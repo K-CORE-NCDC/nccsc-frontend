@@ -1,28 +1,25 @@
 {
-  "name": "nccsc-frontend",
+  "name": "ncc-frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.1.2",
     "@headlessui/react": "^1.2.0",
     "@heroicons/react": "^1.0.1",
-    "@testing-library/jest-dom": "^5.12.0",
-    "@testing-library/react": "^11.2.6",
+    "@testing-library/jest-dom": "^5.13.0",
+    "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
-    "autoprefixer": "^9.8.6",
     "d3": "^6.7.0",
     "d3-tip": "^0.9.1",
-    "postcss": "^8.1.7",
-    "postcss-cli": "^8.3.1",
-    "postcss-loader": "^4.0.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-loadable": "^5.5.0",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.4",
+    "venn.js": "^0.2.20",
     "web-vitals": "^1.1.1"
   },
   "scripts": {
@@ -50,7 +47,8 @@
     ]
   },
   "devDependencies": {
-    "webpack": "^4.44.2",
-    "webpack-cli": "^4.7.0"
+    "autoprefixer": "^9.8.6",
+    "postcss": "^7.0.35",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.4"
   }
 }

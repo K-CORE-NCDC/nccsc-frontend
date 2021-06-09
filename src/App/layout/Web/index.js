@@ -11,7 +11,7 @@ import Header from './Header'
 import { Fragment } from 'react'
 import banner_img from '../../../assets/img/top_banner01.png'
 import { Popover, Transition } from '@headlessui/react'
-//import logo from '../../../assets/img/main_logo2.png'
+import logo from '../../../assets/img/main_logo2.png'
 
 import {
   BookmarkAltIcon,
@@ -55,7 +55,7 @@ export default function Web() {
                     <span className="sr-only">Workflow</span>
                     <img
                       className="h-8 w-auto sm:h-10"
-                      src=''
+                      src={logo}
                       alt=""
                     />
                   </a>

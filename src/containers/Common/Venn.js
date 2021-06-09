@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useEffect } from 'react'
 // var venn = require("venn")
 // import {VennDiagram} from 'venn.js'
 import * as venn from 'venn.js'
@@ -12,7 +12,7 @@ export default function VennCmp({ width }) {
 
     var chart = venn.VennDiagram().width(width)
     var div = d3.select("#venn").datum(sets).call(chart);
-    var tooltip = d3.select("body").append("div").attr("class", "venntooltip");
+    // var tooltip = d3.select("body").append("div").attr("class", "venntooltip");
     div.selectAll("path").style("stroke-opacity", 0).style("stroke", "#fff")
     .style("stroke-width", 3)
 
@@ -44,7 +44,7 @@ export default function VennCmp({ width }) {
     //         .style("fill-opacity", d.sets.length == 1 ? .25 : .0)
     //         .style("stroke-opacity", 0);
     // });
-  },[])
+  },[width])
   return (
     <div id='venn'></div>
   )

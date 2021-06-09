@@ -18,31 +18,29 @@ export default function DataSummary() {
   const parentRef = useRef(null);
   const parentRef1 = useRef(null);
   // const inputEl = useRef(null);
-  const toggleAccordian = (event)=>{
-
-    let accordain_ul = document.querySelector("#accordian_tabs");
-
-    let accordain_button = accordain_ul.querySelectorAll("li button")
-    let accordain_div = accordain_ul.querySelectorAll("li div.accordian_box")
-    accordain_button.forEach((item, i) => {
-      item.addEventListener("click",function(e){
-        e.preventDefault();
-        let id = this.getAttribute("data-id");
-        accordain_div.forEach((child_item, j) => {
-          let child_id = child_item.getAttribute('id')
-          if(id===child_id){
-            child_item.classList.remove('max-h-0')
-            child_item.style.maxHeight = '1200px'
-          }else{
-            child_item.classList.add('max-h-0')
-            child_item.style.maxHeight = '0'
-          }
-        });
-      })
-    });
-    // event.preventDefault()
-
-  }
+  // const toggleAccordian = (event)=>{
+  //
+  //   let accordain_ul = document.querySelector("#accordian_tabs");
+  //
+  //   let accordain_button = accordain_ul.querySelectorAll("li button")
+  //   let accordain_div = accordain_ul.querySelectorAll("li div.accordian_box")
+  //   accordain_button.forEach((item, i) => {
+  //     item.addEventListener("click",function(e){
+  //       e.preventDefault();
+  //       let id = this.getAttribute("data-id");
+  //       accordain_div.forEach((child_item, j) => {
+  //         let child_id = child_item.getAttribute('id')
+  //         if(id===child_id){
+  //           child_item.classList.remove('max-h-0')
+  //           child_item.style.maxHeight = '1200px'
+  //         }else{
+  //           child_item.classList.add('max-h-0')
+  //           child_item.style.maxHeight = '0'
+  //         }
+  //       });
+  //     })
+  //   });
+  // }
 
   const toggleTab = (event)=>{
     let tabsContainer = document.querySelector("#tabs");
@@ -72,7 +70,7 @@ export default function DataSummary() {
 
   const switchButton = (event,id)=>{
     let s = selected
-    if (s==id){
+    if (s===id){
       setSelected('')
     }else{
       setSelected(id)
@@ -114,14 +112,14 @@ export default function DataSummary() {
               </div>
               <h4 className="p-3"><AdjustmentsIcon className="h-6 w-6 inline"/> &nbsp;Filters</h4>
               <ul className="shadow-box w-100 p-3" id='accordian_tabs' >
-                <li className={selected=='a_1'?"relative bg-tab border-b border-gray-200 rounded":"relative border-b border-gray-200"}>
-                  <button type="button" className={selected=="a_1"?"w-full p-3 text-left border-b border-gray-200 focus:outline-none":"w-full p-3 text-left focus:outline-none"}  onClick={(e)=>switchButton(e,'a_1')}>
+                <li className={selected==='a_1'?"relative bg-tab border-b border-gray-200 rounded":"relative border-b border-gray-200"}>
+                  <button type="button" className={selected==="a_1"?"w-full p-3 text-left border-b border-gray-200 focus:outline-none":"w-full p-3 text-left focus:outline-none"}  onClick={(e)=>switchButton(e,'a_1')}>
                     <div className="flex items-center justify-between">
                       <span>Basic Daignostic Information</span>
-                      {selected=='a_1'?<ChevronDownIcon className="h-6 w-6" aria-hidden="true"/>:<ChevronUpIcon className="h-6 w-6" aria-hidden="true"/>}
+                      {selected==='a_1'?<ChevronDownIcon className="h-6 w-6" aria-hidden="true"/>:<ChevronUpIcon className="h-6 w-6" aria-hidden="true"/>}
                     </div>
                   </button>
-                  {selected=='a_1' ?
+                  {selected==='a_1' ?
                     <div className="relative overflow-hidden grid grid-cols-1 py-5" id='a_1' >
                       <div className="mb-3">
                         <label htmlFor="toogleA" className="flex items-center cursor-pointer">
@@ -152,14 +150,14 @@ export default function DataSummary() {
                     </div>
                   :""}
                 </li>
-                <li className={selected=='a_2'?"relative bg-tab border-b border-gray-200 rounded":"relative border-b border-gray-200 "}>
-                  <button type="button" className={selected=="a_2"?"w-full p-3 text-left border-b border-gray-200 focus:outline-none":"w-full p-3 text-left focus:outline-none"}  onClick={(e)=>switchButton(e,'a_2')}>
+                <li className={selected==='a_2'?"relative bg-tab border-b border-gray-200 rounded":"relative border-b border-gray-200 "}>
+                  <button type="button" className={selected==="a_2"?"w-full p-3 text-left border-b border-gray-200 focus:outline-none":"w-full p-3 text-left focus:outline-none"}  onClick={(e)=>switchButton(e,'a_2')}>
                     <div className="flex items-center justify-between">
                       <span>Patient Health Information</span>
-                      {selected=='a_2'?<ChevronDownIcon className="h-6 w-6" aria-hidden="true"/>:<ChevronUpIcon className="h-6 w-6" aria-hidden="true"/>}
+                      {selected==='a_2'?<ChevronDownIcon className="h-6 w-6" aria-hidden="true"/>:<ChevronUpIcon className="h-6 w-6" aria-hidden="true"/>}
                     </div>
                   </button>
-                  {selected=='a_2' ?
+                  {selected==='a_2' ?
                   <div className="relative overflow-hidden grid grid-cols-1 py-5" id='a_2'>
                     <div className="mb-3">
                       <label htmlFor="toogleA" className="flex items-center cursor-pointer">
