@@ -115,11 +115,38 @@ export default function Barchart({width}) {
   }
 
   useEffect(()=>{
-    var data1 = [
-       {group: "A", value: 4},
-       {group: "B", value: 16},
-    ];
-    drawGraph(data1,width)
+    // var data1 = [
+    //    {group: "A", value: 4},
+    //    {group: "B", value: 16},
+    // ];
+    const data1 = [
+      {
+          "age": "30.0",
+          "cnt": 3
+      },
+      {
+          "age": "29.0",
+          "cnt": 8
+      },
+      {
+          "age": "31.0",
+          "cnt": 3
+      },
+      {
+          "age": "26.0",
+          "cnt": 1
+      },
+      {
+          "age": "27.0",
+          "cnt": 3
+      }
+      
+  ]
+  let graphData = []
+  data1.forEach((element) => {
+    graphData.push({group: element.age, value: element.cnt})
+  })
+    drawGraph(graphData,width)
 
   },[])
 

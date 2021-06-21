@@ -4,19 +4,31 @@ import {
   ChevronUpIcon,
   AdjustmentsIcon
 } from '@heroicons/react/outline'
+import { useSelector, useDispatch } from "react-redux";
 import Barchart from '../Common/Barchart'
 import Piechart from '../Common/Piechart'
 import StackedBarChart from '../Common/StackedBarChart'
 // import CircosCmp from '../Common/Circos'
 import VennCmp from '../Common/Venn'
 import VolcanoCmp from '../Common/Volcano'
+import { dispatch } from "d3-dispatch";
+import { getDashboardDsummaryData } from '../../actions/api_actions'
+
+
 export default function DataSummary() {
+  const dataSummary = useSelector(state => state)
   const [selected, setSelected] = useState('');
   const [divWidth, setdivWidth] = useState('');
   const [divWidth1, setdivWidth1] = useState('');
 
   const parentRef = useRef(null);
   const parentRef1 = useRef(null);
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    console.log('  log    ');
+    dispatch(getDashboardDsummaryData())
+  }, [])
   // const inputEl = useRef(null);
   // const toggleAccordian = (event)=>{
   //

@@ -1,5 +1,5 @@
 export default {
   defaultPath: '/',
   basename: '/',
-  auth: 'http://18.191.181.140:8007/',
+  auth: 'http://18.191.112.162:9797/',
 }
