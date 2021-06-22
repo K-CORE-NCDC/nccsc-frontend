@@ -3,7 +3,7 @@ import * as d3 from 'd3'
 import React, { useState,useEffect } from 'react'
 
 
-export default function Barchart({width}) {
+export default function Barchart({width,data,id}) {
   const drawGraph = (data1,width)=>{
     var margin = {top: 30, right: 30, bottom: 70, left: 60},
     width = width - margin.left - margin.right,
@@ -15,7 +15,7 @@ export default function Barchart({width}) {
         // console.log(d.path,target);
         return "<strong>"+target.group+"</strong> <span style='color:red'>"+target.value+"</span>";
       })
-    var svg = d3.select("#my_dataviz")
+    var svg = d3.select("#"+id)
       .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
@@ -23,7 +23,7 @@ export default function Barchart({width}) {
         .attr("transform",
               "translate(" + margin.left + "," + margin.top + ")");
 
-    svg.call(tip1);
+    // svg.call(tip1);
     var x = d3.scaleBand()
         .range([ 0, width ])
         .domain(data1.map(function(d) { return d.group; }))
@@ -54,11 +54,10 @@ export default function Barchart({width}) {
     u.enter()
       .append("rect")
       .merge(u)
-      //.transition()
-      //.duration(1000)
+      .transition()
+      .duration(1000)
       .attr("class","rect")
       .attr("x", function(d,i) {
-
         let final_width = 0
         if(i==0){
           bar_width = width/(data1.length)
@@ -68,7 +67,6 @@ export default function Barchart({width}) {
           final_width = bar_width+12
         }
         return final_width
-
       })
       .attr("y", function(d) { return y(d.value); })
       .attr("width", function(d,i){
@@ -77,18 +75,14 @@ export default function Barchart({width}) {
       })
       .attr("height", function(d) { return height - y(d.value); })
       .attr("fill", "#69b3a2")
-      .on("mouseover", tip1.show)
-      .on("mouseout", tip1.hide)
-    // u.exit().remove();
+      // .on("mouseover", tip1.show)
+      // .on("mouseout", tip1.hide)
 
     u.transition()
         .duration(1000)
 
     svg.selectAll(".domain")
     .attr("stroke","#d9d9d9")
-
-
-
 
     let line_width = 0
     let bar_size = 0
@@ -110,49 +104,23 @@ export default function Barchart({width}) {
     });
 
     xAxis.select('.domain').attr('stroke-width', 0)
-
-
   }
 
   useEffect(()=>{
-    // var data1 = [
-    //    {group: "A", value: 4},
-    //    {group: "B", value: 16},
-    // ];
-    const data1 = [
-      {
-          "age": "30.0",
-          "cnt": 3
-      },
-      {
-          "age": "29.0",
-          "cnt": 8
-      },
-      {
-          "age": "31.0",
-          "cnt": 3
-      },
-      {
-          "age": "26.0",
-          "cnt": 1
-      },
-      {
-          "age": "27.0",
-          "cnt": 3
-      }
-      
-  ]
-  let graphData = []
-  data1.forEach((element) => {
-    graphData.push({group: element.age, value: element.cnt})
-  })
+
+    let graphData = []
+    data.forEach((element) => {
+      graphData.push({group: element.name, value: element.cnt})
+    })
     drawGraph(graphData,width)
 
   },[])
 
   return (
-    <div id="my_dataviz">
-    </div>
+
+      <div id={id}>
+      </div>
+
   )
 
 }

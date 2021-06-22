@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 input:checked ~ .dot {
   transform: translateX(100%);
   background-color: #48bb78;
@@ -30,6 +33,7 @@ input:checked ~ .dot {
   top: 100%;
   left: 0;
 }
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
+.bg-tab{
+  background-color: #edeff3;
+}
