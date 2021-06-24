@@ -9,6 +9,11 @@ const homeReducer = (state = {'home':'home'}, {type,payload}) => {
         ...state,
         dataSummary: payload
       }
+    case homeConstants.GENOMIC_INFORMATION:
+      return {
+        ...state,
+        genomicData: payload
+      }
     default:
       return state
   }

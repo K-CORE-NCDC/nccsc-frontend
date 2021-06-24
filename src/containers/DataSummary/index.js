@@ -14,6 +14,8 @@ import VolcanoCmp from '../Common/Volcano'
 // import { dispatch } from "d3-dispatch";
 import { getDashboardDsummaryData } from '../../actions/api_actions'
 
+import GenomicInfo from "./GenomicInformation"
+
 
 export default function DataSummary() {
   const dataSummary = useSelector(state => state)
@@ -130,7 +132,6 @@ export default function DataSummary() {
   }
 
   const checkBoxFn = (event,id,chart)=>{
-
     let tmp = activeChartsList
     var did = document.getElementById(id)
     var checkbox_elm = document.getElementById(id).checked;
@@ -152,6 +153,7 @@ export default function DataSummary() {
 
   const loadChart = (chart,parent_name)=>{
     let tmp = leftSide['charts']
+    // console.log("---->",tmp)
     let check = true
     for (var i = 0; i < tmp.length; i++) {
       if(tmp[i].key==="chart_"+chart) {
@@ -160,6 +162,7 @@ export default function DataSummary() {
       }
     }
     if(check){
+       console.log("---->",summaryJson[parent_name])
       Object.keys(summaryJson[parent_name]).forEach((item, k) => {
         if(item===chart){
           tmp.push(
@@ -185,10 +188,8 @@ export default function DataSummary() {
       setSelected('')
     }else{
       setSelected(id)
-
     }
   }
-
 
 
   return (
@@ -222,12 +223,11 @@ export default function DataSummary() {
               </div>
               <div className="grid bg-white" ref={parentRef1}>
                 {divWidth1 && <VolcanoCmp width={divWidth1}/>}
-
               </div>
             </div>
           </div>
           <div id="second" className="hidden p-4">
-            Second tab
+            <GenomicInfo/>
           </div>
           <div id="third" className="hidden p-4">
             Third tab

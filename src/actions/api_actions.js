@@ -8,9 +8,7 @@ function sendRequest(url, method, data) {
     return x
   }
 
-
-
-  export function getDashboardDsummaryData() {
+export function getDashboardDsummaryData() {
     return (dispatch) => {
     //   dispatch({ type: homeConstants.DATA_SUMMARY });
       let url = config.auth+"data-summary/";
@@ -27,3 +25,22 @@ function sendRequest(url, method, data) {
         });
     };
   }
+
+  export function getGenomicInformation() {
+      return (dispatch) => {
+      //   dispatch({ type: homeConstants.DATA_SUMMARY });
+        let url = config.auth+"genomic-information/";
+        sendRequest(url, "GET", "")
+          .then((result) => {
+            const d = result;
+            // console.log()
+            dispatch({
+              type: homeConstants.GENOMIC_INFORMATION,
+              payload: d["data"],
+            });
+          })
+          .catch((e) => {
+            console.log("error", e);
+          });
+      };
+    }
