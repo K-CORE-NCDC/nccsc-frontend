@@ -117,7 +117,6 @@ export default function Barchart({width,data,id}) {
   },[])
 
   return (
-
       <div id={id}>
       </div>
 
