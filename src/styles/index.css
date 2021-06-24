@@ -37,3 +37,10 @@ input:checked ~ .dot {
 .bg-tab{
   background-color: #edeff3;
 }
+
+.bg-website{
+  background-color: #fafbfb;
+}
+.card-border{
+  border:solid 1px #A4B7E5;
+}

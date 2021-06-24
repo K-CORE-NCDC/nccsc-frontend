@@ -60,7 +60,7 @@ export default function BarChartComp({data}){
 
     return (
         <div>
-          <canvas ref={chartRef} id="myChart" width="1000" height="1000"></canvas>
+          <canvas ref={chartRef} id="myChart" height="200"></canvas>
         </div>
     )
   }
