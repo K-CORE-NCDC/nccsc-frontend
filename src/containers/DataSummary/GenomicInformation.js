@@ -17,6 +17,8 @@ import VolcanoCmp from '../Common/Volcano'
 // import { dispatch } from "d3-dispatch";
 import { getGenomicInformation } from '../../actions/api_actions'
 
+import chart_types from './genomicCharyTypes'
+
 
 export default function GenomicInfo() {
   const dataSummary = useSelector(state => state)
@@ -25,21 +27,39 @@ export default function GenomicInfo() {
 
   const dispatch = useDispatch()
 
+
   useEffect(() => {
     dispatch(getGenomicInformation())
   }, [dispatch])
+
+  let visual_type = {
+    "Variant Classification":"Bar",
+    "Variant Type":"Bar",
+    "snv_type":"Bar",
+    "dna_mutation_gene":"stack_bar",
+    "dna_per_sample":"stack_bar"
+  }
+
 
   useEffect(()=>{
     if(summaryJson){
       let html = []
       Object.keys(summaryJson).forEach((item, k) => {
+        let type = visual_type[item]
+        let comp = ''
+        if(item === "dna_per_sample"){
+          comp = chart_types(type, summaryJson[item], "x-axis")
+        }else{
+          comp = chart_types(type, summaryJson[item],'')
+        }
+
         html.push(
           <div key={'omics_'+k} className='max-w bg-white rounded overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border'>
             <div className="px-6 py-4">
               <div className="font-bold text-md mb-2">{item}</div>
             </div>
             <div className="px-6 pt-4 pb-4">
-              <BarChartComp data={summaryJson[item]}/>
+              {comp}
             </div>
           </div>
         )
