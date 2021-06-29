@@ -21,7 +21,7 @@ export default {
       title: 'User Data Visualization',
       type: 'item',
       icon: 'fa fa-dashboard',
-      url:'/customvisualization',
+      url:'/userdata',
       children: [],
     },
     {
