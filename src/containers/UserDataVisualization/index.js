@@ -13,8 +13,7 @@ import {
   PlusCircleIcon,
   RefreshIcon
 } from '@heroicons/react/outline'
-import SampleSelection from './Components/SampleSelection/'
-
+import ModalComponent from "./Components/ModalPopup";
 
 export default function DataVisualization() {
   const parentRef = useRef(null);
@@ -37,7 +36,13 @@ export default function DataVisualization() {
     <div className="my-16">
       <div className="w-full md:w-full p-8">
          <div className="shadow-md">
-            <SampleSelection/>
+            <div className="tab w-full overflow-hidden border-t">
+              <input className="absolute opacity-0" id="tab-single-two" type="radio" name="tabs2"/>
+              <label className="block p-5 leading-normal cursor-pointer" for="tab-single-two">Step 1<span className="border-r-2 border-blue-800 px-2"/> <span className="ml-2">Data Upload</span></label>
+              <div className="tab-content overflow-hidden border-l-2 bg-gray-100 border-indigo-500 leading-normal">
+                <ModalComponent/>
+              </div>
+            </div>
             <div className="tab w-full overflow-hidden border-t">
                <input className="absolute opacity-0" id="tab-single-two" type="radio" name="tabs2"/>
                <label className="block p-5 leading-normal cursor-pointer" for="tab-single-two">Step 2<span className="border-r-2 border-blue-800 px-2"/> <span className="ml-2">Gene selection</span></label>
