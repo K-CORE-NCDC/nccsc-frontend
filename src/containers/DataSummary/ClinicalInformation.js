@@ -86,20 +86,14 @@ export default function ClinicalInformation() {
         ...prevState,
         'leftSide':tmp
       }))
-      
-
     }
   }
-
-
-
-
 
 
   const checkBoxFn = (event,id,chart)=>{
     let tmp = activeChartsList
     var did = document.getElementById(id)
-    console.log(did);
+
     var checkbox_elm = document.getElementById(id).checked;
     if(checkbox_elm){
       document.getElementById(id).checked=false

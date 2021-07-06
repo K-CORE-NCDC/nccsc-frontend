@@ -5,7 +5,6 @@ Chart.register(...registerables);
 export default function StackBarChartComp({data,axis}){
       const chartRef = useRef(null);
 
-      console.log("axis--->",axis)
       let axis_ = ''
 
       if(axis === "x-axis"){

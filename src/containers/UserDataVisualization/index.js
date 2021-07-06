@@ -5,75 +5,77 @@ import {
   AdjustmentsIcon
 } from '@heroicons/react/outline'
 import { useSelector, useDispatch } from "react-redux";
-import '../../index.css'
+// import '../../index.css'
 import {
-  UserCircleIcon,
-  BeakerIcon,
-  SearchIcon,
-  PlusCircleIcon,
-  RefreshIcon
+  BeakerIcon
 } from '@heroicons/react/outline'
-import ModalComponent from "./Components/ModalPopup";
+import TabsComponent from "./Components/TabsComponent";
+
 
 export default function DataVisualization() {
-  const parentRef = useRef(null);
+  const [stage,setStage] = useState(1)
+  const [percentage,setPercentage] = useState("25")
+  const [statetext, setText] = useState("Data Upload")
 
-  let myRadios = document.getElementsByName('tabs2');
-      var setCheck;
-      var x = 0;
-      for(x = 0; x < myRadios.length; x++){
-          myRadios[x].onclick = function(){
-              if(setCheck != this){
-                   setCheck = this;
-              }else{
-                  this.checked = false;
-                  setCheck = null;
-          }
-          };
+  function stageIncrement(){
+    let stageText = {1:"Data Upload",2:"Sample Selection",3:"Gene Selection",4:"Visualization"}
+    let s_ = stage + 1
+    let head_name = stageText[s_]
+    let percentage_ = parseInt(percentage) + 25
+    if (s_ <= 4){
+      setText(head_name)
+      setPercentage(percentage_.toString())
+      setStage(s_)
     }
+  }
+
+  const stage_content = (value) => {
+    switch (value) {
+      case 1:
+        return <TabsComponent color="purple"/>
+      case 2:
+        return <div><h4>Sample Selection</h4></div>
+      case 3:
+          return <div><h4>Gene Selection</h4></div>
+      case 4:
+          return <div><h4>Visualization</h4></div>
+      default:
+        return <TabsComponent color="purple"/>
+    }
+  }
 
   return (
-    <div className="my-16">
-      <div className="w-full md:w-full p-8">
-         <div className="shadow-md">
-            <div className="tab w-full overflow-hidden border-t">
-              <input className="absolute opacity-0" id="tab-single-two" type="radio" name="tabs2"/>
-              <label className="block p-5 leading-normal cursor-pointer" for="tab-single-two">Step 1<span className="border-r-2 border-blue-800 px-2"/> <span className="ml-2">Data Upload</span></label>
-              <div className="tab-content overflow-hidden border-l-2 bg-gray-100 border-indigo-500 leading-normal">
-                <ModalComponent/>
-              </div>
-            </div>
-            <div className="tab w-full overflow-hidden border-t">
-               <input className="absolute opacity-0" id="tab-single-two" type="radio" name="tabs2"/>
-               <label className="block p-5 leading-normal cursor-pointer" for="tab-single-two">Step 2<span className="border-r-2 border-blue-800 px-2"/> <span className="ml-2">Gene selection</span></label>
-               <div className="tab-content overflow-hidden border-l-2 bg-gray-100 border-indigo-500 leading-normal">
-                 <div className="px-5 py-4 pb-3">
-                    <div className="mb-2">
-                     <select class="w-full border bg-white rounded px-3 py-2 outline-none">
-                       <option class="py-1">User-Defined list</option>
-                       <option class="py-1">Option 2</option>
-                       <option class="py-1">Option 3</option>
-                      </select>
-                    </div>
-                    <div className="mt-2">
-                      <textarea className="resize-none border rounded-md w-full border-gray-300  focus:outline-none focus:border-gray-700" rows="3" placeholder="  Enter Hugo Gene Symbols, Gene Aliases, or OQL."></textarea>
-                    </div>
-                    <div className="bottom-0 right-0 mt-2 mb-3">
-                      <button class="bg-blue-500 float-right hover:bg-blue-700 mb-3 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
-                        Search
-                      </button>
+    <div className="py-20 h-screen bg-gray-100">
+      <div className="container mx-auto">
+          <div className="w-full">
+            <section className="border-b-2 border-gray-500">
+              <div class="grid grid-cols-10">
+                <div className="col-span-10 flex justify-start my-2">
+                    <span className="uppercase tracking-wide text-xs font-bold text-gray-500 mb-1 leading-tight">STEP: {stage} </span>
+                </div>
+                <div className="col-span-5 flex justify-start my-2 mb-3">
+                  <div className="text-lg font-bold text-gray-700 leading-tight">{statetext}</div>
+                </div>
+                <div className="col-span-5 mb-3 pt-2">
+                  <div className="w-90 bg-gray bg-gray-600 rounded-full mr-2">
+                    <div className="rounded-full bg-green-500 text-xs leading-none h-2 text-center text-white" style={{width:percentage+"%"}}>
                     </div>
                   </div>
-               </div>
-            </div>
-            <div className="tab w-full overflow-hidden border-t my-5">
-               <input className="absolute opacity-0" id="tab-single-three" type="radio" name="tabs2"/>
-               <label className="block p-5 leading-normal cursor-pointer" for="tab-single-three">Step 3<span className="border-r-2 border-blue-800 px-2"/><span className="ml-2">Visualization</span></label>
-               <div className="tab-content overflow-hidden border-l-2 bg-gray-100 border-indigo-500 leading-normal">
-                  <p className="p-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, architecto, explicabo perferendis nostrum, maxime impedit atque odit sunt pariatur illo obcaecati soluta molestias iure facere dolorum adipisci eum? Saepe, itaque.</p>
-               </div>
-            </div>
-         </div>
+                  <div class="text-xs w-10 text-gray-600" x-text="parseInt(step / 3 * 100) +'%'">{percentage+"%"}</div>
+                </div>
+              </div>
+            </section>
+            <section>
+              {stage_content(stage)}
+            </section>
+            <section>
+              <div className="col-span-10 flex justify-end my-1">
+                <button className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded" onClick={stageIncrement}>
+                  Next Step
+                </button>
+              </div>
+            </section>
+          </div>
       </div>
     </div>
   )
