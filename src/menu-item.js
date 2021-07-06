@@ -1,36 +1,152 @@
-export default {
-  items: [
-    {
-      id: 'DataSummary',
-      title: 'Data Summary',
-      type: 'item',
-      icon: 'fa fa-dashboard',
-      url:'/summary',
-      children: [],
-    },
-    {
-      id: 'DataVisualization',
-      title: 'Data Visualization',
-      type: 'item',
-      icon: 'fa fa-dashboard',
-      url:'/visualise',
-      children: [],
-    },
-    {
-      id: 'UserDataVisualization',
-      title: 'User Data Visualization',
-      type: 'item',
-      icon: 'fa fa-dashboard',
-      url:'/userdata',
-      children: [],
-    },
-    {
-      id: 'API',
-      title: 'API',
-      type: 'item',
-      icon: 'fa fa-dashboard',
-      url:'/API',
-      children: [],
-    },
-  ]
+const childMenu = {
+  "social":{
+    items: [
+      {
+        id: 'signup',
+        title: 'Sign Up',
+        type: 'item',
+        icon: 'fa fa-dashboard',
+        url:'/summary',
+        children: [],
+      },
+      {
+        id: 'login',
+        title: 'Login',
+        type: 'item',
+        icon: 'fa fa-dashboard',
+        url:'/visualise',
+        children: [],
+      },
+      {
+        id: 'faq',
+        title: 'FAQ',
+        type: 'item',
+        icon: 'fa fa-dashboard',
+        url:'/userdata',
+        children: [],
+      },
+      {
+        id: 'q&a',
+        title: 'Q&A',
+        type: 'item',
+        icon: 'fa fa-dashboard',
+        url:'/API',
+        children: [],
+      },
+      {
+        id: 'notice',
+        title: 'Notice',
+        type: 'item',
+        icon: 'fa fa-dashboard',
+        url:'/API',
+        children: [],
+      }
+    ]
+  },
+  "mainmenu":{
+    items: [
+      {
+        id: 'introduce',
+        title: 'Introduce',
+        type: 'group',
+        icon: 'fa fa-dashboard',
+        url:'/summary',
+        children: [
+          {
+            id: 'introduce',
+            title: 'Business',
+            type: 'item',
+            icon: 'fa fa-dashboard',
+            url:'/summary',
+            children:[]
+          },
+          {
+            id: 'introduce',
+            title: 'Introduction',
+            type: 'item',
+            icon: 'fa fa-dashboard',
+            url:'/summary',
+            children:[]
+          },
+          {
+            id: 'introduce',
+            title: 'Pipeline',
+            type: 'item',
+            icon: 'fa fa-dashboard',
+            url:'/summary',
+            children:[]
+          },
+        ],
+      },
+      {
+        id: 'Visualization',
+        title: 'Visualization',
+        type: 'group',
+        icon: 'fa fa-dashboard',
+        url:'/summary',
+        children: [
+          {
+            id: 'DataSummary',
+            title: 'Data Summary',
+            type: 'item',
+            icon: 'fa fa-dashboard',
+            url:'/summary',
+            children:[]
+          },
+          {
+            id: 'DataUserVisualization',
+            title: 'Data User Visualization',
+            type: 'item',
+            icon: 'fa fa-dashboard',
+            url:'/summary',
+            children:[]
+          }
+        ],
+      },
+      {
+        id: 'MyDataVisualization',
+        title: 'My Data Visualization',
+        type: 'group',
+        icon: 'fa fa-dashboard',
+        url:'/summary',
+        children: [
+
+        ],
+      },
+      {
+        id: 'DataRequest',
+        title: 'Data Request',
+        type: 'group',
+        icon: 'fa fa-dashboard',
+        url:'/summary',
+        children: [],
+      },
+      {
+        id: 'api',
+        title: 'Api',
+        type: 'group',
+        icon: 'fa fa-dashboard',
+        url:'/summary',
+        children: [
+          {
+            id: 'VariantTypes',
+            title: 'Variant Types',
+            type: 'item',
+            icon: 'fa fa-dashboard',
+            url:'/summary',
+            children:[]
+          },
+          {
+            id: 'VariantClassification',
+            title: 'Variant Classification',
+            type: 'item',
+            icon: 'fa fa-dashboard',
+            url:'/summary',
+            children:[]
+          }
+        ],
+      },
+    ]
+  }
 }
+export default childMenu;

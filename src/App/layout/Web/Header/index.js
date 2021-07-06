@@ -1,13 +1,13 @@
 import React from 'react'
+import childMenu from '../../../../menu-item'
 import Menu from './Menu'
-import Navigation from '../../../../menu-item';
 
 export default function Header() {
   let menuContent = (
-    <Menu items={Navigation.items}/>
+    <Menu items={childMenu.social.items}/>
   )
   return(
-    <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
+    <ul className="flex flex-col lg:flex-row list-none lg:ml-auto justify-end text-white">
       {menuContent}
     </ul>
   )

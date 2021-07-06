@@ -1,6 +1,65 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* Reset */
+@charset "utf-8";
+
+/* font */
+@font-face {
+  font-family: 'Noto Sans CJKkr';
+  font-style: normal;
+  font-weight: 350;
+  src: url("../assets/fonts/NotoSansCJKkr-DemiLight.otf") format("opentype"),
+  url("../assets/fonts/NotoSansCJKkr-DemiLight.woff") format("woff"),
+  url("../assets/fonts/NotoSansCJKkr-DemiLight.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: 'Noto Sans CJKkr';
+  font-style: normal;
+  font-weight: 400;
+  src: url("../assets/fonts/NotoSansCJKkr-Regular.otf") format("opentype"),
+  url("../assets/fonts/NotoSansCJKkr-Regular.woff") format("woff"),
+  url("../assets/fonts/NotoSansCJKkr-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: 'Noto Sans CJKkr';
+  font-style: normal;
+  font-weight: 500;
+  src: url("../assets/fonts/NotoSansCJKkr-Medium.otf") format("opentype"),
+  url("../assets/fonts/NotoSansCJKkr-Medium.woff") format("woff"),
+  url("../assets/fonts/NotoSansCJKkr-Medium.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: 'Noto Sans CJKkr';
+  font-style: normal;
+  font-weight: 700;
+  src: url("../assets/fonts/NotoSansCJKkr-Bold.otf") format("opentype"),
+  url("../assets/fonts/NotoSansCJKkr-Bold.woff") format("woff"),
+  url("../assets/fonts/NotoSansCJKkr-Bold.woff2") format("woff2");
+}
+
+
+
+
+/* reset */
+html {height:100%; font-size:10px;}
+body {
+  width:100%;
+  min-width: 360px;
+  margin:0;
+  font-size:14px;
+  color:#333;
+  letter-spacing: -1px;
+  line-height: 18px;
+  font-weight:400;
+  font-family:'Noto Sans CJKkr'!important;
+}
+
+
+
 input:checked ~ .dot {
   transform: translateX(100%);
   background-color: #48bb78;
@@ -43,4 +102,70 @@ input:checked ~ .dot {
 }
 .card-border{
   border:solid 1px #A4B7E5;
+}
+
+#header{
+  background-image:url('../assets/images/bg.png');
+  background-size:  cover;
+
+}
+.screen-1{
+  height: 20vh;
+}
+.screen-2{
+  height: 60vh;
+}
+.dropdownHeader{
+  color: #fff;
+  background: #0c3c6a;
+  opacity: 0.75;
+  height: 60px;
+  margin: 0 auto;
+  border-radius: 26px;
+  display: table;
+  width: 100%
+
+}
+.group .group_box{
+  min-width: 150px
+}
+.group:hover .group_box{
+  background: #0c2f4d;
+  width: 100%;
+}
+.group:hover ul{
+  display: block !important;
+  background: #0c2f4d;
+  width: 100%;
+  height: auto;
+  transition: all .5s ease-in-out;
+}
+.border-blue{
+  border-color: #0c2f4d;
+}
+
+.con ul li:nth-child(1) a span{background: url('../assets/images/main_icon.png') no-repeat center 30px;}
+.con ul li:nth-child(2) a span{background: url('../assets/images/main_icon.png') no-repeat center -72px;}
+.con ul li:nth-child(3) a span{background: url('../assets/images/main_icon.png') no-repeat center -169px;}
+.con ul li:nth-child(4) a span{background: url('../assets/images/main_icon.png') no-repeat center -275px;}
+.con ul li:nth-child(5) a span{background: url('../assets/images/main_icon.png') no-repeat center -374px;}
+.con ul li:nth-child(6) a span{background: url('../assets/images/main_icon.png') no-repeat center -476px;}
+.con ul li:nth-child(7) a span{background: url('../assets/images/main_icon.png') no-repeat center -572px;}
+.con ul li:nth-child(8) a span{background: url('../assets/images/main_icon.png') no-repeat center -670px;}
+.con ul li:nth-child(9) a span{background: url('../assets/images/main_icon.png') no-repeat center -765px;}
+.con ul li:nth-child(10) a span{background: url('../assets/images/main_icon.png') no-repeat center -860px;}
+.con ul li a{
+  position: relative;
+}
+.con ul li a::after{
+  content: url('../assets/images/list.png');
+  right: 0;
+
+}
+.con ul li a span{
+  display: inline-block;
+  height: 130px;
+  width: 100%;
+  text-align: center;
+  color: #fff;
 }

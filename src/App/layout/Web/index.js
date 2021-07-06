@@ -6,13 +6,14 @@ import config from "../../../config";
 import route from "../../../route";
 import Loader from "../Loader";
 import Header from './Header'
+import DropdownMenu from './Header/DropdownMenu'
 
 
 import { Fragment } from 'react'
-import banner_img from '../../../assets/img/top_banner01.png'
-import { Popover, Transition } from '@headlessui/react'
-import logo from '../../../assets/img/main_logo2.png'
 
+import { Popover, Transition } from '@headlessui/react'
+import logo from '../../../assets/images/logo.png'
+import footer_logo from '../../../assets/images/f_logo.png'
 import {
   BookmarkAltIcon,
   CalendarIcon,
@@ -25,9 +26,13 @@ import {
   ShieldCheckIcon,
   SupportIcon,
   ViewGridIcon,
+  ChevronRightIcon,
   XIcon,
 } from '@heroicons/react/outline'
 import { ChevronDownIcon } from '@heroicons/react/solid'
+import {
+  useParams
+} from "react-router-dom";
 
 const menu = route.map((route, index) => {
 
@@ -42,33 +47,123 @@ const menu = route.map((route, index) => {
   ) : null;
 });
 export default function Web() {
+  let id = useParams();
+  let classes = ''
+
+  if(id[0]==='/'){
+    classes = 'screen-2 xl:h-full lg:h-full'
+  }
+  
 
   return (
-    <div className="relative bg-white ">
-      <Popover className="">
+    <div className="relative">
+      <Popover>
           {({ open }) => (
-          <>
-            <nav className="top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-white shadow">
-              <div className="w-full px-4 mx-auto flex flex-wrap items-center justify-between">
-                <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
+          <div id="header" className={classes}>
+            <nav  className="w-full p-2 py-5 navbar-expand-lg">
+              <div className="w-full grid grid-cols-8 px-10  pt-5">
+                <div className="relative xs:col-span-12 sm:col-span-8 xl:col-span-2 lg:col-span-2  2xl:col-span-1 pt-5">
                   <a href="/">
                     <span className="sr-only">Workflow</span>
                     <img
-                      className="h-8 w-auto sm:h-10"
+                      className="h-16 w-auto "
                       src={logo}
                       alt=""
                     />
                   </a>
-                  <Popover.Button  className="cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none" type="button"><MenuIcon className="h-6 w-6" aria-hidden="true" /></Popover.Button >
+                  <Popover.Button  className="hidden xs:block cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block outline-none focus:outline-none" type="button"><MenuIcon className="h-6 w-6" aria-hidden="true" /></Popover.Button >
                 </div>
-
-                <div className="lg:flex flex-grow items-center bg-white lg:bg-opacity-0 lg:shadow-none hidden">
-                  <ul className="flex flex-col lg:flex-row list-none mr-auto">
-                  </ul>
+                <div className="lg:hidden xl:hidden 2xl:block 2xl:col-span-5 z-10">
+                  <DropdownMenu/>
+                </div>
+                <div className="lg:col-span-6 xl:col-span-6 2xl:col-span-2 py-5">
                   <Header/>
+                </div>
+                <div className="xs:hidden sm:block md:block lg:block lg:col-span-8 xl:block 2xl:hidden px-5 py-5">
+                  <DropdownMenu/>
                 </div>
               </div>
             </nav>
+            {classes!=='' && <div className="grid grid-cols-3 px-64 py-20  text-right text-main-blue">
+              <div className='lg:col-span-3 lg:text-center  2xl:col-start-3'>
+              <h2 className="text-8xl"><strong>K</strong>-cancer <strong>omics</strong></h2>
+              <p className="text-2xl p-5 p-10 2xl:text-right">
+                It is a cancer data platform that visually provides various
+                analysis results by combining high-quality domestic cancer
+                patient clinical and protein genomic information .</p>
+              </div>
+            </div>}
+            {classes!=='' &&
+              <div className="lg:hidden 2xl:block 2xl:grid  grid-rows-2 grid-col-12 grid-flow-col gap-4  text-right text-main-blue px-5">
+                <div className='row-span-3 col-span-2 text-6xl py-10'>
+                  <div className="row-span-1">
+                    <p><span className='text-4xl'>Today &nbsp;&nbsp;</span><strong>2021.04.26.</strong></p>
+                  </div>
+                  <div className="row-span-2">
+                    <p>PM 15:20</p>
+                  </div>
+                </div>
+
+                <div className="col-span-10 border-bottom-blue mx-10">
+                  <div className="grid grid-cols-8">
+                    <div className="text-right text-6xl p-5">
+                      1
+                    </div>
+                    <div className="text-right text-6xl p-5">
+                      45312
+                    </div>
+                    <div className="text-right text-6xl p-5">
+                      1
+                    </div>
+                    <div className="text-right text-6xl p-5">
+                      1265
+                    </div>
+                    <div className="text-right text-6xl p-5">
+                      1
+                    </div>
+                    <div className="text-right text-6xl p-5">
+                      9865
+                    </div>
+                    <div className="text-right text-6xl p-5">
+                      1
+                    </div>
+                    <div className="text-right text-6xl p-5">
+                      1
+                    </div>
+                  </div>
+
+                </div>
+                <div className="row-span-2 col-span-10 mx-10">
+                  <div className="grid grid-cols-8">
+                    <div className="text-right text-2xl p-5">
+                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>암종 (Primary Sites)
+                    </div>
+                    <div className="text-right text-2xl p-5">
+                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>전체대상자 (Sample)
+                    </div>
+                    <div className="text-right text-2xl p-5">
+                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>유전자 (Genes)
+                    </div>
+                    <div className="text-right text-2xl p-5">
+                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>돌연변이 (Mutations)
+                    </div>
+                    <div className="text-right text-2xl p-5">
+                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>유전체 복제수변이 (CNV)
+                    </div>
+                    <div className="text-right text-2xl p-5">
+                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>융합 유전자 (Fusion Genes)
+                    </div>
+                    <div className="text-right text-2xl p-5">
+                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>Global Proteome
+                    </div>
+                    <div className="text-right text-2xl p-5">
+                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>Phospho Site
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+
             <Transition
               show={open}
               as={Fragment}
@@ -101,7 +196,6 @@ export default function Web() {
                     </div>
                     <div className="mt-6">
                       <nav className="grid gap-y-8">
-
                       </nav>
                     </div>
                   </div>
@@ -109,7 +203,7 @@ export default function Web() {
                 </div>
               </Popover.Panel>
             </Transition>
-          </>
+          </div>
         )}
       </Popover>
       <Suspense fallback={<Loader />}>
@@ -118,6 +212,19 @@ export default function Web() {
           <Redirect from="/" to="home" />
         </Switch>
       </Suspense>
+      <footer className="p-10">
+        <div className="grid grid-cols-2">
+          <div className="text-gray-500">
+            <p>경기도 고양시 일산동구 일산로 323 국립암센터</p>
+            <p>
+              Copyright ⓒ 2021 by NCC. All rights reserved.
+            </p>
+          </div>
+          <div>
+            <img src={footer_logo} alt="footer-logo" className="float-right"/>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
