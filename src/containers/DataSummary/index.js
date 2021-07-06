@@ -5,12 +5,13 @@ import {
   AdjustmentsIcon
 } from '@heroicons/react/outline'
 import { useSelector, useDispatch } from "react-redux";
-import GenomicInfo from "./GenomicInformation"
-import ClinicalInformation from "./ClinicalInformation"
+import GenomicInfo from "./GenomicInformation";
+import ClinicalInformation from "./ClinicalInformation";
+// import AdvancedInfo from "./AdvanceAnalysisComp";
+import AdvancedInfo from './AdvanceAnalysis/'
 
 
 export default function DataSummary() {
-
   const parentRef = useRef(null);
 
   const toggleTab = (event)=>{
@@ -63,9 +64,8 @@ export default function DataSummary() {
             <GenomicInfo/>
           </div>
           <div id="third" className="hidden p-4">
-            Third tab
+            <AdvancedInfo/>
           </div>
-
         </div>
       </section>
     </div>

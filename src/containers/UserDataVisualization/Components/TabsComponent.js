@@ -1,4 +1,8 @@
 import React from "react";
+import {
+  BeakerIcon
+} from '@heroicons/react/outline'
+import ClinicalFileUpload from "./MainComponents/ClinicalFileUpload"
 
 const TabsComponent = ({ color }) => {
   const [openTab, setOpenTab] = React.useState(1);
@@ -16,7 +20,7 @@ const TabsComponent = ({ color }) => {
                   "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
                   (openTab === 1
                     ? "text-white bg-" + color + "-600"
-                    : "text-" + color + "-600 bg-red")
+                    : "text-" + color + "-600 bg-white")
                 }
                 onClick={e => {
                   e.preventDefault();
@@ -26,7 +30,7 @@ const TabsComponent = ({ color }) => {
                 href="#link1"
                 role="tablist"
               >
-                <i className="fas fa-space-shuttle text-base mr-1"></i> Profile
+                <BeakerIcon className="h-4 mb-1 w-4 inline"/> Clinical Information
               </a>
             </li>
             <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -35,7 +39,7 @@ const TabsComponent = ({ color }) => {
                   "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
                   (openTab === 2
                     ? "text-white bg-" + color + "-600"
-                    : "text-" + color + "-600 bg-grey")
+                    : "text-" + color + "-600 bg-white")
                 }
                 onClick={e => {
                   e.preventDefault();
@@ -45,7 +49,7 @@ const TabsComponent = ({ color }) => {
                 href="#link2"
                 role="tablist"
               >
-                <i className="fas fa-cog text-base mr-1"></i>  Settings
+                <i className="fas fa-cog text-base mr-1"></i>  DNA
               </a>
             </li>
             <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
@@ -64,7 +68,26 @@ const TabsComponent = ({ color }) => {
                 href="#link3"
                 role="tablist"
               >
-                <i className="fas fa-briefcase text-base mr-1"></i>  Options
+                <i className="fas fa-briefcase text-base mr-1"></i>  RNA
+              </a>
+            </li>
+            <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
+              <a
+                className={
+                  "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
+                  (openTab === 4
+                    ? "text-white bg-" + color + "-600"
+                    : "text-" + color + "-600 bg-white")
+                }
+                onClick={e => {
+                  e.preventDefault();
+                  setOpenTab(4);
+                }}
+                data-toggle="tab"
+                href="#link4"
+                role="tablist"
+              >
+                <i className="fas fa-briefcase text-base mr-1"></i> Proteome
               </a>
             </li>
           </ul>
@@ -72,18 +95,7 @@ const TabsComponent = ({ color }) => {
             <div className="px-4 py-5 flex-auto">
               <div className="tab-content tab-space">
                 <div className={openTab === 1 ? "block" : "hidden"} id="link1">
-                  knsllllllllllllllllllllllllllllllllllll
-                  knsllllllllllllllllllllllllllllllllllll
-                  knsllllllllllllllllllllllllllllllllllll
-                  knsllllllllllllllllllllllllllllllllllll
-                  knsllllllllllllllllllllllllllllllllllll
-                  knsllllllllllllllllllllllllllllllllllll
-                  knsllllllllllllllllllllllllllllllllllll
-                  knsllllllllllllllllllllllllllllllllllll
-                  knsllllllllllllllllllllllllllllllllllll
-                  knsllllllllllllllllllllllllllllllllllllknsllllllllllllllllllllllllllllllllllll
-                  knsllllllllllllllllllllllllllllllllllll
-                  knsllllllllllllllllllllllllllllllllllll
+                  <ClinicalFileUpload/>
                 </div>
                 <div className={openTab === 2 ? "block" : "hidden"} id="link2">
                   <p>
@@ -94,6 +106,11 @@ const TabsComponent = ({ color }) => {
                 <div className={openTab === 3 ? "block" : "hidden"} id="link3">
                   <p>
                     3
+                  </p>
+                </div>
+                <div className={openTab === 4 ? "block" : "hidden"} id="link4">
+                  <p>
+                    4
                   </p>
                 </div>
               </div>
