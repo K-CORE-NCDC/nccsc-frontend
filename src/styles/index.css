@@ -56,6 +56,8 @@ body {
   line-height: 18px;
   font-weight:400;
   font-family:'Noto Sans CJKkr'!important;
+  background: #f5f8fe;
+  letter-spacing: 0.025em;
 }
 
 
@@ -118,20 +120,27 @@ input:checked ~ .dot {
 .dropdownHeader{
   color: #fff;
   background: #0c3c6a;
-  opacity: 0.75;
+  opacity: 1;
   height: 60px;
   margin: 0 auto;
   border-radius: 26px;
   display: table;
-  width: 100%
-
+  width: 100%;
+  z-index:9999999;
 }
 .group .group_box{
-  min-width: 150px
+  min-width: 150px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+
 }
-.group:hover .group_box{
+
+.group:hover,.group:hover .group_box{
   background: #0c2f4d;
   width: 100%;
+  display: inline-flex;
+  text-align: center;
 }
 .group:hover ul{
   display: block !important;
@@ -139,6 +148,8 @@ input:checked ~ .dot {
   width: 100%;
   height: auto;
   transition: all .5s ease-in-out;
+  top: 60px;
+  z-index: 999999;
 }
 .border-blue{
   border-color: #0c2f4d;

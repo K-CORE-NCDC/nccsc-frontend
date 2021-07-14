@@ -3,12 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   ChevronDownIcon,
   ChevronUpIcon,
-  AdjustmentsIcon
+  AdjustmentsIcon,
+  UserCircleIcon
 } from '@heroicons/react/outline'
 
 import Barchart from '../Common/Barchart'
 import { getDashboardDsummaryData } from '../../actions/api_actions'
-import clinicalColor from './data'
+import inputJson from './data'
 export default function ClinicalInformation() {
   const summaryJson = useSelector((data) => data.homeReducer.dataSummary);
   const [leftSide, setLeftSide] = useState({"charts":[],"leftSide":[],"activeCharts":[]});
@@ -24,8 +25,6 @@ export default function ClinicalInformation() {
   useEffect(()=>{
     if(summaryJson){
       leftSideHtml(summaryJson)
-
-
     }
   },[summaryJson])
 
@@ -40,7 +39,8 @@ export default function ClinicalInformation() {
 
     let ac = leftSide['activeCharts']
     let tmp = []
-    if(data){
+    if(data && selected){
+
       Object.keys(data).forEach((item, k) => {
         let t = []
         Object.keys(data[item]).forEach((itm, i) => {
@@ -48,13 +48,13 @@ export default function ClinicalInformation() {
           let color = '#ccc'
           if(ac.indexOf(itm)>-1){
             check = true
-            color = clinicalColor[item]
+            color = inputJson['clinicalColor'][item]
           }
           let id = itm.split(" ").join("")
           t.push(
-            <div className="mb-3" key={'div_mb_'+i}>
+            <div className="p-3 relative z-10" key={'div_mb_'+i}>
               <label htmlFor="toogleA" className="flex items-center cursor-pointer">
-                <div className="ml-3 text-gray-700 w-80">
+                <div className="ml-3 text-gray-700 w-9/12 text-2xl tracking-wide">
                   {itm}
                 </div>
                 <div className="relative" id={'div_'+id}  onClick={e=>checkBoxFn(e,'md_'+i,itm)}>
@@ -67,21 +67,22 @@ export default function ClinicalInformation() {
           )
         })
         tmp.push(
-          <li key={'li_'+k} className={selected===item?"relative bg-kramp-100 bg-tab border-b border-gray-200 rounded":"relative border-b border-gray-200 "}>
-            <button type="button" className={selected===item?"w-full p-3 text-left border-b border-gray-200 focus:outline-none":"w-full p-3 text-left focus:outline-none"}  onClick={(e)=>switchButton(e,item)}>
-              <div className="flex items-center justify-between">
-                <span>{item}</span>
-                {selected===item ? <ChevronDownIcon className="h-6 w-6" aria-hidden="true"/>:<ChevronUpIcon className="h-6 w-6" aria-hidden="true"/>}
-              </div>
-            </button>
-            {selected===item ?
-              <div className="relative overflow-hidden grid grid-cols-1 py-5">
+          <div key={item+'_'+k} class="tab w-full overflow-hidden border-t" onClick={(e)=>switchButton(e,item,k)}>
+            <input class="absolute opacity-0" id={"tab-single-"+k} type="radio" name="tabs2"/>
+            <label class="block p-5 leading-normal cursor-pointer" htmlFor={"tab-single-"+k}>
+              <UserCircleIcon className="h-8 w-8 inline text-main-blue"/>
+              <span class="no-underline  ml-2 text-2xl tracking-wide">{item}</span>
+            </label>
+
+              {selected===item ? <div class="tab-content overflow-hidden border-l-2 bg-gray-100  leading-normal relative">
                 {t}
-              </div>
-            :''}
-          </li>
+              </div>:""}
+
+          </div>
+
         )
       })
+      // console.log(selected);
       setLeftSide((prevState)=>({
         ...prevState,
         'leftSide':tmp
@@ -91,6 +92,7 @@ export default function ClinicalInformation() {
 
 
   const checkBoxFn = (event,id,chart)=>{
+
     let tmp = activeChartsList
     var did = document.getElementById(id)
 
@@ -104,7 +106,7 @@ export default function ClinicalInformation() {
       }
     }else{
       document.getElementById(id).checked=true
-      document.getElementById(id+"_toggle").style.background=clinicalColor[did.getAttribute('data-parent')]
+      document.getElementById(id+"_toggle").style.background=inputJson['clinicalColor'][did.getAttribute('data-parent')]
       if(!tmp.includes(chart)){
         tmp.push(chart)
       }
@@ -132,8 +134,18 @@ export default function ClinicalInformation() {
         if(item===chart){
           tmp.push(
             <div key={'chart_'+item} className='max-w bg-white rounded overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border'>
-              <h2 className="text-xl">{item}</h2>
-              <Barchart  id={'chart_'+id}  data={summaryJson[parent_name][item]} width='300' color={clinicalColor[parent_name]}/>
+              <h2 className="text-3xl tracking-wide">{item}</h2>
+              <div class="mt-2 ml-5 p-3">
+                <label class="inline-flex items-center">
+                  <input type="radio" class="form-radio" name={"cr_"+k} value="Bar"/>
+                  <span class="ml-2">Bar</span>
+                </label>
+                <label class="inline-flex items-center ml-6">
+                  <input type="radio" class="form-radio" name={"cr_"+k} value="Pie"/>
+                  <span class="ml-2">Pie</span>
+                </label>
+              </div>
+              <Barchart  id={'chart_'+id}  data={summaryJson[parent_name][item]} width='300' color={inputJson['clinicalColor'][parent_name]}/>
             </div>
           )
           ac.push(item)
@@ -148,29 +160,42 @@ export default function ClinicalInformation() {
     // setActiveCharts(ac)
   }
 
-  const switchButton = (event,id)=>{
-    // console.log(event,id);
+  const switchButton = (event,id,k)=>{
     let s = selected
-    if (s===id){
-      setSelected('')
-    }else{
-      setSelected(id)
+    setSelected(id)
+
+    var myRadios = document.getElementsByName('tabs2');
+    var setCheck;
+    var x = 0;
+
+    for(x = 0; x < myRadios.length; x++){
+      var child_id = myRadios[x].id
+      myRadios[x].onclick = function(e){
+        if(setCheck != this){
+          setCheck = this;
+        }else{
+          this.checked = false;
+          setCheck = null;
+        }
+      }
     }
+
+
   }
 
 
   return (
-   <div className="grid grid-cols-4 gap-3">
-      <div className="bg-white max-w-xl  border border-gray-200">
+   <div className="grid grid-cols-4 gap-6">
+      <div className="bg-white border border-gray-200">
         <div>
         </div>
         <h4 className="p-3"><AdjustmentsIcon className="h-6 w-6 inline"/> &nbsp;Filters</h4>
-        <ul className="shadow-box w-100 p-3" id='accordian_tabs' >
+        <div className="shadow-box shadow-md w-full p-3" id='accordian_tabs' >
           {leftSide['leftSide']}
-        </ul>
+        </div>
       </div>
-      <div className="col-start-2 col-span-3 m-5">
-        <div className="grid grid-cols-4 sm:grid-cols-3 gap-3">
+      <div className="col-start-2 col-span-4 m-5">
+        <div className="grid grid-cols-3 gap-3">
           {leftSide['charts']}
         </div>
 

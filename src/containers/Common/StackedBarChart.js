@@ -11,6 +11,15 @@ export default function StackBarChartComp({data,axis}){
         axis_ = {
             // indexAxis: 'x',
             // legends:false,
+            plugins:{
+              legend: {
+                display: false
+              }
+
+            },
+            layout:{
+              padding:20
+            },
             scales:{
               xAxes: [{
                   stacked: true
@@ -22,6 +31,15 @@ export default function StackBarChartComp({data,axis}){
         }
       }else{
         axis_ = {
+            plugins:{
+              legend: {
+                display: false
+              }
+
+            },
+            layout:{
+              padding:20
+            },
             indexAxis: 'y',
             // legends:false,
             scales: {

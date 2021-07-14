@@ -42,28 +42,28 @@ export default function DataSummary() {
 
 
   return (
-    <div className="header py-5">
-      <section className="pt-5 relative pt-11 items-center  bg-cover bg-center bg-website-bg  justify-center">
-        <nav className="bg-white px-8 pt-2 shadow-md">
+    <div className="header">
+      <section className="relative  items-center  bg-cover bg-center bg-website-bg  justify-center">
+        <nav className=" px-8 pt-2 shadow-md">
           <ul id="tabs" className="inline-flex justify-center w-full px-1 pt-2 " onClick={toggleTab}>
-            <li className="px-4 py-2  font-semibold rounded-t opacity-100 opacity-50 border-b-4 -mb-px border-blue-400">
+            <li className="px-4 py-2 font-semibold rounded-t opacity-50 ">
               <a id="default-tab" href="#first" >Clinical Information</a>
             </li>
-            <li className="px-4 py-2 font-semibold  rounded-t opacity-50   "><a href="#second">Genomic Information</a></li>
-            <li className="px-4 py-2 font-semibold  rounded-t opacity-50"><a href="#third">Advanced Information</a></li>
+            <li className="px-4 py-2 font-semibold  rounded-t opacity-50 "><a href="#second">Genomic Information</a></li>
+            <li className="px-4 py-2 font-semibold  rounded-t opacity-50 opacity-100 border-b-4  border-blue-400"><a href="#third">Advanced Information</a></li>
           </ul>
         </nav>
 
       </section>
-      <section className="bg-website ">
+      <section >
         <div id="tab-contents">
-          <div id="first" className=" p-4">
+          <div id="first" className="hidden">
             <ClinicalInformation/>
           </div>
-          <div id="second" className="hidden p-4">
+          <div id="second" className="hidden p-10">
             <GenomicInfo/>
           </div>
-          <div id="third" className="hidden p-4">
+          <div id="third" className="">
             <AdvancedInfo/>
           </div>
         </div>

@@ -11,13 +11,25 @@ export default function Barchart({id,data,width,color}) {
         type: 'bar',
         data: g_data,
         options: {
-          legend: {
-            display: false
+          plugins:{
+            legend: {
+              display: false
+            }
+
+          },
+          layout:{
+            padding:20
           },
           scales: {
-              y: {
-                  beginAtZero: true
-              }
+            x: {
+             grid: {
+               display: true,
+               drawBorder: true,
+               drawOnChartArea: true,
+               drawTicks: true,
+             }
+            },
+
           }
         }
     });
@@ -35,9 +47,11 @@ export default function Barchart({id,data,width,color}) {
       drawGraph(g_dat)
     }
   },[data])
+  let w = width-20
+  console.log(w);
   return (
-    <div>
-      <canvas id={id}  width={width} height="300"></canvas>
+    <div >
+      <canvas id={id}  width={w} height="300"></canvas>
     </div>
   )
 }

@@ -95,20 +95,20 @@ const childMenu = {
           },
           {
             id: 'DataUserVisualization',
-            title: 'Data User Visualization',
+            title: 'Data Visualization',
             type: 'item',
             icon: 'fa fa-dashboard',
-            url:'/summary',
+            url:'/visualise',
             children:[]
           }
         ],
       },
       {
         id: 'MyDataVisualization',
-        title: 'My Data Visualization',
+        title: 'User Data Visualization',
         type: 'group',
         icon: 'fa fa-dashboard',
-        url:'/summary',
+        url:'/userdata',
         children: [
 
         ],

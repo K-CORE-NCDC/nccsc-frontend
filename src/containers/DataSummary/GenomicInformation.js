@@ -72,10 +72,10 @@ export default function GenomicInfo() {
   },[summaryJson])
 
   return (
-    <div className="header">
-      <div className="grid grid-cols-3 gap-1">
-        {state['charts']}
-      </div>
+
+    <div className="grid grid-cols-3 gap-6">
+      {state['charts']}
     </div>
+
   )
 }

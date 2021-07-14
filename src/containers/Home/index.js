@@ -129,7 +129,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="p-1 lg:pt-0 pt-20">
+      <div className="p-1 bg-white lg:pt-0  pt-20">
         <div className='p-10 border-t border-b'>
           <Slider {...settings}>
             <div>

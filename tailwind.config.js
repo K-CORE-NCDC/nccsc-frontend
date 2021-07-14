@@ -9,6 +9,10 @@ module.exports = {
         },
 
       },
+      borderColor: (theme) => ({
+        ...theme('colors'),
+        'b-color':"#ced4da"
+      }),
       textColor:{
         'main-blue':'#0c2f4d'
       },

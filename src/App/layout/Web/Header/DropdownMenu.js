@@ -14,22 +14,22 @@ export default function DropdownMenu() {
       let htmlbutton = []
       htmlbutton.push(
 
-          <button key={'button_'+items[i]}
+          <a key={'button_'+items[i]} href={items[i].url}
             className="text-3xl group_box h-full font-bold  items-center w-full"
           >
           <span className="px-5">{items[i].title}</span>
 
-          </button>
+          </a>
 
       )
       let children = items[i].children
       let tmp = []
       for (var j = 0; j < children.length; j++) {
         tmp.push(
-          <li key={"li_"+i+"_"+items[i].title+"_"+j} className='px-3 py-5'>
+          <li key={"li_"+i+"_"+items[j].title+"_"+j} className='px-3 py-5'>
             <a
               className="text-3xl py-2 px-4 block whitespace-no-wrap"
-              href="#"
+              href={children[j].url}
               >{children[j].title}</a
             >
           </li>
@@ -37,19 +37,18 @@ export default function DropdownMenu() {
       }
       if(tmp.length>0){
         html.push(
-          <div className="group h-full table-cell relative " key={items[i].id}>
+          <li className="group h-full table-cell relative " key={items[i].id}>
             {htmlbutton}
-            <ul className="absolute hidden pt-1 list-none" key={'ul'+items[i].id}>
+            <ul className="absolute hidden list-none" key={'ul'+items[i].id}>
               {tmp}
             </ul>
-          </div>
+          </li>
         )
       }else{
         html.push(
-          <div className="group h-full table-cell relative " key={items[i].id}>
+          <li className="group h-full table-cell relative px-3 py-5" key={items[i].id}>
             {htmlbutton}
-
-          </div>
+          </li>
         )
       }
 
@@ -61,8 +60,8 @@ export default function DropdownMenu() {
   },[])
 
   return(
-    <div className="dropdownHeader">
+    <ul className="dropdownHeader">
       {state['menu']}
-    </div>
+    </ul>
   )
 }
