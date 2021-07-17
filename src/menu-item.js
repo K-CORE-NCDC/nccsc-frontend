@@ -50,14 +50,14 @@ const childMenu = {
         title: 'Introduce',
         type: 'group',
         icon: 'fa fa-dashboard',
-        url:'/summary',
+        url:'/',
         children: [
           {
             id: 'introduce',
             title: 'Business',
             type: 'item',
             icon: 'fa fa-dashboard',
-            url:'/summary',
+            url:'/',
             children:[]
           },
           {
@@ -65,7 +65,7 @@ const childMenu = {
             title: 'Introduction',
             type: 'item',
             icon: 'fa fa-dashboard',
-            url:'/summary',
+            url:'/',
             children:[]
           },
           {
@@ -73,35 +73,28 @@ const childMenu = {
             title: 'Pipeline',
             type: 'item',
             icon: 'fa fa-dashboard',
-            url:'/summary',
+            url:'/',
             children:[]
           },
         ],
       },
       {
-        id: 'Visualization',
-        title: 'Visualization',
+        id: 'DataSummary',
+        title: 'Data Summary',
         type: 'group',
         icon: 'fa fa-dashboard',
         url:'/summary',
-        children: [
-          {
-            id: 'DataSummary',
-            title: 'Data Summary',
-            type: 'item',
-            icon: 'fa fa-dashboard',
-            url:'/summary',
-            children:[]
-          },
-          {
-            id: 'DataUserVisualization',
-            title: 'Data Visualization',
-            type: 'item',
-            icon: 'fa fa-dashboard',
-            url:'/visualise',
-            children:[]
-          }
-        ],
+        children: []
+
+      },
+
+      {
+        id: 'DataUserVisualization',
+        title: 'Data Visualization',
+        type: 'group',
+        icon: 'fa fa-dashboard',
+        url:'/visualise',
+        children: [],
       },
       {
         id: 'MyDataVisualization',
@@ -112,14 +105,6 @@ const childMenu = {
         children: [
 
         ],
-      },
-      {
-        id: 'DataRequest',
-        title: 'Data Request',
-        type: 'group',
-        icon: 'fa fa-dashboard',
-        url:'/summary',
-        children: [],
       },
       {
         id: 'api',
