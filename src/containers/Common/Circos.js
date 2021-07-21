@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react'
-import * as d3 from 'd3'
-import * as Circos from 'circos'
+import * as d3 from 'd3';
+import * as Circos from 'circos';
 import {queue} from 'd3-queue';
 
 export default function CircosCmp({ width }) {
@@ -35,12 +35,11 @@ export default function CircosCmp({ width }) {
       outerRadius: width / 2 - 50,
       labels: {
         radialOffset: 70
-        
+
       },
       ticks: {
         display: false,
       },
-
     }
     circosHighlight.layout(GRCh37,conf).highlight('cytobands', data, {
       innerRadius: width / 2 - 100,
