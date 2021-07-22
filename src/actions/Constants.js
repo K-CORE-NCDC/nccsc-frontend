@@ -6,5 +6,5 @@ export const homeConstants = {
 
 export const dataVisualization = {
   CIRCOS_REQUEST: 'CIRCOS_DATA_REQUEST',
-  
+  ONCO_REQUEST:'ONCO_REQUEST'
 }

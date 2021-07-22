@@ -52,8 +52,6 @@ export function getDashboardDsummaryData() {
         sendRequest(url, "GET", "")
           .then((result) => {
             const d = result;
-            console.log(d);
-            // console.log()
             dispatch({
               type: dataVisualization.CIRCOS_REQUEST,
               payload: d["data"],
@@ -64,3 +62,20 @@ export function getDashboardDsummaryData() {
           });
       };
     }
+
+  export function getOncoInformation(){
+    return (dispatch) => {
+      let url = config.auth+"oncoprint/";
+      sendRequest(url, "GET", "")
+        .then((result) => {
+          const d = result;
+          dispatch({
+            type: dataVisualization.ONCO_REQUEST,
+            payload: d["data"],
+          });
+        })
+        .catch((e) => {
+          console.log("error", e);
+        });
+    };
+  }

@@ -19,13 +19,14 @@ import OncoCmp from '../Common/Onco'
 import LollipopCmp from '../Common/Lollipop'
 import HeatmapCmp from '../Common/Heatmap'
 import VolcanoCmp from '../Common/Volcano'
-import { getCircosInformation } from '../../actions/api_actions'
+import { getCircosInformation,getOncoInformation } from '../../actions/api_actions'
 
 export default function DataVisualization() {
   const elementRef = useRef(null);
   const [width,setWidth] = useState(0)
   const dispatch = useDispatch()
   const circosJson = useSelector((data) => data.dataVisualizationReducer.circosSummary);
+  const oncoJson = useSelector((data) => data.dataVisualizationReducer.oncoSummary);
 
   const callback = useCallback((count) => {
     // console.log(count);
@@ -63,6 +64,7 @@ export default function DataVisualization() {
   useEffect(()=>{
     setWidth(elementRef.current.getBoundingClientRect().width);
     dispatch(getCircosInformation())
+    dispatch(getOncoInformation())
   },[])
 
   // useEffect(()=>{
@@ -134,7 +136,7 @@ export default function DataVisualization() {
                       {circosJson && <CircosCmp width={width} data={circosJson}/> }
                     </div>
                     <div id="second" className="hidden">
-                      <OncoCmp/>
+                      {oncoJson && <OncoCmp width={width} data = {oncoJson} />}
                     </div>
                     <div id="third" className="hidden">
                       <LollipopCmp/>
