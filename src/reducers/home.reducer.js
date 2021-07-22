@@ -14,6 +14,11 @@ const homeReducer = (state = {'home':'home'}, {type,payload}) => {
         ...state,
         genomicData: payload
       }
+    case homeConstants.USERDATA_VISUALIZATION:
+      return {
+        ...state,
+        fileUploadData: payload
+      }
     default:
       return state
   }

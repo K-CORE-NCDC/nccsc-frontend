@@ -33,14 +33,10 @@ export default function ClinicalInformation() {
 
   },[selected])
 
-
-
   const leftSideHtml = (data)=>{
-
     let ac = leftSide['activeCharts']
     let tmp = []
     if(data && selected){
-
       Object.keys(data).forEach((item, k) => {
         let t = []
         Object.keys(data[item]).forEach((itm, i) => {
