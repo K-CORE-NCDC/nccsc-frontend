@@ -202,7 +202,7 @@ export default function DataVisualization() {
             </div>
             <div className='p-5 flex'>
               <PlusCircleIcon className='w-10' id="plus_1" data-id="1" onClick={e=>addHtml(e,1)}/>
-              {loader['child_1']?<Loader/>:""}
+
             </div>
           </div>
           {state}
@@ -226,6 +226,7 @@ export default function DataVisualization() {
     </div>
   )
 }
-{response?<Table data_={fileData}/>:""}
+// {response?<Table data_={fileData}/>:""}
 
 // {loader['child_'+id]?<Loader/>:""}
+// {loader['child_1']?<Loader/>:""}
