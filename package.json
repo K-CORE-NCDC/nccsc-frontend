@@ -25,11 +25,12 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "slick-carousel": "^1.8.1",
+    "tailwind-toast": "^1.1.0",
     "venn.js": "^0.2.20",
     "web-vitals": "^1.1.1"
   },
   "scripts": {
-    "start": "HOST=0.0.0.0 PORT=3000 craco start",
+    "start": "HOST=0.0.0.0 PORT=8009 craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject"

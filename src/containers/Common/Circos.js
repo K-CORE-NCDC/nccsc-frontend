@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react'
-import * as d3 from 'd3'
-import * as Circos from 'circos'
+import * as d3 from 'd3';
+import * as Circos from 'circos';
 import {queue} from 'd3-queue';
 
 export default function CircosCmp({ width, data }) {

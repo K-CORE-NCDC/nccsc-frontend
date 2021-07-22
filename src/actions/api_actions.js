@@ -26,8 +26,8 @@ export function getDashboardDsummaryData() {
     };
   }
 
-  export function getGenomicInformation() {
-      return (dispatch) => {
+export function getGenomicInformation() {
+    return (dispatch) => {
       //   dispatch({ type: homeConstants.DATA_SUMMARY });
         let url = config.auth+"genomic-information/";
         sendRequest(url, "GET", "")
@@ -44,6 +44,27 @@ export function getDashboardDsummaryData() {
           });
       };
     }
+
+export function file_upload(data) {
+    return (dispatch) => {
+      const form = new FormData()
+      // dispatch({ type: homeConstants.DATA_SUMMARY });
+      form.set('file', data.file);
+      form.set('type', data.type);
+      let url = config.auth+"user-data-visualization/";
+      sendRequest(url, "POST", form)
+        .then((result) => {
+          const d = result;
+          dispatch({
+            type: homeConstants.USERDATA_VISUALIZATION,
+            payload: d["data"],
+          });
+        })
+        .catch((e) => {
+          console.log("error", e);
+        });
+    }
+  }
 
   export function getCircosInformation() {
       return (dispatch) => {
@@ -62,5 +83,6 @@ export function getDashboardDsummaryData() {
           .catch((e) => {
             console.log("error", e);
           });
+
       };
     }
