@@ -10,37 +10,41 @@ import {
 import { file_upload } from '../../actions/api_actions'
 import { useSelector, useDispatch } from "react-redux";
 import Loader from './Widgets/loader';
+import Table from './Widgets/Table'
 
 // import '../../index.css'
 export default function DataVisualization() {
   const response = useSelector((data) => data.homeReducer.fileUploadData);
   const dispatch = useDispatch()
   const [state,setState] = useState([])
-  const [select,setSelect] = useState({child_1:"clinical"})
+  const [select,setSelect] = useState({})
   const [error, setError] = useState(false)
   const [error_message, setErrorMessage] = useState({type:"", message:""})
-  const [ loader, setLoader] = useState({})
+  const [ loader, setLoader] = useState({child_1:false,child_2:false,child_3:false,child_4:false})
   // const [uploadFile, setUploadFile] = useState({clinical:""})
   const [fileData, setFileData] = useState({clinical:"", rna:"",dna:"", porteme:""})
   const [uploadFile, setUploadFile] = useState({})
   const fileInputRef = useRef()
 
+
   useEffect(()=>{
     if(response){
-      Object.keys(response).forEach(function(key, value) {
-        setFileData(prevState => ({
-              ...prevState,
-              [key]:response[key]
-        }));
-        let loader_state = select
-        const key_loader = Object.keys(loader_state).find(key_ => loader_state[key_] === key);
-        setLoader(prevState => ({
-              ...prevState,
-              [key_loader]:false
-        }));
-      })
+      // Object.keys(response).forEach(function(key, value) {
+      //   setFileData(prevState => ({
+      //         ...prevState,
+      //         [key]:response[key]
+      //   }));
+      //   let loader_state = select
+      //   const key_loader = Object.keys(loader_state).find(key_ => loader_state[key_] === key);
+      //   setLoader(prevState => ({
+      //         ...prevState,
+      //         [key_loader]:false
+      //   }));
+      // })
+      console.log(response)
     }
   },[response])
+
 
   const selectGene = (event) => {
     const {name,value} = event.target;
@@ -48,6 +52,7 @@ export default function DataVisualization() {
           ...prevState,
           [name]: value
     }));
+    localStorage.setItem(name,value)
   }
 
   const handle_error = (type_, message) =>{
@@ -66,24 +71,22 @@ export default function DataVisualization() {
   }
 
   const file_Upload = (e, div_name) =>{
-        // console.log(select)
-        let type_name = e.target.name == undefined?select[div_name]:e.target.name;
-        if(e.target.name){
-          let file_name = e.target.files[0]['name']
-          let extension = file_name.split('.')
-          let validation_error = file_types[e.target.name].includes(extension[1])?false:true
-          if(validation_error){
-            setError(true)
-            handle_error(e.target.name, "please upload file in ."+file_types[e.target.name].join(" .")+"  format")
-          }
-          else{
-            setUploadFile(prevState => ({
-                  ...prevState,
-                  [div_name]: {type:e.target.name,file:e.target.files[0]}
-            }));
-          }
+      let type_name = localStorage.getItem(div_name);
+      if(type_name){
+        let file_name = e.target.files[0]['name']
+        let extension = file_name.split('.')
+        let validation_error = file_types[type_name].includes(extension[1])?false:true
+        if(validation_error){
+          setError(true)
+          handle_error(e.target.name, "please upload file in ."+file_types[type_name].join(" .")+"  format")
         }
-        // [e.target.name]: e.target.files[0]
+        else{
+          setUploadFile(prevState => ({
+                ...prevState,
+                [div_name]: {type:type_name,file:e.target.files[0]}
+          }));
+        }
+      }
   }
 
   let s = ""
@@ -97,12 +100,11 @@ export default function DataVisualization() {
           ...prevState,
           ['child_'+id]: "clinical"
       }));
-
+      localStorage.setItem('child_'+id,"clinical")
       // setUploadFile(prevState => ({
       //     ...prevState,
       //     ['child_'+id]: {type:"clinical",file:""}
       // }));
-
 
 
       t.push(
@@ -123,8 +125,7 @@ export default function DataVisualization() {
               <span className="inline-block px-8 py-2 text-md  leading-none text-white-100 bg-gray-300 rounded">Select</span>
               <input type='file'
               className="hidden"
-              name={select['child_'+id]?"clinical":select['child_'+id]}
-              ref={fileInputRef}
+              // ref={fileInputRef}
               onChange={(e)=>file_Upload(e, 'child_'+id)}
               />
             </label>
@@ -132,6 +133,7 @@ export default function DataVisualization() {
           <div className='p-5 flex'>
             <PlusCircleIcon className='w-10' id={"plus_"+id} onClick={e=>addHtml(e,id)}/>
             <MinusCircleIcon className='w-10' id={"minus_"+id} onClick={e=>removeHtml(e,id)}/>
+
           </div>
         </div>
       )
@@ -153,7 +155,6 @@ export default function DataVisualization() {
 
   const on_upload = (e) =>{
     let files_ = uploadFile;
-    // console.log(files_)
     Object.keys(files_).forEach(function(key, value) {
       let for_loader = files_[key]['type'];
       setLoader(prevState => ({
@@ -163,8 +164,6 @@ export default function DataVisualization() {
       dispatch(file_upload(files_[key]))
     })
   }
-
-  console.log(loader)
 
 
   return (
@@ -219,6 +218,14 @@ export default function DataVisualization() {
           </div>
         </div>
       </div>
+      <div className="grid grid-cols-6 mt-10">
+        <div className="col-start-2 col-span-4 space-y-3 px-6 py-10">
+
+        </div>
+      </div>
     </div>
   )
 }
+{response?<Table data_={fileData}/>:""}
+
+// {loader['child_'+id]?<Loader/>:""}
