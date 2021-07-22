@@ -19,13 +19,17 @@ import OncoCmp from '../Common/Onco'
 import LollipopCmp from '../Common/Lollipop'
 import HeatmapCmp from '../Common/Heatmap'
 import VolcanoCmp from '../Common/Volcano'
-
+import { getCircosInformation } from '../../actions/api_actions'
 
 export default function DataVisualization() {
+  const elementRef = useRef(null);
+  const [width,setWidth] = useState(0)
+  const dispatch = useDispatch()
+  const circosJson = useSelector((data) => data.dataVisualizationReducer.circosSummary);
 
   const callback = useCallback((count) => {
-    console.log(count);
-   // setCount(count);
+    // console.log(count);
+    // setCount(count);
   }, []);
   const selectGene = (event) => {
 
@@ -55,6 +59,15 @@ export default function DataVisualization() {
       })
     })
   }
+
+  useEffect(()=>{
+    setWidth(elementRef.current.getBoundingClientRect().width);
+    dispatch(getCircosInformation())
+  },[])
+
+  // useEffect(()=>{
+  //
+  // },[circosJson])
 
   return (
     <div className="header">
@@ -104,21 +117,21 @@ export default function DataVisualization() {
                 <section>
                   <nav className=" px-8 pt-2 shadow-md">
                     <ul id="tabs" className="inline-flex justify-center w-full px-1 pt-2 " onClick={toggleTab}>
-                      <li className="px-4 py-2 font-semibold rounded-t opacity-50 ">
+                      <li className="px-4 py-2 font-semibold rounded-t opacity-50  opacity-100 border-b-4  border-blue-400">
                         <a id="default-tab" href="#first" >Circos Plot</a>
                       </li>
-                      <li className="px-4 py-2 font-semibold  rounded-t opacity-50 "><a href="#second">OncoPrint</a></li>
+                      <li className="px-4 py-2 font-semibold  rounded-t opacity-50"><a href="#second">OncoPrint</a></li>
                       <li className="px-4 py-2 font-semibold  rounded-t opacity-50 "><a href="#third">Lollipop Plot</a></li>
                       <li className="px-4 py-2 font-semibold  rounded-t opacity-50 "><a href="#fourth">Volcano Plot</a></li>
-                      <li className="px-4 py-2 font-semibold  rounded-t opacity-50 opacity-100 border-b-4  border-blue-400 "><a href="#five">Heatmap</a></li>
+                      <li className="px-4 py-2 font-semibold  rounded-t opacity-50 "><a href="#five">Heatmap</a></li>
                       <li className="px-4 py-2 font-semibold  rounded-t opacity-50 "><a href="#six">Survival Plot</a></li>
                     </ul>
                   </nav>
                 </section>
                 <section >
-                  <div id="tab-contents">
-                    <div id="first" className="hidden">
-                      <CircosCmp/>
+                  <div id="tab-contents" className='block text-center' ref={elementRef}>
+                    <div id="first" className="inline-block">
+                      {circosJson && <CircosCmp width={width} data={circosJson}/> }
                     </div>
                     <div id="second" className="hidden">
                       <OncoCmp/>
@@ -129,7 +142,7 @@ export default function DataVisualization() {
                     <div id="fourth" className="hidden">
                       <VolcanoCmp/>
                     </div>
-                    <div id="five" className="">
+                    <div id="five" className="hidden">
                       <HeatmapCmp/>
                     </div>
                     <div id="six" className="hidden">
