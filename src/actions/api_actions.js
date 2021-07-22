@@ -1,4 +1,4 @@
-import { homeConstants } from "./Constants";
+import { homeConstants,dataVisualization } from "./Constants";
 import config from '../config'
 import axios from "axios";
 
@@ -45,7 +45,6 @@ export function getGenomicInformation() {
       };
     }
 
-
 export function file_upload(data) {
     return (dispatch) => {
       const form = new FormData()
@@ -64,5 +63,26 @@ export function file_upload(data) {
         .catch((e) => {
           console.log("error", e);
         });
+    }
+  }
+
+  export function getCircosInformation() {
+      return (dispatch) => {
+      //   dispatch({ type: homeConstants.DATA_SUMMARY });
+        let url = config.auth+"circos/";
+        sendRequest(url, "GET", "")
+          .then((result) => {
+            const d = result;
+            console.log(d);
+            // console.log()
+            dispatch({
+              type: dataVisualization.CIRCOS_REQUEST,
+              payload: d["data"],
+            });
+          })
+          .catch((e) => {
+            console.log("error", e);
+          });
+
       };
     }

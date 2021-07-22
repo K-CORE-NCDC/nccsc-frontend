@@ -4,3 +4,8 @@ export const homeConstants = {
   GENOMIC_INFORMATION:"GENOMIC_INFORMATION",
   USERDATA_VISUALIZATION:"USERDATA_VISUALIZATION"
 }
+
+export const dataVisualization = {
+  CIRCOS_REQUEST: 'CIRCOS_DATA_REQUEST',
+  
+}
