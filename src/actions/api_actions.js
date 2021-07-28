@@ -26,8 +26,8 @@ export function getDashboardDsummaryData() {
     };
   }
 
-export function getGenomicInformation() {
-    return (dispatch) => {
+  export function getGenomicInformation() {
+      return (dispatch) => {
       //   dispatch({ type: homeConstants.DATA_SUMMARY });
         let url = config.auth+"genomic-information/";
         sendRequest(url, "GET", "")
@@ -44,6 +44,44 @@ export function getGenomicInformation() {
           });
       };
     }
+
+  export function getCircosInformation() {
+      return (dispatch) => {
+      //   dispatch({ type: homeConstants.DATA_SUMMARY });
+        let url = config.auth+"circos/";
+        sendRequest(url, "GET", "")
+          .then((result) => {
+            const d = result;
+            dispatch({
+              type: dataVisualization.CIRCOS_REQUEST,
+              payload: d["data"],
+            });
+            dispatch({ type: dataVisualization.REQUEST_DONE });
+          })
+          .catch((e) => {
+            console.log("error", e);
+          });
+      };
+    }
+
+  export function getOncoInformation(){
+    return (dispatch) => {
+      let url = config.auth+"oncoprint/";
+      sendRequest(url, "GET", "")
+        .then((result) => {
+          const d = result
+          dispatch({
+            type: dataVisualization.ONCO_REQUEST,
+            payload: d["data"],
+          });
+          dispatch({ type: dataVisualization.REQUEST_DONE });
+        })
+        .catch((e) => {
+          console.log("error", e);
+        });
+    };
+  }
+
 
 export function file_upload(data) {
     return (dispatch) => {
@@ -64,40 +102,4 @@ export function file_upload(data) {
           console.log("error", e);
         });
     }
-  }
-
-  export function getCircosInformation() {
-      return (dispatch) => {
-      //   dispatch({ type: homeConstants.DATA_SUMMARY });
-        let url = config.auth+"circos/";
-        sendRequest(url, "GET", "")
-          .then((result) => {
-            const d = result;
-            dispatch({
-              type: dataVisualization.CIRCOS_REQUEST,
-              payload: d["data"],
-            });
-          })
-          .catch((e) => {
-            console.log("error", e);
-          });
-
-      };
-    }
-
-  export function getOncoInformation(){
-    return (dispatch) => {
-      let url = config.auth+"oncoprint/";
-      sendRequest(url, "GET", "")
-        .then((result) => {
-          const d = result;
-          dispatch({
-            type: dataVisualization.ONCO_REQUEST,
-            payload: d["data"],
-          });
-        })
-        .catch((e) => {
-          console.log("error", e);
-        });
-    };
   }

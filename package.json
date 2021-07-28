@@ -6,6 +6,7 @@
     "@craco/craco": "^6.1.2",
     "@headlessui/react": "^1.2.0",
     "@heroicons/react": "^1.0.1",
+    "@oncojs/react-survivalplot": "^0.6.0",
     "@testing-library/jest-dom": "^5.13.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -17,6 +18,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-loadable": "^5.5.0",
+    "react-mutation-plot": "^1.3.1",
     "react-oncoprint": "^1.2.3",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
@@ -30,10 +32,11 @@
     "web-vitals": "^1.1.1"
   },
   "scripts": {
-    "start": "HOST=0.0.0.0 PORT=8009 craco start",
+    "start": "HOST=0.0.0.0 PORT=3000 craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:package": "babel src/packages/@oncojs/survivalplot/index.js --out-file src/packages/@oncojs/survivalplot/index.dist.js"
   },
   "eslintConfig": {
     "extends": [
@@ -54,8 +57,10 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.14.5",
     "autoprefixer": "^9.8.6",
     "postcss": "^7.0.35",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.4"
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.4",
+    "@types/d3": "^5.7.2"
   }
 }

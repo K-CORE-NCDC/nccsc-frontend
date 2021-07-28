@@ -12,6 +12,10 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state,
         oncoSummary: payload
       }
+    case dataVisualization.REQUEST_DONE:
+      return{
+        ...state
+      }
     default:
       return state
   }
