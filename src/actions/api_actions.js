@@ -29,6 +29,7 @@ export function getDashboardDsummaryData() {
   export function getGenomicInformation() {
       return (dispatch) => {
       //   dispatch({ type: homeConstants.DATA_SUMMARY });
+
         let url = config.auth+"genomic-information/";
         sendRequest(url, "GET", "")
           .then((result) => {
@@ -38,25 +39,6 @@ export function getDashboardDsummaryData() {
               type: homeConstants.GENOMIC_INFORMATION,
               payload: d["data"],
             });
-          })
-          .catch((e) => {
-            console.log("error", e);
-          });
-      };
-    }
-
-  export function getCircosInformation() {
-      return (dispatch) => {
-      //   dispatch({ type: homeConstants.DATA_SUMMARY });
-        let url = config.auth+"circos/";
-        sendRequest(url, "GET", "")
-          .then((result) => {
-            const d = result;
-            dispatch({
-              type: dataVisualization.CIRCOS_REQUEST,
-              payload: d["data"],
-            });
-            dispatch({ type: dataVisualization.REQUEST_DONE });
           })
           .catch((e) => {
             console.log("error", e);
@@ -103,3 +85,43 @@ export function file_upload(data) {
         });
     }
   }
+
+
+  export function getCircosInformation() {
+        return (dispatch) => {
+        //   dispatch({ type: homeConstants.DATA_SUMMARY });
+          let url = config.auth+"circos/";
+          sendRequest(url, "GET", "")
+            .then((result) => {
+              const d = result;
+              console.log(d);
+              // console.log()
+              dispatch({
+                type: dataVisualization.CIRCOS_REQUEST,
+                payload: d["data"],
+              });
+            })
+            .catch((e) => {
+              console.log("error", e);
+            });
+        };
+      }
+
+
+  export function getHeadersFiles() {
+      return (dispatch) => {
+          let url = config.auth+"user-data-visualization/";
+          sendRequest(url, "GET", "")
+            .then((result) => {
+              const d = result;
+              // console.log()
+              dispatch({
+                type: homeConstants.USERDATA_VISUALIZATION,
+                payload: d["data"],
+              });
+            })
+            .catch((e) => {
+              console.log("error", e);
+            });
+        };
+      }

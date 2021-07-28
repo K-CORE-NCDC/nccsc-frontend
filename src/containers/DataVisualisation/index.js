@@ -55,7 +55,6 @@ export default function DataVisualization() {
             continue;
           }
           tabContents.children[i].classList.add("hidden");
-
         }
         e.target.parentElement.classList.add("border-blue-400", "border-b-4", "-mb-px", "opacity-100");
       })
