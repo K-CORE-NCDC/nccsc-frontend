@@ -7,7 +7,15 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state,
         circosSummary: payload
       }
-
+    case dataVisualization.ONCO_REQUEST:
+      return {
+        ...state,
+        oncoSummary: payload
+      }
+    case dataVisualization.REQUEST_DONE:
+      return{
+        ...state
+      }
     default:
       return state
   }
