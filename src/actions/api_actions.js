@@ -28,7 +28,7 @@ export function getDashboardDsummaryData() {
 
 export function getGenomicInformation() {
     return (dispatch) => {
-      //   dispatch({ type: homeConstants.DATA_SUMMARY });
+
         let url = config.auth+"genomic-information/";
         sendRequest(url, "GET", "")
           .then((result) => {
@@ -64,9 +64,9 @@ export function file_upload(data) {
           console.log("error", e);
         });
     }
-  }
+}
 
-  export function getCircosInformation() {
+export function getCircosInformation() {
       return (dispatch) => {
       //   dispatch({ type: homeConstants.DATA_SUMMARY });
         let url = config.auth+"circos/";
@@ -84,5 +84,24 @@ export function file_upload(data) {
             console.log("error", e);
           });
 
+      };
+    }
+
+
+export function getHeadersFiles() {
+    return (dispatch) => {
+        let url = config.auth+"user-data-visualization/";
+        sendRequest(url, "GET", "")
+          .then((result) => {
+            const d = result;
+            // console.log()
+            dispatch({
+              type: homeConstants.USERDATA_VISUALIZATION,
+              payload: d["data"],
+            });
+          })
+          .catch((e) => {
+            console.log("error", e);
+          });
       };
     }
