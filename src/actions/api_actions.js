@@ -1,4 +1,4 @@
-import { homeConstants,dataVisualization } from "./Constants";
+import { homeConstants,dataVisualization,userdataVisualization } from "./Constants";
 import config from '../config'
 import axios from "axios";
 
@@ -87,10 +87,18 @@ export function file_upload(data) {
   }
 
 
-  export function getCircosInformation() {
+export function getCircosInformation(data) {
         return (dispatch) => {
-        //   dispatch({ type: homeConstants.DATA_SUMMARY });
-          let url = config.auth+"circos/";
+          let url = ""
+          if('selected_genes' in data && 'type' in data){
+            url = config.auth+"circos-user-data/?genes="+data.selected_genes
+          }
+          else if ("type" in data) {
+            url = config.auth+"circos-user-data/"
+          }else{
+            url = config.auth+"circos/"
+          }
+
           sendRequest(url, "GET", "")
             .then((result) => {
               const d = result;
@@ -108,20 +116,47 @@ export function file_upload(data) {
       }
 
 
-  export function getHeadersFiles() {
-      return (dispatch) => {
-          let url = config.auth+"user-data-visualization/";
-          sendRequest(url, "GET", "")
-            .then((result) => {
-              const d = result;
-              // console.log()
-              dispatch({
-                type: homeConstants.USERDATA_VISUALIZATION,
-                payload: d["data"],
-              });
-            })
-            .catch((e) => {
-              console.log("error", e);
+export function getHeadersFiles() {
+    return (dispatch) => {
+        let url = config.auth+"user-data-visualization/";
+        sendRequest(url, "GET", "")
+          .then((result) => {
+            const d = result;
+            // console.log()
+            dispatch({
+              type: homeConstants.USERDATA_VISUALIZATION,
+              payload: d["data"],
             });
+          })
+          .catch((e) => {
+            console.log("error", e);
+          });
+      };
+    }
+
+export function getCircosUserData(data) {
+      return (dispatch) => {
+        const form = new FormData()
+
+        if('selected_genes' in data){
+          form.set('genes', data.selected_genes);
+        }
+
+        if('filter' in data){
+          form.set('filters', data.filter);
+        }
+
+        let url = config.auth+"circos-user-data/"
+        sendRequest(url, "POST", form)
+          .then((result) => {
+            const d = result;
+            dispatch({
+              type: userdataVisualization.CIRCOS_REQUEST,
+              payload: d["data"],
+            });
+          })
+          .catch((e) => {
+            console.log("error", e);
+          });
         };
       }
