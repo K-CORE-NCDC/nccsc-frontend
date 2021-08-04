@@ -6,18 +6,17 @@ import {
   UserCircleIcon
 } from '@heroicons/react/outline'
 import inputJson from './data'
+
 export default function Filter({parentCallback}) {
   const [state, setState] = useState({"html":[]});
   const [selectState, setSelectState] = useState({});
   const [selected, setSelected] = useState('Basic/Diagnostic Information');
 
-
-
   useEffect(()=>{
     leftSide()
   },[])
-  useEffect(()=>{
 
+  useEffect(()=>{
     leftSide()
   },[selected])
 
@@ -26,6 +25,7 @@ export default function Filter({parentCallback}) {
     if (d.id in selectState){
       check = true
     }
+
     return (
       <div key={d.id} className="px-10">
         <label class="inline-flex items-center">
@@ -78,6 +78,8 @@ export default function Filter({parentCallback}) {
         document.getElementById(id).checked=true
       }
     }
+    // console.log("id---->",id)
+    // console.log("value---->",val)
     setSelectState(tmp)
   }
 
@@ -143,7 +145,6 @@ export default function Filter({parentCallback}) {
   }
 
   const checkBoxFn = (event,id)=>{
-
     var did = document.getElementById(id)
     var checkbox_elm = document.getElementById(id).checked;
     if(checkbox_elm){
@@ -156,8 +157,8 @@ export default function Filter({parentCallback}) {
       document.getElementById("child_"+id).classList.remove("hidden")
       console.log(did.getAttribute('data-parent'),selectState);
     }
-
   }
+
   const switchButton = (event,id,k) => {
     let s = selected
     setSelected(id)
@@ -180,6 +181,7 @@ export default function Filter({parentCallback}) {
   const sendFilter = ()=>{
     parentCallback(selectState)
   }
+
   return (
     <div>
       <div className="py-3 px-2 w-full col-span-2">

@@ -1,42 +1,48 @@
-import React,{useState,useEffect,useRef,useCallback  } from "react";
+import React,{useState,useEffect,useRef,useCallback} from "react";
 import {
   ChevronDownIcon,
   ChevronUpIcon,
-  AdjustmentsIcon
-} from '@heroicons/react/outline'
-import { useSelector, useDispatch } from "react-redux";
-
-import {
-  UserCircleIcon,
-  BeakerIcon,
-  SearchIcon,
+  AdjustmentsIcon,
   PlusCircleIcon,
+  MinusCircleIcon,
   RefreshIcon
 } from '@heroicons/react/outline'
-import Filter from '../Common/filter'
-import CircosCmp from '../Common/Circos'
-import OncoCmp from '../Common/Onco'
-import LollipopCmp from '../Common/Lollipop'
-import HeatmapCmp from '../Common/Heatmap'
-import VolcanoCmp from '../Common/Volcano'
-import SurvivalCmp from '../Common/Survival'
-import { getCircosInformation,getOncoInformation } from '../../actions/api_actions'
+import { getCircosUserData } from '../../../../actions/api_actions'
+import { useSelector, useDispatch } from "react-redux";
+import Filter from '../../../Common/filter';
+import CircosCmp from '../../../Common/Circos';
+import inputJson from '../../../Common/data';
 
-export default function DataVisualization() {
-  const elementRef = useRef(null);
-  const [width,setWidth] = useState(0)
-  const dispatch = useDispatch()
+export default function Visualization() {
+  const [hideupload,setHideUpload] = useState(true)
   const circosJson = useSelector((data) => data.dataVisualizationReducer.circosSummary);
-  const oncoJson = useSelector((data) => data.dataVisualizationReducer.oncoSummary);
+  const [width,setWidth] = useState(0)
+  const [select,setSelect] = useState()
+  const [filterForm, setfilterForm] = useState({})
+  const [selectedGenes,setSelectGenes] = useState()
+  const dispatch = useDispatch()
+  const [showVisualization,setShowviualization] = useState(false)
+  const elementRef = useRef(null);
 
-  const callback = useCallback((count) => {
-    // console.log(count);
-    // setCount(count);
-  }, []);
-  
-  const selectGene = (event) => {
+  // const callback = (count) => {
+  //   console.log(count);
+  //   // setCount(count);
+  // }, []);
 
+  const callback = (filters_) => {
+    setfilterForm(filters_)
+    onFilter(filters_)
   }
+
+  const selectGene = (e) =>{
+    setSelect(e.target.value)
+    setSelectGenes((inputJson.gene_selection[e.target.value]['data']).join())
+  }
+
+  useEffect(()=>{
+    setWidth(elementRef.current.getBoundingClientRect().width);
+    dispatch(getCircosUserData({}))
+  },[])
 
   const toggleTab = (event)=>{
     let tabsContainer = document.querySelector("#tabs");
@@ -62,15 +68,19 @@ export default function DataVisualization() {
     })
   }
 
-  useEffect(()=>{
-    setWidth(elementRef.current.getBoundingClientRect().width);
-    dispatch(getCircosInformation())
-    dispatch(getOncoInformation())
-  },[])
+  const onFilter = (filters) =>{
+    let selectedGenesList = selectedGenes;
+    let data = {}
 
-  // useEffect(()=>{
-  //
-  // },[circosJson])
+    if(filters){
+      data['filter'] = JSON.stringify(filters)
+    }
+    if(selectedGenesList){
+      data['selected_genes'] = selectedGenesList
+    }
+    dispatch(getCircosUserData(data))
+  }
+
 
   return (
     <div className="header">
@@ -85,7 +95,7 @@ export default function DataVisualization() {
                 <h3>Gene Selection</h3>
                 <div className='col-span-3 grid grid-cols-2 gap-6'>
                   <div className="relative w-full">
-                    <select value='user-defined' onChange={e=>selectGene(e)}className='w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 '>
+                    <select value={select} onChange={e=>selectGene(e)}className='w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 '>
                       <option value="user-defined">User-Defined List</option>
                       <option value="major-genes">Cancer major genes (28 genes)</option>
                       <option value="brst-major-genes">Breast cancer major genes (20 genes)</option>
@@ -111,10 +121,16 @@ export default function DataVisualization() {
                     </select>
                   </div>
                   <div className="">
-                    <input type="text" className='w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 h-full' name='genes'/>
+                    <input type="text" className='w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 h-full' onChange={(e)=>setSelectGenes(e.target.value)} value={selectedGenes} name='genes'/>
+                  </div>
+                  <div>
+                    <button className="bg-blue-900 float-right p-3 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+                    onClick={onFilter}
+                    >
+                     Filter
+                    </button>
                   </div>
                 </div>
-
               </div>
               <div className='col-span-3 gap-6'>
                 <section>
@@ -134,22 +150,22 @@ export default function DataVisualization() {
                 <section >
                   <div id="tab-contents" className='block text-center' ref={elementRef}>
                     <div id="first" className="hidden">
-                      {circosJson && <CircosCmp width={width} data={circosJson}/> }
+                      {circosJson && <CircosCmp width={width} data={circosJson}/>}
                     </div>
                     <div id="second" className="hidden">
-                      {oncoJson && <OncoCmp width={width} data = {oncoJson} />}
+
                     </div>
                     <div id="third" className="hidden">
-                      <LollipopCmp/>
+
                     </div>
                     <div id="fourth" className="hidden">
-                      <VolcanoCmp/>
+
                     </div>
                     <div id="five" className="hidden">
-                      <HeatmapCmp/>
+
                     </div>
                     <div id="six" className="inline-block">
-                      <SurvivalCmp/>
+
                     </div>
                   </div>
                 </section>
@@ -161,3 +177,8 @@ export default function DataVisualization() {
     </div>
   )
 }
+
+
+
+// {loader['child_'+id]?<Loader/>:""}
+// {loader['child_1']?<Loader/>:""}

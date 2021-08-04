@@ -18,7 +18,7 @@ export default function FileUpload({ parentCallBack }) {
   const [select,setSelect] = useState({})
   const [error, setError] = useState(false)
   const [error_message, setErrorMessage] = useState({type:"", message:""})
-  const [ loader, setLoader] = useState({child_1:false,child_2:false,child_3:false,child_4:false})
+  const [loader, setLoader] = useState({child_1:false,child_2:false,child_3:false,child_4:false})
   // const [uploadFile, setUploadFile] = useState({clinical:""})
   const [fileData, setFileData] = useState({clinical:"", rna:"",dna:"", porteme:""})
   const [uploadFile, setUploadFile] = useState({})
@@ -94,10 +94,6 @@ export default function FileUpload({ parentCallBack }) {
             ['child_'+id]: "clinical"
         }));
         localStorage.setItem('child_'+id,"clinical")
-        // setUploadFile(prevState => ({
-        //     ...prevState,
-        //     ['child_'+id]: {type:"clinical",file:""}
-        // }));
 
 
         t.push(
@@ -155,7 +151,7 @@ export default function FileUpload({ parentCallBack }) {
             [key]:true
       }));
       dispatch(file_upload(files_[key]));
-      parentCallBack(true);
+      parentCallBack({"hide":true,"selected_keys":select});
     })
   }
 
@@ -196,7 +192,6 @@ export default function FileUpload({ parentCallBack }) {
             </div>
             <div className='p-5 flex'>
               <PlusCircleIcon className='w-10' id="plus_1" data-id="1" onClick={e=>addHtml(e,1)}/>
-
             </div>
           </div>
           {state}
@@ -220,6 +215,7 @@ export default function FileUpload({ parentCallBack }) {
     </div>
   )
 }
+
 
 // 45
 // <footer class="flex justify-end px-8 pb-8 pt-4">

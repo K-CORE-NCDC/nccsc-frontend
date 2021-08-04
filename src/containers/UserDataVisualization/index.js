@@ -12,25 +12,29 @@ import { useSelector, useDispatch } from "react-redux";
 import Loader from './Widgets/loader';
 import Table from './Widgets/Table'
 import FileUpload from './Components/MainComponents/ClinicalFileUpload'
-import TabsComponent from './Components/TabsComponet';
+import TabelDisplay from './Components/TableDisplay/'
+import Visualization from './Components/Visualizations'
 
-// import '../../index.css'
 
 export default function DataVisualization() {
   const [hideupload,setHideUpload] = useState(true)
+  const [showVisualization,setShowviualization] = useState(false)
   const fileUploadCallBack = (d_) =>{
-    setTimeout(() => setHideUpload(true), 10000)
+    // setTimeout(() => setHideUpload(true), 10000)
+  }
+
+  const viusalizationCall = (da) =>{
+    setShowviualization(true)
   }
 
   return (
     <div className="w-full">
-      {hideupload?
-        <TabsComponent/>
-        :<FileUpload parentCallBack={fileUploadCallBack}/>
-      }
+      {hideupload?showVisualization?<Visualization/>:<TabelDisplay parentcallBack={viusalizationCall}/>:<FileUpload parentCallBack={fileUploadCallBack}/>}
     </div>
   )
 }
+
+// <TabsComponent/>
 
 // ______
 // {circosJson && <CircosCmp width={width} data={circosJson}/> }
