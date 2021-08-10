@@ -1,4 +1,4 @@
-import { homeConstants,dataVisualization } from "./Constants";
+import { homeConstants,dataVisualization,userdataVisualization } from "./Constants";
 import config from '../config'
 import axios from "axios";
 
@@ -25,6 +25,7 @@ export function getDashboardDsummaryData() {
         });
     };
   }
+
 
 export function getGenomicInformation() {
     return (dispatch) => {
@@ -65,12 +66,14 @@ export function getOncoInformation(type,data){
 }
 
 
-export function file_upload(data) {
+export function file_upload(data, div_name) {
     return (dispatch) => {
       const form = new FormData()
       // dispatch({ type: homeConstants.DATA_SUMMARY });
       form.set('file', data.file);
       form.set('type', data.type);
+      form.set("div_name",div_name)
+
       let url = config.auth+"user-data-visualization/";
       sendRequest(url, "POST", form)
         .then((result) => {
@@ -85,7 +88,6 @@ export function file_upload(data) {
         });
     }
   }
-
 
 export function getCircosInformation(type,data) {
   // console.log(type,data);
@@ -148,5 +150,88 @@ export function getHeadersFiles() {
           .catch((e) => {
             console.log("error", e);
           });
+      };
+    }
+
+export function getCircosUserData(data) {
+      return (dispatch) => {
+        const form = new FormData()
+
+        if('selected_genes' in data){
+          form.set('genes', data.selected_genes);
+        }
+
+        if('filter' in data){
+          form.set('filters', data.filter);
+        }
+
+        let url = config.auth+"circos-user-data/"
+        sendRequest(url, "POST", form)
+          .then((result) => {
+            const d = result;
+            dispatch({
+              type: userdataVisualization.CIRCOS_REQUEST,
+              payload: d["data"],
+
+            });
+          })
+          .catch((e) => {
+            console.log("error", e);
+          });
+        };
+      }
+
+export function getOncoUserData(data) {
+    return (dispatch) => {
+      const form = new FormData()
+
+      if('selected_genes' in data){
+        form.set('genes', data.selected_genes);
+      }
+
+      if('filter' in data){
+        form.set('filters', data.filter);
+      }
+
+      let url = config.auth+"onco-user-data/"
+      sendRequest(url, "POST", form)
+        .then((result) => {
+          const d = result;
+          dispatch({
+            type: userdataVisualization.ONCO_REQUEST,
+            payload: d["data"],
+          });
+        })
+        .catch((e) => {
+          console.log("error", e);
+        });
+      };
+      }
+
+export function getVolcanoUserData(data) {
+    return (dispatch) => {
+      const form = new FormData()
+
+      if('selected_genes' in data){
+        form.set('genes', data.selected_genes);
+      }
+
+      if('filter' in data){
+        form.set('filters', data.filter);
+      }
+
+      let url = config.auth+"volcano-user-data/"
+      sendRequest(url, "POST", form)
+        .then((result) => {
+          const d = result;
+          dispatch({
+            type: userdataVisualization.VOLCANO_REQUEST,
+            payload: d["data"],
+          });
+        })
+        .catch((e) => {
+          console.log("error", e);
+        });
+
       };
     }

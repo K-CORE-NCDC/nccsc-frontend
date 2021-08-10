@@ -27,7 +27,6 @@ import {
  * https://github.com/plotly/react-oncoprint
  */
 export default class OncoPrintCustom extends PureComponent {
-
     // Constructor
     constructor(props) {
         super(props);

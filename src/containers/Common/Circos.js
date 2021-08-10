@@ -22,8 +22,13 @@ export default function CircosCmp({ width, data }) {
 
 
   const drawCircos =  (width, GRCh37, cytobands,api_data) => {
+    let childnode = document.getElementById("circos");
+    if(childnode.hasChildNodes()){
+      while (childnode.firstChild) {
+        childnode.removeChild(childnode.firstChild)
+      }
 
-
+    }
     var width = width-100
     var circosHighlight = new Circos({
       container: '#circos',
@@ -41,6 +46,7 @@ export default function CircosCmp({ width, data }) {
         display: false,
       },
     }
+
     var snp250 = [];
     if('dna_mutation' in api_data){
       snp250 = api_data['dna_mutation'].map(function (d,i) {
@@ -390,7 +396,6 @@ export default function CircosCmp({ width, data }) {
 
 
   useEffect(()=>{
-
     d3.csv("https://nicgirault.github.io/circosJS/demo/data/cytobands.csv", function(d,i) {
       return d;
     }).then(function(data) {
@@ -413,17 +418,10 @@ export default function CircosCmp({ width, data }) {
         'cytobands':d
       }))
     });
-
-
-
   },[])
 
   useEffect(()=>{
-
     if ( state['cytobands'].length>0){
-      
-      document.getElementById('circos').html = ''
-
       let d = [
         {"id":"chr1","label":"chr1","color":"#996600","len":249250621},
         {"id":"chr2","label":"chr2","color":"#666600","len":243199373},
@@ -452,10 +450,8 @@ export default function CircosCmp({ width, data }) {
       ]
       // console.log(state['cytobands']);
       drawCircos(width,d,state['cytobands'],data)
-
-
     }
-  },[state])
+  },[state, data])
 
   return (
     <div className='circos' id='circos'></div>
