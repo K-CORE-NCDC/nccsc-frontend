@@ -15,5 +15,6 @@ export const dataVisualization = {
 export const userdataVisualization = {
   CIRCOS_REQUEST: 'CIRCOS_DATA_REQUEST',
   ONCO_REQUEST:'ONCO_REQUEST',
+  VOLCANO_REQUEST:'VOLCANO_REQUEST',
   REQUEST_DONE:'REQUEST_DONE'
 }

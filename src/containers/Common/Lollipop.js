@@ -191,7 +191,7 @@ export default function LollipopCmp({ width }) {
           onLollipopClick={onLollipopClickHandler}
           options={options}
         />
-     
+
     </div>
   )
 

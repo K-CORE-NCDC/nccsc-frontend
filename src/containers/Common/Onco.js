@@ -167,8 +167,8 @@ export default function OncoCmp({ width }) {
    setState(data)
   },[])
 
-  console.log(colorScale);
-  console.log(Object.keys(colorScale));
+  // console.log(colorScale);
+  // console.log(Object.keys(colorScale));
   return (
     <div className='onco' id='onco'>
       {Object.keys(colorScale).length > 0 && <OncoPrintCustom SupportedEvents={colorScale} colorccale={colorScale} data={state}/>}
