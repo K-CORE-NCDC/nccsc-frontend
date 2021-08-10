@@ -8,7 +8,7 @@ const UserDataVisualization = React.lazy(() => import('./containers/UserDataVisu
 const route = [
   { path: '/', exact: true, type:'unauth', name: 'Home', component: Home },
   { path: '/summary', exact: true, type:'unauth', name: 'DataSummary', component: DataSummary },
-  { path: '/visualise', exact: true, type:'unauth', name: 'Home', component: DataVisualization },
+  { path: '/visualise/:tab?/', exact: true, type:'unauth', name: 'Home', component: DataVisualization },
   { path: '/userdata', exact: true, type:'unauth', name: 'Home', component: UserDataVisualization },
   // { path: '/customanalysis', exact: true, type:'unauth', name: 'Home', component: Home },
 ]

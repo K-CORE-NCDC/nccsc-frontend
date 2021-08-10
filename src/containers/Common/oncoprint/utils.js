@@ -284,7 +284,7 @@ export const aggregate = (events) => {
 export const getDisplayName = (event, supportedEventsParam) => {
     const eventName = isMutation(event) ? event.type : event.alteration;
 
-    console.log(eventName, supportedEventsParam);
+    // console.log(eventName, supportedEventsParam);
     return supportedEventsParam[eventName].displayName;
 };
 
@@ -293,7 +293,6 @@ export const getDisplayName = (event, supportedEventsParam) => {
 export const getColor = (event, colorscale, supportedEventsParam) => {
     const eventName = isMutation(event) ? event.type : event.alteration;
 
-    console.log(eventName)
     let color;
     if (colorscale && _.isObject(colorscale)) {
         color = colorscale[eventName];

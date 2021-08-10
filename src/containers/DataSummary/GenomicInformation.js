@@ -35,7 +35,7 @@ export default function GenomicInfo() {
   let visual_type = {
     "Variant Classification":"Bar",
     "Variant Type":"Bar",
-    "snv_type":"Bar",
+    "Snv Class":"Bar",
     "dna_mutation_gene":"stack_bar",
     "dna_per_sample":"stack_bar"
   }

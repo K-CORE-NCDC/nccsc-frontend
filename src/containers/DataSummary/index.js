@@ -43,7 +43,7 @@ export default function DataSummary() {
 
   return (
     <div className="header">
-      <section className="relative  items-center  bg-cover bg-center bg-website-bg  justify-center">
+      <section className="relative  items-center  bg-cover bg-center bg-white border-t justify-center">
         <nav className=" px-8 pt-2 shadow-md">
           <ul id="tabs" className="inline-flex justify-center w-full px-1 pt-2 " onClick={toggleTab}>
             <li className="px-4 py-2 font-semibold rounded-t opacity-50 ">

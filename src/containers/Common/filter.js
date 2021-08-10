@@ -28,13 +28,13 @@ export default function Filter({parentCallback}) {
     }
     return (
       <div key={d.id} className="px-10">
-        <label class="inline-flex items-center">
+        <label className="inline-flex items-center">
             <input type="checkbox" id={d.id} name={d.name}
             className="form-checkbox"
             value={d.value}
             onChange={e=>selectFn(e)}
              />
-          <span class="ml-2">{d.value}</span>
+          <span className="ml-2">{d.value}</span>
         </label>
       </div>
     )
@@ -124,13 +124,13 @@ export default function Filter({parentCallback}) {
         })
       }
       html.push(
-        <div key={item+'_'+k} class="tab w-full overflow-hidden border-t" onClick={(e)=>switchButton(e,item,k)}>
-          <input class="absolute opacity-0" id={"tab-single-"+k} type="radio" name="tabs2"/>
-          <label class="block p-5 leading-normal cursor-pointer" htmlFor={"tab-single-"+k}>
+        <div key={item+'_'+k} className="tab w-full overflow-hidden border-t" onClick={(e)=>switchButton(e,item,k)}>
+          <input className="absolute opacity-0" id={"tab-single-"+k} type="radio" name="tabs2"/>
+          <label className="block p-5 leading-normal cursor-pointer" htmlFor={"tab-single-"+k}>
             <UserCircleIcon className="h-8 w-8 inline text-main-blue"/>
-            <span class="no-underline  ml-2 text-2xl tracking-wide">{item}</span>
+            <span className="no-underline  ml-2 text-2xl tracking-wide">{item}</span>
           </label>
-          {selected === item ? <div class="tab-content overflow-hidden border-l-2 bg-gray-100  leading-normal relative py-3">
+          {selected === item ? <div className="tab-content overflow-hidden border-l-2 bg-gray-100  leading-normal relative py-3">
             {t}
           </div>:""}
         </div>
@@ -183,10 +183,10 @@ export default function Filter({parentCallback}) {
   return (
     <div>
       <div className="py-3 px-2 w-full col-span-2">
-        <button class="bg-white  w-80 h-20 hover:text-white mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded">
+        <button className="bg-white  w-80 h-20 hover:text-white mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded">
           Reset
         </button>&nbsp;&nbsp;&nbsp;&nbsp;
-        <button class="bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={sendFilter}>
+        <button className="bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={sendFilter}>
           Search
         </button>
       </div>

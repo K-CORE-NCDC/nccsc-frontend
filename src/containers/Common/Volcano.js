@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import * as d3 from 'd3'
 import dataD from './data.diff'
-import "../../styles/volcano.css"
+// import "../../styles/volcano.css"
 export default function VolcanoCmp({ width }) {
 
   function volcanoPlot() {

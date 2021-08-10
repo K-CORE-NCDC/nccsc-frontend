@@ -2,6 +2,7 @@ import { dataVisualization } from '../actions/Constants';
 
 const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
   switch (type) {
+
     case dataVisualization.CIRCOS_REQUEST:
       return {
         ...state,
@@ -11,6 +12,11 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
       return {
         ...state,
         oncoSummary: payload
+      }
+    case dataVisualization.KEYS_REQUEST:
+      return {
+        ...state,
+        Keys: payload
       }
     case dataVisualization.REQUEST_DONE:
       return{

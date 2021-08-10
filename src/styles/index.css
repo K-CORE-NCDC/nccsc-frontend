@@ -181,6 +181,9 @@ input:checked ~ .dot {
   color: #fff;
 }
 
+.modebar-group{
+  display: inline-flex !important;
+}
 
 
 /* --------------loader----------- */

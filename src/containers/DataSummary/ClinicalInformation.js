@@ -56,7 +56,7 @@ export default function ClinicalInformation() {
                 <div className="relative" id={'div_'+id}  onClick={e=>checkBoxFn(e,'md_'+i,itm)}>
                   <input type="checkbox" id={'md_'+i} checked={check} data-parent={item}   className="checkbox sr-only" onChange={e=>checkBoxFn(e,'md_'+i,itm)}/>
                   <div className="block bg-gray-600 w-14 h-6 rounded-full" id={'md_'+i+'_toggle'} style={{backgroundColor:color}}></div>
-                  <div className="dot absolute left-1 top-1 bg-white w-6 h-4 rounded-full transition bg-white" style={{backgroundColor:'#fff'}}></div>
+                  <div className="dot absolute left-1 top-1 bg-white w-6 h-4 rounded-full transition" style={{backgroundColor:'#fff'}}></div>
                 </div>
               </label>
             </div>

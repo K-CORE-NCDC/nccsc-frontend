@@ -1,11 +1,11 @@
-import React,{useState,useEffect,useRef,useCallback  } from "react";
+import React,{useState,useEffect,useRef,useCallback,Fragment   } from "react";
 import {
   ChevronDownIcon,
   ChevronUpIcon,
   AdjustmentsIcon
 } from '@heroicons/react/outline'
 import { useSelector, useDispatch } from "react-redux";
-
+import { useParams } from "react-router-dom";
 import {
   UserCircleIcon,
   BeakerIcon,
@@ -14,27 +14,39 @@ import {
   RefreshIcon
 } from '@heroicons/react/outline'
 import Filter from '../Common/filter'
-import CircosCmp from '../Common/Circos'
-import OncoCmp from '../Common/Onco'
-import LollipopCmp from '../Common/Lollipop'
-import HeatmapCmp from '../Common/Heatmap'
-import VolcanoCmp from '../Common/Volcano'
-import SurvivalCmp from '../Common/Survival'
-import { getCircosInformation,getOncoInformation } from '../../actions/api_actions'
-
+import { Charts } from "./Charts/";
+import genes from '../Common/gene.json'
+import { getBreastKeys,getCircosInformation } from '../../actions/api_actions'
+import {
+  Link
+} from "react-router-dom";
 export default function DataVisualization() {
   const elementRef = useRef(null);
+  const [state,setState] = useState({"genes":[],'type':''})
+  const [boolChartState,setBoolChartState] = useState(false)
+  const [filterState,setFilterState] = useState({})
+  const [chart,setCharts] = useState({"circos":[]})
+
   const [width,setWidth] = useState(0)
   const dispatch = useDispatch()
+  const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
   const circosJson = useSelector((data) => data.dataVisualizationReducer.circosSummary);
-  const oncoJson = useSelector((data) => data.dataVisualizationReducer.oncoSummary);
+  let { tab } = useParams();
 
   const callback = useCallback((count) => {
     // console.log(count);
     // setCount(count);
   }, []);
-  const selectGene = (event) => {
 
+  const selectGene = (event) => {
+    let val_ = event.target.value;
+    let g = genes[val_].data;
+    document.getElementById('genes').value = g.join(' ')
+    setState((prevState)=>({
+      ...prevState,
+      'genes':g,
+      'type':val_
+    }))
   }
 
   const toggleTab = (event)=>{
@@ -62,18 +74,63 @@ export default function DataVisualization() {
   }
 
   useEffect(()=>{
-    setWidth(elementRef.current.getBoundingClientRect().width);
-    dispatch(getCircosInformation())
-    dispatch(getOncoInformation())
+    let w = elementRef.current.getBoundingClientRect().width
+    setWidth(w);
+    dispatch(getBreastKeys())
+    console.log(chart);
+
   },[])
 
-  // useEffect(()=>{
-  //
-  // },[circosJson])
+  useEffect(()=>{
+    if(BrstKeys){
+      let tmp = []
+      for (const [key, value] of Object.entries(BrstKeys)) {
+        tmp.push(<option key={key} value={key+"_"+value}>{value}</option>)
+      }
+      setFilterState(tmp)
+    }
+  },[BrstKeys])
+
+
+  useEffect(()=>{
+    console.log(chart['circos']);
+    setBoolChartState(true)
+
+  },[chart])
+
+
+  const submitFilter = (e) => {
+    setBoolChartState(false)
+    //
+      let chartx = LoadChart(width,tab)
+
+      if(chartx['chart']){
+        let rn = Math.random();
+        let html = [
+          <div key={rn}>{chartx['data']}</div>
+        ]
+        setCharts((prevState)=>({
+          ...prevState,
+          'circos':html,
+        }))
+      }
+
+
+  }
+
+  const LoadChart = (width,type)=>{
+
+    switch (type) {
+      case "circos":
+        return {"chart":true,"data":Charts.circos(width,state)}
+      default:
+        return false
+    }
+  }
 
   return (
     <div className="header">
-      <div className="mx-auto rounded overflow-hidden ">
+      <div className="mx-auto border-t rounded overflow-hidden ">
         <div id="main_div">
           <div className="grid grid-cols-4">
             <div className="bg-white border border-gray-200">
@@ -82,9 +139,9 @@ export default function DataVisualization() {
             <div className="col-start-2 col-span-3 overflow-auto ">
               <div className="grid grid-cols-3 gap-1 p-5 bg-white">
                 <h3>Gene Selection</h3>
-                <div className='col-span-3 grid grid-cols-2 gap-6'>
-                  <div className="relative w-full">
-                    <select value='user-defined' onChange={e=>selectGene(e)}className='w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 '>
+                <div className='col-span-3 grid grid-cols-7 gap-6'>
+                  <div className="relative w-full col-span-3">
+                    <select value={state['type']} onChange={e=>selectGene(e)}className='w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 '>
                       <option value="user-defined">User-Defined List</option>
                       <option value="major-genes">Cancer major genes (28 genes)</option>
                       <option value="brst-major-genes">Breast cancer major genes (20 genes)</option>
@@ -109,8 +166,11 @@ export default function DataVisualization() {
                       <option value="tgf-beta-path">General: TGF-β Pathway (43 genes)</option>
                     </select>
                   </div>
+                  <div className="col-span-3">
+                    <input type="text" id='genes' className='w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 h-full' name='genes'/>
+                  </div>
                   <div className="">
-                    <input type="text" className='w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 h-full' name='genes'/>
+                    <button className="bg-main-blue hover:bg-main-blue mb-3 w-full h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={e=>submitFilter(e)}>Filter</button>
                   </div>
                 </div>
 
@@ -118,38 +178,34 @@ export default function DataVisualization() {
               <div className='col-span-3 gap-6'>
                 <section>
                   <nav className=" px-8 pt-2 shadow-md">
-                    <ul id="tabs" className="inline-flex justify-center w-full px-1 pt-2 " onClick={toggleTab}>
-                      <li className="px-4 py-2 font-semibold rounded-t opacity-50">
-                        <a id="default-tab" href="#first" >Circos Plot</a>
+                    <ul id="tabs" className="inline-flex justify-center w-full px-1 pt-2 " onClick={e=>toggleTab(e)}>
+                      <li className="px-4 py-2 font-semibold rounded-t opacity-50 opacity-100 border-b-4  border-blue-400">
+                        <Link to="/visualise/circos/">Ciros Plot</Link>
                       </li>
-                      <li className="px-4 py-2 font-semibold  rounded-t opacity-50 "><a href="#second">OncoPrint</a></li>
-                      <li className="px-4 py-2 font-semibold  rounded-t opacity-50 "><a href="#third">Lollipop Plot</a></li>
-                      <li className="px-4 py-2 font-semibold  rounded-t opacity-50 "><a href="#fourth">Volcano Plot</a></li>
-                      <li className="px-4 py-2 font-semibold  rounded-t opacity-50 "><a href="#five">Heatmap</a></li>
-                      <li className="px-4 py-2 font-semibold  rounded-t opacity-50 opacity-100 border-b-4  border-blue-400"><a href="#six">Survival Plot</a></li>
+                      <li className="px-4 py-2 font-semibold  rounded-t opacity-50 ">
+                        <Link to="/visualise/onco">Oncoprint Plot</Link>
+                      </li>
+                      <li className="px-4 py-2 font-semibold  rounded-t opacity-50 ">
+                        <Link to="/visualise/lolipop">Lollipop Plot</Link>
+                      </li>
+                      <li className="px-4 py-2 font-semibold  rounded-t opacity-50 ">
+                        <Link to="/visualise/volcano">Volcano Plot</Link>
+                      </li>
+                      <li className="px-4 py-2 font-semibold  rounded-t opacity-50 ">
+                        <Link to="/visualise/heatmap">Heatmap</Link>
+                      </li>
+                      <li className="px-4 py-2 font-semibold  rounded-t opacity-50 ">
+                        <Link to="/visualise/survival">Survival Plot</Link>
+                      </li>
                     </ul>
                   </nav>
                 </section>
                 <section >
-                  <div id="tab-contents" className='block text-center' ref={elementRef}>
-                    <div id="first" className="hidden">
-                      {circosJson && <CircosCmp width={width} data={circosJson}/> }
-                    </div>
-                    <div id="second" className="hidden">
-                      {oncoJson && <OncoCmp width={width} data = {oncoJson} />}
-                    </div>
-                    <div id="third" className="hidden">
-                      <LollipopCmp/>
-                    </div>
-                    <div id="fourth" className="hidden">
-                      <VolcanoCmp/>
-                    </div>
-                    <div id="five" className="hidden">
-                      <HeatmapCmp/>
-                    </div>
-                    <div id="six" className="inline-block">
-                      <SurvivalCmp/>
-                    </div>
+                   <div id="tab-contents" className='block text-center' ref={elementRef}>
+                    {boolChartState &&
+                      <div>{chart['circos']}</div>
+                    }
+
                   </div>
                 </section>
               </div>
