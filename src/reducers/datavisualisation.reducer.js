@@ -18,6 +18,11 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state,
         Keys: payload
       }
+    case dataVisualization.LOLLIPOP_REQUEST:
+      return {
+        ...state,
+        lollipopSummary:payload
+      }
     case dataVisualization.REQUEST_DONE:
       return{
         ...state
