@@ -33,7 +33,7 @@ export default function DataVisualization() {
     // console.log(count);
     // setCount(count);
   }, []);
-  
+
   const selectGene = (event) => {
 
   }

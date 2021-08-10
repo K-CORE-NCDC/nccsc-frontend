@@ -1,4 +1,4 @@
-import { dataVisualization } from '../actions/Constants';
+import { dataVisualization, userdataVisualization } from '../actions/Constants';
 
 const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
   switch (type) {
@@ -15,6 +15,11 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
     case dataVisualization.REQUEST_DONE:
       return{
         ...state
+      }
+    case userdataVisualization.VOLCANO_REQUEST:
+      return {
+        ...state,
+        volcanoSummary: payload
       }
     default:
       return state

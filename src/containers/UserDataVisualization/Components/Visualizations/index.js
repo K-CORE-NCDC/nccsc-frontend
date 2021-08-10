@@ -7,18 +7,28 @@ import {
   MinusCircleIcon,
   RefreshIcon
 } from '@heroicons/react/outline'
-import { getCircosUserData } from '../../../../actions/api_actions'
+import { getCircosUserData, getOncoUserData, getVolcanoUserData } from '../../../../actions/api_actions'
 import { useSelector, useDispatch } from "react-redux";
 import Filter from '../../../Common/filter';
 import CircosCmp from '../../../Common/Circos';
+import OncoCmp from '../../../Common/Onco'
+import LollipopCmp from '../../../Common/Lollipop'
+import HeatmapCmp from '../../../Common/Heatmap'
+import VolcanoCmp from '../../../Common/Volcano'
+import SurvivalCmp from '../../../Common/Survival'
+
+// import CircosCmp from '../../../Common/Circos';
 import inputJson from '../../../Common/data';
 
 export default function Visualization() {
   const [hideupload,setHideUpload] = useState(true)
   const circosJson = useSelector((data) => data.dataVisualizationReducer.circosSummary);
+  const oncoJson = useSelector((data) => data.dataVisualizationReducer.oncoSummary);
+  const volcanoJson = useSelector((data) => data.dataVisualizationReducer.volcanoSummary);
+
   const [width,setWidth] = useState(0)
   const [select,setSelect] = useState()
-  const [filterForm, setfilterForm] = useState({})
+  // const [filterForm, setfilterForm] = useState({})
   const [selectedGenes,setSelectGenes] = useState()
   const dispatch = useDispatch()
   const [showVisualization,setShowviualization] = useState(false)
@@ -28,10 +38,11 @@ export default function Visualization() {
   //   console.log(count);
   //   // setCount(count);
   // }, []);
-
+  let filters = ''
   const callback = (filters_) => {
-    setfilterForm(filters_)
-    onFilter(filters_)
+    // setfilterForm(JSON.stringify(filters_))
+    filters = JSON.stringify(filters_)
+    onFilter()
   }
 
   const selectGene = (e) =>{
@@ -42,6 +53,8 @@ export default function Visualization() {
   useEffect(()=>{
     setWidth(elementRef.current.getBoundingClientRect().width);
     dispatch(getCircosUserData({}))
+    dispatch(getOncoUserData({}))
+    dispatch(getVolcanoUserData({}))
   },[])
 
   const toggleTab = (event)=>{
@@ -68,19 +81,19 @@ export default function Visualization() {
     })
   }
 
-  const onFilter = (filters) =>{
+  const onFilter = () =>{
     let selectedGenesList = selectedGenes;
     let data = {}
 
-    if(filters){
-      data['filter'] = JSON.stringify(filters)
-    }
     if(selectedGenesList){
       data['selected_genes'] = selectedGenesList
     }
+    // console.log("filters--->",filters)
+    if(filters){
+      data['filter'] = filters
+    }
     dispatch(getCircosUserData(data))
   }
-
 
   return (
     <div className="header">
@@ -153,19 +166,19 @@ export default function Visualization() {
                       {circosJson && <CircosCmp width={width} data={circosJson}/>}
                     </div>
                     <div id="second" className="hidden">
-
+                      {oncoJson && <OncoCmp width={width} data = {oncoJson} />}
                     </div>
                     <div id="third" className="hidden">
-
+                      <LollipopCmp/>
                     </div>
                     <div id="fourth" className="hidden">
-
+                      {volcanoJson && <VolcanoCmp width={width} data={volcanoJson}/>}
                     </div>
                     <div id="five" className="hidden">
-
+                      <HeatmapCmp/>
                     </div>
                     <div id="six" className="inline-block">
-
+                      <SurvivalCmp/>
                     </div>
                   </div>
                 </section>
