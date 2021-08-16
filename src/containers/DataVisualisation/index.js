@@ -23,15 +23,15 @@ import {
 export default function DataVisualization() {
   const elementRef = useRef(null);
   const [state,setState] = useState({"genes":[],'type':''})
-  const [boolChartState,setBoolChartState] = useState(false)
+  const [boolChartState,setBoolChartState] = useState(true)
   const [filterState,setFilterState] = useState({})
-  const [chart,setCharts] = useState({"circos":[]})
-
+  const [chart,setCharts] = useState({"viz":[]})
   const [width,setWidth] = useState(0)
   const dispatch = useDispatch()
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
-  const circosJson = useSelector((data) => data.dataVisualizationReducer.circosSummary);
   let { tab } = useParams();
+  const [chartName,setChartName] = useState(tab)
+
 
   const callback = useCallback((count) => {
     // console.log(count);
@@ -54,30 +54,24 @@ export default function DataVisualization() {
     let tabTogglers = tabsContainer.querySelectorAll("a");
     tabTogglers.forEach(function(toggler) {
       toggler.addEventListener("click", function(e) {
-        e.preventDefault();
-
         let tabName = this.getAttribute("href");
-
-        let tabContents = document.querySelector("#tab-contents");
-
-        for (let i = 0; i < tabContents.children.length; i++) {
-
-          tabTogglers[i].parentElement.classList.remove("border-blue-400", "border-b",  "-mb-px", "opacity-100");  tabContents.children[i].classList.remove("hidden");
-          if ("#" + tabContents.children[i].id === tabName) {
-            continue;
-          }
-          tabContents.children[i].classList.add("hidden");
+        for (var i = 0; i < tabTogglers.length; i++) {
+          tabTogglers[i].parentElement.classList.remove("border-blue-400", "border-b",  "-mb-px", "opacity-100");
         }
         e.target.parentElement.classList.add("border-blue-400", "border-b-4", "-mb-px", "opacity-100");
       })
     })
+
   }
+  useEffect(()=>{
+    submitFilter()
+  },[tab])
 
   useEffect(()=>{
     let w = elementRef.current.getBoundingClientRect().width
     setWidth(w);
     dispatch(getBreastKeys())
-    console.log(chart);
+    setBoolChartState(false)
 
   },[])
 
@@ -93,36 +87,30 @@ export default function DataVisualization() {
 
 
   useEffect(()=>{
-    console.log(chart['circos']);
-    setBoolChartState(true)
-
+    if(chart){
+      setBoolChartState(true)
+    }
   },[chart])
 
 
   const submitFilter = (e) => {
     setBoolChartState(false)
-    //
-      let chartx = LoadChart(width,tab)
-
-      if(chartx['chart']){
-        let rn = Math.random();
-        let html = [
-          <div key={rn}>{chartx['data']}</div>
-        ]
-        setCharts((prevState)=>({
-          ...prevState,
-          'circos':html,
-        }))
-      }
-
-
+    setChartName(tab)
+    let chartx = LoadChart(width,tab)
+    setCharts((prevState)=>({
+      ...prevState,
+      'viz':chartx,
+    }))
   }
 
   const LoadChart = (width,type)=>{
-
     switch (type) {
       case "circos":
-        return {"chart":true,"data":Charts.circos(width,state)}
+        return Charts.circos(width,state)
+      case "onco":
+        return Charts.onco(width,state)
+      case "lolipop":
+        return Charts.onco(width,state)
       default:
         return false
     }
@@ -203,7 +191,10 @@ export default function DataVisualization() {
                 <section >
                    <div id="tab-contents" className='block text-center' ref={elementRef}>
                     {boolChartState &&
-                      <div>{chart['circos']}</div>
+                      <div>{chart['viz']}</div>
+                    }
+                    {!boolChartState &&
+                      <div>Loading.......</div>
                     }
 
                   </div>

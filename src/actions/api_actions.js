@@ -66,6 +66,25 @@ export function getOncoInformation(type,data){
 }
 
 
+export function getLolipopInformation(type,data){
+  return (dispatch) => {
+    let url = config.auth+"lolipop/";
+    sendRequest(url, type, data)
+      .then((result) => {
+        const d = result
+        dispatch({
+          type: dataVisualization.LOLLIPOP_REQUEST,
+          payload: d["data"],
+        });
+        dispatch({ type: dataVisualization.REQUEST_DONE });
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
+  };
+}
+
+
 export function file_upload(data, div_name) {
     return (dispatch) => {
       const form = new FormData()
