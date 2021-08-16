@@ -20,7 +20,7 @@ export default function OncoCmp({ width,data }) {
 
   useEffect(()=>{
     if(data){
-      const d = data
+      const d = data['dna_mutation']
       let colorScaleData = {}
       d.forEach(element =>{
         colorScaleData = {...colorScaleData, [element.alteration]: {colorHTML: getRandomColor(), displayName: element.type}}

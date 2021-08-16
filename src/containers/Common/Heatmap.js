@@ -6,119 +6,339 @@ import {scaleSequential} from 'd3-scale'
 export default function HeatmapCmp({ width }) {
 
   const drawChart = (data) => {
-        // set the dimensions and margins of the graph
-        var margin = {top: 80, right: 25, bottom: 30, left: 40},
-      width = 450 - margin.left - margin.right,
-      height = 450 - margin.top - margin.bottom;
+    let width = 900,
+    height = 500,
+    wrapperWidth = Math.min(width, height) * 0.6,
+    linkHeight = 50,
+    margin = 5,
+    heatmapWidth = wrapperWidth - (linkHeight + margin),
+    mousePosition;
+
 
     // append the svg object to the body of the page
-    var svg = d3.select("#heatmap")
-    .append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-      .attr("transform",
-            "translate(" + margin.left + "," + margin.top + ")");
 
-    var myGroups = [...new Set(data.map(item => item.group))]
-    var myVars = [...new Set(data.map(item => item.variable))]
-    // Build X scales and axis:
-    var x = d3.scaleBand()
-      .range([ 0, width ])
-      .domain(myGroups)
-      .padding(0.01);
-    svg.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x))
+    var svg = d3.select('#heatmap')
+          .append("svg")
+          .attr('width', width)
+          .attr('height', height)
+          .on('mousemove', function() {
+              mousePosition = d3.pointer(this);
+              tooltipGroup.attr('transform', 'translate(' + (mousePosition[0] - (150 / 2) + 10) + ',' + (mousePosition[1] + 20) + ')');
+              tooltipText.text(function() {
+                  return selectedCell ? '(' + selectedCell.col + ', ' + selectedCell.row + '): value: ' + selectedCell.value : ''
+              });
+          });
 
-    // Build X scales and axis:
-    var y = d3.scaleBand()
-      .range([ height, 0 ])
-      .domain(myVars)
-      .padding(0.01);
-    svg.append("g")
-      .call(d3.axisLeft(y));
+      var heatmap = svg.append('g').attr('class', 'heatmap')
+      .attr('transform', 'translate('+ ((width - wrapperWidth) / 2) + ',' + ((height - wrapperWidth) / 2) + ')');
 
-    // Build color scale
-    var myColor = scaleSequential()
-        .interpolator(d3.interpolateInferno)
-      .domain([1,100])
+      var tableData = [
+        {
+            key: 'a',
+            values: [
+                {key: 'd1', value: 0.1},
+                {key: 'd2', value: 0.5},
+                {key: 'd4', value: 0.9},
+                {key: 'd3', value: 0.6}
+            ]
+        },
+        {
+            key: 'f',
+            values: [
+                {key: 'd1', value: 0.6},
+                {key: 'd2', value: 0.9},
+                {key: 'd4', value: 0.6},
+                {key: 'd3', value: 0.9}
+            ]
+        },
+        {
+            key: 'g',
+            values: [
+                {key: 'd1', value: 0.7},
+                {key: 'd2', value: 0.8},
+                {key: 'd4', value: 0.9},
+                {key: 'd3', value: 0.8}
+            ]
+        },
+        {
+            key: 'e',
+            values: [
+                {key: 'd1', value: 0.5},
+                {key: 'd2', value: 0.1},
+                {key: 'd4', value: 0.4},
+                {key: 'd3', value: 0.5}
+            ]
+        },
+        {
+            key: 'b',
+            values: [
+                {key: 'd1', value: 0.2},
+                {key: 'd2', value: 0.4},
+                {key: 'd4', value: 0.1},
+                {key: 'd3', value: 0.7}
+            ]
+        },
+        {
+            key: 'c',
+            values: [
+                {key: 'd1', value: 0.3},
+                {key: 'd2', value: 0.3},
+                {key: 'd4', value: 0.2},
+                {key: 'd3', value: 0.8}
+            ]
+        },
+        {
+            key: 'd',
+            values: [
+                {key: 'd1', value: 0.4},
+                {key: 'd2', value: 0.2},
+                {key: 'd4', value: 0.3},
+                {key: 'd3', value: 0.9}
+            ]
+        }
+    ];
+      var nCols = tableData[0].values.length;
+      var nRows = tableData.length;
+      var bandX = d3.scaleBand()
+        .domain(d3.range(nCols))
+        .range([0, heatmapWidth]);
+      var bandY = d3.scaleBand()
+        .domain(d3.range(nRows))
+        .range([0, heatmapWidth]);
 
-      // create a tooltip
-    var tooltip = d3.select("#heatmap")
-      .append("div")
-      .style("opacity", 0)
-      .attr("class", "tooltip1")
-      .style("background-color", "white")
-      .style("border", "solid")
-      .style("border-width", "2px")
-      .style("border-radius", "5px")
-      .style("padding", "5px")
+      var heatColor = d3.scaleLinear().domain([0.1, 0.5, 0.9]).range(['#00ff00', '#ff0000', 'black']);
+      var table = heatmap.append('g').attr('class', 'table')
+        .attr('transform', 'translate(' + (linkHeight + margin) + ',' + (linkHeight + margin) + ')');
+      var rows = table.selectAll('.row')
+          .data(tableData)
+          .enter().append('g')
+          .attr('class', 'row')
+          .attr('transform', function(d, i) {
+              return 'translate(0, ' + bandY(i) + ')';
+          });
 
-    // Three function that change the tooltip when user hover / move / leave a cell
-    var mouseover = function(d) {
-      tooltip
-        .style("opacity", 1)
-      d3.select(this)
-        .style("stroke", "black")
-        .style("opacity", 1)
+      var selectedCell;
+
+      rows.selectAll('rect')
+        .data(function(d) { d.values.map(function(i) {return i.parent = d.key}); return d.values; })
+        .enter().append('rect')
+        .style('fill', function (d) {return heatColor(d.value)})
+        .style('opacity', 0.7)
+        .attr('x', function(d, i) {return bandX(i);})
+        .attr('width', bandX.bandwidth())
+        .attr('height', bandY.bandwidth())
+        .on('mouseover', function(d) {
+            selectedCell = {row: d.parent, col: d.key, value: d.value};
+            tooltip.style('opacity', 1);
+            d3.select(this)
+                .style('opacity', 1)
+                .style('stroke', '#000')
+                .style('stroke-width', 2);
+        })
+        .on('mouseout', function(d) {
+            selectedCell = null;
+            tooltip.style('opacity', 0);
+            d3.select(this)
+                .style('opacity', 0.7)
+                .style('stroke-width', 0);
+        });
+
+        var yRootData = {
+          totalLength: 0.76,
+          children: [
+              {
+                  length: 0.05,
+                  children: [
+                      {
+                          length: 0.71,
+                          key: 'a'
+                      },
+                      {
+                          length: 0.37,
+                          children: [
+                              {
+                                  length: 0.34,
+                                  key: 'f'
+                              },
+                              {
+                                  length: 0.34,
+                                  key: 'g'
+                              }
+                          ]
+                      }
+                  ]
+              },
+              {
+                  length: 0.33,
+                  children: [
+                      {
+                          length: 0.43,
+                          key: 'e'
+                      },
+                      {
+                          length: 0.21,
+                          children : [
+                              {
+                                  length: 0.22,
+                                  key: 'b'
+                              },
+                              {
+                                  length: 0.10,
+                                  children: [
+                                      {
+                                          length: 0.12,
+                                          key: 'c'
+                                      },
+                                      {
+                                          length: 0.12,
+                                          key: 'd'
+                                      }
+                                  ]
+                              }
+                          ]
+                      }
+                  ]
+              }
+          ]
+      };
+
+      var yRoot = d3.hierarchy(yRootData)
+             .sum(function(d) {
+                 return d.length;
+             });
+
+     setYLinkScaledY(yRoot, yRoot.data.length = 0, linkHeight / yRoot.data.totalLength);
+        function setYLinkScaledY(d, y0, k) {
+            d.yLinkScaledY = (y0 += d.data.length) * k;
+            if (d.children) d.children.forEach(function(d) { setYLinkScaledY(d, y0, k); });
+      }
+
+
+      var yCluster = d3.cluster()
+        .size([heatmapWidth, linkHeight])
+        .separation(function() {return 1;});
+
+      yCluster(yRoot);
+
+      var yLinks = heatmap.append('g').attr('class', 'ylinks')
+        .attr('transform', 'translate(' + 0 + ',' + (linkHeight + margin) + ')');
+
+      yLinks.selectAll('.link')
+          .data(yRoot.descendants().slice(1))
+          .enter().append('path')
+          .attr('class', 'link')
+          .style('fill', 'none')
+          .style('stroke', '#000')
+          .style('stroke-width', 1)
+          .attr("d", function(d) {
+              return "M" + d.yLinkScaledY + "," + d.x
+                      + "L" + d.parent.yLinkScaledY + "," + d.x
+                      + " " + d.parent.yLinkScaledY + "," + d.parent.x;
+          });
+
+        var yNodes = heatmap.append('g').attr('class', 'ynodes')
+            .attr('transform', 'translate(' + (heatmapWidth + margin + 10) + ',' + (linkHeight + margin + 4) + ')');
+
+        yNodes.selectAll('.y-node')
+            .data(yRoot.descendants())
+            .enter().append('text')
+            .attr('class', function(d) {return 'y-node ' + (d.data.key ? d.data.key : '')})
+            .attr('transform', function(d) { return 'translate(' + d.y + ',' + d.x + ')'; })
+            .text(function(d) { return d.children ? '' : d.data.key });
+
+
+            var xRootData = {
+            totalLength: 0.8,
+            children: [
+                {
+                    length: 0.4,
+                    children: [
+                        {
+                            length: 0.4,
+                            key: 'd1'
+                        },
+                        {
+                            length: 0.4,
+                            key: 'd2'
+                        }
+                    ]
+                },
+                {
+                    length: 0.6,
+                    children: [
+                        {
+                            length: 0.2,
+                            key: 'd4'
+                        },
+                        {
+                            length: 0.2,
+                            key: 'd3'
+                        }
+                    ]
+                }
+            ]
+        };
+
+      var xRoot = d3.hierarchy(xRootData)
+        .sum(function(d) {
+            return d.length;
+        });
+
+      setXLinkScaledY(xRoot, xRoot.data.length = 0, linkHeight / xRoot.data.totalLength);
+
+    function setXLinkScaledY(d, y0, k) {
+        d.xLinkScaledY = (y0 += d.data.length) * k;
+        if (d.children) d.children.forEach(function(d) { setXLinkScaledY(d, y0, k); });
     }
-    var mousemove = function(d) {
-      console.log(d);
-      tooltip
-        .html("The exact value of<br>this cell is: " )
-        .style("left", d.clientX+70 + "px")
-        .style("top", d.clientY + "px")
-        .style("position", "absolute")
-    }
-    var mouseleave = function(d) {
-      tooltip
-        .style("opacity", 0)
-      d3.select(this)
-        .style("stroke", "none")
-        .style("opacity", 0.8)
-    }
 
+    var xCluster = d3.cluster()
+        .size([heatmapWidth, linkHeight])
+        .separation(function() {return 1;});
 
-  // add the squares
-  svg.selectAll()
-    .data(data, function(d) {return d.group+':'+d.variable;})
-    .enter()
-    .append("rect")
-      .attr("x", function(d) { return x(d.group) })
-      .attr("y", function(d) { return y(d.variable) })
-      .attr("rx", 4)
-      .attr("ry", 4)
-      .attr("width", x.bandwidth() )
-      .attr("height", y.bandwidth() )
-      .style("fill", function(d) { return myColor(d.value)} )
-      .style("stroke-width", 4)
-      .style("stroke", "none")
-      .style("opacity", 0.8)
-    .on("mouseover", mouseover)
-    .on("mousemove", mousemove)
-    .on("mouseleave", mouseleave)
-  // })
-  // Add title to graph
-svg.append("text")
-        .attr("x", 0)
-        .attr("y", -50)
-        .attr("text-anchor", "left")
-        .style("font-size", "22px")
-        .text("A d3.js heatmap");
+    xCluster(xRoot);
 
-// Add subtitle to graph
-svg.append("text")
-        .attr("x", 0)
-        .attr("y", -20)
-        .attr("text-anchor", "left")
-        .style("font-size", "14px")
-        .style("fill", "grey")
-        .style("max-width", 400)
-        .text("A short description of the take-away message of this chart.");
+    var xLinks = heatmap.append('g').attr('class', 'xlinks')
+        .attr('transform', 'translate(' + (linkHeight + margin) + ',' + 0 + ')');
 
+    xLinks.selectAll('.link')
+            .data(xRoot.descendants().slice(1))
+            .enter().append('path')
+            .attr('class', 'link')
+            .style('fill', 'none')
+            .style('stroke', 'blue')
+            .style('stroke-width', 1)
+            .attr("d", function(d) {
+                return "M" + d.x + "," + d.xLinkScaledY
+                        + "L" + d.x + "," + d.parent.xLinkScaledY
+                        + " " + d.parent.x + "," + d.parent.xLinkScaledY;
+            });
 
-    // })
+      var xNodes = heatmap.append('g').attr('class', 'xnodes')
+        .attr('transform', 'translate(' + (linkHeight + margin - 5) + ',' + (heatmapWidth + margin + 20) + ')');
+
+      xNodes.selectAll('.x-node')
+          .data(xRoot.descendants())
+          .enter().append('text')
+          .attr('class', 'x-node')
+          .style("text-anchor", 'start')
+          .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+          .text(function(d) { return d.children ? '' : d.data.key });
+
+      var tooltipGroup = svg.append('g').attr('class', 'tooltip');
+      var tooltip = tooltipGroup.append('rect')
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('width', 150)
+            .attr('height', 30)
+            .style('opacity', 0)
+            .style('stroke', '#000')
+            .style('stroke-width', 1)
+            .style('fill', 'rgba(255, 255, 255, 0.9');
+      var tooltipText = tooltipGroup.append('text')
+          .attr('x', 0)
+          .attr('y', 0)
+          .attr('dx', 10)
+          .attr('dy', 20)
   }
 
 

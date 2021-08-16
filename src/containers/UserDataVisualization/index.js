@@ -17,7 +17,7 @@ import Visualization from './Components/Visualizations'
 
 
 export default function DataVisualization() {
-  const [hideupload,setHideUpload] = useState(true)
+  const [hideupload,setHideUpload] = useState(false)
   const [showVisualization,setShowviualization] = useState(false)
   const fileUploadCallBack = (d_) =>{
     // setTimeout(() => setHideUpload(true), 10000)

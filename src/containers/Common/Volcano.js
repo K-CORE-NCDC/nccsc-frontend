@@ -288,7 +288,6 @@ export default function VolcanoCmp({ width, data }) {
 }
 
   useEffect(()=>{
-
     if(data){
       let d = data['rna_expression']
       var yLabel = '-log<tspan baseline-shift="sub">10</tspan>False Discovery Rate',
