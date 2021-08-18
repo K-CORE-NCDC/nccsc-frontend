@@ -254,3 +254,22 @@ export function getVolcanoUserData(data) {
 
       };
     }
+
+
+export function getVolcanoData() {
+  return (dispatch) => {
+    let url = config.auth+"volcano/"
+    sendRequest(url, "GET", "")
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: userdataVisualization.VOLCANO_DATA_VISUALIZATION_REQUEST,
+          payload: d["data"],
+        });
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
+
+    };
+  }

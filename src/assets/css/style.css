@@ -1,0 +1,25 @@
+.selected-tab {
+    background-color: aquamarine;
+  }
+
+.table-border {
+    border: solid black 1px;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.p-1 {
+    padding: 1em;
+}
+
+.m-1 {
+    margin: 1em;
+}

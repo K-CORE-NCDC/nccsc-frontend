@@ -34,7 +34,7 @@ export default function DataVisualization() {
 
 
   const callback = useCallback((count) => {
-    // console.log(count);
+    setState((prevState) => ({...prevState, ...count}))
     // setCount(count);
   }, []);
 
