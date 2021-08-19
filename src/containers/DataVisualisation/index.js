@@ -20,18 +20,19 @@ import { getBreastKeys,getCircosInformation } from '../../actions/api_actions'
 import {
   Link
 } from "react-router-dom";
+
 export default function DataVisualization() {
   const elementRef = useRef(null);
   const [state,setState] = useState({"genes":[],'type':''})
   const [boolChartState,setBoolChartState] = useState(true)
   const [filterState,setFilterState] = useState({})
+  const [leftFilter,setLeftFilter] = useState(null)
   const [chart,setCharts] = useState({"viz":[]})
   const [width,setWidth] = useState(0)
   const dispatch = useDispatch()
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
   let { tab } = useParams();
   const [chartName,setChartName] = useState(tab)
-
 
   const callback = useCallback((count) => {
     setState((prevState) => ({...prevState, ...count}))
@@ -63,6 +64,7 @@ export default function DataVisualization() {
     })
 
   }
+
   useEffect(()=>{
     submitFilter()
   },[tab])
@@ -72,7 +74,6 @@ export default function DataVisualization() {
     setWidth(w);
     dispatch(getBreastKeys())
     setBoolChartState(false)
-
   },[])
 
   useEffect(()=>{
@@ -103,17 +104,25 @@ export default function DataVisualization() {
     }))
   }
 
-  const LoadChart = (width,type)=>{
+  const LoadChart = (w,type)=>{
     switch (type) {
       case "circos":
-        return Charts.circos(width,state)
+        return Charts.circos(w, state, leftFilter)
       case "onco":
-        return Charts.onco(width,state)
+        return Charts.onco(w, state, leftFilter)
       case "lolipop":
-        return Charts.onco(width,state)
+        return Charts.onco(w, state, leftFilter)
+      case "volcano":
+        return Charts.volcano(w, state, leftFilter)
+      case "heatmap":
+        return Charts.heatmap(w, state, leftFilter)
       default:
         return false
     }
+  }
+
+  const callback = (da) =>{
+    setLeftFilter(da)
   }
 
   return (
@@ -196,7 +205,6 @@ export default function DataVisualization() {
                     {!boolChartState &&
                       <div>Loading.......</div>
                     }
-
                   </div>
                 </section>
               </div>

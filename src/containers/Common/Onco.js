@@ -20,7 +20,59 @@ export default function OncoCmp({ width,data }) {
 
   useEffect(()=>{
     if(data){
-      const d = data
+      // const d = data['dna_mutation']
+      // const d = data
+      const d = [
+      {
+          "gene": "PTEN",
+          "type": "Frame_Shift_Del",
+          "sample": "RN57508938",
+          "alteration": "PTEN"
+      },
+      {
+          "gene": "PTEN",
+          "type": "Missense_Mutation",
+          "sample": "RN37312101",
+          "alteration": "PTEN"
+      },
+      {
+          "gene": "TP53",
+          "type": "Frame_Shift_Del",
+          "sample": "RN02202045",
+          "alteration": "TP53"
+      },
+      {
+          "gene": "TP53",
+          "type": "Missense_Mutation",
+          "sample": "RN37312989",
+          "alteration": "TP53"
+      },
+      {
+          "gene": "TP53",
+          "type": "Missense_Mutation",
+          "sample": "RN44439642",
+          "alteration": "TP53"
+      }
+    ]
+    //   const d = [{
+    //   "gene":"gloabal_mutation",
+    //   "type":"train_shift_del",
+    //   "sample":"RN9808080",
+    //   "alteration":"gloabal_mutation"
+    //   },
+    //   {
+    //   "gene":"missense_mutation",
+    //   "type":"Frame_Shift_Ins",
+    //   "sample":"RN9808080",
+    //   "alteration":"missense_mutation"
+    // },
+    //   {
+    //   "gene":"gloabal_mutation",
+    //   "type":"train_shift_del",
+    //   "sample":"RN57508938",
+    //   "alteration":"gloabal_mutation"
+    // }
+    // ]
       let colorScaleData = {}
       d.forEach(element =>{
         colorScaleData = {...colorScaleData, [element.alteration]: {colorHTML: getRandomColor(), displayName: element.type}}

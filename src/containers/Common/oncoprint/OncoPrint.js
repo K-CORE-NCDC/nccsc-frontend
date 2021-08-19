@@ -113,6 +113,7 @@ export default class OncoPrintCustom extends PureComponent {
 
     // Fetch data
     getData() {
+
         const {
             data: inputData,
             padding,

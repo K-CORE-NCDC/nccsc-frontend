@@ -50,8 +50,14 @@ export function getGenomicInformation() {
 
 export function getOncoInformation(type,data){
   return (dispatch) => {
+    const form = new FormData()
+
+    form.set('genes', data.genes);
+    // form.set('filters', data.);
+
     let url = config.auth+"onco/";
-    sendRequest(url, type, data)
+
+    sendRequest(url, type, form)
       .then((result) => {
         const d = result
         dispatch({
@@ -86,6 +92,58 @@ export function getLolipopInformation(type,data){
 }
 
 
+
+export function getVolcanoPlotInfo(type,data){
+  return (dispatch) => {
+    let url = config.auth+"volcano/";
+
+    const form = new FormData()
+
+    form.set('genes', data.genes);
+    if("filter" in data){
+      form.set('filters', data.filter);
+    }
+
+    sendRequest(url, type, form)
+      .then((result) => {
+        const d = result
+        dispatch({
+          type: dataVisualization.VOLCANO_REQUEST,
+          payload: d["data"],
+        });
+        dispatch({ type: dataVisualization.REQUEST_DONE });
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
+  };
+}
+
+export function getHeatmapInformation(type,data){
+  return (dispatch) => {
+    let url = config.auth+"heatmap/";
+    const form = new FormData()
+
+    form.set('genes', data.genes);
+    if("filter" in data){
+      form.set('filters', data.filter);
+    }
+
+    sendRequest(url, type, form)
+      .then((result) => {
+        const d = result
+        dispatch({
+          type: dataVisualization.HEATMAP_REQUEST,
+          payload: JSON.parse(d["data"]),
+        });
+        dispatch({ type: dataVisualization.REQUEST_DONE });
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
+  };
+}
+
 export function file_upload(data, div_name) {
     return (dispatch) => {
       const form = new FormData()
@@ -110,7 +168,6 @@ export function file_upload(data, div_name) {
   }
 
 export function getCircosInformation(type,data) {
-  // console.log(type,data);
   return (dispatch) => {
   //   dispatch({ type: homeConstants.DATA_SUMMARY });
     let url = config.auth+"circos/";
@@ -235,6 +292,7 @@ export function getVolcanoUserData(data) {
       if('selected_genes' in data){
         form.set('genes', data.selected_genes);
       }
+
 
       if('filter' in data){
         form.set('filters', data.filter);
