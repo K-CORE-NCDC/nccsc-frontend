@@ -16,6 +16,10 @@ code {
     monospace;
 }
 
+.selected-tab {
+  background-color: aquamarine;
+}
+
 
 
 /*  */

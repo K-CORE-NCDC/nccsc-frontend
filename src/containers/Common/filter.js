@@ -178,7 +178,7 @@ export default function Filter({parentCallback}) {
     }
   }
 
-  const sendFilter = () =>{
+  const sendFilter = ()=>{
     parentCallback(selectState)
   }
 

@@ -34,10 +34,10 @@ export default function DataVisualization() {
   let { tab } = useParams();
   const [chartName,setChartName] = useState(tab)
 
-  // const callback = useCallback((count) => {
-  //   // console.log("filter count",count);
-  //   // setCount(count);
-  // }, []);
+  const callback = useCallback((count) => {
+    setState((prevState) => ({...prevState, ...count}))
+    // setCount(count);
+  }, []);
 
   const selectGene = (event) => {
     let val_ = event.target.value;
@@ -115,7 +115,6 @@ export default function DataVisualization() {
       case "volcano":
         return Charts.volcano(w, state, leftFilter)
       case "heatmap":
-        console.log("leftFilter---->",leftFilter)
         return Charts.heatmap(w, state, leftFilter)
       default:
         return false

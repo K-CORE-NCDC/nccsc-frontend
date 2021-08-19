@@ -84,7 +84,7 @@ export default function CircosCmp({ width, data }) {
             block_id: d.chromosome,
             position: (parseInt(d.start_position) + parseInt(d.end_position)) / 2,
             value: parseInt(d.start_position),
-            name: d.name,
+            name: d.hugo_symbol,
             rna:d.rna_cnt
           }
           tmp.push(dt)
@@ -100,7 +100,7 @@ export default function CircosCmp({ width, data }) {
           block_id: d.chromosome,
           position: (parseInt(d.start_position) + parseInt(d.end_position)) / 2,
           value: d.start_position,
-          name: d.name
+          name: d.hugo_symbol
         }
       })
     }
@@ -111,10 +111,10 @@ export default function CircosCmp({ width, data }) {
         if(d.rna_cnt>1){
           tmp.push({
             block_id: d.chromosome,
-            position: (parseInt(d.start_position) + parseInt(d.end_position)) / 2,
+            position: (parseInt(d.start_position) + parseInt(d.end_position)) / 3,
             value: d.start_position,
             rna:d.rna_cnt,
-            name: d.name
+            name: d.hugo_symbol
           })
         }
         return tmp
@@ -130,7 +130,7 @@ export default function CircosCmp({ width, data }) {
             position: (parseInt(d.start_position) + parseInt(d.end_position)) / 2,
             value: d.start_position,
             rna:d.rna_cnt,
-            name: d.name
+            name: d.hugo_symbol
           })
         }
         return tmp
