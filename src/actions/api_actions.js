@@ -1,6 +1,7 @@
 import { homeConstants,dataVisualization,userdataVisualization } from "./Constants";
 import config from '../config'
 import axios from "axios";
+import '../assets/interceptor/interceptor'
 
 
 function sendRequest(url, method, data) {
