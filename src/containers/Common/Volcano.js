@@ -4,13 +4,13 @@ import dataD from './data.diff'
 
 import "../../styles/volcano.css"
 
-export default function VolcanoCmp({ width, data }) {
+export default function VolcanoCmp({ w, data }) {
 
-
+  // co
   function volcanoPlot() {
-    var width = 960,
+    var width = w - 20,
         height = 500,
-        margin = {top: 20, right: 20, bottom: 40, left: 50},
+        margin = {top: 20, right: 40, bottom: 40, left: 60},
         xColumn, // name of the variable to be plotted on the axis
         yColumn,
         xAxisLabel, // label for the axis
@@ -25,8 +25,6 @@ export default function VolcanoCmp({ width, data }) {
         colorRange, // colour range to use in the plot
         xScale = d3.scaleLinear(), // the values for the axes will be continuous
         yScale = d3.scaleLog();
-
-
 
     function chart(selection){
       var innerWidth = width - margin.left - margin.right, // set the size of the chart within its container
@@ -114,7 +112,8 @@ export default function VolcanoCmp({ width, data }) {
                 .attr('r', 3)
                 .attr('cx', function(d) { return xScale(d[xColumn]); })
                 .attr('cy', function(d) { return yScale(d[yColumn]); })
-                .attr('class', circleClass)
+                .style('fill', function(d) { return d.color })
+                // .attr('class', circleClass)
                 .on('mouseenter', tipEnter)
                 .on("mousemove", tipMove)
                 .on('mouseleave', function(d) {
@@ -179,11 +178,25 @@ export default function VolcanoCmp({ width, data }) {
             }
 
             function circleClass(d) {
-                if (d[yColumn] <= significanceThreshold && Math.abs(d[xColumn]) >= foldChangeThreshold) return 'dot sigfold';
-                else if (d[yColumn] <= significanceThreshold) return 'dot sig';
-                else if (Math.abs(d[xColumn]) >= foldChangeThreshold) return 'dot fold';
+                if (d[yColumn] <= significanceThreshold && Math.abs(d[xColumn]) >= foldChangeThreshold) {
+                  return 'dot sigfold';
+                }
+                else if (d[yColumn] <= significanceThreshold) {
+                  return 'dot sig';
+                }
+                else if (Math.abs(d[xColumn]) >= foldChangeThreshold) {
+                  return 'dot fold';
+                }
                 else return 'dot';
             }
+
+            // function circleClass(d) {
+            //     // console.log(d)
+            //     if (d[yColumn] <= significanceThreshold && Math.abs(d[xColumn]) >= foldChangeThreshold) return 'red';
+            //     else if (d[yColumn] <= significanceThreshold) return 'blue';
+            //     else if (Math.abs(d[xColumn]) >= foldChangeThreshold) return 'green';
+            //     else return 'red';
+            // }
 
             function reset() {
                 var ease = d3.easePolyIn.exponent(4.0);
@@ -289,7 +302,7 @@ export default function VolcanoCmp({ width, data }) {
 
   useEffect(()=>{
     if(data){
-      let d = data['rna_expression']
+      let d = data
       var yLabel = '-log<tspan baseline-shift="sub">10</tspan>False Discovery Rate',
        xLabel = 'log<tspan baseline-shift="sub">2</tspan>Fold-change';
       var volcanoPlot1 = volcanoPlot()
@@ -303,8 +316,6 @@ export default function VolcanoCmp({ width, data }) {
                  .data([d])
                  .call(volcanoPlot1);
     }
-
-
   },[])
 
   return (

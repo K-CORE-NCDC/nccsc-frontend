@@ -81,3 +81,48 @@ code {
          background-color: #6574cd; /*.bg-indigo*/
          color: #f8fafc; /*.text-grey-lightest*/
          }
+
+
+         .dot {
+             /*pointer-events: all;*/
+             /* fill: #666; */
+             fill: red;
+             stroke: none;
+             opacity: 0.4;
+         }
+
+         .dot.sig {
+             fill: red;
+         }
+
+         .dot.fold {
+             fill: blue;
+         }
+
+         .dot.sigfold {
+             fill: green;
+
+         }
+
+
+         .tooltip {
+             position: absolute;
+             z-index: 10;
+             background-color: #000;
+             color: #fff;
+             padding: 2px 7px;
+             visibility: hidden;
+             opacity: 0.75;
+             border-radius: 3px;
+         }
+
+         .tooltip::after {
+             content: " ";
+             position: absolute;
+             top: 14%;
+             right: 100%; /* To the left of the tooltip */
+             margin-top: -5px;
+             border-width: 5px;
+             border-style: solid;
+             border-color: transparent #000 transparent transparent;
+         }

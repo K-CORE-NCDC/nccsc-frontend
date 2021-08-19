@@ -6,6 +6,7 @@ import { getOncoInformation } from '../../../actions/api_actions'
 export default function DataOnco({ width,inputData }) {
   const dispatch = useDispatch()
   const oncoJson = useSelector((data) => data.dataVisualizationReducer.oncoSummary);
+
   useEffect(()=>{
     if(inputData){
       if(inputData.type !==''){

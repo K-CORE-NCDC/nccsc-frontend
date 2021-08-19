@@ -39,8 +39,7 @@ export default function Visualization() {
   //   // setCount(count);
   // }, []);
   let filters = ''
-  const callback = (filters_) => {
-    // setfilterForm(JSON.stringify(filters_))
+  const callback = (filters_) => {  
     filters = JSON.stringify(filters_)
     onFilter()
   }

@@ -34,8 +34,6 @@ export default function FileUpload({ parentCallBack }) {
     // addHtml()
   }, [select])
 
-  console.log(selectedFileSampleType);
-  console.log(uploadFile);
 
   useEffect(() => {
     if (response) {

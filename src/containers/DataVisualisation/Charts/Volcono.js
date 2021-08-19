@@ -2,23 +2,27 @@ import React, { useState,useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import VolcanoCmp from '../../Common/Volcano'
 
-// import { getLolipopInformation } from '../../../actions/api_actions'
+import { getVolcanoPlotInfo } from '../../../actions/api_actions'
 
-export default function DataVolcono({ width,inputData }) {
+export default function DataVolcono({ width, inputData, filter }) {
   const dispatch = useDispatch()
   // const lolipopJson = useSelector((data) => data.dataVisualizationReducer.lollipopSummary);
+  const volcanoJson = useSelector((data) => data.dataVisualizationReducer.volcanoSummary);
 
   useEffect(()=>{
-    // if(inputData){
-    //   if(inputData.type !==''){
-    //     dispatch(getLolipopInformation('POST',inputData))
-    //   }
-    // }
+    if(inputData){
+      if(filter != null){
+        inputData['filter'] = JSON.stringify(filter)
+      }
+      if(inputData.type !==''){
+        dispatch(getVolcanoPlotInfo('POST',inputData))
+      }
+    }
   },[inputData])
 
   return (
     <div>
-      <VolcanoCmp width={width} data={lolipopJson}/>
+      <VolcanoCmp w={width} data={volcanoJson}/>
     </div>
   )
 
