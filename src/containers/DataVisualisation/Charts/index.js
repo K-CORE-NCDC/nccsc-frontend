@@ -16,12 +16,12 @@ function lolipop(width,inputData, filter_) {
   return <DataLolipop key='lolipop' width={width} inputData={inputData} />
 }
 
-function volcano(width,inputData, filter_) {
-  return <DataVolcono key='volcano' width={width} inputData={inputData} filter={filter_}/>
+function volcano(width,inputData) {
+  return <DataVolcono key='volcano' width={width} inputData={inputData}/>
 }
-function heatmap(width,inputData, filter_) {
-  console.log("filter_--->",filter_)  
-  return <DataHeatmap key='volcano' width={width} inputData={inputData} filter={filter_}/>
+
+function heatmap(width,inputData) {
+  return <DataHeatmap key='heatmap' width={width} inputData={inputData}/>
 }
 
 export const Charts = {

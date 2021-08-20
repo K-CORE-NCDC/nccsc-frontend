@@ -23,7 +23,7 @@ import {
 
 export default function DataVisualization() {
   const elementRef = useRef(null);
-  const [state,setState] = useState({"genes":[],'type':''})
+  const [state,setState] = useState({"genes":[],'type':'',"filter":{}})
   const [boolChartState,setBoolChartState] = useState(true)
   const [filterState,setFilterState] = useState({})
   const [leftFilter,setLeftFilter] = useState(null)
@@ -34,8 +34,10 @@ export default function DataVisualization() {
   let { tab } = useParams();
   const [chartName,setChartName] = useState(tab)
 
-  const callback = useCallback((count) => {
-    setState((prevState) => ({...prevState, ...count}))
+  const callback = useCallback((filters) => {
+    // console.log("count---->",count)
+    setState((prevState) => ({...prevState, filter:filters}))
+    // setState((prevState) => ({...prevState, ...count}))
     // setCount(count);
   }, []);
 
@@ -107,23 +109,25 @@ export default function DataVisualization() {
   const LoadChart = (w,type)=>{
     switch (type) {
       case "circos":
-        return Charts.circos(w, state, leftFilter)
+        return Charts.circos(w, state)
       case "onco":
-        return Charts.onco(w, state, leftFilter)
+        return Charts.onco(w, state)
       case "lolipop":
-        return Charts.onco(w, state, leftFilter)
+        return Charts.onco(w, state)
       case "volcano":
-        return Charts.volcano(w, state, leftFilter)
+        return Charts.volcano(w, state)
       case "heatmap":
-        return Charts.heatmap(w, state, leftFilter)
+        return Charts.heatmap(w, state)
       default:
         return false
     }
   }
 
-  const callback = (da) =>{
-    setLeftFilter(da)
-  }
+  // const callback = (da) =>{
+  //   setLeftFilter(da)
+  // }
+
+  console.log(state)
 
   return (
     <div className="header">
