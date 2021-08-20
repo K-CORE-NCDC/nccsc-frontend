@@ -50,14 +50,14 @@ export function getGenomicInformation() {
 
 export function getOncoInformation(type,data){
   return (dispatch) => {
-    const form = new FormData()
+    // const form = new FormData()
+    //
+    // form.set('genes', data.genes);
+    // // form.set('filters', data.);
+    //
+    let url = config.auth+"oncoprint/";
 
-    form.set('genes', data.genes);
-    // form.set('filters', data.);
-
-    let url = config.auth+"onco/";
-
-    sendRequest(url, type, form)
+    sendRequest(url, type, data)
       .then((result) => {
         const d = result
         dispatch({
@@ -75,7 +75,7 @@ export function getOncoInformation(type,data){
 
 export function getLolipopInformation(type,data){
   return (dispatch) => {
-    let url = config.auth+"lolipop/";
+    let url = config.auth+"lollipop/";
     sendRequest(url, type, data)
       .then((result) => {
         const d = result

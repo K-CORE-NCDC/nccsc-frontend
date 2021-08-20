@@ -12,22 +12,22 @@ function onco(width,inputData, filter_) {
   return <DataOnco key='onco' width={width} inputData={inputData} />
 }
 
-function lolipop(width,inputData, filter_) {
-  return <DataLolipop key='lolipop' width={width} inputData={inputData} />
+function lollipop(width,inputData, filter_) {
+  return <DataLolipop key='lolipop' leftFilter={filter_} width={width} inputData={inputData} />
 }
 
 function volcano(width,inputData, filter_) {
   return <DataVolcono key='volcano' width={width} inputData={inputData} filter={filter_}/>
 }
 function heatmap(width,inputData, filter_) {
-  console.log("filter_--->",filter_)  
+  console.log("filter_--->",filter_)
   return <DataHeatmap key='volcano' width={width} inputData={inputData} filter={filter_}/>
 }
 
 export const Charts = {
   circos,
   onco,
-  lolipop,
+  lollipop,
   volcano,
   heatmap
 }

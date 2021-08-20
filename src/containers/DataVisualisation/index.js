@@ -23,10 +23,10 @@ import {
 
 export default function DataVisualization() {
   const elementRef = useRef(null);
-  const [state,setState] = useState({"genes":[],'type':''})
+  const [state,setState] = useState({"genes":[],'filter':'','type':''})
   const [boolChartState,setBoolChartState] = useState(true)
   const [filterState,setFilterState] = useState({})
-  const [leftFilter,setLeftFilter] = useState(null)
+  const [leftFilter,setLeftFilter] = useState(false)
   const [chart,setCharts] = useState({"viz":[]})
   const [width,setWidth] = useState(0)
   const dispatch = useDispatch()
@@ -34,10 +34,24 @@ export default function DataVisualization() {
   let { tab } = useParams();
   const [chartName,setChartName] = useState(tab)
 
-  const callback = useCallback((count) => {
-    setState((prevState) => ({...prevState, ...count}))
+  const callback = useCallback((filters) => {
+
+    let type = document.getElementById('gene_type').value
+    let g = genes[type].data
+    setState((prevState) => ({...prevState,
+      'filter': filters,
+      'genes': g,
+      'type': type
+    }))
+
+    setLeftFilter(true)
     // setCount(count);
   }, []);
+
+  useEffect(() => {
+    // console.log(state);
+    submitFilter()
+  },[state])
 
   const selectGene = (event) => {
     let val_ = event.target.value;
@@ -66,6 +80,16 @@ export default function DataVisualization() {
   }
 
   useEffect(()=>{
+    let tabsContainer = document.querySelector("#tabs");
+    let tabTogglers = tabsContainer.querySelectorAll("li");
+    tabTogglers.forEach(function(toggler) {
+      let href = toggler.children[0].href
+      href = href.split('/')
+      toggler.classList.remove("border-blue-400", "border-b",  "-mb-px", "opacity-100");
+      if (href.includes(tab)){
+        toggler.classList.add("border-blue-400", "border-b-4", "-mb-px", "opacity-100");
+      }
+    })
     submitFilter()
   },[tab])
 
@@ -102,16 +126,18 @@ export default function DataVisualization() {
       ...prevState,
       'viz':chartx,
     }))
+    // setLeftFilter(false)/
   }
 
   const LoadChart = (w,type)=>{
+    console.log('----')
     switch (type) {
       case "circos":
         return Charts.circos(w, state, leftFilter)
       case "onco":
         return Charts.onco(w, state, leftFilter)
-      case "lolipop":
-        return Charts.onco(w, state, leftFilter)
+      case "lollipop":
+        return Charts.lollipop(w, state, leftFilter)
       case "volcano":
         return Charts.volcano(w, state, leftFilter)
       case "heatmap":
@@ -121,24 +147,20 @@ export default function DataVisualization() {
     }
   }
 
-  const callback = (da) =>{
-    setLeftFilter(da)
-  }
-
   return (
     <div className="header">
       <div className="mx-auto border-t rounded overflow-hidden ">
         <div id="main_div">
           <div className="grid grid-cols-4">
             <div className="bg-white border border-gray-200">
-              <Filter parentCallback={callback}/>
+              <Filter parentCallback={callback} genes={state} />
             </div>
             <div className="col-start-2 col-span-3 overflow-auto ">
               <div className="grid grid-cols-3 gap-1 p-5 bg-white">
                 <h3>Gene Selection</h3>
                 <div className='col-span-3 grid grid-cols-7 gap-6'>
                   <div className="relative w-full col-span-3">
-                    <select value={state['type']} onChange={e=>selectGene(e)}className='w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 '>
+                    <select id='gene_type' value={state['type']} onChange={e=>selectGene(e)}className='w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 '>
                       <option value="user-defined">User-Defined List</option>
                       <option value="major-genes">Cancer major genes (28 genes)</option>
                       <option value="brst-major-genes">Breast cancer major genes (20 genes)</option>
@@ -183,7 +205,7 @@ export default function DataVisualization() {
                         <Link to="/visualise/onco">Oncoprint Plot</Link>
                       </li>
                       <li className="px-4 py-2 font-semibold  rounded-t opacity-50 ">
-                        <Link to="/visualise/lolipop">Lollipop Plot</Link>
+                        <Link to="/visualise/lollipop">Lollipop Plot</Link>
                       </li>
                       <li className="px-4 py-2 font-semibold  rounded-t opacity-50 ">
                         <Link to="/visualise/volcano">Volcano Plot</Link>

@@ -9,7 +9,9 @@ export default function DataOnco({ width,inputData }) {
 
   useEffect(()=>{
     if(inputData){
+
       if(inputData.type !==''){
+        // console.log(inputData);
         dispatch(getOncoInformation('POST',inputData))
       }
     }

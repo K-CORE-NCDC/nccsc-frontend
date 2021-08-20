@@ -10,7 +10,7 @@ export default function DataHeatmap({ width,inputData, filter }) {
 
   useEffect(()=>{
     if(inputData){
-      
+
       if(filter != null){
         inputData['filter'] = JSON.stringify(filter)
       }
