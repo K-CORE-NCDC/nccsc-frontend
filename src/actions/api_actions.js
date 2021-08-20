@@ -100,8 +100,10 @@ export function getVolcanoPlotInfo(type,data){
     const form = new FormData()
 
     form.set('genes', data.genes);
+
+    // console.log("data.filter---->",data.filter)
     if("filter" in data){
-      form.set('filters', data.filter);
+      form.set('filters', JSON.stringify(data.filter));
     }
 
     sendRequest(url, type, form)
@@ -125,8 +127,12 @@ export function getHeatmapInformation(type,data){
     const form = new FormData()
 
     form.set('genes', data.genes);
+
     if("filter" in data){
-      form.set('filters', data.filter);
+      form.set('filters', JSON.stringify(data.filter));
+    }
+    if("table_type" in data){
+      form.set('tab_type', data.table_type);
     }
 
     sendRequest(url, type, form)
