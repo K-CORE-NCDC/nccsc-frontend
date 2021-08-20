@@ -6,7 +6,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 
 
-export default function DataLolipop({ leftFilter,width,inputData }) {
+export default function DataLolipop({ width,inputData }) {
   const dispatch = useDispatch()
   const [genesHtml,setGenesHtml] = useState([])
   const [gene,setGene] = useState('')
@@ -15,7 +15,6 @@ export default function DataLolipop({ leftFilter,width,inputData }) {
   const [inputState,setInputState] = useState({})
   const lolipopJson = useSelector((data) => data.dataVisualizationReducer.lollipopSummary);
 
-  console.log(leftFilter);
   const geneSet = (e) => {
     let hash = e.target.hash
     let gene = hash.substring(1)
@@ -42,16 +41,12 @@ export default function DataLolipop({ leftFilter,width,inputData }) {
 
   useEffect(()=>{
     if(inputData && 'genes' in inputData){
-      console.log('---inputdata');
       setInputState((prevState) => ({...prevState,...inputData }))
-      // setInputState(inputData)
-
     }
   },[inputData])
+  
   useEffect(()=>{
     if(inputState && 'genes' in inputState){
-      console.log('---inputstat');
-      console.log(inputState);
       let g = inputState['genes']
       loadGenesDropdown(g)
       setGene(g[0])

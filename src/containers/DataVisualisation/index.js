@@ -26,7 +26,6 @@ export default function DataVisualization() {
   const [state,setState] = useState({"genes":[],'filter':'','type':''})
   const [boolChartState,setBoolChartState] = useState(true)
   const [filterState,setFilterState] = useState({})
-  const [leftFilter,setLeftFilter] = useState(false)
   const [chart,setCharts] = useState({"viz":[]})
   const [width,setWidth] = useState(0)
   const dispatch = useDispatch()
@@ -43,13 +42,9 @@ export default function DataVisualization() {
       'genes': g,
       'type': type
     }))
-
-    setLeftFilter(true)
-    // setCount(count);
   }, []);
 
   useEffect(() => {
-    // console.log(state);
     submitFilter()
   },[state])
 
@@ -130,22 +125,23 @@ export default function DataVisualization() {
   }
 
   const LoadChart = (w,type)=>{
-    console.log('----')
+
     switch (type) {
       case "circos":
-        return Charts.circos(w, state, leftFilter)
+        return Charts.circos(w, state)
       case "onco":
-        return Charts.onco(w, state, leftFilter)
+        return Charts.onco(w, state)
       case "lollipop":
-        return Charts.lollipop(w, state, leftFilter)
+        return Charts.lollipop(w, state)
       case "volcano":
-        return Charts.volcano(w, state, leftFilter)
+        return Charts.volcano(w, state)
       case "heatmap":
-        return Charts.heatmap(w, state, leftFilter)
+        return Charts.heatmap(w, state)
       default:
         return false
     }
   }
+
 
   return (
     <div className="header">
