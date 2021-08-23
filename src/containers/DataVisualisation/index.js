@@ -90,6 +90,7 @@ export default function DataVisualization() {
 
   useEffect(()=>{
     let w = elementRef.current.getBoundingClientRect().width
+
     setWidth(w);
     dispatch(getBreastKeys())
     setBoolChartState(false)
@@ -137,6 +138,8 @@ export default function DataVisualization() {
         return Charts.volcano(w, state)
       case "heatmap":
         return Charts.heatmap(w, state)
+      case "survival":
+        return Charts.survival(w, state)
       default:
         return false
     }
