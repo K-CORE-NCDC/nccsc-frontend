@@ -10,6 +10,7 @@ import {
 } from '@heroicons/react/outline'
 import { file_upload } from '../../../../actions/api_actions'
 import { useSelector, useDispatch } from "react-redux";
+import XLSX from 'xlsx';
 import Loader from '../../Widgets/loader';
 import FileSaver from 'file-saver';
 
@@ -25,34 +26,39 @@ export default function FileUpload({ parentCallBack }) {
   // const [uploadFile, setUploadFile] = useState({clinical:""})
   const [selectedFiles, setSelectedFiles] = useState([])
   const [uploadFile, setUploadFile] = useState({})
+  const [projectName, setProjectName] = useState("")
+  const [uploadButtonDisabled, setUploadButtonDisabled] = useState(true)
+  const [uploadSuccessful, setUploadSuccessful] = useState(false)
   const fileInputRef = useRef()
 
   const [initialInputState, setInitialInputState] = useState(undefined)
-  const [selectedFileSampleType, setSelectedFileSampleType] = useState({ 1: "clinical_information" })
+  const [selectedFileSampleType, setSelectedFileSampleType] = useState({ 
+    1: "clinical_information",
+    2: "dna_mutation",
+    3: "rna_zscore",
+    4: "dna_methylation",
+    5: "proteome"
+  })
+
+  console.log(response)
 
   useEffect(() => {
-    // addHtml()
-  }, [select])
+    if(Object.keys(uploadFile).length === 5){
+      setUploadButtonDisabled(false)
+    }else{
+      setUploadButtonDisabled(true)
+    }
+  }, [uploadFile])
 
 
   useEffect(() => {
-    if (response) {
-      Object.keys(response).forEach(function (key, value) {
-        // localStorage.setItem(key, false)
-        // console.log(localStorage)
+    if (response) { 
+      if(Object.values(response).some((element)=>(element === null))){
+        setUploadSuccessful(false)
+      }else{
+        setUploadSuccessful(true)
+      }
 
-        // localStorage.removeItem(key)
-        // setFileData(prevState => ({
-        //       ...prevState,
-        //       [key]:response[key]
-        // }));
-        // let loader_state = select
-        // const key_loader = Object.keys(loader_state).find(key_ => loader_state[key_] === key);
-        setLoader(prevState => ({
-          ...prevState,
-          [key]: false
-        }));
-      })
     }
   }, [response])
 
@@ -87,7 +93,7 @@ export default function FileUpload({ parentCallBack }) {
     let selected_files = selectedFiles;
     let type_name = e.target.name;
 
-    if (type_name) {
+    if (type_name && e.target.files) {
       let file_name = e.target.files[0]['name']
       selectedFiles.push(file_name)
       let extension = file_name.split('.')
@@ -123,6 +129,31 @@ export default function FileUpload({ parentCallBack }) {
     }
   }
 
+  const excelToJson = (reader) => {
+    var fileData = reader.result;
+    var wb = XLSX.read(fileData, {type : 'binary'});
+    var data = {};
+    wb.SheetNames.forEach(function(sheetName){
+         var rowObj =XLSX.utils.sheet_to_row_object_array(wb.Sheets[sheetName]);
+         var rowString = JSON.stringify(rowObj);
+         data[sheetName] = rowString;
+    });
+    console.log({excelData: data});
+}
+
+const loadFileXLSX = (file) => {
+  var reader = new FileReader();
+  reader = excelToJson(reader);
+  reader.readAsBinaryString(file);
+}
+
+  // useEffect(() => {
+  //   console.log(uploadFile);
+  //   Object.keys(uploadFile).forEach(element => {
+  //     loadFileXLSX(uploadFile[element].file)
+  //   })
+  // }, [uploadFile])
+
   const on_upload = (e) => {
     let files_ = uploadFile;
     Object.keys(files_).forEach(function (key, value) {
@@ -131,7 +162,13 @@ export default function FileUpload({ parentCallBack }) {
         ...prevState,
         [key]: true
       }));
-      dispatch(file_upload(files_[key], key));
+      if(response && (response[for_loader] === null || projectName !== response.name)){
+        dispatch(file_upload(files_[key], key, projectName));
+      }else if(!response){
+        dispatch(file_upload(files_[key], key, projectName));
+      }else{
+        console.log(response);
+      }
       parentCallBack({ "hide": true, "selected_keys": select });
     })
   }
@@ -146,7 +183,7 @@ export default function FileUpload({ parentCallBack }) {
 
   const addNewHTML = () => {
     const newElementId = Math.max(...Object.keys(selectedFileSampleType)) + 1
-    if(newElementId<6){
+    if (newElementId < 6) {
       setSelectedFileSampleType((prevState) => ({
         ...prevState,
         [newElementId]: "clinical_information"
@@ -159,9 +196,9 @@ export default function FileUpload({ parentCallBack }) {
     let selected_ = selectedFiles
     if (deleteKey !== 1) {
       let activeElementKeys = {}
-      Object.keys(selectedFileSampleType).forEach(key =>{
-        if(key != deleteKey){
-          activeElementKeys = {...activeElementKeys, [key]: selectedFileSampleType[key]}
+      Object.keys(selectedFileSampleType).forEach(key => {
+        if (key != deleteKey) {
+          activeElementKeys = { ...activeElementKeys, [key]: selectedFileSampleType[key] }
           selected_.splice(key, 1)
         }
       })
@@ -176,26 +213,18 @@ export default function FileUpload({ parentCallBack }) {
       firstInput.push(
         <div key={key} className="grid grid-cols-12 gap-6 ">
           <div className="relative w-full col-span-4">
-            <select value={selectedFileSampleType[key]} onChange={testFunction}
-              name={key}
-              className='w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
-              <option value="clinical_information">Clinical Information</option>
-              <option value="rna_zscore">RNA</option>
-              <option value="dna_mutation">DNA Mutation</option>
-              <option value="dna_methylation">DNA Methylation</option>
-              <option value="proteome">Porteome</option>
-            </select>
+              
+            <div className="w-full block text-left focus:outline-none  focus:ring focus:border-blue-300 p-4 mt-3">{selectedFileSampleType[key]}</div>
           </div>
           <div className='relative col-span-4 w-full '>
             <label
               className="w-full block text-right border focus:outline-none border-b-color focus:ring focus:border-blue-300 p-4 mt-3">
-              <span className="inline-block px-8 py-2 text-md  leading-none text-white-100 bg-gray-300 rounded">Select</span>
-              <input type='file' className="hidden"  name={selectedFileSampleType[key]} filename={key} onChange={file_Upload_} />
+              <input type='file' className="" name={selectedFileSampleType[key]} filename={key} onChange={file_Upload_} />
             </label>
           </div>
           <div className='p-5 col-span-2 flex'>
-            <PlusCircleIcon className='w-10' id="plus_1" data-id="1" onClick={addNewHTML} />
-            {key>1 && <MinusCircleIcon className='w-10' id={key} onClick={deleteHtml} />}
+            {/* <PlusCircleIcon className='w-10' id="plus_1" data-id="1" onClick={addNewHTML} />
+            {key > 1 && <MinusCircleIcon className='w-10' id={key} onClick={deleteHtml} />} */}
             {loader["child_1"] ? <Loader /> : ""}
           </div>
           <div className="relative w-full col-span-2">
@@ -227,7 +256,13 @@ export default function FileUpload({ parentCallBack }) {
       <div className="grid grid-cols-6 mt-10">
         <div className=" col-start-2 col-span-4 bg-white  space-y-3 px-6 py-10 rounded-3xl shadow-lg border ">
           <div className="relative w-full col-span-12 ">
-            <div className="pb-3">{selectedFiles ? <h2> Selected Files: <b>{selectedFiles.join(', ')}</b></h2> : ""}</div>
+            <div className="flex">
+              <div>Project Name:</div>
+              <div className="mb-4">
+                <input onChange={(e)=>setProjectName(e.target.value)} value={projectName} className=" ml-10 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required={true} id="project" type="text" placeholder="Project Name" />
+              </div>
+            </div>
+            {/* <div className="pb-3">{selectedFiles ? <h2> Selected Files: <b>{selectedFiles.join(', ')}</b></h2> : ""}</div> */}
             <h2>Upload</h2>
           </div>
           {initialInputState}
@@ -236,8 +271,9 @@ export default function FileUpload({ parentCallBack }) {
             <button className="bg-white  w-80 h-20  mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded">
               Reset
             </button>&nbsp;&nbsp;&nbsp;&nbsp;
-            <button className="bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
+            <button disabled={uploadButtonDisabled} className={`bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded ${uploadButtonDisabled ? 'opacity-50': ''}`}
               onClick={on_upload}
+              
             >
               Upload
             </button>

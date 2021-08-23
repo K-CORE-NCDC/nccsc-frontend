@@ -37,6 +37,16 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state,
         heatmapSummary: payload
       }
+    case userdataVisualization.USER_DATA_PROJECT_TABLE:
+      return {
+        ...state,
+        userProjectsDataTable: payload
+      }
+    case dataVisualization.CIRCOS_SAMPLES_RNID:
+      return {
+        ...state,
+        circosSanpleRnidListData : payload
+      }
     default:
       return state
   }

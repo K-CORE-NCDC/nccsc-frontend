@@ -7,10 +7,11 @@ import {
   MinusCircleIcon,
   RefreshIcon
 } from '@heroicons/react/outline'
-import { file_upload } from '../../actions/api_actions'
+import { getUserDataProjectsTableData } from '../../actions/api_actions'
 import { useSelector, useDispatch } from "react-redux";
 import Loader from './Widgets/loader';
 import Table from './Widgets/Table'
+import UserFilesTable from './Components/TableDisplay/table'
 import FileUpload from './Components/MainComponents/ClinicalFileUpload'
 import TabelDisplay from './Components/TableDisplay/'
 import Visualization from './Components/Visualizations'
@@ -19,49 +20,53 @@ import axios from 'axios'
 
 
 export default function DataVisualization() {
+  const userDataTableData = useSelector(state => state.dataVisualizationReducer.userProjectsDataTable)
   const [hideupload, setHideUpload] = useState(true)
   const [showVisualization, setShowviualization] = useState(false)
   const [showLoginForm, setShowLoginForm] = useState(false)
-  const [userFormData, setUserFormData] = useState({username: "", password: ""})
+  const [userFormData, setUserFormData] = useState({ username: "", password: "" })
+  const dispatch = useDispatch()
   const fileUploadCallBack = (d_) => {
     // setTimeout(() => setHideUpload(true), 10000)
   }
 
+  console.log(userDataTableData);
   const accessToken = localStorage.getItem('ncc_access_token')
-  console.log(accessToken)
-
-  console.log(userFormData)
   const viusalizationCall = (da) => {
     setShowviualization(true)
   }
 
-  const updateUserNamePassword = (e) =>{
-    setUserFormData(previousState => ({...previousState, [e.target.name]: e.target.value}))
+  const updateUserNamePassword = (e) => {
+    setUserFormData(previousState => ({ ...previousState, [e.target.name]: e.target.value }))
   }
 
   useEffect(() => {
-    if(accessToken === null){
+    if (accessToken === null) {
       setShowLoginForm(true)
-    }else{
-      if(showLoginForm === false){
+    } else {
+      if (showLoginForm === false) {
         setShowLoginForm(false)
       }
     }
   }, [accessToken])
 
-  const formSubmitAction = (e) =>{
+  useEffect(() => {
+    dispatch(getUserDataProjectsTableData())
+  }, [])
+
+  const formSubmitAction = (e) => {
     console.log('formsubmit')
     e.preventDefault()
     const url = `${config.auth}api/token/`
     let x = axios({ method: 'POST', url: url, data: userFormData })
-    x.then((response) =>{
+    x.then((response) => {
       const data = response.data
       const statusCode = response.status
       console.log(data)
       localStorage.setItem('ncc_access_token', data.access);
       localStorage.setItem('ncc_refresh_token', data.refresh);
       setShowLoginForm(false)
-    }).catch((error) =>{
+    }).catch((error) => {
       console.log(error)
     })
 
@@ -93,8 +98,20 @@ export default function DataVisualization() {
           </div>
         </section>
       </div>}
+      <div className="flex flex-row-reverse">
+        <button 
+        className={`bg-main-blue hover:bg-main-blue w-80 h-20 text-white m-4 font-bold py-2 px-4 border border-blue-700 rounded`}
+        onClick={()=>setHideUpload(false)}
+        >
+          Upload new Samples
+        </button>
+      </div>
+      {hideupload && <div className="m-4">
+        <UserFilesTable userDataTableData={userDataTableData} />
+      </div>}
       <div>
-      {hideupload ? showVisualization ? <Visualization /> : <TabelDisplay parentcallBack={viusalizationCall} /> : <FileUpload parentCallBack={fileUploadCallBack} />}
+        {/* {hideupload ? showVisualization ? <Visualization /> : <TabelDisplay parentcallBack={viusalizationCall} /> : <FileUpload parentCallBack={fileUploadCallBack} />} */}
+        {!hideupload && <FileUpload parentCallBack={fileUploadCallBack} />}
       </div>
     </div>
   )

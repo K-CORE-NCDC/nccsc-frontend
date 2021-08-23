@@ -1,4 +1,4 @@
-import React,{useState,useEffect,useRef,useCallback,Fragment   } from "react";
+import React, { useState, useEffect, useRef, useCallback, Fragment } from "react";
 import {
   ChevronDownIcon,
   ChevronUpIcon,
@@ -16,26 +16,29 @@ import {
 import Filter from '../Common/filter'
 import { Charts } from "./Charts/";
 import genes from '../Common/gene.json'
-import { getBreastKeys,getCircosInformation } from '../../actions/api_actions'
+import { getBreastKeys, getCircosInformation } from '../../actions/api_actions'
 import {
   Link
 } from "react-router-dom";
 
 export default function DataVisualization() {
   const elementRef = useRef(null);
-  const [state,setState] = useState({"genes":[],'type':''})
-  const [boolChartState,setBoolChartState] = useState(true)
-  const [filterState,setFilterState] = useState({})
-  const [leftFilter,setLeftFilter] = useState(null)
-  const [chart,setCharts] = useState({"viz":[]})
-  const [width,setWidth] = useState(0)
+  const [state, setState] = useState({ "genes": [], 'type': '' })
+  const [boolChartState, setBoolChartState] = useState(true)
+  const [filterState, setFilterState] = useState({})
+  const [leftFilter, setLeftFilter] = useState(null)
+  const [chart, setCharts] = useState({ "viz": [] })
+  const [width, setWidth] = useState(0)
   const dispatch = useDispatch()
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
-  let { tab } = useParams();
-  const [chartName,setChartName] = useState(tab)
+  let { tab, project_id } = useParams();
+  const [chartName, setChartName] = useState(tab)
+  const [menuItems, setMenuItems] = useState([])
+
+  console.log(state);
 
   const callback = useCallback((count) => {
-    setState((prevState) => ({...prevState, ...count}))
+    setState((prevState) => ({ ...prevState, ...count }))
     // setCount(count);
   }, []);
 
@@ -43,21 +46,21 @@ export default function DataVisualization() {
     let val_ = event.target.value;
     let g = genes[val_].data;
     document.getElementById('genes').value = g.join(' ')
-    setState((prevState)=>({
+    setState((prevState) => ({
       ...prevState,
-      'genes':g,
-      'type':val_
+      'genes': g,
+      'type': val_
     }))
   }
 
-  const toggleTab = (event)=>{
+  const toggleTab = (event) => {
     let tabsContainer = document.querySelector("#tabs");
     let tabTogglers = tabsContainer.querySelectorAll("a");
-    tabTogglers.forEach(function(toggler) {
-      toggler.addEventListener("click", function(e) {
+    tabTogglers.forEach(function (toggler) {
+      toggler.addEventListener("click", function (e) {
         let tabName = this.getAttribute("href");
         for (var i = 0; i < tabTogglers.length; i++) {
-          tabTogglers[i].parentElement.classList.remove("border-blue-400", "border-b",  "-mb-px", "opacity-100");
+          tabTogglers[i].parentElement.classList.remove("border-blue-400", "border-b", "-mb-px", "opacity-100");
         }
         e.target.parentElement.classList.add("border-blue-400", "border-b-4", "-mb-px", "opacity-100");
       })
@@ -65,46 +68,72 @@ export default function DataVisualization() {
 
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     submitFilter()
-  },[tab])
+  }, [tab])
 
-  useEffect(()=>{
+  useEffect(() => {
     let w = elementRef.current.getBoundingClientRect().width
     setWidth(w);
     dispatch(getBreastKeys())
     setBoolChartState(false)
-  },[])
+    if (project_id !== undefined) {
+      setState((prevState) => ({
+        ...prevState,
+        project_id: project_id
+      }))
+    }
+    let l = ['circos', 'onco', 'lolipop', 'volcano', 'heatmap', 'survival']
+    let tmp = []
 
-  useEffect(()=>{
-    if(BrstKeys){
+    l.forEach(element => {
+      if(project_id !== undefined){
+        tmp.push(
+          <li key={element} className="px-4 py-2 font-semibold rounded-t opacity-50 opacity-100 border-b-4  border-blue-400">
+            <Link className="uppercase" to={`/visualise/${element}/${project_id}`}>{element} plot</Link>
+          </li>
+        )
+      }else{
+        tmp.push(
+          <li key={element} className="px-4 py-2 font-semibold rounded-t opacity-50 opacity-100 border-b-4  border-blue-400">
+            <Link className="uppercase" to={`/visualise/${element}/`}>{element} Plot</Link>
+          </li>
+        )
+      }
+    })
+
+    setMenuItems(tmp)
+  }, [])
+
+  useEffect(() => {
+    if (BrstKeys) {
       let tmp = []
       for (const [key, value] of Object.entries(BrstKeys)) {
-        tmp.push(<option key={key} value={key+"_"+value}>{value}</option>)
+        tmp.push(<option key={key} value={key + "_" + value}>{value}</option>)
       }
       setFilterState(tmp)
     }
-  },[BrstKeys])
+  }, [BrstKeys])
 
 
-  useEffect(()=>{
-    if(chart){
+  useEffect(() => {
+    if (chart) {
       setBoolChartState(true)
     }
-  },[chart])
+  }, [chart])
 
 
   const submitFilter = (e) => {
     setBoolChartState(false)
     setChartName(tab)
-    let chartx = LoadChart(width,tab)
-    setCharts((prevState)=>({
+    let chartx = LoadChart(width, tab)
+    setCharts((prevState) => ({
       ...prevState,
-      'viz':chartx,
+      'viz': chartx,
     }))
   }
 
-  const LoadChart = (w,type)=>{
+  const LoadChart = (w, type) => {
     switch (type) {
       case "circos":
         return Charts.circos(w, state, leftFilter)
@@ -121,9 +150,9 @@ export default function DataVisualization() {
     }
   }
 
-  const callback = (da) =>{
-    setLeftFilter(da)
-  }
+  // const callback = (da) =>{
+  //   setLeftFilter(da)
+  // }
 
   return (
     <div className="header">
@@ -131,14 +160,14 @@ export default function DataVisualization() {
         <div id="main_div">
           <div className="grid grid-cols-4">
             <div className="bg-white border border-gray-200">
-              <Filter parentCallback={callback}/>
+              <Filter parentCallback={callback} />
             </div>
             <div className="col-start-2 col-span-3 overflow-auto ">
               <div className="grid grid-cols-3 gap-1 p-5 bg-white">
                 <h3>Gene Selection</h3>
                 <div className='col-span-3 grid grid-cols-7 gap-6'>
                   <div className="relative w-full col-span-3">
-                    <select value={state['type']} onChange={e=>selectGene(e)}className='w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 '>
+                    <select value={state['type']} onChange={e => selectGene(e)} className='w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 '>
                       <option value="user-defined">User-Defined List</option>
                       <option value="major-genes">Cancer major genes (28 genes)</option>
                       <option value="brst-major-genes">Breast cancer major genes (20 genes)</option>
@@ -164,10 +193,10 @@ export default function DataVisualization() {
                     </select>
                   </div>
                   <div className="col-span-3">
-                    <input type="text" id='genes' className='w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 h-full' name='genes'/>
+                    <input type="text" id='genes' className='w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 h-full' name='genes' />
                   </div>
                   <div className="">
-                    <button className="bg-main-blue hover:bg-main-blue mb-3 w-full h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={e=>submitFilter(e)}>Filter</button>
+                    <button className="bg-main-blue hover:bg-main-blue mb-3 w-full h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={e => submitFilter(e)}>Filter</button>
                   </div>
                 </div>
 
@@ -175,30 +204,13 @@ export default function DataVisualization() {
               <div className='col-span-3 gap-6'>
                 <section>
                   <nav className=" px-8 pt-2 shadow-md">
-                    <ul id="tabs" className="inline-flex justify-center w-full px-1 pt-2 " onClick={e=>toggleTab(e)}>
-                      <li className="px-4 py-2 font-semibold rounded-t opacity-50 opacity-100 border-b-4  border-blue-400">
-                        <Link to="/visualise/circos/">Ciros Plot</Link>
-                      </li>
-                      <li className="px-4 py-2 font-semibold  rounded-t opacity-50 ">
-                        <Link to="/visualise/onco">Oncoprint Plot</Link>
-                      </li>
-                      <li className="px-4 py-2 font-semibold  rounded-t opacity-50 ">
-                        <Link to="/visualise/lolipop">Lollipop Plot</Link>
-                      </li>
-                      <li className="px-4 py-2 font-semibold  rounded-t opacity-50 ">
-                        <Link to="/visualise/volcano">Volcano Plot</Link>
-                      </li>
-                      <li className="px-4 py-2 font-semibold  rounded-t opacity-50 ">
-                        <Link to="/visualise/heatmap">Heatmap</Link>
-                      </li>
-                      <li className="px-4 py-2 font-semibold  rounded-t opacity-50 ">
-                        <Link to="/visualise/survival">Survival Plot</Link>
-                      </li>
+                    <ul id="tabs" className="inline-flex justify-center w-full px-1 pt-2 " onClick={e => toggleTab(e)}>
+                      {menuItems}
                     </ul>
                   </nav>
                 </section>
                 <section >
-                   <div id="tab-contents" className='block text-center' ref={elementRef}>
+                  <div id="tab-contents" className='block text-center' ref={elementRef}>
                     {boolChartState &&
                       <div>{chart['viz']}</div>
                     }
