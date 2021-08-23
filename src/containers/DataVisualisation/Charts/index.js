@@ -3,6 +3,7 @@ import DataOnco from './Onco'
 import DataLolipop from './Lolipop'
 import DataVolcono from './Volcono'
 import DataHeatmap from './Heatmap'
+import DataSurvival from './Survival'
 
 function circos(width,inputData) {
   return <DataCircos key='circos' width={width} inputData={inputData} />
@@ -24,10 +25,15 @@ function heatmap(width,inputData) {
   return <DataHeatmap key='heatmap' width={width} inputData={inputData}/>
 }
 
+function survival(width,inputData) {
+  return <DataSurvival key='survival' width={width} inputData={inputData}/>
+}
+
 export const Charts = {
   circos,
   onco,
   lollipop,
   volcano,
-  heatmap
+  heatmap,
+  survival
 }
