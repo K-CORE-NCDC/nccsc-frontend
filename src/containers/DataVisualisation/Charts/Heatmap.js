@@ -12,6 +12,7 @@ export default function DataHeatmap({ width,inputData }) {
   useEffect(()=>{
     if(inputData){
       if(inputData.type !==''){
+        inputData['table_type'] = tableType
         dispatch(getHeatmapInformation('POST',inputData))
       }
     }
