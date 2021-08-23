@@ -34,7 +34,7 @@ export default function DataVisualization() {
   const [chartName,setChartName] = useState(tab)
 
   const callback = useCallback((filters) => {
-
+    console.log("filters",filters)
     let type = document.getElementById('gene_type').value
     let g = genes[type].data
     setState((prevState) => ({...prevState,
@@ -42,6 +42,7 @@ export default function DataVisualization() {
       'genes': g,
       'type': type
     }))
+
   }, []);
 
   useEffect(() => {
@@ -52,6 +53,7 @@ export default function DataVisualization() {
     let val_ = event.target.value;
     let g = genes[val_].data;
     document.getElementById('genes').value = g.join(' ')
+
     setState((prevState)=>({
       ...prevState,
       'genes':g,
@@ -125,7 +127,7 @@ export default function DataVisualization() {
   }
 
   const LoadChart = (w,type)=>{
-
+    console.log("state",state)
     switch (type) {
       case "circos":
         return Charts.circos(w, state)
