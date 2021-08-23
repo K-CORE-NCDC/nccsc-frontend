@@ -7,7 +7,7 @@ import {
 } from '@heroicons/react/outline'
 import inputJson from './data'
 
-export default function Filter({parentCallback}) {
+export default function Filter({parentCallback,parentState}) {
   const [state, setState] = useState({"html":[]});
   const [selectState, setSelectState] = useState({});
   const [selected, setSelected] = useState('Basic/Diagnostic Information');
@@ -15,6 +15,10 @@ export default function Filter({parentCallback}) {
   useEffect(()=>{
     leftSide()
   },[])
+
+  useEffect(()=>{
+    console.log(parentState);
+  },[parentState])
 
   useEffect(()=>{
     leftSide()
@@ -78,8 +82,6 @@ export default function Filter({parentCallback}) {
         document.getElementById(id).checked=true
       }
     }
-    // console.log("id---->",id)
-    // console.log("value---->",val)
     setSelectState(tmp)
   }
 
@@ -115,7 +117,7 @@ export default function Filter({parentCallback}) {
                 <div className="relative" onClick={e=>checkBoxFn(e,'md_'+id+"_"+c)}>
                   <input type="checkbox" id={'md_'+id+"_"+c} checked="checked" data-parent={item} className="checkbox sr-only " onChange={e=>checkBoxFn(e,'md_'+id+"_"+c)}/>
                   <div className="block bg-gray-600 w-14 h-6 rounded-full" id={'md_'+id+"_"+c+'_toggle'} style={{backgroundColor:color}}></div>
-                  <div className="dot absolute left-1 top-1 bg-white w-6 h-4 rounded-full transition bg-white" style={{backgroundColor:"#fff"}}></div>
+                  <div className="dot absolute left-1 top-1 bg-white w-6 h-4 rounded-full transition bg-white" style={{backgroundColor:"#fff",opacity:1}}></div>
                 </div>
               </label>
               <div className="py-5" id={'child_md_'+id+"_"+c}>

@@ -50,13 +50,12 @@ export function getGenomicInformation() {
 
 export function getOncoInformation(type, data) {
   return (dispatch) => {
-    const form = new FormData()
-
-    form.set('genes', data.genes);
-    // form.set('filters', data.);
-
-    let url = config.auth + "onco/";
-
+    // const form = new FormData()
+    //
+    // form.set('genes', data.genes);
+    // // form.set('filters', data.);
+    //
+    let url = config.auth+"oncoprint/";
     sendRequest(url, type, form)
       .then((result) => {
         const d = result
@@ -75,7 +74,7 @@ export function getOncoInformation(type, data) {
 
 export function getLolipopInformation(type, data) {
   return (dispatch) => {
-    let url = config.auth + "lolipop/";
+    let url = config.auth+"lollipop/";
     sendRequest(url, type, data)
       .then((result) => {
         const d = result
@@ -100,8 +99,10 @@ export function getVolcanoPlotInfo(type, data) {
     const form = new FormData()
 
     form.set('genes', data.genes);
-    if ("filter" in data) {
-      form.set('filters', data.filter);
+
+    // console.log("data.filter---->",data.filter)
+    if("filter" in data){
+      form.set('filters', JSON.stringify(data.filter));
     }
 
     sendRequest(url, type, form)
@@ -125,8 +126,11 @@ export function getHeatmapInformation(type, data) {
     const form = new FormData()
 
     form.set('genes', data.genes);
-    if ("filter" in data) {
-      form.set('filters', data.filter);
+    if("filter" in data){
+      form.set('filters', JSON.stringify(data.filter));
+    }
+    if("table_type" in data){
+      form.set('tab_type', data.table_type);
     }
 
     sendRequest(url, type, form)

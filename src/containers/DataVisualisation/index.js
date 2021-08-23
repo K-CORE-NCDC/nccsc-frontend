@@ -23,12 +23,12 @@ import {
 
 export default function DataVisualization() {
   const elementRef = useRef(null);
-  const [state, setState] = useState({ "genes": [], 'type': '' })
-  const [boolChartState, setBoolChartState] = useState(true)
-  const [filterState, setFilterState] = useState({})
-  const [leftFilter, setLeftFilter] = useState(null)
-  const [chart, setCharts] = useState({ "viz": [] })
-  const [width, setWidth] = useState(0)
+
+  const [state,setState] = useState({"genes":[],'filter':'','type':''})
+  const [boolChartState,setBoolChartState] = useState(true)
+  const [filterState,setFilterState] = useState({})
+  const [chart,setCharts] = useState({"viz":[]})
+  const [width,setWidth] = useState(0)
   const dispatch = useDispatch()
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
   let { tab, project_id } = useParams();
@@ -37,16 +37,26 @@ export default function DataVisualization() {
 
   console.log(state);
 
-  const callback = useCallback((count) => {
-    setState((prevState) => ({ ...prevState, ...count }))
-    // setCount(count);
+  const callback = useCallback((filters) => {
+    console.log("filters",filters)
+    let type = document.getElementById('gene_type').value
+    let g = genes[type].data
+    setState((prevState) => ({...prevState,
+      'filter': filters,
+      'genes': g,
+      'type': type
+    }))
   }, []);
+
+  useEffect(() => {
+    submitFilter()
+  },[state])
 
   const selectGene = (event) => {
     let val_ = event.target.value;
     let g = genes[val_].data;
     document.getElementById('genes').value = g.join(' ')
-    setState((prevState) => ({
+    setState((prevState)=>({
       ...prevState,
       'genes': g,
       'type': val_
@@ -68,12 +78,24 @@ export default function DataVisualization() {
 
   }
 
-  useEffect(() => {
+
+  useEffect(()=>{
+    let tabsContainer = document.querySelector("#tabs");
+    let tabTogglers = tabsContainer.querySelectorAll("li");
+    tabTogglers.forEach(function(toggler) {
+      let href = toggler.children[0].href
+      href = href.split('/')
+      toggler.classList.remove("border-blue-400", "border-b",  "-mb-px", "opacity-100");
+      if (href.includes(tab)){
+        toggler.classList.add("border-blue-400", "border-b-4", "-mb-px", "opacity-100");
+      }
+    })
     submitFilter()
   }, [tab])
 
   useEffect(() => {
     let w = elementRef.current.getBoundingClientRect().width
+
     setWidth(w);
     dispatch(getBreastKeys())
     setBoolChartState(false)
@@ -131,28 +153,28 @@ export default function DataVisualization() {
       ...prevState,
       'viz': chartx,
     }))
+    // setLeftFilter(false)/
   }
 
   const LoadChart = (w, type) => {
     switch (type) {
       case "circos":
-        return Charts.circos(w, state, leftFilter)
+        return Charts.circos(w, state)
       case "onco":
-        return Charts.onco(w, state, leftFilter)
-      case "lolipop":
-        return Charts.onco(w, state, leftFilter)
+        return Charts.onco(w, state)
+      case "lollipop":
+        return Charts.lollipop(w, state)
       case "volcano":
-        return Charts.volcano(w, state, leftFilter)
+        return Charts.volcano(w, state)
       case "heatmap":
-        return Charts.heatmap(w, state, leftFilter)
+        return Charts.heatmap(w, state)
+      case "survival":
+        return Charts.survival(w, state)
       default:
         return false
     }
   }
 
-  // const callback = (da) =>{
-  //   setLeftFilter(da)
-  // }
 
   return (
     <div className="header">
@@ -160,14 +182,14 @@ export default function DataVisualization() {
         <div id="main_div">
           <div className="grid grid-cols-4">
             <div className="bg-white border border-gray-200">
-              <Filter parentCallback={callback} />
+              <Filter parentCallback={callback} genes={state} />
             </div>
             <div className="col-start-2 col-span-3 overflow-auto ">
               <div className="grid grid-cols-3 gap-1 p-5 bg-white">
                 <h3>Gene Selection</h3>
                 <div className='col-span-3 grid grid-cols-7 gap-6'>
                   <div className="relative w-full col-span-3">
-                    <select value={state['type']} onChange={e => selectGene(e)} className='w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 '>
+                    <select id='gene_type' value={state['type']} onChange={e=>selectGene(e)}className='w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 '>
                       <option value="user-defined">User-Defined List</option>
                       <option value="major-genes">Cancer major genes (28 genes)</option>
                       <option value="brst-major-genes">Breast cancer major genes (20 genes)</option>

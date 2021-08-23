@@ -84,7 +84,7 @@ export default function Web() {
                 </div>
               </div>
             </nav>
-
+            {classes==='' &&
             <div className='w-full mx-auto text-center flex flex-row justify-center p-5 bg-white mt-4'>
               <div className=" items-center mr-4 mb-4">
                 <label htmlFor="radio1" className="flex items-center cursor-pointer">
@@ -135,7 +135,7 @@ export default function Web() {
                 </label>
               </div>
 
-            </div>
+            </div> }
             {classes!=='' && <div className="grid grid-cols-3 px-64 py-20  text-right text-main-blue">
               <div className='lg:col-span-3 lg:text-center  2xl:col-start-3'>
               <h2 className="text-8xl"><strong>K</strong>-cancer <strong>omics</strong></h2>

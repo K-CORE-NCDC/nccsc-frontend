@@ -18,7 +18,7 @@ export default function DataSurvival({ width,inputData }) {
 
   return (
     <div>
-      <SurvivalCmp width={width} data={lolipopJson}/>
+      <SurvivalCmp width={width} />
     </div>
   )
 

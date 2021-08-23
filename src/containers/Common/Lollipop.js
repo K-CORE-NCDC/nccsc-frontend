@@ -2,12 +2,22 @@ import React, { useState,useEffect } from 'react'
 import LollipopPlot from 'react-mutation-plot'
 
 
-export default function LollipopCmp({ width }) {
-  const [state, setState] = useState({})
-
+export default function LollipopCmp({ width,data,gene }) {
+  const [active, setActive] = useState(false)
+  const mockData = {
+    vizHeight: 400, // hardcoded
+    vizWidth: width-400, // hardcoded
+    xMax: data['width'], // protein length
+    yMax: 23, // max #mutations
+    hugoGeneSymbol: gene,
+    lollipops: data['lollipop'],
+    domains: data['domain']
+  }
   useEffect(()=>{
-
-  },[])
+    if(gene!==''){
+      setActive(true)
+    }
+  },[gene])
   const domains = [
     {
       'startCodon': 57,
@@ -157,20 +167,13 @@ export default function LollipopCmp({ width }) {
       'color': '#cf58bc'
     }
   ]
-  const mockData = {
-    vizHeight: 130, // hardcoded
-    vizWidth: 665, // hardcoded
-    xMax: 1210, // protein length
-    yMax: 23, // max #mutations
-    hugoGeneSymbol: 'EGFR',
-    lollipops: lollipops,
-    domains: domains
-  }
+
+
 
   const options = {
-    displayDomainLabel: false,
-    displayLegend: true,
-    exportToPDF: true
+    displayDomainLabel: true,
+    displayLegend: false,
+    exportToPDF: false
   }
 
   const onLollipopClickHandler = (data) => {
@@ -180,7 +183,7 @@ export default function LollipopCmp({ width }) {
 
   return (
     <div id='lolipop' className='p-3'>
-      <LollipopPlot
+      {active && <LollipopPlot
           domains={mockData.domains}
           lollipops={mockData.lollipops}
           vizWidth={mockData.vizWidth}
@@ -190,7 +193,7 @@ export default function LollipopCmp({ width }) {
           yMax={mockData.yMax}
           onLollipopClick={onLollipopClickHandler}
           options={options}
-        />
+        />}
 
     </div>
   )

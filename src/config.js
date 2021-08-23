@@ -1,6 +1,6 @@
 export default {
   defaultPath: '/',
   basename: '/',
-  auth: 'http://localhost:8000/',
-  // auth: 'http://localhost:9002/',
+  // auth: 'http://18.191.112.162:9797/',
+  auth: 'http://18.191.112.162:9002/',
 }

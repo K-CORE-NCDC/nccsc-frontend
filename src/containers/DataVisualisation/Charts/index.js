@@ -3,31 +3,37 @@ import DataOnco from './Onco'
 import DataLolipop from './Lolipop'
 import DataVolcono from './Volcono'
 import DataHeatmap from './Heatmap'
+import DataSurvival from './Survival'
 
-function circos(width,inputData, filter_) {
+function circos(width,inputData) {
   return <DataCircos key='circos' width={width} inputData={inputData} />
 }
 
-function onco(width,inputData, filter_) {
+function onco(width,inputData, ) {
   return <DataOnco key='onco' width={width} inputData={inputData} />
 }
 
-function lolipop(width,inputData, filter_) {
-  return <DataLolipop key='lolipop' width={width} inputData={inputData} />
+function lollipop(width,inputData) {
+  return <DataLolipop key='lolipop'  width={width} inputData={inputData} />
 }
 
-function volcano(width,inputData, filter_) {
-  return <DataVolcono key='volcano' width={width} inputData={inputData} filter={filter_}/>
+function volcano(width,inputData) {
+  return <DataVolcono key='volcano' width={width} inputData={inputData}/>
 }
-function heatmap(width,inputData, filter_) {
-  console.log("filter_--->",filter_)  
-  return <DataHeatmap key='volcano' width={width} inputData={inputData} filter={filter_}/>
+
+function heatmap(width,inputData) {
+  return <DataHeatmap key='heatmap' width={width} inputData={inputData}/>
+}
+
+function survival(width,inputData) {
+  return <DataSurvival key='survival' width={width} inputData={inputData}/>
 }
 
 export const Charts = {
   circos,
   onco,
-  lolipop,
+  lollipop,
   volcano,
-  heatmap
+  heatmap,
+  survival
 }
