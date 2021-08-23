@@ -50,13 +50,9 @@ export function getGenomicInformation() {
 
 export function getOncoInformation(type, data) {
   return (dispatch) => {
-    const form = new FormData()
 
-    // form.set('genes', data.genes);
-    // // form.set('filters', data.);
-    //
     let url = config.auth+"oncoprint/";
-    sendRequest(url, type, form)
+    sendRequest(url, type, data)
       .then((result) => {
         const d = result
         dispatch({
