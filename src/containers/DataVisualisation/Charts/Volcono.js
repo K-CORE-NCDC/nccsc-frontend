@@ -7,6 +7,7 @@ import { getVolcanoPlotInfo } from '../../../actions/api_actions'
 export default function DataVolcono({ width, inputData }) {
   const dispatch = useDispatch()
   const volcanoJson = useSelector((data) => data.dataVisualizationReducer.volcanoSummary);
+  const [activeCmp,setActiveCmp] = useState(false)
 
   useEffect(()=>{
     if(inputData){
@@ -16,9 +17,15 @@ export default function DataVolcono({ width, inputData }) {
     }
   },[inputData])
 
+  useEffect(()=>{
+    if(volcanoJson){
+      setActiveCmp(true)
+    }
+  },[volcanoJson])
+
   return (
     <div>
-      <VolcanoCmp w={width} data={volcanoJson}/>
+      {activeCmp && <VolcanoCmp w={width} data={volcanoJson}/>}
     </div>
   )
 

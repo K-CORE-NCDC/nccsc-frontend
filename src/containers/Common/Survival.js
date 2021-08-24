@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { renderPlot } from '@oncojs/survivalplot/index.js'
 import defaults from 'lodash.defaults'
+import '../../styles/survival.css'
+import sampleData from './survival.json'
+
 function isElementFullScreen (element) {
   return [
     document.fullscreenElement,
@@ -51,7 +54,15 @@ export default class SurvivalCmp extends React.Component {
         ]
       }
     ]
-
+    this.state = {
+      data:this.data,
+      tooltip: {
+        donor: {},
+        x: 0,
+        y:0,
+        isVisible: false,
+      }
+    }
 
     this.defaultProps2 = {
       palette: ['#1880b2', '#c20127', '#00005d'],
@@ -82,17 +93,16 @@ export default class SurvivalCmp extends React.Component {
 
   }
   state = {
-    tooltip: {
-      donor: {},
-      x: 0,
-      y:0,
-      isVisible: false,
-    },
+
+
   }
   componentDidMount(){
-    this.setState(this.props.survival_data)
-    this.update()
 
+    // this.setState({
+      // "data":[this.props.survival_data]
+    // })
+    this.update()
+    console.log(this.state)
   }
 
 
@@ -129,7 +139,7 @@ export default class SurvivalCmp extends React.Component {
 
     renderPlot(defaults({
       container,
-      dataSets: this.props.survival_data,
+      dataSets: this.state.data,
       palette: props.palette,
       xDomain: state.xDomain,
       xAxisLabel: 'Duration (days)',
