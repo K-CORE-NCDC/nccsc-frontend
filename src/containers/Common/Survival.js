@@ -12,6 +12,7 @@ function isElementFullScreen (element) {
 export default class SurvivalCmp extends React.Component {
   constructor(props) {
     super(props);
+
     this.listRef = React.createRef();
     this.data = [
       {
@@ -40,12 +41,17 @@ export default class SurvivalCmp extends React.Component {
             "time": 12.4,
             "survivalEstimate": 0.2,
 
+          },
+          {
+            "id": "DO227682",
+            "status": "deceased",
+            "time": 12.4,
+            "survivalEstimate": 0.4,
           }
-
         ]
-
       }
     ]
+
 
     this.defaultProps2 = {
       palette: ['#1880b2', '#c20127', '#00005d'],
@@ -84,7 +90,9 @@ export default class SurvivalCmp extends React.Component {
     },
   }
   componentDidMount(){
+    this.setState(this.props.survival_data)
     this.update()
+
   }
 
 
@@ -121,7 +129,7 @@ export default class SurvivalCmp extends React.Component {
 
     renderPlot(defaults({
       container,
-      dataSets: this.data,
+      dataSets: this.props.survival_data,
       palette: props.palette,
       xDomain: state.xDomain,
       xAxisLabel: 'Duration (days)',
@@ -149,6 +157,7 @@ export default class SurvivalCmp extends React.Component {
       display: tooltip.isVisible ? 'block' : 'none',
       pointerEvents: 'none',
     }
+
     return (
       <div>
         <div style={{'width':'960px'}}

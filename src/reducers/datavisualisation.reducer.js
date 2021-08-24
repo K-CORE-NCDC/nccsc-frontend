@@ -37,6 +37,11 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state,
         heatmapSummary: payload
       }
+    case dataVisualization.SURVIVAL_REQUEST:
+      return {
+        ...state,
+        survivalSummary: payload
+      }
     case userdataVisualization.USER_DATA_PROJECT_TABLE:
       return {
         ...state,
