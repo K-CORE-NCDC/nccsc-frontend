@@ -9,28 +9,35 @@ export default function DataOnco({ width,inputData }) {
   const oncoJson = useSelector((data) => data.dataVisualizationReducer.oncoSummary);
   const [activeCmp,setActiveCmp] = useState(false)
   const [chartData,setChartData] = useState({})
+  const [inputState,setInputState] = useState({})
 
   useEffect(()=>{
-    if(inputData){
-      if(inputData.type !==''){
-        dispatch(getOncoInformation('POST',inputData))
-        setActiveCmp(false)
+    if(inputData && 'genes' in inputData){
+      setActiveCmp(false)
+      setInputState((prevState) => ({...prevState,...inputData }))
+    }
+  },[inputData])
+
+
+  useEffect(()=>{
+    if(inputState && 'genes' in inputState){
+      setActiveCmp(false)
+      if(inputState.type !==''){
+        let dataJson = inputState
+        dispatch(getOncoInformation('POST',dataJson))
       }
     }
-
-  },[inputData])
+  },[inputState])
 
   useEffect(()=>{
     if(oncoJson){
-      setChartData((prevState) => ({...prevState,...oncoJson }))
-    }
-  },[oncoJson])
-
-  useEffect(()=>{
-    if(chartData){
+      setChartData((prevState) => ({
+        ...prevState,
+        ...oncoJson
+      }))
       setActiveCmp(true)
     }
-  },[chartData])
+  },[oncoJson])
 
 
   return (

@@ -6,12 +6,12 @@ import './rules'
 
 export default function OncoCmp({ width,data }) {
 
-  const [state, setState] = useState([]);
+  const [state, setState] = useState({});
 
   const drawChart = (w,gData,cData) => {
     // $(document).ready(function() {
 
-
+      document.getElementById('oncoprint-glyphmap').innerHTML = ""
       var clinical_custom_track_params = {
               'rule_set_params': window.geneticrules.clinical_rule_set_custom,
               'target_group': 1,
@@ -1078,12 +1078,18 @@ export default function OncoCmp({ width,data }) {
 
   useEffect(()=>{
     if (data){
-      let d = data
-      let gData = d['geneData']
-      let cData = d['clinicalData']
+      console.log(data);
+
+      setState((prevState) => ({...prevState,...data }))
+    }
+  },[data])
+  useEffect(()=>{
+    if(Object.keys(state).length>0){
+      let gData = state['geneData']
+      let cData = state['clinicalData']
       drawChart(width-300,gData,cData)
     }
-  },[])
+  },[state])
 
   return (
     <div className='onco' id='oncoprint-glyphmap' style={{width:width+'px'}}>

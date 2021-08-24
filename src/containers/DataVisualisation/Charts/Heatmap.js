@@ -21,17 +21,15 @@ export default function DataHeatmap({ width,inputData }) {
 
   useEffect(()=>{
     if(heatmapJson){
-      console.log("after heatmap data receive",heatmapJson)
       if(Object.keys(heatmapJson).length>0){
-        // if(heatmapJson['domains'].length>0 && heatmapJson['lollipop'].length>0){
           setActiveCmp(true)
-        // }
       }
     }
   },[heatmapJson])
 
   const changeType = (e,type)=> {
     let c = document.getElementsByName('type')
+    setActiveCmp(false)
     for (var i = 0; i < c.length; i++) {
       let classList = c[i].classList
       classList.remove("hover:bg-main-blue","bg-main-blue","text-white");
@@ -51,7 +49,7 @@ export default function DataHeatmap({ width,inputData }) {
 
   return (
     <div>
-      {activeCmp &&
+
       <Fragment>
         <div className="grid grid-cols-2  ">
           <div className="p-5 text-right">
@@ -85,10 +83,10 @@ export default function DataHeatmap({ width,inputData }) {
           </div>
         </div>
         <div className='grid'>
-          {heatmapJson && <HeatmapCmp width={width} data={heatmapJson}/>}
+          {activeCmp && <HeatmapCmp width={width} data={heatmapJson}/>}
         </div>
       </Fragment>
-      }
+      
     </div>
   )
 }

@@ -89,14 +89,14 @@ export function getVolcanoPlotInfo(type, data) {
   return (dispatch) => {
     let url = config.auth + "volcano/";
 
-    const data = new FormData()
-
-    data.set('genes', data.genes);
-
-    // console.log("data.filter---->",data.filter)
-    if("filter" in data){
-      data.set('filters', JSON.stringify(data.filter));
-    }
+    // const data = new FormData()
+    //
+    // data.set('genes', data.genes);
+    //
+    // // console.log("data.filter---->",data.filter)
+    // if("filter" in data){
+    //   data.set('filters', JSON.stringify(data.filter));
+    // }
 
     sendRequest(url, type, data)
       .then((result) => {
@@ -116,15 +116,15 @@ export function getVolcanoPlotInfo(type, data) {
 export function getHeatmapInformation(type, data) {
   return (dispatch) => {
     let url = config.auth + "heatmap/";
-    const data = new FormData()
-
-    data.set('genes', data.genes);
-    if("filter" in data){
-      data.set('filters', JSON.stringify(data.filter));
-    }
-    if("table_type" in data){
-      data.set('tab_type', data.table_type);
-    }
+    // const data = new FormData()
+    //
+    // data.set('genes', data.genes);
+    // if("filter" in data){
+    //   data.set('filters', JSON.stringify(data.filter));
+    // }
+    // if("table_type" in data){
+    //   data.set('tab_type', data.table_type);
+    // }
 
     sendRequest(url, type, data)
       .then((result) => {
@@ -198,7 +198,6 @@ export function getSurvivalInformation(type, data) {
       .then((result) => {
         const d = result;
 
-        dispatch({ type: dataVisualization.REQUEST_DONE });
         dispatch({
           type: dataVisualization.SURVIVAL_REQUEST,
           payload: d["data"],
