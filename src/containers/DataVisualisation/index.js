@@ -35,7 +35,7 @@ export default function DataVisualization() {
   const [chartName, setChartName] = useState(tab)
   const [menuItems, setMenuItems] = useState([])
 
-  console.log(state);
+
 
   const callback = useCallback((filters) => {
     console.log("filters",filters)
@@ -47,10 +47,6 @@ export default function DataVisualization() {
       'type': type
     }))
   }, []);
-
-  useEffect(() => {
-    // submitFilter()
-  },[state])
 
   const selectGene = (event) => {
     let val_ = event.target.value;
@@ -105,20 +101,24 @@ export default function DataVisualization() {
         project_id: project_id
       }))
     }
-    let l = ['circos', 'onco', 'lolipop', 'volcano', 'heatmap', 'survival']
+    let l = ['circos', 'onco', 'lollipop', 'volcano', 'heatmap', 'survival']
     let tmp = []
 
     l.forEach(element => {
+      let classes='px-4 py-2 font-semibold rounded-t opacity-50 '
+      if (tab===element){
+        classes = classes+ " border-blue-400 border-b-4 -mb-px opacity-100"
+      }
       if(project_id !== undefined){
         tmp.push(
-          <li key={element} className="px-4 py-2 font-semibold rounded-t opacity-50 opacity-100 border-b-4  border-blue-400">
-            <Link className="uppercase" to={`/visualise/${element}/${project_id}`}>{element} plot</Link>
+          <li key={element} className={classes}>
+            <Link className="capitalize" to={`/visualise/${element}/${project_id}`}>{element} plot</Link>
           </li>
         )
       }else{
         tmp.push(
-          <li key={element} className="px-4 py-2 font-semibold rounded-t opacity-50 opacity-100 border-b-4  border-blue-400">
-            <Link className="uppercase" to={`/visualise/${element}/`}>{element} Plot</Link>
+          <li key={element} className={classes}>
+            <Link className="capitalize" to={`/visualise/${element}/`}>{element} Plot</Link>
           </li>
         )
       }

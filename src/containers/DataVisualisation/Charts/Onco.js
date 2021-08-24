@@ -6,22 +6,36 @@ import { getOncoInformation } from '../../../actions/api_actions'
 
 export default function DataOnco({ width,inputData }) {
   const dispatch = useDispatch()
-  // const oncoJson = useSelector((data) => data.dataVisualizationReducer.oncoSummary);
-  //
-  // useEffect(()=>{
-  //   if(inputData){
-  //
-  //     if(inputData.type !==''){
-  //       // console.log(inputData);
-  //       dispatch(getOncoInformation('POST',inputData))
-  //     }
-  //   }
-  //   {oncoJson && <OncoCmp width={width} data={oncoJson}/>}
-  // },[inputData])
-  
+  const oncoJson = useSelector((data) => data.dataVisualizationReducer.oncoSummary);
+  const [activeCmp,setActiveCmp] = useState(false)
+  const [chartData,setChartData] = useState({})
+
+  useEffect(()=>{
+    if(inputData){
+      if(inputData.type !==''){
+        dispatch(getOncoInformation('POST',inputData))
+        setActiveCmp(false)
+      }
+    }
+
+  },[inputData])
+
+  useEffect(()=>{
+    if(oncoJson){
+      setChartData((prevState) => ({...prevState,...oncoJson }))
+    }
+  },[oncoJson])
+
+  useEffect(()=>{
+    if(chartData){
+      setActiveCmp(true)
+    }
+  },[chartData])
+
+
   return (
     <div>
-      <OncoCmp width={width}/>
+      {activeCmp && <OncoCmp width={width} data={chartData}/>}
     </div>
   )
 

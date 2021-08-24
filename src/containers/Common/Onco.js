@@ -4,11 +4,11 @@ import Oncoprint from "oncoprintjs";
 import _ from 'lodash';
 import './rules'
 
-export default function OncoCmp({ width }) {
+export default function OncoCmp({ width,data }) {
 
   const [state, setState] = useState([]);
 
-  const drawChart = (w) => {
+  const drawChart = (w,gData,cData) => {
     // $(document).ready(function() {
 
 
@@ -703,6 +703,12 @@ export default function OncoCmp({ width }) {
                   "desc": "PIK3R2"
               }
       ]
+
+      if (gData){
+        geneData = gData
+      }
+
+
       var share_id = null;
 
 
@@ -964,6 +970,10 @@ export default function OncoCmp({ width }) {
             }
         ]
       }
+
+      if (cData){
+        clinicalData = cData
+      }
       //
       var global_mut_category_datum = clinicalData['globalMutCategory']
       var mut_category_datum = clinicalData['mutCategory']
@@ -1067,8 +1077,12 @@ export default function OncoCmp({ width }) {
 
 
   useEffect(()=>{
-
-    drawChart(width)
+    if (data){
+      let d = data
+      let gData = d['geneData']
+      let cData = d['clinicalData']
+      drawChart(width-300,gData,cData)
+    }
   },[])
 
   return (

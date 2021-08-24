@@ -1,28 +1,33 @@
-const childMenu = {
-  "social":{
+const sessionAuth = localStorage.getItem('ncc_access_token');
+
+const login = {
+  id: 'login',
+  title: 'Login',
+  type: 'item',
+  icon: 'fa fa-dashboard',
+  url: '/login',
+  children: [],
+}
+
+const logout = {
+  id: 'logout',
+  title: 'Logout',
+  type: 'item',
+  icon: 'fa fa-dashboard',
+  url: '/logout',
+  children: [],
+}
+
+
+let childMenu = {
+  "social": {
     items: [
-      {
-        id: 'login',
-        title: 'Login',
-        type: 'item',
-        icon: 'fa fa-dashboard',
-        url:'/login',
-        children: [],
-      },
-      {
-        id: 'logout',
-        title: 'Logout',
-        type: 'item',
-        icon: 'fa fa-dashboard',
-        url:'/logout',
-        children: [],
-      },
       {
         id: 'faq',
         title: 'FAQ',
         type: 'item',
         icon: 'fa fa-dashboard',
-        url:'/userdata',
+        url: '/userdata',
         children: [],
       },
       {
@@ -30,7 +35,7 @@ const childMenu = {
         title: 'Q&A',
         type: 'item',
         icon: 'fa fa-dashboard',
-        url:'/API',
+        url: '/API',
         children: [],
       },
       {
@@ -38,43 +43,43 @@ const childMenu = {
         title: 'Notice',
         type: 'item',
         icon: 'fa fa-dashboard',
-        url:'/API',
+        url: '/API',
         children: [],
       }
     ]
   },
-  "mainmenu":{
+  "mainmenu": {
     items: [
       {
         id: 'introduce',
         title: 'Introduce',
         type: 'group',
         icon: 'fa fa-dashboard',
-        url:'/',
+        url: '/',
         children: [
           {
             id: 'introduce',
             title: 'Business',
             type: 'item',
             icon: 'fa fa-dashboard',
-            url:'/',
-            children:[]
+            url: '/',
+            children: []
           },
           {
             id: 'introduce',
             title: 'Introduction',
             type: 'item',
             icon: 'fa fa-dashboard',
-            url:'/',
-            children:[]
+            url: '/',
+            children: []
           },
           {
             id: 'introduce',
             title: 'Pipeline',
             type: 'item',
             icon: 'fa fa-dashboard',
-            url:'/',
-            children:[]
+            url: '/',
+            children: []
           },
         ],
       },
@@ -83,7 +88,7 @@ const childMenu = {
         title: 'Data Summary',
         type: 'group',
         icon: 'fa fa-dashboard',
-        url:'/summary',
+        url: '/summary',
         children: []
 
       },
@@ -93,7 +98,7 @@ const childMenu = {
         title: 'Data Visualization',
         type: 'group',
         icon: 'fa fa-dashboard',
-        url:'/visualise',
+        url: '/visualise',
         children: [],
       },
       {
@@ -101,7 +106,7 @@ const childMenu = {
         title: 'User Data Visualization',
         type: 'group',
         icon: 'fa fa-dashboard',
-        url:'/userdata',
+        url: '/userdata',
         children: [
 
         ],
@@ -111,27 +116,33 @@ const childMenu = {
         title: 'Api',
         type: 'group',
         icon: 'fa fa-dashboard',
-        url:'/summary',
+        url: '/summary',
         children: [
           {
             id: 'VariantTypes',
             title: 'Variant Types',
             type: 'item',
             icon: 'fa fa-dashboard',
-            url:'/summary',
-            children:[]
+            url: '/summary',
+            children: []
           },
           {
             id: 'VariantClassification',
             title: 'Variant Classification',
             type: 'item',
             icon: 'fa fa-dashboard',
-            url:'/summary',
-            children:[]
+            url: '/summary',
+            children: []
           }
         ],
       },
     ]
   }
+}
+
+if (sessionAuth){
+  childMenu["social"]["items"].push(logout)
+}else{
+  childMenu["social"]["items"].push(login)
 }
 export default childMenu;

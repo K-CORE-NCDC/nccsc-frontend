@@ -5,50 +5,28 @@ Chart.register(...registerables);
 export default function StackBarChartComp({data,axis}){
       const chartRef = useRef(null);
 
-      let axis_ = ''
-
-      if(axis === "x-axis"){
-        axis_ = {
-            // indexAxis: 'x',
-            // legends:false,
+      let          axis_ = {
             plugins:{
               legend: {
                 display: false
               }
 
             },
+            indexAxis: 'y',
             layout:{
               padding:20
             },
             scales:{
-              xAxes: [{
-                  stacked: true
-              }],
-              yAxes: [{
-                  stacked: true
-              }]
-            }
-        }
-      }else{
-        axis_ = {
-            plugins:{
-              legend: {
-                display: false
+              x: {
+                stacked: true,
+              },
+              y: {
+                beginAtZero: true,
+                stacked: true
               }
 
-            },
-            layout:{
-              padding:20
-            },
-            indexAxis: 'y',
-            // legends:false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                }
             }
         }
-      }
 
       const drawGraph = (labels, data_) => {
         if(chartRef.current){
@@ -65,9 +43,11 @@ export default function StackBarChartComp({data,axis}){
       }
 
     useEffect(() => {
-      let labels = data['categories']
-      let data_list = data['series']
-      drawGraph(labels,data_list)
+
+      let datasets = data['datasets']
+      let labels = data['labels']
+      drawGraph(labels,datasets)
+
     }, []);
 
 

@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios'
 import config from '../../config'
-import { useHistory } from "react-router-dom";
 
 const LoginComponent = () => {
-    let history = useHistory();
     const [userFormData, setUserFormData] = useState({ username: "", password: "" })
     const [errorClass, setErrorClass] = useState("")
     const [errorMessage, setErrorMessage] = useState([])
@@ -22,7 +20,8 @@ const LoginComponent = () => {
     const loginSuccess = (data) => {
         localStorage.setItem('ncc_access_token', data.access);
         localStorage.setItem('ncc_refresh_token', data.refresh);
-        history.push("/userdata")
+        // history.push("/userdata")
+        window.location.href = "/userdata"
     }
 
 
