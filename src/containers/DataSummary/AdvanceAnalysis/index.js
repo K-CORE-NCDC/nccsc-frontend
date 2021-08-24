@@ -25,8 +25,8 @@ export default function AdvancedInfo() {
     "Variant Classification":"Bar",
     "Variant Type":"Bar",
     "Snv Class":"Bar",
-    "dna_mutation_gene":"stack_bar",
-    "dna_per_sample":"stack_bar"
+    "Top 10 Mutated Genes":"stack_bar",
+    "Variant Per Sample":"stack_bar"
   }
 
   useEffect(()=>{

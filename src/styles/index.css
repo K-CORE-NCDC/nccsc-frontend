@@ -192,6 +192,14 @@ input:checked ~ .dot {
 	-webkit-animation: spinner 1.5s linear infinite;
 	animation: spinner 1.5s linear infinite;
 }
+.onco{
+  margin: 50px 20px
+}
+.onco span div{
+  top: 0px;
+  left: 50px;
+}
+
 
 /* @-webkit-keyframes spinner {
 	0% {
