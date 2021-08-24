@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react';
 const UserFilesTable = ({ userDataTableData }) => {
     const columns = ['name', 'dna_mutation', 'dna_methylation', 'rna_zscore', 'proteome', 'clinical_information']
     const [showTableRows, setShowTableRows] = useState(false)
-
-    console.log(userDataTableData)
+    
     useEffect(() => {
         if (userDataTableData && userDataTableData.length > 0) {
             setShowTableRows(true)

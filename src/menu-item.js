@@ -2,19 +2,19 @@ const childMenu = {
   "social":{
     items: [
       {
-        id: 'signup',
-        title: 'Sign Up',
-        type: 'item',
-        icon: 'fa fa-dashboard',
-        url:'/summary',
-        children: [],
-      },
-      {
         id: 'login',
         title: 'Login',
         type: 'item',
         icon: 'fa fa-dashboard',
-        url:'/visualise',
+        url:'/login',
+        children: [],
+      },
+      {
+        id: 'logout',
+        title: 'Logout',
+        type: 'item',
+        icon: 'fa fa-dashboard',
+        url:'/logout',
         children: [],
       },
       {

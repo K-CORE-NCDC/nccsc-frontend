@@ -17,7 +17,7 @@ export default function DataCircos({ width, inputData }) {
     if (inputData) {
       let editInputData = inputData
       editInputData = { ...editInputData, sampleKey: sampleKey }
-      if (editInputData.type !== '' && sampleKey !== '') {
+      if (editInputData.type !== '') {
         dispatch(getCircosInformation('POST', editInputData))
       }
     }

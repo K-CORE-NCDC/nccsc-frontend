@@ -1,9 +1,9 @@
 import { homeConstants } from '../actions/Constants';
 
-const homeReducer = (state = {'home':'home'}, {type,payload}) => {
+const homeReducer = (state = { 'home': 'home' }, { type, payload }) => {
   switch (type) {
     case homeConstants.HOME_REQUEST:
-      return {...state}
+      return { ...state }
     case homeConstants.DATA_SUMMARY:
       return {
         ...state,
@@ -18,6 +18,11 @@ const homeReducer = (state = {'home':'home'}, {type,payload}) => {
       return {
         ...state,
         fileUploadData: payload
+      }
+    case homeConstants.USERDATA_VISUALIZATION_ERROR:
+      return {
+        ...state,
+        fileUploadStatus: {...state.fileUploadStatus, ...payload}
       }
     default:
       return state

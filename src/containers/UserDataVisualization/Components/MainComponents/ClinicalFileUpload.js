@@ -12,27 +12,31 @@ import { file_upload } from '../../../../actions/api_actions'
 import { useSelector, useDispatch } from "react-redux";
 import XLSX from 'xlsx';
 import Loader from '../../Widgets/loader';
-import FileSaver from 'file-saver';
+import { useHistory } from 'react-router-dom'
+
 
 export default function FileUpload({ parentCallBack }) {
   // const parentRef = useRef(null);
+  const history = useHistory()
   const response = useSelector((data) => data.homeReducer.fileUploadData);
+  const fileUploadStatus = useSelector((data) => data.homeReducer.fileUploadStatus);
   const dispatch = useDispatch()
   const [state, setState] = useState([])
   const [select, setSelect] = useState({})
   const [error, setError] = useState(false)
   const [error_message, setErrorMessage] = useState({ type: "", message: "" })
-  const [loader, setLoader] = useState({ child_1: false, child_2: false, child_3: false, child_4: false })
+  const [loader, setLoader] = useState({})
   // const [uploadFile, setUploadFile] = useState({clinical:""})
   const [selectedFiles, setSelectedFiles] = useState([])
   const [uploadFile, setUploadFile] = useState({})
   const [projectName, setProjectName] = useState("")
   const [uploadButtonDisabled, setUploadButtonDisabled] = useState(true)
   const [uploadSuccessful, setUploadSuccessful] = useState(false)
+  const [formSbubmitButtonText, setFormSubmitButtonText] = useState("upload")
   const fileInputRef = useRef()
 
   const [initialInputState, setInitialInputState] = useState(undefined)
-  const [selectedFileSampleType, setSelectedFileSampleType] = useState({ 
+  const [selectedFileSampleType, setSelectedFileSampleType] = useState({
     1: "clinical_information",
     2: "dna_mutation",
     3: "rna_zscore",
@@ -40,27 +44,60 @@ export default function FileUpload({ parentCallBack }) {
     5: "proteome"
   })
 
-  console.log(response)
-
   useEffect(() => {
-    if(Object.keys(uploadFile).length === 5){
+    if (Object.keys(uploadFile).length === 5) {
       setUploadButtonDisabled(false)
-    }else{
+    } else {
       setUploadButtonDisabled(true)
     }
   }, [uploadFile])
 
+  useEffect(()=>{
+    let isVisualize = false
+    if(Object.keys(loader).length === 0){
+      isVisualize = false
+    }else if(Object.values(loader).every((element) => (element === 'success'))){
+      isVisualize = true
+    }
+    
+    Object.keys(Loader).forEach(element =>{
+      let statusType = loader[element]
+      if(statusType === 'loader'){
+        isVisualize = false
+        setFormSubmitButtonText('upload')
+      }else if(statusType === 'failed'){
+        isVisualize = false
+        setFormSubmitButtonText('retry')
+      }
+    })
+    if (isVisualize){
+      setFormSubmitButtonText('visualize')
+    }
+  },[loader])
+
 
   useEffect(() => {
-    if (response) { 
-      if(Object.values(response).some((element)=>(element === null))){
+    if (response) {
+      Object.keys(response).forEach(fileType => {
+        if (response[fileType]) {
+          setLoader((prevState) => ({ ...prevState, [fileType]: 'success' }))
+        }
+      })
+
+      if (Object.values(response).some((element) => (element === null))) {
         setUploadSuccessful(false)
-      }else{
+      } else {
         setUploadSuccessful(true)
       }
 
     }
   }, [response])
+
+
+  useEffect(() => {
+    console.log(fileUploadStatus)
+    setLoader((prevState) => ({ ...prevState, ...fileUploadStatus }))
+  }, [fileUploadStatus])
 
 
   const selectGene = (event) => {
@@ -131,21 +168,21 @@ export default function FileUpload({ parentCallBack }) {
 
   const excelToJson = (reader) => {
     var fileData = reader.result;
-    var wb = XLSX.read(fileData, {type : 'binary'});
+    var wb = XLSX.read(fileData, { type: 'binary' });
     var data = {};
-    wb.SheetNames.forEach(function(sheetName){
-         var rowObj =XLSX.utils.sheet_to_row_object_array(wb.Sheets[sheetName]);
-         var rowString = JSON.stringify(rowObj);
-         data[sheetName] = rowString;
+    wb.SheetNames.forEach(function (sheetName) {
+      var rowObj = XLSX.utils.sheet_to_row_object_array(wb.Sheets[sheetName]);
+      var rowString = JSON.stringify(rowObj);
+      data[sheetName] = rowString;
     });
-    console.log({excelData: data});
-}
+    console.log({ excelData: data });
+  }
 
-const loadFileXLSX = (file) => {
-  var reader = new FileReader();
-  reader = excelToJson(reader);
-  reader.readAsBinaryString(file);
-}
+  const loadFileXLSX = (file) => {
+    var reader = new FileReader();
+    reader = excelToJson(reader);
+    reader.readAsBinaryString(file);
+  }
 
   // useEffect(() => {
   //   console.log(uploadFile);
@@ -157,20 +194,34 @@ const loadFileXLSX = (file) => {
   const on_upload = (e) => {
     let files_ = uploadFile;
     Object.keys(files_).forEach(function (key, value) {
-      let for_loader = files_[key]['type'];
+      let fileType = files_[key]['type'];
       setLoader(prevState => ({
         ...prevState,
         [key]: true
       }));
-      if(response && (response[for_loader] === null || projectName !== response.name)){
+      if (response && (response[fileType] === null || projectName !== response.name)) {
         dispatch(file_upload(files_[key], key, projectName));
-      }else if(!response){
+        setLoader((prevState) => ({ ...prevState, [fileType]: 'loader' }))
+      } else if (!response) {
         dispatch(file_upload(files_[key], key, projectName));
-      }else{
+        setLoader((prevState) => ({ ...prevState, [fileType]: 'loader' }))
+      } else {
         console.log(response);
       }
       parentCallBack({ "hide": true, "selected_keys": select });
     })
+  }
+
+  const formSubmitButtonActions = () =>{
+    if(formSbubmitButtonText === 'upload'){
+      on_upload()
+    }
+    if(formSbubmitButtonText === 'retry'){
+      on_upload()
+    }
+    if(formSbubmitButtonText === 'visualize'){
+      history.push(`/visualise/circos/${response.id}`)
+    }
   }
 
   const testFunction = (e) => {
@@ -207,25 +258,37 @@ const loadFileXLSX = (file) => {
     }
   }
 
+  const removeUnderscore = (underscoreString) =>{
+    return underscoreString.replace('_', ' ')    
+  }
+
   useEffect(() => {
     let firstInput = []
     Object.keys(selectedFileSampleType).forEach(key => {
       firstInput.push(
         <div key={key} className="grid grid-cols-12 gap-6 ">
           <div className="relative w-full col-span-4">
-              
-            <div className="w-full block text-left focus:outline-none  focus:ring focus:border-blue-300 p-4 mt-3">{selectedFileSampleType[key]}</div>
+
+            <div className="capitalize w-full block text-left focus:outline-none  focus:ring focus:border-blue-300 p-4 mt-3">{removeUnderscore(selectedFileSampleType[key])}</div>
           </div>
           <div className='relative col-span-4 w-full '>
             <label
               className="w-full block text-right border focus:outline-none border-b-color focus:ring focus:border-blue-300 p-4 mt-3">
-              <input type='file' className="" name={selectedFileSampleType[key]} filename={key} onChange={file_Upload_} />
+              <input type='file' className="" value={selectedFileSampleType[key].file} name={selectedFileSampleType[key]} filename={key} onChange={file_Upload_} />
             </label>
           </div>
           <div className='p-5 col-span-2 flex'>
             {/* <PlusCircleIcon className='w-10' id="plus_1" data-id="1" onClick={addNewHTML} />
             {key > 1 && <MinusCircleIcon className='w-10' id={key} onClick={deleteHtml} />} */}
-            {loader["child_1"] ? <Loader /> : ""}
+            {(loader[selectedFileSampleType[key]] === 'success') && <section className="">
+              <div className="mr-6 bg-green-500 rounded px-4 py-2  text-center -ml-3">
+                <svg fill="none" viewBox="0 0 24 24" className="w-8 h-8 text-white" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            </section>}
+            {(loader[selectedFileSampleType[key]] === 'loader') && <Loader />}
+            {(loader[selectedFileSampleType[key]] === 'failed') && <strong className="text-red-700 font-bold">Failed!</strong>}
           </div>
           <div className="relative w-full col-span-2">
             <div className="pt-8 pr-0 pl-0">
@@ -239,7 +302,7 @@ const loadFileXLSX = (file) => {
       )
     })
     setInitialInputState(firstInput)
-  }, [selectedFileSampleType])
+  }, [selectedFileSampleType, loader])
 
 
   return (
@@ -259,7 +322,7 @@ const loadFileXLSX = (file) => {
             <div className="flex">
               <div>Project Name:</div>
               <div className="mb-4">
-                <input onChange={(e)=>setProjectName(e.target.value)} value={projectName} className=" ml-10 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required={true} id="project" type="text" placeholder="Project Name" />
+                <input onChange={(e) => setProjectName(e.target.value)} value={projectName} className=" ml-10 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required={true} id="project" type="text" placeholder="Project Name" />
               </div>
             </div>
             {/* <div className="pb-3">{selectedFiles ? <h2> Selected Files: <b>{selectedFiles.join(', ')}</b></h2> : ""}</div> */}
@@ -268,14 +331,14 @@ const loadFileXLSX = (file) => {
           {initialInputState}
           {state}
           <div className="relative w-full col-span-12 text-center">
-            <button className="bg-white  w-80 h-20  mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded">
+            <button  className="capitalize bg-white  w-80 h-20  mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded">
               Reset
             </button>&nbsp;&nbsp;&nbsp;&nbsp;
-            <button disabled={uploadButtonDisabled} className={`bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded ${uploadButtonDisabled ? 'opacity-50': ''}`}
-              onClick={on_upload}
-              
+            <button disabled={uploadButtonDisabled} className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded ${uploadButtonDisabled ? 'opacity-50' : ''}`}
+              onClick={formSubmitButtonActions}
+
             >
-              Upload
+              {formSbubmitButtonText}
             </button>
           </div>
         </div>

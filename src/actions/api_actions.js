@@ -50,7 +50,11 @@ export function getGenomicInformation() {
 
 export function getOncoInformation(type, data) {
   return (dispatch) => {
-
+    // const data = new FormData()
+    //
+    // data.set('genes', data.genes);
+    // // data.set('filters', data.);
+    //
     let url = config.auth+"oncoprint/";
     sendRequest(url, type, data)
       .then((result) => {
@@ -92,6 +96,15 @@ export function getVolcanoPlotInfo(type, data) {
   return (dispatch) => {
     let url = config.auth + "volcano/";
 
+    const data = new FormData()
+
+    data.set('genes', data.genes);
+
+    // console.log("data.filter---->",data.filter)
+    if("filter" in data){
+      data.set('filters', JSON.stringify(data.filter));
+    }
+
     sendRequest(url, type, data)
       .then((result) => {
         const d = result
@@ -110,16 +123,15 @@ export function getVolcanoPlotInfo(type, data) {
 export function getHeatmapInformation(type, data) {
   return (dispatch) => {
     let url = config.auth + "heatmap/";
-    const form = new FormData()
+    const data = new FormData()
 
-    // form.set('genes', data.genes);
-    // if("filter" in data){
-    //   form.set('filters', JSON.stringify(data.filter));
-    // }
-    // if("table_type" in data){
-    //   form.set('tab_type', data.table_type);
-    // }
-    console.log(data)
+    data.set('genes', data.genes);
+    if("filter" in data){
+      data.set('filters', JSON.stringify(data.filter));
+    }
+    if("table_type" in data){
+      data.set('tab_type', data.table_type);
+    }
 
     sendRequest(url, type, data)
       .then((result) => {
@@ -136,17 +148,17 @@ export function getHeatmapInformation(type, data) {
   };
 }
 
-export function file_upload(data, div_name, projectName) {
+export function file_upload(fileData, div_name, projectName) {
   return (dispatch) => {
-    const form = new FormData()
+    const data = new FormData()
     // dispatch({ type: homeConstants.DATA_SUMMARY });
-    form.set('file', data.file);
-    form.set('type', data.type);
-    form.set("div_name", div_name)
-    form.set("project_name", projectName)
+    data.set('file', fileData.file);
+    data.set('type', fileData.type);
+    data.set("div_name", div_name)
+    data.set("project_name", projectName)
 
     let url = config.auth + "user-data-visualization/";
-    sendRequest(url, "POST", form)
+    sendRequest(url, "POST", data)
       .then((result) => {
         const d = result;
         dispatch({
@@ -156,6 +168,10 @@ export function file_upload(data, div_name, projectName) {
       })
       .catch((e) => {
         console.log("error", e);
+        dispatch({
+          type: homeConstants.USERDATA_VISUALIZATION_ERROR,
+          payload: {[fileData.type]: 'failed'}
+        })
       });
   }
 }
@@ -225,18 +241,18 @@ export function getHeadersFiles() {
 
 export function getCircosUserData(data) {
   return (dispatch) => {
-    const form = new FormData()
+    const data = new FormData()
 
     if ('selected_genes' in data) {
-      form.set('genes', data.selected_genes);
+      data.set('genes', data.selected_genes);
     }
 
     if ('filter' in data) {
-      form.set('filters', data.filter);
+      data.set('filters', data.filter);
     }
 
     let url = config.auth + "circos-user-data/"
-    sendRequest(url, "POST", form)
+    sendRequest(url, "POST", data)
       .then((result) => {
         const d = result;
         dispatch({
@@ -253,18 +269,18 @@ export function getCircosUserData(data) {
 
 export function getOncoUserData(data) {
   return (dispatch) => {
-    const form = new FormData()
+    const data = new FormData()
 
     if ('selected_genes' in data) {
-      form.set('genes', data.selected_genes);
+      data.set('genes', data.selected_genes);
     }
 
     if ('filter' in data) {
-      form.set('filters', data.filter);
+      data.set('filters', data.filter);
     }
 
     let url = config.auth + "onco-user-data/"
-    sendRequest(url, "POST", form)
+    sendRequest(url, "POST", data)
       .then((result) => {
         const d = result;
         dispatch({
@@ -280,19 +296,19 @@ export function getOncoUserData(data) {
 
 export function getVolcanoUserData(data) {
   return (dispatch) => {
-    const form = new FormData()
+    const data = new FormData()
 
     if ('selected_genes' in data) {
-      form.set('genes', data.selected_genes);
+      data.set('genes', data.selected_genes);
     }
 
 
     if ('filter' in data) {
-      form.set('filters', data.filter);
+      data.set('filters', data.filter);
     }
 
     let url = config.auth + "volcano-user-data/"
-    sendRequest(url, "POST", form)
+    sendRequest(url, "POST", data)
       .then((result) => {
         const d = result;
         dispatch({

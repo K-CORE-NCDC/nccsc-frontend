@@ -49,7 +49,7 @@ export default function DataVisualization() {
   }, []);
 
   useEffect(() => {
-    submitFilter()
+    // submitFilter()
   },[state])
 
   const selectGene = (event) => {
