@@ -11,6 +11,7 @@ export default function DataVolcono({ width, inputData }) {
 
   useEffect(()=>{
     if(inputData){
+      setActiveCmp(false)
       if(inputData.type !==''){
         dispatch(getVolcanoPlotInfo('POST',inputData))
       }

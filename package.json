@@ -6,7 +6,6 @@
     "@craco/craco": "^6.2.0",
     "@headlessui/react": "^1.4.0",
     "@heroicons/react": "^1.0.4",
-    "@oncojs/react-survivalplot": "^0.6.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -39,8 +38,7 @@
     "start": "HOST=0.0.0.0 PORT=3000 craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject",
-    "build:package": "babel src/packages/@oncojs/survivalplot/index.js --out-file src/packages/@oncojs/survivalplot/index.dist.js"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
