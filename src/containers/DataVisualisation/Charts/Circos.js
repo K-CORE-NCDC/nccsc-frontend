@@ -9,8 +9,8 @@ export default function DataCircos({ width, inputData }) {
   const [sampleKey, setSampleKey] = useState('')
   const circosJson = useSelector((data) => data.dataVisualizationReducer.circosSummary);
   const circosSanpleRnidListData = useSelector(state => state.dataVisualizationReducer.circosSanpleRnidListData)
-  console.log(sampleKey)
   const [sampleListElements, setSampleListElements] = useState([])
+  const [displaySamples, setDisplaySamples] = useState(false)
 
   console.log(inputData)
   useEffect(() => {
@@ -22,6 +22,14 @@ export default function DataCircos({ width, inputData }) {
       }
     }
   }, [inputData, sampleKey])
+
+  useEffect(() => {
+    if(inputData && inputData.genes.length > 0) {
+      setDisplaySamples(true)
+    }else{
+      setDisplaySamples(false)
+    }
+  }, [inputData])
 
   useEffect(() => {
     if(!circosSanpleRnidListData){
@@ -43,13 +51,13 @@ export default function DataCircos({ width, inputData }) {
 
   return (
     <div className="flex-row m-1">
-      <div className="flex-column p-1">
+      {displaySamples && <div className="flex-column p-1">
         <label htmlFor="samples">Choose a Sample: </label>
 
         <select defaultChecked={sampleKey} onChange={e => { setSampleKey(e.target.value) }} name="samples" id="samples">
           {sampleListElements}
         </select>
-      </div>
+      </div>}
       <div>
         {circosJson && <CircosCmp width={width * 0.8} data={circosJson} />}
       </div>
