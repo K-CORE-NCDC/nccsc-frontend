@@ -37,7 +37,8 @@ export default function GenomicInfo() {
     "Variant Type":"Bar",
     "Snv Class":"Bar",
     "Top 10 Mutated Genes":"stack_bar",
-    "dna_per_sample":"stack_bar"
+    "dna_per_sample":"stack_bar",
+    
   }
 
 

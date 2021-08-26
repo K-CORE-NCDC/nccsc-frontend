@@ -56,21 +56,21 @@ export default function ClinicalInformation() {
                 <div className="relative" id={'div_'+id}  onClick={e=>checkBoxFn(e,'md_'+i,itm)}>
                   <input type="checkbox" id={'md_'+i} checked={check} data-parent={item}   className="checkbox sr-only" onChange={e=>checkBoxFn(e,'md_'+i,itm)}/>
                   <div className="block bg-gray-600 w-14 h-6 rounded-full" id={'md_'+i+'_toggle'} style={{backgroundColor:color}}></div>
-                  <div className="dot absolute left-1 top-1 bg-white w-6 h-4 rounded-full transition" style={{backgroundColor:'#fff'}}></div>
+                  <div className="dot absolute left-1 top-1 bg-white w-6 h-4 rounded-full transition" style={{backgroundColor:'#fff',opacity:1}}></div>
                 </div>
               </label>
             </div>
           )
         })
         tmp.push(
-          <div key={item+'_'+k} class="tab w-full overflow-hidden border-t" onClick={(e)=>switchButton(e,item,k)}>
-            <input class="absolute opacity-0" id={"tab-single-"+k} type="radio" name="tabs2"/>
-            <label class="block p-5 leading-normal cursor-pointer" htmlFor={"tab-single-"+k}>
+          <div key={item+'_'+k} className="tab w-full overflow-hidden border-t" onClick={(e)=>switchButton(e,item,k)}>
+            <input className="absolute opacity-0" id={"tab-single-"+k} type="radio" name="tabs2"/>
+            <label className="block p-5 leading-normal cursor-pointer" htmlFor={"tab-single-"+k}>
               <UserCircleIcon className="h-8 w-8 inline text-main-blue"/>
-              <span class="no-underline  ml-2 text-2xl tracking-wide">{item}</span>
+              <span className="no-underline  ml-2 text-2xl tracking-wide">{item}</span>
             </label>
 
-              {selected===item ? <div class="tab-content overflow-hidden border-l-2 bg-gray-100  leading-normal relative">
+              {selected===item ? <div className="tab-content overflow-hidden border-l-2 bg-gray-100  leading-normal relative">
                 {t}
               </div>:""}
 
@@ -87,7 +87,7 @@ export default function ClinicalInformation() {
   }
 
 
-  const checkBoxFn = (event,id,chart)=>{
+  const checkBoxFn = (event,id,chart) => {
 
     let tmp = activeChartsList
     var did = document.getElementById(id)
@@ -131,14 +131,14 @@ export default function ClinicalInformation() {
           tmp.push(
             <div key={'chart_'+item} className='max-w bg-white rounded overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border'>
               <h2 className="text-3xl tracking-wide">{item}</h2>
-              <div class="mt-2 ml-5 p-3">
-                <label class="inline-flex items-center">
-                  <input type="radio" class="form-radio" name={"cr_"+k} value="Bar"/>
-                  <span class="ml-2">Bar</span>
+              <div className="mt-2 ml-5 p-3">
+                <label className="inline-flex items-center">
+                  <input type="radio" className="form-radio" name={"cr_"+k} value="Bar"/>
+                  <span className="ml-2">Bar</span>
                 </label>
-                <label class="inline-flex items-center ml-6">
-                  <input type="radio" class="form-radio" name={"cr_"+k} value="Pie"/>
-                  <span class="ml-2">Pie</span>
+                <label className="inline-flex items-center ml-6">
+                  <input type="radio" className="form-radio" name={"cr_"+k} value="Pie"/>
+                  <span className="ml-2">Pie</span>
                 </label>
               </div>
               <Barchart  id={'chart_'+id}  data={summaryJson[parent_name][item]} width='300' color={inputJson['clinicalColor'][parent_name]}/>

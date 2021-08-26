@@ -60,7 +60,7 @@ export default function DataSummary() {
           <div id="first" className="hidden">
             <ClinicalInformation/>
           </div>
-          <div id="second" className="hidden p-10">
+          <div id="second" className="hidden">
             <GenomicInfo/>
           </div>
           <div id="third" className="">

@@ -48,7 +48,7 @@ export default function Barchart({id,data,width,color}) {
     }
   },[data])
   let w = width-20
-  console.log(w);
+  
   return (
     <div >
       <canvas id={id}  width={w} height="300"></canvas>
