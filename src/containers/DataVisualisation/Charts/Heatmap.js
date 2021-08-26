@@ -7,10 +7,14 @@ export default function DataHeatmap({ width,inputData }) {
   const dispatch = useDispatch()
   const [activeCmp,setActiveCmp] = useState(false)
   const [tableType,setTableType] = useState('rna')
+  const [data_,setData] = useState('')
   const heatmapJson = useSelector((data) => data.dataVisualizationReducer.heatmapSummary);
+  // const didMountRef = useRef(false)
+
 
   useEffect(()=>{
     if(inputData){
+      setActiveCmp(false)
       if(inputData.type !==''){
         inputData['table_type'] = tableType
         dispatch(getHeatmapInformation('POST',inputData))
@@ -18,14 +22,16 @@ export default function DataHeatmap({ width,inputData }) {
     }
   },[inputData])
 
-
   useEffect(()=>{
     if(heatmapJson){
       if(Object.keys(heatmapJson).length>0){
           setActiveCmp(true)
+          setData(heatmapJson)
       }
     }
   },[heatmapJson])
+
+
 
   const changeType = (e,type)=> {
     let c = document.getElementsByName('type')
@@ -45,12 +51,8 @@ export default function DataHeatmap({ width,inputData }) {
     }
   }
 
-  // console.log(tableType)
-
   return (
-    <div>
-
-      <Fragment>
+      <div>
         <div className="grid grid-cols-2  ">
           <div className="p-5 text-right">
             <div className="flex justify-start items-baseline flex-wrap">
@@ -83,10 +85,8 @@ export default function DataHeatmap({ width,inputData }) {
           </div>
         </div>
         <div className='grid'>
-          {activeCmp && <HeatmapCmp width={width} data={heatmapJson}/>}
+          <HeatmapCmp width={width} data={heatmapJson}/>
         </div>
-      </Fragment>
-      
-    </div>
+      </div>
   )
 }
