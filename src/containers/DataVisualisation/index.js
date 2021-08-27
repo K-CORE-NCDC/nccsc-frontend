@@ -23,7 +23,6 @@ import {
 
 export default function DataVisualization() {
   const elementRef = useRef(null);
-
   const [state,setState] = useState({"genes":[],'filter':'','type':''})
   const [boolChartState,setBoolChartState] = useState(true)
   const [filterState,setFilterState] = useState({})
@@ -48,7 +47,6 @@ export default function DataVisualization() {
     }))
   }, []);
 
-  console.log(state);
   const selectGene = (event) => {
     let val_ = event.target.value;
     let g = genes[val_].data;
@@ -74,7 +72,6 @@ export default function DataVisualization() {
     })
 
   }
-
 
   useEffect(()=>{
     let tabsContainer = document.querySelector("#tabs");

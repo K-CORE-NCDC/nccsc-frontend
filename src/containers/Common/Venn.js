@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 // var venn = require("venn")
 // import {VennDiagram} from 'venn.js'
 import * as venn from 'venn.js'
@@ -43,9 +43,8 @@ export default function VennCmp({ width }) {
 
     });
 
-
-
   },[width])
+  
   return (
     <div id='venn' className='relative'></div>
   )
