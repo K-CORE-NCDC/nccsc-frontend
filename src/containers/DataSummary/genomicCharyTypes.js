@@ -1,6 +1,7 @@
 import BarChartComp from "../Common/HorizontalBarChart"
 import StackBarChartComp from "../Common/StackedBarChart"
 import Boxplot from "../Common/boxplot"
+import VerticalStackBarChartComp from "../Common/VerticalStackBarChart"
 
 const chart_types = (type,payload,axis) => {
   switch (type) {
@@ -10,6 +11,8 @@ const chart_types = (type,payload,axis) => {
       return <StackBarChartComp data={payload} axis={axis}/>
     case "box_plot":
       return <Boxplot data={payload} />
+    case "vertical_stack_bar":
+      return <VerticalStackBarChartComp data={payload} />
     default:
       return ""
   }
