@@ -57,14 +57,14 @@ export default function DataSummary() {
       </section>
       <section >
         <div id="tab-contents">
-          <div id="first" className="hidden">
+          <div id="first" className="">
             <ClinicalInformation/>
           </div>
           <div id="second" className="hidden">
 
           </div>
-          <div id="third" className="">
-            <AdvancedInfo/>
+          <div id="third" className="hidden">
+            
           </div>
         </div>
       </section>

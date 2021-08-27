@@ -66,7 +66,6 @@ export default function GenomicInfo() {
 
   return (
     <div className="grid grid-cols-3 gap-6">
-      <VennCmp/>
       {state['charts']}
     </div>
 

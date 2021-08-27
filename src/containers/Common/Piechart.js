@@ -48,7 +48,7 @@ export default function Piechart({id,data,width,color, chart_type}) {
   let w = width-20
 
   return (
-    <div id={'parent'+id}>
+    <div id={'parent_pie'+id}>
       <canvas id={id}  width={w} height="300"></canvas>
     </div>
   )
