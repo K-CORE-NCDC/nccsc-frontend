@@ -1,24 +1,28 @@
-import React,{useState,useEffect,useRef,useCallback } from "react";
+import React,{useState,useEffect,useRef,useCallback,usePrevious } from "react";
 import {
   ChevronDownIcon,
   ChevronUpIcon,
   AdjustmentsIcon
 } from '@heroicons/react/outline'
 import { useSelector, useDispatch } from "react-redux";
-
 import { getGenomicInformation } from '../../../actions/api_actions'
 import chart_types from '../genomicCharyTypes';
 import inputJson from '../data'
 import Filter from './filter'
+import VennCmp from '../../Common/Venn'
+
 export default function AdvancedInfo() {
   const dataSummary = useSelector(state => state)
   const summaryJson = useSelector((data) => data.homeReducer.genomicData);
-  const [state, setState] = useState({"charts":[]});
-
+  const [filterState,setFilterState] = useState({})
+  const [state, setState] = useState([]);
+  const [data, setData] = useState("");
+  const [active, setActive] = useState(false);
   const dispatch = useDispatch()
+  const prevCountRef = useRef();
 
   useEffect(() => {
-    dispatch(getGenomicInformation())
+    dispatch(getGenomicInformation("POST",""))
   }, [dispatch])
 
   let visual_type = {
@@ -27,7 +31,8 @@ export default function AdvancedInfo() {
     "Snv Class":"Bar",
     "Top 10 Mutated Genes":"stack_bar",
     "Variant Per Sample":"stack_bar",
-    "Variant Classification Summary":'box_plot'
+    "Variant Classification Summary":'box_plot',
+    "Variant per Sample":"vertical_stack_bar"
   }
 
   useEffect(()=>{
@@ -36,11 +41,7 @@ export default function AdvancedInfo() {
       Object.keys(summaryJson).forEach((item, k) => {
         let type = visual_type[item]
         let comp = ''
-        if(item === "dna_per_sample"){
-          comp = chart_types(type, summaryJson[item], "x-axis")
-        }else{
-          comp = chart_types(type, summaryJson[item],'')
-        }
+        comp = chart_types(type, summaryJson[item], visual_type[item])
 
         html.push(
           <div key={'omics_'+k} className='max-w bg-white rounded overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border'>
@@ -53,16 +54,17 @@ export default function AdvancedInfo() {
           </div>
         )
       })
-      setState((prevState)=>({
-        ...prevState,
-        'charts':html
-      }))
+      setState(html)
     }
   },[summaryJson])
-  const callback = useCallback((count) => {
-    console.log(count);
-   // setCount(count);
+
+  const callback = useCallback((filters) => {
+    let data_ = {'filter':filters}
+    setState([])
+    dispatch(getGenomicInformation("POST", data_))
   }, []);
+
+  console.log(state)
 
   return (
     <div className="header">
@@ -74,7 +76,7 @@ export default function AdvancedInfo() {
             </div>
             <div className="col-start-2 col-span-3 pt-4 overflow-auto ">
               <div className="grid grid-cols-3 gap-1">
-                {state['charts']}
+                {state}
               </div>
             </div>
           </div>

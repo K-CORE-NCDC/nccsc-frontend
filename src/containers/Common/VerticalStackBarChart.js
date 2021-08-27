@@ -3,33 +3,38 @@ import {Chart, registerables} from 'chart.js';
 
 Chart.register(...registerables);
 
-export default function StackBarChartComp({data, axis, key}){
-      const chartRef = useRef(null);
-
-      let option = {
+export default function VerticalStackBarChartComp({data, axis, key}){
+    const chartRef_1 = useRef(null);
+    let option = {
               plugins:{
                 legend: {
                   display: false
                 }
               },
-              indexAxis: 'y',
-              layout:{
-                padding:20
+              indexAxis: 'x',
+              layout: {
+               padding: {
+                 left: -20
+               }
               },
               scales:{
                 x: {
                   stacked: true,
                 },
-                y: {
-                  beginAtZero: true,
-                  stacked: true
-                }
+                yAxes: [{
+                   scaleLabel: {
+                     display: true,
+                   },
+                   ticks:{
+                     display: false
+                   }
+                 }]
               }
           }
-
+          
     const drawGraph = (labels, data_) => {
-        if(chartRef.current){
-          var myChart = new Chart(chartRef.current, {
+        if(chartRef_1.current){
+          var myChart = new Chart(chartRef_1.current, {
               type: 'bar',
               data: {
                   labels: labels,
@@ -49,7 +54,7 @@ export default function StackBarChartComp({data, axis, key}){
 
     return (
         <div>
-          <canvas ref={chartRef} id={key} height="200"></canvas>
+          <canvas ref={chartRef_1} id={key} height="200"></canvas>
         </div>
     )
   }

@@ -54,7 +54,6 @@ export default function DataVisualization() {
     }))
   }, []);
 
-  console.log(state);
   const selectGene = (event) => {
     let val_ = event.target.value;
     let g = genes[val_].data;

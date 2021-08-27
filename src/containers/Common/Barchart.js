@@ -3,9 +3,9 @@ import {Chart, registerables} from 'chart.js';
 Chart.register(...registerables);
 
 
-export default function Barchart({id,data,width,color}) {
+export default function Barchart({id,data,width,color, chart_type}) {
+  const drawGraph = (g_data,ct_type) => {
 
-  const drawGraph = (g_data) => {
     var ctx = document.getElementById(id).getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'bar',
@@ -15,7 +15,6 @@ export default function Barchart({id,data,width,color}) {
             legend: {
               display: false
             }
-
           },
           layout:{
             padding:20
@@ -29,12 +28,11 @@ export default function Barchart({id,data,width,color}) {
                drawTicks: true,
              }
             },
-
           }
         }
     });
-
   }
+
   useEffect(() => {
     if (data){
       let g_dat = {"labels":[],"datasets":[]}
@@ -44,13 +42,13 @@ export default function Barchart({id,data,width,color}) {
         g_dat['labels'].push(data[i].name)
       }
       g_dat['datasets'].push({"data":t,backgroundColor:color})
-      drawGraph(g_dat)
+      drawGraph(g_dat, chart_type)
     }
-  },[data])
+  },[data,chart_type])
   let w = width-20
-  
+
   return (
-    <div >
+    <div id={'parent'+id}>
       <canvas id={id}  width={w} height="300"></canvas>
     </div>
   )

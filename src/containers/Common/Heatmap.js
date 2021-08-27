@@ -19,7 +19,6 @@ const HeatmapCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
   },[data])
 
 
-
   return (
     <>
       {active  &&

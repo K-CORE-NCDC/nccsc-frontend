@@ -1,4 +1,4 @@
-import React,{useState,useEffect,useRef,useLayoutEffect } from "react";
+import React,{useState,useEffect,useRef,useLayoutEffect,updateState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   ChevronDownIcon,
@@ -8,15 +8,55 @@ import {
 } from '@heroicons/react/outline'
 
 import Barchart from '../Common/Barchart'
+import Piechart from '../Common/Piechart'
 import { getDashboardDsummaryData } from '../../actions/api_actions'
+
 import inputJson from './data'
 export default function ClinicalInformation() {
   const summaryJson = useSelector((data) => data.homeReducer.dataSummary);
   const [leftSide, setLeftSide] = useState({"charts":[],"leftSide":[],"activeCharts":[]});
-  const [activeChartsList, setActiveChartsList] = useState([]);
-
+  const [activeChartsList, setActiveChartsList] = useState(["Sex","Age Of Diagnosis","Body Mass Index","Diagnosis of Bilateral Breast Cancer"]);
   const [selected, setSelected] = useState('Basic/Diagnostic Information');
   const dispatch = useDispatch()
+  const [visual_change_state, setVisualChangeState] = useState({});
+  const [charts, setCharts] = useState("")
+  const [chartType, setChartType] = useState({})
+  const [active, setActive] = useState(false)
+  const [firstLoad, setFirstLoad] = useState(true)
+
+  // const forceUpdate = React.useCallback(() => updateState({}), []);
+
+  const change_visual = (e) =>{
+
+    let id = e.target.dataset['id']
+    let c_type = e.target.value
+    let current_class_name = "parent_chart_"+c_type+"_"+id
+    let toggle_name =''
+    if(c_type=="bar"){
+      toggle_name ='pie'
+    }else if(c_type=="pie"){
+      toggle_name ='bar'
+    }
+    // document.getElementById(id+"_"toggle_name).remove
+    let previous_class_name = "parent_chart_"+toggle_name+"_"+id
+
+
+    document.getElementById(current_class_name).classList.remove("hidden")
+    document.getElementById(previous_class_name).classList.add("hidden")
+
+  }
+
+  useEffect(()=>{
+    if(firstLoad===true && summaryJson){
+
+      let tmp = activeChartsList
+      for (var i = 0; i < tmp.length; i++) {
+        loadChart(tmp[i],selected)
+      }
+      setFirstLoad(false)
+    }
+  },[firstLoad,summaryJson])
+
 
   useEffect(() => {
     dispatch(getDashboardDsummaryData())
@@ -29,12 +69,15 @@ export default function ClinicalInformation() {
   },[summaryJson])
 
   useEffect(()=>{
-    leftSideHtml(summaryJson)
-
+    if(selected){
+      leftSideHtml(summaryJson)
+    }
   },[selected])
+
 
   const leftSideHtml = (data)=>{
     let ac = leftSide['activeCharts']
+
     let tmp = []
     if(data && selected){
       Object.keys(data).forEach((item, k) => {
@@ -42,10 +85,12 @@ export default function ClinicalInformation() {
         Object.keys(data[item]).forEach((itm, i) => {
           let check = false
           let color = '#ccc'
+
           if(ac.indexOf(itm)>-1){
             check = true
             color = inputJson['clinicalColor'][item]
           }
+
           let id = itm.split(" ").join("")
           t.push(
             <div className="p-3 relative z-10" key={'div_mb_'+i}>
@@ -54,7 +99,8 @@ export default function ClinicalInformation() {
                   {itm}
                 </div>
                 <div className="relative" id={'div_'+id}  onClick={e=>checkBoxFn(e,'md_'+i,itm)}>
-                  <input type="checkbox" id={'md_'+i} checked={check} data-parent={item}   className="checkbox sr-only" onChange={e=>checkBoxFn(e,'md_'+i,itm)}/>
+                  <input type="checkbox" id={'md_'+i} checked={check} data-parent={item}  className="checkbox sr-only"
+                  onChange={e=>checkBoxFn(e,'md_'+i,itm)}/>
                   <div className="block bg-gray-600 w-14 h-6 rounded-full" id={'md_'+i+'_toggle'} style={{backgroundColor:color}}></div>
                   <div className="dot absolute left-1 top-1 bg-white w-6 h-4 rounded-full transition" style={{backgroundColor:'#fff',opacity:1}}></div>
                 </div>
@@ -69,13 +115,10 @@ export default function ClinicalInformation() {
               <UserCircleIcon className="h-8 w-8 inline text-main-blue"/>
               <span className="no-underline  ml-2 text-2xl tracking-wide">{item}</span>
             </label>
-
               {selected===item ? <div className="tab-content overflow-hidden border-l-2 bg-gray-100  leading-normal relative">
                 {t}
               </div>:""}
-
           </div>
-
         )
       })
       // console.log(selected);
@@ -86,10 +129,9 @@ export default function ClinicalInformation() {
     }
   }
 
-
   const checkBoxFn = (event,id,chart) => {
-
     let tmp = activeChartsList
+    console.log(tmp);
     var did = document.getElementById(id)
 
     var checkbox_elm = document.getElementById(id).checked;
@@ -108,13 +150,15 @@ export default function ClinicalInformation() {
       }
     }
     setActiveChartsList(tmp)
-    loadChart(chart,did.getAttribute('data-parent'))
+    loadChart(chart, did.getAttribute('data-parent'))
   }
 
-  const loadChart = (chart,parent_name)=>{
+  const loadChart = (chart,parent_name,type='')=>{
     let tmp = leftSide['charts']
     let ac = leftSide['activeCharts']
     let check = true
+
+
 
     for (var i = 0; i < tmp.length; i++) {
       if(tmp[i].key==="chart_"+chart) {
@@ -124,30 +168,54 @@ export default function ClinicalInformation() {
       }
     }
 
-    if(check){
+
+
+    if(check ){
       Object.keys(summaryJson[parent_name]).forEach((item, k) => {
         let id = item.split(" ").join("")
         if(item===chart){
           tmp.push(
-            <div key={'chart_'+item} className='max-w bg-white rounded overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border'>
+            <div key={'chart_'+item} data-chart="bar" className='max-w bg-white rounded overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border'>
               <h2 className="text-3xl tracking-wide">{item}</h2>
               <div className="mt-2 ml-5 p-3">
-                <label className="inline-flex items-center">
-                  <input type="radio" className="form-radio" name={"cr_"+k} value="Bar"/>
-                  <span className="ml-2">Bar</span>
-                </label>
-                <label className="inline-flex items-center ml-6">
-                  <input type="radio" className="form-radio" name={"cr_"+k} value="Pie"/>
-                  <span className="ml-2">Pie</span>
-                </label>
+
+
+                  <label className="inline-flex items-center">
+                    <input type="radio" className="form-radio" id={id+"_bar"} data-id={id} name={"cr_"+k} value="bar" onChange={change_visual}/>
+                    <span className="ml-2">Bar</span>
+                  </label>
+                  <label className="inline-flex items-center ml-6">
+                    <input type="radio" className="form-radio" id={id+"_pie"} data-id={id} name={"cr_"+k} value="pie" onChange={change_visual}/>
+                    <span className="ml-2">Pie</span>
+                  </label>
+
               </div>
-              <Barchart  id={'chart_'+id}  data={summaryJson[parent_name][item]} width='300' color={inputJson['clinicalColor'][parent_name]}/>
+              <div id="chart-tab-contents">
+                <div id={'parent_chart_bar_'+id} className="">
+                  <Barchart  id={'chart_bar_'+id}
+                  data={summaryJson[parent_name][item]}
+                  width='300'
+                  color={inputJson['clinicalColor'][parent_name]}
+                  />
+                </div>
+                <div id={'parent_chart_pie_'+id} className="hidden">
+                  <Piechart id={'chart_pie_'+id}
+                  data={summaryJson[parent_name][item]}
+                  width='300'
+                  color={inputJson['clinicalColor'][parent_name]}
+                  />
+                </div>
+              </div>
             </div>
           )
           ac.push(item)
         }
       })
     }
+
+
+
+
     setLeftSide((prevState)=>({
       ...prevState,
       'charts':tmp,
@@ -156,9 +224,9 @@ export default function ClinicalInformation() {
     // setActiveCharts(ac)
   }
 
-  const switchButton = (event,id,k)=>{
+  const switchButton = (event,id,k) => {
     let s = selected
-    setSelected(id)
+
 
     var myRadios = document.getElementsByName('tabs2');
     var setCheck;
@@ -175,10 +243,8 @@ export default function ClinicalInformation() {
         }
       }
     }
-
-
+    setSelected(id)
   }
-
 
   return (
    <div className="grid grid-cols-4 gap-6">
@@ -187,14 +253,17 @@ export default function ClinicalInformation() {
         </div>
         <h4 className="p-3"><AdjustmentsIcon className="h-6 w-6 inline"/> &nbsp;Filters</h4>
         <div className="shadow-box shadow-md w-full p-3" id='accordian_tabs' >
-          {leftSide['leftSide']}
+          {
+            leftSide['leftSide']
+          }
         </div>
       </div>
       <div className="col-start-2 col-span-4 m-5">
         <div className="grid grid-cols-3 gap-3">
-          {leftSide['charts']}
+          {
+            leftSide['charts']
+          }
         </div>
-
       </div>
     </div>
   )
