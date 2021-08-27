@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import * as Circos from 'circos';
 import {queue} from 'd3-queue';
 
-export default function CircosCmp({ width, data }) {
+const CircosCmp = React.forwardRef(({ width, data }, ref) => {
   const [state, setState] = useState({"cytobands":[],'genes':[],'GRCh37':[]});
   var gieStainColor = {
   gpos100: 'rgb(0,0,0)',
@@ -454,7 +454,9 @@ export default function CircosCmp({ width, data }) {
   },[state, data])
 
   return (
-    <div className='circos' id='circos'></div>
+    <div ref={ref} className='circos' id='circos'></div>
 
   )
-}
+})
+
+export default CircosCmp

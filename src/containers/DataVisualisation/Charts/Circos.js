@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import CircosCmp from '../../Common/Circos'
 import { getCircosInformation, getCircosSamplesRnidList } from '../../../actions/api_actions'
 import '../../../assets/css/style.css'
+import { exportComponentAsJPEG, exportComponentAsPDF, exportComponentAsPNG } from 'react-component-export-image';
 
 export default function DataCircos({ width, inputData }) {
+  const reference = useRef()
   const dispatch = useDispatch()
   const [sampleKey, setSampleKey] = useState('')
   const circosJson = useSelector((data) => data.dataVisualizationReducer.circosSummary);
@@ -59,8 +61,9 @@ export default function DataCircos({ width, inputData }) {
         </select>
       </div>}
       <div>
-        {circosJson && <CircosCmp width={width * 0.8} data={circosJson} />}
+        {circosJson && <CircosCmp ref={reference} width={width * 0.8} data={circosJson} />}
       </div>
+      <button onClick={() => exportComponentAsPNG(reference)}>photo</button>
     </div>
   )
 

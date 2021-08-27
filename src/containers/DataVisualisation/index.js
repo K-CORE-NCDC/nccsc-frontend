@@ -48,6 +48,7 @@ export default function DataVisualization() {
     }))
   }, []);
 
+  console.log(state);
   const selectGene = (event) => {
     let val_ = event.target.value;
     let g = genes[val_].data;
@@ -143,6 +144,14 @@ export default function DataVisualization() {
       setBoolChartState(true)
     }
   }, [chart])
+
+  useEffect(() => {
+    let chartx = LoadChart(width, tab)
+    setCharts((prevState) => ({
+      ...prevState,
+      'viz': chartx,
+    }))
+  }, [state])
 
 
   const submitFilter = (e) => {

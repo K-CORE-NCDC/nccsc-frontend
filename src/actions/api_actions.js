@@ -147,6 +147,10 @@ export function getHeatmapInformation(type, data) {
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
       .catch((e) => {
+        dispatch({
+          type: dataVisualization.HEATMAP_REQUEST,
+          payload: {}
+        });
         console.log("error", e);
       });
   };
