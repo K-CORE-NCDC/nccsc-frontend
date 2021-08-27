@@ -3,18 +3,18 @@ import * as d3 from 'd3'
 import React, { useState,useEffect,useRef } from 'react'
 
 
-export default function Piechart({width}) {
-  const pieRef   = useRef(null);
+export default function Piechart({width, data}) {
+  const pieRef  = useRef(null);
 
   const drawPie = (data1,width)=>{
+    console.log(data1)
     var margin = {top: 30, right: 30, bottom: 70, left: 60};
-    var width = width-50;
+    var width = width - 50;
     var height = 400;
     var svg = d3.select('#pie').append("svg")
       .attr("width", width)
       .attr("height", 400)
       .attr("class", "inline")
-
       .append("g");
 
     svg.append("g")
@@ -28,8 +28,7 @@ export default function Piechart({width}) {
 
     var radius = Math.min(width, height)/2;
     var color = 'red' //d3.scaleOrdinal(d3.schemeCategory20);
-    var data = [26,25,10,30,30,50,33,56,38];
-
+    // var data = [26,25,10,30,30,50,33,56,38];
 
 
     var pie = d3.pie().sort(null).value(d => d);
@@ -61,7 +60,7 @@ export default function Piechart({width}) {
 
                     // see label transform function for explanations of these three lines.
                     var pos = outerArc.centroid(d);
-                    
+
                     pos[0] = radius * 0.95 * (midAngle(d) < Math.PI ? 1 : -1);
                     return [arc.centroid(d), outerArc.centroid(d), pos]
                 });
@@ -92,12 +91,17 @@ export default function Piechart({width}) {
 
   useEffect(()=>{
     var data1 = [
-       {group: "A", value: 4},
-       {group: "B", value: 16},
+       {name: "A", value: 4},
+       {name: "B", value: 16},
+       {name: "C", value: 16},
+       {name: "D", value: 16},
+       {name: "E", value: 16}
     ];
+    // let data1 = data
+    // console.log(data1)
     drawPie(data1,width)
+  },[data])
 
-  },[])
   return (
     <div id='pie' className='text-center'>
     </div>

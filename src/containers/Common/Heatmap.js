@@ -19,7 +19,6 @@ export default function HeatmapCmp({ width,data }) {
   },[data])
 
 
-
   return (
     <>
       {active  &&

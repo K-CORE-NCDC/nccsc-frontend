@@ -1,4 +1,4 @@
-import React,{useState,useEffect,useRef,useLayoutEffect } from "react";
+import React,{useState,useEffect,useRef,useLayoutEffect,updateState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   ChevronDownIcon,
@@ -8,15 +8,29 @@ import {
 } from '@heroicons/react/outline'
 
 import Barchart from '../Common/Barchart'
+import Piechart from '../Common/Piechart'
+
+
 import { getDashboardDsummaryData } from '../../actions/api_actions'
 import inputJson from './data'
 export default function ClinicalInformation() {
   const summaryJson = useSelector((data) => data.homeReducer.dataSummary);
   const [leftSide, setLeftSide] = useState({"charts":[],"leftSide":[],"activeCharts":[]});
   const [activeChartsList, setActiveChartsList] = useState([]);
-
   const [selected, setSelected] = useState('Basic/Diagnostic Information');
   const dispatch = useDispatch()
+  const [visual_change_state, setVisualChangeState] = useState({});
+  const [charts, setCharts] = useState("")
+  const [chartType, setChartType] = useState("bar")
+  const [active, setActive] = useState(false)
+  // const forceUpdate = React.useCallback(() => updateState({}), []);
+
+  const change_visual = (e) =>{
+    let visual_card = e.target.name;
+    let value = e.target.value
+    setChartType(value)
+    // forceUpdate()
+  }
 
   useEffect(() => {
     dispatch(getDashboardDsummaryData())
@@ -30,8 +44,10 @@ export default function ClinicalInformation() {
 
   useEffect(()=>{
     leftSideHtml(summaryJson)
+  },[selected, chartType])
 
-  },[selected])
+  console.log(leftSide);
+  console.log(summaryJson);
 
   const leftSideHtml = (data)=>{
     let ac = leftSide['activeCharts']
@@ -42,10 +58,12 @@ export default function ClinicalInformation() {
         Object.keys(data[item]).forEach((itm, i) => {
           let check = false
           let color = '#ccc'
+
           if(ac.indexOf(itm)>-1){
             check = true
             color = inputJson['clinicalColor'][item]
           }
+
           let id = itm.split(" ").join("")
           t.push(
             <div className="p-3 relative z-10" key={'div_mb_'+i}>
@@ -54,7 +72,8 @@ export default function ClinicalInformation() {
                   {itm}
                 </div>
                 <div className="relative" id={'div_'+id}  onClick={e=>checkBoxFn(e,'md_'+i,itm)}>
-                  <input type="checkbox" id={'md_'+i} checked={check} data-parent={item}   className="checkbox sr-only" onChange={e=>checkBoxFn(e,'md_'+i,itm)}/>
+                  <input type="checkbox" id={'md_'+i} checked={check} data-parent={item}  className="checkbox sr-only"
+                  onChange={e=>checkBoxFn(e,'md_'+i,itm)}/>
                   <div className="block bg-gray-600 w-14 h-6 rounded-full" id={'md_'+i+'_toggle'} style={{backgroundColor:color}}></div>
                   <div className="dot absolute left-1 top-1 bg-white w-6 h-4 rounded-full transition" style={{backgroundColor:'#fff',opacity:1}}></div>
                 </div>
@@ -69,13 +88,10 @@ export default function ClinicalInformation() {
               <UserCircleIcon className="h-8 w-8 inline text-main-blue"/>
               <span className="no-underline  ml-2 text-2xl tracking-wide">{item}</span>
             </label>
-
               {selected===item ? <div className="tab-content overflow-hidden border-l-2 bg-gray-100  leading-normal relative">
                 {t}
               </div>:""}
-
           </div>
-
         )
       })
       // console.log(selected);
@@ -86,9 +102,7 @@ export default function ClinicalInformation() {
     }
   }
 
-
   const checkBoxFn = (event,id,chart) => {
-
     let tmp = activeChartsList
     var did = document.getElementById(id)
 
@@ -108,7 +122,7 @@ export default function ClinicalInformation() {
       }
     }
     setActiveChartsList(tmp)
-    loadChart(chart,did.getAttribute('data-parent'))
+    loadChart(chart, did.getAttribute('data-parent'))
   }
 
   const loadChart = (chart,parent_name)=>{
@@ -133,21 +147,27 @@ export default function ClinicalInformation() {
               <h2 className="text-3xl tracking-wide">{item}</h2>
               <div className="mt-2 ml-5 p-3">
                 <label className="inline-flex items-center">
-                  <input type="radio" className="form-radio" name={"cr_"+k} value="Bar"/>
+                  <input type="radio" className="form-radio" name={"cr_"+k} value="bar" onClick={change_visual}/>
                   <span className="ml-2">Bar</span>
                 </label>
                 <label className="inline-flex items-center ml-6">
-                  <input type="radio" className="form-radio" name={"cr_"+k} value="Pie"/>
+                  <input type="radio" className="form-radio" name={"cr_"+k} value="pie" onClick={change_visual}/>
                   <span className="ml-2">Pie</span>
                 </label>
               </div>
-              <Barchart  id={'chart_'+id}  data={summaryJson[parent_name][item]} width='300' color={inputJson['clinicalColor'][parent_name]}/>
+                <Barchart  id={'chart_'+id}
+                data={summaryJson[parent_name][item]}
+                width='300'
+                color={inputJson['clinicalColor'][parent_name]}
+                chart_type={chartType}
+                />
             </div>
           )
           ac.push(item)
         }
       })
     }
+
     setLeftSide((prevState)=>({
       ...prevState,
       'charts':tmp,
@@ -175,10 +195,7 @@ export default function ClinicalInformation() {
         }
       }
     }
-
-
   }
-
 
   return (
    <div className="grid grid-cols-4 gap-6">
@@ -187,14 +204,17 @@ export default function ClinicalInformation() {
         </div>
         <h4 className="p-3"><AdjustmentsIcon className="h-6 w-6 inline"/> &nbsp;Filters</h4>
         <div className="shadow-box shadow-md w-full p-3" id='accordian_tabs' >
-          {leftSide['leftSide']}
+          {
+            leftSide['leftSide']
+          }
         </div>
       </div>
       <div className="col-start-2 col-span-4 m-5">
         <div className="grid grid-cols-3 gap-3">
-          {leftSide['charts']}
+          {
+            leftSide['charts']
+          }
         </div>
-
       </div>
     </div>
   )
