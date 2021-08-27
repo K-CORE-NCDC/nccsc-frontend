@@ -4,7 +4,7 @@ import dataD from './data.diff'
 
 import "../../styles/volcano.css"
 
-export default function VolcanoCmp({ w, data }) {
+const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss }, ref) => {
     // co
     function volcanoPlot() {
         var width = w - 30,
@@ -350,9 +350,11 @@ export default function VolcanoCmp({ w, data }) {
 
     return (
         <div>
-            <div id='volcano' className="p-3">
+            <div ref={ref} id='volcano' className={`p-3 ${watermarkCss}`}>
             </div>
             <button id="resetBtn">Reset</button>
         </div>
     )
-}
+})
+
+export default VolcanoCmp

@@ -5,28 +5,64 @@ import DataVolcono from './Volcono'
 import DataHeatmap from './Heatmap'
 import DataSurvival from './Survival'
 
-function circos(width,inputData) {
-  return <DataCircos key='circos' width={width} inputData={inputData} />
+function circos(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
+  return <DataCircos
+    key='circos'
+    width={width}
+    inputData={inputData}
+    screenCapture={screenCapture}
+    setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+  />
 }
 
-function onco(width,inputData, ) {
-  return <DataOnco key='onco' width={width} inputData={inputData} />
+function onco(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
+  return <DataOnco 
+  key='onco' 
+  width={width} 
+  inputData={inputData} 
+  screenCapture={screenCapture} 
+  setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+  />
 }
 
-function lollipop(width,inputData) {
-  return <DataLolipop key='lolipop'  width={width} inputData={inputData} />
+function lollipop(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
+  return <DataLolipop 
+  key='lolipop' 
+  width={width} 
+  inputData={inputData} 
+  screenCapture={screenCapture} 
+  setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+  />
 }
 
-function volcano(width,inputData) {
-  return <DataVolcono key='volcano' width={width} inputData={inputData}/>
+function volcano(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
+  return <DataVolcono 
+  key='volcano' 
+  width={width} 
+  inputData={inputData} 
+  screenCapture={screenCapture} 
+  setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+  />
 }
 
-function heatmap(width,inputData) {
-  return <DataHeatmap key='heatmap' width={width} inputData={inputData}/>
+function heatmap(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
+  return <DataHeatmap 
+  key='heatmap' 
+  width={width} 
+  inputData={inputData} 
+  screenCapture={screenCapture} 
+  setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+  />
 }
 
-function survival(width,inputData) {
-  return <DataSurvival key='survival' width={width} inputData={inputData}/>
+function survival(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
+  return <DataSurvival 
+  key='survival' 
+  width={width} 
+  inputData={inputData} 
+  screenCapture={screenCapture} 
+  setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+  />
 }
 
 export const Charts = {

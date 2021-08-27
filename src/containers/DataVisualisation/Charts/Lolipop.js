@@ -1,18 +1,21 @@
-import React, { useState,useEffect,Fragment } from 'react'
+import React, { useState,useEffect,Fragment, useRef } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import LollipopCmp from '../../Common/Lollipop'
 import { getLolipopInformation } from '../../../actions/api_actions'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
+import { exportComponentAsPNG } from 'react-component-export-image';
 
 
-export default function DataLolipop({ width,inputData }) {
+export default function DataLolipop({ width,inputData, screenCapture, setToFalseAfterScreenCapture }) {
+  const reference = useRef()
   const dispatch = useDispatch()
   const [genesHtml,setGenesHtml] = useState([])
   const [gene,setGene] = useState('')
   const [activeCmp,setActiveCmp] = useState(false)
   const [tableType,setTableType] = useState('Mutation')
   const [inputState,setInputState] = useState({})
+  const [watermarkCss, setWatermarkCSS] = useState("")
   const lolipopJson = useSelector((data) => data.dataVisualizationReducer.lollipopSummary);
 
   const geneSet = (e) => {
@@ -72,6 +75,20 @@ export default function DataLolipop({ width,inputData }) {
       }
     }
   },[lolipopJson])
+
+  useEffect(() => {
+    if(screenCapture){
+      setWatermarkCSS("watermark")
+    }else{
+      setWatermarkCSS("")
+    }
+
+    if(watermarkCss !== ""){
+      exportComponentAsPNG(reference)
+      setToFalseAfterScreenCapture()
+    }
+
+  }, [screenCapture, watermarkCss])
 
   const changeType = (e,type)=> {
     let c = document.getElementsByName('type')
@@ -139,7 +156,7 @@ export default function DataLolipop({ width,inputData }) {
           </div>
         </div>
         <div className='grid'>
-          <LollipopCmp width={width} gene={gene} data={lolipopJson}/>
+          <LollipopCmp watermarkCss={watermarkCss} ref={reference} width={width} gene={gene} data={lolipopJson}/>
         </div>
       </Fragment>
       }

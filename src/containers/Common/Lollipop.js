@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react'
 import LollipopPlot from 'react-mutation-plot'
 
 
-export default function LollipopCmp({ width,data,gene }) {
+const LollipopCmp = React.forwardRef(({ width,data,gene, watermarkCss }, ref) => {
   const [active, setActive] = useState(false)
   const mockData = {
     vizHeight: 400, // hardcoded
@@ -182,7 +182,7 @@ export default function LollipopCmp({ width,data,gene }) {
 
 
   return (
-    <div id='lolipop' className='p-3'>
+    <div ref={ref} id='lolipop' className={`p-3 ${watermarkCss}`}>
       {active && <LollipopPlot
           domains={mockData.domains}
           lollipops={mockData.lollipops}
@@ -198,4 +198,6 @@ export default function LollipopCmp({ width,data,gene }) {
     </div>
   )
 
-}
+})
+
+export default LollipopCmp

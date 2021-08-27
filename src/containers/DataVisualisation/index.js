@@ -24,24 +24,30 @@ import {
 export default function DataVisualization() {
   const elementRef = useRef(null);
 
-  const [state,setState] = useState({"genes":[],'filter':'','type':''})
-  const [boolChartState,setBoolChartState] = useState(true)
-  const [filterState,setFilterState] = useState({})
-  const [chart,setCharts] = useState({"viz":[]})
-  const [width,setWidth] = useState(0)
+  const [state, setState] = useState({ "genes": [], 'filter': '', 'type': '' })
+  const [boolChartState, setBoolChartState] = useState(true)
+  const [filterState, setFilterState] = useState({})
+  const [chart, setCharts] = useState({ "viz": [] })
+  const [width, setWidth] = useState(0)
   const dispatch = useDispatch()
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
   let { tab, project_id } = useParams();
   const [chartName, setChartName] = useState(tab)
   const [menuItems, setMenuItems] = useState([])
+  const [screenCapture, setScreenCapture] = useState(false)
+
+  const setToFalseAfterScreenCapture = () =>{
+    setScreenCapture(false)
+  }
 
 
 
   const callback = useCallback((filters) => {
-    console.log("filters",filters)
+    console.log("filters", filters)
     let type = document.getElementById('gene_type').value
     let g = genes[type].data
-    setState((prevState) => ({...prevState,
+    setState((prevState) => ({
+      ...prevState,
       'filter': filters,
       'genes': g,
       'type': type
@@ -53,7 +59,7 @@ export default function DataVisualization() {
     let val_ = event.target.value;
     let g = genes[val_].data;
     document.getElementById('genes').value = g.join(' ')
-    setState((prevState)=>({
+    setState((prevState) => ({
       ...prevState,
       'genes': g,
       'type': val_
@@ -76,14 +82,14 @@ export default function DataVisualization() {
   }
 
 
-  useEffect(()=>{
+  useEffect(() => {
     let tabsContainer = document.querySelector("#tabs");
     let tabTogglers = tabsContainer.querySelectorAll("li");
-    tabTogglers.forEach(function(toggler) {
+    tabTogglers.forEach(function (toggler) {
       let href = toggler.children[0].href
       href = href.split('/')
-      toggler.classList.remove("border-blue-400", "border-b",  "-mb-px", "opacity-100");
-      if (href.includes(tab)){
+      toggler.classList.remove("border-blue-400", "border-b", "-mb-px", "opacity-100");
+      if (href.includes(tab)) {
         toggler.classList.add("border-blue-400", "border-b-4", "-mb-px", "opacity-100");
       }
     })
@@ -106,17 +112,17 @@ export default function DataVisualization() {
     let tmp = []
 
     l.forEach(element => {
-      let classes='px-4 py-2 font-semibold rounded-t opacity-50 '
-      if (tab===element){
-        classes = classes+ " border-blue-400 border-b-4 -mb-px opacity-100"
+      let classes = 'px-4 py-2 font-semibold rounded-t opacity-50 '
+      if (tab === element) {
+        classes = classes + " border-blue-400 border-b-4 -mb-px opacity-100"
       }
-      if(project_id !== undefined){
+      if (project_id !== undefined) {
         tmp.push(
           <li key={element} className={classes}>
             <Link className="capitalize" to={`/visualise/${element}/${project_id}`}>{element} plot</Link>
           </li>
         )
-      }else{
+      } else {
         tmp.push(
           <li key={element} className={classes}>
             <Link className="capitalize" to={`/visualise/${element}/`}>{element} Plot</Link>
@@ -151,7 +157,7 @@ export default function DataVisualization() {
       ...prevState,
       'viz': chartx,
     }))
-  }, [state])
+  }, [state, screenCapture])
 
 
   const submitFilter = (e) => {
@@ -168,17 +174,17 @@ export default function DataVisualization() {
   const LoadChart = (w, type) => {
     switch (type) {
       case "circos":
-        return Charts.circos(w, state)
+        return Charts.circos(w, state, screenCapture, setToFalseAfterScreenCapture)
       case "onco":
-        return Charts.onco(w, state)
+        return Charts.onco(w, state, screenCapture, setToFalseAfterScreenCapture)
       case "lollipop":
-        return Charts.lollipop(w, state)
+        return Charts.lollipop(w, state, screenCapture, setToFalseAfterScreenCapture)
       case "volcano":
-        return Charts.volcano(w, state)
+        return Charts.volcano(w, state, screenCapture, setToFalseAfterScreenCapture)
       case "heatmap":
-        return Charts.heatmap(w, state)
+        return Charts.heatmap(w, state, screenCapture, setToFalseAfterScreenCapture)
       case "survival":
-        return Charts.survival(w, state)
+        return Charts.survival(w, state, screenCapture, setToFalseAfterScreenCapture)
       default:
         return false
     }
@@ -198,7 +204,7 @@ export default function DataVisualization() {
                 <h3>Gene Selection</h3>
                 <div className='col-span-3 grid grid-cols-7 gap-6'>
                   <div className="relative w-full col-span-3">
-                    <select id='gene_type' value={state['type']} onChange={e=>selectGene(e)}className='w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 '>
+                    <select id='gene_type' value={state['type']} onChange={e => selectGene(e)} className='w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 '>
                       <option value="user-defined">User-Defined List</option>
                       <option value="major-genes">Cancer major genes (28 genes)</option>
                       <option value="brst-major-genes">Breast cancer major genes (20 genes)</option>
@@ -230,6 +236,10 @@ export default function DataVisualization() {
                     <button className="bg-main-blue hover:bg-main-blue mb-3 w-full h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={e => submitFilter(e)}>Filter</button>
                   </div>
                 </div>
+
+              </div>
+              <div className="inline-flex justify-center p-2 ">
+                <button className="bg-main-blue hover:bg-main-blue mb-3 w-full h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={()=> setScreenCapture(true)}>capture screenshot</button>
 
               </div>
               <div className='col-span-3 gap-6'>

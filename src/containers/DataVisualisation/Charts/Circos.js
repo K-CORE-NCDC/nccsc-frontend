@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import CircosCmp from '../../Common/Circos'
 import { getCircosInformation, getCircosSamplesRnidList } from '../../../actions/api_actions'
 import '../../../assets/css/style.css'
-import { exportComponentAsJPEG, exportComponentAsPDF, exportComponentAsPNG } from 'react-component-export-image';
+import { exportComponentAsPNG } from 'react-component-export-image';
 
-export default function DataCircos({ width, inputData }) {
+export default function DataCircos({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
   const dispatch = useDispatch()
   const [sampleKey, setSampleKey] = useState('')
@@ -13,6 +13,7 @@ export default function DataCircos({ width, inputData }) {
   const circosSanpleRnidListData = useSelector(state => state.dataVisualizationReducer.circosSanpleRnidListData)
   const [sampleListElements, setSampleListElements] = useState([])
   const [displaySamples, setDisplaySamples] = useState(false)
+  const [watermarkCss, setWatermarkCSS] = useState("")
 
   console.log(inputData)
   useEffect(() => {
@@ -40,6 +41,20 @@ export default function DataCircos({ width, inputData }) {
   }, [])
 
   useEffect(() => {
+    if(screenCapture){
+      setWatermarkCSS("watermark")
+    }else{
+      setWatermarkCSS("")
+    }
+
+    if(watermarkCss !== ""){
+      exportComponentAsPNG(reference)
+      setToFalseAfterScreenCapture()
+    }
+
+  }, [screenCapture, watermarkCss])
+
+  useEffect(() => {
     if (circosSanpleRnidListData) {
       let sampleListElementsTemp = []
       circosSanpleRnidListData.forEach((element, index) => {
@@ -61,9 +76,8 @@ export default function DataCircos({ width, inputData }) {
         </select>
       </div>}
       <div>
-        {circosJson && <CircosCmp ref={reference} width={width * 0.8} data={circosJson} />}
+        {circosJson && <CircosCmp watermarkCss={watermarkCss} ref={reference} width={width * 0.8} data={circosJson} />}
       </div>
-      <button onClick={() => exportComponentAsPNG(reference)}>photo</button>
     </div>
   )
 

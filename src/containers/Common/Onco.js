@@ -4,7 +4,7 @@ import Oncoprint from "oncoprintjs";
 import _ from 'lodash';
 import './rules'
 
-export default function OncoCmp({ width,data }) {
+const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
 
   const [state, setState] = useState({});
 
@@ -1092,7 +1092,9 @@ export default function OncoCmp({ width,data }) {
   },[state])
 
   return (
-    <div className='onco' id='oncoprint-glyphmap' style={{width:width+'px'}}>
+    <div ref={ref} className={`onco ${watermarkCss}`} id='oncoprint-glyphmap' style={{width:width+'px'}}>
     </div>
   )
-}
+})
+
+export default OncoCmp

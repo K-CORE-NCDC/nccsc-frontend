@@ -1,15 +1,18 @@
-import React, { useState,useEffect, Fragment } from 'react'
+import React, { useState,useEffect, Fragment, useRef } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import HeatmapCmp from '../../Common/Heatmap'
 import { getHeatmapInformation } from '../../../actions/api_actions'
+import { exportComponentAsPNG } from 'react-component-export-image';
 
-export default function DataHeatmap({ width,inputData }) {
+export default function DataHeatmap({ width,inputData, screenCapture, setToFalseAfterScreenCapture }) {
+  const reference = useRef()
   const dispatch = useDispatch()
   const [activeCmp,setActiveCmp] = useState(false)
   const [tableType,setTableType] = useState('rna')
   const [data_,setData] = useState('')
   const heatmapJson = useSelector((data) => data.dataVisualizationReducer.heatmapSummary);
   // const didMountRef = useRef(false)
+  const [watermarkCss, setWatermarkCSS] = useState("")
 
 
   useEffect(()=>{
@@ -30,6 +33,20 @@ export default function DataHeatmap({ width,inputData }) {
       }
     }
   },[heatmapJson])
+
+  useEffect(() => {
+    if(screenCapture){
+      setWatermarkCSS("watermark")
+    }else{
+      setWatermarkCSS("")
+    }
+
+    if(watermarkCss !== ""){
+      exportComponentAsPNG(reference)
+      setToFalseAfterScreenCapture()
+    }
+
+  }, [screenCapture, watermarkCss])
 
 
 
@@ -85,7 +102,7 @@ export default function DataHeatmap({ width,inputData }) {
           </div>
         </div>
         <div className='grid'>
-          <HeatmapCmp width={width} data={heatmapJson}/>
+          <HeatmapCmp watermarkCss={watermarkCss} ref={reference} width={width} data={heatmapJson}/>
         </div>
       </div>
   )

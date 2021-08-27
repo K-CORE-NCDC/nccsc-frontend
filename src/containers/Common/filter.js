@@ -12,6 +12,8 @@ export default function Filter({parentCallback,parentState}) {
   const [selectState, setSelectState] = useState({});
   const [selected, setSelected] = useState('Basic/Diagnostic Information');
 
+  // console.log(state);
+
   useEffect(()=>{
     leftSide()
   },[])
@@ -22,7 +24,8 @@ export default function Filter({parentCallback,parentState}) {
 
   useEffect(()=>{
     leftSide()
-  },[selected])
+    console.log('update component');
+  },[selected, selectState])
 
   let checkbox = (d) => {
     let check = false
@@ -141,7 +144,7 @@ export default function Filter({parentCallback,parentState}) {
       )
     })
     setState((prevState)=>({
-      ...prevState,
+      
       'html':html
     }))
   }
@@ -180,6 +183,23 @@ export default function Filter({parentCallback,parentState}) {
     }
   }
 
+  const resetSelectedFilters = () =>{
+    let selectStateTemp = selectState
+    Object.keys(selectStateTemp).forEach(element =>{
+      let documentObject = document.getElementById(element)
+      if(documentObject.type === "checkbox"){
+        documentObject.checked = false
+      }else{
+        documentObject.value = ''
+      }
+      // if(documentObject.type)
+    })
+    console.log('clicked');
+    console.log(selectState);
+    setSelectState({})
+    // parentCallback({})
+  }
+
   const sendFilter = ()=>{
     parentCallback(selectState)
   }
@@ -187,7 +207,7 @@ export default function Filter({parentCallback,parentState}) {
   return (
     <div>
       <div className="py-3 px-2 w-full col-span-2">
-        <button className="bg-white  w-80 h-20 hover:text-white mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded">
+        <button onClick={resetSelectedFilters} className="bg-white  w-80 h-20 hover:text-white mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded">
           Reset
         </button>&nbsp;&nbsp;&nbsp;&nbsp;
         <button className="bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={sendFilter}>

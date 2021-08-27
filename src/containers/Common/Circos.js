@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import * as Circos from 'circos';
 import {queue} from 'd3-queue';
 
-const CircosCmp = React.forwardRef(({ width, data }, ref) => {
+const CircosCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
   const [state, setState] = useState({"cytobands":[],'genes':[],'GRCh37':[]});
   var gieStainColor = {
   gpos100: 'rgb(0,0,0)',
@@ -454,7 +454,7 @@ const CircosCmp = React.forwardRef(({ width, data }, ref) => {
   },[state, data])
 
   return (
-    <div ref={ref} className='circos' id='circos'></div>
+    <div ref={ref} className={`circos ${watermarkCss}`} id='circos'></div>
 
   )
 })

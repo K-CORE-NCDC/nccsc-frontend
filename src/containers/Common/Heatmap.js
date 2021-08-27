@@ -4,7 +4,7 @@ import {scaleSequential} from 'd3-scale'
 import Clustergrammer from 'react-clustergrammer';
 import '../../styles/clustergram.css'
 
-export default function HeatmapCmp({ width,data }) {
+const HeatmapCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
   const [heatmapData, setHeatmapData] = useState({});
   const [active, activeState] = useState(false);
 
@@ -23,14 +23,16 @@ export default function HeatmapCmp({ width,data }) {
   return (
     <>
       {active  &&
-        // <div id='heatmap' className='p-3' style={{"width":width+"px","height":"500px"}}>
+        <div ref={ref} className="watermarkCss">
           <Clustergrammer
             network_data={heatmapData}
             width={width-100}
             height={window.innerHeight}
           />
-        // </div>
+        </div>
       }
     </>
   )
-}
+})
+
+export default HeatmapCmp
