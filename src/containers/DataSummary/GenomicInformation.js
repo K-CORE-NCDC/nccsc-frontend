@@ -5,16 +5,8 @@ import {
   AdjustmentsIcon
 } from '@heroicons/react/outline'
 import { useSelector, useDispatch } from "react-redux";
-import Barchart from '../Common/Barchart';
 
-// import BarChartComp from '../Common/HorizontalBarchart';
-import BarChartComp from "../Common/HorizontalBarChart"
-import Piechart from '../Common/Piechart'
-import StackedBarChart from '../Common/StackedBarChart'
-// import CircosCmp from '../Common/Circos'
-import VennCmp from '../Common/Venn'
-import VolcanoCmp from '../Common/Volcano'
-// import { dispatch } from "d3-dispatch";
+
 import { getGenomicInformation } from '../../actions/api_actions'
 
 import chart_types from './genomicCharyTypes'
@@ -74,7 +66,6 @@ export default function GenomicInfo() {
 
   return (
     <div className="grid grid-cols-3 gap-6">
-      <VennCmp/>
       {state['charts']}
     </div>
 

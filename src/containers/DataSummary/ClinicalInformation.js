@@ -9,28 +9,54 @@ import {
 
 import Barchart from '../Common/Barchart'
 import Piechart from '../Common/Piechart'
-
-
 import { getDashboardDsummaryData } from '../../actions/api_actions'
+
 import inputJson from './data'
 export default function ClinicalInformation() {
   const summaryJson = useSelector((data) => data.homeReducer.dataSummary);
   const [leftSide, setLeftSide] = useState({"charts":[],"leftSide":[],"activeCharts":[]});
-  const [activeChartsList, setActiveChartsList] = useState([]);
+  const [activeChartsList, setActiveChartsList] = useState(["Sex","Age Of Diagnosis","Body Mass Index","Diagnosis of Bilateral Breast Cancer"]);
   const [selected, setSelected] = useState('Basic/Diagnostic Information');
   const dispatch = useDispatch()
   const [visual_change_state, setVisualChangeState] = useState({});
   const [charts, setCharts] = useState("")
-  const [chartType, setChartType] = useState("bar")
+  const [chartType, setChartType] = useState({})
   const [active, setActive] = useState(false)
+  const [firstLoad, setFirstLoad] = useState(true)
+
   // const forceUpdate = React.useCallback(() => updateState({}), []);
 
   const change_visual = (e) =>{
-    let visual_card = e.target.name;
-    let value = e.target.value
-    setChartType(value)
-    // forceUpdate()
+
+    let id = e.target.dataset['id']
+    let c_type = e.target.value
+    let current_class_name = "parent_chart_"+c_type+"_"+id
+    let toggle_name =''
+    if(c_type=="bar"){
+      toggle_name ='pie'
+    }else if(c_type=="pie"){
+      toggle_name ='bar'
+    }
+    // document.getElementById(id+"_"toggle_name).remove
+    let previous_class_name = "parent_chart_"+toggle_name+"_"+id
+
+
+    document.getElementById(current_class_name).classList.remove("hidden")
+    document.getElementById(previous_class_name).classList.add("hidden")
+
   }
+
+  useEffect(()=>{
+    if(firstLoad===true && summaryJson){
+
+      let tmp = activeChartsList
+      for (var i = 0; i < tmp.length; i++) {
+        loadChart(tmp[i],selected)
+      }
+      setFirstLoad(false)
+    }
+  },[firstLoad,summaryJson])
+
 
   useEffect(() => {
     dispatch(getDashboardDsummaryData())
@@ -43,14 +69,15 @@ export default function ClinicalInformation() {
   },[summaryJson])
 
   useEffect(()=>{
-    leftSideHtml(summaryJson)
-  },[selected, chartType])
+    if(selected){
+      leftSideHtml(summaryJson)
+    }
+  },[selected])
 
-  console.log(leftSide);
-  console.log(summaryJson);
 
   const leftSideHtml = (data)=>{
     let ac = leftSide['activeCharts']
+
     let tmp = []
     if(data && selected){
       Object.keys(data).forEach((item, k) => {
@@ -104,6 +131,7 @@ export default function ClinicalInformation() {
 
   const checkBoxFn = (event,id,chart) => {
     let tmp = activeChartsList
+    console.log(tmp);
     var did = document.getElementById(id)
 
     var checkbox_elm = document.getElementById(id).checked;
@@ -125,10 +153,12 @@ export default function ClinicalInformation() {
     loadChart(chart, did.getAttribute('data-parent'))
   }
 
-  const loadChart = (chart,parent_name)=>{
+  const loadChart = (chart,parent_name,type='')=>{
     let tmp = leftSide['charts']
     let ac = leftSide['activeCharts']
     let check = true
+
+
 
     for (var i = 0; i < tmp.length; i++) {
       if(tmp[i].key==="chart_"+chart) {
@@ -138,35 +168,53 @@ export default function ClinicalInformation() {
       }
     }
 
-    if(check){
+
+
+    if(check ){
       Object.keys(summaryJson[parent_name]).forEach((item, k) => {
         let id = item.split(" ").join("")
         if(item===chart){
           tmp.push(
-            <div key={'chart_'+item} className='max-w bg-white rounded overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border'>
+            <div key={'chart_'+item} data-chart="bar" className='max-w bg-white rounded overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border'>
               <h2 className="text-3xl tracking-wide">{item}</h2>
               <div className="mt-2 ml-5 p-3">
-                <label className="inline-flex items-center">
-                  <input type="radio" className="form-radio" name={"cr_"+k} value="bar" onClick={change_visual}/>
-                  <span className="ml-2">Bar</span>
-                </label>
-                <label className="inline-flex items-center ml-6">
-                  <input type="radio" className="form-radio" name={"cr_"+k} value="pie" onClick={change_visual}/>
-                  <span className="ml-2">Pie</span>
-                </label>
+
+
+                  <label className="inline-flex items-center">
+                    <input type="radio" className="form-radio" id={id+"_bar"} data-id={id} name={"cr_"+k} value="bar" onChange={change_visual}/>
+                    <span className="ml-2">Bar</span>
+                  </label>
+                  <label className="inline-flex items-center ml-6">
+                    <input type="radio" className="form-radio" id={id+"_pie"} data-id={id} name={"cr_"+k} value="pie" onChange={change_visual}/>
+                    <span className="ml-2">Pie</span>
+                  </label>
+
               </div>
-                <Barchart  id={'chart_'+id}
-                data={summaryJson[parent_name][item]}
-                width='300'
-                color={inputJson['clinicalColor'][parent_name]}
-                chart_type={chartType}
-                />
+              <div id="chart-tab-contents">
+                <div id={'parent_chart_bar_'+id} className="">
+                  <Barchart  id={'chart_bar_'+id}
+                  data={summaryJson[parent_name][item]}
+                  width='300'
+                  color={inputJson['clinicalColor'][parent_name]}
+                  />
+                </div>
+                <div id={'parent_chart_pie_'+id} className="hidden">
+                  <Piechart id={'chart_pie_'+id}
+                  data={summaryJson[parent_name][item]}
+                  width='300'
+                  color={inputJson['clinicalColor'][parent_name]}
+                  />
+                </div>
+              </div>
             </div>
           )
           ac.push(item)
         }
       })
     }
+
+
+
 
     setLeftSide((prevState)=>({
       ...prevState,
@@ -176,9 +224,9 @@ export default function ClinicalInformation() {
     // setActiveCharts(ac)
   }
 
-  const switchButton = (event,id,k)=>{
+  const switchButton = (event,id,k) => {
     let s = selected
-    setSelected(id)
+
 
     var myRadios = document.getElementsByName('tabs2');
     var setCheck;
@@ -195,6 +243,7 @@ export default function ClinicalInformation() {
         }
       }
     }
+    setSelected(id)
   }
 
   return (
