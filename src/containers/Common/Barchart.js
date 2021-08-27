@@ -4,17 +4,17 @@ Chart.register(...registerables);
 
 
 export default function Barchart({id,data,width,color, chart_type}) {
-  const drawGraph = (g_data) => {
+  const drawGraph = (g_data,ct_type) => {
+
     var ctx = document.getElementById(id).getContext('2d');
     var myChart = new Chart(ctx, {
-        type: chart_type,
+        type: 'bar',
         data: g_data,
         options: {
           plugins:{
             legend: {
               display: false
             }
-
           },
           layout:{
             padding:20
@@ -28,12 +28,11 @@ export default function Barchart({id,data,width,color, chart_type}) {
                drawTicks: true,
              }
             },
-
           }
         }
     });
-
   }
+
   useEffect(() => {
     if (data){
       let g_dat = {"labels":[],"datasets":[]}
@@ -45,11 +44,11 @@ export default function Barchart({id,data,width,color, chart_type}) {
       g_dat['datasets'].push({"data":t,backgroundColor:color})
       drawGraph(g_dat, chart_type)
     }
-  },[data])
+  },[data,chart_type])
   let w = width-20
 
   return (
-    <div >
+    <div id={'parent'+id}>
       <canvas id={id}  width={w} height="300"></canvas>
     </div>
   )

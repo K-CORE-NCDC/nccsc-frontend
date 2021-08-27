@@ -214,6 +214,7 @@ export default function Boxplot({data}) {
   useEffect(()=>{
     if(data){
       let w = elementRef.current.getBoundingClientRect().width
+      console.log(w);
       drawChart(w,data)
     }
   },[data])

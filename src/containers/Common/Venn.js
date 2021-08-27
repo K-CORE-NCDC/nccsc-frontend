@@ -1,14 +1,19 @@
 import React, { useEffect } from 'react'
 // var venn = require("venn")
-import {VennDiagram} from 'venn.js'
+// import {VennDiagram} from 'venn.js'
 import * as venn from 'venn.js'
 import * as d3 from 'd3'
+
 export default function VennCmp({ width }) {
 
   useEffect(()=>{
-    var sets = [ {sets: ['A'], size: 12},
-             {sets: ['B'], size: 12},
-             {sets: ['A','B'], size: 2}];
+    var sets = [ {sets: ['Global Proteome'], size: 12},
+             {sets: ['RNA Expression'], size: 12},
+             {sets: ['DNA Mutation'], size: 12},
+             {sets: ['Global Proteome','RNA Expression'], size: 2},
+             {sets: ['RNA Expression','DNA Mutation'], size: 4},
+             {sets: ['Global Proteome','DNA Mutation'], size: 4},
+             {sets: ['Global Proteome','RNA Expression','DNA Mutation'], size: 2}];
 
     var chart = venn.VennDiagram().width(width)
     var div = d3.select("#venn").datum(sets).call(chart);
@@ -18,34 +23,30 @@ export default function VennCmp({ width }) {
 
     div.selectAll("g")
     .on("mouseover", function(d, i) {
-        // sort all the areas relative to the current item
-        venn.sortAreas(div, d);
-
-        // Display a tooltip with the current size
-        tooltip.transition().duration(400).style("opacity", .9);
-        tooltip.text(d.size + " users");
-
-        // highlight the current path
-        var selection = d3.select(this).transition("tooltip").duration(400);
-        selection.select("path")
-            .style("fill-opacity", d.sets.length == 1 ? .4 : .1)
-            .style("stroke-opacity", 1);
+        var s = i['sets']
+        var html = []
+        for (var j = 0; j < s.length; j++) {
+          html.push(s[j])
+        }
+        var ht = html.join("/")
+        ht = ht+"("+i.size+")"
+        tooltip.html(ht)
+        tooltip.transition().duration(40).style("opacity", 1);
     })
-
-    .on("mousemove", function() {
-        // tooltip.style("left", (d3.event.pageX) + "px")
-               // .style("top", (d3.event.pageY - 28) + "px");
+    .on("mousemove", function(d) {
+        tooltip.style("left", (d.pageX) + "px")
+               .style("top", (d.pageY - 28) + "px");
     })
 
     .on("mouseout", function(d, i) {
-        tooltip.transition().duration(400).style("opacity", 0);
-        var selection = d3.select(this).transition("tooltip").duration(400);
-        selection.select("path")
-            .style("fill-opacity", d.sets.length == 1 ? .25 : .0)
-            .style("stroke-opacity", 0);
+        tooltip.transition().duration(2500).style("opacity", 0);
+
     });
+
+
+
   },[width])
   return (
-    <div id='venn'></div>
+    <div id='venn' className='relative'></div>
   )
 }

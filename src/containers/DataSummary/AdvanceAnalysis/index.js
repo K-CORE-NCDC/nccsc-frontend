@@ -39,10 +39,6 @@ export default function AdvancedInfo() {
         let type = visual_type[item]
         let comp = ''
         comp = chart_types(type, summaryJson[item], visual_type[item])
-        // if(item === "Dna Per Sample"){
-        //   comp = chart_types(type, summaryJson[item], "x-axis", "dna_per_sample_key")
-        // }else{
-        // }
 
         html.push(
           <div key={'omics_'+k} className='max-w bg-white rounded overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border'>
