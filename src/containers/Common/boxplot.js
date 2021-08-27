@@ -54,6 +54,10 @@ export default function Boxplot({data}) {
       var interQuantileRange = q3 - q1
       var min = q1 - 1.5 * interQuantileRange
       var max = q3 + 1.5 * interQuantileRange
+      if (min < min_vl){
+        min_vl = min
+      }
+
       return({q1: q1, median: median, q3: q3, min: min, max: max})
     })
     .entries(data)
@@ -74,8 +78,9 @@ export default function Boxplot({data}) {
        .attr("transform", "rotate(130)")
        .style("text-anchor", "start");
      // Show the Y scale
+     // console.log(min_vl)
      var y = d3.scaleLinear()
-       .domain([-10,max_vl])
+       .domain([min_vl - 10, max_vl])
        .range([height, 0])
      svg.append("g").call(d3.axisLeft(y))
 

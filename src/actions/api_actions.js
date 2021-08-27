@@ -28,12 +28,13 @@ export function getDashboardDsummaryData() {
 }
 
 
-export function getGenomicInformation() {
+export function getGenomicInformation(method, data) {
   return (dispatch) => {
     //   dispatch({ type: homeConstants.DATA_SUMMARY });
-
     let url = config.auth + "genomic-information/";
-    sendRequest(url, "GET", "")
+    console.log(method)
+    console.log(data)
+    sendRequest(url, method, data)
       .then((result) => {
         const d = result;
         // console.log()
@@ -89,15 +90,7 @@ export function getVolcanoPlotInfo(type, data) {
   return (dispatch) => {
     let url = config.auth + "volcano/";
 
-    // const data = new FormData()
-    //
-    // data.set('genes', data.genes);
-    //
-    // // console.log("data.filter---->",data.filter)
-    // if("filter" in data){
-    //   data.set('filters', JSON.stringify(data.filter));
-    // }
-
+    console.log(type)
     sendRequest(url, type, data)
       .then((result) => {
         const d = result

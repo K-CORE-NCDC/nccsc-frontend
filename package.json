@@ -12,6 +12,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^3.4.1",
     "chart.js": "^3.5.1",
+    "chartjs-chart-venn": "^3.1.0",
     "circos": "^2.1.0",
     "d3": "^6.7.0",
     "d3-tip": "^0.9.1",

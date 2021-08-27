@@ -38,7 +38,7 @@ export default function GenomicInfo() {
     "Snv Class":"Bar",
     "Top 10 Mutated Genes":"stack_bar",
     "dna_per_sample":"stack_bar",
-    
+
   }
 
 
@@ -73,8 +73,8 @@ export default function GenomicInfo() {
   },[summaryJson])
 
   return (
-
     <div className="grid grid-cols-3 gap-6">
+      <VennCmp/>
       {state['charts']}
     </div>
 
