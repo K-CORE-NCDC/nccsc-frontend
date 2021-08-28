@@ -44,7 +44,7 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
       setWatermarkCSS("")
     }
 
-    if(watermarkCss !== ""){
+    if(watermarkCss !== "" && screenCapture){
       exportComponentAsPNG(reference)
       setToFalseAfterScreenCapture()
     }

@@ -83,7 +83,7 @@ export default function DataLolipop({ width,inputData, screenCapture, setToFalse
       setWatermarkCSS("")
     }
 
-    if(watermarkCss !== ""){
+    if(watermarkCss !== "" && screenCapture){
       exportComponentAsPNG(reference)
       setToFalseAfterScreenCapture()
     }

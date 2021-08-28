@@ -9,7 +9,6 @@ export default function DataSurvival({ width,inputData, screenCapture, setToFals
   const reference = useRef()
   const dispatch = useDispatch()
   const survivalJson = useSelector((data) => data.dataVisualizationReducer.survivalSummary);
-  const [activeCmp,setActiveCmp] = useState(false)
   const [watermarkCss, setWatermarkCSS] = useState("")
 
   useEffect(()=>{
@@ -20,21 +19,15 @@ export default function DataSurvival({ width,inputData, screenCapture, setToFals
     }
   },[inputData])
 
-  useEffect(()=>{
-    if(survivalJson && 'meta' in survivalJson){
-      setActiveCmp(true)
-
-    }
-  },[survivalJson])
-
   useEffect(() => {
+    console.log(screenCapture, watermarkCss);
     if(screenCapture){
       setWatermarkCSS("watermark")
     }else{
       setWatermarkCSS("")
     }
 
-    if(watermarkCss !== ""){
+    if(watermarkCss !== "" && screenCapture){
       exportComponentAsPNG(reference)
       setToFalseAfterScreenCapture()
     }
@@ -43,7 +36,7 @@ export default function DataSurvival({ width,inputData, screenCapture, setToFals
 
   return (
     <div>
-      {activeCmp && <SurvivalCmp watermarkCss={watermarkCss} ref={reference} width={width} survival_data={survivalJson}/>}
+      <SurvivalCmp watermarkCss={watermarkCss} ref={reference} width={width} survival_data={survivalJson}/>
     </div>
   )
 

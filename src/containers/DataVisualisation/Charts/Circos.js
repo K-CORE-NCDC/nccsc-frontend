@@ -47,7 +47,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
       setWatermarkCSS("")
     }
 
-    if(watermarkCss !== ""){
+    if(watermarkCss !== "" && screenCapture){
       exportComponentAsPNG(reference)
       setToFalseAfterScreenCapture()
     }

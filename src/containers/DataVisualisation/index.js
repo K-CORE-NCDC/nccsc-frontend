@@ -107,7 +107,7 @@ export default function DataVisualization() {
         project_id: project_id
       }))
     }
-    let l = ['circos', 'onco', 'lollipop', 'volcano', 'heatmap']
+    let l = ['circos', 'onco', 'lollipop', 'volcano', 'heatmap', 'survival']
     let tmp = []
 
     l.forEach(element => {

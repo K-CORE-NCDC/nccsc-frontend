@@ -41,7 +41,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, setToFalse
       setWatermarkCSS("")
     }
 
-    if(watermarkCss !== ""){
+    if(watermarkCss !== "" && screenCapture){
       exportComponentAsPNG(reference)
       setToFalseAfterScreenCapture()
     }

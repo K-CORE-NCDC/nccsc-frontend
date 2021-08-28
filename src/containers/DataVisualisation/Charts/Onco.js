@@ -49,7 +49,7 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
       setWatermarkCSS("")
     }
 
-    if(watermarkCss !== ""){
+    if(watermarkCss !== "" && screenCapture){
       exportComponentAsPNG(reference)
       setToFalseAfterScreenCapture()
     }
