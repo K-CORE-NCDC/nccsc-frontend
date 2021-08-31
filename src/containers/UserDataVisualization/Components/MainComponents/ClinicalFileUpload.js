@@ -15,11 +15,66 @@ import Loader from '../../Widgets/loader';
 import { useHistory } from 'react-router-dom'
 
 
+
+
+function Modal({ showModal, setShowModal, body }) {
+  return (
+    <>
+      {showModal ? (
+        <>
+          <div
+            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+          >
+            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+              {/*content*/}
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                {/*header*/}
+                <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+                  <h3 className="text-3xl font-semibold">
+                    Error in the uploaded file
+                  </h3>
+                  <button
+                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                    onClick={() => setShowModal(false)}
+                  >
+                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                      ×
+                    </span>
+                  </button>
+                </div>
+                {/*body*/}
+                <div className="relative p-6 flex-auto">
+                  <div className="my-4 text-2xl leading-relaxed">
+                    {body}
+                  </div>
+                </div>
+                {/*footer*/}
+                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                  <button
+                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={() => setShowModal(false)}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+        </>
+      ) : null}
+    </>
+  );
+}
+
+
+
+
 export default function FileUpload({ parentCallBack }) {
   // const parentRef = useRef(null);
   const history = useHistory()
   const response = useSelector((data) => data.homeReducer.fileUploadData);
-  const fileUploadStatus = useSelector((data) => data.homeReducer.fileUploadStatus);
   const dispatch = useDispatch()
   const [state, setState] = useState([])
   const [select, setSelect] = useState({})
@@ -30,74 +85,62 @@ export default function FileUpload({ parentCallBack }) {
   const [selectedFiles, setSelectedFiles] = useState([])
   const [uploadFile, setUploadFile] = useState({})
   const [projectName, setProjectName] = useState("")
-  const [uploadButtonDisabled, setUploadButtonDisabled] = useState(true)
-  const [uploadSuccessful, setUploadSuccessful] = useState(false)
   const [formSbubmitButtonText, setFormSubmitButtonText] = useState("upload")
-  const fileInputRef = useRef()
-
+  const [showModal, setShowModal] = useState(false)
+  const [modalData, setModalData] = useState([])
   const [initialInputState, setInitialInputState] = useState(undefined)
   const [selectedFileSampleType, setSelectedFileSampleType] = useState({
     1: "clinical_information",
-    2: "dna_mutation",
-    3: "rna_zscore",
-    4: "dna_methylation",
-    5: "proteome"
   })
 
-  useEffect(() => {
-    if (Object.keys(uploadFile).length === 5) {
-      setUploadButtonDisabled(false)
-    } else {
-      setUploadButtonDisabled(true)
-    }
-  }, [uploadFile])
+  const setShowModalFunction = (stateData) =>{
+    setShowModal(stateData)
+  }
 
-  useEffect(()=>{
-    let isVisualize = false
-    if(Object.keys(loader).length === 0){
-      isVisualize = false
-    }else if(Object.values(loader).every((element) => (element === 'success'))){
-      isVisualize = true
+  useEffect(() => {
+    if(Object.values(loader).some(element => (element === 'failed'))){
+      setFormSubmitButtonText('retry')
     }
-    
-    Object.keys(Loader).forEach(element =>{
-      let statusType = loader[element]
-      if(statusType === 'loader'){
-        isVisualize = false
-        setFormSubmitButtonText('upload')
-      }else if(statusType === 'failed'){
-        isVisualize = false
-        setFormSubmitButtonText('retry')
-      }
-    })
-    if (isVisualize){
-      setFormSubmitButtonText('visualize')
-    }
-  },[loader])
+  }, [loader])
 
 
   useEffect(() => {
+    let filesUploadedStatus = undefined
     if (response) {
-      Object.keys(response).forEach(fileType => {
-        if (response[fileType]) {
+      filesUploadedStatus = response.files
+    }
+
+    if (filesUploadedStatus) {
+      Object.keys(filesUploadedStatus).forEach(fileType => {
+        if (filesUploadedStatus[fileType]) {
           setLoader((prevState) => ({ ...prevState, [fileType]: 'success' }))
+        } else {
+          setLoader((prevState) => ({ ...prevState, [fileType]: 'failed' }))
         }
       })
+    }
+    if(filesUploadedStatus){
+      let errorModalData = []
+      let modaShowTemp = false
+      Object.keys(filesUploadedStatus).forEach(element => {
+        if(filesUploadedStatus[element] === false){
+          modaShowTemp = true
+          errorModalData.push(
+            <div key={element} className="text-black">
+              <h6 className="text-red-500">{uploadFile[element]['file'].name}</h6>
+              is invalid, check sample file for reference
+            </div>
+          )
+        }
+      })
+      setModalData(errorModalData)
+      setShowModal(modaShowTemp)
 
-      if (Object.values(response).some((element) => (element === null))) {
-        setUploadSuccessful(false)
-      } else {
-        setUploadSuccessful(true)
+      if(Object.values(filesUploadedStatus).every(element => (element === true))){
+        setFormSubmitButtonText('visualize')
       }
-
     }
   }, [response])
-
-
-  useEffect(() => {
-    console.log(fileUploadStatus)
-    setLoader((prevState) => ({ ...prevState, ...fileUploadStatus }))
-  }, [fileUploadStatus])
 
 
   const selectGene = (event) => {
@@ -191,40 +234,26 @@ export default function FileUpload({ parentCallBack }) {
   //   })
   // }, [uploadFile])
 
-  const on_upload = (e) => {
-    let files_ = uploadFile;
-    Object.keys(files_).forEach(function (key, value) {
-      let fileType = files_[key]['type'];
-      setLoader(prevState => ({
-        ...prevState,
-        [key]: true
-      }));
-      if (response && (response[fileType] === null || projectName !== response.name)) {
-        dispatch(file_upload(files_[key], key, projectName));
-        setLoader((prevState) => ({ ...prevState, [fileType]: 'loader' }))
-      } else if (!response) {
-        dispatch(file_upload(files_[key], key, projectName));
-        setLoader((prevState) => ({ ...prevState, [fileType]: 'loader' }))
-      } else {
-        console.log(response);
-      }
-      parentCallBack({ "hide": true, "selected_keys": select });
-    })
-  }
-
-  const formSubmitButtonActions = () =>{
-    if(formSbubmitButtonText === 'upload'){
-      on_upload()
-    }
-    if(formSbubmitButtonText === 'retry'){
-      on_upload()
-    }
-    if(formSbubmitButtonText === 'visualize'){
-      history.push(`/visualise/circos/${response.id}`)
+  const on_upload = () => {
+    dispatch(file_upload(uploadFile, projectName))
+    for (let key in uploadFile) {
+      setLoader((prevState) => ({ ...prevState, [key]: 'loader' }))
     }
   }
 
-  const testFunction = (e) => {
+  const formSubmitButtonActions = () => {
+    if (formSbubmitButtonText === 'upload') {
+      on_upload()
+    }
+    if (formSbubmitButtonText === 'retry') {
+      on_upload()
+    }
+    if (formSbubmitButtonText === 'visualize') {
+      history.push(`/visualise/circos/${response['serializer'].id}`)
+    }
+  }
+
+  const updateFileTypeOnChange = (e) => {
     console.log(e.target.value, e.target.name);
     setSelectedFileSampleType((prevState) => ({
       ...prevState,
@@ -258,8 +287,8 @@ export default function FileUpload({ parentCallBack }) {
     }
   }
 
-  const removeUnderscore = (underscoreString) =>{
-    return underscoreString.replace('_', ' ')    
+  const removeUnderscore = (underscoreString) => {
+    return underscoreString.replace('_', ' ')
   }
 
   useEffect(() => {
@@ -269,7 +298,15 @@ export default function FileUpload({ parentCallBack }) {
         <div key={key} className="grid grid-cols-12 gap-6 ">
           <div className="relative w-full col-span-4">
 
-            <div className="capitalize w-full block text-left focus:outline-none  focus:ring focus:border-blue-300 p-4 mt-3">{removeUnderscore(selectedFileSampleType[key])}</div>
+            <select onChange={updateFileTypeOnChange}
+              name={key}
+              className='w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
+              <option value="clinical_information">Clinical Information</option>
+              <option value="rna_zscore">RNA</option>
+              <option value="dna_mutation">DNA Mutation</option>
+              <option value="dna_methylation">DNA Methylation</option>
+              <option value="proteome">Porteome</option>
+            </select>
           </div>
           <div className='relative col-span-4 w-full '>
             <label
@@ -278,8 +315,8 @@ export default function FileUpload({ parentCallBack }) {
             </label>
           </div>
           <div className='p-5 col-span-2 flex'>
-            {/* <PlusCircleIcon className='w-10' id="plus_1" data-id="1" onClick={addNewHTML} />
-            {key > 1 && <MinusCircleIcon className='w-10' id={key} onClick={deleteHtml} />} */}
+            <PlusCircleIcon className='w-10' id="plus_1" data-id="1" onClick={addNewHTML} />
+            {key > 1 && <MinusCircleIcon className='w-10' id={key} onClick={deleteHtml} />}
             {(loader[selectedFileSampleType[key]] === 'success') && <section className="">
               <div className="mr-6 bg-green-500 rounded px-4 py-2  text-center -ml-3">
                 <svg fill="none" viewBox="0 0 24 24" className="w-8 h-8 text-white" stroke="currentColor">
@@ -316,6 +353,9 @@ export default function FileUpload({ parentCallBack }) {
             onClick={(e) => setError(false)}><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" /></svg>
         </span>
       </div> : ""}
+      <div>
+        <Modal showModal={showModal} setShowModal={setShowModalFunction} body={modalData} />
+      </div>
       <div className="grid grid-cols-6 mt-10">
         <div className=" col-start-2 col-span-4 bg-white  space-y-3 px-6 py-10 rounded-3xl shadow-lg border ">
           <div className="relative w-full col-span-12 ">
@@ -331,10 +371,10 @@ export default function FileUpload({ parentCallBack }) {
           {initialInputState}
           {state}
           <div className="relative w-full col-span-12 text-center">
-            <button  className="capitalize bg-white  w-80 h-20  mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded">
+            <button className="capitalize bg-white  w-80 h-20  mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded">
               Reset
             </button>&nbsp;&nbsp;&nbsp;&nbsp;
-            <button disabled={uploadButtonDisabled} className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded ${uploadButtonDisabled ? 'opacity-50' : ''}`}
+            <button className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
               onClick={formSubmitButtonActions}
 
             >
