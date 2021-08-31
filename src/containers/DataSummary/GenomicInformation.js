@@ -21,7 +21,7 @@ export default function GenomicInfo() {
 
 
   useEffect(() => {
-    dispatch(getGenomicInformation())
+    dispatch(getGenomicInformation("POST",""))
   }, [dispatch])
 
   let visual_type = {
@@ -29,8 +29,8 @@ export default function GenomicInfo() {
     "Variant Type":"Bar",
     "Snv Class":"Bar",
     "Top 10 Mutated Genes":"stack_bar",
-    "dna_per_sample":"stack_bar",
-
+    "Variant Classification Summary":'box_plot',
+    "Variant per Sample":"vertical_stack_bar"
   }
 
 

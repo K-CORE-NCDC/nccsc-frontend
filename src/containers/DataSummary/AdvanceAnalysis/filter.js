@@ -104,6 +104,7 @@ export default function Filter({parentCallback}) {
           }
           let color = inputJson['clinicalColor'][item]
           let id = item.split(" ").join("")
+          console.log("childelm---->",childelm)
           t.push(
             <div className="px-5 py-3 relative z-10" key={'div_mb_'+c}>
               <label htmlFor="toogleA" className="flex items-center cursor-pointer">

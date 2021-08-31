@@ -7,67 +7,101 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import GenomicInfo from "./GenomicInformation";
 import ClinicalInformation from "./ClinicalInformation";
-// import AdvancedInfo from "./AdvanceAnalysisComp";
 import AdvancedInfo from './AdvanceAnalysis/'
-
+import {
+  Link, useParams
+} from "react-router-dom";
 
 export default function DataSummary() {
   const parentRef = useRef(null);
+  const elementRef = useRef(null);
+  const [menuItems, setMenuItems] = useState([])
+  let { tab } = useParams();
+  const [chartName, setChartName] = useState(tab)
 
-  const toggleTab = (event)=>{
+  const toggleTab = (event) => {
     let tabsContainer = document.querySelector("#tabs");
     let tabTogglers = tabsContainer.querySelectorAll("a");
-    tabTogglers.forEach(function(toggler) {
-      toggler.addEventListener("click", function(e) {
-        e.preventDefault();
-
+    tabTogglers.forEach(function (toggler) {
+      toggler.addEventListener("click", function (e) {
         let tabName = this.getAttribute("href");
-
-        let tabContents = document.querySelector("#tab-contents");
-
-        for (let i = 0; i < tabContents.children.length; i++) {
-
-          tabTogglers[i].parentElement.classList.remove("border-blue-400", "border-b",  "-mb-px", "opacity-100");  tabContents.children[i].classList.remove("hidden");
-          if ("#" + tabContents.children[i].id === tabName) {
-            continue;
-          }
-          tabContents.children[i].classList.add("hidden");
-
+        for (var i = 0; i < tabTogglers.length; i++) {
+          tabTogglers[i].parentElement.classList.remove("border-blue-400", "border-b", "-mb-px", "opacity-100");
         }
         e.target.parentElement.classList.add("border-blue-400", "border-b-4", "-mb-px", "opacity-100");
       })
     })
   }
 
+  useEffect(() => {
+    let tabsContainer = document.querySelector("#tabs");
+    let tabTogglers = tabsContainer.querySelectorAll("li");
+    tabTogglers.forEach(function (toggler) {
+      let href = toggler.children[0].href
+      href = href.split('/')
+      toggler.classList.remove("border-blue-400", "border-b", "-mb-px", "opacity-100");
+      if (href.includes(tab)) {
+        toggler.classList.add("border-blue-400", "border-b-4", "-mb-px", "opacity-100");
+      }
+    })
+  }, [tab])
+
+  const LoadChart = (type) =>{
+    switch (type) {
+      case "Clinical_Information":
+        return <ClinicalInformation/>
+      case "Genomic_Information":
+        return <GenomicInfo/>
+      case "Advanced_Information":
+        return <AdvancedInfo/>
+      default:
+        return <ClinicalInformation/>
+    }
+  }
+
+  useEffect(() => {
+    let l = ['Clinical_Information', 'Genomic_Information', 'Advanced_Information']
+    let tmp = []
+    l.forEach(element => {
+      let classes = 'px-4 py-2 font-semibold rounded-t opacity-50 '
+      if (tab === element) {
+        classes = classes + " border-blue-400 border-b-4 -mb-px opacity-100"
+      }
+      tmp.push(
+        <li key={element} className={classes}>
+          <Link className="capitalize" to={`/summary/${element}/`}>{element.split('_').join(' ')}</Link>
+        </li>
+      )
+    })
+    setMenuItems(tmp)
+  }, [])
 
 
   return (
     <div className="header">
       <section className="relative  items-center  bg-cover bg-center bg-white border-t justify-center">
         <nav className=" px-8 pt-2 shadow-md">
-          <ul id="tabs" className="inline-flex justify-center w-full px-1 pt-2 " onClick={toggleTab}>
-            <li className="px-4 py-2 font-semibold rounded-t opacity-50 opacity-100 border-b-4  border-blue-400">
-              <a id="default-tab" href="#first" >Clinical Information</a>
-            </li>
-            <li className="px-4 py-2 font-semibold  rounded-t opacity-50 "><a href="#second">Genomic Information</a></li>
-            <li className="px-4 py-2 font-semibold  rounded-t opacity-50 "><a href="#third">Advanced Information</a></li>
-          </ul>
+            <ul id="tabs" className="inline-flex justify-center w-full px-1 pt-2 " onClick={e => toggleTab(e)}>
+              {menuItems}
+            </ul>
         </nav>
-
       </section>
       <section >
-        <div id="tab-contents">
-          <div id="first" className="">
-            <ClinicalInformation/>
-          </div>
-          <div id="second" className="hidden">
-
-          </div>
-          <div id="third" className="hidden">
-            
-          </div>
-        </div>
+      <div id="tab-contents" className='block text-center' ref={elementRef}>
+          {
+            LoadChart(tab)
+          }
+      </div>
       </section>
     </div>
   )
 }
+
+// {
+//   boolChartState &&
+//   <div>{chart['viz']}</div>
+// }
+// {
+//   !boolChartState &&
+//   <div>Loading.......</div>
+// }

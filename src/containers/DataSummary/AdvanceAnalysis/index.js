@@ -64,7 +64,6 @@ export default function AdvancedInfo() {
     dispatch(getGenomicInformation("POST", data_))
   }, []);
 
-  console.log(state)
 
   return (
     <div className="header">

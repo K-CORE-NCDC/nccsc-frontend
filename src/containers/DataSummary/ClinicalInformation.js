@@ -4,7 +4,10 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   AdjustmentsIcon,
-  UserCircleIcon
+  UserCircleIcon,
+  BeakerIcon,
+  SearchIcon,
+  DocumentAddIcon
 } from '@heroicons/react/outline'
 
 import Barchart from '../Common/Barchart'
@@ -25,7 +28,6 @@ export default function ClinicalInformation() {
   const [firstLoad, setFirstLoad] = useState(true)
 
   // const forceUpdate = React.useCallback(() => updateState({}), []);
-
   const change_visual = (e) =>{
 
     let id = e.target.dataset['id']
@@ -40,7 +42,6 @@ export default function ClinicalInformation() {
     // document.getElementById(id+"_"toggle_name).remove
     let previous_class_name = "parent_chart_"+toggle_name+"_"+id
 
-
     document.getElementById(current_class_name).classList.remove("hidden")
     document.getElementById(previous_class_name).classList.add("hidden")
 
@@ -48,7 +49,6 @@ export default function ClinicalInformation() {
 
   useEffect(()=>{
     if(firstLoad===true && summaryJson){
-
       let tmp = activeChartsList
       for (var i = 0; i < tmp.length; i++) {
         loadChart(tmp[i],selected)
@@ -74,6 +74,12 @@ export default function ClinicalInformation() {
     }
   },[selected])
 
+  let icon_type = {
+    "Basic/Diagnostic Information":<UserCircleIcon className="h-8 w-8 inline text-main-blue"/>,
+    "Patient Health Information":<DocumentAddIcon className="h-8 w-8 inline text-main-blue"/>,
+    "Clinical Information":<BeakerIcon className="h-8 w-8 inline text-main-blue"/>,
+    "Follow-up Observation":<SearchIcon className="h-8 w-8 inline text-main-blue"/>
+  }
 
   const leftSideHtml = (data)=>{
     let ac = leftSide['activeCharts']
@@ -92,6 +98,7 @@ export default function ClinicalInformation() {
           }
 
           let id = itm.split(" ").join("")
+
           t.push(
             <div className="p-3 relative z-10" key={'div_mb_'+i}>
               <label htmlFor="toogleA" className="flex items-center cursor-pointer">
@@ -108,12 +115,14 @@ export default function ClinicalInformation() {
             </div>
           )
         })
+
+        // console.log("item---->",item)
         tmp.push(
           <div key={item+'_'+k} className="tab w-full overflow-hidden border-t" onClick={(e)=>switchButton(e,item,k)}>
             <input className="absolute opacity-0" id={"tab-single-"+k} type="radio" name="tabs2"/>
             <label className="block p-5 leading-normal cursor-pointer" htmlFor={"tab-single-"+k}>
-              <UserCircleIcon className="h-8 w-8 inline text-main-blue"/>
-              <span className="no-underline  ml-2 text-2xl tracking-wide">{item}</span>
+              {icon_type[item]}
+              <span className="no-underline  ml-5 text-2xl tracking-wide">{item}</span>
             </label>
               {selected===item ? <div className="tab-content overflow-hidden border-l-2 bg-gray-100  leading-normal relative">
                 {t}
@@ -130,11 +139,16 @@ export default function ClinicalInformation() {
   }
 
   const checkBoxFn = (event,id,chart) => {
-    let tmp = activeChartsList
-    console.log(tmp);
-    var did = document.getElementById(id)
+    window.scroll({
+      top: document.body.offsetHeight,
+      left: 0,
+      behavior: 'smooth',
+    });
 
+    let tmp = activeChartsList
+    var did = document.getElementById(id)
     var checkbox_elm = document.getElementById(id).checked;
+
     if(checkbox_elm){
       document.getElementById(id).checked=false
       document.getElementById(id+"_toggle").style.background='#ccc'
@@ -153,33 +167,27 @@ export default function ClinicalInformation() {
     loadChart(chart, did.getAttribute('data-parent'))
   }
 
-  const loadChart = (chart,parent_name,type='')=>{
+  const loadChart = (chart, parent_name, type='')=>{
     let tmp = leftSide['charts']
     let ac = leftSide['activeCharts']
     let check = true
 
-
-
     for (var i = 0; i < tmp.length; i++) {
-      if(tmp[i].key==="chart_"+chart) {
+      if(tmp[i].key === "chart_"+chart) {
         tmp.splice(i,1)
         check = false
         ac.splice(i,1)
       }
     }
 
-
-
     if(check ){
       Object.keys(summaryJson[parent_name]).forEach((item, k) => {
         let id = item.split(" ").join("")
         if(item===chart){
           tmp.push(
-            <div key={'chart_'+item} data-chart="bar" className='max-w bg-white rounded overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border'>
+            <div key={'chart_'+item} data-chart="bar" className='max-w bg-white rounded-2xl overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border'>
               <h2 className="text-3xl tracking-wide">{item}</h2>
               <div className="mt-2 ml-5 p-3">
-
-
                   <label className="inline-flex items-center">
                     <input type="radio" className="form-radio" id={id+"_bar"} data-id={id} name={"cr_"+k} value="bar" onChange={change_visual}/>
                     <span className="ml-2">Bar</span>
@@ -188,21 +196,20 @@ export default function ClinicalInformation() {
                     <input type="radio" className="form-radio" id={id+"_pie"} data-id={id} name={"cr_"+k} value="pie" onChange={change_visual}/>
                     <span className="ml-2">Pie</span>
                   </label>
-
               </div>
               <div id="chart-tab-contents">
                 <div id={'parent_chart_bar_'+id} className="">
                   <Barchart  id={'chart_bar_'+id}
                   data={summaryJson[parent_name][item]}
                   width='300'
-                  color={inputJson['clinicalColor'][parent_name]}
+                  color={ inputJson['clinicalColor'][parent_name] }
                   />
                 </div>
                 <div id={'parent_chart_pie_'+id} className="hidden">
                   <Piechart id={'chart_pie_'+id}
                   data={summaryJson[parent_name][item]}
                   width='300'
-                  color={inputJson['clinicalColor'][parent_name]}
+                  color={ inputJson['clinicalColor'][parent_name] }
                   />
                 </div>
               </div>
@@ -212,9 +219,6 @@ export default function ClinicalInformation() {
         }
       })
     }
-
-
-
 
     setLeftSide((prevState)=>({
       ...prevState,
@@ -226,7 +230,6 @@ export default function ClinicalInformation() {
 
   const switchButton = (event,id,k) => {
     let s = selected
-
 
     var myRadios = document.getElementsByName('tabs2');
     var setCheck;
@@ -249,8 +252,6 @@ export default function ClinicalInformation() {
   return (
    <div className="grid grid-cols-4 gap-6">
       <div className="bg-white border border-gray-200">
-        <div>
-        </div>
         <h4 className="p-3"><AdjustmentsIcon className="h-6 w-6 inline"/> &nbsp;Filters</h4>
         <div className="shadow-box shadow-md w-full p-3" id='accordian_tabs' >
           {

@@ -32,8 +32,8 @@ export function getGenomicInformation(method, data) {
   return (dispatch) => {
     //   dispatch({ type: homeConstants.DATA_SUMMARY });
     let url = config.auth + "genomic-information/";
-    console.log(method)
-    console.log(data)
+    // console.log(method)
+    // console.log(data)
     sendRequest(url, method, data)
       .then((result) => {
         const d = result;
