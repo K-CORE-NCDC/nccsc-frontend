@@ -149,13 +149,16 @@ export function getHeatmapInformation(type, data) {
   };
 }
 
-export function file_upload(fileData, div_name, projectName) {
+export function file_upload(fileData, projectName) {
   return (dispatch) => {
     const data = new FormData()
     // dispatch({ type: homeConstants.DATA_SUMMARY });
-    data.set('file', fileData.file);
-    data.set('type', fileData.type);
-    data.set("div_name", div_name)
+    // fileData.forEach(file=>{
+    //   formData.append("arrayOfFilesName", file);
+    // });
+    Object.keys(fileData).forEach(element => {
+      data.append(fileData[element].type, fileData[element].file);
+    })
     data.set("project_name", projectName)
 
     let url = config.auth + "user-data-visualization/";
@@ -364,9 +367,14 @@ export function getVolcanoData() {
 }
 
 
-export function getUserDataProjectsTableData() {
+export function getUserDataProjectsTableData(project=false) {
   return (dispatch) => {
-    let url = config.auth + "user-data-projects/"
+    let url = ''
+    if(project !== false){
+      url = `${config.auth}user-data-projects/${project}/`
+    }else{
+      url = `${config.auth}user-data-projects/`
+    }
     sendRequest(url, "GET", "")
       .then((result) => {
         const d = result;

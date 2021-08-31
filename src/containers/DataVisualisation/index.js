@@ -16,7 +16,7 @@ import {
 import Filter from '../Common/filter'
 import { Charts } from "./Charts/";
 import genes from '../Common/gene.json'
-import { getBreastKeys, getCircosInformation } from '../../actions/api_actions'
+import { getBreastKeys, getUserDataProjectsTableData } from '../../actions/api_actions'
 import {
   Link
 } from "react-router-dom";
@@ -31,16 +31,19 @@ export default function DataVisualization() {
   const [width, setWidth] = useState(0)
   const dispatch = useDispatch()
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
+  const userProjectDetails = useSelector((data) => data.dataVisualizationReducer.userProjectsDataTable);
   let { tab, project_id } = useParams();
   const [chartName, setChartName] = useState(tab)
   const [menuItems, setMenuItems] = useState([])
   const [screenCapture, setScreenCapture] = useState(false)
+  const [availableTabsForProject, setavailableTabsForProject] = useState([])
 
-  const setToFalseAfterScreenCapture = () =>{
+  const setToFalseAfterScreenCapture = () => {
     setScreenCapture(false)
   }
 
 
+  console.log(userProjectDetails);
 
   const callback = useCallback((filters) => {
     console.log("filters", filters)
@@ -64,6 +67,30 @@ export default function DataVisualization() {
       'type': val_
     }))
   }
+
+  useEffect(() => {
+    if (project_id !== undefined) {
+      console.log(userProjectDetails);
+      let projectAvailableSteps = undefined
+      if (userProjectDetails) {
+        projectAvailableSteps = userProjectDetails.available_steps
+      }
+
+
+      let tabList = []
+      if (projectAvailableSteps === undefined) {
+        dispatch(getUserDataProjectsTableData(project_id))
+      } else {
+        Object.keys(projectAvailableSteps).forEach(stepName => {
+          if (projectAvailableSteps[stepName].length > 0) {
+            tabList.push(stepName)
+          }
+        })
+      }
+      setavailableTabsForProject(tabList)
+
+    }
+  }, [project_id, userProjectDetails])
 
   const toggleTab = (event) => {
     let tabsContainer = document.querySelector("#tabs");
@@ -107,7 +134,13 @@ export default function DataVisualization() {
         project_id: project_id
       }))
     }
-    let l = ['circos', 'onco', 'lollipop', 'volcano', 'heatmap', 'survival']
+    // let l = ['circos', 'onco', 'lollipop', 'volcano', 'heatmap', 'survival']
+    let l = []
+    if (project_id !== undefined) {
+      l = availableTabsForProject
+    } else {
+      l = ['circos', 'onco', 'lollipop', 'volcano', 'heatmap', 'survival']
+    }
     let tmp = []
 
     l.forEach(element => {
@@ -131,7 +164,7 @@ export default function DataVisualization() {
     })
 
     setMenuItems(tmp)
-  }, [])
+  }, [availableTabsForProject])
 
   useEffect(() => {
     if (BrstKeys) {
@@ -238,7 +271,7 @@ export default function DataVisualization() {
 
               </div>
               <div className="inline-flex justify-center p-2 ">
-                <button className="bg-main-blue hover:bg-main-blue mb-3 w-full h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={()=> setScreenCapture(true)}>capture screenshot</button>
+                <button className="bg-main-blue hover:bg-main-blue mb-3 w-full h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={() => setScreenCapture(true)}>capture screenshot</button>
 
               </div>
               <div className='col-span-3 gap-6'>
