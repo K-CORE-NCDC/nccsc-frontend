@@ -3,7 +3,8 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   AdjustmentsIcon,
-  UserCircleIcon
+  UserCircleIcon,
+  BeakerIcon
 } from '@heroicons/react/outline'
 import inputJson from './data'
 
@@ -111,6 +112,7 @@ export default function Filter({parentCallback,parentState}) {
           }
           let color = inputJson['clinicalColor'][item]
           let id = item.split(" ").join("")
+          console.log("childelm---->",childelm)
           t.push(
             <div className="px-5 py-3 relative z-10" key={'div_mb_'+c}>
               <label htmlFor="toogleA" className="flex items-center cursor-pointer">
@@ -130,6 +132,7 @@ export default function Filter({parentCallback,parentState}) {
           )
         })
       }
+
       html.push(
         <div key={item+'_'+k} className="tab w-full overflow-hidden border-t" onClick={(e)=>switchButton(e,item,k)}>
           <input className="absolute opacity-0" id={"tab-single-"+k} type="radio" name="tabs2"/>
@@ -137,14 +140,15 @@ export default function Filter({parentCallback,parentState}) {
             <UserCircleIcon className="h-8 w-8 inline text-main-blue"/>
             <span className="no-underline  ml-2 text-2xl tracking-wide">{item}</span>
           </label>
-          {selected === item ? <div className="tab-content overflow-hidden border-l-2 bg-gray-100  leading-normal relative py-3">
+          {
+            selected === item ? <div className="tab-content overflow-hidden border-l-2 bg-gray-100  leading-normal relative py-3">
             {t}
           </div>:""}
         </div>
       )
     })
+
     setState((prevState)=>({
-      
       'html':html
     }))
   }

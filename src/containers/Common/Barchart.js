@@ -14,6 +14,11 @@ export default function Barchart({id,data,width,color, chart_type}) {
           plugins:{
             legend: {
               display: false
+            },
+            title: {
+                display: true,
+                position: 'left',
+                text: ' # of samples ',
             }
           },
           layout:{
@@ -27,7 +32,7 @@ export default function Barchart({id,data,width,color, chart_type}) {
                drawOnChartArea: true,
                drawTicks: true,
              }
-            },
+            }
           }
         }
     });
@@ -41,7 +46,7 @@ export default function Barchart({id,data,width,color, chart_type}) {
         t.push(data[i].cnt)
         g_dat['labels'].push(data[i].name)
       }
-      g_dat['datasets'].push({"data":t,backgroundColor:color})
+      g_dat['datasets'].push({"data":t,backgroundColor:color,borderRadius: 11})
       drawGraph(g_dat, chart_type)
     }
   },[data,chart_type])

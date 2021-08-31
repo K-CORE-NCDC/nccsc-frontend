@@ -90,9 +90,7 @@ let childMenu = {
         icon: 'fa fa-dashboard',
         url: '/summary',
         children: []
-
       },
-
       {
         id: 'DataUserVisualization',
         title: 'Data Visualization',
