@@ -255,10 +255,52 @@ input:checked ~ .dot {
   height: 150px;
   position: absolute;
   top: 0px;
-  right: 30px;      
+  right: 30px;
   background-image: url('../assets/img/main_logo2.png');
   background-size: auto;
   background-position: 30px 30px;
   background-repeat: no-repeat;
   opacity: 0.1;
+}
+
+.box {
+  font: 10px sans-serif;
+}
+
+.box line,
+.box rect,
+.box circle {
+  /* fill: red; */
+  stroke: #000;
+  stroke-width: 1px;
+}
+
+.box .center {
+  stroke-dasharray: 3,3;
+}
+
+.box .outlier {
+  fill: none;
+  stroke: #000;
+}
+
+.axis {
+  font: 12px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.onco span div:first-child{
+  width: 100%;
 }

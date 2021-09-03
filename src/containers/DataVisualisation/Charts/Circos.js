@@ -15,7 +15,6 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   const [displaySamples, setDisplaySamples] = useState(false)
   const [watermarkCss, setWatermarkCSS] = useState("")
 
-  console.log(inputData)
   useEffect(() => {
     if (inputData) {
       let editInputData = inputData

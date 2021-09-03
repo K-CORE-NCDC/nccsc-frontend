@@ -13,8 +13,9 @@ import {
 import Barchart from '../Common/Barchart'
 import Piechart from '../Common/Piechart'
 import { getDashboardDsummaryData } from '../../actions/api_actions'
-
+import Loader from "react-loader-spinner";
 import inputJson from './data'
+
 export default function ClinicalInformation() {
   const summaryJson = useSelector((data) => data.homeReducer.dataSummary);
   const [leftSide, setLeftSide] = useState({"charts":[],"leftSide":[],"activeCharts":[]});
@@ -26,10 +27,11 @@ export default function ClinicalInformation() {
   const [chartType, setChartType] = useState({})
   const [active, setActive] = useState(false)
   const [firstLoad, setFirstLoad] = useState(true)
+  const [loader, setLoader] = useState(true)
+
 
   // const forceUpdate = React.useCallback(() => updateState({}), []);
   const change_visual = (e) =>{
-
     let id = e.target.dataset['id']
     let c_type = e.target.value
     let current_class_name = "parent_chart_"+c_type+"_"+id
@@ -59,11 +61,13 @@ export default function ClinicalInformation() {
 
 
   useEffect(() => {
+    setLoader(true)
     dispatch(getDashboardDsummaryData())
   }, [dispatch])
 
   useEffect(()=>{
     if(summaryJson){
+      setLoader(false)
       leftSideHtml(summaryJson)
     }
   },[summaryJson])
@@ -250,22 +254,36 @@ export default function ClinicalInformation() {
   }
 
   return (
-   <div className="grid grid-cols-4 gap-6">
-      <div className="bg-white border border-gray-200">
-        <h4 className="p-3"><AdjustmentsIcon className="h-6 w-6 inline"/> &nbsp;Filters</h4>
-        <div className="shadow-box shadow-md w-full p-3" id='accordian_tabs' >
-          {
-            leftSide['leftSide']
-          }
-        </div>
+   <>
+      {loader?
+        <div className="flex justify-center mt-12">
+        <Loader
+        type="ThreeDots"
+        color="#0c3c6a"
+        height={200}
+        width={200}
+        timeout={30000} //3 secs
+      />
       </div>
-      <div className="col-start-2 col-span-4 m-5">
-        <div className="grid grid-cols-3 gap-3">
-          {
-            leftSide['charts']
-          }
+      :
+        <div className="grid grid-cols-4 gap-6">
+          <div className="bg-white border border-gray-200">
+            <h4 className="p-3"><AdjustmentsIcon className="h-6 w-6 inline"/> &nbsp;Filters</h4>
+            <div className="shadow-box shadow-md w-full p-3" id='accordian_tabs' >
+              {
+                leftSide['leftSide']
+              }
+            </div>
+          </div>
+          <div className="col-start-2 col-span-4 m-5">
+            <div className="grid grid-cols-3 gap-3">
+              {
+                leftSide['charts']
+              }
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      }
+    </>
   )
 }

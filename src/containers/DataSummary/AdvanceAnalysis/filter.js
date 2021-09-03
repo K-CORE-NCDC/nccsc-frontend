@@ -3,15 +3,16 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   AdjustmentsIcon,
-  UserCircleIcon
+  UserCircleIcon,
+  BeakerIcon,
+  SearchIcon,
+  DocumentAddIcon
 } from '@heroicons/react/outline'
 import inputJson from '../data'
 export default function Filter({parentCallback}) {
   const [state, setState] = useState({"html":[]});
   const [selectState, setSelectState] = useState({});
   const [selected, setSelected] = useState('Basic/Diagnostic Information');
-
-
 
   useEffect(()=>{
     leftSide()
@@ -20,6 +21,14 @@ export default function Filter({parentCallback}) {
 
     leftSide()
   },[selected])
+
+  let icon_type = {
+    "Basic/Diagnostic Information":<UserCircleIcon className="h-8 w-8 inline text-main-blue"/>,
+    "Patient Health Information":<DocumentAddIcon className="h-8 w-8 inline text-main-blue"/>,
+    "Clinical Information":<BeakerIcon className="h-8 w-8 inline text-main-blue"/>,
+    "Follow-up Observation":<SearchIcon className="h-8 w-8 inline text-main-blue"/>
+  }
+
 
   let checkbox = (d) => {
     let check = false
@@ -66,7 +75,6 @@ export default function Filter({parentCallback}) {
     let val = e.target.value
     let id = e.target.id
     let tmp = selectState
-
     if (e.target.type==='text'){
       tmp[id] = val
     }else{
@@ -128,7 +136,7 @@ export default function Filter({parentCallback}) {
         <div key={item+'_'+k} className="tab w-full overflow-hidden border-t" onClick={(e)=>switchButton(e,item,k)}>
           <input className="absolute opacity-0" id={"tab-single-"+k} type="radio" name="tabs2"/>
           <label className="block p-5 leading-normal cursor-pointer" htmlFor={"tab-single-"+k}>
-            <UserCircleIcon className="h-8 w-8 inline text-main-blue"/>
+            {icon_type[item]}
             <span className="no-underline  ml-2 text-2xl tracking-wide">{item}</span>
           </label>
           {selected === item ? <div className="tab-content overflow-hidden border-l-2 bg-gray-100  leading-normal relative py-3">
@@ -144,7 +152,6 @@ export default function Filter({parentCallback}) {
   }
 
   const checkBoxFn = (event,id)=>{
-
     var did = document.getElementById(id)
     var checkbox_elm = document.getElementById(id).checked;
     if(checkbox_elm){
@@ -181,17 +188,39 @@ export default function Filter({parentCallback}) {
   const sendFilter = ()=>{
     parentCallback(selectState)
   }
+
+  const reset = ()=>{
+    let toggle_check = ['Basic/Diagnostic Information',
+      'Patient Health Information',
+      'Clinical Information','Follow-up Observation'
+    ]
+    setSelectState({})
+    let ckb = document.querySelectorAll("#all_checkboxes input[type=checkbox]");
+    [...ckb].forEach( el => {
+      let toggle_check_ = el.getAttribute('data-parent')
+      if (!toggle_check.includes(toggle_check_)){
+            el.checked=false
+      }
+    });
+    let input_boxes = document.querySelectorAll("#all_checkboxes input[type=text]");
+    [...input_boxes].forEach( il => {
+      il.value = ""
+    })
+    parentCallback("")
+  }
+
+
   return (
     <div>
       <div className="py-3 px-2 w-full col-span-2">
-        <button className="bg-white  w-80 h-20 hover:text-white mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded">
+        <button className="bg-white  w-80 h-20 hover:text-white mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded" onClick={reset}>
           Reset
         </button>&nbsp;&nbsp;&nbsp;&nbsp;
         <button className="bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={sendFilter}>
           Search
         </button>
       </div>
-      <div className="col-span-2">
+        <div className="col-span-2" id="all_checkboxes">
         {state['html']  }
       </div>
     </div>

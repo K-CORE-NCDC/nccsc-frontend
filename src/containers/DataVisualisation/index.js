@@ -2,17 +2,15 @@ import React, { useState, useEffect, useRef, useCallback, Fragment } from "react
 import {
   ChevronDownIcon,
   ChevronUpIcon,
-  AdjustmentsIcon
-} from '@heroicons/react/outline'
-import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import {
+  AdjustmentsIcon,
   UserCircleIcon,
   BeakerIcon,
   SearchIcon,
   PlusCircleIcon,
   RefreshIcon
 } from '@heroicons/react/outline'
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import Filter from '../Common/filter'
 import { Charts } from "./Charts/";
 import genes from '../Common/gene.json'
@@ -110,7 +108,6 @@ export default function DataVisualization() {
     })
 
   }
-
 
   useEffect(() => {
     let tabsContainer = document.querySelector("#tabs");
@@ -274,10 +271,6 @@ export default function DataVisualization() {
                 </div>
 
               </div>
-              <div className="inline-flex justify-center p-2 ">
-                <button className="bg-main-blue hover:bg-main-blue mb-3 w-full h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={() => setScreenCapture(true)}>capture screenshot</button>
-
-              </div>
               <div className='col-span-3 gap-6'>
                 <section>
                   <nav className=" px-8 pt-2 shadow-md">
@@ -288,6 +281,11 @@ export default function DataVisualization() {
                 </section>
                 <section >
                   <div id="tab-contents" className='block text-center' ref={elementRef}>
+                    <div className="grid grid-cols-6 p-5">
+                      <div className="col-start-6 inline-flex justify-center p-2 ">
+                        <button className="bg-main-blue hover:bg-main-blue mb-3 w-full h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={()=> setScreenCapture(true)}>capture screenshot</button>
+                      </div>
+                    </div>
                     {boolChartState &&
                       <div>{chart['viz']}</div>
                     }
