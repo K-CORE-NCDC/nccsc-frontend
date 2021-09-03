@@ -8,14 +8,15 @@ const GenomiInfo = React.lazy(() => import('./containers/DataSummary/GenomicInfo
 const AdvanceInfo = React.lazy(() => import('./containers/DataSummary/AdvanceAnalysis'));
 const Login = React.lazy(() => import('./containers/Login/login'));
 const Logout = React.lazy(() => import('./containers/Login/logout'))
-
+const Igv = React.lazy(() => import('./containers/Common/igv'))
 const route = [
   { path: '/', exact: true, type:'unauth', name: 'Home', component: Home },
   { path: '/summary/:tab?/', exact: true, type:'unauth', name: 'DataSummary', component: DataSummary },
   { path: '/visualise/:tab?/:project_id?/', exact: true, type:'unauth', name: 'Home', component: DataVisualization },
   { path: '/userdata', exact: true, type:'unauth', name: 'Home', component: UserDataVisualization },
   { path: '/login', exact: true, type:'unauth', name: 'Login', component: Login },
-  { path: '/logout', exact: true, type:'unauth', name: 'Logout', component: Logout }
+  { path: '/logout', exact: true, type:'unauth', name: 'Logout', component: Logout },
+  { path: '/igv', exact: true, type:'unauth', name: 'igv', component: Igv }
   // { path: '/customanalysis', exact: true, type:'unauth', name: 'Home', component: Home },
 ]
 

@@ -16,6 +16,7 @@ export default function VennCmp({ width }) {
              {sets: ['Global Proteome','RNA Expression','DNA Mutation'], size: 2}];
 
     var chart = venn.VennDiagram().width(width)
+    chart.colours = ['red','green','blue']
     var div = d3.select("#venn").datum(sets).call(chart);
     var tooltip = d3.select("body").append("div").attr("class", "venntooltip");
     div.selectAll("path").style("stroke-opacity", 0).style("stroke", "#fff")
@@ -44,7 +45,7 @@ export default function VennCmp({ width }) {
     });
 
   },[width])
-  
+
   return (
     <div id='venn' className='relative'></div>
   )

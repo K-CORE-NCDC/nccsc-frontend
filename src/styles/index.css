@@ -255,10 +255,14 @@ input:checked ~ .dot {
   height: 150px;
   position: absolute;
   top: 0px;
-  right: 30px;      
+  right: 30px;
   background-image: url('../assets/img/main_logo2.png');
   background-size: auto;
   background-position: 30px 30px;
   background-repeat: no-repeat;
   opacity: 0.1;
+}
+
+.onco span div:first-child{
+  width: 100%;
 }
