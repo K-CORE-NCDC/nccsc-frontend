@@ -2,17 +2,15 @@ import React, { useState, useEffect, useRef, useCallback, Fragment } from "react
 import {
   ChevronDownIcon,
   ChevronUpIcon,
-  AdjustmentsIcon
-} from '@heroicons/react/outline'
-import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import {
+  AdjustmentsIcon,
   UserCircleIcon,
   BeakerIcon,
   SearchIcon,
   PlusCircleIcon,
   RefreshIcon
 } from '@heroicons/react/outline'
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import Filter from '../Common/filter'
 import { Charts } from "./Charts/";
 import genes from '../Common/gene.json'
@@ -102,7 +100,6 @@ export default function DataVisualization() {
       })
     })
   }
-
 
   useEffect(() => {
     let tabsContainer = document.querySelector("#tabs");

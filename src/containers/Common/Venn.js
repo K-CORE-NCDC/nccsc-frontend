@@ -3,9 +3,9 @@ import React, { useEffect, useRef } from 'react'
 // import {VennDiagram} from 'venn.js'
 import * as venn from 'venn.js'
 import * as d3 from 'd3'
+import '../../styles/survival.css'
 
 export default function VennCmp({ width }) {
-
   useEffect(()=>{
     var sets = [ {sets: ['Global Proteome'], size: 12},
              {sets: ['RNA Expression'], size: 12},
@@ -16,11 +16,27 @@ export default function VennCmp({ width }) {
              {sets: ['Global Proteome','RNA Expression','DNA Mutation'], size: 2}];
 
     var chart = venn.VennDiagram().width(width)
+
+    var div = d3.select("#venn")
+    .datum(sets)
+    .call(chart);
+
+    var tooltip = d3.select("body")
+    .append("div")
+    .attr("class", "venntooltip");
+
+    div.selectAll("path")
+    .style("stroke-opacity", 0)
+    .style("stroke", "#fff")
+
     chart.colours = ['red','green','blue']
     var div = d3.select("#venn").datum(sets).call(chart);
     var tooltip = d3.select("body").append("div").attr("class", "venntooltip");
     div.selectAll("path").style("stroke-opacity", 0).style("stroke", "#fff")
     .style("stroke-width", 3)
+
+
+
 
     div.selectAll("g")
     .on("mouseover", function(d, i) {
