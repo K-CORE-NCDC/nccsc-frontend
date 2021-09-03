@@ -21,17 +21,12 @@ export default function VerticalStackBarChartComp({data, axis, key}){
                 x: {
                   stacked: true,
                 },
-                yAxes: [{
-                   scaleLabel: {
-                     display: true,
-                   },
-                   ticks:{
-                     display: false
-                   }
-                 }]
+                y: {
+                  stacked: true
+                }
               }
           }
-          
+
     const drawGraph = (labels, data_) => {
         if(chartRef_1.current){
           var myChart = new Chart(chartRef_1.current, {

@@ -19,7 +19,7 @@ export default function Piechart({id,data,width,color, chart_type}) {
           responsive: false,
           layout:{
             padding:20
-          },
+          }
         }
     });
   }
@@ -53,8 +53,10 @@ export default function Piechart({id,data,width,color, chart_type}) {
   let w = width-20
 
   return (
-    <div id={'parent_pie'+id} className="mt-10 ml-10">
-      <canvas id={id}  width={w} height="300"></canvas>
+    <div id={'parent_pie'+id} className="flex">
+      <div className="m-auto">
+        <canvas id={id}  width={w} height="300"></canvas>
+      </div>
     </div>
   )
 }

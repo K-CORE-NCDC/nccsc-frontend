@@ -4,7 +4,9 @@ import {
   ChevronUpIcon,
   AdjustmentsIcon,
   UserCircleIcon,
-  BeakerIcon
+  BeakerIcon,
+  DocumentAddIcon,
+  SearchIcon
 } from '@heroicons/react/outline'
 import inputJson from './data'
 
@@ -89,6 +91,13 @@ export default function Filter({parentCallback,parentState}) {
     setSelectState(tmp)
   }
 
+  let icon_type = {
+    "Basic/Diagnostic Information":<UserCircleIcon className="h-8 w-8 inline text-main-blue"/>,
+    "Patient Health Information":<DocumentAddIcon className="h-8 w-8 inline text-main-blue"/>,
+    "Clinical Information":<BeakerIcon className="h-8 w-8 inline text-main-blue"/>,
+    "Follow-up Observation":<SearchIcon className="h-8 w-8 inline text-main-blue"/>
+  }
+
   const leftSide = () =>{
     let filterBoxes = inputJson.filterBoxes
     let html = []
@@ -137,7 +146,7 @@ export default function Filter({parentCallback,parentState}) {
         <div key={item+'_'+k} className="tab w-full overflow-hidden border-t" onClick={(e)=>switchButton(e,item,k)}>
           <input className="absolute opacity-0" id={"tab-single-"+k} type="radio" name="tabs2"/>
           <label className="block p-5 leading-normal cursor-pointer" htmlFor={"tab-single-"+k}>
-            <UserCircleIcon className="h-8 w-8 inline text-main-blue"/>
+            {icon_type[item]}
             <span className="no-underline  ml-2 text-2xl tracking-wide">{item}</span>
           </label>
           {

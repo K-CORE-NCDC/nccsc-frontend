@@ -10,6 +10,7 @@ import chart_types from '../genomicCharyTypes';
 import inputJson from '../data'
 import Filter from './filter'
 import VennCmp from '../../Common/Venn'
+import Loader from "react-loader-spinner";
 
 export default function AdvancedInfo() {
   const dataSummary = useSelector(state => state)
@@ -20,6 +21,7 @@ export default function AdvancedInfo() {
   const [active, setActive] = useState(false);
   const dispatch = useDispatch()
   const prevCountRef = useRef();
+  const [loader, setLoader] = useState(true)
 
   useEffect(() => {
     dispatch(getGenomicInformation("POST",""))
@@ -32,40 +34,61 @@ export default function AdvancedInfo() {
     "Top 10 Mutated Genes":"stack_bar",
     "Variant Per Sample":"stack_bar",
     "Variant Classification Summary":'box_plot',
-    "Variant per Sample":"vertical_stack_bar"
+    "Variant per Sample":"vertical_stack_bar",
+    "Methylation":"vertical_stack_bar",
+    "Proteome":"vertical_stack_bar",
+    "Phospo":"vertical_stack_bar"
   }
 
   useEffect(()=>{
     if(summaryJson){
+      setLoader(false)
       let html = []
       Object.keys(summaryJson).forEach((item, k) => {
         let type = visual_type[item]
         let comp = ''
         comp = chart_types(type, summaryJson[item], visual_type[item])
-
-        html.push(
-          <div key={'omics_'+k} className='max-w bg-white rounded overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border'>
-            <div className="px-6 py-4">
-              <div className="font-bold text-md mb-2">{item}</div>
+        if (item !== "Omics Sample Summary"){
+          html.push(
+            <div key={'omics_'+k} className='max-w bg-white rounded overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border'>
+              <div className="px-6 py-4">
+                <div className="font-bold text-md mb-2">{item}</div>
+              </div>
+              <div className="px-6 pt-4 pb-4">
+                {comp}
+              </div>
             </div>
-            <div className="px-6 pt-4 pb-4">
-              {comp}
-            </div>
-          </div>
-        )
+          )
+        }
       })
       setState(html)
     }
   },[summaryJson])
 
   const callback = useCallback((filters) => {
-    let data_ = {'filter':filters}
     setState([])
-    dispatch(getGenomicInformation("POST", data_))
+    if(filters){
+      let data_ = {'filter':filters}
+      dispatch(getGenomicInformation("POST", data_))
+    }else{
+      dispatch(getGenomicInformation("POST", ""))
+    }
   }, []);
 
 
   return (
+    <>{
+      loader?
+        <div className="flex justify-center mt-12">
+          <Loader
+          type="ThreeDots"
+          color="#0c3c6a"
+          height={200}
+          width={200}
+          timeout={30000} //3 secs
+        />
+        </div>
+    :
     <div className="header">
       <div className="mx-auto rounded overflow-hidden ">
         <div id="main_div">
@@ -82,5 +105,8 @@ export default function AdvancedInfo() {
         </div>
       </div>
     </div>
+    }
+
+    </>
   )
 }

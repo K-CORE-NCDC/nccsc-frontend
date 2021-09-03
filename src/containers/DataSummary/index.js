@@ -18,6 +18,7 @@ export default function DataSummary() {
   const [menuItems, setMenuItems] = useState([])
   let { tab } = useParams();
   const [chartName, setChartName] = useState(tab)
+  tab = tab?tab:"Clinical_Information";
 
   const toggleTab = (event) => {
     let tabsContainer = document.querySelector("#tabs");
@@ -55,7 +56,7 @@ export default function DataSummary() {
       case "Advanced_Information":
         return <AdvancedInfo/>
       default:
-        return <ClinicalInformation/>
+        return ""
     }
   }
 
