@@ -42,8 +42,11 @@ export default function DataVisualization() {
     setScreenCapture(false)
   }
 
+
+  console.log(userProjectDetails);
+
   const callback = useCallback((filters) => {
-    // console.log("filters", filters)
+    console.log("filters", filters)
     let type = document.getElementById('gene_type').value
     let g = genes[type].data
     setState((prevState) => ({
@@ -80,7 +83,11 @@ export default function DataVisualization() {
       } else {
         Object.keys(projectAvailableSteps).forEach(stepName => {
           if (projectAvailableSteps[stepName].length > 0) {
-            tabList.push(stepName)
+            if(stepName !== "lollypop"){
+              tabList.push(stepName)
+            }else{
+              tabList.push('lollipop')
+            }
           }
         })
       }
@@ -101,6 +108,7 @@ export default function DataVisualization() {
         e.target.parentElement.classList.add("border-blue-400", "border-b-4", "-mb-px", "opacity-100");
       })
     })
+
   }
 
 
@@ -120,6 +128,7 @@ export default function DataVisualization() {
 
   useEffect(() => {
     let w = elementRef.current.getBoundingClientRect().width
+
     setWidth(w);
     dispatch(getBreastKeys())
     setBoolChartState(false)
@@ -157,6 +166,7 @@ export default function DataVisualization() {
         )
       }
     })
+
     setMenuItems(tmp)
   }, [availableTabsForProject])
 
@@ -184,6 +194,7 @@ export default function DataVisualization() {
       'viz': chartx,
     }))
   }, [state, screenCapture])
+
 
   const submitFilter = (e) => {
     setBoolChartState(false)
@@ -214,6 +225,7 @@ export default function DataVisualization() {
         return false
     }
   }
+
 
   return (
     <div className="header">
@@ -260,9 +272,11 @@ export default function DataVisualization() {
                     <button className="bg-main-blue hover:bg-main-blue mb-3 w-full h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={e => submitFilter(e)}>Filter</button>
                   </div>
                 </div>
+
               </div>
               <div className="inline-flex justify-center p-2 ">
-                <button className="bg-main-blue hover:bg-main-blue mb-3 w-full h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={()=> setScreenCapture(true)}>capture screenshot</button>
+                <button className="bg-main-blue hover:bg-main-blue mb-3 w-full h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={() => setScreenCapture(true)}>capture screenshot</button>
+
               </div>
               <div className='col-span-3 gap-6'>
                 <section>
@@ -277,8 +291,7 @@ export default function DataVisualization() {
                     {boolChartState &&
                       <div>{chart['viz']}</div>
                     }
-                    {
-                      !boolChartState &&
+                    {!boolChartState &&
                       <div>Loading.......</div>
                     }
                   </div>
