@@ -300,3 +300,7 @@ input:checked ~ .dot {
   stroke: #000;
   shape-rendering: crispEdges;
 }
+
+.onco span div:first-child{
+  width: 100%;
+}

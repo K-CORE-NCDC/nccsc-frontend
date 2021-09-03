@@ -88,7 +88,7 @@ export default function DataSummary() {
         </nav>
       </section>
       <section >
-      <div id="tab-contents" className='block text-center' ref={elementRef}>
+      <div id="tab-contents" className='block ' ref={elementRef}>
           {
             LoadChart(tab)
           }
