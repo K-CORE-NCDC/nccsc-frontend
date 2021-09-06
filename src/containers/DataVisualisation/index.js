@@ -1,13 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback, Fragment } from "react";
 import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  AdjustmentsIcon,
-  UserCircleIcon,
-  BeakerIcon,
-  SearchIcon,
-  PlusCircleIcon,
-  RefreshIcon
+  MenuIcon
 } from '@heroicons/react/outline'
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -35,16 +28,15 @@ export default function DataVisualization() {
   const [menuItems, setMenuItems] = useState([])
   const [screenCapture, setScreenCapture] = useState(false)
   const [availableTabsForProject, setavailableTabsForProject] = useState([])
+  const [toggle, setToggle] = useState(false)
 
   const setToFalseAfterScreenCapture = () => {
     setScreenCapture(false)
   }
 
 
-  console.log(userProjectDetails);
 
   const callback = useCallback((filters) => {
-    console.log("filters", filters)
     let type = document.getElementById('gene_type').value
     let g = genes[type].data
     setState((prevState) => ({
@@ -68,7 +60,6 @@ export default function DataVisualization() {
 
   useEffect(() => {
     if (project_id !== undefined) {
-      console.log(userProjectDetails);
       let projectAvailableSteps = undefined
       if (userProjectDetails) {
         projectAvailableSteps = userProjectDetails.available_steps
@@ -201,7 +192,6 @@ export default function DataVisualization() {
       ...prevState,
       'viz': chartx,
     }))
-    // setLeftFilter(false)/
   }
 
   const LoadChart = (w, type) => {
@@ -228,16 +218,20 @@ export default function DataVisualization() {
     <div className="header">
       <div className="mx-auto border-t rounded overflow-hidden ">
         <div id="main_div">
-          <div className="grid grid-cols-4">
-            <div className="bg-white border border-gray-200">
-              <Filter parentCallback={callback} genes={state} />
+          <div className={toggle?"grid grid-cols-4":"grid "}>
+            {toggle && <div className="bg-white border border-gray-200 transition duration-150 ease-in-out">
+               <Filter parentCallback={callback} genes={state} />
             </div>
-            <div className="col-start-2 col-span-3 overflow-auto ">
+            }
+            <div className={toggle?"col-start-2 col-span-3 overflow-auto":""}>
               <div className="grid grid-cols-3 gap-1 p-5 bg-white">
-                <h3>Gene Selection</h3>
-                <div className='col-span-3 grid grid-cols-7 gap-6'>
-                  <div className="relative w-full col-span-3">
-                    <select id='gene_type' value={state['type']} onChange={e => selectGene(e)} className='w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 '>
+
+                <div className='col-span-3 flex gap-6'>
+                  <div className="inline-flex relative ">
+                    <MenuIcon className="h-8 w-8 inline text-main-blue mt-3 cursor-pointer" onClick={() => setToggle(!toggle)}/>
+                  </div>
+                  <div className="inline-flex w-2/5 ">
+                    <select id='gene_type' value={state['type']} onChange={e => selectGene(e)} className='btn_input_height w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 '>
                       <option value="user-defined">User-Defined List</option>
                       <option value="major-genes">Cancer major genes (28 genes)</option>
                       <option value="brst-major-genes">Breast cancer major genes (20 genes)</option>
@@ -262,16 +256,16 @@ export default function DataVisualization() {
                       <option value="tgf-beta-path">General: TGF-β Pathway (43 genes)</option>
                     </select>
                   </div>
-                  <div className="col-span-3">
-                    <input type="text" id='genes' className='w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 h-full' name='genes' />
+                  <div className="inline-flex w-2/5">
+                    <input type="text" id='genes' className='btn_input_height w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 ' name='genes' />
                   </div>
-                  <div className="">
-                    <button className="bg-main-blue hover:bg-main-blue mb-3 w-full h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={e => submitFilter(e)}>Filter</button>
+                  <div className="inline-flex w-2/12">
+                    <button className="btn_input_height bg-main-blue hover:bg-main-blue mb-3 w-full text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={e => submitFilter(e)}>Filter</button>
                   </div>
                 </div>
 
               </div>
-              <div className='col-span-3 gap-6'>
+              <div className='gap-6'>
                 <section>
                   <nav className=" px-8 pt-2 shadow-md">
                     <ul id="tabs" className="inline-flex justify-center w-full px-1 pt-2 " onClick={e => toggleTab(e)}>

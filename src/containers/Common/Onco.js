@@ -54,7 +54,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
         'init_sort_direction': 0
     };
 
-    var oncoprint = new window.Oncoprint("#oncoprint-glyphmap", 800);
+    var oncoprint = new window.Oncoprint("#oncoprint-glyphmap", "80vw");
     oncoprint.suppressRendering();
     var geneData = []
 
@@ -151,36 +151,35 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
     var mut_category_datum = clinicalData['mutCategory']
     var global_mut_datum = clinicalData['mutCnt']
     var mut_datum = clinicalData['globalMutCnt']
+    var custom_datum = clinicalData['custom']
 
-    var custom_datum = [
-      {"category":
-        {
-          "displayName":'sex',
-          "data":[
-            
-            {"sample": "RN10281584","category":"M","value":'M'},
-            {"sample": "RN37312989","category":"F","value":'F'},
-            {"sample": "RN57508938","category":"F","value":'M'},
-            {"sample": "RN44439642","category":"M","value":'M'}
-          ]
-        }
-      }
-    ]
+    // var custom_datum = [
+    //   {
+    //     "displayName":'sex',
+    //     "data":[
+    //
+    //       {"sample": "RN10281584","category":"M","value":'M'},
+    //       {"sample": "RN37312989","category":"F","value":'F'},
+    //       {"sample": "RN57508938","category":"F","value":'M'},
+    //       {"sample": "RN44439642","category":"M","value":'M'}
+    //     ]
+    //   }
+    // ]
 
     for (var i = 0; i < custom_datum.length; i++) {
       var originDatum = custom_datum[i]
-      clinical_custom_track_params['rule_set_params']['legend_label'] = originDatum.category.displayName;
-      clinical_custom_track_params['label'] = originDatum.category.displayName;
-      clinical_custom_track_params['description'] = originDatum.category.displayName;
+      clinical_custom_track_params['rule_set_params']['legend_label'] = originDatum.displayName;
+      clinical_custom_track_params['label'] = originDatum.displayName;
+      clinical_custom_track_params['description'] = originDatum.displayName;
 
 
       var track_id = oncoprint.addTracks([_.clone(clinical_custom_track_params)])[0];
 
       oncoprint.setTrackInfo(track_id, "");
-      oncoprint.setTrackData(track_id, custom_datum[i]['category']['data'], 'sample');
-      oncoprint.setTrackTooltipFn(track_id,function(data) {
-          return "<b>Sample: " + data.sample + " (" + data.category + ")</b>";
-      });
+      oncoprint.setTrackData(track_id, custom_datum[i]['data'], 'sample');
+      // oncoprint.setTrackTooltipFn(track_id,function(data) {
+      //     return "<b>Sample: " + data.sample + " (" + data.category + ")</b>";
+      // });
     }
 
 
