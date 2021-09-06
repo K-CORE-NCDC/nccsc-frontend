@@ -71,7 +71,6 @@ export default function DataVisualization() {
         projectAvailableSteps = userProjectDetails.available_steps
       }
 
-
       let tabList = []
       if (projectAvailableSteps === undefined) {
         dispatch(getUserDataProjectsTableData(project_id))

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import HeatmapCmp from '../../Common/Heatmap'
 import { getHeatmapInformation } from '../../../actions/api_actions'
 import { exportComponentAsPNG } from 'react-component-export-image';
+import Loader from "react-loader-spinner";
 
 export default function DataHeatmap({ width,inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
@@ -13,12 +14,14 @@ export default function DataHeatmap({ width,inputData, screenCapture, setToFalse
   const heatmapJson = useSelector((data) => data.dataVisualizationReducer.heatmapSummary);
   // const didMountRef = useRef(false)
   const [watermarkCss, setWatermarkCSS] = useState("")
+  const [loader, setLoader] = useState(false)
 
 
   useEffect(()=>{
     if(inputData){
       setActiveCmp(false)
       if(inputData.type !==''){
+        setLoader(true)
         inputData['table_type'] = tableType
         dispatch(getHeatmapInformation('POST',inputData))
       }
@@ -31,6 +34,9 @@ export default function DataHeatmap({ width,inputData, screenCapture, setToFalse
           setActiveCmp(true)
           setData(heatmapJson)
       }
+      setTimeout(function() {
+          setLoader(false)
+      }, (1000));
     }
   },[heatmapJson])
 
@@ -53,6 +59,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, setToFalse
   const changeType = (e,type)=> {
     let c = document.getElementsByName('type')
     setActiveCmp(false)
+    setLoader(true)
     for (var i = 0; i < c.length; i++) {
       let classList = c[i].classList
       classList.remove("hover:bg-main-blue","bg-main-blue","text-white");
@@ -102,7 +109,19 @@ export default function DataHeatmap({ width,inputData, screenCapture, setToFalse
           </div>
         </div>
         <div className='grid'>
-          <HeatmapCmp watermarkCss={watermarkCss} ref={reference} width={width} data={heatmapJson}/>
+        {
+          loader?
+          <div className="flex justify-center mt-12">
+            <Loader
+              type="ThreeDots"
+              color="#0c3c6a"
+              height={200}
+              width={200}
+              timeout={30000} //3 secs
+            />
+          </div>
+          :<HeatmapCmp watermarkCss={watermarkCss} ref={reference} width={width} data={heatmapJson}/>
+        }
         </div>
       </div>
   )

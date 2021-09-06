@@ -37,7 +37,7 @@ export default function BoxPlot({ box_data }) {
 
   return (
       <div>
-        <canvas ref={scatter_plot} width="200" height="200"></canvas>
+        <canvas ref={scatter_plot} width="50" height="50"></canvas>
       </div>
   )
 }

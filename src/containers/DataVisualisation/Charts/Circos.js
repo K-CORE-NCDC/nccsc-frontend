@@ -4,6 +4,7 @@ import CircosCmp from '../../Common/Circos'
 import { getCircosInformation, getCircosSamplesRnidList } from '../../../actions/api_actions'
 import '../../../assets/css/style.css'
 import { exportComponentAsPNG } from 'react-component-export-image';
+import Loader from "react-loader-spinner";
 
 export default function DataCircos({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
@@ -14,12 +15,14 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   const [sampleListElements, setSampleListElements] = useState([])
   const [displaySamples, setDisplaySamples] = useState(false)
   const [watermarkCss, setWatermarkCSS] = useState("")
+  const [loader, setLoader] = useState(false)
 
   useEffect(() => {
     if (inputData) {
       let editInputData = inputData
       editInputData = { ...editInputData, sampleKey: sampleKey }
       if (editInputData.type !== '') {
+        setLoader(true)
         dispatch(getCircosInformation('POST', editInputData))
       }
     }
@@ -45,12 +48,10 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
     }else{
       setWatermarkCSS("")
     }
-
     if(watermarkCss !== "" && screenCapture){
       exportComponentAsPNG(reference)
       setToFalseAfterScreenCapture()
     }
-
   }, [screenCapture, watermarkCss])
 
   useEffect(() => {
@@ -65,19 +66,42 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
     }
   }, [circosSanpleRnidListData])
 
-  return (
-    <div className="flex-row m-1">
-      {displaySamples && <div className="flex-column p-1">
-        <label htmlFor="samples">Choose a Sample: </label>
+  useEffect(() => {
+    setTimeout(function() {
+        setLoader(false)
+    }, (1000));
+  }, [circosJson])
 
-        <select defaultChecked={sampleKey} onChange={e => { setSampleKey(e.target.value) }} name="samples" id="samples">
-          {sampleListElements}
-        </select>
-      </div>}
-      <div>
-        {circosJson && <CircosCmp watermarkCss={watermarkCss} ref={reference} width={width * 0.8} data={circosJson} />}
+  return (
+    <>
+    {
+      loader?
+      <div className="flex justify-center mt-12">
+        <Loader
+          type="ThreeDots"
+          color="#0c3c6a"
+          height={200}
+          width={200}
+          timeout={30000} //3 secs
+        />
       </div>
-    </div>
+      :
+      <div className="flex-row m-1">
+        {displaySamples && <div className="flex-column p-1">
+          <label htmlFor="samples">Choose a Sample: </label>
+          <select defaultChecked={sampleKey} onChange={e => {
+            setSampleKey(e.target.value)
+            setLoader(true)
+          }} name="samples" id="samples">
+            {sampleListElements}
+          </select>
+        </div>}
+        <div>
+          {circosJson?<CircosCmp watermarkCss={watermarkCss} ref={reference} width={width * 0.8} data={circosJson} />:""}
+        </div>
+      </div>
+    }
+    </>
   )
 
 }

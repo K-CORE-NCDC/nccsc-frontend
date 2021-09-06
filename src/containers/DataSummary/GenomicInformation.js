@@ -37,7 +37,6 @@ export default function GenomicInfo() {
 
   useEffect(()=>{
     if(summaryJson){
-      setLoader(false)
       let html = []
       Object.keys(summaryJson).forEach((item, k) => {
         let type = visual_type[item]
@@ -63,6 +62,10 @@ export default function GenomicInfo() {
         ...prevState,
         'charts':html
       }))
+
+      setTimeout(function() {
+          setLoader(false)
+      }, (1000));
     }
   },[summaryJson])
 
