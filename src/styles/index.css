@@ -41,7 +41,9 @@
   url("../assets/fonts/NotoSansCJKkr-Bold.woff2") format("woff2");
 }
 
-
+.btn_input_height{
+  height: 45px;
+}
 
 
 /* reset */
@@ -60,7 +62,12 @@ body {
   letter-spacing: 0.025em;
 }
 
-
+#circos div{
+  display: block;
+}
+#circos div svg{
+  display: inline;
+}
 
 input:checked ~ .dot {
   transform: translateX(100%);
@@ -195,10 +202,14 @@ input:checked ~ .dot {
 .onco{
   margin: 50px 20px
 }
-.onco span div{
-  top: 0px;
-  left: 50px;
+.onco span div div.noselect:first-child{
+  overflow: scroll;
 }
+.noselect img{
+  width: 24px;
+  height: 24px;
+}
+
 
 .boxplot_tooltip{
   position: absolute;
