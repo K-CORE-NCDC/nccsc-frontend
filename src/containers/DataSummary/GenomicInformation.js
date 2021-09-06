@@ -43,6 +43,8 @@ export default function GenomicInfo() {
         let comp = ''
         if(item === "dna_per_sample"){
           comp = chart_types(type, summaryJson[item], "x-axis")
+        }else if(item === "Omics Sample Summary"){
+          comp = chart_types(type, summaryJson[type], "")
         }else{
           comp = chart_types(type, summaryJson[item],'')
         }

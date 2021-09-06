@@ -5,15 +5,17 @@ import * as venn from 'venn.js'
 import * as d3 from 'd3'
 import '../../styles/survival.css'
 
-export default function VennCmp({ width }) {
+export default function VennCmp({ width, data=null }) {
+  console.log(data);
   useEffect(()=>{
-    var sets = [ {sets: ['Global Proteome'], size: 12},
-             {sets: ['RNA Expression'], size: 12},
-             {sets: ['DNA Mutation'], size: 12},
-             {sets: ['Global Proteome','RNA Expression'], size: 2},
-             {sets: ['RNA Expression','DNA Mutation'], size: 4},
-             {sets: ['Global Proteome','DNA Mutation'], size: 4},
-             {sets: ['Global Proteome','RNA Expression','DNA Mutation'], size: 2}];
+    // var sets = [ {sets: ['Global Proteome'], size: 12},
+    //          {sets: ['RNA Expression'], size: 12},
+    //          {sets: ['DNA Mutation'], size: 12},
+    //          {sets: ['Global Proteome','RNA Expression'], size: 2},
+    //          {sets: ['RNA Expression','DNA Mutation'], size: 4},
+    //          {sets: ['Global Proteome','DNA Mutation'], size: 4},
+    //          {sets: ['Global Proteome','RNA Expression','DNA Mutation'], size: 2}];
+    let sets = data
 
     var chart = venn.VennDiagram().width(width)
 
@@ -60,7 +62,7 @@ export default function VennCmp({ width }) {
 
     });
 
-  },[width])
+  },[width, data])
 
   return (
     <div id='venn' className='relative'></div>

@@ -24,6 +24,18 @@ export default function DataVisualization() {
   const fileUploadCallBack = (d_) => {
     // setTimeout(() => setHideUpload(true), 10000)
   }
+  const [uploadNewSamplesToggle, setUploadNewSamplesToggle] = useState('Upload new Samples')
+
+  const handleUploadNewSamplesToggle = () => {
+    setHideUpload((prevState) => (!prevState))
+    setUploadNewSamplesToggle(prevState => {
+      if(prevState === 'Upload new Samples'){
+        return 'View Table'
+      }else{
+        return 'Upload new Samples'
+      }
+    })
+  }
 
   // console.log(userDataTableData);
   const accessToken = localStorage.getItem('ncc_access_token')
@@ -47,13 +59,13 @@ export default function DataVisualization() {
       <div className="flex flex-row-reverse">
         <button
           className={`bg-main-blue hover:bg-main-blue w-80 h-20 text-white m-4 font-bold py-2 px-4 border border-blue-700 rounded`}
-          onClick={() => setHideUpload(false)}
+          onClick={handleUploadNewSamplesToggle}
         >
-          Upload new Samples
+          {uploadNewSamplesToggle}
         </button>
       </div>
-      {!showLoginForm && <div>
-        {hideupload && <div className="m-4">
+      {!showLoginForm && <div className="m-4 max-w-full">
+        {hideupload && <div className="">
           <UserFilesTable userDataTableData={userDataTableData} />
         </div>}
         <div>

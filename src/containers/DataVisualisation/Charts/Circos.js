@@ -11,7 +11,9 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   const dispatch = useDispatch()
   const [sampleKey, setSampleKey] = useState('')
   const circosJson = useSelector((data) => data.dataVisualizationReducer.circosSummary);
-  const circosSanpleRnidListData = useSelector(state => state.dataVisualizationReducer.circosSanpleRnidListData)
+  // const circosSanpleRnidListData = useSelector(state => state.dataVisualizationReducer.circosSanpleRnidListData)
+
+  const circosSanpleRnidListData = useSelector((data) => data.dataVisualizationReducer.Keys);
   const [sampleListElements, setSampleListElements] = useState([])
   const [displaySamples, setDisplaySamples] = useState(false)
   const [watermarkCss, setWatermarkCSS] = useState("")
@@ -36,11 +38,11 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
     }
   }, [inputData])
 
-  useEffect(() => {
-    if(!circosSanpleRnidListData){
-      dispatch(getCircosSamplesRnidList())
-    }
-  }, [])
+  // useEffect(() => {
+  //   if(!circosSanpleRnidListData){
+  //     dispatch(getCircosSamplesRnidList())
+  //   }
+  // }, [])
 
   useEffect(() => {
     if(screenCapture){
@@ -57,11 +59,12 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   useEffect(() => {
     if (circosSanpleRnidListData) {
       let sampleListElementsTemp = []
-      circosSanpleRnidListData.forEach((element, index) => {
-        sampleListElementsTemp.push(
-          <option key={element.rn_key} value={element.rn_key}>{element.brst_key}</option>
-        )
+      let sampleKey = ''
+      Object.entries(circosSanpleRnidListData).forEach(([k,v]) => {
+        sampleListElementsTemp.push(<option key={k} value={k}>{v}</option>)
+        if(sampleKey==='') sampleKey = k
       })
+      setSampleKey(sampleKey)
       setSampleListElements(sampleListElementsTemp)
     }
   }, [circosSanpleRnidListData])
@@ -72,9 +75,11 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
     }, (1000));
   }, [circosJson])
 
+
+
+  var w = Math.floor((width/100)*75)
   return (
-    <>
-    {
+    <>{
       loader?
       <div className="flex justify-center mt-12">
         <Loader
@@ -85,21 +90,20 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
           timeout={30000} //3 secs
         />
       </div>
-      :
-      <div className="flex-row m-1">
-        {displaySamples && <div className="flex-column p-1">
-          <label htmlFor="samples">Choose a Sample: </label>
-          <select defaultChecked={sampleKey} onChange={e => {
-            setSampleKey(e.target.value)
-            setLoader(true)
-          }} name="samples" id="samples">
-            {sampleListElements}
-          </select>
-        </div>}
-        <div>
-          {circosJson?<CircosCmp watermarkCss={watermarkCss} ref={reference} width={width * 0.8} data={circosJson} />:""}
+        :
+        <div className="grid ">
+          {displaySamples && <div className="p-1 grid grid-cols-6">
+            <div>
+              <label htmlFor="samples">Choose a Sample: </label>
+              <select className="w-full border bg-white rounded px-3 py-2 outline-none" defaultChecked={sampleKey} onChange={e => { setSampleKey(e.target.value) }} name="samples" id="samples">
+                {sampleListElements}
+              </select>
+            </div>
+          </div>}
+          <div>
+            {circosJson && <CircosCmp watermarkCss={watermarkCss} ref={reference} width={w} data={circosJson} />}
+          </div>
         </div>
-      </div>
     }
     </>
   )
