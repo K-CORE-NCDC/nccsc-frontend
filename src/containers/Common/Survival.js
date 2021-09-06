@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import '../../styles/survival.css'
 import { Chart } from 'react-google-charts'
 
@@ -29,22 +29,27 @@ import { Chart } from 'react-google-charts'
 // }
 
 const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
+  console.log(data);
+  const [survivalData, setSurvivalData] = useState([])
+
+  useEffect(()=>{
+    let chartsArray = [['RLPS_CNFR_DRTN', 'RLPS_CNFR_DRTN']]
+    if(data.survivalJson !== undefined){
+      data.survivalJson.forEach(element => {
+        chartsArray.push([element.pt_sbst_no, element.rlps_cnfr_drtn])
+      });
+    }
+    setSurvivalData(chartsArray)
+  },[data])
 
   return (
     <div ref={ref} className={watermarkCss}>
-      <Chart
+      {survivalData.length > 1 && <Chart
         width={'100%'}
         // height={'400px'}
         chartType="SteppedAreaChart"
         loader={<div>Loading Chart</div>}
-        data={[
-          ['RLPS_CNFR_DRTN', 'RLPS_CNFR_DRTN',],
-          ['RN44439642', 20.7],
-          ['RN02202045', 15.2],
-          ['RN10281584', 12.4],
-          ['RN57508938', 0.8],
-          ['RN37312989', 0]
-        ]}
+        data={survivalData}
         options={{
           title: "Survival Plot",
           vAxis: { title: 'Samples' },
@@ -52,7 +57,7 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
           legend: {position: 'none'}
         }}
         rootProps={{ 'data-testid': '1' }}
-      />
+      />}
     </div>
   );
 })

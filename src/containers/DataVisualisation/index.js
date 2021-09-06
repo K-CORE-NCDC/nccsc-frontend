@@ -23,6 +23,7 @@ export default function DataVisualization() {
   const elementRef = useRef(null);
 
   const [state, setState] = useState({ "genes": [], 'filter': '', 'type': '' })
+  const [advanceFilters, setAdvanceFilters] = useState({})
   const [boolChartState, setBoolChartState] = useState(true)
   const [filterState, setFilterState] = useState({})
   const [chart, setCharts] = useState({ "viz": [] })
@@ -190,8 +191,13 @@ export default function DataVisualization() {
       ...prevState,
       'viz': chartx,
     }))
-  }, [state, screenCapture])
+  }, [advanceFilters, screenCapture])
 
+  useEffect(() => {
+    if(state.filter !== advanceFilters){
+      setAdvanceFilters(state.filter)
+    }
+  }, [state])
 
   const submitFilter = (e) => {
     setBoolChartState(false)

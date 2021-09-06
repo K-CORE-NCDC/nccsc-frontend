@@ -18,7 +18,7 @@ const chart_types = (type,payload,axis) => {
     case "vertical_stack_bar":
       return <VerticalStackBarChartComp data={payload} />
     case "Venn":
-        return <VennCmp width={300}/>
+        return <VennCmp width={300} data={payload}/>
     default:
       return ""
   }
