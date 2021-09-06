@@ -1,9 +1,13 @@
 
 import React, { useState,useEffect,useRef } from 'react'
 import {Chart, registerables} from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+
 Chart.register(...registerables);
+// Chart.register(ChartDataLabels);
 
 export default function Piechart({id,data,width,color, chart_type}) {
+
   const drawGraph = (g_data,ct_type) => {
     var ctx = document.getElementById(id).getContext('2d');
 
@@ -14,14 +18,30 @@ export default function Piechart({id,data,width,color, chart_type}) {
           plugins:{
             legend: {
               display: false
+            },
+            datalabels: {
+              formatter: (value, ctx) => {
+                  let sum = 0;
+                  let dataArr = ctx.chart.data.datasets[0].data;
+                  dataArr.map(data => {
+                      sum += data;
+                  });
+                  let percentage = (value*100 / sum).toFixed(2)+"%";
+                  return percentage;
+              },
+              color: '#fff',
             }
           },
           responsive: false,
           layout:{
             padding:20
-          }
-        }
+          },
+
+        },
+        plugins: [ChartDataLabels]
     });
+
+
   }
 
   var dynamicColors = function() {

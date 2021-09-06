@@ -51,7 +51,7 @@ export default function Web() {
   let classes = ''
 
   if(id[0]==='/'){
-    classes = 'screen-2 xl:h-full lg:h-full'
+    classes = 'screen-2 xl:h-full lg:h-full md:fixed'
   }
 
 

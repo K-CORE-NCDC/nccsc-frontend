@@ -65,10 +65,14 @@ export default function ClinicalInformation() {
     dispatch(getDashboardDsummaryData())
   }, [dispatch])
 
+
+
   useEffect(()=>{
     if(summaryJson){
-      setLoader(false)
       leftSideHtml(summaryJson)
+      setTimeout(function() {
+          setLoader(false)
+      }, (1000));
     }
   },[summaryJson])
 
@@ -266,14 +270,17 @@ export default function ClinicalInformation() {
       />
       </div>
       :
+      <div class="relative">
         <div className="grid grid-cols-4 gap-6">
+          <div className="relative">
           <div className="bg-white border border-gray-200">
             <h4 className="p-3"><AdjustmentsIcon className="h-6 w-6 inline"/> &nbsp;Filters</h4>
-            <div className="shadow-box shadow-md w-full p-3" id='accordian_tabs' >
+            <div className="shadow-box shadow-md w-full p-3 " id='accordian_tabs' >
               {
                 leftSide['leftSide']
               }
             </div>
+          </div>
           </div>
           <div className="col-start-2 col-span-4 m-5">
             <div className="grid grid-cols-3 gap-3">
@@ -283,6 +290,7 @@ export default function ClinicalInformation() {
             </div>
           </div>
         </div>
+      </div>
       }
     </>
   )

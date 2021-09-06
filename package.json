@@ -13,6 +13,7 @@
     "bootstrap": "^3.4.1",
     "chart.js": "^3.5.1",
     "chartjs-chart-venn": "^3.1.0",
+    "chartjs-plugin-datalabels": "^2.0.0",
     "circos": "^2.1.0",
     "d3": "^6.7.0",
     "d3-tip": "^0.9.1",
@@ -40,7 +41,7 @@
     "xlsx": "^0.17.1"
   },
   "scripts": {
-    "start": "HOST=0.0.0.0 PORT=3000 craco start",
+    "start": "HOST=0.0.0.0 PORT=8009 craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject"

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import OncoCmp from '../../Common/Onco'
 import { getOncoInformation } from '../../../actions/api_actions'
 import { exportComponentAsPNG } from 'react-component-export-image';
+import Loader from "react-loader-spinner";
 
 export default function DataOnco({ width,inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
@@ -13,10 +14,12 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
   const [chartData,setChartData] = useState({})
   const [inputState,setInputState] = useState({})
   const [watermarkCss, setWatermarkCSS] = useState("")
+  const [loader, setLoader] = useState(false)
 
   useEffect(()=>{
     if(inputData && 'genes' in inputData){
       setActiveCmp(false)
+
       setInputState((prevState) => ({...prevState,...inputData }))
     }
   },[inputData])
@@ -26,6 +29,7 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
     if(inputState && 'genes' in inputState){
       setActiveCmp(false)
       if(inputState.type !==''){
+        setLoader(true)
         let dataJson = inputState
         dispatch(getOncoInformation('POST',dataJson))
       }
@@ -56,11 +60,30 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
 
   }, [screenCapture, watermarkCss])
 
+  useEffect(() => {
+    setTimeout(function() {
+        setLoader(false)
+    }, (1000));
+  }, [oncoJson])
 
   return (
-    <div>
-      {activeCmp && <OncoCmp watermarkCss={watermarkCss} ref={reference} width={width} data={chartData}/>}
-    </div>
+    <>{
+      loader?
+      <div className="flex justify-center mt-12">
+        <Loader
+          type="ThreeDots"
+          color="#0c3c6a"
+          height={200}
+          width={200}
+          timeout={30000} //3 secs
+        />
+      </div>
+      :
+      <div>
+        {activeCmp && <OncoCmp watermarkCss={watermarkCss} ref={reference} width={width} data={chartData}/>}
+      </div>
+    }
+    </>
   )
 
 }

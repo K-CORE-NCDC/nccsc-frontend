@@ -42,7 +42,6 @@ export default function AdvancedInfo() {
 
   useEffect(()=>{
     if(summaryJson){
-      setLoader(false)
       let html = []
       Object.keys(summaryJson).forEach((item, k) => {
         let type = visual_type[item]
@@ -62,33 +61,30 @@ export default function AdvancedInfo() {
         }
       })
       setState(html)
+      setTimeout(function() {
+          setLoader(false)
+      }, (1000));
     }
   },[summaryJson])
 
   const callback = useCallback((filters) => {
     setState([])
     if(filters){
+      setLoader(true)
       let data_ = {'filter':filters}
       dispatch(getGenomicInformation("POST", data_))
     }else{
+      setLoader(true)
       dispatch(getGenomicInformation("POST", ""))
     }
   }, []);
 
+  // useEffect(()=>{
+  // },[loader])
+
+  // console.log(loader)
 
   return (
-    <>{
-      loader?
-        <div className="flex justify-center mt-12">
-          <Loader
-          type="ThreeDots"
-          color="#0c3c6a"
-          height={200}
-          width={200}
-          timeout={30000} //3 secs
-        />
-        </div>
-    :
     <div className="header">
       <div className="mx-auto rounded overflow-hidden ">
         <div id="main_div">
@@ -98,15 +94,25 @@ export default function AdvancedInfo() {
             </div>
             <div className="col-start-2 col-span-3 pt-4 overflow-auto ">
               <div className="grid grid-cols-3 gap-1">
-                {state}
+                {
+                  loader?
+                    <div className="flex justify-center mt-12">
+                      <div className="pl-24">
+                          <Loader
+                          type="ThreeDots"
+                          color="#0c3c6a"
+                          height={200}
+                          width={200}
+                          timeout={30000} //3 secs
+                        />
+                      </div>
+                    </div>:state
+                }
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    }
-
-    </>
   )
 }

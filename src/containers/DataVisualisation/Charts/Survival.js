@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import SurvivalCmp from '../../Common/Survival'
 import { getSurvivalInformation } from '../../../actions/api_actions'
 import { exportComponentAsPNG } from 'react-component-export-image';
+import Loader from "react-loader-spinner";
 
 
 export default function DataSurvival({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
@@ -12,13 +13,16 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
   const [watermarkCss, setWatermarkCSS] = useState("")
   const [genesArray, setGenesArray] = useState([])
   const [fileredGene, setFilteredGene] = useState("")
+  const [loader, setLoader] = useState(true)
 
   useEffect(() => {
     if (inputData) {
       if (inputData.type !== '') {
         if (fileredGene !== "") {
+          setLoader(true)
           dispatch(getSurvivalInformation('POST', { ...inputData, filter_gene: fileredGene }))
         } else {
+          setLoader(true)
           dispatch(getSurvivalInformation('POST', inputData))
         }
       }
@@ -28,8 +32,14 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
     }
   }, [inputData, fileredGene])
 
+
   useEffect(() => {
-    console.log(screenCapture, watermarkCss);
+    setTimeout(function() {
+        setLoader(false)
+    }, (1000));
+  }, [survivalJson])
+
+  useEffect(() => {
     if (screenCapture) {
       setWatermarkCSS("watermark")
     } else {
@@ -44,28 +54,40 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
   }, [screenCapture, watermarkCss])
 
   return (
-    <div className="flex flex-row justify-around">
-      <div>
-        <div className="relative w-full col-span-4">
-
-          <select onChange={(e) => setFilteredGene(e.target.value)}
-            className='w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
-            <option value=""></option>
-            {genesArray.map((gene, index) => (
-              <option key={`${gene}-${index}`} value={gene}>{gene}</option>
-            ))}
-          </select>
+    <>{
+      loader?
+      <div className="flex justify-center mt-12">
+        <Loader
+          type="ThreeDots"
+          color="#0c3c6a"
+          height={200}
+          width={200}
+          timeout={30000} //3 secs
+        />
+      </div>
+        :
+        <div className="flex flex-row justify-around">
+          <div>
+            <div className="relative w-full col-span-4">
+              <select onChange={(e) => setFilteredGene(e.target.value)}
+                className='w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
+                <option value=""></option>
+                {genesArray.map((gene, index) => (
+                  <option key={`${gene}-${index}`} value={gene}>{gene}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div>
+            <SurvivalCmp watermarkCss={watermarkCss} ref={reference} width={width} data={
+              {
+                fileredGene: fileredGene,
+                survivalJson: survivalJson
+              }
+            } />
+          </div>
         </div>
-      </div>
-      <div>
-        <SurvivalCmp watermarkCss={watermarkCss} ref={reference} width={width} data={
-          {
-            fileredGene: fileredGene,
-            survivalJson: survivalJson
-          }
-        } />
-      </div>
-    </div>
+      }
+    </>
   )
-
 }
