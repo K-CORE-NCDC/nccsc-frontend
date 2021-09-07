@@ -9,11 +9,12 @@ import {
   SearchIcon,
   DocumentAddIcon
 } from '@heroicons/react/outline'
-
 import Barchart from '../Common/Barchart'
 import Piechart from '../Common/Piechart'
 import { getDashboardDsummaryData } from '../../actions/api_actions'
-import Loader from "react-loader-spinner";
+// import Loader from "react-loader-spinner";
+import LoaderCmp from '../Common/Loader';
+
 import inputJson from './data'
 
 export default function ClinicalInformation() {
@@ -260,15 +261,7 @@ export default function ClinicalInformation() {
   return (
    <>
       {loader?
-        <div className="flex justify-center mt-12">
-        <Loader
-        type="ThreeDots"
-        color="#0c3c6a"
-        height={200}
-        width={200}
-        timeout={30000} //3 secs
-      />
-      </div>
+        <LoaderCmp />
       :
       <div class="relative">
         <div className="grid grid-cols-4 gap-6">

@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import HeatmapCmp from '../../Common/Heatmap'
 import { getHeatmapInformation } from '../../../actions/api_actions'
 import { exportComponentAsPNG } from 'react-component-export-image';
-import Loader from "react-loader-spinner";
+// import Loader from "react-loader-spinner";
+import LoaderCmp from '../../Common/Loader'
 
 export default function DataHeatmap({ width,inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
@@ -111,15 +112,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, setToFalse
         <div className='grid'>
         {
           loader?
-          <div className="flex justify-center mt-12">
-            <Loader
-              type="ThreeDots"
-              color="#0c3c6a"
-              height={200}
-              width={200}
-              timeout={30000} //3 secs
-            />
-          </div>
+          <LoaderCmp/>
           :<HeatmapCmp watermarkCss={watermarkCss} ref={reference} width={width} data={heatmapJson}/>
         }
         </div>

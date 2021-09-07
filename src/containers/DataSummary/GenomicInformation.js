@@ -7,6 +7,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { getGenomicInformation } from '../../actions/api_actions'
 import chart_types from './genomicCharyTypes'
+import LoaderCmp from '../Common/Loader';
 import Loader from "react-loader-spinner";
 
 
@@ -75,15 +76,7 @@ export default function GenomicInfo() {
     <>
     {
       loader?
-      <div className="flex justify-center mt-12">
-        <Loader
-          type="ThreeDots"
-          color="#0c3c6a"
-          height={200}
-          width={200}
-          timeout={30000} //3 secs
-        />
-      </div>
+        <LoaderCmp />
       :
       <div className="grid grid-cols-3 gap-6 mt-6">
         {state['charts']}

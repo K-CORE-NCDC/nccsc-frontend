@@ -4,7 +4,8 @@ import VolcanoCmp from '../../Common/Volcano'
 import { exportComponentAsPNG } from 'react-component-export-image';
 
 import { getVolcanoPlotInfo } from '../../../actions/api_actions'
-import Loader from "react-loader-spinner";
+// import Loader from "react-loader-spinner";
+import LoaderCmp from '../../Common/Loader'
 
 export default function DataVolcono({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
@@ -62,15 +63,7 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
     <>
     {
       loader?
-      <div className="flex justify-center mt-12">
-        <Loader
-          type="ThreeDots"
-          color="#0c3c6a"
-          height={200}
-          width={200}
-          timeout={30000} //3 secs
-        />
-      </div>
+      <LoaderCmp/>
       :
       <Fragment>
           {(volcanoJson && Object.keys(volcanoJson).length>0) && <VolcanoCmp watermarkCss={watermarkCss} ref={reference} w={width} data={volcanoJson}/>}
