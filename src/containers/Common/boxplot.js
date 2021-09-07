@@ -57,7 +57,6 @@ export default function Boxplot({data}) {
       if (min < min_vl){
         min_vl = min
       }
-
       return({q1: q1, median: median, q3: q3, min: min, max: max})
     })
     .entries(data)
@@ -66,8 +65,9 @@ export default function Boxplot({data}) {
      var x = d3.scaleBand()
        .range([ 0, width ])
        .domain(domains)
-       .paddingInner(1)
+       // .paddingInner(1)
        .paddingOuter(.5)
+
      svg.append("g")
        .attr("transform", "translate(0," + height + ")")
        .call(d3.axisBottom(x))
@@ -79,28 +79,83 @@ export default function Boxplot({data}) {
        .style("text-anchor", "start");
      // Show the Y scale
      // console.log(min_vl)
+
      var y = d3.scaleLinear()
        .domain([min_vl - 10, max_vl])
        .range([height, 0])
      svg.append("g").call(d3.axisLeft(y))
 
 
-
-
      for (var i = 0; i < sumstat.length; i++) {
-      var p = svg.append('g').attr('class','box')
-      .attr('id',i)
-      p.selectAll("vertLines")
+        var p = svg.append('g').attr('class','box')
+        .attr('id',i)
+        p.selectAll("vertLines")
+          .data([sumstat[i]])
+          .enter()
+          .append("line")
+            .attr("x1", function(d){
+              return(x(d.key))
+            })
+            .attr("x2", function(d){return(x(d.key))})
+            .attr("y1", function(d){
+              if (y(d.value.min)>height){
+                // console.log()
+                return height-30
+              }else{
+                return(y(d.value.min))
+              }
+            })
+            .attr("y2", function(d){
+              if (y(d.value.min)>height){
+                return(y(d.value.q3)-30)
+              }else{
+                return(y(d.value.max))
+              }
+            })
+            .attr("stroke", "black")
+            .style("width", 40)
+
+        var boxWidth = 13
+        p.selectAll("boxes")
+          .data([sumstat[i]])
+          .enter()
+          .append("rect")
+          .attr("x", function(d){return(x(d.key)-boxWidth/2)})
+          .attr("y", function(d){return(y(d.value.q3))})
+          .attr("height", function(d){return(y(d.value.q1)-y(d.value.q3))})
+          .attr("width", boxWidth )
+          .attr("stroke", "black")
+          .style("fill", "#69b3a2")
+
+
+               // Show the median
+         p.selectAll("medianLines")
+          .data([sumstat[i]])
+          .enter()
+          .append("line")
+          .attr("x1", function(d){return(x(d.key)-boxWidth/2) })
+          .attr("x2", function(d){return(x(d.key)+boxWidth/2) })
+          .attr("y1", function(d){return(y(d.value.median))})
+          .attr("y2", function(d){return(y(d.value.median))})
+          .attr("stroke", "black")
+          .style("width", 80)
+
+        //
+        p.selectAll("toto")
         .data([sumstat[i]])
         .enter()
         .append("line")
-          .attr("x1", function(d){return(x(d.key))})
-          .attr("x2", function(d){return(x(d.key))})
+          .attr('clas','r')
+          .attr("x1", function(d){
+            return(x(d.key)-boxWidth/2)
+          })
+          .attr("x2", function(d){return(x(d.key)+boxWidth/2) })
           .attr("y1", function(d){
             if (y(d.value.min)>height){
-              return height-30
+              return(y(d.value.q3)-30)
             }else{
-              return(y(d.value.min))
+              return(y(d.value.max))
+
             }
           })
           .attr("y2", function(d){
@@ -112,114 +167,55 @@ export default function Boxplot({data}) {
             }
           })
           .attr("stroke", "black")
-          .style("width", 40)
-
-      var boxWidth = 15
-      p.selectAll("boxes")
-        .data([sumstat[i]])
-        .enter()
-        .append("rect")
-        .attr("x", function(d){return(x(d.key)-boxWidth/2)})
-        .attr("y", function(d){return(y(d.value.q3))})
-        .attr("height", function(d){return(y(d.value.q1)-y(d.value.q3))})
-        .attr("width", boxWidth )
-        .attr("stroke", "black")
-        .style("fill", "#69b3a2")
 
 
-             // Show the median
-       p.selectAll("medianLines")
-        .data([sumstat[i]])
-        .enter()
-        .append("line")
-        .attr("x1", function(d){return(x(d.key)-boxWidth/2) })
-        .attr("x2", function(d){return(x(d.key)+boxWidth/2) })
-        .attr("y1", function(d){return(y(d.value.median))})
-        .attr("y2", function(d){return(y(d.value.median))})
-        .attr("stroke", "black")
-        .style("width", 80)
+          p.selectAll("toto")
+          .data([sumstat[i]])
+          .enter()
+          .append("line")
+            .attr('clas','rz')
+            .attr("x1", function(d){
+              return(x(d.key)-boxWidth/2)
+            })
+            .attr("x2", function(d){return(x(d.key)+boxWidth/2) })
+            .attr("y1", function(d){
+              if (y(d.value.min)>height){
+                return height-30
+              }else{
+                return(y(d.value.min))
+              }
+            })
+            .attr("y2", function(d){
+              if (y(d.value.min)>height){
+                return height-30
+              }else{
+                return(y(d.value.min))
+              }
+            })
+            .attr("stroke", "black")
 
-      //
-      p.selectAll("toto")
-      .data([sumstat[i]])
-      .enter()
-      .append("line")
-        .attr('clas','r')
-        .attr("x1", function(d){
-          return(x(d.key)-boxWidth/2)
-        })
-        .attr("x2", function(d){return(x(d.key)+boxWidth/2) })
-        .attr("y1", function(d){
-          if (y(d.value.min)>height){
-            return(y(d.value.q3)-30)
-          }else{
-            return(y(d.value.max))
-
-          }
-        })
-        .attr("y2", function(d){
-          if (y(d.value.min)>height){
-            return(y(d.value.q3)-30)
-          }else{
-            return(y(d.value.max))
-
-          }
-        })
-        .attr("stroke", "black")
-
-
-        p.selectAll("toto")
-        .data([sumstat[i]])
-        .enter()
-        .append("line")
-          .attr('clas','rz')
-          .attr("x1", function(d){
-            return(x(d.key)-boxWidth/2)
-          })
-          .attr("x2", function(d){return(x(d.key)+boxWidth/2) })
-          .attr("y1", function(d){
-            if (y(d.value.min)>height){
-              return height-30
-            }else{
-              return(y(d.value.min))
+          p.on("mouseover", function(d){
+            var id = this.id
+            var html = ''
+            for(var key in sumstat[id].value){
+              html +=key+":"+ sumstat[id].value[key]+"<br/>"
             }
+            div.html(html)
+               .style("left","50px")
+               .style("top", "0px")
+               .style("opacity", 1);
+
           })
-          .attr("y2", function(d){
-            if (y(d.value.min)>height){
-              return height-30
-            }else{
-              return(y(d.value.min))
-            }
+          p.on("mouseleave", function(d){
+            div.style("opacity", 0);
           })
-          .attr("stroke", "black")
-        p.on("mouseover", function(d){
-          console.log(d);
-          var id = this.id
-          var html = ''
-          for(var key in sumstat[id].value){
-            html +=key+":"+ sumstat[id].value[key]+"<br/>"
-          }
-          div.html(html)
-             .style("left","50px")
-             .style("top", "0px")
-             .style("opacity", 1);
-
-        })
-        p.on("mouseleave", function(d){
-
-          div.style("opacity", 0);
-
-        })
-
-
-
       }
   }
 
   useEffect(()=>{
     if(data){
       let w = elementRef.current.getBoundingClientRect().width
-      console.log(w);
+      // console.log(w);
       drawChart(w,data)
     }
   },[data])

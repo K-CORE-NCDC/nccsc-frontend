@@ -17,6 +17,8 @@ const ScatterPlot = React.lazy(() => import('./containers/Common/ScatterPlot'))
 const Igv = React.lazy(() => import('./containers/Common/igv'))
 const Heatmap = React.lazy(() => import('./containers/Common/heatmapNew'))
 
+const Box2 = React.lazy(() => import('./containers/Common/BoxPlot2'))
+
 const route = [
   { path: '/', exact: true, type:'unauth', name: 'Home', component: Home },
   { path: '/summary/:tab?/', exact: true, type:'unauth', name: 'DataSummary', component: DataSummary },
@@ -27,7 +29,8 @@ const route = [
   { path: '/boxplot', exact: true, type:'unauth', name: 'boxplot', component: BoxPlot },
   { path: '/scatter', exact: true, type:'unauth', name: 'scatterplot', component: ScatterPlot },
   { path: '/igv', exact: true, type:'unauth', name: 'igv', component: Igv },
-  { path: '/heatmap', exact: true, type:'unauth', name: 'igv', component: Heatmap}
+  { path: '/heatmap', exact: true, type:'unauth', name: 'igv', component: Heatmap},
+  { path: '/box2', exact: true, type:'unauth', name: 'igv', component: Box2}
   // { path: '/customanalysis', exact: true, type:'unauth', name: 'Home', component: Home },
 ]
 
