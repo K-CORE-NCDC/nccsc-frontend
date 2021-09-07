@@ -29,23 +29,41 @@ import { Chart } from 'react-google-charts'
 // }
 
 const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
-  console.log(data);
+  // console.log(data);
   const [survivalData, setSurvivalData] = useState([])
-
-  useEffect(()=>{
-    let chartsArray = [['RLPS_CNFR_DRTN', 'RLPS_CNFR_DRTN']]
-    if(data.survivalJson !== undefined){
-      data.survivalJson.forEach(element => {
-        chartsArray.push([element.pt_sbst_no, element.rlps_cnfr_drtn])
+  console.log(survivalData);
+  useEffect(() => {
+    let chartsArray = []
+    let sampleScore = {}
+    if (data.survivalJson !== undefined) {
+      data.survivalJson.normal.forEach(element => {
+        // chartsArray.push([element.pt_sbst_no, element.rlps_cnfr_drtn])
+        sampleScore = { ...sampleScore, [element.pt_sbst_no]: [element.rlps_cnfr_drtn] }
       });
+
+      if (data.survivalJson.filter_gene) {
+        data.survivalJson.filter_gene.forEach(element => {
+          // chartsArray.push([element.pt_sbst_no, element.rlps_cnfr_drtn])
+          sampleScore = { ...sampleScore, [element.pt_sbst_no]: [...sampleScore[element.pt_sbst_no], element.rlps_cnfr_drtn] }
+        });
+      }
+      if (data.fileredGene !== ""){
+        chartsArray.push(['RLPS_CNFR_DRTN', 'RLPS_CNFR_DRTN', data.fileredGene])
+      }else{
+        chartsArray.push(['RLPS_CNFR_DRTN', 'RLPS_CNFR_DRTN'])
+      }
+      Object.keys(sampleScore).forEach(element => {
+        chartsArray.push([element, ...sampleScore[element]])
+      })
+
     }
     setSurvivalData(chartsArray)
-  },[data])
+  }, [data])
 
   return (
     <div ref={ref} className={watermarkCss}>
       {survivalData.length > 1 && <Chart
-        width={'100%'}
+        width={'80%'}
         // height={'400px'}
         chartType="SteppedAreaChart"
         loader={<div>Loading Chart</div>}
@@ -54,7 +72,7 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
           title: "Survival Plot",
           vAxis: { title: 'Samples' },
           isStacked: true,
-          legend: {position: 'none'}
+          legend: { position: 'none' }
         }}
         rootProps={{ 'data-testid': '1' }}
       />}

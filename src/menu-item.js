@@ -96,7 +96,7 @@ let childMenu = {
         title: 'Data Visualization',
         type: 'group',
         icon: 'fa fa-dashboard',
-        url: '/visualise',
+        url: '/visualise/circos',
         children: [],
       },
       {

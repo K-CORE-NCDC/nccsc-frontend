@@ -68,8 +68,9 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
         :
         <div className="flex flex-row justify-around">
           <div>
-            <div className="relative w-full col-span-4">
+            <div>
               <select onChange={(e) => setFilteredGene(e.target.value)}
+                value={fileredGene}
                 className='w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
                 <option value=""></option>
                 {genesArray.map((gene, index) => (

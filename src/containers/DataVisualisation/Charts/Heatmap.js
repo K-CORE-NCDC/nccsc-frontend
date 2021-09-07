@@ -15,7 +15,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, setToFalse
   // const didMountRef = useRef(false)
   const [watermarkCss, setWatermarkCSS] = useState("")
   const [loader, setLoader] = useState(false)
-
+console.log(inputData);
 
   useEffect(()=>{
     if(inputData){
