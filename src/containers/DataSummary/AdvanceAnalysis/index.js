@@ -10,7 +10,8 @@ import chart_types from '../genomicCharyTypes';
 import inputJson from '../data'
 import Filter from './filter'
 import VennCmp from '../../Common/Venn'
-import Loader from "react-loader-spinner";
+// import Loader from "react-loader-spinner";
+import LoaderCmp from '../../Common/Loader';
 
 export default function AdvancedInfo() {
   const dataSummary = useSelector(state => state)
@@ -96,17 +97,8 @@ export default function AdvancedInfo() {
               <div className="grid grid-cols-3 gap-1">
                 {
                   loader?
-                    <div className="flex justify-center mt-12">
-                      <div className="pl-24">
-                          <Loader
-                          type="ThreeDots"
-                          color="#0c3c6a"
-                          height={200}
-                          width={200}
-                          timeout={30000} //3 secs
-                        />
-                      </div>
-                    </div>:state
+                    <LoaderCmp/>
+                    :state
                 }
               </div>
             </div>

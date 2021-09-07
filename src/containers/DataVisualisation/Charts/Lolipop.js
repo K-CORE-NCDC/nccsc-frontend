@@ -5,7 +5,8 @@ import { getLolipopInformation } from '../../../actions/api_actions'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { exportComponentAsPNG } from 'react-component-export-image';
-import Loader from "react-loader-spinner";
+// import Loader from "react-loader-spinner";
+import LoaderCmp from '../../Common/Loader'
 
 
 export default function DataLolipop({ width,inputData, screenCapture, setToFalseAfterScreenCapture }) {
@@ -118,15 +119,7 @@ export default function DataLolipop({ width,inputData, screenCapture, setToFalse
   return (
     <>{
         loader?
-        <div className="flex justify-center mt-12">
-          <Loader
-            type="ThreeDots"
-            color="#0c3c6a"
-            height={200}
-            width={200}
-            timeout={30000} //3 secs
-          />
-        </div>
+        <LoaderCmp/>
         :
         <div>
           {activeCmp &&

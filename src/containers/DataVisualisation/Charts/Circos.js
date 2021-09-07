@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import CircosCmp from '../../Common/Circos'
+import LoaderCmp from '../../Common/Loader'
 import { getCircosInformation, getCircosSamplesRnidList } from '../../../actions/api_actions'
 import '../../../assets/css/style.css'
 import { exportComponentAsPNG } from 'react-component-export-image';
-import Loader from "react-loader-spinner";
+
+
 
 export default function DataCircos({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
@@ -81,15 +83,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   return (
     <>{
       loader?
-      <div className="flex justify-center mt-12">
-        <Loader
-          type="ThreeDots"
-          color="#0c3c6a"
-          height={200}
-          width={200}
-          timeout={30000} //3 secs
-        />
-      </div>
+        <LoaderCmp/>
         :
         <div className="grid ">
           {displaySamples && <div className="p-1 grid grid-cols-6">
