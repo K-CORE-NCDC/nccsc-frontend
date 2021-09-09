@@ -131,7 +131,7 @@ export default function DataVisualization() {
     if (project_id !== undefined) {
       l = availableTabsForProject
     } else {
-      l = ['circos', 'onco', 'lollipop', 'volcano', 'heatmap', 'survival']
+      l = ['circos', 'onco', 'lollipop', 'volcano', 'heatmap', 'survival', 'scatter']
     }
     let tmp = []
 
@@ -213,6 +213,8 @@ export default function DataVisualization() {
         return Charts.heatmap(w, state, screenCapture, setToFalseAfterScreenCapture)
       case "survival":
         return Charts.survival(w, state, screenCapture, setToFalseAfterScreenCapture)
+        case "scatter":
+          return Charts.scatter(w, state, screenCapture, setToFalseAfterScreenCapture)
       default:
         return false
     }

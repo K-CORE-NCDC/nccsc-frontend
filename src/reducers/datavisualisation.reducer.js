@@ -52,6 +52,11 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state,
         circosSanpleRnidListData : payload
       }
+    case dataVisualization.SCATTER_REQUEST:
+      return {
+        ...state,
+        scatterData : payload
+      }
     default:
       return state
   }
