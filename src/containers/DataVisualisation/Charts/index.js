@@ -4,7 +4,9 @@ import DataLolipop from './Lolipop'
 import DataVolcono from './Volcono'
 import DataHeatmap from './Heatmap'
 import DataSurvival from './Survival'
+import Scatter from './Scatter'
 import DataIgv from './igv'
+
 
 function circos(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
   return <DataCircos
@@ -66,6 +68,18 @@ function survival(width, inputData, screenCapture, setToFalseAfterScreenCapture)
   />
 }
 
+
+function scatter(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
+  return <Scatter
+  key='scatter'
+  width={width}
+  inputData={inputData}
+  screenCapture={screenCapture}
+  setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+  />
+}
+
+
 function igv(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
   return <DataIgv
   key='igv'
@@ -83,5 +97,6 @@ export const Charts = {
   volcano,
   heatmap,
   survival,
+  scatter,
   igv
 }
