@@ -42,6 +42,11 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state,
         survivalSummary: payload
       }
+      case dataVisualization.IGV_REQUEST:
+        return {
+          ...state,
+          igvSummary: payload
+        }
     case userdataVisualization.USER_DATA_PROJECT_TABLE:
       return {
         ...state,
@@ -51,6 +56,11 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
       return {
         ...state,
         circosSanpleRnidListData : payload
+      }
+    case dataVisualization.SCATTER_REQUEST:
+      return {
+        ...state,
+        scatterData : payload
       }
     default:
       return state

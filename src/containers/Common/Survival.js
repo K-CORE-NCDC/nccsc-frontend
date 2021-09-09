@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import '../../styles/survival.css'
 import { Chart } from 'react-google-charts'
+import { index } from 'd3'
 
 
 // export default class SurvivalCmp extends React.Component {
@@ -32,47 +33,93 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
   // console.log(data);
   const [survivalData, setSurvivalData] = useState([])
   console.log(survivalData);
-  useEffect(() => {
-    let chartsArray = []
-    let sampleScore = {}
-    if (data.survivalJson !== undefined) {
-      data.survivalJson.normal.forEach(element => {
-        // chartsArray.push([element.pt_sbst_no, element.rlps_cnfr_drtn])
-        sampleScore = { ...sampleScore, [element.pt_sbst_no]: [element.rlps_cnfr_drtn] }
-      });
 
-      if (data.survivalJson.filter_gene) {
-        data.survivalJson.filter_gene.forEach(element => {
-          // chartsArray.push([element.pt_sbst_no, element.rlps_cnfr_drtn])
-          sampleScore = { ...sampleScore, [element.pt_sbst_no]: [...sampleScore[element.pt_sbst_no], element.rlps_cnfr_drtn] }
-        });
-      }
-      if (data.fileredGene !== ""){
-        chartsArray.push(['RLPS_CNFR_DRTN', 'RLPS_CNFR_DRTN', data.fileredGene])
-      }else{
-        chartsArray.push(['RLPS_CNFR_DRTN', 'RLPS_CNFR_DRTN'])
-      }
-      Object.keys(sampleScore).forEach(element => {
-        chartsArray.push([element, ...sampleScore[element]])
-      })
-
+  function countUnique(iterable) {
+    if (iterable) {
+      return new Set(iterable).size;
+    } else {
+      return 0
     }
+  }
+
+  useEffect(() => {
+    let chartsArray = [['', 'normal']]
+    let survivalObject = { normal: {} }
+    let sampleScore = {}
+    let sampleScoreFilter = {}
+    let gene = data.fileredGene
+    console.log(gene);
+    let responseData = data.survivalJson
+
+    if (responseData) {
+      if (responseData.normal) {
+        responseData.normal.time.forEach((element, index) => {
+          survivalObject['normal'] = { ...survivalObject['normal'], [element]: responseData.normal.risk[index] }
+        })
+      }
+
+      if (gene !== "" && gene in responseData) {
+        chartsArray[0].push(gene)
+        survivalObject = { ...survivalObject, [gene]: {} }
+
+        responseData[gene].time.forEach((element, index) => {
+          survivalObject[gene] = { ...survivalObject[gene], [element]: responseData[gene].risk[index] }
+        })
+      }
+
+      let mergedArray = Object.keys(survivalObject['normal'])
+      if (gene !== "" && gene in responseData) {
+        mergedArray = [...mergedArray, ...Object.keys(survivalObject[gene])]
+      }
+      mergedArray = mergedArray.map(Number);
+      mergedArray.sort(function (a, b) {  return a - b;  })
+
+      console.log(mergedArray);
+      // mergedArray = mergedArray.splice(5,15)
+
+      let oldVals = [null, null]
+      if (gene !== "" && gene in responseData){
+        oldVals = [Math.max(...Object.values(survivalObject['normal'])), Math.max(...Object.values(survivalObject[gene]))]
+      }
+      mergedArray.forEach(element => {
+        let eachStep = [element, null, null]
+        if (gene !== "" && gene in responseData) {
+          if (element in survivalObject['normal']) {
+            eachStep[1] = survivalObject['normal'][element]
+            oldVals[0] = survivalObject['normal'][element]
+          }
+
+          if (element in survivalObject[gene]) {
+            eachStep[2] = survivalObject[gene][element]
+            oldVals[1] = survivalObject[gene][element]
+          }
+          eachStep[1] === null ? eachStep[1] = oldVals[0] : eachStep[1] = eachStep[1]
+          eachStep[2] === null ? eachStep[2] = oldVals[1] : eachStep[2] = eachStep[2]
+          
+          chartsArray.push(eachStep)
+        } else {
+          chartsArray.push([element, survivalObject['normal'][element]])
+        }
+      })
+    }
+
     setSurvivalData(chartsArray)
   }, [data])
 
   return (
     <div ref={ref} className={watermarkCss}>
       {survivalData.length > 1 && <Chart
-        width={'80%'}
-        // height={'400px'}
+        width={'100%'}
+        height={'600px'}
         chartType="SteppedAreaChart"
         loader={<div>Loading Chart</div>}
         data={survivalData}
         options={{
           title: "Survival Plot",
-          vAxis: { title: 'Samples' },
+          vAxis: { title: 'Samples count' },
+          hAxis: { title: 'Duration in Month' },
           isStacked: true,
-          legend: { position: 'none' }
+          legend: { position: 'top' }
         }}
         rootProps={{ 'data-testid': '1' }}
       />}

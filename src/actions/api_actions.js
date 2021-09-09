@@ -221,6 +221,26 @@ export function getSurvivalInformation(type, data) {
   };
 }
 
+export function getIgv(type,data){
+  return (dispatch) => {
+    //   dispatch({ type: homeConstants.DATA_SUMMARY });
+    let url = config.auth + "igv/";
+    sendRequest(url, type, data)
+      .then((result) => {
+        const d = result;
+
+        dispatch({
+          type: dataVisualization.IGV_REQUEST,
+          payload: d["data"],
+        });
+        dispatch({ type: dataVisualization.REQUEST_DONE });
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
+  };
+}
+
 export function getBreastKeys() {
   return (dispatch) => {
     //   dispatch({ type: homeConstants.DATA_SUMMARY });
@@ -405,5 +425,26 @@ export function getCircosSamplesRnidList() {
         console.log("error", e);
       });
 
+  };
+}
+
+export function getScatterInformation(type, data) {
+  return (dispatch) => {
+    //   dispatch({ type: homeConstants.DATA_SUMMARY });
+    let url = config.auth + "scatter-plot/";
+    sendRequest(url, type, data)
+      .then((result) => {
+        const d = result;
+
+        dispatch({ type: dataVisualization.REQUEST_DONE });
+        dispatch({
+          type: dataVisualization.SCATTER_REQUEST,
+          payload: d["data"],
+        });
+        dispatch({ type: dataVisualization.REQUEST_DONE });
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
   };
 }

@@ -4,6 +4,9 @@ import DataLolipop from './Lolipop'
 import DataVolcono from './Volcono'
 import DataHeatmap from './Heatmap'
 import DataSurvival from './Survival'
+import Scatter from './Scatter'
+import DataIgv from './igv'
+
 
 function circos(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
   return <DataCircos
@@ -16,51 +19,73 @@ function circos(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
 }
 
 function onco(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
-  return <DataOnco 
-  key='onco' 
-  width={width} 
-  inputData={inputData} 
-  screenCapture={screenCapture} 
+  return <DataOnco
+  key='onco'
+  width={width}
+  inputData={inputData}
+  screenCapture={screenCapture}
   setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
   />
 }
 
 function lollipop(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
-  return <DataLolipop 
-  key='lolipop' 
-  width={width} 
-  inputData={inputData} 
-  screenCapture={screenCapture} 
+  return <DataLolipop
+  key='lolipop'
+  width={width}
+  inputData={inputData}
+  screenCapture={screenCapture}
   setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
   />
 }
 
 function volcano(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
-  return <DataVolcono 
-  key='volcano' 
-  width={width} 
-  inputData={inputData} 
-  screenCapture={screenCapture} 
+  return <DataVolcono
+  key='volcano'
+  width={width}
+  inputData={inputData}
+  screenCapture={screenCapture}
   setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
   />
 }
 
 function heatmap(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
-  return <DataHeatmap 
-  key='heatmap' 
-  width={width} 
-  inputData={inputData} 
-  screenCapture={screenCapture} 
+  return <DataHeatmap
+  key='heatmap'
+  width={width}
+  inputData={inputData}
+  screenCapture={screenCapture}
   setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
   />
 }
 
 function survival(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
-  return <DataSurvival 
-  key='survival' 
-  width={width} 
-  inputData={inputData} 
-  screenCapture={screenCapture} 
+  return <DataSurvival
+  key='survival'
+  width={width}
+  inputData={inputData}
+  screenCapture={screenCapture}
+  setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+  />
+}
+
+
+function scatter(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
+  return <Scatter
+  key='scatter'
+  width={width}
+  inputData={inputData}
+  screenCapture={screenCapture}
+  setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+  />
+}
+
+
+function igv(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
+  return <DataIgv
+  key='igv'
+  width={width}
+  inputData={inputData}
+  screenCapture={screenCapture}
   setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
   />
 }
@@ -71,5 +96,7 @@ export const Charts = {
   lollipop,
   volcano,
   heatmap,
-  survival
+  survival,
+  scatter,
+  igv
 }

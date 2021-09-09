@@ -46,6 +46,9 @@ export default function AdvancedInfo() {
       let html = []
       Object.keys(summaryJson).forEach((item, k) => {
         let type = visual_type[item]
+        if(item === "Venn") {
+          return
+        }
         let comp = ''
         comp = chart_types(type, summaryJson[item], visual_type[item])
         if (item !== "Omics Sample Summary"){
