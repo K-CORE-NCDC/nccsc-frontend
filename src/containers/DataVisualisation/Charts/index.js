@@ -6,7 +6,9 @@ import DataHeatmap from './Heatmap'
 import DataSurvival from './Survival'
 import Scatter from './Scatter'
 import DataIgv from './igv'
+
 import FusionPlot from './Fusion'
+import Box from './Box'
 
 
 function circos(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
@@ -91,9 +93,22 @@ function igv(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
   />
 }
 
+
 function fusion(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
   return <FusionPlot
   key='fusion'
+  width={width}
+  inputData={inputData}
+  screenCapture={screenCapture}
+  setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+  />
+}
+
+
+
+function box(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
+  return <Box
+  key='box'
   width={width}
   inputData={inputData}
   screenCapture={screenCapture}
@@ -111,4 +126,5 @@ export const Charts = {
   scatter,
   igv,
   fusion
+  box
 }
