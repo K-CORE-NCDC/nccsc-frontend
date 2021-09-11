@@ -62,6 +62,11 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state,
         scatterData : payload
       }
+    case dataVisualization.BOX_REQUEST:
+      return {
+        ...state,
+        boxData : payload
+      }
     default:
       return state
   }

@@ -131,7 +131,7 @@ export default function DataVisualization() {
     if (project_id !== undefined) {
       l = availableTabsForProject
     } else {
-      l = ['circos', 'onco', 'lollipop', 'volcano', 'heatmap', 'survival', 'scatter','igv']
+      l = ['circos', 'onco', 'lollipop', 'volcano', 'heatmap', 'survival', 'scatter','igv','box']
     }
     let tmp = []
 
@@ -217,6 +217,8 @@ export default function DataVisualization() {
         return Charts.scatter(w, state, screenCapture, setToFalseAfterScreenCapture)
       case "igv":
         return Charts.igv(w, state, screenCapture, setToFalseAfterScreenCapture)
+      case "box":
+        return Charts.box(w, state, screenCapture, setToFalseAfterScreenCapture)
       default:
         return false
     }
