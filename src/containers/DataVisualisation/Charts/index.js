@@ -6,6 +6,8 @@ import DataHeatmap from './Heatmap'
 import DataSurvival from './Survival'
 import Scatter from './Scatter'
 import DataIgv from './igv'
+
+import FusionPlot from './Fusion'
 import Box from './Box'
 
 
@@ -91,6 +93,19 @@ function igv(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
   />
 }
 
+
+function fusion(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
+  return <FusionPlot
+  key='fusion'
+  width={width}
+  inputData={inputData}
+  screenCapture={screenCapture}
+  setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+  />
+}
+
+
+
 function box(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
   return <Box
   key='box'
@@ -110,5 +125,6 @@ export const Charts = {
   survival,
   scatter,
   igv,
+  fusion,
   box
 }

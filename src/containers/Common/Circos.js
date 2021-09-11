@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react'
 import * as d3 from 'd3';
 import * as Circos from 'circos';
 import {queue} from 'd3-queue';
-
+import cytobands from './cytobands.csv'
 const CircosCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
   const [state, setState] = useState({"cytobands":[],'genes':[],'GRCh37':[]});
   var gieStainColor = {
@@ -396,7 +396,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
 
 
   useEffect(()=>{
-    d3.csv("https://nicgirault.github.io/circosJS/demo/data/cytobands.csv", function(d,i) {
+    d3.csv(cytobands, function(d,i) {
       return d;
     }).then(function(data) {
       let d = []

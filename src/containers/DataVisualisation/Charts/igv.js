@@ -27,7 +27,7 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
 
   return (
     <div>
-      {activeCmp && <Igv file_name={igvJson}/>}
+      {activeCmp && <Igv data={igvJson}/>}
     </div>
   )
 }
