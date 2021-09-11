@@ -448,3 +448,23 @@ export function getScatterInformation(type, data) {
       });
   };
 }
+
+export function getFusionInformation(type, data) {
+  return (dispatch) => {
+    //   dispatch({ type: homeConstants.DATA_SUMMARY });
+    let url = config.auth + "fusion-plot/";
+    sendRequest(url, type, data)
+      .then((result) => {
+        const d = result;
+        dispatch({ type: dataVisualization.REQUEST_DONE });
+        dispatch({
+          type: dataVisualization.FUSION_REQUEST,
+          payload: d["data"],
+        });
+        dispatch({ type: dataVisualization.REQUEST_DONE });
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
+  };
+}

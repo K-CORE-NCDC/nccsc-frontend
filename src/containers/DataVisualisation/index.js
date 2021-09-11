@@ -36,7 +36,6 @@ export default function DataVisualization() {
   }
 
 
-
   const callback = useCallback((filters) => {
     let type = document.getElementById('gene_type').value
     let g = genes[type].data
@@ -131,7 +130,7 @@ export default function DataVisualization() {
     if (project_id !== undefined) {
       l = availableTabsForProject
     } else {
-      l = ['circos', 'onco', 'lollipop', 'volcano', 'heatmap', 'survival', 'scatter','igv']
+      l = ['circos', 'onco', 'lollipop', 'volcano', 'heatmap', 'survival', 'scatter','igv','fusion']
     }
     let tmp = []
 
@@ -217,6 +216,8 @@ export default function DataVisualization() {
         return Charts.scatter(w, state, screenCapture, setToFalseAfterScreenCapture)
       case "igv":
         return Charts.igv(w, state, screenCapture, setToFalseAfterScreenCapture)
+      case "fusion":
+        return Charts.fusion(w, state, screenCapture, setToFalseAfterScreenCapture)
       default:
         return false
     }

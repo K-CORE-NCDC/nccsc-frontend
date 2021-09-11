@@ -1,46 +1,36 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from "react-redux";
-import ScatterPlot from '../../Common/ScatterPlot'
+import ChordCmp from '../../Common/Chord'
 import LoaderCmp from '../../Common/Loader'
-import { getScatterInformation, getCircosSamplesRnidList } from '../../../actions/api_actions'
+import { getFusionInformation} from '../../../actions/api_actions'
 import '../../../assets/css/style.css'
 import { exportComponentAsPNG } from 'react-component-export-image';
 
-export default function Scatter({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
+
+export default function FusionPlot({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
   const dispatch = useDispatch()
   const [sampleKey, setSampleKey] = useState('')
-  const scatterJson = useSelector((data) => data.dataVisualizationReducer.scatterData);
+  const fusionJson = useSelector((data) => data.dataVisualizationReducer.fusionData);
   // const circosSanpleRnidListData = useSelector(state => state.dataVisualizationReducer.circosSanpleRnidListData)
   // const circosSanpleRnidListData = useSelector((data) => data.dataVisualizationReducer.Keys);
-  const [sampleListElements, setSampleListElements] = useState([])
-  const [displaySamples, setDisplaySamples] = useState(false)
+  // const [sampleListElements, setSampleListElements] = useState([])
+  // const [displaySamples, setDisplaySamples] = useState(false)
   const [watermarkCss, setWatermarkCSS] = useState("")
   const [loader, setLoader] = useState(false)
 
   useEffect(() => {
     if (inputData) {
       let editInputData = inputData
+      editInputData = { ...editInputData, sampleKey: sampleKey }
       if (editInputData.type !== '') {
         setLoader(true)
-        dispatch(getScatterInformation('POST', editInputData))
+        dispatch(getFusionInformation('POST', editInputData))
       }
     }
-  }, [inputData])
+  }, [inputData, sampleKey])
 
-  useEffect(() => {
-    if(inputData && inputData.genes.length > 0) {
-      setDisplaySamples(true)
-    }else{
-      setDisplaySamples(false)
-    }
-  }, [inputData])
 
-  // useEffect(() => {
-  //   if(!circosSanpleRnidListData){
-  //     dispatch(getCircosSamplesRnidList())
-  //   }
-  // }, [])
 
   useEffect(() => {
     if(screenCapture){
@@ -66,22 +56,25 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
   //     setSampleListElements(sampleListElementsTemp)
   //   }
   // }, [circosSanpleRnidListData])
+
   useEffect(() => {
     setTimeout(function() {
         setLoader(false)
     }, (1000));
-  }, [scatterJson])
+  }, [fusionJson])
 
-  // console.log("scatterJson---->",scatterJson)
 
+  var w = Math.floor((width/100)*75)
   return (
     <>{
       loader?
         <LoaderCmp/>
         :
+        <div className="grid ">
           <div>
-            {scatterJson && <ScatterPlot scatter_data={scatterJson}/>}
+            {fusionJson && <ChordCmp watermarkCss={watermarkCss} ref={reference} width={w} data={fusionJson}/>}
           </div>
+        </div>
     }
     </>
   )
