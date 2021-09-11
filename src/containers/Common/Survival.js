@@ -72,6 +72,9 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
         mergedArray = [...mergedArray, ...Object.keys(survivalObject[gene])]
       }
       mergedArray = mergedArray.map(Number);
+      mergedArray = mergedArray.filter(function(item, pos) {
+        return mergedArray.indexOf(item) == pos;
+    })
       mergedArray.sort(function (a, b) {  return a - b;  })
 
       console.log(mergedArray);
@@ -81,7 +84,8 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
       if (gene !== "" && gene in responseData){
         oldVals = [Math.max(...Object.values(survivalObject['normal'])), Math.max(...Object.values(survivalObject[gene]))]
       }
-      mergedArray.forEach(element => {
+      mergedArray.forEach((element, inex) => {
+        
         let eachStep = [element, null, null]
         if (gene !== "" && gene in responseData) {
           if (element in survivalObject['normal']) {
@@ -102,7 +106,7 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
         }
       })
     }
-
+    chartsArray.splice(1, 1)
     setSurvivalData(chartsArray)
   }, [data])
 
@@ -111,7 +115,7 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
       {survivalData.length > 1 && <Chart
         width={'100%'}
         height={'600px'}
-        chartType="SteppedAreaChart"
+        chartType="Line"
         loader={<div>Loading Chart</div>}
         data={survivalData}
         options={{
