@@ -125,6 +125,6 @@ export const Charts = {
   survival,
   scatter,
   igv,
-  fusion
+  fusion,
   box
 }
