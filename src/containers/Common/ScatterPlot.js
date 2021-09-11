@@ -9,11 +9,10 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 Chart.register(...registerables);
 // import genes from '../Common/gene.json'
 // import { getBreastKeys, getUserDataProjectsTableData } from '../../actions/api_actions'
-
 var myChart
 export default function ScatterPlot({ scatter_data }) {
   const scatter_plot = useRef(null);
-
+  const [chartV, setChartV] = useState()
   let option = {
     scales: {
       x: {
@@ -38,7 +37,9 @@ export default function ScatterPlot({ scatter_data }) {
     plugins: [ChartDataLabels]
 }
 
+
   const drawChart = (data_) =>{
+
     // var grapharea = document.getElementById("scatter").getContext("2d");
     // grapharea.destroy();
     // var canvas = document. getElementById("scatter");
@@ -53,9 +54,8 @@ export default function ScatterPlot({ scatter_data }) {
       type: 'scatter',
       data: data_,
       options:option,
-      // height: 260,
-      });
-
+    });
+    // console.log(myChart);
   }
 
   useEffect(()=>{
@@ -66,7 +66,7 @@ export default function ScatterPlot({ scatter_data }) {
 
 
   return (
-      <div>
+      <div id='scatter_parent'>
         <canvas id="scatter" ref={scatter_plot} height="10vh" width="40vw"></canvas>
       </div>
   )

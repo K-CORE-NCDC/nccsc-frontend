@@ -2,10 +2,10 @@ import React, { useState,useEffect } from 'react'
 import igv from 'igv'
 import config from '../../config'
 
-export default function Igv({width,file_name}) {
+export default function Igv({width,data}) {
 
 
-  const loadIgv = (name)=>{
+  const loadIgv = (data)=>{
 
     var doc = document.getElementById('igv-div')
     if(doc.hasChildNodes()){
@@ -20,31 +20,30 @@ export default function Igv({width,file_name}) {
       showNavigation:true,
       showSampleNames:true,
       tracks: [
+        {
+          name: "Copy number",
+          type: "seg",
+          displayMode: "EXPANDED",
+          features:data
+        }
       ]
     };
 
     igv.createBrowser(igvDiv, options).then(function (browser) {
-      for (var i = 0, l = browser.trackViews.length; i < l; i++) {
-        var trackView = browser.trackViews[i];
-        if (trackView.track.name === "Refseq Genes") {
-          browser.removeTrack(trackView.track);
-        }
-      }
-      browser.loadTrack({
-          name: "Segmented Copy Number",
-          type: "seg",
-          format: "seg",
-          url: config['auth']+"media/"+name,
-      })
+      console.log('created igv browser')
     })
+
   }
   useEffect(()=>{
-    console.log(file_name);
-    if(file_name){
-      console.log(file_name);
-      loadIgv(file_name['file'])
+    // console.log(file_name);
+    // if(file_name){
+    //   console.log(file_name);
+    if(data){
+      loadIgv(data)
     }
-  },[file_name])
+    // }
+    // loadIgv('s')
+  },[data])
 
   return (
     <div className='ad' id="igv-div" style={{"height":"500px","width":width+"px"}}>
