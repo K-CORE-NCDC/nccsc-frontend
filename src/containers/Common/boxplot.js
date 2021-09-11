@@ -81,7 +81,7 @@ export default function Boxplot({data}) {
      // console.log(min_vl)
 
      var y = d3.scaleLinear()
-       .domain([min_vl - 10, max_vl])
+       .domain([min_vl - 2, max_vl])
        .range([height, 0])
      svg.append("g").call(d3.axisLeft(y))
 
