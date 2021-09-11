@@ -64,7 +64,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
       loader?
         <LoaderCmp/>
         :
-          <div>
+          <div className="grid">
             {boxJson && <BoxPlot box_data={boxJson} ref={reference} width={width}/>}
           </div>
     }
