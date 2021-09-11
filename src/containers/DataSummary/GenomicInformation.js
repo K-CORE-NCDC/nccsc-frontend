@@ -46,6 +46,8 @@ export default function GenomicInfo() {
           comp = chart_types(type, summaryJson[item], "x-axis")
         }else if(item === "Omics Sample Summary"){
           comp = chart_types(type, summaryJson[type], "")
+        }else if(item === "Venn"){
+          return
         }else{
           comp = chart_types(type, summaryJson[item],'')
         }

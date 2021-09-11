@@ -273,17 +273,17 @@ export default function FileUpload({ parentCallBack }) {
   const renderSwitch = (param) => {
     switch (param) {
       case 'clinical_information':
-        return "/SAMPLE_FILES/clinical_information.xlsx";
+        return "/SAMPLE_FILES/clinical_information.csv";
       case 'rna_zscore':
-        return "/SAMPLE_FILES/rna_zscore.xlsx";
+        return "/SAMPLE_FILES/rna_zscore.csv";
       case 'dna_mutation':
-        return "/SAMPLE_FILES/dna_mutation.xlsx";
+        return "/SAMPLE_FILES/dna_mutation.csv";
       case 'dna_methylation':
-        return "/SAMPLE_FILES/dna_methylation.xlsx";
+        return "/SAMPLE_FILES/dna_methylation.csv";
       case 'proteome':
-        return "/SAMPLE_FILES/global_proteome_rawdata.xlsx";
+        return "/SAMPLE_FILES/global_proteome_rawdata.csv";
       default:
-        return "/SAMPLE_FILES/clinical_information.xlsx";
+        return "/SAMPLE_FILES/clinical_information.csv";
     }
   }
 
@@ -513,23 +513,23 @@ export default function FileUpload({ parentCallBack }) {
 function SampleDataTable() {
 
   const renderSwitch = {
-    'clinical_information': "/SAMPLE_FILES/clinical_information.xlsx",
-    'rna_zscore': "/SAMPLE_FILES/rna_zscore.xlsx",
-    'dna_mutation': "/SAMPLE_FILES/dna_mutation.xlsx",
-    'dna_methylation': "/SAMPLE_FILES/dna_methylation.xlsx",
-    'proteome': "/SAMPLE_FILES/global_proteome_rawdata.xlsx"
+    'clinical_information': "/SAMPLE_FILES/clinical_information.csv",
+    'rna_zscore': "/SAMPLE_FILES/rna_zscore.csv",
+    'dna_mutation': "/SAMPLE_FILES/dna_mutation.csv",
+    'dna_methylation': "/SAMPLE_FILES/dna_methylation.csv",
+    'proteome': "/SAMPLE_FILES/global_proteome_rawdata.csv"
   }
   const data = {
     headers: ['type', 'Download', 'Circos plot', 'Oncoprinter', 'Lollipop plot', 'Volcano Plot', 'Heatmap', 'Survival Plot', 'Gene fusion', 'CNV chart', 'Box plot', 'Correlation plot'],
     body: [
-      ['Clinical information', '/SAMPLE_FILES/clinical_information.xlsx', true, true, true, true, true, true, true, true, true, true],
-      ['DNA mutation', '/SAMPLE_FILES/dna_mutation.xlsx', true, true, true, false, true, true, false, false, false, false],
-      ['RNA Zscore', '/SAMPLE_FILES/rna_zscore.xlsx', true, true, false, true, true, false, false, false, false, false],
-      ['DNA Methylation', '/SAMPLE_FILES/dna_methylation.xlsx', true, false, false, false, true, false, false, false, true, false],
-      ['Phospo Proteome', '/SAMPLE_FILES/clinical_information.xlsx', true, true, true, false, true, false, false, false, true, false],
-      ['Global Proteome', '/SAMPLE_FILES/global_proteome_rawdata.xlsx', false, false, false, false, true, false, false, false, false, false],
-      ['Gene fusion', '/SAMPLE_FILES/clinical_information.xlsx', true, false, false, false, false, false, true, false, false, false],
-      ['CNV', '/SAMPLE_FILES/clinical_information.xlsx', true, false, false, false, false, false, false, true, false, false]
+      ['Clinical information', '/SAMPLE_FILES/clinical_information.csv', true, true, true, true, true, true, true, true, true, true],
+      ['DNA mutation', '/SAMPLE_FILES/dna_mutation.csv', true, true, true, false, true, true, false, false, false, false],
+      ['RNA Zscore', '/SAMPLE_FILES/rna_zscore.csv', true, true, false, true, true, false, false, false, false, false],
+      ['DNA Methylation', '/SAMPLE_FILES/dna_methylation.csv', true, false, false, false, true, false, false, false, true, false],
+      ['Phospo Proteome', '/SAMPLE_FILES/phospo.csv', true, true, true, false, true, false, false, false, true, false],
+      ['Global Proteome', '/SAMPLE_FILES/global_proteome_rawdata.csv', false, false, false, false, true, false, false, false, false, false],
+      ['Gene fusion', '/SAMPLE_FILES/clinical_information.csv', true, false, false, false, false, false, true, false, false, false],
+      ['CNV', '/SAMPLE_FILES/cnv.csv', true, false, false, false, false, false, false, true, false, false]
     ]
   }
   return (
@@ -542,6 +542,7 @@ function SampleDataTable() {
                 <tr>
                   {data.headers.map(headerName => (
                     <th
+                      key={headerName}
                       scope="col"
                       className="px-6 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
                     >
