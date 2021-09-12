@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import CircosCmp from '../../Common/Circos'
 import LoaderCmp from '../../Common/Loader'
-import { getCircosInformation, getCircosSamplesRnidList } from '../../../actions/api_actions'
+import { getCircosInformation, getFusionInformation } from '../../../actions/api_actions'
 import '../../../assets/css/style.css'
 import { exportComponentAsPNG } from 'react-component-export-image';
 
@@ -13,6 +13,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   const dispatch = useDispatch()
   const [sampleKey, setSampleKey] = useState('')
   const circosJson = useSelector((data) => data.dataVisualizationReducer.circosSummary);
+  const fusionJson = useSelector((data) => data.dataVisualizationReducer.fusionData);
   // const circosSanpleRnidListData = useSelector(state => state.dataVisualizationReducer.circosSanpleRnidListData)
 
   const circosSanpleRnidListData = useSelector((data) => data.dataVisualizationReducer.Keys);
@@ -28,6 +29,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
       if (editInputData.type !== '') {
         setLoader(true)
         dispatch(getCircosInformation('POST', editInputData))
+        dispatch(getFusionInformation('POST', editInputData))
       }
     }
   }, [inputData, sampleKey])
@@ -40,11 +42,16 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
     }
   }, [inputData])
 
-  // useEffect(() => {
-  //   if(!circosSanpleRnidListData){
-  //     dispatch(getCircosSamplesRnidList())
-  //   }
-  // }, [])
+  useEffect(() => {
+    if(!circosJson){
+      setLoader(true)
+      dispatch(getCircosInformation('POST', {}))
+    }
+    if(!fusionJson){
+      setLoader(true)
+      dispatch(getFusionInformation('POST', {}))
+    }
+  }, [])
 
   useEffect(() => {
     if(screenCapture){
@@ -73,7 +80,9 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
   useEffect(() => {
     setTimeout(function() {
+      if(circosJson && fusionJson){
         setLoader(false)
+      }
     }, (1000));
   }, [circosJson])
 
@@ -89,13 +98,20 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
           {displaySamples && <div className="p-1 grid grid-cols-6">
             <div>
               <label htmlFor="samples">Choose a Sample: </label>
-              <select className="w-full border bg-white rounded px-3 py-2 outline-none" defaultChecked={sampleKey} onChange={e => { setSampleKey(e.target.value) }} name="samples" id="samples">
+              <select value></select>
+              <select className="w-full border bg-white rounded px-3 py-2 outline-none" value={sampleKey} onChange={e => { setSampleKey(e.target.value) }} name="samples" id="samples">
                 {sampleListElements}
               </select>
             </div>
           </div>}
           <div>
-            {circosJson && <CircosCmp watermarkCss={watermarkCss} ref={reference} width={w} data={circosJson} />}
+            {(circosJson && fusionJson) && <CircosCmp 
+            watermarkCss={watermarkCss} 
+            ref={reference} 
+            width={w} 
+            data={circosJson}
+            fusionJson={fusionJson}
+             />}
           </div>
         </div>
     }
