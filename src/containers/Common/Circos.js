@@ -3,8 +3,10 @@ import * as d3 from 'd3';
 import * as Circos from 'circos';
 import {queue} from 'd3-queue';
 import cytobands from './cytobands.csv'
-const CircosCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
+const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, ref) => {
+  // console.log(fusionJson);
   const [state, setState] = useState({"cytobands":[],'genes':[],'GRCh37':[]});
+
   var gieStainColor = {
     gpos100: 'rgb(0,0,0)',
     gpos: 'rgb(0,0,0)',
@@ -137,17 +139,69 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
       },[])
     }
 
-    circosHighlight.layout(GRCh37,conf).highlight('cytobands', data, {
-      innerRadius: width / 2 - 100,
+    let chord_data = fusionJson
+
+    circosHighlight.layout(GRCh37,conf)
+    .highlight('cytobands-1', data, {
+      innerRadius: width/2 -100,
       outerRadius: width / 2 - 50,
       opacity: 0.5,
       color: function (d) {
         return gieStainColor[d.gieStain]
       }
     })
+    .highlight('cytobands', data, {
+      innerRadius: .26,
+      outerRadius: .29,
+      opacity: 0.5,
+      color: function (d) {
+        return gieStainColor[d.gieStain]
+      }
+    })
+    .chords('l1',chord_data,{
+      radius: 0.26,
+      logScale: false,
+      opacity: 0.7,
+      color: function(d){
+        return d['source']['color']
+      },
+      tooltipContent: function (d) {
+        return `<h3> source : ${d.source.id} | ${d.source.name}  ➤ target: ${d.target.id} | ${d.target.name} </h3>`
+      },
+      events: {
+        'mouseover.demo': function (d, i, nodes, event) {
+          // console.log(d, i, nodes, event.pageX)
+        }
+      },
+      labels: {
+          display: true,
+          position: 'center',
+          size: '14px',
+          color: '#000000',
+          radialOffset: 20,
+      },
+      ticks: {
+          display: true,
+          color: 'grey',
+          spacing: 10000000,
+          labels: true,
+          labelSpacing: 10,
+          labelSuffix: 'Mb',
+          labelDenominator: 1000000,
+          labelDisplay0: true,
+          labelSize: '10px',
+          labelColor: '#000000',
+          labelFont: 'default',
+          majorSpacing: 5,
+          size: {
+              minor: 2,
+              major: 5,
+          }
+      }
+    })
     .scatter('dna-mutation', snp250, {
-      innerRadius: width / 2 - 220,
-      outerRadius: width / 2 - 120,
+      innerRadius: 0.3,
+      outerRadius: 0.4,
       color:'grey',
       strokeColor: 'grey',
       strokeWidth: 1,
@@ -205,12 +259,12 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
         }
       ],
       tooltipContent: function (d, i) {
-        return `${d.block_id}:${Math.round(d.position)} ➤ ${d.name}`
+        return `${d.block_id}:${Math.round(d.position)} ➤ ${d.name} mutation`
       }
     })
     .scatter('snp-250-2', rna_expression_up, {
-      innerRadius: width / 2 - 400,
-      outerRadius: width / 2 - 220,
+      innerRadius: 0.4,
+      outerRadius: 0.5,
       color: 'red',
       strokeColor: 'red',
       strokeWidth: 1,
@@ -240,8 +294,8 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
       }
     })
     .scatter('snp-250-3', rna_expression_down, {
-      innerRadius: width / 2 - 400,
-      outerRadius: width / 2 - 300,
+      innerRadius: 0.5,
+      outerRadius: 0.6,
       color: '#7c7ce5',
       strokeColor: '#7c7ce5',
       strokeWidth: 1,
@@ -270,8 +324,8 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
       }
     })
     .scatter('snp-250-4', dna_methylation, {
-      innerRadius: width / 2 - 500,
-      outerRadius: width / 2 - 400,
+      innerRadius: 0.6,
+      outerRadius: 0.7,
       color: '#7c7ce5',
       strokeColor: '#7c7ce5',
       strokeWidth: 1,
@@ -299,8 +353,8 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
       }
     })
     .scatter('snp-250-5', global_proteome_up, {
-      innerRadius: width / 2 - 600,
-      outerRadius: width / 2 - 450,
+      innerRadius: 0.7,
+      outerRadius: 0.8,
       color: '#7c7ce5',
       strokeColor: '#7c7ce5',
       strokeWidth: 1,
@@ -346,8 +400,8 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
       }
     })
     .scatter('snp-250-6', global_proteome_down, {
-      innerRadius: width / 2 - 700,
-      outerRadius: width / 2 - 500,
+      innerRadius: 0.8,
+      outerRadius: 0.9,
       color: '#7c7ce5',
       strokeColor: '#7c7ce5',
       strokeWidth: 1,

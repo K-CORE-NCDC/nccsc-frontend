@@ -32,7 +32,7 @@ import { index } from 'd3'
 const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
   // console.log(data);
   const [survivalData, setSurvivalData] = useState([])
-  console.log(survivalData);
+  // console.log(survivalData);
 
   function countUnique(iterable) {
     if (iterable) {
@@ -48,7 +48,7 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
     let sampleScore = {}
     let sampleScoreFilter = {}
     let gene = data.fileredGene
-    console.log(gene);
+    // console.log(gene);
     let responseData = data.survivalJson
 
     if (responseData) {
@@ -77,7 +77,7 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
     })
       mergedArray.sort(function (a, b) {  return a - b;  })
 
-      console.log(mergedArray);
+      // console.log(mergedArray);
       // mergedArray = mergedArray.splice(5,15)
 
       let oldVals = [null, null]
