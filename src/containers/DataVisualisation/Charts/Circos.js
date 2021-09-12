@@ -11,7 +11,7 @@ import { exportComponentAsPNG } from 'react-component-export-image';
 export default function DataCircos({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
   const dispatch = useDispatch()
-  const [sampleKey, setSampleKey] = useState('')
+  const [sampleKey, setSampleKey] = useState('all')
   const circosJson = useSelector((data) => data.dataVisualizationReducer.circosSummary);
   const fusionJson = useSelector((data) => data.dataVisualizationReducer.fusionData);
   // const circosSanpleRnidListData = useSelector(state => state.dataVisualizationReducer.circosSanpleRnidListData)
@@ -42,16 +42,16 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
     }
   }, [inputData])
 
-  useEffect(() => {
-    if(!circosJson){
-      setLoader(true)
-      dispatch(getCircosInformation('POST', {}))
-    }
-    if(!fusionJson){
-      setLoader(true)
-      dispatch(getFusionInformation('POST', {}))
-    }
-  }, [])
+  // useEffect(() => {
+  //   if(!circosJson){
+  //     setLoader(true)
+  //     dispatch(getCircosInformation('POST', {}))
+  //   }
+  //   if(!fusionJson){
+  //     setLoader(true)
+  //     dispatch(getFusionInformation('POST', {}))
+  //   }
+  // }, [])
 
   useEffect(() => {
     if(screenCapture){
@@ -68,12 +68,12 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   useEffect(() => {
     if (circosSanpleRnidListData) {
       let sampleListElementsTemp = []
-      let sampleKey = ''
+      // let sampleKey = ''
       Object.entries(circosSanpleRnidListData).forEach(([k,v]) => {
         sampleListElementsTemp.push(<option key={k} value={k}>{v}</option>)
-        if(sampleKey==='') sampleKey = k
+        // if(sampleKey==='') sampleKey = k
       })
-      setSampleKey(sampleKey)
+      // setSampleKey(sampleKey)
       setSampleListElements(sampleListElementsTemp)
     }
   }, [circosSanpleRnidListData])
@@ -84,7 +84,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
         setLoader(false)
       }
     }, (1000));
-  }, [circosJson])
+  }, [circosJson, fusionJson])
 
 
 
@@ -95,11 +95,17 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
         <LoaderCmp/>
         :
         <div className="grid ">
-          {displaySamples && <div className="p-1 grid grid-cols-6">
+          {true && <div className="p-1 grid grid-cols-6">
             <div>
               <label htmlFor="samples">Choose a Sample: </label>
-              <select value></select>
-              <select className="w-full border bg-white rounded px-3 py-2 outline-none" value={sampleKey} onChange={e => { setSampleKey(e.target.value) }} name="samples" id="samples">
+              <select 
+              className="w-full border bg-white rounded px-3 py-2 outline-none" 
+              value={sampleKey} 
+              onChange={e =>  setSampleKey(e.target.value) } 
+              name="samples" 
+              id="samples"
+              >
+                <option value="all">all</option>
                 {sampleListElements}
               </select>
             </div>

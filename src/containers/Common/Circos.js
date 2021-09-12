@@ -4,7 +4,7 @@ import * as Circos from 'circos';
 import {queue} from 'd3-queue';
 import cytobands from './cytobands.csv'
 const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, ref) => {
-  // console.log(fusionJson);
+  console.log(fusionJson, data);
   const [state, setState] = useState({"cytobands":[],'genes':[],'GRCh37':[]});
 
   var gieStainColor = {
@@ -53,11 +53,12 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
     if('dna_mutation' in api_data){
       snp250 = api_data['dna_mutation'].map(function (d,i) {
         let gc = d.genome_change
-        gc = gc.match(/\d+/)
+        gc = gc.split(':')[1]
+
         return {
           block_id: d.chromosome,
           position: (parseInt(d.start_position) + parseInt(d.end_position)) /2,
-          value:gc[0],
+          value:gc,
           name: d.hugo_symbol
         }
       })
@@ -505,7 +506,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
       // console.log(state['cytobands']);
       drawCircos(width,d,state['cytobands'],data)
     }
-  },[state, data])
+  },[state, data, fusionJson])
 
   return (
     <div ref={ref} className={`circos block ${watermarkCss}`} id='circos'></div>

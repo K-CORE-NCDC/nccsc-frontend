@@ -5,6 +5,6 @@ export default {
 
   // auth: 'http://3.133.131.207:9797/',
 
-  auth: 'http://3.133.131.207:9002/',
+  auth: 'http://localhost:8000/',
 
 }
