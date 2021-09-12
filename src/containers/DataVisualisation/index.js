@@ -16,7 +16,7 @@ export default function DataVisualization() {
   const elementRef = useRef(null);
 
   const [state, setState] = useState({ "genes": [], 'filter': '', 'type': '' })
-  const [advanceFilters, setAdvanceFilters] = useState({})
+  // const [advanceFilters, setAdvanceFilters] = useState({})
   const [boolChartState, setBoolChartState] = useState(true)
   const [filterState, setFilterState] = useState({})
   const [chart, setCharts] = useState({ "viz": [] })
@@ -35,16 +35,29 @@ export default function DataVisualization() {
     setScreenCapture(false)
   }
 
+  const submitFilter = (e) => {
+    console.log('state', state);
+    setBoolChartState(false)
+    setChartName(tab)
+    let chartx = LoadChart(width, tab)
+    setCharts((prevState) => ({
+      ...prevState,
+      'viz': chartx,
+    }))
+  }
 
   const callback = useCallback((filters) => {
     let type = document.getElementById('gene_type').value
+    console.log(type);
     let g = genes[type].data
+    document.getElementById('genes').value = g.join(' ')
     setState((prevState) => ({
       ...prevState,
       'filter': filters,
       'genes': g,
       'type': type
     }))
+    submitFilter()
   }, []);
 
   const selectGene = (event) => {
@@ -182,23 +195,14 @@ export default function DataVisualization() {
       ...prevState,
       'viz': chartx,
     }))
-  }, [advanceFilters, screenCapture])
+  }, [screenCapture])
 
-  useEffect(() => {
-    if(state.filter !== advanceFilters){
-      setAdvanceFilters(state.filter)
-    }
-  }, [state])
+  // useEffect(() => {
+  //   if(state.filter !== advanceFilters){
+  //     setAdvanceFilters(state.filter)
+  //   }
+  // }, [state])
 
-  const submitFilter = (e) => {
-    setBoolChartState(false)
-    setChartName(tab)
-    let chartx = LoadChart(width, tab)
-    setCharts((prevState) => ({
-      ...prevState,
-      'viz': chartx,
-    }))
-  }
 
   const LoadChart = (w, type) => {
     switch (type) {
