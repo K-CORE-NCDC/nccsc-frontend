@@ -15,7 +15,7 @@ export default function Boxplot({data}) {
     // set the dimensions and margins of the graph
     var margin = {top: 10, right: 30, bottom: 30, left: 40},
         width = w - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
+        height = 300 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
     var svg = d3.select("#my_dataviz")
@@ -37,7 +37,7 @@ export default function Boxplot({data}) {
       domains.push(data[i].label)
       max_d.push(...data[i].data)
     }
-    var max_vl = 1000
+    var max_vl = 10
     var min_vl = 0
     if(max_d.length>0){
       max_vl = Math.max(...max_d)
@@ -56,6 +56,9 @@ export default function Boxplot({data}) {
       var max = q3 + 1.5 * interQuantileRange
       if (min < min_vl){
         min_vl = min
+      }
+      if (max > max_vl){
+        max_vl = max+20
       }
       return({q1: q1, median: median, q3: q3, min: min, max: max})
     })
@@ -115,7 +118,7 @@ export default function Boxplot({data}) {
             .attr("stroke", "black")
             .style("width", 40)
 
-        var boxWidth = 13
+        var boxWidth = 60-20
         p.selectAll("boxes")
           .data([sumstat[i]])
           .enter()

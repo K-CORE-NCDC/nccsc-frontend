@@ -113,34 +113,34 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
 
     // oncoprint.hideIds([], true);
     oncoprint.keepSorted(true);
+    if(geneData.length>0){
+      for (var i = 0; i < geneData.length; i++) {
+        var results = [];
+        for (var j = 0; j < geneData[i].data.length; j++) {
+            var result = _.cloneDeep(geneData[i].data[j]);
+            if(result.type == 'search') {
+                result.sample = geneData[i].data[j].sample;
+            }else {
+                result.sample = geneData[i].data[j].sample;
+            }
+            results[j] = result;
+        }
 
-    for (var i = 0; i < geneData.length; i++) {
-      var results = [];
-      for (var j = 0; j < geneData[i].data.length; j++) {
-          var result = _.cloneDeep(geneData[i].data[j]);
-          if(result.type == 'search') {
-              result.sample = geneData[i].data[j].sample;
-          }else {
-              result.sample = geneData[i].data[j].sample;
+        oncoprint.setTrackData(geneData[i].track_id, results, 'sample');
+        oncoprint.setTrackInfo(geneData[i].track_id, calculateMutation(results));
+        oncoprint.setTrackTooltipFn(geneData[i].track_id, function(data) {
+
+          var result = "<b>Sample: " + data.sample + "</b>"
+          if (data.snv_class) {
+              result = result + "<br>SNV Class: " + data.snv_class;
           }
-          results[j] = result;
+          if (data.no_maf) {
+              result = result + "<br>This Patient has no data.";
+          }
+          return result
+        });
       }
-
-      oncoprint.setTrackData(geneData[i].track_id, results, 'sample');
-      oncoprint.setTrackInfo(geneData[i].track_id, calculateMutation(results));
-      oncoprint.setTrackTooltipFn(geneData[i].track_id, function(data) {
-
-        var result = "<b>Sample: " + data.sample + "</b>"
-        if (data.snv_class) {
-            result = result + "<br>SNV Class: " + data.snv_class;
-        }
-        if (data.no_maf) {
-            result = result + "<br>This Patient has no data.";
-        }
-        return result
-      });
     }
-
 
     var clinicalData =  {}
     if(cData){
@@ -165,23 +165,23 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
     //     ]
     //   }
     // ]
+    if(custom_datum.length>0){
+      for (var i = 0; i < custom_datum.length; i++) {
+        var originDatum = custom_datum[i]
+        clinical_custom_track_params['rule_set_params']['legend_label'] = originDatum.displayName;
+        clinical_custom_track_params['label'] = originDatum.displayName;
+        clinical_custom_track_params['description'] = originDatum.displayName;
 
-    for (var i = 0; i < custom_datum.length; i++) {
-      var originDatum = custom_datum[i]
-      clinical_custom_track_params['rule_set_params']['legend_label'] = originDatum.displayName;
-      clinical_custom_track_params['label'] = originDatum.displayName;
-      clinical_custom_track_params['description'] = originDatum.displayName;
 
+        var track_id = oncoprint.addTracks([_.clone(clinical_custom_track_params)])[0];
 
-      var track_id = oncoprint.addTracks([_.clone(clinical_custom_track_params)])[0];
-
-      oncoprint.setTrackInfo(track_id, "");
-      oncoprint.setTrackData(track_id, custom_datum[i]['data'], 'sample');
-      // oncoprint.setTrackTooltipFn(track_id,function(data) {
-      //     return "<b>Sample: " + data.sample + " (" + data.category + ")</b>";
-      // });
+        oncoprint.setTrackInfo(track_id, "");
+        oncoprint.setTrackData(track_id, custom_datum[i]['data'], 'sample');
+        // oncoprint.setTrackTooltipFn(track_id,function(data) {
+        //     return "<b>Sample: " + data.sample + " (" + data.category + ")</b>";
+        // });
+      }
     }
-
 
 
     var clinical_stacked_bar_track_params = {

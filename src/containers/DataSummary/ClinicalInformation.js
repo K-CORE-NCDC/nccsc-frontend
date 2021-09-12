@@ -148,11 +148,11 @@ export default function ClinicalInformation() {
   }
 
   const checkBoxFn = (event,id,chart) => {
-    window.scroll({
-      top: document.body.offsetHeight,
-      left: 0,
-      behavior: 'smooth',
-    });
+    // window.scroll({
+    //   top: document.body.offsetHeight,
+    //   left: 0,
+    //   behavior: 'smooth',
+    // });
 
     let tmp = activeChartsList
     var did = document.getElementById(id)
@@ -174,6 +174,7 @@ export default function ClinicalInformation() {
     }
     setActiveChartsList(tmp)
     loadChart(chart, did.getAttribute('data-parent'))
+
   }
 
   const loadChart = (chart, parent_name, type='')=>{
@@ -234,8 +235,20 @@ export default function ClinicalInformation() {
       'charts':tmp,
       'activeCharts':ac
     }))
+
     // setActiveCharts(ac)
   }
+  useEffect(()=>{
+    var objDiv = document.getElementById('charts_container')
+    if(objDiv){
+      objDiv.scrollTop = objDiv.scrollHeight;
+      window.scroll({
+        top: document.body.offsetHeight,
+        left: 0,
+        behavior: 'smooth',
+      });
+    }
+  },[leftSide])
 
   const switchButton = (event,id,k) => {
     let s = selected
@@ -263,7 +276,7 @@ export default function ClinicalInformation() {
       {loader?
         <LoaderCmp />
       :
-      <div class="relative">
+      <div className="relative">
         <div className="grid grid-cols-4 gap-6">
           <div className="relative">
           <div className="bg-white border border-gray-200">
@@ -275,8 +288,8 @@ export default function ClinicalInformation() {
             </div>
           </div>
           </div>
-          <div className="col-start-2 col-span-4 m-5">
-            <div className="grid grid-cols-3 gap-3">
+          <div className="col-start-2 col-span-4 m-5 overflow-y-auto h-screen" id='charts_container'>
+            <div className="grid grid-cols-3 gap-3 " >
               {
                 leftSide['charts']
               }
