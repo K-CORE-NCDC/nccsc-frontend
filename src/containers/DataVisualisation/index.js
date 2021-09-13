@@ -84,6 +84,9 @@ export default function DataVisualization() {
       } else {
         Object.keys(projectAvailableSteps).forEach(stepName => {
           if (projectAvailableSteps[stepName].length > 0) {
+            if(stepName === 'fusion'){
+              return
+            }
             if(stepName !== "lollypop"){
               tabList.push(stepName)
             }else{

@@ -109,7 +109,10 @@ export default function FileUpload({ parentCallBack }) {
       rna_zscore: "RNA",
       dna_mutation: "DNA Mutation",
       dna_methylation: "DNA Methylation",
-      proteome: "proteome"
+      proteome: "proteome",
+      phospho: "phospho",
+      cnv: "cnv",
+      fusion: "fusion"
     }
   })
 
@@ -140,7 +143,10 @@ export default function FileUpload({ parentCallBack }) {
     rna_zscore: "RNA",
     dna_mutation: "DNA Mutation",
     dna_methylation: "DNA Methylation",
-    proteome: "proteome"
+    proteome: "proteome",
+    phospho: "phospho",
+    cnv: "cnv",
+    fusion: "fusion"
   }
 
   const changeErrorDataTable = (e) => {
@@ -254,19 +260,18 @@ export default function FileUpload({ parentCallBack }) {
     if (type_name && e.target.files) {
       let file_name = e.target.files[0]['name']
       selectedFiles.push(file_name)
-      let extension = file_name.split('.')
-      let validation_error = file_types[type_name].includes(extension[1]) ? false : true
-      if (validation_error) {
-        setError(true)
-        handle_error(e.target.name, "please upload file in ." + file_types[type_name].join(" .") + "  format")
-      }
-      else {
-        setUploadFile(prevState => ({
-          ...prevState,
-          [e.target.name]: { type: type_name, file: e.target.files[0] }
-        }));
-        setSelectedFiles([...selected_files])
-      }
+      // let extension = file_name.split('.')
+      // let validation_error = file_types[type_name].includes(extension[1]) ? false : true
+      // if (validation_error) {
+      //   setError(true)
+      //   handle_error(e.target.name, "please upload file in ." + file_types[type_name].join(" .") + "  format")
+      // }
+      setUploadFile(prevState => ({
+        ...prevState,
+        [e.target.name]: { type: type_name, file: e.target.files[0] }
+      }));
+      setSelectedFiles([...selected_files])
+
     }
   }
 
@@ -326,7 +331,7 @@ export default function FileUpload({ parentCallBack }) {
 
   const addNewHTML = () => {
     const newElementId = Math.max(...Object.keys(selectedFileSampleType)) + 1
-    if (newElementId < 6) {
+    if (newElementId < 9) {
       let checkedFileTypes = Object.values(selectedFileSampleType)
       let availableTypes = Object.keys(dropdownOptions).filter(step => (!checkedFileTypes.includes(step)))
       console.log(availableTypes);
@@ -528,7 +533,7 @@ function SampleDataTable() {
       ['DNA Methylation', '/SAMPLE_FILES/dna_methylation.csv', true, false, false, false, true, false, false, false, true, false],
       ['Phospo Proteome', '/SAMPLE_FILES/phospo.csv', true, true, true, false, true, false, false, false, true, false],
       ['Global Proteome', '/SAMPLE_FILES/global_proteome_rawdata.csv', false, false, false, false, true, false, false, false, false, false],
-      ['Gene fusion', '/SAMPLE_FILES/clinical_information.csv', true, false, false, false, false, false, true, false, false, false],
+      ['Gene fusion', '/SAMPLE_FILES/fusion.csv', true, false, false, false, false, false, true, false, false, false],
       ['CNV', '/SAMPLE_FILES/cnv.csv', true, false, false, false, false, false, false, true, false, false]
     ]
   }
@@ -571,7 +576,7 @@ function SampleDataTable() {
                           </td>
                         )
                       } else {
-                        if(cellData === true){
+                        if (cellData === true) {
                           return (
                             <td key={`${index}-${cellIndex}-${cellData}`} className="px-6 py-4 whitespace-nowrap">
                               <span className="px-2 inline-flex text-lg leading-5 font-semibold rounded-full bg-green-100 text-green-800">
@@ -579,7 +584,7 @@ function SampleDataTable() {
                               </span>
                             </td>
                           )
-                        }else{
+                        } else {
                           return (<td key={`${index}-${cellIndex}-${cellData}`}></td>)
                         }
                       }
