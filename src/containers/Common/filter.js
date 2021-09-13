@@ -21,13 +21,13 @@ export default function Filter({parentCallback,parentState}) {
     leftSide()
   },[])
 
-  useEffect(()=>{
-    console.log(parentState);
-  },[parentState])
+  // useEffect(()=>{
+  //   // console.log(parentState);
+  // },[parentState])
 
   useEffect(()=>{
     leftSide()
-    console.log('update component');
+
   },[selected, selectState])
 
   let checkbox = (d) => {
@@ -121,7 +121,7 @@ export default function Filter({parentCallback,parentState}) {
           }
           let color = inputJson['clinicalColor'][item]
           let id = item.split(" ").join("")
-          console.log("childelm---->",childelm)
+
           t.push(
             <div className="px-5 py-3 relative z-10" key={'div_mb_'+c}>
               <label htmlFor="toogleA" className="flex items-center cursor-pointer">
@@ -173,7 +173,7 @@ export default function Filter({parentCallback,parentState}) {
       document.getElementById(id).checked=true
       document.getElementById(id+"_toggle").style.background=inputJson['clinicalColor'][did.getAttribute('data-parent')]
       document.getElementById("child_"+id).classList.remove("hidden")
-      console.log(did.getAttribute('data-parent'),selectState);
+      // console.log(did.getAttribute('data-parent'),selectState);
     }
   }
 
@@ -207,8 +207,7 @@ export default function Filter({parentCallback,parentState}) {
       }
       // if(documentObject.type)
     })
-    console.log('clicked');
-    console.log(selectState);
+
     setSelectState({})
     // parentCallback({})
   }

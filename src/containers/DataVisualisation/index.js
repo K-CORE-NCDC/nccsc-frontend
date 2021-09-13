@@ -30,13 +30,14 @@ export default function DataVisualization() {
   const [screenCapture, setScreenCapture] = useState(false)
   const [availableTabsForProject, setavailableTabsForProject] = useState([])
   const [toggle, setToggle] = useState(false)
+  const [filterApplied, setfilterApplied] = useState(false)
 
   const setToFalseAfterScreenCapture = () => {
     setScreenCapture(false)
   }
 
   const submitFilter = (e) => {
-    console.log('state', state);
+
     setBoolChartState(false)
     setChartName(tab)
     let chartx = LoadChart(width, tab)
@@ -46,9 +47,10 @@ export default function DataVisualization() {
     }))
   }
 
+
   const callback = useCallback((filters) => {
     let type = document.getElementById('gene_type').value
-    console.log(type);
+    console.log(filters);
     let g = genes[type].data
     document.getElementById('genes').value = g.join(' ')
     setState((prevState) => ({
@@ -57,8 +59,17 @@ export default function DataVisualization() {
       'genes': g,
       'type': type
     }))
-    submitFilter()
+    setfilterApplied(true)
   }, []);
+
+  useEffect(()=>{
+    if(filterApplied){
+      setfilterApplied(false)
+      submitFilter()
+    }
+  },[filterApplied])
+
+
 
   const selectGene = (event) => {
     let val_ = event.target.value;
