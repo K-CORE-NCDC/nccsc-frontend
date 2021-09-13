@@ -92,28 +92,27 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   return (
     <>{
       loader?
-        <LoaderCmp/>
-        :
-        <div className="grid ">
-          {displaySamples && <div className="p-1 grid grid-cols-6">
-            <div>
-              <label htmlFor="samples">Choose a Sample: </label>
-              <select value></select>
-              <select className="w-full border bg-white rounded px-3 py-2 outline-none" value={sampleKey} onChange={e => { setSampleKey(e.target.value) }} name="samples" id="samples">
-                {sampleListElements}
-              </select>
-            </div>
-          </div>}
+      <LoaderCmp/>:
+      <div className="grid ">
+        {displaySamples && <div className="p-1 grid grid-cols-6">
           <div>
-            {(circosJson && fusionJson) && <CircosCmp 
-            watermarkCss={watermarkCss} 
-            ref={reference} 
-            width={w} 
-            data={circosJson}
-            fusionJson={fusionJson}
-             />}
+            <label htmlFor="samples">Choose a Sample: </label>
+            <select value></select>
+            <select className="w-full border bg-white rounded px-3 py-2 outline-none" value={sampleKey} onChange={e => { setSampleKey(e.target.value) }} name="samples" id="samples">
+              {sampleListElements}
+            </select>
           </div>
+        </div>}
+        <div>
+          {(circosJson && fusionJson) && <CircosCmp
+          watermarkCss={watermarkCss}
+          ref={reference}
+          width={w}
+          data={circosJson}
+          fusionJson={fusionJson}
+           />}
         </div>
+      </div>
     }
     </>
   )

@@ -66,15 +66,16 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
   //     setSampleListElements(sampleListElementsTemp)
   //   }
   // }, [circosSanpleRnidListData])
+
   useEffect(() => {
     setTimeout(function() {
         setLoader(false)
-    }, (1000));
+    }, (10000));
   }, [scatterJson])
 
   return (
     <>{
-      loader?
+        loader?
         <LoaderCmp/>
         :
           <div>

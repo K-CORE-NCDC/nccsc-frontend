@@ -3,9 +3,13 @@ import * as d3 from 'd3';
 import * as Circos from 'circos';
 import {queue} from 'd3-queue';
 import cytobands from './cytobands.csv'
+import LoaderCmp from './Loader'
+
+
 const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, ref) => {
   // console.log(fusionJson);
   const [state, setState] = useState({"cytobands":[],'genes':[],'GRCh37':[]});
+  const [loader, setLoader] = useState(false)
 
   var gieStainColor = {
     gpos100: 'rgb(0,0,0)',
@@ -445,9 +449,12 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
       }
     })
     .render()
-
+    // setLoader(false)
+    // setTimeout(function() {
+    //   if(circosJson && fusionJson){
+    //   }
+    // }, (1000));
   }
-
 
   useEffect(()=>{
     d3.csv(cytobands, function(d,i) {
@@ -509,7 +516,6 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
 
   return (
     <div ref={ref} className={`circos block ${watermarkCss}`} id='circos'></div>
-
   )
 })
 
