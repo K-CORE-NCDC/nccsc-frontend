@@ -73,7 +73,16 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
       <LoaderCmp/>
       :
       <div>
-        {activeCmp && <OncoCmp watermarkCss={watermarkCss} ref={reference} width={width} data={chartData}/>}
+
+        {activeCmp &&
+          <div className='text-left'>
+            <h3>Global Mutation Distribution :distribution of total mutation</h3>
+            <h3>Global Mutation Count :count of total somatic mutation</h3>
+            <h3>Mutation Distribution :distribution of selected mutation</h3>
+            <h3>Mutation Count :count of selected somatic mutation</h3>
+            <OncoCmp watermarkCss={watermarkCss} ref={reference} width={width} data={chartData}/>
+          </div>
+        }
       </div>
     }
     </>
