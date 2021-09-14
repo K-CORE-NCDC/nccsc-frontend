@@ -100,6 +100,8 @@ export default function DataVisualization() {
             }
             if(stepName !== "lollypop"){
               tabList.push(stepName)
+            }else if(stepName !== "oncoprint"){
+              tabList.push('onco')
             }else{
               tabList.push('lollipop')
             }

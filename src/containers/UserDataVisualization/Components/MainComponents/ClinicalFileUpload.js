@@ -115,14 +115,33 @@ export default function FileUpload({ parentCallBack }) {
       fusion: "fusion"
     }
   })
-
+  console.log(uploadFile);
   const [fileDataAsTableAll, setFileDataAsTableAll] = useState({})
   const [fileDataAsTableRendered, setFileDataAsTableRendered] = useState({})
   const [showFileDataTable, setShowFileDataTable] = useState(false)
   const [tableNavTabs, setTableNavTabs] = useState([])
   const [activeTableKey, setActiveTableKey] = useState("")
 
-  console.log(dropdownOptionsSelected);
+  // console.log(dropdownOptionsSelected);
+
+  const resetStates = () => {
+    setSelectedFileSampleType({
+      1: "clinical_information",
+    })
+    setDropdownOptionsSelected({
+      1: {
+        clinical_information: "Clinical Information",
+        rna_zscore: "RNA",
+        dna_mutation: "DNA Mutation",
+        dna_methylation: "DNA Methylation",
+        proteome: "proteome",
+        phospho: "phospho",
+        cnv: "cnv",
+        fusion: "fusion"
+      }
+    })
+    setSelectedFiles({})
+  }
 
   const hideModal = (hide) => {
     setShowModalInfo(hide)
@@ -176,9 +195,15 @@ export default function FileUpload({ parentCallBack }) {
       Object.keys(filesUploadedStatus).forEach(element => {
         if (filesUploadedStatus[element] === false) {
           modaShowTemp = true
+          let errorFileName = '' // uploadFile[element]['file'].name
+          Object.keys(uploadFile).forEach(e => {
+            if (uploadFile[e].type === element) {
+              errorFileName = uploadFile[e]['file'].name
+            }
+          })
           errorModalData.push(
             <div key={element} className="text-black">
-              <h6 className="text-red-500">{uploadFile[element]['file'].name}</h6>
+              <h6 className="text-red-500">{errorFileName}</h6>
               is invalid, check sample file for reference
             </div>
           )
@@ -229,7 +254,7 @@ export default function FileUpload({ parentCallBack }) {
 
   const selectGene = (event) => {
     const { name, value } = event.target;
-    console.log(name, value)
+    // console.log(name, value)
     setSelect(prevState => ({
       ...prevState,
       [name]: value
@@ -256,6 +281,7 @@ export default function FileUpload({ parentCallBack }) {
   const file_Upload_ = (e, div_name) => {
     let selected_files = selectedFiles;
     let type_name = e.target.name;
+    let divKey = e.target.getAttribute('filename')
 
     if (type_name && e.target.files) {
       let file_name = e.target.files[0]['name']
@@ -268,7 +294,7 @@ export default function FileUpload({ parentCallBack }) {
       // }
       setUploadFile(prevState => ({
         ...prevState,
-        [e.target.name]: { type: type_name, file: e.target.files[0] }
+        [divKey]: { type: type_name, file: e.target.files[0] }
       }));
       setSelectedFiles([...selected_files])
 
@@ -301,7 +327,7 @@ export default function FileUpload({ parentCallBack }) {
   const on_upload = () => {
     dispatch(file_upload(uploadFile, projectName))
     for (let key in uploadFile) {
-      setLoader((prevState) => ({ ...prevState, [key]: 'loader' }))
+      setLoader((prevState) => ({ ...prevState, [uploadFile[key].type]: 'loader' }))
     }
   }
 
@@ -319,22 +345,39 @@ export default function FileUpload({ parentCallBack }) {
 
   const updateFileTypeOnChange = (e) => {
     console.log(e.target.value, e.target.name);
+    const divName = e.target.name
+    const divValue = e.target.value
+    // setUploadFile(prevState)
     setDropdownOptionsSelected(prevState => ({
       ...prevState,
-      [e.target.value]: dropdownOptions[e.target.value]
+      [divValue]: dropdownOptions[divValue]
     }))
     setSelectedFileSampleType((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value
+      [divName]: divValue
     }))
   }
+
+  useEffect(() => {
+    // console.log(Object.keys(uploadFile), uploadFile);
+
+    Object.keys(uploadFile).forEach(element => {
+      if (uploadFile[element].type !== selectedFileSampleType[element]) {
+        setUploadFile(prevState => ({
+          ...prevState,
+          [element]: { file: prevState[element].file, type: selectedFileSampleType[element] }
+        }))
+      }
+    })
+
+  }, [selectedFileSampleType])
 
   const addNewHTML = () => {
     const newElementId = Math.max(...Object.keys(selectedFileSampleType)) + 1
     if (newElementId < 9) {
       let checkedFileTypes = Object.values(selectedFileSampleType)
       let availableTypes = Object.keys(dropdownOptions).filter(step => (!checkedFileTypes.includes(step)))
-      console.log(availableTypes);
+      // console.log(availableTypes);
       let availableTypesJson = {}
       availableTypes.forEach(element => {
         availableTypesJson[element] = dropdownOptions[element]
@@ -370,7 +413,7 @@ export default function FileUpload({ parentCallBack }) {
     return underscoreString.replace('_', ' ')
   }
 
-  console.log(fileDataAsTableRendered)
+  // console.log(fileDataAsTableRendered)
   useEffect(() => {
     let firstInput = []
     let dropdownOptionsArray = Object.keys(dropdownOptions).filter(value => {
@@ -378,7 +421,7 @@ export default function FileUpload({ parentCallBack }) {
         return true
       }
     })
-    console.log(dropdownOptionsArray);
+    // console.log(dropdownOptionsArray);
 
     Object.keys(selectedFileSampleType).forEach(key => {
 
@@ -404,7 +447,7 @@ export default function FileUpload({ parentCallBack }) {
           <div className='relative col-span-4 w-full '>
             <label
               className="w-full block text-right border focus:outline-none border-b-color focus:ring focus:border-blue-300 p-4 mt-3">
-              <input type='file' className="" value={selectedFileSampleType[key].file} name={selectedFileSampleType[key]} filename={key} onChange={file_Upload_} />
+              <input type='file' className="" data={key} value={selectedFileSampleType[key].file} name={selectedFileSampleType[key]} filename={key} onChange={file_Upload_} />
             </label>
           </div>
           <div className='p-5 col-span-2 flex'>
@@ -436,7 +479,7 @@ export default function FileUpload({ parentCallBack }) {
     setInitialInputState(firstInput)
   }, [selectedFileSampleType, loader])
 
-  console.log(showModalInfo);
+  // console.log(showModalInfo);
   return (
     <>
       <ModalTest modalStateButton={showModalInfo} setShowModalFunction={hideModal} />
@@ -491,6 +534,10 @@ export default function FileUpload({ parentCallBack }) {
           <button onClick={() => setShowFileDataTable(false)} className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
           >
             back to upload
+          </button>
+          <button onClick={() => history.push(`/visualise/circos/${response['serializer'].id}`)} className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
+          >
+            visualize
           </button>
           <section>
             <nav className=" px-8 pt-2 shadow-md">
@@ -604,7 +651,7 @@ function SampleDataTable() {
 
 
 function ModalTest({ modalStateButton, setShowModalFunction }) {
-  console.log(modalStateButton);
+  // console.log(modalStateButton);
   // const [showModal, setShowModal] = useState(false);
 
 
