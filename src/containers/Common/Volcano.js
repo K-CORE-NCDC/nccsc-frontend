@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import * as d3 from 'd3'
 import dataD from './data.diff'
-
 import "../../styles/volcano.css"
+import UserFilesTable from './Table'
 
-const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss }, ref) => {
+const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, positive_data, tab_count }, ref) => {
     // co
     function volcanoPlot() {
         var width = w - 30,
@@ -346,13 +346,30 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss }, ref) => {
         }
     }, [data])
 
-    console.log(data);
 
     return (
         <div>
             <div ref={ref} id='volcano' className={`p-3 ${watermarkCss}`}>
             </div>
             <button id="resetBtn">Reset</button>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <h2 className="text-left text-blue-800 mb-12 mt-12"><strong>{"Expression Down Level(log2FC <= -5)"}</strong></h2>
+                <div>
+                  <UserFilesTable userDataTableData={negative_data}/>
+                  <div className="mt-8 ml-4 text-left">
+                    <h2><strong>Total entries:  {tab_count['negative']}</strong></h2>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <h2 className="text-left text-blue-800 mb-12 mt-12"><strong>{"Expression Up Level(log2FC >= 5)"}</strong></h2>
+                <UserFilesTable userDataTableData={positive_data}/>
+                <div className="mt-8 ml-4 text-left">
+                  <h2><strong>Total entries:  {tab_count['positive']}</strong></h2>
+                </div>
+              </div>
+            </div>
         </div>
     )
 })

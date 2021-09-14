@@ -10,7 +10,7 @@ export default function LoaderComp() {
             color="#0c3c6a"
             height={80}
             width={80}
-            timeout={30000} //3 secs
+            timeout={3000000} //3 secs
           />
         </div>
       </div>

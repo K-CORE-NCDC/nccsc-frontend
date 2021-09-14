@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import CircosCmp from '../../Common/Circos'
 import LoaderCmp from '../../Common/Loader'
-import { getCircosInformation, getFusionInformation } from '../../../actions/api_actions'
+import ImageGrid from '../../Common/ImageGrid'
+import { getCircosInformation, getFusionInformation,getOncoImages } from '../../../actions/api_actions'
 import '../../../assets/css/style.css'
 import { exportComponentAsPNG } from 'react-component-export-image';
 
@@ -14,6 +15,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   const [sampleKey, setSampleKey] = useState('all')
   const circosJson = useSelector((data) => data.dataVisualizationReducer.circosSummary);
   const fusionJson = useSelector((data) => data.dataVisualizationReducer.fusionData);
+  const oncoImageJson = useSelector((data) => data.dataVisualizationReducer.oncoInfoData);
   // const circosSanpleRnidListData = useSelector(state => state.dataVisualizationReducer.circosSanpleRnidListData)
 
   const circosSanpleRnidListData = useSelector((data) => data.dataVisualizationReducer.Keys);
@@ -30,6 +32,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
         setLoader(true)
         dispatch(getCircosInformation('POST', editInputData))
         dispatch(getFusionInformation('POST', editInputData))
+        dispatch(getOncoImages('POST',{"sample_id":sampleKey,'page_no':0}))
       }
     }
   }, [inputData, sampleKey])
@@ -98,11 +101,11 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
           {true && <div className="p-1 grid grid-cols-6">
             <div>
               <label htmlFor="samples">Choose a Sample: </label>
-              <select 
-              className="w-full border bg-white rounded px-3 py-2 outline-none" 
-              value={sampleKey} 
-              onChange={e =>  setSampleKey(e.target.value) } 
-              name="samples" 
+              <select
+              className="w-full border bg-white rounded px-3 py-2 outline-none"
+              value={sampleKey}
+              onChange={e =>  setSampleKey(e.target.value) }
+              name="samples"
               id="samples"
               >
                 <option value="all">all</option>
@@ -110,16 +113,19 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
               </select>
             </div>
           </div>}
+        <div>
           <div>
-            {(circosJson && fusionJson) && <CircosCmp 
-            watermarkCss={watermarkCss} 
-            ref={reference} 
-            width={w} 
+            {(circosJson && fusionJson) && <CircosCmp
+            watermarkCss={watermarkCss}
+            ref={reference}
+            width={w}
             data={circosJson}
             fusionJson={fusionJson}
              />}
           </div>
+          {sampleKey!=='all' && <ImageGrid sample_id={sampleKey}/>}
         </div>
+      </div>
     }
     </>
   )
