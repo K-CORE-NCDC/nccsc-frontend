@@ -7,7 +7,7 @@ import LoaderCmp from './Loader'
 
 
 const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, ref) => {
-  console.log(fusionJson, data);
+  // console.log(fusionJson, data);
   const [state, setState] = useState({"cytobands":[],'genes':[],'GRCh37':[]});
   const [loader, setLoader] = useState(false)
 
@@ -42,9 +42,19 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
       height: width
     })
     let data = cytobands
+    let all_chr = []
+    for (var i = 0; i < GRCh37.length; i++) {
+      all_chr.push({
+        "block_id":GRCh37[i]['id'],
+        "position":0,
+        "value":0,
+        "name":'',
+      })
+    }
     let conf = {
       innerRadius: width / 2 - 100,
       outerRadius: width / 2 - 50,
+      gap:0.04,
       labels: {
         radialOffset: 70
       },
@@ -53,95 +63,130 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
       },
     }
 
-    var snp250 = [];
+    var snp250 = all_chr;
+
     if('dna_mutation' in api_data){
-      snp250 = api_data['dna_mutation'].map(function (d,i) {
-        let gc = d.genome_change
-        gc = gc.split(':')[1]
+      let strchr = 0
+      let iter = 1
+      let dna_mutation_data = api_data['dna_mutation']
+      for (var i = 0; i < dna_mutation_data.length; i++) {
+        snp250.push({
+          block_id: dna_mutation_data[i].chromosome,
+          position: strchr,
+          value: iter,
+          name: dna_mutation_data[i].hugo_symbol+"||"+dna_mutation_data[i].genome_change
 
-        return {
-          block_id: d.chromosome,
-          position: (parseInt(d.start_position) + parseInt(d.end_position)) /2,
-          value:gc,
-          name: d.hugo_symbol
+        })
+
+        if (iter === 10) {
+          iter = 1
+          strchr = iter+parseFloat((strchr + 3.500).toFixed(3))
         }
-      })
-    }
-    var rna_expression_up = [];
-    if ('rna_expression' in api_data){
-      rna_expression_up = api_data['rna_expression'].reduce(function (tmp,d) {
-        if(d.rna_cnt>1){
-          let dt = {
-            block_id: d.chromosome,
-            position: (parseInt(d.start_position) + parseInt(d.end_position)) / 2,
-            value: parseInt(d.start_position),
-            name: d.name,
-            rna:d.rna_cnt
-          }
-          tmp.push(dt)
-        }
-        return tmp
-      },[])
-    }
-    var rna_expression_down = []
-    if ('rna_expression' in api_data){
-      rna_expression_down = api_data['rna_expression'].reduce(function (tmp,d) {
-        if(d.rna_cnt < -1){
-          let dt = {
-            block_id: d.chromosome,
-            position: (parseInt(d.start_position) + parseInt(d.end_position)) / 2,
-            value: parseInt(d.start_position),
-            name: d.hugo_symbol,
-            rna:d.rna_cnt
-          }
-          tmp.push(dt)
-        }
-        return tmp
-      },[])
+        iter++
+      }
     }
 
-    var dna_methylation = []
+
+
+    var dna_methylation = all_chr
     if ('dna_methylation' in api_data){
-      dna_methylation = api_data['dna_methylation'].map(function (d,i) {
-        return {
-          block_id: d.chromosome,
-          position: (parseInt(d.start_position) + parseInt(d.end_position)) / 2,
-          value: d.start_position,
-          name: d.hugo_symbol
+      let strchr = 0
+      let iter = 1
+      let dna_methylation_data = api_data['dna_methylation']
+      for (var i = 0; i < dna_methylation_data.length; i++) {
+        dna_methylation.push({
+          block_id: dna_methylation_data[i].chromosome,
+          position: strchr,
+          value: iter,
+          name: dna_methylation_data[i].hugo_symbol
+        })
+        iter++
+        if (iter === 15) {
+          iter = 1
+          strchr = parseFloat((strchr + 4.5).toFixed(3))
         }
-      })
+      }
     }
 
-    var global_proteome_up = []
-    if ('global_proteome' in api_data){
-      global_proteome_up = api_data['global_proteome'].reduce(function (tmp,d) {
-        if(d.rna_cnt>1){
-          tmp.push({
-            block_id: d.chromosome,
-            position: (parseInt(d.start_position) + parseInt(d.end_position)) / 3,
-            value: d.start_position,
-            rna:d.rna_cnt,
-            name: d.hugo_symbol
+
+    var rna_expression_up = all_chr;
+    var rna_expression_down = all_chr;
+    if ('rna_expression' in api_data){
+      let strchr = 0
+      let iter = 1
+      let strchr2 = 0
+      let iter2 = 1
+      let rna_expression_data = api_data['rna_expression']
+
+      for (var i = 0; i < rna_expression_data.length; i++) {
+        if(rna_expression_data[i].rna_cnt>1){
+          rna_expression_up.push({
+            block_id: rna_expression_data[i].chromosome,
+            position: rna_expression_data[i].rna_cnt,
+            value: iter,
+            name: rna_expression_data[i].hugo_symbol,
+            rna:rna_expression_data[i].rna_cnt
           })
+          iter++
+          if (iter === 10) {
+            iter = 1
+            strchr = parseFloat((strchr + 4.500).toFixed(4))
+          }
+        } else if(rna_expression_data[i].rna_cnt<-1){
+          rna_expression_down.push({
+            block_id: rna_expression_data[i].chromosome,
+            position: -rna_expression_data[i].rna_cnt,
+            value: iter2,
+            name: rna_expression_data[i].hugo_symbol,
+            rna:rna_expression_data[i].rna_cnt
+          })
+          iter2++
+          if (iter2 === 10) {
+            iter2 = 1
+            strchr2 = parseFloat((strchr + 4.500).toFixed(4))
+          }
         }
-        return tmp
-      },[])
+      }
     }
 
-    var global_proteome_down = []
+    var global_proteome_up = all_chr;
+    var global_proteome_down = all_chr
     if ('global_proteome' in api_data){
-      global_proteome_down = api_data['global_proteome'].reduce(function (tmp,d) {
-        if(d.rna_cnt<-1){
-          tmp.push({
-            block_id: d.chromosome,
-            position: (parseInt(d.start_position) + parseInt(d.end_position)) / 2,
-            value: d.start_position,
-            rna:d.rna_cnt,
-            name: d.hugo_symbol
+      let global_proteome_data = api_data['global_proteome']
+      let strchr = 0
+      let iter = 1
+      let strchr2 = 0
+      let iter2 = 1
+      for (var i = 0; i < global_proteome_data.length; i++) {
+        if(global_proteome_data[i].rna_cnt>1){
+          global_proteome_up.push({
+            block_id: global_proteome_data[i].chromosome,
+            position: strchr,
+            value: iter,
+            rna:global_proteome_data[i].rna_cnt,
+            name: global_proteome_data[i].hugo_symbol
           })
         }
-        return tmp
-      },[])
+        else if (global_proteome_data[i].rna_cnt<-1) {
+          global_proteome_down.push({
+            block_id: global_proteome_data[i].chromosome,
+            position: strchr2,
+            value: iter2,
+            rna:global_proteome_data[i].rna_cnt,
+            name: global_proteome_data[i].hugo_symbol
+          })
+        }
+        iter++
+        if (iter === 30) {
+          iter = 1
+          strchr = parseFloat((strchr + 3.500).toFixed(3))
+        }
+        iter2++
+        if (iter2 === 30) {
+          iter2 = 1
+          strchr2 = parseFloat((strchr + 3.500).toFixed(3))
+        }
+      }
     }
 
     let chord_data = fusionJson
@@ -155,9 +200,221 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
         return gieStainColor[d.gieStain]
       }
     })
+    .scatter('dna-mutation', snp250, {
+      innerRadius: 0.99,
+      outerRadius: 0.85,
+      color:function(d){
+        if(d.name) {
+          return 'grey'
+        }else{
+          return 'rgba(0,0,0,0)'
+        }
+      },
+      strokeColor: function(d){
+        if(d.name) {
+          return 1
+        }else{
+          return 0
+        }
+      },
+      strokeWidth: 1,
+      shape: 'circle',
+      size: 15,
+      min: 0,
+      max: 10,
+      direction:'out',
+      
+      axes: [
+        {
+          spacing: 1,
+          color: '#f44336',
+          opacity: 0.3
+        }
+      ],
+
+      tooltipContent: function (d, i) {
+        console.log(d);
+        return `${d.block_id}:${Math.round(d.position)} ➤ ${d.name} mutation`
+      }
+    })
+    .scatter('rna-up', rna_expression_up, {
+      innerRadius: 0.85,
+      outerRadius: 0.75,
+      color:function(d){
+        if(d.name) {
+          return 'red'
+        }else{
+          return 'rgba(0,0,0,0)'
+        }
+      },
+      strokeColor: function(d){
+        if(d.name) {
+          return 1
+        }else{
+          return 0
+        }
+      },
+
+      strokeWidth: 1,
+      shape: 'circle',
+      size: 15,
+      min: 0,
+      max: 10,
+      axes: [
+        {
+          spacing: 2,
+          color: '#68BBE3',
+          opacity: 0.3
+        }
+      ],
+      tooltipContent: function (d, i) {
+        return `${d.block_id}:${Math.round(d.position)} ➤ ${d.name}`
+      }
+    })
+    .scatter('rna-down', rna_expression_down, {
+      innerRadius: 0.75,
+      outerRadius: 0.65,
+      color:function(d){
+        if(d.name) {
+          return '#7c7ce5'
+        }else{
+          return 'rgba(0,0,0,0)'
+        }
+      },
+      strokeColor: function(d){
+        if(d.name) {
+          return 1
+        }else{
+          return 0
+        }
+      },
+      strokeWidth: 1,
+      shape: 'circle',
+      direction:'out',
+      size: 15,
+      min: 0,
+      max: 16,
+
+      axes: [
+        {
+          spacing: 2,
+          color: '#68BBE3',
+          opacity: 0.3
+        }
+
+      ],
+
+      tooltipContent: function (d, i) {
+        return `${d.block_id}:${Math.round(d.position)} ➤ ${d.name}`
+      }
+    })
+    .scatter('snp-250-4', dna_methylation, {
+      innerRadius: 0.65,
+      outerRadius: 0.55,
+      color:function(d){
+        if(d.name) {
+          return '#000'
+        }else{
+          return 'rgba(0,0,0,0)'
+        }
+      },
+      strokeColor: function(d){
+        if(d.name) {
+          return 1
+        }else{
+          return 0
+        }
+      },
+      strokeWidth: 1,
+      shape: 'circle',
+      size: 16,
+      min: 0,
+      max: 16,
+      axes: [
+        {
+          spacing: 3,
+          color: 'grey',
+          opacity: 0.3
+        },
+
+      ],
+
+      tooltipContent: function (d, i) {
+        return `${d.block_id}:${Math.round(d.position)} ➤ ${d.value}`
+      }
+    })
+    .scatter('snp-250-5', global_proteome_up, {
+      innerRadius: 0.53,
+      outerRadius: 0.43,
+      color:function(d){
+        if(d.name) {
+          return 'red'
+        }else{
+          return 'rgba(0,0,0,0)'
+        }
+      },
+      strokeColor: function(d){
+        if(d.name) {
+          return 1
+        }else{
+          return 0
+        }
+      },
+      strokeWidth: 1,
+      shape: 'circle',
+      size: 16,
+      min: 0,
+      max: 15,
+
+      axes: [
+        {
+          spacing: 2,
+          color: 'red',
+          opacity: 0.5
+        }
+      ],
+
+      tooltipContent: function (d, i) {
+        return `${d.block_id}:${Math.round(d.position)} ➤ ${d.value}`
+      }
+    })
+    .scatter('snp-250-6', global_proteome_down, {
+      innerRadius: 0.42,
+      outerRadius: 0.32,
+      color:function(d){
+        if(d.name) {
+          return '#7c7ce5'
+        }else{
+          return 'rgba(0,0,0,0)'
+        }
+      },
+      strokeColor: function(d){
+        if(d.name) {
+          return 1
+        }else{
+          return 0
+        }
+      },
+
+      strokeWidth: 1,
+      shape: 'circle',
+      size: 16,
+      min: 0,
+      max: 15,
+      axes: [
+        {
+          spacing: 2,
+          color: 'red',
+          opacity: 0.5
+        }
+      ],
+      tooltipContent: function (d, i) {
+        return `${d.block_id}:${Math.round(d.position)} ➤ ${d.value}`
+      }
+    })
     .highlight('cytobands', data, {
-      innerRadius: .26,
-      outerRadius: .29,
+      innerRadius: .3,
+      outerRadius: .25,
       opacity: 0.5,
       color: function (d) {
         return gieStainColor[d.gieStain]
@@ -204,251 +461,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
           }
       }
     })
-    .scatter('dna-mutation', snp250, {
-      innerRadius: 0.3,
-      outerRadius: 0.4,
-      color:'grey',
-      strokeColor: 'grey',
-      strokeWidth: 1,
-      shape: 'circle',
-      size: 16,
-      min: 0,
-      max: 0.013,
-      axes: [
-        {
-          spacing: 0.001,
-          start: 0.006,
-          thickness: 1,
-          color: '#f44336',
-          opacity: 0.3
-        },
-        {
-          spacing: 0.002,
-          start: 0.006,
-          thickness: 1,
-          color: '#f44336',
-          opacity: 0.5
-        },
-        {
-          spacing: 0.002,
-          start: 0.002,
-          end: 0.006,
-          thickness: 1,
-          color: '#f44336',
-          opacity: 0.5
-        },
-        {
-          spacing: 0.001,
-          end: 0.002,
-          thickness: 1,
-          color: '#f44336',
-          opacity: 0.5
-        }
-      ],
-      backgrounds: [
-        {
-          start: 0.006,
-          color: '#f44336',
-          opacity: 0.1
-        },
-        {
-          start: 0.002,
-          end: 0.006,
-          color: '#f44336',
-          opacity: 0.1
-        },
-        {
-          end: 0.002,
-          color: '#f44336',
-          opacity: 0.1
-        }
-      ],
-      tooltipContent: function (d, i) {
-        return `${d.block_id}:${Math.round(d.position)} ➤ ${d.name} mutation`
-      }
-    })
-    .scatter('snp-250-2', rna_expression_up, {
-      innerRadius: 0.4,
-      outerRadius: 0.5,
-      color: 'red',
-      strokeColor: 'red',
-      strokeWidth: 1,
-      shape: 'circle',
-      direction:'out',
-      size: 16,
-      min: 0,
-      max: 0.013,
 
-      axes: [
-        {
-          spacing: 0.001,
-          thickness: 1,
-          color: '#68BBE3',
-          opacity: 0.3
-        },
-        {
-          spacing: 0.002,
-          thickness: 1,
-          color: '#68BBE3',
-          opacity: 0.5
-        }
-      ],
-
-      tooltipContent: function (d, i) {
-        return `${d.block_id}:${Math.round(d.position)} ➤ ${d.name}`
-      }
-    })
-    .scatter('snp-250-3', rna_expression_down, {
-      innerRadius: 0.5,
-      outerRadius: 0.6,
-      color: '#7c7ce5',
-      strokeColor: '#7c7ce5',
-      strokeWidth: 1,
-      shape: 'circle',
-      size: 16,
-      min: 0,
-      max: 0.013,
-
-      axes: [
-       {
-         spacing: 0.001,
-         thickness: 1,
-         color: '#68BBE3',
-         opacity: 0.3
-       },
-       {
-         spacing: 0.002,
-         thickness: 1,
-         color: '#68BBE3',
-         opacity: 0.5
-       }
-      ],
-
-      tooltipContent: function (d, i) {
-        return `${d.block_id}:${Math.round(d.position)} ➤ ${d.name}`
-      }
-    })
-    .scatter('snp-250-4', dna_methylation, {
-      innerRadius: 0.6,
-      outerRadius: 0.7,
-      color: '#7c7ce5',
-      strokeColor: '#7c7ce5',
-      strokeWidth: 1,
-      shape: 'circle',
-      size: 16,
-      min: 0,
-      max: 0.013,
-      axes: [
-        {
-          spacing: 0.0001,
-          thickness: 1,
-          color: 'red',
-          opacity: 0.3
-        },
-        {
-          spacing: 0.0005,
-          thickness: 1,
-          color: 'red',
-          opacity: 0.5
-        }
-      ],
-
-      tooltipContent: function (d, i) {
-        return `${d.block_id}:${Math.round(d.position)} ➤ ${d.value}`
-      }
-    })
-    .scatter('snp-250-5', global_proteome_up, {
-      innerRadius: 0.7,
-      outerRadius: 0.8,
-      color: '#7c7ce5',
-      strokeColor: '#7c7ce5',
-      strokeWidth: 1,
-      shape: 'circle',
-      size: 16,
-      min: 0,
-      max: 0.013,
-
-      axes: [
-        {
-          spacing: 0.001,
-          start: 0.006,
-          thickness: 1,
-          color: '#f44336',
-          opacity: 0.3
-        },
-        {
-          spacing: 0.002,
-          start: 0.006,
-          thickness: 1,
-          color: '#f44336',
-          opacity: 0.5
-        },
-        {
-          spacing: 0.002,
-          start: 0.002,
-          end: 0.006,
-          thickness: 1,
-          color: '#f44336',
-          opacity: 0.5
-        },
-        {
-          spacing: 0.001,
-          end: 0.002,
-          thickness: 1,
-          color: '#f44336',
-          opacity: 0.5
-        }
-      ],
-
-      tooltipContent: function (d, i) {
-        return `${d.block_id}:${Math.round(d.position)} ➤ ${d.value}`
-      }
-    })
-    .scatter('snp-250-6', global_proteome_down, {
-      innerRadius: 0.8,
-      outerRadius: 0.9,
-      color: '#7c7ce5',
-      strokeColor: '#7c7ce5',
-      strokeWidth: 1,
-      shape: 'circle',
-      size: 16,
-      min: 0,
-      max: 0.013,
-      axes: [
-        {
-          spacing: 0.001,
-          start: 0.006,
-          thickness: 1,
-          color: '#f44336',
-          opacity: 0.3
-        },
-        {
-          spacing: 0.002,
-          start: 0.006,
-          thickness: 1,
-          color: '#f44336',
-          opacity: 0.5
-        },
-        {
-          spacing: 0.002,
-          start: 0.002,
-          end: 0.006,
-          thickness: 1,
-          color: '#f44336',
-          opacity: 0.5
-        },
-        {
-          spacing: 0.001,
-          end: 0.002,
-          thickness: 1,
-          color: '#f44336',
-          opacity: 0.5
-        }
-      ],
-      tooltipContent: function (d, i) {
-        return `${d.block_id}:${Math.round(d.position)} ➤ ${d.value}`
-      }
-    })
     .render()
     // setLoader(false)
     // setTimeout(function() {
