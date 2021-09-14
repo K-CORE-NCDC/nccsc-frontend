@@ -52,8 +52,8 @@ export default function DataVisualization() {
     }
   }, [accessToken])
 
-  
 
+  console.log(userDataTableData)
   return (
     <div className="w-full">
       <div className="flex flex-row-reverse">

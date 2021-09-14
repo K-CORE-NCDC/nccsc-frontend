@@ -113,6 +113,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
               </select>
             </div>
           </div>}
+        <div>
           <div>
             {(circosJson && fusionJson) && <CircosCmp
             watermarkCss={watermarkCss}
@@ -124,6 +125,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
           </div>
           {sampleKey!=='all' && <ImageGrid sample_id={sampleKey}/>}
         </div>
+      </div>
     }
     </>
   )
