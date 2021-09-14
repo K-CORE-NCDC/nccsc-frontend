@@ -202,7 +202,7 @@ input:checked ~ .dot {
 .onco{
   margin: 50px 20px
 }
-.onco span div div.noselect:first-child{
+.onco span div:first-child div.noselect:first-child{
   overflow: scroll;
 }
 .noselect img{
