@@ -490,3 +490,24 @@ export function getBoxInformation(type, data) {
       });
   };
 }
+
+export function getOncoImages(method, data) {
+  return (dispatch) => {
+    //   dispatch({ type: homeConstants.DATA_SUMMARY });
+    let url = config.auth + "onco-sample-images/";
+    // console.log(method)
+    // console.log(data)
+    sendRequest(url, method, data)
+      .then((result) => {
+        const d = result;
+        // console.log()
+        dispatch({
+          type: dataVisualization.ONCO_IMAGES_INFORMATION,
+          payload: d["data"],
+        });
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
+  };
+}
