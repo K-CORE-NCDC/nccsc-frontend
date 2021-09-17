@@ -306,11 +306,13 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_
         <div className="mr-20 w-11/12">
             {
               table_data &&
+              <>
               <UserFilesTable userDataTableData={table_data} />
+              <div className="mt-8 ml-4">
+                <h3>Total entries:{table_count}</h3>
+              </div>
+              </>
             }
-            <div className="mt-8 ml-4">
-              <h3>Total entries:{table_count}</h3>
-            </div>
         </div>
       </div>
     </div>

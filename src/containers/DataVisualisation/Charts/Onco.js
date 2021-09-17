@@ -51,7 +51,7 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
       let global_ = cData["globalMutCategory"]
       let mutant_ = cData["mutCategory"]
 
-      global_.forEach((g, i) => {
+      mutant_.forEach((g, i) => {
         let sample_id = g['sample']
         final[sample_id] = g["val"]
       });

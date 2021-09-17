@@ -20,6 +20,28 @@ export default function DataLolipop({ width,inputData, screenCapture, setToFalse
   const [watermarkCss, setWatermarkCSS] = useState("")
   const lolipopJson = useSelector((data) => data.dataVisualizationReducer.lollipopSummary);
   const [loader, setLoader] = useState(false)
+  const [tableData, setTableData] = useState()
+  const [state,setState] = useState({"domains":[],"lollipop":[],"width":0})
+  const [mutationLabel,setMutationLabel] = useState([])
+
+  let mutation_colors = {
+    'In_Frame_Del':'#1b4879',
+    'In_Frame_Ins':'#c74951',
+    'Frame_Shift_Del':'#603d92',
+    'Frame_Shift_Ins':'#3778ae',
+    'Nonsense_Mutation':'#d3352b',
+    'Splice_Site':'#f28432',
+    'Germline':'#000000',
+    'Missense_Mutation':'#549d3e'
+  }
+
+  let phospo_colors = {
+    "S":"#1b4879",
+    "T":'#603d92',
+    "Y":'#d3352b'
+  }
+
+
 
   const geneSet = (e) => {
     let hash = e.target.hash
@@ -71,18 +93,164 @@ export default function DataLolipop({ width,inputData, screenCapture, setToFalse
     return classes.filter(Boolean).join(' ')
   }
 
+  const generateColor = ()=>{
+    var letters = "0123456789ABCDEF";
+    var color = '#';
+    for (var i = 0; i < 6; i++)
+      color += letters[(Math.floor(Math.random() * 16))];
+    return color
+  }
+  
   useEffect(()=>{
     if(lolipopJson){
       if(Object.keys(lolipopJson).length>0){
-        // if(lolipopJson['domains'].length>0 && lolipopJson['lollipop'].length>0){
-          setActiveCmp(true)
-        // }
+        let domainsTmp = {}
+        let domains = []
+        let lollipop = []
+        let lollipopLegenedTmp = {}
+        let lollipopTmp = {}
+        let codons = {}
+        var width = []
+        let data = lolipopJson['data']
+        for (var i = 0; i < data.length; i++) {
+          if(tableType === "Mutation"){
+            let vc_sample = data[i]['variant_classification']
+            if(vc_sample in lollipopLegenedTmp){
+              if(lollipopLegenedTmp[vc_sample].includes(data[i].sample)==false){
+                lollipopLegenedTmp[vc_sample].push(data[i].sample)
+              }
+            }else{
+              lollipopLegenedTmp[vc_sample] = [data[i].sample]
+            }
+
+            let protein = data[i]['protien'].replace(/[^\d]/g,'');
+            let p_vc = protein+"||"+data[i]['variant_classification']
+
+            if(p_vc in lollipopTmp){
+              lollipopTmp[p_vc].push(data[i]['sample']+"||"+data[i]['protien'])
+            }else{
+              lollipopTmp[p_vc] = [data[i]['sample']+"||"+data[i]['protien']]
+            }
+          }else{
+            let vc_sample = data[i]['site']
+            if(vc_sample in lollipopLegenedTmp){
+              if(lollipopLegenedTmp[vc_sample].includes(data[i].sample)==false){
+                lollipopLegenedTmp[vc_sample].push(data[i].sample)
+              }
+            }
+            else{
+                lollipopLegenedTmp[vc_sample] = [data[i].sample]
+            }
+
+            let protein = data[i]['protien'].replace(/[^\d]/g,'');
+            let p_vc = protein+"||"+data[i]['site']
+            if(p_vc in lollipopTmp){
+              lollipopTmp[p_vc].push(data[i]['sample']+"||"+data[i]['protien'])
+            }else{
+              lollipopTmp[p_vc] = [data[i]['sample']+"||"+data[i]['protien']]
+            }
+
+          }
+        }
+
+        let tmp_ = {"S":[],"Y":[],"T":[]}
+        for (var h in lollipopLegenedTmp){
+            if (h.startsWith('S')){
+                tmp_['S'].push(...lollipopLegenedTmp[h])
+            }
+
+            if (h.startsWith('Y')){
+              tmp_['Y'].push(...lollipopLegenedTmp[h])
+            }
+
+            if (h.startsWith('T')){
+                tmp_['T'].push(...lollipopLegenedTmp[h])
+            }
+        }
+
+
+        let tmp = []
+        let colors
+        if(tableType === "Mutation"){
+          colors = mutation_colors
+        }else{
+          lollipopLegenedTmp = tmp_
+          colors = phospo_colors
+        }
+
+        for (var key in lollipopLegenedTmp) {
+          tmp.push(
+            <div className='p-3'>
+              <span style={{'backgroundColor':colors[key]}} className="inline-flex items-center justify-center px-3 mr-3 pb-1 text-md font-bold leading-none text-white rounded-full">
+                { lollipopLegenedTmp[key].length }
+              </span>
+              <text style={{'color':colors[key]}}><strong>{key}</strong></text>
+            </div>
+          )
+
+          for (var vc in lollipopTmp) {
+            if(vc.includes(key)){
+              let codon = vc.split("||")
+              lollipop.push({
+                "codon":codon[0],
+                'count': lollipopTmp[vc].length,
+                'color':colors[key],
+                'tooltip': {
+                  'header':'Protein Change',
+                  'body': lollipopTmp[vc][0].split('||')[1]
+                }
+              })
+            }
+          }
+        }
+
+        let domains_data = lolipopJson['domains']
+        for (var i = 0; i < domains_data.length; i++) {
+          let l = (domains_data[i].end-domains_data[i].start)/domains_data[i]['domain'].length
+          let name = domains_data[i]['domain'].substring(0,l)
+          if(name == ''){
+            name =  domains_data[i]['domain'].substring(0,1)
+          }
+
+
+          width.push(domains_data[i]['end'])
+
+          domains.push({
+            "startCodon": domains_data[i]['start'],
+            "endCodon": domains_data[i]['end'],
+            "label": name+'...',
+            'color': generateColor(),
+            'tooltip': {
+              "body": domains_data[i]['domain']+" ("+domains_data[i]['start']+" - "+domains_data[i]['end']+")"
+            }
+          })
+        }
+        let w = 300
+        if(width.length>0){
+          w = Math.max(...width)
+        }
+        setMutationLabel(tmp)
+        setState((prevState) => ({
+          ...prevState,
+          'domains': domains,
+          'lollipop':lollipop,
+          "width": w+100
+        }))
+        // console.log(state);
+        setActiveCmp(true)
       }
+
     }
     setTimeout(function() {
         setLoader(false)
     }, (1000));
   },[lolipopJson])
+
+  useEffect(()=>{
+    if(state){
+      console.log(state);
+    }
+  },[state])
 
   useEffect(() => {
     if(screenCapture){
@@ -168,7 +336,15 @@ export default function DataLolipop({ width,inputData, screenCapture, setToFalse
               </div>
             </div>
             <div className='grid'>
-              <LollipopCmp watermarkCss={watermarkCss} ref={reference} width={width} gene={gene} data={lolipopJson}/>
+              <div>
+                <LollipopCmp watermarkCss={watermarkCss} ref={reference} width={width} type={tableType}
+                gene={gene}
+                data={state}
+                />
+              </div>
+              <div className='flex'>
+                {mutationLabel}
+              </div>
             </div>
           </Fragment>
           }
