@@ -6,7 +6,7 @@ import ImageGrid from '../../Common/ImageGrid'
 import { getCircosInformation, getFusionInformation,getOncoImages } from '../../../actions/api_actions'
 import '../../../assets/css/style.css'
 import { exportComponentAsPNG } from 'react-component-export-image';
-
+import placeholder from '../../../assets/img/circos_plot_layer_info.png'
 
 
 export default function DataCircos({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
@@ -111,6 +111,9 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
                 <option value="all">all</option>
                 {sampleListElements}
               </select>
+            </div>
+            <div className='col-start-6'>
+              <img src={placeholder} width='230'/>
             </div>
           </div>}
         <div>
