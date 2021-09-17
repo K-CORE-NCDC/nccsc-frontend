@@ -7,7 +7,6 @@ export default function ImageGrid({data}) {
   const [showModal, setShowModal] = React.useState(false);
   const [selectedImageId, setSelectedImageId] = useState('')
 
-
   function modalShow(e){
     setShowModal(true)
     setSelectedImageId(e.target.id)
