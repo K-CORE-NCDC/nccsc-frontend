@@ -189,8 +189,52 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
       }
     }
 
-    let chord_data = fusionJson
+    var cnvData = all_chr;
 
+    if('cnv' in api_data){
+      let strchr = 0
+      let iter = 1
+      let cnvJsonData = api_data['cnv']
+      for (var i = 0; i < cnvJsonData.length; i++) {
+        cnvData.push({
+          block_id: cnvJsonData[i].chromosome,
+          position: strchr,
+          value: iter,
+          name: cnvJsonData[i].hugo_symbol+"||"+cnvJsonData[i].genome_change
+
+        })
+
+        if (iter === 10) {
+          iter = 1
+          strchr = iter+parseFloat((strchr + 3.500).toFixed(3))
+        }
+        iter++
+      }
+    }
+
+    let chord_data = fusionJson
+    if ('sv_data' in api_data){
+      let svData = api_data['sv_data']
+      svData.forEach(element => {
+        chord_data.push({
+          source: {
+            id: element.left_gene_chr,
+            start: element.left_gene_pos - 2000000,
+            end: element.left_gene_pos + 2000000,
+            name: element.left_gene_name,
+            color: '#ffce44',
+            svtype: element.svtype
+          },
+          target: {
+            id: element.right_gene_chr,
+            start: element.right_gene_pos - 2000000,
+            end: element.right_gene_pos + 2000000,
+            name: element.right_gene_name,
+          }
+        })
+      });
+    }
+    console.log(chord_data);
     circosHighlight.layout(GRCh37,conf)
     .highlight('cytobands-1', data, {
       innerRadius: width/2 -100,
@@ -412,6 +456,40 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
         return `${d.block_id}:${Math.round(d.position)} ➤ ${d.value}`
       }
     })
+    .scatter('snp-250-6', cnvData, {
+      innerRadius: 1,
+      outerRadius: 1.2,
+      color:function(d){
+        if(d.name) {
+          return '#7c7ce5'
+        }else{
+          return 'rgba(0,0,0,0)'
+        }
+      },
+      strokeColor: function(d){
+        if(d.name) {
+          return 1
+        }else{
+          return 0
+        }
+      },
+
+      strokeWidth: 1,
+      shape: 'circle',
+      size: 16,
+      min: 0,
+      max: 15,
+      axes: [
+        {
+          spacing: 2,
+          color: 'red',
+          opacity: 0.5
+        }
+      ],
+      tooltipContent: function (d, i) {
+        return `${d.block_id}:${Math.round(d.position)} ➤ ${d.value}`
+      }
+    })
     .highlight('cytobands', data, {
       innerRadius: .3,
       outerRadius: .25,
@@ -424,11 +502,20 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
       radius: 0.26,
       logScale: false,
       opacity: 0.7,
+      color: '#ffce44',
       color: function(d){
-        return d['source']['color']
+        if(d.source.svtype){
+          return '#ffce44'
+        }else{
+          return "#0F9D58"
+        }
       },
       tooltipContent: function (d) {
-        return `<h3> source : ${d.source.id} | ${d.source.name}  ➤ target: ${d.target.id} | ${d.target.name} </h3>`
+        if(d.source.svtype){
+          return`<h3> SV Type : ${d.source.svtype} | source : ${d.source.id} | ${d.source.name}  ➤ target: ${d.target.id} | ${d.target.name} </h3>`
+        }else{
+          return `<h3> Fusion source : ${d.source.id} | ${d.source.name}  ➤ target: ${d.target.id} | ${d.target.name} </h3>`
+        }
       },
       events: {
         'mouseover.demo': function (d, i, nodes, event) {

@@ -1,6 +1,7 @@
-import React, { useState,useEffect, Fragment, useRef } from 'react'
+import React, { useState, useEffect, Fragment, useRef } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import VolcanoCmp from '../../Common/Volcano'
+import GroupFilters from '../../Common/GroupFilter'
 import { exportComponentAsPNG } from 'react-component-export-image';
 
 import { getVolcanoPlotInfo } from '../../../actions/api_actions'
@@ -11,8 +12,8 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
   const reference = useRef()
   const dispatch = useDispatch()
   const volcanoJson = useSelector((data) => data.dataVisualizationReducer.volcanoSummary);
-  const [activeCmp,setActiveCmp] = useState(false)
-  const [comp,setComp] = useState([])
+  const [activeCmp, setActiveCmp] = useState(false)
+  const [comp, setComp] = useState([])
   // const didMountRef = useRef(false)
   const [data_, setData] = useState('')
   const [watermarkCss, setWatermarkCSS] = useState("")
@@ -20,26 +21,34 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
   const [negativeData, setNegativeData] = useState()
   const [positiveData, setPositiveData] = useState()
   const [tabCount, setTabCount] = useState()
+  const [groupFilters, setGroupFilters] = useState({})
+
+  const updateGroupFilters = (filtersObject) =>{
+    if(filtersObject){
+      setGroupFilters(filtersObject)
+    }
+  }
 
 
-  useEffect(()=>{
-    if(inputData){
+  useEffect(() => {
+    if (inputData) {
       setActiveCmp(false)
-      if(inputData.type !==''){
+      if (inputData.type !== '') {
         setLoader(true)
-        dispatch(getVolcanoPlotInfo('POST',inputData))
+        console.log('dispatch', {...inputData, filterGroup: groupFilters});
+        dispatch(getVolcanoPlotInfo('POST', {...inputData}))
       }
     }
-  },[inputData])
+  }, [inputData, groupFilters])
 
-  useEffect(()=>{
-    if(volcanoJson){
-      if(Object.keys(volcanoJson).length>0){
-          setActiveCmp(true)
-          setData(volcanoJson)
+  useEffect(() => {
+    if (volcanoJson) {
+      if (Object.keys(volcanoJson).length > 0) {
+        setActiveCmp(true)
+        setData(volcanoJson)
       }
-      setTimeout(function() {
-          setLoader(false)
+      setTimeout(function () {
+        setLoader(false)
       }, (1000));
 
       let negative = []
@@ -48,52 +57,54 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
       let pos_count = 1
       let n_t = 1
       let p_t = 1
-      let total = {"negative":1,"positive":1}
+      let total = { "negative": 1, "positive": 1 }
       volcanoJson.forEach((item, i) => {
         let log2foldchange = parseFloat(item['log2(fold_change)'])
-        if (log2foldchange < 0){
+        if (log2foldchange < 0) {
           total['negative'] += 1
-          if (neg_count === 5){
+          if (neg_count === 5) {
             return false
-          }else{
+          } else {
             negative.push({
-              "Gene Name":item['gene'],
-              "Log2FC":parseFloat(item['log2(fold_change)']),
-              "-Log(Pvalue)":item['q_value']
+              "Gene Name": item['gene'],
+              "Log2FC": parseFloat(item['log2(fold_change)']),
+              "-Log(Pvalue)": item['q_value']
             })
             neg_count += 1
           }
         }
-        else{
+        else {
           total['positive'] += 1
-          if (pos_count === 5){
+          if (pos_count === 5) {
             return false
-          }else{
+          } else {
             positive.push({
-              "Gene Name":item['gene'],
-              "Log2FC":parseFloat(item['log2(fold_change)']),
-              "-Log(Pvalue)":item['q_value']
+              "Gene Name": item['gene'],
+              "Log2FC": parseFloat(item['log2(fold_change)']),
+              "-Log(Pvalue)": item['q_value']
             })
             pos_count += 1
           }
         }
       });
 
-      setTabCount({"negative":total['negative'],
-      "positive":total['positive']})
+      setTabCount({
+        "negative": total['negative'],
+        "positive": total['positive']
+      })
       setNegativeData(negative)
       setPositiveData(positive)
     }
-  },[volcanoJson])
+  }, [volcanoJson])
 
   useEffect(() => {
-    if(screenCapture){
+    if (screenCapture) {
       setWatermarkCSS("watermark")
-    }else{
+    } else {
       setWatermarkCSS("")
     }
 
-    if(watermarkCss !== "" && screenCapture){
+    if (watermarkCss !== "" && screenCapture) {
       exportComponentAsPNG(reference)
       setToFalseAfterScreenCapture()
     }
@@ -103,22 +114,27 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
 
   return (
     <>
-    {
-      loader?
-      <LoaderCmp/>
-      :
-      <Fragment>
-          {(volcanoJson && Object.keys(volcanoJson).length>0)
-            && <VolcanoCmp watermarkCss={watermarkCss}
-            ref={reference}
-            w={width}
-            data={volcanoJson}
-            negative_data={negativeData}
-            positive_data={positiveData}
-            tab_count={tabCount}
-            />}
-      </Fragment>
-    }
+      {
+        loader ?
+          <LoaderCmp />
+          :
+          <div className="flex flex-row justify-around">
+            <div className="w-1/5">
+              <GroupFilters parentCallback={updateGroupFilters} groupFilters={groupFilters}/>
+            </div>
+            <div className="w-4/5" style={{'overflowX':'scroll'}}>
+              {(volcanoJson && Object.keys(volcanoJson).length > 0)
+                && <VolcanoCmp watermarkCss={watermarkCss}
+                  ref={reference}
+                  w={width}
+                  data={volcanoJson}
+                  negative_data={negativeData}
+                  positive_data={positiveData}
+                  tab_count={tabCount}
+                />}
+            </div>
+          </div>
+      }
     </>
   )
 

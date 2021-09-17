@@ -115,12 +115,12 @@ export default function FileUpload({ parentCallBack }) {
       fusion: "fusion"
     }
   })
-  console.log(uploadFile);
   const [fileDataAsTableAll, setFileDataAsTableAll] = useState({})
   const [fileDataAsTableRendered, setFileDataAsTableRendered] = useState({})
   const [showFileDataTable, setShowFileDataTable] = useState(false)
   const [tableNavTabs, setTableNavTabs] = useState([])
   const [activeTableKey, setActiveTableKey] = useState("")
+  const [disableUploadButton, setDisableUploadButton] = useState(true)
 
   // console.log(dropdownOptionsSelected);
 
@@ -141,6 +141,7 @@ export default function FileUpload({ parentCallBack }) {
       }
     })
     setSelectedFiles({})
+    setUploadFile([])
   }
 
   const hideModal = (hide) => {
@@ -233,6 +234,18 @@ export default function FileUpload({ parentCallBack }) {
       }
     }
   }, [fileDataAsTableAll])
+
+  useEffect(() => {
+    if(projectName){
+      if(selectedFiles.length === Object.keys(selectedFileSampleType).length){
+        setDisableUploadButton(false)
+      }else{
+        setDisableUploadButton(true)
+      }
+    }else{
+      setDisableUploadButton(true)
+    }
+  }, [projectName, selectedFiles, selectedFileSampleType])
 
   useEffect(() => {
     let allTableTabs = Object.keys(fileDataAsTableAll)
@@ -447,7 +460,7 @@ export default function FileUpload({ parentCallBack }) {
           <div className='relative col-span-4 w-full '>
             <label
               className="w-full block text-right border focus:outline-none border-b-color focus:ring focus:border-blue-300 p-4 mt-3">
-              <input type='file' className="" data={key} value={selectedFileSampleType[key].file} name={selectedFileSampleType[key]} filename={key} onChange={file_Upload_} />
+              <input type='file' className="" data={key} name={selectedFileSampleType[key]} id="user-file-input" filename={key} onChange={file_Upload_} />
             </label>
           </div>
           <div className='p-5 col-span-2 flex'>
@@ -477,7 +490,7 @@ export default function FileUpload({ parentCallBack }) {
       )
     })
     setInitialInputState(firstInput)
-  }, [selectedFileSampleType, loader])
+  }, [selectedFileSampleType, loader, selectedFiles])
 
   // console.log(showModalInfo);
   return (
@@ -516,10 +529,10 @@ export default function FileUpload({ parentCallBack }) {
             {initialInputState}
             {state}
             <div className="relative w-full col-span-12 text-center">
-              <button className="capitalize bg-white  w-80 h-20  mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded">
+              <button onClick={resetStates} className="capitalize bg-white  w-80 h-20  mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded">
                 Reset
               </button>&nbsp;&nbsp;&nbsp;&nbsp;
-              <button className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
+              <button disabled={disableUploadButton} className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded ${disableUploadButton ? 'bg-opacity-10' : ''}`}
                 onClick={formSubmitButtonActions}
 
               >

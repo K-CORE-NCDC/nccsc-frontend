@@ -30,20 +30,17 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
             var innerWidth = width - margin.left - margin.right, // set the size of the chart within its container
                 innerHeight = height - margin.top - margin.bottom;
             selection.each(function (data) {
-                // set up the scaling for the axes based on the inner width/height of the chart and also the range
-                // of value for the x and y axis variables. This range is defined by their min and max values as
-                // calculated by d3.extent()
-
                 let xMaxVal = 0
                 let yMaxVal = 0
                 data.forEach(e=>{
                     let xAxis = e['log2(fold_change)']
                     let yAxis = e['q_value']
-                    if(xAxis > xMaxVal){
-                        xMaxVal = xAxis
+
+                    if(xMaxVal>xAxis){
+                      xMaxVal = xAxis
                     }
                     if(yMaxVal > yAxis) {
-                        yMaxVal = yAxis
+                      yMaxVal = yAxis
                     }
                 })
                 xMaxVal += 5
@@ -56,7 +53,6 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
                 // have -log10 scale without having to do extra parsing
                 yScale.range([0, innerHeight])
                     .domain(d3.extent(data, function (d) {
-                        // console.log("y---->",d)
                         return d[yColumn];
                     }))
                     .nice(); // adds "padding" so the domain extent is exactly the min and max values
@@ -244,10 +240,7 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
 
         chart.xColumn = function (value) {
             if (!arguments.length) return xColumn;
-            // console.log("before xColumn---->",xColumn)
             xColumn = value;
-            // console.log("value---->",value)
-            // console.log("xColumn---->",xColumn)
             return chart;
         };
 
@@ -322,13 +315,13 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
 
     useEffect(() => {
         if (data) {
-            let d = []
-            data.forEach(e=>{
-                d.push({
-                    ...e,
-                    "log2(fold_change)": parseFloat(e["log2(fold_change)"])
-                })
-            })
+            // let d = []
+            // data.forEach(e=>{
+            //     d.push({
+            //         ...e,
+            //         "log2(fold_change)": parseFloat(e["log2(fold_change)"])
+            //     })
+            // })
             var yLabel = '-log<tspan baseline-shift="sub">10</tspan>False Discovery Rate';
             var xLabel = 'log<tspan baseline-shift="sub">2</tspan>Fold-change';
             let childnode = document.getElementById("volcano");
@@ -341,7 +334,7 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
                 .xColumn("log2(fold_change)")
                 .yColumn("q_value");
             d3.select('#volcano')
-                .data([d])
+                .data([data])
                 .call(volcanoPlot1);
         }
     }, [data])

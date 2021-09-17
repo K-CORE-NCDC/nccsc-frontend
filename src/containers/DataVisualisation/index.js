@@ -95,15 +95,16 @@ export default function DataVisualization() {
       } else {
         Object.keys(projectAvailableSteps).forEach(stepName => {
           if (projectAvailableSteps[stepName].length > 0) {
+            console.log(projectAvailableSteps, stepName, );
             if(stepName === 'fusion'){
               return
             }
-            if(stepName !== "lollypop"){
-              tabList.push(stepName)
-            }else if(stepName !== "oncoprint"){
+            if(stepName === "lollypop"){
+              tabList.push('lollipop')
+            }else if(stepName === "oncoprint"){
               tabList.push('onco')
             }else{
-              tabList.push('lollipop')
+              tabList.push(stepName)
             }
           }
         })
