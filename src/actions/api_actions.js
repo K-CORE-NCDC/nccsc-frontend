@@ -157,7 +157,9 @@ export function file_upload(fileData, projectName) {
     //   formData.append("arrayOfFilesName", file);
     // });
     Object.keys(fileData).forEach(element => {
-      data.append(fileData[element].type, fileData[element].file);
+      if(fileData[element].type !== undefined){
+        data.append(fileData[element].type, fileData[element].file);
+      }
     })
     data.set("project_name", projectName)
 
