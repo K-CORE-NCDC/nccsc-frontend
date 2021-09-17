@@ -52,16 +52,22 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
       })
     }
     let conf = {
-      innerRadius: width / 2 - 100,
-      outerRadius: width / 2 - 50,
-      gap:0.04,
-      labels: {
-        radialOffset: 70
-      },
-      ticks: {
-        display: false,
-      },
-    }
+				innerRadius: width / 2 - 100,
+				outerRadius: width / 2 - 50,
+				labels		: {
+					position		: 'center',
+					display		: true,
+					size			: 6,
+					color		: '#000',
+					radialOffset	: 70
+				},
+				ticks		: {
+					display		: false,
+					spacing		: 1000000,
+					labelSize: '16px',
+					labelSuffix	: ''
+				}
+			}
 
     var snp250 = all_chr;
 
@@ -72,10 +78,9 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
       for (var i = 0; i < dna_mutation_data.length; i++) {
         snp250.push({
           block_id: dna_mutation_data[i].chromosome,
-          position: strchr,
-          value: iter,
-          name: dna_mutation_data[i].hugo_symbol+"||"+dna_mutation_data[i].genome_change
-
+          position: (parseInt(dna_mutation_data[i].start - 200000 )+parseInt(dna_mutation_data[i].end) + 200000) / 2,
+          value: dna_mutation_data[i].value,
+          name:  dna_mutation_data[i].hugo_symbol
         })
 
         if (iter === 10) {
@@ -86,66 +91,20 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
       }
     }
 
-
-
     var dna_methylation = all_chr
-    if ('dna_methylation' in api_data){
-      let strchr = 0
-      let iter = 1
-      let dna_methylation_data = api_data['dna_methylation']
-      for (var i = 0; i < dna_methylation_data.length; i++) {
-        dna_methylation.push({
-          block_id: dna_methylation_data[i].chromosome,
-          position: strchr,
-          value: iter,
-          name: dna_methylation_data[i].hugo_symbol
-        })
-        iter++
-        if (iter === 15) {
-          iter = 1
-          strchr = parseFloat((strchr + 4.5).toFixed(3))
-        }
-      }
-    }
-
 
     var rna_expression_up = all_chr;
     var rna_expression_down = all_chr;
     if ('rna_expression' in api_data){
-      let strchr = 0
-      let iter = 1
-      let strchr2 = 0
-      let iter2 = 1
       let rna_expression_data = api_data['rna_expression']
-
       for (var i = 0; i < rna_expression_data.length; i++) {
-        if(rna_expression_data[i].rna_cnt>1){
-          rna_expression_up.push({
-            block_id: rna_expression_data[i].chromosome,
-            position: rna_expression_data[i].rna_cnt,
-            value: iter,
-            name: rna_expression_data[i].hugo_symbol,
-            rna:rna_expression_data[i].rna_cnt
-          })
-          iter++
-          if (iter === 10) {
-            iter = 1
-            strchr = parseFloat((strchr + 4.500).toFixed(4))
-          }
-        } else if(rna_expression_data[i].rna_cnt<-1){
-          rna_expression_down.push({
-            block_id: rna_expression_data[i].chromosome,
-            position: -rna_expression_data[i].rna_cnt,
-            value: iter2,
-            name: rna_expression_data[i].hugo_symbol,
-            rna:rna_expression_data[i].rna_cnt
-          })
-          iter2++
-          if (iter2 === 10) {
-            iter2 = 1
-            strchr2 = parseFloat((strchr + 4.500).toFixed(4))
-          }
-        }
+        rna_expression_up.push({
+          block_id: rna_expression_data[i].chromosome,
+          position: (parseInt(rna_expression_data[i].start)+parseInt(rna_expression_data[i].end)) / 2,
+          value: rna_expression_data[i].value,
+          name: rna_expression_data[i].hugo_symbol
+
+        })
       }
     }
 
@@ -153,39 +112,14 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
     var global_proteome_down = all_chr
     if ('global_proteome' in api_data){
       let global_proteome_data = api_data['global_proteome']
-      let strchr = 0
-      let iter = 1
-      let strchr2 = 0
-      let iter2 = 1
       for (var i = 0; i < global_proteome_data.length; i++) {
-        if(global_proteome_data[i].rna_cnt>1){
+
           global_proteome_up.push({
             block_id: global_proteome_data[i].chromosome,
-            position: strchr,
-            value: iter,
-            rna:global_proteome_data[i].rna_cnt,
+            position: (parseInt(global_proteome_data[i].start)+parseInt(global_proteome_data[i].end)) / 2,
+            value: global_proteome_data[i].value,
             name: global_proteome_data[i].hugo_symbol
           })
-        }
-        else if (global_proteome_data[i].rna_cnt<-1) {
-          global_proteome_down.push({
-            block_id: global_proteome_data[i].chromosome,
-            position: strchr2,
-            value: iter2,
-            rna:global_proteome_data[i].rna_cnt,
-            name: global_proteome_data[i].hugo_symbol
-          })
-        }
-        iter++
-        if (iter === 30) {
-          iter = 1
-          strchr = parseFloat((strchr + 3.500).toFixed(3))
-        }
-        iter2++
-        if (iter2 === 30) {
-          iter2 = 1
-          strchr2 = parseFloat((strchr + 3.500).toFixed(3))
-        }
       }
     }
 
@@ -245,8 +179,6 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
       }
     })
     .scatter('dna-mutation', snp250, {
-      innerRadius: 0.99,
-      outerRadius: 0.85,
       color:function(d){
         if(d.name) {
           return 'grey'
@@ -261,19 +193,16 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
           return 0
         }
       },
-      strokeWidth: 1,
+      innerRadius	: 0.80,
+			outerRadius	: 0.95,
+      strokeWidth: 2.0,
       shape: 'circle',
-      size: 15,
+      size: 7,
       min: 0,
-      max: 10,
-      direction:'out',
-      
+      max: 1,
       axes: [
-        {
-          spacing: 1,
-          color: '#f44336',
-          opacity: 0.3
-        }
+        {spacing: 0.1, thickness: 1, color: '#f44336', opacity: 0.3},
+				{spacing: 0.2, thickness: 1, color: '#f44336', opacity: 0.5}
       ],
 
       tooltipContent: function (d, i) {
@@ -282,14 +211,12 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
       }
     })
     .scatter('rna-up', rna_expression_up, {
-      innerRadius: 0.85,
-      outerRadius: 0.75,
+      innerRadius: 0.60,
+      outerRadius: 0.79,
       color:function(d){
-        if(d.name) {
-          return 'red'
-        }else{
-          return 'rgba(0,0,0,0)'
-        }
+        if (d.value >= 1) 	{ return '#d2352b' }
+				if (d.value <= -1) 	{ return '#3777af' }
+				return '#d3d3d3'
       },
       strokeColor: function(d){
         if(d.name) {
@@ -299,62 +226,22 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
         }
       },
 
-      strokeWidth: 1,
+      strokeWidth: 2.0,
       shape: 'circle',
       size: 15,
-      min: 0,
-      max: 10,
+      min: -2,
+      max: 2,
       axes: [
-        {
-          spacing: 2,
-          color: '#68BBE3',
-          opacity: 0.3
-        }
+        {spacing: 0.1, thickness: 1, color: '#ffffff', opacity: 0.3},
+					{spacing: 0.2, thickness: 3, color: '#ffffff', opacity: 0.3},
+					{spacing: 0.3, thickness: 1, color: '#3777af', opacity: 0.5}
       ],
-      tooltipContent: function (d, i) {
-        return `${d.block_id}:${Math.round(d.position)} ➤ ${d.name}`
-      }
+      tooltipContent	: function(d) { return d.label+'('+d.value+')'; },
     })
-    .scatter('rna-down', rna_expression_down, {
-      innerRadius: 0.75,
-      outerRadius: 0.65,
-      color:function(d){
-        if(d.name) {
-          return '#7c7ce5'
-        }else{
-          return 'rgba(0,0,0,0)'
-        }
-      },
-      strokeColor: function(d){
-        if(d.name) {
-          return 1
-        }else{
-          return 0
-        }
-      },
-      strokeWidth: 1,
-      shape: 'circle',
-      direction:'out',
-      size: 15,
-      min: 0,
-      max: 16,
 
-      axes: [
-        {
-          spacing: 2,
-          color: '#68BBE3',
-          opacity: 0.3
-        }
-
-      ],
-
-      tooltipContent: function (d, i) {
-        return `${d.block_id}:${Math.round(d.position)} ➤ ${d.name}`
-      }
-    })
     .scatter('snp-250-4', dna_methylation, {
-      innerRadius: 0.65,
-      outerRadius: 0.55,
+      innerRadius: 0.44,
+      outerRadius: 0.59,
       color:function(d){
         if(d.name) {
           return '#000'
@@ -369,33 +256,26 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
           return 0
         }
       },
-      strokeWidth: 1,
+      strokeWidth: 2.0,
       shape: 'circle',
-      size: 16,
+      size: 7,
       min: 0,
-      max: 16,
+      max: 1,
       axes: [
-        {
-          spacing: 3,
-          color: 'grey',
-          opacity: 0.3
-        },
-
+        {spacing: 0.1, thickness: 1, color: '#ffffff', opacity: 0.3},
+				{spacing: 0.2, thickness: 3, color: '#ffffff', opacity: 0.3},
+				{spacing: 0.3, thickness: 1, color: '#529d3f', opacity: 0.5}
       ],
 
-      tooltipContent: function (d, i) {
-        return `${d.block_id}:${Math.round(d.position)} ➤ ${d.value}`
-      }
+      tooltipContent	: function(d) { return d.label+'('+d.value+')'; },
     })
     .scatter('snp-250-5', global_proteome_up, {
-      innerRadius: 0.53,
+      innerRadius: 0.28,
       outerRadius: 0.43,
       color:function(d){
-        if(d.name) {
-          return 'red'
-        }else{
-          return 'rgba(0,0,0,0)'
-        }
+        if (d.value >= 1.5) 	{ return '#d2352b' }
+				if (d.value <= 0.5) 	{ return '#3777af' }
+        return '#d3d3d3'
       },
       strokeColor: function(d){
         if(d.name) {
@@ -404,92 +284,21 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
           return 0
         }
       },
-      strokeWidth: 1,
+      strokeWidth: 2.0,
       shape: 'circle',
-      size: 16,
+      size: 7,
       min: 0,
-      max: 15,
+      max: 2,
 
       axes: [
-        {
-          spacing: 2,
-          color: 'red',
-          opacity: 0.5
-        }
+        {spacing: 0.1, thickness: 1, color: '#f18532', opacity: 0.3},
+					{spacing: 0.3, thickness: 6, color: '#ffffff', opacity: 0.3},
+					{spacing: 0.2, thickness: 1, color: '#644195', opacity: 0.5}
       ],
 
-      tooltipContent: function (d, i) {
-        return `${d.block_id}:${Math.round(d.position)} ➤ ${d.value}`
-      }
+      tooltipContent	: function(d) { return d.label+'('+d.value+')'; },
     })
-    .scatter('snp-250-6', global_proteome_down, {
-      innerRadius: 0.42,
-      outerRadius: 0.32,
-      color:function(d){
-        if(d.name) {
-          return '#7c7ce5'
-        }else{
-          return 'rgba(0,0,0,0)'
-        }
-      },
-      strokeColor: function(d){
-        if(d.name) {
-          return 1
-        }else{
-          return 0
-        }
-      },
 
-      strokeWidth: 1,
-      shape: 'circle',
-      size: 16,
-      min: 0,
-      max: 15,
-      axes: [
-        {
-          spacing: 2,
-          color: 'red',
-          opacity: 0.5
-        }
-      ],
-      tooltipContent: function (d, i) {
-        return `${d.block_id}:${Math.round(d.position)} ➤ ${d.value}`
-      }
-    })
-    .scatter('snp-250-6', cnvData, {
-      innerRadius: 1,
-      outerRadius: 1.2,
-      color:function(d){
-        if(d.name) {
-          return '#7c7ce5'
-        }else{
-          return 'rgba(0,0,0,0)'
-        }
-      },
-      strokeColor: function(d){
-        if(d.name) {
-          return 1
-        }else{
-          return 0
-        }
-      },
-
-      strokeWidth: 1,
-      shape: 'circle',
-      size: 16,
-      min: 0,
-      max: 15,
-      axes: [
-        {
-          spacing: 2,
-          color: 'red',
-          opacity: 0.5
-        }
-      ],
-      tooltipContent: function (d, i) {
-        return `${d.block_id}:${Math.round(d.position)} ➤ ${d.value}`
-      }
-    })
     .highlight('cytobands', data, {
       innerRadius: .3,
       outerRadius: .25,
@@ -538,7 +347,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
           labelSuffix: 'Mb',
           labelDenominator: 1000000,
           labelDisplay0: true,
-          labelSize: '10px',
+          labelSize: '1px',
           labelColor: '#000000',
           labelFont: 'default',
           majorSpacing: 5,

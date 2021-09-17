@@ -22,6 +22,7 @@ const Box2 = React.lazy(() => import('./containers/Common/BoxPlot2'))
 const Chord = React.lazy(() => import('./containers/Common/Chord'))
 
 const Volcano = React.lazy(() => import('./containers/Common/ScatterVolcano'))
+
 const route = [
   { path: '/', exact: true, type:'unauth', name: 'Home', component: Home },
   { path: '/summary/:tab?/', exact: true, type:'unauth', name: 'DataSummary', component: DataSummary },
@@ -37,6 +38,7 @@ const route = [
 
   { path: '/chord', exact: true, type:'unauth', name: 'igv', component: Chord},
   { path: '/volcano', exact: true, type:'unauth', name: 'igv', component: Volcano}
+
   // { path: '/customanalysis', exact: true, type:'unauth', name: 'Home', component: Home },
 ]
 
