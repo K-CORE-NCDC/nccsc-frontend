@@ -10,7 +10,7 @@ const LollipopCmp = React.forwardRef(({ width,data,gene,watermarkCss }, ref) => 
     vizHeight: 400, // hardcoded
     vizWidth: width-400, // hardcoded
     xMax: data['width'], // protein length
-    yMax: 23, // max #mutations
+    yMax: data['height'], // max #mutations
     hugoGeneSymbol: gene,
     lollipops: data['lollipop'],
     domains: data['domains']
@@ -38,24 +38,21 @@ const LollipopCmp = React.forwardRef(({ width,data,gene,watermarkCss }, ref) => 
 
 
   return (
-    <div className='grid'>
-      <div ref={ref} id='lolipop' className={`p-3 grid grid-cols-4 ${watermarkCss}`}>
-        <div className='col-span-2'>
-          {active &&
-            <LollipopPlot
-              domains={mockData.domains}
-              lollipops={mockData.lollipops}
-              vizWidth={mockData.vizWidth}
-              vizHeight={mockData.vizHeight}
-              hugoGeneSymbol={mockData.hugoGeneSymbol}
-              xMax={mockData.xMax}
-              yMax={mockData.yMax}
-              onLollipopClick={onLollipopClickHandler}
-              options={options}
-            />
-          }
-        </div>
-      </div>
+
+    <div ref={ref} id='lolipop' className={`lollipop ${watermarkCss}`}>
+      {active &&
+        <LollipopPlot
+          domains={mockData.domains}
+          lollipops={mockData.lollipops}
+          vizWidth={mockData.vizWidth}
+          vizHeight={mockData.vizHeight}
+          hugoGeneSymbol={mockData.hugoGeneSymbol}
+          xMax={mockData.xMax}
+          yMax={mockData.yMax}
+          onLollipopClick={onLollipopClickHandler}
+          options={options}
+        />
+      }
     </div>
   )
 })
