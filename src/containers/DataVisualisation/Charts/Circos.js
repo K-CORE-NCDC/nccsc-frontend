@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import CircosCmp from '../../Common/Circos'
+import PagenationTable from '../../Common/PagenationTable'
 import LoaderCmp from '../../Common/Loader'
 import ImageGrid from '../../Common/ImageGrid'
 import { getCircosInformation, getFusionInformation,getOncoImages } from '../../../actions/api_actions'
@@ -14,8 +15,8 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   const dispatch = useDispatch()
   const [sampleKey, setSampleKey] = useState('all')
   const circosJson = useSelector((data) => data.dataVisualizationReducer.circosSummary);
-  const fusionJson = useSelector((data) => data.dataVisualizationReducer.fusionData);
-  const oncoImageJson = useSelector((data) => data.dataVisualizationReducer.oncoInfoData);
+  // const fusionJson = useSelector((data) => data.dataVisualizationReducer.fusionData);
+  // const oncoImageJson = useSelector((data) => data.dataVisualizationReducer.oncoInfoData);
   // const circosSanpleRnidListData = useSelector(state => state.dataVisualizationReducer.circosSanpleRnidListData)
 
   const circosSanpleRnidListData = useSelector((data) => data.dataVisualizationReducer.Keys);
@@ -24,6 +25,20 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   const [watermarkCss, setWatermarkCSS] = useState("")
   const [loader, setLoader] = useState(false)
 
+  const reA = /[^a-zA-Z]/g;
+  const reN = /[^0-9]/g;  
+  function sortAlphaNum(a, b) {
+    var aA = a.replace(reA, "");
+    var bA = b.replace(reA, "");
+    if (aA === bA) {
+      var aN = parseInt(a.replace(reN, ""), 10);
+      var bN = parseInt(b.replace(reN, ""), 10);
+      return aN === bN ? 0 : aN > bN ? 1 : -1;
+    } else {
+      return aA > bA ? 1 : -1;
+    }
+  }
+
   useEffect(() => {
     if (inputData) {
       let editInputData = inputData
@@ -31,8 +46,8 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
       if (editInputData.type !== '') {
         setLoader(true)
         dispatch(getCircosInformation('POST', editInputData))
-        dispatch(getFusionInformation('POST', editInputData))
-        dispatch(getOncoImages('POST',{"sample_id":sampleKey,'page_no':0}))
+        // dispatch(getFusionInformation('POST', editInputData))
+        // dispatch(getOncoImages('POST',{"sample_id":sampleKey,'page_no':0}))
       }
     }
   }, [inputData, sampleKey])
@@ -72,8 +87,13 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
     if (circosSanpleRnidListData) {
       let sampleListElementsTemp = []
       // let sampleKey = ''
-      Object.entries(circosSanpleRnidListData).forEach(([k,v]) => {
-        sampleListElementsTemp.push(<option key={k} value={k}>{v}</option>)
+      let brstKeysObject = {}
+      Object.keys(circosSanpleRnidListData).forEach(e => {
+        brstKeysObject = {...brstKeysObject, [circosSanpleRnidListData[e]]: e}
+      })
+      let brstKeysArray = Object.keys(brstKeysObject).sort(sortAlphaNum)
+      brstKeysArray.forEach((element) => {
+        sampleListElementsTemp.push(<option key={element} value={brstKeysObject[element]}>{element}</option>)
         // if(sampleKey==='') sampleKey = k
       })
       // setSampleKey(sampleKey)
@@ -83,11 +103,11 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
   useEffect(() => {
     setTimeout(function() {
-      if(circosJson && fusionJson){
+      if(circosJson){
         setLoader(false)
       }
     }, (1000));
-  }, [circosJson, fusionJson])
+  }, [circosJson])
 
 
 
@@ -118,18 +138,18 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
           </div>}
         <div>
           <div>
-            {(circosJson && fusionJson) && <CircosCmp
+            {circosJson && <CircosCmp
             watermarkCss={watermarkCss}
             ref={reference}
             width={w}
             data={circosJson}
-            fusionJson={fusionJson}
              />}
           </div>
           {sampleKey!=='all' && <ImageGrid sample_id={sampleKey}/>}
         </div>
       </div>
     }
+    {/* <PagenationTable /> */}
     </>
   )
 }
