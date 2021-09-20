@@ -58,7 +58,8 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
       let n_t = 1
       let p_t = 1
       let total = { "negative": 1, "positive": 1 }
-      volcanoJson.forEach((item, i) => {
+      volcanoJson['table_data'].forEach((item, i) => {
+        // console.log(item)
         let log2foldchange = parseFloat(item['log2(fold_change)'])
         if (log2foldchange < 0) {
           total['negative'] += 1
@@ -88,10 +89,17 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
         }
       });
 
+      // console.log(total['negative'])
+      // console.log(total['positive'])
+
       setTabCount({
         "negative": total['negative'],
         "positive": total['positive']
       })
+
+      console.log(negative)
+      console.log(positive)
+
       setNegativeData(negative)
       setPositiveData(positive)
     }
@@ -127,7 +135,7 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
                 && <VolcanoCmp watermarkCss={watermarkCss}
                   ref={reference}
                   w={width}
-                  data={volcanoJson}
+                  data={volcanoJson['data']}
                   negative_data={negativeData}
                   positive_data={positiveData}
                   tab_count={tabCount}
