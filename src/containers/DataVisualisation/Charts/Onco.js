@@ -107,23 +107,8 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
           }
         });
       });
-      let count = 1
-      let table_data = []
 
-      Object.keys(final).forEach((item, i) => {
-        if("mRNA Upregulation" in final[item]){
-          let val = final[item]
-          val["sampl_id"] = item
-          if(count === 6){
-              return false
-          }else{
-              table_data.push(val)
-              count += 1
-          }
-        }
-      });
-      setTableData(table_data)
-      setTableCount(Object.keys(final).length)
+
     }
   },[oncoJson])
 
@@ -155,7 +140,7 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
       :
       <div>
         {activeCmp &&
-          <div className="grid grid-rows-2">
+          <div className="grid ">
             <div className="col-span-2">
               <div className='text-left'>
                 <div className="pl-10">
