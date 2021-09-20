@@ -241,37 +241,7 @@ export default function HeatmapNewCmp({ width,data }) {
         .attr('transform', function(d) { return 'translate(' + d.y + ',' + d.x + ')'; })
         .text(function(d) { return d.children ? '' : d.data.key });
 
-    var xRootData = {
-          totalLength: 0.8,
-          children: [
-              {
-                  length: 0.4,
-                  children: [
-                      {
-                          length: 0.4,
-                          key: 'd1'
-                      },
-                      {
-                          length: 0.4,
-                          key: 'd2'
-                      }
-                  ]
-              },
-              {
-                  length: 0.6,
-                  children: [
-                      {
-                          length: 0.2,
-                          key: 'd4'
-                      },
-                      {
-                          length: 0.2,
-                          key: 'd3'
-                      }
-                  ]
-              }
-          ]
-      };
+  var xRootData = {"totalLength":2,"children":[{"length":1.1874342087037917,"children":[],"key":"d4"},{"length":1.1874342087037917,"children":[{"length":0.8124038404635961,"children":[],"key":"d1"},{"length":0.8124038404635961,"children":[{"length":0.6782329983125269,"children":[],"key":"d2"},{"length":0.6782329983125269,"children":[],"key":"d3"}],"key":"d2-d3"}],"key":"d1-d2-d3"}],"key":"d1-d2-d3-d4"}
 
   var xRoot = d3.hierarchy(xRootData)
         .sum(function(d) {
