@@ -73,6 +73,16 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state,
        boxData : payload
       }
+    case dataVisualization.ONCO_IMAGES_INFORMATION:
+      return {
+        ...state,
+        oncoSampleImagesData: payload
+      }
+    case dataVisualization.CIRCOS_TIMELINE_GRAPH:
+      return {
+        ...state,
+        circosTimelieTableData: payload
+      }
     default:
       return state
   }

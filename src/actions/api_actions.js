@@ -495,17 +495,49 @@ export function getBoxInformation(type, data) {
 
 export function getOncoImages(method, data) {
   return (dispatch) => {
-    //   dispatch({ type: homeConstants.DATA_SUMMARY });
     let url = config.auth + "onco-sample-images/";
-    // console.log(method)
-    // console.log(data)
+    dispatch({
+      type: dataVisualization.ONCO_IMAGES_INFORMATION,
+      payload: null,
+    });
     sendRequest(url, method, data)
       .then((result) => {
         const d = result;
         // console.log()
+        let payload = []
+        if(d.status === 200){
+          payload = d["data"]
+        }
         dispatch({
           type: dataVisualization.ONCO_IMAGES_INFORMATION,
-          payload: d["data"],
+          payload: payload,
+        });
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
+  };
+}
+
+
+export function getCircosTimelineTable(method, data) {
+  return (dispatch) => {
+    let url = config.auth + "onco-age-diagram/";
+    dispatch({
+      type: dataVisualization.CIRCOS_TIMELINE_GRAPH,
+      payload: null,
+    });
+    sendRequest(url, method, data)
+      .then((result) => {
+        const d = result;
+        // console.log()
+        let payload = []
+        if(d.status === 200){
+          payload = d["data"]
+        }
+        dispatch({
+          type: dataVisualization.CIRCOS_TIMELINE_GRAPH,
+          payload: payload,
         });
       })
       .catch((e) => {
