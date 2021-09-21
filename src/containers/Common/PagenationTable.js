@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Chart } from 'react-google-charts';
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
-const activePageCss = "z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
-const nonActiveClassCss = "bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
+import config from '../../config.js'
 
+const activePageCss = "z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-md font-medium"
+const nonActiveClassCss = "bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-md font-medium"
 
 
 function PagenationTable({ imageData }) {
@@ -70,21 +71,20 @@ function PagenationTable({ imageData }) {
     }, [currentActivePageNumber])
     return (
         <>
-            {/* <div className="flex flex-wrap">
-                <div className="w-1/4 m-1 p-1">
-                    <img src="https://img.fonwall.ru/o/1c/kosmos-planety-vselennaya-360z.jpg" className="rounded-lg" />
-                </div>
-            </div> */}
-            {isDataFound ? <div>
-                <div className="overflow-y-scroll">
+
+            {isDataFound ? <div >
+                <div className="grid max-auto grid-cols-3 gap-6 p-6 overflow-y-scroll oncoimages_height">
                     {activeDisplayImagesContent.map(e => {
-                        return <h6 key={e}>{e}</h6>
+                        return <a key={e} href={config['auth']+e}>
+                            <img className='w-full block rounded' src={config['auth']+e} />
+                            <h1 className='text-3xl p-6'>{e.split('/').at(-1)}</h1>
+                          </a>
                     })}
                 </div>
                 <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
                     <div className="hidden w-full m-1 p-1 sm:flex sm:items-center sm:justify-between">
                         <div>
-                            <p className="text-sm text-gray-700">
+                            <p className="text-md text-gray-700">
                                 Showing <span className="font-medium">{(currentActivePageNumber - 1) * 10}</span> to <span className="font-medium">{currentActivePageNumber * 10}</span> of{' '}
                                 <span className="font-medium">{totalImagesCount}</span> results
                             </p>
@@ -135,10 +135,8 @@ function PagenationTable({ imageData }) {
 const PagenationTableComponent = ({ closeShowOncoImages, imageData }) => {
     // console.log(imageData);
     return (
-        <div
-            className="justify-center items-center w-screen flex overflow-x-hidden fixed inset-0 z-50 outline-none focus:outline-none"
-        >
-            <div className="relative w-11/12 h-11/12 my-6 mx-auto">
+        <div className='fixed inset-0 bg-gray-600 bg-opacity-50 h-full w-full z-50'>
+            <div className="relative w-11/12 h-11/12 my-10 mx-auto">
                 {/*content*/}
                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                     {/*header*/}
@@ -155,30 +153,8 @@ const PagenationTableComponent = ({ closeShowOncoImages, imageData }) => {
                         </button>
                     </div>
                     {/*body*/}
-                    <div>
+                    <div className=''>
                         <PagenationTable imageData={imageData} />
-                        {/* <Chart
-                            width={'500px'}
-                            height={'300px'}
-                            chartType="Timeline"
-                            loader={<div>Loading Chart</div>}
-                            data={[
-                                [
-                                    { type: 'string', id: 'Term' },
-                                    { type: 'string', id: 'Name' },
-                                    { type: 'date', id: 'Start' },
-                                    { type: 'date', id: 'End' }
-
-                                ],
-                                ['1', 'Washington', new Date(1789, 3, 30), new Date(1789, 3, 30)],
-                                ['2', 'Adams', new Date(1797, 2, 4), new Date(1797, 2, 4)],
-                                ['3', 'Jefferson', new Date(1801, 2, 4), new Date(1801, 2, 4)],
-                            ]}
-                            options={{
-                                showRowNumber: true,
-                            }}
-                            rootProps={{ 'data-testid': '1' }}
-                        /> */}
                     </div>
                     {/*footer*/}
                     <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">

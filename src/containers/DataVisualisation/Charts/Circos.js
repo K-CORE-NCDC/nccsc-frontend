@@ -43,15 +43,11 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   }
 
   const timelineGraphClickFunction = () =>{
-    // setLoader(true)
     setShowOncoImages(false)
     setShowOncoTimelineTables(true)
     dispatch(getCircosTimelineTable('POST', {sample_id: sampleKey}))
   }
-  
-  useEffect(() => {
-    // console.log(oncoImageJson);
-  }, [oncoImageJson])
+
 
   const reA = /[^a-zA-Z]/g;
   const reN = /[^0-9]/g;
@@ -69,13 +65,21 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
   useEffect(() => {
     if (inputData) {
+      if(sampleKey!=='all'){
+        document.getElementById('images').classList.remove("opacity-50")
+        document.getElementById('tables').classList.remove("opacity-50")
+      }else{
+        document.getElementById('images').classList.add("opacity-50")
+        document.getElementById('tables').classList.add("opacity-50")
+      }
+
       let editInputData = inputData
       editInputData = { ...editInputData, sampleKey: sampleKey }
+
       if (editInputData.type !== '') {
+
         setLoader(true)
         dispatch(getCircosInformation('POST', editInputData))
-        // dispatch(getFusionInformation('POST', editInputData))
-        // dispatch(getOncoImages('POST',{"sample_id":sampleKey,'page_no':0}))
       }
     }
   }, [inputData, sampleKey])
@@ -88,16 +92,6 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
     }
   }, [inputData])
 
-  // useEffect(() => {
-  //   if(!circosJson){
-  //     setLoader(true)
-  //     dispatch(getCircosInformation('POST', {}))
-  //   }
-  //   if(!fusionJson){
-  //     setLoader(true)
-  //     dispatch(getFusionInformation('POST', {}))
-  //   }
-  // }, [])
 
   useEffect(() => {
     if (screenCapture) {
@@ -114,7 +108,6 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   useEffect(() => {
     if (circosSanpleRnidListData) {
       let sampleListElementsTemp = []
-      // let sampleKey = ''
       let brstKeysObject = {}
       Object.keys(circosSanpleRnidListData).forEach(e => {
         brstKeysObject = { ...brstKeysObject, [circosSanpleRnidListData[e]]: e }
@@ -122,9 +115,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
       let brstKeysArray = Object.keys(brstKeysObject).sort(sortAlphaNum)
       brstKeysArray.forEach((element) => {
         sampleListElementsTemp.push(<option key={element} value={brstKeysObject[element]}>{element}</option>)
-        // if(sampleKey==='') sampleKey = k
       })
-      // setSampleKey(sampleKey)
       setSampleListElements(sampleListElementsTemp)
     }
   }, [circosSanpleRnidListData])
@@ -147,25 +138,28 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
         :
         <div className="grid ">
           <div className="p-1 grid grid-cols-6">
-            <div>
-              <label htmlFor="samples">Choose a Sample: </label>
-              <select
-                className="w-full border bg-white rounded px-3 py-2 outline-none"
-                value={sampleKey}
-                onChange={e => setSampleKey(e.target.value)}
-                name="samples"
-                id="samples"
-              >
-                <option value="all">all</option>
-                {sampleListElements}
-              </select>
+            <div className='flex col-span-2'>
+              <div className='flex-col text-left'>
+                <label htmlFor="samples" >Choose a Sample: </label>
+                <select
+                  className="w-full border bg-white rounded px-3 py-2 outline-none"
+                  value={sampleKey}
+                  onChange={e => setSampleKey(e.target.value)}
+                  name="samples"
+                  id="samples"
+                >
+                  <option value="all">all</option>
+                  {sampleListElements}
+                </select>
+              </div>
+              <div className='p-3 mt-2'>
+                <button id='images' className="opacity-50 bg-main-blue hover:bg-blue-700 text-white font-bold p-4 rounded w-80" onClick={oncoImagesClickFunction}>Images</button>
+              </div>
+              <div className='p-3 mt-2'>
+                <button id='tables' className="opacity-50 bg-main-blue hover:bg-blue-700 text-white font-bold p-4 rounded w-80" onClick={timelineGraphClickFunction}>Tables</button>
+              </div>
             </div>
-            <div className="col-start-2">
-              <button className="bg-main-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onClick={oncoImagesClickFunction}>Images</button>
-            </div>
-            <div className="col-start-3">
-              <button className="bg-main-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onClick={timelineGraphClickFunction}>Tables</button>
-            </div>
+
             <div className='col-start-6'>
               <img src={placeholder} width='230' />
             </div>
