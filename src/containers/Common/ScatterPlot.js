@@ -67,7 +67,7 @@ export default function ScatterPlot({ scatter_data }) {
 
   return (
       <div id='scatter_parent'>
-        <canvas id="scatter" ref={scatter_plot} height="10vh" width="40vw"></canvas>
+        <canvas id="scatter" ref={scatter_plot} height="14vh" width="40vw"></canvas>
       </div>
   )
 }
