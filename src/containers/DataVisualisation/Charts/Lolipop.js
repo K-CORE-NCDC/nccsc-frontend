@@ -54,7 +54,6 @@ export default function DataLolipop({ width,inputData, screenCapture, setToFalse
       dataJson['table_type'] = tableType
       setLoader(true)
       setActiveCmp(false)
-
       dispatch(getLolipopInformation('POST',dataJson))
     }
   }
@@ -75,7 +74,6 @@ export default function DataLolipop({ width,inputData, screenCapture, setToFalse
   useEffect(()=>{
     if(inputData && 'genes' in inputData){
       setInputState((prevState) => ({...prevState,...inputData }))
-
     }
   },[inputData])
 
