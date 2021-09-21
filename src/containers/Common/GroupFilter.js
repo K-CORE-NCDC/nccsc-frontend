@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-const GroupFilters = ({parentCallback, groupFilters}) => {
+const GroupFilters = ({ parentCallback, groupFilters }) => {
     const [filterSelected, setFilterSelected] = useState('')
     const [selectedFilterDetails, setSelectedFilterDetails] = useState({})
     const [filterInputs, setFilterInputs] = useState([])
     const [userGivenInputValues, setUserGivenInputValues] = useState({})
+    const [showAddGroupButton, setShowAddGroupButton] = useState(false)
+    const [groupsCounter, setGroupsCounter] = useState(1)
 
     const LabelCss = "block text-left text-blue-700 text-lg  font-bold mb-2"
     const checkBoxCss = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -30,13 +32,22 @@ const GroupFilters = ({parentCallback, groupFilters}) => {
         { 'type': 'text', 'name': 'N Stage', 'id': 'n_category', 'input': 'text' },
         { 'type': 'text', 'name': 'HER2 Score', 'id': 'her2_score', 'input': 'text' },
         { 'type': 'text', 'name': 'ki67', 'id': 'ki67_score', 'input': 'text' },
-        { 'type': 'number', 'name': 'Relapse Duration', 'id': 'rlps_cnfr_drtn', 'input': 'number'},
+        { 'type': 'number', 'name': 'Relapse Duration', 'id': 'rlps_cnfr_drtn', 'input': 'number' },
         { 'type': 'boolean', 'name': 'Relapse Yes or No', 'id': 'rlps_yn' },
     ]
 
     const submitFilters = () => {
-        console.log(userGivenInputValues);
+        // console.log(userGivenInputValues);
         parentCallback(userGivenInputValues)
+    }
+
+    const resetFilters = () =>{
+        setFilterSelected('')
+        setSelectedFilterDetails({})
+        setFilterInputs([])
+        setUserGivenInputValues({})
+        setShowAddGroupButton(false)
+        setGroupsCounter(1)
     }
 
     const updateSelectedFilter = (e) => {
@@ -49,7 +60,7 @@ const GroupFilters = ({parentCallback, groupFilters}) => {
             setSelectedFilterDetails({})
         }
     }
-    
+
 
     const onChangeFilterInput = (e) => {
         setUserGivenInputValues(prevState => ({
@@ -57,6 +68,57 @@ const GroupFilters = ({parentCallback, groupFilters}) => {
             [e.target.name]: e.target.value
         }))
     }
+
+
+    const componetSwitch = (compCase, groupLabels=null) => {
+        switch (compCase) {
+            case "static":
+                return (
+                    <div key={compCase} className="mb-4">
+                        {['A Group', 'B Group'].map((e, index) => (
+                            <div key={e} className="border mt-4 p-1">
+                                <div className={LabelCss} htmlFor="yes">
+                                    {e}
+                                </div>
+                                <h1 id="yes" className="text-left mt-2">{groupLabels[index]}</h1>
+                            </div>
+                        ))}
+                    </div>
+                )
+
+            case "number":
+                return (
+                    <div key={`${compCase}-${groupsCounter}`} className="mb-4">
+                        <div>
+                            <div className={LabelCss} htmlFor="username">
+                                {`Group ${groupsCounter}`}
+                            </div>
+                            <div>
+                                <input onChange={onChangeFilterInput} className={numberInputBoxCss} name={`${groupsCounter}_from`} type="number" placeholder="from" >
+                                </input>
+                                <input onChange={onChangeFilterInput} className={numberInputBoxCss} name={`${groupsCounter}_to`} type="number" placeholder="to" >
+                                </input>
+                            </div>
+                        </div>
+                    </div>
+                )
+            case "text":
+                return (
+                    <div key={`${compCase}-${groupsCounter}`} className="mb-4">
+                        <div>
+                                <div className={LabelCss} htmlFor="username">
+                                    {`Group ${groupsCounter}`}
+                                </div>
+                                <div>
+                                    <input onChange={onChangeFilterInput} className={checkBoxCss} name={`${groupsCounter}`} type="text" placeholder="Enter Text" >
+                                    </input>
+                                </div>
+                            </div>
+                    </div>
+                )
+        }
+    }
+
 
     useEffect(() => {
         let filterType = selectedFilterDetails.type
@@ -67,96 +129,42 @@ const GroupFilters = ({parentCallback, groupFilters}) => {
                 let options = ['Yes', 'No']
                 if (filterType === 'static') {
                     options = [selectedFilterDetails.options[0], selectedFilterDetails.options[1]]
-                    setUserGivenInputValues({ group_a: 'M', group_b: 'F', column: selectedFilterDetails.id, type: filterType})
+                    setUserGivenInputValues({ group_a: 'M', group_b: 'F', column: selectedFilterDetails.id, type: filterType })
                 } else {
                     setUserGivenInputValues({ group_a: true, group_b: false, column: selectedFilterDetails.id, type: filterType })
                 }
-                componentData.push(
-                    <div key={filterType} className="mb-4">
-                        <div>
-                            <div className={LabelCss} htmlFor="yes">
-                                A Group
-                            </div>
-                            <select className={checkBoxCss} id="yes" type="text" >
-                                <option value={options[0]}>{options[0]}</option>
-                            </select>
-                        </div>
-                        <div className="mt-2">
-                            <div className={LabelCss}>
-                                B Group
-                            </div>
-                            <select className={checkBoxCss} type="text" >
-                                <option value={options[1]}>{options[1]}</option>
-                            </select>
-                        </div>
-                    </div>
-                )
-            } else if(filterType === 'number') {
+                componentData.push(componetSwitch('static', options))
+            } else if (filterType === 'number') {
+                setShowAddGroupButton(true)
                 setUserGivenInputValues({ column: selectedFilterDetails.id, type: filterType })
-                componentData.push(
-                    <div key={filterType} className="mb-4">
-                        <div>
-                            <div className={LabelCss} htmlFor="username">
-                                A Group
-                            </div>
-                            <div>
-                                <input onChange={onChangeFilterInput} className={numberInputBoxCss} name='group_a_from' type="number" placeholder="from" >
-                                </input>
-                                <input onChange={onChangeFilterInput} className={numberInputBoxCss} name='group_a_to' type="number" placeholder="to" >
-                                </input>
-                            </div>
-                        </div>
-                        <div className="mt-2">
-                            <div className={LabelCss} htmlFor="username">
-                                B Group
-                            </div>
-                            <div>
-                                <input onChange={onChangeFilterInput} className={numberInputBoxCss} name='group_b_from' type="number" placeholder="from" >
-                                </input>
-                                <input onChange={onChangeFilterInput} className={numberInputBoxCss} name='group_b_to' type="number" placeholder="to" >
-                                </input>
-                            </div>
-                        </div>
-                    </div>
-                )
-            }else{
+                componentData.push(componetSwitch('number'))
+                setGroupsCounter(prevState => prevState + 1)
+            } else if(filterType === "text"){
+                setShowAddGroupButton(true)
                 setUserGivenInputValues({ column: selectedFilterDetails.id, type: selectedFilterDetails.type })
-                componentData.push(
-                    <div key={selectedFilterDetails.type} className="mb-4">
-                        <div>
-                            <div className={LabelCss} htmlFor="username">
-                                A Group
-                            </div>
-                            <div>
-                                <input onChange={onChangeFilterInput} className={checkBoxCss} name='group_a' type="text" placeholder="Enter Text" >
-                                </input>
-                            </div>
-                        </div>
-                        <div className="mt-2">
-                            <div className={LabelCss} htmlFor="username">
-                                B Group
-                            </div>
-                            <div>
-                                <input onChange={onChangeFilterInput} className={checkBoxCss} name='group_b' type="text" placeholder="Enter Text" >
-                                </input>
-                            </div>
-                        </div>
-                    </div>
-                )
+                componentData.push(componetSwitch('text'))
+                setGroupsCounter(prevState => prevState + 1)
             }
             setFilterInputs(componentData)
         }
     }, [selectedFilterDetails])
 
+    const AppendNewGroup = () => {
+        const filterType = selectedFilterDetails.type
+        const componentData = componetSwitch(filterType)
+        setFilterInputs(prevState => [...prevState, componentData])
+        setGroupsCounter(prevState => prevState + 1)
+    }
+
     return (
-        <div className="m-1 bg-white">
+        <div className="m-1 bg-gray-100">
             <div className="p-1 py-3 px-2 col-span-2">
                 <div className="block text-left text-blue-700 text-lg  font-bold mb-2">
-                    Filters
+                    Clinical Filters
                 </div>
                 <select
                     onChange={updateSelectedFilter}
-                    // value={filterSelected}
+                    defaultValue={filterSelected}
                     className='w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
                     <option value=''></option>
                     {filterChoices.map((type, index) => (
@@ -164,12 +172,22 @@ const GroupFilters = ({parentCallback, groupFilters}) => {
                     ))}
                 </select>
             </div>
+            {showAddGroupButton && <div onClick={AppendNewGroup} className="p-1 py-3 px-2 col-span-2">
+                <button className="bg-main-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                    Add Group
+                </button>
+            </div>}
             <div className="p-1 py-3 px-2 col-span-2">
                 {filterInputs}
             </div>
             {filterSelected && <div>
                 <button onClick={submitFilters} className="bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
                     Submit
+                </button>
+            </div>}
+            {filterSelected && <div>
+                <button onClick={resetFilters} className="bg-white hover:bg-gray-700 mb-3 w-80 h-20 text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
+                    Reset
                 </button>
             </div>}
         </div>
