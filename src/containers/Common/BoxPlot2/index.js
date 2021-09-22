@@ -7,7 +7,7 @@ import { nest } from 'd3-collection';
 // import { getBreastKeys, getUserDataProjectsTableData } from '../../actions/api_actions'
 
 export default function BoxPlot({ box_data }) {
-  const elementRef = useRef(null);
+  const box_elementRef = useRef(null);
 
   function drawChart(d_){
       // set the dimensions and margins of the graph
@@ -69,7 +69,8 @@ export default function BoxPlot({ box_data }) {
                 interQuantileRange: interQuantileRange,
                 min: min,
                 max: max,
-                Sepal_Length: d[i]['Sepal_Length']
+                Sepal_Length: d[i]['Sepal_Length'],
+                type:"T"
               })
 
               if (min < min_vl){
@@ -98,7 +99,8 @@ export default function BoxPlot({ box_data }) {
                 interQuantileRange: interQuantileRange,
                 min: min,
                 max: max,
-                Sepal_Length: d[i]['Sepal_Length']
+                Sepal_Length: d[i]['Sepal_Length'],
+                type:"N"
               })
               if (min < min_vl){
                 min_vl = min
@@ -136,6 +138,7 @@ export default function BoxPlot({ box_data }) {
       .attr('id',i)
       var key = x(sumstat[i]['key'])-50
       var vl = sumstat[i]['value']
+      // console.log(vl)
 
       for (var z = 0; z < vl.length; z++) {
         p.selectAll("vertLines")
@@ -158,7 +161,7 @@ export default function BoxPlot({ box_data }) {
             .attr("stroke", "black")
             .style("width", 40)
 
-
+        // console.log([vl[z]])
         var boxWidth = 100- 20
         p.selectAll("boxes")
           .data([vl[z]])
@@ -171,8 +174,7 @@ export default function BoxPlot({ box_data }) {
             y(d[0].q3))
           })
           .attr("height", function(d){
-
-            return(y(d[0].q1)-y(d[0].q3))
+            return((y(d[0].q1)-y(d[0].q3)) + 3)
           })
           .attr("width", boxWidth )
           .attr("stroke", "black")
@@ -203,7 +205,13 @@ export default function BoxPlot({ box_data }) {
               return(y(d.Sepal_Length))
             })
             .attr("r", 2)
-            .style("fill", "red")
+            .style("fill", function(d){
+              if(d['type'] === "N"){
+                return "blue"
+              }else{
+                return "red"
+              }
+              })
             .attr("stroke", "black")
         key = key+80
       }
@@ -215,18 +223,15 @@ export default function BoxPlot({ box_data }) {
       //
   }
 
-
   useEffect(()=>{
-    if(box_data){
+    if(Object.keys(box_data).length !== 0){
       drawChart(box_data)
     }
   },[box_data])
 
 
-
-
   return (
-      <div id="box2" style={{'width':'100%','overflowX':'scroll'}}>
+      <div ref={box_elementRef} id="box2" style={{'width':'100%','overflowX':'scroll'}}>
       </div>
   )
 }
