@@ -67,10 +67,15 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_
 
 
     function calculateMutation(genes) {
-      var total = genes.length;
+
+      let total = genes.length;
+
       var i = 0;
       for (var key in genes) {
-        if (Object.keys(genes).indexOf("variant_classification") != -1) i++;
+        // console.log(key);
+        if (Object.keys(genes[key]).indexOf("variant_classification") != -1){
+          i++;
+        }
       }
       return Math.round((i/total)*100, 0) + "%";
     }
@@ -103,7 +108,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_
               'na_z': 1.1,
               'init_sort_direction': 0
           }
-      var new_ga_id = oncoprint.addTracks([_.clone(x)])[0]
+      var new_ga_id = oncoprint.addTracks([x])[0]
       geneData[i].track_id = new_ga_id;
       if (i === 0) {
         share_id = new_ga_id;
@@ -113,7 +118,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_
     }
 
     // oncoprint.hideIds([], true);
-    oncoprint.keepSorted(true);
+    oncoprint.keepSorted(false);
     if(geneData.length>0){
       for (var i = 0; i < geneData.length; i++) {
         var results = [];
@@ -154,18 +159,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_
     var mut_datum = clinicalData['globalMutCnt']
     var custom_datum = clinicalData['custom']
 
-    // var custom_datum = [
-    //   {
-    //     "displayName":'sex',
-    //     "data":[
-    //
-    //       {"sample": "RN10281584","category":"M","value":'M'},
-    //       {"sample": "RN37312989","category":"F","value":'F'},
-    //       {"sample": "RN57508938","category":"F","value":'M'},
-    //       {"sample": "RN44439642","category":"M","value":'M'}
-    //     ]
-    //   }
-    // ]
+
     if(custom_datum.length>0){
       for (var i = 0; i < custom_datum.length; i++) {
         var originDatum = custom_datum[i]
@@ -271,7 +265,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_
     oncoprint.setTrackTooltipFn(mut_id,function(data) {
         return "<b>Sample: " + data.sample + " <br/> Count: " + data.cnt + "</b>";
     });
-
+    oncoprint.keepSorted(true);
 
     oncoprint.releaseRendering();
 
@@ -302,7 +296,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_
     <div>
       <div ref={ref} className={`onco ${watermarkCss}`} id='oncoprint-glyphmap'>
       </div>
-      
+
     </div>
   )
 })
