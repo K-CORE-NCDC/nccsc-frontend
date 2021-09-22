@@ -19,6 +19,7 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
   const [groupFilters, setGroupFilters] = useState({})
   const [geneDatabase, setGeneDatabase] = useState('dna_mutation')
   const [showClinicalFilters, setShowClinicalFilters] = useState(false)
+  const [sampleCountsCard, setSampleCountsCard] = useState([])
 
   useEffect(() => {
     if (inputData) {
@@ -46,7 +47,7 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
   }, [inputData])
 
   useEffect(() => {
-    if(fileredGene !== ""){
+    if (fileredGene !== "") {
       setShowClinicalFilters(true)
     }
   }, [fileredGene])
@@ -56,6 +57,35 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
     setTimeout(function () {
       setLoader(false)
     }, (1000));
+    if (survivalJson && survivalJson.sample_counts) {
+      const sampleCountsObject = survivalJson.sample_counts
+      let totalCount = 0
+      let htmlArray = []
+      if (Object.keys(sampleCountsObject).length > 0) {
+        Object.keys(sampleCountsObject).map(e => {
+          totalCount += sampleCountsObject[e]
+          htmlArray.push(
+            <div key={e} className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue">
+              {`${e} : ${sampleCountsObject[e]}`}
+            </div>
+          )
+        })
+      }
+      if(htmlArray.length>1){
+        setSampleCountsCard([
+          <div key='total' className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue">
+            Total : {totalCount}
+          </div>,
+          ...htmlArray
+        ])
+      }else{
+        setSampleCountsCard([
+          <div key='total' className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue">
+            Total : {totalCount}
+          </div>
+        ])
+      }
+    }
   }, [survivalJson])
 
   useEffect(() => {
@@ -85,6 +115,9 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
         :
         <div className="flex flex-row justify-around">
           <div className="w-1/5 border bg-white">
+            {sampleCountsCard.length > 0 && <div className="m-1 p-1 border border-black border-dashed">
+              {sampleCountsCard}
+            </div>}
             <div className="m-1 p-1">
               <h6 className="text-blue-700 text-lg  font-bold mb-2 text-left" htmlFor="dropdown-gene">Select Gene</h6>
               <select id="dropdown-gene" onChange={(e) => setFilteredGene(e.target.value)}

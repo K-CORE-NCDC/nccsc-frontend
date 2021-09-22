@@ -23,6 +23,7 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
   const [tabCount, setTabCount] = useState()
   const [groupFilters, setGroupFilters] = useState({})
 
+  console.log(groupFilters);
   const updateGroupFilters = (filtersObject) =>{
     if(filtersObject){
       setGroupFilters(filtersObject)
@@ -33,10 +34,10 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
   useEffect(() => {
     if (inputData) {
       setActiveCmp(false)
-      if (inputData.type !== '') {
+      if (inputData.type !== '' && Object.keys(groupFilters).length > 0) {
         setLoader(true)
         console.log('dispatch', {...inputData, filterGroup: groupFilters});
-        dispatch(getVolcanoPlotInfo('POST', {...inputData}))
+        dispatch(getVolcanoPlotInfo('POST', {...inputData, filterGroup: groupFilters}))
       }
     }
   }, [inputData, groupFilters])
@@ -58,36 +59,38 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
       let n_t = 1
       let p_t = 1
       let total = { "negative": 1, "positive": 1 }
-      volcanoJson['table_data'].forEach((item, i) => {
-        // console.log(item)
-        let log2foldchange = parseFloat(item['log2(fold_change)'])
-        if (log2foldchange < 0) {
-          total['negative'] += 1
-          if (neg_count === 5) {
-            return false
-          } else {
-            negative.push({
-              "Gene Name": item['gene'],
-              "Log2FC": parseFloat(item['log2(fold_change)']),
-              "-Log(Pvalue)": item['q_value']
-            })
-            neg_count += 1
+      if('table_data' in volcanoJson){
+        volcanoJson['table_data'].forEach((item, i) => {
+          // console.log(item)
+          let log2foldchange = parseFloat(item['log2(fold_change)'])
+          if (log2foldchange < 0) {
+            total['negative'] += 1
+            if (neg_count === 5) {
+              return false
+            } else {
+              negative.push({
+                "Gene Name": item['gene'],
+                "Log2FC": parseFloat(item['log2(fold_change)']),
+                "-Log(Pvalue)": item['q_value']
+              })
+              neg_count += 1
+            }
           }
-        }
-        else {
-          total['positive'] += 1
-          if (pos_count === 5) {
-            return false
-          } else {
-            positive.push({
-              "Gene Name": item['gene'],
-              "Log2FC": parseFloat(item['log2(fold_change)']),
-              "-Log(Pvalue)": item['q_value']
-            })
-            pos_count += 1
+          else {
+            total['positive'] += 1
+            if (pos_count === 5) {
+              return false
+            } else {
+              positive.push({
+                "Gene Name": item['gene'],
+                "Log2FC": parseFloat(item['log2(fold_change)']),
+                "-Log(Pvalue)": item['q_value']
+              })
+              pos_count += 1
+            }
           }
-        }
-      });
+        });
+      }
 
       // console.log(total['negative'])
       // console.log(total['positive'])
