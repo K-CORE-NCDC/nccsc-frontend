@@ -6,21 +6,33 @@ import { exportComponentAsPNG } from 'react-component-export-image';
 // import Loader from "react-loader-spinner";
 import LoaderCmp from '../../Common/Loader'
 
+
 export default function DataHeatmap({ width,inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
   const dispatch = useDispatch()
   const [activeCmp,setActiveCmp] = useState(false)
   const [tableType,setTableType] = useState('rna')
   const [data_,setData] = useState('')
+  const [inputGene,setInputGene] = useState([])
   const heatmapJson = useSelector((data) => data.dataVisualizationReducer.heatmapSummary);
   // const didMountRef = useRef(false)
   const [watermarkCss, setWatermarkCSS] = useState("")
   const [loader, setLoader] = useState(false)
-console.log(inputData);
+  const [genes,setGenes] = useState([])
+  const [selectedGene,setSelectedGene] = useState([])
+
 
   useEffect(()=>{
     if(inputData){
       setActiveCmp(false)
+      let genes = inputData['genes']
+      let t = []
+      for (var i = 0; i < genes.length; i++) {
+        t.push(<option key={i} value={genes[i]}>{genes[i]}</option>)
+      }
+      setInputGene(t)
+      setGenes(genes)
+      setSelectedGene([genes[0]])
       if(inputData.type !==''){
         setLoader(true)
         inputData['table_type'] = tableType
@@ -55,6 +67,11 @@ console.log(inputData);
 
   }, [screenCapture, watermarkCss])
 
+  // useEffect(()=>{
+  //   if(selectedGene.length === 0){
+  //     setSelectedGene([genes[0]])
+  //   }
+  // },[inputGene,genes])
 
 
   const changeType = (e,type)=> {
@@ -67,11 +84,44 @@ console.log(inputData);
       classList.add("text-teal-700","hover:bg-teal-200", "bg-teal-100")
     }
     e.target.classList.add("hover:bg-main-blue","bg-main-blue","text-white")
+
     setTableType(type)
+    let dataJson = inputData
+    if(type === 'rna'){
+      dataJson['genes'] = genes
+    }else if(type === 'methylation'){
+      dataJson['genes'] = selectedGene
+    }else if(type === 'proteome'){
+      dataJson['genes'] = genes
+    }else if(type === 'phospo'){
+      dataJson['genes'] = selectedGene
+    }
+
     if(inputData.type !==''){
-      let dataJson = inputData
-      // dataJson['genes'] = gene
       dataJson['table_type'] = type
+      dispatch(getHeatmapInformation('POST',inputData))
+    }
+  }
+
+  const setGene = (e)=>{
+    let gene = e.target.value
+    setSelectedGene([gene])
+
+    let dataJson = inputData
+    if(tableType === 'rna'){
+      dataJson['genes'] = genes
+    }else if(tableType === 'methylation'){
+      dataJson['genes'] = [gene]
+    }else if(tableType === 'proteome'){
+      dataJson['genes'] = genes
+    }else if(tableType === 'phospo'){
+      dataJson['genes'] = [gene]
+    }
+
+    if(inputData.type !==''){
+      dataJson['table_type'] = tableType
+      setLoader(true)
+      setActiveCmp(false)
       dispatch(getHeatmapInformation('POST',inputData))
     }
   }
@@ -110,11 +160,19 @@ console.log(inputData);
           </div>
         </div>
         <div className='grid'>
-        {
-          loader?
-          <LoaderCmp/>
-          :<HeatmapCmp watermarkCss={watermarkCss} ref={reference} width={width} data={heatmapJson}/>
-        }
+          { loader? <LoaderCmp/>: <div>
+            {(tableType === 'methylation' || tableType==='phospo') &&
+              <div className='grid grid-cols-6'>
+                {inputGene &&
+                  <select value={selectedGene[0]} onChange={e=>setGene(e)} className="w-full border bg-white rounded px-3 py-2 outline-none text-gray-700" >
+                    {inputGene}
+                  </select>
+                }
+              </div>
+            }
+            {heatmapJson && <HeatmapCmp watermarkCss={watermarkCss} ref={reference} width={width} data={heatmapJson}/>}
+            </div>
+          }
         </div>
       </div>
   )

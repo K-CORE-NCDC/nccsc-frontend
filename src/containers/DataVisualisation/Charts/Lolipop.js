@@ -408,7 +408,7 @@ export default function DataLolipop({ width,inputData, screenCapture, setToFalse
                 <div className='flex float-right'>
                   <div className='p-3'>Selected Gene Is</div>
                   <div>
-                    <select value={gene} onChange={e=>geneSet(e)} class="w-full border bg-white rounded px-3 py-2 outline-none text-gray-700" on>
+                    <select value={gene} onChange={e=>geneSet(e)} className="w-full border bg-white rounded px-3 py-2 outline-none text-gray-700">
                       {genesHtml}
                     </select>
                   </div>
