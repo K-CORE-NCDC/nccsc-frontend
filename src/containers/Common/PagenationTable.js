@@ -3,6 +3,7 @@ import { Chart } from 'react-google-charts';
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
 import config from '../../config.js'
+import NoContentMessage from './NoContentComponent'
 
 const activePageCss = "z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-md font-medium"
 const nonActiveClassCss = "bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-md font-medium"
@@ -123,9 +124,7 @@ function PagenationTable({ imageData }) {
                     </div>
                 </div>
             </div> :
-                <div>
-                    No Images Found
-                </div>
+                <NoContentMessage />
             }
         </>
     )

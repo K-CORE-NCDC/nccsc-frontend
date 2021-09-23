@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import VolcanoCmp from '../../Common/Volcano'
 import GroupFilters from '../../Common/GroupFilter'
 import { exportComponentAsPNG } from 'react-component-export-image';
+import NoContentMessage from '../../Common/NoContentComponent'
 
 import { getVolcanoPlotInfo } from '../../../actions/api_actions'
 // import Loader from "react-loader-spinner";
@@ -22,10 +23,12 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
   const [positiveData, setPositiveData] = useState()
   const [tabCount, setTabCount] = useState()
   const [groupFilters, setGroupFilters] = useState({})
+  const [showVolcano, setShowVolcano] = useState(false)
+  const [noContent, setNoContent] = useState(true)
 
-  console.log(groupFilters);
-  const updateGroupFilters = (filtersObject) =>{
-    if(filtersObject){
+
+  const updateGroupFilters = (filtersObject) => {
+    if (filtersObject) {
       setGroupFilters(filtersObject)
     }
   }
@@ -36,8 +39,8 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
       setActiveCmp(false)
       if (inputData.type !== '' && Object.keys(groupFilters).length > 0) {
         setLoader(true)
-        console.log('dispatch', {...inputData, filterGroup: groupFilters});
-        dispatch(getVolcanoPlotInfo('POST', {...inputData, filterGroup: groupFilters}))
+        console.log('dispatch', { ...inputData, filterGroup: groupFilters });
+        dispatch(getVolcanoPlotInfo('POST', { ...inputData, filterGroup: groupFilters }))
       }
     }
   }, [inputData, groupFilters])
@@ -59,7 +62,7 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
       let n_t = 1
       let p_t = 1
       let total = { "negative": 1, "positive": 1 }
-      if('table_data' in volcanoJson){
+      if ('table_data' in volcanoJson) {
         volcanoJson['table_data'].forEach((item, i) => {
           // console.log(item)
           let log2foldchange = parseFloat(item['log2(fold_change)'])
@@ -100,9 +103,6 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
         "positive": total['positive']
       })
 
-      console.log(negative)
-      console.log(positive)
-
       setNegativeData(negative)
       setPositiveData(positive)
     }
@@ -122,6 +122,21 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
 
   }, [screenCapture, watermarkCss])
 
+  useEffect(() => {
+    if (volcanoJson && volcanoJson.status === 200) {
+      if (volcanoJson && Object.keys(volcanoJson).length > 0) {
+        setShowVolcano(true)
+        setNoContent(false)
+      } else {
+        setShowVolcano(false)
+        setNoContent(true)
+      }
+    } else {
+      setShowVolcano(false)
+      setNoContent(true)
+    }
+  }, [volcanoJson])
+
 
   return (
     <>
@@ -131,10 +146,16 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
           :
           <div className="flex flex-row justify-around">
             <div className="w-1/5">
-              <GroupFilters parentCallback={updateGroupFilters} groupFilters={groupFilters}/>
+              <GroupFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} />
+              <div className="m-1 p-1 border border-black border-dashed">
+                <p className="text-blue-900 text-lg font-bold text-left">{`Blue: Log2FC <= -1.5 & pvalue >= 0.5`}</p>
+                <p className="text-blue-900 text-lg font-bold text-left">{`Red: Log2FC <= 1.5 & pvalue >= 0.5`}</p>
+                <p className="text-blue-900 text-lg font-bold text-left">Grey: Not significant gene</p>
+                <p className="text-blue-900 text-lg font-bold text-left">Black: Selected genes</p>
+              </div>
             </div>
-            <div className="w-4/5" style={{'overflowX':'scroll'}}>
-              {(volcanoJson && Object.keys(volcanoJson).length > 0)
+            <div className="w-4/5" style={{ 'overflowX': 'scroll' }}>
+              {showVolcano
                 && <VolcanoCmp watermarkCss={watermarkCss}
                   ref={reference}
                   w={width}
@@ -143,6 +164,7 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
                   positive_data={positiveData}
                   tab_count={tabCount}
                 />}
+                {noContent && <NoContentMessage />}
             </div>
           </div>
       }

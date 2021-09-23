@@ -1,4 +1,4 @@
-import React, { useState,useEffect,Fragment, useRef } from 'react'
+import React, { useState, useEffect, Fragment, useRef } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import LollipopCmp from '../../Common/Lollipop'
 import { getLolipopInformation } from '../../../actions/api_actions'
@@ -8,39 +8,42 @@ import { exportComponentAsPNG } from 'react-component-export-image';
 // import Loader from "react-loader-spinner";
 import LoaderCmp from '../../Common/Loader'
 import DataTable from 'react-data-table-component';
+import NoContentMessage from '../../Common/NoContentComponent'
 
-export default function DataLolipop({ width,inputData, screenCapture, setToFalseAfterScreenCapture }) {
+export default function DataLolipop({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
   const dispatch = useDispatch()
-  const [genesHtml,setGenesHtml] = useState([])
-  const [gene,setGene] = useState('')
-  const [activeCmp,setActiveCmp] = useState(false)
-  const [tableType,setTableType] = useState('Mutation')
-  const [inputState,setInputState] = useState({})
+  const [genesHtml, setGenesHtml] = useState([])
+  const [gene, setGene] = useState('')
+  const [activeCmp, setActiveCmp] = useState(false)
+  const [tableType, setTableType] = useState('Mutation')
+  const [inputState, setInputState] = useState({})
   const [watermarkCss, setWatermarkCSS] = useState("")
   const lolipopJson = useSelector((data) => data.dataVisualizationReducer.lollipopSummary);
   const [loader, setLoader] = useState(false)
   const [tableData, setTableData] = useState([])
-  const [state,setState] = useState({"domains":[],"lollipop":[],"width":0,'height':0})
-  const [mutationLabel,setMutationLabel] = useState([])
-  const [tableColumnsData,setTableColumnsData] = useState([])
-  const [enstId,setEnstId] = useState([])
-  const [refSeqId,setRefSeqId] = useState([])
+  const [state, setState] = useState({ "domains": [], "lollipop": [], "width": 0, 'height': 0 })
+  const [mutationLabel, setMutationLabel] = useState([])
+  const [tableColumnsData, setTableColumnsData] = useState([])
+  const [enstId, setEnstId] = useState([])
+  const [refSeqId, setRefSeqId] = useState([])
+  const [showLollipop, setShowLollipop] = useState(false)
+  const [noContent, setNoContent] = useState(true)
   let mutation_colors = {
-    'In_Frame_Del':'#1b4879',
-    'In_Frame_Ins':'#c74951',
-    'Frame_Shift_Del':'#603d92',
-    'Frame_Shift_Ins':'#3778ae',
-    'Nonsense_Mutation':'#d3352b',
-    'Splice_Site':'#f28432',
-    'Germline':'#000000',
-    'Missense_Mutation':'#549d3e'
+    'In_Frame_Del': '#1b4879',
+    'In_Frame_Ins': '#c74951',
+    'Frame_Shift_Del': '#603d92',
+    'Frame_Shift_Ins': '#3778ae',
+    'Nonsense_Mutation': '#d3352b',
+    'Splice_Site': '#f28432',
+    'Germline': '#000000',
+    'Missense_Mutation': '#549d3e'
   }
 
   let phospo_colors = {
-    "S":"#1b4879",
-    "T":'#603d92',
-    "Y":'#d3352b'
+    "S": "#1b4879",
+    "T": '#603d92',
+    "Y": '#d3352b'
   }
 
 
@@ -48,13 +51,13 @@ export default function DataLolipop({ width,inputData, screenCapture, setToFalse
   const geneSet = (e) => {
     let gene = e.target.value
     setGene(gene)
-    if(inputData.type !==''){
+    if (inputData.type !== '') {
       let dataJson = inputData
       dataJson['genes'] = gene
       dataJson['table_type'] = tableType
       setLoader(true)
       setActiveCmp(false)
-      dispatch(getLolipopInformation('POST',dataJson))
+      dispatch(getLolipopInformation('POST', dataJson))
     }
   }
 
@@ -63,7 +66,7 @@ export default function DataLolipop({ width,inputData, screenCapture, setToFalse
     let t = []
     for (var i = 0; i < genes.length; i++) {
       t.push(
-        <option key={i+'_'+genes[i]} value={genes[i]}>
+        <option key={i + '_' + genes[i]} value={genes[i]}>
           {genes[i]}
         </option>
       )
@@ -71,33 +74,33 @@ export default function DataLolipop({ width,inputData, screenCapture, setToFalse
     setGenesHtml(t)
   }
 
-  useEffect(()=>{
-    if(inputData && 'genes' in inputData){
-      setInputState((prevState) => ({...prevState,...inputData }))
+  useEffect(() => {
+    if (inputData && 'genes' in inputData) {
+      setInputState((prevState) => ({ ...prevState, ...inputData }))
     }
-  },[inputData])
+  }, [inputData])
 
-  useEffect(()=>{
-    if(inputState && 'genes' in inputState){
+  useEffect(() => {
+    if (inputState && 'genes' in inputState) {
       let g = inputState['genes']
       loadGenesDropdown(g)
       setGene(g[0])
-      if(inputState.type !==''){
+      if (inputState.type !== '') {
         let dataJson = inputState
         setLoader(true)
         dataJson['genes'] = g[0]
         dataJson['table_type'] = tableType
-        dispatch(getLolipopInformation('POST',dataJson))
+        dispatch(getLolipopInformation('POST', dataJson))
       }
       setTableType(tableType)
     }
-  },[inputState])
+  }, [inputState])
 
   const classNames = (...classes) => {
     return classes.filter(Boolean).join(' ')
   }
 
-  const generateColor = ()=>{
+  const generateColor = () => {
     var letters = "0123456789ABCDEF";
     var color = '#';
     for (var i = 0; i < 6; i++)
@@ -106,9 +109,9 @@ export default function DataLolipop({ width,inputData, screenCapture, setToFalse
   }
 
 
-  useEffect(()=>{
-    if(lolipopJson){
-      if(Object.keys(lolipopJson).length>0){
+  useEffect(() => {
+    if (lolipopJson) {
+      if (Object.keys(lolipopJson).length > 0) {
         let domainsTmp = {}
         let domains = []
         let lollipop = []
@@ -121,46 +124,46 @@ export default function DataLolipop({ width,inputData, screenCapture, setToFalse
         let table_cols = []
         let enst_id = []
         let refseq_id = []
-        if(data.length>0){
+        if (data.length > 0) {
           console.log(data);
           for (var i = 0; i < data.length; i++) {
-            if(tableType === "Mutation"){
+            if (tableType === "Mutation") {
               let vc_sample = data[i]['variant_classification']
-              if(vc_sample in lollipopLegenedTmp){
-                if(lollipopLegenedTmp[vc_sample].includes(data[i].sample)==false){
+              if (vc_sample in lollipopLegenedTmp) {
+                if (lollipopLegenedTmp[vc_sample].includes(data[i].sample) == false) {
                   lollipopLegenedTmp[vc_sample].push(data[i].sample)
                 }
-              }else{
+              } else {
                 lollipopLegenedTmp[vc_sample] = [data[i].sample]
               }
-              if(data[i]['protien']){
-                let protein = data[i]['protien'].replace(/[^\d]/g,'');
-                let p_vc = protein+"||"+data[i]['variant_classification']
+              if (data[i]['protien']) {
+                let protein = data[i]['protien'].replace(/[^\d]/g, '');
+                let p_vc = protein + "||" + data[i]['variant_classification']
 
-                if(p_vc in lollipopTmp){
-                  lollipopTmp[p_vc].push(data[i]['sample']+"||"+data[i]['protien'])
-                }else{
-                  lollipopTmp[p_vc] = [data[i]['sample']+"||"+data[i]['protien']]
+                if (p_vc in lollipopTmp) {
+                  lollipopTmp[p_vc].push(data[i]['sample'] + "||" + data[i]['protien'])
+                } else {
+                  lollipopTmp[p_vc] = [data[i]['sample'] + "||" + data[i]['protien']]
                 }
               }
               table_data.push({
-                "sample":data[i]['sample'],
-                "protein":data[i]['protien'],
-                "variant_classification":data[i]['variant_classification']
+                "sample": data[i]['sample'],
+                "protein": data[i]['protien'],
+                "variant_classification": data[i]['variant_classification']
               })
 
               refseq_id.push(data[i]['refseq_mrna_id'])
               enst_id.push(data[i]['annotation_transcript'])
 
-            }else if(tableType=="Phospho"){
+            } else if (tableType == "Phospho") {
               let site_sample = data[i]['site'].split(' ')
               for (var k = 0; k < site_sample.length; k++) {
-                if(site_sample[k] in lollipopLegenedTmp){
-                  if(lollipopLegenedTmp[site_sample[k]].includes(data[i].sample)==false){
+                if (site_sample[k] in lollipopLegenedTmp) {
+                  if (lollipopLegenedTmp[site_sample[k]].includes(data[i].sample) == false) {
                     lollipopLegenedTmp[site_sample[k]].push(data[i].sample)
                   }
                 }
-                else{
+                else {
                   lollipopLegenedTmp[site_sample[k]] = [data[i].sample]
                 }
               }
@@ -177,7 +180,7 @@ export default function DataLolipop({ width,inputData, screenCapture, setToFalse
         let tmp = []
         let height = []
         let colors
-        if(tableType === "Mutation"){
+        if (tableType === "Mutation") {
           table_cols = [
             {
               name: 'Sample Id',
@@ -196,26 +199,26 @@ export default function DataLolipop({ width,inputData, screenCapture, setToFalse
           for (var key in mutation_colors) {
             let name = key
             let count = 0
-            if(key in lollipopLegenedTmp){
+            if (key in lollipopLegenedTmp) {
               count = lollipopLegenedTmp[key].length
             }
             tmp.push(
               <div className='p-3'>
-                <span style={{'backgroundColor':colors[key]}} className="inline-flex items-center justify-center px-3 mr-3 pb-1 text-md font-bold leading-none text-white rounded-full">
-                  { count }
+                <span style={{ 'backgroundColor': colors[key] }} className="inline-flex items-center justify-center px-3 mr-3 pb-1 text-md font-bold leading-none text-white rounded-full">
+                  {count}
                 </span>
-                <text style={{'color':colors[key]}}><strong>{key}</strong></text>
+                <text style={{ 'color': colors[key] }}><strong>{key}</strong></text>
               </div>
             )
             for (var vc in lollipopTmp) {
-              if(vc.includes(key)){
+              if (vc.includes(key)) {
                 let codon = vc.split("||")
                 lollipop.push({
-                  "codon":codon[0],
+                  "codon": codon[0],
                   'count': lollipopTmp[vc].length,
-                  'color':colors[key],
+                  'color': colors[key],
                   'tooltip': {
-                    'header':'Protein Change',
+                    'header': 'Protein Change',
                     'body': lollipopTmp[vc][0].split('||')[1]
                   }
                 })
@@ -223,7 +226,7 @@ export default function DataLolipop({ width,inputData, screenCapture, setToFalse
               }
             }
           }
-        }else{
+        } else {
           table_cols = [
             {
               name: 'Sample Id',
@@ -245,55 +248,55 @@ export default function DataLolipop({ width,inputData, screenCapture, setToFalse
           )
           colors = phospo_colors
           let phospho_tmp = {}
-          for(var key in lollipopLegenedTmp){
-            let name = key.substring(0,1)
-            if( name in phospho_tmp){
+          for (var key in lollipopLegenedTmp) {
+            let name = key.substring(0, 1)
+            if (name in phospho_tmp) {
               phospho_tmp[name] += lollipopLegenedTmp[key].length
-            }else{
+            } else {
               phospho_tmp[name] = lollipopLegenedTmp[key].length
             }
-            let position = key.replace(/[^\d]/g,'');
+            let position = key.replace(/[^\d]/g, '');
             lollipop.push({
-              "codon":position,
+              "codon": position,
               'count': lollipopLegenedTmp[key].length,
-              'color':colors[key.substring(0,1)],
+              'color': colors[key.substring(0, 1)],
               'tooltip': {
-                'header': key+' Site',
-                'body': lollipopLegenedTmp[key].length+' Phosphorelytions'
+                'header': key + ' Site',
+                'body': lollipopLegenedTmp[key].length + ' Phosphorelytions'
               }
             })
 
             height.push(lollipopLegenedTmp[key].length)
           }
-          for(var key in phospo_colors){
+          for (var key in phospo_colors) {
             let name = key
             let count = 0
-            if(key in phospho_tmp){
+            if (key in phospho_tmp) {
               count = phospho_tmp[key]
             }
             tmp.push(
               <div className='p-3'>
-                <span style={{'backgroundColor':colors[name]}} className="inline-flex items-center justify-center px-3 mr-3 pb-1 text-md font-bold leading-none text-white rounded-full">
-                  { count }
+                <span style={{ 'backgroundColor': colors[name] }} className="inline-flex items-center justify-center px-3 mr-3 pb-1 text-md font-bold leading-none text-white rounded-full">
+                  {count}
                 </span>
-                <text style={{'color':colors[key]}}><strong>{name}</strong></text>
+                <text style={{ 'color': colors[key] }}><strong>{name}</strong></text>
               </div>
             )
           }
           tmp.push(<div className='p-3'> / Major Site:</div>)
-          for(var key in lollipopLegenedTmp){
+          for (var key in lollipopLegenedTmp) {
             tmp.push(<div className='p-3'>
-              <text ><strong>{key+"("+lollipopLegenedTmp[key].length+")"}</strong></text>
+              <text ><strong>{key + "(" + lollipopLegenedTmp[key].length + ")"}</strong></text>
             </div>)
           }
         }
 
         let domains_data = lolipopJson['domains']
         for (var i = 0; i < domains_data.length; i++) {
-          let l = (domains_data[i].end-domains_data[i].start)/domains_data[i]['domain'].length
-          let name = domains_data[i]['domain'].substring(0,l)
-          if(name == ''){
-            name =  domains_data[i]['domain'].substring(0,1)
+          let l = (domains_data[i].end - domains_data[i].start) / domains_data[i]['domain'].length
+          let name = domains_data[i]['domain'].substring(0, l)
+          if (name == '') {
+            name = domains_data[i]['domain'].substring(0, 1)
           }
 
 
@@ -302,17 +305,17 @@ export default function DataLolipop({ width,inputData, screenCapture, setToFalse
           domains.push({
             "startCodon": domains_data[i]['start'],
             "endCodon": domains_data[i]['end'],
-            "label": name+'...',
+            "label": name + '...',
             'color': generateColor(),
             'tooltip': {
-              "body": domains_data[i]['domain']+" ("+domains_data[i]['start']+" - "+domains_data[i]['end']+")"
+              "body": domains_data[i]['domain'] + " (" + domains_data[i]['start'] + " - " + domains_data[i]['end'] + ")"
             }
           })
         }
         let w = 300
         let h = 10
-        if (width.length>0) w = Math.max(...width)
-        if (height.length>0) h = Math.max(...height)
+        if (width.length > 0) w = Math.max(...width)
+        if (height.length > 0) h = Math.max(...height)
 
         setMutationLabel(tmp)
         setTableData(table_data)
@@ -320,87 +323,98 @@ export default function DataLolipop({ width,inputData, screenCapture, setToFalse
         setState((prevState) => ({
           ...prevState,
           'domains': domains,
-          'lollipop':lollipop,
-          "width": w+100,
-          "height": h+10
+          'lollipop': lollipop,
+          "width": w + 100,
+          "height": h + 10
         }))
 
         setActiveCmp(true)
         setLoader(false)
       }
     }
-  },[lolipopJson])
+  }, [lolipopJson])
 
-  useEffect(()=>{
-    if(activeCmp){
+  useEffect(() => {
+    if (activeCmp) {
       let c = document.getElementsByName('type')
       for (var i = 0; i < c.length; i++) {
         let classList = c[i].classList
-        classList.remove("hover:bg-main-blue","bg-main-blue","text-white");
-        classList.add("text-teal-700","hover:bg-teal-200", "bg-teal-100")
+        classList.remove("hover:bg-main-blue", "bg-main-blue", "text-white");
+        classList.add("text-teal-700", "hover:bg-teal-200", "bg-teal-100")
       }
-      document.getElementById(tableType).classList.add("hover:bg-main-blue","bg-main-blue","text-white")
+      document.getElementById(tableType).classList.add("hover:bg-main-blue", "bg-main-blue", "text-white")
     }
-  },[activeCmp])
+  }, [activeCmp])
 
 
   useEffect(() => {
-    if(screenCapture){
+    if (screenCapture) {
       setWatermarkCSS("watermark")
-    }else{
+    } else {
       setWatermarkCSS("")
     }
-    if(watermarkCss !== "" && screenCapture){
+    if (watermarkCss !== "" && screenCapture) {
       exportComponentAsPNG(reference)
       setToFalseAfterScreenCapture()
     }
   }, [screenCapture, watermarkCss])
 
 
-  const changeType = (e,type)=> {
+  const changeType = (e, type) => {
     let c = document.getElementsByName('type')
     for (var i = 0; i < c.length; i++) {
       let classList = c[i].classList
-      classList.remove("hover:bg-main-blue","bg-main-blue","text-white");
-      classList.add("text-teal-700","hover:bg-teal-200", "bg-teal-100")
+      classList.remove("hover:bg-main-blue", "bg-main-blue", "text-white");
+      classList.add("text-teal-700", "hover:bg-teal-200", "bg-teal-100")
     }
-    e.target.classList.add("hover:bg-main-blue","bg-main-blue","text-white")
+    e.target.classList.add("hover:bg-main-blue", "bg-main-blue", "text-white")
     setTableType(type)
     setActiveCmp(false)
     setLoader(true)
-    if(inputData.type !==''){
+    if (inputData.type !== '') {
       let dataJson = inputData
       dataJson['genes'] = gene
       dataJson['table_type'] = type
-      dispatch(getLolipopInformation('POST',dataJson))
+      dispatch(getLolipopInformation('POST', dataJson))
     }
 
   }
 
+  useEffect(() => {
+    if (lolipopJson && lolipopJson.status === 200) {
+      setShowLollipop(true)
+      setNoContent(false)
+    } else {
+      setShowLollipop(false)
+      setNoContent(true)
+    }
+  }, [lolipopJson])
+
 
   return (
     <>{
-        loader?
-        <LoaderCmp/>
+      loader ?
+        <LoaderCmp />
         :
         <div>
           {activeCmp &&
-          <Fragment>
-            <div className="grid grid-cols-2  ">
-              <div className="p-5 text-right">
-                <div className="flex justify-start items-baseline flex-wrap">
-                  <div className="flex m-2">
-                    <button onClick={e=>changeType(e,'Mutation')} id='Mutation' name='type' className="rounded-r-none  hover:scale-110
+            <Fragment>
+              <div className="grid grid-cols-2  ">
+                <div className="p-5 text-right">
+                  <div className="flex justify-start items-baseline flex-wrap">
+                    <div className="flex m-2">
+                      <button onClick={e => changeType(e, 'Mutation')} id='Mutation' name='type' className="rounded-r-none  hover:scale-110
                       focus:outline-none flex p-5 rounded font-bold cursor-pointer
                       hover:bg-main-blue  bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition">
                         Mutation
-                    </button>
-                    <button onClick={e=>changeType(e,'Phospho')} id='Phospho' name='type' className="rounded-l-none border-l-0
+                      </button>
+                      <button onClick={e => changeType(e, 'Phospho')} id='Phospho' name='type' className="rounded-l-none border-l-0
                       hover:scale-110 focus:outline-none flex justify-center p-5
                       rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100
                       text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
                         Phospho
-                    </button>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -414,44 +428,46 @@ export default function DataLolipop({ width,inputData, screenCapture, setToFalse
                   </div>
                 </div>
               </div>
-            </div>
-            <div className='grid p-10'>
-              <div className='bg-white flex'>
-                <LollipopCmp watermarkCss={watermarkCss} ref={reference} width={width} type={tableType}
-                  gene={gene}
-                  data={state}
-                />
-                {tableType==="Mutation" &&
-                  <div className='absolute right-10 flex'>
-                    <div className='m-3 text-left'>
-                      <label>Enst Id List</label>
-                      <textarea className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none" rows="4">
-                        {enstId.join("\n")}
-                      </textarea>
-                    </div>
-                    <div className='m-3 text-left'>
-                      <label>Refseq MRNA Id List</label>
-                      <textarea className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none" rows="4">
-                        {refSeqId.join("\n")}
-                      </textarea>
-                    </div>
+              <>
+                {noContent && <NoContentMessage />}
+                {showLollipop && <div className='grid p-10'>
+                  <div className='bg-white flex'>
+                    <LollipopCmp watermarkCss={watermarkCss} ref={reference} width={width} type={tableType}
+                      gene={gene}
+                      data={state}
+                    />
+                    {tableType === "Mutation" &&
+                      <div className='absolute right-10 flex'>
+                        <div className='m-3 text-left'>
+                          <label>Enst Id List</label>
+                          <textarea className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none" rows="4">
+                            {enstId.join("\n")}
+                          </textarea>
+                        </div>
+                        <div className='m-3 text-left'>
+                          <label>Refseq MRNA Id List</label>
+                          <textarea className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none" rows="4">
+                            {refSeqId.join("\n")}
+                          </textarea>
+                        </div>
+                      </div>
+                    }
+
                   </div>
-                }
+                  <div className='flex bg-blue-100 p-10'>
+                    {mutationLabel}
+                  </div>
 
-              </div>
-              <div className='flex bg-blue-100 p-10'>
-                {mutationLabel}
-              </div>
+                  {tableData.length > 0 && <div className='mt-5'>
 
-              {tableData.length>0 &&<div className='mt-5'>
-
-                <DataTable pagination
-                  columns={tableColumnsData}
-                  data={tableData}
-                />
-              </div>}
-            </div>
-          </Fragment>
+                    <DataTable pagination
+                      columns={tableColumnsData}
+                      data={tableData}
+                    />
+                  </div>}
+                </div>}
+              </>
+            </Fragment>
           }
         </div>
     }

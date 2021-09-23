@@ -6,6 +6,7 @@ import { exportComponentAsPNG } from 'react-component-export-image';
 // import Loader from "react-loader-spinner";
 import UserFilesTable from '../../Common/Table'
 import LoaderCmp from '../../Common/Loader'
+import NoContentMessage from '../../Common/NoContentComponent'
 
 export default function DataOnco({ width,inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
@@ -18,6 +19,8 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
   const [loader, setLoader] = useState(false)
   const [tableData, setTableData] = useState("")
   const [tableCount, setTableCount] = useState()
+  const [showOnco, setShowOnco] = useState(false)
+  const [noContent, setNoContent] = useState(true)
 
   useEffect(()=>{
     if(inputData && 'genes' in inputData){
@@ -131,6 +134,16 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
     }, (1000));
   }, [oncoJson])
 
+  useEffect(() => {
+    if (oncoJson && oncoJson.status === 200) {
+      setShowOnco(true)
+      setNoContent(false)
+    } else {
+      setShowOnco(false)
+      setNoContent(true)
+    }
+  }, [oncoJson])
+
   // console.log("tableCount---->",tableCount)
 
   return (
@@ -142,7 +155,7 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
         {activeCmp &&
           <div className="grid ">
             <div className="col-span-2">
-              <div className='text-left'>
+              {showOnco && <div className='text-left'>
                 <div className="pl-10">
                 <h3>Global Mutation Distribution :distribution of total mutation</h3>
                 <h3>Global Mutation Count :count of total somatic mutation</h3>
@@ -157,7 +170,8 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
                 table_data={tableData}
                 table_count={tableCount}
                 />
-              </div>
+              </div>}
+              {noContent && <NoContentMessage />}
             </div>
 
           </div>
