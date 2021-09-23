@@ -160,9 +160,9 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
         {
           loader?
             <LoaderCmp/>
-            :boxJson && 
+            :boxJson &&
             <>
-            {showBoxPlot && <BoxPlot box_data={boxJson} ref={reference} width={width}/>}
+            {showBoxPlot && <BoxPlot box_data={boxJson}  ref={reference} width={width}/>}
             {noContent && <NoContentMessage />}
             </>
         }

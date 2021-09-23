@@ -131,14 +131,14 @@ export default function DataHeatmap({ width,inputData, screenCapture, setToFalse
 
   return (
     <div>
-      <div className="grid grid-cols-2  ">
+      <div className="grid  ">
         <div className="p-5 text-right">
           <div className="flex justify-start items-baseline flex-wrap">
             <div className="flex m-2">
               <button onClick={e => changeType(e, 'rna')} name='type' className="rounded-r-none  hover:scale-110
                   focus:outline-none flex p-5 rounded font-bold cursor-pointer
                   hover:bg-main-blue  bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition">
-                Rna
+                RNA
               </button>
               <button onClick={e => changeType(e, 'methylation')} name='type' className="rounded-l-none border-l-0
                   hover:scale-110 focus:outline-none flex justify-center p-5
@@ -150,13 +150,13 @@ export default function DataHeatmap({ width,inputData, screenCapture, setToFalse
                   hover:scale-110 focus:outline-none flex justify-center p-5
                   rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100
                   text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
-                Proteome
+                Global Proteome
               </button>
               <button onClick={e => changeType(e, 'phospo')} name='type' className="rounded-l-none border-l-0
                   hover:scale-110 focus:outline-none flex justify-center p-5
                   rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100
                   text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
-                Phospo
+                Phospho
               </button>
             </div>
           </div>

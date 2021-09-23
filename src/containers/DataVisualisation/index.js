@@ -50,7 +50,6 @@ export default function DataVisualization() {
 
   const callback = useCallback((filters) => {
     let type = document.getElementById('gene_type').value
-    console.log(filters);
     let g = genes[type].data
     document.getElementById('genes').value = g.join(' ')
     setState((prevState) => ({
@@ -161,7 +160,7 @@ export default function DataVisualization() {
       l = availableTabsForProject
     } else {
 
-      l = ['circos', 'onco', 'lollipop', 'volcano', 'heatmap', 'survival', 'scatter','igv','box']
+      l = ['circos', 'onco', 'lollipop', 'volcano', 'heatmap', 'survival', 'scatter','cnv','box']
 
     }
     let tmp = []
@@ -171,16 +170,21 @@ export default function DataVisualization() {
       if (tab === element) {
         classes = classes + " border-blue-400 border-b-4 -mb-px opacity-100"
       }
+      let name = ' Plot'
+      if( element === 'heatmap') {
+        name=''
+      }
       if (project_id !== undefined) {
         tmp.push(
           <li key={element} className={classes}>
-            <Link className="capitalize" to={`/visualise/${element}/${project_id}`}>{element} plot</Link>
+            <Link className="capitalize" to={`/visualise/${element}/${project_id}`}>{element+name}</Link>
           </li>
         )
       } else {
+
         tmp.push(
           <li key={element} className={classes}>
-            <Link className="capitalize" to={`/visualise/${element}/`}>{element} Plot</Link>
+            <Link className="capitalize" to={`/visualise/${element}/`}>{element+name}</Link>
           </li>
         )
       }
@@ -237,7 +241,7 @@ export default function DataVisualization() {
         return Charts.survival(w, state, screenCapture, setToFalseAfterScreenCapture)
       case "scatter":
         return Charts.scatter(w, state, screenCapture, setToFalseAfterScreenCapture)
-      case "igv":
+      case "cnv":
         return Charts.igv(w, state, screenCapture, setToFalseAfterScreenCapture)
       case "fusion":
         return Charts.fusion(w, state, screenCapture, setToFalseAfterScreenCapture)

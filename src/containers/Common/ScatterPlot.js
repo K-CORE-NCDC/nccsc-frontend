@@ -4,16 +4,26 @@ import { useParams } from "react-router-dom";
 import * as d3 from 'd3';
 import test_data from './test_scatter_data'
 import {Chart, registerables} from 'chart.js';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
+// import ChartDataLabels from 'chartjs-pslugin-datalabels';
 
 Chart.register(...registerables);
 // import genes from '../Common/gene.json'
 // import { getBreastKeys, getUserDataProjectsTableData } from '../../actions/api_actions'
 var myChart
 export default function ScatterPlot({ scatter_data }) {
+  const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
   const scatter_plot = useRef(null);
   const [chartV, setChartV] = useState()
   let option = {
+    plugins:{
+      tooltip: {
+        callbacks: {
+          label: function(tooltipItem, data) {
+            return  BrstKeys[tooltipItem['raw']['sample']]+ ': (' + tooltipItem.raw.x + ', ' + tooltipItem.raw.y + ')';
+          }
+        }
+      },
+    },
     scales: {
       x: {
         type: 'linear',
@@ -21,21 +31,7 @@ export default function ScatterPlot({ scatter_data }) {
       }
     },
     responsive:true,
-    tooltips: {
-      // mode: "index",
-      intersect: false,
-      callbacks: { //Added callbacks for label
-        // title: () => {
-        //   return "";
-        // },
-        label: (tooltipItems, data) => {
-          console.log("data--->",data)
-          return "[" + tooltipItems.xLabel + "," + tooltipItems.yLabel + "]";
-        }
-      }
-  },
-    plugins: [ChartDataLabels]
-}
+  }
 
 
   const drawChart = (data_) =>{

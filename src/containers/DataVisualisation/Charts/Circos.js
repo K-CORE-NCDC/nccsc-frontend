@@ -30,7 +30,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   const [showOncoTimelineTables, setShowOncoTimelineTables] = useState(false)
   const [showNoContent, setShowNoContent] = useState(false)
   const [renderCircos, setRenderCircos] = useState(false)
-  console.log(renderCircos);
+  
 
   const closeShowOncoImages = () => {
     setShowOncoImages(false)
@@ -82,7 +82,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
           document.getElementById('images').classList.add("opacity-50")
           document.getElementById('tables').classList.add("opacity-50")
         }
-        // setLoader(true)
+        setLoader(true)
         setRenderCircos(false)
         dispatch(getCircosInformation('POST', editInputData))
       }
@@ -155,7 +155,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
           setShowNoContent(true)
         }
     }
-    
+
   }, [circosJson])
 
 

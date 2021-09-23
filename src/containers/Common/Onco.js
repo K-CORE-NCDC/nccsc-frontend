@@ -1,5 +1,6 @@
 import { element } from 'prop-types';
 import React, { useState,useEffect } from 'react'
+import { useSelector, useDispatch } from "react-redux";
 import Oncoprint from "oncoprintjs";
 import _ from 'lodash';
 import './rules';
@@ -8,6 +9,7 @@ import UserFilesTable from './Table'
 const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_count }, ref) => {
 
   const [state, setState] = useState({});
+  const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
 
   const drawChart = (w,gData,cData) => {
     var clinical_custom_track_params = {
@@ -136,7 +138,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_
         oncoprint.setTrackInfo(geneData[i].track_id, calculateMutation(results));
         oncoprint.setTrackTooltipFn(geneData[i].track_id, function(data) {
 
-          var result = "<b>Sample: " + data.sample + "</b>"
+          var result = "<b>Sample: " + BrstKeys[data.sample] + "</b>"
           if (data.snv_class) {
               result = result + "<br>SNV Class: " + data.snv_class;
           }
@@ -245,25 +247,25 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_
     oncoprint.setTrackInfo(global_mut_category_id, "");
     oncoprint.setTrackData(global_mut_category_id, global_mut_category_datum, 'sample');
     oncoprint.setTrackTooltipFn(global_mut_category_id,function(data) {
-        return "<b>Sample: " + data.sample + "</b>";
+        return "<b>Sample: " + BrstKeys[data.sample] + "</b>";
     });
 
     oncoprint.setTrackInfo(mut_category_id, "");
     oncoprint.setTrackData(mut_category_id, mut_category_datum, 'sample');
     oncoprint.setTrackTooltipFn(mut_category_id,function(data) {
-        return "<b>Sample: " + data.sample + "</b>";
+        return "<b>Sample: " + BrstKeys[data.sample] + "</b>";
     });
 
     oncoprint.setTrackInfo(global_mut_id, "");
     oncoprint.setTrackData(global_mut_id, global_mut_datum, 'sample');
     oncoprint.setTrackTooltipFn(global_mut_id,function(data) {
-        return "<b>Sample: " + data.sample + " <br/> Count: " + data.cnt + "</b>";
+        return "<b>Sample: " + BrstKeys[data.sample] + " <br/> Count: " + data.cnt + "</b>";
     });
 
     oncoprint.setTrackInfo(mut_id, "");
     oncoprint.setTrackData(mut_id, mut_datum, 'sample');
     oncoprint.setTrackTooltipFn(mut_id,function(data) {
-        return "<b>Sample: " + data.sample + " <br/> Count: " + data.cnt + "</b>";
+        return "<b>Sample: " + BrstKeys[data.sample] + " <br/> Count: " + data.cnt + "</b>";
     });
     oncoprint.keepSorted(true);
 
