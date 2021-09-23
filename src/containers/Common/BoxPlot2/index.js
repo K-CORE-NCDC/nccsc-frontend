@@ -8,6 +8,7 @@ import { nest } from 'd3-collection';
 
 export default function BoxPlot({ box_data }) {
   const box_elementRef = useRef(null);
+  const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
 
   function drawChart(d_){
       // set the dimensions and margins of the graph
@@ -33,7 +34,8 @@ export default function BoxPlot({ box_data }) {
           .attr("transform",
                 "translate(" + margin.left + "," + margin.top + ")");
 
-
+      var tooltip = d3.select("#box2").append("div").attr('class','boxplot_tooltip')
+                 .style("opacity", 0);
     // Compute quartiles, median, inter quantile range min and max --> these info are then used to draw the box.
      // nest function allows to group the calculation per level of a factor
     var max_vl = 5 //d_['max']
@@ -70,7 +72,8 @@ export default function BoxPlot({ box_data }) {
                 min: min,
                 max: max,
                 Sepal_Length: d[i]['Sepal_Length'],
-                type:"T"
+                type:"T",
+                Sample:d[i]['Sample']
               })
 
               if (min < min_vl){
@@ -100,7 +103,8 @@ export default function BoxPlot({ box_data }) {
                 min: min,
                 max: max,
                 Sepal_Length: d[i]['Sepal_Length'],
-                type:"N"
+                type:"N",
+                Sample:d[i]['Sample']
               })
               if (min < min_vl){
                 min_vl = min
@@ -162,7 +166,7 @@ export default function BoxPlot({ box_data }) {
             .style("width", 40)
 
         // console.log([vl[z]])
-        var boxWidth = 100- 20
+        var boxWidth = 100- 50
         p.selectAll("boxes")
           .data([vl[z]])
           .enter()
@@ -197,22 +201,43 @@ export default function BoxPlot({ box_data }) {
           .data(vl[z])
           .enter()
           .append("circle")
-            .attr("cx", function(d){
-              return(key - jitterWidth/2 + Math.random()*jitterWidth )
+          .attr("cx", function(d){
+            return(key - jitterWidth/2 + Math.random()*jitterWidth )
+          })
+          .attr("cy", function(d){
+            // console.log(d);
+            return(y(d.Sepal_Length))
+          })
+          .attr("r", 2)
+          .style("fill", function(d){
+            if(d['type'] === "N"){
+              return "blue"
+            }else{
+              return "red"
+            }
             })
-            .attr("cy", function(d){
-              // console.log(d);
-              return(y(d.Sepal_Length))
-            })
-            .attr("r", 2)
-            .style("fill", function(d){
-              if(d['type'] === "N"){
-                return "blue"
-              }else{
-                return "red"
-              }
-              })
-            .attr("stroke", "black")
+          .attr("stroke", function(d){
+            if(d['type'] === "N"){
+              return "blue"
+            }else{
+              return "red"
+            }
+          })
+          .on("mouseover", (d,i)=> {
+
+            tooltip.transition()
+              .duration(200)
+              .style('opacity', 0.9);
+            tooltip.html("Sample:<br/>"+BrstKeys[i.Sample]+"<br/>gene val<br/>"+i.Sepal_Length)
+              .style('left', d.pageX + 'px')
+              .style('top', d.pageY - 28 + 'px');
+          })
+          .on('mouseout', () => {
+            tooltip
+              .transition()
+              .duration(500)
+              .style('opacity', 0);
+          });
         key = key+80
       }
 
