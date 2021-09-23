@@ -201,7 +201,6 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
           })
       }
     }
-    console.log(cnvData);
     let chord_data = api_data['fusion_genes_data']
     if ('sv_data' in api_data){
       let svData = api_data['sv_data']

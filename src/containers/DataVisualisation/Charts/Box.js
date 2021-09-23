@@ -6,6 +6,7 @@ import { getBoxInformation} from '../../../actions/api_actions'
 import '../../../assets/css/style.css'
 import { exportComponentAsPNG } from 'react-component-export-image';
 import Multiselect from 'multiselect-react-dropdown';
+import NoContentMessage from '../../Common/NoContentComponent'
 
 export default function Box({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
@@ -19,6 +20,8 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
   const [inputState,setInputState] = useState({})
   const [genesHtml,setGenesHtml] = useState([])
   const [selectedValue,setSelectedValue] = useState('')
+  const [showBoxPlot, setShowBoxPlot] = useState(false)
+  const [noContent, setNoContent] = useState(true)
 
   // useEffect(() => {
   //   if (inputData) {
@@ -129,6 +132,16 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
     }, (1000));
   }, [boxJson])
 
+  useEffect(() => {
+    if (boxJson && boxJson.status === 200) {
+      setShowBoxPlot(true)
+      setNoContent(false)
+    } else {
+      setShowBoxPlot(false)
+      setNoContent(true)
+    }
+  }, [boxJson])
+
   return (
     <>
         <div className="grid">
@@ -147,7 +160,11 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
         {
           loader?
             <LoaderCmp/>
-            :boxJson && <BoxPlot box_data={boxJson} ref={reference} width={width}/>
+            :boxJson && 
+            <>
+            {showBoxPlot && <BoxPlot box_data={boxJson} ref={reference} width={width}/>}
+            {noContent && <NoContentMessage />}
+            </>
         }
         </div>
     </>

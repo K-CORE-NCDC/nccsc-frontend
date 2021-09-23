@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import CircosCmp from '../../Common/Circos'
+import NoContentMessage from '../../Common/NoContentComponent'
 import PagenationTableComponent from '../../Common/PagenationTable'
 import GraphsModal from '../../Common/circostimelineGraph'
 import LoaderCmp from '../../Common/Loader'
@@ -27,6 +28,9 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   const [loader, setLoader] = useState(false)
   const [showOncoImages, setShowOncoImages] = useState(false)
   const [showOncoTimelineTables, setShowOncoTimelineTables] = useState(false)
+  const [showNoContent, setShowNoContent] = useState(false)
+  const [renderCircos, setRenderCircos] = useState(false)
+  console.log(renderCircos);
 
   const closeShowOncoImages = () => {
     setShowOncoImages(false)
@@ -78,7 +82,8 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
           document.getElementById('images').classList.add("opacity-50")
           document.getElementById('tables').classList.add("opacity-50")
         }
-        setLoader(true)
+        // setLoader(true)
+        setRenderCircos(false)
         dispatch(getCircosInformation('POST', editInputData))
       }
     }
@@ -132,10 +137,25 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
   useEffect(() => {
     setTimeout(function () {
-      if (circosJson) {
+      if (circosJson && circosJson.status) {
         setLoader(false)
       }
     }, (1000));
+  }, [circosJson])
+
+  useEffect(() => {
+    if(circosJson && circosJson.status) {
+
+        if(circosJson.status === 200 && Object.keys(circosJson).length > 1){
+          console.log('circosJsonStatus 200', circosJson);
+          setShowNoContent(false)
+          setRenderCircos(true)
+        }else{
+          setRenderCircos(false)
+          setShowNoContent(true)
+        }
+    }
+    
   }, [circosJson])
 
 
@@ -176,17 +196,18 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
           </div>
           <div>
             <div>
-              {circosJson && <CircosCmp
+              {renderCircos && <CircosCmp
                 watermarkCss={watermarkCss}
                 ref={reference}
                 width={w}
                 data={circosJson}
               />}
+              {showNoContent && <NoContentMessage />}
             </div>
           </div>
         </div>
     }
-      {showOncoImages&& <PagenationTableComponent closeShowOncoImages={closeShowOncoImages} imageData={oncoImageJson} />}
+      {showOncoImages && <PagenationTableComponent closeShowOncoImages={closeShowOncoImages} imageData={oncoImageJson} />}
       {showOncoTimelineTables && <GraphsModal circosTimelieTableData={circosTimelieTableData} closeShowTimelineTables={closeShowTimelineTables} />}
     </>
   )

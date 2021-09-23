@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Igv from '../../Common/igv';
 import LoaderCmp from '../../Common/Loader';
 import { getIgv } from '../../../actions/api_actions'
+import NoContentMessage from '../../Common/NoContentComponent'
 // import { exportComponentAsPNG } from 'react-component-export-image';
 
 // import LoaderCmp from '../../Common/Loader'
@@ -23,10 +24,14 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
 
   useEffect(()=>{
     if(igvJson){
-      setActiveCmp(true)
       setTimeout(function() {
           setLoader(false)
       }, (10000));
+    }
+    if(igvJson && igvJson.length > 0){
+      setActiveCmp(true)
+    }else{
+      setActiveCmp(false)
     }
   },[igvJson])
 
@@ -46,6 +51,7 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
       :
       <div>
         {activeCmp && <Igv data={igvJson}/>}
+        {!activeCmp && <NoContentMessage />}
       </div>
     }
     </>
