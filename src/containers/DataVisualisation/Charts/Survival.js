@@ -4,6 +4,7 @@ import SurvivalCmp from '../../Common/Survival'
 import { getSurvivalInformation } from '../../../actions/api_actions'
 import { exportComponentAsPNG } from 'react-component-export-image';
 import GroupFilters from '../../Common/GroupFilter'
+import NoContentMessage from '../../Common/NoContentComponent'
 
 import LoaderCmp from '../../Common/Loader'
 
@@ -20,6 +21,8 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
   const [geneDatabase, setGeneDatabase] = useState('dna_mutation')
   const [showClinicalFilters, setShowClinicalFilters] = useState(false)
   const [sampleCountsCard, setSampleCountsCard] = useState([])
+  const [renderSurvival, setRenderSurvival] = useState(true)
+  const [renderNoContent, setRenderNoContent] = useState(false)
 
   useEffect(() => {
     if (inputData) {
@@ -108,6 +111,16 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
     }
   }
 
+  useEffect(() => {
+    if(survivalJson && survivalJson.status === 200){
+      setRenderNoContent(false)
+      setRenderSurvival(true)
+    }else{
+      setRenderNoContent(true)
+      setRenderSurvival(false)
+    }
+  }, [survivalJson])
+
   return (
     <>{
       loader ?
@@ -123,9 +136,9 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
               <select id="dropdown-gene" onChange={(e) => setFilteredGene(e.target.value)}
                 defaultValue={fileredGene}
                 className='w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
-                <option value=""></option>
+                <option selected={fileredGene === ""} value=""></option>
                 {genesArray.map((gene, index) => (
-                  <option key={`${gene}-${index}`} value={gene}>{gene}</option>
+                  <option selected={fileredGene === gene} key={`${gene}-${index}`} value={gene}>{gene}</option>
                 ))}
               </select>
             </div>
@@ -134,20 +147,21 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
               <select id="dropdown-database" onChange={(e) => setGeneDatabase(e.target.value)}
                 defaultValue={geneDatabase}
                 className='w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
-                <option value="dna_mutation">DNA Mutation</option>
-                <option value="rna">RNA</option>
-                <option value="methylation">DNA Methylation</option>
+                <option selected={geneDatabase === 'dna_mutation'} value="dna_mutation">DNA Mutation</option>
+                <option selected={geneDatabase === 'rna'} value="rna">RNA</option>
+                <option selected={geneDatabase === 'methylation'} value="methylation">DNA Methylation</option>
               </select>
             </div>
             {showClinicalFilters && <GroupFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
           </div>
           <div className="w-4/5">
-            <SurvivalCmp watermarkCss={watermarkCss} ref={reference} width={width} data={
+            {renderSurvival && <SurvivalCmp watermarkCss={watermarkCss} ref={reference} width={width} data={
               {
                 fileredGene: fileredGene,
                 survivalJson: survivalJson
               }
-            } />
+            } />}
+            {renderNoContent && <NoContentMessage />}
           </div>
         </div>
     }

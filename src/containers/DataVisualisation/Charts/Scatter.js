@@ -6,6 +6,7 @@ import { getScatterInformation, getCircosSamplesRnidList } from '../../../action
 import '../../../assets/css/style.css'
 import { exportComponentAsPNG } from 'react-component-export-image';
 import Multiselect from 'multiselect-react-dropdown';
+import NoContentMessage from '../../Common/NoContentComponent'
 
 export default function Scatter({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
@@ -18,10 +19,12 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
   const [displaySamples, setDisplaySamples] = useState(false)
   const [watermarkCss, setWatermarkCSS] = useState("")
   const [loader, setLoader] = useState(false)
-  const [gene,setGene] = useState('')
-  const [genesHtml,setGenesHtml] = useState([])
-  const [inputState,setInputState] = useState({})
-  const [selectedValue,setSelectedValue] = useState('')
+  const [gene, setGene] = useState('')
+  const [genesHtml, setGenesHtml] = useState([])
+  const [inputState, setInputState] = useState({})
+  const [selectedValue, setSelectedValue] = useState('')
+  const [showScatter, setShowScatter] = useState(false)
+  const [noContent, setNoContent] = useState(true)
 
 
   // useEffect(() => {
@@ -36,54 +39,54 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
   //   }
   // }, [inputData])
 
-  useEffect(()=>{
-    if(inputData && 'genes' in inputData){
-      setInputState((prevState) => ({...prevState,...inputData }))
+  useEffect(() => {
+    if (inputData && 'genes' in inputData) {
+      setInputState((prevState) => ({ ...prevState, ...inputData }))
     }
-  },[inputData])
+  }, [inputData])
 
-  useEffect(()=>{
-    if(inputState && 'genes' in inputState){
+  useEffect(() => {
+    if (inputState && 'genes' in inputState) {
       let g = inputState['genes']
       loadGenesDropdown(g)
       setGene(g[0])
-      if(inputState.type !==''){
+      if (inputState.type !== '') {
         let dataJson = inputState
         setLoader(true)
         // dataJson['genes'] = g[0]
         dataJson['genes'] = g
-        dispatch(getScatterInformation('POST',dataJson))
+        dispatch(getScatterInformation('POST', dataJson))
       }
     }
-  },[inputState])
+  }, [inputState])
 
 
   const loadGenesDropdown = (genes) => {
     let t = []
     for (var i = 0; i < genes.length; i++) {
       t.push(
-        {"name":genes[i],"id":i}
+        { "name": genes[i], "id": i }
       )
     }
     setGenesHtml(t)
   }
 
   useEffect(() => {
-    if(inputData && inputData.genes.length > 0) {
+    if (inputData && inputData.genes.length > 0) {
       setDisplaySamples(true)
-    }else{
+    } else {
       setDisplaySamples(false)
     }
   }, [inputData])
 
 
   useEffect(() => {
-    if(screenCapture){
+    if (screenCapture) {
       setWatermarkCSS("watermark")
-    }else{
+    } else {
       setWatermarkCSS("")
     }
-    if(watermarkCss !== "" && screenCapture){
+    if (watermarkCss !== "" && screenCapture) {
       exportComponentAsPNG(reference)
       setToFalseAfterScreenCapture()
     }
@@ -97,12 +100,12 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
       genes.push(item['name'])
     });
     // loadGenesDropdown(genes)
-    if(inputData.type !==''){
+    if (inputData.type !== '') {
       let dataJson = inputData
       dataJson['genes'] = genes
       setLoader(true)
       // setActiveCmp(false)
-      dispatch(getScatterInformation('POST',dataJson))
+      dispatch(getScatterInformation('POST', dataJson))
     }
   }
 
@@ -112,49 +115,62 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
     selectedList.forEach((item, i) => {
       genes.push(item['name'])
     });
-    if(genes.length === 0){
+    if (genes.length === 0) {
       genes = inputState['genes']
     }
-    if(inputData.type !==''){
+    if (inputData.type !== '') {
       let dataJson = inputData
       dataJson['genes'] = genes
       setLoader(true)
       // setActiveCmp(false)
-      dispatch(getScatterInformation('POST',dataJson))
+      dispatch(getScatterInformation('POST', dataJson))
     }
   }
 
   useEffect(() => {
-    setTimeout(function() {
-        setLoader(false)
+    setTimeout(function () {
+      setLoader(false)
     }, (10000));
+  }, [scatterJson])
+
+  useEffect(() => {
+    if (scatterJson && scatterJson.status === 200) {
+      setShowScatter(true)
+      setNoContent(false)
+    } else {
+      setShowScatter(false)
+      setNoContent(true)
+    }
   }, [scatterJson])
 
   // console.log(genesHtml)
 
   return (
+    <div>
+      <div className='p-5 text-right m-5'>
+        <div className='flex float-left'>
+          <div className='p-3'>Selected Gene Is</div>
           <div>
-            <div className='p-5 text-right m-5'>
-              <div className='flex float-left'>
-                <div className='p-3'>Selected Gene Is</div>
-                <div>
-                  <Multiselect
-                    options={genesHtml} // Options to display in the dropdown
-                    selectedValues={selectedValue} // Preselected value to persist in dropdown
-                    onSelect={onSelect} // Function will trigger on select event
-                    onRemove={onRemove} // Function will trigger on remove event
-                    displayValue="name" // Property name to display in the dropdown options
-                    />
-                </div>
-              </div>
-            </div>
-            {
-              loader?
-              <LoaderCmp/>
-              :
-              scatterJson &&  <ScatterPlot scatter_data={scatterJson}/>
-            }
+            <Multiselect
+              options={genesHtml} // Options to display in the dropdown
+              selectedValues={selectedValue} // Preselected value to persist in dropdown
+              onSelect={onSelect} // Function will trigger on select event
+              onRemove={onRemove} // Function will trigger on remove event
+              displayValue="name" // Property name to display in the dropdown options
+            />
           </div>
+        </div>
+      </div>
+      {
+        loader ?
+          <LoaderCmp />
+          :
+          <>
+          {showScatter && <ScatterPlot scatter_data={scatterJson}/>}
+          {noContent && <NoContentMessage />}
+          </>
+      }
+    </div>
   )
 }
 

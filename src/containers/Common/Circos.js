@@ -39,6 +39,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
     "chrY": 59373566,
   }
 
+
   var gieStainColor = {
     gpos100: 'rgb(0,0,0)',
     gpos: 'rgb(0,0,0)',
@@ -200,7 +201,6 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
           })
       }
     }
-    console.log(cnvData);
     let chord_data = api_data['fusion_genes_data']
     if ('sv_data' in api_data){
       let svData = api_data['sv_data']
@@ -414,6 +414,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
         }
       },
       tooltipContent: function (d) {
+        console.log(d);
         if(d.source.svtype){
           return`<h3> SV Type : ${d.source.svtype} | source : ${d.source.id} | ${d.source.name}  ➤ target: ${d.target.id} | ${d.target.name} </h3>`
         }else{
