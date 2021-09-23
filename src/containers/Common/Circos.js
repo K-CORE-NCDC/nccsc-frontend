@@ -4,6 +4,7 @@ import * as Circos from 'circos';
 import {queue} from 'd3-queue';
 import cytobands from './cytobands.csv'
 import LoaderCmp from './Loader'
+import placeholder from '../../assets/img/circos_ncc-removebg-preview.png'
 
 
 const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, ref) => {
@@ -53,7 +54,6 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
     stalk: 'rgb(100,127,164)',
     select: 'rgb(135,177,255)'
   }
-
 
   const drawCircos =  (width, GRCh37, cytobands,api_data) => {
     let childnode = document.getElementById("circos");
@@ -519,7 +519,14 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
   },[state, data, fusionJson])
 
   return (
-    <div ref={ref} className={`circos block ${watermarkCss}`} id='circos'></div>
+    <div className="grid grid-cols-12">
+      <div className="col-span-9 p-5">
+        <div ref={ref} className={`circos block ${watermarkCss}`} id='circos'></div>
+      </div>
+      <div className="col-span-3 pl-8">
+        <img src={placeholder} width='400' className="mt-10 object-contain h-2/5"/>
+      </div>
+    </div>
   )
 })
 

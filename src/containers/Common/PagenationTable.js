@@ -45,7 +45,7 @@ function PagenationTable({ imageData }) {
             setIsDataFound(true)
             const imagesCount = imageData.length
             setTotalImagesCount(imagesCount)
-            if (imagesCount <= 10) {
+            if (imagesCount <= 20) {
                 setActiveDisplayImagesContent(imageData)
             }
             setTotalPages(parseInt(imagesCount / 10))
@@ -70,13 +70,14 @@ function PagenationTable({ imageData }) {
         }
 
     }, [currentActivePageNumber])
+
     return (
         <>
 
             {isDataFound ? <div >
-                <div className="grid max-auto grid-cols-3 gap-6 p-6 overflow-y-scroll oncoimages_height">
+                <div className="grid max-auto grid-cols-5 gap-4 p-6 overflow-y-scroll oncoimages_height">
                     {activeDisplayImagesContent.map(e => {
-                        return <a key={e} href={config['auth']+e}>
+                        return <a key={e} href={config['auth']+e} target="_blank">
                             <img className='w-full block rounded' src={config['auth']+e} />
                             <h1 className='text-3xl p-6'>{e.split('/').at(-1)}</h1>
                           </a>

@@ -14,8 +14,8 @@ export default function BarChartComp({data}){
               label: '',
               data: data_,
               backgroundColor: [
-                  '#529d3f',
                   '#d2352b',
+                  '#529d3f',
                   '#f18532',
                   '#644195',
                   '#3777af',
@@ -31,7 +31,8 @@ export default function BarChartComp({data}){
                 '#c74a52',
                 '#fffebc'
               ],
-              borderWidth: 1
+              borderWidth: 1,
+              borderRadius: 11
             }]
           },
           options: {
@@ -62,6 +63,7 @@ export default function BarChartComp({data}){
         });
       }
     }
+
     useEffect(() => {
       let labels = []
       let data_list = []
@@ -69,7 +71,6 @@ export default function BarChartComp({data}){
           labels.push(data[k]['name'])
           data_list.push(data[k]['cnt'])
       }
-
       drawGraph(labels,data_list)
     }, []);
 

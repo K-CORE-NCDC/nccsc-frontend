@@ -9,7 +9,7 @@ import ImageGrid from '../../Common/ImageGrid'
 import { getCircosInformation, getCircosTimelineTable, getOncoImages } from '../../../actions/api_actions'
 import '../../../assets/css/style.css'
 import { exportComponentAsPNG } from 'react-component-export-image';
-import placeholder from '../../../assets/img/circos_plot_layer_info.png'
+import placeholder from '../../../assets/img/circos_ncc.png'
 
 
 export default function DataCircos({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
@@ -69,35 +69,25 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
   useEffect(() => {
     if (inputData) {
-
+      if(sampleKey!=='all'){
+        document.getElementById('images').classList.remove("opacity-50")
+        document.getElementById('tables').classList.remove("opacity-50")
+      }else{
+        document.getElementById('images').classList.add("opacity-50")
+        document.getElementById('tables').classList.add("opacity-50")
+      }
 
       let editInputData = inputData
       editInputData = { ...editInputData, sampleKey: sampleKey }
 
       if (editInputData.type !== '') {
-        if(sampleKey!=='all'){
-          document.getElementById('images').classList.remove("opacity-50")
-          document.getElementById('tables').classList.remove("opacity-50")
-        }else{
-          document.getElementById('images').classList.add("opacity-50")
-          document.getElementById('tables').classList.add("opacity-50")
-        }
+
         setLoader(true)
         setRenderCircos(false)
         dispatch(getCircosInformation('POST', editInputData))
       }
     }
   }, [inputData, sampleKey])
-
-  useEffect(()=>{
-    if(sampleKey!=='all'){
-      document.getElementById('images').classList.remove("opacity-50")
-      document.getElementById('tables').classList.remove("opacity-50")
-    }else{
-      document.getElementById('images').classList.add("opacity-50")
-      document.getElementById('tables').classList.add("opacity-50")
-    }
-  },[sampleKey])
 
   useEffect(() => {
     if (inputData && inputData.genes.length > 0) {
@@ -188,10 +178,6 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
               <div className='p-3 mt-2'>
                 <button id='tables' className="opacity-50 bg-main-blue hover:bg-blue-700 text-white font-bold p-4 rounded w-80" onClick={timelineGraphClickFunction}>Tables</button>
               </div>
-            </div>
-
-            <div className='col-start-6'>
-              <img src={placeholder} width='230' />
             </div>
           </div>
           <div>
