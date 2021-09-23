@@ -19,7 +19,7 @@ const GroupFilters = ({ parentCallback, groupFilters }) => {
         { 'type': 'boolean', 'id': 'bila_cncr_yn', 'name': 'Diagnosis of Bilateral Breast Cancer' },
         { 'type': 'boolean', 'name': 'Current Smoker', 'id': 'smok_curr_yn' },
         { 'type': 'boolean', 'name': 'Former Smoker', 'id': 'smok_yn' },
-        { 'type': 'boolean', 'name': 'alcohol_consuption', 'id': 'drkn_yn', 'value': 'Yes' },
+        { 'type': 'boolean', 'name': 'alcohol_consuption', 'id': 'drnk_yn', 'value': 'Yes' },
         { 'type': 'boolean', 'name': 'Family History of Breast Cancer', 'id': 'fmhs_brst_yn', 'value': 'Yes' },
         { 'type': 'number', 'name': 'First Menstural Age', 'id': 'mena_age', 'input': 'number' },
         { 'type': 'boolean', 'name': 'Menopause', 'id': 'meno_yn' },

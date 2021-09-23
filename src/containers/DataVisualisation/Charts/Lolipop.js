@@ -121,55 +121,57 @@ export default function DataLolipop({ width,inputData, screenCapture, setToFalse
         let table_cols = []
         let enst_id = []
         let refseq_id = []
-        for (var i = 0; i < data.length; i++) {
-          if(tableType === "Mutation"){
-            let vc_sample = data[i]['variant_classification']
-            if(vc_sample in lollipopLegenedTmp){
-              if(lollipopLegenedTmp[vc_sample].includes(data[i].sample)==false){
-                lollipopLegenedTmp[vc_sample].push(data[i].sample)
-              }
-            }else{
-              lollipopLegenedTmp[vc_sample] = [data[i].sample]
-            }
-            if(data[i]['protien']){
-              let protein = data[i]['protien'].replace(/[^\d]/g,'');
-              let p_vc = protein+"||"+data[i]['variant_classification']
-
-              if(p_vc in lollipopTmp){
-                lollipopTmp[p_vc].push(data[i]['sample']+"||"+data[i]['protien'])
+        if(data.length>0){
+          console.log(data);
+          for (var i = 0; i < data.length; i++) {
+            if(tableType === "Mutation"){
+              let vc_sample = data[i]['variant_classification']
+              if(vc_sample in lollipopLegenedTmp){
+                if(lollipopLegenedTmp[vc_sample].includes(data[i].sample)==false){
+                  lollipopLegenedTmp[vc_sample].push(data[i].sample)
+                }
               }else{
-                lollipopTmp[p_vc] = [data[i]['sample']+"||"+data[i]['protien']]
+                lollipopLegenedTmp[vc_sample] = [data[i].sample]
               }
-            }
-            table_data.push({
-              "sample":data[i]['sample'],
-              "protein":data[i]['protien'],
-              "variant_classification":data[i]['variant_classification']
-            })
+              if(data[i]['protien']){
+                let protein = data[i]['protien'].replace(/[^\d]/g,'');
+                let p_vc = protein+"||"+data[i]['variant_classification']
 
-            refseq_id.push(data[i]['refseq_mrna_id'])
-            enst_id.push(data[i]['annotation_transcript'])
-
-          }else if(tableType=="Phospho"){
-            let site_sample = data[i]['site'].split(' ')
-            for (var k = 0; k < site_sample.length; k++) {
-              if(site_sample[k] in lollipopLegenedTmp){
-                if(lollipopLegenedTmp[site_sample[k]].includes(data[i].sample)==false){
-                  lollipopLegenedTmp[site_sample[k]].push(data[i].sample)
+                if(p_vc in lollipopTmp){
+                  lollipopTmp[p_vc].push(data[i]['sample']+"||"+data[i]['protien'])
+                }else{
+                  lollipopTmp[p_vc] = [data[i]['sample']+"||"+data[i]['protien']]
                 }
               }
-              else{
-                lollipopLegenedTmp[site_sample[k]] = [data[i].sample]
+              table_data.push({
+                "sample":data[i]['sample'],
+                "protein":data[i]['protien'],
+                "variant_classification":data[i]['variant_classification']
+              })
+
+              refseq_id.push(data[i]['refseq_mrna_id'])
+              enst_id.push(data[i]['annotation_transcript'])
+
+            }else if(tableType=="Phospho"){
+              let site_sample = data[i]['site'].split(' ')
+              for (var k = 0; k < site_sample.length; k++) {
+                if(site_sample[k] in lollipopLegenedTmp){
+                  if(lollipopLegenedTmp[site_sample[k]].includes(data[i].sample)==false){
+                    lollipopLegenedTmp[site_sample[k]].push(data[i].sample)
+                  }
+                }
+                else{
+                  lollipopLegenedTmp[site_sample[k]] = [data[i].sample]
+                }
               }
+              table_data.push({
+                "sample": data[i]['sample'],
+                "site": data[i]['site'],
+                "gene": gene
+              })
             }
-            table_data.push({
-              "sample": data[i]['sample'],
-              "site": data[i]['site'],
-              "gene": gene
-            })
           }
         }
-
         setRefSeqId(refseq_id)
         setEnstId(enst_id)
         let tmp = []
@@ -406,7 +408,7 @@ export default function DataLolipop({ width,inputData, screenCapture, setToFalse
                 <div className='flex float-right'>
                   <div className='p-3'>Selected Gene Is</div>
                   <div>
-                    <select value={gene} onChange={e=>geneSet(e)} class="w-full border bg-white rounded px-3 py-2 outline-none text-gray-700" on>
+                    <select value={gene} onChange={e=>geneSet(e)} className="w-full border bg-white rounded px-3 py-2 outline-none text-gray-700">
                       {genesHtml}
                     </select>
                   </div>

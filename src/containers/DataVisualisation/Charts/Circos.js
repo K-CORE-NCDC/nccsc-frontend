@@ -65,24 +65,34 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
   useEffect(() => {
     if (inputData) {
-      if(sampleKey!=='all'){
-        document.getElementById('images').classList.remove("opacity-50")
-        document.getElementById('tables').classList.remove("opacity-50")
-      }else{
-        document.getElementById('images').classList.add("opacity-50")
-        document.getElementById('tables').classList.add("opacity-50")
-      }
+
 
       let editInputData = inputData
       editInputData = { ...editInputData, sampleKey: sampleKey }
 
       if (editInputData.type !== '') {
-
+        if(sampleKey!=='all'){
+          document.getElementById('images').classList.remove("opacity-50")
+          document.getElementById('tables').classList.remove("opacity-50")
+        }else{
+          document.getElementById('images').classList.add("opacity-50")
+          document.getElementById('tables').classList.add("opacity-50")
+        }
         setLoader(true)
         dispatch(getCircosInformation('POST', editInputData))
       }
     }
   }, [inputData, sampleKey])
+
+  useEffect(()=>{
+    if(sampleKey!=='all'){
+      document.getElementById('images').classList.remove("opacity-50")
+      document.getElementById('tables').classList.remove("opacity-50")
+    }else{
+      document.getElementById('images').classList.add("opacity-50")
+      document.getElementById('tables').classList.add("opacity-50")
+    }
+  },[sampleKey])
 
   useEffect(() => {
     if (inputData && inputData.genes.length > 0) {
