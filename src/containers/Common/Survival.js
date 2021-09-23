@@ -30,9 +30,9 @@ import { index } from 'd3'
 // }
 
 const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
-  console.log(data);
+  // console.log(data);
   if (data.survivalJson && data.survivalJson.all) {
-    console.log(data.survivalJson.all);
+    // console.log(data.survivalJson.all);
   }
   const [survivalData, setSurvivalData] = useState([])
   // console.log(survivalData);
@@ -123,10 +123,11 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
       {survivalData.length > 1 && <Chart
         width={'100%'}
         height={'600px'}
-        chartType="Line"
+        chartType="LineChart"
         loader={<div>Loading Chart</div>}
         data={data.survivalJson.all}
         options={{
+          allowHtml: true,
           title: "Survival Plot",
           vAxis: { title: 'Samples count' },
           hAxis: { title: 'Duration in Month' },
