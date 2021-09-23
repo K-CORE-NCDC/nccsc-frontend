@@ -281,8 +281,7 @@ input:checked ~ .dot {
 .box line,
 .box rect,
 .box circle {
-  /* fill: red; */
-  stroke: #000;
+  
   stroke-width: 1px;
 }
 

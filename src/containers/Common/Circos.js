@@ -17,27 +17,27 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
     "chr3": 198022430,
     "chr4": 191154276,
     "chr5": 180915260,
-    "chr6": 171115067, 
-    "chr7": 159138663, 
-    "chr8": 146364022, 
-    "chr9": 141213431, 
-    "chr10": 135534747, 
-    "chr11": 135006516, 
-    "chr12": 133851895, 
-    "chr13": 115169878, 
-    "chr14": 107349540, 
-    "chr15": 102531392, 
-    "chr16": 90354753, 
-    "chr17": 81195210, 
-    "chr18": 78077248, 
-    "chr19": 59128983, 
-    "chr20": 63025520, 
-    "chr21": 48129895, 
-    "chr22": 51304566, 
-    "chrX": 155270560, 
-    "chrY": 59373566, 
+    "chr6": 171115067,
+    "chr7": 159138663,
+    "chr8": 146364022,
+    "chr9": 141213431,
+    "chr10": 135534747,
+    "chr11": 135006516,
+    "chr12": 133851895,
+    "chr13": 115169878,
+    "chr14": 107349540,
+    "chr15": 102531392,
+    "chr16": 90354753,
+    "chr17": 81195210,
+    "chr18": 78077248,
+    "chr19": 59128983,
+    "chr20": 63025520,
+    "chr21": 48129895,
+    "chr22": 51304566,
+    "chrX": 155270560,
+    "chrY": 59373566,
   }
-  
+
 
   var gieStainColor = {
     gpos100: 'rgb(0,0,0)',
@@ -292,8 +292,8 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
 					{spacing: 0.2, thickness: 3, color: '#ffffff', opacity: 0.2},
 					{spacing: 0.3, thickness: 1, color: '#3777af', opacity: 0.3}
       ],
-      tooltipContent	: function(d) { 
-        return `RNA gene: ${d.name} chromosome: ${d.block_id} | z score: ${d.value}`; 
+      tooltipContent	: function(d) {
+        return `RNA gene: ${d.name} chromosome: ${d.block_id} | z score: ${d.value}`;
       },
     })
     .scatter('snp-250-4', dna_methylation, {
@@ -325,7 +325,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
 				{spacing: 0.3, thickness: 1, color: '#529d3f', opacity: 0.3}
       ],
 
-      tooltipContent	: function(d) { 
+      tooltipContent	: function(d) {
         return `Methylation gene: ${d.name} chromosome: ${d.block_id} | value: ${d.value}`
       },
     })
@@ -355,7 +355,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
 					{spacing: 0.2, thickness: 1, color: '#644195', opacity: 0.3}
       ],
 
-      tooltipContent	: function(d) { 
+      tooltipContent	: function(d) {
         return `proteome gene: ${d.name} chromosome: ${d.block_id} | value: ${d.value}`
       },
     })
@@ -364,7 +364,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
       outerRadius: 0.45,
       showAxesTooltip: false,
       color:function(d){
-        if (d.value > 1){ 
+        if (d.value > 1){
           return '#F4B400'
         }else{
           return "#0F9D58"
@@ -389,7 +389,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
 				{spacing: 0.3, thickness: 3, color: '#ffffff', opacity: 0.2},
       ],
 
-      tooltipContent	: function(d) { 
+      tooltipContent	: function(d) {
         return `CNV gene: ${d.name} chromosome: ${d.block_id} | CN value: ${d.value}`
       },
     })
@@ -414,6 +414,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
         }
       },
       tooltipContent: function (d) {
+        console.log(d);
         if(d.source.svtype){
           return`<h3> SV Type : ${d.source.svtype} | source : ${d.source.id} | ${d.source.name}  ➤ target: ${d.target.id} | ${d.target.name} </h3>`
         }else{

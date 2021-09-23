@@ -29,6 +29,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   const [refSeqId, setRefSeqId] = useState([])
   const [showLollipop, setShowLollipop] = useState(false)
   const [noContent, setNoContent] = useState(true)
+  const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
   let mutation_colors = {
     'In_Frame_Del': '#1b4879',
     'In_Frame_Ins': '#c74951',
@@ -125,7 +126,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
         let enst_id = []
         let refseq_id = []
         if (data.length > 0) {
-          console.log(data);
+
           for (var i = 0; i < data.length; i++) {
             if (tableType === "Mutation") {
               let vc_sample = data[i]['variant_classification']
@@ -147,7 +148,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                 }
               }
               table_data.push({
-                "sample": data[i]['sample'],
+                "sample": BrstKeys[data[i]['sample']],
                 "protein": data[i]['protien'],
                 "variant_classification": data[i]['variant_classification']
               })
@@ -168,7 +169,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                 }
               }
               table_data.push({
-                "sample": data[i]['sample'],
+                "sample": BrstKeys[data[i]['sample']],
                 "site": data[i]['site'],
                 "gene": gene
               })

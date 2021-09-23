@@ -176,7 +176,7 @@ export default function Boxplot({data}) {
           .data([sumstat[i]])
           .enter()
           .append("line")
-            .attr('clas','rz')
+            .attr('class','rz')
             .attr("x1", function(d){
               return(x(d.key)-boxWidth/2)
             })
