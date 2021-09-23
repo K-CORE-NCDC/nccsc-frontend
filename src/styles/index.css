@@ -318,3 +318,9 @@ input:checked ~ .dot {
 .oncoimages_height{
   height: 70vh;
 }
+
+.scrollBox ul li {
+  border: none!important;
+  padding: 0 0 0 10px!important;
+  line-height: 40px;
+}

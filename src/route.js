@@ -23,6 +23,16 @@ const Chord = React.lazy(() => import('./containers/Common/Chord'))
 
 const Volcano = React.lazy(() => import('./containers/Common/ScatterVolcano'))
 
+// temp
+const Terms = React.lazy(() => import('./containers/Signup/TermsOfUse'))
+
+const Join = React.lazy(() => import('./containers/Signup/MemberShip'))
+
+const Signup = React.lazy(() => import('./containers/Signup/'))
+// const  = React.lazy(() => import('./containers/Signup/MemberShip'))
+
+
+
 const route = [
   { path: '/', exact: true, type:'unauth', name: 'Home', component: Home },
   { path: '/summary/:tab?/', exact: true, type:'unauth', name: 'DataSummary', component: DataSummary },
@@ -37,7 +47,12 @@ const route = [
   { path: '/box2', exact: true, type:'unauth', name: 'igv', component: Box2},
 
   { path: '/chord', exact: true, type:'unauth', name: 'igv', component: Chord},
-  { path: '/volcano', exact: true, type:'unauth', name: 'igv', component: Volcano}
+  { path: '/volcano', exact: true, type:'unauth', name: 'igv', component: Volcano},
+
+  { path: '/term', exact: true, type:'unauth', name: 'igv', component: Terms},
+  { path: '/member', exact: true, type:'unauth', name: 'igv', component: Join},
+  { path: '/signup', exact: true, type:'unauth', name: 'igv', component: Signup},
+
 
   // { path: '/customanalysis', exact: true, type:'unauth', name: 'Home', component: Home },
 ]
