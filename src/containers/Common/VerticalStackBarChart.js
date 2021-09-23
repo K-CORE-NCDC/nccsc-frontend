@@ -29,6 +29,7 @@ export default function VerticalStackBarChartComp({data, axis, key}){
 
     const drawGraph = (labels, data_) => {
         if(chartRef_1.current){
+          
           var myChart = new Chart(chartRef_1.current, {
               type: 'bar',
               data: {

@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import igv from 'igv'
 import config from '../../config'
+import placeholder from '../../assets/img/cnv_legend-removebg-preview.png'
 
 export default function Igv({width,data}) {
 
@@ -46,7 +47,12 @@ export default function Igv({width,data}) {
   },[data])
 
   return (
-    <div className='ad' id="igv-div" style={{"height":"500px","width":width+"px"}}>
+    <div>
+      <div className='ml-6'>
+        <img src={placeholder} width='400'/>
+      </div>
+      <div className='ad pt-6' id="igv-div" style={{"height":"500px","width":width+"px"}}>
+      </div>
     </div>
   )
 }
