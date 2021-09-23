@@ -26,7 +26,7 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
     if(igvJson){
       setTimeout(function() {
           setLoader(false)
-      }, (10000));
+      }, (1000));
     }
     if(igvJson && igvJson.length > 0){
       setActiveCmp(true)
