@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment, useRef } from 'react'
 import { useSelector, useDispatch } from "react-redux";
-import HeatmapCmp from '../../Common/Heatmap'
+import HeatmapNewCmp from '../../Common/testH'
 import { getHeatmapInformation } from '../../../actions/api_actions'
 import { exportComponentAsPNG } from 'react-component-export-image';
 // import Loader from "react-loader-spinner";
@@ -8,7 +8,7 @@ import LoaderCmp from '../../Common/Loader'
 import NoContentMessage from '../../Common/NoContentComponent'
 
 
-export default function DataHeatmap({ width,inputData, screenCapture, setToFalseAfterScreenCapture }) {
+export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, setToFalseAfterScreenCapture }) {
   const reference = useRef()
   const dispatch = useDispatch()
   const [activeCmp,setActiveCmp] = useState(false)
@@ -46,10 +46,35 @@ export default function DataHeatmap({ width,inputData, screenCapture, setToFalse
 
   useEffect(() => {
     if (heatmapJson) {
-      if (Object.keys(heatmapJson).length > 0) {
-        setActiveCmp(true)
-        setData(heatmapJson)
+      let genes = []
+      let unique_sample_values = {}
+      let heat_data = []
+
+      heatmapJson.forEach((item, i) => {
+        if(!genes.includes(item['gene_name'])){
+          genes.push(item['gene_name'])
+        }
+        let breast_key = brstKeys[item['pt_sbst_no']]
+        if (breast_key in unique_sample_values){
+          unique_sample_values[breast_key].push(item["gene_vl"])
+        }else{
+          unique_sample_values[breast_key] = []
+          unique_sample_values[breast_key].push(item["gene_vl"])
+        }
+      });
+      
+      let y = {
+        "smps":genes,
+        "vars":[],
+        "data":[]
       }
+      Object.keys(unique_sample_values).forEach((key, i) => {
+        y["vars"].push(key)
+        y['data'].push(unique_sample_values[key])
+      });
+
+      setActiveCmp(true)
+      setData(y)
       setTimeout(function () {
         setLoader(false)
       }, (1000));
@@ -70,11 +95,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, setToFalse
 
   }, [screenCapture, watermarkCss])
 
-  // useEffect(()=>{
-  //   if(selectedGene.length === 0){
-  //     setSelectedGene([genes[0]])
-  //   }
-  // },[inputGene,genes])
+  
 
 
   const changeType = (e, type) => {
@@ -172,7 +193,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, setToFalse
                 }
               </div>
             }
-            {heatmapJson && <HeatmapCmp watermarkCss={watermarkCss} ref={reference} width={width} data={heatmapJson}/>}
+            {data_ && <HeatmapNewCmp inputData={data_} watermarkCss={watermarkCss} ref={reference} width={width} />}
             </div>
           }
         </div>

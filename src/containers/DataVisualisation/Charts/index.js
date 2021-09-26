@@ -51,12 +51,13 @@ function volcano(width, inputData, screenCapture, setToFalseAfterScreenCapture) 
   />
 }
 
-function heatmap(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
+function heatmap(width, inputData, screenCapture, BrstKeys,setToFalseAfterScreenCapture) {
   return <DataHeatmap
   key='heatmap'
   width={width}
   inputData={inputData}
   screenCapture={screenCapture}
+  brstKeys={BrstKeys}
   setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
   />
 }

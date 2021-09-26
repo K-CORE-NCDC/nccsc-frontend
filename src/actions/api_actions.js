@@ -155,17 +155,18 @@ export function getHeatmapInformation(type, data) {
     sendRequest(url, type, data)
       .then((result) => {
         const d = result
-        if (d.status === 200) {
-          dispatch({
+        // if (d.status === 200) {
+          dispatch({    
             type: dataVisualization.HEATMAP_REQUEST,
-            payload: {...JSON.parse(d["data"]), status:200},
+            // payload: {...JSON.parse(d["data"]), status:200},
+            payload: d["data"],
           });
-        } else {
-          dispatch({
-            type: dataVisualization.HEATMAP_REQUEST,
-            payload: {status:204}
-          });
-        }
+        // } else {
+        //   dispatch({
+        //     type: dataVisualization.HEATMAP_REQUEST,
+        //     payload: {status:204}
+        //   });
+        // }
         // dispatch({
         //   type: dataVisualization.HEATMAP_REQUEST,
         //   payload: JSON.parse(d["data"]),
