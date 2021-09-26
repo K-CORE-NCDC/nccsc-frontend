@@ -22,19 +22,24 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
     },
     responsive:true,
     tooltips: {
-      // mode: "index",
-      intersect: false,
-      callbacks: { //Added callbacks for label
-        // title: () => {
-        //   return "";
-        // },
-        label: (tooltipItems, data) => {
-          // console.log("data--->",data)
-          return "[" + tooltipItems.xLabel + "," + tooltipItems.yLabel + "]";
-        }
+      callbacks: {
+         label: function(tooltipItem, data) {
+            var label = data.labels[tooltipItem.index];
+            console.log(tooltipItem, data);
+            return label + ': (' + tooltipItem.xLabel + ', ' + tooltipItem.yLabel + ')';
+         }
       }
-    },
+   },
     plugins: {
+      tooltips: {
+        callbacks: {
+           label: function(tooltipItem, data) {
+              var label = data.labels[tooltipItem.index];
+              console.log(tooltipItem, data);
+              return label + ': (test' + tooltipItem.xLabel + ', ' + tooltipItem.yLabel + ')';
+           }
+        }
+     },
       zoom: {
         pan: {
           enabled: true,
@@ -99,7 +104,7 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
             <button type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-8" onClick={resetChart}>reset</button>
             <button type="button" onClick={zoomIn} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 ml-8 rounded" >zoom in</button>
             <button type="button" onClick={zoomOut} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4  ml-8 rounded">zoom out</button>
-            <div class="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4">
               <div>
                 <h2 className="text-left text-blue-800 mb-12 mt-12"><strong>{"Expression Down Level(log2FC <= -5)"}</strong></h2>
                 <div>

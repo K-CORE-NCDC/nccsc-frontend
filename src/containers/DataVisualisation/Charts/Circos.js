@@ -127,7 +127,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
   useEffect(() => {
     setTimeout(function () {
-      if (circosJson && circosJson.status) {
+      if (circosJson && circosJson.status !== 0) {
         setLoader(false)
       }
     }, (1000));
@@ -137,9 +137,12 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
     if(circosJson && circosJson.status) {
 
         if(circosJson.status === 200 && Object.keys(circosJson).length > 1){
-          console.log('circosJsonStatus 200', circosJson);
           setShowNoContent(false)
           setRenderCircos(true)
+        }else if(circosJson.status === 0){
+          setLoader(true)
+          setShowNoContent(false)
+          setRenderCircos(false)
         }else{
           setRenderCircos(false)
           setShowNoContent(true)
