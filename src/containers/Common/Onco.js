@@ -174,9 +174,9 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_
 
         oncoprint.setTrackInfo(track_id, "");
         oncoprint.setTrackData(track_id, custom_datum[i]['data'], 'sample');
-        // oncoprint.setTrackTooltipFn(track_id,function(data) {
-        //     return "<b>Sample: " + data.sample + " (" + data.category + ")</b>";
-        // });
+        oncoprint.setTrackTooltipFn(track_id,function(data) {
+            return "<b>Sample: " + data.sample + " (" + data.category + ")</b>";
+        });
       }
     }
 
@@ -222,6 +222,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_
        },
        'init_sort_direction': 0
     };
+
     clinical_stacked_bar_track_params['rule_set_params']['legend_label'] = 'Global Mutation Distribution';
     clinical_stacked_bar_track_params['label'] = 'Global Mutation Distribution';
     clinical_stacked_bar_track_params['description'] = 'Global Mutation Distribution';

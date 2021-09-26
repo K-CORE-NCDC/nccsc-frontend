@@ -30,7 +30,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   const [showOncoTimelineTables, setShowOncoTimelineTables] = useState(false)
   const [showNoContent, setShowNoContent] = useState(false)
   const [renderCircos, setRenderCircos] = useState(false)
-  
+
 
   const closeShowOncoImages = () => {
     setShowOncoImages(false)
@@ -127,8 +127,15 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
   useEffect(() => {
     setTimeout(function () {
-      if (circosJson && circosJson.status) {
+      if (circosJson && circosJson.status !== 0) {
         setLoader(false)
+        if(sampleKey!=='all'){
+          document.getElementById('images').classList.remove("opacity-50")
+          document.getElementById('tables').classList.remove("opacity-50")
+        }else{
+          document.getElementById('images').classList.add("opacity-50")
+          document.getElementById('tables').classList.add("opacity-50")
+        }
       }
     }, (1000));
   }, [circosJson])
@@ -137,9 +144,12 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
     if(circosJson && circosJson.status) {
 
         if(circosJson.status === 200 && Object.keys(circosJson).length > 1){
-          console.log('circosJsonStatus 200', circosJson);
           setShowNoContent(false)
           setRenderCircos(true)
+        }else if(circosJson.status === 0){
+          setLoader(true)
+          setShowNoContent(false)
+          setRenderCircos(false)
         }else{
           setRenderCircos(false)
           setShowNoContent(true)
