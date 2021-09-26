@@ -221,7 +221,7 @@ export function getCircosInformation(type, data) {
     let url = config.auth + "circos/";
     dispatch({
       type: dataVisualization.CIRCOS_REQUEST,
-      payload: {status:204  },
+      payload: {status:0  },
     });
     sendRequest(url, type, data)
       .then((result) => {

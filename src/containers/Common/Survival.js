@@ -129,7 +129,7 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
         options={{
           allowHtml: true,
           title: "Survival Plot",
-          vAxis: { title: 'Samples count' },
+          vAxis: { title: 'Number at Risk' },
           hAxis: { title: 'Duration in Month' },
           isStacked: true,
           legend: { position: 'top' },

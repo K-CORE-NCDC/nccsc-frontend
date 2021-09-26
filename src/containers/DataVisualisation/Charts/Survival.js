@@ -8,6 +8,8 @@ import NoContentMessage from '../../Common/NoContentComponent'
 
 import LoaderCmp from '../../Common/Loader'
 
+const selectedCss = "w-1/2 rounded-r-none  hover:scale-110 focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition"
+const nonSelectedCss = "w-1/2 rounded-l-none border-l-0 hover:scale-110 focus:outline-none flex justify-center p-5 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 text-teal-700 border duration-200 ease-in-out border-teal-600 transition"
 
 export default function DataSurvival({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
@@ -23,22 +25,35 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
   const [sampleCountsCard, setSampleCountsCard] = useState([])
   const [renderSurvival, setRenderSurvival] = useState(true)
   const [renderNoContent, setRenderNoContent] = useState(false)
+  const [filterTypeButton, setFilterTypeButton] = useState('clinical')
+
+  const submitFitersAndFetchData = () =>{
+    if (fileredGene !== "") {
+      setLoader(true)
+      if(filterTypeButton === 'clinical'){
+        dispatch(getSurvivalInformation('POST', {
+          ...inputData,
+          filter_gene: fileredGene,
+          gene_database: geneDatabase,
+          group_filters: groupFilters
+        }))
+      }else{
+        dispatch(getSurvivalInformation('POST', {
+          ...inputData,
+          filter_gene: fileredGene,
+          gene_database: geneDatabase
+        }))
+      }
+    } else {
+      setLoader(true)
+      dispatch(getSurvivalInformation('POST', inputData))
+    }
+  }
 
   useEffect(() => {
     if (inputData) {
       if (inputData.type !== '') {
-        if (fileredGene !== "") {
-          setLoader(true)
-          dispatch(getSurvivalInformation('POST', {
-            ...inputData,
-            filter_gene: fileredGene,
-            gene_database: geneDatabase,
-            group_filters: groupFilters
-          }))
-        } else {
-          setLoader(true)
-          dispatch(getSurvivalInformation('POST', inputData))
-        }
+        submitFitersAndFetchData()
       }
     }
   }, [inputData, groupFilters])
@@ -74,14 +89,14 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
           )
         })
       }
-      if(htmlArray.length>1){
+      if (htmlArray.length > 1) {
         setSampleCountsCard([
           <div key='total' className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue">
             Total : {totalCount}
           </div>,
           ...htmlArray
         ])
-      }else{
+      } else {
         setSampleCountsCard([
           <div key='total' className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue">
             Total : {totalCount}
@@ -112,10 +127,10 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
   }
 
   useEffect(() => {
-    if(survivalJson && survivalJson.status === 200){
+    if (survivalJson && survivalJson.status === 200) {
       setRenderNoContent(false)
       setRenderSurvival(true)
-    }else{
+    } else {
       setRenderNoContent(true)
       setRenderSurvival(false)
     }
@@ -131,6 +146,18 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
             {sampleCountsCard.length > 0 && <div className="m-1 p-1 border border-black border-dashed">
               {sampleCountsCard}
             </div>}
+            <div className="m-1 flex flex-row justify-around">
+              <button onClick={() => setFilterTypeButton('clinical')} id='Mutation' name='type'
+                className={filterTypeButton === 'clinical' ? selectedCss : nonSelectedCss}
+              >
+                Clinical
+              </button>
+              <button onClick={() => setFilterTypeButton('omics')} id='Phospho' name='type'
+                className={filterTypeButton === 'omics' ? selectedCss : nonSelectedCss}
+              >
+                Omics
+              </button>
+            </div>
             <div className="m-1 p-1">
               <h6 className="text-blue-700 text-lg  font-bold mb-2 text-left" htmlFor="dropdown-gene">Select Gene</h6>
               <select id="dropdown-gene" onChange={(e) => setFilteredGene(e.target.value)}
@@ -142,7 +169,7 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
                 ))}
               </select>
             </div>
-            <div className="m-1 p-1">
+            {(filterTypeButton === 'omics') && <div className="m-1 p-1">
               <h6 className="text-blue-700 text-lg  font-bold mb-1 text-left" htmlFor="dropdown-database">Select Database</h6>
               <select id="dropdown-database" onChange={(e) => setGeneDatabase(e.target.value)}
                 defaultValue={geneDatabase}
@@ -151,8 +178,20 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
                 <option selected={geneDatabase === 'rna'} value="rna">RNA</option>
                 <option selected={geneDatabase === 'methylation'} value="methylation">DNA Methylation</option>
               </select>
-            </div>
-            {showClinicalFilters && <GroupFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
+            </div>}
+            {(filterTypeButton === 'clinical') && <GroupFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
+            {(filterTypeButton === 'omics') &&  <div>
+              <div>
+                <button onClick={submitFitersAndFetchData} className="bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
+                  Submit
+                </button>
+              </div>
+              <div>
+                <button className="bg-white hover:bg-gray-700 mb-3 w-80 h-20 text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
+                  Reset
+                </button>
+              </div>
+            </div>}
           </div>
           <div className="w-4/5">
             {renderSurvival && <SurvivalCmp watermarkCss={watermarkCss} ref={reference} width={width} data={
