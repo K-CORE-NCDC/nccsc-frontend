@@ -37,7 +37,6 @@ export default function DataVisualization() {
   }
 
   const submitFilter = (e) => {
-
     setBoolChartState(false)
     setChartName(tab)
     let chartx = LoadChart(width, tab)
@@ -236,7 +235,7 @@ export default function DataVisualization() {
       case "volcano":
         return Charts.volcano(w, state, screenCapture, setToFalseAfterScreenCapture)
       case "heatmap":
-        return Charts.heatmap(w, state, screenCapture, setToFalseAfterScreenCapture)
+        return Charts.heatmap(w, state, screenCapture, BrstKeys, setToFalseAfterScreenCapture)
       case "survival":
         return Charts.survival(w, state, screenCapture, setToFalseAfterScreenCapture)
       case "scatter":
