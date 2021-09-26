@@ -7,6 +7,9 @@ import { exportComponentAsPNG } from 'react-component-export-image';
 import UserFilesTable from '../../Common/Table'
 import LoaderCmp from '../../Common/Loader'
 import NoContentMessage from '../../Common/NoContentComponent'
+import Multiselect from 'multiselect-react-dropdown';
+import inputJson from '../../Common/data'
+
 
 export default function DataOnco({ width,inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
@@ -21,6 +24,16 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
   const [tableCount, setTableCount] = useState()
   const [showOnco, setShowOnco] = useState(false)
   const [noContent, setNoContent] = useState(true)
+  const [optionChoices,setOptionChoices] = useState([])
+  const [option,setOption] = useState([])
+
+  useEffect(()=>{
+    if(inputJson['filterChoices']){
+      let f = inputJson['filterChoices']
+
+      setOptionChoices(f)
+    }
+  },[inputJson['filterChoices']])
 
   useEffect(()=>{
     if(inputData && 'genes' in inputData){
@@ -144,10 +157,60 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
     }
   }, [oncoJson])
 
+  // useEffect(()=>{
+  //   console.log(filters)
+  //   if(filters){
+  //     for (var i = 0; i < filters.length; i++) {
+  //       console.log(filters[i])
+  //     }
+  //   }
+  // },[filters])
+
   // console.log("tableCount---->",tableCount)
+  function onSelect(selectedList, selectedItem) {
+
+    let cf = []
+    setOption(selectedList)
+    selectedList.forEach((item, i) => {
+      cf.push(item['id'])
+    });
+
+    setActiveCmp(false)
+    if(inputState.type !==''){
+      setLoader(true)
+      let dataJson = inputState
+      dataJson['clinicalFilters'] = cf
+      dispatch(getOncoInformation('POST',dataJson))
+    }
+
+  }
+
+  function onRemove(selectedList, removedItem) {
+    let genes = []
+    setOption(selectedList)
+    selectedList.forEach((item, i) => {
+      genes.push(item['id'])
+    });
+  }
 
   return (
-    <>{
+
+    <>
+    {optionChoices &&   <div className='p-5 text-right m-5'>
+        <div className='flex float-left'>
+          <div className='p-3'>Clinical Filters</div>
+          <Multiselect
+            options={optionChoices} // Options to display in the dropdown
+            selectedValues={option} // Preselected value to persist in dropdown
+            onSelect={onSelect} // Function will trigger on select event
+            onRemove={onRemove} // Function will trigger on remove event
+            displayValue="name" // Property name to display in the dropdown options
+          />
+        </div>
+      </div>
+
+    }
+    {
       loader?
       <LoaderCmp/>
       :
