@@ -23,8 +23,8 @@ export default function BarChartComp({data}){
                   '#fffebc'
               ],
               borderColor: [
-                '#529d3f',
                 '#d2352b',
+                '#529d3f',
                 '#f18532',
                 '#644195',
                 '#3777af',
