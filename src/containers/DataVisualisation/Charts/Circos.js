@@ -30,7 +30,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   const [showOncoTimelineTables, setShowOncoTimelineTables] = useState(false)
   const [showNoContent, setShowNoContent] = useState(false)
   const [renderCircos, setRenderCircos] = useState(false)
-  
+
 
   const closeShowOncoImages = () => {
     setShowOncoImages(false)
@@ -129,6 +129,13 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
     setTimeout(function () {
       if (circosJson && circosJson.status !== 0) {
         setLoader(false)
+        if(sampleKey!=='all'){
+          document.getElementById('images').classList.remove("opacity-50")
+          document.getElementById('tables').classList.remove("opacity-50")
+        }else{
+          document.getElementById('images').classList.add("opacity-50")
+          document.getElementById('tables').classList.add("opacity-50")
+        }
       }
     }, (1000));
   }, [circosJson])

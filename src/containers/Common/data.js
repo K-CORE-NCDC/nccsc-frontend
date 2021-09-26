@@ -317,11 +317,38 @@ let filterBoxes = {
     ]
   },
 }
+
+let filterChoices = [
+    {'name': 'sex', 'id': 'sex_cd'},
+    {'name': 'Age Of Diaganosis', 'id': 'diag_age'},
+    {'id': 'bmi_vl', 'name': 'Body Mass Index'},
+    {'id': 'bila_cncr_yn', 'name': 'Diagnosis of Bilateral Breast Cancer' },
+    {'name': 'Current Smoker', 'id': 'smok_curr_yn' },
+    {'name': 'Former Smoker', 'id': 'smok_yn' },
+    {'name': 'alcohol_consuption', 'id': 'drnk_yn',  },
+    {'name': 'Family History of Breast Cancer', 'id': 'fmhs_brst_yn' },
+    {'name': 'First Menstural Age', 'id': 'mena_age'},
+    {'name': 'Menopause', 'id': 'meno_yn' },
+    {'name': 'childbirth', 'id': 'delv_yn' },
+    {'name': 'Experience of Breastfeeding', 'id': 'feed_yn' },
+    {'name': 'Duration of Breastfeeding (1-24 M)', 'id': 'feed_drtn_mnth'},
+    {'name': 'Intake of Oral Contraceptive Pill', 'id': 'oc_yn' },
+    {'name': 'Hormone Replacement Therapy', 'id': 'hrt_yn' },
+    {'name': 'T Stage', 'id': 't_category'  },
+    {'name': 'N Stage', 'id': 'n_category' },
+    {'name': 'HER2 Score', 'id': 'her2_score' },
+    {'name': 'ki67', 'id': 'ki67_score'},
+    {'name': 'Relapse Duration', 'id': 'rlps_cnfr_drtn',},
+    {'name': 'Relapse Yes or No', 'id': 'rlps_yn' }
+]
 let inputJson = {
   "clinicalColor":clinicalColor,
   "filterBoxes":filterBoxes,
-  "gene_selection":gene_selection
+  "gene_selection":gene_selection,
+  "filterChoices":filterChoices
 }
+
+
 
 
 
