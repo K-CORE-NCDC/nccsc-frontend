@@ -39,20 +39,11 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
       },
     },
     responsive: true,
-    tooltips: {
-      callbacks: {
-        label: function (tooltipItem, data) {
-          var label = data.labels[tooltipItem.index];
-          return label + ': (' + tooltipItem.xLabel + ', ' + tooltipItem.yLabel + ')';
-        }
-      }
-    },
     plugins: {
       tooltips: {
         callbacks: {
           label: function (tooltipItem, data) {
-            var label = data.labels[tooltipItem.index];
-            return label + ': (test' + tooltipItem.xLabel + ', ' + tooltipItem.yLabel + ')';
+            return tooltipItem.raw.gene+': (' +  tooltipItem.raw.x + ', ' +  tooltipItem.raw.y + ')';
           }
         }
       },
@@ -64,23 +55,27 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
           // rangeMin: { y: 0},
           // rangeMax: { y: 10 }
         },
-        // zoom: {
-        //   // enabled: true,
-        //   drag:{
-        //     enabled:true,
-        //     threshold:100
-        //   },
-        //   mode: 'x',
-        //   pinch:{
-        //     enabled:true,
-        //     // threshold:100
-        //   }
-        //   // rangeMin: { y: 0},
-        //   // rangeMax: { y: 20 }
-        // }
+        y:{
+          title: {
+            display: true,
+            text: '-Log(p-value)'
+          }
+        }
+        
+        
+      },
+      responsive:true,
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+                return tooltipItem.raw.gene+': (' +  tooltipItem.raw.x + ', ' +  tooltipItem.raw.y + ')';
+            }
+          }
       }
     }
   }
+}
 
   const resetChart = () => {
     myChart.resetZoom()
