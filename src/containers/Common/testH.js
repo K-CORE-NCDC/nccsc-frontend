@@ -2,9 +2,9 @@ import React, { useState,useEffect,Fragment } from 'react'
 import CanvasXpressReact from 'canvasxpress-react';
 
 
-const HeatmapCmp = React.forwardRef(({  inputData, watermarkCss,width }, ref) => {
+const HeatmapCmp = React.forwardRef(({  inputData, watermarkCss,width,clinicalFilter }, ref) => {
 
-    const [data,setData] = useState({"y":{}})
+    const [data,setData] = useState({})
     const [dataLoaded,setDataLoaded] = useState(false)
     let target = "canvas";
 
@@ -13,21 +13,49 @@ const HeatmapCmp = React.forwardRef(({  inputData, watermarkCss,width }, ref) =>
         "colorSpectrum": ["navy","white","firebrick3"],
         "graphType": "Heatmap",
         "heatmapCellBoxColor": "rgb(255,255,255)",
+        "overlayScaleFontFactor" : 2,
         "samplesClustered": true,
         "showTransition": false,
-        "title": "Clustered data",
-        "variablesClustered": true
+        "variablesClustered": true,
+        "showVarOverlaysLegend": true,
+        'events': false,
+        'info': false,
+        'afterRenderInit': false,
+        'afterRender': [
+            [
+                'setDimensions',
+                [613,613,true]
+            ]
+        ],
+        'noValidate': true
+    }
+    if(clinicalFilter.length>0){
+        config['varOverlayProperties'] = {}
+        config["varOverlays"] = []
+        for (let i = 0; i < clinicalFilter.length; i++) {
+            config['varOverlayProperties'][clinicalFilter[i].id] = {
+                "position": "top",
+                "type": "Default",
+                "color": "rgb(254,41,108)",
+                "spectrum": ["rgb(255,0,255)","rgb(0,0,255)","rgb(0,0,0)","rgb(255,0,0)","rgb(255,215,0)"],
+                "scheme": "GGPlot",
+                
+                "showLegend": true,
+                "showName": true,
+                "showBox": true,
+                "rotate": false
+            }
+            config["varOverlays"].push(clinicalFilter[i].id)
+        }
+        config["variablesClustered"] =  true
     }
 
-
+    console.log(config)
 
     useEffect(()=>{
         
         if(Object.keys(inputData).length>0){
-            setData((prevState) => ({
-                ...prevState,
-                "y" : inputData
-            }))
+            setData(inputData)
         }   
 
     },[inputData])

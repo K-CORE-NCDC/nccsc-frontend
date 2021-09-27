@@ -30,9 +30,7 @@ const Join = React.lazy(() => import('./containers/Signup/MemberShip'))
 
 const Signup = React.lazy(() => import('./containers/Signup/'))
 
-
-
-const Heat = React.lazy(() => import('./containers/Common/testH'))
+const CanvasBox = React.lazy(() => import('./containers/Common/CanvasBoxPlot'))
 // const  = React.lazy(() => import('./containers/Signup/MemberShip'))
 
 
@@ -49,16 +47,13 @@ const route = [
   { path: '/igv', exact: true, type:'unauth', name: 'igv', component: Igv },
   { path: '/heatmap', exact: true, type:'unauth', name: 'igv', component: Heatmap},
   { path: '/box2', exact: true, type:'unauth', name: 'igv', component: Box2},
-
   { path: '/chord', exact: true, type:'unauth', name: 'igv', component: Chord},
   { path: '/volcano', exact: true, type:'unauth', name: 'igv', component: Volcano},
-
   { path: '/term', exact: true, type:'unauth', name: 'igv', component: Terms},
   { path: '/member', exact: true, type:'unauth', name: 'igv', component: Join},
   { path: '/signup', exact: true, type:'unauth', name: 'igv', component: Signup},
-
-  { path: '/h', exact: true, type:'unauth', name: 'igv', component: Heat}
-  // { path: '/customanalysis', exact: true, type:'unauth', name: 'Home', component: Home },
+  { path: '/canvasbox', exact: true, type:'unauth', name: 'Home', component: CanvasBox },
+  
 ]
 
 export default route;

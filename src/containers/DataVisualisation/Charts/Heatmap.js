@@ -6,7 +6,9 @@ import { exportComponentAsPNG } from 'react-component-export-image';
 // import Loader from "react-loader-spinner";
 import LoaderCmp from '../../Common/Loader'
 import NoContentMessage from '../../Common/NoContentComponent'
-
+import inputJson from '../../Common/data'
+import { ZoomInIcon } from '@heroicons/react/solid';
+import Multiselect from 'multiselect-react-dropdown';
 
 export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, setToFalseAfterScreenCapture }) {
   const reference = useRef()
@@ -21,9 +23,47 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const [loader, setLoader] = useState(false)
   const [genes,setGenes] = useState([])
   const [selectedGene,setSelectedGene] = useState([])
+  const [optionChoices,setOptionChoices] = useState([])
+  const [option,setOption] = useState([])
   const [showBoxPlot, setShowBoxPlot] = useState(false)
   const [noContent, setNoContent] = useState(true)
 
+  const diag_age = (vl)=>{
+    let n = parseInt(vl)
+    let tmp = ''
+    if(n >20 && n<=25){
+      tmp = '21~25'
+    } else if(n>25 && n<=30 )  {
+      tmp = '25~30'
+    } else if(n>30 && n<=35) {
+      tmp = '30~35'
+    } else if(n>35 && n<=40) {
+      tmp = '36~40'
+    }
+    return tmp
+  }
+
+  const bim_vl = (vl)=>{
+    let n = parseInt(vl)
+    let tmp = ''
+    if(n<18.5){
+      tmp='~18.5'
+    }else if (n>18.5 &&n<=25) {
+      tmp = '18.5 ~ 25'
+    }else if (n>25 &&n<=30) {
+      tmp='25~30'
+    }else if (n>30) {
+      tmp='30~'
+    }
+    return tmp
+  }
+
+  useEffect(()=>{
+    if(inputJson['filterChoices']){
+      let f = inputJson['filterChoices']
+      setOptionChoices(f)
+    }
+  },[inputJson['filterChoices']])
 
   useEffect(() => {
     if (inputData) {
@@ -49,7 +89,15 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       let genes = []
       let unique_sample_values = {}
       let heat_data = []
-
+      let unique_cf = {}
+      let z = {}
+      if(option.length>0){
+        for (let opt = 0; opt < option.length; opt++) {
+          unique_cf[option[opt].id] = []
+          z[option[opt].id] = []
+        }
+      }
+      
       heatmapJson.forEach((item, i) => {
         if(!genes.includes(item['gene_name'])){
           genes.push(item['gene_name'])
@@ -61,20 +109,46 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
           unique_sample_values[breast_key] = []
           unique_sample_values[breast_key].push(item["gene_vl"])
         }
+        if(option.length>0){
+          for (let opt = 0; opt < option.length; opt++) {
+            if(!(breast_key in unique_cf[option[opt].id])){
+              unique_cf[option[opt].id][breast_key] = item[option[opt].id]
+            }
+          }
+        }
+        
       });
       
+      
+      // if(clinicalFilter){
+      //   z[clinicalFilter] = []
+      // }
+      
+
       let y = {
         "smps":genes,
         "vars":[],
         "data":[]
       }
+      let x = {}
       Object.keys(unique_sample_values).forEach((key, i) => {
         y["vars"].push(key)
         y['data'].push(unique_sample_values[key])
+        if(option.length>0){
+          for (let opt = 0; opt < option.length; opt++) {
+            if(option[opt].id==='diag_age'){
+              z[option[opt].id].push(diag_age(unique_cf[option[opt].id][key]))
+            }else if(option[opt].id==='bmi_vl'){
+              z[option[opt].id].push(bim_vl(unique_cf[option[opt].id][key]))
+            }else{
+              z[option[opt].id].push(unique_cf[option[opt].id][key])
+            }
+          }
+        }
       });
 
       setActiveCmp(true)
-      setData(y)
+      setData({"z":z,"x":x,"y":y})
       setTimeout(function () {
         setLoader(false)
       }, (1000));
@@ -150,38 +224,85 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     }
   }
 
+ 
+  function onSelect(selectedList, selectedItem) {
+
+    let cf = []
+    setOption(selectedList)
+    selectedList.forEach((item, i) => {
+      cf.push(item['id'])
+    });
+
+    
+    if(inputData.type !==''){
+      setLoader(true)
+      setActiveCmp(false)
+      let dataJson = inputData
+      dataJson['clinicalFilters'] = cf
+      dispatch(getHeatmapInformation('POST',dataJson))
+    }
+
+  }
+
+  function onRemove(selectedList, removedItem) {
+    let items = []
+    setOption(selectedList)
+    selectedList.forEach((item, i) => {
+      items.push(item['id'])
+    });
+    if(inputData.type !==''){
+      setLoader(true)
+      setActiveCmp(false)
+      let dataJson = inputData
+      dataJson['clinicalFilters'] = items
+      dispatch(getHeatmapInformation('POST',dataJson))
+    }
+  }
+
   return (
     <div>
       <div className="grid  ">
-        <div className="p-5 text-right">
-          <div className="flex justify-start items-baseline flex-wrap">
-            <div className="flex m-2">
-              <button onClick={e => changeType(e, 'rna')} name='type' className="rounded-r-none  hover:scale-110
-                  focus:outline-none flex p-5 rounded font-bold cursor-pointer
-                  hover:bg-main-blue  bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition">
-                RNA
-              </button>
-              <button onClick={e => changeType(e, 'methylation')} name='type' className="rounded-l-none border-l-0
-                  hover:scale-110 focus:outline-none flex justify-center p-5
-                  rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100
-                  text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
-                Methylation
-              </button>
-              <button onClick={e => changeType(e, 'proteome')} name='type' className="rounded-l-none border-l-0
-                  hover:scale-110 focus:outline-none flex justify-center p-5
-                  rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100
-                  text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
-                Global Proteome
-              </button>
-              <button onClick={e => changeType(e, 'phospo')} name='type' className="rounded-l-none border-l-0
-                  hover:scale-110 focus:outline-none flex justify-center p-5
-                  rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100
-                  text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
-                Phospho
-              </button>
+        <div className='grid grid-cols-4'>
+          <div className="p-5 text-right col-span-2">
+            <div className="flex justify-start items-baseline flex-wrap">
+              <div className="flex m-2">
+                <button onClick={e => changeType(e, 'rna')} name='type' className="rounded-r-none  hover:scale-110
+                    focus:outline-none flex p-5 rounded font-bold cursor-pointer
+                    hover:bg-main-blue  bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition">
+                  RNA
+                </button>
+                <button onClick={e => changeType(e, 'methylation')} name='type' className="rounded-l-none border-l-0
+                    hover:scale-110 focus:outline-none flex justify-center p-5
+                    rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100
+                    text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
+                  Methylation
+                </button>
+                <button onClick={e => changeType(e, 'proteome')} name='type' className="rounded-l-none border-l-0
+                    hover:scale-110 focus:outline-none flex justify-center p-5
+                    rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100
+                    text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
+                  Global Proteome
+                </button>
+                <button onClick={e => changeType(e, 'phospo')} name='type' className="rounded-l-none border-l-0
+                    hover:scale-110 focus:outline-none flex justify-center p-5
+                    rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100
+                    text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
+                  Phospho
+                </button>
+              </div>
             </div>
           </div>
+          <div className='p-5 '>
+            <Multiselect
+              options={optionChoices} // Options to display in the dropdown
+              selectedValues={option} // Preselected value to persist in dropdown
+              onSelect={onSelect} // Function will trigger on select event
+              onRemove={onRemove} // Function will trigger on remove event
+              displayValue="name" // Property name to display in the dropdown options
+            />
+          </div>
         </div>
+
         <div className='grid'>
           { loader? <LoaderCmp/>: <div>
             {(tableType === 'methylation' || tableType==='phospo') &&
@@ -193,7 +314,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
                 }
               </div>
             }
-            {data_ && <HeatmapNewCmp inputData={data_} watermarkCss={watermarkCss} ref={reference} width={width} />}
+            {data_ && <HeatmapNewCmp clinicalFilter={optionChoices} inputData={data_} watermarkCss={watermarkCss} ref={reference} width={width} />}
             </div>
           }
         </div>
