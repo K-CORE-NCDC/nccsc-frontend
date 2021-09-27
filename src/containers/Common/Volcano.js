@@ -14,54 +14,34 @@ var myChart
 const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, positive_data, tab_count }, ref) => {
     const volcano_plot = useRef(null);
     let option = {
-    scales: {
-      x: {
-        type: 'linear',
-        position: 'bottom'
-      },
-    },
-    responsive:true,
-    tooltips: {
-      callbacks: {
-         label: function(tooltipItem, data) {
-            var label = data.labels[tooltipItem.index];
-            console.log(tooltipItem, data);
-            return label + ': (' + tooltipItem.xLabel + ', ' + tooltipItem.yLabel + ')';
-         }
-      }
-   },
-    plugins: {
-      tooltips: {
-        callbacks: {
-           label: function(tooltipItem, data) {
-              var label = data.labels[tooltipItem.index];
-              console.log(tooltipItem, data);
-              return label + ': (test' + tooltipItem.xLabel + ', ' + tooltipItem.yLabel + ')';
-           }
-        }
-     },
-      zoom: {
-        pan: {
-          enabled: true,
-          drag:true,
-          mode: 'xy',
-          // rangeMin: { y: 0},
-          // rangeMax: { y: 10 }
+      scales: {
+        x: {
+          type: 'linear',
+          position: 'bottom',
+          min: -25,
+          max: 25,
+          title: {
+            display: true,
+            text: 'Log2FoldChange'
+          }
         },
-        // zoom: {
-        //   // enabled: true,
-        //   drag:{
-        //     enabled:true,
-        //     threshold:100
-        //   },
-        //   mode: 'x',
-        //   pinch:{
-        //     enabled:true,
-        //     // threshold:100
-        //   }
-        //   // rangeMin: { y: 0},
-        //   // rangeMax: { y: 20 }
-        // }
+        y:{
+          title: {
+            display: true,
+            text: '-Log(p-value)'
+          }
+        }
+        
+        
+      },
+      responsive:true,
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+                return tooltipItem.raw.gene+': (' +  tooltipItem.raw.x + ', ' +  tooltipItem.raw.y + ')';
+            }
+          }
       }
     }
   }
@@ -99,7 +79,7 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
     return (
         <div>
             <div id='scatter_parent' className={`p-3 ${watermarkCss}`}>
-              <canvas id="scatter" ref={volcano_plot} height="10vh" width="40vw"></canvas>
+              <canvas id="scatter" ref={volcano_plot} height="200"></canvas>
             </div>
             <button type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-8" onClick={resetChart}>reset</button>
             <button type="button" onClick={zoomIn} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 ml-8 rounded" >zoom in</button>

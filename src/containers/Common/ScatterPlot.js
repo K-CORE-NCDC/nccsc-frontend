@@ -27,8 +27,19 @@ export default function ScatterPlot({ scatter_data }) {
     scales: {
       x: {
         type: 'linear',
-        position: 'bottom'
+        position: 'bottom',
+        title: {
+          display: true,
+          text: 'Rna Expression (z-score)'
+        }
+      },
+      y:{
+        title: {
+          display: true,
+          text: 'Global proteome(z-score)'
+        }
       }
+
     },
     responsive:true,
   }
@@ -62,7 +73,7 @@ export default function ScatterPlot({ scatter_data }) {
 
 
   return (
-      <div id='scatter_parent'>
+      <div id='scatter_parent' className='p-5'>
         <canvas id="scatter" ref={scatter_plot} height="14vh" width="40vw"></canvas>
       </div>
   )

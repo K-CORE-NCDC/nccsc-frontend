@@ -196,19 +196,21 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
   return (
 
     <>
-    {optionChoices &&   <div className='p-5 text-right m-5'>
-        <div className='flex float-left'>
-          <div className='p-3'>Clinical Filters</div>
-          <Multiselect
-            options={optionChoices} // Options to display in the dropdown
-            selectedValues={option} // Preselected value to persist in dropdown
-            onSelect={onSelect} // Function will trigger on select event
-            onRemove={onRemove} // Function will trigger on remove event
-            displayValue="name" // Property name to display in the dropdown options
-          />
+    {optionChoices &&  
+      <div className='grid'>
+        <div className='p-5 text-right m-5'>
+          <div className='flex float-left'>
+            <div className='p-3'>Clinical Filters</div>
+            <Multiselect
+              options={optionChoices} // Options to display in the dropdown
+              selectedValues={option} // Preselected value to persist in dropdown
+              onSelect={onSelect} // Function will trigger on select event
+              onRemove={onRemove} // Function will trigger on remove event
+              displayValue="name" // Property name to display in the dropdown options
+            />
+          </div>
         </div>
       </div>
-
     }
     {
       loader?
