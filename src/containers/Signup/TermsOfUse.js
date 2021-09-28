@@ -29,10 +29,10 @@ const TermsOfUse = ({updateStep}) => {
                 <div className="my-14">
                     <h1 className="font-medium text-3xl text-gray-800">Please proceed after agreeing to the terms of use.</h1>
                 </div>
-                <div class="overflow-auto bg-white border border-gray-400 rounded shadow-sm w-4/6 p-10" style={{height:"280px"}}>
-                    <div class="scrollBox">
+                <div className="overflow-auto bg-white border border-gray-400 rounded shadow-sm w-4/6 p-10" style={{height:"280px"}}>
+                    <div className="scrollBox">
                               <h4 className="font-medium">Member Terms and Conditions for National Cancer Center website</h4>
-                              <ul class="scrollList">
+                              <ul className="scrollList">
                                   <li>제1장 총 칙
                                       <ul>
                                           <li>제1조 (목적) 본 약관은 국립암센터가 제공하는 인터넷관련 서비스(이하 "서비스"라 합니다)를 이용함에 있어 그 이용조건 및 절차와 국립암센터와 이용자의 권리, 의무 및 책임 등 필요한 사항을 규정함을 목적으로 합니다.</li>
@@ -361,15 +361,15 @@ const TermsOfUse = ({updateStep}) => {
                 </div>
                 <div className="my-8 pb-6">
                   <label className="inline-flex items-center">
-                    <input type="checkbox" className="form-radio" checked={firstAgree} name="accountType" value="personal" onClick={()=>setFirstAgree(!firstAgree)}/>
+                    <input type="checkbox" className="form-radio" checked={firstAgree} name="accountType" value="personal" onChange={()=>setFirstAgree(!firstAgree)}/>
                     <span className="ml-2 font-medium">I agree to the website membership terms and conditions.</span>
                   </label>
                 </div>
-                <div class="overflow-auto bg-white border border-gray-400 rounded shadow-sm w-4/6 p-10" style={{height:"280px"}}>
-                  <div class="scrollBox">
+                <div className="overflow-auto bg-white border border-gray-400 rounded shadow-sm w-4/6 p-10" style={{height:"280px"}}>
+                  <div className="scrollBox">
                         <h4 className="font-medium">Consent to collection and use of personal information in accordance with Article 15 of the Personal Information Protection Act</h4>
                         <p className="font-medium">We inform you that the National Cancer Center processes your personal information as follows.</p>
-                        <ul class="scrollList">
+                        <ul className="scrollList">
                             <li><font> 1. purpose of collection and use of personal information </font><ul>
                                     <li> - for website services related to article 14 (work, etc.) of the national health insurance act</li>
                                 </ul>
@@ -391,11 +391,11 @@ const TermsOfUse = ({updateStep}) => {
                 </div>
                 <div className="my-8 pb-6 inline-flex gap-4">
                   <label>
-                    <input type="checkbox" className="form-radio" checked={secondAgree} name="accountType" value="personal" onClick={()=>setSecondAgree(!secondAgree)}/>
+                    <input type="checkbox" className="form-radio" checked={secondAgree} name="accountType" value="personal" onChange={()=>setSecondAgree(!secondAgree)}/>
                     <span className="ml-2 font-medium">I agree to the Privacy Act.</span>
                   </label>
                   <label>
-                    <input type="checkbox" className="form-radio" checked={allCheck} name="accountType" value="personal" onClick={()=>{
+                    <input type="checkbox" className="form-radio" checked={allCheck} name="accountType" value="personal" onChange={()=>{
                       setAllCheck(!allCheck)
                       setFirstAgree(!firstAgree)
                       setSecondAgree(!allCheck)

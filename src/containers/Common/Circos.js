@@ -1,14 +1,17 @@
 import React, { useState,useEffect } from 'react'
 import * as d3 from 'd3';
 import * as Circos from 'circos';
-import {queue} from 'd3-queue';
 import cytobands from './cytobands.csv'
-import LoaderCmp from './Loader'
 import placeholder from '../../assets/img/circosImage.png'
 
 
-const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, ref) => {
+const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, selectedGenes }, ref) => {
   // console.log(fusionJson, data);
+  let selectedGenesObject = {}
+  selectedGenes.forEach(e =>{
+    selectedGenesObject[e] = true
+  })
+  const selectedGeneColor = "#000"
   const [state, setState] = useState({"cytobands":[],'genes':[],'GRCh37':[]});
   const [loader, setLoader] = useState(false)
 
@@ -122,7 +125,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
         iter++
       }
     }
-    console.log(snp250);
+    
     var dna_methylation = [...all_chr]
 
     if('dna_methylation' in api_data){
@@ -234,9 +237,12 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
     })
     .scatter('dna-mutation', snp250, {
       color:function(d){
-        // console.log('mutation', d)
         if(d.name) {
-          return 'grey'
+          if(d.name in selectedGenesObject){
+            return selectedGeneColor
+          }else{
+            return 'grey'
+          }
         }else{
           return 'rgba(0,0,0,0)'
         }
@@ -262,7 +268,6 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
       ],
 
       tooltipContent: function (d, i) {
-        // console.log(d);
         return `${d.block_id}:${Math.round(d.position)} ➤ ${d.name} dna_mutation`
       }
     })
@@ -270,9 +275,13 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
       innerRadius: 0.74,
       outerRadius: 0.84,
       color:function(d){
-        if (d.value >= 1) 	{ return '#d2352b' }
+        if(d.name in selectedGenesObject){
+          return selectedGeneColor
+        }else{
+          if (d.value >= 1) 	{ return '#d2352b' }
 				if (d.value <= -1) 	{ return '#3777af' }
 				return '#d3d3d3'
+        }
       },
       strokeColor: function(d){
         if(d.name) {
@@ -302,7 +311,11 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
       showAxesTooltip: false,
       color:function(d){
         if(d.name) {
-          return '#000'
+          if(d.name in selectedGenesObject){
+            return selectedGeneColor
+          }else{
+            return '#000'
+          }
         }else{
           return 'rgba(0,0,0,0)'
         }
@@ -334,7 +347,11 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
       outerRadius: 0.57,
       showAxesTooltip: false,
       color:function(d){
-        return '#4285F4'
+        if(d.name in selectedGenesObject){
+          return selectedGeneColor
+        }else{
+          return '#4285F4'
+        }
       },
       strokeColor: function(d){
         if(d.name) {
@@ -364,11 +381,16 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
       outerRadius: 0.45,
       showAxesTooltip: false,
       color:function(d){
-        if (d.value > 1){
-          return '#F4B400'
+        if(d.name in selectedGenesObject){
+          return selectedGeneColor
         }else{
-          return "#0F9D58"
+          if (d.value > 1){
+            return '#F4B400'
+          }else{
+            return "#0F9D58"
+          }
         }
+        
       },
       strokeColor: function(d){
         if(d.name) {
@@ -407,6 +429,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, r
       opacity: 0.9,
       color: '#ffce44',
       color: function(d){
+        console.log(d.source)
         if(d.source.svtype){
           return '#ffce44'
         }else{
