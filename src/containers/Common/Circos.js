@@ -429,15 +429,17 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
       opacity: 0.9,
       color: '#ffce44',
       color: function(d){
-        console.log(d.source)
         if(d.source.svtype){
-          return '#ffce44'
+          if(d.source.svtype === "Deletion"){
+            return "red"
+          }else{
+            return 'yellow'
+          }
         }else{
           return "#0F9D58"
         }
       },
       tooltipContent: function (d) {
-        console.log(d);
         if(d.source.svtype){
           return`<h3> SV Type : ${d.source.svtype} | source : ${d.source.id} | ${d.source.name}  ➤ target: ${d.target.id} | ${d.target.name} </h3>`
         }else{

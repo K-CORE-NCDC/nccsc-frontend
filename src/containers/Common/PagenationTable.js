@@ -24,18 +24,26 @@ function PagenationTable({ imageData }) {
     }
 
     const generatePagesNumbersForCount = () => {
-        let cP = currentActivePageNumber
         let pageNumbers = []
-        if (totalPages <= 5) {
+        console.log(totalPages, currentActivePageNumber, totalPages - 2);
+        if (totalPages <= 6) {
             for (let i = 0; i < totalPages; i++) {
                 pageNumbers.push(i + 1)
             }
-        } else if ((cP === 1) || (cP === totalPages)) {
-            pageNumbers = [1, 2, 3, totalPages - 2, totalPages - 1, totalPages]
-        } else if ((cP === 2) || (cP === (totalPages - 1))) {
-            pageNumbers = [1, 2, 3, totalPages - 2, totalPages - 1, totalPages]
-        } else {
-            pageNumbers = [1, cP - 1, cP, cP + 1, totalPages - 1, totalPages]
+        } else if(currentActivePageNumber == 1){
+            pageNumbers = [1, 2, 3, '...', totalPages - 2, totalPages - 1, totalPages]
+        }else if(currentActivePageNumber == 2){
+            pageNumbers = [1, 2, 3, '...', totalPages - 2, totalPages - 1, totalPages]
+        }else if(currentActivePageNumber == 3){
+            pageNumbers = [1, '...', 3, currentActivePageNumber + 1, '...', totalPages - 2, totalPages - 1, totalPages]
+        }else if(currentActivePageNumber == (totalPages - 2)){
+            pageNumbers = [1, 2, '...', currentActivePageNumber - 1, currentActivePageNumber, totalPages - 1, totalPages]
+        }else if(currentActivePageNumber === (totalPages - 1)){
+            pageNumbers = [1, 2, 3, '...', currentActivePageNumber - 1, currentActivePageNumber, totalPages]
+        }else if(currentActivePageNumber === totalPages){
+            pageNumbers = [1, 2, 3, '...', totalPages -2, totalPages -1, totalPages]
+        }else{
+            pageNumbers = [1, 2, '...', currentActivePageNumber - 1, currentActivePageNumber, currentActivePageNumber + 1, '...', totalPages - 1, totalPages]
         }
         setPagenationPageNos(pageNumbers)
     }
@@ -45,10 +53,10 @@ function PagenationTable({ imageData }) {
             setIsDataFound(true)
             const imagesCount = imageData.length
             setTotalImagesCount(imagesCount)
-            if (imagesCount <= 20) {
+            if (imagesCount <= 10) {
                 setActiveDisplayImagesContent(imageData)
             }
-            setTotalPages(parseInt(imagesCount / 10))
+            setTotalPages(parseInt(imagesCount / 20) + 1)
             setCurrentActivePageNumber(1)
         } else {
             setIsDataFound(false)
@@ -56,40 +64,46 @@ function PagenationTable({ imageData }) {
     }, [imageData])
 
     useEffect(() => {
-        const sliceFrom = (currentActivePageNumber - 1) * 10
-        const sliceTo = currentActivePageNumber * 10
-        console.log(sliceFrom, sliceTo, totalImagesCount);
+        const sliceFrom = (currentActivePageNumber - 1) * 20
+        const sliceTo = currentActivePageNumber * 20
         if (currentActivePageNumber > 0) {
-            console.log(imageData.slice(sliceFrom, sliceTo))
             generatePagesNumbersForCount()
-            if (sliceTo > totalImagesCount) {
-                setActiveDisplayImagesContent(sliceFrom)
-            } else {
+            if ((sliceTo > totalImagesCount) && (sliceFrom > setTotalImagesCount)) {
                 setActiveDisplayImagesContent(imageData.slice(sliceFrom, sliceTo))
+            } else if(sliceTo <= totalImagesCount) {
+                setActiveDisplayImagesContent(imageData.slice(sliceFrom, sliceTo))
+            }else if((sliceTo > totalImagesCount) && (sliceFrom < totalImagesCount)){
+                setActiveDisplayImagesContent(imageData.slice(sliceFrom))
+            }else{
+                setActiveDisplayImagesContent([])
             }
         }
 
     }, [currentActivePageNumber])
-
     return (
         <>
 
             {isDataFound ? <div >
-                <div className="grid max-auto grid-cols-5 gap-4 p-6 overflow-y-scroll oncoimages_height">
+                <div className="grid max-auto grid-cols-10 gap-3 p-6 overflow-y-scroll oncoimages_height">
                     {activeDisplayImagesContent.map(e => {
-                        return <a key={e} href={config['auth']+e} target="_blank">
+                        return <a key={e} target="_blank" href={config['auth']+e}>
                             <img className='w-full block rounded' src={config['auth']+e} />
-                            <h1 className='text-3xl p-6'>{e.split('/').at(-1)}</h1>
+                            {/* <h1 className='text-3xl p-6'>{e.split('/').at(-1)}</h1> */}
                           </a>
                     })}
                 </div>
                 <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
                     <div className="hidden w-full m-1 p-1 sm:flex sm:items-center sm:justify-between">
                         <div>
-                            <p className="text-md text-gray-700">
-                                Showing <span className="font-medium">{(currentActivePageNumber - 1) * 10}</span> to <span className="font-medium">{currentActivePageNumber * 10}</span> of{' '}
+                            {currentActivePageNumber === totalPages ? <p className="text-md text-gray-700">
+                                Showing <span className="font-medium">{totalImagesCount - activeDisplayImagesContent.length}</span> to <span className="font-medium">{totalImagesCount}</span> of{' '}
                                 <span className="font-medium">{totalImagesCount}</span> results
-                            </p>
+                            </p> :
+                            <p className="text-md text-gray-700">
+                            Showing <span className="font-medium">{(currentActivePageNumber - 1) * 20}</span> to <span className="font-medium">{currentActivePageNumber * 20}</span> of{' '}
+                            <span className="font-medium">{totalImagesCount}</span> results
+                        </p>
+                             }
                         </div>
                         <div>
                             <nav className="w-full inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
@@ -103,6 +117,7 @@ function PagenationTable({ imageData }) {
                                 </button>
                                 {pagenationPageNos.map(element => (
                                     <button
+                                        disabled={element === '...'}
                                         onClick={pageClickFunction}
                                         key={element}
                                         value={element}

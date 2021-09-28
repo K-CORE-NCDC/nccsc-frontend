@@ -188,7 +188,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
                 <button id='images' className="opacity-50 bg-main-blue hover:bg-blue-700 text-white font-bold p-4 rounded w-80" onClick={oncoImagesClickFunction}>Images</button>
               </div>
               <div className='p-3 mt-2'>
-                <button id='tables' className="opacity-50 bg-main-blue hover:bg-blue-700 text-white font-bold p-4 rounded w-80" onClick={timelineGraphClickFunction}>Tables</button>
+                <button id='tables' className="opacity-50 bg-main-blue hover:bg-blue-700 text-white font-bold p-4 rounded w-80" onClick={timelineGraphClickFunction}>F/U Timeline</button>
               </div>
             </div>
           </div>
