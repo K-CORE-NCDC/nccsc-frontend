@@ -30,7 +30,7 @@ const LoginComponent = () => {
 
     const formSubmitAction = (e) => {
         console.log('formsubmit')
-        e.preventDefault()
+        // e.preventDefault()
         const url = `${config.auth}api/token/`
         let x = axios({ method: 'POST', url: url, data: userFormData })
         x.then((response) => {
@@ -66,7 +66,7 @@ const LoginComponent = () => {
                         </div>
                         <div>
                         <div className="mb-4 pr-45 col-span-2">
-                            <input className="shadow appearance-none border rounded-lg w-full py-8 px-5 text-gray-700 leading-tight focus:border-blue-500  w-28" id="username" type="text" placeholder="Please Enter your id"/>
+                            <input onChange={updateUserNamePassword} name="username" className="shadow appearance-none border rounded-lg w-full py-8 px-5 text-gray-700 leading-tight focus:border-blue-500  w-28" id="username" type="text" placeholder="Please Enter your id"/>
                         </div>
                         </div>
                     </div>
@@ -76,13 +76,13 @@ const LoginComponent = () => {
                         </div>
                         <div>
                         <div className="mb-4 pr-45 col-span-2">
-                            <input className="shadow appearance-none border rounded-lg w-full py-8 px-5 text-gray-700 leading-tight focus:border-blue-500  w-28" id="password" type="text" placeholder="Please Enter a password "/>
+                            <input onChange={updateUserNamePassword} name="password" className="shadow appearance-none border rounded-lg w-full py-8 px-5 text-gray-700 leading-tight focus:border-blue-500  w-28" id="password" type="text" placeholder="Please Enter a password "/>
                         </div>
                         </div>
                     </div>
                     <div className="grid grid-cols-3 pt-12">
                         <div className="w-full col-span-3">
-                            <button className="bg-blue-500 hover:bg-blue-700 text-white h-28 font-bold py-2 px-4 border border-blue-700 w-full rounded" style={{backgroundColor:"#194872"}}>
+                            <button onClick={formSubmitAction} className="bg-blue-500 hover:bg-blue-700 text-white h-28 font-bold py-2 px-4 border border-blue-700 w-full rounded" style={{backgroundColor:"#194872"}}>
                               <UserIcon className="h-14 w-12 inline text-main-white"/> <span>Login</span>
                             </button>
                         </div>
