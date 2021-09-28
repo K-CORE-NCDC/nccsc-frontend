@@ -1,14 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios'
-import config from '../../config'
-import {
-  UserIcon
-} from '@heroicons/react/outline'
 
 const MemberShip = () => {
-    const [errorClass, setErrorClass] = useState("")
-    const [errorMessage, setErrorMessage] = useState([])
-
     return (
         <div>
             <section className="mt-10 flex flex-col items-center justify-center">
@@ -25,7 +17,7 @@ const MemberShip = () => {
                       <span className="text-red-500">*</span>
                     </div>
                     <div className="col-span-3 p-8 bg-white border-b-2 border-gray-300 inline-flex gap-3">
-                      <div class="mb-3 pt-0">
+                      <div className="mb-3 pt-0">
                         <input type="text"  className="px-4 py-4 text-blueGray-600 relative bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"/>
                       </div>
                       <button className="hover:bg-blue-700 text-white h-11 mt-2 font-bold py-1 px-6 float-left rounded" style={{backgroundColor:"#bdbdbd"}}>
@@ -36,7 +28,7 @@ const MemberShip = () => {
                       <span className="font-bold">Password</span><span className="text-red-500">*</span>
                     </div>
                     <div className="col-span-3 p-8 bg-white border-b-2 border-gray-300">
-                        <div class="mb-3 pt-0">
+                        <div className="mb-3 pt-0">
                           <input type="text"  className="px-4 py-4 text-blueGray-600 relative bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"/>
                         </div>
                         <text className="text-red-500 text-sm">* It is less than 10-20 digits and is stored encrypted.</text>
@@ -45,7 +37,7 @@ const MemberShip = () => {
                       <span className="font-bold">Verify password</span><span className="text-red-500">*</span>
                     </div>
                     <div className="col-span-3 p-8 bg-white border-b-2 border-gray-300">
-                      <div class="mb-3 pt-0">
+                      <div className="mb-3 pt-0">
                         <input type="text"  className="px-4 py-4 text-blueGray-600 relative bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"/>
                       </div>
                     </div>
@@ -53,7 +45,7 @@ const MemberShip = () => {
                       <span className="font-bold">Name</span><span className="text-red-500">*</span>
                     </div>
                     <div className="col-span-3 p-8 bg-white border-b-2 border-gray-300">
-                        <div class="mb-3 pt-0">
+                        <div className="mb-3 pt-0">
                           <input type="text"  className="px-4 py-4 text-blueGray-600 relative bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"/>
                         </div>
                     </div>
@@ -65,7 +57,7 @@ const MemberShip = () => {
                           <input type="checkbox" className="form-radio" name="accountType" value="personal"/>
                           <span className="ml-2 font-medium">I agree to receive SMS</span>
                         </label>
-                        <div class="pt-0">
+                        <div className="pt-0">
                           <input type="text"  className="px-4 py-4 text-blueGray-600 relative bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"/>
                         </div>
                     </div>
@@ -73,11 +65,11 @@ const MemberShip = () => {
                       <span className="font-bold">E-mail</span><span className="text-red-500">*</span>
                     </div>
                     <div className="col-span-3 p-8 bg-white border-b-2 border-gray-300 inline-flex">
-                        <div class="mb-3 pt-0">
+                        <div className="mb-3 pt-0">
                           <input type="text"  className="px-4 py-4 text-blueGray-600 relative bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"/>
                         </div>
                         <h1 className="p-3">@</h1>
-                        <div class="mb-3 pt-0">
+                        <div className="mb-3 pt-0">
                           <input type="text"  className="px-4 py-4 text-blueGray-600 relative bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"/>
                         </div>
                         <select className="ml-3 border border-gray-300 px-4 py-3 rounded focus:outline-none focus:ring">
@@ -94,7 +86,7 @@ const MemberShip = () => {
                       <span className="font-bold">Email Verification Number</span><span className="text-red-500">*</span>
                     </div>
                     <div className="col-span-3 p-8 bg-white border-b-2 inline-flex border-gray-300">
-                      <div class="mb-3 pt-0">
+                      <div className="mb-3 pt-0">
                         <input type="text"  className="px-4 py-4 text-blueGray-600 relative bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"/>
                       </div>
                       <button className="text-gray border h-11 ml-3 mt-2 border-gray-300 bg-transparent font-bold py-1 px-6 float-left rounded">

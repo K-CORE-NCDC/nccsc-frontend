@@ -199,6 +199,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
                 ref={reference}
                 width={w}
                 data={circosJson}
+                selectedGenes={inputData.genes}
               />}
               {showNoContent && <NoContentMessage />}
             </div>

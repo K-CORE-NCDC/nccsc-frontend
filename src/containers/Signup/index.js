@@ -1,17 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'
-import config from '../../config'
 import MemberShip from './MemberShip'
 import TermsOfUse from './TermsOfUse'
-import {
-  UserIcon
-} from '@heroicons/react/outline'
 
 const SignupComponent = () => {
-    const [errorClass, setErrorClass] = useState("")
-    const [errorMessage, setErrorMessage] = useState([])
     const [nextstep, setNextStep] = useState(1)
-
     const updateStep_ = (star) => {
       let step = nextstep
       setNextStep( step + 1)

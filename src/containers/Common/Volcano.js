@@ -35,18 +35,24 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
     scales: {
       x: {
         type: 'linear',
-        position: 'bottom'
+        position: 'bottom',
+        min: -25,
+        max: 25,
+        title: {
+          display: true,
+          text: 'Log2FoldChange'
+        }
       },
     },
     responsive: true,
     plugins: {
-      tooltips: {
+      tooltip: {
         callbacks: {
-          label: function (tooltipItem, data) {
-            return tooltipItem.raw.gene+': (' +  tooltipItem.raw.x + ', ' +  tooltipItem.raw.y + ')';
+          label: function(tooltipItem, data) {
+              return tooltipItem.raw.gene+': (' +  tooltipItem.raw.x + ', ' +  tooltipItem.raw.y + ')';
           }
         }
-      },
+    },
       zoom: {
         pan: {
           enabled: true,
@@ -55,27 +61,15 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
           // rangeMin: { y: 0},
           // rangeMax: { y: 10 }
         },
-        y:{
+        y: {
           title: {
             display: true,
             text: '-Log(p-value)'
           }
         }
-        
-        
       },
-      responsive:true,
-      plugins: {
-        tooltip: {
-          callbacks: {
-            label: function(tooltipItem, data) {
-                return tooltipItem.raw.gene+': (' +  tooltipItem.raw.x + ', ' +  tooltipItem.raw.y + ')';
-            }
-          }
-      }
     }
   }
-}
 
   const resetChart = () => {
     myChart.resetZoom()
@@ -113,17 +107,17 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
     ];
     if (tableType === "positive") {
       tableData.forEach(element => {
-        if(element["log2(fold_change)"] <= -5){
+        if (element["log2(fold_change)"] <= -5) {
           rows.push([element["gene"], element["log2(fold_change)"], element["q_value"]])
         }
       });
-    } else if(tableType === "negative") {
+    } else if (tableType === "negative") {
       tableData.forEach(element => {
-        if(element["q_value"] >= 5){
+        if (element["q_value"] >= 5) {
           rows.push([element["gene"], element["log2(fold_change)"], element["q_value"]])
         }
       });
-    }else{
+    } else {
       tableData.forEach(element => {
         rows.push([element["gene"], element["log2(fold_change)"], element["q_value"]])
       })
@@ -151,9 +145,9 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
           <div>
             {/* <UserFilesTable userDataTableData={negative_data} /> */}
             <DataTable pagination
-                      columns={table_cols}
-                      data={negative_data}
-                    />
+              columns={table_cols}
+              data={negative_data}
+            />
             <div className="mt-8 ml-4 text-left flex flex-row justify-between">
               <h2><strong>Total entries:  {tab_count['negative']}</strong></h2>
               <button onClick={() => downloadTableAsCsv("negative")} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
@@ -167,9 +161,9 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
           <h2 className="text-left text-blue-800 mb-12 mt-12"><strong>{"Expression Up Level(log2FC >= 5)"}</strong></h2>
           {/* <UserFilesTable userDataTableData={positive_data} /> */}
           <DataTable pagination
-                      columns={table_cols}
-                      data={positive_data}
-                    />
+            columns={table_cols}
+            data={positive_data}
+          />
           <div className="mt-8 ml-4 text-left flex flex-row justify-between">
             <h2><strong>Total entries:  {tab_count['positive']}</strong></h2>
             <button onClick={() => downloadTableAsCsv("negative")} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
@@ -183,12 +177,12 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
                     /> */}
         </div>
         <div className="mt-8 ml-4 text-left flex flex-row justify-between">
-            <h2><strong>Download Entire Data</strong></h2>
-            <button onClick={() => downloadTableAsCsv("")} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
-              <svg className="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg>
-              <span>Download</span>
-            </button>
-          </div>
+          <h2><strong>Download Entire Data</strong></h2>
+          <button onClick={() => downloadTableAsCsv("")} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
+            <svg className="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg>
+            <span>Download</span>
+          </button>
+        </div>
       </div>
     </div>
   )
