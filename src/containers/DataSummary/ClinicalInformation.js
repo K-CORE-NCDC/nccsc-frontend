@@ -193,6 +193,9 @@ export default function ClinicalInformation() {
     if(check ){
       Object.keys(summaryJson[parent_name]).forEach((item, k) => {
         let id = item.split(" ").join("")
+
+
+
         if(item===chart){
           tmp.push(
             <div key={'chart_'+item} data-chart="bar" className='max-w bg-white rounded-2xl overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border'>
@@ -212,7 +215,8 @@ export default function ClinicalInformation() {
                   <Barchart  id={'chart_bar_'+id}
                   data={summaryJson[parent_name][item]}
                   width='300'
-                  color={ inputJson['clinicalColor'][parent_name] }
+                  color={inputJson['clinicalColor'][parent_name]}
+                  title={inputJson['clinical_info_title'][item]}
                   />
                 </div>
                 <div id={'parent_chart_pie_'+id} className="hidden">

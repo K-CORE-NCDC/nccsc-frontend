@@ -5,6 +5,11 @@ let clinicalColor = {
   "Follow-up Observation":"#db941b"
 }
 
+let clinical_info_title = {
+  "Age Of Diagnosis":"Age",
+  "Body Mass Index":"kg/m2",
+  "Duration Of Breastfeeding (1-24 M)":"month"
+}
 
 
 let filterBoxes = {
@@ -118,7 +123,8 @@ let filterBoxes = {
 }
 let inputJson = {
   "clinicalColor":clinicalColor,
-  "filterBoxes":filterBoxes
+  "filterBoxes":filterBoxes,
+  "clinical_info_title":clinical_info_title
 }
 
 export default inputJson
