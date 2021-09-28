@@ -48,8 +48,10 @@ export default function Igv({width,data}) {
 
   return (
     <div>
-      <div className='ml-6'>
-        <img src={placeholder} width='400'/>
+      <div className='ml-6 grid grid-cols-4'>
+        <div className='col-span-2'>
+          <img src={placeholder} width='400'/>
+        </div>
       </div>
       <div className='ad pt-6' id="igv-div" style={{"height":"500px","width":width+"px"}}>
       </div>
