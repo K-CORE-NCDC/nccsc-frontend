@@ -84,58 +84,7 @@ export default function Web() {
                 </div>
               </div>
             </nav>
-            {classes==='' &&
-            <div className='w-full mx-auto text-center flex flex-row justify-center p-5 bg-white mt-4'>
-              <div className=" items-center mr-4 mb-4">
-                <label htmlFor="radio1" className="flex items-center cursor-pointer">
-                  <input id="radio1" type="radio" name="radio"  />&nbsp;&nbsp;
-                  Breast Cancer
-                </label>
-              </div>
-              <div className=" items-center mr-4 mb-4">
-                <label htmlFor="radio2" className="flex items-center cursor-pointer">
-                  <input id="radio2" type="radio" name="radio" />&nbsp;&nbsp;
-                  Bile Duck Cancer
-                </label>
-              </div>
-              <div className=" items-center mr-4 mb-4">
-                <label htmlFor="radio3" className="flex items-center cursor-pointer">
-                  <input id="radio3" type="radio" name="radio" />&nbsp;&nbsp;
-                  Stomach Cancer
-                </label>
-              </div>
-              <div className=" items-center mr-4 mb-4">
-                <label htmlFor="radio4" className="flex items-center cursor-pointer">
-                  <input id="radio4" type="radio" name="radio" />&nbsp;&nbsp;
-                  Uterine Cancer
-                </label>
-              </div>
-              <div className=" items-center mr-4 mb-4">
-                <label htmlFor="radio5" className="flex items-center cursor-pointer">
-                  <input id="radio5" type="radio" name="radio" />&nbsp;&nbsp;
-                  Brain Cancer
-                </label>
-              </div>
-              <div className=" items-center mr-4 mb-4">
-                <label htmlFor="radio6" className="flex items-center cursor-pointer">
-                  <input id="radio6" type="radio" name="radio" />&nbsp;&nbsp;
-                  Renel Cancer
-                </label>
-              </div>
-              <div className=" items-center mr-4 mb-4">
-                <label htmlFor="radio7" className="flex items-center cursor-pointer">
-                  <input id="radio7" type="radio" name="radio" />&nbsp;&nbsp;
-                  Prostate Cancer
-                </label>
-              </div>
-              <div className=" items-center mr-4 mb-4">
-                <label htmlFor="radio8" className="flex items-center cursor-pointer">
-                  <input id="radio8" type="radio" name="radio" />&nbsp;&nbsp;
-                  Heck and Neck Cancer
-                </label>
-              </div>
-
-            </div> }
+            
             {classes!=='' && <div className="grid grid-cols-3 px-64 py-20  text-right text-main-blue">
               <div className='lg:col-span-3 lg:text-center  2xl:col-start-3'>
               <h2 className="text-8xl"><strong>K</strong>-cancer <strong>omics</strong></h2>

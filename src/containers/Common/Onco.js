@@ -74,7 +74,6 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_
 
       var i = 0;
       for (var key in genes) {
-        // console.log(key);
         if (Object.keys(genes[key]).indexOf("variant_classification") != -1){
           i++;
         }
@@ -169,7 +168,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_
         clinical_custom_track_params['label'] = originDatum.displayName;
         clinical_custom_track_params['description'] = originDatum.displayName;
 
-
+        
         var track_id = oncoprint.addTracks([_.clone(clinical_custom_track_params)])[0];
 
         oncoprint.setTrackInfo(track_id, "");
