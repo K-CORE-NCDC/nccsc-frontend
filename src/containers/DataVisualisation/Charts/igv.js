@@ -12,7 +12,9 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
   const dispatch = useDispatch()
   const igvJson = useSelector((data) => data.dataVisualizationReducer.igvSummary);
   const [activeCmp,setActiveCmp] = useState(false)
+  const [igvLegend,setIgvLegend] = useState("")
   const [loader, setLoader] = useState(false)
+
 
   useEffect(()=>{
     if(inputData.type !==''){
@@ -42,7 +44,7 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
   //   }, (10000));
   // }, [igvJson])
 
-
+  console.log(igvLegend)
 
   return (
     <>{
@@ -50,7 +52,27 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
       <LoaderCmp/>
       :
       <div>
-        {activeCmp && <Igv data={igvJson}/>}
+        {
+          activeCmp
+          &&
+          <>
+          <div className="flex flex-row justify-start pl-12 gap-6">
+            <div>
+              <button className="box-border h-8 w-20 bg-red-600 border-2 line-through" onClick={()=>setIgvLegend("cn >= 3")}></button>
+              <h3><strong>{"cn >= 3"}</strong></h3>
+            </div>
+            <div>
+              <button className="box-border h-8 w-20 bg-white border-4" onClick={()=>setIgvLegend("cn = 2")}></button>
+              <h3><strong>{"cn = 2"}</strong></h3>
+            </div>
+            <div>
+              <button className="box-border h-8 w-20 bg-blue-500 border-4" onClick={()=>setIgvLegend("cn <= 1")}></button>
+              <h3><strong>{"cn <= 1"}</strong></h3>
+            </div>
+          </div>
+          <Igv data={igvJson}/>
+          </>
+        }
         {!activeCmp && <NoContentMessage />}
       </div>
     }

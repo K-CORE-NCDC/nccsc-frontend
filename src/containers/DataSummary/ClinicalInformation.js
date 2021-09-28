@@ -30,6 +30,7 @@ export default function ClinicalInformation() {
   const [firstLoad, setFirstLoad] = useState(true)
   const [loader, setLoader] = useState(true)
 
+  console.log(summaryJson)
 
   // const forceUpdate = React.useCallback(() => updateState({}), []);
   const change_visual = (e) =>{
@@ -190,12 +191,10 @@ export default function ClinicalInformation() {
       }
     }
 
+
     if(check ){
       Object.keys(summaryJson[parent_name]).forEach((item, k) => {
         let id = item.split(" ").join("")
-
-
-
         if(item===chart){
           tmp.push(
             <div key={'chart_'+item} data-chart="bar" className='max-w bg-white rounded-2xl overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border'>
