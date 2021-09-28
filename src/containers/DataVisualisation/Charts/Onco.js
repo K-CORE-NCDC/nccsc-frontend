@@ -157,16 +157,6 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
     }
   }, [oncoJson])
 
-  // useEffect(()=>{
-  //   console.log(filters)
-  //   if(filters){
-  //     for (var i = 0; i < filters.length; i++) {
-  //       console.log(filters[i])
-  //     }
-  //   }
-  // },[filters])
-
-  // console.log("tableCount---->",tableCount)
   function onSelect(selectedList, selectedItem) {
 
     let cf = []
@@ -186,11 +176,19 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
   }
 
   function onRemove(selectedList, removedItem) {
-    let genes = []
+    let cf = []
     setOption(selectedList)
     selectedList.forEach((item, i) => {
-      genes.push(item['id'])
+      cf.push(item['id'])
     });
+
+    setActiveCmp(false)
+    if(inputState.type !==''){
+      setLoader(true)
+      let dataJson = inputState
+      dataJson['clinicalFilters'] = cf
+      dispatch(getOncoInformation('POST',dataJson))
+    }
   }
 
   return (
