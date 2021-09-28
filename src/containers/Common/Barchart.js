@@ -2,8 +2,7 @@ import React, { useState,useEffect,useRef } from 'react';
 import {Chart, registerables} from 'chart.js';
 Chart.register(...registerables);
 
-
-export default function Barchart({id,data,width,color, chart_type}) {
+export default function Barchart({id,data,width,color, chart_type,title}) {
   const hexToRgb = hex =>
       hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i
          ,(m, r, g, b) => '#' + r + r + g + g + b + b)
@@ -63,6 +62,7 @@ export default function Barchart({id,data,width,color, chart_type}) {
         backgroundColor:colors,
         borderRadius: 11
       })
+      console.log(chart_type)
       drawGraph(g_dat, chart_type)
     }
   },[data,chart_type])
@@ -71,6 +71,9 @@ export default function Barchart({id,data,width,color, chart_type}) {
   return (
     <div id={'parent'+id}>
       <canvas id={id}  width={w} height="300"></canvas>
+      <div>
+        <center>{title}</center>
+      </div>
     </div>
   )
 }
