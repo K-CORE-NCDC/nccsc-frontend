@@ -23,15 +23,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
   const [showBoxPlot, setShowBoxPlot] = useState(false)
   const [noContent, setNoContent] = useState(true)
 
-  // useEffect(() => {
-  //   if (inputData) {
-  //     let editInputData = inputData
-  //     if (editInputData.type !== '') {
-  //       setLoader(true)
-  //       dispatch(getBoxInformation('POST', editInputData))
-  //     }
-  //   }
-  // }, [inputData])
+  
 
   useEffect(()=>{
     if(inputData && 'genes' in inputData){
@@ -47,7 +39,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
       if(inputState.type !==''){
         let dataJson = inputState
         setLoader(true)
-        // dataJson['genes'] = g[0]
+        
         dataJson['genes'] = g
         dispatch(getBoxInformation('POST', dataJson))
       }
@@ -61,12 +53,6 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
       setDisplaySamples(false)
     }
   }, [inputData])
-
-  // useEffect(() => {
-  //   if(!circosSanpleRnidListData){
-  //     dispatch(getCircosSamplesRnidList())
-  //   }
-  // }, [])
 
   useEffect(() => {
     if(screenCapture){
@@ -97,13 +83,10 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
     selectedList.forEach((item, i) => {
       genes.push(item['name'])
     });
-    // loadGenesDropdown(genes)
     if(inputData.type !==''){
       let dataJson = inputData
       dataJson['genes'] = genes
-      console.log(dataJson)
       setLoader(true)
-      // setActiveCmp(false)
       dispatch(getBoxInformation('POST', dataJson))
     }
   }

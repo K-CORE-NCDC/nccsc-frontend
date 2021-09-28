@@ -15,7 +15,7 @@ import placeholder from '../../../assets/img/circos_ncc.png'
 export default function DataCircos({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
   const dispatch = useDispatch()
-  const [sampleKey, setSampleKey] = useState('all')
+  const [sampleKey, setSampleKey] = useState('')
   const circosJson = useSelector((data) => data.dataVisualizationReducer.circosSummary);
   // const fusionJson = useSelector((data) => data.dataVisualizationReducer.fusionData);
   const oncoImageJson = useSelector((data) => data.dataVisualizationReducer.oncoSampleImagesData);
@@ -178,8 +178,10 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
                   name="samples"
                   id="samples"
                 >
-                  <option value="all">all</option>
+                  <option>--Select Sample--</option>
                   {sampleListElements}
+                  <option value="all">all</option>
+                  
                 </select>
               </div>
               <div className='p-3 mt-2'>

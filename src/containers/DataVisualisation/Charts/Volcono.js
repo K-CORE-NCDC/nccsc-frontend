@@ -25,6 +25,7 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
   const [groupFilters, setGroupFilters] = useState({})
   const [showVolcano, setShowVolcano] = useState(false)
   const [noContent, setNoContent] = useState(true)
+  const [sampleCount, setSampleCount] = useState({})
 
 
   const updateGroupFilters = (filtersObject) => {
@@ -39,7 +40,6 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
       setActiveCmp(false)
       if (inputData.type !== '' && Object.keys(groupFilters).length > 0) {
         setLoader(true)
-        console.log('dispatch', { ...inputData, filterGroup: groupFilters });
         dispatch(getVolcanoPlotInfo('POST', { ...inputData, filterGroup: groupFilters }))
       }
     }
@@ -125,6 +125,7 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
   useEffect(() => {
     if (volcanoJson && volcanoJson.status === 200) {
       if (volcanoJson && Object.keys(volcanoJson).length > 0) {
+        setSampleCount(volcanoJson.samples)
         setShowVolcano(true)
         setNoContent(false)
       } else {
@@ -146,10 +147,19 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
           :
           <div className="flex flex-row justify-around">
             <div className="w-1/5">
+              <div>
+                {(sampleCount && Object.keys(sampleCount).length > 0) && <div className="m-1 p-1 border border-black border-dashed">
+                  {Object.keys(sampleCount).map(e =>(
+                    <div key={e} className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue">
+                    Group {e} : {sampleCount[e]}
+                  </div>
+                  ))}
+                  </div>}
+              </div>
               <GroupFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} />
               <div className="m-1 p-1 border border-black border-dashed">
-                <p className="text-blue-900 text-lg font-bold text-left">{`Blue: Log2FC <= -1.5 & pvalue >= 0.5`}</p>
-                <p className="text-blue-900 text-lg font-bold text-left">{`Red: Log2FC <= 1.5 & pvalue >= 0.5`}</p>
+                <p className="text-blue-900 text-lg font-bold text-left">{`Blue: Log2FC <= -1.5 & pvalue >= 0.05`}</p>
+                <p className="text-blue-900 text-lg font-bold text-left">{`Red: Log2FC >= 1.5 & pvalue >= 0.05`}</p>
                 <p className="text-blue-900 text-lg font-bold text-left">Grey: Not significant gene</p>
                 <p className="text-blue-900 text-lg font-bold text-left">Black: Selected genes</p>
               </div>
@@ -163,6 +173,7 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
                   negative_data={negativeData}
                   positive_data={positiveData}
                   tab_count={tabCount}
+                  tableData={volcanoJson['table_data']}
                 />}
                 {noContent && <NoContentMessage />}
             </div>

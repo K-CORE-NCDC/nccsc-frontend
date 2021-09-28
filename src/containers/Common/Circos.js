@@ -4,7 +4,7 @@ import * as Circos from 'circos';
 import {queue} from 'd3-queue';
 import cytobands from './cytobands.csv'
 import LoaderCmp from './Loader'
-import placeholder from '../../assets/img/circos_ncc-removebg-preview.png'
+import placeholder from '../../assets/img/circosImage.png'
 
 
 const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson }, ref) => {

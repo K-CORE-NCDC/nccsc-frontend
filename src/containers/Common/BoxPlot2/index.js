@@ -21,10 +21,10 @@ export default function BoxPlot({ box_data }) {
 
 
       var margin = {top: 15, right: 50, bottom: 60, left: 50},
-      width = 1000 - margin.left - margin.right,
+      width = 5000 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
       if(d_['datasets'].length>width){
-        width = d_['datasets'].length+500
+        width = d_['datasets'].length+3000
       }
       var svg = d3.select("#box2")
         .append("svg")
@@ -36,8 +36,7 @@ export default function BoxPlot({ box_data }) {
 
       var tooltip = d3.select("#box2").append("div").attr('class','boxplot_tooltip')
                  .style("opacity", 0);
-    // Compute quartiles, median, inter quantile range min and max --> these info are then used to draw the box.
-     // nest function allows to group the calculation per level of a factor
+    
     var max_vl = 5 //d_['max']
     var min_vl = 0 //d_['min']
     var domains = []
@@ -146,7 +145,7 @@ export default function BoxPlot({ box_data }) {
 
       for (var z = 0; z < vl.length; z++) {
         p.selectAll("vertLines")
-          .data([vl[z]])
+          .data(vl[z])
           .enter()
           .append("line")
             .attr("x1", function(d){
@@ -156,10 +155,10 @@ export default function BoxPlot({ box_data }) {
               return(key)
             })
             .attr("y1", function(d){
-              return(y(d[0].min))
+              return(y(d.min))
             })
             .attr("y2", function(d){
-              return(y(d[0].max))
+              return(y(d.max))
 
             })
             .attr("stroke", "black")
@@ -168,31 +167,84 @@ export default function BoxPlot({ box_data }) {
         // console.log([vl[z]])
         var boxWidth = 100- 50
         p.selectAll("boxes")
-          .data([vl[z]])
+          .data(vl[z])
           .enter()
           .append("rect")
           .attr("x", function(d){
             return(key-boxWidth/2)
           })
           .attr("y", function(d){return(
-            y(d[0].q3))
+            y(d.q3))
           })
           .attr("height", function(d){
-            return((y(d[0].q1)-y(d[0].q3)) + 3)
+            return((y(d.q1)-y(d.q3)) + 3)
           })
           .attr("width", boxWidth )
           .attr("stroke", "black")
-          .style("fill", "#69b3a2")
+          .style("fill", "#fff")
+          .on("mouseover", (d,i)=> {
+            
+            let html = 'q1'+i.q1.toFixed(2)+"<br/>"
+            html += 'q3: '+i.q3.toFixed(2)+"<br/>"
+            html += 'median: '+i.median.toFixed(2)+"<br/>"
+            html += 'interQuantile: '+i.interQuantileRange.toFixed(2)+"<br/>"
+            html += 'min: '+i.min.toFixed(2)+"<br/>"
+            html += 'max: '+i.max.toFixed(2)+"<br/>"
+            tooltip.transition()
+              .duration(200)
+              .style('opacity', 0.9);
+
+            tooltip.html(html)
+              .style('left', d.pageX + 'px')
+              .style('top', d.pageY - 28 + 'px');
+          })
+          .on('mouseout', () => {
+            tooltip
+              .transition()
+              .duration(500)
+              .style('opacity', 0);
+          });
 
         p
           .selectAll("medianLines")
-          .data([vl[z]])
+          .data(vl[z])
           .enter()
           .append("line")
             .attr("x1", function(d){return(key-boxWidth/2) })
             .attr("x2", function(d){return(key+boxWidth/2) })
-            .attr("y1", function(d){return(y(d[0].median))})
-            .attr("y2", function(d){return(y(d[0].median))})
+            .attr("y1", function(d){return(y(d.median))})
+            .attr("y2", function(d){return(y(d.median))})
+            .attr("stroke", "black")
+            .style("width", 80)
+        
+          p
+            .selectAll("medianLines")
+            .data(vl[z])
+            .enter()
+            .append("line")
+              .attr("x1", function(d){return (key-boxWidth/2) })
+              .attr("x2", function(d){return(key+boxWidth/2) })
+              .attr("y1", function(d){
+                return y(d.max)
+              })
+              .attr("y2", function(d){
+                return y(d.max)
+              })
+              .attr("stroke", "black")
+              .style("width", 80)
+        p
+          .selectAll("medianLines")
+          .data(vl[z])
+          .enter()
+          .append("line")
+            .attr("x1", function(d){return (key-boxWidth/2) })
+            .attr("x2", function(d){return(key+boxWidth/2) })
+            .attr("y1", function(d){
+              return y(d.min)
+            })
+            .attr("y2", function(d){
+              return y(d.min)
+            })
             .attr("stroke", "black")
             .style("width", 80)
 
@@ -224,10 +276,12 @@ export default function BoxPlot({ box_data }) {
             }
           })
           .on("mouseover", (d,i)=> {
-
+            
+            
             tooltip.transition()
               .duration(200)
               .style('opacity', 0.9);
+
             tooltip.html("Sample:<br/>"+BrstKeys[i.Sample]+"<br/>gene val<br/>"+i.Sepal_Length)
               .style('left', d.pageX + 'px')
               .style('top', d.pageY - 28 + 'px');

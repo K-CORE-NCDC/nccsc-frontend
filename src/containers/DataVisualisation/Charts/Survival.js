@@ -175,8 +175,8 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
                 defaultValue={geneDatabase}
                 className='w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
                 <option selected={geneDatabase === 'dna_mutation'} value="dna_mutation">DNA Mutation</option>
-                <option selected={geneDatabase === 'rna'} value="rna">RNA</option>
-                <option selected={geneDatabase === 'methylation'} value="methylation">DNA Methylation</option>
+                <option selected={geneDatabase === 'rna'} value="rna">RNA Expression</option>
+                <option selected={geneDatabase === 'proteome'} value="proteome">Global Proteome</option>
               </select>
             </div>}
             {(filterTypeButton === 'clinical') && <GroupFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
