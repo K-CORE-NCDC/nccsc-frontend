@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import SurvivalCmp from '../../Common/Survival'
 import { getSurvivalInformation } from '../../../actions/api_actions'
 import { exportComponentAsPNG } from 'react-component-export-image';
-import GroupFilters from '../../Common/GroupFilter'
+import GroupFilters, { PreDefienedFilters } from '../../Common/GroupFilter'
 import NoContentMessage from '../../Common/NoContentComponent'
 
 import LoaderCmp from '../../Common/Loader'
@@ -26,18 +26,19 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
   const [renderSurvival, setRenderSurvival] = useState(true)
   const [renderNoContent, setRenderNoContent] = useState(false)
   const [filterTypeButton, setFilterTypeButton] = useState('clinical')
+  const [userDefienedFilter, setUserDefienedFilter] = useState('static')
 
-  const submitFitersAndFetchData = () =>{
+  const submitFitersAndFetchData = () => {
     if (fileredGene !== "") {
       setLoader(true)
-      if(filterTypeButton === 'clinical'){
+      if (filterTypeButton === 'clinical') {
         dispatch(getSurvivalInformation('POST', {
           ...inputData,
           filter_gene: fileredGene,
           gene_database: geneDatabase,
           group_filters: groupFilters
         }))
-      }else{
+      } else {
         dispatch(getSurvivalInformation('POST', {
           ...inputData,
           filter_gene: fileredGene,
@@ -143,6 +144,20 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
         :
         <div className="flex flex-row justify-around">
           <div className="w-1/5 border bg-white">
+            <h6 className="p-4 ml-1 text-left text-bold text-blue-700">Choose Filter group</h6>
+            <div className="m-1 flex flex-row justify-around">
+              <button onClick={() => setUserDefienedFilter('static')}
+                className={userDefienedFilter === 'static' ? selectedCss : nonSelectedCss}
+              >
+                Static
+              </button>
+              <button onClick={() => setUserDefienedFilter('dynamic')}
+                className={userDefienedFilter === 'dynamic' ? selectedCss : nonSelectedCss}
+              >
+                Dynamic
+              </button>
+            </div>
+            <h6 className="ml-1 mt-1 p-4 text-left text-bold text-blue-700">Choose Filter Type</h6>
             {sampleCountsCard.length > 0 && <div className="m-1 p-1 border border-black border-dashed">
               {sampleCountsCard}
             </div>}
@@ -179,8 +194,9 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
                 <option selected={geneDatabase === 'proteome'} value="proteome">Global Proteome</option>
               </select>
             </div>}
-            {(filterTypeButton === 'clinical') && <GroupFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
-            {(filterTypeButton === 'omics') &&  <div>
+            {((filterTypeButton === 'clinical') && (userDefienedFilter === 'static')) && <PreDefienedFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
+            {((filterTypeButton === 'clinical') && (userDefienedFilter === 'dynamic')) && <GroupFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
+            {(filterTypeButton === 'omics') && <div>
               <div>
                 <button onClick={submitFitersAndFetchData} className="bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
                   Submit

@@ -25,23 +25,15 @@ function PagenationTable({ imageData }) {
 
     const generatePagesNumbersForCount = () => {
         let pageNumbers = []
-        console.log(totalPages, currentActivePageNumber, totalPages - 2);
-        if (totalPages <= 6) {
+        setPagenationPageNos([])
+        if (totalPages < 10) {
             for (let i = 0; i < totalPages; i++) {
                 pageNumbers.push(i + 1)
             }
-        } else if(currentActivePageNumber == 1){
-            pageNumbers = [1, 2, 3, '...', totalPages - 2, totalPages - 1, totalPages]
-        }else if(currentActivePageNumber == 2){
-            pageNumbers = [1, 2, 3, '...', totalPages - 2, totalPages - 1, totalPages]
-        }else if(currentActivePageNumber == 3){
-            pageNumbers = [1, '...', 3, currentActivePageNumber + 1, '...', totalPages - 2, totalPages - 1, totalPages]
-        }else if(currentActivePageNumber == (totalPages - 2)){
-            pageNumbers = [1, 2, '...', currentActivePageNumber - 1, currentActivePageNumber, totalPages - 1, totalPages]
-        }else if(currentActivePageNumber === (totalPages - 1)){
-            pageNumbers = [1, 2, 3, '...', currentActivePageNumber - 1, currentActivePageNumber, totalPages]
-        }else if(currentActivePageNumber === totalPages){
-            pageNumbers = [1, 2, 3, '...', totalPages -2, totalPages -1, totalPages]
+        } else if(currentActivePageNumber <= 3){
+            pageNumbers = [1, 2, 3, 4, 5, '...', totalPages - 2, totalPages - 1, totalPages]
+        }else if(currentActivePageNumber >= (totalPages - 3)){
+            pageNumbers = [1, 2, 3,  '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages]
         }else{
             pageNumbers = [1, 2, '...', currentActivePageNumber - 1, currentActivePageNumber, currentActivePageNumber + 1, '...', totalPages - 1, totalPages]
         }
@@ -84,7 +76,7 @@ function PagenationTable({ imageData }) {
         <>
 
             {isDataFound ? <div >
-                <div className="grid max-auto grid-cols-10 gap-3 p-6 overflow-y-scroll oncoimages_height">
+                <div className="grid max-auto grid-cols-5 gap-3 p-6 overflow-y-scroll" style={{"height":'50vh'}}>
                     {activeDisplayImagesContent.map(e => {
                         return <a key={e} target="_blank" href={config['auth']+e}>
                             <img className='w-full block rounded' src={config['auth']+e} />
@@ -115,11 +107,11 @@ function PagenationTable({ imageData }) {
                                 >
                                     <ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
                                 </button>
-                                {pagenationPageNos.map(element => (
+                                {pagenationPageNos.map((element, index) => (
                                     <button
                                         disabled={element === '...'}
                                         onClick={pageClickFunction}
-                                        key={element}
+                                        key={`${element}-${index}`}
                                         value={element}
                                         className={element == currentActivePageNumber ? activePageCss : nonActiveClassCss}
                                     >
@@ -150,8 +142,8 @@ function PagenationTable({ imageData }) {
 const PagenationTableComponent = ({ closeShowOncoImages, imageData }) => {
     // console.log(imageData);
     return (
-        <div className='fixed inset-0 bg-gray-600 bg-opacity-50 h-full w-full z-50'>
-            <div className="relative w-11/12 h-11/12 my-10 mx-auto">
+        <div className='fixed inset-0 bg-gray-600 bg-opacity-50 w-full z-50'>
+            <div className="relative w-1/2 h-1/2 my-10 mx-auto">
                 {/*content*/}
                 <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                     {/*header*/}

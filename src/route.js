@@ -9,7 +9,7 @@ const Logout = React.lazy(() => import('./containers/Login/logout'))
 const Terms = React.lazy(() => import('./containers/Signup/TermsOfUse'))
 const Join = React.lazy(() => import('./containers/Signup/MemberShip'))
 const Signup = React.lazy(() => import('./containers/Signup/'))
-
+const Survival = React.lazy(() => import('./containers/Common/test_scatter_data'))
 
 const route = [
   { path: '/', exact: true, type:'unauth', name: 'Home', component: Home },
@@ -21,6 +21,7 @@ const route = [
   { path: '/term', exact: true, type:'unauth', name: 'igv', component: Terms},
   { path: '/member', exact: true, type:'unauth', name: 'igv', component: Join},
   { path: '/signup', exact: true, type:'unauth', name: 'igv', component: Signup},
+  { path: '/survival', exact: true, type:'unauth', name: 'igv', component: Survival},
   
 ]
 

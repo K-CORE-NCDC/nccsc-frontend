@@ -84,7 +84,7 @@ export default function Boxplot({data}) {
      // console.log(min_vl)
 
      var y = d3.scaleLinear()
-       .domain([min_vl - 2, max_vl])
+       .domain([-max_vl, max_vl])
        .range([height, 0])
      svg.append("g").call(d3.axisLeft(y))
 
@@ -101,19 +101,14 @@ export default function Boxplot({data}) {
             })
             .attr("x2", function(d){return(x(d.key))})
             .attr("y1", function(d){
-              if (y(d.value.min)>height){
-                // console.log()
-                return height-30
-              }else{
+              
                 return(y(d.value.min))
-              }
+              
             })
             .attr("y2", function(d){
-              if (y(d.value.min)>height){
-                return(y(d.value.q3)-30)
-              }else{
-                return(y(d.value.max))
-              }
+              
+              return(y(d.value.max))
+              
             })
             .attr("stroke", "black")
             .style("width", 40)
