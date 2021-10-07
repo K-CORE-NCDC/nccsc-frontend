@@ -28,17 +28,17 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
   const [filterTypeButton, setFilterTypeButton] = useState('clinical')
   const [userDefienedFilter, setUserDefienedFilter] = useState('static')
 
-  const submitFitersAndFetchData = () =>{
+  const submitFitersAndFetchData = () => {
     if (fileredGene !== "") {
       setLoader(true)
-      if(filterTypeButton === 'clinical'){
+      if (filterTypeButton === 'clinical') {
         dispatch(getSurvivalInformation('POST', {
           ...inputData,
           filter_gene: fileredGene,
           gene_database: geneDatabase,
           group_filters: groupFilters
         }))
-      }else{
+      } else {
         dispatch(getSurvivalInformation('POST', {
           ...inputData,
           filter_gene: fileredGene,

@@ -50,7 +50,7 @@ const HeatmapCmp = React.forwardRef(({  inputData, watermarkCss,width,clinicalFi
         config["variablesClustered"] =  true
     }
 
-    console.log(config)
+    
 
     useEffect(()=>{
         

@@ -220,7 +220,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                   'color': colors[key],
                   'tooltip': {
                     'header': 'Protein Change',
-                    'body': lollipopTmp[vc][0].split('||')[1]
+                    'body': lollipopTmp[vc][0].split('||')[1]+"\n Samples Count - "+lollipopTmp[vc].length
                   }
                 })
                 height.push(lollipopTmp[vc].length)

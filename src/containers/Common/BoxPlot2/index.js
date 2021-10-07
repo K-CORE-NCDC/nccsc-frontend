@@ -6,7 +6,7 @@ import { nest } from 'd3-collection';
 // import genes from '../Common/gene.json'
 // import { getBreastKeys, getUserDataProjectsTableData } from '../../actions/api_actions'
 
-export default function BoxPlot({ box_data }) {
+export default function BoxPlot({ box_data,chart_type }) {
   const box_elementRef = useRef(null);
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
 
@@ -21,21 +21,12 @@ export default function BoxPlot({ box_data }) {
 
 
       var margin = {top: 15, right: 50, bottom: 60, left: 50},
-      width = 5000 - margin.left - margin.right,
+      width = 1000 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
       if(d_['datasets'].length>width){
         width = d_['datasets'].length+3000
       }
-      var svg = d3.select("#box2")
-        .append("svg")
-          .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
-          .append("g")
-          .attr("transform",
-                "translate(" + margin.left + "," + margin.top + ")");
-
-      var tooltip = d3.select("#box2").append("div").attr('class','boxplot_tooltip')
-                 .style("opacity", 0);
+      
     
     var max_vl = 5 //d_['max']
     var min_vl = 0 //d_['min']
@@ -116,32 +107,62 @@ export default function BoxPlot({ box_data }) {
           return [t,n]
       })
       .entries(d_['datasets'])
+      
+      var svg = d3.select("#box2")
+      .append("svg")
+        .attr("width", (250*sumstat.length)+250)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+              "translate(" + margin.left + "," + margin.top + ")");
 
-
+    var tooltip = d3.select("#box2").append("div").attr('class','boxplot_tooltip')
+               .style("opacity", 0);
     // Show the X scale
     var x = d3.scaleBand()
-      .range([ 0, width ])
+      .range([ 0, (250*sumstat.length)+250 ])
       .domain(domains)
       .paddingInner(1)
       .paddingOuter(.5)
-      svg.append("g")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x))
+      console.log(sumstat)
+      
+        if(chart_type==="proteome"){
+          svg.append("g")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(x))
+        }else{
+          svg.append("g")
+          .attr("transform", "translate(-50," + height + ")")
+          .call(d3.axisBottom(x))
+        }
 
         // Show the Y scale
+    svg.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Proteome expression (gene_vl)");    
+      
+      svg.append("text")             
+      .attr("transform",
+            "translate(" + (width/2) + " ," + 
+                           (height + margin.top + 20) + ")")
+      .style("text-anchor", "middle")
+      .text("Selected Genes");
 
     var y = d3.scaleLinear()
-      .domain([min_vl,max_vl])
+      .domain([min_vl-1,max_vl])
       .range([height, 0])
     svg.append("g").call(d3.axisLeft(y))
 
     for (var i = 0; i < sumstat.length; i++) {
-      // console.log(sumstat[i]);
+      
       var p = svg.append('g').attr('class','box')
       .attr('id',i)
       var key = x(sumstat[i]['key'])-50
       var vl = sumstat[i]['value']
-      // console.log(vl)
 
       for (var z = 0; z < vl.length; z++) {
         p.selectAll("vertLines")
@@ -162,10 +183,8 @@ export default function BoxPlot({ box_data }) {
 
             })
             .attr("stroke", "black")
-            .style("width", 40)
 
-        // console.log([vl[z]])
-        var boxWidth = 100- 50
+        var boxWidth = 50
         p.selectAll("boxes")
           .data(vl[z])
           .enter()
@@ -215,7 +234,6 @@ export default function BoxPlot({ box_data }) {
             .attr("y1", function(d){return(y(d.median))})
             .attr("y2", function(d){return(y(d.median))})
             .attr("stroke", "black")
-            .style("width", 80)
         
           p
             .selectAll("medianLines")
@@ -231,7 +249,6 @@ export default function BoxPlot({ box_data }) {
                 return y(d.max)
               })
               .attr("stroke", "black")
-              .style("width", 80)
         p
           .selectAll("medianLines")
           .data(vl[z])
@@ -246,7 +263,7 @@ export default function BoxPlot({ box_data }) {
               return y(d.min)
             })
             .attr("stroke", "black")
-            .style("width", 80)
+            // .style("width", 80)
 
         var jitterWidth = 50
         p.selectAll("indPoints")
@@ -297,6 +314,9 @@ export default function BoxPlot({ box_data }) {
 
 
     }
+    
+    
+    // console.log(d3)
 
       // Add individual points with jitter
       //
@@ -310,7 +330,7 @@ export default function BoxPlot({ box_data }) {
 
 
   return (
-      <div ref={box_elementRef} id="box2" style={{'width':'100%','overflowX':'scroll'}}>
+      <div ref={box_elementRef} id="box2" style={{'width':'100%','overflowX':'scroll','padding':'20px'}}>
       </div>
   )
 }

@@ -20,7 +20,7 @@ import inputJson from './data'
 export default function ClinicalInformation() {
   const summaryJson = useSelector((data) => data.homeReducer.dataSummary);
   const [leftSide, setLeftSide] = useState({"charts":[],"leftSide":[],"activeCharts":[]});
-  const [activeChartsList, setActiveChartsList] = useState(["Sex","Age Of Diagnosis","Body Mass Index","Diagnosis of Bilateral Breast Cancer"]);
+  const [activeChartsList, setActiveChartsList] = useState(["Sex","Age","BMI","Bilateral Breast Cancer"]);
   const [selected, setSelected] = useState('Basic/Diagnostic Information');
   const dispatch = useDispatch()
   const [visual_change_state, setVisualChangeState] = useState({});
