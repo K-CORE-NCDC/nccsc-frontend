@@ -1,13 +1,16 @@
 import React, { useState, useEffect, Fragment, useRef } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import VolcanoCmp from '../../Common/Volcano'
-import GroupFilters from '../../Common/GroupFilter'
+import GroupFilters, { PreDefienedFilters } from '../../Common/GroupFilter'
 import { exportComponentAsPNG } from 'react-component-export-image';
 import NoContentMessage from '../../Common/NoContentComponent'
 
 import { getVolcanoPlotInfo } from '../../../actions/api_actions'
 // import Loader from "react-loader-spinner";
 import LoaderCmp from '../../Common/Loader'
+
+const selectedCss = "w-1/2 rounded-r-none  hover:scale-110 focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition"
+const nonSelectedCss = "w-1/2 rounded-l-none border-l-0 hover:scale-110 focus:outline-none flex justify-center p-5 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 text-teal-700 border duration-200 ease-in-out border-teal-600 transition"
 
 export default function DataVolcono({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
@@ -26,6 +29,7 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
   const [showVolcano, setShowVolcano] = useState(false)
   const [noContent, setNoContent] = useState(true)
   const [sampleCount, setSampleCount] = useState({})
+  const [userDefienedFilter, setUserDefienedFilter] = useState('static')
 
 
   const updateGroupFilters = (filtersObject) => {
@@ -149,14 +153,29 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
             <div className="w-1/5">
               <div>
                 {(sampleCount && Object.keys(sampleCount).length > 0) && <div className="m-1 p-1 border border-black border-dashed">
-                  {Object.keys(sampleCount).map(e =>(
+                  {Object.keys(sampleCount).map(e => (
                     <div key={e} className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue">
-                    Group {e} : {sampleCount[e]}
-                  </div>
+                      Group {e} : {sampleCount[e]}
+                    </div>
                   ))}
-                  </div>}
+                </div>}
               </div>
-              <GroupFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} />
+              <h6 className="p-4 ml-1 text-left text-bold text-blue-700">Choose Filter group</h6>
+              <div className="m-1 flex flex-row justify-around">
+                <button onClick={() => setUserDefienedFilter('static')}
+                  className={userDefienedFilter === 'static' ? selectedCss : nonSelectedCss}
+                >
+                  Static
+                </button>
+                <button onClick={() => setUserDefienedFilter('dynamic')}
+                  className={userDefienedFilter === 'dynamic' ? selectedCss : nonSelectedCss}
+                >
+                  Dynamic
+                </button>
+              </div>
+              {(userDefienedFilter === 'dynamic') && <GroupFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
+              {(userDefienedFilter === 'static') && <PreDefienedFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
+              {/* <GroupFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} /> */}
               <div className="m-1 p-1 border border-black border-dashed">
                 <p className="text-blue-900 text-lg font-bold text-left">{`Blue: Log2FC <= -1.5 & pvalue >= 0.05`}</p>
                 <p className="text-blue-900 text-lg font-bold text-left">{`Red: Log2FC >= 1.5 & pvalue >= 0.05`}</p>
@@ -175,7 +194,7 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
                   tab_count={tabCount}
                   tableData={volcanoJson['table_data']}
                 />}
-                {noContent && <NoContentMessage />}
+              {noContent && <NoContentMessage />}
             </div>
           </div>
       }

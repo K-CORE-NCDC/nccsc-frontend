@@ -25,8 +25,8 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const [selectedGene,setSelectedGene] = useState([])
   const [optionChoices,setOptionChoices] = useState([])
   const [option,setOption] = useState([])
-  const [showBoxPlot, setShowBoxPlot] = useState(false)
-  const [noContent, setNoContent] = useState(true)
+  const [viewType, setViewType] = useState('gene_vl')
+  
 
   const diag_age = (vl)=>{
     let n = parseInt(vl)
@@ -79,6 +79,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       if(inputData.type !==''){
         setLoader(true)
         inputData['table_type'] = tableType
+        inputData['view'] = viewType
         dispatch(getHeatmapInformation('POST', inputData))
       }
     }
@@ -178,7 +179,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     setLoader(true)
     for (var i = 0; i < c.length; i++) {
       let classList = c[i].classList
-      classList.remove("hover:bg-main-blue", "bg-main-blue", "text-white");
+      classList.remove("hover:bg-main-blue", "bg-main-blue", "text-white",'border-gray-600');
       classList.add("text-teal-700", "hover:bg-teal-200", "bg-teal-100")
     }
     e.target.classList.add("hover:bg-main-blue","bg-main-blue","text-white")
@@ -197,7 +198,8 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
 
     if(inputData.type !==''){
       dataJson['table_type'] = type
-      dispatch(getHeatmapInformation('POST', inputData))
+      dataJson['view'] = viewType
+      dispatch(getHeatmapInformation('POST', dataJson))
     }
   }
 
@@ -218,9 +220,10 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
 
     if(inputData.type !==''){
       dataJson['table_type'] = tableType
+      dataJson['view'] = viewType
       setLoader(true)
       setActiveCmp(false)
-      dispatch(getHeatmapInformation('POST',inputData))
+      dispatch(getHeatmapInformation('POST',dataJson))
     }
   }
 
@@ -239,6 +242,8 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       setActiveCmp(false)
       let dataJson = inputData
       dataJson['clinicalFilters'] = cf
+      dataJson['view'] = viewType
+      dataJson['type'] = viewType
       dispatch(getHeatmapInformation('POST',dataJson))
     }
 
@@ -258,6 +263,46 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       dispatch(getHeatmapInformation('POST',dataJson))
     }
   }
+
+  const changeView = (e,view)=>{
+    let c = document.getElementsByName('view')
+    setActiveCmp(false)
+    setLoader(true)
+    for (var i = 0; i < c.length; i++) {
+      let classList = c[i].classList
+      classList.remove("hover:bg-main-blue", "bg-main-blue", "text-white");
+      classList.add("text-teal-700", "hover:bg-teal-200", "bg-teal-100")
+    }
+    e.target.classList.add("hover:bg-main-blue","bg-main-blue","text-white")
+    setViewType(view)
+    let dataJson = inputData
+    dataJson['view'] = view
+    if(inputData.type !==''){
+      dispatch(getHeatmapInformation('POST', dataJson))
+    }
+  }
+
+  let style = {
+    multiselectContainer:{
+      'marginTop':'5px'
+    },
+    inputField:{
+      'padding':'5px'
+    }
+  }
+
+  let selected_button = ''
+  selected_button += "rounded-r-none  hover:scale-110 focus:outline-none flex p-5 px-10 "
+  selected_button += " rounded font-bold cursor-pointer hover:bg-main-blue "
+  selected_button +=" bg-main-blue text-white border duration-200 ease-in-out transition "
+
+  let normal_button = ''
+  normal_button += "rounded-l-none  hover:scale-110 focus:outline-none flex justify-center p-5 "
+  normal_button += " rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 "
+  normal_button += " border duration-200 ease-in-out border-teal-600 transition px-10 "
+  
+
+  
 
   return (
     <div>
@@ -292,15 +337,36 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
               </div>
             </div>
           </div>
-          <div className='p-5 '>
-            <Multiselect
-              options={optionChoices} // Options to display in the dropdown
-              selectedValues={option} // Preselected value to persist in dropdown
-              onSelect={onSelect} // Function will trigger on select event
-              onRemove={onRemove} // Function will trigger on remove event
-              displayValue="name" // Property name to display in the dropdown options
-            />
+          <div className='p-5 text-left flex col-span-2'>
+            <div className={tableType!=='methylation'?'w-9/12':'w-full'}>
+              <label >Clinical Filters:</label>
+              <Multiselect
+
+                style={style}
+                options={optionChoices} // Options to display in the dropdown
+                selectedValues={option} // Preselected value to persist in dropdown
+                onSelect={onSelect} // Function will trigger on select event
+                onRemove={onRemove} // Function will trigger on remove event
+                displayValue="name" // Property name to display in the dropdown options
+              />
+            </div>
+            { tableType!=='methylation' && 
+              <div className="mx-5 flex-wrap text-left w-3/12">
+                View By: 
+                <div className="flex m-2 w-100">
+                  <button onClick={e => changeView(e, 'gene_vl')} name='view' className={viewType==="gene_vl"?selected_button:normal_button}>
+                    Gene-Vl
+                  </button>
+                  <button onClick={e => changeView(e, 'z_score')} name='view' className={viewType==="z_score"?selected_button:normal_button}>
+                    Z-Score
+                  </button>
+                </div>
+              </div>
+            }
           </div>
+          
+          
+          
         </div>
 
         <div className='grid'>
