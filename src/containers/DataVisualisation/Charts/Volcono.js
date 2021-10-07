@@ -169,7 +169,7 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
                 && <VolcanoCmp watermarkCss={watermarkCss}
                   ref={reference}
                   w={width}
-                  data={volcanoJson['data']}
+                  data={volcanoJson['d3_response']}
                   negative_data={negativeData}
                   positive_data={positiveData}
                   tab_count={tabCount}
