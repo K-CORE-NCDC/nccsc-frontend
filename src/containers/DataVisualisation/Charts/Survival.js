@@ -144,8 +144,8 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
         :
         <div className="flex flex-row justify-around">
           <div className="w-1/5 border bg-white">
-            <h6 className="p-4 ml-1 text-left text-bold text-blue-700">Choose Filter group</h6>
-            <div className="m-1 flex flex-row justify-around">
+          <h6 className="p-4 ml-1 text-left text-bold text-blue-700">Choose Filter group</h6>
+          <div className="m-1 flex flex-row justify-around">
               <button onClick={() => setUserDefienedFilter('static')}
                 className={userDefienedFilter === 'static' ? selectedCss : nonSelectedCss}
               >
@@ -194,9 +194,9 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
                 <option selected={geneDatabase === 'proteome'} value="proteome">Global Proteome</option>
               </select>
             </div>}
-            {((filterTypeButton === 'clinical') && (userDefienedFilter === 'static')) && <PreDefienedFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
+            {((filterTypeButton === 'clinical')  && (userDefienedFilter === 'static')) && <PreDefienedFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
             {((filterTypeButton === 'clinical') && (userDefienedFilter === 'dynamic')) && <GroupFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
-            {(filterTypeButton === 'omics') && <div>
+            {(filterTypeButton === 'omics') &&  <div>
               <div>
                 <button onClick={submitFitersAndFetchData} className="bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
                   Submit
