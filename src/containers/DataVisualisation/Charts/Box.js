@@ -28,13 +28,21 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
   const [activeCmp,setActiveCmp] = useState(false)
   const [gene, setGene] = useState('')
   
-
+  console.log(inputState, inputData);
   useEffect(()=>{
     if(inputData && 'genes' in inputData){
-      console.log(inputData)
-      setInputState((prevState) => ({...prevState,...inputData }))
+      setInputState({...inputData})
     }
-  },[inputData])
+  },[])
+
+  const dispatchActionCommon = (postJsonBody) =>{
+    console.log(tableType, postJsonBody);
+    if(postJsonBody.table_type === 'proteome'){
+      dispatch(getBoxInformation('POST', {...postJsonBody, genes: inputData.genes}))
+    }else{
+      dispatch(getBoxInformation('POST', postJsonBody))
+    }
+  }
 
   const loadGenesDropdownMutation = (genes) => {
 
@@ -52,20 +60,19 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
     let gene = e.target.value
     setGene(gene)
     if (inputData.type !== '') {
-      let dataJson = inputData
+      let dataJson = {...inputData}
       dataJson['genes'] = [gene]
       dataJson['table_type'] = tableType
       dataJson['view'] = viewType
       
       setLoader(true)
       setActiveCmp(false)
-      dispatch(getBoxInformation('POST', dataJson))
+      dispatchActionCommon(dataJson)
     }
   }
 
   useEffect(()=>{
     if(inputState && 'genes' in inputState){
-      console.log(inputState)
       let g = inputState['genes']
       let dataJson = inputState
       loadGenesDropdown(g)
@@ -81,7 +88,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
         setLoader(true)
         dataJson['table_type'] = tableType
         dataJson['view'] = viewType
-        dispatch(getBoxInformation('POST', dataJson))
+        dispatchActionCommon(dataJson)
       }
     }
   },[inputState])
@@ -129,7 +136,6 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
         {"name":genes[i],"id":i}
       )
     }
-    console.log(t)
     setGenesHtml(t)
   }
 
@@ -141,12 +147,12 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
       genes.push(item['name'])
     });
     if(inputData.type !==''){
-      let dataJson = inputData
+      let dataJson = {...inputData}
       dataJson['genes'] = genes
       dataJson['table_type'] = tableType
       dataJson['view'] = viewType
       setLoader(true)
-      dispatch(getBoxInformation('POST', dataJson))
+      dispatchActionCommon(dataJson)
     }
   }
 
@@ -160,14 +166,14 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
       genes = inputState['genes']
     }
     if(inputData.type !==''){
-      let dataJson = inputData
+      let dataJson = {...inputData}
       dataJson['genes'] = genes
       dataJson['table_type'] = tableType
       dataJson['view'] = viewType
       
       setLoader(true)
       // setActiveCmp(false)
-      dispatch(getBoxInformation('POST', dataJson))
+      dispatchActionCommon(dataJson)
     }
   }
 
@@ -175,6 +181,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
 
   const changeType = (e,type)=>{
     let c = document.getElementsByName('type')
+    setTableType(type)
     setActiveCmp(false)
     setLoader(true)
     for (var i = 0; i < c.length; i++) {
@@ -183,9 +190,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
       classList.add("text-teal-700", "hover:bg-teal-200", "bg-teal-100")
     }
     e.target.classList.add("hover:bg-main-blue","bg-main-blue","text-white")
-    setTableType(type)
     let dataJson = inputState
-    console.log(dataJson)
     if(inputData.type !==''){
       if(type==='mutation'){
         dataJson['genes'] = [gene]
@@ -194,7 +199,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
       // dataJson['genes'] = inputState['gene']
       dataJson['table_type'] = type
       dataJson['view'] = viewType
-      dispatch(getBoxInformation('POST', dataJson))
+      dispatchActionCommon(dataJson)
     }
   }
 
@@ -215,7 +220,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
       
       dataJson['table_type'] = tableType
       dataJson['view'] = view
-      dispatch(getBoxInformation('POST', dataJson))
+      dispatchActionCommon(dataJson)
     }
   }
 

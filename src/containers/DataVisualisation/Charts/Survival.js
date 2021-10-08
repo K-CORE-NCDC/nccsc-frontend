@@ -27,6 +27,7 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
   const [renderNoContent, setRenderNoContent] = useState(false)
   const [filterTypeButton, setFilterTypeButton] = useState('clinical')
   const [userDefienedFilter, setUserDefienedFilter] = useState('static')
+  const [pValueData, setPvalueData] = useState("")
 
   const submitFitersAndFetchData = () => {
     if (fileredGene !== "") {
@@ -91,6 +92,7 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
         })
       }
       if (htmlArray.length > 1) {
+        setPvalueData('')
         setSampleCountsCard([
           <div key='total' className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue">
             Total : {totalCount}
@@ -98,6 +100,7 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
           ...htmlArray
         ])
       } else {
+        setPvalueData(`pvalue : ${survivalJson.pvalue.toFixed(3)}`)
         setSampleCountsCard([
           <div key='total' className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue">
             Total : {totalCount}
@@ -210,12 +213,17 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
             </div>}
           </div>
           <div className="w-4/5">
-            {renderSurvival && <SurvivalCmp watermarkCss={watermarkCss} ref={reference} width={width} data={
+            {renderSurvival && <SurvivalCmp 
+            watermarkCss={watermarkCss} 
+            ref={reference} width={width} 
+            data={
               {
                 fileredGene: fileredGene,
                 survivalJson: survivalJson
               }
-            } />}
+            }
+            pValue={pValueData} 
+            />}
             {renderNoContent && <NoContentMessage />}
           </div>
         </div>
