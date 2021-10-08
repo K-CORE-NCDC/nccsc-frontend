@@ -4,7 +4,7 @@ import { Chart } from 'react-google-charts'
 import { index } from 'd3'
 import CanvasXpressReact from 'canvasxpress-react';
 
-const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
+const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref) => {
   const [survivalData, setSurvivalData] = useState([])
   useEffect(() => {
     if (data.survivalJson && data.survivalJson.all) {
@@ -14,6 +14,9 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
 
   return (
     <div ref={ref} className={`${watermarkCss} p-1`}>
+      <div className="w-full bg-white">
+        <div className="w-4/5 p-1 text-right">{pValue}</div>
+      </div>
       {survivalData.length > 1 && <Chart
         width={'100%'}
         height={'600px'}
