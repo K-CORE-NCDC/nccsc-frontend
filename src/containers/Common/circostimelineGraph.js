@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Chart } from 'react-google-charts';
 import DataTable from 'react-data-table-component';
+import TimeLineChart from './timelineCss'
 
 
 const months = {
@@ -19,6 +20,7 @@ const months = {
 }
 
 const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
+  console.log(closeShowTimelineTables, circosTimelieTableData);
   const [bmiChart, setBmiChart] = useState([])
   const [ki67Chart, setKi67Chart] = useState([])
   const [bmiChartTable, setBmiChartTable] = useState({"columns":[],'data':[]})
@@ -141,7 +143,7 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
             <div className='col-span-4'>
               <h3>BMI Timeline</h3>
               <hr/>
-              {bmiChart && <Chart
+              {/* {bmiChart && <Chart
                 height={"300px"}
 
                 chartType="Timeline"
@@ -152,12 +154,13 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
                   allowHtml: true,
                 }}
                 rootProps={{ 'data-testid': '1' }}
-              />}
+              />} */}
+              {circosTimelieTableData && <TimeLineChart data={circosTimelieTableData.bmi} yearKey="rgst_ymd" valueKey="bmi_vl" />}
             </div>
             <div className='col-span-4'>
               <h3>KI67 Timeline</h3>
               <hr/>
-              {ki67Chart && <Chart
+              {/* {ki67Chart && <Chart
                 height={'300px'}
                 chartType="Timeline"
                 loader={<div>Loading Chart</div>}
@@ -167,7 +170,8 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
                   allowHtml: true,
                 }}
                 rootProps={{ 'data-testid': '1' }}
-              />}
+              />} */}
+              {circosTimelieTableData && <TimeLineChart data={circosTimelieTableData.ki67} yearKey="imnl_read_ymd" valueKey="ki67_score" />}
             </div>
 
             <div className='col-span-2'>

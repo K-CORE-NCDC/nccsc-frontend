@@ -8,6 +8,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 // import * as ChartZoomPlugin from "chartjs-plugin-zoom"
 import zoomPlugin from "chartjs-plugin-zoom";
 import DataTable from 'react-data-table-component';
+import VolcanoPlotD3 from './VolcanoD3'
 
 Chart.register(...registerables, zoomPlugin);
 
@@ -92,11 +93,11 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
       options: option
     })
   }
-  useEffect(() => {
-    if (data) {
-      volcanoPlot(data)
-    }
-  }, [data])
+  // useEffect(() => {
+  //   if (data) {
+  //     volcanoPlot(data)
+  //   }
+  // }, [data])
 
   // <div ref={ref} id='volcano' className={`p-3 ${watermarkCss}`}>
   // </div>
@@ -134,7 +135,7 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
   return (
     <div>
       <div id='scatter_parent' className={`p-3 ${watermarkCss}`}>
-        <canvas id="scatter" ref={volcano_plot} height="20vh" width="40vw"></canvas>
+        <VolcanoPlotD3 dataProps={data}/>
       </div>
       <button type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-8" onClick={resetChart}>reset</button>
       <button type="button" onClick={zoomIn} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 ml-8 rounded" >zoom in</button>

@@ -9,6 +9,9 @@ const Logout = React.lazy(() => import('./containers/Login/logout'))
 const Terms = React.lazy(() => import('./containers/Signup/TermsOfUse'))
 const Join = React.lazy(() => import('./containers/Signup/MemberShip'))
 const Signup = React.lazy(() => import('./containers/Signup/'))
+const VolcanoPlotD3 = React.lazy(() => import('./containers/Common/VolcanoD3'))
+const TimeLineChart = React.lazy(() => import('./containers/Common/timelineCss'))
+
 const Survival = React.lazy(() => import('./containers/Common/test_scatter_data'))
 
 const route = [
@@ -21,6 +24,8 @@ const route = [
   { path: '/term', exact: true, type:'unauth', name: 'igv', component: Terms},
   { path: '/member', exact: true, type:'unauth', name: 'igv', component: Join},
   { path: '/signup', exact: true, type:'unauth', name: 'igv', component: Signup},
+  { path: '/volcano', exact: true, type:'unauth', name: 'igv', component: VolcanoPlotD3},
+  { path: '/timeline', exact: true, type:'unauth', name: 'igv', component: TimeLineChart},
   { path: '/survival', exact: true, type:'unauth', name: 'igv', component: Survival},
   
 ]

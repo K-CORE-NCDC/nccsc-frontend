@@ -25,7 +25,8 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
   const [selectedValue, setSelectedValue] = useState('')
   const [showScatter, setShowScatter] = useState(false)
   const [noContent, setNoContent] = useState(true)
-
+  const [selectall, setSelectAll] = useState(false)
+  const [primaryGene, setPrimaryGene] = useState('')
 
   // useEffect(() => {
   //   if (inputData) {
@@ -49,12 +50,12 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
     if (inputState && 'genes' in inputState) {
       let g = inputState['genes']
       loadGenesDropdown(g)
-      setGene(g[0])
+      setGene(g)
       if (inputState.type !== '') {
         let dataJson = inputState
         setLoader(true)
-        // dataJson['genes'] = g[0]
-        dataJson['genes'] = g
+        dataJson['genes'] = [g[0]]
+        // dataJson['genes'] = g
         dispatch(getScatterInformation('POST', dataJson))
       }
     }
@@ -69,6 +70,9 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
       )
     }
     setGenesHtml(t)
+    let select_ = t.splice(0,1)
+    setSelectedValue(select_)
+    setPrimaryGene(select_)
   }
 
   useEffect(() => {
@@ -95,7 +99,7 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
 
   function onSelect(selectedList, selectedItem) {
     let genes = []
-    setSelectedValue(selectedList)
+    // setSelectedValue(selectedList)
     selectedList.forEach((item, i) => {
       genes.push(item['name'])
     });
@@ -143,21 +147,62 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
     }
   }, [scatterJson])
 
-  // console.log(genesHtml)
+  function selectAll(){
+    if(selectall === false){
+      setSelectAll(!selectall)
+      setSelectedValue("")
+      if (inputState && 'genes' in inputState) {
+        if (inputState.type !== '') {
+          let dataJson = inputState
+          setLoader(true)
+          dataJson['genes'] = gene
+          dispatch(getScatterInformation('POST', dataJson))
+        }
+      }
+    }
+    else{
+      setSelectAll(!selectall)
+      setSelectedValue(primaryGene)
+      if (inputState && 'genes' in inputState) {
+        if (inputState.type !== '') {
+          let dataJson = inputState
+          setLoader(true)
+          dataJson['genes'] = [gene[0]]
+          dispatch(getScatterInformation('POST', dataJson))
+        }
+      }
+    }
+  }
+
+
+  console.log("primaryGene----?",primaryGene)
+
 
   return (
     <div>
       <div className='p-5 text-right m-5'>
-        <div className='flex float-left'>
-          <div className='p-3'>Selected Gene Is</div>
-          <div>
-            <Multiselect
-              options={genesHtml} // Options to display in the dropdown
-              selectedValues={selectedValue} // Preselected value to persist in dropdown
-              onSelect={onSelect} // Function will trigger on select event
-              onRemove={onRemove} // Function will trigger on remove event
-              displayValue="name" // Property name to display in the dropdown options
-            />
+        <div className='grid grid-rows-3'>
+          <div className="flex float-left ">
+              <div className='p-3 ml-6'>Selected Gene Is</div>
+              <div>
+                <Multiselect
+                  options={genesHtml} // Options to display in the dropdown
+                  selectedValues={selectedValue} // Preselected value to persist in dropdown
+                  onSelect={onSelect} // Function will trigger on select event
+                  onRemove={onRemove} // Function will trigger on remove event
+                  displayValue="name" // Property name to display in the dropdown options
+                />
+              </div>
+              <div className="mt-3 ml-4">
+                <label class="inline-flex items-center">
+                  <input type="checkbox" class="form-checkbox" check={selectall} onClick={selectAll}/>
+                  <span class="ml-2"><strong>select all</strong></span>
+                </label>
+              </div>
+          </div>
+          <div className="flex float-left pt-6 pl-3 ml-6">
+            {showScatter && scatterJson['p_value']?<h4><strong>p-value:</strong> {scatterJson['p_value']}</h4>:""}
+            {showScatter && scatterJson['r_value']?<h4 className="ml-8"><strong>r-value:</strong> {scatterJson['r_value']}</h4>:""}
           </div>
         </div>
       </div>
