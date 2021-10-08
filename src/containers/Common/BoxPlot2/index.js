@@ -72,6 +72,7 @@ export default function BoxPlot({ box_data,chart_type }) {
               if (max > max_vl){
                 max_vl = max+2
               }
+              
             }else{
               let q1 = d3.quantile(d.map(function(g) {
                 if (g.type==="N") return g.Sepal_Length;
@@ -103,6 +104,7 @@ export default function BoxPlot({ box_data,chart_type }) {
                 max_vl = max+2
               }
             }
+
           }
           return [t,n]
       })
@@ -124,7 +126,7 @@ export default function BoxPlot({ box_data,chart_type }) {
       .domain(domains)
       .paddingInner(1)
       .paddingOuter(.5)
-      console.log(sumstat)
+      
       
         if(chart_type==="proteome"){
           svg.append("g")
@@ -156,15 +158,43 @@ export default function BoxPlot({ box_data,chart_type }) {
       .domain([min_vl-1,max_vl])
       .range([height, 0])
     svg.append("g").call(d3.axisLeft(y))
-
+      
+    
     for (var i = 0; i < sumstat.length; i++) {
       
       var p = svg.append('g').attr('class','box')
       .attr('id',i)
       var key = x(sumstat[i]['key'])-50
       var vl = sumstat[i]['value']
+      console.log(vl)
+      if(vl[1].length>0){
+        p
+          .selectAll("medianLines")
+          .data([key])
+          .enter()
+          .append("line")
+          .attr("x1", function(d){return (key-25) })
+          .attr("x2", function(d){return(key+75) })
+          .attr("y1", function(d){
+            return 10
+          })
+          .attr("y2", function(d){
+            return 10
+          })
+          .attr("stroke", "black")
+          .attr("class", "pvalue")
+        p
+          .selectAll("medianLines")
+          .data([key])
+          .enter()
+          .append("text")
+          .attr("x", function(d){return (key) })
+          .attr("y", function(d){ return 0 })
+          .text("P-value");
+      }
 
       for (var z = 0; z < vl.length; z++) {
+        
         p.selectAll("vertLines")
           .data(vl[z])
           .enter()
@@ -223,6 +253,8 @@ export default function BoxPlot({ box_data,chart_type }) {
               .duration(500)
               .style('opacity', 0);
           });
+        
+       
 
         p
           .selectAll("medianLines")
@@ -240,15 +272,16 @@ export default function BoxPlot({ box_data,chart_type }) {
             .data(vl[z])
             .enter()
             .append("line")
-              .attr("x1", function(d){return (key-boxWidth/2) })
-              .attr("x2", function(d){return(key+boxWidth/2) })
-              .attr("y1", function(d){
-                return y(d.max)
-              })
-              .attr("y2", function(d){
-                return y(d.max)
-              })
-              .attr("stroke", "black")
+            .attr("x1", function(d){return (key-boxWidth/2) })
+            .attr("x2", function(d){return(key+boxWidth/2) })
+            .attr("y1", function(d){
+              return y(d.max)
+            })
+            .attr("y2", function(d){
+              return y(d.max)
+            })
+            .attr("stroke", "black")
+            .attr("class", "black")
         p
           .selectAll("medianLines")
           .data(vl[z])
@@ -264,7 +297,9 @@ export default function BoxPlot({ box_data,chart_type }) {
             })
             .attr("stroke", "black")
             // .style("width", 80)
-
+        
+        
+        
         var jitterWidth = 50
         p.selectAll("indPoints")
           .data(vl[z])
@@ -312,6 +347,7 @@ export default function BoxPlot({ box_data,chart_type }) {
         key = key+80
       }
 
+      
 
     }
     
