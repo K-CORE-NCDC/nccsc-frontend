@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 /* Reset */
-@charset "utf-8";
 
 /* font */
 @font-face {
@@ -324,4 +323,8 @@ input:checked ~ .dot {
   border: none!important;
   padding: 0 0 0 10px!important;
   line-height: 40px;
+}
+
+.linethrough text{
+  text-decoration: line-through;
 }
