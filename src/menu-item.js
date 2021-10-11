@@ -23,19 +23,11 @@ let childMenu = {
   "social": {
     items: [
       {
-        id: 'faq',
-        title: 'FAQ',
+        id: 'signup',
+        title: 'Join membership',
         type: 'item',
         icon: 'fa fa-dashboard',
-        url: '/userdata',
-        children: [],
-      },
-      {
-        id: 'q&a',
-        title: 'Q&A',
-        type: 'item',
-        icon: 'fa fa-dashboard',
-        url: '/API',
+        url: '/signup',
         children: [],
       },
       {
