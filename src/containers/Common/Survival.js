@@ -14,9 +14,6 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
 
   return (
     <div ref={ref} className={`${watermarkCss} p-1`}>
-      <div className="w-full bg-white">
-        <div className="w-4/5 p-1 text-right">{pValue}</div>
-      </div>
       {survivalData.length > 1 && <Chart
         width={'100%'}
         height={'600px'}
@@ -24,6 +21,7 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
         loader={<div>Loading Chart</div>}
         data={data.survivalJson.all}
         options={{
+
           explorer: {
             actions: ['dragToZoom', 'rightClickToReset'],
             axis: 'horizontal',
@@ -31,7 +29,7 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
             maxZoomIn: 4.0
           },
           allowHtml: true,
-          title: "Survival Plot",
+          title: pValue,
           vAxis: { title: 'Recurrence rate(Max : 100%)' },
           hAxis: { title: 'Duration in Month' },
           isStacked: true,
