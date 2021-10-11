@@ -82,7 +82,7 @@ const InforIcon = () => {
 
 
 export default function FileUpload({ parentCallBack }) {
-  // const parentRef = useRef(null);
+  const projectNameRef = useRef(null);
   const history = useHistory()
   const response = useSelector((data) => data.homeReducer.fileUploadData);
   const dispatch = useDispatch()
@@ -121,6 +121,7 @@ export default function FileUpload({ parentCallBack }) {
   const [tableNavTabs, setTableNavTabs] = useState([])
   const [activeTableKey, setActiveTableKey] = useState("")
   const [disableUploadButton, setDisableUploadButton] = useState(true)
+  const [borderRed, setBorderRed] = useState(false)
 
   // console.log(dropdownOptionsSelected);
 
@@ -236,6 +237,7 @@ export default function FileUpload({ parentCallBack }) {
   }, [fileDataAsTableAll])
 
   useEffect(() => {
+    console.log(selectedFiles, selectedFileSampleType);
     if(projectName){
       if(selectedFiles.length === Object.keys(selectedFileSampleType).length){
         setDisableUploadButton(false)
@@ -264,6 +266,11 @@ export default function FileUpload({ parentCallBack }) {
     setTableNavTabs(tableNavTabsTemp)
   }, [activeTableKey])
 
+  useEffect(() => {
+    if(projectName.length > 0 ){
+      setBorderRed(false)
+    }
+  }, [projectName])
 
   const selectGene = (event) => {
     const { name, value } = event.target;
@@ -345,14 +352,19 @@ export default function FileUpload({ parentCallBack }) {
   }
 
   const formSubmitButtonActions = () => {
-    if (formSbubmitButtonText === 'upload') {
-      on_upload()
-    }
-    if (formSbubmitButtonText === 'retry') {
-      on_upload()
-    }
-    if (formSbubmitButtonText === 'visualize') {
-      history.push(`/visualise/circos/${response['serializer'].id}`)
+    if(projectName.length > 0){
+      if (formSbubmitButtonText === 'upload') {
+        on_upload()
+      }
+      if (formSbubmitButtonText === 'retry') {
+        on_upload()
+      }
+      if (formSbubmitButtonText === 'visualize') {
+        history.push(`/visualise/circos/${response['serializer'].id}`)
+      }
+    }else{
+      projectNameRef.current.focus()
+      setBorderRed(true)
     }
   }
 
@@ -520,7 +532,7 @@ export default function FileUpload({ parentCallBack }) {
               <div className="flex">
                 <div>Project Name:</div>
                 <div className="mb-4">
-                  <input onChange={(e) => setProjectName(e.target.value)} value={projectName} className=" ml-10 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required={true} id="project" type="text" placeholder="Project Name" />
+                  <input ref={projectNameRef} onChange={(e) => setProjectName(e.target.value)} value={projectName} className={` ${borderRed ? "border-red-400" : ""} ml-10 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} required={true} id="project" type="text" placeholder="Project Name" />
                 </div>
               </div>
               {/* <div className="pb-3">{selectedFiles ? <h2> Selected Files: <b>{selectedFiles.join(', ')}</b></h2> : ""}</div> */}
@@ -532,7 +544,7 @@ export default function FileUpload({ parentCallBack }) {
               <button onClick={resetStates} className="capitalize bg-white  w-80 h-20  mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded">
                 Reset
               </button>&nbsp;&nbsp;&nbsp;&nbsp;
-              <button disabled={disableUploadButton} className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded ${disableUploadButton ? 'bg-opacity-10' : ''}`}
+              <button className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded ${disableUploadButton ? 'bg-opacity-10' : ''}`}
                 onClick={formSubmitButtonActions}
 
               >
