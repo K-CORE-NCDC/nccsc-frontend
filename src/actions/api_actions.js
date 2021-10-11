@@ -156,7 +156,7 @@ export function getHeatmapInformation(type, data) {
       .then((result) => {
         const d = result
         // if (d.status === 200) {
-          dispatch({    
+          dispatch({
             type: dataVisualization.HEATMAP_REQUEST,
             // payload: {...JSON.parse(d["data"]), status:200},
             payload: d["data"],
@@ -638,6 +638,27 @@ export function getCircosTimelineTable(method, data) {
           type: dataVisualization.CIRCOS_TIMELINE_GRAPH,
           payload: payload,
         });
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
+  };
+}
+
+
+export function userRegister(type, data) {
+  return (dispatch) => {
+    //   dispatch({ type: homeConstants.DATA_SUMMARY });
+    let url = config.auth + "registration/";
+    sendRequest(url, type, data)
+      .then((result) => {
+        const d = result;
+        dispatch({ type: dataVisualization.REQUEST_DONE });
+        dispatch({
+          type: dataVisualization.REGISTER_REQUEST,
+          payload: d["data"],
+        });
+        dispatch({ type: dataVisualization.REQUEST_DONE });
       })
       .catch((e) => {
         console.log("error", e);

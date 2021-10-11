@@ -26,8 +26,8 @@ export default function BoxPlot({ box_data,chart_type }) {
       if(d_['datasets'].length>width){
         width = d_['datasets'].length+3000
       }
-      
-    
+
+
     var max_vl = 5 //d_['max']
     var min_vl = 0 //d_['min']
     var domains = []
@@ -72,7 +72,7 @@ export default function BoxPlot({ box_data,chart_type }) {
               if (max > max_vl){
                 max_vl = max+2
               }
-              
+
             }else{
               let q1 = d3.quantile(d.map(function(g) {
                 if (g.type==="N") return g.Sepal_Length;
@@ -109,7 +109,7 @@ export default function BoxPlot({ box_data,chart_type }) {
           return [t,n]
       })
       .entries(d_['datasets'])
-      
+
       var svg = d3.select("#box2")
       .append("svg")
         .attr("width", (250*sumstat.length)+250)
@@ -126,8 +126,8 @@ export default function BoxPlot({ box_data,chart_type }) {
       .domain(domains)
       .paddingInner(1)
       .paddingOuter(.5)
-      
-      
+
+
         if(chart_type==="proteome"){
           svg.append("g")
           .attr("transform", "translate(0," + height + ")")
@@ -145,11 +145,11 @@ export default function BoxPlot({ box_data,chart_type }) {
       .attr("x",0 - (height / 2))
       .attr("dy", "1em")
       .style("text-anchor", "middle")
-      .text("Proteome expression (gene_vl)");    
-      
-      svg.append("text")             
+      .text("Proteome expression (gene_vl)");
+
+      svg.append("text")
       .attr("transform",
-            "translate(" + (width/2) + " ," + 
+            "translate(" + (width/2) + " ," +
                            (height + margin.top + 20) + ")")
       .style("text-anchor", "middle")
       .text("Selected Genes");
@@ -158,23 +158,27 @@ export default function BoxPlot({ box_data,chart_type }) {
       .domain([min_vl-1,max_vl])
       .range([height, 0])
     svg.append("g").call(d3.axisLeft(y))
-      
-    
+
+
     for (var i = 0; i < sumstat.length; i++) {
-      
+
       var p = svg.append('g').attr('class','box')
       .attr('id',i)
+      console.log("0000",sumstat[i])
+
       var key = x(sumstat[i]['key'])-50
       var vl = sumstat[i]['value']
-      console.log(vl)
+      let p_value = d_['p_value'][sumstat[i]['key']]
+
+
       if(vl[1].length>0){
         p
           .selectAll("medianLines")
           .data([key])
           .enter()
           .append("line")
-          .attr("x1", function(d){return (key-25) })
-          .attr("x2", function(d){return(key+75) })
+          .attr("x1", function(d){return (key-8) })
+          .attr("x2", function(d){return(key+50) })
           .attr("y1", function(d){
             return 10
           })
@@ -190,11 +194,10 @@ export default function BoxPlot({ box_data,chart_type }) {
           .append("text")
           .attr("x", function(d){return (key) })
           .attr("y", function(d){ return 0 })
-          .text("P-value");
+          .text("P-value:"+p_value);
       }
-
+      // (d_['p_value'][sumstat[i]['key']]).toFixed(6)
       for (var z = 0; z < vl.length; z++) {
-        
         p.selectAll("vertLines")
           .data(vl[z])
           .enter()
@@ -232,7 +235,7 @@ export default function BoxPlot({ box_data,chart_type }) {
           .attr("stroke", "black")
           .style("fill", "#fff")
           .on("mouseover", (d,i)=> {
-            
+
             let html = 'q1'+i.q1.toFixed(2)+"<br/>"
             html += 'q3: '+i.q3.toFixed(2)+"<br/>"
             html += 'median: '+i.median.toFixed(2)+"<br/>"
@@ -253,8 +256,8 @@ export default function BoxPlot({ box_data,chart_type }) {
               .duration(500)
               .style('opacity', 0);
           });
-        
-       
+
+
 
         p
           .selectAll("medianLines")
@@ -266,7 +269,7 @@ export default function BoxPlot({ box_data,chart_type }) {
             .attr("y1", function(d){return(y(d.median))})
             .attr("y2", function(d){return(y(d.median))})
             .attr("stroke", "black")
-        
+
           p
             .selectAll("medianLines")
             .data(vl[z])
@@ -297,9 +300,9 @@ export default function BoxPlot({ box_data,chart_type }) {
             })
             .attr("stroke", "black")
             // .style("width", 80)
-        
-        
-        
+
+
+
         var jitterWidth = 50
         p.selectAll("indPoints")
           .data(vl[z])
@@ -328,8 +331,8 @@ export default function BoxPlot({ box_data,chart_type }) {
             }
           })
           .on("mouseover", (d,i)=> {
-            
-            
+
+
             tooltip.transition()
               .duration(200)
               .style('opacity', 0.9);
@@ -347,11 +350,11 @@ export default function BoxPlot({ box_data,chart_type }) {
         key = key+80
       }
 
-      
+
 
     }
-    
-    
+
+
     // console.log(d3)
 
       // Add individual points with jitter
