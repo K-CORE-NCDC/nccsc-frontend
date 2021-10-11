@@ -83,6 +83,11 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state,
         circosTimelieTableData: payload
       }
+    case dataVisualization.REGISTER_REQUEST:
+      return {
+        ...state,
+        registerData: payload
+      }
     default:
       return state
   }

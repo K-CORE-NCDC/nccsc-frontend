@@ -175,8 +175,6 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
   }
 
 
-  console.log("primaryGene----?",primaryGene)
-
 
   return (
     <div>
