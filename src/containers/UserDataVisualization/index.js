@@ -43,7 +43,6 @@ export default function DataVisualization() {
     setShowviualization(true)
   }
 
-
   useEffect(() => {
     if(accessToken){
       dispatch(getUserDataProjectsTableData())
