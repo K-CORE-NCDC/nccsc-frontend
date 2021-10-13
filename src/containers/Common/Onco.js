@@ -31,7 +31,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_
     const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
 
     const drawChart = (w,gData,cData,rule_types,inputRule) => {
-        console.log(inputRule)
+        
         if($('#oncoprint-glyphmap').length>0){
             $('#oncoprint-glyphmap').empty()
         }
@@ -186,8 +186,8 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_
 
         var global_mut_category_datum = clinicalData['globalMutCategory']
         var mut_category_datum = clinicalData['mutCategory']
-        var global_mut_datum = clinicalData['mutCnt']
-        var mut_datum = clinicalData['globalMutCnt']
+        var global_mut_datum =  clinicalData['globalMutCnt']
+        var mut_datum = clinicalData['mutCnt']
         var custom_datum = clinicalData['custom']
 
 
@@ -208,29 +208,13 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_
                 });
             }
         }
-
+        oncoprint.keepSorted(true);
 
         var clinical_stacked_bar_track_params = {
             'rule_set_params': window.geneticrules.clinical_rule_set_stacked_bar,
             'target_group': 1,
             'na_z': 1.1,
-            'sortCmpFn':function (d1, d2) {
-                if (d1.na && d2.na) {
-                    return 0;
-                } else if (d1.na && !d2.na) {
-                    return 2;
-                } else if (!d1.na && d2.na) {
-                    return -2;
-                } else if (!d1['category'] && !d2['category']) {
-                    return 0
-                } else if (!d1['category'] && d2['category']) {
-                    return 2
-                } else if (d1['category'] && !d2['category']) {
-                    return -2
-                } else {
-                    return d1.category.localeCompare(d2.category);
-                }
-            }
+            
         };
 
         var clinical_bar_track_params = {

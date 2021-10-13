@@ -4,6 +4,7 @@ import Loadable from 'react-loadable';
 import Loader from './layout/Loader/';
 import { PrivateRoute } from './PrivateRoute';
 import '../assets/css/style.css'
+import Wrapper  from '../wrapper';
 const Web = Loadable({
   loader: () => import('./layout/Web'),
   loading: Loader,
@@ -15,13 +16,15 @@ export default function App() {
   const [blurScreenCss, setBlurScreenCss] = useState("")
  
   return (
-    <div className={blurScreenCss}>
-      <Suspense fallback={<Loader />}>
-        <Switch>
-          <PrivateRoute exact path="*" component={Web} />
-        </Switch>
-      </Suspense>
-    </div>
+    <Wrapper>
+      <div className={blurScreenCss}>
+        <Suspense fallback={<Loader />}>
+          <Switch>
+            <PrivateRoute exact path="*" component={Web} />
+          </Switch>
+        </Suspense>
+      </div>
+    </Wrapper>
   )
 }
 

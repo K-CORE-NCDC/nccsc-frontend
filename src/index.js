@@ -6,7 +6,9 @@ import {BrowserRouter} from 'react-router-dom';
 import App from './App/index';
 import {store} from './store';
 import config from './config';
-// import reportWebVitals from './reportWebVitals';
+
+
+
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter basename={config.basename}>

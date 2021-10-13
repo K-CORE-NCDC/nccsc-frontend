@@ -67,7 +67,7 @@ export default function Piechart({id,data,width,color, chart_type}) {
 
       let linear = 1
 
-      if(id === 'chart_pie_AgeOfDiagnosis'){
+      if(id === 'chart_pie_Age'){
         let ageofdiag = {}
         for (var i = 0; i < data.length; i++) {
           let n = parseInt(data[i].name)
@@ -97,7 +97,7 @@ export default function Piechart({id,data,width,color, chart_type}) {
         data = d
 
       }
-      else if(id==='chart_pie_BodyMassIndex') {
+      else if(id==='chart_pie_BMI') {
         let bmi = {}
         for (var i = 0; i < data.length; i++) {
           let n = parseInt(data[i].name)
