@@ -18,9 +18,15 @@ const MemberShip = () => {
     const dispatch = useDispatch()
     const regitserResponse = useSelector((data) => data.dataVisualizationReducer.registerData);
     const [message,setMessage] = useState("")
+    const [inputmail,setInputMail] = useState(false)
 
     function formSet(e){
-      setForm(oldState => ({ ...oldState, [e.target.name]: e.target.value}))
+      if(e.target.value === "input"){
+        setForm(oldState => ({ ...oldState, [e.target.name]: ""}))
+        setInputMail(true)
+      }else{
+          setForm(oldState => ({ ...oldState, [e.target.name]: e.target.value}))
+      }
     }
 
     function validation(){
@@ -74,6 +80,7 @@ const MemberShip = () => {
       }
     }, [regitserResponse])
 
+    console.log(form)
     return (
         <div>
             <section className="mt-10 flex flex-col items-center justify-center">
@@ -163,14 +170,14 @@ const MemberShip = () => {
                         <h1 className="p-3">@</h1>
                         <div className="mb-3 pt-0">
                           <input type="text"
-                          value={(form['domain_email']=== "input")? "" : form['domain_email']}
+                          value={form['domain_email']}
                           name="domain_email"
                           onChange={formSet}
-                          disabled = {(form['domain_email']=== "input")? "" : "disabled"}
+                          disabled = {inputmail? "" : "disabled"}
                           className="px-4 py-4 text-blueGray-600 relative bg-white rounded border border-gray-400 outline-none focus:outline-none focus:ring"/>
                         </div>
                         <select name="domain_email" onChange={formSet} className="ml-3 border border-gray-300 px-4 py-3 rounded focus:outline-none focus:ring">
-                          <option value="">Option</option>
+                          <option value="option">Option</option>
                           <option value="naver.com">naver.com</option>
                           <option value="gmail.com">gmail.com</option>
                           <option value="daum.com">daum.net</option>

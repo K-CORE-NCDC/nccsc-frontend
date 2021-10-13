@@ -173,6 +173,14 @@ export default function DataVisualization() {
       if( element === 'heatmap') {
         name=''
       }
+      else if (element === 'cnv') {
+        element = "CNV"
+      }
+      else if (element === 'onco') {
+        element = "OncoPrint"
+        name = ''
+      }
+
       if (project_id !== undefined) {
         tmp.push(
           <li key={element} className={classes}>
@@ -246,7 +254,6 @@ export default function DataVisualization() {
         return Charts.fusion(w, state, screenCapture, setToFalseAfterScreenCapture)
       case "box":
         return Charts.box(w, state, screenCapture, setToFalseAfterScreenCapture)
-
       default:
         return false
     }
