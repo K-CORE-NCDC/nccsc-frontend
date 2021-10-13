@@ -9,6 +9,7 @@ import NoContentMessage from '../../Common/NoContentComponent'
 import inputJson from '../../Common/data'
 import { ZoomInIcon } from '@heroicons/react/solid';
 import Multiselect from 'multiselect-react-dropdown';
+import KmeanCmp from '../../Common/K_mean'
 
 export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, setToFalseAfterScreenCapture }) {
   const reference = useRef()
@@ -20,13 +21,15 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const heatmapJson = useSelector((data) => data.dataVisualizationReducer.heatmapSummary);
   // const didMountRef = useRef(false)
   const [watermarkCss, setWatermarkCSS] = useState("")
+  const [rangeValue,setRangeValue] = useState(1)
   const [loader, setLoader] = useState(false)
   const [genes,setGenes] = useState([])
   const [selectedGene,setSelectedGene] = useState([])
   const [optionChoices,setOptionChoices] = useState([])
   const [option,setOption] = useState([])
   const [viewType, setViewType] = useState('gene_vl')
-  
+  const [mainTab,setMainTab] = useState('heatmap')
+  const [clusterRange,setClusterRange] = useState("")
 
   const diag_age = (vl)=>{
     let n = parseInt(vl)
@@ -98,8 +101,15 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
           z[option[opt].id] = []
         }
       }
-      
-      heatmapJson.forEach((item, i) => {
+
+      let d_ = ""
+      if(mainTab === "k-mean"){
+        d_ = heatmapJson['data']
+      }else{
+        d_ = heatmapJson
+      }
+
+      d_.forEach((item, i) => {
         if(!genes.includes(item['gene_name'])){
           genes.push(item['gene_name'])
         }
@@ -117,21 +127,26 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
             }
           }
         }
-        
+
       });
-      
-      
+
       // if(clinicalFilter){
       //   z[clinicalFilter] = []
       // }
-      
 
       let y = {
         "smps":genes,
         "vars":[],
         "data":[]
       }
+
       let x = {}
+      if(mainTab === "k-mean"){
+        x = {
+          "Cluster":heatmapJson['clusters'],
+        }
+      }
+
       Object.keys(unique_sample_values).forEach((key, i) => {
         y["vars"].push(key)
         y['data'].push(unique_sample_values[key])
@@ -170,9 +185,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
 
   }, [screenCapture, watermarkCss])
 
-  
-
-
   const changeType = (e, type) => {
     let c = document.getElementsByName('type')
     setActiveCmp(false)
@@ -203,7 +215,49 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     }
   }
 
-  const setGene = (e)=>{
+  const changeMainType = (e, type) => {
+    let c = document.getElementsByName('maintype')
+    for (var i = 0; i < c.length; i++) {
+      let classList = c[i].classList
+      classList.remove("hover:bg-main-blue", "bg-main-blue", "text-white",'border-gray-600');
+      classList.add("text-teal-700", "hover:bg-teal-200", "bg-teal-100")
+    }
+    e.target.classList.add("hover:bg-main-blue","bg-main-blue","text-white")
+    setMainTab(type)
+    let dataJson = inputData
+    if(inputData.type !==''){
+      // setClusterRange
+      // console.log(dataJson['genes'])
+      setClusterRange(dataJson['genes'].length)
+      setActiveCmp(false)
+      setLoader(true)
+      dataJson['table_type'] = tableType
+      dataJson['view'] = viewType
+      dataJson['heat_type'] = type
+      setLoader(true)
+      setActiveCmp(false)
+      dispatch(getHeatmapInformation('POST',dataJson))
+    }
+    // setTableType(type)
+    // let dataJson = inputData
+    // if(type === 'rna'){
+    //   dataJson['genes'] = genes
+    // }else if(type === 'methylation'){
+    //   dataJson['genes'] = selectedGene
+    // }else if(type === 'proteome'){
+    //   dataJson['genes'] = genes
+    // }else if(type === 'phospo'){
+    //   dataJson['genes'] = selectedGene
+    // }
+    //
+    // if(inputData.type !==''){
+    //   dataJson['table_type'] = type
+    //   dataJson['view'] = viewType
+    //   dispatch(getHeatmapInformation('POST', dataJson))
+    // }
+  }
+
+const setGene = (e)=>{
     let gene = e.target.value
     setSelectedGene([gene])
 
@@ -221,22 +275,21 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     if(inputData.type !==''){
       dataJson['table_type'] = tableType
       dataJson['view'] = viewType
+      dataJson['heat_type'] = mainTab
       setLoader(true)
       setActiveCmp(false)
       dispatch(getHeatmapInformation('POST',dataJson))
     }
   }
 
- 
-  function onSelect(selectedList, selectedItem) {
-
+function onSelect(selectedList, selectedItem) {
     let cf = []
     setOption(selectedList)
     selectedList.forEach((item, i) => {
       cf.push(item['id'])
     });
 
-    
+
     if(inputData.type !==''){
       setLoader(true)
       setActiveCmp(false)
@@ -244,9 +297,9 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       dataJson['clinicalFilters'] = cf
       dataJson['view'] = viewType
       dataJson['type'] = viewType
+      dataJson['heat_type'] = mainTab
       dispatch(getHeatmapInformation('POST',dataJson))
     }
-
   }
 
   function onRemove(selectedList, removedItem) {
@@ -260,6 +313,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       setActiveCmp(false)
       let dataJson = inputData
       dataJson['clinicalFilters'] = items
+      dataJson['heat_type'] = mainTab
       dispatch(getHeatmapInformation('POST',dataJson))
     }
   }
@@ -277,6 +331,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     setViewType(view)
     let dataJson = inputData
     dataJson['view'] = view
+    dataJson['heat_type'] = mainTab
     if(inputData.type !==''){
       dispatch(getHeatmapInformation('POST', dataJson))
     }
@@ -300,14 +355,45 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   normal_button += "rounded-l-none  hover:scale-110 focus:outline-none flex justify-center p-5 "
   normal_button += " rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 "
   normal_button += " border duration-200 ease-in-out border-teal-600 transition px-10 "
-  
 
-  
+  function rangeCall(e){
+    // console.log("----->")
+    let cf = []
+    setRangeValue(e.target.value)
+
+    if(inputData.type !==''){
+      setLoader(true)
+      setActiveCmp(false)
+      let dataJson = inputData
+      dataJson['clinicalFilters'] = cf
+      dataJson['view'] = viewType
+      dataJson['type'] = viewType
+      dataJson['cluster'] = e.target.value
+      dispatch(getHeatmapInformation('POST',dataJson))
+    }
+  }
 
   return (
     <div>
       <div className="grid  ">
         <div className='grid grid-cols-4'>
+          <div className="p-5 text-right col-span-4">
+            <div className="flex justify-start items-baseline flex-wrap">
+              <div className="flex m-2">
+                <button onClick={e => changeMainType(e, 'heatmap')} name='maintype' className="rounded-r-none  hover:scale-110
+                    focus:outline-none flex p-5 rounded font-bold cursor-pointer
+                    hover:bg-main-blue  bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition">
+                  Heatmap
+                </button>
+                <button onClick={e => changeMainType(e, 'k-mean')} name='maintype' className="rounded-l-none border-l-0
+                    hover:scale-110 focus:outline-none flex justify-center p-5
+                    rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100
+                    text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
+                  K-mean
+                </button>
+              </div>
+            </div>
+          </div>
           <div className="p-5 text-right col-span-2">
             <div className="flex justify-start items-baseline flex-wrap">
               <div className="flex m-2">
@@ -341,7 +427,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
             <div className={tableType!=='methylation'?'w-9/12':'w-full'}>
               <label >Clinical Filters:</label>
               <Multiselect
-
                 style={style}
                 options={optionChoices} // Options to display in the dropdown
                 selectedValues={option} // Preselected value to persist in dropdown
@@ -349,10 +434,17 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
                 onRemove={onRemove} // Function will trigger on remove event
                 displayValue="name" // Property name to display in the dropdown options
               />
+              {mainTab === 'k-mean'?
+                <div className="mt-8">
+                  <label for="points"><strong>Cluster (between {rangeValue} and {clusterRange}):</strong></label>
+                  <input type="range" className="ml-4 border-4 border-gray-500 rounded-lg overflow-hidden appearance-none bg-white h-6 w-128"
+                  id="points" name="points" min="1" max={clusterRange} value={rangeValue} onChange={rangeCall}/>
+                </div>:""
+              }
             </div>
-            { tableType!=='methylation' && 
+            { tableType!=='methylation' &&
               <div className="mx-5 flex-wrap text-left w-3/12">
-                View By: 
+                View By:
                 <div className="flex m-2 w-100">
                   <button onClick={e => changeView(e, 'gene_vl')} name='view' className={viewType==="gene_vl"?selected_button:normal_button}>
                     Gene-Vl
@@ -364,9 +456,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
               </div>
             }
           </div>
-          
-          
-          
         </div>
 
         <div className='grid'>
@@ -380,7 +469,8 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
                 }
               </div>
             }
-            {data_ && <HeatmapNewCmp clinicalFilter={optionChoices} inputData={data_} watermarkCss={watermarkCss} ref={reference} width={width} />}
+            {data_ && <HeatmapNewCmp clinicalFilter={optionChoices} inputData={data_} type={mainTab} watermarkCss={watermarkCss} ref={reference} width={width} />
+            }
             </div>
           }
         </div>
