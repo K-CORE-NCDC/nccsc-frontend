@@ -665,3 +665,49 @@ export function userRegister(type, data) {
       });
   };
 }
+
+
+// export function getKMeanformation(type, data) {
+//   return (dispatch) => {
+//     console.log("type--->",type)
+//     let url = config.auth + "k-mean/";
+//     // const data = new FormData()
+//
+//     // data.set('genes', data.genes);
+//     // if("filter" in data){
+//     //   data.set('filters', JSON.stringify(data.filter));
+//     // }
+//     // if("table_type" in data){
+//     //   data.set('tab_type', data.table_type);
+//     // }
+//
+//     sendRequest(url, type, data)
+//       .then((result) => {
+//         const d = result
+//         // if (d.status === 200) {
+//           dispatch({
+//             type: dataVisualization.KMEAN_REQUEST,
+//             // payload: {...JSON.parse(d["data"]), status:200},
+//             payload: d["data"],
+//           });
+//         // } else {
+//         //   dispatch({
+//         //     type: dataVisualization.HEATMAP_REQUEST,
+//         //     payload: {status:204}
+//         //   });
+//         // }
+//         // dispatch({
+//         //   type: dataVisualization.HEATMAP_REQUEST,
+//         //   payload: JSON.parse(d["data"]),
+//         // });
+//         dispatch({ type: dataVisualization.REQUEST_DONE });
+//       })
+//       .catch((e) => {
+//         dispatch({
+//           type: dataVisualization.KMEAN_REQUEST,
+//           payload: {status:204}
+//         });
+//         console.log("error", e);
+//       });
+//   };
+// }

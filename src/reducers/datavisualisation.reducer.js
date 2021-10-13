@@ -88,6 +88,11 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state,
         registerData: payload
       }
+    case dataVisualization.KMEAN_REQUEST:
+      return {
+        ...state,
+        kmeanSummary: payload
+      }
     default:
       return state
   }
