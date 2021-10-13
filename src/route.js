@@ -1,4 +1,5 @@
 import React from 'react';
+import {FormattedMessage} from 'react-intl';
 
 const Home = React.lazy(() => import('./containers/Home/'));
 const DataSummary = React.lazy(() => import('./containers/DataSummary/'));
@@ -9,24 +10,26 @@ const Logout = React.lazy(() => import('./containers/Login/logout'))
 const Terms = React.lazy(() => import('./containers/Signup/TermsOfUse'))
 const Join = React.lazy(() => import('./containers/Signup/MemberShip'))
 const Signup = React.lazy(() => import('./containers/Signup/'))
-const VolcanoPlotD3 = React.lazy(() => import('./containers/Common/VolcanoD3'))
-const TimeLineChart = React.lazy(() => import('./containers/Common/timelineCss'))
 
-const Survival = React.lazy(() => import('./containers/Common/test_scatter_data'))
+
+const Introduce = React.lazy(() => import('./containers/Home/introduce'))
+const Pipeline = React.lazy(() => import('./containers/Home/pipeline'))
+const DataApplication = React.lazy(() => import('./containers/DataApplication'))
 
 const route = [
   { path: '/', exact: true, type:'unauth', name: 'Home', component: Home },
-  { path: '/summary/:tab?/', exact: true, type:'unauth', name: 'DataSummary', component: DataSummary },
-  { path: '/visualise/:tab?/:project_id?/', exact: true, type:'unauth', name: 'Home', component: DataVisualization },
-  { path: '/userdata', exact: true, type:'unauth', name: 'Home', component: UserDataVisualization },
-  { path: '/login', exact: true, type:'unauth', name: 'Login', component: Login },
-  { path: '/logout', exact: true, type:'unauth', name: 'Logout', component: Logout },
-  { path: '/term', exact: true, type:'unauth', name: 'igv', component: Terms},
-  { path: '/member', exact: true, type:'unauth', name: 'igv', component: Join},
-  { path: '/signup', exact: true, type:'unauth', name: 'igv', component: Signup},
-  { path: '/volcano', exact: true, type:'unauth', name: 'igv', component: VolcanoPlotD3},
-  { path: '/timeline', exact: true, type:'unauth', name: 'igv', component: TimeLineChart},
-  { path: '/survival', exact: true, type:'unauth', name: 'igv', component: Survival},
+  { path: '/summary/:tab?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Visualization" defaultMessage='Visualization'/>,childname:'Data Summary', component: DataSummary },
+  { path: '/visualise/:tab?/:project_id?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Visualization" defaultMessage='Visualization'/>,childname:'Data Visualization', component: DataVisualization },
+  { path: '/userdata', exact: true, type:'unauth', name:<FormattedMessage  id = "Home" defaultMessage='Home'/> , childname:<FormattedMessage  id = "DataVisualization" defaultMessage='User Data Visualization'/>, component: UserDataVisualization },
+  { path: '/introduce', exact: true, type:'unauth', name: <FormattedMessage  id = "Introduce" defaultMessage='Introduction'/>, childname:<FormattedMessage  id = "BusinessIntroduce" defaultMessage='Business Introduction'/>, component: Introduce },
+  { path: '/pipeline', exact: true, type:'unauth', name: <FormattedMessage  id = "Introduce" defaultMessage='Introduction'/>, childname:<FormattedMessage  id = "Pipeline" defaultMessage='Pipeline'/>, component: Pipeline },
+  { path: '/application', exact: true, type:'unauth',name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage  id = "DataApplication" defaultMessage='Data Application'/>,  component: DataApplication },
+
+  { path: '/login', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Login" defaultMessage='Login'/>,  component: Login },
+  { path: '/logout', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Logout" defaultMessage='Logout'/>, component: Logout },
+  { path: '/term', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Terms'/>, component: Terms},
+  { path: '/member', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Join'/>, component: Join},
+  { path: '/signup', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: Signup},
   
 ]
 

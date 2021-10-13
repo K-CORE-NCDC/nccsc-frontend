@@ -1,0 +1,24 @@
+{
+    "Home":"집",
+    "Introduce":"소개",
+    "BusinessIntroduce":"사업소개",
+    "Pipeline":"파이프라인",
+    "Visualization":"시각화",
+    "DataSummary":"데이터요약",
+    "DataVisualization":"데이터시각화",
+    "MyDataVisualization":"마이데이터 시각화",
+    "DataApplication":"데이터 신청",
+    "DataProvision":"데이터제공 안내",
+    "DataDb":"자료 안내",
+    "DataRequest":"데이터신청",
+    "CustomerVoice":"고객의 소리",
+    "FAQ":"FAQ",
+    "QA":"Q&A",
+    "Notice":"공지사항",
+    "Signup":"회원 가입",
+    "Login":"로그인",
+    "Api":"API",
+    "Logout":"로그 아웃"
+
+
+}

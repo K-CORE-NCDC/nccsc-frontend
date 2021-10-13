@@ -1,8 +1,10 @@
+import {FormattedMessage} from 'react-intl';
 const sessionAuth = localStorage.getItem('ncc_access_token');
+
 
 const login = {
   id: 'login',
-  title: 'Login',
+  title: <FormattedMessage  id = "Login" defaultMessage="Login"/>,
   type: 'item',
   icon: 'fa fa-dashboard',
   url: '/login',
@@ -24,15 +26,15 @@ let childMenu = {
     items: [
       {
         id: 'signup',
-        title: 'Join membership',
+        title: <FormattedMessage  id = "Signup" defaultMessage="Sign Up"/>,
         type: 'item',
         icon: 'fa fa-dashboard',
         url: '/signup',
         children: [],
       },
       {
-        id: 'notice',
-        title: 'Notice',
+        id: 'api',
+        title: 'API',
         type: 'item',
         icon: 'fa fa-dashboard',
         url: '/API',
@@ -44,56 +46,58 @@ let childMenu = {
     items: [
       {
         id: 'introduce',
-        title: 'Introduce',
+        title: <FormattedMessage  id = "Introduce" defaultMessage="Introduction"/>,
         type: 'group',
         icon: 'fa fa-dashboard',
-        url: '/',
+        url: '/introduce',
         children: [
           {
-            id: 'introduce',
-            title: 'Business',
+            id: 'Business',
+            title: <FormattedMessage  id = "BusinessIntroduce" defaultMessage="Business Introduction"/>,
             type: 'item',
             icon: 'fa fa-dashboard',
-            url: '/',
+            url: '/introduce',
             children: []
           },
           {
-            id: 'introduce',
-            title: 'Introduction',
+            id: 'pipeline',
+            title: <FormattedMessage  id = "Pipeline" defaultMessage="Pipeline"/>,
             type: 'item',
             icon: 'fa fa-dashboard',
-            url: '/',
-            children: []
-          },
-          {
-            id: 'introduce',
-            title: 'Pipeline',
-            type: 'item',
-            icon: 'fa fa-dashboard',
-            url: '/',
+            url: '/pipeline',
             children: []
           },
         ],
       },
       {
-        id: 'DataSummary',
-        title: 'Data Summary',
+        id: 'visualization',
+        title: <FormattedMessage  id = "Visualization" defaultMessage='Visualization'/>,
         type: 'group',
         icon: 'fa fa-dashboard',
         url: '/summary',
-        children: []
+        children: [
+          {
+            id: 'DataSummary',
+            title: <FormattedMessage  id = "DataSummary" defaultMessage="Data Summary"/>,
+            type: 'item',
+            icon: 'fa fa-dashboard',
+            url: '/summary',
+            children: []
+          },
+          {
+            id: 'DataVisualization',
+            title: <FormattedMessage  id = "DataVisualization" defaultMessage="Data Visualization"/>,
+            type: 'item',
+            icon: 'fa fa-dashboard',
+            url: '/visualise',
+            children: []
+          }
+        ]
       },
-      {
-        id: 'DataUserVisualization',
-        title: 'Data Visualization',
-        type: 'group',
-        icon: 'fa fa-dashboard',
-        url: '/visualise/circos',
-        children: [],
-      },
+     
       {
         id: 'MyDataVisualization',
-        title: 'User Data Visualization',
+        title: <FormattedMessage  id = "MyDataVisualization" defaultMessage='User Data Visualization'/>,
         type: 'group',
         icon: 'fa fa-dashboard',
         url: '/userdata',
@@ -102,23 +106,64 @@ let childMenu = {
         ],
       },
       {
-        id: 'api',
-        title: 'Api',
+        id: 'dataapplication',
+        title: <FormattedMessage  id = "DataApplication" defaultMessage='Data Application'/>,
+        type: 'group',
+        icon: 'fa fa-dashboard',
+        url: '/application',
+        children: [
+          {
+            id: 'dataprovision',
+            title: <FormattedMessage  id = "DataProvision" defaultMessage='Provision Guide'/>,
+            type: 'item',
+            icon: 'fa fa-dashboard',
+            url: '/application',
+            children: []
+          },
+          {
+            id: 'datadb',
+            title: <FormattedMessage  id = "DataDb" defaultMessage='DB Guide'/>,
+            type: 'item',
+            icon: 'fa fa-dashboard',
+            url: '/application',
+            children: []
+          },
+          {
+            id: 'datarequest',
+            title: <FormattedMessage  id = "DataRequest" defaultMessage='Data Request'/>,
+            type: 'item',
+            icon: 'fa fa-dashboard',
+            url: '/application',
+            children: []
+          }
+        ],
+      },
+      {
+        id: 'voice',
+        title: <FormattedMessage  id = "CustomerVoice" defaultMessage='Customer Voice'/>,
         type: 'group',
         icon: 'fa fa-dashboard',
         url: '/summary',
         children: [
           {
-            id: 'VariantTypes',
-            title: 'Variant Types',
+            id: 'faq',
+            title: <FormattedMessage  id = "FAQ" defaultMessage='FAQ'/>,
             type: 'item',
             icon: 'fa fa-dashboard',
             url: '/summary',
             children: []
           },
           {
-            id: 'VariantClassification',
-            title: 'Variant Classification',
+            id: 'qa',
+            title: <FormattedMessage  id = "QA" defaultMessage='Q&A'/>,
+            type: 'item',
+            icon: 'fa fa-dashboard',
+            url: '/summary',
+            children: []
+          },
+          {
+            id: 'notice',
+            title: <FormattedMessage  id = "Notice" defaultMessage='Notice'/>,
             type: 'item',
             icon: 'fa fa-dashboard',
             url: '/summary',

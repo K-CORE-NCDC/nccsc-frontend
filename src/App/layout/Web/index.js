@@ -1,59 +1,66 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-
 import { Link } from "react-router-dom";
 import config from "../../../config";
 import route from "../../../route";
 import Loader from "../Loader";
 import Header from './Header'
 import DropdownMenu from './Header/DropdownMenu'
-
-
 import { Fragment } from 'react'
-
 import { Popover, Transition } from '@headlessui/react'
 import logo from '../../../assets/images/logo.png'
 import footer_logo from '../../../assets/images/f_logo.png'
 import {
-  BookmarkAltIcon,
-  CalendarIcon,
-  ChartBarIcon,
-  CursorClickIcon,
   MenuIcon,
-  PhoneIcon,
-  PlayIcon,
-  RefreshIcon,
-  ShieldCheckIcon,
-  SupportIcon,
-  ViewGridIcon,
   ChevronRightIcon,
   XIcon,
+  HomeIcon
 } from '@heroicons/react/outline'
-import { ChevronDownIcon } from '@heroicons/react/solid'
+import MenuItems from '../../../menu-item'
 import {
   useParams
 } from "react-router-dom";
 
 const menu = route.map((route, index) => {
-
+  
   return route.component ? (
     <Route
-      key={index}
-      path={route.path}
-      exact={route.exact}
-      name={route.name}
-      render={(props) => <route.component {...props} />}
+      key = {index}
+      path =  {route.path}
+      exact = {route.exact}
+      name = {route.name}
+      childname = {route.childname}
+      render = {(props) => <route.component {...props} />}
     />
   ) : null;
 });
-export default function Web() {
+
+
+export default function Web(props) {
+  
   let id = useParams();
+  const [breadCrumb,setBreadCrumb] = useState([])
+  useEffect(()=>{
+    let html = []
+    for (let m = 0; m < menu.length; m++) {
+      let p = id[0].split('/')[1]
+      if(menu[m].props.path.includes(p)){
+        let name = menu[m].props.name
+        let childname = menu[m].props.childname
+        html.push(<li key={m+'2'}><HomeIcon className="h-6 w-6" aria-hidden="true"/></li>)
+        html.push(<li key={m+'1'}><span className="mx-2">|</span></li>)
+        html.push(<li key={m}><a href="#" className="font-bold">{name}</a></li>)
+        html.push(<li key={m+'c1'}><span className="mx-2">|</span></li>)
+        html.push(<li key={m+'child'}>{childname}</li>)
+      }
+    }
+    setBreadCrumb(html)
+  },[props])
   let classes = ''
 
   if(id[0]==='/'){
     classes = 'screen-2 xl:h-full lg:h-full '
   }
-
 
   return (
     <div className="relative">
@@ -207,13 +214,18 @@ export default function Web() {
           </div>
         )}
       </Popover>
+      {classes =='' && <nav className="bg-grey-light rounded w-full bg-white p-5">
+        <ol className="list-reset flex text-grey-dark p-5">
+          {breadCrumb}
+        </ol>
+      </nav> }
       <Suspense fallback={<Loader />}>
         <Switch>
           {menu}
           <Redirect from="/" to="home" />
         </Switch>
       </Suspense>
-      <footer className="p-10">
+      <footer className="p-10 bg-white border-gray-300 border-t">
         <div className="grid grid-cols-2">
           <div className="text-gray-500">
             <p>경기도 고양시 일산동구 일산로 323 국립암센터</p>
