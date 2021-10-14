@@ -20,9 +20,10 @@ import MenuItems from '../../../menu-item'
 import {
   useParams
 } from "react-router-dom";
+import {FormattedMessage} from 'react-intl';
 
 const menu = route.map((route, index) => {
-  
+
   return route.component ? (
     <Route
       key = {index}
@@ -37,9 +38,11 @@ const menu = route.map((route, index) => {
 
 
 export default function Web(props) {
-  
   let id = useParams();
   const [breadCrumb,setBreadCrumb] = useState([])
+  const [currentDate,setCurrentDate] = useState("")
+  const [currentTime,setCurrentTime] = useState("")
+
   useEffect(()=>{
     let html = []
     for (let m = 0; m < menu.length; m++) {
@@ -56,6 +59,16 @@ export default function Web(props) {
     }
     setBreadCrumb(html)
   },[props])
+
+  useEffect(()=>{
+    let today = new Date();
+    var date = today.getFullYear()+'.'+(today.getMonth()+1)+'.'+today.getDate()
+    var a_or_p = today.toLocaleString('en-US', { hour: 'numeric', hour12: true }).split(' ')[1]
+    var time = a_or_p+" "+today.getHours() + ":" + today.getMinutes();
+
+    setCurrentDate(date)
+    setCurrentTime(time)
+  },[])
   let classes = ''
 
   if(id[0]==='/'){
@@ -91,24 +104,26 @@ export default function Web(props) {
                 </div>
               </div>
             </nav>
-            
+
             {classes!=='' && <div className="grid grid-cols-3 px-64 py-20  text-right text-main-blue">
               <div className='lg:col-span-3 lg:text-center  2xl:col-start-3'>
-              <h2 className="text-8xl"><strong>K</strong>-cancer <strong>omics</strong></h2>
-              <p className="text-2xl p-5 p-10 2xl:text-right">
-                It is a cancer data platform that visually provides various
-                analysis results by combining high-quality domestic cancer
-                patient clinical and protein genomic information .</p>
+              <h2 className="text-8xl"><strong>K-CORE</strong> <strong>Portal</strong></h2>
+              <h2 className="text-4xl mt-4"><strong>Cancer Omics Research Portal</strong></h2>
+              <div className="pl-8">
+                <p className="border-l-2 text-2xl p-5 mt-8 text-center border-gray-600">
+                  <FormattedMessage  id = "home_child_title" defaultMessage='It is a cancer data platform that visually provides various analysis results by combining high-quality domestic cancer patient clinical and protein genomic information .'/>
+                </p>
+              </div>
               </div>
             </div>}
             {classes!=='' &&
               <div className="lg:hidden 2xl:block 2xl:grid  grid-rows-2 grid-col-12 grid-flow-col gap-4  text-right text-main-blue px-5">
                 <div className='row-span-3 col-span-2 text-6xl py-10'>
                   <div className="row-span-1">
-                    <p><span className='text-4xl'>Today &nbsp;&nbsp;</span><strong>2021.04.26.</strong></p>
+                    <p><span className='text-4xl'>Today &nbsp;&nbsp;</span><strong>{currentDate?currentDate:""}.</strong></p>
                   </div>
                   <div className="row-span-2">
-                    <p>PM 15:20</p>
+                    <p> {currentTime?currentTime:""}</p>
                   </div>
                 </div>
 

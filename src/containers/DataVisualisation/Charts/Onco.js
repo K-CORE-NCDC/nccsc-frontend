@@ -8,7 +8,8 @@ import UserFilesTable from '../../Common/Table'
 import LoaderCmp from '../../Common/Loader'
 import NoContentMessage from '../../Common/NoContentComponent'
 import Multiselect from 'multiselect-react-dropdown';
-import inputJson from '../../Common/data'
+import inputJson from '../../Common/data';
+import {FormattedMessage} from 'react-intl';
 
 
 export default function DataOnco({ width,inputData, screenCapture, setToFalseAfterScreenCapture }) {
@@ -194,7 +195,7 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
   return (
 
     <>
-    {optionChoices &&  
+    {optionChoices &&
       <div className='grid'>
         <div className='p-5 text-right m-5'>
           <div className='flex float-left'>

@@ -9,7 +9,8 @@ import ImageGrid from '../../Common/ImageGrid'
 import { getCircosInformation, getCircosTimelineTable, getOncoImages } from '../../../actions/api_actions'
 import '../../../assets/css/style.css'
 import { exportComponentAsPNG } from 'react-component-export-image';
-import placeholder from '../../../assets/img/circos_ncc.png'
+import placeholder from '../../../assets/img/circos_ncc.png';
+import {FormattedMessage} from 'react-intl';
 
 
 export default function DataCircos({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
@@ -170,7 +171,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
           <div className="p-1 grid grid-cols-6">
             <div className='flex col-span-2'>
               <div className='flex-col text-left'>
-                <label htmlFor="samples" >Choose a Sample: </label>
+                <label htmlFor="samples" ><FormattedMessage  id = "Cir_choose_sample" defaultMessage='Choose a Sample'/>: </label>
                 <select
                   className="w-full border bg-white rounded px-3 py-2 outline-none"
                   value={sampleKey}

@@ -1,6 +1,7 @@
 import React,{useContext} from 'react'
 import { Link } from 'react-router-dom';
 import {Context} from '../../../../wrapper'
+import {FormattedMessage} from 'react-intl';
 
 const SingleElem = ({elem}) =>{
   if (elem.url){
@@ -70,7 +71,10 @@ const Menu = ({items}) => {
     return ""
   })
   const context = useContext(Context);
-  
+
+  // let a_ =  []
+  // a_.push()
+
   return <>
     {m}
     <div className="relative inline-flex">
@@ -78,7 +82,7 @@ const Menu = ({items}) => {
         <path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" fill="#fff" fillRule="nonzero"/>
       </svg>
       <select value = {context.locale} onChange={context.selectLanguage} className="border border-white rounded bg-transparent text-white h-15 pl-5 pr-10 focus:tex-black active:tex-black hover:border-gray-400 focus:outline-none appearance-none">
-        <option className='text-black' value='kr'>Korea</option>
+        <option className='text-black' value='kr'><FormattedMessage  id="Korea" defaultMessage='Korea'/></option>
         <option className='text-black' value='en'>English</option>
       </select>
     </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {FormattedMessage} from 'react-intl';
 
 const LabelCss = "block text-left text-blue-700-700 text-lg  font-bold mb-2"
 const checkBoxCss = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -287,7 +288,7 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
         <div className="m-1 bg-gray-100">
             <div className="p-1 py-3 px-2 col-span-2">
                 <div className="block text-left text-blue-700-700 text-lg  font-bold mb-2">
-                    Clinical Filters
+                    <FormattedMessage  id = "Clinical Filters" defaultMessage='Clinical Filters'/>
                 </div>
                 {((resetClicked === true) || (isGroupFilterProp === false)) && <select
                     onChange={filterTypeDropdownSelection}
@@ -308,12 +309,12 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
             </div>
             <div>
                 <button onClick={submitFilters} className="bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
-                    Submit
+                    <FormattedMessage  id = "Submit_volcano" defaultMessage='Submit'/>
                 </button>
             </div>
             <div>
                 <button onClick={resetFilters} className="bg-white hover:bg-gray-700 mb-3 w-80 h-20 text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
-                    Reset
+                    <FormattedMessage  id = "Reset_volcano" defaultMessage='Reset'/>
                 </button>
             </div>
         </div>
@@ -526,7 +527,7 @@ const GroupFilters = ({ parentCallback, groupFilters }) => {
         <div className="m-1 bg-gray-100">
             <div className="p-1 py-3 px-2 col-span-2">
                 <div className="block text-left text-blue-700-700 text-lg  font-bold mb-2">
-                    Clinical Filters
+                    <FormattedMessage  id = "Clinical Filters" defaultMessage='Clinical Filters'/>
                 </div>
                 <select
                     onChange={updateSelectedFilter}

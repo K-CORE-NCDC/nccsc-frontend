@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import banner_img from '../../assets/img/top_banner01.png'
 import {ChevronRightIcon} from '@heroicons/react/outline'
 import Slider from "react-slick";
@@ -10,8 +11,12 @@ import s4 from '../../assets/images/f_ci4.png'
 import s5 from '../../assets/images/f_ci5.png'
 import s6 from '../../assets/images/f_ci6.png'
 import s7 from '../../assets/images/f_ci7.png'
+import breast from '../../assets/images/breast_cancer.png'
+import {FormattedMessage} from 'react-intl';
 
 export default function Home() {
+  const [showModal, setShowModal] = useState(false);
+
   var settings = {
     dots: true,
     infinite: false,
@@ -66,62 +71,82 @@ export default function Home() {
               <ul className='grid lg:grid-cols-3 2xl:grid-cols-10'>
                 <li className="text-center py-10 relative">
                   <a>
-                    <span></span>
-                    <font className="text-white text-3xl text-3xl ">breast cancer</font>
+                    <button onClick={() => setShowModal(true)} className="w-full">
+                      <span></span>
+                      <font className="text-white text-3xl text-3xl "><FormattedMessage  id = "breast cancer" defaultMessage='Breast cancer'/></font>
+                    </button>
                   </a>
                 </li>
                 <li className="text-center py-10 relative">
                   <a>
-                    <span></span>
-                    <font className="text-white text-3xl text-center">thyroid cancer</font>
+
+                      <span></span>
+                      <font className="text-white text-3xl text-center"><FormattedMessage  id = "Thyroid cancer" defaultMessage='Thyroid cancer'/></font>
+
                   </a>
                 </li>
                 <li className="text-center py-10 relative">
                   <a>
-                    <span></span>
-                    <font className="text-white text-3xl text-center">uterine cancer</font>
+
+                      <span></span>
+                      <font className="text-white text-3xl text-center"><FormattedMessage  id = "Cervical cancer" defaultMessage='Cervical cancer'/></font>
+
                   </a>
                 </li>
                 <li className="text-center py-10 relative">
                   <a>
-                    <span></span>
-                    <font className="text-white text-3xl ">lung cancer</font>
+
+                      <span></span>
+                      <font className="text-white text-3xl "><FormattedMessage  id = "lung cancer" defaultMessage='lung cancer'/></font>
+
                   </a>
                 </li>
                 <li className="text-center py-10 relative">
                   <a>
-                    <span></span>
-                    <font className="text-white text-3xl text-center">colorectal cancer</font>
+
+                      <span></span>
+                      <font className="text-white text-3xl text-center"><FormattedMessage  id = "Colorectal cancer" defaultMessage='Colorectal cancer'/></font>
+
                   </a>
                 </li>
                 <li className="text-center py-10 relative">
                   <a>
-                    <span></span>
-                    <font className="text-white text-3xl text-center">kidney cancer</font>
+
+                      <span></span>
+                      <font className="text-white text-3xl text-center"><FormattedMessage  id = "renal cancer" defaultMessage='Renal cancer'/></font>
+
                   </a>
                 </li>
                 <li className="text-center py-10 relative">
                   <a>
-                    <span></span>
-                    <font className="text-white text-3xl ">liver cancer</font>
+
+                      <span></span>
+                      <font className="text-white text-3xl "><FormattedMessage  id = "Liver cancer" defaultMessage='Liver cancer'/></font>
+
                   </a>
                 </li>
                 <li className="text-center py-10 relative">
                   <a>
-                    <span></span>
-                    <font className="text-white text-3xl text-center">stomach cancer</font>
+
+                      <span></span>
+                      <font className="text-white text-3xl text-center"><FormattedMessage  id = "cancer of the stomach" defaultMessage='Cancer of the stomach'/></font>
+
                   </a>
                 </li>
                 <li className="text-center py-10 relative">
                   <a>
+
                     <span></span>
-                    <font className="text-white text-3xl text-center">prostate cancer</font>
+                    <font className="text-white text-3xl text-center"><FormattedMessage  id = "Prostate cancer" defaultMessage='Prostate cancer'/></font>
+
                   </a>
                 </li>
                 <li className="text-center py-10 relative">
                   <a>
-                    <span></span>
-                    <font className="text-white text-3xl text-center">pancreateic biliary cancer</font>
+
+                      <span></span>
+                      <font className="text-white text-3xl text-center"><FormattedMessage  id = "Pancreatic cancer" defaultMessage='Pancreatic cancer'/></font>
+                    
                   </a>
                 </li>
               </ul>
@@ -156,6 +181,32 @@ export default function Home() {
           </Slider>
         </div>
       </div>
+      {showModal ? (
+       <>
+         <div className="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+           <div className="relative w-auto my-6 mx-auto max-w-3xl">
+             {/*content*/}
+             // <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+               {/*body*/}
+               <div className="relative p-6 flex-auto">
+                 <img src={breast}/>
+               </div>
+               {/*footer*/}
+               <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                 <button
+                   className="bg-gray-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                   type="button"
+                   onClick={() => setShowModal(false)}
+                 >
+                   <FormattedMessage  id = "Close" defaultMessage='Close'/>
+                 </button>
+               </div>
+             </div>
+           </div>
+         </div>
+         <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+       </>
+     ) : null}
     </div>
   )
 }
