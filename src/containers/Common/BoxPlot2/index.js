@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import * as d3 from 'd3';
 import { nest } from 'd3-collection';
+import {FormattedMessage} from 'react-intl';
 // import genes from '../Common/gene.json'
 // import { getBreastKeys, getUserDataProjectsTableData } from '../../actions/api_actions'
 
@@ -152,7 +153,8 @@ export default function BoxPlot({ box_data,chart_type }) {
             "translate(" + (width/2) + " ," +
                            (height + margin.top + 20) + ")")
       .style("text-anchor", "middle")
-      .text("Selected Genes");
+      .text("Selected Gene");
+
 
     var y = d3.scaleLinear()
       .domain([min_vl-1,max_vl])

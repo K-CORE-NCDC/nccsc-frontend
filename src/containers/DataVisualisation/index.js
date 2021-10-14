@@ -11,6 +11,7 @@ import { getBreastKeys, getUserDataProjectsTableData } from '../../actions/api_a
 import {
   Link
 } from "react-router-dom";
+import {FormattedMessage} from 'react-intl';
 
 export default function DataVisualization() {
   const elementRef = useRef(null);
@@ -236,7 +237,7 @@ export default function DataVisualization() {
     switch (type) {
       case "circos":
         return Charts.circos(w, state, screenCapture, setToFalseAfterScreenCapture)
-      case "onco":
+      case "OncoPrint":
         return Charts.onco(w, state, screenCapture, setToFalseAfterScreenCapture)
       case "lollipop":
         return Charts.lollipop(w, state, screenCapture, setToFalseAfterScreenCapture)
@@ -248,7 +249,7 @@ export default function DataVisualization() {
         return Charts.survival(w, state, screenCapture, setToFalseAfterScreenCapture)
       case "scatter":
         return Charts.scatter(w, state, screenCapture, setToFalseAfterScreenCapture)
-      case "cnv":
+      case "CNV":
         return Charts.igv(w, state, screenCapture, setToFalseAfterScreenCapture)
       case "fusion":
         return Charts.fusion(w, state, screenCapture, setToFalseAfterScreenCapture)
@@ -306,7 +307,7 @@ export default function DataVisualization() {
                     <input type="text" id='genes' className='btn_input_height w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 ' name='genes' />
                   </div>
                   <div className="inline-flex w-2/12">
-                    <button className="btn_input_height bg-main-blue hover:bg-main-blue mb-3 w-full text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={e => submitFilter(e)}>Filter</button>
+                    <button className="btn_input_height bg-main-blue hover:bg-main-blue mb-3 w-full text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={e => submitFilter(e)}><FormattedMessage  id = "Filter" defaultMessage='Filter'/></button>
                   </div>
                 </div>
 
@@ -323,7 +324,7 @@ export default function DataVisualization() {
                   <div id="tab-contents" className='block text-center' ref={elementRef}>
                     <div className="grid grid-cols-6 p-5">
                       <div className="col-start-6 inline-flex justify-center p-2 ">
-                        <button className="bg-main-blue hover:bg-main-blue mb-3 w-full h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={()=> setScreenCapture(true)}>capture screenshot</button>
+                        <button className="bg-main-blue hover:bg-main-blue mb-3 w-full h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={()=> setScreenCapture(true)}><FormattedMessage  id = "Capture_screen" defaultMessage='capture screenshot'/></button>
                       </div>
                     </div>
                     {boolChartState &&

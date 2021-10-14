@@ -7,7 +7,8 @@ import NoContentMessage from '../../Common/NoContentComponent'
 
 import { getVolcanoPlotInfo } from '../../../actions/api_actions'
 // import Loader from "react-loader-spinner";
-import LoaderCmp from '../../Common/Loader'
+import LoaderCmp from '../../Common/Loader';
+import {FormattedMessage} from 'react-intl';
 
 const selectedCss = "w-1/2 rounded-r-none  hover:scale-110 focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition"
 const nonSelectedCss = "w-1/2 rounded-l-none border-l-0 hover:scale-110 focus:outline-none flex justify-center p-5 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 text-teal-700 border duration-200 ease-in-out border-teal-600 transition"
@@ -160,17 +161,17 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
                   ))}
                 </div>}
               </div>
-              <h6 className="p-4 ml-1 text-left text-bold text-blue-700">Choose Filter group</h6>
+              <h6 className="p-4 ml-1 text-left text-bold text-blue-700"><FormattedMessage  id = "Choose Filter group" defaultMessage='Choose Filter group'/></h6>
               <div className="m-1 flex flex-row justify-around">
                 <button onClick={() => setUserDefienedFilter('static')}
                   className={userDefienedFilter === 'static' ? selectedCss : nonSelectedCss}
                 >
-                  Static
+                  <FormattedMessage  id = "Static_volcano" defaultMessage='Static'/>
                 </button>
                 <button onClick={() => setUserDefienedFilter('dynamic')}
                   className={userDefienedFilter === 'dynamic' ? selectedCss : nonSelectedCss}
                 >
-                  Dynamic
+                  <FormattedMessage  id = "Dynamic_volcano" defaultMessage='Dynamic'/>
                 </button>
               </div>
               {(userDefienedFilter === 'dynamic') && <GroupFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} />}

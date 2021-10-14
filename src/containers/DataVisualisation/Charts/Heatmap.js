@@ -9,7 +9,8 @@ import NoContentMessage from '../../Common/NoContentComponent'
 import inputJson from '../../Common/data'
 import { ZoomInIcon } from '@heroicons/react/solid';
 import Multiselect from 'multiselect-react-dropdown';
-import KmeanCmp from '../../Common/K_mean'
+import KmeanCmp from '../../Common/K_mean';
+import {FormattedMessage} from 'react-intl';
 
 export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, setToFalseAfterScreenCapture }) {
   const reference = useRef()
@@ -425,7 +426,7 @@ function onSelect(selectedList, selectedItem) {
           </div>
           <div className='p-5 text-left flex col-span-2'>
             <div className={tableType!=='methylation'?'w-9/12':'w-full'}>
-              <label >Clinical Filters:</label>
+              <label ><FormattedMessage  id = "Clinical_Filters_heatmap" defaultMessage='Clinical Filters'/>:</label>
               <Multiselect
                 style={style}
                 options={optionChoices} // Options to display in the dropdown
@@ -444,7 +445,7 @@ function onSelect(selectedList, selectedItem) {
             </div>
             { tableType!=='methylation' &&
               <div className="mx-5 flex-wrap text-left w-3/12">
-                View By:
+                <FormattedMessage  id = "View_By_heatmap" defaultMessage='View By'/>:
                 <div className="flex m-2 w-100">
                   <button onClick={e => changeView(e, 'gene_vl')} name='view' className={viewType==="gene_vl"?selected_button:normal_button}>
                     Gene-Vl

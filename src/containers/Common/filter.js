@@ -9,6 +9,7 @@ import {
   SearchIcon
 } from '@heroicons/react/outline'
 import inputJson from './data'
+import {FormattedMessage} from 'react-intl';
 
 export default function Filter({parentCallback,parentState}) {
   const [state, setState] = useState({"html":[]});

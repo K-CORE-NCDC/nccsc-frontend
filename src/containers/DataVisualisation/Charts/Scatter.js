@@ -6,7 +6,8 @@ import { getScatterInformation, getCircosSamplesRnidList } from '../../../action
 import '../../../assets/css/style.css'
 import { exportComponentAsPNG } from 'react-component-export-image';
 import Multiselect from 'multiselect-react-dropdown';
-import NoContentMessage from '../../Common/NoContentComponent'
+import NoContentMessage from '../../Common/NoContentComponent';
+import {FormattedMessage} from 'react-intl';
 
 export default function Scatter({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
@@ -181,7 +182,7 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
       <div className='p-5 text-right m-5'>
         <div className='grid grid-rows-3'>
           <div className="flex float-left ">
-              <div className='p-3 ml-6'>Selected Gene Is</div>
+              <div className='p-3 ml-6'><FormattedMessage  id ="Selected Gene Is" defaultMessage="Selected Gene Is" /></div>
               <div>
                 <Multiselect
                   options={genesHtml} // Options to display in the dropdown
@@ -194,7 +195,7 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
               <div className="mt-3 ml-4">
                 <label class="inline-flex items-center">
                   <input type="checkbox" class="form-checkbox" check={selectall} onClick={selectAll}/>
-                  <span class="ml-2"><strong>select all</strong></span>
+                  <span class="ml-2"><strong><FormattedMessage  id ="Select all" defaultMessage="Select all"/></strong></span>
                 </label>
               </div>
           </div>

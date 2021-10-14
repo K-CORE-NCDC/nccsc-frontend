@@ -7,6 +7,7 @@ import NoContentMessage from '../../Common/NoContentComponent'
 // import { exportComponentAsPNG } from 'react-component-export-image';
 
 // import LoaderCmp from '../../Common/Loader'
+import {FormattedMessage} from 'react-intl';
 
 export default function DataIgv({ width,inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const dispatch = useDispatch()
@@ -59,15 +60,15 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
           <div className="flex flex-row justify-start pl-12 gap-6">
             <div>
               <button className="box-border h-8 w-20 bg-red-600 border-2 line-through" onClick={()=>setIgvLegend("cn >= 3")}></button>
-              <h3><strong>{"cn >= 3"}</strong></h3>
+              <h3><strong><FormattedMessage  id = "Gain" defaultMessage='Gain'/></strong></h3>
             </div>
             <div>
               <button className="box-border h-8 w-20 bg-white border-4" onClick={()=>setIgvLegend("cn = 2")}></button>
-              <h3><strong>{"cn = 2"}</strong></h3>
+              <h3><strong><FormattedMessage  id = "Normal" defaultMessage='Normal'/></strong></h3>
             </div>
             <div>
               <button className="box-border h-8 w-20 bg-blue-500 border-4" onClick={()=>setIgvLegend("cn <= 1")}></button>
-              <h3><strong>{"cn <= 1"}</strong></h3>
+              <h3><strong><FormattedMessage  id = "Loss" defaultMessage='Loss'/></strong></h3>
             </div>
           </div>
           <Igv data={igvJson}/>

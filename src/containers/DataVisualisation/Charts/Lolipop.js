@@ -8,7 +8,8 @@ import { exportComponentAsPNG } from 'react-component-export-image';
 // import Loader from "react-loader-spinner";
 import LoaderCmp from '../../Common/Loader'
 import DataTable from 'react-data-table-component';
-import NoContentMessage from '../../Common/NoContentComponent'
+import NoContentMessage from '../../Common/NoContentComponent';
+import {FormattedMessage} from 'react-intl';
 
 export default function DataLolipop({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
@@ -421,7 +422,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
               </div>
               <div className='p-5 text-right m-5'>
                 <div className='flex float-right'>
-                  <div className='p-3'>Selected Gene Is</div>
+                  <div className='p-3'><FormattedMessage  id = "Selected Gene" defaultMessage='Selected Gene Is'/></div>
                   <div>
                     <select value={gene} onChange={e=>geneSet(e)} className="w-full border bg-white rounded px-3 py-2 outline-none text-gray-700">
                       {genesHtml}

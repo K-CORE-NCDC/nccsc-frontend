@@ -8,16 +8,17 @@ import '../../../assets/css/style.css'
 import { exportComponentAsPNG } from 'react-component-export-image';
 import Multiselect from 'multiselect-react-dropdown';
 import NoContentMessage from '../../Common/NoContentComponent'
+import {FormattedMessage} from 'react-intl';
 
 export default function Box({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
   const dispatch = useDispatch()
   const boxJson = useSelector((data) => data.dataVisualizationReducer.boxData);
-  
+
   const [displaySamples, setDisplaySamples] = useState(false)
   const [watermarkCss, setWatermarkCSS] = useState("")
   const [loader, setLoader] = useState(false)
-  
+
   const [inputState,setInputState] = useState({})
   const [genesHtml,setGenesHtml] = useState([])
   const [selectedValue,setSelectedValue] = useState([])
@@ -27,8 +28,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
   const [tableType,setTableType] = useState('proteome')
   const [activeCmp,setActiveCmp] = useState(false)
   const [gene, setGene] = useState('')
-  
-  console.log(inputState, inputData);
+
   useEffect(()=>{
     if(inputData && 'genes' in inputData){
       setInputState({...inputData})
@@ -36,7 +36,6 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
   },[])
 
   const dispatchActionCommon = (postJsonBody) =>{
-    console.log(tableType, postJsonBody);
     if(postJsonBody.table_type === 'proteome'){
       dispatch(getBoxInformation('POST', {...postJsonBody, genes: inputData.genes}))
     }else{
@@ -64,7 +63,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
       dataJson['genes'] = [gene]
       dataJson['table_type'] = tableType
       dataJson['view'] = viewType
-      
+
       setLoader(true)
       setActiveCmp(false)
       dispatchActionCommon(dataJson)
@@ -170,14 +169,14 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
       dataJson['genes'] = genes
       dataJson['table_type'] = tableType
       dataJson['view'] = viewType
-      
+
       setLoader(true)
       // setActiveCmp(false)
       dispatchActionCommon(dataJson)
     }
   }
 
- 
+
 
   const changeType = (e,type)=>{
     let c = document.getElementsByName('type')
@@ -214,10 +213,10 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
     }
     e.target.classList.add("hover:bg-main-blue","bg-main-blue","text-white")
     setViewType(view)
-    
+
     let dataJson = inputState
     if(inputData.type !==''){
-      
+
       dataJson['table_type'] = tableType
       dataJson['view'] = view
       dispatchActionCommon(dataJson)
@@ -242,7 +241,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
   normal_button += "rounded-l-none  hover:scale-110 focus:outline-none flex justify-center p-5 "
   normal_button += " rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 "
   normal_button += " border duration-200 ease-in-out border-teal-600 transition px-10 "
-  
+
 
 
   return (
@@ -258,11 +257,11 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
               </button>
             </div>
           </div>
-          
+
             <div className='flex  text-left'>
               <div className='w-9/12'>
                 {tableType==='proteome' && <>
-                  <label>Selected Gene Is</label>
+                  <label><FormattedMessage  id = "Selected Gene Is" defaultMessage='Selected Gene Is'/></label>
                   <Multiselect
                     options={genesHtml} // Options to display in the dropdown
                     selectedValues={selectedValue} // Preselected value to persist in dropdown
@@ -273,7 +272,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
                   /> </>
                   }
                 {
-                  tableType==='mutation' && 
+                  tableType==='mutation' &&
                   <div>
                     <select value={gene} onChange={e=>geneSet(e)} className="w-full border bg-white rounded px-3 py-2 outline-none text-gray-700">
                       {genesHtml}
@@ -282,10 +281,10 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
                 }
               </div>
               <div className="mx-5 flex-wrap text-left w-3/12">
-                  View By: 
+                  <FormattedMessage  id = "View_By_heatmap" defaultMessage='View By'/>:
                   <div className="flex m-2 w-100">
                     <button onClick={e => changeView(e, 'gene_vl')} name='view' className={viewType==="gene_vl"?selected_button:normal_button}>
-                      Gene-Vl
+                      Gene-vl
                     </button>
                     <button onClick={e => changeView(e, 'z_score')} name='view' className={viewType==="z_score"?selected_button:normal_button}>
                       Z-Score
@@ -293,7 +292,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
                   </div>
               </div>
             </div>
-          
+
         </div>
         {
           loader?
@@ -301,11 +300,11 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
             :boxJson &&
             <>
             {showBoxPlot  && <BoxPlot box_data={boxJson} chart_type={tableType}  ref={reference} width={width}/>}
-            
+
             {noContent && <NoContentMessage />}
             </>
         }
-        
+
     </div>
   )
 }
