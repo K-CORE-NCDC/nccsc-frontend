@@ -51,8 +51,13 @@ export default function Barchart({id,data,width,color, chart_type,title}) {
       let h = 'rgba('+hex_color[0]+','+hex_color[1]+','+hex_color[2]+','
       let linear = 1
       for (var i = 0; i < data.length; i++) {
+        if(data[i].name==null){
+          g_dat['labels'].push('N/A')
+        }else{
+          g_dat['labels'].push(data[i].name)
+        }
         t.push(data[i].cnt)
-        g_dat['labels'].push(data[i].name)
+        
         colors.push(h+linear+")")
         linear = linear-0.020
       }
