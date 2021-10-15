@@ -4,149 +4,32 @@ import data_apply from '../../assets/images/sub/data_apply.png'
 import icon_1 from '../../assets/images/sub/icon_1.png'
 import icon_2 from '../../assets/images/sub/icon_2.png'
 import icon_3 from '../../assets/images/sub/icon_3.png'
+import DataDeliverGuidance from "./DataDeliverGuidance"
+import MaterialGuidance from "./MaterialDbGuidance"
+
 export default function DataApplication() {
     const [openTab, setOpenTab] = React.useState(1);
     return (
-        <div className='container mx-auto my-10'>
-            <section className="relative  items-center  bg-cover bg-center  justify-center">
-                <nav className=" px-8 pt-2 ">
-                    <ul id="tabs" className="inline-flex justify-center w-full px-1 pt-2 text-center " >
-                        <li className='px-4 py-2 font-semibold rounded-t border-blue-400 border-b-4 -mb-px opacity-100 w-4/12'>
-                            <Link className="capitalize" to='#DataDelivery' onClick={e => {
-                  e.preventDefault();
-                  setOpenTab(1);
-                }}>데이터제공 안내</Link>
-                        </li>
-                        <li className='px-4 py-2 font-semibold rounded-t opacity-50 w-4/12 border-b-4'>
-                            <Link className="capitalize" onClick={e => {
-                  e.preventDefault();
-                  setOpenTab(2);
-                }} to='#MaterialDB'>자료 DB 안내</Link>
-                        </li>
-                        <li className='px-4 py-2 font-semibold rounded-t opacity-50 w-4/12 border-b-4'>
-                            <Link className="capitalize" onClick={e => {
-                                e.preventDefault();
-                                setOpenTab(3);
-                                }} to='#DataApplication' >데이터신청</Link>
-                        </li>
-                    </ul>
-                </nav>
-            </section>
-            <section >
-                <div id="tab-contents" className='block text-center' >
-                    <div className={openTab === 1 ? "block  px-8 pt-2 " : "hidden"} id="link1">    
-                        <div className="on" >
-                            <h6 className="h-tit6 mt20">Guidance on data provision processing procedures</h6>
-                            <p className="sub_text text-left"><b style={{'color':'#da0404'}}>You can check the progress through My Page.</b></p>
-                            <div className="step">
-                                <ul>
-                                    <li>
-                                        <div>
-                                            <span>STEP 1</span>
-                                            <p>Document application</p>
-                                        </div>
-                                        <b>※If the document is insufficient, it can be returned.</b>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <span>STEP 2</span>
-                                            <p>Data provision deliberation</p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <span>STEP 3</span>
-                                            <p>Approval</p>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <span>STEP 4</span>
-                                            <p>Data provision</p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <h6 className="h-tit6 mt20">Detailed application process guidance</h6>
-                            
-                            <img src={data_apply} alt="Detailed application process guidance"/>
-                            <p className='text-left'><b  style={{'color':'#da0404'}}>※ For the BioBank data, separate deliberation procedures are carried out.</b></p>
-                            <h6 className="h-tit6 mt20">Procedure for extending the period of use</h6>
-                            
-                            <div className="use_step">
-                                <div className="step_box">
-                                    <img src={icon_1} alt=""/>
-                                    <div className="use_step_txt">
-                                        <h3 className="use_step_title">STEP 01. Application for extension of period of use</h3>
-                                        <p>Select Data</p>
-                                    </div>
-                                </div>
-                                <div className="step_box">
-                                    <img  src={icon_2}  alt=""/>
-                                    <div className="use_step_txt">
-                                        <h3 className="use_step_title">STEP 02. Review Extension Application</h3>
-                                        <div className="step_meta">Staff Review and Approval</div>
-                                        <p>Reviewing and approving portal representative applications</p>
-                                    </div>
-                                </div>
-                                <div className="step_box">
-                                    <img  src={icon_3}  alt=""/>
-                                    <div className="use_step_txt">
-                                        <h3 className="use_step_title">STEP 03. Notification of results and extended period of use</h3>
-                                        <div className="step_meta">Staff Review and Approval</div>
-                                        <p>Notification of the applicant's e-mail result and extension of the deadline</p>
-                                    </div>
-                                </div>
-                            </div>
-                                                                                                                                                    
-                            <h6 className="h-tit6 mt20">Fill out the application form</h6>
-                            <div className="tbl type1 scroll">
-                                <table className="table w-full" id="table">
-                                    
-                                    <thead className='bg-gray-200 border-black border-t-2 border-b-2'>
-                                        <tr >
-                                            <th className='p-5'>Procedure classNameification</th>
-                                            <th className='p-5'>Essential</th>
-                                            <th className='p-5'>Choice</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className='bg-white'>
-                                        <tr className="tr_row">
-                                            <td>Application stage</td>
-                                            <td>
-                                                Research plan<br/>
-                                                IRB Approval Letter<br/>
-                                                Application form for data use<br/>
-                                                Data request specification<br/>
-                                                Security Pledge<br/>
-                                                Consent to collect and use personal information
-                                            </td>
-                                            <td>
-                                                Application for change in data use<br/>
-                                                Application for Objection
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            
-                            
-                            <br/><br/>
-                            <div className="btn_wrap center">
-                                <a href="#" className="btn btn-color3 btn-md">Download application form</a>
-                                <a href="/web/usr/mypage.do" className="btn btn-color4 btn-md">Inquiry of application</a>
-                                <a href="/web/sub/sub4_1.do?sub=4_3" className="btn btn-color4 btn-md">Data Application</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={openTab === 2 ? "block" : "hidden"} id="link2">    
-                    adfasd
-                    </div>
-                    <div className={openTab === 3 ? "block" : "hidden"} id="link3">    
-                    qweewqr
-                    </div>
+      <div className="cont_wrap">
+        <div className="lay_1 clear align-center sub_max">
+              <ul className="tab_title_main tab_responsive mt30" data-aos="fade-left" aos-easing="ease-in-sine" aos-duration="3000">
+                   <li className={openTab === 1?"on":""}><p onClick={()=>setOpenTab(1)}>Data delivery guidance</p></li>
+                   <li className={openTab === 2?"on":""}><p onClick={()=>setOpenTab(2)}>Material DB Guidance</p></li>
+                   <li className={openTab === 3?"on":""}><p onClick={()=>setOpenTab(3)}>Data application</p></li>
+              </ul>
+              <div className="tab_cont">
+                <div class="on" style={{display:openTab === 1?"block":"none"}}>
+                  <DataDeliverGuidance/>
                 </div>
-            </section>
+                <div style={{display:openTab === 2?"block":"none"}}>
+                  <MaterialGuidance/>
+                </div>
+                <div style={{display:openTab === 3?"block":"none"}}>
+                  ddddddddd
+                </div>
+              </div>
         </div>
-    )   
+
+      </div>
+    )
 }
