@@ -15,6 +15,8 @@ const Introduce = React.lazy(() => import('./containers/Home/introduce'))
 const Pipeline = React.lazy(() => import('./containers/Home/pipeline'))
 const DataApplication = React.lazy(() => import('./containers/DataApplication'))
 
+const genefusion = React.lazy(() => import('./containers/Common/genefusion'))
+
 const route = [
   { path: '/', exact: true, type:'unauth', name: 'Home', component: Home },
   { path: '/summary/:tab?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Visualization" defaultMessage='Visualization'/>,childname:'Data Summary', component: DataSummary },
@@ -28,6 +30,8 @@ const route = [
   { path: '/term', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Terms'/>, component: Terms},
   { path: '/member', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Join'/>, component: Join},
   { path: '/signup', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: Signup},
+  { path: '/genefusion', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: genefusion},
+
 ]
 
 export default route;
