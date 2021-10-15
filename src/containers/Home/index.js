@@ -79,74 +79,56 @@ export default function Home() {
                 </li>
                 <li className="text-center py-10 relative">
                   <a>
-
                       <span></span>
                       <font className="text-white text-3xl text-center"><FormattedMessage  id = "Thyroid cancer" defaultMessage='Thyroid cancer'/></font>
-
                   </a>
                 </li>
                 <li className="text-center py-10 relative">
                   <a>
-
                       <span></span>
                       <font className="text-white text-3xl text-center"><FormattedMessage  id = "Cervical cancer" defaultMessage='Cervical cancer'/></font>
-
                   </a>
                 </li>
                 <li className="text-center py-10 relative">
                   <a>
-
                       <span></span>
-                      <font className="text-white text-3xl "><FormattedMessage  id = "lung cancer" defaultMessage='lung cancer'/></font>
-
+                      <font className="text-white text-3xl"><FormattedMessage  id = "lung cancer" defaultMessage='lung cancer'/></font>
                   </a>
                 </li>
                 <li className="text-center py-10 relative">
                   <a>
-
                       <span></span>
                       <font className="text-white text-3xl text-center"><FormattedMessage  id = "Colorectal cancer" defaultMessage='Colorectal cancer'/></font>
-
                   </a>
                 </li>
                 <li className="text-center py-10 relative">
                   <a>
-
                       <span></span>
                       <font className="text-white text-3xl text-center"><FormattedMessage  id = "renal cancer" defaultMessage='Renal cancer'/></font>
-
                   </a>
                 </li>
                 <li className="text-center py-10 relative">
                   <a>
-
                       <span></span>
                       <font className="text-white text-3xl "><FormattedMessage  id = "Liver cancer" defaultMessage='Liver cancer'/></font>
-
                   </a>
                 </li>
                 <li className="text-center py-10 relative">
                   <a>
-
                       <span></span>
                       <font className="text-white text-3xl text-center"><FormattedMessage  id = "cancer of the stomach" defaultMessage='Cancer of the stomach'/></font>
-
                   </a>
                 </li>
                 <li className="text-center py-10 relative">
                   <a>
-
                     <span></span>
                     <font className="text-white text-3xl text-center"><FormattedMessage  id = "Prostate cancer" defaultMessage='Prostate cancer'/></font>
-
                   </a>
                 </li>
                 <li className="text-center py-10 relative">
                   <a>
-
                       <span></span>
                       <font className="text-white text-3xl text-center"><FormattedMessage  id = "Pancreatic cancer" defaultMessage='Pancreatic cancer'/></font>
-                    
                   </a>
                 </li>
               </ul>
