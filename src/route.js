@@ -11,7 +11,6 @@ const Terms = React.lazy(() => import('./containers/Signup/TermsOfUse'))
 const Join = React.lazy(() => import('./containers/Signup/MemberShip'))
 const Signup = React.lazy(() => import('./containers/Signup/'))
 
-
 const Introduce = React.lazy(() => import('./containers/Home/introduce'))
 const Pipeline = React.lazy(() => import('./containers/Home/pipeline'))
 const DataApplication = React.lazy(() => import('./containers/DataApplication'))
@@ -24,13 +23,11 @@ const route = [
   { path: '/introduce', exact: true, type:'unauth', name: <FormattedMessage  id = "Introduce" defaultMessage='Introduction'/>, childname:<FormattedMessage  id = "BusinessIntroduce" defaultMessage='Business Introduction'/>, component: Introduce },
   { path: '/pipeline', exact: true, type:'unauth', name: <FormattedMessage  id = "Introduce" defaultMessage='Introduction'/>, childname:<FormattedMessage  id = "Pipeline" defaultMessage='Pipeline'/>, component: Pipeline },
   { path: '/application', exact: true, type:'unauth',name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage  id = "DataApplication" defaultMessage='Data Application'/>,  component: DataApplication },
-
   { path: '/login', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Login" defaultMessage='Login'/>,  component: Login },
   { path: '/logout', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Logout" defaultMessage='Logout'/>, component: Logout },
   { path: '/term', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Terms'/>, component: Terms},
   { path: '/member', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Join'/>, component: Join},
   { path: '/signup', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: Signup},
-
 ]
 
 export default route;
