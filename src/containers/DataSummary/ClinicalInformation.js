@@ -23,18 +23,16 @@ export default function ClinicalInformation() {
   const [activeChartsList, setActiveChartsList] = useState(["Sex","Age","BMI","Bilateral Breast Cancer"]);
   const [selected, setSelected] = useState('Basic/Diagnostic Information');
   const dispatch = useDispatch()
-  const [visual_change_state, setVisualChangeState] = useState({});
-  const [charts, setCharts] = useState("")
-  const [chartType, setChartType] = useState({})
-  const [active, setActive] = useState(false)
   const [firstLoad, setFirstLoad] = useState(true)
   const [loader, setLoader] = useState(true)
 
-  console.log(summaryJson)
-
+  
   // const forceUpdate = React.useCallback(() => updateState({}), []);
   const change_visual = (e) =>{
+    
     let id = e.target.dataset['id']
+    
+    e.target.checked = true
     let c_type = e.target.value
     let current_class_name = "parent_chart_"+c_type+"_"+id
     let toggle_name =''
@@ -48,7 +46,7 @@ export default function ClinicalInformation() {
 
     document.getElementById(current_class_name).classList.remove("hidden")
     document.getElementById(previous_class_name).classList.add("hidden")
-
+    // e.stopPropagation()
   }
 
   useEffect(()=>{
@@ -61,6 +59,7 @@ export default function ClinicalInformation() {
     }
   },[firstLoad,summaryJson])
 
+  
 
   useEffect(() => {
     setLoader(true)
@@ -117,7 +116,7 @@ export default function ClinicalInformation() {
                 </div>
                 <div className="relative" id={'div_'+id}  onClick={e=>checkBoxFn(e,'md_'+i,itm)}>
                   <input type="checkbox" id={'md_'+i} checked={check} data-parent={item}  className="checkbox sr-only"
-                  onChange={e=>checkBoxFn(e,'md_'+i,itm)}/>
+                  onChange={e=>checkBoxFn(e,'md_'+i,itm)}  />
                   <div className="block bg-gray-600 w-14 h-6 rounded-full" id={'md_'+i+'_toggle'} style={{backgroundColor:color}}></div>
                   <div className="dot absolute left-1 top-1 bg-white w-6 h-4 rounded-full transition" style={{backgroundColor:'#fff',opacity:1}}></div>
                 </div>
@@ -125,8 +124,7 @@ export default function ClinicalInformation() {
             </div>
           )
         })
-
-        // console.log("item---->",item)
+        
         tmp.push(
           <div key={item+'_'+k} className="tab w-full overflow-hidden border-t" onClick={(e)=>switchButton(e,item,k)}>
             <input className="absolute opacity-0" id={"tab-single-"+k} type="radio" name="tabs2"/>
@@ -140,7 +138,7 @@ export default function ClinicalInformation() {
           </div>
         )
       })
-      // console.log(selected);
+      
       setLeftSide((prevState)=>({
         ...prevState,
         'leftSide':tmp
@@ -149,16 +147,10 @@ export default function ClinicalInformation() {
   }
 
   const checkBoxFn = (event,id,chart) => {
-    // window.scroll({
-    //   top: document.body.offsetHeight,
-    //   left: 0,
-    //   behavior: 'smooth',
-    // });
 
     let tmp = activeChartsList
     var did = document.getElementById(id)
     var checkbox_elm = document.getElementById(id).checked;
-
     if(checkbox_elm){
       document.getElementById(id).checked=false
       document.getElementById(id+"_toggle").style.background='#ccc'
@@ -171,6 +163,7 @@ export default function ClinicalInformation() {
       document.getElementById(id+"_toggle").style.background=inputJson['clinicalColor'][did.getAttribute('data-parent')]
       if(!tmp.includes(chart)){
         tmp.push(chart)
+        
       }
     }
     setActiveChartsList(tmp)
@@ -178,7 +171,8 @@ export default function ClinicalInformation() {
 
   }
 
-  const loadChart = (chart, parent_name, type='')=>{
+  const loadChart = (chart, parent_name)=>{
+    
     let tmp = leftSide['charts']
     let ac = leftSide['activeCharts']
     let check = true
@@ -191,21 +185,22 @@ export default function ClinicalInformation() {
       }
     }
 
-
+    
     if(check ){
       Object.keys(summaryJson[parent_name]).forEach((item, k) => {
         let id = item.split(" ").join("")
+        
         if(item===chart){
           tmp.push(
             <div key={'chart_'+item} data-chart="bar" className='max-w bg-white rounded-2xl overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border'>
               <h2 className="text-3xl tracking-wide">{item}</h2>
               <div className="mt-2 ml-5 p-3">
                   <label className="inline-flex items-center">
-                    <input type="radio" className="form-radio" id={id+"_bar"} data-id={id} name={"cr_"+k} value="bar" onChange={change_visual}/>
+                    <input key={'radio_'+id+"_bar"} type="radio" defaultChecked={true} className="form-radio" id={id+"_bar"} data-id={id} name={"cr_"+id+"_"+k} value="bar" onChange={change_visual} />
                     <span className="ml-2">Bar</span>
                   </label>
                   <label className="inline-flex items-center ml-6">
-                    <input type="radio" className="form-radio" id={id+"_pie"} data-id={id} name={"cr_"+k} value="pie" onChange={change_visual}/>
+                    <input key={'radio_'+id+"_pie"} type="radio" defaultChecked={false} className="form-radio" id={id+"_pie"} data-id={id} name={"cr_"+id+"_"+k} value="pie" onChange={change_visual} />
                     <span className="ml-2">Pie</span>
                   </label>
               </div>
@@ -228,19 +223,20 @@ export default function ClinicalInformation() {
               </div>
             </div>
           )
+          
           ac.push(item)
         }
       })
     }
+    
 
     setLeftSide((prevState)=>({
       ...prevState,
       'charts':tmp,
       'activeCharts':ac
     }))
-
-    // setActiveCharts(ac)
   }
+  
   useEffect(()=>{
     var objDiv = document.getElementById('charts_container')
     if(objDiv){
@@ -266,6 +262,7 @@ export default function ClinicalInformation() {
         if(setCheck != this){
           setCheck = this;
         }else{
+          
           this.checked = false;
           setCheck = null;
         }
