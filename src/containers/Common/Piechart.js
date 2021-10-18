@@ -127,16 +127,12 @@ export default function Piechart({id,data,width,color, chart_type}) {
         data = d
 
       }
-
-
-
       for (var i = 0; i < data.length; i++) {
         t.push(data[i].cnt)
         g_dat['labels'].push(data[i].name)
         colors.push(h+linear+")")
         linear = linear-0.050
       }
-      console.log(colors);
       g_dat['datasets'].push({
         "data":t,
         "backgroundColor":colors,

@@ -35,8 +35,13 @@ export default function Barchart({id,data,width,color, chart_type,title}) {
                drawBorder: true,
                drawOnChartArea: true,
                drawTicks: true,
+             },
+             title:{
+              display: true,
+              text: (title)?title:''
              }
-            }
+            },
+            
           }
         }
     });
@@ -50,24 +55,44 @@ export default function Barchart({id,data,width,color, chart_type,title}) {
       let hex_color = hexToRgb(color)
       let h = 'rgba('+hex_color[0]+','+hex_color[1]+','+hex_color[2]+','
       let linear = 1
+      let na = ''
       for (var i = 0; i < data.length; i++) {
         if(data[i].name==null){
-          g_dat['labels'].push('N/A')
-        }else{
+          // g_dat['labels'].push('N/A')
+          na = 'N/A'
+        }
+        else if(data[i].name=="null"){
+          // g_dat['labels'].push('N/A')
+          na = 'N/A'
+        }
+        else if(data[i].name==""){
+          // g_dat['labels'].push('N/A')
+          na = 'N/A'
+        }
+        else if(data[i].name=="N/A"){
+          na = data[i].name
+        }
+        else{
           g_dat['labels'].push(data[i].name)
         }
-        t.push(data[i].cnt)
-        
+        if(na=="N/A"){
+          na += "||"+data[i].cnt
+        }else{
+          t.push(data[i].cnt)
+        }
         colors.push(h+linear+")")
         linear = linear-0.020
       }
-      // console.log(colors);
+      if(na!=''){
+        na = na.split('||')
+        g_dat['labels'].push(na[0])
+        t.push(na[1])
+      }
       g_dat['datasets'].push({
         "data":t,
         backgroundColor:colors,
         borderRadius: 11
       })
-      console.log(chart_type)
       drawGraph(g_dat, chart_type)
     }
   },[data,chart_type])
@@ -76,9 +101,6 @@ export default function Barchart({id,data,width,color, chart_type,title}) {
   return (
     <div id={'parent'+id}>
       <canvas id={id}  width={w} height="300"></canvas>
-      <div>
-        <center>{title}</center>
-      </div>
     </div>
   )
 }
