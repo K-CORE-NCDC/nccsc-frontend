@@ -14,8 +14,8 @@ export default function BarChartComp({data}){
               label: '',
               data: data_,
               backgroundColor: [
-                  '#d2352b',
                   '#529d3f',
+                  '#d2352b',
                   '#f18532',
                   '#644195',
                   '#3777af',
@@ -23,8 +23,8 @@ export default function BarChartComp({data}){
                   '#fffebc'
               ],
               borderColor: [
-                '#d2352b',
                 '#529d3f',
+                '#d2352b',
                 '#f18532',
                 '#644195',
                 '#3777af',
@@ -32,7 +32,7 @@ export default function BarChartComp({data}){
                 '#fffebc'
               ],
               borderWidth: 1,
-              borderRadius: 11
+              borderRadius: 0
             }]
           },
           options: {

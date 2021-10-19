@@ -33,7 +33,7 @@ export default function GenomicInfo() {
     "Variant per Sample":"vertical_stack_bar",
     "Methylation":"vertical_stack_bar",
     "Proteome":"vertical_stack_bar",
-    "Phospo":"vertical_stack_bar"
+    "Phospho":"vertical_stack_bar"
   }
 
   useEffect(()=>{
@@ -44,11 +44,8 @@ export default function GenomicInfo() {
         let comp = ''
         if(item === "dna_per_sample"){
           comp = chart_types(type, summaryJson[item], "x-axis")
-        }else if(item === "Omics Sample Summary"){
-          comp = chart_types(type, summaryJson[type], "")
-        }else if(item === "Venn"){
-          return
-        }else{
+        }
+        else{
           comp = chart_types(type, summaryJson[item],'')
         }
 

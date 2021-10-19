@@ -11,8 +11,8 @@ let clinical_info_title = {
   "Lactation period(1-24 M)":"month",
   "Menarche age (10-17 Y)":'Year',
   'Lactation period (1-24 M)':'Month',
-  'T Category':'Stage',
-  'N Category':'Stage',
+  'T Category':'Category',
+  'N Category':'Category',
   'Time until relapse is confirmed (1-16 Y)':'Year'
 }
 
