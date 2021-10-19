@@ -62,14 +62,14 @@ export default function Home() {
           </div>
         </div>
         <div className='bg-main-blue p-14 2xl:p-5  2xl:col-span-2'>
-          <div className='grid 2xl:grid-cols-12'>
-            <div className="text-white grid text-center content-center text-3xl 2xl:col-span-2">
-              보유 암종별 데이터<br/>
+          <div className='grid h-72 2xl:grid-cols-12'>
+            <div className="text-white grid text-center mb-16 content-center text-3xl 2xl:col-span-2">
+              보유 암종별 데이터<br />
               [테이블 관계도]
             </div>
             <div className=" con 2xl:col-span-10">
               <ul className='grid lg:grid-cols-3 2xl:grid-cols-10'>
-                <li className="text-center py-10 relative">
+                <li className="text-center pt-1  relative">
                   <a>
                     <button onClick={() => setShowModal(true)} className="w-full">
                       <span></span>
@@ -77,55 +77,55 @@ export default function Home() {
                     </button>
                   </a>
                 </li>
-                <li className="text-center py-10 relative">
+                <li className="text-center pt-1 relative">
                   <a>
                       <span></span>
                       <font className="text-white text-3xl text-center"><FormattedMessage  id = "Thyroid cancer" defaultMessage='Thyroid cancer'/></font>
                   </a>
                 </li>
-                <li className="text-center py-10 relative">
+                <li className="text-center pt-1 relative">
                   <a>
                       <span></span>
                       <font className="text-white text-3xl text-center"><FormattedMessage  id = "Cervical cancer" defaultMessage='Cervical cancer'/></font>
                   </a>
                 </li>
-                <li className="text-center py-10 relative">
+                <li className="text-center pt-1 relative">
                   <a>
                       <span></span>
                       <font className="text-white text-3xl"><FormattedMessage  id = "lung cancer" defaultMessage='lung cancer'/></font>
                   </a>
                 </li>
-                <li className="text-center py-10 relative">
+                <li className="text-center pt-1  relative">
                   <a>
                       <span></span>
                       <font className="text-white text-3xl text-center"><FormattedMessage  id = "Colorectal cancer" defaultMessage='Colorectal cancer'/></font>
                   </a>
                 </li>
-                <li className="text-center py-10 relative">
+                <li className="text-center pt-1 relative">
                   <a>
                       <span></span>
                       <font className="text-white text-3xl text-center"><FormattedMessage  id = "renal cancer" defaultMessage='Renal cancer'/></font>
                   </a>
                 </li>
-                <li className="text-center py-10 relative">
+                <li className="text-center pt-1 relative">
                   <a>
                       <span></span>
                       <font className="text-white text-3xl "><FormattedMessage  id = "Liver cancer" defaultMessage='Liver cancer'/></font>
                   </a>
                 </li>
-                <li className="text-center py-10 relative">
+                <li className="text-center pt-1 relative">
                   <a>
                       <span></span>
                       <font className="text-white text-3xl text-center"><FormattedMessage  id = "cancer of the stomach" defaultMessage='Cancer of the stomach'/></font>
                   </a>
                 </li>
-                <li className="text-center py-10 relative">
+                <li className="text-center pt-1 relative">
                   <a>
                     <span></span>
                     <font className="text-white text-3xl text-center"><FormattedMessage  id = "Prostate cancer" defaultMessage='Prostate cancer'/></font>
                   </a>
                 </li>
-                <li className="text-center py-10 relative">
+                <li className="text-center pt-1 relative">
                   <a>
                       <span></span>
                       <font className="text-white text-3xl text-center"><FormattedMessage  id = "Pancreatic cancer" defaultMessage='Pancreatic cancer'/></font>
@@ -166,7 +166,7 @@ export default function Home() {
       {showModal ? (
        <>
          <div className="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
-           <div className="relative w-auto my-6 mx-auto max-w-3xl">
+           <div className="relative w-auto my-6 mx-auto max-w-7xl">
              {/*content*/}
              // <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                {/*body*/}

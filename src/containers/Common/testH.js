@@ -28,7 +28,10 @@ const HeatmapCmp = React.forwardRef(({  inputData, type, watermarkCss,width,clin
                 [613,613,true]
             ]
         ],
-        'noValidate': true
+        'noValidate': true,
+        'disableDataTable':true,
+        // 'disableConfigurator':true
+        // 'disableToolbar':true
     }
     if(clinicalFilter.length>0){
         config['varOverlayProperties'] = {}
