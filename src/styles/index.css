@@ -551,7 +551,9 @@ ul.db li {
     color: #fff;
     padding: 15px 10px 15px 30px!important;
 }
-
+text.label, text.sam{
+  font-size: 12px;
+}
 /* .at .at1 .imgbox {
     width: 40%;
     height: 200px;

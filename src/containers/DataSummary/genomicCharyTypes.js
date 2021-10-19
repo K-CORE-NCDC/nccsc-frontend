@@ -13,7 +13,6 @@ const chart_types = (type,payload,axis) => {
       return <StackBarChartComp data={payload} axis={axis}/>
     case "box_plot":
       return <Boxplot data={payload}/>
-      // return <BoxPlot box_data={payload}/>
     case "vertical_stack_bar":
       return <VerticalStackBarChartComp data={payload} />
     case "Venn":
