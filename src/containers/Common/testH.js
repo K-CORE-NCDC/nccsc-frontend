@@ -94,7 +94,7 @@ const HeatmapCmp = React.forwardRef(({  inputData, type, watermarkCss,width,clin
 
     useEffect(()=>{
         if(Object.keys(inputData).length>0){
-            console.log(inputData)
+            
             setData(inputData)
         }
 

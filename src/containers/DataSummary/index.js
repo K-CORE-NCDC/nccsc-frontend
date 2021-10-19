@@ -11,6 +11,7 @@ import AdvancedInfo from './AdvanceAnalysis/'
 import {
   Link, useParams
 } from "react-router-dom";
+import {FormattedMessage} from 'react-intl';
 
 export default function DataSummary() {
   const parentRef = useRef(null);
@@ -63,6 +64,11 @@ export default function DataSummary() {
   useEffect(() => {
     let l = ['Clinical_Information', 'Genomic_Information', 'Advanced_Information']
     let tmp = []
+    let name = {
+      "Clinical_Information":"Clinical Information",
+      "Genomic_Information":"Genomic Information",
+      "Advanced_Information":"Advanced Information"
+    }
     l.forEach(element => {
       let classes = 'px-4 py-2 font-semibold rounded-t opacity-50 '
       if (tab === element) {
@@ -70,7 +76,9 @@ export default function DataSummary() {
       }
       tmp.push(
         <li key={element} className={classes}>
-          <Link className="capitalize" to={`/summary/${element}/`}>{element.split('_').join(' ')}</Link>
+          <Link className="capitalize" to={`/summary/${element}/`}>
+            <FormattedMessage  id ={element} defaultMessage={name[element]}/>
+          </Link>
         </li>
       )
     })
@@ -97,12 +105,3 @@ export default function DataSummary() {
     </div>
   )
 }
-
-// {
-//   boolChartState &&
-//   <div>{chart['viz']}</div>
-// }
-// {
-//   !boolChartState &&
-//   <div>Loading.......</div>
-// }

@@ -6,41 +6,104 @@ import * as d3 from 'd3'
 import '../../styles/survival.css'
 
 export default function VennCmp({ width, data=null }) {
-  console.log(data);
   useEffect(()=>{
-    // var sets = [ {sets: ['Global Proteome'], size: 12},
-    //          {sets: ['RNA Expression'], size: 12},
-    //          {sets: ['DNA Mutation'], size: 12},
-    //          {sets: ['Global Proteome','RNA Expression'], size: 2},
-    //          {sets: ['RNA Expression','DNA Mutation'], size: 4},
-    //          {sets: ['Global Proteome','DNA Mutation'], size: 4},
-    //          {sets: ['Global Proteome','RNA Expression','DNA Mutation'], size: 2}];
+    
     let sets = data
-
     var chart = venn.VennDiagram().width(width)
-
+    
     var div = d3.select("#venn")
     .datum(sets)
     .call(chart);
+   
+    div.select("svg").attr("class","inline")
+
+    
+
+
+
 
     var tooltip = d3.select("body")
     .append("div")
     .attr("class", "venntooltip");
+    
+    
 
     div.selectAll("path")
     .style("stroke-opacity", 0)
     .style("stroke", "#fff")
 
-    chart.colours = ['red','green','blue']
+    // chart.colours = ['#d2352b','#529d3f','#f18532']
+    let colors = {
+      "Global Proteome":"#f18532",
+      "RNA Expression":"#d2352b",
+      "DNA Mutation":"#529d3f",
+      "Global Proteome_RNA Expression":"#c74a52",
+      "DNA Mutation_RNA Expression":"#644195",
+      "Global Proteome_DNA Mutation":"#3777af",
+      "Global Proteome_DNA Mutation_RNA Expression":"#fffebc"
+    }
     var div = d3.select("#venn").datum(sets).call(chart);
     var tooltip = d3.select("body").append("div").attr("class", "venntooltip");
-    div.selectAll("path").style("stroke-opacity", 0).style("stroke", "#fff")
-    .style("stroke-width", 3)
+    div.selectAll("path")
+      .data(data)
+      .style("fill",function(d,i){
+        if(d['sets'].length==1){
+          return colors[d['sets'][0]]
+        }else{
+          let n = d['sets'].join('_')
+          console.log(n)
+          return colors[n]
+        }
+      })
+      .style("fill-opacity",1)
+    
+    div.selectAll("text")
+      .data(data)
+      .style("fill",function(d,i){
+        return "#333"
+      })
+    var svgTmp = d3.selectAll('.venn-area')
+    let dTmp = []
+    let labels = svgTmp.selectAll('.label')['_groups']
+    if(labels.length>0){
+      for (let x = 0; x < labels.length; x++) {
+        let xTmp = labels[x][0]['x']['baseVal'][0]['valueAsString']
+        let yTmp = labels[x][0]['y']['baseVal'][0]['valueAsString']
+        let dyTmp = parseFloat(labels[x][0]['dy']['baseVal'][0]['valueAsString'])
+        if (labels[x][0].textContent){
+          dyTmp = 2
+        }
+        dTmp.push({
+          "x":xTmp,
+          "y":yTmp,
+          "dy":dyTmp,
+          "size":data[x].size
+        })
+      }
 
-
+      svgTmp
+      .data(dTmp)
+      .append('text')
+      .attr('class','sam')
+      .text(function(d){
+        return d.size
+      })
+      .attr("text-anchor", "middle")
+      .attr("fill", "#333")
+      .attr("dy", function(d,i){
+        return d.dy+"em"
+      })
+      .attr("x", function(d,i){
+        return d.x
+      })
+      .attr("y",function(d,i){
+        return d.y
+      });
+    }
 
 
     div.selectAll("g")
+    .data(data)
     .on("mouseover", function(d, i) {
         var s = i['sets']
         var html = []
@@ -61,10 +124,19 @@ export default function VennCmp({ width, data=null }) {
         tooltip.transition().duration(2500).style("opacity", 0);
 
     });
+    
 
+    
+    
+    
+
+
+    
   },[width, data])
 
   return (
-    <div id='venn' className='relative'></div>
+    <div>
+      <div id='venn'  className='relative w-full block text-center'></div>
+    </div>
   )
 }
