@@ -109,8 +109,8 @@ export default function Web(props) {
               <div className='lg:col-span-3 lg:text-center  2xl:col-start-3'>
               <h2 className="text-8xl"><strong>K-CORE</strong> <strong>Portal</strong></h2>
               <h2 className="text-4xl mt-4"><strong>Cancer Omics Research Portal</strong></h2>
-              <div className="pl-8">
-                <p className="border-l-2 text-2xl p-5 mt-8 text-center border-gray-600">
+              <div className="pl-6">
+                <p className="border-l-2 text-2xl p-5 font-medium mt-8 border-gray-600" style={{textAlign: 'right'}}>
                   <FormattedMessage  id = "home_child_title" defaultMessage='It is a cancer data platform that visually provides various analysis results by combining high-quality domestic cancer patient clinical and protein genomic information .'/>
                 </p>
               </div>

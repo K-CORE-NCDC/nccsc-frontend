@@ -30,6 +30,8 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   const [refSeqId, setRefSeqId] = useState([])
   const [showLollipop, setShowLollipop] = useState(false)
   const [noContent, setNoContent] = useState(true)
+  const [percentage, setPercentage] = useState("")
+
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
   let mutation_colors = {
     'In_Frame_Del': '#1b4879',
@@ -122,13 +124,16 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
         let codons = {}
         var width = []
         let data = lolipopJson['data']
+
         let table_data = []
         let table_cols = []
         let enst_id = []
         let refseq_id = []
+        let sample_length = []
+        setPercentage(lolipopJson['percentage'])
         if (data.length > 0) {
-
           for (var i = 0; i < data.length; i++) {
+            sample_length.push(data[i]['sample'])
             if (tableType === "Mutation") {
               let vc_sample = data[i]['variant_classification']
               if (vc_sample in lollipopLegenedTmp) {
@@ -177,6 +182,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
             }
           }
         }
+
         setRefSeqId(refseq_id)
         setEnstId(enst_id)
         let tmp = []
@@ -304,6 +310,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
 
           width.push(domains_data[i]['end'])
 
+
           domains.push({
             "startCodon": domains_data[i]['start'],
             "endCodon": domains_data[i]['end'],
@@ -379,7 +386,6 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
       dataJson['table_type'] = type
       dispatch(getLolipopInformation('POST', dataJson))
     }
-
   }
 
   useEffect(() => {
@@ -456,8 +462,13 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                     }
 
                   </div>
-                  <div className='flex bg-blue-100 p-10'>
-                    {mutationLabel}
+                  <div className='grid grid-rows-2 bg-blue-100 p-10'>
+                    <div>
+                      <h5 className="float-left">Somantic Mutation Frequency: {percentage?percentage:""} % (mutation sample number/total selected sample number(%))</h5>
+                    </div>
+                    <div className='flex'>
+                      {mutationLabel}
+                    </div>
                   </div>
 
                   {tableData.length > 0 && <div className='mt-5'>

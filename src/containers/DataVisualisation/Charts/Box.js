@@ -28,6 +28,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
   const [tableType,setTableType] = useState('proteome')
   const [activeCmp,setActiveCmp] = useState(false)
   const [gene, setGene] = useState('')
+  const [geneOption,setGeneOption] = useState('')
 
   useEffect(()=>{
     if(inputData && 'genes' in inputData){
@@ -46,15 +47,21 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
   const loadGenesDropdownMutation = (genes) => {
 
     let t = []
+    let t_ = []
     for (var i = 0; i < genes.length; i++) {
-      t.push(
+      t_.push(
         <option key={i + '_' + genes[i]} value={genes[i]}>
           {genes[i]}
         </option>
       )
+      t.push(
+        { "name": genes[i], "id": i }
+      )
     }
     setGenesHtml(t)
+    setGeneOption(t_)
   }
+
   const geneSet = (e) => {
     let gene = e.target.value
     setGene(gene)
@@ -244,6 +251,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
 
 
 
+
   return (
     <div className='grid'>
         <div className="grid grid-cols-2">
@@ -275,7 +283,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
                   tableType==='mutation' &&
                   <div>
                     <select value={gene} onChange={e=>geneSet(e)} className="w-full border bg-white rounded px-3 py-2 outline-none text-gray-700">
-                      {genesHtml}
+                      {geneOption}
                     </select>
                   </div>
                 }
