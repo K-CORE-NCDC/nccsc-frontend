@@ -7,7 +7,7 @@ import {FormattedMessage} from 'react-intl';
 // import genes from '../Common/gene.json'
 // import { getBreastKeys, getUserDataProjectsTableData } from '../../actions/api_actions'
 
-export default function BoxPlot({ box_data,chart_type }) {
+const BoxPlot = React.forwardRef(({ box_data,chart_type, watermarkCss }, ref) => {
   const box_elementRef = useRef(null);
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
 
@@ -119,6 +119,11 @@ export default function BoxPlot({ box_data,chart_type }) {
         .attr("transform",
               "translate(" + margin.left + "," + margin.top + ")");
 
+    svg.append("circle").attr("cx",30).attr("cy",5).attr("r", 6).style("fill", "red")
+    svg.append("circle").attr("cx",30).attr("cy",19).attr("r", 6).style("fill", "blue")
+    svg.append("text").attr("x", 40).attr("y", 10).text("T").style("font-size", "15px").attr("alignment-baseline","top")
+    svg.append("text").attr("x", 40).attr("y", 25).text("N").style("font-size", "15px").attr("alignment-baseline","top")
+
     var tooltip = d3.select("#box2").append("div").attr('class','boxplot_tooltip')
                .style("opacity", 0);
     // Show the X scale
@@ -166,7 +171,6 @@ export default function BoxPlot({ box_data,chart_type }) {
 
       var p = svg.append('g').attr('class','box')
       .attr('id',i)
-      console.log("0000",sumstat[i])
 
       var key = x(sumstat[i]['key'])-50
       var vl = sumstat[i]['value']
@@ -371,7 +375,9 @@ export default function BoxPlot({ box_data,chart_type }) {
 
 
   return (
-      <div ref={box_elementRef} id="box2" style={{'width':'100%','overflowX':'scroll','padding':'20px'}}>
+      <div ref={ref} className={watermarkCss} id="box2" style={{'width':'100%','overflowX':'scroll','padding':'20px'}}>
       </div>
   )
-}
+})
+
+export default BoxPlot

@@ -56,7 +56,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
     let gene = e.target.value
     setGene(gene)
     if (inputData.type !== '') {
-      let dataJson = inputData
+      let dataJson = { ...inputData }
       dataJson['genes'] = gene
       dataJson['table_type'] = tableType
       setLoader(true)
@@ -381,7 +381,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
     setActiveCmp(false)
     setLoader(true)
     if (inputData.type !== '') {
-      let dataJson = inputData
+      let dataJson = { ...inputData }
       dataJson['genes'] = gene
       dataJson['table_type'] = type
       dispatch(getLolipopInformation('POST', dataJson))

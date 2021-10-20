@@ -106,7 +106,7 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
     });
     // loadGenesDropdown(genes)
     if (inputData.type !== '') {
-      let dataJson = inputData
+      let dataJson = { ...inputData }
       dataJson['genes'] = genes
       setLoader(true)
       // setActiveCmp(false)
@@ -124,7 +124,7 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
       genes = inputState['genes']
     }
     if (inputData.type !== '') {
-      let dataJson = inputData
+      let dataJson = { ...inputData }
       dataJson['genes'] = genes
       setLoader(true)
       // setActiveCmp(false)
@@ -210,7 +210,7 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
           <LoaderCmp />
           :
           <>
-          {showScatter && <ScatterPlot scatter_data={scatterJson}/>}
+          {showScatter && <ScatterPlot  watermarkCss={watermarkCss} ref={reference} scatter_data={scatterJson}/>}
           {noContent && <NoContentMessage />}
           </>
       }

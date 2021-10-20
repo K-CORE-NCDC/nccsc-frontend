@@ -18,7 +18,6 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
   const [displaySamples, setDisplaySamples] = useState(false)
   const [watermarkCss, setWatermarkCSS] = useState("")
   const [loader, setLoader] = useState(false)
-
   const [inputState,setInputState] = useState({})
   const [genesHtml,setGenesHtml] = useState([])
   const [selectedValue,setSelectedValue] = useState([])
@@ -38,14 +37,14 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
 
   const dispatchActionCommon = (postJsonBody) =>{
     if(postJsonBody.table_type === 'proteome'){
-      dispatch(getBoxInformation('POST', {...postJsonBody, genes: inputData.genes}))
+      // dispatch(getBoxInformation('POST', {...postJsonBody, genes: inputData.genes}))
+      dispatch(getBoxInformation('POST', postJsonBody))
     }else{
       dispatch(getBoxInformation('POST', postJsonBody))
     }
   }
 
   const loadGenesDropdownMutation = (genes) => {
-
     let t = []
     let t_ = []
     for (var i = 0; i < genes.length; i++) {
@@ -157,6 +156,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
       dataJson['genes'] = genes
       dataJson['table_type'] = tableType
       dataJson['view'] = viewType
+
       setLoader(true)
       dispatchActionCommon(dataJson)
     }
@@ -198,8 +198,15 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
     e.target.classList.add("hover:bg-main-blue","bg-main-blue","text-white")
     let dataJson = inputState
     if(inputData.type !==''){
+      // console.log(selectedValue)
+      let gene_ = selectedValue.map(x => x['name']);
+      if (gene_.length <= 0){
+        gene_ = [gene]
+      }
       if(type==='mutation'){
-        dataJson['genes'] = [gene]
+        dataJson['genes'] = gene_
+        let selected = selectedValue
+        selected.push({"name":gene,id:1})
       }
 
       // dataJson['genes'] = inputState['gene']
@@ -223,7 +230,6 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
 
     let dataJson = inputState
     if(inputData.type !==''){
-
       dataJson['table_type'] = tableType
       dataJson['view'] = view
       dispatchActionCommon(dataJson)
@@ -251,6 +257,12 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
 
 
 
+  // <select value={gene} onChange={e=>geneSet(e)} className="w-full border bg-white rounded px-3 py-2 outline-none text-gray-700">
+  //   {geneOption}
+  // </select>
+
+  // console.log(boxJson)
+  console.log(selectedValue)
 
   return (
     <div className='grid'>
@@ -282,9 +294,15 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
                 {
                   tableType==='mutation' &&
                   <div>
-                    <select value={gene} onChange={e=>geneSet(e)} className="w-full border bg-white rounded px-3 py-2 outline-none text-gray-700">
-                      {geneOption}
-                    </select>
+                    <label><FormattedMessage  id = "Selected Gene Is" defaultMessage='Selected Gene Is'/></label>
+                    <Multiselect
+                      options={genesHtml} // Options to display in the dropdown
+                      selectedValues={selectedValue} // Preselected value to persist in dropdown
+                      onSelect={onSelect} // Function will trigger on select event
+                      onRemove={onRemove} // Function will trigger on remove event
+                      displayValue="name" // Property name to display in the dropdown options
+                      style={style}
+                    />
                   </div>
                 }
               </div>
@@ -307,7 +325,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
             <LoaderCmp/>
             :boxJson &&
             <>
-            {showBoxPlot  && <BoxPlot box_data={boxJson} chart_type={tableType}  ref={reference} width={width}/>}
+            {showBoxPlot  && <BoxPlot box_data={boxJson} chart_type={tableType}  ref={reference} watermarkCss={watermarkCss} width={width}/>}
 
             {noContent && <NoContentMessage />}
             </>

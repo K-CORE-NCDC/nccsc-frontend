@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import Filter from '../Common/filter'
 import { Charts } from "./Charts/";
 import genes from '../Common/gene.json'
-import { getBreastKeys, getUserDataProjectsTableData } from '../../actions/api_actions'
+import { getBreastKeys, getUserDataProjectsTableData, clearDataVisualizationState } from '../../actions/api_actions'
 import {
   Link
 } from "react-router-dom";
@@ -68,7 +68,12 @@ export default function DataVisualization() {
     }
   },[filterApplied])
 
-
+  useEffect(() => {
+    
+    return () => {
+      dispatch(clearDataVisualizationState())
+    }
+  }, [])
 
   const selectGene = (event) => {
     let val_ = event.target.value;
@@ -324,7 +329,8 @@ export default function DataVisualization() {
                   <div id="tab-contents" className='block text-center' ref={elementRef}>
                     <div className="grid grid-cols-6 p-5">
                       <div className="col-start-6 inline-flex justify-center p-2 ">
-                        <button className="bg-main-blue hover:bg-main-blue mb-3 w-full h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={()=> setScreenCapture(true)}><FormattedMessage  id = "Capture_screen" defaultMessage='capture screenshot'/></button>
+                        {(screenCapture === false) && <button className="bg-main-blue hover:bg-main-blue mb-3 w-full h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={()=> setScreenCapture(true)}><FormattedMessage  id = "Capture_screen" defaultMessage='capture screenshot'/></button>}
+                        {(screenCapture === true) && <button className="bg-main-blue hover:bg-main-blue mb-3 w-full h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" disabled={true}>Loading...</button>}
                       </div>
                     </div>
                     {boolChartState &&
