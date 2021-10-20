@@ -20,16 +20,13 @@ export default function Boxplot({data}) {
     // append the svg object to the body of the page
     var svg = d3.select("#my_dataviz")
       .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
       .append("g")
-        .attr("transform",
-              "translate(40,-40)");
+      .attr("transform","translate(40,-40)");
 
-    var div = d3.select("#my_dataviz").append("div").attr('class','boxplot_tooltip')
-               .style("opacity", 0);
+    var div = d3.select("#my_dataviz").append("div").attr('class','boxplot_tooltip').style("opacity", 0);
     var data = dt
-
 
     var domains = []
     var max_d = []
@@ -43,24 +40,31 @@ export default function Boxplot({data}) {
       max_vl = Math.max(...max_d)
       min_vl = Math.min(...max_d)
     }
-
-    var sumstat = d3Collection.nest() // nest function allows to group the calculation per level of a factor
-    .key(function(d) { return d.label;})
+    var colors = {
+      'In_Frame_Del': '#1b4879',
+      'In_Frame_Ins': '#c74951',
+      'Frame_Shift_Del': '#603d92',
+      'Frame_Shift_Ins': '#3778ae',
+      'Nonsense_Mutation': '#d3352b',
+      'Splice_Site': '#f28432',
+      'Germline': '#000000',
+      'Missense_Mutation': '#549d3e'
+    }
+    var sumstat = d3Collection.nest() .key(function(d) { return d.label;})
     .rollup(function(d) {
       var d = d[0]
-      var q1 = d3.quantile(d['data'],.25)
-      var median = d3.quantile(d['data'],.5)
-      var q3 = d3.quantile(d['data'],.75)
+      
+      var data_sorted = d['data'].sort(d3.ascending)
+      var q1 = d3.quantile(data_sorted,.25)
+      var median = d3.quantile(data_sorted,.5)
+      var q3 = d3.quantile(data_sorted,.75)
       var interQuantileRange = q3 - q1
       var min = q1 - 1.5 * interQuantileRange
       var max = q3 + 1.5 * interQuantileRange
-      if (min < min_vl){
-        min_vl = min
+      if(min<1){
+        min=2
       }
-      if (max > max_vl){
-        max_vl = max+20
-      }
-      return({q1: q1, median: median, q3: q3, min: min, max: max})
+      return({'color':colors[d['label']],q1: q1, median: median, q3: q3, min: min, max: max})
     })
     .entries(data)
 
@@ -68,7 +72,7 @@ export default function Boxplot({data}) {
      var x = d3.scaleBand()
        .range([ 0, width ])
        .domain(domains)
-       // .paddingInner(1)
+       .paddingInner(1)
        .paddingOuter(.5)
 
      svg.append("g")
@@ -78,136 +82,108 @@ export default function Boxplot({data}) {
        .attr("y", 0)
        .attr("x", 9)
        .attr("dy", ".35em")
-       .attr("transform", "rotate(130)")
+       .attr("transform", "rotate(60)")
        .style("text-anchor", "start");
-     // Show the Y scale
-     // console.log(min_vl)
+    
 
-     var y = d3.scaleLinear()
-       .domain([-max_vl, max_vl])
-       .range([height, 0])
-     svg.append("g").call(d3.axisLeft(y))
+      var y = d3.scaleLinear()
+              .domain([0, 400])
+              .range([height, 0])
+      svg.append("g").call(d3.axisLeft(y))
 
+    for (var i = 0; i < sumstat.length; i++) {
+      var p = svg.append('g').attr('class','box').attr('id',i)
+      p.selectAll("vertLines").data([sumstat[i]])
+      .enter()
+      .append("line")
+      .attr("x1", function(d){return(x(d.key))})
+      .attr("x2", function(d){return(x(d.key))})
+      .attr("y1", function(d){return(y(d.value.min))})
+      .attr("y2", function(d){return(y(d.value.max))})
+      .attr("stroke", function(d,i){
+        return d.value.color
+      })
+      .style("width", 40)
 
-     for (var i = 0; i < sumstat.length; i++) {
-        var p = svg.append('g').attr('class','box')
-        .attr('id',i)
-        p.selectAll("vertLines")
-          .data([sumstat[i]])
-          .enter()
-          .append("line")
-            .attr("x1", function(d){
-              return(x(d.key))
-            })
-            .attr("x2", function(d){return(x(d.key))})
-            .attr("y1", function(d){
-              
-                return(y(d.value.min))
-              
-            })
-            .attr("y2", function(d){
-              
-              return(y(d.value.max))
-              
-            })
-            .attr("stroke", "black")
-            .style("width", 40)
-
-        var boxWidth = 60-20
-        p.selectAll("boxes")
-          .data([sumstat[i]])
-          .enter()
-          .append("rect")
+      var boxWidth = 50
+      p
+      .selectAll("boxes")
+      .data([sumstat[i]])
+      .enter()
+      .append("rect")
           .attr("x", function(d){return(x(d.key)-boxWidth/2)})
           .attr("y", function(d){return(y(d.value.q3))})
           .attr("height", function(d){return(y(d.value.q1)-y(d.value.q3))})
           .attr("width", boxWidth )
-          .attr("stroke", "black")
-          .style("fill", "#69b3a2")
-
-
-               // Show the median
-         p.selectAll("medianLines")
-          .data([sumstat[i]])
-          .enter()
-          .append("line")
-          .attr("x1", function(d){return(x(d.key)-boxWidth/2) })
-          .attr("x2", function(d){return(x(d.key)+boxWidth/2) })
-          .attr("y1", function(d){return(y(d.value.median))})
-          .attr("y2", function(d){return(y(d.value.median))})
-          .attr("stroke", "black")
-          .style("width", 80)
-
-        //
-        p.selectAll("toto")
-        .data([sumstat[i]])
-        .enter()
-        .append("line")
-          .attr('clas','r')
-          .attr("x1", function(d){
-            return(x(d.key)-boxWidth/2)
+          .attr("stroke",function(d,i){
+            return d.value.color
           })
-          .attr("x2", function(d){return(x(d.key)+boxWidth/2) })
-          .attr("y1", function(d){
-            if (y(d.value.min)>height){
-              return(y(d.value.q3)-30)
-            }else{
-              return(y(d.value.max))
-
-            }
+          .style("fill", function(d,i){
+            return d.value.color
           })
-          .attr("y2", function(d){
-            if (y(d.value.min)>height){
-              return(y(d.value.q3)-30)
-            }else{
-              return(y(d.value.max))
-
-            }
-          })
-          .attr("stroke", "black")
-
-
-          p.selectAll("toto")
-          .data([sumstat[i]])
-          .enter()
-          .append("line")
-            .attr('class','rz')
-            .attr("x1", function(d){
-              return(x(d.key)-boxWidth/2)
-            })
-            .attr("x2", function(d){return(x(d.key)+boxWidth/2) })
-            .attr("y1", function(d){
-              if (y(d.value.min)>height){
-                return height-30
-              }else{
-                return(y(d.value.min))
-              }
-            })
-            .attr("y2", function(d){
-              if (y(d.value.min)>height){
-                return height-30
-              }else{
-                return(y(d.value.min))
-              }
-            })
-            .attr("stroke", "black")
-
-          p.on("mouseover", function(d){
-            var id = this.id
-            var html = ''
-            for(var key in sumstat[id].value){
+      
+      
+      p
+      .selectAll("medianLines")
+      .data([sumstat[i]])
+      .enter()
+      .append("line")
+        .attr("x1", function(d){return(x(d.key)-boxWidth/2) })
+        .attr("x2", function(d){return(x(d.key)+boxWidth/2) })
+        .attr("y1", function(d){return(y(d.value.median))})
+        .attr("y2", function(d){return(y(d.value.median))})
+        .attr("stroke", "#fff")
+        .style("width", 80)
+      
+      p
+      .selectAll("medianLines")
+      .data([sumstat[i]])
+      .enter()
+      .append("line")
+        .attr("x1", function(d){return(x(d.key)-boxWidth/2) })
+        .attr("x2", function(d){return(x(d.key)+boxWidth/2) })
+        .attr("y1", function(d){return(y(d.value.min))})
+        .attr("y2", function(d){return(y(d.value.min))})
+        .attr("stroke", function(d,i){
+          return d.value.color
+        })
+        .style("width", 80)
+      
+      p
+      .selectAll("medianLines")
+      .data([sumstat[i]])
+      .enter()
+      .append("line")
+        .attr("x1", function(d){return(x(d.key)-boxWidth/2) })
+        .attr("x2", function(d){return(x(d.key)+boxWidth/2) })
+        .attr("y1", function(d){return(y(d.value.max))})
+        .attr("y2", function(d){return(y(d.value.max))})
+        .attr("stroke", function(d,i){
+          return d.value.color
+        })
+        .style("width", 80)
+      
+        p.on("mouseover", function(d){
+          var id = this.id
+          var html = ''
+          for(var key in sumstat[id].value){
+            if(key!=='color'){
               html +=key+":"+ sumstat[id].value[key]+"<br/>"
             }
-            div.html(html)
-               .style("left","50px")
-               .style("top", "0px")
-               .style("opacity", 1);
+          }
+          div.html(html)
+             .style("left","50px")
+             .style("top", "0px")
+             .style("opacity", 1);
+  
+        })
+        p.on("mouseleave", function(d){
+          div.style("opacity", 0);
+        })
 
-          })
-          p.on("mouseleave", function(d){
-            div.style("opacity", 0);
-          })
-      }
+    }
+
+     
   }
 
   useEffect(()=>{

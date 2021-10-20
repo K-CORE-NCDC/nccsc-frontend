@@ -4,9 +4,65 @@ import {Chart, registerables} from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 Chart.register(...registerables);
-// Chart.register(ChartDataLabels);
 
-// let ctx
+function hex (c) {
+  var s = "0123456789abcdef";
+  var i = parseInt (c);
+  if (i == 0 || isNaN (c))
+    return "00";
+  i = Math.round (Math.min (Math.max (0, i), 255));
+  return s.charAt ((i - i % 16) / 16) + s.charAt (i % 16);
+}
+
+/* Convert an RGB triplet to a hex string */
+function convertToHex (rgb) {
+  return "#"+hex(rgb[0]) + hex(rgb[1]) + hex(rgb[2]);
+}
+
+/* Remove '#' in color hex string */
+function trim (s) { return (s.charAt(0) == '#') ? s.substring(1, 7) : s }
+
+/* Convert a hex string to an RGB triplet */
+function convertToRGB (hex) {
+  var color = [];
+  color[0] = parseInt ((trim(hex)).substring (0, 2), 16);
+  color[1] = parseInt ((trim(hex)).substring (2, 4), 16);
+  color[2] = parseInt ((trim(hex)).substring (4, 6), 16);
+  return color;
+}
+
+function generateColor(colorStart,colorEnd,colorCount){
+
+  // The beginning of your gradient
+  var start = convertToRGB (colorStart);    
+
+  // The end of your gradient
+  var end   = convertToRGB (colorEnd);    
+
+  // The number of colors to compute
+  var len = colorCount;
+
+  //Alpha blending amount
+  var alpha = 0.0;
+
+  var saida = [];
+  
+  for (var i = 0; i < len; i++) {
+    var c = [];
+    alpha += (1.0/len);
+    
+    c[0] = start[0] * alpha + (1 - alpha) * end[0];
+    c[1] = start[1] * alpha + (1 - alpha) * end[1];
+    c[2] = start[2] * alpha + (1 - alpha) * end[2];
+
+    saida.push(convertToHex (c));
+    
+  }
+  
+  return saida;
+  
+}
+
 export default function Piechart({id,data,width,color, chart_type}) {
 
   const hexToRgb = hex =>
@@ -19,7 +75,8 @@ export default function Piechart({id,data,width,color, chart_type}) {
     let ctx = document.getElementById(id).getContext('2d');
 
     // console.log(g_data)
-
+    let segment;
+    let selectedIndex;
     var myChart = new Chart(ctx, {
         type: 'pie',
         data: g_data,
@@ -45,15 +102,14 @@ export default function Piechart({id,data,width,color, chart_type}) {
           responsive: false,
           layout:{
             padding:20
-          },
-
+          }
         },
         plugins: [ChartDataLabels]
     });
   }
 
 
-
+  
 
   useEffect(() => {
 
@@ -101,6 +157,7 @@ export default function Piechart({id,data,width,color, chart_type}) {
         let bmi = {}
         for (var i = 0; i < data.length; i++) {
           let n = parseInt(data[i].name)
+          
           let tmp =''
           if(n<18.5){
             tmp='~18.5'
@@ -127,15 +184,30 @@ export default function Piechart({id,data,width,color, chart_type}) {
         data = d
 
       }
+      var tmp = generateColor(color,"#666666",data.length);
       for (var i = 0; i < data.length; i++) {
         t.push(data[i].cnt)
-        g_dat['labels'].push(data[i].name)
+        if(data[i].name==null){
+          g_dat['labels'].push("N/A")
+        }
+        else if(data[i].name=="null"){
+          g_dat['labels'].push("N/A")
+        }
+        else if(data[i].name==""){
+          g_dat['labels'].push("N/A")
+        }
+        else if(data[i].name=="N/A"){
+          g_dat['labels'].push("N/A")
+        }
+        else{
+          g_dat['labels'].push(data[i].name)
+        }
         colors.push(h+linear+")")
-        linear = linear-0.050
+        linear = linear-0.080
       }
       g_dat['datasets'].push({
         "data":t,
-        "backgroundColor":colors,
+        "backgroundColor":tmp,
       })
 
       drawGraph(g_dat, chart_type)
