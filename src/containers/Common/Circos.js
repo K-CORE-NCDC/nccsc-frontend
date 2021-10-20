@@ -188,7 +188,25 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
     }
 
     var cnvData = [...all_chr];
-
+    // d3.select('#circos svg')
+    // .call(d3.zoom().scaleExtent([-5, 50])
+    //               .translateExtent([[0,0], [width+100, (width-150)+100]])
+    //               .extent([[0,0], [width+100, (width-150)+100]])
+    //               .on("zoom", function () {
+    //   var translation = (event) => {
+    //     return event.transform;
+    //   }
+    //   var newViewBox = [
+    //   -translation["x"]/translation["k"],
+    //   -translation["y"]/translation["k"],
+    //   width/translation["k"],
+    //   width-150/translation["k"]
+    // ].join(" ");
+    // d3.select(this).attr('viewBox', newViewBox);
+    // d3.select(this).attr("transform", (event) => {
+    //   return event.transform
+    // })
+    // }))
     if('cnv' in api_data){
       let cnv_data = api_data['cnv']
       for (var i = 0; i < cnv_data.length; i++) {
@@ -477,6 +495,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
           }
       }
     })
+    // .call(d3.drag().subject(dragsubject).on("drag", dragged))
     .render()
     // setLoader(false)
     // setTimeout(function() {
