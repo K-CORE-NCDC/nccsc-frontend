@@ -44,7 +44,6 @@ const VolcanoPlotD3 = ({ dataProps }) => {
                 yScale.range([0, innerHeight])
                     .domain([0.0000000001, 1])
                     .nice(); // adds "padding" so the domain extent is exactly the min and max values
-                console.log(d3.extent(data, function (d) { return d[yColumn]; }));
                 var zoom = d3.zoom()
                     .scaleExtent([1, 20])
                     .translateExtent([[0, 0], [width, height]])
@@ -172,7 +171,6 @@ const VolcanoPlotD3 = ({ dataProps }) => {
                     .attr('class', 'tooltip');
 
                 function tipEnter(d) {
-                    console.log(d);
                     tooltip.style('visibility', 'visible')
                         .style('font-size', '11px')
                         .html(

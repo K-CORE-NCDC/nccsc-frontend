@@ -34,3 +34,5 @@ export const userdataVisualization = {
   REQUEST_DONE:'REQUEST_DONE',
   USER_DATA_PROJECT_TABLE: 'USER_DATA_PROJECT_TABLE'
 }
+
+export const  CLEAR_ALL_STATES = "CLEAR_ALL_STATES"
