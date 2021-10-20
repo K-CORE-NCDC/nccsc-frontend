@@ -1,4 +1,4 @@
-import { dataVisualization, userdataVisualization } from '../actions/Constants';
+import { dataVisualization, userdataVisualization, CLEAR_ALL_STATES } from '../actions/Constants';
 
 const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
   switch (type) {
@@ -92,6 +92,10 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
       return {
         ...state,
         kmeanSummary: payload
+      }
+    case CLEAR_ALL_STATES:
+      return {
+        
       }
     default:
       return state

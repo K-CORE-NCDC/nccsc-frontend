@@ -1,4 +1,4 @@
-import { homeConstants, dataVisualization, userdataVisualization } from "./Constants";
+import { homeConstants, dataVisualization, userdataVisualization, CLEAR_ALL_STATES } from "./Constants";
 import config from '../config'
 import axios from "axios";
 import '../assets/interceptor/interceptor'
@@ -711,3 +711,14 @@ export function userRegister(type, data) {
 //       });
 //   };
 // }
+
+
+export function clearDataVisualizationState() {
+  return (dispatch) => {
+    console.log("clearing state");
+    dispatch({
+      type: CLEAR_ALL_STATES,
+      payload: {},
+    });
+  };
+}

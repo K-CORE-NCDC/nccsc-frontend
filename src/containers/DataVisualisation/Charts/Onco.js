@@ -137,7 +137,14 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
     }
 
     if(watermarkCss !== "" && screenCapture){
-      exportComponentAsPNG(reference)
+      exportComponentAsPNG(reference, {
+        html2CanvasOptions: {
+          onclone: (clonedDoc) => {
+            clonedDoc.getElementById("oncoprint-glyphmap").style.visibility = "visible";
+            // Visibility set to visible using `onclone` method
+          },
+        },
+      })
       setToFalseAfterScreenCapture()
     }
   }, [screenCapture, watermarkCss])

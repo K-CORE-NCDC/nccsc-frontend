@@ -198,7 +198,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     e.target.classList.add("hover:bg-main-blue","bg-main-blue","text-white")
 
     setTableType(type)
-    let dataJson = inputData
+    let dataJson = { ...inputData }
     if(type === 'rna'){
       dataJson['genes'] = genes
     }else if(type === 'methylation'){
@@ -225,7 +225,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     }
     e.target.classList.add("hover:bg-main-blue","bg-main-blue","text-white")
     setMainTab(type)
-    let dataJson = inputData
+    let dataJson = { ...inputData }
     if(inputData.type !==''){
       // setClusterRange
       // console.log(dataJson['genes'])
@@ -262,7 +262,7 @@ const setGene = (e)=>{
     let gene = e.target.value
     setSelectedGene([gene])
 
-    let dataJson = inputData
+    let dataJson = { ...inputData }
     if(tableType === 'rna'){
       dataJson['genes'] = genes
     }else if(tableType === 'methylation'){
@@ -294,7 +294,7 @@ function onSelect(selectedList, selectedItem) {
     if(inputData.type !==''){
       setLoader(true)
       setActiveCmp(false)
-      let dataJson = inputData
+      let dataJson = { ...inputData }
       dataJson['clinicalFilters'] = cf
       dataJson['view'] = viewType
       dataJson['type'] = viewType
@@ -312,7 +312,7 @@ function onSelect(selectedList, selectedItem) {
     if(inputData.type !==''){
       setLoader(true)
       setActiveCmp(false)
-      let dataJson = inputData
+      let dataJson = { ...inputData }
       dataJson['clinicalFilters'] = items
       dataJson['heat_type'] = mainTab
       dispatch(getHeatmapInformation('POST',dataJson))
@@ -330,7 +330,7 @@ function onSelect(selectedList, selectedItem) {
     }
     e.target.classList.add("hover:bg-main-blue","bg-main-blue","text-white")
     setViewType(view)
-    let dataJson = inputData
+    let dataJson = { ...inputData }
     dataJson['view'] = view
     dataJson['heat_type'] = mainTab
     if(inputData.type !==''){
@@ -365,7 +365,7 @@ function onSelect(selectedList, selectedItem) {
     if(inputData.type !==''){
       setLoader(true)
       setActiveCmp(false)
-      let dataJson = inputData
+      let dataJson = { ...inputData }
       dataJson['clinicalFilters'] = cf
       dataJson['view'] = viewType
       dataJson['type'] = viewType

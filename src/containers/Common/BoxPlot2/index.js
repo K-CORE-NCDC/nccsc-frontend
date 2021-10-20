@@ -7,7 +7,7 @@ import {FormattedMessage} from 'react-intl';
 // import genes from '../Common/gene.json'
 // import { getBreastKeys, getUserDataProjectsTableData } from '../../actions/api_actions'
 
-export default function BoxPlot({ box_data,chart_type }) {
+const BoxPlot = React.forwardRef(({ box_data,chart_type, watermarkCss }, ref) => {
   const box_elementRef = useRef(null);
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
 
@@ -371,7 +371,9 @@ export default function BoxPlot({ box_data,chart_type }) {
 
 
   return (
-      <div ref={box_elementRef} id="box2" style={{'width':'100%','overflowX':'scroll','padding':'20px'}}>
+      <div ref={ref} className={watermarkCss} id="box2" style={{'width':'100%','overflowX':'scroll','padding':'20px'}}>
       </div>
   )
-}
+})
+
+export default BoxPlot

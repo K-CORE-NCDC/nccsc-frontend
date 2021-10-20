@@ -307,7 +307,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
             <LoaderCmp/>
             :boxJson &&
             <>
-            {showBoxPlot  && <BoxPlot box_data={boxJson} chart_type={tableType}  ref={reference} width={width}/>}
+            {showBoxPlot  && <BoxPlot box_data={boxJson} chart_type={tableType}  ref={reference} watermarkCss={watermarkCss} width={width}/>}
 
             {noContent && <NoContentMessage />}
             </>

@@ -10,7 +10,7 @@ Chart.register(...registerables);
 // import genes from '../Common/gene.json'
 // import { getBreastKeys, getUserDataProjectsTableData } from '../../actions/api_actions'
 var myChart
-export default function ScatterPlot({ scatter_data }) {
+const ScatterPlot = React.forwardRef(({ scatter_data, watermarkCss }, ref) => {
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
   const scatter_plot = useRef(null);
   const [chartV, setChartV] = useState()
@@ -73,10 +73,12 @@ export default function ScatterPlot({ scatter_data }) {
 
 
   return (
-      <div id='scatter_parent' className='p-5'>
+      <div ref={ref} id='scatter_parent' className={`p-5 ${watermarkCss}`}>
         <canvas id="scatter" ref={scatter_plot} height="14vh" width="40vw"></canvas>
       </div>
   )
-}
+})
 
 // <canvas ref={scatter_plot} width="50" height="50"></canvas>
+
+export default ScatterPlot
