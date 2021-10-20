@@ -11,43 +11,47 @@ export default function Barchart({id,data,width,color, chart_type,title}) {
   const drawGraph = (g_data,ct_type) => {
 
     var ctx = document.getElementById(id).getContext('2d');
+    var options = {
+      plugins:{
+        legend: {
+          display: false
+        },
+        title: {
+            display: true,
+            position: 'left',
+            text: ' # of samples ',
+        }
+      },
+      layout:{
+        padding:20
+      },
+      scales: {
+        x: {
+         grid: {
+           display: true,
+           drawBorder: true,
+           drawOnChartArea: true,
+           drawTicks: true,
+         },
+         title:{
+          display: true,
+          text: (title)?title:''
+         }
+        }
+      }
+    }
+    
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: g_data,
-        options: {
-          plugins:{
-            legend: {
-              display: false
-            },
-            title: {
-                display: true,
-                position: 'left',
-                text: ' # of samples ',
-            }
-          },
-          layout:{
-            padding:20
-          },
-          scales: {
-            x: {
-             grid: {
-               display: true,
-               drawBorder: true,
-               drawOnChartArea: true,
-               drawTicks: true,
-             },
-             title:{
-              display: true,
-              text: (title)?title:''
-             }
-            },
-            
-          }
-        }
+        options: options
     });
+            
+
   }
 
   useEffect(() => {
+    
     if (data){
       let g_dat = {"labels":[],"datasets":[]}
       let t = []
@@ -58,15 +62,12 @@ export default function Barchart({id,data,width,color, chart_type,title}) {
       let na = ''
       for (var i = 0; i < data.length; i++) {
         if(data[i].name==null){
-          // g_dat['labels'].push('N/A')
           na = 'N/A'
         }
         else if(data[i].name=="null"){
-          // g_dat['labels'].push('N/A')
           na = 'N/A'
         }
         else if(data[i].name==""){
-          // g_dat['labels'].push('N/A')
           na = 'N/A'
         }
         else if(data[i].name=="N/A"){
