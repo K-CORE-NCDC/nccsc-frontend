@@ -14,7 +14,7 @@ export default function VerticalStackBarChartComp({data, axis, key}){
               indexAxis: 'x',
               layout: {
                padding: {
-                 left: -20
+                 left: 20
                }
               },
               scales:{
