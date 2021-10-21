@@ -4,6 +4,12 @@ let clinicalColor = {
   "Clinical Information":"#1d52b5",
   "Follow-up Observation":"#db941b"
 }
+let clinicalColorGradient = {
+  "Basic/Diagnostic Information":"#94db60",
+  "Patient Health Information":"#da5f66",
+  "Clinical Information":"#73a0f4",
+  "Follow-up Observation":"#e7be7a"
+}
 
 let gene_selection = {
   "user-defined" : {
@@ -223,11 +229,6 @@ let filterBoxes = {
 
     ],
 
-    "Bilateral Breast Cancer)":[
-      {'type':'checkbox','id':'dbbc_from','value':'Yes'},
-      {'type':'checkbox','id':'dbbc_to','value':'No'}
-    ],
-
   },
   "Patient Health Information":{
     "Smoking information":[
@@ -318,29 +319,30 @@ let filterBoxes = {
 
 let filterChoices = [
     {'name': 'sex', 'id': 'sex_cd'},
-    {'name': 'Age Of Diaganosis', 'id': 'diag_age'},
-    {'id': 'bmi_vl', 'name': 'Body Mass Index'},
+    {'name': 'Age', 'id': 'diag_age'},
+    {'id': 'bmi_vl', 'name': 'BMI'},
     {'id': 'bila_cncr_yn', 'name': 'Diagnosis of Bilateral Breast Cancer' },
     {'name': 'Current Smoker', 'id': 'smok_curr_yn' },
     {'name': 'Former Smoker', 'id': 'smok_yn' },
-    {'name': 'alcohol_consuption', 'id': 'drnk_yn',  },
-    {'name': 'Family History of Breast Cancer', 'id': 'fmhs_brst_yn' },
-    {'name': 'First Menstural Age', 'id': 'mena_age'},
+    {'name': 'Alcohol Consumption', 'id': 'drnk_yn',  },
+    {'name': 'Breast Cancer Family History', 'id': 'fmhs_brst_yn' },
+    {'name': 'Menarche age (10-17 Y)', 'id': 'mena_age'},
     {'name': 'Menopause', 'id': 'meno_yn' },
     {'name': 'childbirth', 'id': 'delv_yn' },
-    {'name': 'Experience of Breastfeeding', 'id': 'feed_yn' },
-    {'name': 'Duration of Breastfeeding (1-24 M)', 'id': 'feed_drtn_mnth'},
-    {'name': 'Intake of Oral Contraceptive Pill', 'id': 'oc_yn' },
-    {'name': 'Hormone Replacement Therapy', 'id': 'hrt_yn' },
+    {'name': 'Breastfeeding Experience', 'id': 'feed_yn' },
+    {'name': 'Lactation period (1-24 M)', 'id': 'feed_drtn_mnth'},
+    {'name': 'Contraceptive', 'id': 'oc_yn' },
+    {'name': 'HRT', 'id': 'hrt_yn' },
     {'name': 'T Stage', 'id': 't_category'  },
     {'name': 'N Stage', 'id': 'n_category' },
     {'name': 'HER2 Score', 'id': 'her2_score' },
-    {'name': 'ki67', 'id': 'ki67_score'},
+    {'name': 'Ki67', 'id': 'ki67_score'},
     {'name': 'Relapse Duration', 'id': 'rlps_cnfr_drtn',},
     {'name': 'Relapse Yes or No', 'id': 'rlps_yn' }
 ]
 let inputJson = {
   "clinicalColor":clinicalColor,
+  'clinicalColorGradient':clinicalColorGradient,
   "filterBoxes":filterBoxes,
   "gene_selection":gene_selection,
   "filterChoices":filterChoices

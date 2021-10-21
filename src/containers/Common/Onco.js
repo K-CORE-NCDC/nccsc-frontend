@@ -4,13 +4,12 @@ import { useSelector, useDispatch } from "react-redux";
 import Oncoprint from "oncoprintjs";
 import _ from 'lodash';
 import './rules';
-import UserFilesTable from './Table'
+
 import $ from 'jquery'
-
-
-const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_count }, ref) => {
+import inputJson from '../Common/data'
+const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
     const [inputRule,setInputRule] = useState({})
-
+    const [customName,setCustomName] = useState({})
     let names_variant ={
         "Missense Mutation":"variant_classification||Missense_Mutation||4",
         "Nonsense Mutation":"variant_classification||Nonsense_Mutation||6",
@@ -31,6 +30,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_
     const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
 
     const drawChart = (w,gData,cData,rule_types,inputRule) => {
+        
         
         if($('#oncoprint-glyphmap').length>0){
             $('#oncoprint-glyphmap').empty()
@@ -194,9 +194,9 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_
         if(custom_datum.length>0){
             for (var i = 0; i < custom_datum.length; i++) {
                 var originDatum = custom_datum[i]
-                clinical_custom_track_params['rule_set_params']['legend_label'] = originDatum.displayName;
-                clinical_custom_track_params['label'] = originDatum.displayName;
-                clinical_custom_track_params['description'] = originDatum.displayName;
+                clinical_custom_track_params['rule_set_params']['legend_label'] = customName[originDatum.displayName];
+                clinical_custom_track_params['label'] = customName[originDatum.displayName];
+                clinical_custom_track_params['description'] = customName[originDatum.displayName];
 
                 
                 var track_id = oncoprint.addTracks([_.clone(clinical_custom_track_params)])[0];
@@ -204,7 +204,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_
                 oncoprint.setTrackInfo(track_id, "");
                 oncoprint.setTrackData(track_id, custom_datum[i]['data'], 'sample');
                 oncoprint.setTrackTooltipFn(track_id,function(data) {
-                    return "<b>Sample: " + data.sample + " (" + data.category + ")</b>";
+                    return "<b>Sample: " + BrstKeys[data.sample]+ " (" + data.category + ")</b>";
                 });
             }
         }
@@ -290,7 +290,6 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_
                 for (let r = 0; r < rule_types.length; r++) {
                     for (let l = 0; l < legends.length; l++) {
                         if(legends[l].textContent in names_variant && names_variant[legends[l].textContent]==rule_types[r]){
-                            
                             legends[l].classList.add('linethrough')
                         }
                         
@@ -304,9 +303,17 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_
 
     useEffect(()=>{
         if (data){
+            let custom_name = {}
+            for (let cn = 0; cn < inputJson['filterChoices'].length; cn++) {
+                custom_name[inputJson['filterChoices'][cn]['id']] = inputJson['filterChoices'][cn]['name']
+            }
+            setCustomName((prevState)=>({...prevState,...custom_name}))
+
             setState((prevState) => ({...prevState,...data }))
             let rule = window.geneticrules.genetic_rule_set_custom
             setInputRule((prevState) => ({...prevState,...rule }))
+
+
         }
     },[data])
 
@@ -349,13 +356,13 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss, table_data, table_
     })
     
     
-  useEffect(()=>{
-    if(Object.keys(state).length>0){
-      let gData = state['geneData']
-      let cData = state['clinicalData']
-      drawChart(width-300,gData,cData,type,inputRule)
-    }
-  },[state,inputRule])
+    useEffect(()=>{
+        if(Object.keys(state).length>0){
+            let gData = state['geneData']
+            let cData = state['clinicalData']
+            drawChart(width-300,gData,cData,type,inputRule)
+        }
+    },[state,inputRule])
 
   return (
     <div>

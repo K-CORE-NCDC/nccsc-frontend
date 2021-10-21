@@ -1,6 +1,10 @@
-import React,{useState,useEffect,useRef } from "react";
+import React,{useState,useEffect,useRef,Fragment } from "react";
 import childMenu from '../../../../menu-item'
 import { Link } from 'react-router-dom';
+import {
+  MenuIcon,
+} from '@heroicons/react/outline'
+
 
 export default function DropdownMenu() {
   const [state, setState] = useState({"menu":[]});
@@ -42,7 +46,7 @@ export default function DropdownMenu() {
         )
       }else{
         html.push(
-          <li className="group h-full table-cell relative px-3 py-5" key={'liul_'+i}>
+          <li className="group h-full table-cell relative " key={'liul_'+i}>
             {htmlbutton}
           </li>
         )
@@ -55,8 +59,15 @@ export default function DropdownMenu() {
     }))
   },[])
 
+
   return(
-    <ul className="dropdownHeader">
+
+    <ul className="dropdownHeader ">
+      <li className='group h-full table-cell relative px-3'>
+        <a className='text-3xl group_box h-full font-bold items-center w-full' style={{'minWidth':'50px'}}>
+          <MenuIcon className='w-6'/>
+        </a>
+      </li>
       {state['menu']}
     </ul>
   )
