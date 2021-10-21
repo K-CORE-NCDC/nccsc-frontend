@@ -4,17 +4,19 @@ import Igv from '../../Common/igv';
 import LoaderCmp from '../../Common/Loader';
 import { getIgv } from '../../../actions/api_actions'
 import NoContentMessage from '../../Common/NoContentComponent'
-// import { exportComponentAsPNG } from 'react-component-export-image';
+import { exportComponentAsPNG } from 'react-component-export-image';
 
 // import LoaderCmp from '../../Common/Loader'
 import {FormattedMessage} from 'react-intl';
 
 export default function DataIgv({ width,inputData, screenCapture, setToFalseAfterScreenCapture }) {
+  const reference = useRef()
   const dispatch = useDispatch()
   const igvJson = useSelector((data) => data.dataVisualizationReducer.igvSummary);
   const [activeCmp,setActiveCmp] = useState(false)
   const [igvLegend,setIgvLegend] = useState("")
   const [loader, setLoader] = useState(false)
+  const [watermarkCss, setWatermarkCSS] = useState("")
 
 
   useEffect(()=>{
@@ -45,6 +47,20 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
   //   }, (10000));
   // }, [igvJson])
 
+  useEffect(() => {
+    if (screenCapture) {
+      setWatermarkCSS("watermark")
+    } else {
+      setWatermarkCSS("")
+    }
+
+    if (watermarkCss !== "" && screenCapture) {
+      exportComponentAsPNG(reference)
+      setToFalseAfterScreenCapture()
+    }
+
+  }, [screenCapture, watermarkCss])
+
   console.log(igvLegend)
 
   return (
@@ -71,7 +87,7 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
               <h3><strong><FormattedMessage  id = "Loss" defaultMessage='Loss'/></strong></h3>
             </div>
           </div>
-          <Igv data={igvJson}/>
+          <Igv watermarkCss={watermarkCss} ref={reference} data={igvJson}/>
           </>
         }
         {!activeCmp && <NoContentMessage />}
