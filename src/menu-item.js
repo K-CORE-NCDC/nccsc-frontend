@@ -94,10 +94,10 @@ let childMenu = {
           }
         ]
       },
-     
+
       {
         id: 'MyDataVisualization',
-        title: <FormattedMessage  id = "MyDataVisualization" defaultMessage='User Data Visualization'/>,
+        title: <FormattedMessage  id = "MyDataVisualization" defaultMessage='Visualize MyData'/>,
         type: 'group',
         icon: 'fa fa-dashboard',
         url: '/userdata',
@@ -114,7 +114,7 @@ let childMenu = {
         children: [
           {
             id: 'dataprovision',
-            title: <FormattedMessage  id = "DataProvision" defaultMessage='Provision Guide'/>,
+            title: <FormattedMessage  id = "DataProvision" defaultMessage='Data delivery guidance'/>,
             type: 'item',
             icon: 'fa fa-dashboard',
             url: '/application',
@@ -122,7 +122,7 @@ let childMenu = {
           },
           {
             id: 'datadb',
-            title: <FormattedMessage  id = "DataDb" defaultMessage='DB Guide'/>,
+            title: <FormattedMessage  id = "DataDb" defaultMessage='MaterialDB Guides'/>,
             type: 'item',
             icon: 'fa fa-dashboard',
             url: '/application',
@@ -130,7 +130,7 @@ let childMenu = {
           },
           {
             id: 'datarequest',
-            title: <FormattedMessage  id = "DataRequest" defaultMessage='Data Request'/>,
+            title: <FormattedMessage  id = "DataRequest" defaultMessage='Data Application'/>,
             type: 'item',
             icon: 'fa fa-dashboard',
             url: '/application',
