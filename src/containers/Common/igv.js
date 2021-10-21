@@ -3,7 +3,7 @@ import igv from 'igv'
 
 
 
-export default function Igv({width,data}) {
+const Igv = React.forwardRef(({width,data, watermarkCss}, ref) => {
 
 
   const loadIgv = (data)=>{
@@ -47,7 +47,7 @@ export default function Igv({width,data}) {
   },[data])
 
   return (
-    <div>
+    <div ref={ref} className={watermarkCss}>
       <div className='ml-6 grid grid-cols-4'>
         <div className='col-span-2'>
           
@@ -57,4 +57,6 @@ export default function Igv({width,data}) {
       </div>
     </div>
   )
-}
+})
+
+export default Igv

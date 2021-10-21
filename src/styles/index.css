@@ -564,6 +564,207 @@ text.label, text.sam{
   font-size: 12px;
 }
 
+.db_list a:before {
+    content: "-";
+    margin: 0 10px 0 0;
+}
+
+.wp75 {
+    width: 75%;
+}
+
+.right {
+    float: right!important;
+}
+
+/* .h-tit6 {
+    font-size: 20px;
+    line-height: 1.8;
+    margin: 0;
+    background: url(#) no-repeat left 17px;
+    padding: 10px 0 10px 32px;
+    text-align: left; */
+/* } */
+
+.mt20 {
+    margin-top: 20px !important;
+}
+
+.tab_content {
+    clear: both;
+    overflow: hidden;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    line-height: 30px;
+    font-size: 15px;
+}
+
+.h-tit6 {
+    font-size: 20px;
+    line-height: 1.8;
+    margin: 0;
+    padding: 10px 0 10px 32px;
+    text-align: left;
+}
+
+.tab_content ul li span {
+    display: inline-block;
+    width: 70px;
+    text-align: right;
+    font-weight: 600;
+    margin: 0 20px 0 0;
+}
+
+.tab_content ul li span:after {
+    content: '|';
+    margin: 0 0 0 2px;
+    font-weight: normal;
+    color: #6d6d6d;
+}
+
+dl, ul, ol, menu, li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.left {
+    float: left!important;
+}
+
+.tablebox {
+    width: 82%;
+    float: right!important;
+}
+
+.tbl.type2 .fm_area dl.sbj_tit {
+    border-top: 2px solid "#4e4e4e";
+    border-bottom: 1px solid "#dddddd";
+}
+
+.tbl.type2 .fm_area dl {
+    display: table;
+    width: 100%;
+    border-bottom: 1px solid "#ddd";
+}
+
+
+
+/* .tbl.type2 .fm_area dl dt {
+    font-size: 16px;
+    background: #a96363;
+} */
+
+.tbl.type2 .fm_area dl dt, .tbl.type2 .fm_area dl dd {
+    display: table-cell;
+    vertical-align: middle;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 15px;
+    background: #fff;
+}
+
+
+.tbl.type2 dl dt {
+    width: 173px;
+    text-align: right;
+    padding-right: 45px;
+}
+
+
+
+.tbl.type2 .fm_area dl.sbj_tit {
+    border-top: 2px solid #4e4e4e;
+    border-bottom: 1px solid #dddddd;
+}
+
+dt {
+    font-weight: 700;
+}
+
+.tbl.type2 .fm_area dl dt {
+    font-size: 16px;
+    background: #eee;
+}
+
+/* .tbl.type2 .fm_area dl {
+    display: table;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+} */
+
+/* .tbl.type2 .fm_area dl dt {
+    font-size: 16px;
+    background: "#eee";
+} */
+
+
+.tbl.type2 dl dd {
+    padding: 0 20px;
+    text-align: left;
+}
+
+dd {
+    margin-bottom: .5rem;
+    margin-left: 0;
+}
+
+/* * {
+    box-sizing: border-box;
+} */
+
+.iconbox {
+    width: 15%;
+}
+
+.iconbox img {
+    width: 100%;
+}
+
+.tbl.type2 .fm_area dl dd>div {
+    margin-bottom: 8px;
+}
+
+.dateWrap {
+    display: inline-block;
+}
+
+.dateWrap .date-inpt {
+    display: inline-block;
+    position: relative;
+    /* width: 135px; */
+}
+
+.dateWrap .date-inpt input[type="text"] {
+    font-size: 13px;
+    width: 130px!important;
+    height: 42px;
+    padding: 0 50px 0 10px;
+    /* background: #fff url(/images/www/ico_calendar2.gif) no-repeat 90% 10px; */
+    cursor: pointer;
+}
+
+/* background: url(/images/www/sub/tit_bar.gif) no-repeat left 17px; */
+
+/* .at .at1 .imgbox {
+    width: 40%;
+    height: 200px;
+    float: "left";
+    background-color: #ddd;
+}
+
+.at .at2 .imgbox {
+    width: 40%;
+    height: 200px;
+    float: "left";
+    background-color: "#ddd";
+} */
+
+
 
 
 
