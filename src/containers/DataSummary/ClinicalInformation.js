@@ -20,7 +20,7 @@ import inputJson from './data'
 export default function ClinicalInformation() {
   const summaryJson = useSelector((data) => data.homeReducer.dataSummary);
   const [leftSide, setLeftSide] = useState({"charts":[],"leftSide":[],"activeCharts":[]});
-  const [activeChartsList, setActiveChartsList] = useState(["Sex","Age","BMI","Bilateral Breast Cancer"]);
+  const [activeChartsList, setActiveChartsList] = useState(["Sex","Age Of Daignosis","Body Mass Index","Diagnosis Of Bilateral Breast Cancer"]);
   const [selected, setSelected] = useState('Basic/Diagnostic Information');
   const dispatch = useDispatch()
   const [firstLoad, setFirstLoad] = useState(true)
@@ -90,6 +90,20 @@ export default function ClinicalInformation() {
     "Follow-up Observation":<SearchIcon className="h-8 w-8 inline text-main-blue"/>
   }
 
+  let chart_names = {
+    'Age Of Daignosis':'Age of Diagnosis (20-40 Y)',
+    "Body Mass Index":'Body Mass Index (15.82-36.33 kg/㎡)',
+    'First Menstrual Age':'First Menstrual Age (10-17 Y)',
+    'Duration of Breastfeeding':'Duration of Breastfeeding (1-24 M)',
+    'Ki-67 Index':'Ki-67 Index(1-95 %)',
+    'Time until relapse is confirmed':'Time until relapse is confirmed (1-16 Y)'
+  }
+
+  let chart_inside_names = {
+    'Duration of Breastfeeding':'Duration of Breastfeeding (Targeting Experience of Breastfeeding Y respondents(58))',
+    'Time until relapse is confirmed':'Time until relapse is confirmed (Targeting Cancer Recurrence Y respondents(44))'
+  }
+
   const leftSideHtml = (data)=>{
     let ac = leftSide['activeCharts']
 
@@ -112,7 +126,10 @@ export default function ClinicalInformation() {
             <div className="p-3 relative z-10" key={'div_mb_'+i}>
               <label htmlFor="toogleA" className="flex items-center cursor-pointer">
                 <div className="ml-3 text-gray-700 w-9/12 text-2xl tracking-wide">
-                  {itm}
+                  {
+                    (itm in chart_names)?chart_names[itm]:itm
+                    
+                  }
                 </div>
                 <div className="relative" id={'div_'+id}  onClick={e=>checkBoxFn(e,'md_'+i,itm)}>
                   <input type="checkbox" id={'md_'+i} checked={check} data-parent={item}  className="checkbox sr-only"
@@ -193,7 +210,7 @@ export default function ClinicalInformation() {
         if(item===chart){
           tmp.push(
             <div key={'chart_'+item} data-chart="bar" className='max-w bg-white rounded-2xl overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border'>
-              <h2 className="text-3xl tracking-wide">{item}</h2>
+              <h2 className="text-3xl tracking-wide">{(item in chart_inside_names)?chart_inside_names[item]:item}</h2>
               <div className="mt-2 ml-5 p-3">
                   <label className="inline-flex items-center">
                     <input key={'radio_'+id+"_bar"} type="radio" defaultChecked={true} className="form-radio" id={id+"_bar"} data-id={id} name={"cr_"+id+"_"+k} value="bar" onChange={change_visual} />
@@ -218,6 +235,8 @@ export default function ClinicalInformation() {
                   data={summaryJson[parent_name][item]}
                   width='300'
                   color={ inputJson['clinicalColor'][parent_name] }
+                  
+
                   />
                 </div>
               </div>

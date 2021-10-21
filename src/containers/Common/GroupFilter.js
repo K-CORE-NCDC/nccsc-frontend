@@ -21,8 +21,8 @@ const filterChoices = [
     { 'type': 'number', 'name': 'Lactation period (month)', 'id': 'feed_drtn_mnth', 'input': 'number' },
     { 'type': 'boolean', 'name': 'Intake of Oral Contraceptive Pill', 'id': 'oc_yn' },
     { 'type': 'boolean', 'name': 'Hormone Replacement Therapy', 'id': 'hrt_yn' },
-    { 'type': 'number', 'name': 'T Stage', 'id': 't_category', 'input': 'number' },
-    { 'type': 'text', 'name': 'N Stage', 'id': 'n_category', 'input': 'text' },
+    { 'type': 'number', 'name': 'T Category', 'id': 't_category', 'input': 'number' },
+    { 'type': 'text', 'name': 'N Category', 'id': 'n_category', 'input': 'text' },
     { 'type': 'text', 'name': 'HER2 Score', 'id': 'her2_score', 'input': 'text' },
     { 'type': 'text', 'name': 'ki67', 'id': 'ki67_score', 'input': 'text' },
     { 'type': 'number', 'name': 'Relapse Duration', 'id': 'rlps_cnfr_drtn', 'input': 'number' },
@@ -46,8 +46,8 @@ const filterChoicesCustom = [
     { 'type': 'number', 'name': 'Lactation period (month)', 'id': 'feed_drtn_mnth', 'input': 'number' },
     { 'type': 'boolean', 'name': 'Intake of Oral Contraceptive Pill', 'id': 'oc_yn' },
     { 'type': 'boolean', 'name': 'HRT', 'id': 'hrt_yn' },
-    { 'type': 'number', 'name': 'T Stage', 'id': 't_category', 'input': 'number' },
-    { 'type': 'text', 'name': 'N Stage', 'id': 'n_category', 'input': 'text' },
+    { 'type': 'number', 'name': 'T Category', 'id': 't_category', 'input': 'number' },
+    { 'type': 'text', 'name': 'N Category', 'id': 'n_category', 'input': 'text' },
     { 'type': 'text', 'name': 'HER2 Score', 'id': 'her2_score', 'input': 'text' },
     { 'type': 'text', 'name': 'ki67', 'id': 'ki67_score', 'input': 'text' },
     { 'type': 'boolean', 'name': 'Recurance Yes or No', 'id': 'rlps_yn' },
@@ -63,10 +63,10 @@ const preDefienedGroups = {
         { label: "36-40", from: 36, to: 40 }
     ],
     bmi_vl: [
-        { label: "<18.5", from: 0, to: 18.5 },
-        { label: "18.5~25", from: 18.5, to: 25 },
-        { label: "25~30", from: 25, to: 30 },
-        { label: "30>", from: 30, to: 100 }
+        { label: "~18.5", from: 0, to: 18.5 },
+        { label: "18.6~25", from: 18.6, to: 25 },
+        { label: "25.1~30", from: 25.1, to: 30 },
+        { label: "30.1>", from: 30.1, to: 100 }
     ],
     mena_age: [
         { label: "10-13", from: 10, to: 13 },

@@ -62,8 +62,29 @@ function generateColor(colorStart,colorEnd,colorCount){
   return saida;
   
 }
+// labels:{
+//   generateLabels: function(chart) {
+//     var data = chart.data;
+//     var datasets = data['datasets'][0]
+    
+//     let l = data['labels']
+//     let tmp = []
+//     for (let index = 0; index < l.length; index++) {
+//       tmp.push({
+//         text: l[index]+": ("+datasets.data[index]+")",
+//         fillStyle: datasets.backgroundColor[index],
+//         strokeStyle: datasets.backgroundColor[index],
+//         lineWidth: 1,
+//         // hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+//         index: index
+//       })
+      
+//     }
+//     return tmp
+//   }
+// }
 
-export default function Piechart({id,data,width,color, chart_type}) {
+export default function Piechart({id,data,width,color,gradeint_color, chart_type}) {
 
   const hexToRgb = hex =>
       hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i
@@ -84,7 +105,8 @@ export default function Piechart({id,data,width,color, chart_type}) {
           plugins:{
             legend: {
               display: true,
-              position:'bottom'
+              position:'bottom',
+              
             },
             datalabels: {
               formatter: (value, ctx) => {
@@ -94,7 +116,7 @@ export default function Piechart({id,data,width,color, chart_type}) {
                       sum += data;
                   });
                   let percentage = (value*100 / sum).toFixed(2)+"%";
-                  return percentage;
+                  return '';
               },
               color: '#fff',
             }
@@ -123,7 +145,7 @@ export default function Piechart({id,data,width,color, chart_type}) {
 
       let linear = 1
 
-      if(id === 'chart_pie_Age'){
+      if(id === 'chart_pie_AgeOfDaignosis'){
         let ageofdiag = {}
         for (var i = 0; i < data.length; i++) {
           let n = parseInt(data[i].name)
@@ -131,9 +153,9 @@ export default function Piechart({id,data,width,color, chart_type}) {
           if(n >20 && n<=25){
             tmp = '21~25'
           } else if(n>25 && n<=30 )  {
-            tmp = '25~30'
+            tmp = '26~30'
           } else if(n>30 && n<=35) {
-            tmp = '30~35'
+            tmp = '31~35'
           } else if(n>35 && n<=40) {
             tmp = '36~40'
           }
@@ -153,7 +175,34 @@ export default function Piechart({id,data,width,color, chart_type}) {
         data = d
 
       }
-      else if(id==='chart_pie_BMI') {
+      else if(id==='chart_pie_FirstMenstrualAge'){
+        let fma = {}
+        for (var i = 0; i < data.length; i++) {
+          let n = parseInt(data[i].name)
+          
+          let tmp =''
+          if (n>10 &&n<=13) {
+            tmp = '10~13'
+          }else if (n>14 &&n<=17) {
+            tmp='14~17'
+          }
+          if(tmp in fma) {
+            fma[tmp] += data[i].cnt
+          } else {
+            fma[tmp] = data[i].cnt
+          }
+        }
+        let d = []
+        for (var key in fma) {
+          d.push({
+            'name': key,
+            'cnt': fma[key]
+          })
+        }
+        data = d
+
+      }
+      else if(id==='chart_pie_BodyMassIndex') {
         let bmi = {}
         for (var i = 0; i < data.length; i++) {
           let n = parseInt(data[i].name)
@@ -162,11 +211,11 @@ export default function Piechart({id,data,width,color, chart_type}) {
           if(n<18.5){
             tmp='~18.5'
           }else if (n>18.5 &&n<=25) {
-            tmp = '18.5 ~ 25'
+            tmp = '18.6 ~ 25'
           }else if (n>25 &&n<=30) {
-            tmp='25~30'
+            tmp='25.1~30'
           }else if (n>30) {
-            tmp='30~'
+            tmp='30.1~'
           }
           if(tmp in bmi) {
             bmi[tmp] += data[i].cnt
@@ -184,7 +233,7 @@ export default function Piechart({id,data,width,color, chart_type}) {
         data = d
 
       }
-      var tmp = generateColor(color,"#666666",data.length);
+      var tmp = generateColor(color,"#fefefe",data.length);
       for (var i = 0; i < data.length; i++) {
         t.push(data[i].cnt)
         if(data[i].name==null){

@@ -91,12 +91,16 @@ export default function Web(props) {
                       alt=""
                     />
                   </a>
+                  
+
                   <Popover.Button  className="hidden xs:block cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block outline-none focus:outline-none" type="button"><MenuIcon className="h-6 w-6" aria-hidden="true" /></Popover.Button >
                 </div>
                 <div className="lg:hidden xl:hidden 2xl:block 2xl:col-span-5 z-10">
+                  
                   <DropdownMenu/>
                 </div>
                 <div className="lg:col-span-6 xl:col-span-6 2xl:col-span-2 py-5">
+                  
                   <Header/>
                 </div>
                 <div className="xs:hidden sm:block md:block lg:block lg:col-span-8 xl:block 2xl:hidden px-5 py-5">

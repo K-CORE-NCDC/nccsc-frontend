@@ -157,6 +157,22 @@ input:checked ~ .dot {
   top: 60px;
   z-index: 999999;
 }
+.openmenu .group .group_box{
+  background: #0c2f4d;
+  width: 100%;
+  display: inline-flex;
+  text-align: center;
+}
+.openmenu .group ul{
+  display: block !important;
+  background: #0c2f4d;
+  width: 100%;
+  height: 50vh;
+  transition: all .5s ease-in-out;
+  top: 60px;
+  z-index: 999999;
+}
+
 .border-blue{
   border-color: #0c2f4d;
 }
@@ -259,14 +275,7 @@ input:checked ~ .dot {
 }
 
 
-/* @-webkit-keyframes spinner {
-	0% {
-		-webkit-transform: rotate(0deg);
-	}
-	100% {
-		-webkit-transform: rotate(360deg);
-	}
-} */
+
 
 @keyframes spinner {
 	0% {
@@ -757,19 +766,8 @@ dd {
 
 
 
-/* .at .at2::after {
-    content: "";
-    clear: "both";
-    display: block;
-} */
 
 
-/* #business_imgbox_2{
-  width: 40%;
-  height: 200px;
-  float: "left";
-  background-color: "black";
-} */
 
 .imgbox12 {
     width: 100%;
