@@ -205,8 +205,17 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
       }
       if(type==='mutation'){
         dataJson['genes'] = gene_
+
         let selected = selectedValue
-        selected.push({"name":gene,id:1})
+        // selected.push({"name":gene,id:1})
+        if(selected.length > 0){
+          selected = selected.filter((data,index)=>{
+            return selected.indexOf(data) === index;
+          })
+        }else{
+          selected.push({"name":gene,id:1})
+        }
+
       }
 
       // dataJson['genes'] = inputState['gene']
@@ -261,8 +270,6 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
   //   {geneOption}
   // </select>
 
-  // console.log(boxJson)
-  console.log(selectedValue)
 
   return (
     <div className='grid'>

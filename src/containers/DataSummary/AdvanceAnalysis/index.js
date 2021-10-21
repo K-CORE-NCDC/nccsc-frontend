@@ -23,6 +23,8 @@ export default function AdvancedInfo() {
   const dispatch = useDispatch()
   const prevCountRef = useRef();
   const [loader, setLoader] = useState(true)
+  const [reset, setReset] = useState("")
+  // const [previousSelection,setPreviousSelection] = useState({});
 
   useEffect(() => {
     dispatch(getGenomicInformation("POST",""))
@@ -71,8 +73,9 @@ export default function AdvancedInfo() {
     }
   },[summaryJson])
 
-  const callback = useCallback((filters) => {
+  const callback = useCallback((filters,selected) => {
     setState([])
+
     if(filters){
       setLoader(true)
       let data_ = {'filter':filters}
@@ -83,6 +86,7 @@ export default function AdvancedInfo() {
     }
   }, []);
 
+  // console.log("---->",previousSelection)
   // useEffect(()=>{
   // },[loader])
 
@@ -97,13 +101,12 @@ export default function AdvancedInfo() {
               <Filter parentCallback={callback}/>
             </div>
             <div className="col-start-2 col-span-3 pt-4 overflow-auto ">
+            {
+              loader?<LoaderCmp/>:
               <div className="grid grid-cols-3 gap-1">
-                {
-                  loader?
-                    <LoaderCmp/>
-                    :state
-                }
+                    {state}
               </div>
+              }
             </div>
           </div>
         </div>

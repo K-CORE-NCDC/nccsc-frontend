@@ -9,18 +9,22 @@ import {
   DocumentAddIcon
 } from '@heroicons/react/outline'
 import inputJson from '../data'
+
+
+let previous = ""
+
 export default function Filter({parentCallback}) {
   const [state, setState] = useState({"html":[]});
   const [selectState, setSelectState] = useState({});
   const [selected, setSelected] = useState('Basic/Diagnostic Information');
+  // const [previous,setPrevious] = useState('');
 
   useEffect(()=>{
     leftSide()
   },[])
   useEffect(()=>{
-
     leftSide()
-  },[selected])
+  },[selected, selectState])
 
   let icon_type = {
     "Basic/Diagnostic Information":<UserCircleIcon className="h-8 w-8 inline text-main-blue"/>,
@@ -74,11 +78,13 @@ export default function Filter({parentCallback}) {
   let selectFn = (e) => {
     let val = e.target.value
     let id = e.target.id
+    console.log("select---->",id)
     let tmp = selectState
     if (e.target.type==='text'){
       tmp[id] = val
     }else{
       if (id in tmp){
+
         delete tmp[id]
         document.getElementById(id).checked=false
       }else{
@@ -112,7 +118,6 @@ export default function Filter({parentCallback}) {
           }
           let color = inputJson['clinicalColor'][item]
           let id = item.split(" ").join("")
-          console.log("childelm---->",childelm)
           t.push(
             <div className="px-5 py-3 relative z-10" key={'div_mb_'+c}>
               <label htmlFor="toogleA" className="flex items-center cursor-pointer">
@@ -164,8 +169,8 @@ export default function Filter({parentCallback}) {
       document.getElementById("child_"+id).classList.remove("hidden")
       console.log(did.getAttribute('data-parent'),selectState);
     }
-
   }
+
   const switchButton = (event,id,k)=>{
     let s = selected
     setSelected(id)
@@ -194,21 +199,32 @@ export default function Filter({parentCallback}) {
       'Patient Health Information',
       'Clinical Information','Follow-up Observation'
     ]
-    setSelectState({})
+    let tmp = selectState
+
+
     let ckb = document.querySelectorAll("#all_checkboxes input[type=checkbox]");
     [...ckb].forEach( el => {
       let toggle_check_ = el.getAttribute('data-parent')
       if (!toggle_check.includes(toggle_check_)){
+            delete tmp[el.id]
             el.checked=false
       }
     });
+
     let input_boxes = document.querySelectorAll("#all_checkboxes input[type=text]");
     [...input_boxes].forEach( il => {
+      delete tmp[il.id]
       il.value = ""
     })
+    setSelectState(tmp)
     parentCallback("")
   }
 
+  // useEffect(()=>{
+  //   leftSide()
+  // },[selectState])
+
+  console.log(selectState)
 
   return (
     <div>
