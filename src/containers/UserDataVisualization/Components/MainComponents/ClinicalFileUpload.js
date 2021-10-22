@@ -123,7 +123,7 @@ export default function FileUpload({ parentCallBack }) {
   const [disableUploadButton, setDisableUploadButton] = useState(true)
   const [borderRed, setBorderRed] = useState(false)
 
-  // console.log(dropdownOptionsSelected);
+  console.log(activeTableKey);
 
   const resetStates = () => {
     setSelectedFileSampleType({
@@ -170,9 +170,10 @@ export default function FileUpload({ parentCallBack }) {
     fusion: "fusion"
   }
 
-  const changeErrorDataTable = (e) => {
-    setActiveTableKey(e.target.value)
-    setFileDataAsTableRendered(fileDataAsTableAll[e.target.value])
+  const changeErrorDataTable = (tableTabName) => {
+    console.log(tableTabName, fileDataAsTableAll);
+    setActiveTableKey(tableTabName)
+    setFileDataAsTableRendered(fileDataAsTableAll[tableTabName])
   }
 
 
@@ -258,8 +259,8 @@ export default function FileUpload({ parentCallBack }) {
         css += " border-blue-400 border-b-4 -mb-px opacity-100"
       }
       tableNavTabsTemp.push(
-        <li className={css}>
-          <button value={element} onClick={changeErrorDataTable} className="capitalize" >{dropdownOptions[element]}</button>
+        <li key={element} className={css}>
+          <button value={element} onClick={() => changeErrorDataTable(element)} className="capitalize" >{dropdownOptions[element]}</button>
         </li>
       )
     })

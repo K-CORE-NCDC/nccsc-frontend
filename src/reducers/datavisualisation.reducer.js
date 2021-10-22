@@ -97,6 +97,11 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
       return {
         
       }
+    case userdataVisualization.USER_DATA_PROJECT_TABLE_PROJECT:
+      return {
+        ...state, 
+        userDataProjectTable: payload
+      }
     default:
       return state
   }

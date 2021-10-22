@@ -12,6 +12,7 @@ import {
   Link
 } from "react-router-dom";
 import {FormattedMessage} from 'react-intl';
+import { element } from "prop-types";
 
 export default function DataVisualization() {
   const elementRef = useRef(null);
@@ -107,6 +108,8 @@ export default function DataVisualization() {
               tabList.push('lollipop')
             }else if(stepName === "oncoprint"){
               tabList.push('onco')
+            }else if(stepName === "igv"){
+              tabList.push('CNV')
             }else{
               tabList.push(stepName)
             }
@@ -151,7 +154,11 @@ export default function DataVisualization() {
     let w = elementRef.current.getBoundingClientRect().width
 
     setWidth(w);
-    dispatch(getBreastKeys())
+    if(project_id !== undefined){
+      dispatch(getBreastKeys({project_id: project_id}))
+    }else{
+      dispatch(getBreastKeys({}))
+    }
     setBoolChartState(false)
     if (project_id !== undefined) {
       setState((prevState) => ({
