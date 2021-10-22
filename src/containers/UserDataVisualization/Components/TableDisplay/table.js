@@ -10,7 +10,7 @@ const UserFilesTable = ({ userDataTableData }) => {
         {
             name: 'NAME',
             selector: row => row.name,
-            cell:(row)=><a className="text-blue-600" href={`visualise/circos/${row.id}`}>{row.name}</a>
+            cell:(row)=><a className="text-blue-600" href={`user-data/${row.id}`}>{row.name}</a>
         },
         {
             name: 'DNA MUTATION',

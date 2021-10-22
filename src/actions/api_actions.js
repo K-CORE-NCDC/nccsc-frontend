@@ -309,11 +309,11 @@ export function getIgv(type, data) {
   };
 }
 
-export function getBreastKeys() {
+export function getBreastKeys(data) {
   return (dispatch) => {
     //   dispatch({ type: homeConstants.DATA_SUMMARY });
     let url = config.auth + "brst-key/";
-    sendRequest(url, "GET", '')
+    sendRequest(url, "POST", data)
       .then((result) => {
         const d = result;
         let data = d['data']
@@ -720,5 +720,31 @@ export function clearDataVisualizationState() {
       type: CLEAR_ALL_STATES,
       payload: {},
     });
+  };
+}
+
+
+export function fetchProjectTableData(data) {
+  return (dispatch) => {
+    //   dispatch({ type: homeConstants.DATA_SUMMARY });
+    let url = config.auth + "user-project-table/";
+    dispatch({
+      type: userdataVisualization.USER_DATA_PROJECT_TABLE_PROJECT,
+      payload: {},
+    });
+    sendRequest(url, 'POST', data)
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: userdataVisualization.USER_DATA_PROJECT_TABLE_PROJECT,
+          payload: d["data"],
+        });
+      })
+      .catch((e) => {
+        dispatch({
+          type: userdataVisualization.USER_DATA_PROJECT_TABLE_PROJECT,
+          payload: {},
+        });
+      });
   };
 }

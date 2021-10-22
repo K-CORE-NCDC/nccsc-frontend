@@ -16,6 +16,7 @@ const Pipeline = React.lazy(() => import('./containers/Home/pipeline'))
 const DataApplication = React.lazy(() => import('./containers/DataApplication'))
 
 const genefusion = React.lazy(() => import('./containers/Common/genefusion'))
+const UserDataTable = React.lazy(() => import('./containers/UserDataVisualization/Components/MainComponents/projectDataTable'))
 
 const route = [
   { path: '/', exact: true, type:'unauth', name: 'Home', component: Home },
@@ -31,6 +32,7 @@ const route = [
   { path: '/member', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Join'/>, component: Join},
   { path: '/signup', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: Signup},
   { path: '/genefusion', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: genefusion},
+  { path: '/user-data/:id', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: UserDataTable},
 
 ]
 
