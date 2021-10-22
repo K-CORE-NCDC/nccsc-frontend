@@ -102,6 +102,9 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
         type: 'pie',
         data: g_data,
         options: {
+          labels: {
+            render: 'label'
+          },
           plugins:{
             legend: {
               display: true,
@@ -109,17 +112,29 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
               
             },
             datalabels: {
-              formatter: (value, ctx) => {
-                  let sum = 0;
-                  let dataArr = ctx.chart.data.datasets[0].data;
-                  dataArr.map(data => {
-                      sum += data;
-                  });
-                  let percentage = (value*100 / sum).toFixed(2)+"%";
-                  return '';
+              display: true,
+              formatter: (val, ctx) => {
+                return ctx.chart.data.labels[ctx.dataIndex];
               },
               color: '#fff',
-            }
+              // backgroundColor: '#404040'
+            },
+            
+            // datalabels: {
+
+              // formatter: (value, ctx) => {
+              //     // var data = chart.data;
+              //     let sum = 0;
+              //     let dataArr = ctx.chart.data;
+              //     console.log(dataArr)
+              //     // dataArr.map(data => {
+              //     //     sum += data;
+              //     // });
+              //     // let percentage = (value*100 / sum).toFixed(2)+"%";
+              //     return '';
+              // },
+              // color: '#fff',
+            // }
           },
           responsive: false,
           layout:{

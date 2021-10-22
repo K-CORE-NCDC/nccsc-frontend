@@ -76,15 +76,15 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
           <div className="flex flex-row justify-start pl-12 gap-6">
             <div>
               <button className="box-border h-8 w-20 bg-red-600 border-2 line-through" onClick={()=>setIgvLegend("cn >= 3")}></button>
-              <h3><strong><FormattedMessage  id = "Gain" defaultMessage='Gain'/></strong></h3>
+              <h3><strong>Gain (&gt;=3) </strong></h3>
             </div>
             <div>
               <button className="box-border h-8 w-20 bg-white border-4" onClick={()=>setIgvLegend("cn = 2")}></button>
-              <h3><strong><FormattedMessage  id = "Normal" defaultMessage='Normal'/></strong></h3>
+              <h3><strong>Normal (=2)</strong></h3>
             </div>
             <div>
               <button className="box-border h-8 w-20 bg-blue-500 border-4" onClick={()=>setIgvLegend("cn <= 1")}></button>
-              <h3><strong><FormattedMessage  id = "Loss" defaultMessage='Loss'/></strong></h3>
+              <h3><strong>Loss (&lt;=1)</strong></h3>
             </div>
           </div>
           <Igv watermarkCss={watermarkCss} ref={reference} data={igvJson}/>

@@ -227,7 +227,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                   'color': colors[key],
                   'tooltip': {
                     'header': 'Protein Change',
-                    'body': lollipopTmp[vc][0].split('||')[1]+"\n Samples Count - "+lollipopTmp[vc].length
+                    'body': lollipopTmp[vc][0].split('||')[1]+"\n Samples Count : "+lollipopTmp[vc].length
                   }
                 })
                 height.push(lollipopTmp[vc].length)
@@ -270,7 +270,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
               'color': colors[key.substring(0, 1)],
               'tooltip': {
                 'header': key + ' Site',
-                'body': lollipopLegenedTmp[key].length + ' Phosphorelytions'
+                'body': lollipopLegenedTmp[key].length + ' : Phosphorelytions'
               }
             })
 
