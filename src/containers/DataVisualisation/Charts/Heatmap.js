@@ -38,9 +38,9 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     if(n >20 && n<=25){
       tmp = '21~25'
     } else if(n>25 && n<=30 )  {
-      tmp = '25~30'
+      tmp = '26~30'
     } else if(n>30 && n<=35) {
-      tmp = '30~35'
+      tmp = '31~35'
     } else if(n>35 && n<=40) {
       tmp = '36~40'
     }
@@ -55,9 +55,9 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     }else if (n>18.5 &&n<=25) {
       tmp = '18.5 ~ 25'
     }else if (n>25 &&n<=30) {
-      tmp='25~30'
+      tmp='25.1~30'
     }else if (n>30) {
-      tmp='30~'
+      tmp='30.1~'
     }
     return tmp
   }
@@ -96,10 +96,12 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       let heat_data = []
       let unique_cf = {}
       let z = {}
+      let optn = {}
       if(option.length>0){
         for (let opt = 0; opt < option.length; opt++) {
           unique_cf[option[opt].id] = []
           z[option[opt].id] = []
+          optn[option[opt].id] = option[opt].name
         }
       }
 
@@ -131,9 +133,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
 
       });
 
-      // if(clinicalFilter){
-      //   z[clinicalFilter] = []
-      // }
 
       let y = {
         "smps":genes,
@@ -149,6 +148,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       }
 
       Object.keys(unique_sample_values).forEach((key, i) => {
+        
         y["vars"].push(key)
         y['data'].push(unique_sample_values[key])
         if(option.length>0){
@@ -164,8 +164,17 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
         }
       });
 
+      let tmp = {}
+      for (const key in z) {
+        if(key in optn){
+          tmp[optn[key]] = z[key]
+        }
+      }
+      // z = tmp
+      
+      
       setActiveCmp(true)
-      setData({"z":z,"x":x,"y":y})
+      setData({"z":tmp,"x":x,"y":y})
       setTimeout(function () {
         setLoader(false)
       }, (1000));
@@ -208,7 +217,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     }else if(type === 'phospo'){
       dataJson['genes'] = selectedGene
     }
-
+    setOption([])
     if(inputData.type !==''){
       dataJson['table_type'] = type
       dataJson['view'] = viewType
@@ -225,6 +234,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     }
     e.target.classList.add("hover:bg-main-blue","bg-main-blue","text-white")
     setMainTab(type)
+    setOption([])
     let dataJson = { ...inputData }
     if(inputData.type !==''){
       // setClusterRange

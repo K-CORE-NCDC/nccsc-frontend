@@ -81,6 +81,11 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
         };
 
         var oncoprint = new window.Oncoprint("#oncoprint-glyphmap", "80vw");
+        console.log(oncoprint)
+        let models = {
+            vert_scroll:1
+        }
+        // oncoprint.model();
         oncoprint.suppressRendering();
         var geneData = []
 

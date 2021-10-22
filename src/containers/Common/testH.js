@@ -37,7 +37,7 @@ const HeatmapCmp = React.forwardRef(({  inputData, type, watermarkCss,width,clin
         config['varOverlayProperties'] = {}
         config["varOverlays"] = []
         for (let i = 0; i < clinicalFilter.length; i++) {
-            config['varOverlayProperties'][clinicalFilter[i].id] = {
+            config['varOverlayProperties'][clinicalFilter[i].name] = {
                 "position": "top",
                 "type": "Default",
                 "color": "rgb(254,41,108)",
@@ -49,7 +49,7 @@ const HeatmapCmp = React.forwardRef(({  inputData, type, watermarkCss,width,clin
                 "showBox": true,
                 "rotate": false
             }
-            config["varOverlays"].push(clinicalFilter[i].id)
+            config["varOverlays"].push(clinicalFilter[i].name)
         }
         config["variablesClustered"] =  true
     }

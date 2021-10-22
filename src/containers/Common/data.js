@@ -220,31 +220,34 @@ let filterBoxes = {
       {'type':'checkbox','name':'sex','id':'sex_male','value':'Male'},
       {'type':'checkbox','name':'sex','id':'sex_female','value':'Female'}
     ],
-    "Age(20-40 Y)":[
+    "Age Of Diagnosis (20-40 Y)":[
       {'type':'number','id':'aod','value':''},
 
     ],
-    "BMI (15.82-36.33 kg/㎡)":[
+    "Body Mass Index (15.82-36.33 kg/㎡)":[
       {'type':'number','id':'bmi','value':''},
-
+    ],
+    "Diagnosis of Bilateral Breast Cancer":[
+      {'type':'checkbox','name':'dbbc','id':'dbbc_from','value':'Yes'},
+      {'type':'checkbox','name':'dbbc','id':'dbbc_to','value':'No'}
     ],
 
   },
   "Patient Health Information":{
-    "Smoking information":[
+    "Smoking Status":[
       {'type':'checkbox','name':'smoking_status','id':'current_smoker','value':'Current Smoker'},
       {'type':'checkbox','name':'smoking_status','id':'former_smoker','value':'Former Smoker'},
       {'type':'checkbox','name':'smoking_status','id':'non_smoker','value':'Nonsmoker'},
     ],
-    "Drinking information":[
+    "Alcohol Consumption":[
       {'type':'checkbox','name':'alcohol_consuption','id':'ac_yes','value':'Yes'},
       {'type':'checkbox','name':'alcohol_consuption','id':'ac_no','value':'No'},
     ],
-    "Breast cancer family history":[
+    "Family History of Breast Cancer":[
       {'type':'checkbox','name':'fhbc','id':'fhbc_yes','value':'Yes'},
       {'type':'checkbox','name':'fhbc','id':'fhbc_no','value':'No'},
     ],
-    "Menarche age (10-17 Y)":[
+    "First Menstrual age (10-17 Y)":[
       {'type':'number','name':'fma','id':'fma','value':''},
     ],
     "Menopause":[
@@ -255,18 +258,18 @@ let filterBoxes = {
       {'type':'checkbox','name':'childbirth','id':'childbirth_yes','value':'Yes'},
       {'type':'checkbox','name':'childbirth','id':'childbirth_no','value':'No'},
     ],
-    "Breastfeeding experience":[
+    "Experience Of Breastfeeding":[
       {'type':'checkbox','name':'eob','id':'eob_yes','value':'Yes'},
       {'type':'checkbox','name':'eob','id':'eob_no','value':'No'},
     ],
-    "Lactation period (1-24 M)":[
+    "Duration of Breastfeeding (1-24 M)":[
       {'type':'number','name':'dob','id':'dob','value':''},
     ],
-    "Contraceptive":[
+    "Intake of Oral Contraceptive Pill":[
       {'type':'checkbox','name':'iocp','id':'iocp_yes','value':'Yes'},
       {'type':'checkbox','name':'iocp','id':'iocp_no','value':'No'},
     ],
-    "HRT":[
+    "Hormone Replacement Therapy":[
       {'type':'checkbox','name':'hrt','id':'hrt_yes','value':'Yes'},
       {'type':'checkbox','name':'hrt','id':'hrt_no','value':'No'},
     ],
@@ -283,13 +286,13 @@ let filterBoxes = {
       {'type':'checkbox','name':'nstage','id':'nstage_n2','value':' N2(2, 2a)'},
       {'type':'checkbox','name':'nstage','id':'nstage_n3','value':'N3(3, 3a)'},
     ],
-    "ER Test":[
+    "ER Test Results":[
       {'type':'checkbox','name':'etr','id':'etr_yes','value':'Positive'},
       {'type':'checkbox','name':'etr','id':'etr_no','value':'Negative'},
       {'type':'checkbox','name':'etr','id':'etr_na','value':'Not evaluated'},
 
     ],
-    "PR Test":[
+    "PR Test Results":[
       {'type':'checkbox','name':'ptr','id':'ptr_yes','value':'Positive'},
       {'type':'checkbox','name':'ptr','id':'ptr_no','value':'Negative'},
       {'type':'checkbox','name':'ptr','id':'ptr_na','value':'Not evaluated'},
@@ -302,16 +305,16 @@ let filterBoxes = {
       {'type':'checkbox','name':'herscore','id':'herscore_2+','value':'2+'},
       {'type':'checkbox','name':'herscore','id':'herscore_3+','value':'3+'},
     ],
-    "Ki-67 (1-95 %)":[
+    "Ki-67 Index (1-95 %)":[
       {'type':'number','name':'ki67','id':'ki67','value':''},
     ]
   },
   "Follow-up Observation":{
-    "Recurrence":[
+    "Cancer Recurrence":[
       {'type':'checkbox','name':'cr','id':'cr_yes','value':'Yes'},
       {'type':'checkbox','name':'cr','id':'cr_no','value':'No'},
     ],
-    "Time until relapse is confirmed (0.8-186.3 M)":[
+    "Time until relapse is confirmed (1-16 Y)":[
       {'type':'number','name':'turc','id':'turc','value':''},
     ]
   },
@@ -319,26 +322,28 @@ let filterBoxes = {
 
 let filterChoices = [
     {'name': 'sex', 'id': 'sex_cd'},
-    {'name': 'Age', 'id': 'diag_age'},
-    {'id': 'bmi_vl', 'name': 'BMI'},
+    {'name': 'Age Of Diagnosis', 'id': 'diag_age'},
+    {'id': 'bmi_vl', 'name': 'Body Mass Index'},
     {'id': 'bila_cncr_yn', 'name': 'Diagnosis of Bilateral Breast Cancer' },
-    {'name': 'Current Smoker', 'id': 'smok_curr_yn' },
+    {'name': 'Smoking Status', 'id': 'smok_curr_yn' },
     {'name': 'Former Smoker', 'id': 'smok_yn' },
     {'name': 'Alcohol Consumption', 'id': 'drnk_yn',  },
-    {'name': 'Breast Cancer Family History', 'id': 'fmhs_brst_yn' },
-    {'name': 'Menarche age (10-17 Y)', 'id': 'mena_age'},
+    {'name': 'Family History of Breast Cancer ', 'id': 'fmhs_brst_yn' },
+    {'name': 'First Menstrual Age', 'id': 'mena_age'},
     {'name': 'Menopause', 'id': 'meno_yn' },
-    {'name': 'childbirth', 'id': 'delv_yn' },
-    {'name': 'Breastfeeding Experience', 'id': 'feed_yn' },
-    {'name': 'Lactation period (1-24 M)', 'id': 'feed_drtn_mnth'},
-    {'name': 'Contraceptive', 'id': 'oc_yn' },
-    {'name': 'HRT', 'id': 'hrt_yn' },
-    {'name': 'T Stage', 'id': 't_category'  },
-    {'name': 'N Stage', 'id': 'n_category' },
+    {'name': 'Childbirth', 'id': 'delv_yn' },
+    {'name': 'Experience of Breastfeeding', 'id': 'feed_yn' },
+    {'name': 'Duration of Breastfeeding', 'id': 'feed_drtn_mnth'},
+    {'name': 'Intake Of Contraceptive Pill', 'id': 'oc_yn' },
+    {'name': 'Hormone Replace Therapy', 'id': 'hrt_yn' },
+    {'name': 'T Category', 'id': 't_category'  },
+    {'name': 'N Category', 'id': 'n_category' },
+    {'name': 'ER Test Results', 'id': 'er_score' },
+    {'name': 'PR Test Results', 'id': 'pr_score' },
     {'name': 'HER2 Score', 'id': 'her2_score' },
-    {'name': 'Ki67', 'id': 'ki67_score'},
+    {'name': 'Ki67 Index', 'id': 'ki67_score'},
     {'name': 'Relapse Duration', 'id': 'rlps_cnfr_drtn',},
-    {'name': 'Relapse Yes or No', 'id': 'rlps_yn' }
+    {'name': 'Cancer Recurrence', 'id': 'rlps_yn' }
 ]
 let inputJson = {
   "clinicalColor":clinicalColor,

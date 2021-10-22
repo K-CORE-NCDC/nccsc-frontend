@@ -142,7 +142,7 @@ var non_mutation_rule_params = {
 				'fill': 'rgba(139,0,139,1)',
 				'z': 4,
 			}],
-			legend_label: 'Cnv (value > 3)',
+			legend_label: 'Cnv (value >= 3)',
 		}
     },
     // fusion

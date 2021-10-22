@@ -139,12 +139,12 @@ export default function Barchart({id,data,width,color, chart_type,title}) {
           t.push(data[i].cnt)
         }
         colors.push(h+linear+")")
-        console.log(id)
+        
         if(id!=='chart_bar_HER2Score' && id!=='chart_bar_Timeuntilrelapseisconfirmed' && id!=='chart_bar_FirstMenstrualAge' && id!=='chart_bar_AgeOfDaignosis' && id!=="chart_bar_BodyMassIndex"){
           linear = linear-0.2
         }
       }
-      console.log(colors)
+      
       if(na!=''){
         na = na.split('||')
         g_dat['labels'].push(na[0])
