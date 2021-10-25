@@ -31,6 +31,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const [viewType, setViewType] = useState('gene_vl')
   const [mainTab,setMainTab] = useState('heatmap')
   const [clusterRange,setClusterRange] = useState("")
+  const [inSufficientData, setInSufficientData] = useState(true)
 
   const diag_age = (vl)=>{
     let n = parseInt(vl)
@@ -178,6 +179,27 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       setTimeout(function () {
         setLoader(false)
       }, (1000));
+    }
+  }, [heatmapJson])
+
+
+  useEffect(() => {
+    if(heatmapJson){
+      let geneSet = new Set();
+      if('data' in heatmapJson){
+        heatmapJson.data.forEach(e=>{
+          geneSet.add(e.gene_name)
+        })
+      }else if(heatmapJson.length > 1){
+        heatmapJson.forEach(e=>{
+          geneSet.add(e.gene_name)
+        })
+      }
+      if(geneSet.size > 2){
+        setInSufficientData(false)
+      }else{
+        setInSufficientData(true)
+      }
     }
   }, [heatmapJson])
 
@@ -480,8 +502,9 @@ function onSelect(selectedList, selectedItem) {
                 }
               </div>
             }
-            {data_ && <HeatmapNewCmp clinicalFilter={optionChoices} inputData={data_} type={mainTab} watermarkCss={watermarkCss} ref={reference} width={width} />
+            {(data_ && (inSufficientData !== true)) && <HeatmapNewCmp clinicalFilter={optionChoices} inputData={data_} type={mainTab} watermarkCss={watermarkCss} ref={reference} width={width} />
             }
+            {inSufficientData && <NoContentMessage />}
             </div>
           }
         </div>
