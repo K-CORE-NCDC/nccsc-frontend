@@ -40,7 +40,7 @@ export default function AdvancedInfo() {
     "Variant per Sample":"vertical_stack_bar",
     "Methylation":"vertical_stack_bar",
     "Proteome":"vertical_stack_bar",
-    "Phospo":"vertical_stack_bar"
+    "Phospho":"vertical_stack_bar"
   }
 
   useEffect(()=>{

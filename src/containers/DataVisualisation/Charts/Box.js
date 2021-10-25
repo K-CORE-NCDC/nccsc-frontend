@@ -37,8 +37,8 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
 
   const dispatchActionCommon = (postJsonBody) =>{
     if(postJsonBody.table_type === 'proteome'){
-      // dispatch(getBoxInformation('POST', {...postJsonBody, genes: inputData.genes}))
-      dispatch(getBoxInformation('POST', postJsonBody))
+      dispatch(getBoxInformation('POST', {...postJsonBody, genes: inputData.genes}))
+      // dispatch(getBoxInformation('POST', postJsonBody))
     }else{
       dispatch(getBoxInformation('POST', postJsonBody))
     }
