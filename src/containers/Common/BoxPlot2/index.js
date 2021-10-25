@@ -114,15 +114,15 @@ const BoxPlot = React.forwardRef(({ box_data,chart_type, watermarkCss }, ref) =>
       var svg = d3.select("#box2")
       .append("svg")
         .attr("width", (250*sumstat.length)+250)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("height", height+  margin.top + margin.bottom)
         .append("g")
         .attr("transform",
               "translate(" + margin.left + "," + margin.top + ")");
 
-    svg.append("circle").attr("cx",30).attr("cy",5).attr("r", 6).style("fill", "red")
-    svg.append("circle").attr("cx",30).attr("cy",19).attr("r", 6).style("fill", "blue")
-    svg.append("text").attr("x", 40).attr("y", 10).text("T").style("font-size", "15px").attr("alignment-baseline","top")
-    svg.append("text").attr("x", 40).attr("y", 25).text("N").style("font-size", "15px").attr("alignment-baseline","top")
+      svg.append("circle").attr("cx",20).attr("cy",-11).attr("r", 6).style("fill", "red")
+      svg.append("circle").attr("cx",90).attr("cy",-11).attr("r", 6).style("fill", "blue")
+      svg.append("text").attr("x", 30).attr("y", -3).text("Tumor").style("font-size", "15px").attr("alignment-baseline","top")
+      svg.append("text").attr("x", 110).attr("y", -3).text("Normal").style("font-size", "15px").attr("alignment-baseline","top")
 
     var tooltip = d3.select("#box2").append("div").attr('class','boxplot_tooltip')
                .style("opacity", 0);
