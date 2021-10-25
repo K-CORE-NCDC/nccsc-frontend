@@ -1,7 +1,8 @@
 import { element } from 'prop-types';
 import React, { useState,useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
-import Oncoprint from "oncoprintjs";
+// import Oncoprint from "oncoprintjs";
+// import CanvasXpressReact from 'canvasxpress-react';
 import _ from 'lodash';
 import './rules';
 
@@ -29,6 +30,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
     const [state, setState] = useState({});
     const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
 
+    var oncoprint 
     const drawChart = (w,gData,cData,rule_types,inputRule) => {
         
         
@@ -80,8 +82,8 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
             'init_sort_direction': 0
         };
 
-        var oncoprint = new window.Oncoprint("#oncoprint-glyphmap", "80vw");
-        console.log(oncoprint)
+        oncoprint = new window.Oncoprint("#oncoprint-glyphmap", "80vw");
+        
         let models = {
             vert_scroll:1
         }
@@ -368,11 +370,22 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
             drawChart(width-300,gData,cData,type,inputRule)
         }
     },[state,inputRule])
+    const downloadImage = (e)=>{
+        console.log(oncoprint)
+        oncoprint.toCanvas(function(canvas, truncated) {
+            canvas.toBlob(function(blob) {
+                console.log(blob)
+                // saveAs(blob, 'oncoprint.png');
+            });
+        }, 2);
+
+    }
 
   return (
     <div>
       <div ref={ref}  className={`onco ${watermarkCss}`} id='oncoprint-glyphmap'>
       </div>
+      <button onClick={e=>downloadImage(e)}>Image</button>
     </div>
   )
 })
