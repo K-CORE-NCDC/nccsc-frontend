@@ -41,7 +41,7 @@ export default function DropdownMenu() {
         html.push(
           <li className="group h-full table-cell relative " key={'li_'+i}>
             {htmlbutton}
-            <ul className="absolute hidden list-none text-center" key={'ul_'+i}>
+            <ul className="absolute hidden list-none text-center h-auto" key={'ul_'+i}>
               {tmp}
             </ul>
           </li>
@@ -50,6 +50,9 @@ export default function DropdownMenu() {
         html.push(
           <li className="group h-full table-cell relative " key={'liul_'+i}>
             {htmlbutton}
+            <ul className="absolute hidden list-none text-center h-auto" key={'ul_'+i}>
+              
+            </ul>
           </li>
         )
       }

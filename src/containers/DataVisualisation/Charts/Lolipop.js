@@ -444,7 +444,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
               </div>
               <>
                 {noContent && <NoContentMessage />}
-                {showLollipop && <div className='grid p-10'>
+                {showLollipop && <div className='grid p-10 w-full'>
                   <div className='bg-white flex'>
                     <LollipopCmp watermarkCss={watermarkCss} ref={reference} width={width} type={tableType}
                       gene={gene}

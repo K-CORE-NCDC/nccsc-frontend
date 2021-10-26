@@ -328,7 +328,6 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
             html2canvas(document.querySelector('canvas')).then(function(canvas) {
                 saveAs(canvas.toDataURL(), 'oncoprint.png');
             });
-           
         }
     },[watermarkCss])
 
