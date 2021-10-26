@@ -27,7 +27,7 @@ export default function GenomicInfo() {
     "Omics Sample Summary":"Venn",
     "Variant Classification":"Bar",
     "Variant Type":"Bar",
-    "Snv Class":"Bar",
+    "CNV Class":"Bar",
     "Top 10 Mutated Genes":"stack_bar",
     "Variant Classification Summary":'box_plot',
     "Variant per Sample":"vertical_stack_bar",

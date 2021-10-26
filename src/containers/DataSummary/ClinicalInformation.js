@@ -14,6 +14,7 @@ import Piechart from '../Common/Piechart'
 import { getDashboardDsummaryData } from '../../actions/api_actions'
 // import Loader from "react-loader-spinner";
 import LoaderCmp from '../Common/Loader';
+import {FormattedMessage} from 'react-intl';
 
 import inputJson from './data'
 
@@ -26,12 +27,12 @@ export default function ClinicalInformation() {
   const [firstLoad, setFirstLoad] = useState(true)
   const [loader, setLoader] = useState(true)
 
-  
+
   // const forceUpdate = React.useCallback(() => updateState({}), []);
   const change_visual = (e) =>{
-    
+
     let id = e.target.dataset['id']
-    
+
     e.target.checked = true
     let c_type = e.target.value
     let current_class_name = "parent_chart_"+c_type+"_"+id
@@ -59,7 +60,7 @@ export default function ClinicalInformation() {
     }
   },[firstLoad,summaryJson])
 
-  
+
 
   useEffect(() => {
     setLoader(true)
@@ -104,6 +105,7 @@ export default function ClinicalInformation() {
     'Time until relapse is confirmed':'Time until relapse is confirmed (Targeting Cancer Recurrence Y respondents(44))'
   }
 
+
   const leftSideHtml = (data)=>{
     let ac = leftSide['activeCharts']
 
@@ -121,14 +123,16 @@ export default function ClinicalInformation() {
           }
 
           let id = itm.split(" ").join("")
-
+          console.log(itm)
+          // if(itm === "Age of Diagnosis"){
+          //   console.log(itm)
+          // }
           t.push(
             <div className="p-3 relative z-10" key={'div_mb_'+i}>
               <label htmlFor="toogleA" className="flex items-center cursor-pointer">
                 <div className="ml-3 text-gray-700 w-9/12 text-2xl tracking-wide">
                   {
-                    (itm in chart_names)?chart_names[itm]:itm
-                    
+                    (itm in chart_names)?<FormattedMessage  id = {itm} defaultMessage={chart_names[itm]}/>:<FormattedMessage  id = {itm} defaultMessage={itm}/>
                   }
                 </div>
                 <div className="relative" id={'div_'+id}  onClick={e=>checkBoxFn(e,'md_'+i,itm)}>
@@ -141,13 +145,13 @@ export default function ClinicalInformation() {
             </div>
           )
         })
-        
+
         tmp.push(
           <div key={item+'_'+k} className="tab w-full overflow-hidden border-t" onClick={(e)=>switchButton(e,item,k)}>
             <input className="absolute opacity-0" id={"tab-single-"+k} type="radio" name="tabs2"/>
             <label className="block p-5 leading-normal cursor-pointer" htmlFor={"tab-single-"+k}>
               {icon_type[item]}
-              <span className="no-underline  ml-5 text-2xl tracking-wide">{item}</span>
+              <span className="no-underline  ml-5 text-2xl tracking-wide"><FormattedMessage  id = {item} defaultMessage={item}/></span>
             </label>
               {selected===item ? <div className="tab-content overflow-hidden border-l-2 bg-gray-100  leading-normal relative">
                 {t}
@@ -155,7 +159,7 @@ export default function ClinicalInformation() {
           </div>
         )
       })
-      
+
       setLeftSide((prevState)=>({
         ...prevState,
         'leftSide':tmp
@@ -180,7 +184,7 @@ export default function ClinicalInformation() {
       document.getElementById(id+"_toggle").style.background=inputJson['clinicalColor'][did.getAttribute('data-parent')]
       if(!tmp.includes(chart)){
         tmp.push(chart)
-        
+
       }
     }
     setActiveChartsList(tmp)
@@ -189,7 +193,7 @@ export default function ClinicalInformation() {
   }
 
   const loadChart = (chart, parent_name)=>{
-    
+
     let tmp = leftSide['charts']
     let ac = leftSide['activeCharts']
     let check = true
@@ -202,15 +206,15 @@ export default function ClinicalInformation() {
       }
     }
 
-    
+
     if(check ){
       Object.keys(summaryJson[parent_name]).forEach((item, k) => {
         let id = item.split(" ").join("")
-        
+
         if(item===chart){
           tmp.push(
             <div key={'chart_'+item} data-chart="bar" className='max-w bg-white rounded-2xl overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border'>
-              <h2 className="text-3xl tracking-wide">{(item in chart_inside_names)?chart_inside_names[item]:item}</h2>
+              <h2 className="text-3xl tracking-wide">{(item in chart_inside_names)?<FormattedMessage  id = {item+"_chart"} defaultMessage={chart_inside_names[item]}/>:<FormattedMessage  id = {item} defaultMessage={item}/>}</h2>
               <div className="mt-2 ml-5 p-3">
                   <label className="inline-flex items-center">
                     <input key={'radio_'+id+"_bar"} type="radio" defaultChecked={true} className="form-radio" id={id+"_bar"} data-id={id} name={"cr_"+id+"_"+k} value="bar" onChange={change_visual} />
@@ -235,19 +239,19 @@ export default function ClinicalInformation() {
                   data={summaryJson[parent_name][item]}
                   width='300'
                   color={ inputJson['clinicalColor'][parent_name] }
-                  
+
 
                   />
                 </div>
               </div>
             </div>
           )
-          
+
           ac.push(item)
         }
       })
     }
-    
+
 
     setLeftSide((prevState)=>({
       ...prevState,
@@ -255,7 +259,7 @@ export default function ClinicalInformation() {
       'activeCharts':ac
     }))
   }
-  
+
   useEffect(()=>{
     var objDiv = document.getElementById('charts_container')
     if(objDiv){
@@ -281,7 +285,7 @@ export default function ClinicalInformation() {
         if(setCheck != this){
           setCheck = this;
         }else{
-          
+
           this.checked = false;
           setCheck = null;
         }

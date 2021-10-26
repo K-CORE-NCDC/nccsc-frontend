@@ -28,6 +28,22 @@ const BoxPlot = React.forwardRef(({ box_data,chart_type, watermarkCss }, ref) =>
         width = d_['datasets'].length+3000
       }
 
+      var svg1 = d3.select("#box3")
+      .append("svg")
+        .attr("width", 250)
+        .attr("height", height-450 +  margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+              "translate(" + margin.left + "," + margin.top + ")");
+
+    svg1.append("circle").attr("cx",20).attr("cy",-5).attr("r", 6).style("fill", "red")
+    svg1.append("text").attr("x", 30).attr("y", 1).text("Tumor").style("font-size", "15px").attr("alignment-baseline","top")
+    if(chart_type==="proteome"){
+      svg1.append("circle").attr("cx",90).attr("cy",-5).attr("r", 6).style("fill", "blue")
+      svg1.append("text").attr("x", 100).attr("y", 1).text("Normal").style("font-size", "15px").attr("alignment-baseline","top")
+    }
+
+
 
     var max_vl = 5 //d_['max']
     var min_vl = 0 //d_['min']
@@ -119,10 +135,10 @@ const BoxPlot = React.forwardRef(({ box_data,chart_type, watermarkCss }, ref) =>
         .attr("transform",
               "translate(" + margin.left + "," + margin.top + ")");
 
-      svg.append("circle").attr("cx",20).attr("cy",-11).attr("r", 6).style("fill", "red")
-      svg.append("circle").attr("cx",90).attr("cy",-11).attr("r", 6).style("fill", "blue")
-      svg.append("text").attr("x", 30).attr("y", -3).text("Tumor").style("font-size", "15px").attr("alignment-baseline","top")
-      svg.append("text").attr("x", 110).attr("y", -3).text("Normal").style("font-size", "15px").attr("alignment-baseline","top")
+      // svg.append("circle").attr("cx",20).attr("cy",-11).attr("r", 6).style("fill", "red")
+      // svg.append("circle").attr("cx",90).attr("cy",-11).attr("r", 6).style("fill", "blue")
+      // svg.append("text").attr("x", 30).attr("y", -3).text("Tumor").style("font-size", "15px").attr("alignment-baseline","top")
+      // svg.append("text").attr("x", 110).attr("y", -3).text("Normal").style("font-size", "15px").attr("alignment-baseline","top")
 
     var tooltip = d3.select("#box2").append("div").attr('class','boxplot_tooltip')
                .style("opacity", 0);
@@ -158,7 +174,7 @@ const BoxPlot = React.forwardRef(({ box_data,chart_type, watermarkCss }, ref) =>
             "translate(" + (width/2) + " ," +
                            (height + margin.top + 20) + ")")
       .style("text-anchor", "middle")
-      .text("Selected Gene");
+      // .text("Selected Gene");
 
 
     var y = d3.scaleLinear()
@@ -375,8 +391,12 @@ const BoxPlot = React.forwardRef(({ box_data,chart_type, watermarkCss }, ref) =>
 
 
   return (
+    <>
+      <div id="box3">
+      </div>
       <div ref={ref} className={watermarkCss} id="box2" style={{'width':'100%','overflowX':'scroll','padding':'20px'}}>
       </div>
+    </>
   )
 })
 

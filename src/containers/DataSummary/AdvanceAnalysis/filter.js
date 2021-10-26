@@ -8,7 +8,8 @@ import {
   SearchIcon,
   DocumentAddIcon
 } from '@heroicons/react/outline'
-import inputJson from '../data'
+import inputJson from '../data';
+import {FormattedMessage} from 'react-intl';
 
 
 let previous = ""
@@ -33,12 +34,22 @@ export default function Filter({parentCallback}) {
     "Follow-up Observation":<SearchIcon className="h-8 w-8 inline text-main-blue"/>
   }
 
+  let chart_names = {
+    'Age Of Daignosis':'Age of Diagnosis (20-40 Y)',
+    "Body Mass Index":'Body Mass Index (15.82-36.33 kg/㎡)',
+    'First Menstrual Age':'First Menstrual Age (10-17 Y)',
+    'Duration of Breastfeeding':'Duration of Breastfeeding (1-24 M)',
+    'Ki-67 Index':'Ki-67 Index(1-95 %)',
+    'Time until relapse is confirmed':'Time until relapse is confirmed (1-16 Y)'
+  }
+
 
   let checkbox = (d) => {
     let check = false
     if (d.id in selectState){
       check = true
     }
+    
     return (
       <div key={d.id} className="px-10">
         <label className="inline-flex items-center">
@@ -47,7 +58,7 @@ export default function Filter({parentCallback}) {
             value={d.value}
             onChange={e=>selectFn(e)}
              />
-          <span className="ml-2">{d.value}</span>
+          <span className="ml-2"><FormattedMessage  id = {d.value} defaultMessage={d.value}/></span>
         </label>
       </div>
     )
@@ -78,7 +89,7 @@ export default function Filter({parentCallback}) {
   let selectFn = (e) => {
     let val = e.target.value
     let id = e.target.id
-    console.log("select---->",id)
+    // console.log("select---->",id)
     let tmp = selectState
     if (e.target.type==='text'){
       tmp[id] = val
@@ -118,11 +129,16 @@ export default function Filter({parentCallback}) {
           }
           let color = inputJson['clinicalColor'][item]
           let id = item.split(" ").join("")
+
+          // <FormattedMessage  id = {itm} defaultMessage={itm}/>
+          // console.log(childelm)
           t.push(
             <div className="px-5 py-3 relative z-10" key={'div_mb_'+c}>
               <label htmlFor="toogleA" className="flex items-center cursor-pointer">
                 <div className="ml-3 text-gray-700 w-10/12 text-2xl tracking-wide">
-                  {childelm}
+                  {
+                      (childelm in chart_names)?<FormattedMessage  id = {childelm} defaultMessage={chart_names[childelm]}/>:<FormattedMessage  id = {childelm} defaultMessage={childelm}/>
+                  }
                 </div>
                 <div className="relative" onClick={e=>checkBoxFn(e,'md_'+id+"_"+c)}>
                   <input type="checkbox" id={'md_'+id+"_"+c} checked="checked" data-parent={item} className="checkbox sr-only " onChange={e=>checkBoxFn(e,'md_'+id+"_"+c)}/>
@@ -142,7 +158,7 @@ export default function Filter({parentCallback}) {
           <input className="absolute opacity-0" id={"tab-single-"+k} type="radio" name="tabs2"/>
           <label className="block p-5 leading-normal cursor-pointer" htmlFor={"tab-single-"+k}>
             {icon_type[item]}
-            <span className="no-underline  ml-2 text-2xl tracking-wide">{item}</span>
+            <span className="no-underline  ml-2 text-2xl tracking-wide"><FormattedMessage  id ={item} defaultMessage={item}/></span>
           </label>
           {selected === item ? <div className="tab-content overflow-hidden border-l-2 bg-gray-100  leading-normal relative py-3">
             {t}
@@ -224,7 +240,7 @@ export default function Filter({parentCallback}) {
   //   leftSide()
   // },[selectState])
 
-  console.log(selectState)
+  // console.log(selectState)
 
   return (
     <div>
