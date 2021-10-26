@@ -28,6 +28,13 @@ const BoxPlot = React.forwardRef(({ box_data,chart_type, watermarkCss }, ref) =>
         width = d_['datasets'].length+3000
       }
 
+      let childnode_ = document.getElementById("box3")
+      if(childnode_.hasChildNodes()){
+        while (childnode_.firstChild) {
+          childnode_.removeChild(childnode_.firstChild)
+        }
+      }
+
       var svg1 = d3.select("#box3")
       .append("svg")
         .attr("width", 250)

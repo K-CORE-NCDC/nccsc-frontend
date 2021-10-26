@@ -805,7 +805,7 @@ dd {
 
 .bg4{max-width: 1000px;margin: 0 auto 80px;padding-bottom: 0px;}
 .pipeline_4{display: flex;flex-flow: wrap; align-items: flex-end;justify-content: space-around;}
-.pipeline_4_li{margin-bottom: 70px;width: 45%}
+.pipeline_4_li{margin-bottom: 70px;width: 54%}
 .pipeline_4_li img{box-shadow: 1px 1px 8px #333}
 .pipeline_4_li p{ margin-top: 12px}
 

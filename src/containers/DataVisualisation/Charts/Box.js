@@ -28,10 +28,13 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
   const [activeCmp,setActiveCmp] = useState(false)
   const [gene, setGene] = useState('')
   const [geneOption,setGeneOption] = useState('')
+  const [genes,setGenes] = useState('')
 
   useEffect(()=>{
     if(inputData && 'genes' in inputData){
+      setGenes(inputData['genes'])
       setInputState({...inputData})
+
     }
   },[])
 
@@ -158,7 +161,6 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
       dataJson['table_type'] = tableType
       dataJson['view'] = viewType
       // console.log(genes)
-      console.log(dataJson)
       setLoader(true)
       dispatchActionCommon(dataJson)
     }
@@ -167,6 +169,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
   function onRemove(selectedList, removedItem) {
     let genes = []
     setSelectedValue(selectedList)
+    // console.log(removedItem)
     selectedList.forEach((item, i) => {
       genes.push(item['name'])
     });
@@ -184,8 +187,6 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
       dispatchActionCommon(dataJson)
     }
   }
-
-
 
   const changeType = (e,type)=>{
     let c = document.getElementsByName('type')
@@ -205,6 +206,8 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
       if (gene_.length <= 0){
         gene_ = [gene]
       }
+      // console.log(type)
+      // console.log(inputState)
       if(type==='mutation'){
         dataJson['genes'] = gene_
 
@@ -217,7 +220,9 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
         }else{
           selected.push({"name":gene,id:1})
         }
-
+      }else{
+        setSelectedValue([])
+        dataJson['genes'] = genes
       }
 
       // dataJson['genes'] = inputState['gene']
