@@ -192,15 +192,18 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
           table_cols = [
             {
               name: 'Sample Id',
-              selector: row => row.sample
+              selector: row => row.sample,
+              sortable: true
             },
             {
               name: 'Protein Change',
-              selector: row => row.protein
+              selector: row => row.protein,
+              sortable: true
             },
             {
               name: 'Mutation Type',
-              selector: row => row.variant_classification
+              selector: row => row.variant_classification,
+              sortable: true
             }
           ]
           colors = mutation_colors
@@ -238,15 +241,18 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
           table_cols = [
             {
               name: 'Sample Id',
-              selector: row => row.sample
+              selector: row => row.sample,
+              sortable: true
             },
             {
               name: 'Site',
-              selector: row => row.site
+              selector: row => row.site,
+              sortable: true
             },
             {
               name: 'Gene',
-              selector: row => row.gene
+              selector: row => row.gene,
+              sortable: true
             }
           ]
           tmp.push(

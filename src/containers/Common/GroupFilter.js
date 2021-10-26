@@ -10,15 +10,15 @@ const filterChoices = [
     { 'type': 'number', 'name': 'Age Of Diaganosis', 'id': 'diag_age', 'input': 'number' },
     { 'type': 'number', 'id': 'bmi_vl', 'name': 'Body Mass Index', 'input': 'number' },
     { 'type': 'boolean', 'id': 'bila_cncr_yn', 'name': 'Diagnosis of Bilateral Breast Cancer' },
-    { 'type': 'boolean', 'name': 'Current Smoker', 'id': 'smok_curr_yn' },
+    { 'type': 'boolean', 'name': 'Smoking Status', 'id': 'smok_curr_yn' },
     { 'type': 'boolean', 'name': 'Former Smoker', 'id': 'smok_yn' },
-    { 'type': 'boolean', 'name': 'alcohol_consuption', 'id': 'drnk_yn', 'value': 'Yes' },
+    { 'type': 'boolean', 'name': 'Alcohol Consuption', 'id': 'drnk_yn', 'value': 'Yes' },
     { 'type': 'boolean', 'name': 'Family History of Breast Cancer', 'id': 'fmhs_brst_yn', 'value': 'Yes' },
     { 'type': 'number', 'name': 'First Menstural Age', 'id': 'mena_age', 'input': 'number' },
     { 'type': 'boolean', 'name': 'Menopause', 'id': 'meno_yn' },
     { 'type': 'boolean', 'name': 'childbirth', 'id': 'delv_yn' },
     { 'type': 'boolean', 'name': 'Experience of Breastfeeding', 'id': 'feed_yn' },
-    { 'type': 'number', 'name': 'Lactation period (month)', 'id': 'feed_drtn_mnth', 'input': 'number' },
+    { 'type': 'number', 'name': 'Duration of Breastfeeding', 'id': 'feed_drtn_mnth', 'input': 'number' },
     { 'type': 'boolean', 'name': 'Intake of Oral Contraceptive Pill', 'id': 'oc_yn' },
     { 'type': 'boolean', 'name': 'Hormone Replacement Therapy', 'id': 'hrt_yn' },
     { 'type': 'number', 'name': 'T Category', 'id': 't_category', 'input': 'number' },
@@ -36,16 +36,16 @@ const filterChoicesCustom = [
     { 'type': 'number', 'name': 'Age ', 'id': 'diag_age', 'input': 'number' },
     { 'type': 'number', 'id': 'bmi_vl', 'name': 'BMI', 'input': 'number' },
     { 'type': 'boolean', 'id': 'bila_cncr_yn', 'name': 'Diagnosis of Bilateral Breast Cancer' },
-    { 'type': 'boolean', 'name': 'Smoking', 'id': 'smok_yn' },
-    { 'type': 'boolean', 'name': 'Drinking', 'id': 'drnk_yn', 'value': 'Yes' },
+    { 'type': 'boolean', 'name': 'Smoking Status', 'id': 'smok_yn' },
+    { 'type': 'boolean', 'name': 'Alcohol Consuption', 'id': 'drnk_yn', 'value': 'Yes' },
     { 'type': 'boolean', 'name': 'Breast cancer family history', 'id': 'fmhs_brst_yn', 'value': 'Yes' },
     { 'type': 'number', 'name': 'Menarche age', 'id': 'mena_age', 'input': 'number' },
     { 'type': 'boolean', 'name': 'Menopause', 'id': 'meno_yn' },
     { 'type': 'boolean', 'name': 'childbirth', 'id': 'delv_yn' },
     { 'type': 'boolean', 'name': 'Breastfeeding Experience', 'id': 'feed_yn' },
-    { 'type': 'number', 'name': 'Lactation period (month)', 'id': 'feed_drtn_mnth', 'input': 'number' },
+    { 'type': 'number', 'name': 'Duration of Breastfeeding', 'id': 'feed_drtn_mnth', 'input': 'number' },
     { 'type': 'boolean', 'name': 'Intake of Oral Contraceptive Pill', 'id': 'oc_yn' },
-    { 'type': 'boolean', 'name': 'HRT', 'id': 'hrt_yn' },
+    { 'type': 'boolean', 'name': 'Hormone Replace Therapy', 'id': 'hrt_yn' },
     { 'type': 'number', 'name': 'T Category', 'id': 't_category', 'input': 'number' },
     { 'type': 'text', 'name': 'N Category', 'id': 'n_category', 'input': 'text' },
     { 'type': 'text', 'name': 'HER2 Score', 'id': 'her2_score', 'input': 'text' },
@@ -77,12 +77,12 @@ const preDefienedGroups = {
         { label: "< 1 Year", from: 12, to: 24 }
     ],
     t_category: [
-        { label: "Tis~T2", from: 0, to: 1 },
-        { label: "T3~T4", from: 1, to: 3 }
+        { label: "Tis~T2", from: 'T1', to: 'T2' },
+        { label: "T3~T4", from: 'T3', to: 'T4' }
     ],
     n_category: [
-        { label: "Nx~N2", from: 0, to: 2 },
-        { label: "N3", from: 3, to: 3 }
+        { label: "Nx~N2", from: 'N1', to: 'N2' },
+        { label: "N3", from: 'N3', to: 'N3' }
     ],
     her2_score: [
         { label: "positive(0, 0~1, 1+)", value: "positive(0, 0~1, 1+)" },

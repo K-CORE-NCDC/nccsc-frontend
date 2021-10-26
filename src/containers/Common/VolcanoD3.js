@@ -22,7 +22,7 @@ const VolcanoPlotD3 = ({ dataProps }) => {
             foldChangeThreshold = 1.0, // fold change level to colour by
             colorRange, // colour range to use in the plot
             xScale = d3.scaleLinear(), // the values for the axes will be continuous
-            yScale = d3.scaleLog();
+            yScale = d3.scaleLinear();
 
 
 
@@ -42,7 +42,7 @@ const VolcanoPlotD3 = ({ dataProps }) => {
                 // normally would set the y-range to [height, 0] but by swapping it I can flip the axis and thus
                 // have -log10 scale without having to do extra parsing
                 yScale.range([0, innerHeight])
-                    .domain([0.0000000001, 1])
+                    .domain([10, 0])
                     .nice(); // adds "padding" so the domain extent is exactly the min and max values
                 var zoom = d3.zoom()
                     .scaleExtent([1, 20])
@@ -72,8 +72,7 @@ const VolcanoPlotD3 = ({ dataProps }) => {
                 // add the axes
                 var xAxis = d3.axisBottom(xScale);
                 var yAxis = d3.axisLeft(yScale)
-                    .ticks(5)
-                    .tickFormat(yTickFormat);
+                   
 
                 var gX = svg.append('g')
                     .attr('class', 'x axis')
