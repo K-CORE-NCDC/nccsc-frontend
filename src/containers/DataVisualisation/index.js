@@ -70,7 +70,7 @@ export default function DataVisualization() {
   },[filterApplied])
 
   useEffect(() => {
-    
+
     return () => {
       dispatch(clearDataVisualizationState())
     }
@@ -172,7 +172,7 @@ export default function DataVisualization() {
       l = availableTabsForProject
     } else {
 
-      l = ['circos', 'onco', 'lollipop', 'volcano', 'heatmap', 'survival', 'scatter','cnv','box']
+      l = ['circos', 'onco', 'lollipop', 'volcano', 'heatmap', 'survival', 'correlation','cnv','box']
 
     }
     let tmp = []
@@ -259,7 +259,7 @@ export default function DataVisualization() {
         return Charts.heatmap(w, state, screenCapture, BrstKeys, setToFalseAfterScreenCapture)
       case "survival":
         return Charts.survival(w, state, screenCapture, setToFalseAfterScreenCapture)
-      case "scatter":
+      case "correlation":
         return Charts.scatter(w, state, screenCapture, setToFalseAfterScreenCapture)
       case "CNV":
         return Charts.igv(w, state, screenCapture, setToFalseAfterScreenCapture)

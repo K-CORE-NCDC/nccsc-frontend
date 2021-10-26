@@ -6,7 +6,7 @@ import PagenationTableComponent from '../../Common/PagenationTable'
 import GraphsModal from '../../Common/circostimelineGraph'
 import LoaderCmp from '../../Common/Loader'
 import ImageGrid from '../../Common/ImageGrid'
-import { getCircosInformation, getCircosTimelineTable, getOncoImages } from '../../../actions/api_actions'
+import { getCircosInformation, getCircosTimelineTable, getOncoImages, getBreastKeys } from '../../../actions/api_actions'
 import '../../../assets/css/style.css'
 import { exportComponentAsPNG } from 'react-component-export-image';
 import placeholder from '../../../assets/img/circos_ncc.png';
@@ -85,10 +85,18 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
         setLoader(true)
         setRenderCircos(false)
+        dispatch(getBreastKeys(editInputData))
         dispatch(getCircosInformation('POST', editInputData))
       }
     }
   }, [inputData, sampleKey])
+
+  useEffect(() => {
+    
+    return () => {
+      dispatch(getBreastKeys({}))
+    }
+  }, [])
 
   useEffect(() => {
     if (inputData && inputData.genes.length > 0) {
@@ -186,7 +194,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
                 </select>
               </div>
               <div className='p-3 mt-2'>
-                <button id='images' className="opacity-50 bg-main-blue hover:bg-blue-700 text-white font-bold p-4 rounded w-80" onClick={oncoImagesClickFunction}>Pathology image</button>
+                <button id='images' className="opacity-50 bg-main-blue hover:bg-blue-700 text-white font-bold p-4 rounded w-80" onClick={oncoImagesClickFunction}>Pathological image</button>
               </div>
               <div className='p-3 mt-2'>
                 <button id='tables' className="opacity-50 bg-main-blue hover:bg-blue-700 text-white font-bold p-4 rounded w-80" onClick={timelineGraphClickFunction}>F/U Timeline</button>

@@ -220,14 +220,14 @@ let filterBoxes = {
       {'type':'checkbox','name':'sex','id':'sex_male','value':'Male'},
       {'type':'checkbox','name':'sex','id':'sex_female','value':'Female'}
     ],
-    "Age Of Diagnosis (20-40 Y)":[
+    "Age Of Daignosis":[
       {'type':'number','id':'aod','value':''},
 
     ],
-    "Body Mass Index (15.82-36.33 kg/㎡)":[
+    "Body Mass Index":[
       {'type':'number','id':'bmi','value':''},
     ],
-    "Diagnosis of Bilateral Breast Cancer":[
+    "Diagnosis Of Bilateral Breast Cancer":[
       {'type':'checkbox','name':'dbbc','id':'dbbc_from','value':'Yes'},
       {'type':'checkbox','name':'dbbc','id':'dbbc_to','value':'No'}
     ],
@@ -247,7 +247,7 @@ let filterBoxes = {
       {'type':'checkbox','name':'fhbc','id':'fhbc_yes','value':'Yes'},
       {'type':'checkbox','name':'fhbc','id':'fhbc_no','value':'No'},
     ],
-    "First Menstrual age (10-17 Y)":[
+    "First Menstrual Age":[
       {'type':'number','name':'fma','id':'fma','value':''},
     ],
     "Menopause":[
@@ -275,13 +275,13 @@ let filterBoxes = {
     ],
   },
   "Clinical Information":{
-    "T Category":[
+    "T Stage":[
       {'type':'checkbox','name':'tstage','id':'tstage_1','value':'T1(is, 1, 1a, 1b, 1c, 1mi)'},
       {'type':'checkbox','name':'tstage','id':'tstage_2','value':'T2(2)'},
       {'type':'checkbox','name':'tstage','id':'tstage_3','value':'T3(3)'},
       {'type':'checkbox','name':'tstage','id':'tstage_4','value':'T4(4b, 4d)'},
     ],
-    "N Category":[
+    "N Stage":[
       {'type':'checkbox','name':'nstage','id':'nstage_n1','value':'N1(x,0,1mi, 1a, 1b)'},
       {'type':'checkbox','name':'nstage','id':'nstage_n2','value':' N2(2, 2a)'},
       {'type':'checkbox','name':'nstage','id':'nstage_n3','value':'N3(3, 3a)'},
@@ -305,7 +305,7 @@ let filterBoxes = {
       {'type':'checkbox','name':'herscore','id':'herscore_2+','value':'2+'},
       {'type':'checkbox','name':'herscore','id':'herscore_3+','value':'3+'},
     ],
-    "Ki-67 Index (1-95 %)":[
+    "Ki-67 Index":[
       {'type':'number','name':'ki67','id':'ki67','value':''},
     ]
   },
@@ -314,7 +314,7 @@ let filterBoxes = {
       {'type':'checkbox','name':'cr','id':'cr_yes','value':'Yes'},
       {'type':'checkbox','name':'cr','id':'cr_no','value':'No'},
     ],
-    "Time until relapse is confirmed (1-16 Y)":[
+    "Time until relapse is confirmed":[
       {'type':'number','name':'turc','id':'turc','value':''},
     ]
   },

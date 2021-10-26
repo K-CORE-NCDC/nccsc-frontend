@@ -200,8 +200,8 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
               </div>
           </div>
           <div className="flex float-left pt-6 pl-3 ml-6">
-            {showScatter && scatterJson['p_value']?<h4><strong>p-value:</strong> {scatterJson['p_value']}</h4>:""}
-            {showScatter && scatterJson['r_value']?<h4 className="ml-8"><strong>r-value:</strong> {scatterJson['r_value']}</h4>:""}
+            {showScatter && scatterJson['p_value']?<h4><strong>P-value:</strong> {scatterJson['p_value']}</h4>:""}
+            {showScatter && scatterJson['r_value']?<h4 className="ml-8"><strong>R-value:</strong> {scatterJson['r_value']}</h4>:""}
           </div>
         </div>
       </div>
