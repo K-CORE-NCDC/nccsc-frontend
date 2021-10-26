@@ -49,7 +49,6 @@ const TimeLineChart = ({ yearKey, valueKey, data }) => {
 
                 </ul>
                 <div className="m-1 p-1">
-                <p>X axis info</p>
                 </div>
             </div>) : (<div>No content</div>)}
         </div>

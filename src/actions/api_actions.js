@@ -151,11 +151,24 @@ export function getHeatmapInformation(type, data) {
     // if("table_type" in data){
     //   data.set('tab_type', data.table_type);
     // }
-
+    dispatch({
+      type: dataVisualization.HEATMAP_REQUEST_STATUS_CODE,
+      payload: {status:204, loader: true},
+    });
     sendRequest(url, type, data)
       .then((result) => {
         const d = result
-        // if (d.status === 200) {
+        if (d.status === 200) {
+          dispatch({
+            type: dataVisualization.HEATMAP_REQUEST_STATUS_CODE,
+            payload: {status:200},
+          });
+        }else{
+          dispatch({
+            type: dataVisualization.HEATMAP_REQUEST_STATUS_CODE,
+            payload: {status:204},
+          });
+        }
           dispatch({
             type: dataVisualization.HEATMAP_REQUEST,
             // payload: {...JSON.parse(d["data"]), status:200},

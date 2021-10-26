@@ -62,40 +62,27 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
 
       let negative = []
       let positive = []
-      let neg_count = 1
-      let pos_count = 1
-      let n_t = 1
-      let p_t = 1
-      let total = { "negative": 1, "positive": 1 }
+      let negativeCount = 0
+      let positiveCount =  0 
       if ('table_data' in volcanoJson) {
         volcanoJson['table_data'].forEach((item, i) => {
           // console.log(item)
           let log2foldchange = parseFloat(item['log2(fold_change)'])
           if (log2foldchange < 0) {
-            total['negative'] += 1
-            if (neg_count === 5) {
-              return false
-            } else {
+            negativeCount += 1
               negative.push({
                 "Gene Name": item['gene'],
                 "Log2FC": parseFloat(item['log2(fold_change)']),
                 "-Log(Pvalue)": item['q_value']
               })
-              neg_count += 1
-            }
           }
           else {
-            total['positive'] += 1
-            if (pos_count === 5) {
-              return false
-            } else {
+            positiveCount += 1
               positive.push({
                 "Gene Name": item['gene'],
                 "Log2FC": parseFloat(item['log2(fold_change)']),
                 "-Log(Pvalue)": item['q_value']
               })
-              pos_count += 1
-            }
           }
         });
       }
@@ -104,8 +91,8 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
       // console.log(total['positive'])
 
       setTabCount({
-        "negative": total['negative'],
-        "positive": total['positive']
+        "negative": negativeCount,
+        "positive": positiveCount
       })
 
       setNegativeData(negative)
