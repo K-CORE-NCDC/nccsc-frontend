@@ -7,8 +7,8 @@ import '../../styles/survival.css'
 
 export default function VennCmp({ width, data=null }) {
   useEffect(()=>{
-    
-    let sets = data
+    if(data){
+      let sets = data
     var chart = venn.VennDiagram().width(width)
     
     var div = d3.select("#venn")
@@ -38,7 +38,8 @@ export default function VennCmp({ width, data=null }) {
       "RNA Expression":"#d2352b",
       "DNA Mutation":"#529d3f",
       "Global Proteome_RNA Expression":"#c74a52",
-      "DNA Mutation_RNA Expression":"#644195",
+      "DNA Mutation_RNA Expression":"#b49cd6",
+      "RNA Expression_DNA Mutation": "#b49cd6",
       "Global Proteome_DNA Mutation":"#3777af",
       "Global Proteome_DNA Mutation_RNA Expression":"#fffebc"
     }
@@ -51,7 +52,6 @@ export default function VennCmp({ width, data=null }) {
           return colors[d['sets'][0]]
         }else{
           let n = d['sets'].join('_')
-          console.log(n)
           return colors[n]
         }
       })
@@ -124,13 +124,7 @@ export default function VennCmp({ width, data=null }) {
         tooltip.transition().duration(2500).style("opacity", 0);
 
     });
-    
-
-    
-    
-    
-
-
+    }
     
   },[width, data])
 

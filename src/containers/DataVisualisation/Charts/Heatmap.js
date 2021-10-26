@@ -36,6 +36,8 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const [renderNoContent, setRenderNoContent] = useState(false)
   const [renderHeatmap, setRenderHeatmap] = useState(true)
 
+  console.log(tableType);
+
 const diag_age = (vl)=>{
   let n = parseInt(vl)
   let tmp = ''
@@ -220,6 +222,8 @@ const bim_vl = (vl)=>{
   }, [screenCapture, watermarkCss])
 
 const changeType = (e, type) => {
+    e.preventDefault()
+    setTableType(type)
     let c = document.getElementsByName('type')
     setActiveCmp(false)
     setLoader(true)
@@ -229,8 +233,6 @@ const changeType = (e, type) => {
       classList.add("text-teal-700", "hover:bg-teal-200", "bg-teal-100")
     }
     e.target.classList.add("hover:bg-main-blue","bg-main-blue","text-white")
-
-    setTableType(type)
     let dataJson = { ...inputData }
     if(type === 'rna'){
       dataJson['genes'] = genes
@@ -331,8 +333,9 @@ function onSelect(selectedList, selectedItem) {
       let dataJson = { ...inputData }
       dataJson['clinicalFilters'] = cf
       dataJson['view'] = viewType
-      dataJson['type'] = viewType
+      // dataJson['type'] = viewType
       dataJson['heat_type'] = mainTab
+      dataJson['table_type'] = tableType
       dispatch(getHeatmapInformation('POST',dataJson))
     }
   }
