@@ -1,14 +1,28 @@
 import React, { useState,useEffect,Fragment } from 'react'
 import CanvasXpressReact from 'canvasxpress-react';
+import html2canvas from 'html2canvas';
 
-
+function saveAs(uri, filename) {
+    var link = document.createElement('a');
+    link.className = 'watermark'
+    if (typeof link.download === 'string') {
+        link.href = uri;
+        link.download = filename;
+        //Firefox requires the link to be in the body
+        document.body.appendChild(link);
+        //simulate click
+        link.click();
+        //remove the link when done
+        document.body.removeChild(link);
+    } else {
+        window.open(uri);
+    }
+}
 const HeatmapCmp = React.forwardRef(({  inputData, type, watermarkCss,width,clinicalFilter }, ref) => {
 
     const [data,setData] = useState({})
     const [dataLoaded,setDataLoaded] = useState(false)
     let target = "canvas";
-
-
 
     let config = {
         "colorSpectrum": ["navy","white","firebrick3"],
@@ -94,6 +108,15 @@ const HeatmapCmp = React.forwardRef(({  inputData, type, watermarkCss,width,clin
       config['smpOverlays'] = ["Treatment","Cluster","Dose"]
     }
 
+    useEffect(()=>{
+        if(watermarkCss){
+            html2canvas(document.querySelector('#canvas')).then(function(canvas) {
+                saveAs(canvas.toDataURL(), 'heatmap.png');
+            });
+           
+        }
+    },[watermarkCss])
+
 
     useEffect(()=>{
         if(Object.keys(inputData).length>0){
@@ -109,16 +132,15 @@ const HeatmapCmp = React.forwardRef(({  inputData, type, watermarkCss,width,clin
         }
     },[data])
     
-    console.log(data);
-    console.log(config);
+    // console.log(data);
+    // console.log(config);
 
     return (
         <div ref={ref} className={`heatmap ${watermarkCss}`}>
             { dataLoaded &&
                 <CanvasXpressReact target={target} data={data} config={config} width={width-100} height={'700'} />
-                // <div>dat</div>
-
             }
+            
         </div>
     )
 })

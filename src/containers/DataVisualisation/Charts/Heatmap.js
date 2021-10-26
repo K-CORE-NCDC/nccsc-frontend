@@ -211,7 +211,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     }
 
     if (watermarkCss !== "" && screenCapture) {
-      exportComponentAsPNG(reference)
       setToFalseAfterScreenCapture()
     }
 

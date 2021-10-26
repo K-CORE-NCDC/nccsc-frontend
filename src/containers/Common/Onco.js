@@ -1,13 +1,30 @@
 import { element } from 'prop-types';
 import React, { useState,useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
-// import Oncoprint from "oncoprintjs";
+import Oncoprint from "oncoprintjs";
 // import CanvasXpressReact from 'canvasxpress-react';
 import _ from 'lodash';
 import './rules';
-
+import html2canvas from 'html2canvas';
 import $ from 'jquery'
 import inputJson from '../Common/data'
+function saveAs(uri, filename) {
+    var link = document.createElement('a');
+    link.className = 'watermark'
+    if (typeof link.download === 'string') {
+        link.href = uri;
+        link.download = filename;
+        //Firefox requires the link to be in the body
+        document.body.appendChild(link);
+        //simulate click
+        link.click();
+        //remove the link when done
+        document.body.removeChild(link);
+    } else {
+        window.open(uri);
+    }
+}
+
 const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
     const [inputRule,setInputRule] = useState({})
     const [customName,setCustomName] = useState({})
@@ -306,7 +323,15 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
         },500);
     }
 
-  
+    useEffect(()=>{
+        if(watermarkCss){
+            html2canvas(document.querySelector('canvas')).then(function(canvas) {
+                saveAs(canvas.toDataURL(), 'oncoprint.png');
+            });
+           
+        }
+    },[watermarkCss])
+
 
     useEffect(()=>{
         if (data){
@@ -329,35 +354,37 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
     document.addEventListener('click',function(e){
         
         let elem = e.target.parentNode
-        if(elem.classList.contains('legends')){
-            let name = elem.getAttribute('data-text')
-            if (name in names_variant){
-                let zx = names_variant[name]
-                let index = type.indexOf(zx)
-                let r = zx.split('||')
-                let key = r[0]
-                let value = r[1]
-                let z = r[2]
-                let rule = window.geneticrules.genetic_rule_set_custom
-                if(index > -1){
-                    type.splice(index, 1);
-                    rule.rule_params[key][value]['shapes'][0]['z']=z
-                }else{
-                    type.push(zx)
-                    rule.rule_params[key][value]['shapes'][0]['z']=0
-                }
-                let gData = state['geneData']
-                let cData = state['clinicalData']
-                if(gData){
-                    if(gData.length>0){
-                        
-                        drawChart(width-300,gData,cData,type,rule)
+        if(elem){
+            if(elem.classList.contains('legends')){
+                let name = elem.getAttribute('data-text')
+                if (name in names_variant){
+                    let zx = names_variant[name]
+                    let index = type.indexOf(zx)
+                    let r = zx.split('||')
+                    let key = r[0]
+                    let value = r[1]
+                    let z = r[2]
+                    let rule = window.geneticrules.genetic_rule_set_custom
+                    if(index > -1){
+                        type.splice(index, 1);
+                        rule.rule_params[key][value]['shapes'][0]['z']=z
+                    }else{
+                        type.push(zx)
+                        rule.rule_params[key][value]['shapes'][0]['z']=0
                     }
-                }
+                    let gData = state['geneData']
+                    let cData = state['clinicalData']
+                    if(gData){
+                        if(gData.length>0){
+                            
+                            drawChart(width-300,gData,cData,type,rule)
+                        }
+                    }
 
+                }
+                e.preventDefault()
+                e.stopPropagation()
             }
-            e.preventDefault()
-            e.stopPropagation()
         }
         
     })
@@ -370,13 +397,15 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
             drawChart(width-300,gData,cData,type,inputRule)
         }
     },[state,inputRule])
+
     const downloadImage = (e)=>{
         console.log(oncoprint)
         oncoprint.toCanvas(function(canvas, truncated) {
-            canvas.toBlob(function(blob) {
-                console.log(blob)
-                // saveAs(blob, 'oncoprint.png');
-            });
+            console.log(canvas.toDataURL())
+            // canvas.toBlob(function(blob) {
+            //     console.log(blob)
+            //     // saveAs(blob, 'oncoprint.png');
+            // });
         }, 2);
 
     }
@@ -385,7 +414,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
     <div>
       <div ref={ref}  className={`onco ${watermarkCss}`} id='oncoprint-glyphmap'>
       </div>
-      <button onClick={e=>downloadImage(e)}>Image</button>
+        <button  onClick={e=>downloadImage(e)}>image</button>
     </div>
   )
 })
