@@ -31,6 +31,15 @@ export default function Filter({parentCallback,parentState}) {
 
   },[selected, selectState])
 
+  let chart_names = {
+    'Age Of Daignosis':'Age of Diagnosis (20-40 Y)',
+    "Body Mass Index":'Body Mass Index (15.82-36.33 kg/㎡)',
+    'First Menstrual Age':'First Menstrual Age (10-17 Y)',
+    'Duration of Breastfeeding':'Duration of Breastfeeding (1-24 M)',
+    'Ki-67 Index':'Ki-67 Index(1-95 %)',
+    'Time until relapse is confirmed':'Time until relapse is confirmed (1-16 Y)'
+  }
+
   let checkbox = (d) => {
     let check = false
     if (d.id in selectState){
@@ -45,7 +54,7 @@ export default function Filter({parentCallback,parentState}) {
             value={d.value}
             onChange={e=>selectFn(e)}
              />
-          <span className="ml-2">{d.value}</span>
+          <span className="ml-2"><FormattedMessage  id = {d.value} defaultMessage={d.value}/></span>
         </label>
       </div>
     )
@@ -127,7 +136,9 @@ export default function Filter({parentCallback,parentState}) {
             <div className="px-5 py-3 relative z-10" key={'div_mb_'+c}>
               <label htmlFor="toogleA" className="flex items-center cursor-pointer">
                 <div className="ml-3 text-gray-700 w-10/12 text-2xl tracking-wide">
-                  {childelm}
+                  {
+                      (childelm in chart_names)?<FormattedMessage  id = {childelm} defaultMessage={chart_names[childelm]}/>:<FormattedMessage  id = {childelm} defaultMessage={childelm}/>
+                  }
                 </div>
                 <div className="relative" onClick={e=>checkBoxFn(e,'md_'+id+"_"+c)}>
                   <input type="checkbox" id={'md_'+id+"_"+c} checked="checked" data-parent={item} className="checkbox sr-only " onChange={e=>checkBoxFn(e,'md_'+id+"_"+c)}/>

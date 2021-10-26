@@ -36,22 +36,22 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const [renderNoContent, setRenderNoContent] = useState(false)
   const [renderHeatmap, setRenderHeatmap] = useState(true)
 
-  const diag_age = (vl)=>{
-    let n = parseInt(vl)
-    let tmp = ''
-    if(n >20 && n<=25){
-      tmp = '21~25'
-    } else if(n>25 && n<=30 )  {
-      tmp = '26~30'
-    } else if(n>30 && n<=35) {
-      tmp = '31~35'
-    } else if(n>35 && n<=40) {
-      tmp = '36~40'
-    }
-    return tmp
+const diag_age = (vl)=>{
+  let n = parseInt(vl)
+  let tmp = ''
+  if(n >20 && n<=25){
+    tmp = '21~25'
+  } else if(n>25 && n<=30 )  {
+    tmp = '26~30'
+  } else if(n>30 && n<=35) {
+    tmp = '31~35'
+  } else if(n>35 && n<=40) {
+    tmp = '36~40'
   }
+  return tmp
+}
 
-  const bim_vl = (vl)=>{
+const bim_vl = (vl)=>{
     let n = parseInt(vl)
     let tmp = ''
     if(n<18.5){
@@ -116,6 +116,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
         d_ = heatmapJson
       }
 
+
       d_.forEach((item, i) => {
         if(!genes.includes(item['gene_name'])){
           genes.push(item['gene_name'])
@@ -134,7 +135,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
             }
           }
         }
-
       });
 
 
@@ -152,7 +152,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       }
 
       Object.keys(unique_sample_values).forEach((key, i) => {
-        
         y["vars"].push(key)
         y['data'].push(unique_sample_values[key])
         if(option.length>0){
@@ -175,8 +174,8 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
         }
       }
       // z = tmp
-      
-      
+
+
       setActiveCmp(true)
       setData({"z":tmp,"x":x,"y":y})
       setTimeout(function () {
@@ -220,7 +219,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
 
   }, [screenCapture, watermarkCss])
 
-  const changeType = (e, type) => {
+const changeType = (e, type) => {
     let c = document.getElementsByName('type')
     setActiveCmp(false)
     setLoader(true)
@@ -250,7 +249,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     }
   }
 
-  const changeMainType = (e, type) => {
+const changeMainType = (e, type) => {
     let c = document.getElementsByName('maintype')
     for (var i = 0; i < c.length; i++) {
       let classList = c[i].classList
@@ -338,7 +337,7 @@ function onSelect(selectedList, selectedItem) {
     }
   }
 
-  function onRemove(selectedList, removedItem) {
+function onRemove(selectedList, removedItem) {
     let items = []
     setOption(selectedList)
     selectedList.forEach((item, i) => {
@@ -354,7 +353,7 @@ function onSelect(selectedList, selectedItem) {
     }
   }
 
-  const changeView = (e,view)=>{
+const changeView = (e,view)=>{
     let c = document.getElementsByName('view')
     setActiveCmp(false)
     setLoader(true)
@@ -373,24 +372,24 @@ function onSelect(selectedList, selectedItem) {
     }
   }
 
-  let style = {
-    multiselectContainer:{
-      'marginTop':'5px'
-    },
-    inputField:{
-      'padding':'5px'
-    }
+let style = {
+  multiselectContainer:{
+    'marginTop':'5px'
+  },
+  inputField:{
+    'padding':'5px'
   }
+}
 
-  let selected_button = ''
-  selected_button += "rounded-r-none  hover:scale-110 focus:outline-none flex p-5 px-10 "
-  selected_button += " rounded font-bold cursor-pointer hover:bg-main-blue "
-  selected_button +=" bg-main-blue text-white border duration-200 ease-in-out transition "
+let selected_button = ''
+selected_button += "rounded-r-none  hover:scale-110 focus:outline-none flex p-5 px-10 "
+selected_button += " rounded font-bold cursor-pointer hover:bg-main-blue "
+selected_button +=" bg-main-blue text-white border duration-200 ease-in-out transition "
 
-  let normal_button = ''
-  normal_button += "rounded-l-none  hover:scale-110 focus:outline-none flex justify-center p-5 "
-  normal_button += " rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 "
-  normal_button += " border duration-200 ease-in-out border-teal-600 transition px-10 "
+let normal_button = ''
+normal_button += "rounded-l-none  hover:scale-110 focus:outline-none flex justify-center p-5 "
+normal_button += " rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 "
+normal_button += " border duration-200 ease-in-out border-teal-600 transition px-10 "
 
   function rangeCall(e){
     // console.log("----->")
@@ -404,6 +403,7 @@ function onSelect(selectedList, selectedItem) {
       dataJson['clinicalFilters'] = cf
       dataJson['view'] = viewType
       dataJson['type'] = viewType
+      dataJson['heat_type'] = mainTab
       dataJson['cluster'] = e.target.value
       dispatch(getHeatmapInformation('POST',dataJson))
     }
