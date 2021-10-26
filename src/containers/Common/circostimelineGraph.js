@@ -60,7 +60,7 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
           let t = ChartData
           let table_cols = [
             {
-              name: 'Bmi Value',
+              name: 'BMI Value',
               selector: row => row.bmi_vl
             },
             {
@@ -112,7 +112,7 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
           }
           let table_cols = [
             {
-              name: 'KI67 Value',
+              name: 'KI-67 % Value',
               selector: row => row.ki67_score
             },
             {
@@ -158,7 +158,7 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
               {circosTimelieTableData && <TimeLineChart data={circosTimelieTableData.bmi} yearKey="rgst_ymd" valueKey="bmi_vl" />}
             </div>
             <div className='col-span-4'>
-              <h3>KI67 Timeline</h3>
+              <h3>KI-67 % Timeline</h3>
               <hr/>
               {/* {ki67Chart && <Chart
                 height={'300px'}

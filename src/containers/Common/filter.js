@@ -221,6 +221,7 @@ export default function Filter({parentCallback,parentState}) {
     })
 
     setSelectState({})
+    parentCallback(selectState)
     // parentCallback({})
   }
 

@@ -20,6 +20,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const [data_,setData] = useState('')
   const [inputGene,setInputGene] = useState([])
   const heatmapJson = useSelector((data) => data.dataVisualizationReducer.heatmapSummary);
+  const heatmapSummaryStatusCode = useSelector((data) => data.dataVisualizationReducer.heatmapSummaryStatusCode);
   // const didMountRef = useRef(false)
   const [watermarkCss, setWatermarkCSS] = useState("")
   const [rangeValue,setRangeValue] = useState(1)
@@ -32,6 +33,8 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const [mainTab,setMainTab] = useState('heatmap')
   const [clusterRange,setClusterRange] = useState("")
   const [inSufficientData, setInSufficientData] = useState(true)
+  const [renderNoContent, setRenderNoContent] = useState(false)
+  const [renderHeatmap, setRenderHeatmap] = useState(true)
 
 const diag_age = (vl)=>{
   let n = parseInt(vl)
@@ -406,6 +409,22 @@ normal_button += " border duration-200 ease-in-out border-teal-600 transition px
     }
   }
 
+  useEffect(() => {
+    if (heatmapSummaryStatusCode && heatmapSummaryStatusCode.status === 200) {
+      setRenderNoContent(false)
+      setRenderHeatmap(true)
+      setLoader(false)
+    } else if(heatmapSummaryStatusCode && heatmapSummaryStatusCode.loader === true){
+      setLoader(true)
+      setData('')
+    }else{
+      setLoader(false)
+      setRenderNoContent(true)
+      setRenderHeatmap(false)
+      setData('')
+    }
+  }, [heatmapSummaryStatusCode])
+
   return (
     <div>
       <div className="grid  ">
@@ -504,7 +523,7 @@ normal_button += " border duration-200 ease-in-out border-teal-600 transition px
             }
             {(data_ && (inSufficientData !== true)) && <HeatmapNewCmp clinicalFilter={optionChoices} inputData={data_} type={mainTab} watermarkCss={watermarkCss} ref={reference} width={width} />
             }
-            {inSufficientData && <NoContentMessage />}
+            {(inSufficientData || renderNoContent) && <NoContentMessage />}
             </div>
           }
         </div>
