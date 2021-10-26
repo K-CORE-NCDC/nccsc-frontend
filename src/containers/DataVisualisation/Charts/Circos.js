@@ -177,7 +177,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
         :
         <div className="grid ">
           <div className="p-1 grid grid-cols-6">
-            <div className='flex col-span-2'>
+            <div className='flex sm:col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-2'>
               <div className='flex-col text-left'>
                 {circosSanpleRnidListData && <label htmlFor="samples" ><FormattedMessage  id = "Cir_choose_sample" defaultMessage='Choose a Sample'/>:{circosSanpleRnidListData.length} </label>}
                 <select

@@ -3,11 +3,13 @@ import childMenu from '../../../../menu-item'
 import { Link } from 'react-router-dom';
 import {
   MenuIcon,
+  XIcon
 } from '@heroicons/react/outline'
 
 
 export default function DropdownMenu() {
   const [state, setState] = useState({"menu":[]});
+  const [openClass,setOpenClass] = useState(false);
   useEffect(()=>{
     let items = childMenu.mainmenu.items
 
@@ -39,7 +41,7 @@ export default function DropdownMenu() {
         html.push(
           <li className="group h-full table-cell relative " key={'li_'+i}>
             {htmlbutton}
-            <ul className="absolute hidden list-none" key={'ul_'+i}>
+            <ul className="absolute hidden list-none text-center h-auto" key={'ul_'+i}>
               {tmp}
             </ul>
           </li>
@@ -48,6 +50,9 @@ export default function DropdownMenu() {
         html.push(
           <li className="group h-full table-cell relative " key={'liul_'+i}>
             {htmlbutton}
+            <ul className="absolute hidden list-none text-center h-auto" key={'ul_'+i}>
+              
+            </ul>
           </li>
         )
       }
@@ -59,13 +64,24 @@ export default function DropdownMenu() {
     }))
   },[])
 
+  const openMenu = (e) => {
+    var l = document.getElementById('mainHeader')
+    if(l.classList.contains('openmenu')){
+      l.classList.remove("openmenu");
+      setOpenClass(false)
+    }else{
+      l.classList.add('openmenu')
+      setOpenClass(true)
+    }
+  }
 
   return(
 
-    <ul className="dropdownHeader ">
-      <li className='group h-full table-cell relative px-3'>
+    <ul className="dropdownHeader t" id='mainHeader'>
+      <li className='group h-full table-cell relative cursor-pointer' onClick={e=>openMenu(e)}>
         <a className='text-3xl group_box h-full font-bold items-center w-full' style={{'minWidth':'50px'}}>
-          <MenuIcon className='w-6'/>
+          {!openClass && <MenuIcon className='w-6'/>}
+          {openClass && <XIcon className='w-6'/>}
         </a>
       </li>
       {state['menu']}
