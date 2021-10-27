@@ -258,11 +258,11 @@ let filterBoxes = {
       {'type':'checkbox','name':'childbirth','id':'childbirth_yes','value':'Yes'},
       {'type':'checkbox','name':'childbirth','id':'childbirth_no','value':'No'},
     ],
-    "Experience Of Breastfeeding":[
+    "Experience of Breastfeeding":[
       {'type':'checkbox','name':'eob','id':'eob_yes','value':'Yes'},
       {'type':'checkbox','name':'eob','id':'eob_no','value':'No'},
     ],
-    "Duration of Breastfeeding (1-24 M)":[
+    "Duration of Breastfeeding":[
       {'type':'number','name':'dob','id':'dob','value':''},
     ],
     "Intake of Oral Contraceptive Pill":[

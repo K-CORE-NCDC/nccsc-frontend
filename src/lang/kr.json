@@ -9,7 +9,7 @@
     "Advanced_Information":"임상 고급 정보",
     "DataSummary":"데이터요약",
     "DataVisualization":"데이터시각화",
-    "MyDataVisualization":"마이데이터 시각화",
+    "MyDataVisualization":"사용자데이터 시각화",
     "DataApplication":"데이터 신청",
     "DataProvision":"데이터제공 안내",
     "DataDb":"자료 안내",
@@ -135,5 +135,7 @@
     "Male":"남자",
     "Female":"여자",
     "Yes":"예",
-    "No":"아니오"
+    "No":"아니오",
+    "Positive":"양성",
+    "Negative":"음성"
 }
