@@ -145,6 +145,8 @@ input:checked ~ .dot {
 
 }
 
+
+
 .group:hover,.group:hover .group_box{
   background: #0c2f4d;
   width: 100%;
@@ -778,6 +780,37 @@ dd {
 .imgbox12 {
     width: 100%;
 }
+
+.db_table_wrap {
+    margin-bottom: 30px;
+}
+
+.db_table_stit {
+    font-size: 18px;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    color: #555;
+}
+
+.db_table_stit::before {
+    content: "";
+    border: solid 6px transparent;
+    border-left: #5b9bd5 solid 6px;
+    width: 0px;
+    height: 0px;
+    display: inline-block;
+    line-height: 18px;
+}
+
+.db_table_icon_table {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+
 
 /* pages css */
 .cont_wrap{padding: 0;text-align: center;/* min-height: 880px; */}

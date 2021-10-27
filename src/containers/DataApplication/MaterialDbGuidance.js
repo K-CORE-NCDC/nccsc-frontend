@@ -29,23 +29,122 @@ export default function MaterialGuidance() {
                 	<li><span>content</span>Integrate and link DB of genomic and proteomic and clinical data of Korean early-onset breast cancer patients</li>
                 </ul>
             </div>
-            <h6 class="h-tit6 mt20">Health Information Table</h6>
-            <div class="iconbox left">
-            	<img src={icon_4} alt='건강정보 테이블  아이콘'/>
+            <h6 class="h-tit6 mt20">자료DB 안내</h6>
+            <div class="db_table_wrap">
+            	<h3 class="db_table_stit">건강정보 테이블</h3>
+            	<div class="db_table_icon_table">
+            		<div class="iconbox">
+            			<img src={icon_4} alt="건강정보 테이블  아이콘"/>
+            		</div>
+            		<div class="tbl type2 tablebox">
+            			<div class="tbl type1 scroll">
+                			<div class="fm_area">
+                      	 		<dl class="sbj_tit">
+                          	 		<dt>내용</dt>
+                           			<dd>환자의 기본 건강정보(예. 음주·흡연 여부 등)</dd>
+                       			</dl>
+                       			<dl>
+                           			<dt>변수</dt>
+                           			<dd>12</dd>
+                       			</dl>
+                 			</div>
+            			</div>
+            		</div>
+            	</div>
             </div>
-            <div class="tbl type2 tablebox left">
-                     <div class="fm_area border-t-2 border-gray-600">
-                         <dl class="sbj_tit">
-                             <dt style={{background:"#eee"}}><strong>content</strong></dt>
-                             <dd>Other health information for the patient</dd>
-                         </dl>
-                         <dl>
-                             <dt style={{background:"#eee"}}><strong>variable</strong></dt>
-                             <dd>twelve</dd>
-                         </dl>
-                     </div>
+
+            <div class="db_table_wrap">
+          		<h3 class="db_table_stit">신체계측 테이블</h3>
+          		<div class="db_table_icon_table">
+          			<div class="iconbox">
+          				<img src={icon_4} alt="건강정보 테이블  아이콘"/>
+          			</div>
+          			<div class="tbl type2 tablebox">
+          				<div class="tbl type1 scroll">
+          	    			<div class="fm_area">
+                      	 		<dl class="sbj_tit">
+                          	 		<dt>내용</dt>
+                           			<dd>환자의 신체계측(BMI) 정보</dd>
+                       			</dl>
+                       			<dl>
+                           			<dt>변수</dt>
+                           			<dd>2</dd>
+                       			</dl>
+                 			</div>
+          				</div>
+            		</div>
+            	</div>
+            </div>
+
+              <div class="db_table_wrap">
+            		<h3 class="db_table_stit">면역병리 테이블</h3>
+            		<div class="db_table_icon_table">
+            			<div class="iconbox">
+            					<img src={icon_4} alt="건강정보 테이블  아이콘"/>
+            			</div>
+            			<div class="tbl type2 tablebox">
+            				<div class="tbl type1 scroll">
+            	    			<div class="fm_area">
+                        	 		<dl class="sbj_tit">
+                            	 		<dt>내용</dt>
+                             			<dd>면역병리검사의 검사결과(예. ER, PR, HER2, Ki-67(%) 등)</dd>
+                         			</dl>
+                         			<dl>
+                             			<dt>변수</dt>
+                             			<dd>4</dd>
+                         			</dl>
+                     			</div>
+            				</div>
+                		</div>
+                	</div>
               </div>
-            </div>
+
+              <div class="db_table_wrap">
+              	<h3 class="db_table_stit">외과병리 테이블</h3>
+              	<div class="db_table_icon_table">
+              		<div class="iconbox">
+              			<img src={icon_4} alt="건강정보 테이블  아이콘"/>
+              		</div>
+              		<div class="tbl type2 tablebox">
+              			<div class="tbl type1 scroll">
+                  			<div class="fm_area">
+                        	 		<dl class="sbj_tit">
+                            	 		<dt>내용</dt>
+                             			<dd>수술 시 조직 검사에서 확인된 정보(예. T, N Category 등)</dd>
+                         			</dl>
+                         			<dl>
+                             			<dt>변수</dt>
+                             			<dd>2</dd>
+                         			</dl>
+                     			</div>
+              			</div>
+                		</div>
+                	</div>
+              </div>
+
+              <div class="db_table_wrap">
+            		<h3 class="db_table_stit">추적관찰 테이블</h3>
+            		<div class="db_table_icon_table">
+            			<div class="iconbox">
+            				<img src={icon_4} alt="건강정보 테이블  아이콘"/>
+            			</div>
+            			<div class="tbl type2 tablebox">
+            				<div class="tbl type1 scroll">
+            	    			<div class="fm_area">
+                        	 		<dl class="sbj_tit">
+                            	 		<dt>내용</dt>
+                             			<dd>환자의 재발 정보(예. 재발여부, 재발까지 확인된 기간 등)</dd>
+                         			</dl>
+                         			<dl>
+                             			<dt>변수</dt>
+                             			<dd>3</dd>
+                         			</dl>
+                     			</div>
+            				</div>
+                		</div>
+                	</div>
+                </div>
+          </div>
       </div>
     )
 }

@@ -6,14 +6,14 @@ let clinicalColor = {
 }
 
 let clinical_info_title = {
-  "Age":"Age",
-  "BMI":"kg/m2",
-  "Lactation period(1-24 M)":"month",
-  "Menarche age (10-17 Y)":'Year',
-  'Lactation period (1-24 M)':'Month',
+  "Age Of Daignosis":"Age",
+  "Body Mass Index":"kg/m2",
+  "Duration of Breastfeeding":"month",
+  "First Menstrual Age":'Year',
+  // 'Lactation period (1-24 M)':'Month',
   'T Category':'Category',
   'N Category':'Category',
-  'Time until relapse is confirmed (1-16 Y)':'Year'
+  'Time until relapse is confirmed':'Year'
 }
 
 
