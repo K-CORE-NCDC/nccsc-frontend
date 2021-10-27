@@ -478,8 +478,8 @@ normal_button += " border duration-200 ease-in-out border-teal-600 transition px
             </div>
           </div>
           <div className='p-5 text-left flex col-span-2'>
-            <div className={tableType!=='methylation'?'lg:w-7/12 xl:w-7/12 2xl:w-9/12':'w-full'}>
-              <label><FormattedMessage  id = "Clinical_Filters_heatmap" defaultMessage='Clinical Filters'/>:</label>
+            <div className={tableType!=='methylation'?'lg:w-7/12 xl:w-7/12 2xl:w-9/12 text-right':'w-full text-right'}>
+              <label ><FormattedMessage  id = "Clinical_Filters_heatmap" defaultMessage='Clinical Filters'/>:</label>
               <Multiselect
                 style={style}
                 options={optionChoices} // Options to display in the dropdown
@@ -497,7 +497,7 @@ normal_button += " border duration-200 ease-in-out border-teal-600 transition px
               }
             </div>
             { tableType!=='methylation' &&
-              <div className="mx-5 flex-wrap text-left lg:w-5/12 xl:w-5/12 2xl:w-3/12">
+              <div className="mx-5 flex-wrap text-left lg:w-5/12 xl:w-5/12 2xl:w-3/12 text-right">
                 <FormattedMessage  id = "View_By_heatmap" defaultMessage='View By'/>:
                 <div className="flex m-2 w-100">
                   <button onClick={e => changeView(e, 'gene_vl')} name='view' className={viewType==="gene_vl"?selected_button:normal_button}>
@@ -510,7 +510,7 @@ normal_button += " border duration-200 ease-in-out border-teal-600 transition px
               </div>
             }
             {(tableType === 'methylation' || tableType==='phospo') &&
-              <div className='mx-5 flex-wrap text-left'>
+              <div className='mx-5 flex-wrap text-right'>
                 {inputGene &&
                   <>
                   <label>Select Gene</label>
