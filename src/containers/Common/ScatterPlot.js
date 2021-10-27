@@ -30,13 +30,13 @@ const ScatterPlot = React.forwardRef(({ scatter_data, watermarkCss }, ref) => {
         position: 'bottom',
         title: {
           display: true,
-          text: 'Rna Expression (z-score)'
+          text: 'RNA Expression (z-score)'
         }
       },
       y:{
         title: {
           display: true,
-          text: 'Global proteome(z-score)'
+          text: 'Global Proteome (z-score)'
         }
       }
 
