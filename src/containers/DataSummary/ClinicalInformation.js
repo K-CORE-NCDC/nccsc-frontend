@@ -123,7 +123,7 @@ export default function ClinicalInformation() {
           }
 
           let id = itm.split(" ").join("")
-          console.log(itm)
+          // console.log(itm)
           // if(itm === "Age of Diagnosis"){
           //   console.log(itm)
           // }
@@ -210,7 +210,7 @@ export default function ClinicalInformation() {
     if(check ){
       Object.keys(summaryJson[parent_name]).forEach((item, k) => {
         let id = item.split(" ").join("")
-
+        console.log(inputJson['clinical_info_title'][item])
         if(item===chart){
           tmp.push(
             <div key={'chart_'+item} data-chart="bar" className='max-w bg-white rounded-2xl overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border'>
@@ -239,7 +239,6 @@ export default function ClinicalInformation() {
                   data={summaryJson[parent_name][item]}
                   width='300'
                   color={ inputJson['clinicalColor'][parent_name] }
-
 
                   />
                 </div>
@@ -293,6 +292,9 @@ export default function ClinicalInformation() {
     }
     setSelected(id)
   }
+
+
+
 
   return (
    <>

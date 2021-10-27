@@ -5,6 +5,8 @@ import Loader from './layout/Loader/';
 import { PrivateRoute } from './PrivateRoute';
 import '../assets/css/style.css'
 import Wrapper  from '../wrapper';
+require('dotenv').config()
+
 const Web = Loadable({
   loader: () => import('./layout/Web'),
   loading: Loader,
@@ -14,7 +16,7 @@ const Web = Loadable({
 
 export default function App() {
   const [blurScreenCss, setBlurScreenCss] = useState("")
- 
+
   return (
     <Wrapper>
       <div className={blurScreenCss}>
@@ -27,4 +29,3 @@ export default function App() {
     </Wrapper>
   )
 }
-
