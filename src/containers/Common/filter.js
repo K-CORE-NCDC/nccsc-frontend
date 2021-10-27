@@ -159,7 +159,7 @@ export default function Filter({parentCallback,parentState}) {
           <input className="absolute opacity-0" id={"tab-single-"+k} type="radio" name="tabs2"/>
           <label className="block p-5 leading-normal cursor-pointer" htmlFor={"tab-single-"+k}>
             {icon_type[item]}
-            <span className="no-underline  ml-2 text-2xl tracking-wide">{item}</span>
+            <span className="no-underline  ml-2 text-2xl tracking-wide">{<FormattedMessage  id = {item} defaultMessage={item}/>}</span>
           </label>
           {
             selected === item ? <div className="tab-content overflow-hidden border-l-2 bg-gray-100  leading-normal relative py-3">
