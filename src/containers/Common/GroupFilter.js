@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {FormattedMessage} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 const LabelCss = "block text-left text-blue-700-700 text-lg  font-bold mb-2"
 const checkBoxCss = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -22,7 +22,7 @@ const filterChoices = [
     { 'type': 'boolean', 'name': 'Intake of Oral Contraceptive Pill', 'id': 'oc_yn' },
     { 'type': 'boolean', 'name': 'Hormone Replacement Therapy', 'id': 'hrt_yn' },
     { 'type': 'number', 'name': 'T Category', 'id': 't_category', 'input': 'number' },
-    { 'type': 'text', 'name': 'N Category', 'id': 'n_category', 'input': 'text' },
+    { 'type': 'number', 'name': 'N Category', 'id': 'n_category', 'input': 'number' },
     { 'type': 'text', 'name': 'HER2 Score', 'id': 'her2_score', 'input': 'text' },
     { 'type': 'text', 'name': 'ki67', 'id': 'ki67_score', 'input': 'text' },
     { 'type': 'number', 'name': 'Relapse Duration', 'id': 'rlps_cnfr_drtn', 'input': 'number' },
@@ -33,7 +33,7 @@ const filterChoices = [
 
 const filterChoicesCustom = [
     { 'type': 'static', 'name': 'Sex', 'id': 'sex_cd', options: ['Male', 'Female'] },
-    { 'type': 'number', 'name': 'Age ', 'id': 'diag_age', 'input': 'number' },
+    { 'type': 'number', 'name': 'Age Of Diagonosis', 'id': 'diag_age', 'input': 'number' },
     { 'type': 'number', 'id': 'bmi_vl', 'name': 'BMI', 'input': 'number' },
     { 'type': 'boolean', 'id': 'bila_cncr_yn', 'name': 'Diagnosis of Bilateral Breast Cancer' },
     { 'type': 'boolean', 'name': 'Smoking Status', 'id': 'smok_yn' },
@@ -47,7 +47,7 @@ const filterChoicesCustom = [
     { 'type': 'boolean', 'name': 'Intake of Oral Contraceptive Pill', 'id': 'oc_yn' },
     { 'type': 'boolean', 'name': 'Hormone Replace Therapy', 'id': 'hrt_yn' },
     { 'type': 'number', 'name': 'T Category', 'id': 't_category', 'input': 'number' },
-    { 'type': 'text', 'name': 'N Category', 'id': 'n_category', 'input': 'text' },
+    { 'type': 'number', 'name': 'N Category', 'id': 'n_category', 'input': 'number' },
     { 'type': 'text', 'name': 'HER2 Score', 'id': 'her2_score', 'input': 'text' },
     { 'type': 'text', 'name': 'ki67', 'id': 'ki67_score', 'input': 'text' },
     { 'type': 'boolean', 'name': 'Recurance Yes or No', 'id': 'rlps_yn' },
@@ -55,7 +55,7 @@ const filterChoicesCustom = [
     { 'type': 'number', 'name': 'PR Test', 'id': 'pr_score', 'input': 'number' }
 ]
 
-const preDefienedGroups = {
+let preDefienedGroups = {
     diag_age: [
         { label: "21-25", from: 21, to: 25 },
         { label: "26-30", from: 26, to: 30 },
@@ -126,7 +126,7 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
 
     useEffect(() => {
         if (groupFilters && groupFilters.type) {
-            if(resetClicked === false){
+            if (resetClicked === false) {
                 setIsGroupFilterProp(true)
             }
             let filterGroupsHtmlTemp = []
@@ -288,7 +288,7 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
         <div className="m-1 bg-gray-100">
             <div className="p-1 py-3 px-2 col-span-2">
                 <div className="block text-left text-blue-700-700 text-lg  font-bold mb-2">
-                    <FormattedMessage  id = "Clinical Filters" defaultMessage='Clinical Filters'/>
+                    <FormattedMessage id="Clinical Filters" defaultMessage='Clinical Filters' />
                 </div>
                 {((resetClicked === true) || (isGroupFilterProp === false)) && <select
                     onChange={filterTypeDropdownSelection}
@@ -298,8 +298,8 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
                         <option className="text-lg" key={type.name} value={index}>{type.name}</option>
                     ))}
                 </select>}
-                {((resetClicked === false) && (isGroupFilterProp === true)) && <h6 className='border p-4'>{filterChoicesCustom.map(e=>{
-                    if(groupFilters.column === e.id){
+                {((resetClicked === false) && (isGroupFilterProp === true)) && <h6 className='border p-4'>{filterChoicesCustom.map(e => {
+                    if (groupFilters.column === e.id) {
                         return e.name
                     }
                 })}</h6>}
@@ -309,12 +309,12 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
             </div>
             <div>
                 <button onClick={submitFilters} className="bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
-                    <FormattedMessage  id = "Submit_volcano" defaultMessage='Submit'/>
+                    <FormattedMessage id="Submit_volcano" defaultMessage='Submit' />
                 </button>
             </div>
             <div>
                 <button onClick={resetFilters} className="bg-white hover:bg-gray-700 mb-3 w-80 h-20 text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
-                    <FormattedMessage  id = "Reset_volcano" defaultMessage='Reset'/>
+                    <FormattedMessage id="Reset_volcano" defaultMessage='Reset' />
                 </button>
             </div>
         </div>
@@ -527,7 +527,7 @@ const GroupFilters = ({ parentCallback, groupFilters }) => {
         <div className="m-1 bg-gray-100">
             <div className="p-1 py-3 px-2 col-span-2">
                 <div className="block text-left text-blue-700-700 text-lg  font-bold mb-2">
-                    <FormattedMessage  id = "Clinical Filters" defaultMessage='Clinical Filters'/>
+                    <FormattedMessage id="Clinical Filters" defaultMessage='Clinical Filters' />
                 </div>
                 <select
                     onChange={updateSelectedFilter}
@@ -562,3 +562,236 @@ const GroupFilters = ({ parentCallback, groupFilters }) => {
 }
 
 export default GroupFilters;
+
+
+
+export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters }) => {
+    const [selectedFilterType, setSelectedFilterType] = useState({})
+    const [filterGroupsHtml, setFilterGroupsHtml] = useState([])
+    const [filters, setFilters] = useState({})
+    const [resetClicked, setResetClicked] = useState(false)
+    const [isGroupFilterProp, setIsGroupFilterProp] = useState(false)
+
+
+    let preDefienedGroups1 = {
+        ...preDefienedGroups,
+        t_category: [
+            { label: "T1", from: 'T1', to: 'T1' },
+            { label: "T2", from: 'T2', to: 'T2' },
+            { label: "T3", from: 'T3', to: 'T3' },
+            { label: "T4", from: 'T4', to: 'T4' },
+        ],
+        n_category: [
+            { label: "N1", from: 'N1', to: 'N1' },
+            { label: "N2", from: 'N2', to: 'N2' },
+            { label: "N3", from: 'N3', to: 'N3' }
+        ]
+    }
+
+
+    const submitFilters = () => {
+        if (Object.keys(filters).length > 0) {
+            parentCallback(filters)
+        } else {
+            parentCallback(groupFilters)
+        }
+    }
+
+    const resetFilters = () => {
+        setSelectedFilterType({})
+        setFilterGroupsHtml([])
+        setFilters({})
+        setResetClicked(true)
+        setIsGroupFilterProp(false)
+    }
+
+    useEffect(() => {
+        if (groupFilters && groupFilters.type) {
+            if (resetClicked === false) {
+                setIsGroupFilterProp(true)
+            }
+            let filterGroupsHtmlTemp = []
+            if (groupFilters.type === 'boolean') {
+                filterGroupsHtmlTemp.push(
+                    <div key='bool'>
+                        <div className="flex flex-row">
+                            <h5>Group 1 : </h5>
+                            <h5 className="text-bold text-blue-700">TRUE</h5>
+                        </div>
+                        <div className="flex flex-row">
+                            <h5>Group 2 : </h5>
+                            <h5 className="text-bold text-blue-700">FALSE</h5>
+                        </div>
+                    </div>
+                )
+            }
+
+            if (groupFilters.type === 'static') {
+                filterGroupsHtmlTemp.push(
+                    <div key='bool'>
+                        <div className="flex flex-row">
+                            <h5>Group 1 : </h5>
+                            <h5 className="text-bold text-blue-700">Male</h5>
+                        </div>
+                        <div className="flex flex-row">
+                            <h5>Group 2 : </h5>
+                            <h5 className="text-bold text-blue-700">Female</h5>
+                        </div>
+                    </div>
+                )
+            }
+
+            // if (groupFilters.type === 'text') {
+            //     filterGroupsHtmlTemp.push(
+            //         <div key='bool'>
+            //             <div className="flex flex-row">
+            //                 <h5>Group 1 : </h5>
+            //                 <h5 className="text-bold text-blue-700">{groupFilters[1]}</h5>
+            //             </div>
+            //             <div className="flex flex-row">
+            //                 <h5>Group 2 : </h5>
+            //                 <h5 className="text-bold text-blue-700">{groupFilters[2]}</h5>
+            //             </div>
+            //         </div>
+            //     )
+            // }
+            if ((groupFilters.type === 'number') || (groupFilters.type === 'text')) {
+                filterGroupsHtmlTemp.push(
+                    <div key='drop-user'>
+                        {preDefienedGroups1[groupFilters.column].map((element, index) => (
+                            <div className="text-lg" key={`${element.label}-${index}-grp-a`}>
+                                <div className="flex flex-row justify-around">
+                                    <h5 className="p-4">Group {index + 1} : {element.label}</h5>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )
+            }
+            setFilterGroupsHtml(filterGroupsHtmlTemp)
+        }
+    }, [groupFilters])
+
+    const filterTypeDropdownSelection = event => {
+        let key = event.target.value
+        setSelectedFilterType({ details: filterChoicesCustom[parseInt(key)], index: key })
+    }
+
+    const dropDownChange = (event) => {
+        const eventObject = JSON.parse(event.target.value)
+        const filterData = preDefienedGroups1[eventObject.colName][(eventObject.index)]
+        if ('value' in filterData) {
+            setFilters(prevState => ({
+                ...prevState,
+                ...{ [eventObject.group]: filterData.value, column: selectedFilterType.details.id, type: "text" }
+            }))
+        } else {
+            setFilters(prevState => ({
+                ...prevState,
+                ...{ [`${eventObject.group}_from`]: filterData.from, [`${eventObject.group}_to`]: filterData.to, column: selectedFilterType.details.id, type: "number" }
+            }))
+        }
+    }
+
+    useEffect(() => {
+        let filterGroupsHtmlTemp = []
+        if (selectedFilterType && selectedFilterType.details) {
+            if (selectedFilterType.details.type === 'boolean') {
+                setFilters({ group_a: true, group_b: false, column: selectedFilterType.details.id, type: "boolean" })
+                filterGroupsHtmlTemp.push(
+                    <div key='bool'>
+                        <div className="flex flex-row">
+                            <h5 className="p-4">Group 1 : </h5>
+                            <h5 className="p-4 text-bold text-blue-700">TRUE</h5>
+                        </div>
+                        <div className="flex flex-row">
+                            <h5 className="p-4">Group 2 : </h5>
+                            <h5 className="p-4 text-bold text-blue-700">FALSE</h5>
+                        </div>
+                    </div>
+                )
+            }
+
+            if (selectedFilterType.details.type === 'static') {
+                setFilters({ group_a: 'F', group_b: 'M', column: selectedFilterType.details.id, type: "static" })
+                filterGroupsHtmlTemp.push(
+                    <div key='gender'>
+                        <div className="flex border mb-1 flex-row justify-around">
+                            <h5 className="p-4">Group 1 : </h5>
+                            <h5 className="p-4 text-bold text-blue-700">Male</h5>
+                        </div>
+                        <div className="flex border mb-1 flex-row justify-around">
+                            <h5 className="p-4">Group 2 : </h5>
+                            <h5 className="p-4 text-bold text-blue-700">Female</h5>
+                        </div>
+                    </div>
+                )
+            }
+
+            if ((selectedFilterType.details.type === 'number') || (selectedFilterType.details.type === 'text')) {
+                const colName = selectedFilterType.details.id
+                console.log(selectedFilterType);
+                let filtersTemp = { type: selectedFilterType.details.type, column: colName }
+                preDefienedGroups1[colName].map((e, index) => {
+                    filtersTemp = {
+                        ...filtersTemp,
+                        [`${index + 1}_from`]: e.from,
+                        [`${index + 1}_to`]: e.to,
+                    }
+                })
+                setFilters(filtersTemp)
+                filterGroupsHtmlTemp.push(
+                    <div key='drop-user'>
+                        {preDefienedGroups1[colName].map((element, index) => (
+                            <div className="text-lg" key={`${element.label}-${index}-grp-a`}>
+                                <div className="flex flex-row justify-around">
+                                    <h5 className="p-4">Group {index + 1} : {element.label}</h5>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )
+            }
+
+
+            setFilterGroupsHtml(filterGroupsHtmlTemp)
+
+        }
+    }, [selectedFilterType])
+
+    return (
+        <div className="m-1 bg-gray-100">
+            <div className="p-1 py-3 px-2 col-span-2">
+                <div className="block text-left text-blue-700-700 text-lg  font-bold mb-2">
+                    <FormattedMessage id="Clinical Filters" defaultMessage='Clinical Filters' />
+                </div>
+                {((resetClicked === true) || (isGroupFilterProp === false)) && <select
+                    onChange={filterTypeDropdownSelection}
+                    className='w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
+                    <option value=''></option>
+                    {filterChoicesCustom.map((type, index) => (
+                        <option className="text-lg" key={type.name} value={index}>{type.name}</option>
+                    ))}
+                </select>}
+                {((resetClicked === false) && (isGroupFilterProp === true)) && <h6 className='border p-4'>{filterChoicesCustom.map(e => {
+                    if (groupFilters.column === e.id) {
+                        return e.name
+                    }
+                })}</h6>}
+            </div>
+            <div className="p-1 py-3 px-2 col-span-2">
+                {filterGroupsHtml}
+            </div>
+            <div>
+                <button onClick={submitFilters} className="bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
+                    <FormattedMessage id="Submit_volcano" defaultMessage='Submit' />
+                </button>
+            </div>
+            <div>
+                <button onClick={resetFilters} className="bg-white hover:bg-gray-700 mb-3 w-80 h-20 text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
+                    <FormattedMessage id="Reset_volcano" defaultMessage='Reset' />
+                </button>
+            </div>
+        </div>
+    );
+}
