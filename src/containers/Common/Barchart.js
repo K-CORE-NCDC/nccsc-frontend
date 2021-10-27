@@ -133,14 +133,16 @@ export default function Barchart({id,data,width,color, chart_type,title}) {
         else{
           g_dat['labels'].push(data[i].name)
         }
+
         if(na=="N/A"){
           na += "||"+data[i].cnt
+          
         }else{
           t.push(data[i].cnt)
         }
         colors.push(h+linear+")")
         
-        if(id!=='chart_bar_HER2Score' && id!=='chart_bar_Timeuntilrelapseisconfirmed' && id!=='chart_bar_FirstMenstrualAge' && id!=='chart_bar_AgeOfDaignosis' && id!=="chart_bar_BodyMassIndex"){
+        if(id!=='chart_bar_Ki-67Index' && id!=='chart_bar_HER2Score' && id!=='chart_bar_Timeuntilrelapseisconfirmed' && id!=='chart_bar_FirstMenstrualAge' && id!=='chart_bar_AgeOfDaignosis' && id!=="chart_bar_BodyMassIndex"){
           linear = linear-0.2
         }
       }
@@ -148,14 +150,18 @@ export default function Barchart({id,data,width,color, chart_type,title}) {
       if(na!=''){
         na = na.split('||')
         g_dat['labels'].push(na[0])
-        t.push(na[1])
+        t.push(parseInt(na[1]))
       }
-      var tmp = generateColor(color,"#FFFFCC",data.length);
+      // var tmp = generateColor(color,"#FFFFCC",data.length);
+      // console.log(tmp)
+      
+      
       g_dat['datasets'].push({
-        "data":t,
+        data:t,
         backgroundColor:colors,
         borderRadius: 11
       })
+      
       drawGraph(g_dat, chart_type)
     }
   },[data,chart_type])

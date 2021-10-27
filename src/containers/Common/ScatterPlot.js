@@ -36,7 +36,7 @@ const ScatterPlot = React.forwardRef(({ scatter_data, watermarkCss }, ref) => {
       y:{
         title: {
           display: true,
-          text: 'Global proteome(z-score)'
+          text: 'Global Proteome (z-score)'
         }
       }
 

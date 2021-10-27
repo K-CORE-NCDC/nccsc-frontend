@@ -293,7 +293,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
           </div>
 
             <div className='flex  text-left'>
-              <div className='w-9/12'>
+              <div className='w-9/12 text-right'>
                 {tableType==='proteome' && <>
                   <label><FormattedMessage  id = "Selected Gene Is" defaultMessage='Selected Gene Is'/></label>
                   <Multiselect
@@ -320,7 +320,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
                   </div>
                 }
               </div>
-              <div className="mx-5 flex-wrap text-left w-3/12">
+              <div className="mx-5 flex-wrap text-left w-3/12 text-right">
                   <FormattedMessage  id = "View_By_heatmap" defaultMessage='View By'/>:
                   <div className="flex m-2 w-100">
                     <button onClick={e => changeView(e, 'gene_vl')} name='view' className={viewType==="gene_vl"?selected_button:normal_button}>
