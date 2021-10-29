@@ -321,12 +321,11 @@ let filterBoxes = {
 }
 
 let filterChoices = [
-    {'name': 'sex', 'id': 'sex_cd'},
+    {'name': 'Sex', 'id': 'sex_cd'},
     {'name': 'Age Of Diagnosis', 'id': 'diag_age'},
     {'id': 'bmi_vl', 'name': 'Body Mass Index'},
     {'id': 'bila_cncr_yn', 'name': 'Diagnosis of Bilateral Breast Cancer' },
     {'name': 'Smoking Status', 'id': 'smok_curr_yn' },
-    {'name': 'Former Smoker', 'id': 'smok_yn' },
     {'name': 'Alcohol Consumption', 'id': 'drnk_yn',  },
     {'name': 'Family History of Breast Cancer ', 'id': 'fmhs_brst_yn' },
     {'name': 'First Menstrual Age', 'id': 'mena_age'},
@@ -342,7 +341,7 @@ let filterChoices = [
     {'name': 'PR Test Results', 'id': 'pr_score' },
     {'name': 'HER2 Score', 'id': 'her2_score' },
     {'name': 'Ki67 Index', 'id': 'ki67_score'},
-    {'name': 'Relapse Duration', 'id': 'rlps_cnfr_drtn',},
+    {'name': 'Time until relapse confirmed', 'id': 'rlps_cnfr_drtn',},
     {'name': 'Cancer Recurrence', 'id': 'rlps_yn' }
 ]
 let inputJson = {

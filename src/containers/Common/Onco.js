@@ -8,6 +8,10 @@ import './rules';
 import html2canvas from 'html2canvas';
 import $ from 'jquery'
 import inputJson from '../Common/data'
+import {
+    ZoomInIcon,
+    ZoomOutIcon,
+  } from '@heroicons/react/outline'
 function saveAs(uri, filename) {
     var link = document.createElement('a');
     link.className = 'watermark'
@@ -397,23 +401,19 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
         }
     },[state,inputRule])
 
-    const downloadImage = (e)=>{
-        console.log(oncoprint)
-        oncoprint.toCanvas(function(canvas, truncated) {
-            console.log(canvas.toDataURL())
-            // canvas.toBlob(function(blob) {
-            //     console.log(blob)
-            //     // saveAs(blob, 'oncoprint.png');
-            // });
-        }, 2);
-
+    const makezoom = (e,name)=>{
+        $('.'+name).click()
     }
 
   return (
     <div>
-      <div ref={ref}  className={`onco ${watermarkCss}`} id='oncoprint-glyphmap'>
-      </div>
-        <button  onClick={e=>downloadImage(e)}>image</button>
+        <div className='text-right mx-12'>
+            <button className='h-10' onClick={e=>makezoom(e,'fa-plus')}><ZoomInIcon className='h-7 w-7'/></button> &nbsp;&nbsp;
+            <button className='h-10' onClick={e=>makezoom(e,'fa-minus')}><ZoomOutIcon className='h-7 w-7'/></button>
+        </div>
+        <div ref={ref}  className={`onco ${watermarkCss}`} id='oncoprint-glyphmap'>
+        </div>
+        
     </div>
   )
 })
