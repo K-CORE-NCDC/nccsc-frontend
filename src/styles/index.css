@@ -249,7 +249,7 @@ input:checked ~ .dot {
 	animation: spinner 1.5s linear infinite;
 }
 .onco{
-  margin: 50px 20px
+  margin: 0px 20px
 }
 .onco span div:first-child div.noselect:first-child{
   overflow: scroll;
