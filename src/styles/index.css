@@ -1,3 +1,5 @@
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -392,17 +394,17 @@ input:checked ~ .dot {
 }
 
 .intro_tab li.on {
-  background-color: #ffc000;
+  background-color: ;
 }
 
 .intro_tab li {
     width: 33.2%;
-    background-color: #4472c4;
+    /* background-color: #4472c4; */
 }
 
 
 .intro_tab li a {
-    color: #fff;
+    color: #212121;
     text-align: center;
     width: 100%;
     font-size: 20px;
@@ -455,6 +457,12 @@ input:checked ~ .dot {
 
 .at .at2 {
     margin-bottom: 10px;
+}
+
+.at .at1::after {
+    content: "";
+    clear: both;
+    display: block;
 }
 
 .imgbox {
@@ -752,7 +760,8 @@ dd {
     width: 130px!important;
     height: 42px;
     padding: 0 50px 0 10px;
-    /* background: #fff url(/images/www/ico_calendar2.gif) no-repeat 90% 10px; */
+    /* background: #fff url("/ico_calendar2.gif") no-repeat 90% 10px; */
+    /* background: #fff; */
     cursor: pointer;
 }
 
@@ -811,6 +820,19 @@ dd {
 }
 
 
+.tbl.type2 .fm_area dl dd>div {
+    margin-bottom: 8px;
+}
+
+.radio.radio-inline {
+    padding-right: 3px;
+    margin-top: 0;
+    float: left;
+}
+
+.radio {
+    padding-left: 24px;
+}
 
 /* pages css */
 .cont_wrap{padding: 0;text-align: center;/* min-height: 880px; */}

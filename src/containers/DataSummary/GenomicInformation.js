@@ -52,9 +52,9 @@ export default function GenomicInfo() {
         html.push(
           <div key={'omics_'+k} className='max-w bg-white rounded overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border'>
             <div className="px-6 py-4">
-              <div className="font-bold text-md mb-2">{item}</div>
+              <div className="font-bold lg:text-2xl sm:text-xl md:text-xl mb-2">{item}</div>
             </div>
-            <div className="px-6 pt-4 pb-4">
+            <div class="lg:px-6 md:px-3 sm:px-0 sm:pt-1 lg:pt-4 md:pt-1 pb-4">
               {comp}
             </div>
           </div>
@@ -77,7 +77,7 @@ export default function GenomicInfo() {
       loader?
         <LoaderCmp />
       :
-      <div className="grid grid-cols-3 gap-6 mt-6">
+      <div className="grid lg:grid-cols-3 sm:grid-cols-2 md:grid-cols-2 md:gap-3 lg:gap-6 sm:gap-3 mt-6">
         {state['charts']}
       </div>
     }

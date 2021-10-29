@@ -75,32 +75,33 @@ export default function Web(props) {
     classes = 'screen-2 xl:h-full lg:h-full '
   }
 
+  // <div className="md:visible lg:invisible sm:visible pt-5">
+  //     <ul>
+  //       <li class="active"><a href="index.html" class="block text-sm px-2 py-4 text-white bg-green-500 font-semibold">Home</a></li>
+  //       <li><a href="#services" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Services</a></li>
+  //       <li><a href="#about" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">About</a></li>
+  //       <li><a href="#contact" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">contact us</a></li>
+  //     </ul>
+  // </div>
+
   return (
     <div className="relative">
-      <Popover>
+      <Popover className="sm:invisible md:invisible lg:visible">
           {({ open }) => (
           <div id="header" className={classes}>
-            <nav  className="w-full p-2 py-5 navbar-expand-lg">
+            <nav  className="w-full sm:invisible md:invisible lg:visible p-2 py-5 navbar-expand-lg">
               <div className="w-full grid grid-cols-8 px-10  pt-5">
                 <div className="relative xs:col-span-12 sm:col-span-8 xl:col-span-2 lg:col-span-2  2xl:col-span-1 pt-5">
                   <a href="/">
                     <span className="sr-only">Workflow</span>
-                    <img
-                      className="h-16 w-auto "
-                      src={logo}
-                      alt=""
-                    />
+                    <img className="h-16 w-auto " src={logo} alt=""/>
                   </a>
-                  
-
                   <Popover.Button  className="hidden xs:block cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block outline-none focus:outline-none" type="button"><MenuIcon className="h-6 w-6" aria-hidden="true" /></Popover.Button >
                 </div>
                 <div className="lg:hidden xl:hidden 2xl:block 2xl:col-span-5 z-10">
-                  
                   <DropdownMenu/>
                 </div>
                 <div className="lg:col-span-6 xl:col-span-6 2xl:col-span-2 py-5">
-                  
                   <Header/>
                 </div>
                 <div className="xs:hidden sm:block md:block lg:block lg:col-span-8 xl:block 2xl:hidden px-5 py-5">
@@ -108,6 +109,7 @@ export default function Web(props) {
                 </div>
               </div>
             </nav>
+
 
             {classes!=='' && <div className="grid grid-cols-3 px-64 py-20  text-right text-main-blue">
               <div className='lg:col-span-3 lg:text-center  2xl:col-start-3'>

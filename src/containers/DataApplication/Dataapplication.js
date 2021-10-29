@@ -5,6 +5,7 @@ import icon_1 from '../../assets/images/sub/icon_1.png'
 import icon_2 from '../../assets/images/sub/icon_2.png'
 import icon_3 from '../../assets/images/sub/icon_3.png';
 import icon_4 from '../../assets/images/health_info_icon.png';
+// import icon_5 from '../../assets/images/ico_calendar2.gif';
 import {FormattedMessage} from 'react-intl';
 
 
@@ -24,13 +25,20 @@ export default function DataApplicationComp() {
                            <dl class="sbj_tit">
                                <dt style={{background:"#eee"}}><strong>Type of affiliation  </strong></dt>
                                <dd>
-                                     " "
+                                    <div class="radio radio-inline mr20"><input type="radio" name="applAffiliationType" value="GOV" id="applAffiliationType_1" checked="checked"/><label class="label" for="applAffiliationType_1">정부기관</label></div>
+                                    <div class="radio radio-inline mr20"><input type="radio" name="applAffiliationType" value="UAR" id="applAffiliationType_2"/><label class="label" for="applAffiliationType_2">대학 및 연구소</label></div>
+                                    <div class="radio radio-inline mr20"><input type="radio" name="applAffiliationType" value="UAR" id="applAffiliationType_2"/><label class="label" for="applAffiliationType_2">대학 및 연구소</label></div>
+                                    <div class="radio radio-inline mr20"><input type="radio" name="applAffiliationType" value="ETP" id="applAffiliationType_4"/><label class="label" for="applAffiliationType_4">산업체</label></div>
+                                    <div class="radio radio-inline mr20"><input type="radio" name="applAffiliationType" value="ETP" id="applAffiliationType_4"/><label class="label" for="applAffiliationType_4">산업체</label></div>
                                </dd>
                            </dl>
                            <dl>
                               <dt>Data utilization objectives</dt>
                               <dd>
-                                ""
+                                <div class="radio radio-inline mr20"><input type="radio" name="dataUsesPurpose" value="RSC" id="dataUsesPurpose_1" checked="checked"/><label class="label" for="dataUsesPurpose_1">연구</label></div>
+                                <div class="radio radio-inline mr20"><input type="radio" name="dataUsesPurpose" value="BSN" id="dataUsesPurpose_2"/><label class="label" for="dataUsesPurpose_2">사업</label></div>
+                                <div class="radio radio-inline mr20"><input type="radio" name="dataUsesPurpose" value=" CLN" id="dataUsesPurpose_3"/><label class="label" for="dataUsesPurpose_3">진료</label></div>
+                                <div class="radio radio-inline mr20"><input type="radio" name="dataUsesPurpose" value="ETC" id="dataUsesPurpose_4"/><label class="label" for="dataUsesPurpose_4">기타</label></div>
                               </dd>
                            </dl>
                            <dl>
@@ -46,23 +54,19 @@ export default function DataApplicationComp() {
                   <dl className="sbj_tit">
                     <dt>Study Period</dt>
                     <dd className="date">
-                        <div className="dateWrap">
-                          <div className="date-inpt"><input type="text" name="researchStartDate"
-                          className="date1 hasDatepicker w200" size="12" id="researchStartDate"
-                          readonly="readonly" value="" title="Research period start date"/></div>
-                          <span style={{"padding": "0 10px"}}>~</span>
-                          <div class="date-inpt"><input type="text" name="researchEndDate"
-                          className="date1 hasDatepicker w200" size="12" id="researchEndDate"
-                          readonly="readonly" value="" title="End date of research period"/></div>
-                        </div>
-                    </dd>
+                      <div class="dateWrap">
+                          <div class="date-inpt"><input type="text" name="researchStartDate" class="date1 hasDatepicker w200" size="12" id="researchStartDate" readonly="readonly" value="" title="Research period start date"/></div>
+                            <span style={{"padding": "0 10px"}}>~</span>
+                            <div class="date-inpt"><input type="text" name="researchEndDate" class="date1 hasDatepicker w200" size="12" id="researchEndDate" readonly="readonly" value="" title="End date of research period"/></div>
+                          </div>
+                      </dd>
                   </dl>
                   <dl>
                      <dt>Period of use</dt>
                      <dd class="date">
                          <div class="dateWrap">
                            <div class="date-inpt"><input type="text" name="useStartDate" class="date1 hasDatepicker w200" size="12" id="useStartDate" readonly="readonly" value="" title="Usage period start date"/></div>
-                           <span style={{"padding": "0 10px"}}>~</span>
+                            <span style={{"padding": "0 10px"}}>~</span>
                            <div class="date-inpt"><input type="text" name="useEndDate" class="date1 hasDatepicker w200" size="12" id="useEndDate" readonly="readonly" value="" title="End date of use period"/></div>
                          </div>
                      </dd>
@@ -98,7 +102,7 @@ export default function DataApplicationComp() {
                       <dd class="file_up">
                         <label for="fileupload" class="file_btn btn-color3"><img src="#" alt="File Icon"/>Attach File</label>
                         <input type="hidden" name="frmName" value="frm1" />
-                        
+
                       </dd>
                     </dl>
                   </div>
