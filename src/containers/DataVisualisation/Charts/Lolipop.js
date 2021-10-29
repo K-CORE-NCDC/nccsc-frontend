@@ -482,6 +482,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                     <DataTable pagination
                       columns={tableColumnsData}
                       data={tableData}
+                      
                     />
                   </div>}
                 </div>}
