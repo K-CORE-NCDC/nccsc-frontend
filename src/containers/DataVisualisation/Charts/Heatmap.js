@@ -68,6 +68,18 @@ const bim_vl = (vl)=>{
     return tmp
   }
 
+  const smoking_status = (n)=>{
+    let tmp = ''
+    if((n === 'Y') || (n === true) || (n === 'Yes')){
+      tmp = 'YES'
+    }else if((n === 'N') || (n === false) || (n === 'No')) {
+      tmp = 'No'
+    }else{
+      tmp='N/A'
+    }
+    return tmp
+  }
+
   useEffect(()=>{
     if(inputJson['filterChoices']){
       let f = inputJson['filterChoices']
@@ -162,7 +174,7 @@ const bim_vl = (vl)=>{
               z[option[opt].id].push(diag_age(unique_cf[option[opt].id][key]))
             }else if(option[opt].id==='bmi_vl'){
               z[option[opt].id].push(bim_vl(unique_cf[option[opt].id][key]))
-            }else{
+            }else {
               z[option[opt].id].push(unique_cf[option[opt].id][key])
             }
           }
@@ -332,7 +344,9 @@ function onSelect(selectedList, selectedItem) {
       let dataJson = { ...inputData }
       dataJson['clinicalFilters'] = cf
       dataJson['view'] = viewType
-      // dataJson['type'] = viewType
+      if((tableType === "methylation") || (tableType === "phospo")){
+        dataJson['genes'] = selectedGene
+      }
       dataJson['heat_type'] = mainTab
       dataJson['table_type'] = tableType
       dispatch(getHeatmapInformation('POST',dataJson))
@@ -351,6 +365,7 @@ function onRemove(selectedList, removedItem) {
       let dataJson = { ...inputData }
       dataJson['clinicalFilters'] = items
       dataJson['heat_type'] = mainTab
+      dataJson['genes'] = selectedGene
       dispatch(getHeatmapInformation('POST',dataJson))
     }
   }
