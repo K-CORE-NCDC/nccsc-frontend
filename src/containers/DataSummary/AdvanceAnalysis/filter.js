@@ -49,7 +49,7 @@ export default function Filter({parentCallback}) {
     if (d.id in selectState){
       check = true
     }
-    
+
     return (
       <div key={d.id} className="px-10">
         <label className="inline-flex items-center">
@@ -58,7 +58,7 @@ export default function Filter({parentCallback}) {
             value={d.value}
             onChange={e=>selectFn(e)}
              />
-          <span className="ml-2"><FormattedMessage  id = {d.value} defaultMessage={d.value}/></span>
+          <span className="ml-2 lg:text-2xl sm:text-xl md:text-xl"><FormattedMessage  id = {d.value} defaultMessage={d.value}/></span>
         </label>
       </div>
     )
@@ -135,7 +135,7 @@ export default function Filter({parentCallback}) {
           t.push(
             <div className="px-5 py-3 relative z-10" key={'div_mb_'+c}>
               <label htmlFor="toogleA" className="flex items-center cursor-pointer">
-                <div className="ml-3 text-gray-700 w-10/12 text-2xl tracking-wide">
+                <div className="ml-3 text-gray-700 w-10/12 lg:text-2xl sm:text-xl md:text-xl tracking-wide">
                   {
                       (childelm in chart_names)?<FormattedMessage  id = {childelm} defaultMessage={chart_names[childelm]}/>:<FormattedMessage  id = {childelm} defaultMessage={childelm}/>
                   }
@@ -245,10 +245,10 @@ export default function Filter({parentCallback}) {
   return (
     <div>
       <div className="py-3 px-2 w-full col-span-2">
-        <button className="bg-white  w-80 h-20 hover:text-white mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded" onClick={reset}>
+        <button className="bg-white  lg:w-80 sm:w-52  lg:h-20 sm:h-16  hover:text-white mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded" onClick={reset}>
           Reset
         </button>&nbsp;&nbsp;&nbsp;&nbsp;
-        <button className="bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={sendFilter}>
+        <button className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 lg:h-20 sm:w-52 sm:h-16 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={sendFilter}>
           Search
         </button>
       </div>

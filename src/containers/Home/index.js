@@ -64,8 +64,8 @@ export default function Home() {
         <div className='bg-main-blue p-14 2xl:p-5  2xl:col-span-2'>
           <div className='grid h-72 2xl:grid-cols-12'>
             <div className="text-white grid text-center mb-16 content-center text-3xl 2xl:col-span-2">
-              보유 암종별 데이터<br />
-              [테이블 관계도]
+              <FormattedMessage  id = "Data of included cancer type" defaultMessage='Data of included cancer type'/><br />
+              <FormattedMessage  id = "Table relationship" defaultMessage='[Table relationship]'/>
             </div>
             <div className=" con 2xl:col-span-10">
               <ul className='grid lg:grid-cols-3 2xl:grid-cols-10'>

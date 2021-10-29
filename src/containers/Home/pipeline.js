@@ -14,7 +14,7 @@ export default function Pipeline() {
     return (
         <div className="cont_wrap my-10">
           <div className="flex justify-center">
-            <div className="pipeline_4_li">
+            <div className="pl-8 pr-8">
               <img src={pipeline}/>
             </div>
           </div>

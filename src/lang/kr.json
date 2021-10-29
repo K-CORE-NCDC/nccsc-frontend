@@ -137,5 +137,20 @@
     "Yes":"예",
     "No":"아니오",
     "Positive":"양성",
-    "Negative":"음성"
+    "Negative":"음성",
+    "Project for building a healthcare big data showcase":"헬스케어 빅데이터 쇼케이스 구축사업",
+    "Project introduction":"사업 소개",
+    "Pri_1":"헬스케어 빅데이터 쇼케이스 구축사업은",
+    "Pri_2":"대통령 직속 4차산업 혁명위원회",
+    "Pri_3":"'4차 산업 혁명 기반 헬스케어 발전전략'에 따라",
+    "Pri_4":"헬스케어 6대 프로젝트 추직 전략 중 하나로써",
+    "Pri_5":"국립암센터 암빅데이터에서 수행중인 사업입니다.",
+    "Cancer Proteogenomics Working Group":"암단백유전체사업단 소개",
+    "Cncr_1":"암단백유전체사업단은",
+    "Cncr_2":"암 단백유전체 분석을 통해 암의 새로운 바이오마커를 발굴하고",
+    "Cncr_3":"이를 기반으로하는 신 치료 기술 개발의 근거를 제공하고자",
+    "Cncr_4":"국립암센터에 구성된 연구사업단입니다.",
+    "DATA introduction":"보유 데이터 소개",
+    "Data of included cancer type":"보유 암종별 데이터",
+    "Table relationship":"[테이블 관계도]"
 }
