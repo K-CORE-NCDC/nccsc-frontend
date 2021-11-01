@@ -31,6 +31,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   const [showOncoTimelineTables, setShowOncoTimelineTables] = useState(false)
   const [showNoContent, setShowNoContent] = useState(false)
   const [renderCircos, setRenderCircos] = useState(false)
+  const [samplesCount, setSamplesCount] = useState(0)
 
 
   const closeShowOncoImages = () => {
@@ -69,13 +70,31 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   }
 
   useEffect(() => {
+    if(circosSanpleRnidListData && Object.keys(circosSanpleRnidListData).length > 0){
+      setSamplesCount(Object.keys(circosSanpleRnidListData).length)
+    }
+  }, [circosSanpleRnidListData])
+
+  useEffect(() => {
     if (inputData) {
       if(sampleKey!=='all'){
-        document.getElementById('images').classList.remove("opacity-50")
-        document.getElementById('tables').classList.remove("opacity-50")
+        let imageDocumentObject = document.getElementById('images')
+        if(imageDocumentObject){
+          imageDocumentObject.classList.remove("opacity-50")
+        }
+        let tableDocumentObject = document.getElementById('tables')
+        if (tableDocumentObject){
+          tableDocumentObject.classList.remove("opacity-50")
+        }
       }else{
-        document.getElementById('images').classList.add("opacity-50")
-        document.getElementById('tables').classList.add("opacity-50")
+        let imageDocumentObject = document.getElementById('images')
+        if(imageDocumentObject){
+          imageDocumentObject.classList.add("opacity-50")
+        }
+        let tableDocumentObject = document.getElementById('tables')
+        if (tableDocumentObject){
+          tableDocumentObject.classList.add("opacity-50")
+        }
       }
 
       let editInputData = inputData
@@ -179,7 +198,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
           <div className="p-1 grid grid-cols-6">
             <div className='flex sm:col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-2'>
               <div className='flex-col text-left'>
-                {circosSanpleRnidListData && <label htmlFor="samples" ><FormattedMessage  id = "Cir_choose_sample" defaultMessage='Choose a Sample'/>:{circosSanpleRnidListData.length} </label>}
+                {circosSanpleRnidListData && <div><FormattedMessage  id = "Cir_choose_sample" defaultMessage='Choose a Sample'/>:({samplesCount}) </div>}
                 <select
                   className="w-full border bg-white rounded px-3 py-2 outline-none"
                   value={sampleKey}

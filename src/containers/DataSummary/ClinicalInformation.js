@@ -206,6 +206,7 @@ export default function ClinicalInformation() {
       }
     }
 
+    console.log(summaryJson);
 
     if(check ){
       Object.keys(summaryJson[parent_name]).forEach((item, k) => {
