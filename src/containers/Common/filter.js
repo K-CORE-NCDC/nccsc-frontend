@@ -54,7 +54,7 @@ export default function Filter({parentCallback,parentState}) {
             value={d.value}
             onChange={e=>selectFn(e)}
              />
-          <span className="ml-2"><FormattedMessage  id = {d.value} defaultMessage={d.value}/></span>
+          <span className="ml-2 lg:text-2xl sm:text-xl"><FormattedMessage  id = {d.value} defaultMessage={d.value}/></span>
         </label>
       </div>
     )
@@ -135,7 +135,7 @@ export default function Filter({parentCallback,parentState}) {
           t.push(
             <div className="px-5 py-3 relative z-10" key={'div_mb_'+c}>
               <label htmlFor="toogleA" className="flex items-center cursor-pointer">
-                <div className="ml-3 text-gray-700 w-10/12 text-2xl tracking-wide">
+                <div className="ml-3 text-gray-700 w-10/12 lg:text-2xl sm:text-xl tracking-wide">
                   {
                       (childelm in chart_names)?<FormattedMessage  id = {childelm} defaultMessage={chart_names[childelm]}/>:<FormattedMessage  id = {childelm} defaultMessage={childelm}/>
                   }
@@ -159,7 +159,7 @@ export default function Filter({parentCallback,parentState}) {
           <input className="absolute opacity-0" id={"tab-single-"+k} type="radio" name="tabs2"/>
           <label className="block p-5 leading-normal cursor-pointer" htmlFor={"tab-single-"+k}>
             {icon_type[item]}
-            <span className="no-underline  ml-2 text-2xl tracking-wide">{<FormattedMessage  id = {item} defaultMessage={item}/>}</span>
+            <span className="no-underline  ml-2 lg:text-2xl  sm:text-xl tracking-wide">{<FormattedMessage  id = {item} defaultMessage={item}/>}</span>
           </label>
           {
             selected === item ? <div className="tab-content overflow-hidden border-l-2 bg-gray-100  leading-normal relative py-3">
@@ -232,10 +232,10 @@ export default function Filter({parentCallback,parentState}) {
   return (
     <div>
       <div className="py-3 px-2 w-full col-span-2">
-        <button onClick={resetSelectedFilters} className="bg-white  w-80 h-20 hover:text-white mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded">
+        <button onClick={resetSelectedFilters} className="bg-white  lg:w-80 sm:w-52 lg:h-20 sm:h-14 hover:text-white mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded">
           Reset
         </button>&nbsp;&nbsp;&nbsp;&nbsp;
-        <button className="bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={sendFilter}>
+        <button className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-52 lg:h-20 sm:h-14 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={sendFilter}>
           Search
         </button>
       </div>
