@@ -31,6 +31,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   const [showOncoTimelineTables, setShowOncoTimelineTables] = useState(false)
   const [showNoContent, setShowNoContent] = useState(false)
   const [renderCircos, setRenderCircos] = useState(false)
+  const [samplesCount, setSamplesCount] = useState(0)
 
 
   const closeShowOncoImages = () => {
@@ -69,13 +70,31 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   }
 
   useEffect(() => {
+    if(circosSanpleRnidListData && Object.keys(circosSanpleRnidListData).length > 0){
+      setSamplesCount(Object.keys(circosSanpleRnidListData).length)
+    }
+  }, [circosSanpleRnidListData])
+
+  useEffect(() => {
     if (inputData) {
       if(sampleKey!=='all'){
-        document.getElementById('images').classList.remove("opacity-50")
-        document.getElementById('tables').classList.remove("opacity-50")
+        let imageDocumentObject = document.getElementById('images')
+        if(imageDocumentObject){
+          imageDocumentObject.classList.remove("opacity-50")
+        }
+        let tableDocumentObject = document.getElementById('tables')
+        if (tableDocumentObject){
+          tableDocumentObject.classList.remove("opacity-50")
+        }
       }else{
-        document.getElementById('images').classList.add("opacity-50")
-        document.getElementById('tables').classList.add("opacity-50")
+        let imageDocumentObject = document.getElementById('images')
+        if(imageDocumentObject){
+          imageDocumentObject.classList.add("opacity-50")
+        }
+        let tableDocumentObject = document.getElementById('tables')
+        if (tableDocumentObject){
+          tableDocumentObject.classList.add("opacity-50")
+        }
       }
 
       let editInputData = inputData

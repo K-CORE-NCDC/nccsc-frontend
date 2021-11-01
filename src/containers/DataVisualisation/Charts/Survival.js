@@ -94,7 +94,8 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
         })
       }
       if (htmlArray.length > 1) {
-        setPvalueData(`P-Value : ${survivalJson.pvalue.toPrecision(3)} / R-Value : ${survivalJson.rvalue.toFixed(6)}`)
+        // setPvalueData(`P-Value : ${survivalJson.pvalue.toPrecision(3)} / R-Value : ${survivalJson.rvalue.toFixed(6)}`)
+        setPvalueData(`P-Value : ${survivalJson.pvalue.toPrecision(3)}`)
         setSampleCountsCard([
           <div key='total' className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue">
             <FormattedMessage id="Total" defaultMessage='Total' /> : {totalCount}
@@ -102,7 +103,7 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
           ...htmlArray
         ])
       } else {
-        setPvalueData(`P-Value : ${survivalJson.pvalue.toPrecision(3)} / R-Value : ${survivalJson.rvalue.toFixed(6)}`)
+        setPvalueData(`P-Value : ${survivalJson.pvalue.toPrecision(3)}`)
         setSampleCountsCard([
           <div key='total' className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue">
             <FormattedMessage id="Total" defaultMessage='Total' /> : {totalCount}

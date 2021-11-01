@@ -160,37 +160,37 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
 
       let linear = 1
 
-      if(id === 'chart_pie_AgeOfDaignosis'){
-        let ageofdiag = {}
-        for (var i = 0; i < data.length; i++) {
-          let n = parseInt(data[i].name)
-          let tmp = 0
-          if(n >20 && n<=25){
-            tmp = '21~25'
-          } else if(n>25 && n<=30 )  {
-            tmp = '26~30'
-          } else if(n>30 && n<=35) {
-            tmp = '31~35'
-          } else if(n>35 && n<=40) {
-            tmp = '36~40'
-          }
-          if(tmp in ageofdiag) {
-            ageofdiag[tmp] += data[i].cnt
-          } else {
-            ageofdiag[tmp] = data[i].cnt
-          }
-        }
-        let d = []
-        for (var key in ageofdiag) {
-          d.push({
-            'name': key,
-            'cnt': ageofdiag[key]
-          })
-        }
-        data = d
+      // if(id === 'chart_pie_AgeOfDaignosis'){
+      //   let ageofdiag = {}
+      //   for (var i = 0; i < data.length; i++) {
+      //     let n = parseInt(data[i].name)
+      //     let tmp = 0
+      //     if(n >20 && n<=25){
+      //       tmp = '21~25'
+      //     } else if(n>25 && n<=30 )  {
+      //       tmp = '26~30'
+      //     } else if(n>30 && n<=35) {
+      //       tmp = '31~35'
+      //     } else if(n>35 && n<=40) {
+      //       tmp = '36~40'
+      //     }
+      //     if(tmp in ageofdiag) {
+      //       ageofdiag[tmp] += data[i].cnt
+      //     } else {
+      //       ageofdiag[tmp] = data[i].cnt
+      //     }
+      //   }
+      //   let d = []
+      //   for (var key in ageofdiag) {
+      //     d.push({
+      //       'name': key,
+      //       'cnt': ageofdiag[key]
+      //     })
+      //   }
+      //   data = d
 
-      }
-      else if(id==='chart_pie_FirstMenstrualAge'){
+      // }
+      if(id==='chart_pie_FirstMenstrualAge'){
         let fma = {}
         for (var i = 0; i < data.length; i++) {
           let n = parseInt(data[i].name)
