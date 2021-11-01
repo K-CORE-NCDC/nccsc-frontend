@@ -7,7 +7,7 @@ export default function Header() {
     <Menu items={childMenu.social.items}/>
   )
   return(
-    <ul className="flex flex-col lg:flex-row list-none lg:ml-auto justify-end text-white">
+    <ul className="flex flex-row list-none lg:ml-auto justify-end text-white">
       {menuContent}
     </ul>
   )

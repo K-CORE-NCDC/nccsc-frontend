@@ -12,26 +12,12 @@ import {
     ZoomInIcon,
     ZoomOutIcon,
   } from '@heroicons/react/outline'
-function saveAs(uri, filename) {
-    var link = document.createElement('a');
-    link.className = 'watermark'
-    if (typeof link.download === 'string') {
-        link.href = uri;
-        link.download = filename;
-        //Firefox requires the link to be in the body
-        document.body.appendChild(link);
-        //simulate click
-        link.click();
-        //remove the link when done
-        document.body.removeChild(link);
-    } else {
-        window.open(uri);
-    }
-}
 
 const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
     const [inputRule,setInputRule] = useState({})
     const [customName,setCustomName] = useState({})
+    const [oncoprintObj,setOncoprintObj] = useState({})
+
     let names_variant ={
         "Missense Mutation":"variant_classification||Missense_Mutation||4",
         "Nonsense Mutation":"variant_classification||Nonsense_Mutation||6",
@@ -51,9 +37,9 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
     const [state, setState] = useState({});
     const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
 
-    var oncoprint 
+    
     const drawChart = (w,gData,cData,rule_types,inputRule) => {
-        
+        var oncoprint     
         
         if($('#oncoprint-glyphmap').length>0){
             $('#oncoprint-glyphmap').empty()
@@ -325,15 +311,25 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
                 }
             }
         },500);
+        setOncoprintObj(oncoprint)
     }
 
     useEffect(()=>{
+        // console.log(oncoprintObj)
         if(watermarkCss){
-            html2canvas(document.querySelector('canvas')).then(function(canvas) {
-                saveAs(canvas.toDataURL(), 'oncoprint.png');
-            });
+            var svgEl = oncoprintObj.toSVG()
+            var xml = new XMLSerializer().serializeToString(svgEl);
+            var svg64 = btoa(xml); //for utf8: btoa(unescape(encodeURIComponent(xml)))
+            var b64start = 'data:image/svg+xml;base64,';
+            var image64 = b64start + svg64;
+            const downloadLink = document.createElement('a');
+            document.body.appendChild(downloadLink);
+            downloadLink.href = image64;
+            downloadLink.target = '_self';
+            downloadLink.download = 'onco';
+            downloadLink.click(); 
         }
-    },[watermarkCss])
+    },[watermarkCss,oncoprintObj])
 
 
     useEffect(()=>{
@@ -355,7 +351,6 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
    
     
     document.addEventListener('click',function(e){
-        
         let elem = e.target.parentNode
         if(elem){
             if(elem.classList.contains('legends')){

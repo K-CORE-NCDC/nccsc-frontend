@@ -20,7 +20,7 @@ export default function DropdownMenu() {
       htmlbutton.push(
           <Link key={'button_'+i} 
             to={items[i].url}
-            className="text-3xl group_box h-full font-bold  items-center w-full">
+            className="text-sm md:text-xl lg:text-2xl xl:text-2xl 2xl:text-3xl group_box h-full font-bold  items-center w-full">
             <span className="px-5">{items[i].title}</span>
           </Link>
       )
