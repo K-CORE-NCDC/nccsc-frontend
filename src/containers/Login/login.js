@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios'
 import config from '../../config'
 import {
-  UserIcon
+    UserIcon
 } from '@heroicons/react/outline'
 
 const LoginComponent = () => {
@@ -12,11 +12,11 @@ const LoginComponent = () => {
 
     const updateUserNamePassword = (e) => {
         setUserFormData(previousState => ({ ...previousState, [e.target.name]: e.target.value }))
-      }
+    }
 
     const loginFailure = () => {
         setErrorClass("border-red-500")
-        setErrorMessage([<p key="error" className="text-red-500 text-xs italic">Invalid username/Password</p>])
+        setErrorMessage([<p key="error" className="p-1 font-bold text-3xl text-red-500 italic">Invalid username/Password</p>])
         setUserFormData({ username: "", password: "" })
     }
 
@@ -29,16 +29,16 @@ const LoginComponent = () => {
 
 
     const formSubmitAction = (e) => {
-        console.log('formsubmit')
-        // e.preventDefault()
+        // console.log('formsubmit')
+        e.preventDefault()
         const url = `${config.auth}api/token/`
         let x = axios({ method: 'POST', url: url, data: userFormData })
         x.then((response) => {
             const data = response.data
             const statusCode = response.status
-            if(statusCode === 200){
+            if (statusCode === 200) {
                 loginSuccess(data)
-            }else{
+            } else {
                 loginFailure()
             }
         }).catch((error) => {
@@ -58,41 +58,42 @@ const LoginComponent = () => {
                 </div>
                 <div className="my-32">
                     <div className="border-b-2 border-gray-600 pt-8 pb-8">
-                      <h1 className="font-bold text-3xl text-red-500"> If an error in consecutive password input (5 times) occurs, the account is locked.</h1>
+                        <h1 className="font-bold text-3xl text-red-500"> If an error in consecutive password input (5 times) occurs, the account is locked.</h1>
                     </div>
                     <div className="grid grid-cols-3 border-b-2 border-gray-600 pt-12 pb-12">
                         <div className="pt-6 pl-48 col-span-1">
-                          <h1 className="font-bold">login ID_</h1>
+                            <h1 className="font-bold">login ID_</h1>
                         </div>
                         <div>
-                        <div className="mb-4 pr-45 col-span-2">
-                            <input onChange={updateUserNamePassword} name="username" className="shadow appearance-none border rounded-lg w-full py-8 px-5 text-gray-700 leading-tight focus:border-blue-500  w-28" id="username" type="text" placeholder="Please Enter your id"/>
-                        </div>
+                            <div className="mb-4 pr-45 col-span-2">
+                                <input onChange={updateUserNamePassword} name="username" className={`shadow appearance-none border rounded-lg w-full py-8 px-5 text-gray-700 leading-tight focus:border-blue-500  w-28 ${errorClass}`} id="username" type="text" placeholder="Please Enter your id" />
+                            </div>
                         </div>
                     </div>
                     <div className="grid grid-cols-3 border-b-2 border-gray-600 pt-12 pb-12">
                         <div className="pt-6 pl-48 col-span-1">
-                          <h1 className="font-bold">Password _</h1>
+                            <h1 className="font-bold">Password _</h1>
                         </div>
                         <div>
-                        <div className="mb-4 pr-45 col-span-2">
-                            <input onChange={updateUserNamePassword} name="password" className="shadow appearance-none border rounded-lg w-full py-8 px-5 text-gray-700 leading-tight focus:border-blue-500  w-28" id="password" type="text" placeholder="Please Enter a password "/>
-                        </div>
+                            <div className="mb-4 pr-45 col-span-2">
+                                <input onChange={updateUserNamePassword} name="password" className={`shadow appearance-none border rounded-lg w-full py-8 px-5 text-gray-700 leading-tight focus:border-blue-500  w-28 ${errorClass}`} id="password" type="password" placeholder="Please Enter a password " />
+                            </div>
                         </div>
                     </div>
                     <div className="grid grid-cols-3 pt-12">
                         <div className="w-full col-span-3">
-                            <button onClick={formSubmitAction} className="bg-blue-500 hover:bg-blue-700 text-white h-28 font-bold py-2 px-4 border border-blue-700 w-full rounded" style={{backgroundColor:"#194872"}}>
-                              <UserIcon className="h-14 w-12 inline text-main-white"/> <span>Login</span>
+                            {errorMessage && <div className="font-bold text-3xl text-red-500">{errorMessage}</div>}
+                            <button onClick={formSubmitAction} className="bg-blue-500 hover:bg-blue-700 text-white h-28 font-bold py-2 px-4 border border-blue-700 w-full rounded" style={{ backgroundColor: "#194872" }}>
+                                <UserIcon className="h-14 w-12 inline text-main-white" /> <span>Login</span>
                             </button>
                         </div>
                     </div>
                     <div className="grid grid-cols-3 pt-12">
                         <div className="w-full col-span-3">
-                          <div className="float-right">
-                            <a href="#" className="border-r-2 border-gray-600 pr-5">Find ID</a>
-                            <a href="#" className="pl-5">Find password</a>
-                          </div>
+                            <div className="float-right">
+                                <a href="#" className="border-r-2 border-gray-600 pr-5">Find ID</a>
+                                <a href="#" className="pl-5">Find password</a>
+                            </div>
                         </div>
                     </div>
                 </div>

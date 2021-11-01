@@ -57,7 +57,7 @@ export default function AdvancedInfo() {
           html.push(
             <div key={'omics_'+k} className='max-w bg-white rounded overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border'>
               <div className="px-6 py-4">
-                <div className="font-bold text-md mb-2">{item}</div>
+                <div className="font-bold lg:text-2xl md:text-xl sm:text-xl mb-2">{item}</div>
               </div>
               <div className="px-6 pt-4 pb-4">
                 {comp}
@@ -103,7 +103,7 @@ export default function AdvancedInfo() {
             <div className="col-start-2 col-span-3 pt-4 overflow-auto ">
             {
               loader?<LoaderCmp/>:
-              <div className="grid grid-cols-3 gap-1">
+              <div className="grid lg:grid-cols-3 sm:grid-cols-1 md:lg:grid-cols-2 gap-1">
                     {state}
               </div>
               }

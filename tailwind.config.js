@@ -1,3 +1,5 @@
+// const defaultTheme = require('tailwindcss/defaultTheme')
+
 module.exports = {
   purge: [],
   darkMode: false, // or 'media' or 'class'
@@ -22,7 +24,11 @@ module.exports = {
       },
       fontFamily:{
 
-      }
+      },
+      screens: {
+      'xs': '475px',
+        // ...defaultTheme.screens,
+      },
     },
     screens:{
       'xs':'300px',

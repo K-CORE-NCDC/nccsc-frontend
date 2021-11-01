@@ -130,7 +130,7 @@ export default function ClinicalInformation() {
           t.push(
             <div className="p-3 relative z-10" key={'div_mb_'+i}>
               <label htmlFor="toogleA" className="flex items-center cursor-pointer">
-                <div className="ml-3 text-gray-700 w-9/12 text-2xl tracking-wide">
+                <div className="ml-3 lg:text-3xl md:text-2xl sm:text-xl text-gray-700 w-9/12  tracking-wide">
                   {
                     (itm in chart_names)?<FormattedMessage  id = {itm} defaultMessage={chart_names[itm]}/>:<FormattedMessage  id = {itm} defaultMessage={itm}/>
                   }
@@ -206,6 +206,7 @@ export default function ClinicalInformation() {
       }
     }
 
+    console.log(summaryJson);
 
     if(check ){
       Object.keys(summaryJson[parent_name]).forEach((item, k) => {
@@ -214,15 +215,15 @@ export default function ClinicalInformation() {
         if(item===chart){
           tmp.push(
             <div key={'chart_'+item} data-chart="bar" className='max-w bg-white rounded-2xl overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border'>
-              <h2 className="text-3xl tracking-wide">{(item in chart_inside_names)?<FormattedMessage  id = {item+"_chart"} defaultMessage={chart_inside_names[item]}/>:<FormattedMessage  id = {item} defaultMessage={item}/>}</h2>
+              <h2 className="lg:text-3xl md:text-2xl sm:text-2xl tracking-wide">{(item in chart_inside_names)?<FormattedMessage  id = {item+"_chart"} defaultMessage={chart_inside_names[item]}/>:<FormattedMessage  id = {item} defaultMessage={item}/>}</h2>
               <div className="mt-2 ml-5 p-3">
                   <label className="inline-flex items-center">
                     <input key={'radio_'+id+"_bar"} type="radio" defaultChecked={true} className="form-radio" id={id+"_bar"} data-id={id} name={"cr_"+id+"_"+k} value="bar" onChange={change_visual} />
-                    <span className="ml-2">Bar</span>
+                    <span className="ml-2 sm:text-xl">Bar</span>
                   </label>
                   <label className="inline-flex items-center ml-6">
                     <input key={'radio_'+id+"_pie"} type="radio" defaultChecked={false} className="form-radio" id={id+"_pie"} data-id={id} name={"cr_"+id+"_"+k} value="pie" onChange={change_visual} />
-                    <span className="ml-2">Pie</span>
+                    <span className="ml-2 sm:text-xl">Pie</span>
                   </label>
               </div>
               <div id="chart-tab-contents">
@@ -314,7 +315,7 @@ export default function ClinicalInformation() {
           </div>
           </div>
           <div className="col-start-2 col-span-4 m-5 overflow-y-auto h-screen" id='charts_container'>
-            <div className="grid grid-cols-3 gap-3 " >
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 sm:grid-cols-2 gap-3" >
               {
                 leftSide['charts']
               }

@@ -76,6 +76,15 @@ export default function Web(props) {
     classes = 'screen-2 xl:h-full lg:h-full '
   }
 
+  // <div className="md:visible lg:invisible sm:visible pt-5">
+  //     <ul>
+  //       <li class="active"><a href="index.html" class="block text-sm px-2 py-4 text-white bg-green-500 font-semibold">Home</a></li>
+  //       <li><a href="#services" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Services</a></li>
+  //       <li><a href="#about" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">About</a></li>
+  //       <li><a href="#contact" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">contact us</a></li>
+  //     </ul>
+  // </div>
+
   return (
     <div className="relative">
       <Popover>
@@ -86,11 +95,7 @@ export default function Web(props) {
                 <div className="relative pt-5 sm:flex xs:flex">
                   <a href="/" className='xs:w-11/12 sm:w-11/12'>
                     <span className="sr-only">Workflow</span>
-                    <img
-                      className="h-16 w-auto "
-                      src={logo}
-                      alt=""
-                    />
+                    <img className="h-16 w-auto " src={logo} alt=""/>
                   </a>
                   <Popover.Button  className="xs:block sm:block lg:hidden  text-white  cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block outline-none focus:outline-none" type="button"><MenuIcon className="h-6 w-6" aria-hidden="true" /></Popover.Button >
                 </div>
@@ -111,7 +116,7 @@ export default function Web(props) {
               <h2 className="text-8xl"><strong>K-CORE</strong> <strong>Portal</strong></h2>
               <h2 className="text-4xl mt-4"><strong>Cancer Omics Research Portal</strong></h2>
               <div className="pl-6">
-                <p className="border-l-2 text-2xl p-5 font-medium mt-8 border-gray-600" style={{textAlign: 'right'}}>
+                <p className="lg:border-l-2 lg:text-2xl sm:text-xl p-5 font-medium mt-8 border-gray-600" style={{textAlign: 'right'}}>
                   <FormattedMessage  id = "home_child_title" defaultMessage='It is a cancer data platform that visually provides various analysis results by combining high-quality domestic cancer patient clinical and protein genomic information .'/>
                 </p>
               </div>
@@ -232,12 +237,14 @@ export default function Web(props) {
           {breadCrumb}
         </ol>
       </nav> }
+
       <Suspense fallback={<Loader />}>
         <Switch>
           {menu}
           <Redirect from="/" to="home" />
         </Switch>
       </Suspense>
+
       <footer className="p-10 bg-white border-gray-300 border-t">
         <div className="grid grid-cols-2">
           <div className="text-gray-500">
