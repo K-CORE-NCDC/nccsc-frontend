@@ -399,12 +399,12 @@ let style = {
 }
 
 let selected_button = ''
-selected_button += "rounded-r-none  hover:scale-110 focus:outline-none flex p-5 px-10 "
+selected_button += "rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 sm:p-2 lg:px-10 md:px-10 sm:px-8 sm:w-40 md:w-80 sm:text-xl lg:text-2xl sm:h-16 lg:h-24"
 selected_button += " rounded font-bold cursor-pointer hover:bg-main-blue "
 selected_button +=" bg-main-blue text-white border duration-200 ease-in-out transition "
 
 let normal_button = ''
-normal_button += "rounded-l-none  hover:scale-110 focus:outline-none flex justify-center p-5 "
+normal_button += "rounded-l-none  hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-2 lg:px-10 sm:px-8 sm:w-40 md:w-80 sm:text-xl lg:text-2xl sm:h-16 lg:h-24"
 normal_button += " rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 "
 normal_button += " border duration-200 ease-in-out border-teal-600 transition px-10 "
 
@@ -449,43 +449,41 @@ normal_button += " border duration-200 ease-in-out border-teal-600 transition px
           <div className="p-5 text-right col-span-4">
             <div className="flex justify-start items-baseline flex-wrap">
               <div className="flex m-2">
-                <button onClick={e => changeMainType(e, 'heatmap')} name='maintype' className="rounded-r-none  hover:scale-110
-                    focus:outline-none flex p-5 rounded font-bold cursor-pointer
-                    hover:bg-main-blue  bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition">
+                <button onClick={e => changeMainType(e, 'heatmap')} name='maintype' className="rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 rounded font-bold cursor-pointer hover:bg-main-blue
+                bg-main-blue text-white border duration-200 ease-in-out sm:p-3 sm:text-xl lg:text-2xl sm:h-14 lg:h-20  border-gray-600 transition">
                   Heatmap
                 </button>
                 <button onClick={e => changeMainType(e, 'k-mean')} name='maintype' className="rounded-l-none border-l-0
-                    hover:scale-110 focus:outline-none flex justify-center p-5
-                    rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100
-                    text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
+                    hover:scale-110 focus:outline-none flex justify-center lg:p-5 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 text-teal-700 border duration-200 sm:p-3
+                    sm:text-xl lg:text-2xl sm:h-14 lg:h-ease-in-out lg:h-20 border-teal-600 transition">
                   K-mean
                 </button>
               </div>
             </div>
           </div>
-          <div className="p-5 text-right col-span-2">
+          <div className="p-5 text-right lg:col-span-2 sm:col-span-4">
             <div className="flex justify-start items-baseline flex-wrap">
               <div className="flex m-2">
                 <button onClick={e => changeType(e, 'rna')} name='type' className="rounded-r-none  hover:scale-110
-                    focus:outline-none flex p-5 rounded font-bold cursor-pointer
+                    focus:outline-none flex p-5 rounded font-bold cursor-pointer sm:text-xl md:text-2xl lg:text-2xl
                     hover:bg-main-blue  bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition">
                   RNA
                 </button>
                 <button onClick={e => changeType(e, 'methylation')} name='type' className="rounded-l-none border-l-0
                     hover:scale-110 focus:outline-none flex justify-center p-5
-                    rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100
+                    rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl
                     text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
                   Methylation
                 </button>
                 <button onClick={e => changeType(e, 'proteome')} name='type' className="rounded-l-none border-l-0
                     hover:scale-110 focus:outline-none flex justify-center p-5
-                    rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100
+                    rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl
                     text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
                   Global Proteome
                 </button>
                 <button onClick={e => changeType(e, 'phospo')} name='type' className="rounded-l-none border-l-0
                     hover:scale-110 focus:outline-none flex justify-center p-5
-                    rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100
+                    rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl
                     text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
                   Phospho
                 </button>
@@ -505,14 +503,14 @@ normal_button += " border duration-200 ease-in-out border-teal-600 transition px
               />
               {mainTab === 'k-mean'?
                 <div className="mt-8">
-                  <label for="points"><strong>Cluster (between {rangeValue} and {clusterRange}):</strong></label>
+                  <label for="points"><strong className="sm:text-xl lg:text-2xl">Cluster (between {rangeValue} and {clusterRange}):</strong></label>
                   <input type="range" className="ml-4 border-4 border-gray-500 rounded-lg overflow-hidden appearance-none bg-white h-6 w-128"
                   id="points" name="points" min="1" max={clusterRange} value={rangeValue} onChange={rangeCall}/>
                 </div>:""
               }
             </div>
             { tableType!=='methylation' &&
-              <div className="mx-5 flex-wrap text-left lg:w-5/12 xl:w-5/12 2xl:w-3/12 text-right">
+              <div className="mx-5 flex-wrap sm:text-xl lg:text-2xl text-left lg:w-5/12 xl:w-5/12 2xl:w-3/12 text-right">
                 <FormattedMessage  id = "View_By_heatmap" defaultMessage='View By'/>:
                 <div className="flex m-2 w-100">
                   <button onClick={e => changeView(e, 'gene_vl')} name='view' className={viewType==="gene_vl"?selected_button:normal_button}>
@@ -541,7 +539,7 @@ normal_button += " border duration-200 ease-in-out border-teal-600 transition px
 
         <div className='grid'>
           { loader? <LoaderCmp/>: <div>
-            
+
             {(data_ && (inSufficientData !== true)) && <HeatmapNewCmp clinicalFilter={optionChoices} inputData={data_} type={mainTab} watermarkCss={watermarkCss} ref={reference} width={width} />
             }
             {(inSufficientData || renderNoContent) && <NoContentMessage />}
