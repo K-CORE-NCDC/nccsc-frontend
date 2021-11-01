@@ -86,7 +86,7 @@ export default function Web(props) {
 
   return (
     <div className="relative">
-      <Popover className="sm:invisible md:invisible lg:visible">
+      <Popover>
           {({ open }) => (
           <div id="header" className={classes}>
             <nav  className="w-full sm:invisible md:invisible lg:visible p-2 py-5 navbar-expand-lg">
@@ -110,13 +110,12 @@ export default function Web(props) {
               </div>
             </nav>
 
-
-            {classes!=='' && <div className="grid grid-cols-3 px-64 py-20  text-right text-main-blue">
-              <div className='lg:col-span-3 lg:text-center  2xl:col-start-3'>
-              <h2 className="text-8xl"><strong>K-CORE</strong> <strong>Portal</strong></h2>
-              <h2 className="text-4xl mt-4"><strong>Cancer Omics Research Portal</strong></h2>
+            {classes!=='' && <div className="grid grid-cols-3 px-64 lg:py-20 sm:py-0  text-right text-main-blue">
+              <div className='col-span-3 text-center  2xl:col-start-3'>
+              <h2 className="lg:text-8xl sm:text-6xl"><strong>K-CORE</strong> <strong>Portal</strong></h2>
+              <h2 className="lg:text-4xl sm:text-3xl mt-4"><strong>Cancer Omics Research Portal</strong></h2>
               <div className="pl-6">
-                <p className="border-l-2 text-2xl p-5 font-medium mt-8 border-gray-600" style={{textAlign: 'right'}}>
+                <p className="lg:border-l-2 lg:text-2xl sm:text-xl p-5 font-medium mt-8 border-gray-600" style={{textAlign: 'right'}}>
                   <FormattedMessage  id = "home_child_title" defaultMessage='It is a cancer data platform that visually provides various analysis results by combining high-quality domestic cancer patient clinical and protein genomic information .'/>
                 </p>
               </div>
@@ -240,12 +239,14 @@ export default function Web(props) {
           {breadCrumb}
         </ol>
       </nav> }
+
       <Suspense fallback={<Loader />}>
         <Switch>
           {menu}
           <Redirect from="/" to="home" />
         </Switch>
       </Suspense>
+
       <footer className="p-10 bg-white border-gray-300 border-t">
         <div className="grid grid-cols-2">
           <div className="text-gray-500">

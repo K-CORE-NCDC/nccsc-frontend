@@ -178,7 +178,7 @@ export default function DataVisualization() {
     let tmp = []
 
     l.forEach(element => {
-      let classes = 'px-4 py-2 font-semibold rounded-t opacity-50 '
+      let classes = 'px-4 py-2 sm:text-xl lg:text-2xl font-semibold rounded-t opacity-50 '
       if (tab === element) {
         classes = classes + " border-blue-400 border-b-4 -mb-px opacity-100"
       }
@@ -273,6 +273,7 @@ export default function DataVisualization() {
   }
 
 
+
   return (
     <div className="header">
       <div className="mx-auto border-t rounded overflow-hidden ">
@@ -284,8 +285,7 @@ export default function DataVisualization() {
             }
             <div className={toggle?"col-start-2 col-span-3 overflow-auto":""}>
               <div className="grid grid-cols-3 gap-1 p-5 bg-white">
-
-                <div className='col-span-3 flex gap-6'>
+                <div className='flex lg:col-span-3 sm:col-span-3 sm:gap-2 lg:gap-6'>
                   <div className="inline-flex relative ">
                     <MenuIcon className="h-8 w-8 inline text-main-blue mt-3 cursor-pointer" onClick={() => setToggle(!toggle)}/>
                   </div>
@@ -315,19 +315,18 @@ export default function DataVisualization() {
                       <option value="tgf-beta-path">General: TGF-β Pathway (43 genes)</option>
                     </select>
                   </div>
-                  <div className="inline-flex w-2/5">
-                    <input type="text" id='genes' className='btn_input_height w-full p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 ' name='genes' />
+                  <div className="inline-flex lg:w-2/5 sm:w-13">
+                    <input type="text" id='genes' className='btn_input_height lg:w-full sm:w-13 p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 ' name='genes' />
                   </div>
-                  <div className="inline-flex w-2/12">
-                    <button className="btn_input_height bg-main-blue hover:bg-main-blue mb-3 w-full text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={e => submitFilter(e)}><FormattedMessage  id = "Filter" defaultMessage='Filter'/></button>
+                  <div className="inline-flex lg:w-2/12 sm:w-1/5">
+                    <button className="btn_input_height bg-main-blue hover:bg-main-blue mb-3 lg:w-full text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={e => submitFilter(e)}><FormattedMessage  id = "Filter" defaultMessage='Filter'/></button>
                   </div>
                 </div>
-
               </div>
               <div className='gap-6'>
                 <section>
                   <nav className=" px-8 pt-2 shadow-md">
-                    <ul id="tabs" className="inline-flex justify-center w-full px-1 pt-2 " onClick={e => toggleTab(e)}>
+                    <ul id="tabs" className="inline-flex justify-center w-full lg:px-1 sm:px-0 pt-2" onClick={e => toggleTab(e)}>
                       {menuItems}
                     </ul>
                   </nav>
@@ -335,8 +334,8 @@ export default function DataVisualization() {
                 <section >
                   <div id="tab-contents" className='block text-center' ref={elementRef}>
                     <div className="grid grid-cols-6 p-5">
-                      <div className="col-start-6 inline-flex justify-center p-2 ">
-                        {(screenCapture === false) && <button className="bg-main-blue hover:bg-main-blue mb-3 w-full h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={()=> setScreenCapture(true)}><FormattedMessage  id = "Capture_screen" defaultMessage='capture screenshot'/></button>}
+                      <div className="lg:col-start-6 sm:col-start-1 md:col-start-6 inline-flex justify-center p-2 ">
+                        {(screenCapture === false) && <button className="bg-main-blue hover:bg-main-blue mb-3 lg:w-full sm:w-40 sm:h-14 lg:h-20 sm:h-16 sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={()=> setScreenCapture(true)}><FormattedMessage  id = "Capture_screen" defaultMessage='capture screenshot'/></button>}
                         {(screenCapture === true) && <button className="bg-main-blue hover:bg-main-blue mb-3 w-full h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" disabled={true}>Loading...</button>}
                       </div>
                     </div>

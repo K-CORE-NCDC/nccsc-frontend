@@ -262,12 +262,12 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
   }
 
   let selected_button = ''
-  selected_button += "rounded-r-none  hover:scale-110 focus:outline-none flex p-5 px-10 "
+  selected_button += "rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 sm:p-2 lg:px-10 md:px-10 sm:px-8 sm:w-40 md:w-80 sm:text-xl lg:text-2xl sm:h-16 lg:h-24"
   selected_button += " rounded font-bold cursor-pointer hover:bg-main-blue "
   selected_button +=" bg-main-blue text-white border duration-200 ease-in-out transition "
 
   let normal_button = ''
-  normal_button += "rounded-l-none  hover:scale-110 focus:outline-none flex justify-center p-5 "
+  normal_button += "rounded-l-none  hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-2 lg:px-10 sm:px-8 sm:w-40 md:w-80 sm:text-xl lg:text-2xl sm:h-16 lg:h-24"
   normal_button += " rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 "
   normal_button += " border duration-200 ease-in-out border-teal-600 transition px-10 "
 
@@ -281,19 +281,20 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
   return (
     <div className='grid'>
         <div className="grid grid-cols-2">
-          <div className="mx-5 ">
+          <div className="mx-5 sm:col-span-2 lg:col-span-1">
             <div className="flex m-2 w-100">
-              <button onClick={e => changeType(e, 'proteome')} name='type' className="rounded-r-none  hover:scale-110 focus:outline-none flex p-5 px-10 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 ease-in-out transition ">
+              <button onClick={e => changeType(e, 'proteome')} name='type' className="rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 sm:p-2 lg:px-10 md:px-10 sm:px-8 sm:w-40 md:w-48  lg:w-48 sm:text-xl lg:text-2xl sm:h-16 lg:h-20 rounded
+              font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 ease-in-out transition ">
                 Proteome
               </button>
-              <button onClick={e => changeType(e, 'mutation')} name='type' className="rounded-l-none  hover:scale-110 focus:outline-none flex justify-center p-5 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 border duration-200 ease-in-out border-teal-600 transition px-10 ">
+              <button onClick={e => changeType(e, 'mutation')} name='type' className="rounded-l-none  hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-2 sm:w-40 md:w-48 lg:w-48 sm:text-xl lg:text-2xl sm:h-16 lg:h-20 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 border duration-200 ease-in-out border-teal-600 transition px-10 ">
                 Mutation
               </button>
             </div>
           </div>
 
             <div className='flex  text-left'>
-              <div className='w-9/12 text-right'>
+              <div className='w-9/12 text-right sm:pl-8'>
                 {tableType==='proteome' && <>
                   <label><FormattedMessage  id = "Selected Gene Is" defaultMessage='Selected Gene Is'/></label>
                   <Multiselect

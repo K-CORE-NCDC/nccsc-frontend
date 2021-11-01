@@ -92,7 +92,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   }, [inputData, sampleKey])
 
   useEffect(() => {
-    
+
     return () => {
       dispatch(getBreastKeys({}))
     }
@@ -178,10 +178,10 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
         <div className="grid ">
           <div className="p-1 grid grid-cols-6">
             <div className='flex sm:col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-2'>
-              <div className='flex-col text-left'>
-                {circosSanpleRnidListData && <label htmlFor="samples" ><FormattedMessage  id = "Cir_choose_sample" defaultMessage='Choose a Sample'/>:{circosSanpleRnidListData.length} </label>}
+              <div className='flex-col text-left sm:w-2/6'>
+                {circosSanpleRnidListData && <label htmlFor="samples" className="lg:text-2xl sm:text-xl"><FormattedMessage  id = "Cir_choose_sample" defaultMessage='Choose a Sample'/>:{circosSanpleRnidListData.length} </label>}
                 <select
-                  className="w-full border bg-white rounded px-3 py-2 outline-none"
+                  className="w-full  border bg-white rounded px-3 py-2 outline-none"
                   value={sampleKey}
                   onChange={e => setSampleKey(e.target.value)}
                   name="samples"
@@ -193,11 +193,11 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
                 </select>
               </div>
-              <div className='p-3 mt-2'>
-                <button id='images' className="opacity-50 bg-main-blue hover:bg-blue-700 text-white font-bold p-4 rounded w-80" onClick={oncoImagesClickFunction}>Pathological image</button>
+              <div className='p-3 mt-2 sm:pt-0 sm:mt-8'>
+                <button id='images' className="opacity-50 bg-main-blue hover:bg-blue-700 sm:text-xl lg:text-2xl text-white font-bold p-4 rounded lg:w-80 sm:w-13" onClick={oncoImagesClickFunction}>Pathological image</button>
               </div>
-              <div className='p-3 mt-2'>
-                <button id='tables' className="opacity-50 bg-main-blue hover:bg-blue-700 text-white font-bold p-4 rounded w-80" onClick={timelineGraphClickFunction}>F/U Timeline</button>
+              <div className='p-3 mt-2 sm:pt-0 sm:mt-8'>
+                <button id='tables' className="opacity-50 bg-main-blue hover:bg-blue-700 sm:text-xl lg:text-2xl text-white font-bold p-4 rounded lg:w-80 sm:w-13" onClick={timelineGraphClickFunction}>F/U Timeline</button>
               </div>
             </div>
           </div>

@@ -548,7 +548,7 @@ const GroupFilters = ({ parentCallback, groupFilters }) => {
                 {filterInputs}
             </div>
             {filterSelected && <div>
-                <button onClick={submitFilters} className="bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
+                <button onClick={submitFilters} className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
                     Submit
                 </button>
             </div>}
@@ -783,7 +783,7 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters }) => 
                 {filterGroupsHtml}
             </div>
             <div>
-                <button onClick={submitFilters} className="bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
+                <button onClick={submitFilters} className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-20 sm:h-14 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
                     <FormattedMessage id="Submit_volcano" defaultMessage='Submit' />
                 </button>
             </div>

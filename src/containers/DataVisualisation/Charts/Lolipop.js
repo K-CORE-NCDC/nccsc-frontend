@@ -50,8 +50,6 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
     "Y": '#d3352b'
   }
 
-
-
   const geneSet = (e) => {
     let gene = e.target.value
     setGene(gene)
@@ -111,7 +109,6 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
       color += letters[(Math.floor(Math.random() * 16))];
     return color
   }
-
 
   useEffect(() => {
     if (lolipopJson) {
@@ -290,10 +287,10 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
             }
             tmp.push(
               <div className='p-3'>
-                <span style={{ 'backgroundColor': colors[name] }} className="inline-flex items-center justify-center px-3 mr-3 pb-1 text-md font-bold leading-none text-white rounded-full">
+                <span style={{ 'backgroundColor': colors[name] }} className="inline-flex items-center justify-center px-3 mr-3 pb-1 lg:text-md sm:text-xl font-bold leading-none text-white rounded-full">
                   {count}
                 </span>
-                <text style={{ 'color': colors[key] }}><strong>{name}</strong></text>
+                <text style={{ 'color': colors[key] }}><strong className="sm:text-xl lg:text-2xl">{name}</strong></text>
               </div>
             )
           }
@@ -418,14 +415,14 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                   <div className="flex justify-start items-baseline flex-wrap">
                     <div className="flex m-2">
                       <button onClick={e => changeType(e, 'Mutation')} id='Mutation' name='type' className="rounded-r-none  hover:scale-110
-                      focus:outline-none flex p-5 rounded font-bold cursor-pointer
-                      hover:bg-main-blue  bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition">
+                      focus:outline-none flex lg:p-5 sm:p-3 rounded font-bold cursor-pointer
+                      hover:bg-main-blue  bg-main-blue sm:text-xl lg:text-2xl text-white border duration-200 ease-in-out border-gray-600 transition sm:h-14">
                         Mutation
                       </button>
                       <button onClick={e => changeType(e, 'Phospho')} id='Phospho' name='type' className="rounded-l-none border-l-0
-                      hover:scale-110 focus:outline-none flex justify-center p-5
+                      hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-3
                       rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100
-                      text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
+                      text-teal-700 sm:text-xl lg:text-2xl border duration-200 ease-in-out border-teal-600 transition sm:h-14">
                         Phospho
                       </button>
                     </div>
@@ -434,7 +431,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
               </div>
               <div className='p-5 text-right m-5'>
                 <div className='flex float-right'>
-                  <div className='p-3'><FormattedMessage  id = "Selected Gene" defaultMessage='Selected Gene Is'/></div>
+                  <div className='p-3 lg:text-2xl sm:text-xl'><FormattedMessage  id = "Selected Gene" defaultMessage='Selected Gene Is'/></div>
                   <div>
                     <select value={gene} onChange={e=>geneSet(e)} className="w-full border bg-white rounded px-3 py-2 outline-none text-gray-700">
                       {genesHtml}
@@ -451,16 +448,16 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                       data={state}
                     />
                     {tableType === "Mutation" &&
-                      <div className='absolute right-10 flex'>
+                      <div className='absolute lg:right-10 flex'>
                         <div className='m-3 text-left'>
-                          <label>Enst Id List</label>
-                          <textarea className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none" rows="4">
+                          <label className="sm:text-xl lg:text-2xl">Enst Id List</label>
+                          <textarea className="w-full px-3 py-2 sm:text-xl lg:text-2xl md:text-xl text-gray-700 border rounded-lg focus:outline-none" rows="4">
                             {enstId.join("\n")}
                           </textarea>
                         </div>
                         <div className='m-3 text-left'>
-                          <label>Refseq MRNA Id List</label>
-                          <textarea className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none" rows="4">
+                          <label className="sm:text-xl lg:text-2xl">Refseq MRNA Id List</label>
+                          <textarea className="w-full px-3 py-2 sm:text-xl lg:text-2xl md:text-xl text-gray-700 border rounded-lg focus:outline-none" rows="4">
                             {refSeqId.join("\n")}
                           </textarea>
                         </div>
@@ -469,20 +466,18 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
 
                   </div>
                   <div className='grid grid-rows-2 bg-blue-100 p-10'>
-                    <div>
-                      <h5 className="float-left">Somantic Mutation Frequency: {percentage?percentage:""} % (mutation sample number/total selected sample number(%))</h5>
+                    <div className="lg:w-full sm:w-3/6">
+                      <h5 className="float-left sm:text-xl lg:text-2xl">Somantic Mutation Frequency: {percentage?percentage:""} % (mutation sample number/total selected sample number(%))</h5>
                     </div>
-                    <div className='flex'>
+                    <div className='flex sm:flex-wrap'>
                       {mutationLabel}
                     </div>
                   </div>
 
                   {tableData.length > 0 && <div className='mt-5'>
-
                     <DataTable pagination
                       columns={tableColumnsData}
                       data={tableData}
-                      
                     />
                   </div>}
                 </div>}
