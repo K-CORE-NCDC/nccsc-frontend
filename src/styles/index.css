@@ -247,7 +247,7 @@ input:checked ~ .dot {
 	animation: spinner 1.5s linear infinite;
 }
 .onco{
-  margin: 0px 20px
+  margin: 0px 20px 50px 20px;
 }
 .onco span div:first-child div.noselect:first-child{
   overflow: scroll;
@@ -282,7 +282,12 @@ input:checked ~ .dot {
     opacity: 0;
 }
 
-
+.mobile .dropdownHeader{
+  display: table;
+}
+.mobile .dropdownHeader li{
+  display: table-row !important;
+}
 
 
 @keyframes spinner {

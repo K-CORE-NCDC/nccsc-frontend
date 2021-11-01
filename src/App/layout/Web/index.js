@@ -22,6 +22,7 @@ import {
 } from "react-router-dom";
 import {FormattedMessage} from 'react-intl';
 
+
 const menu = route.map((route, index) => {
 
   return route.component ? (
@@ -81,9 +82,9 @@ export default function Web(props) {
           {({ open }) => (
           <div id="header" className={classes}>
             <nav  className="w-full p-2 py-5 navbar-expand-lg">
-              <div className="w-full grid grid-cols-8 px-10  pt-5">
-                <div className="relative xs:col-span-12 sm:col-span-8 xl:col-span-2 lg:col-span-2  2xl:col-span-1 pt-5">
-                  <a href="/">
+              <div className="w-full grid md:grid-cols-3 xl:grid-cols-8 2xl:grid-cols-8 px-5  pt-5">
+                <div className="relative pt-5 sm:flex xs:flex">
+                  <a href="/" className='xs:w-11/12 sm:w-11/12'>
                     <span className="sr-only">Workflow</span>
                     <img
                       className="h-16 w-auto "
@@ -91,26 +92,22 @@ export default function Web(props) {
                       alt=""
                     />
                   </a>
-                  
-
-                  <Popover.Button  className="hidden xs:block cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block outline-none focus:outline-none" type="button"><MenuIcon className="h-6 w-6" aria-hidden="true" /></Popover.Button >
+                  <Popover.Button  className="xs:block sm:block lg:hidden  text-white  cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block outline-none focus:outline-none" type="button"><MenuIcon className="h-6 w-6" aria-hidden="true" /></Popover.Button >
                 </div>
-                <div className="lg:hidden xl:hidden 2xl:block 2xl:col-span-5 z-10">
-                  
+                <div className="hidden 2xl:block 2xl:col-span-5 z-10">
                   <DropdownMenu/>
                 </div>
-                <div className="lg:col-span-6 xl:col-span-6 2xl:col-span-2 py-5">
-                  
+                <div className="hidden md:block lg:block xl:block 2xl:block md:col-span-2 lg:col-span-7 xl:col-span-7 2xl:col-span-2 py-5">
                   <Header/>
                 </div>
-                <div className="xs:hidden sm:block md:block lg:block lg:col-span-8 xl:block 2xl:hidden px-5 py-5">
+                <div className="hidden md:block lg:block xl:block 2xl:block md:col-span-3 lg:col-span-8  2xl:hidden px-5 py-5">
                   <DropdownMenu/>
                 </div>
               </div>
             </nav>
 
-            {classes!=='' && <div className="grid grid-cols-3 px-64 py-20  text-right text-main-blue">
-              <div className='lg:col-span-3 lg:text-center  2xl:col-start-3'>
+            {classes!=='' && <div className="grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1 grid-cols-3 px-64 py-20  text-right text-main-blue">
+              <div className='text-center lg:col-span-3 lg:text-center  2xl:col-start-3'>
               <h2 className="text-8xl"><strong>K-CORE</strong> <strong>Portal</strong></h2>
               <h2 className="text-4xl mt-4"><strong>Cancer Omics Research Portal</strong></h2>
               <div className="pl-6">
@@ -194,7 +191,7 @@ export default function Web(props) {
             <Transition
               show={open}
               as={Fragment}
-              enter="duration-200 ease-out"
+              enter="duration-200 ease-in"
               enterFrom="opacity-0 scale-95"
               enterTo="opacity-100 scale-100"
               leave="duration-100 ease-in"
@@ -203,27 +200,24 @@ export default function Web(props) {
               <Popover.Panel
                 focus
                 static
-                className="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden">
-                <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
+                className="absolute top-0 right-0 transition transform origin-top-right md:hidden w-10/12">
+                <div className=" shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
                   <div className="pt-5 pb-6 px-5">
                     <div className="flex items-center justify-between">
                       <div>
-                        <img
-                          className="h-8 w-auto"
-                          src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                          alt="Workflow"
-                        />
+                        
                       </div>
                       <div className="-mr-2">
                         <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                           <span className="sr-only">Close menu</span>
-                          <XIcon className="h-6 w-6" aria-hidden="true" />
+                          <XIcon className="h-10 w-10" aria-hidden="true" />
                         </Popover.Button>
                       </div>
                     </div>
                     <div className="mt-6">
-                      <nav className="grid gap-y-8">
-                      </nav>
+                      <div className="grid mobile">
+                        
+                      </div>
                     </div>
                   </div>
 
