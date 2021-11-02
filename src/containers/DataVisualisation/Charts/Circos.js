@@ -100,7 +100,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
       let editInputData = inputData
       editInputData = { ...editInputData, sampleKey: sampleKey }
 
-      if (editInputData.type !== '') {
+      if (editInputData.type !== '' && sampleKey!='') {
 
         setLoader(true)
         setRenderCircos(false)
@@ -195,6 +195,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
         <LoaderCmp />
         :
         <div className="grid ">
+
           <div className="p-1 grid lg:grid-cols-6 xs:grid-cols-3">
             <div className='flex xs:col-span-2 sm:col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-2'>
               <div className='flex-col text-left sm:w-2/6 xs:w-2/6'>

@@ -123,10 +123,7 @@ export default function ClinicalInformation() {
           }
 
           let id = itm.split(" ").join("")
-          // console.log(itm)
-          // if(itm === "Age of Diagnosis"){
-          //   console.log(itm)
-          // }
+          
           t.push(
             <div className="p-3 relative z-10" key={'div_mb_'+i}>
               <label htmlFor="toogleA" className="flex items-center cursor-pointer">
@@ -206,12 +203,11 @@ export default function ClinicalInformation() {
       }
     }
 
-    console.log(summaryJson);
+    
 
     if(check ){
       Object.keys(summaryJson[parent_name]).forEach((item, k) => {
         let id = item.split(" ").join("")
-        console.log(inputJson['clinical_info_title'][item])
         if(item===chart){
           tmp.push(
             <div key={'chart_'+item} data-chart="bar" className='max-w bg-white rounded-2xl overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border'>

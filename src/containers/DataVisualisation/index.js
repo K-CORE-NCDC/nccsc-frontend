@@ -280,7 +280,7 @@ export default function DataVisualization() {
         <div id="main_div">
           <div className={toggle?"grid grid-cols-4":"grid "}>
             {toggle && <div className="bg-white border border-gray-200 transition duration-150 ease-in-out">
-               <Filter parentCallback={callback} genes={state} />
+               <Filter parentCallback={callback} genes={state}  />
             </div>
             }
             <div className={toggle?"col-start-2 col-span-3 overflow-auto":""}>

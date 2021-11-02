@@ -49,7 +49,6 @@ export default function DataSummary() {
   }, [tab])
 
   const LoadChart = (type) =>{
-    console.log(type);
     switch (type) {
       case "Clinical_Information":
         return <ClinicalInformation/>
