@@ -69,7 +69,7 @@ export function getOncoInformation(type, data) {
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
       .catch((e) => {
-        console.log("error", e);
+        // console.log("error", e);
         dispatch({
           type: dataVisualization.ONCO_REQUEST,
           payload: {status: 204},
@@ -112,7 +112,7 @@ export function getVolcanoPlotInfo(type, data) {
   return (dispatch) => {
     let url = config.auth + "volcano/";
 
-    console.log(type)
+    // console.log(type)
     sendRequest(url, type, data)
       .then((result) => {
         const d = result
@@ -240,7 +240,7 @@ export function getCircosInformation(type, data) {
     sendRequest(url, type, data)
       .then((result) => {
         const d = result;
-        console.log(d);
+        // console.log(d);
         if (d.status === 200) {
           dispatch({
             type: dataVisualization.CIRCOS_REQUEST,
@@ -728,7 +728,7 @@ export function userRegister(type, data) {
 
 export function clearDataVisualizationState() {
   return (dispatch) => {
-    console.log("clearing state");
+    // console.log("clearing state");
     dispatch({
       type: CLEAR_ALL_STATES,
       payload: {},

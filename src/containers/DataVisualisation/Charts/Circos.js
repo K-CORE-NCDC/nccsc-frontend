@@ -100,7 +100,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
       let editInputData = inputData
       editInputData = { ...editInputData, sampleKey: sampleKey }
 
-      if (editInputData.type !== '') {
+      if (editInputData.type !== '' && sampleKey!='') {
 
         setLoader(true)
         setRenderCircos(false)
@@ -198,7 +198,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
           <div className="p-1 grid grid-cols-6">
             <div className='flex sm:col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-2'>
               <div className='flex-col text-left sm:w-2/6'>
-                {circosSanpleRnidListData && <label htmlFor="samples" className="lg:text-2xl sm:text-xl"><FormattedMessage  id = "Cir_choose_sample" defaultMessage='Choose a Sample'/>:{circosSanpleRnidListData.length} </label>}
+                {circosSanpleRnidListData && <label htmlFor="samples" className="lg:text-2xl sm:text-xl"><FormattedMessage  id = "Cir_choose_sample" defaultMessage='Choose a Sample'/>:({samplesCount}) </label>}
                 <select
                   className="w-full  border bg-white rounded px-3 py-2 outline-none"
                   value={sampleKey}

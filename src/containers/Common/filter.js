@@ -11,22 +11,24 @@ import {
 import inputJson from './data'
 import {FormattedMessage} from 'react-intl';
 
-export default function Filter({parentCallback,parentState}) {
+export default function Filter({parentCallback,genes}) {
   const [state, setState] = useState({"html":[]});
   const [selectState, setSelectState] = useState({});
   const [selected, setSelected] = useState('Basic/Diagnostic Information');
 
-  // console.log(state);
+  
 
   useEffect(()=>{
-    leftSide()
-  },[])
-
-  // useEffect(()=>{
-  //   // console.log(parentState);
-  // },[parentState])
+    if('filter' in genes){
+      setSelectState((prevState) => ({
+        ...prevState,
+        ...genes['filter']
+      }))
+    }
+  },[genes])
 
   useEffect(()=>{
+    
     leftSide()
 
   },[selected, selectState])
@@ -49,11 +51,12 @@ export default function Filter({parentCallback,parentState}) {
     return (
       <div key={d.id} className="px-10">
         <label className="inline-flex items-center">
-            <input type="checkbox" id={d.id} name={d.name}
+            
+          <input type="checkbox"  id={d.id} name={d.name} defaultChecked={check}
             className="form-checkbox"
             value={d.value}
             onChange={e=>selectFn(e)}
-             />
+           />
           <span className="ml-2 lg:text-2xl sm:text-xl"><FormattedMessage  id = {d.value} defaultMessage={d.value}/></span>
         </label>
       </div>
@@ -98,6 +101,7 @@ export default function Filter({parentCallback,parentState}) {
         document.getElementById(id).checked=true
       }
     }
+    console.log(tmp)
     setSelectState(tmp)
   }
 
