@@ -285,7 +285,7 @@ export default function DataVisualization() {
             }
             <div className={toggle?"col-start-2 col-span-3 overflow-auto":""}>
               <div className="grid grid-cols-3 gap-1 p-5 bg-white">
-                <div className='flex lg:col-span-3 sm:col-span-3 sm:gap-2 lg:gap-6'>
+                <div className='flex xs:col-span-2 lg:col-span-3 sm:col-span-3 sm:gap-2 xs:gap-1 lg:gap-6'>
                   <div className="inline-flex relative ">
                     <MenuIcon className="h-8 w-8 inline text-main-blue mt-3 cursor-pointer" onClick={() => setToggle(!toggle)}/>
                   </div>
