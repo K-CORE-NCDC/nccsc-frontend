@@ -54,7 +54,7 @@ export default function GenomicInfo() {
             <div className="px-6 py-4">
               <div className="font-bold lg:text-2xl sm:text-xl md:text-xl mb-2">{item}</div>
             </div>
-            <div class="lg:px-6 md:px-3 sm:px-0 sm:pt-1 lg:pt-4 md:pt-1 pb-4">
+            <div className="lg:px-6 md:px-3 sm:px-0 sm:pt-1 lg:pt-4 md:pt-1 pb-4">
               {comp}
             </div>
           </div>

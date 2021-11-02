@@ -399,12 +399,12 @@ let style = {
 }
 
 let selected_button = ''
-selected_button += "rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 sm:p-2 lg:px-10 md:px-10 sm:px-8 sm:w-40 md:w-80 sm:text-xl lg:text-2xl sm:h-16 lg:h-24"
+selected_button += "rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 sm:p-2 lg:px-10 md:px-10 sm:px-8 sm:w-40 md:w-80 sm:text-xl lg:text-2xl "
 selected_button += " rounded font-bold cursor-pointer hover:bg-main-blue "
 selected_button +=" bg-main-blue text-white border duration-200 ease-in-out transition "
 
 let normal_button = ''
-normal_button += "rounded-l-none  hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-2 lg:px-10 sm:px-8 sm:w-40 md:w-80 sm:text-xl lg:text-2xl sm:h-16 lg:h-24"
+normal_button += "rounded-l-none  hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-2 lg:px-10 sm:px-8 sm:w-40 md:w-80 sm:text-xl lg:text-2xl "
 normal_button += " rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 "
 normal_button += " border duration-200 ease-in-out border-teal-600 transition px-10 "
 

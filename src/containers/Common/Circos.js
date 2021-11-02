@@ -558,6 +558,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
         {"id":"chrY","label":"chrY","color":"#CCCCCC","len":59373566}
       ]
       // console.log(state['cytobands']);
+
       drawCircos(width,d,state['cytobands'],data)
     }
   },[state, data, fusionJson])
