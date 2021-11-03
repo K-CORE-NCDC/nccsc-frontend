@@ -308,12 +308,12 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
                 {filterGroupsHtml}
             </div>
             <div>
-                <button onClick={submitFilters} className="bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
+                <button onClick={submitFilters} className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 xs:w-28 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
                     <FormattedMessage id="Submit_volcano" defaultMessage='Submit' />
                 </button>
             </div>
             <div>
-                <button onClick={resetFilters} className="bg-white hover:bg-gray-700 mb-3 w-80 h-20 text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
+                <button onClick={resetFilters} className="bg-white hover:bg-gray-700 mb-3 lg:w-80 h-20 xs:w-28 text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
                     <FormattedMessage id="Reset_volcano" defaultMessage='Reset' />
                 </button>
             </div>

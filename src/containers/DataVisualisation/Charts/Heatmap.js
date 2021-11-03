@@ -401,12 +401,12 @@ let style = {
 let selected_button = ''
 selected_button += "rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 sm:p-2 lg:px-10 md:px-10 sm:px-8 sm:w-40 md:w-80 sm:text-xl lg:text-2xl "
 selected_button += " rounded font-bold cursor-pointer hover:bg-main-blue "
-selected_button +=" bg-main-blue text-white border duration-200 ease-in-out transition "
+selected_button +=" bg-main-blue text-white border duration-200 ease-in-out transition xs:p-2 xs:text-sm xs:w-28"
 
 let normal_button = ''
 normal_button += "rounded-l-none  hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-2 lg:px-10 sm:px-8 sm:w-40 md:w-80 sm:text-xl lg:text-2xl "
 normal_button += " rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 "
-normal_button += " border duration-200 ease-in-out border-teal-600 transition px-10 "
+normal_button += " border duration-200 ease-in-out border-teal-600 transition px-10 xs:p-2 xs:text-sm xs:w-28"
 
   function rangeCall(e){
     // console.log("----->")
@@ -450,40 +450,40 @@ normal_button += " border duration-200 ease-in-out border-teal-600 transition px
             <div className="flex justify-start items-baseline flex-wrap">
               <div className="flex m-2">
                 <button onClick={e => changeMainType(e, 'heatmap')} name='maintype' className="rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 rounded font-bold cursor-pointer hover:bg-main-blue
-                bg-main-blue text-white border duration-200 ease-in-out sm:p-3 sm:text-xl lg:text-2xl sm:h-14 lg:h-20  border-gray-600 transition">
+                bg-main-blue text-white border duration-200 ease-in-out sm:p-3 sm:text-xl lg:text-2xl sm:h-14 lg:h-20 xs:p-3 md-p-4 border-gray-600 transition xs:text-sm">
                   Heatmap
                 </button>
                 <button onClick={e => changeMainType(e, 'k-mean')} name='maintype' className="rounded-l-none border-l-0
                     hover:scale-110 focus:outline-none flex justify-center lg:p-5 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 text-teal-700 border duration-200 sm:p-3
-                    sm:text-xl lg:text-2xl sm:h-14 lg:h-ease-in-out lg:h-20 border-teal-600 transition">
+                    sm:text-xl lg:text-2xl sm:h-14 lg:h-ease-in-out lg:h-20 xs:p-3 md-p-4 border-teal-600 transition xs:text-sm">
                   K-mean
                 </button>
               </div>
             </div>
           </div>
-          <div className="p-5 text-right lg:col-span-2 sm:col-span-4">
+          <div className="p-5 text-right xs:col-span-4  lg:col-span-2 sm:col-span-4">
             <div className="flex justify-start items-baseline flex-wrap">
               <div className="flex m-2">
                 <button onClick={e => changeType(e, 'rna')} name='type' className="rounded-r-none  hover:scale-110
-                    focus:outline-none flex p-5 rounded font-bold cursor-pointer sm:text-xl md:text-2xl lg:text-2xl
+                    focus:outline-none flex p-5 rounded font-bold cursor-pointer sm:text-xl md:text-2xl lg:text-2xl xs:text-sm xs:p-3
                     hover:bg-main-blue  bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition">
                   RNA
                 </button>
                 <button onClick={e => changeType(e, 'methylation')} name='type' className="rounded-l-none border-l-0
                     hover:scale-110 focus:outline-none flex justify-center p-5
-                    rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl
+                    rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl xs:text-sm xs:p-3
                     text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
                   Methylation
                 </button>
                 <button onClick={e => changeType(e, 'proteome')} name='type' className="rounded-l-none border-l-0
                     hover:scale-110 focus:outline-none flex justify-center p-5
-                    rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl
+                    rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl xs:text-sm xs:p-3
                     text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
                   Global Proteome
                 </button>
                 <button onClick={e => changeType(e, 'phospo')} name='type' className="rounded-l-none border-l-0
                     hover:scale-110 focus:outline-none flex justify-center p-5
-                    rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl
+                    rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl xs:text-sm xs:p-3
                     text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
                   Phospho
                 </button>

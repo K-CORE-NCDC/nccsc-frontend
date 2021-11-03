@@ -178,7 +178,7 @@ export default function DataVisualization() {
     let tmp = []
 
     l.forEach(element => {
-      let classes = 'px-4 py-2 sm:text-xl lg:text-2xl font-semibold rounded-t opacity-50 '
+      let classes = 'px-4 py-2 xs:text-sm sm:text-xl lg:text-2xl font-semibold rounded-t opacity-50 '
       if (tab === element) {
         classes = classes + " border-blue-400 border-b-4 -mb-px opacity-100"
       }
@@ -285,7 +285,7 @@ export default function DataVisualization() {
             }
             <div className={toggle?"col-start-2 col-span-3 overflow-auto":""}>
               <div className="grid grid-cols-3 gap-1 p-5 bg-white">
-                <div className='flex xs:col-span-2 lg:col-span-3 sm:col-span-3 sm:gap-2 xs:gap-1 lg:gap-6'>
+                <div className='flex xs:col-span-3 lg:col-span-3 sm:col-span-3 sm:gap-2 xs:gap-2 lg:gap-6'>
                   <div className="inline-flex relative ">
                     <MenuIcon className="h-8 w-8 inline text-main-blue mt-3 cursor-pointer" onClick={() => setToggle(!toggle)}/>
                   </div>
@@ -335,7 +335,7 @@ export default function DataVisualization() {
                   <div id="tab-contents" className='block text-center' ref={elementRef}>
                     <div className="grid grid-cols-6 p-5">
                       <div className="lg:col-start-6 sm:col-start-1 md:col-start-6 inline-flex justify-center p-2 ">
-                        {(screenCapture === false) && <button className="bg-main-blue hover:bg-main-blue mb-3 lg:w-full sm:w-40 sm:h-14 lg:h-20 sm:h-16 sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={()=> setScreenCapture(true)}><FormattedMessage  id = "Capture_screen" defaultMessage='capture screenshot'/></button>}
+                        {(screenCapture === false) && <button className="bg-main-blue hover:bg-main-blue mb-3 lg:w-full sm:w-40 sm:h-14 lg:h-20 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={()=> setScreenCapture(true)}><FormattedMessage  id = "Capture_screen" defaultMessage='capture screenshot'/></button>}
                         {(screenCapture === true) && <button className="bg-main-blue hover:bg-main-blue mb-3 w-full h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" disabled={true}>Loading...</button>}
                       </div>
                     </div>

@@ -167,10 +167,10 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
 
               {/* <GroupFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} /> */}
               <div className="m-1 p-1 border border-black border-dashed">
-                <p className="text-blue-900 text-lg font-bold text-left">{`Blue: Log2FC <= -1.5 & pvalue >= 0.05`}</p>
-                <p className="text-blue-900 text-lg font-bold text-left">{`Red: Log2FC >= 1.5 & pvalue >= 0.05`}</p>
-                <p className="text-blue-900 text-lg font-bold text-left">Grey: Not significant gene</p>
-                <p className="text-blue-900 text-lg font-bold text-left">Black: Selected genes</p>
+                <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left">{`Blue: Log2FC <= -1.5 & pvalue >= 0.05`}</p>
+                <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left">{`Red: Log2FC >= 1.5 & pvalue >= 0.05`}</p>
+                <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left">Grey: Not significant gene</p>
+                <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left">Black: Selected genes</p>
               </div>
             </div>
             <div className="w-4/5" style={{ 'overflowX': 'scroll' }}>
