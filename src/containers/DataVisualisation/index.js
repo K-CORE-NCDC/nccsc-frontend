@@ -39,6 +39,7 @@ export default function DataVisualization() {
   }
 
   const submitFilter = (e) => {
+    // e.preventDefault()
     setBoolChartState(false)
     setChartName(tab)
     let chartx = LoadChart(width, tab)
@@ -137,6 +138,14 @@ export default function DataVisualization() {
   }
 
   useEffect(() => {
+    if(project_id !== undefined){
+      dispatch(getBreastKeys({project_id: project_id}))
+    }else{
+      dispatch(getBreastKeys({}))
+    }
+  }, [])
+
+  useEffect(() => {
     let tabsContainer = document.querySelector("#tabs");
     let tabTogglers = tabsContainer.querySelectorAll("li");
     tabTogglers.forEach(function (toggler) {
@@ -154,11 +163,6 @@ export default function DataVisualization() {
     let w = elementRef.current.getBoundingClientRect().width
 
     setWidth(w);
-    if(project_id !== undefined){
-      dispatch(getBreastKeys({project_id: project_id}))
-    }else{
-      dispatch(getBreastKeys({}))
-    }
     setBoolChartState(false)
     if (project_id !== undefined) {
       setState((prevState) => ({
@@ -319,7 +323,7 @@ export default function DataVisualization() {
                     <input type="text" id='genes' className='btn_input_height lg:w-full sm:w-13 p-3 border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 ' name='genes' />
                   </div>
                   <div className="inline-flex lg:w-2/12 sm:w-1/5">
-                    <button className="btn_input_height bg-main-blue hover:bg-main-blue mb-3 lg:w-full text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={e => submitFilter(e)}><FormattedMessage  id = "Filter" defaultMessage='Filter'/></button>
+                    <button className="btn_input_height bg-main-blue hover:bg-main-blue mb-3 lg:w-full text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={submitFilter}><FormattedMessage  id = "Filter" defaultMessage='Filter'/></button>
                   </div>
                 </div>
               </div>

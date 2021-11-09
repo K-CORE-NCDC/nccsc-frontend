@@ -99,12 +99,12 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
       let editInputData = inputData
       editInputData = { ...editInputData, sampleKey: sampleKey }
-
+      dispatch(getBreastKeys(editInputData))
       if (editInputData.type !== '' && sampleKey!='') {
 
         setLoader(true)
         setRenderCircos(false)
-        dispatch(getBreastKeys(editInputData))
+        // dispatch(getBreastKeys(editInputData))
         dispatch(getCircosInformation('POST', editInputData))
       }
     }
@@ -199,7 +199,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
           <div className="p-1 grid lg:grid-cols-6 xs:grid-cols-3">
             <div className='flex xs:col-span-2 sm:col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-2'>
               <div className='flex-col text-left sm:w-2/6 xs:w-2/6'>
-                {circosSanpleRnidListData && <label htmlFor="samples" className="lg:text-2xl sm:text-xl xs:text-sm"><FormattedMessage  id = "Cir_choose_sample" defaultMessage='Choose a Sample'/>:{circosSanpleRnidListData.length} </label>}
+                {circosSanpleRnidListData && <div htmlFor="samples" className="lg:text-2xl sm:text-xl xs:text-sm"><FormattedMessage  id = "Cir_choose_sample" defaultMessage='Choose a Sample'/>: ({samplesCount}) </div>}
                 <select
                   className="w-full  border bg-white rounded px-3 py-2 outline-none"
                   value={sampleKey}
