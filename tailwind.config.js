@@ -25,10 +25,7 @@ module.exports = {
       fontFamily:{
 
       },
-      screens: {
-      'xs': '475px',
-        // ...defaultTheme.screens,
-      },
+      
     },
     screens:{
       'xs':'300px',
