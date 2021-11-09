@@ -47,7 +47,7 @@ const Igv = React.forwardRef(({width,data, watermarkCss}, ref) => {
   },[data])
 
   return (
-    <div ref={ref} className={watermarkCss +" sm:w-5/6 lg:w-full"}>
+    <div ref={ref} className={watermarkCss +" sm:w-5/6 xs:w-5/6 lg:w-full"}>
       <div className='ml-6 grid grid-cols-4'>
         <div className='col-span-2'>
 

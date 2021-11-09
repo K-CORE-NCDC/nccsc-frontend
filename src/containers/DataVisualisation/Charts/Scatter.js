@@ -194,14 +194,14 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
               </div>
               <div className="mt-3 ml-4">
                 <label class="inline-flex items-center">
-                  <input type="checkbox" class="form-checkbox" check={selectall} onClick={selectAll}/>
-                  <span class="ml-2"><strong><FormattedMessage  id ="Select all" defaultMessage="Select all"/></strong></span>
+                  <input type="checkbox" className="form-checkbox" check={selectall} onClick={selectAll}/>
+                  <span class="ml-2"><strong className="xs:text-sm"><FormattedMessage  id ="Select all" defaultMessage="Select all"/></strong></span>
                 </label>
               </div>
           </div>
           <div className="flex float-left pt-6 pl-3 ml-6">
-            {showScatter && scatterJson['p_value']?<h4 className="sm:text-xl lg:text-2xl"><strong>P-value:</strong> {scatterJson['p_value']}</h4>:""}
-            {showScatter && scatterJson['r_value']?<h4 className="ml-8 sm:text-xl lg:text-2xl"><strong>R-value:</strong> {scatterJson['r_value']}</h4>:""}
+            {showScatter && scatterJson['p_value']?<h4 className="xs:text-sm sm:text-xl lg:text-2xl"><strong>P-value:</strong> {scatterJson['p_value']}</h4>:""}
+            {showScatter && scatterJson['r_value']?<h4 className="ml-8 xs:text-sm sm:text-xl lg:text-2xl"><strong>R-value:</strong> {scatterJson['r_value']}</h4>:""}
           </div>
         </div>
       </div>

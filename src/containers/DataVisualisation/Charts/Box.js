@@ -264,12 +264,12 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
   let selected_button = ''
   selected_button += "rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 sm:p-2 lg:px-10 md:px-10 sm:px-8 sm:w-40 md:w-80 sm:text-xl lg:text-2xl sm:h-16 lg:h-24"
   selected_button += " rounded font-bold cursor-pointer hover:bg-main-blue "
-  selected_button +=" bg-main-blue text-white border duration-200 ease-in-out transition "
+  selected_button +=" bg-main-blue text-white border duration-200 ease-in-out transition xs:p-3 xs:text-sm"
 
   let normal_button = ''
   normal_button += "rounded-l-none  hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-2 lg:px-10 sm:px-8 sm:w-40 md:w-80 sm:text-xl lg:text-2xl sm:h-16 lg:h-24"
   normal_button += " rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 "
-  normal_button += " border duration-200 ease-in-out border-teal-600 transition px-10 "
+  normal_button += " border duration-200 ease-in-out border-teal-600 transition px-10 xs:p-3 xs:text-sm"
 
 
 
@@ -281,22 +281,23 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
   return (
     <div className='grid'>
         <div className="grid grid-cols-2">
-          <div className="mx-5 sm:col-span-2 lg:col-span-1">
+          <div className="mx-5 sm:col-span-2 xs:col-span-2 lg:col-span-1">
             <div className="flex m-2 w-100">
               <button onClick={e => changeType(e, 'proteome')} name='type' className="rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 sm:p-2 lg:px-10 md:px-10 sm:px-8 sm:w-40 md:w-48  lg:w-48 sm:text-xl lg:text-2xl sm:h-16 lg:h-20 rounded
-              font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 ease-in-out transition ">
+              font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 ease-in-out transition xs:p-3 xs:text-sm">
                 Proteome
               </button>
-              <button onClick={e => changeType(e, 'mutation')} name='type' className="rounded-l-none  hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-2 sm:w-40 md:w-48 lg:w-48 sm:text-xl lg:text-2xl sm:h-16 lg:h-20 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 border duration-200 ease-in-out border-teal-600 transition px-10 ">
+              <button onClick={e => changeType(e, 'mutation')} name='type' className="rounded-l-none  hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-2 sm:w-40 md:w-48 lg:w-48 sm:text-xl lg:text-2xl sm:h-16 lg:h-20 rounded font-bold cursor-pointer hover:bg-teal-200
+              bg-teal-100 border duration-200 ease-in-out border-teal-600 transition px-10 xs:p-3 xs:text-sm">
                 Mutation
               </button>
             </div>
           </div>
 
             <div className='flex  text-left'>
-              <div className='w-9/12 text-right sm:pl-8'>
+              <div className='w-9/12 text-right sm:pl-8 xs:pl-8'>
                 {tableType==='proteome' && <>
-                  <label><FormattedMessage  id = "Selected Gene Is" defaultMessage='Selected Gene Is'/></label>
+                  <label className="xs:text-xl"><FormattedMessage  id = "Selected Gene Is" defaultMessage='Selected Gene Is'/></label>
                   <Multiselect
                     options={genesHtml} // Options to display in the dropdown
                     selectedValues={selectedValue} // Preselected value to persist in dropdown
@@ -309,7 +310,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
                 {
                   tableType==='mutation' &&
                   <div>
-                    <label><FormattedMessage  id = "Selected Gene Is" defaultMessage='Selected Gene Is'/></label>
+                    <label className="xs:text-xl"><FormattedMessage  id = "Selected Gene Is" defaultMessage='Selected Gene Is'/></label>
                     <Multiselect
                       options={genesHtml} // Options to display in the dropdown
                       selectedValues={selectedValue} // Preselected value to persist in dropdown
@@ -321,7 +322,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
                   </div>
                 }
               </div>
-              <div className="mx-5 flex-wrap text-left w-3/12 text-right">
+              <div className="mx-5 flex-wrap text-left w-3/12 xs:text-xl text-right">
                   <FormattedMessage  id = "View_By_heatmap" defaultMessage='View By'/>:
                   <div className="flex m-2 w-100">
                     <button onClick={e => changeView(e, 'gene_vl')} name='view' className={viewType==="gene_vl"?selected_button:normal_button}>
