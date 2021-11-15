@@ -290,6 +290,9 @@ input:checked ~ .dot {
 .mobile .dropdownHeader li{
   display: table-row !important;
 }
+.mobile-background{
+  background:#3273b0
+}
 
 
 @keyframes spinner {
@@ -399,7 +402,7 @@ input:checked ~ .dot {
 }
 
 .intro_tab li.on {
-  background-color: ;
+  background-color: '#0000';
 }
 
 .intro_tab li {
@@ -518,7 +521,9 @@ input:checked ~ .dot {
     /* max-width: 400px; */
     /* min-width: 175px; */
 }
-
+.mobile-menu-bg{
+  background: #104c7f;
+}
 .tab_title_main li p {
     list-style: none;
     width: 100%;

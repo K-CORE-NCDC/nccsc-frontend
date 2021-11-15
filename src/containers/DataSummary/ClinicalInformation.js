@@ -123,9 +123,9 @@ export default function ClinicalInformation() {
           }
 
           let id = itm.split(" ").join("")
-          
+
           t.push(
-            <div className="p-3 relative z-10" key={'div_mb_'+i}>
+            <div className="p-3 relative z-40" key={'div_mb_'+i}>
               <label htmlFor="toogleA" className="flex items-center cursor-pointer">
                 <div className="ml-3 lg:text-3xl md:text-2xl sm:text-xl text-gray-700 w-9/12  tracking-wide">
                   {
@@ -161,6 +161,7 @@ export default function ClinicalInformation() {
         ...prevState,
         'leftSide':tmp
       }))
+
     }
   }
 
@@ -203,7 +204,7 @@ export default function ClinicalInformation() {
       }
     }
 
-    
+
 
     if(check ){
       Object.keys(summaryJson[parent_name]).forEach((item, k) => {
@@ -301,7 +302,7 @@ export default function ClinicalInformation() {
       <div className="relative">
         <div className="grid grid-cols-4 gap-6">
           <div className="relative">
-          <div className="bg-white border border-gray-200">
+          <div className="sm:hidden xs:hidden lg:block xl:block bg-white border border-gray-200">
             <h4 className="p-3"><AdjustmentsIcon className="h-6 w-6 inline"/> &nbsp;Filters</h4>
             <div className="shadow-box shadow-md w-full p-3 " id='accordian_tabs' >
               {
@@ -310,8 +311,14 @@ export default function ClinicalInformation() {
             </div>
           </div>
           </div>
-          <div className="col-start-2 col-span-4 m-5 overflow-y-auto h-screen" id='charts_container'>
+          <div className="xl:col-start-2 lg:col-start-2 col-span-4 m-5 overflow-y-auto h-screen" id='charts_container'>
+
             <div className="grid md:grid-cols-2 lg:grid-cols-3 sm:grid-cols-2 gap-3" >
+              <div className="pl-8 lg:hidden md:hidden">
+                <button className="bg-blue-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
+                 <AdjustmentsIcon className="h-6 w-6 inline"/>
+                </button>
+              </div>
               {
                 leftSide['charts']
               }

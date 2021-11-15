@@ -5,6 +5,8 @@ import config from "../../../config";
 import route from "../../../route";
 import Loader from "../Loader";
 import Header from './Header'
+import MobileHeader from './Mobile'
+import DropdownMenuMobile from './Mobile/DropdownMenu'
 import DropdownMenu from './Header/DropdownMenu'
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
@@ -92,7 +94,7 @@ export default function Web(props) {
           <div id="header" className={classes}>
             <nav  className="w-full p-2 py-5 navbar-expand-lg">
               <div className="w-full grid md:grid-cols-3 xl:grid-cols-8 2xl:grid-cols-8 px-5  pt-5">
-                <div className="relative pt-5 sm:flex xs:flex">
+                <div className="relative pt-5 sm:flex flex">
                   <a href="/" className='xs:w-11/12 sm:w-11/12'>
                     <span className="sr-only">Workflow</span>
                     <img className="h-16 w-auto " src={logo} alt=""/>
@@ -205,24 +207,23 @@ export default function Web(props) {
               <Popover.Panel
                 focus
                 static
-                className="absolute top-0 right-0 transition transform origin-top-right md:hidden w-10/12">
+                className="absolute top-0 right-0 transition transform origin-top-right md:hidden w-10/12 z-50">
                 <div className=" shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
-                  <div className="pt-5 pb-6 px-5">
+                  <div className="py-6  mobile-background">
                     <div className="flex items-center justify-between">
                       <div>
                         
                       </div>
                       <div className="-mr-2">
-                        <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                        <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 mr-6">
                           <span className="sr-only">Close menu</span>
                           <XIcon className="h-10 w-10" aria-hidden="true" />
                         </Popover.Button>
                       </div>
                     </div>
                     <div className="mt-6">
-                      <div className="grid mobile">
-                        
-                      </div>
+                      <MobileHeader/>
+                      <DropdownMenuMobile/>
                     </div>
                   </div>
 
