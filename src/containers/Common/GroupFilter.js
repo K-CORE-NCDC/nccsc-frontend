@@ -134,12 +134,12 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
                 filterGroupsHtmlTemp.push(
                     <div key='bool'>
                         <div className="flex flex-row">
-                            <h5>Group 1 : </h5>
-                            <h5 className="text-bold text-blue-700">TRUE</h5>
+                            <h5 className="xs:text-xl">Group 1 : </h5>
+                            <h5 className="text-bold text-blue-700 xs:text-xl">TRUE</h5>
                         </div>
                         <div className="flex flex-row">
-                            <h5>Group 2 : </h5>
-                            <h5 className="text-bold text-blue-700">FALSE</h5>
+                            <h5 className="xs:text-xl">Group 2 : </h5>
+                            <h5 className="text-bold text-blue-700 xs:text-xl">FALSE</h5>
                         </div>
                     </div>
                 )
@@ -149,12 +149,12 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
                 filterGroupsHtmlTemp.push(
                     <div key='bool'>
                         <div className="flex flex-row">
-                            <h5>Group 1 : </h5>
-                            <h5 className="text-bold text-blue-700">Male</h5>
+                            <h5 className="xs:text-xl">Group 1 : </h5>
+                            <h5 className="text-bold xs:text-xl text-blue-700">Male</h5>
                         </div>
                         <div className="flex flex-row">
-                            <h5>Group 2 : </h5>
-                            <h5 className="text-bold text-blue-700">Female</h5>
+                            <h5 className="xs:text-xl">Group 2 : </h5>
+                            <h5 className="text-bold xs:text-xl text-blue-700">Female</h5>
                         </div>
                     </div>
                 )
@@ -164,12 +164,12 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
                 filterGroupsHtmlTemp.push(
                     <div key='bool'>
                         <div className="flex flex-row">
-                            <h5>Group 1 : </h5>
-                            <h5 className="text-bold text-blue-700">{groupFilters[1]}</h5>
+                            <h5 className="xs:text-xl">Group 1 : </h5>
+                            <h5 className="text-bold xs:text-xl text-blue-700">{groupFilters[1]}</h5>
                         </div>
                         <div className="flex flex-row">
-                            <h5>Group 2 : </h5>
-                            <h5 className="text-bold text-blue-700">{groupFilters[2]}</h5>
+                            <h5 className="xs:text-xl">Group 2 : </h5>
+                            <h5 className="text-bold xs:text-xl text-blue-700">{groupFilters[2]}</h5>
                         </div>
                     </div>
                 )
@@ -178,12 +178,12 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
                 filterGroupsHtmlTemp.push(
                     <div key='bool'>
                         <div className="flex flex-row">
-                            <h5>Group 1 : </h5>
-                            <h5 className="text-bold text-blue-700">{`${groupFilters['1_from']}-${groupFilters['1_to']}`}</h5>
+                            <h5 className="xs:text-xl">Group 1 : </h5>
+                            <h5 className="text-bold xs:text-xl text-blue-700">{`${groupFilters['1_from']}-${groupFilters['1_to']}`}</h5>
                         </div>
                         <div className="flex flex-row">
-                            <h5>Group 2 : </h5>
-                            <h5 className="text-bold text-blue-700">{`${groupFilters['2_from']}-${groupFilters['2_to']}`}</h5>
+                            <h5 className="xs:text-xl">Group 2 : </h5>
+                            <h5 className="text-bold xs:text-xl text-blue-700">{`${groupFilters['2_from']}-${groupFilters['2_to']}`}</h5>
                         </div>
                     </div>
                 )
@@ -221,12 +221,12 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
                 filterGroupsHtmlTemp.push(
                     <div key='bool'>
                         <div className="flex flex-row">
-                            <h5 className="p-4">Group 1 : </h5>
-                            <h5 className="p-4 text-bold text-blue-700">TRUE</h5>
+                            <h5 className="p-4 xs:text-xl">Group 1 : </h5>
+                            <h5 className="p-4 text-bold xs:text-xl text-blue-700">TRUE</h5>
                         </div>
                         <div className="flex flex-row">
-                            <h5 className="p-4">Group 2 : </h5>
-                            <h5 className="p-4 text-bold text-blue-700">FALSE</h5>
+                            <h5 className="p-4 xs:text-xl">Group 2 : </h5>
+                            <h5 className="p-4 text-bold xs:text-xl text-blue-700">FALSE</h5>
                         </div>
                     </div>
                 )
@@ -237,12 +237,12 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
                 filterGroupsHtmlTemp.push(
                     <div key='gender'>
                         <div className="flex border mb-1 flex-row justify-around">
-                            <h5 className="p-4">Group 1 : </h5>
-                            <h5 className="p-4 text-bold text-blue-700">Male</h5>
+                            <h5 className="p-4 xs:text-xl">Group 1 : </h5>
+                            <h5 className="p-4 text-bold xs:text-xl text-blue-700">Male</h5>
                         </div>
                         <div className="flex border mb-1 flex-row justify-around">
-                            <h5 className="p-4">Group 2 : </h5>
-                            <h5 className="p-4 text-bold text-blue-700">Female</h5>
+                            <h5 className="p-4 xs:text-xl">Group 2 : </h5>
+                            <h5 className="p-4 text-bold xs:text-xl text-blue-700">Female</h5>
                         </div>
                     </div>
                 )
@@ -253,24 +253,24 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
                 filterGroupsHtmlTemp.push(
                     <div key='drop-user'>
                         <div className="flex flex-row justify-around">
-                            <h5 className="p-4">Group 1 : </h5>
+                            <h5 className="p-4 xs:text-xl">Group 1 : </h5>
                             <select
                                 onChange={dropDownChange}
-                                className='p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
+                                className='lg:p-4 xs:p-2 border xs:text-sm lg:text-xl focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
                                 <option value=''></option>
                                 {preDefienedGroups[colName].map((element, index) => (
-                                    <option className="text-lg" key={`${element.label}-${index}-grp-a`} value={JSON.stringify({ index: index, colName: colName, group: 1 })}>{element.label}</option>
+                                    <option className="lg:text-lg xs:text-sm" key={`${element.label}-${index}-grp-a`} value={JSON.stringify({ index: index, colName: colName, group: 1 })}>{element.label}</option>
                                 ))}
                             </select>
                         </div>
                         <div className="flex flex-row justify-around">
-                            <h5 className="p-4">Group 2 : </h5>
+                            <h5 className="p-4 xs:text-xl">Group 2 : </h5>
                             <select
                                 onChange={dropDownChange}
-                                className='p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
+                                className='lg:p-4 xs:p-2 border xs:text-sm lg:text-xl focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
                                 <option value=''></option>
                                 {preDefienedGroups[colName].map((element, index) => (
-                                    <option className="text-lg" key={`${element.label}-${index}-grp-b`} value={JSON.stringify({ index: index, colName: colName, group: 2 })}>{element.label}</option>
+                                    <option className="lg:text-lg xs:text-sm" key={`${element.label}-${index}-grp-b`} value={JSON.stringify({ index: index, colName: colName, group: 2 })}>{element.label}</option>
                                 ))}
                             </select>
                         </div>
@@ -292,10 +292,10 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
                 </div>
                 {((resetClicked === true) || (isGroupFilterProp === false)) && <select
                     onChange={filterTypeDropdownSelection}
-                    className='w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
+                    className='w-full lg:p-4 xs:p-2 border xs:text-sm lg:text-lg focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
                     <option value=''></option>
                     {filterChoicesCustom.map((type, index) => (
-                        <option className="text-lg" key={type.name} value={index}>{type.name}</option>
+                        <option className="lg:text-lg xs:text-sm" key={type.name} value={index}>{type.name}</option>
                     ))}
                 </select>}
                 {((resetClicked === false) && (isGroupFilterProp === true)) && <h6 className='border p-4'>{filterChoicesCustom.map(e => {
@@ -308,12 +308,12 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
                 {filterGroupsHtml}
             </div>
             <div>
-                <button onClick={submitFilters} className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 xs:w-28 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
+                <button onClick={submitFilters} className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 xs:w-28 h-20 xs:text-sm text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
                     <FormattedMessage id="Submit_volcano" defaultMessage='Submit' />
                 </button>
             </div>
             <div>
-                <button onClick={resetFilters} className="bg-white hover:bg-gray-700 mb-3 lg:w-80 h-20 xs:w-28 text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
+                <button onClick={resetFilters} className="bg-white hover:bg-gray-700 mb-3 lg:w-80 h-20 xs:w-28 xs:text-sm text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
                     <FormattedMessage id="Reset_volcano" defaultMessage='Reset' />
                 </button>
             </div>
@@ -532,10 +532,10 @@ const GroupFilters = ({ parentCallback, groupFilters }) => {
                 <select
                     onChange={updateSelectedFilter}
                     defaultValue={filterSelected}
-                    className='w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
+                    className='w-full lg:p-4 xs:p-2 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
                     <option value=''></option>
                     {filterChoices.map((type, index) => (
-                        <option selected={filterSelected === type.name} className="text-lg" key={type.name} value={index}>{type.name}</option>
+                        <option selected={filterSelected === type.name} className="lg:text-lg xs:text-sm" key={type.name} value={index}>{type.name}</option>
                     ))}
                 </select>
             </div>
@@ -553,7 +553,7 @@ const GroupFilters = ({ parentCallback, groupFilters }) => {
                 </button>
             </div>}
             {filterSelected && <div>
-                <button onClick={resetFilters} className="bg-white hover:bg-gray-700 mb-3 w-80 h-20 text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
+                <button onClick={resetFilters} className="bg-white hover:bg-gray-700 mb-3 lg:w-80 sm:w-40 h-20 text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
                     Reset
                 </button>
             </div>}
@@ -615,12 +615,12 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters }) => 
                 filterGroupsHtmlTemp.push(
                     <div key='bool'>
                         <div className="flex flex-row">
-                            <h5>Group 1 : </h5>
-                            <h5 className="text-bold text-blue-700">TRUE</h5>
+                            <h5 className="xs:text-xl">Group 1 : </h5>
+                            <h5 className="text-bold xs:text-xl text-blue-700">TRUE</h5>
                         </div>
                         <div className="flex flex-row">
-                            <h5>Group 2 : </h5>
-                            <h5 className="text-bold text-blue-700">FALSE</h5>
+                            <h5 className="xs:text-xl">Group 2 : </h5>
+                            <h5 className="text-bold xs:text-xl text-blue-700">FALSE</h5>
                         </div>
                     </div>
                 )
@@ -630,12 +630,12 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters }) => 
                 filterGroupsHtmlTemp.push(
                     <div key='bool'>
                         <div className="flex flex-row">
-                            <h5>Group 1 : </h5>
-                            <h5 className="text-bold text-blue-700">Male</h5>
+                            <h5 className="xs:text-xl">Group 1 : </h5>
+                            <h5 className="text-bold xs:text-xl text-blue-700">Male</h5>
                         </div>
                         <div className="flex flex-row">
-                            <h5>Group 2 : </h5>
-                            <h5 className="text-bold text-blue-700">Female</h5>
+                            <h5 className="xs:text-xl">Group 2 : </h5>
+                            <h5 className="text-bold xs:text-xl text-blue-700">Female</h5>
                         </div>
                     </div>
                 )
@@ -661,7 +661,7 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters }) => 
                         {preDefienedGroups1[groupFilters.column].map((element, index) => (
                             <div className="text-lg" key={`${element.label}-${index}-grp-a`}>
                                 <div className="flex flex-row justify-around">
-                                    <h5 className="p-4">Group {index + 1} : {element.label}</h5>
+                                    <h5 className="p-4 xs:text-xl">Group {index + 1} : {element.label}</h5>
                                 </div>
                             </div>
                         ))}
@@ -701,12 +701,12 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters }) => 
                 filterGroupsHtmlTemp.push(
                     <div key='bool'>
                         <div className="flex flex-row">
-                            <h5 className="p-4">Group 1 : </h5>
-                            <h5 className="p-4 text-bold text-blue-700">TRUE</h5>
+                            <h5 className="p-4 xs:text-xl">Group 1 : </h5>
+                            <h5 className="p-4 text-bold xs:text-xl text-blue-700">TRUE</h5>
                         </div>
                         <div className="flex flex-row">
-                            <h5 className="p-4">Group 2 : </h5>
-                            <h5 className="p-4 text-bold text-blue-700">FALSE</h5>
+                            <h5 className="p-4 xs:text-xl">Group 2 : </h5>
+                            <h5 className="p-4 text-bold xs:text-xl text-blue-700">FALSE</h5>
                         </div>
                     </div>
                 )
@@ -717,12 +717,12 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters }) => 
                 filterGroupsHtmlTemp.push(
                     <div key='gender'>
                         <div className="flex border mb-1 flex-row justify-around">
-                            <h5 className="p-4">Group 1 : </h5>
-                            <h5 className="p-4 text-bold text-blue-700">Male</h5>
+                            <h5 className="p-4 xs:text-xl">Group 1 : </h5>
+                            <h5 className="p-4 text-bold xs:text-xl text-blue-700">Male</h5>
                         </div>
                         <div className="flex border mb-1 flex-row justify-around">
-                            <h5 className="p-4">Group 2 : </h5>
-                            <h5 className="p-4 text-bold text-blue-700">Female</h5>
+                            <h5 className="p-4 xs:text-xl">Group 2 : </h5>
+                            <h5 className="p-4 text-bold xs:text-xl text-blue-700">Female</h5>
                         </div>
                     </div>
                 )
@@ -745,7 +745,7 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters }) => 
                         {preDefienedGroups1[colName].map((element, index) => (
                             <div className="text-lg" key={`${element.label}-${index}-grp-a`}>
                                 <div className="flex flex-row justify-around">
-                                    <h5 className="p-4">Group {index + 1} : {element.label}</h5>
+                                    <h5 className="p-4 xs:text-xl">Group {index + 1} : {element.label}</h5>
                                 </div>
                             </div>
                         ))}
@@ -767,7 +767,7 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters }) => 
                 </div>
                 {((resetClicked === true) || (isGroupFilterProp === false)) && <select
                     onChange={filterTypeDropdownSelection}
-                    className='w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
+                    className='w-full lg:p-4 xs:p-2 border lg:text-xl xs:text-sm focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
                     <option value=''></option>
                     {filterChoicesCustom.map((type, index) => (
                         <option className="text-lg" key={type.name} value={index}>{type.name}</option>
@@ -783,12 +783,12 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters }) => 
                 {filterGroupsHtml}
             </div>
             <div>
-                <button onClick={submitFilters} className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-20 sm:h-14 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
+                <button onClick={submitFilters} className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-20 sm:h-14 xs:text-sm text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
                     <FormattedMessage id="Submit_volcano" defaultMessage='Submit' />
                 </button>
             </div>
             <div>
-                <button onClick={resetFilters} className="bg-white hover:bg-gray-700 mb-3 w-80 h-20 text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
+                <button onClick={resetFilters} className="bg-white hover:bg-gray-700 mb-3 lg:w-80 sm:w-42 lg:h-20 sm:h-14 xs:text-sm text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
                     <FormattedMessage id="Reset_volcano" defaultMessage='Reset' />
                 </button>
             </div>

@@ -24,6 +24,7 @@ export default function AdvancedInfo() {
   const prevCountRef = useRef();
   const [loader, setLoader] = useState(true)
   const [reset, setReset] = useState("")
+  const [smallScreen, setSmallScreen] = useState(false)
   // const [previousSelection,setPreviousSelection] = useState({});
 
   useEffect(() => {
@@ -86,25 +87,33 @@ export default function AdvancedInfo() {
     }
   }, []);
 
-  // console.log("---->",previousSelection)
-  // useEffect(()=>{
-  // },[loader])
+  const set_screen = useCallback((bool) => {
+    setSmallScreen(false)
+  }, []);
 
-  // console.log(loader)
+
+
 
   return (
     <div className="header">
       <div className="mx-auto rounded overflow-hidden ">
         <div id="main_div">
-          <div className="grid grid-cols-4 gap-6">
-            <div className="bg-white border border-gray-200">
-              <Filter parentCallback={callback}/>
+          <div className={`grid grid-cols-4 gap-6`}>
+            <div className={`bg-white border lg:block xl:block sm:hidden border-gray-200 ${smallScreen?"xs:col-span-4 z-10 opacity-95":"xs:hidden"}`}>
+              <Filter parentCallback={callback} small_screen={set_screen}/>
             </div>
-            <div className="col-start-2 col-span-3 pt-4 overflow-auto ">
+            <div className={`lg:col-start-2 md:col-start-2 lg:col-span-3 md:col-span-3 sm:col-span-4 xs:col-span-4 pt-4 overflow-auto ${smallScreen?"absolute":""}`}>
             {
               loader?<LoaderCmp/>:
               <div className="grid lg:grid-cols-3 sm:grid-cols-1 md:lg:grid-cols-2 gap-1">
-                    {state}
+                <div className="pl-6 mb-5 lg:hidden md:hidden">
+                  <button className="bg-blue-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  onClick={()=>setSmallScreen(true)}
+                  type="button">
+                   <AdjustmentsIcon className="h-6 w-6 inline"/>
+                  </button>
+                </div>
+                {state}
               </div>
               }
             </div>

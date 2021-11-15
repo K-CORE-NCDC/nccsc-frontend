@@ -181,8 +181,8 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
     <div>
       <div className='p-5 text-right m-5'>
         <div className='grid grid-rows-3'>
-          <div className="flex float-left ">
-              <div className='p-3 ml-6'><FormattedMessage  id ="Selected Gene Is" defaultMessage="Selected Gene Is" /></div>
+          <div className="flex float-left xs:flex-wrap">
+              <div className='p-3 ml-6 xs:text-sm lg:text-xl md:text-xl'><FormattedMessage  id ="Selected Gene Is" defaultMessage="Selected Gene Is" /></div>
               <div>
                 <Multiselect
                   options={genesHtml} // Options to display in the dropdown
@@ -192,10 +192,10 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
                   displayValue="name" // Property name to display in the dropdown options
                 />
               </div>
-              <div className="mt-3 ml-4">
+              <div className="mt-3 lg:ml-4 xs:ml-10">
                 <label class="inline-flex items-center">
                   <input type="checkbox" className="form-checkbox" check={selectall} onClick={selectAll}/>
-                  <span class="ml-2"><strong className="xs:text-sm"><FormattedMessage  id ="Select all" defaultMessage="Select all"/></strong></span>
+                  <span class="ml-2"><strong className="lg:text-xl xs:text-sm"><FormattedMessage  id ="Select all" defaultMessage="Select all"/></strong></span>
                 </label>
               </div>
           </div>

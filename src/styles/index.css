@@ -955,3 +955,31 @@ dd {
 .btn-xs{font-size: 12px;padding: 6px 10px;}
 .btn-xs .ico::before{font-size: 17px; color: #959595; }
 .btn-xs:hover .ico::before{color:#24537e;}
+
+
+
+
+.second_header_scroll{
+    width: 400px;
+    overflow-x: scroll;
+}
+
+.second_header_scroll_ul{
+    width: 600px;
+}
+
+@media (max-width: 400px) {
+    #second_header {
+      width: 400px;
+      overflow-x: scroll;
+    }
+
+    #second_header::-webkit-scrollbar-thumb {
+      background: black; 
+    }
+
+    #tabs{
+        width: 600px;
+    }
+
+}
