@@ -26,6 +26,7 @@ export default function ClinicalInformation() {
   const dispatch = useDispatch()
   const [firstLoad, setFirstLoad] = useState(true)
   const [loader, setLoader] = useState(true)
+  const [smallScreen,setSmallScreen] = useState(false)
 
 
   // const forceUpdate = React.useCallback(() => updateState({}), []);
@@ -301,9 +302,14 @@ export default function ClinicalInformation() {
       :
       <div className="relative">
         <div className="grid grid-cols-4 gap-6">
-          <div className="relative">
-          <div className="sm:hidden xs:hidden lg:block xl:block bg-white border border-gray-200">
-            <h4 className="p-3"><AdjustmentsIcon className="h-6 w-6 inline"/> &nbsp;Filters</h4>
+          <div className={`relative ${smallScreen?"col-span-4 z-10":""}`}>
+          <div className={`sm:hidden xs:opacity-95 sm:opacity-95 lg:block xl:block bg-white border border-gray-200 ${smallScreen?"":"xs:hidden"}`}>
+              <h4 className="p-3 float-left"><AdjustmentsIcon className="h-6 w-6 inline"/> &nbsp;Filters</h4>
+              <button className="float-right lg:hidden md:hidden bg-blue-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 my-4 mr-4 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              onClick={()=>setSmallScreen(false)}
+              type="button">
+               close
+              </button>
             <div className="shadow-box shadow-md w-full p-3 " id='accordian_tabs' >
               {
                 leftSide['leftSide']
@@ -311,17 +317,19 @@ export default function ClinicalInformation() {
             </div>
           </div>
           </div>
-          <div className="xl:col-start-2 lg:col-start-2 col-span-4 m-5 overflow-y-auto h-screen" id='charts_container'>
-
+          <div className={`xl:col-start-2 lg:col-start-2 col-span-4 m-5 overflow-y-auto h-screen ${smallScreen?"absolute":""}`} id='charts_container'>
+            <div className="pl-6 mb-5 lg:hidden md:hidden">
+              <button className="bg-blue-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              onClick={()=>setSmallScreen(true)}
+              type="button">
+               <AdjustmentsIcon className="h-6 w-6 inline"/>
+              </button>
+            </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 sm:grid-cols-2 gap-3" >
-              <div className="pl-8 lg:hidden md:hidden">
-                <button className="bg-blue-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
-                 <AdjustmentsIcon className="h-6 w-6 inline"/>
-                </button>
-              </div>
               {
                 leftSide['charts']
               }
+
             </div>
           </div>
         </div>

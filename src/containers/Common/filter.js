@@ -14,7 +14,7 @@ import {FormattedMessage} from 'react-intl';
 
 let previous = ""
 
-export default function Filter({parentCallback}) {
+export default function Filter({parentCallback, set_screen}) {
   const [state, setState] = useState({"html":[]});
   const [selectState, setSelectState] = useState({});
   const [selected, setSelected] = useState('Basic/Diagnostic Information');
@@ -250,6 +250,11 @@ export default function Filter({parentCallback}) {
         </button>&nbsp;&nbsp;&nbsp;&nbsp;
         <button className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 lg:h-20 sm:w-52 sm:h-16 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={sendFilter}>
           Search
+        </button>
+        <button className="float-right lg:hidden md:hidden bg-blue-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 my-4 mr-4 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+        onClick={()=>set_screen(false)}
+        type="button">
+         close
         </button>
       </div>
         <div className="col-span-2" id="all_checkboxes">

@@ -1,17 +1,19 @@
+
 import React, { useState, useEffect, Fragment, useRef } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import VolcanoCmp from '../../Common/Volcano'
 import GroupFilters, { PreDefienedFilters } from '../../Common/GroupFilter'
 import { exportComponentAsPNG } from 'react-component-export-image';
-import NoContentMessage from '../../Common/NoContentComponent'
+import NoContentMessage from '../../Common/NoContentComponent';
+import {AdjustmentsIcon} from '@heroicons/react/outline'
 
 import { getVolcanoPlotInfo } from '../../../actions/api_actions'
 // import Loader from "react-loader-spinner";
 import LoaderCmp from '../../Common/Loader';
 import {FormattedMessage} from 'react-intl';
 
-const selectedCss = "w-1/2 rounded-r-none  hover:scale-110 focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 sm:text-sm md:text-2xl md:text-2xl ease-in-out border-gray-600 transition"
-const nonSelectedCss = "w-1/2 rounded-l-none border-l-0 hover:scale-110 focus:outline-none flex justify-center p-5 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 text-teal-700 border sm:text-sm md:text-2xl md:text-2xl duration-200 ease-in-out border-teal-600 transition"
+const selectedCss = "w-1/2 rounded-r-none  hover:scale-110 focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 xs:text-sm sm:text-sm md:text-2xl md:text-2xl ease-in-out border-gray-600 transition"
+const nonSelectedCss = "w-1/2 rounded-l-none border-l-0 hover:scale-110 focus:outline-none flex justify-center p-5 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 text-teal-700 border xs:text-sm sm:text-sm md:text-2xl md:text-2xl duration-200 ease-in-out border-teal-600 transition"
 
 
 export default function DataVolcono({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
@@ -32,6 +34,7 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
   const [noContent, setNoContent] = useState(true)
   const [sampleCount, setSampleCount] = useState({})
   const [userDefienedFilter, setUserDefienedFilter] = useState('static')
+  const [smallScreen, setSmallScreen] = useState(false)
 
 
   const updateGroupFilters = (filtersObject) => {
@@ -131,7 +134,7 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
     }
   }, [volcanoJson])
 
-
+  console.log(smallScreen)
   return (
     <>
       {
@@ -139,7 +142,14 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
           <LoaderCmp />
           :
           <div className="flex flex-row justify-around">
-            <div className="w-1/5">
+            <div className={`lg:hidden md:hidden xs:ml-8`}>
+              <button className="bg-blue-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              onClick={()=>setSmallScreen(!smallScreen)}
+              type="button">
+                <AdjustmentsIcon className="h-6 w-6 inline"/>
+              </button>
+            </div>
+            <div className={`lg:w-1/5 md:w-4/5 lg:block md:block lg:block sm:hidden ${smallScreen?"xs:mr-80 xs:z-10 xs:opacity-95 xs:bg-white":"xs:hidden"} `}>
               <div>
                 {(sampleCount && Object.keys(sampleCount).length > 0) && <div className="m-1 p-1 border border-black border-dashed">
                   {Object.keys(sampleCount).map(e => (
@@ -173,7 +183,7 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
                 <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left">Black: Selected genes</p>
               </div>
             </div>
-            <div className="w-4/5" style={{ 'overflowX': 'scroll' }}>
+            <div className={`lg:w-4/5 md:w-4/5 sm:w-full lg:block ${smallScreen?"xs:absolute":"xs:w-full"}`} style={{ 'overflowX': 'scroll' }}>
               {showVolcano
                 && <VolcanoCmp watermarkCss={watermarkCss}
                   ref={reference}

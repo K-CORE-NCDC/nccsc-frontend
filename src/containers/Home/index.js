@@ -30,34 +30,34 @@ export default function Home() {
       <div className="grid grid-cols-2">
         <div className='bg-white 2xl:hidden'>
           <div className="grid grid-cols-5 p-14 border-b border-blue">
-            <div className='text-right sm:text-3xl sm:col-start-1 lg:text-5xl lg:col-start-2'>
+            <div className='text-right sm:text-3xl xs:text-xl sm:col-start-1 lg:text-5xl lg:col-start-2'>
               Today
             </div>
-            <div className='text-left sm:text-4xl lg:text-6xl px-10 lg:col-span-3 sm:col-span-4'>
+            <div className='text-left sm:text-4xl xs:text-xl lg:text-6xl px-10 lg:col-span-3 sm:col-span-4'>
               <p><strong>2021.04.26.</strong><br/><br/>
               PM 15:20</p>
             </div>
           </div>
           <div className="grid grid-cols-2 ">
             <div className="border-r border-blue ">
-              <div className="p-20 lg:text-3xl sm:text-2xl text-right">암종 (Primary Sites)<ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/></div>
-              <div className="p-20 lg:text-3xl sm:text-2xl text-right">전체대상자 (Sample)<ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/></div>
-              <div className="p-20 lg:text-3xl sm:text-2xl text-right">유전자 (Genes)<ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/></div>
-              <div className="p-20 lg:text-3xl sm:text-2xl text-right">돌연변이 (Mutations)<ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/></div>
-              <div className="p-20 lg:text-3xl sm:text-2xl text-right">유전체 복제수변이 (CNV)<ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/></div>
-              <div className="p-20 lg:text-3xl sm:text-2xl text-right">융합 유전자 (Fusion Genes)<ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/></div>
-              <div className="p-20 lg:text-3xl sm:text-2xl text-right">Global Proteome<ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/></div>
-              <div className="p-20 lg:text-3xl sm:text-2xl text-right">Phospho Site<ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/></div>
+              <div className="p-20 lg:text-3xl sm:text-2xl xs:text-sm text-right">암종 (Primary Sites)<ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/></div>
+              <div className="p-20 lg:text-3xl sm:text-2xl xs:text-sm text-right">전체대상자 (Sample)<ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/></div>
+              <div className="p-20 lg:text-3xl sm:text-2xl xs:text-sm text-right">유전자 (Genes)<ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/></div>
+              <div className="p-20 lg:text-3xl sm:text-2xl xs:text-sm text-right">돌연변이 (Mutations)<ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/></div>
+              <div className="p-20 lg:text-3xl sm:text-2xl xs:text-sm text-right">유전체 복제수변이 (CNV)<ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/></div>
+              <div className="p-20 lg:text-3xl sm:text-2xl xs:text-sm text-right">융합 유전자 (Fusion Genes)<ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/></div>
+              <div className="p-20 lg:text-3xl sm:text-2xl xs:text-sm text-right">Global Proteome<ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/></div>
+              <div className="p-20 lg:text-3xl sm:text-2xl xs:text-sm text-right">Phospho Site<ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/></div>
             </div>
             <div>
-              <div className="p-20  pl-24 lg:text-3xl sm:text-2xl text-left">1</div>
-              <div className="p-20  pl-24 lg:text-3xl sm:text-2xl text-left">45312</div>
-              <div className="p-20  pl-24 lg:text-3xl sm:text-2xl text-left">1</div>
-              <div className="p-20  pl-24 lg:text-3xl sm:text-2xl text-left">1265</div>
-              <div className="p-20  pl-24 lg:text-3xl sm:text-2xl text-left">1</div>
-              <div className="p-20  pl-24 lg:text-3xl sm:text-2xl text-left">9865</div>
-              <div className="p-20  pl-24 lg:text-3xl sm:text-2xl text-left">1</div>
-              <div className="p-20  pl-24 lg:text-3xl sm:text-2xl text-left">1</div>
+              <div className="p-20  pl-24 lg:text-3xl sm:text-2xl xs:text-sm text-left">1</div>
+              <div className="p-20  pl-24 lg:text-3xl sm:text-2xl xs:text-sm text-left">45312</div>
+              <div className="p-20  pl-24 lg:text-3xl sm:text-2xl xs:text-sm text-left">1</div>
+              <div className="p-20  pl-24 lg:text-3xl sm:text-2xl xs:text-sm text-left">1265</div>
+              <div className="p-20  pl-24 lg:text-3xl sm:text-2xl xs:text-sm text-left">1</div>
+              <div className="p-20  pl-24 lg:text-3xl sm:text-2xl xs:text-sm text-left">9865</div>
+              <div className="p-20  pl-24 lg:text-3xl sm:text-2xl xs:text-sm text-left">1</div>
+              <div className="p-20  pl-24 lg:text-3xl sm:text-2xl xs:text-sm text-left">1</div>
             </div>
           </div>
         </div>

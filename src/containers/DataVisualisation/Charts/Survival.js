@@ -5,12 +5,13 @@ import { getSurvivalInformation } from '../../../actions/api_actions'
 import { exportComponentAsPNG } from 'react-component-export-image';
 import GroupFilters, { PreDefienedFiltersSurvival } from '../../Common/GroupFilter'
 import NoContentMessage from '../../Common/NoContentComponent'
+import {AdjustmentsIcon} from '@heroicons/react/outline'
 
 import LoaderCmp from '../../Common/Loader'
 import { FormattedMessage } from 'react-intl';
 
-const selectedCss = "w-1/2 rounded-r-none  hover:scale-110 focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition"
-const nonSelectedCss = "w-1/2 rounded-l-none border-l-0 hover:scale-110 focus:outline-none flex justify-center p-5 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 text-teal-700 border duration-200 ease-in-out border-teal-600 transition"
+const selectedCss = "w-1/2 rounded-r-none  hover:scale-110 xs:h-14 xs:text-sm focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition"
+const nonSelectedCss = "w-1/2 rounded-l-none border-l-0 xs:h-14 xs:text-sm hover:scale-110 focus:outline-none flex justify-center p-5 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 text-teal-700 border duration-200 ease-in-out border-teal-600 transition"
 
 export default function DataSurvival({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
@@ -29,6 +30,7 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
   const [filterTypeButton, setFilterTypeButton] = useState('clinical')
   const [userDefienedFilter, setUserDefienedFilter] = useState('static')
   const [pValueData, setPvalueData] = useState("")
+  const [smallScreen, setSmallScreen] = useState(false)
 
   const submitFitersAndFetchData = () => {
     if ((fileredGene !== "") || (filterTypeButton === 'clinical')) {
@@ -149,88 +151,97 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
       loader ?
         <LoaderCmp />
         :
-        <div className="flex flex-row justify-around">
-          <div className="w-1/5 border bg-white">
-            {sampleCountsCard.length > 0 && <div className="m-1 p-1 border border-black border-dashed">
-              {sampleCountsCard}
-            </div>}
-            <h6 className="p-4 ml-1 text-left text-bold text-blue-700">
-              <FormattedMessage id="Choose Filter group" defaultMessage='Choose Filter group' />
-            </h6>
-            <div className="m-1 flex flex-row justify-around">
-              <button onClick={() => setUserDefienedFilter('static')}
-                className={userDefienedFilter === 'static' ? selectedCss : nonSelectedCss}
-              >
-                <FormattedMessage id="Static_volcano" defaultMessage='Static' />
+        <div className="grid grid-row-3">
+          <div className="lg:hidden sm:hidden md:hidden">
+              <button className="float-left bg-blue-500 xs:ml-8 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              onClick={()=>setSmallScreen(!smallScreen)}
+              type="button">
+                <AdjustmentsIcon className="h-6 w-6 inline"/>
               </button>
-              <button onClick={() => setUserDefienedFilter('dynamic')}
-                className={userDefienedFilter === 'dynamic' ? selectedCss : nonSelectedCss}
-              >
-                <FormattedMessage id="Dynamic_volcano" defaultMessage='Dynamic' />
-              </button>
-            </div>
-            <h6 className="ml-1 mt-1 p-4 text-left text-bold text-blue-700">Choose Filter Type</h6>
-            <div className="m-1 flex flex-row justify-around">
-              <button onClick={() => setFilterTypeButton('clinical')} id='Mutation' name='type'
-                className={filterTypeButton === 'clinical' ? selectedCss : nonSelectedCss}
-              >
-                <FormattedMessage id="Clinical" defaultMessage='Clinical' />
-              </button>
-              <button onClick={() => setFilterTypeButton('omics')} id='Phospho' name='type'
-                className={filterTypeButton === 'omics' ? selectedCss : nonSelectedCss}
-              >
-                <FormattedMessage id="Omics" defaultMessage='Omics' />
-              </button>
-            </div>
-            {(filterTypeButton === 'omics') && <div className="m-1 p-1">
-              <h6 className="text-blue-700 text-lg  font-bold mb-2 text-left" htmlFor="dropdown-gene"><FormattedMessage id="Select Gene" defaultMessage='Select Gene' /></h6>
-              <select id="dropdown-gene" onChange={(e) => setFilteredGene(e.target.value)}
-                defaultValue={fileredGene}
-                className='w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
-                <option selected={fileredGene === ""} value=""></option>
-                {genesArray.map((gene, index) => (
-                  <option selected={fileredGene === gene} key={`${gene}-${index}`} value={gene}>{gene}</option>
-                ))}
-              </select>
-            </div>}
-            {(filterTypeButton === 'omics') && <div className="m-1 p-1">
-              <h6 className="text-blue-700 text-lg  font-bold mb-1 text-left" htmlFor="dropdown-database">Select Database</h6>
-              <select id="dropdown-database" onChange={(e) => setGeneDatabase(e.target.value)}
-                defaultValue={geneDatabase}
-                className='w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
-                <option selected={geneDatabase === 'dna_mutation'} value="dna_mutation">DNA Mutation</option>
-                <option selected={geneDatabase === 'rna'} value="rna">RNA Expression</option>
-                <option selected={geneDatabase === 'proteome'} value="proteome">Global Proteome</option>
-              </select>
-            </div>}
-            {((filterTypeButton === 'clinical') && (userDefienedFilter === 'static')) && <PreDefienedFiltersSurvival parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
-            {((filterTypeButton === 'clinical') && (userDefienedFilter === 'dynamic')) && <GroupFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
-            {(filterTypeButton === 'omics') && <div>
-              <div>
-                <button onClick={submitFitersAndFetchData} className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 xs:w-32 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
-                  <FormattedMessage id="Submit_volcano" defaultMessage='Submit' />
-                </button>
-              </div>
-              <div>
-                <button className="bg-white hover:bg-gray-700 mb-3 w-80 h-20 xs:w-20 lg:w-80 xs:w-32 text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
-                  <FormattedMessage id="Reset_volcano" defaultMessage='Reset' />
-                </button>
-              </div>
-            </div>}
           </div>
-          <div className="w-4/5">
-            {renderSurvival && <SurvivalCmp
-              watermarkCss={watermarkCss}
-              ref={reference} width={width}
-              data={
-                {
-                  fileredGene: fileredGene,
-                  survivalJson: survivalJson
+          <div className="flex flex-row justify-around">
+            <div className={`xs:ml-8 lg:w-1/5 sm:w-2/5 xs:w-2/5 border bg-white ${smallScreen?"xs:mr-80 xs:z-10 xs:opacity-95 xs:bg-white":"xs:hidden"}`}>
+              {sampleCountsCard.length > 0 && <div className="m-1 p-1 border border-black border-dashed">
+                {sampleCountsCard}
+              </div>}
+              <h6 className="p-4 ml-1 text-left text-bold xs:text-xl text-blue-700">
+                <FormattedMessage id="Choose Filter group" defaultMessage='Choose Filter group' />
+              </h6>
+              <div className="m-1 flex flex-row justify-around">
+                <button onClick={() => setUserDefienedFilter('static')}
+                  className={userDefienedFilter === 'static' ? selectedCss : nonSelectedCss}
+                >
+                  <FormattedMessage id="Static_volcano" defaultMessage='Static' />
+                </button>
+                <button onClick={() => setUserDefienedFilter('dynamic')}
+                  className={userDefienedFilter === 'dynamic' ? selectedCss : nonSelectedCss}
+                >
+                  <FormattedMessage id="Dynamic_volcano" defaultMessage='Dynamic' />
+                </button>
+              </div>
+              <h6 className="ml-1 mt-1 p-4 text-left text-bold xs:text-xl text-blue-700">Choose Filter Type</h6>
+              <div className="m-1 flex flex-row justify-around">
+                <button onClick={() => setFilterTypeButton('clinical')} id='Mutation' name='type'
+                  className={filterTypeButton === 'clinical' ? selectedCss : nonSelectedCss}
+                >
+                  <FormattedMessage id="Clinical" defaultMessage='Clinical' />
+                </button>
+                <button onClick={() => setFilterTypeButton('omics')} id='Phospho' name='type'
+                  className={filterTypeButton === 'omics' ? selectedCss : nonSelectedCss}
+                >
+                  <FormattedMessage id="Omics" defaultMessage='Omics' />
+                </button>
+              </div>
+              {(filterTypeButton === 'omics') && <div className="m-1 p-1">
+                <h6 className="text-blue-700 text-lg  font-bold mb-2 text-left" htmlFor="dropdown-gene"><FormattedMessage id="Select Gene" defaultMessage='Select Gene' /></h6>
+                <select id="dropdown-gene" onChange={(e) => setFilteredGene(e.target.value)}
+                  defaultValue={fileredGene}
+                  className='w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
+                  <option selected={fileredGene === ""} value=""></option>
+                  {genesArray.map((gene, index) => (
+                    <option selected={fileredGene === gene} key={`${gene}-${index}`} value={gene}>{gene}</option>
+                  ))}
+                </select>
+              </div>}
+              {(filterTypeButton === 'omics') && <div className="m-1 p-1">
+                <h6 className="text-blue-700 text-lg  font-bold mb-1 text-left" htmlFor="dropdown-database">Select Database</h6>
+                <select id="dropdown-database" onChange={(e) => setGeneDatabase(e.target.value)}
+                  defaultValue={geneDatabase}
+                  className='w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
+                  <option selected={geneDatabase === 'dna_mutation'} value="dna_mutation">DNA Mutation</option>
+                  <option selected={geneDatabase === 'rna'} value="rna">RNA Expression</option>
+                  <option selected={geneDatabase === 'proteome'} value="proteome">Global Proteome</option>
+                </select>
+              </div>}
+              {((filterTypeButton === 'clinical') && (userDefienedFilter === 'static')) && <PreDefienedFiltersSurvival parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
+              {((filterTypeButton === 'clinical') && (userDefienedFilter === 'dynamic')) && <GroupFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
+              {(filterTypeButton === 'omics') && <div>
+                <div>
+                  <button onClick={submitFitersAndFetchData} className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 xs:w-32 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
+                    <FormattedMessage id="Submit_volcano" defaultMessage='Submit' />
+                  </button>
+                </div>
+                <div>
+                  <button className="bg-white hover:bg-gray-700 mb-3 w-80 h-20 xs:w-20 lg:w-80 xs:w-32 text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
+                    <FormattedMessage id="Reset_volcano" defaultMessage='Reset' />
+                  </button>
+                </div>
+              </div>}
+            </div>
+            <div className="xs:absolute lg:w-4/5 xs:w-full">
+              {renderSurvival && <SurvivalCmp
+                watermarkCss={watermarkCss}
+                ref={reference} width={width}
+                data={
+                  {
+                    fileredGene: fileredGene,
+                    survivalJson: survivalJson
+                  }
                 }
-              }
-              pValue={pValueData}
-            />}
-            {renderNoContent && <NoContentMessage />}
+                pValue={pValueData}
+              />}
+              {renderNoContent && <NoContentMessage />}
+            </div>
           </div>
         </div>
     }

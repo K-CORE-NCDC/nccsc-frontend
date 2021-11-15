@@ -113,12 +113,12 @@ export default function Web(props) {
               </div>
             </nav>
 
-            {classes!=='' && <div className="grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1 grid-cols-3 px-64 py-20  text-right text-main-blue">
-              <div className='text-center lg:col-span-3 lg:text-center  2xl:col-start-3'>
-              <h2 className="text-8xl"><strong>K-CORE</strong> <strong>Portal</strong></h2>
-              <h2 className="text-4xl mt-4"><strong>Cancer Omics Research Portal</strong></h2>
+            {classes!=='' && <div className="grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xs:grid-cols-4 lg:px-64 xs:px-40 py-20  text-right text-main-blue">
+              <div className='text-center xs:col-span-4  lg:col-span-3 lg:text-center  2xl:col-start-3'>
+              <h2 className="lg:text-8xl xs:text-4xl"><strong>K-CORE</strong> <strong>Portal</strong></h2>
+              <h2 className="lg:text-4xl xs:text-xl mt-4"><strong>Cancer Omics Research Portal</strong></h2>
               <div className="pl-6">
-                <p className="lg:border-l-2 lg:text-2xl sm:text-xl p-5 font-medium mt-8 border-gray-600" style={{textAlign: 'right'}}>
+                <p className="lg:border-l-2 lg:text-2xl xs:text-sm sm:text-xl p-5 font-medium mt-8 border-gray-600" style={{textAlign: 'right'}}>
                   <FormattedMessage  id = "home_child_title" defaultMessage='It is a cancer data platform that visually provides various analysis results by combining high-quality domestic cancer patient clinical and protein genomic information .'/>
                 </p>
               </div>
@@ -212,7 +212,7 @@ export default function Web(props) {
                   <div className="py-6  mobile-background">
                     <div className="flex items-center justify-between">
                       <div>
-                        
+
                       </div>
                       <div className="-mr-2">
                         <Popover.Button className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 mr-6">

@@ -147,7 +147,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
       })
       let brstKeysArray = Object.keys(brstKeysObject).sort(sortAlphaNum)
       brstKeysArray.forEach((element) => {
-        sampleListElementsTemp.push(<option key={element} value={brstKeysObject[element]}>{element}</option>)
+        sampleListElementsTemp.push(<option className="xs:text-sm lg:text-xl" key={element} value={brstKeysObject[element]}>{element}</option>)
       })
       setSampleListElements(sampleListElementsTemp)
     }
@@ -197,27 +197,27 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
         <div className="grid ">
 
           <div className="p-1 grid lg:grid-cols-6 xs:grid-cols-3">
-            <div className='flex xs:col-span-2 sm:col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-2'>
+            <div className='flex xs:col-span-3 sm:col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-2'>
               <div className='flex-col text-left sm:w-2/6 xs:w-2/6'>
                 {circosSanpleRnidListData && <div htmlFor="samples" className="lg:text-2xl sm:text-xl xs:text-sm"><FormattedMessage  id = "Cir_choose_sample" defaultMessage='Choose a Sample'/>: ({samplesCount}) </div>}
                 <select
-                  className="w-full  border bg-white rounded px-3 py-2 outline-none"
+                  className="w-full  border bg-white rounded px-3 py-2 outline-none lg:text-xl sm:text-xl xs:text-sm"
                   value={sampleKey}
                   onChange={e => setSampleKey(e.target.value)}
                   name="samples"
                   id="samples"
                 >
-                  <option>--Select Sample--</option>
+                  <option className="xs:text-sm sm:text-sm lg:text-xl">--Select Sample--</option>
                   {sampleListElements}
-                  <option value="all">all</option>
+                  <option className="xs:text-sm lg:text-xl" value="all">all</option>
 
                 </select>
               </div>
-              <div className='p-3 mt-2 sm:pt-0 sm:mt-8'>
-                <button id='images' className="opacity-50 bg-main-blue hover:bg-blue-700 xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-3 xs:w-40" onClick={oncoImagesClickFunction}>Pathological image</button>
+              <div className='p-3 lg:mt-2 xs:mt-3 sm:pt-0 sm:mt-8'>
+                <button id='images' className="opacity-50 bg-main-blue hover:bg-blue-700 xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40" onClick={oncoImagesClickFunction}>Pathological image</button>
               </div>
-              <div className='p-3 mt-2 sm:pt-0 sm:mt-8'>
-                <button id='tables' className="opacity-50 bg-main-blue hover:bg-blue-700 xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-3 xs:w-40" onClick={timelineGraphClickFunction}>F/U Timeline</button>
+              <div className='p-3 lg:mt-2 xs:mt-3 sm:pt-0 sm:mt-8'>
+                <button id='tables' className="opacity-50 bg-main-blue hover:bg-blue-700 xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40" onClick={timelineGraphClickFunction}>F/U Timeline</button>
               </div>
             </div>
           </div>

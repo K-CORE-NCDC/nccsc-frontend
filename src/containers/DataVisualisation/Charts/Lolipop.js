@@ -215,7 +215,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                 <span style={{ 'backgroundColor': colors[key] }} className="inline-flex items-center justify-center px-3 mr-3 pb-1 text-md font-bold leading-none text-white rounded-full">
                   {count}
                 </span>
-                <text style={{ 'color': colors[key] }}><strong>{key}</strong></text>
+                <text style={{ 'color': colors[key] }}><strong className="xs:text-sm sm:text-xl">{key}</strong></text>
               </div>
             )
             for (var vc in lollipopTmp) {
@@ -416,13 +416,13 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                     <div className="flex m-2">
                       <button onClick={e => changeType(e, 'Mutation')} id='Mutation' name='type' className="rounded-r-none  hover:scale-110
                       focus:outline-none flex lg:p-5 sm:p-3 rounded font-bold cursor-pointer
-                      hover:bg-main-blue  bg-main-blue sm:text-xl lg:text-2xl text-white border duration-200 ease-in-out border-gray-600 transition">
+                      hover:bg-main-blue  bg-main-blue sm:text-xl lg:text-2xl xs:text-sm xs:p-2 text-white border duration-200 ease-in-out border-gray-600 transition">
                         Mutation
                       </button>
                       <button onClick={e => changeType(e, 'Phospho')} id='Phospho' name='type' className="rounded-l-none border-l-0
                       hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-3
                       rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100
-                      text-teal-700 sm:text-xl lg:text-2xl border duration-200 ease-in-out border-teal-600 transition">
+                      text-teal-700 sm:text-xl xs:text-sm lg:text-2xl xs:p-2 border duration-200 ease-in-out border-teal-600 transition">
                         Phospho
                       </button>
                     </div>
@@ -430,10 +430,10 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                 </div>
               </div>
               <div className='p-5 text-right m-5'>
-                <div className='flex float-right'>
-                  <div className='p-3 lg:text-2xl sm:text-xl'><FormattedMessage  id = "Selected Gene" defaultMessage='Selected Gene Is'/></div>
+                <div className='flex lg:float-right md:float-right sm:float-left xs:float-left'>
+                  <div className='p-3 lg:text-2xl sm:text-xl xs:text-sm'><FormattedMessage  id = "Selected Gene" defaultMessage='Selected Gene Is'/></div>
                   <div>
-                    <select value={gene} onChange={e=>geneSet(e)} className="w-full border bg-white rounded px-3 py-2 outline-none text-gray-700">
+                    <select value={gene} onChange={e=>geneSet(e)} className="w-full border bg-white rounded lg:px-3 lg:py-2 xs:py-0 lg:h-14 sm:h-14 xs:h-8 lg:text-2xl xs:text-sm outline-none text-gray-700">
                       {genesHtml}
                     </select>
                   </div>
@@ -442,7 +442,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
               <>
                 {noContent && <NoContentMessage />}
                 {showLollipop && <div className='grid p-10 w-full'>
-                  <div className='bg-white flex'>
+                  <div className='bg-white flex xs:w-4/6 md:w-full lg:w-full'>
                     <LollipopCmp watermarkCss={watermarkCss} ref={reference} width={width} type={tableType}
                       gene={gene}
                       data={state}
@@ -450,14 +450,14 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                     {tableType === "Mutation" &&
                       <div className='absolute lg:right-10 flex'>
                         <div className='m-3 text-left'>
-                          <label className="sm:text-xl lg:text-2xl">Enst Id List</label>
-                          <textarea className="w-full px-3 py-2 sm:text-xl lg:text-2xl md:text-xl text-gray-700 border rounded-lg focus:outline-none" rows="4">
+                          <label className="sm:text-xl lg:text-2xl xs:text-sm">Enst Id List</label>
+                          <textarea className="w-full px-3 py-2 sm:text-xl lg:text-2xl md:text-xl xs:w-5/6 text-gray-700 border rounded-lg focus:outline-none xs:text-sm" rows="4">
                             {enstId.join("\n")}
                           </textarea>
                         </div>
                         <div className='m-3 text-left'>
-                          <label className="sm:text-xl lg:text-2xl">Refseq MRNA Id List</label>
-                          <textarea className="w-full px-3 py-2 sm:text-xl lg:text-2xl md:text-xl text-gray-700 border rounded-lg focus:outline-none" rows="4">
+                          <label className="sm:text-xl lg:text-2xl xs:text-sm">Refseq MRNA Id List</label>
+                          <textarea className="w-full px-3 py-2 sm:text-xl lg:text-2xl md:text-xl xs:w-5/6 text-gray-700 border rounded-lg focus:outline-none xs:text-sm" rows="4">
                             {refSeqId.join("\n")}
                           </textarea>
                         </div>
@@ -466,15 +466,15 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
 
                   </div>
                   <div className='grid grid-rows-2 bg-blue-100 p-10'>
-                    <div className="lg:w-full sm:w-3/6">
-                      <h5 className="float-left sm:text-xl lg:text-2xl">Somantic Mutation Frequency: {percentage?percentage:""} % (mutation sample number/total selected sample number(%))</h5>
+                    <div className="lg:w-full sm:w-3/6 xs:w-1/2">
+                      <h5 className="float-left sm:text-xl lg:text-2xl xs:text-xl">Somantic Mutation Frequency: {percentage?percentage:""} % (mutation sample number/total selected sample number(%))</h5>
                     </div>
-                    <div className='flex sm:flex-wrap'>
+                    <div className='flex sm:flex-wrap xs:flex-wrap xs:w-1/2'>
                       {mutationLabel}
                     </div>
                   </div>
 
-                  {tableData.length > 0 && <div className='mt-5'>
+                  {tableData.length > 0 && <div className='mt-5 xs:w-2/3 lg:w-full'>
                     <DataTable pagination
                       columns={tableColumnsData}
                       data={tableData}
