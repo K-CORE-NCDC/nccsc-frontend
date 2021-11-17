@@ -9,6 +9,23 @@ function sendRequest(url, method, data) {
   return x
 }
 
+export function getDashboardCount(){
+  return (dispatch) => {
+    let url = config.auth + "data-count/";
+    sendRequest(url, "GET", "")
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: homeConstants.DATA_COUNT,
+          payload: d["data"],
+        });
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
+  }
+}
+
 export function getDashboardDsummaryData() {
   return (dispatch) => {
     //   dispatch({ type: homeConstants.DATA_SUMMARY });

@@ -61,6 +61,7 @@ body {
   font-family:'Noto Sans CJKkr'!important;
   background: #f5f8fe;
   letter-spacing: 0.025em;
+  overflow-x: hidden;
 }
 
 #circos div{
@@ -382,8 +383,9 @@ input:checked ~ .dot {
 
 
 .intro_wrap {
-    max-width: 874px;
+    max-width: 1200px;
     margin: 50px auto;
+    padding:0 1%;
 }
 
 .intro_wrap h1 {

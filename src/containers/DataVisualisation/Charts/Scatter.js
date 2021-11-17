@@ -193,9 +193,9 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
                 />
               </div>
               <div className="mt-3 lg:ml-4 xs:ml-10">
-                <label class="inline-flex items-center">
-                  <input type="checkbox" className="form-checkbox" check={selectall} onClick={selectAll}/>
-                  <span class="ml-2"><strong className="lg:text-xl xs:text-sm"><FormattedMessage  id ="Select all" defaultMessage="Select all"/></strong></span>
+                <label className="inline-flex items-center">
+                  <input type="checkbox" className="form-checkbox" checked={selectall} onChange={selectAll}/>
+                  <span className="ml-2"><strong className="lg:text-xl xs:text-sm"><FormattedMessage  id ="Select all" defaultMessage="Select all"/></strong></span>
                 </label>
               </div>
           </div>

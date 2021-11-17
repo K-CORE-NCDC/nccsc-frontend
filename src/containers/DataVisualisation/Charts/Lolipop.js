@@ -211,18 +211,18 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
               count = lollipopLegenedTmp[key].length
             }
             tmp.push(
-              <div className='p-3'>
+              <div className='p-3' key={key} >
                 <span style={{ 'backgroundColor': colors[key] }} className="inline-flex items-center justify-center px-3 mr-3 pb-1 text-md font-bold leading-none text-white rounded-full">
                   {count}
                 </span>
-                <text style={{ 'color': colors[key] }}><strong className="xs:text-sm sm:text-xl">{key}</strong></text>
+                <span style={{ 'color': colors[key] }}><strong className="xs:text-sm sm:text-xl">{key}</strong></span>
               </div>
             )
             for (var vc in lollipopTmp) {
               if (vc.includes(key)) {
                 let codon = vc.split("||")
                 lollipop.push({
-                  "codon": codon[0],
+                  "codon": parseInt(codon[0]),
                   'count': lollipopTmp[vc].length,
                   'color': colors[key],
                   'tooltip': {
@@ -253,8 +253,8 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
             }
           ]
           tmp.push(
-            <div className='p-3'>
-              <text>Total Site:</text>
+            <div className='p-3' key='total_site'>
+              <span>Total Site:</span>
             </div>
           )
           colors = phospo_colors
@@ -268,7 +268,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
             }
             let position = key.replace(/[^\d]/g, '');
             lollipop.push({
-              "codon": position,
+              "codon": parseInt(position),
               'count': lollipopLegenedTmp[key].length,
               'color': colors[key.substring(0, 1)],
               'tooltip': {
@@ -286,18 +286,20 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
               count = phospho_tmp[key]
             }
             tmp.push(
-              <div className='p-3'>
+              <div className='p-3' key={key}> 
                 <span style={{ 'backgroundColor': colors[name] }} className="inline-flex items-center justify-center px-3 mr-3 pb-1 lg:text-md sm:text-xl font-bold leading-none text-white rounded-full">
                   {count}
                 </span>
-                <text style={{ 'color': colors[key] }}><strong className="sm:text-xl lg:text-2xl">{name}</strong></text>
+                <span style={{ 'color': colors[key] }}>
+                  <strong className="sm:text-xl lg:text-2xl">{name}</strong>
+                </span>
               </div>
             )
           }
-          tmp.push(<div className='p-3'> / Major Site:</div>)
+          tmp.push(<div className='p-3' key={'major'}> / Major Site:</div>)
           for (var key in lollipopLegenedTmp) {
-            tmp.push(<div className='p-3'>
-              <text ><strong>{key + "(" + lollipopLegenedTmp[key].length + ")"}</strong></text>
+            tmp.push(<div className='p-3' key={key}>
+              <span ><strong>{key + "(" + lollipopLegenedTmp[key].length + ")"}</strong></span>
             </div>)
           }
         }
@@ -451,15 +453,11 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                       <div className='absolute lg:right-10 flex'>
                         <div className='m-3 text-left'>
                           <label className="sm:text-xl lg:text-2xl xs:text-sm">Enst Id List</label>
-                          <textarea className="w-full px-3 py-2 sm:text-xl lg:text-2xl md:text-xl xs:w-5/6 text-gray-700 border rounded-lg focus:outline-none xs:text-sm" rows="4">
-                            {enstId.join("\n")}
-                          </textarea>
+                          <textarea defaultValue={enstId.join("\n")} className="w-full px-3 py-2 sm:text-xl lg:text-2xl md:text-xl xs:w-5/6 text-gray-700 border rounded-lg focus:outline-none xs:text-sm" rows="4"></textarea>
                         </div>
                         <div className='m-3 text-left'>
                           <label className="sm:text-xl lg:text-2xl xs:text-sm">Refseq MRNA Id List</label>
-                          <textarea className="w-full px-3 py-2 sm:text-xl lg:text-2xl md:text-xl xs:w-5/6 text-gray-700 border rounded-lg focus:outline-none xs:text-sm" rows="4">
-                            {refSeqId.join("\n")}
-                          </textarea>
+                          <textarea defaultValue={refSeqId.join("\n")} className="w-full px-3 py-2 sm:text-xl lg:text-2xl md:text-xl xs:w-5/6 text-gray-700 border rounded-lg focus:outline-none xs:text-sm" rows="4"></textarea>
                         </div>
                       </div>
                     }

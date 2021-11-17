@@ -10,7 +10,7 @@ export default function Introduce() {
   const [tabs, setTabs] = useState(1);
 
     return(
-        <section class="intro_wrap">
+        <section className="intro_wrap">
           <h1><FormattedMessage  id = {"Project for building a healthcare big data showcase"} defaultMessage={"Project for building a healthcare big data showcase"}/></h1>
           <ul className="intro_tab tab_title_main">
               <li className={tabs === 1?"on":"" }><a onClick={()=>setTabs(1)}>
@@ -27,7 +27,7 @@ export default function Introduce() {
 
           <ul className="at">
             <li className={tabs === 1?"at1 on":"at1"}>
-              <div class="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 gap-2">
                   <div className="w-full"><img src={s2} alt=""/></div>
                   <div className="txtbox">
                     <h3><FormattedMessage  id = {"Pri_1"} defaultMessage={"Project for building a healthcare big data showcase is"}/></h3>
@@ -40,7 +40,7 @@ export default function Introduce() {
             </li>
 
             <li className={tabs === 2?"at2 on":"at2"}>
-                <div class="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-2 gap-2">
                   <div className="w-full" id="business_imgbox_2"><img src={s3} alt=""/></div>
                   <div className="txtbox">
                       <h3><FormattedMessage  id = {"Cncr_1"} defaultMessage={"To administrate “Cancer Proteogenomics Working Group”,"}/></h3>

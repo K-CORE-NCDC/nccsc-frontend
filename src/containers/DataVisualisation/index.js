@@ -102,7 +102,7 @@ export default function DataVisualization() {
       } else {
         Object.keys(projectAvailableSteps).forEach(stepName => {
           if (projectAvailableSteps[stepName].length > 0) {
-            console.log(projectAvailableSteps, stepName, );
+            // console.log(projectAvailableSteps, stepName, );
             if(stepName === 'fusion'){
               return
             }
@@ -202,14 +202,14 @@ export default function DataVisualization() {
       if (project_id !== undefined) {
         tmp.push(
           <li key={element} className={classes}>
-            <Link className="capitalize" to={`/visualise/${element}/${project_id}`}>{element+name}</Link>
+            <Link className="capitalize" to={`/core/visualise/${element}/${project_id}`}>{element+name}</Link>
           </li>
         )
       } else {
 
         tmp.push(
           <li key={element} className={classes}>
-            <Link className="capitalize" to={`/visualise/${element}/`}>{element+name}</Link>
+            <Link className="capitalize" to={`/core/visualise/${element}/`}>{element+name}</Link>
           </li>
         )
       }
