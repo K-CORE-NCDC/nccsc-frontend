@@ -134,7 +134,7 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
     }
   }, [volcanoJson])
 
-  console.log(smallScreen)
+  
   return (
     <>
       {

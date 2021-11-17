@@ -12,6 +12,7 @@ import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import logo from '../../../assets/images/logo.png'
 import footer_logo from '../../../assets/images/f_logo.png'
+import { useSelector, useDispatch } from "react-redux";
 import {
   MenuIcon,
   ChevronRightIcon,
@@ -23,6 +24,7 @@ import {
   useParams
 } from "react-router-dom";
 import {FormattedMessage} from 'react-intl';
+import { getDashboardCount } from "../../../actions/api_actions";
 
 
 const menu = route.map((route, index) => {
@@ -45,17 +47,20 @@ export default function Web(props) {
   const [breadCrumb,setBreadCrumb] = useState([])
   const [currentDate,setCurrentDate] = useState("")
   const [currentTime,setCurrentTime] = useState("")
+  const dispatch = useDispatch()
+  const countJson = useSelector((data) => data.homeReducer.dataCount);
 
   useEffect(()=>{
     let html = []
+    // console.log(menu)
     for (let m = 0; m < menu.length; m++) {
       let p = id[0].split('/')[1]
       if(menu[m].props.path.includes(p)){
         let name = menu[m].props.name
         let childname = menu[m].props.childname
-        html.push(<li key={m+'2'}><HomeIcon className="h-6 w-6" aria-hidden="true"/></li>)
-        html.push(<li key={m+'1'}><span className="mx-2">|</span></li>)
-        html.push(<li key={m}><a href="#" className="font-bold">{name}</a></li>)
+        html.push(<li key={m+'icon'}><HomeIcon className="h-6 w-6" aria-hidden="true"/></li>)
+        html.push(<li key={m+'1pipe'}><span className="mx-2">|</span></li>)
+        html.push(<li key={m+name}><a href="#" className="font-bold">{name}</a></li>)
         html.push(<li key={m+'c1'}><span className="mx-2">|</span></li>)
         html.push(<li key={m+'child'}>{childname}</li>)
       }
@@ -71,6 +76,9 @@ export default function Web(props) {
 
     setCurrentDate(date)
     setCurrentTime(time)
+    
+    dispatch(getDashboardCount())
+
   },[])
   let classes = ''
 
@@ -78,14 +86,6 @@ export default function Web(props) {
     classes = 'screen-2 xl:h-full lg:h-full '
   }
 
-  // <div className="md:visible lg:invisible sm:visible pt-5">
-  //     <ul>
-  //       <li class="active"><a href="index.html" class="block text-sm px-2 py-4 text-white bg-green-500 font-semibold">Home</a></li>
-  //       <li><a href="#services" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Services</a></li>
-  //       <li><a href="#about" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">About</a></li>
-  //       <li><a href="#contact" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">contact us</a></li>
-  //     </ul>
-  // </div>
 
   return (
     <div className="relative">
@@ -119,7 +119,7 @@ export default function Web(props) {
               <h2 className="lg:text-4xl xs:text-xl mt-4"><strong>Cancer Omics Research Portal</strong></h2>
               <div className="pl-6">
                 <p className="lg:border-l-2 lg:text-2xl xs:text-sm sm:text-xl p-5 font-medium mt-8 border-gray-600" style={{textAlign: 'right'}}>
-                  <FormattedMessage  id = "home_child_title" defaultMessage='It is a cancer data platform that visually provides various analysis results by combining high-quality domestic cancer patient clinical and protein genomic information .'/>
+                  <FormattedMessage  id = "home_child_title" defaultMessage='A cancer data platform that provides a variety of visualized analysis results by combining high quality clinical and proteogenomic information of domestic cancer patients.'/>
                 </p>
               </div>
               </div>
@@ -136,30 +136,30 @@ export default function Web(props) {
                 </div>
 
                 <div className="col-span-10 border-bottom-blue mx-10">
-                  <div className="grid grid-cols-8">
+                  <div className="grid grid-cols-8 border-b border-blue-color ">
                     <div className="text-right text-6xl p-5">
                       1
                     </div>
                     <div className="text-right text-6xl p-5">
-                      45312
+                      {(countJson && 'sample' in countJson) ?countJson['sample'] : ""}
                     </div>
                     <div className="text-right text-6xl p-5">
-                      1
+                    {(countJson && 'genes' in countJson) ?countJson['genes'] : ""}
                     </div>
                     <div className="text-right text-6xl p-5">
-                      1265
+                    {(countJson && 'mutation' in countJson) ?countJson['mutation'] : ""}
                     </div>
                     <div className="text-right text-6xl p-5">
-                      1
+                    {(countJson && 'cnv' in countJson) ?countJson['cnv'] : ""}
                     </div>
                     <div className="text-right text-6xl p-5">
-                      9865
+                    {(countJson && 'fusion' in countJson) ?countJson['fusion'] : ""}
                     </div>
                     <div className="text-right text-6xl p-5">
-                      1
+                    {(countJson && 'proteome' in countJson) ?countJson['proteome'] : ""}
                     </div>
                     <div className="text-right text-6xl p-5">
-                      1
+                    {(countJson && 'phospho' in countJson) ?countJson['phospho'] : ""}
                     </div>
                   </div>
 
@@ -167,28 +167,36 @@ export default function Web(props) {
                 <div className="row-span-2 col-span-10 mx-10">
                   <div className="grid grid-cols-8">
                     <div className="text-right text-2xl p-5">
-                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>암종 (Primary Sites)
+                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>
+                      <FormattedMessage  id = "Primary_Sites" defaultMessage='Primary Sites'/>
                     </div>
                     <div className="text-right text-2xl p-5">
-                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>전체대상자 (Sample)
+                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>
+                      <FormattedMessage  id = "Sample" defaultMessage='Sample'/>
                     </div>
                     <div className="text-right text-2xl p-5">
-                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>유전자 (Genes)
+                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>
+                      <FormattedMessage id='Genes' defaultMessage='Genes'/>
                     </div>
                     <div className="text-right text-2xl p-5">
-                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>돌연변이 (Mutations)
+                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>
+                      <FormattedMessage id='Mutations' defaultMessage='Mutations'/>
                     </div>
                     <div className="text-right text-2xl p-5">
-                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>유전체 복제수변이 (CNV)
+                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>
+                      <FormattedMessage id='cnv' defaultMessage='CNV'/>
                     </div>
                     <div className="text-right text-2xl p-5">
-                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>융합 유전자 (Fusion Genes)
+                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>
+                      <FormattedMessage id='Fusion Genes' defaultMessage='Fusion Genes'/>
                     </div>
                     <div className="text-right text-2xl p-5">
-                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>Global Proteome
+                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>
+                      <FormattedMessage id='Global Proteome' defaultMessage='Global Proteome'/>
                     </div>
                     <div className="text-right text-2xl p-5">
-                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>Phospho Site
+                      <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex"/>
+                      <FormattedMessage id='Phospho Site' defaultMessage='Phospho Site'/>
                     </div>
                   </div>
                 </div>

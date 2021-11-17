@@ -152,5 +152,13 @@
     "Cncr_4":"국립암센터에 구성된 연구사업단입니다.",
     "DATA introduction":"보유 데이터 소개",
     "Data of included cancer type":"보유 암종별 데이터",
-    "Table relationship":"[테이블 관계도]"
+    "Table relationship":"[테이블 관계도]",
+    "Primary_Sites":"암종",
+    "Sample":"전체대상자",
+    "Genes":"유전자",
+    "Mutations":"돌연변이",
+    "cnv":"유전체 복제수변이",
+    "Fusion Genes":"융합 유전자",
+    "Global Proteome":"단백질체",
+    "Phospho Site":"인산화"
 }

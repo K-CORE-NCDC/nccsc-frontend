@@ -14,8 +14,11 @@ module.exports = {
       },
       borderColor: (theme) => ({
         ...theme('colors'),
-        'b-color':"#ced4da"
+        'b-color':"#ced4da",
+        'blue-color':"#0c2f4d"
+
       }),
+
       textColor:{
         'main-blue':'#0c2f4d'
       },

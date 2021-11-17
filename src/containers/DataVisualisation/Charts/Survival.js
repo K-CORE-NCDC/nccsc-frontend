@@ -152,7 +152,7 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
         <LoaderCmp />
         :
         <div className="grid grid-row-3">
-          <div className="lg:hidden sm:hidden md:hidden">
+          <div className="">
               <button className="float-left bg-blue-500 xs:ml-8 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               onClick={()=>setSmallScreen(!smallScreen)}
               type="button">
@@ -160,7 +160,7 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
               </button>
           </div>
           <div className="flex flex-row justify-around">
-            <div className={`xs:ml-8 lg:w-1/5 sm:w-2/5 xs:w-2/5 border bg-white ${smallScreen?"xs:mr-80 xs:z-10 xs:opacity-95 xs:bg-white":"xs:hidden"}`}>
+            <div className={`border bg-white ${smallScreen?" xs:z-10 xs:opacity-95 xs:bg-white":"xs:hidden"}`}>
               {sampleCountsCard.length > 0 && <div className="m-1 p-1 border border-black border-dashed">
                 {sampleCountsCard}
               </div>}
@@ -228,7 +228,7 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
                 </div>
               </div>}
             </div>
-            <div className="xs:absolute lg:w-4/5 xs:w-full">
+            <div className="lg:w-4/5 xs:w-full">
               {renderSurvival && <SurvivalCmp
                 watermarkCss={watermarkCss}
                 ref={reference} width={width}

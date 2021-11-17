@@ -15,7 +15,7 @@ const LollipopCmp = React.forwardRef(({ width,data,gene,watermarkCss }, ref) => 
     lollipops: data['lollipop'],
     domains: data['domains']
   }
-  console.log(mockData);
+  // console.log(mockData);
   useEffect(()=>{
     if(gene!==''){
       setActive(true)

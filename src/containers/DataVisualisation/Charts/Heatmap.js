@@ -36,7 +36,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const [renderNoContent, setRenderNoContent] = useState(false)
   const [renderHeatmap, setRenderHeatmap] = useState(true)
 
-  console.log(tableType);
+  // console.log(tableType);
 
 const diag_age = (vl)=>{
   let n = parseInt(vl)
