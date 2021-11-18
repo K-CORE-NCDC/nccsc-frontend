@@ -15,7 +15,7 @@ import breast from '../../assets/images/breast_cancer.png'
 import {FormattedMessage} from 'react-intl';
 
 import { useSelector, useDispatch } from "react-redux";
-import { getDashboardCount } from "../../actions/api_actions";
+
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
@@ -32,7 +32,7 @@ export default function Home() {
 
     setCurrentDate(date)
     setCurrentTime(time)
-    dispatch(getDashboardCount())
+    
   },[])
 
   var settings = {

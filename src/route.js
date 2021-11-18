@@ -19,9 +19,9 @@ const genefusion = React.lazy(() => import('./containers/Common/genefusion'))
 const UserDataTable = React.lazy(() => import('./containers/UserDataVisualization/Components/MainComponents/projectDataTable'))
 
 const route = [
-  { path: '/', exact: true, type:'unauth', name: 'Home', component: Home },
+  { path: '/home/', exact: true, type:'unauth', name: 'Home', component: Home },
   { path: '/summary/:tab?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Visualization" defaultMessage='Visualization'/>,childname:<FormattedMessage  id = "DataSummary" defaultMessage='Data Summary'/>, component: DataSummary },
-  { path: '/core/visualise/:tab?/:project_id?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Visualization" defaultMessage='Visualization'/>,childname:<FormattedMessage  id = "DataVisualization" defaultMessage='DataVisualization'/>, component: DataVisualization },
+  { path: '/visualise/:tab?/:project_id?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Visualization" defaultMessage='Visualization'/>,childname:<FormattedMessage  id = "DataVisualization" defaultMessage='DataVisualization'/>, component: DataVisualization },
   { path: '/userdata', exact: true, type:'unauth', name:<FormattedMessage  id = "Home" defaultMessage='Home'/> , childname:<FormattedMessage  id = "DataVisualization" defaultMessage='Visualize MyData'/>, component: UserDataVisualization },
   { path: '/introduce', exact: true, type:'unauth', name: <FormattedMessage  id = "Introduce" defaultMessage='Introduction'/>, childname:<FormattedMessage  id = "BusinessIntroduce" defaultMessage='Business Introduction'/>, component: Introduce },
   { path: '/pipeline', exact: true, type:'unauth', name: <FormattedMessage  id = "Introduce" defaultMessage='Introduction'/>, childname:<FormattedMessage  id = "Pipeline" defaultMessage='Pipeline'/>, component: Pipeline },

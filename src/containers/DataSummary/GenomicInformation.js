@@ -12,7 +12,6 @@ import Loader from "react-loader-spinner";
 
 
 export default function GenomicInfo() {
-  const dataSummary = useSelector(state => state)
   const summaryJson = useSelector((data) => data.homeReducer.genomicData);
   const [state, setState] = useState({"charts":[]});
   const [loader, setLoader] = useState(true)
@@ -20,7 +19,9 @@ export default function GenomicInfo() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getGenomicInformation("POST",""))
+    // if(!summaryJson){
+      dispatch(getGenomicInformation("POST",""))
+    // }
   }, [dispatch])
 
   let visual_type = {

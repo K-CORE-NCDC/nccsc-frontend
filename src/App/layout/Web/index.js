@@ -69,20 +69,22 @@ export default function Web(props) {
   },[props])
 
   useEffect(()=>{
-    let today = new Date();
-    var date = today.getFullYear()+'.'+(today.getMonth()+1)+'.'+today.getDate()
-    var a_or_p = today.toLocaleString('en-US', { hour: 'numeric', hour12: true }).split(' ')[1]
-    var time = a_or_p+" "+today.getHours() + ":" + today.getMinutes();
+    if(id[0]==='/home' ){  
+      let today = new Date();
+      var date = today.getFullYear()+'.'+(today.getMonth()+1)+'.'+today.getDate()
+      var a_or_p = today.toLocaleString('en-US', { hour: 'numeric', hour12: true }).split(' ')[1]
+      var time = a_or_p+" "+today.getHours() + ":" + today.getMinutes();
 
-    setCurrentDate(date)
-    setCurrentTime(time)
-    
-    dispatch(getDashboardCount())
+      setCurrentDate(date)
+      setCurrentTime(time)
+      if(!countJson){
+        dispatch(getDashboardCount())
+      }
+    }
 
   },[])
   let classes = ''
-
-  if(id[0]==='/'){
+  if(id[0]==='/home'){
     classes = 'screen-2 xl:h-full lg:h-full '
   }
 
@@ -95,10 +97,10 @@ export default function Web(props) {
             <nav  className="w-full p-2 py-5 navbar-expand-lg">
               <div className="w-full grid md:grid-cols-3 xl:grid-cols-8 2xl:grid-cols-8 px-5  pt-5">
                 <div className="relative pt-5 sm:flex flex">
-                  <a href="/" className='xs:w-11/12 sm:w-11/12'>
+                  <Link to="/" className='xs:w-11/12 sm:w-11/12'>
                     <span className="sr-only">Workflow</span>
                     <img className="h-16 w-auto " src={logo} alt=""/>
-                  </a>
+                  </Link>
                   <Popover.Button  className="xs:block sm:block lg:hidden  text-white  cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block outline-none focus:outline-none" type="button"><MenuIcon className="h-6 w-6" aria-hidden="true" /></Popover.Button >
                 </div>
                 <div className="hidden 2xl:block 2xl:col-span-5 z-10">

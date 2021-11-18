@@ -202,14 +202,14 @@ export default function DataVisualization() {
       if (project_id !== undefined) {
         tmp.push(
           <li key={element} className={classes}>
-            <Link className="capitalize" to={`/core/visualise/${element}/${project_id}`}>{element+name}</Link>
+            <Link className="capitalize" to={`/visualise/${element}/${project_id}`}>{element+name}</Link>
           </li>
         )
       } else {
 
         tmp.push(
           <li key={element} className={classes}>
-            <Link className="capitalize" to={`/core/visualise/${element}/`}>{element+name}</Link>
+            <Link className="capitalize" to={`/visualise/${element}/`}>{element+name}</Link>
           </li>
         )
       }
