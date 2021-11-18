@@ -64,8 +64,10 @@ export default function ClinicalInformation() {
 
 
   useEffect(() => {
-    setLoader(true)
-    dispatch(getDashboardDsummaryData())
+    if(!summaryJson){
+      setLoader(true)
+      dispatch(getDashboardDsummaryData())
+    }
   }, [dispatch])
 
 

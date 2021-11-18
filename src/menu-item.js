@@ -91,7 +91,7 @@ let childMenu = {
             title: <FormattedMessage  id = "DataVisualization" defaultMessage="Data Visualization"/>,
             type: 'item',
             icon: 'fa fa-dashboard',
-            url: '/core/visualise/circos/',
+            url: '/visualise/circos/',
             children: []
           }
         ]
