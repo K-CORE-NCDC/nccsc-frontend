@@ -266,7 +266,7 @@ export default function DataVisualization() {
   const LoadChart = (w, type) => {
     switch (type) {
       case "circos":
-        return Charts.circos(w, state, screenCapture, setToFalseAfterScreenCapture)
+        return Charts.circos(w, state, screenCapture, setToFalseAfterScreenCapture, toggle)
       case "OncoPrint":
         return Charts.onco(w, state, screenCapture, setToFalseAfterScreenCapture)
       case "lollipop":
@@ -294,7 +294,7 @@ export default function DataVisualization() {
     setToggle(false)
   }, []);
 
-
+  console.log(toggle)
   return (
     <div className="header">
       <div className="mx-auto border-t rounded overflow-hidden ">

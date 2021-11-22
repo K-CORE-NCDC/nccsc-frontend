@@ -437,8 +437,8 @@ input:checked ~ .dot {
 }
 
 .at .txtbox {
-    float: right;
-    text-align: right;
+    float: left;
+    text-align: left;
     padding: 12px 12px 0 0;
     color: "#152a52";
 }
@@ -977,7 +977,7 @@ dd {
     }
 
     #second_header::-webkit-scrollbar-thumb {
-      background: black; 
+      background: black;
     }
 
     #tabs{

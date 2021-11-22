@@ -13,7 +13,7 @@ import placeholder from '../../../assets/img/circos_ncc.png';
 import {FormattedMessage} from 'react-intl';
 
 
-export default function DataCircos({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
+export default function DataCircos({ width, inputData, screenCapture, setToFalseAfterScreenCapture, toggle}) {
   const reference = useRef()
   const dispatch = useDispatch()
   const [sampleKey, setSampleKey] = useState('')
@@ -187,16 +187,16 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   }, [circosJson])
 
 
-
   var w = Math.floor((width / 100) * 75)
+
+  console.log(toggle)
   return (
     <>{
       loader ?
         <LoaderCmp />
         :
         <div className="grid ">
-
-          <div className="p-1 grid lg:grid-cols-6 xs:grid-cols-3">
+          <div className={`p-1 grid xs:grid-cols-3 ${toggle?"lg:grid-cols-4":"lg:grid-cols-4"}`}>
             <div className='flex xs:col-span-3 sm:col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-2'>
               <div className='flex-col text-left sm:w-2/6 xs:w-2/6'>
                 {circosSanpleRnidListData && <div htmlFor="samples" className="lg:text-2xl sm:text-xl xs:text-sm"><FormattedMessage  id = "Cir_choose_sample" defaultMessage='Choose a Sample'/>: ({samplesCount}) </div>}
@@ -213,10 +213,10 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
                 </select>
               </div>
-              <div className='p-3 lg:mt-2 xs:mt-3 sm:pt-0 sm:mt-8'>
+              <div className='p-3 lg:mt-6 xs:mt-3 sm:pt-0 sm:mt-8'>
                 <button id='images' className="opacity-50 bg-main-blue hover:bg-blue-700 xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40" onClick={oncoImagesClickFunction}>Pathological image</button>
               </div>
-              <div className='p-3 lg:mt-2 xs:mt-3 sm:pt-0 sm:mt-8'>
+              <div className='p-3 lg:mt-6 xs:mt-3 sm:pt-0 sm:mt-8'>
                 <button id='tables' className="opacity-50 bg-main-blue hover:bg-blue-700 xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40" onClick={timelineGraphClickFunction}>F/U Timeline</button>
               </div>
             </div>
