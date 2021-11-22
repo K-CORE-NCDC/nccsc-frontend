@@ -9,6 +9,7 @@ import {
   DocumentAddIcon
 } from '@heroicons/react/outline'
 import inputJson from './data';
+// import filterBoxes from './data'
 import {FormattedMessage} from 'react-intl';
 
 
@@ -18,7 +19,9 @@ export default function Filter({parentCallback, set_screen}) {
   const [state, setState] = useState({"html":[]});
   const [selectState, setSelectState] = useState({});
   const [selected, setSelected] = useState('Basic/Diagnostic Information');
-  // const [previous,setPrevious] = useState('');
+  const [filtersUi, setFiltersUi] = useState({});
+  const [filterHtml, setFilterHtml] = useState([])
+  console.log(filterHtml);
 
   useEffect(()=>{
     leftSide()
@@ -27,6 +30,28 @@ export default function Filter({parentCallback, set_screen}) {
     leftSide()
   },[selected, selectState])
 
+  useEffect(() => {
+    let html = []
+    if(Object.keys(filtersUi).length > 0){
+      Object.keys(filtersUi).forEach(e=>{
+        if(filtersUi[e].length > 0){
+          html.push(
+            <div key={e}>
+              <div>
+                {filtersUi[e].forEach(sub => {
+                  <span key={`${sub.key}-${Math.random()}`} class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">{`${sub.key} : ${sub.value}`}</span>
+                })}
+              </div>
+            </div>
+          )
+        }
+      })
+    }
+    setFilterHtml(html)
+  }, [filtersUi])
+
+
+  console.log(selectState, filtersUi);
   let icon_type = {
     "Basic/Diagnostic Information":<UserCircleIcon className="h-8 w-8 inline text-main-blue"/>,
     "Patient Health Information":<DocumentAddIcon className="h-8 w-8 inline text-main-blue"/>,
@@ -208,6 +233,29 @@ export default function Filter({parentCallback, set_screen}) {
 
   const sendFilter = ()=>{
     parentCallback(selectState)
+
+    let filterBoxes = inputJson.filterBoxes
+    if(Object.keys(selectState).length > 0){
+      let filterSelectedHtml = {}
+      Object.keys(filterBoxes).forEach(header => {
+        filterSelectedHtml = {
+          ...filterSelectedHtml,
+          [header] : []
+        }
+        Object.keys(filterBoxes[header]).forEach(field=>{
+          filterBoxes[header][field].forEach(subField =>{
+            // console.log(subField);
+            if(subField.id in selectState){
+              filterSelectedHtml = {
+                ...filterSelectedHtml,
+                [header] : [...filterSelectedHtml[header], {key: [field], value: selectState[subField.id]}]
+              }
+            }
+          })
+        })
+      })
+      setFiltersUi(filterSelectedHtml);
+    }
   }
 
   const reset = ()=>{
@@ -256,6 +304,11 @@ export default function Filter({parentCallback, set_screen}) {
         type="button">
          close
         </button>
+      </div>
+      <div>
+      <div className="col-span-2 p-1">
+        {filterHtml}
+      </div>
       </div>
         <div className="col-span-2" id="all_checkboxes">
         {state['html']  }
