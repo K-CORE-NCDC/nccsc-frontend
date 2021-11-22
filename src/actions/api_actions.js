@@ -778,3 +778,15 @@ export function fetchProjectTableData(data) {
       });
   };
 }
+
+
+
+export function languageChange(data) {
+  return (dispatch) => {
+    //   dispatch({ type: homeConstants.DATA_SUMMARY });
+    dispatch({
+      type: homeConstants.APPLICATION_LANGUAGE,
+      payload: data,
+    });
+  }
+}
