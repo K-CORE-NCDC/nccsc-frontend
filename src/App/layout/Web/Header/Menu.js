@@ -73,7 +73,6 @@ const Menu = ({items}) => {
   const context = useContext(Context);
 
   return <>
-    
     {m}
     <div className="relative inline-flex">
       <svg className="w-5 h-5 absolute top-0 right-0 m-4 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 412 232">
