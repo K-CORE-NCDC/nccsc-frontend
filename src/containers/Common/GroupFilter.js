@@ -36,7 +36,7 @@ const filterChoicesCustom = [
     { 'type': 'number', 'name': 'Age Of Diagonosis', 'id': 'diag_age', 'input': 'number' },
     { 'type': 'number', 'id': 'bmi_vl', 'name': 'BMI', 'input': 'number' },
     { 'type': 'boolean', 'id': 'bila_cncr_yn', 'name': 'Diagnosis of Bilateral Breast Cancer' },
-    { 'type': 'boolean', 'name': 'Smoking Status', 'id': 'smok_yn' },
+    { 'type': 'text', 'name': 'Smoking Status', 'id': 'smok_yn' },
     { 'type': 'boolean', 'name': 'Alcohol Consuption', 'id': 'drnk_yn', 'value': 'Yes' },
     { 'type': 'boolean', 'name': 'Breast cancer family history', 'id': 'fmhs_brst_yn', 'value': 'Yes' },
     { 'type': 'number', 'name': 'Menarche age', 'id': 'mena_age', 'input': 'number' },
@@ -99,6 +99,11 @@ let preDefienedGroups = {
     ki67_score: [
         { label: "Positive 1-15%", value: "Positive 15%" },
         { label: "Positive 16%-", value: "Positive 50%" }
+    ],
+    smok_yn: [
+        { label: "No Smoking", value: "no" },
+        { label: "Past Smoking", value: "past" },
+        { label: "Current Smoking", value: "current" }
     ]
 }
 export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {

@@ -5,9 +5,14 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import Filter from '../Common/filter'
+import ConfirmDownload from '../Common/downloadConfirmation'
 import { Charts } from "./Charts/";
 import genes from '../Common/gene.json'
-import { getBreastKeys, getUserDataProjectsTableData, clearDataVisualizationState } from '../../actions/api_actions'
+import { 
+  getBreastKeys, 
+  getUserDataProjectsTableData, 
+  clearDataVisualizationState
+ } from '../../actions/api_actions'
 import {
   Link
 } from "react-router-dom";
@@ -33,12 +38,20 @@ export default function DataVisualization() {
   const [availableTabsForProject, setavailableTabsForProject] = useState([])
   const [toggle, setToggle] = useState(false)
   const [filterApplied, setfilterApplied] = useState(false)
-  const [smallScreen, setSmallScreen] = useState(false)
+  const [screenCaptureConfirmation, setScreenCaptureConfirmation] = useState(false)
 
-  const setToFalseAfterScreenCapture = () => {
-    setScreenCapture(false)
+  const setToFalseAfterScreenCapture = (param=false) => {
+    if(param === false){
+      setScreenCapture(false)
+    }else{
+      setScreenCapture(true)
+    }
   }
 
+  const setScreenCaptureFunction = (capture) =>{
+    // setScreenCapture(capture)
+    setScreenCaptureConfirmation(true)
+  }
   const submitFilter = (e) => {
     // e.preventDefault()
     setBoolChartState(false)
@@ -253,7 +266,7 @@ export default function DataVisualization() {
   const LoadChart = (w, type) => {
     switch (type) {
       case "circos":
-        return Charts.circos(w, state, screenCapture, setToFalseAfterScreenCapture)
+        return Charts.circos(w, state, screenCapture, setToFalseAfterScreenCapture, toggle)
       case "OncoPrint":
         return Charts.onco(w, state, screenCapture, setToFalseAfterScreenCapture)
       case "lollipop":
@@ -281,7 +294,7 @@ export default function DataVisualization() {
     setToggle(false)
   }, []);
 
-
+  console.log(toggle)
   return (
     <div className="header">
       <div className="mx-auto border-t rounded overflow-hidden ">
@@ -350,8 +363,9 @@ export default function DataVisualization() {
                   <div id="tab-contents" className='block text-center' ref={elementRef}>
                     <div className="grid grid-cols-6 p-5">
                       <div className="lg:col-start-6 sm:col-start-1 md:col-start-6 inline-flex justify-center p-2 ">
-                        {(screenCapture === false) && <button className="bg-main-blue hover:bg-main-blue mb-3 lg:w-full sm:w-40 sm:h-14  lg:h-20 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={()=> setScreenCapture(true)}><FormattedMessage  id = "Capture_screen" defaultMessage='capture screenshot'/></button>}
+                        {(screenCapture === false) && <button className="bg-main-blue hover:bg-main-blue mb-3 lg:w-full sm:w-40 sm:h-14  lg:h-20 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" onClick={()=> setScreenCaptureFunction(true)}><FormattedMessage  id = "Capture_screen" defaultMessage='capture screenshot'/></button>}
                         {(screenCapture === true) && <button className="bg-main-blue hover:bg-main-blue mb-3 w-full h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" disabled={true}>Loading...</button>}
+                        {screenCaptureConfirmation && <ConfirmDownload screenCaptureFunction={setToFalseAfterScreenCapture} hideModal={()=>setScreenCaptureConfirmation(false)}/>}
                       </div>
                     </div>
                     {boolChartState &&

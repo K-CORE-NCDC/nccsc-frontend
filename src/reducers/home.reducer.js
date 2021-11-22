@@ -29,6 +29,11 @@ const homeReducer = (state = { 'home': 'home' }, { type, payload }) => {
         ...state,
         fileUploadStatus: {...state.fileUploadStatus, ...payload}
       }
+    case homeConstants.APPLICATION_LANGUAGE:
+      return {
+        ...state,
+        languageReducer: payload
+      }
     default:
       return state
   }

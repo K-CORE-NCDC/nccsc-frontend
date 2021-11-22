@@ -9,13 +9,14 @@ import DataIgv from './igv'
 import FusionPlot from './Fusion'
 import Box from './Box'
 
-function circos(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
+function circos(width, inputData, screenCapture, setToFalseAfterScreenCapture, toggle) {
   return <DataCircos
     key='circos'
     width={width}
     inputData={inputData}
     screenCapture={screenCapture}
     setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+    toggle={toggle}
   />
 }
 

@@ -9,7 +9,7 @@ function sendRequest(url, method, data) {
   return x
 }
 
-export function getDashboardCount(){
+export function getDashboardCount() {
   return (dispatch) => {
     let url = config.auth + "data-count/";
     sendRequest(url, "GET", "")
@@ -72,15 +72,15 @@ export function getOncoInformation(type, data) {
     sendRequest(url, type, data)
       .then((result) => {
         const d = result
-        if(d.status === 200){
+        if (d.status === 200) {
           dispatch({
             type: dataVisualization.ONCO_REQUEST,
-            payload: {...d["data"], status: 200},
+            payload: { ...d["data"], status: 200 },
           });
-        }else{
+        } else {
           dispatch({
             type: dataVisualization.ONCO_REQUEST,
-            payload: {status: 204},
+            payload: { status: 204 },
           });
         }
         dispatch({ type: dataVisualization.REQUEST_DONE });
@@ -89,7 +89,7 @@ export function getOncoInformation(type, data) {
         // console.log("error", e);
         dispatch({
           type: dataVisualization.ONCO_REQUEST,
-          payload: {status: 204},
+          payload: { status: 204 },
         });
       });
   };
@@ -102,15 +102,15 @@ export function getLolipopInformation(type, data) {
     sendRequest(url, type, data)
       .then((result) => {
         const d = result
-        if(d.status === 200){
+        if (d.status === 200) {
           dispatch({
             type: dataVisualization.LOLLIPOP_REQUEST,
-            payload: {...d["data"], status:200},
+            payload: { ...d["data"], status: 200 },
           });
-        }else{
+        } else {
           dispatch({
             type: dataVisualization.LOLLIPOP_REQUEST,
-            payload: {data:[], domains:[], status:204},
+            payload: { data: [], domains: [], status: 204 },
           });
         }
         dispatch({ type: dataVisualization.REQUEST_DONE });
@@ -119,7 +119,7 @@ export function getLolipopInformation(type, data) {
         console.log("error", e);
         dispatch({
           type: dataVisualization.LOLLIPOP_REQUEST,
-          payload: {data:[], domains:[], status:204},
+          payload: { data: [], domains: [], status: 204 },
         });
       });
   };
@@ -133,15 +133,15 @@ export function getVolcanoPlotInfo(type, data) {
     sendRequest(url, type, data)
       .then((result) => {
         const d = result
-        if(d.status === 200){
+        if (d.status === 200) {
           dispatch({
             type: dataVisualization.VOLCANO_REQUEST,
-            payload: {...d["data"], status:200},
+            payload: { ...d["data"], status: 200 },
           });
-        }else{
+        } else {
           dispatch({
             type: dataVisualization.VOLCANO_REQUEST,
-            payload: {status:204},
+            payload: { status: 204 },
           });
         }
         dispatch({ type: dataVisualization.REQUEST_DONE });
@@ -150,7 +150,7 @@ export function getVolcanoPlotInfo(type, data) {
         console.log("error", e);
         dispatch({
           type: dataVisualization.VOLCANO_REQUEST,
-          payload: {status:204},
+          payload: { status: 204 },
         });
       });
   };
@@ -170,7 +170,7 @@ export function getHeatmapInformation(type, data) {
     // }
     dispatch({
       type: dataVisualization.HEATMAP_REQUEST_STATUS_CODE,
-      payload: {status:204, loader: true},
+      payload: { status: 204, loader: true },
     });
     sendRequest(url, type, data)
       .then((result) => {
@@ -178,19 +178,19 @@ export function getHeatmapInformation(type, data) {
         if (d.status === 200) {
           dispatch({
             type: dataVisualization.HEATMAP_REQUEST_STATUS_CODE,
-            payload: {status:200},
+            payload: { status: 200 },
           });
-        }else{
+        } else {
           dispatch({
             type: dataVisualization.HEATMAP_REQUEST_STATUS_CODE,
-            payload: {status:204},
+            payload: { status: 204 },
           });
         }
-          dispatch({
-            type: dataVisualization.HEATMAP_REQUEST,
-            // payload: {...JSON.parse(d["data"]), status:200},
-            payload: d["data"],
-          });
+        dispatch({
+          type: dataVisualization.HEATMAP_REQUEST,
+          // payload: {...JSON.parse(d["data"]), status:200},
+          payload: d["data"],
+        });
         // } else {
         //   dispatch({
         //     type: dataVisualization.HEATMAP_REQUEST,
@@ -206,7 +206,7 @@ export function getHeatmapInformation(type, data) {
       .catch((e) => {
         dispatch({
           type: dataVisualization.HEATMAP_REQUEST,
-          payload: {status:204}
+          payload: { status: 204 }
         });
         console.log("error", e);
       });
@@ -252,7 +252,7 @@ export function getCircosInformation(type, data) {
     let url = config.auth + "circos/";
     dispatch({
       type: dataVisualization.CIRCOS_REQUEST,
-      payload: {status:0  },
+      payload: { status: 0 },
     });
     sendRequest(url, type, data)
       .then((result) => {
@@ -261,19 +261,19 @@ export function getCircosInformation(type, data) {
         if (d.status === 200) {
           dispatch({
             type: dataVisualization.CIRCOS_REQUEST,
-            payload: {...d["data"], status:200},
+            payload: { ...d["data"], status: 200 },
           });
           // dispatch({ type: dataVisualization.REQUEST_DONE });
-        }else{
+        } else {
           dispatch({
             type: dataVisualization.CIRCOS_REQUEST,
-            payload: {status: 204},
+            payload: { status: 204 },
           });
         }
       })
       .catch((e) => {
         console.log("error", e);
-        dispatch({ type: dataVisualization.CIRCOS_REQUEST, payload: {status: 400} });
+        dispatch({ type: dataVisualization.CIRCOS_REQUEST, payload: { status: 400 } });
       });
   };
 }
@@ -286,15 +286,15 @@ export function getSurvivalInformation(type, data) {
       .then((result) => {
         const d = result;
 
-        if(d.status === 200){
+        if (d.status === 200) {
           dispatch({
             type: dataVisualization.SURVIVAL_REQUEST,
-            payload: {...d["data"], status:200},
+            payload: { ...d["data"], status: 200 },
           });
-        }else{
+        } else {
           dispatch({
             type: dataVisualization.SURVIVAL_REQUEST,
-            payload: {status:d.status},
+            payload: { status: d.status },
           });
         }
         dispatch({ type: dataVisualization.REQUEST_DONE });
@@ -302,7 +302,7 @@ export function getSurvivalInformation(type, data) {
       .catch((e) => {
         dispatch({
           type: dataVisualization.SURVIVAL_REQUEST,
-          payload: {status:204},
+          payload: { status: 204 },
         });
       });
   };
@@ -316,12 +316,12 @@ export function getIgv(type, data) {
       .then((result) => {
         const d = result;
 
-        if(d.status === 200){
+        if (d.status === 200) {
           dispatch({
             type: dataVisualization.IGV_REQUEST,
             payload: d["data"],
           });
-        }else{
+        } else {
           dispatch({
             type: dataVisualization.IGV_REQUEST,
             payload: [],
@@ -472,15 +472,15 @@ export function getVolcanoData() {
     sendRequest(url, "GET", "")
       .then((result) => {
         const d = result;
-        if(d.status === 200){
+        if (d.status === 200) {
           dispatch({
             type: userdataVisualization.VOLCANO_DATA_VISUALIZATION_REQUEST,
-            payload: {...d["data"], status:200},
+            payload: { ...d["data"], status: 200 },
           });
-        }else{
+        } else {
           dispatch({
             type: userdataVisualization.VOLCANO_DATA_VISUALIZATION_REQUEST,
-            payload: {status:204},
+            payload: { status: 204 },
           });
         }
       })
@@ -488,7 +488,7 @@ export function getVolcanoData() {
         console.log("error", e);
         dispatch({
           type: userdataVisualization.VOLCANO_DATA_VISUALIZATION_REQUEST,
-          payload: {status:204},
+          payload: { status: 204 },
         });
       });
 
@@ -546,15 +546,15 @@ export function getScatterInformation(type, data) {
         const d = result;
 
         dispatch({ type: dataVisualization.REQUEST_DONE });
-        if(d.status === 200){
+        if (d.status === 200) {
           dispatch({
             type: dataVisualization.SCATTER_REQUEST,
-            payload: {...d["data"], status:200},
+            payload: { ...d["data"], status: 200 },
           });
-        }else{
+        } else {
           dispatch({
             type: dataVisualization.SCATTER_REQUEST,
-            payload: {status:d.status},
+            payload: { status: d.status },
           });
         }
         dispatch({ type: dataVisualization.REQUEST_DONE });
@@ -563,7 +563,7 @@ export function getScatterInformation(type, data) {
         console.log("error", e);
         dispatch({
           type: dataVisualization.SCATTER_REQUEST,
-          payload: {status:204},
+          payload: { status: 204 },
         });
       });
   };
@@ -599,15 +599,15 @@ export function getBoxInformation(type, data) {
         const d = result;
 
         dispatch({ type: dataVisualization.REQUEST_DONE });
-        if(d.status === 200){
+        if (d.status === 200) {
           dispatch({
             type: dataVisualization.BOX_REQUEST,
-            payload: {...d["data"], status:200},
+            payload: { ...d["data"], status: 200 },
           });
-        }else{
+        } else {
           dispatch({
             type: dataVisualization.BOX_REQUEST,
-            payload: {status:204},
+            payload: { status: 204 },
           });
         }
         dispatch({ type: dataVisualization.REQUEST_DONE });
@@ -616,7 +616,7 @@ export function getBoxInformation(type, data) {
         console.log("error", e);
         dispatch({
           type: dataVisualization.BOX_REQUEST,
-          payload: {status:204},
+          payload: { status: 204 },
         });
       });
   };
@@ -777,4 +777,29 @@ export function fetchProjectTableData(data) {
         });
       });
   };
+}
+
+export function updateDownloadVisualizationPurpose(data) {
+  return (dispatch) => {
+    let url = config.auth + "download-capture-info/";
+    sendRequest(url, 'POST', data)
+      .then((result) => {
+        let res = result
+      })
+      .catch(e => {
+        console.log(e);
+      })
+
+    }
+  }
+  
+
+export function languageChange(data) {
+  return (dispatch) => {
+    //   dispatch({ type: homeConstants.DATA_SUMMARY });
+    dispatch({
+      type: homeConstants.APPLICATION_LANGUAGE,
+      payload: data,
+    });
+  }
 }

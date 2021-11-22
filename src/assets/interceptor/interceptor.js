@@ -39,7 +39,7 @@ axios.interceptors.response.use((response) => {
       }).catch((error) => {
 
         localStorageService.clearToken()
-        window.location.href = '/'
+        // window.location.href = '/'
       })
 
     } else if (error.response.status === 409) {
