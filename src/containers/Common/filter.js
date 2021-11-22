@@ -27,6 +27,7 @@ export default function Filter({parentCallback, set_screen}) {
     leftSide()
   },[selected, selectState])
 
+  console.log(selectState);
   let icon_type = {
     "Basic/Diagnostic Information":<UserCircleIcon className="h-8 w-8 inline text-main-blue"/>,
     "Patient Health Information":<DocumentAddIcon className="h-8 w-8 inline text-main-blue"/>,
