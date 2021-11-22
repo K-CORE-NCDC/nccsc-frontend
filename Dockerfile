@@ -1,20 +1,28 @@
-FROM node:latest as builder
-COPY package.json .
-#COPY yarn.lock .
-#RUN npm install -g npm@7.7.6
-RUN npm install -g npm@7.11.1
-RUN npm install --legacy-peer-deps
+FROM ubuntu:20.04
+RUN apt-get update
+WORKDIR /tmp
+RUN apt-get install -y curl
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get install -y nodejs
+RUN apt-get update
+RUN apt install -y nginx
+WORKDIR /var/www/html/ncc/
+RUN export NODE_OPTIONS=--openssl-legacy-provider
+RUN npm install -g npm
 RUN npm install btoa
+RUN apt-get install -y vim
+RUN npm install -g serve
 COPY . .
-COPY oncoprint.bundle.js ~/node_modules/oncoprintjs/dist/
+RUN npm install
 RUN npm run build
-FROM nginx:1.15.2-alpine
-RUN rm -rf /etc/nginx/conf.d
-#COPY nginx.conf /etc/nginx
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /build /usr/share/nginx/html/
-WORKDIR /usr/share/nginx/html
+COPY default.conf /etc/nginx/sites-enabled/default
+WORKDIR /var/www/html/ncc/build/
+RUN mkdir core
+RUN mv static/ core/
+RUN mv favicon.ico core/
+RUN mv manifest.json core/
 EXPOSE 80
-#CMD ["nginx", "-g", "daemon off;"]
-#CMD ["/bin/sh", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]
-CMD ["nginx", "-g", "daemon off;"]
+RUN service nginx start
+
+
+

@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './styles/tailwind.css';
 import './styles/index.css';
 import { Provider } from 'react-redux';
 import {BrowserRouter} from 'react-router-dom';
@@ -11,7 +12,7 @@ import config from './config';
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter basename={config.basename}>
+    <BrowserRouter  basename={config.basename}>
       <App />
     </BrowserRouter>
   </Provider>,
