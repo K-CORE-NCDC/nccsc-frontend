@@ -1,8 +1,4 @@
 
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 /* Reset */
 
 /* font */
@@ -40,6 +36,19 @@
   src: url("../assets/fonts/NotoSansCJKkr-Bold.otf") format("opentype"),
   url("../assets/fonts/NotoSansCJKkr-Bold.woff") format("woff"),
   url("../assets/fonts/NotoSansCJKkr-Bold.woff2") format("woff2");
+}
+
+.border-b-color{
+  color: #ced4da;
+}
+.border-blue-color{
+  color:#0c2f4d;
+}
+.text-main-blue{
+  color:#0c2f4d;
+}
+.bg-main-blue{
+  background-color: #0c2f4d;
 }
 
 .btn_input_height{
