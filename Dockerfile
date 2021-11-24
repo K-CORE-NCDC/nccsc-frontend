@@ -14,8 +14,9 @@ RUN apt-get install -y vim
 RUN npm install -g serve
 COPY . .
 RUN npm install
+COPY oncoprint.bundle.js node_modules/oncoprintjs/dist/
 RUN npm run build
-COPY default.conf /etc/nginx/sites-enabled/default
+COPY nginx.conf /etc/nginx/sites-enabled/default
 WORKDIR /var/www/html/ncc/build/
 RUN mkdir core
 RUN mv static/ core/
