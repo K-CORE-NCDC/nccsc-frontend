@@ -64,18 +64,20 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
       {/* <CanvasXpressReact target={target} data={survivalDataCanvas} config={config} width={500} height={500} /> */}
       {/* <div id="kaplanmeier1" className="kaplanmeier1"><Abc /></div> */}
       {/* <Abc /> */}
+      <div>{pValue}</div>
       {survivalData.length > 1 && <LineChart
         name={pValue}
-        xLabel='Duration in Month'
+        xLabel='Time (in month)'
         showLegends={true}
         legendPosition='top-right'
-        yLabel='Recurrence rate(Max : 100%)'
+        yLabel='Survival Probability'
         interpolate="step-before"
         pointRadius={1}
         onPointHover={(e) => {
           return `<div><b>duration: </b>${e.x}<br /><b>Survival Rate: </b>${e.y}<br /><b>Sample: </b>${e.sample}</div>`;
         }}
-        yMin={0}
+        yMin={-5}
+        xMin={-5}
         width={900}
         height={500}
         data={lineChartData}
