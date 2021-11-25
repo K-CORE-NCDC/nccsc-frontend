@@ -17,6 +17,7 @@ import ExampleUserTable from "../TableDisplay/cellColorTable";
 import {
   Link
 } from "react-router-dom";
+import config from "../../../../config";
 
 
 
@@ -600,14 +601,14 @@ function SampleDataTable() {
   const data = {
     headers: ['type', 'Download', 'Circos plot', 'Oncoprinter', 'Lollipop plot', 'Volcano Plot', 'Heatmap', 'Survival Plot', 'Gene fusion', 'CNV chart', 'Box plot', 'Correlation plot'],
     body: [
-      ['Clinical information', '/SAMPLE_FILES/clinical_information.csv', true, true, true, true, true, true, true, true, true, true],
-      ['DNA mutation', '/SAMPLE_FILES/dna_mutation.csv', true, true, true, false, true, true, false, false, false, false],
-      ['RNA Zscore', '/SAMPLE_FILES/rna_zscore.csv', true, true, false, true, true, false, false, false, false, false],
-      ['DNA Methylation', '/SAMPLE_FILES/dna_methylation.csv', true, false, false, false, true, false, false, false, true, false],
-      ['Phospo Proteome', '/SAMPLE_FILES/phospo.csv', true, true, true, false, true, false, false, false, true, false],
-      ['Global Proteome', '/SAMPLE_FILES/global_proteome_rawdata.csv', false, false, false, false, true, false, false, false, false, false],
-      ['Gene fusion', '/SAMPLE_FILES/fusion.csv', true, false, false, false, false, false, true, false, false, false],
-      ['CNV', '/SAMPLE_FILES/cnv.csv', true, false, false, false, false, false, false, true, false, false]
+      ['Clinical information', `${config.media}samples/clinical_information.csv`, true, true, true, true, true, true, true, true, true, true],
+      ['DNA mutation', `${config.media}samples/dna_mutation.csv`, true, true, true, false, true, true, false, false, false, false],
+      ['RNA Zscore', `${config.media}samples/rna_zscore.csv`, true, true, false, true, true, false, false, false, false, false],
+      ['DNA Methylation', `${config.media}samples/dna_methylation.csv`, true, false, false, false, true, false, false, false, true, false],
+      ['Phospo Proteome', `${config.media}samples/phospo.csv`, true, true, true, false, true, false, false, false, true, false],
+      ['Global Proteome', `${config.media}samples/global_proteome_rawdata.csv`, false, false, false, false, true, false, false, false, false, false],
+      ['Gene fusion', `${config.media}samples/fusion.csv`, true, false, false, false, false, false, true, false, false, false],
+      ['CNV', `${config.media}samples/cnv.csv`, true, false, false, false, false, false, false, true, false, false]
     ]
   }
   return (
