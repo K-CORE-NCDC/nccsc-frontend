@@ -24,7 +24,7 @@ const LoginComponent = () => {
         localStorage.setItem('ncc_access_token', data.access);
         localStorage.setItem('ncc_refresh_token', data.refresh);
         // history.push("/userdata")
-        window.location.href = "/userdata"
+        window.location.href = "/core/userdata"
     }
 
 
