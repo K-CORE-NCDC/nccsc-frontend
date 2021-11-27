@@ -15,33 +15,48 @@ import {FormattedMessage} from 'react-intl';
 
 let previous = ""
 
-export default function Filter({parentCallback, set_screen}) {
+export default function Filter({parentCallback, filterState, set_screen}) {
   const [state, setState] = useState({"html":[]});
   const [selectState, setSelectState] = useState({});
   const [selected, setSelected] = useState('Basic/Diagnostic Information');
   const [filtersUi, setFiltersUi] = useState({});
   const [filterHtml, setFilterHtml] = useState([])
-  console.log(filterHtml);
-
+  
   useEffect(()=>{
+    
     leftSide()
   },[])
+  
   useEffect(()=>{
+    drawTags()
     leftSide()
   },[selected, selectState])
 
+  useEffect(()=>{
+    if(Object.keys(filterState).length !== 0){
+      setSelectState({...filterState})
+      switchButton()
+    }
+  },[filterState])
+
   useEffect(() => {
     let html = []
+    
     if(Object.keys(filtersUi).length > 0){
       Object.keys(filtersUi).forEach(e=>{
+        let tmp = []
         if(filtersUi[e].length > 0){
-          html.push(
-            <div key={e}>
-              <div>
-                {filtersUi[e].forEach(sub => {
-                  <span key={`${sub.key}-${Math.random()}`} class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">{`${sub.key} : ${sub.value}`}</span>
-                })}
-              </div>
+
+          {filtersUi[e].forEach(sub => {
+            tmp.push(<span key={`${sub.key}-${Math.random()}`} className="inline-flex items-center justify-center p-3 px-5  mr-2 text-md font-bold leading-none text-white bg-gray-600 rounded-full mb-4">
+              <FormattedMessage  id = {sub.key} defaultMessage={sub.key}/>: &nbsp;<FormattedMessage  id = {sub.value} defaultMessage={sub.value}/>
+            </span>)
+          })}
+        }
+        if(tmp.length>0){
+          html.push(<div className='mb-5'>
+              <h4 className='mb-5'><FormattedMessage  id = {e} defaultMessage={e}/></h4>
+              {tmp}
             </div>
           )
         }
@@ -50,8 +65,8 @@ export default function Filter({parentCallback, set_screen}) {
     setFilterHtml(html)
   }, [filtersUi])
 
-
-  console.log(selectState, filtersUi);
+  
+  
   let icon_type = {
     "Basic/Diagnostic Information":<UserCircleIcon className="h-8 w-8 inline text-main-blue"/>,
     "Patient Health Information":<DocumentAddIcon className="h-8 w-8 inline text-main-blue"/>,
@@ -73,20 +88,23 @@ export default function Filter({parentCallback, set_screen}) {
     let check = false
     if (d.id in selectState){
       check = true
-    }
-
+    } 
     return (
       <div key={d.id} className="px-10">
         <label className="inline-flex items-center">
-            <input type="checkbox" id={d.id} name={d.name}
+          <input type="checkbox" id={d.id} name={d.name}
             className="form-checkbox"
             value={d.value}
+            defaultChecked={check}
             onChange={e=>selectFn(e)}
-             />
-          <span className="ml-2 lg:text-2xl sm:text-xl md:text-xl"><FormattedMessage  id = {d.value} defaultMessage={d.value}/></span>
+          />
+          <span className="ml-2 lg:text-2xl sm:text-xl md:text-xl">
+            <FormattedMessage  id = {d.value} defaultMessage={d.value}/>
+          </span>
         </label>
       </div>
     )
+    
   }
 
   let inputbox = (d) => {
@@ -114,7 +132,7 @@ export default function Filter({parentCallback, set_screen}) {
   let selectFn = (e) => {
     let val = e.target.value
     let id = e.target.id
-    // console.log("select---->",id)
+    
     let tmp = selectState
     if (e.target.type==='text'){
       tmp[id] = val
@@ -154,9 +172,6 @@ export default function Filter({parentCallback, set_screen}) {
           }
           let color = inputJson['clinicalColor'][item]
           let id = item.split(" ").join("")
-
-          // <FormattedMessage  id = {itm} defaultMessage={itm}/>
-          // console.log(childelm)
           t.push(
             <div className="px-5 py-3 relative z-10" key={'div_mb_'+c}>
               <label htmlFor="toogleA" className="flex items-center cursor-pointer">
@@ -208,7 +223,7 @@ export default function Filter({parentCallback, set_screen}) {
       document.getElementById(id).checked=true
       document.getElementById(id+"_toggle").style.background=inputJson['clinicalColor'][did.getAttribute('data-parent')]
       document.getElementById("child_"+id).classList.remove("hidden")
-      console.log(did.getAttribute('data-parent'),selectState);
+      
     }
   }
 
@@ -231,10 +246,9 @@ export default function Filter({parentCallback, set_screen}) {
     }
   }
 
-  const sendFilter = ()=>{
-    parentCallback(selectState)
-
+  const drawTags = () => {
     let filterBoxes = inputJson.filterBoxes
+    let tx = ['aod','bmi','fma','dob','ki67','turc']
     if(Object.keys(selectState).length > 0){
       let filterSelectedHtml = {}
       Object.keys(filterBoxes).forEach(header => {
@@ -244,12 +258,17 @@ export default function Filter({parentCallback, set_screen}) {
         }
         Object.keys(filterBoxes[header]).forEach(field=>{
           filterBoxes[header][field].forEach(subField =>{
-            // console.log(subField);
             if(subField.id in selectState){
               filterSelectedHtml = {
                 ...filterSelectedHtml,
                 [header] : [...filterSelectedHtml[header], {key: [field], value: selectState[subField.id]}]
               }
+            }else if(tx.indexOf(subField.id)>-1 && selectState["from_"+subField.id] && selectState["to_"+subField.id]){
+              filterSelectedHtml = {
+                ...filterSelectedHtml,
+                [header] : [...filterSelectedHtml[header], {key: [field], value: selectState["from_"+subField.id]+"-"+selectState["to_"+subField.id]}]
+              }
+              
             }
           })
         })
@@ -258,13 +277,15 @@ export default function Filter({parentCallback, set_screen}) {
     }
   }
 
-  const reset = ()=>{
-    let toggle_check = ['Basic/Diagnostic Information',
-      'Patient Health Information',
-      'Clinical Information','Follow-up Observation'
-    ]
-    let tmp = selectState
+  const sendFilter = ()=>{
+    parentCallback(selectState)
+    drawTags()
 
+  }
+
+  const reset = ()=>{
+    let toggle_check = ['Basic/Diagnostic Information','Patient Health Information','Clinical Information','Follow-up Observation']
+    let tmp = selectState
 
     let ckb = document.querySelectorAll("#all_checkboxes input[type=checkbox]");
     [...ckb].forEach( el => {
@@ -284,14 +305,9 @@ export default function Filter({parentCallback, set_screen}) {
     parentCallback("")
   }
 
-  // useEffect(()=>{
-  //   leftSide()
-  // },[selectState])
-
-  // console.log(selectState)
-
   return (
     <div>
+      
       <div className="py-3 px-2 w-full col-span-2">
         <button className="bg-white  lg:w-80 sm:w-52  lg:h-20 sm:h-16  hover:text-white mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded" onClick={reset}>
           Reset
@@ -307,7 +323,7 @@ export default function Filter({parentCallback, set_screen}) {
       </div>
       <div>
       <div className="col-span-2 p-1">
-        {filterHtml}
+        {filterHtml}  
       </div>
       </div>
         <div className="col-span-2" id="all_checkboxes">
