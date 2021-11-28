@@ -11,7 +11,7 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
   const [offsetWidth, setOffsetWidth] = useState(900)
   const [yMinValue, setYMinValue] = useState(0)
   const colorArray = ['#4285F4', '#DB4437', '#F4B400', '#0F9D58', '#000', '#1f0cf2', '#1f0cf2']
-  console.log(yMinValue);
+  // console.log(yMinValue);
   useEffect(() => {
     if (data.survivalJson && data.survivalJson.all) {
       setSurvivalData(data.survivalJson.all);

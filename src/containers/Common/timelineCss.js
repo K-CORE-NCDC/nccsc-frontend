@@ -9,7 +9,7 @@ const TimeLineChart = ({ yearKey, valueKey, data }) => {
 
     useEffect(() => {
         if (data && data.length > 0) {
-            console.log(data);
+            // console.log(data);
             let yearsObjectTemp = {}
             let yearsArrayTemp = []
             for (let i = 0; i < 22; i++) {

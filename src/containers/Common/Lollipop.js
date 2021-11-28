@@ -32,7 +32,7 @@ const LollipopCmp = React.forwardRef(({ width,data,gene,watermarkCss }, ref) => 
   }
 
   const onLollipopClickHandler = (data) => {
-    console.log('onLollipopClick', data)
+    // console.log('onLollipopClick', data)
   }
 
 

@@ -39,7 +39,7 @@ const ChordCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
       },
       events: {
         'click.demo': function (d, i, nodes, event) {
-          console.log('clicked on layout block', d, event)
+          // console.log('clicked on layout block', d, event)
         }
       }
     }
@@ -72,7 +72,7 @@ const ChordCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
       },
       events: {
         'mouseover.demo': function (d, i, nodes, event) {
-          console.log(d, i, nodes, event.pageX)
+          // console.log(d, i, nodes, event.pageX)
         }
       },
       labels: {

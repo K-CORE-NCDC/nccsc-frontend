@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
+import config from '../../../../config';
+import { Link } from 'react-router-dom'
 
 const UserFilesTable = ({ userDataTableData }) => {
-    console.log(userDataTableData);
+    // console.log(userDataTableData);
     const columns = ['name', 'dna_mutation', 'methylation', 'rna', 'proteome', 'clinical_information', 'cnv', 'phospho', 'fusion']
     const [showTableRows, setShowTableRows] = useState(false)
 
@@ -10,7 +12,7 @@ const UserFilesTable = ({ userDataTableData }) => {
         {
             name: 'NAME',
             selector: row => row.name,
-            cell:(row)=><a className="text-blue-600" href={`user-data/${row.id}`}>{row.name}</a>
+            cell:(row)=><Link className="text-blue-600" to={`/user-data/${row.id}`}>{row.name}</Link>
         },
         {
             name: 'DNA MUTATION',

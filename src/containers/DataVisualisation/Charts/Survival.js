@@ -130,7 +130,7 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
   }, [screenCapture, watermarkCss])
 
   const updateGroupFilters = (filtersObject) => {
-    console.log(filtersObject);
+    // console.log(filtersObject);
     if (filtersObject) {
       setGroupFilters(filtersObject)
     }

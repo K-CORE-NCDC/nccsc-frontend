@@ -54,6 +54,9 @@
 .btn_input_height{
   height: 45px;
 }
+select{
+  color:#333 !important;
+}
 
 
 /* reset */

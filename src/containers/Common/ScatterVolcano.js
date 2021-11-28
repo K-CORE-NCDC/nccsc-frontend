@@ -96,7 +96,7 @@ export default function ScatterVolcono({}) {
         data: tmp,
         options:option
       })
-      console.log(t);
+      // console.log(t);
     })
 
   },[])

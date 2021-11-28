@@ -429,7 +429,7 @@ const GroupFilters = ({ parentCallback, groupFilters }) => {
 
             ////////
             if (filterType === 'text' | filterType === 'number') {
-                console.log(counter)
+                // console.log(counter)
                 setPrevStateFilters(valsArray)
                 setGroupsCounter(counter)
             }
@@ -492,7 +492,7 @@ const GroupFilters = ({ parentCallback, groupFilters }) => {
         let filterType = selectedFilterDetails.type
         if (filterType) {
             let componentData = []
-            console.log('this after state update');
+            // console.log('this after state update');
 
             if (filterType === 'boolean' || filterType === 'static') {
                 let options = ['Yes', 'No']
@@ -735,7 +735,7 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters }) => 
 
             if ((selectedFilterType.details.type === 'number') || (selectedFilterType.details.type === 'text')) {
                 const colName = selectedFilterType.details.id
-                console.log(selectedFilterType);
+                // console.log(selectedFilterType);
                 let filtersTemp = { type: selectedFilterType.details.type, column: colName }
                 preDefienedGroups1[colName].map((e, index) => {
                     filtersTemp = {

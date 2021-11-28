@@ -20,7 +20,7 @@ const months = {
 }
 
 const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
-  console.log(closeShowTimelineTables, circosTimelieTableData);
+  // console.log(closeShowTimelineTables, circosTimelieTableData);
   const [bmiChart, setBmiChart] = useState([])
   const [ki67Chart, setKi67Chart] = useState([])
   const [bmiChartTable, setBmiChartTable] = useState({"columns":[],'data':[]})
