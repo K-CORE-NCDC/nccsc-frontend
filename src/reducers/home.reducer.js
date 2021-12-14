@@ -34,6 +34,21 @@ const homeReducer = (state = { 'home': 'home' }, { type, payload }) => {
         ...state,
         languageReducer: payload
       }
+    case homeConstants.DATA_FAQ:
+      return {
+        ...state,
+        dataFaq: payload
+      }
+    case homeConstants.DATA_NOTICE:
+      return {
+        ...state,
+        dataNotice: payload
+      }
+    case homeConstants.DATA_QA:
+      return {
+        ...state,
+        dataQA: payload
+      }
     default:
       return state
   }
