@@ -189,7 +189,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
   var w = Math.floor((width / 100) * 75)
 
-  console.log(toggle)
+  
   return (
     <>{
       loader ?

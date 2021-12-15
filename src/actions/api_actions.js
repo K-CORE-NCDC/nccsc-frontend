@@ -792,7 +792,7 @@ export function updateDownloadVisualizationPurpose(data) {
 
     }
   }
-  
+
 
 export function languageChange(data) {
   return (dispatch) => {
@@ -801,5 +801,62 @@ export function languageChange(data) {
       type: homeConstants.APPLICATION_LANGUAGE,
       payload: data,
     });
+  }
+}
+
+export function getFaqData(id) {
+  return (dispatch) => {
+    let url = config.auth + "faq-api/?id="+id;
+    sendRequest(url, "GET", "")
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: homeConstants.DATA_FAQ,
+          payload: d["data"],
+        });
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
+  }
+}
+
+export function getNoticeData(id) {
+  return (dispatch) => {
+    let url = config.auth + "notice-api/?id="+id;
+    sendRequest(url, "GET", "")
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: homeConstants.DATA_NOTICE,
+          payload: d["data"],
+        });
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
+  }
+}
+
+export function getQaData(id, data) {
+  return (dispatch) => {
+    let request
+    if(id){
+      let url = config.auth + "qa-api/?id="+id;
+      request = sendRequest(url, "GET", "")
+    }else{
+      let url = config.auth + "qa-api/";
+      request = sendRequest(url, "POST", data)
+    }
+      request.then((result) => {
+        const d = result;
+        dispatch({
+          type: homeConstants.DATA_QA,
+          payload: d["data"],
+        });
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
   }
 }
