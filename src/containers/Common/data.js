@@ -222,6 +222,7 @@ let filterBoxes = {
     ],
     "Age Of Daignosis":[
       {'type':'number','id':'aod','value':''},
+      
 
     ],
     "Body Mass Index":[

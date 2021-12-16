@@ -8,7 +8,7 @@ const login = {
   title: <FormattedMessage  id = "Login" defaultMessage="Login"/>,
   type: 'item',
   icon: 'fa fa-dashboard',
-  url: '/login',
+  url: '/login/',
   children: [],
 }
 
@@ -17,7 +17,7 @@ const logout = {
   title: 'Logout',
   type: 'item',
   icon: 'fa fa-dashboard',
-  url: '/logout',
+  url: '/logout/',
   children: [],
 }
 
@@ -30,7 +30,7 @@ let childMenu = {
         title: <FormattedMessage  id = "Signup" defaultMessage="Sign Up"/>,
         type: 'item',
         icon: 'fa fa-dashboard',
-        url: '/signup',
+        url: '/signup/',
         children: [],
       },
       {
@@ -38,7 +38,7 @@ let childMenu = {
         title: 'API',
         type: 'item',
         icon: 'fa fa-dashboard',
-        url: '/API',
+        url: '/API/',
         children: [],
       }
     ]
@@ -51,14 +51,14 @@ let childMenu = {
         title: <FormattedMessage  id = "Introduce" defaultMessage="Introduction"/>,
         type: 'group',
         icon: 'fa fa-dashboard',
-        url: '/introduce',
+        url: '/introduce/',
         children: [
           {
             id: 'Business',
             title: <FormattedMessage  id = "BusinessIntroduce" defaultMessage="Business Introduction"/>,
             type: 'item',
             icon: 'fa fa-dashboard',
-            url: '/introduce',
+            url: '/introduce/',
             children: []
           },
           {
@@ -66,7 +66,7 @@ let childMenu = {
             title: <FormattedMessage  id = "Pipeline" defaultMessage="Pipeline"/>,
             type: 'item',
             icon: 'fa fa-dashboard',
-            url: '/pipeline',
+            url: '/pipeline/',
             children: []
           },
         ],
@@ -76,14 +76,14 @@ let childMenu = {
         title: <FormattedMessage  id = "Visualization" defaultMessage='Visualization'/>,
         type: 'group',
         icon: 'fa fa-dashboard',
-        url: '/summary',
+        url: '/summary/',
         children: [
           {
             id: 'DataSummary',
             title: <FormattedMessage  id = "DataSummary" defaultMessage="Data Summary"/>,
             type: 'item',
             icon: 'fa fa-dashboard',
-            url: '/summary',
+            url: '/summary/',
             children: []
           },
           {
@@ -102,9 +102,9 @@ let childMenu = {
         title: <FormattedMessage  id = "MyDataVisualization" defaultMessage='Visualize MyData'/>,
         type: 'group',
         icon: 'fa fa-dashboard',
-        url: '/userdata',
+        url: '/userdata/',
         children: [
-
+          
         ],
       },
       {
@@ -112,14 +112,14 @@ let childMenu = {
         title: <FormattedMessage  id = "DataApplication" defaultMessage='Data Application'/>,
         type: 'group',
         icon: 'fa fa-dashboard',
-        url: '/application',
+        url: '/application/',
         children: [
           {
             id: 'dataprovision',
             title: <FormattedMessage  id = "DataProvision" defaultMessage='Data delivery guidance'/>,
             type: 'item',
             icon: 'fa fa-dashboard',
-            url: '/application',
+            url: '/application/',
             children: []
           },
           {
@@ -127,7 +127,7 @@ let childMenu = {
             title: <FormattedMessage  id = "DataDb" defaultMessage='MaterialDB Guides'/>,
             type: 'item',
             icon: 'fa fa-dashboard',
-            url: '/application',
+            url: '/application/',
             children: []
           },
           {
@@ -135,7 +135,7 @@ let childMenu = {
             title: <FormattedMessage  id = "DataRequest" defaultMessage='Data Application'/>,
             type: 'item',
             icon: 'fa fa-dashboard',
-            url: '/application',
+            url: '/application/',
             children: []
           }
         ],
@@ -145,7 +145,7 @@ let childMenu = {
         title: <FormattedMessage  id = "CustomerVoice" defaultMessage='Customer Voice'/>,
         type: 'group',
         icon: 'fa fa-dashboard',
-        url: '/summary',
+        url: '/summary/',
         children: [
           {
             id: 'faq',

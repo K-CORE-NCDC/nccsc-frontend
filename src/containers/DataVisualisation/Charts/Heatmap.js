@@ -36,7 +36,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const [renderNoContent, setRenderNoContent] = useState(false)
   const [renderHeatmap, setRenderHeatmap] = useState(true)
 
-  // console.log(tableType);
+  console.log(mainTab);
 
 const diag_age = (vl)=>{
   let n = parseInt(vl)
@@ -102,6 +102,7 @@ const bim_vl = (vl)=>{
         setLoader(true)
         inputData['table_type'] = tableType
         inputData['view'] = viewType
+        inputData['heat_type'] = mainTab
         dispatch(getHeatmapInformation('POST', inputData))
       }
     }
@@ -124,6 +125,7 @@ const bim_vl = (vl)=>{
       }
 
       let d_ = ""
+      console.log(mainTab);
       if(mainTab === "k-mean"){
         d_ = heatmapJson['data']
       }else{
@@ -131,25 +133,27 @@ const bim_vl = (vl)=>{
       }
 
 
-      d_.forEach((item, i) => {
-        if(!genes.includes(item['gene_name'])){
-          genes.push(item['gene_name'])
-        }
-        let breast_key = brstKeys[item['pt_sbst_no']]
-        if (breast_key in unique_sample_values){
-          unique_sample_values[breast_key].push(item["gene_vl"])
-        }else{
-          unique_sample_values[breast_key] = []
-          unique_sample_values[breast_key].push(item["gene_vl"])
-        }
-        if(option.length>0){
-          for (let opt = 0; opt < option.length; opt++) {
-            if(!(breast_key in unique_cf[option[opt].id])){
-              unique_cf[option[opt].id][breast_key] = item[option[opt].id]
+      if(d_ && d_ !== undefined){
+        d_.forEach((item, i) => {
+          if(!genes.includes(item['gene_name'])){
+            genes.push(item['gene_name'])
+          }
+          let breast_key = brstKeys[item['pt_sbst_no']]
+          if (breast_key in unique_sample_values){
+            unique_sample_values[breast_key].push(item["gene_vl"])
+          }else{
+            unique_sample_values[breast_key] = []
+            unique_sample_values[breast_key].push(item["gene_vl"])
+          }
+          if(option.length>0){
+            for (let opt = 0; opt < option.length; opt++) {
+              if(!(breast_key in unique_cf[option[opt].id])){
+                unique_cf[option[opt].id][breast_key] = item[option[opt].id]
+              }
             }
           }
-        }
-      });
+        });
+      }
 
 
       let y = {
@@ -160,8 +164,10 @@ const bim_vl = (vl)=>{
 
       let x = {}
       if(mainTab === "k-mean"){
-        x = {
-          "Cluster":heatmapJson['clusters'],
+        if(heatmapJson && ('clusters' in heatmapJson)){
+          x = {
+            "Cluster":heatmapJson['clusters'],
+          }
         }
       }
 
@@ -188,10 +194,22 @@ const bim_vl = (vl)=>{
         }
       }
       // z = tmp
-
-
-      setActiveCmp(true)
-      setData({"z":tmp,"x":x,"y":y})
+      let setStateTrue = false
+      for (const [key, value] of Object.entries(y)) {
+        value.forEach(e=>{
+          if(e.length > 0){
+            setStateTrue = true
+          }
+        })
+      }
+      console.log({"z":tmp,"x":x,"y":y});
+      if(setStateTrue){
+        setRenderNoContent(false)
+        setActiveCmp(true)
+        setData({"z":tmp,"x":x,"y":y})
+      }else{
+        setRenderNoContent(true)
+      }
       setTimeout(function () {
         setLoader(false)
       }, (1000));
@@ -258,6 +276,7 @@ const changeType = (e, type) => {
     if(inputData.type !==''){
       dataJson['table_type'] = type
       dataJson['view'] = viewType
+      inputData['heat_type'] = mainTab
       dispatch(getHeatmapInformation('POST', dataJson))
     }
   }

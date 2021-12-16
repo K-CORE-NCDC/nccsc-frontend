@@ -183,7 +183,7 @@ export default function Filter({parentCallback, small_screen}) {
       document.getElementById(id).checked=true
       document.getElementById(id+"_toggle").style.background=inputJson['clinicalColor'][did.getAttribute('data-parent')]
       document.getElementById("child_"+id).classList.remove("hidden")
-      console.log(did.getAttribute('data-parent'),selectState);
+      // console.log(did.getAttribute('data-parent'),selectState);
     }
   }
 

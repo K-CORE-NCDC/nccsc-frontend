@@ -80,7 +80,7 @@ const MemberShip = () => {
       }
     }, [regitserResponse])
 
-    console.log(form)
+    // console.log(form)
     return (
         <div>
             <section className="mt-10 flex flex-col items-center justify-center">

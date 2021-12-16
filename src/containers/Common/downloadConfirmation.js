@@ -15,7 +15,7 @@ const ConfirmDownload = ({ screenCaptureFunction, hideModal }) => {
     const purposeOptions = ['business', 'research', 'diagonosis']
 
     const accessToken = localStorage.getItem('ncc_access_token');
-    console.log('render');
+    // console.log('render');
     useEffect(() => {
         if ((accessToken === null) | (accessToken === undefined)) {
             setShowLoginPage(true)

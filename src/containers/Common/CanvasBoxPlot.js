@@ -5261,7 +5261,7 @@ export default function BoxPlot({ box_data }) {
           ]
         }
       }
-    console.log(data['x']['dataset'].length);
+    // console.log(data['x']['dataset'].length);
     let config = {
         "graphOrientation": "vertical",
         "graphType": "Boxplot",

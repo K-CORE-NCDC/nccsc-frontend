@@ -160,5 +160,7 @@
     "cnv":"유전체 복제수변이",
     "Fusion Genes":"융합 유전자",
     "Global Proteome":"단백질체",
-    "Phospho Site":"인산화"
+    "Phospho Site":"인산화",
+    "Files": "파일",
+    "Projects":"프로젝트"
 }

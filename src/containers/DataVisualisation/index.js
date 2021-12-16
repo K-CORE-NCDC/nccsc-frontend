@@ -94,6 +94,7 @@ export default function DataVisualization() {
   const selectGene = (event) => {
     let val_ = event.target.value;
     let g = genes[val_].data;
+    g = g.sort();
     document.getElementById('genes').value = g.join(' ')
     setState((prevState) => ({
       ...prevState,
@@ -125,7 +126,9 @@ export default function DataVisualization() {
               tabList.push('onco')
             }else if(stepName === "igv"){
               tabList.push('CNV')
-            }else{
+            }else if(stepName === "scatter"){
+	            tabList.push('correlation')
+	          }else{
               tabList.push(stepName)
             }
           }
@@ -175,7 +178,6 @@ export default function DataVisualization() {
 
   useEffect(() => {
     let w = elementRef.current.getBoundingClientRect().width
-
     setWidth(w);
     setBoolChartState(false)
     if (project_id !== undefined) {
@@ -294,14 +296,14 @@ export default function DataVisualization() {
     setToggle(false)
   }, []);
 
-  console.log(toggle)
+  // console.log(toggle)
   return (
     <div className="header">
       <div className="mx-auto border-t rounded overflow-hidden ">
         <div id="main_div">
           <div className={toggle?"grid grid-cols-4":"grid "}>
             {toggle && <div className="xs:col-span-3 lg:col-span-1 xs:z-10 xs:opacity-95 bg-white border border-gray-200 transition duration-150 ease-in-out">
-               <Filter parentCallback={callback} genes={state} set_screen={screen_call}/>
+               <Filter parentCallback={callback} filterState={state['filter']} set_screen={screen_call}/>
             </div>
             }
             <div className={toggle?"xs:absolute lg:relative col-start-2 col-span-3 overflow-auto":""}>
@@ -372,7 +374,7 @@ export default function DataVisualization() {
                       <div>{chart['viz']}</div>
                     }
                     {!boolChartState &&
-                      <div>Loading.......</div>
+                      <div className="p-1">Please select Genes</div>
                     }
                   </div>
                 </section>

@@ -62,21 +62,21 @@ const LoginComponent = () => {
                     </div>
                     <div className="grid grid-cols-3 border-b-2 border-gray-600 pt-12 pb-12">
                         <div className="pt-6 pl-48 col-span-1">
-                            <h1 className="font-bold">login ID_</h1>
+                            <h1 className="font-bold">Username</h1>
                         </div>
                         <div>
                             <div className="mb-4 pr-45 col-span-2">
-                                <input onChange={updateUserNamePassword} name="username" className={`shadow appearance-none border rounded-lg w-full py-8 px-5 text-gray-700 leading-tight focus:border-blue-500  w-28 ${errorClass}`} id="username" type="text" placeholder="Please Enter your id" />
+                                <input value={userFormData.username} onChange={updateUserNamePassword} name="username" className={`shadow appearance-none border rounded-lg w-full py-8 px-5 text-gray-700 leading-tight focus:border-blue-500  w-28 ${errorClass}`} id="username" type="text" placeholder="Please Enter your id" />
                             </div>
                         </div>
                     </div>
                     <div className="grid grid-cols-3 border-b-2 border-gray-600 pt-12 pb-12">
                         <div className="pt-6 pl-48 col-span-1">
-                            <h1 className="font-bold">Password _</h1>
+                            <h1 className="font-bold">Password</h1>
                         </div>
                         <div>
                             <div className="mb-4 pr-45 col-span-2">
-                                <input onChange={updateUserNamePassword} name="password" className={`shadow appearance-none border rounded-lg w-full py-8 px-5 text-gray-700 leading-tight focus:border-blue-500  w-28 ${errorClass}`} id="password" type="password" placeholder="Please Enter a password " />
+                                <input value={userFormData.password} onChange={updateUserNamePassword} name="password" className={`shadow appearance-none border rounded-lg w-full py-8 px-5 text-gray-700 leading-tight focus:border-blue-500  w-28 ${errorClass}`} id="password" type="password" placeholder="Please Enter a password " />
                             </div>
                         </div>
                     </div>

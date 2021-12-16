@@ -1,9 +1,9 @@
 import React, { useState,useEffect } from 'react'
 import LollipopPlot from 'react-mutation-plot'
-import UserFilesTable from './Table'
+import $ from "jquery";
 
 
-const LollipopCmp = React.forwardRef(({ width,data,gene,watermarkCss }, ref) => {
+const LollipopCmp = React.forwardRef(({ type,width,data,gene,watermarkCss }, ref) => {
   const [active, setActive] = useState(false)
   const [label, setLabel] = useState([])
   const mockData = {
@@ -13,7 +13,8 @@ const LollipopCmp = React.forwardRef(({ width,data,gene,watermarkCss }, ref) => 
     yMax: data['height'], // max #mutations
     hugoGeneSymbol: gene,
     lollipops: data['lollipop'],
-    domains: data['domains']
+    domains: data['domains'],
+    
   }
   // console.log(mockData);
   useEffect(()=>{
@@ -23,16 +24,31 @@ const LollipopCmp = React.forwardRef(({ width,data,gene,watermarkCss }, ref) => 
   },[gene])
 
 
-
+  useEffect(()=>{
+    if(active){
+      $('svg g:last-child text').each(function(i,item){
+        let  t = item.textContent
+        if ( t.indexOf('#')!==-1){
+          if(type==="Mutation"){
+            $(this).text(gene+" Mutations")
+          } else {
+            $(this).text(gene+" Phosphorylation")
+          }
+        }
+      })
+    }
+    
+  },[active])
 
   const options = {
     displayDomainLabel: true,
     displayLegend: false,
-    exportToPDF: false
+    exportToPDF: false,
+    label:'sameer'
   }
 
   const onLollipopClickHandler = (data) => {
-    console.log('onLollipopClick', data)
+    // console.log('onLollipopClick', data)
   }
 
 

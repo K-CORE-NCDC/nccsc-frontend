@@ -13,7 +13,7 @@ export default function ImageGrid({data}) {
   }
 
   useEffect(()=>{
-    console.log(data);
+    // console.log(data);
   },[data])
 
 

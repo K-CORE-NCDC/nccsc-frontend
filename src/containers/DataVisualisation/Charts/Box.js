@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import BoxPlot from '../../Common/BoxPlot2'
-import BoxPlot1 from '../../Common/BoxPlot'
 import LoaderCmp from '../../Common/Loader'
 import { getBoxInformation} from '../../../actions/api_actions'
 import '../../../assets/css/style.css'
@@ -201,18 +200,14 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
     e.target.classList.add("hover:bg-main-blue","bg-main-blue","text-white")
     let dataJson = inputState
     if(inputData.type !==''){
-      // console.log(selectedValue)
       let gene_ = selectedValue.map(x => x['name']);
       if (gene_.length <= 0){
         gene_ = [gene]
       }
-      // console.log(type)
-      // console.log(inputState)
       if(type==='mutation'){
         dataJson['genes'] = gene_
 
         let selected = selectedValue
-        // selected.push({"name":gene,id:1})
         if(selected.length > 0){
           selected = selected.filter((data,index)=>{
             return selected.indexOf(data) === index;
@@ -262,12 +257,12 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
   }
 
   let selected_button = ''
-  selected_button += "rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 sm:p-2 lg:px-10 md:px-10 sm:px-8 sm:w-40 md:w-80 sm:text-xl lg:text-2xl sm:h-16 lg:h-24"
+  selected_button += "rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 sm:p-2 lg:px-10 md:px-10 sm:px-8 sm:text-xl lg:text-2xl "
   selected_button += " rounded font-bold cursor-pointer hover:bg-main-blue "
   selected_button +=" bg-main-blue text-white border duration-200 ease-in-out transition xs:p-3 xs:text-sm"
 
   let normal_button = ''
-  normal_button += "rounded-l-none  hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-2 lg:px-10 sm:px-8 sm:w-40 md:w-80 sm:text-xl lg:text-2xl sm:h-16 lg:h-24"
+  normal_button += "rounded-l-none  hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-2 lg:px-10 sm:px-8  sm:text-xl lg:text-2xl "
   normal_button += " rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 "
   normal_button += " border duration-200 ease-in-out border-teal-600 transition px-10 xs:p-3 xs:text-sm"
 
@@ -295,7 +290,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
           </div>
 
             <div className='flex  text-left'>
-              <div className='w-9/12 text-right sm:pl-8 xs:pl-8'>
+              <div className='flex-1 text-right sm:pl-8 xs:pl-8'>
                 {tableType==='proteome' && <>
                   <label className="xs:text-xl"><FormattedMessage  id = "Selected Gene Is" defaultMessage='Selected Gene Is'/></label>
                   <Multiselect
@@ -322,9 +317,9 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
                   </div>
                 }
               </div>
-              <div className="mx-5 flex-wrap text-left w-3/12 xs:text-xl text-right">
+              <div className="mx-5 text-left xs:text-xl text-right">
                   <FormattedMessage  id = "View_By_heatmap" defaultMessage='View By'/>:
-                  <div className="flex m-2 w-100">
+                  <div className="flex m-2 w-100 ">
                     <button onClick={e => changeView(e, 'gene_vl')} name='view' className={viewType==="gene_vl"?selected_button:normal_button}>
                       Gene-vl
                     </button>
@@ -341,7 +336,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
             <LoaderCmp/>
             :boxJson &&
             <>
-            {showBoxPlot  && <BoxPlot box_data={boxJson} chart_type={tableType}  ref={reference} watermarkCss={watermarkCss} width={width}/>}
+            {showBoxPlot  && <BoxPlot view_type={viewType} box_data={boxJson} chart_type={tableType}  ref={reference} watermarkCss={watermarkCss} width={width}/>}
 
             {noContent && <NoContentMessage />}
             </>

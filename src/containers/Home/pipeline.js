@@ -25,7 +25,7 @@ export default function Pipeline() {
       }
     },[language])
 
-    console.log(language)
+    // console.log(language)
     return (
         <div className="cont_wrap my-10">
           <div className="flex justify-center">

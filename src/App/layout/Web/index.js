@@ -10,8 +10,9 @@ import DropdownMenuMobile from './Mobile/DropdownMenu'
 import DropdownMenu from './Header/DropdownMenu'
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
-import logo from '../../../assets/images/logo.png'
+import logoNew from '../../../assets/images/Left_up.png'
 import footer_logo from '../../../assets/images/f_logo.png'
+
 import { useSelector, useDispatch } from "react-redux";
 import {
   MenuIcon,
@@ -96,10 +97,10 @@ export default function Web(props) {
           <div id="header" className={classes}>
             <nav  className="w-full p-2 py-5 navbar-expand-lg">
               <div className="w-full grid md:grid-cols-3 xl:grid-cols-8 2xl:grid-cols-8 px-5  pt-5">
-                <div className="relative pt-5 sm:flex flex">
-                  <Link to="/" className='xs:w-11/12 sm:w-11/12'>
-                    <span className="sr-only">Workflow</span>
-                    <img className="h-16 w-auto " src={logo} alt=""/>
+                <div className="relative pr-5 sm:flex flex">
+                  <Link to="/" className=''>
+                    {/* <span className="sr-only">Workflow</span> */}
+                    <img className="" width='210' src={logoNew} alt=""/>
                   </Link>
                   <Popover.Button  className="xs:block sm:block lg:hidden  text-white  cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block outline-none focus:outline-none" type="button"><MenuIcon className="h-6 w-6" aria-hidden="true" /></Popover.Button >
                 </div>
@@ -117,7 +118,7 @@ export default function Web(props) {
 
             {classes!=='' && <div className="grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xs:grid-cols-4 lg:px-64 xs:px-40 py-20  text-right text-main-blue">
               <div className='text-center xs:col-span-4  lg:col-span-3 lg:text-center  2xl:col-start-3'>
-              <h2 className="lg:text-8xl xs:text-4xl"><strong>K-CORE</strong> <strong>Portal</strong></h2>
+              <h2 className="lg:text-8xl xs:text-4xl"><strong>K-CORE</strong> </h2>
               <h2 className="lg:text-4xl xs:text-xl mt-4"><strong>Cancer Omics Research Portal</strong></h2>
               <div className="pl-6">
                 <p className="lg:border-l-2 lg:text-2xl xs:text-sm sm:text-xl p-5 font-medium mt-8 border-gray-600" style={{textAlign: 'right'}}>
@@ -265,7 +266,7 @@ export default function Web(props) {
             </p>
           </div>
           <div>
-            <img src={footer_logo} alt="footer-logo" className="float-right"/>
+            <img src={footer_logo}  alt="footer-logo" className="float-right"/>
           </div>
         </div>
       </footer>

@@ -12,6 +12,7 @@ import s5 from '../../assets/images/f_ci5.png'
 import s6 from '../../assets/images/f_ci6.png'
 import s7 from '../../assets/images/f_ci7.png'
 import breast from '../../assets/images/breast_cancer.png'
+import s8 from '../../assets/images/right_below_add.png'
 import {FormattedMessage} from 'react-intl';
 
 import { useSelector, useDispatch } from "react-redux";
@@ -49,7 +50,7 @@ export default function Home() {
         <div className='bg-white 2xl:hidden'>
           <div className="grid grid-cols-5 p-14 border-b border-blue">
             <div className='text-right sm:text-3xl xs:text-xl sm:col-start-1 lg:text-5xl lg:col-start-2'>
-              Todaya
+              Today
             </div>
             <div className='text-left sm:text-4xl xs:text-xl lg:text-6xl px-10 lg:col-span-3 sm:col-span-4'>
               <p>{currentDate?currentDate:""}<br/><br/>
@@ -215,6 +216,9 @@ export default function Home() {
             </div>
             <div>
               <img src={s7} />
+            </div>
+            <div>
+              <img src={s8} width='250' />
             </div>
           </Slider>
         </div>

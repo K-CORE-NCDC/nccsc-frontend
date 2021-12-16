@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchProjectTableData } from '../../../../actions/api_actions'
+import { fetchProjectTableData, clearProjectTableDataTableData } from '../../../../actions/api_actions'
 import ExampleUserTable from '../TableDisplay/cellColorTable'
 import DataTable from 'react-data-table-component';
 import { objectOf } from 'prop-types';
@@ -29,7 +29,7 @@ const ProjectDataTable = () => {
     const [show, setShow] = useState(false)
     const params = useParams()
 
-    console.log(fileDataAsTableRendered);
+    // console.log(fileDataAsTableRendered);
 
     const changeErrorDataTable = (tableTabName) => {
         setShow(false)
@@ -42,6 +42,12 @@ const ProjectDataTable = () => {
             dispatch(fetchProjectTableData({ project_id: params.id }))
         }
     }, [params])
+
+    useEffect(() => {
+        return () => {
+            dispatch(clearProjectTableDataTableData())
+        }
+    }, [])
 
     useEffect(() => {
         if (fileDataAsTableRendered && fileDataAsTableRendered.length > 0) {
@@ -67,7 +73,7 @@ const ProjectDataTable = () => {
         if (fileDataAsTableAll) {
             setShow(false)
             let currentRenderedTable = Object.keys(fileDataAsTableAll)
-            console.log(currentRenderedTable)
+            // console.log(currentRenderedTable)
             if (currentRenderedTable.length > 0) {
                 setFileDataAsTableRendered(fileDataAsTableAll[currentRenderedTable[0]])
                 setActiveTableKey(currentRenderedTable[0])
@@ -99,7 +105,7 @@ const ProjectDataTable = () => {
         <div>
             {show && <div className='p-1 col-span-3 gap-6'>
                 <div className="p-1 flex justify-around">
-                    <button onClick={() => history.push('dummy')} className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
+                    <button onClick={() => history.push('/userdata/')} className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
                     >
                         back
                     </button>

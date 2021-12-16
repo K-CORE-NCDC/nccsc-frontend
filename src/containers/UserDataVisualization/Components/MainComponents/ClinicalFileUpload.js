@@ -124,7 +124,7 @@ export default function FileUpload({ parentCallBack }) {
   const [disableUploadButton, setDisableUploadButton] = useState(true)
   const [borderRed, setBorderRed] = useState(false)
 
-  console.log(activeTableKey);
+  // console.log(activeTableKey);
 
   const resetStates = () => {
     setSelectedFileSampleType({
@@ -172,7 +172,7 @@ export default function FileUpload({ parentCallBack }) {
   }
 
   const changeErrorDataTable = (tableTabName) => {
-    console.log(tableTabName, fileDataAsTableAll);
+    // console.log(tableTabName, fileDataAsTableAll);
     setActiveTableKey(tableTabName)
     setFileDataAsTableRendered(fileDataAsTableAll[tableTabName])
   }
@@ -239,7 +239,7 @@ export default function FileUpload({ parentCallBack }) {
   }, [fileDataAsTableAll])
 
   useEffect(() => {
-    console.log(selectedFiles, selectedFileSampleType);
+    // console.log(selectedFiles, selectedFileSampleType);
     if(projectName){
       if(selectedFiles.length === Object.keys(selectedFileSampleType).length){
         setDisableUploadButton(false)
@@ -371,7 +371,7 @@ export default function FileUpload({ parentCallBack }) {
   }
 
   const updateFileTypeOnChange = (e) => {
-    console.log(e.target.value, e.target.name);
+    // console.log(e.target.value, e.target.name);
     const divName = e.target.name
     const divValue = e.target.value
     // setUploadFile(prevState)
@@ -460,20 +460,20 @@ export default function FileUpload({ parentCallBack }) {
               name={key}
               defaultChecked={selectedFileSampleType[key]}
               value={selectedFileSampleType[key]}
-              className='w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
+              className='select-color w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
               {/* <option value="clinical_information">Clinical Information</option>
               <option value="rna_zscore">RNA</option>
               <option value="dna_mutation">DNA Mutation</option>
               <option value="dna_methylation">DNA Methylation</option>
               <option value="proteome">Porteome</option> */}
               {Object.keys(dropdownOptionsSelected[key]).map(type => (
-                <option key={type} value={type}>{dropdownOptionsSelected[key][type]}</option>
+                <option className='text-gray-900' key={type} value={type}>{dropdownOptionsSelected[key][type]}</option>
               ))}
             </select>
           </div>
           <div className='relative col-span-4 w-full '>
             <label
-              className="w-full block text-right border focus:outline-none border-b-color focus:ring focus:border-blue-300 p-4 mt-3">
+              className="select-color w-full block text-right border focus:outline-none border-b-color focus:ring focus:border-blue-300 p-4 mt-3">
               <input type='file' className="" data={key} name={selectedFileSampleType[key]} id="user-file-input" filename={key} onChange={file_Upload_} />
             </label>
           </div>

@@ -18,12 +18,13 @@ COPY oncoprint.bundle.js node_modules/oncoprintjs/dist/
 RUN npm run build
 COPY nginx.conf /etc/nginx/sites-enabled/default
 WORKDIR /var/www/html/ncc/build/
-RUN mkdir core
-RUN mv static/ core/
-RUN mv favicon.ico core/
-RUN mv manifest.json core/
+#RUN mkdir core
+#RUN mv static/ core/
+#RUN mv favicon.ico core/
+#RUN mv manifest.json core/
 EXPOSE 80
 RUN service nginx start
+
 
 
 

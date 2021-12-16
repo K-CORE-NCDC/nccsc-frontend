@@ -56,7 +56,7 @@ export function renderPlot (params) {
 
   var outerWidth = containerBounds.width
   var outerHeight = params.height || outerWidth * 0.5
-  console.log(outerWidth);
+  // console.log(outerWidth);
   var axisWidth = outerWidth - margins.left - margins.right
   var axisHeight = outerHeight - margins.top - margins.bottom
 

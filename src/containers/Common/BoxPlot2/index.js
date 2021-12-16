@@ -7,7 +7,7 @@ import {FormattedMessage} from 'react-intl';
 // import genes from '../Common/gene.json'
 // import { getBreastKeys, getUserDataProjectsTableData } from '../../actions/api_actions'
 
-const BoxPlot = React.forwardRef(({ box_data,chart_type, watermarkCss }, ref) => {
+const BoxPlot = React.forwardRef(({view_type, box_data,chart_type, watermarkCss }, ref) => {
   const box_elementRef = useRef(null);
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
 
@@ -174,7 +174,19 @@ const BoxPlot = React.forwardRef(({ box_data,chart_type, watermarkCss }, ref) =>
       .attr("x",0 - (height / 2))
       .attr("dy", "1em")
       .style("text-anchor", "middle")
-      .text("Proteome expression (gene_vl)");
+      .text(function(){
+        if(view_type==="gene_vl"){
+          return "Proteome expression (gene_vl)"
+        }else{
+          return "Proteome expression (z-score)"
+        }
+      });
+    // if(view_type==="gene_vl"){
+    // }else{
+      // svg.text("Proteome expression (z-score)");
+    // }
+      
+      
 
       svg.append("text")
       .attr("transform",
@@ -392,6 +404,7 @@ const BoxPlot = React.forwardRef(({ box_data,chart_type, watermarkCss }, ref) =>
 
   useEffect(()=>{
     if(Object.keys(box_data).length !== 0){
+      console.log(box_data)
       drawChart(box_data)
     }
   },[box_data])
