@@ -59,7 +59,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "homepage": "/core/",
+  
   "eslintConfig": {
     "extends": [
       "react-app"
