@@ -25,6 +25,23 @@ export function getDashboardCount() {
       });
   }
 }
+export function getUserFiles() {
+  return (dispatch) => {
+    //   dispatch({ type: homeConstants.DATA_SUMMARY });
+    let url = config.auth + "files/";
+    sendRequest(url, "GET", "")
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: homeConstants.FILE_REQUEST,
+          payload: d["data"],
+        });
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
+  };
+}
 
 export function getDashboardDsummaryData() {
   return (dispatch) => {
@@ -800,6 +817,16 @@ export function languageChange(data) {
     dispatch({
       type: homeConstants.APPLICATION_LANGUAGE,
       payload: data,
+    });
+  }
+}
+
+
+export function clearProjectTableDataTableData() {
+  return (dispatch) => {
+    dispatch({
+      type: userdataVisualization.USER_DATA_PROJECT_TABLE_PROJECT,
+      payload: {},
     });
   }
 }

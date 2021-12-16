@@ -34,6 +34,11 @@ const homeReducer = (state = { 'home': 'home' }, { type, payload }) => {
         ...state,
         languageReducer: payload
       }
+    case homeConstants.FILE_REQUEST:
+      return {
+        ...state,
+        files: payload
+      }
     default:
       return state
   }

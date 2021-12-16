@@ -127,7 +127,8 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
         let enst_id = []
         let refseq_id = []
         let sample_length = []
-        setPercentage(lolipopJson['percentage'])
+        let unique_sample = []
+        // setPercentage(lolipopJson['percentage'])
         if (data.length > 0) {
           for (var i = 0; i < data.length; i++) {
             sample_length.push(data[i]['sample'])
@@ -136,9 +137,11 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
               if (vc_sample in lollipopLegenedTmp) {
                 if (lollipopLegenedTmp[vc_sample].includes(data[i].sample) == false) {
                   lollipopLegenedTmp[vc_sample].push(data[i].sample)
+                  unique_sample.push(data[i].sample)
                 }
               } else {
                 lollipopLegenedTmp[vc_sample] = [data[i].sample]
+                unique_sample.push(data[i].sample)
               }
               if (data[i]['protien']) {
                 let protein = data[i]['protien'].replace(/[^\d]/g, '');
@@ -161,14 +164,17 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
 
             } else if (tableType == "Phospho") {
               let site_sample = data[i]['site'].split(' ')
+
               for (var k = 0; k < site_sample.length; k++) {
                 if (site_sample[k] in lollipopLegenedTmp) {
                   if (lollipopLegenedTmp[site_sample[k]].includes(data[i].sample) == false) {
                     lollipopLegenedTmp[site_sample[k]].push(data[i].sample)
+                    unique_sample.push(data[i].sample)
                   }
                 }
                 else {
                   lollipopLegenedTmp[site_sample[k]] = [data[i].sample]
+                  unique_sample.push(data[i].sample)
                 }
               }
               table_data.push({
@@ -203,6 +209,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
               sortable: true
             }
           ]
+          
           colors = mutation_colors
           for (var key in mutation_colors) {
             let name = key
@@ -228,7 +235,8 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                   'tooltip': {
                     'header': 'Protein Change',
                     'body': lollipopTmp[vc][0].split('||')[1]+"\n Samples Count : "+lollipopTmp[vc].length
-                  }
+                  },
+                  
                 })
                 height.push(lollipopTmp[vc].length)
               }
@@ -273,8 +281,9 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
               'color': colors[key.substring(0, 1)],
               'tooltip': {
                 'header': key + ' Site',
-                'body': lollipopLegenedTmp[key].length + ' : Phosphorelytions'
+                'body': lollipopLegenedTmp[key].length + ' : Phosphorylation'
               }
+              
             })
 
             height.push(lollipopLegenedTmp[key].length)
@@ -324,6 +333,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
             'tooltip': {
               "body": domains_data[i]['domain'] + " (" + domains_data[i]['start'] + " - " + domains_data[i]['end'] + ")"
             }
+            
           })
         }
         let w = 300
@@ -331,6 +341,10 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
         if (width.length > 0) w = Math.max(...width)
         if (height.length > 0) h = Math.max(...height)
 
+        let u_sample =  [...new Set(unique_sample)]
+        let total_smaples = Object.keys(BrstKeys).length
+        let sm_frequency = (u_sample.length/total_smaples)*100
+        setPercentage(sm_frequency.toFixed(3))
         setMutationLabel(tmp)
         setTableData(table_data)
         setTableColumnsData(table_cols)
@@ -435,7 +449,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                 <div className='flex lg:float-right md:float-right sm:float-left xs:float-left'>
                   <div className='p-3 lg:text-2xl sm:text-xl xs:text-sm'><FormattedMessage  id = "Selected Gene" defaultMessage='Selected Gene Is'/></div>
                   <div>
-                    <select value={gene} onChange={e=>geneSet(e)} className="w-full border bg-white rounded lg:px-3 lg:py-2 xs:py-0 lg:h-14 sm:h-14 xs:h-8 lg:text-2xl xs:text-sm outline-none text-gray-700">
+                    <select defaultValue={gene} onChange={e=>geneSet(e)} className="w-full border bg-white rounded lg:px-3 lg:py-2 xs:py-0 lg:h-14 sm:h-14 xs:h-8 lg:text-2xl xs:text-sm outline-none text-gray-700">
                       {genesHtml}
                     </select>
                   </div>
@@ -463,9 +477,9 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                     }
 
                   </div>
-                  <div className='grid grid-rows-2 bg-blue-100 p-10'>
-                    <div className="lg:w-full sm:w-3/6 xs:w-1/2">
-                      <h5 className="float-left sm:text-xl lg:text-2xl xs:text-xl">Somantic Mutation Frequency: {percentage?percentage:""} % (mutation sample number/total selected sample number(%))</h5>
+                  <div className='grid grid-rows bg-blue-100 p-10'>
+                    <div className="lg:w-full sm:w-3/6 xs:w-1/2 p-3">
+                      <h5 className="float-left sm:text-xl lg:text-2xl xs:text-xl mb-5">Somantic Mutation Frequency: {percentage?percentage:""} % (mutation sample number/total selected sample number(%))</h5>
                     </div>
                     <div className='flex sm:flex-wrap xs:flex-wrap xs:w-1/2'>
                       {mutationLabel}

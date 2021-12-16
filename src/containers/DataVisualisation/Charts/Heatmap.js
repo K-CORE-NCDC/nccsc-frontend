@@ -36,7 +36,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const [renderNoContent, setRenderNoContent] = useState(false)
   const [renderHeatmap, setRenderHeatmap] = useState(true)
 
-  // console.log(tableType);
+  console.log(mainTab);
 
 const diag_age = (vl)=>{
   let n = parseInt(vl)
@@ -102,6 +102,7 @@ const bim_vl = (vl)=>{
         setLoader(true)
         inputData['table_type'] = tableType
         inputData['view'] = viewType
+        inputData['heat_type'] = mainTab
         dispatch(getHeatmapInformation('POST', inputData))
       }
     }
@@ -123,7 +124,8 @@ const bim_vl = (vl)=>{
         }
       }
 
-      let d_ = []
+      let d_ = ""
+      console.log(mainTab);
       if(mainTab === "k-mean"){
         d_ = heatmapJson['data']
       }else{
@@ -200,7 +202,9 @@ const bim_vl = (vl)=>{
           }
         })
       }
+      console.log({"z":tmp,"x":x,"y":y});
       if(setStateTrue){
+        setRenderNoContent(false)
         setActiveCmp(true)
         setData({"z":tmp,"x":x,"y":y})
       }else{
@@ -272,6 +276,7 @@ const changeType = (e, type) => {
     if(inputData.type !==''){
       dataJson['table_type'] = type
       dataJson['view'] = viewType
+      inputData['heat_type'] = mainTab
       dispatch(getHeatmapInformation('POST', dataJson))
     }
   }

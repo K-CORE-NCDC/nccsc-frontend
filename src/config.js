@@ -1,6 +1,6 @@
 export default {
   defaultPath: '/core/',
   basename: '/core/',
-  auth: 'https://www.cancerdata.kr/corev/',
-  media: 'https://www.cancerdata.kr/corev/media/',
+  auth: 'http://18.219.51.159:9797/',
+  media: 'http://18.219.51.159:9797/corev/media/',
 }
