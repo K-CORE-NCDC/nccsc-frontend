@@ -203,6 +203,7 @@ input:checked ~ .dot {
   border-color: #0c2f4d;
 }
 
+
 .con ul li:nth-child(1) a span{background: url('../assets/images/main_icon.png') no-repeat center 30px;}
 .con ul li:nth-child(2) a span{background: url('../assets/images/main_icon.png') no-repeat center -72px;}
 .con ul li:nth-child(3) a span{background: url('../assets/images/main_icon.png') no-repeat center -169px;}
@@ -409,7 +410,6 @@ input:checked ~ .dot {
     text-align: left;
     color: #152a52;
 }
-
 
 
 .intro_tab {
@@ -1002,19 +1002,79 @@ dd {
 }
 
 
-.svg-line-chart-tooltip-custom { 
-  position: fixed;     
-  text-align: center;     
+.svg-line-chart-tooltip-custom {
+  position: fixed;
+  text-align: center;
   width: 200px;
   padding-top: 5px;
   padding-bottom: 5px;
-  font: 12px sans-serif;    
-  background: whitesmoke; 
+  font: 12px sans-serif;
+  background: whitesmoke;
   border: 0px;
   pointer-events: none;
-  opacity: 0;     
+  opacity: 0;
 }
 
-/* #lolipop > svg > g:last-child > text{
-  display: none;
-} */
+.h-tit4_tit {
+    font-size: 34px;
+    line-height: 1;
+    margin: 0;
+    padding: 10px 0;
+    clear: both;
+    background: url("#") no-repeat left 18px;
+    border-bottom: 1px solid #ccc;
+    padding: 15px 0 15px 15px;
+    margin: 0 0 20px 0;
+}
+
+.tb-top {
+    display: table;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.tb-top .pull-right {
+    display: table-cell;
+    float: none !important;
+    height: 100%;
+    text-align: right;
+    vertical-align: bottom;
+}
+
+.w100 {
+    width: 100px!important;
+}
+
+.tb-top select {
+    height: 38px;
+    vertical-align: top;
+}
+
+.tb-top select + .searchBox {
+    margin-left: 2px;
+}
+
+.tb-top .searchBox input {
+    height: 38px;
+}
+
+.tb-top .search_input {
+    display: inline-block;
+    width: auto!important;
+}
+
+.tbl.type2 .fm_area dl dt {
+    font-size: 16px;
+    background: #eee;
+}
+
+.tbl.type2 .fm_area dl.sbj_tit {
+    border-top: 2px solid #4e4e4e;
+    border-bottom: 1px solid #dddddd;
+}
+
+.tbl.type2 .fm_area dl {
+    display: table;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+}

@@ -45,7 +45,7 @@ let childMenu = {
   },
   "mainmenu": {
     items: [
-      
+
       {
         id: 'introduce',
         title: <FormattedMessage  id = "Introduce" defaultMessage="Introduction"/>,
@@ -152,7 +152,7 @@ let childMenu = {
             title: <FormattedMessage  id = "FAQ" defaultMessage='FAQ'/>,
             type: 'item',
             icon: 'fa fa-dashboard',
-            url: '/summary/',
+            url: '/faq',
             children: []
           },
           {
@@ -160,7 +160,7 @@ let childMenu = {
             title: <FormattedMessage  id = "QA" defaultMessage='Q&A'/>,
             type: 'item',
             icon: 'fa fa-dashboard',
-            url: '/summary/',
+            url: '/qa',
             children: []
           },
           {
@@ -168,7 +168,7 @@ let childMenu = {
             title: <FormattedMessage  id = "Notice" defaultMessage='Notice'/>,
             type: 'item',
             icon: 'fa fa-dashboard',
-            url: '/summary/',
+            url: '/notice',
             children: []
           }
         ],

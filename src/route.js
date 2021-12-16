@@ -15,8 +15,14 @@ const Introduce = React.lazy(() => import('./containers/Home/introduce'))
 const Pipeline = React.lazy(() => import('./containers/Home/pipeline'))
 const DataApplication = React.lazy(() => import('./containers/DataApplication'))
 
+const Faq = React.lazy(() => import('./containers/CustomerVoice/Faq'))
+const Notice = React.lazy(() => import('./containers/CustomerVoice/Notice'))
+const Qa = React.lazy(() => import('./containers/CustomerVoice/QA'))
+
+
 const genefusion = React.lazy(() => import('./containers/Common/genefusion'))
 const UserDataTable = React.lazy(() => import('./containers/UserDataVisualization/Components/MainComponents/projectDataTable'))
+
 
 const route = [
   { path: '/home/', exact: true, type:'unauth', name: 'Home', component: Home },
@@ -33,6 +39,11 @@ const route = [
   { path: '/signup/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: Signup},
   { path: '/genefusion/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: genefusion},
   { path: '/user-data/:id', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: UserDataTable},
+
+  { path: '/faq/:slug?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: Faq},
+  { path: '/notice/:slug?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: Notice},
+  { path: '/qa/:slug?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: Qa}
+
 ]
 
 export default route;
