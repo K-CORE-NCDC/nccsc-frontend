@@ -9,6 +9,7 @@ import {
   DocumentAddIcon
 } from '@heroicons/react/outline'
 import inputJson from './data';
+import { useSelector } from 'react-redux'
 // import filterBoxes from './data'
 import {FormattedMessage} from 'react-intl';
 
@@ -21,6 +22,10 @@ export default function Filter({parentCallback, filterState, set_screen}) {
   const [selected, setSelected] = useState('Basic/Diagnostic Information');
   const [filtersUi, setFiltersUi] = useState({});
   const [filterHtml, setFilterHtml] = useState([])
+  const totalCount = useSelector((state)=>{    
+    return Object.keys(state.dataVisualizationReducer.Keys).length || 0
+  })
+  const [totalCountS, setTotalCountS] = useState(totalCount)
   
   useEffect(()=>{
     
@@ -322,12 +327,17 @@ export default function Filter({parentCallback, filterState, set_screen}) {
         </button>
       </div>
       <div>
-      <div className="col-span-2 p-1">
-        {filterHtml}  
-      </div>
+      
       </div>
         <div className="col-span-2" id="all_checkboxes">
         {state['html']  }
+      </div>
+      <div className="col-span-2 p-1">
+        {filterHtml.length && totalCount!== totalCountS?  <>
+          <div className="mb-5"><h6>Total Number of Samples : {totalCountS}</h6></div>
+          {filterHtml}
+          <div className="mt-5"><h6>Number of Filtered Samples: {totalCount}</h6></div>
+        </>:""}  
       </div>
     </div>
   )

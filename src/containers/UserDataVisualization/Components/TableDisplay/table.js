@@ -46,7 +46,16 @@ const UserFilesTable = ({ userDataTableData }) => {
             name: 'FUSION',
             selector: row => row.fusion,
         },
+        {
+            cell:(row) => <button className="bg-main-blue hover:bg-main-blue w-80 h-20 text-white m-4 font-bold py-2 px-4 border border-blue-700 rounded" onClick={clickHandler} id={row.id}>Delete</button>,
+            ignoreRowClick: false,
+            allowOverflow: true,
+            button: true,
+        }
     ]
+    const clickHandler = (event)=>{
+        console.log(event.target.id)
+    }
 
     useEffect(() => {
         if (userDataTableData && userDataTableData.length > 0) {

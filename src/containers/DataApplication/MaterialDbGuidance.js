@@ -12,34 +12,34 @@ export default function MaterialGuidance() {
     const [openTab, setOpenTab] = React.useState(1);
     return (
       <div>
-        <div class="left wp25 db_list_wrap">
-             <ul class="db">
-               <li class="db_tit1"><FormattedMessage  id = "DB List" defaultMessage='DB List'/></li>
-               <li class="db_tit2"><FormattedMessage  id = "Cancer Proteogenomic DB" defaultMessage='Cancer Proteogenomic DB'/></li>
-               <li class="db_list db_list1"><a href="#"><FormattedMessage  id = "YBC Dataset" defaultMessage='YBC Dataset'/></a></li>
+        <div className="left wp25 db_list_wrap">
+             <ul className="db">
+               <li className="db_tit1"><FormattedMessage  id = "DB List" defaultMessage='DB List'/></li>
+               <li className="db_tit2"><FormattedMessage  id = "Cancer Proteogenomic DB" defaultMessage='Cancer Proteogenomic DB'/></li>
+               <li className="db_list db_list1"><a href="#"><FormattedMessage  id = "YBC Dataset" defaultMessage='YBC Dataset'/></a></li>
              </ul>
          </div>
-         <div class="right wp75 db_list_con db_list_con1">
-            <h6 class="h-tit6 mt20">Cancer Proteogenomic DB > YBC Dataset</h6>
-            <div class="tab_content">
+         <div className="right wp75 db_list_con db_list_con1">
+            <h6 className="h-tit6 mt20">암단백유전체 DB > YBC 데이터셋</h6>
+            <div className="tab_content">
                 <ul>
-                	<li><span>Criteria </span>Among patients with early-onset breast cancer under 40 years of age</li>
-                	<li><span>Target</span>126 people</li>
-                	<li><span>Year</span>2013~2021</li>
-                	<li><span>content</span>Integrate and link DB of genomic and proteomic and clinical data of Korean early-onset breast cancer patients</li>
+                	<li><span>기준</span> 조기발병 유방암 환자 중 40세 이하 대상자</li>
+                	<li><span>대상자</span>126명</li>
+                	<li><span>연도</span>2013 ~ 2021년</li>
+                	<li><span>내용</span>한국인 조기발병 유방암 환자의 유전체 및 단백체와 임상 데이터 통합 · 연계 DB</li>
                 </ul>
             </div>
-            <h6 class="h-tit6 mt20">자료DB 안내</h6>
-            <div class="db_table_wrap">
-            	<h3 class="db_table_stit">건강정보 테이블</h3>
-            	<div class="db_table_icon_table">
-            		<div class="iconbox">
+            <h6 className="h-tit6 mt20">자료DB 안내</h6>
+            <div className="db_table_wrap">
+            	<h3 className="db_table_stit">건강정보 테이블</h3>
+            	<div className="db_table_icon_table">
+            		<div className="iconbox">
             			<img src={icon_4} alt="건강정보 테이블  아이콘"/>
             		</div>
-            		<div class="tbl type2 tablebox">
-            			<div class="tbl type1 scroll">
-                			<div class="fm_area">
-                      	 		<dl class="sbj_tit">
+            		<div className="tbl type2 tablebox">
+            			<div className="tbl type1 scroll">
+                			<div className="fm_area">
+                      	 		<dl className="sbj_tit">
                           	 		<dt>내용</dt>
                            			<dd>환자의 기본 건강정보(예. 음주·흡연 여부 등)</dd>
                        			</dl>
@@ -53,16 +53,16 @@ export default function MaterialGuidance() {
             	</div>
             </div>
 
-            <div class="db_table_wrap">
-          		<h3 class="db_table_stit">신체계측 테이블</h3>
-          		<div class="db_table_icon_table">
-          			<div class="iconbox">
+            <div className="db_table_wrap">
+          		<h3 className="db_table_stit">신체계측 테이블</h3>
+          		<div className="db_table_icon_table">
+          			<div className="iconbox">
           				<img src={icon_4} alt="건강정보 테이블  아이콘"/>
           			</div>
-          			<div class="tbl type2 tablebox">
-          				<div class="tbl type1 scroll">
-          	    			<div class="fm_area">
-                      	 		<dl class="sbj_tit">
+          			<div className="tbl type2 tablebox">
+          				<div className="tbl type1 scroll">
+          	    			<div className="fm_area">
+                      	 		<dl className="sbj_tit">
                           	 		<dt>내용</dt>
                            			<dd>환자의 신체계측(BMI) 정보</dd>
                        			</dl>
@@ -76,16 +76,16 @@ export default function MaterialGuidance() {
             	</div>
             </div>
 
-              <div class="db_table_wrap">
-            		<h3 class="db_table_stit">면역병리 테이블</h3>
-            		<div class="db_table_icon_table">
-            			<div class="iconbox">
+              <div className="db_table_wrap">
+            		<h3 className="db_table_stit">면역병리 테이블</h3>
+            		<div className="db_table_icon_table">
+            			<div className="iconbox">
             					<img src={icon_4} alt="건강정보 테이블  아이콘"/>
             			</div>
-            			<div class="tbl type2 tablebox">
-            				<div class="tbl type1 scroll">
-            	    			<div class="fm_area">
-                        	 		<dl class="sbj_tit">
+            			<div className="tbl type2 tablebox">
+            				<div className="tbl type1 scroll">
+            	    			<div className="fm_area">
+                        	 		<dl className="sbj_tit">
                             	 		<dt>내용</dt>
                              			<dd>면역병리검사의 검사결과(예. ER, PR, HER2, Ki-67(%) 등)</dd>
                          			</dl>
@@ -99,16 +99,16 @@ export default function MaterialGuidance() {
                 	</div>
               </div>
 
-              <div class="db_table_wrap">
-              	<h3 class="db_table_stit">외과병리 테이블</h3>
-              	<div class="db_table_icon_table">
-              		<div class="iconbox">
+              <div className="db_table_wrap">
+              	<h3 className="db_table_stit">외과병리 테이블</h3>
+              	<div className="db_table_icon_table">
+              		<div className="iconbox">
               			<img src={icon_4} alt="건강정보 테이블  아이콘"/>
               		</div>
-              		<div class="tbl type2 tablebox">
-              			<div class="tbl type1 scroll">
-                  			<div class="fm_area">
-                        	 		<dl class="sbj_tit">
+              		<div className="tbl type2 tablebox">
+              			<div className="tbl type1 scroll">
+                  			<div className="fm_area">
+                        	 		<dl className="sbj_tit">
                             	 		<dt>내용</dt>
                              			<dd>수술 시 조직 검사에서 확인된 정보(예. T, N Category 등)</dd>
                          			</dl>
@@ -122,16 +122,16 @@ export default function MaterialGuidance() {
                 	</div>
               </div>
 
-              <div class="db_table_wrap">
-            		<h3 class="db_table_stit">추적관찰 테이블</h3>
-            		<div class="db_table_icon_table">
-            			<div class="iconbox">
+              <div className="db_table_wrap">
+            		<h3 className="db_table_stit">추적관찰 테이블</h3>
+            		<div className="db_table_icon_table">
+            			<div className="iconbox">
             				<img src={icon_4} alt="건강정보 테이블  아이콘"/>
             			</div>
-            			<div class="tbl type2 tablebox">
-            				<div class="tbl type1 scroll">
-            	    			<div class="fm_area">
-                        	 		<dl class="sbj_tit">
+            			<div className="tbl type2 tablebox">
+            				<div className="tbl type1 scroll">
+            	    			<div className="fm_area">
+                        	 		<dl className="sbj_tit">
                             	 		<dt>내용</dt>
                              			<dd>환자의 재발 정보(예. 재발여부, 재발까지 확인된 기간 등)</dd>
                          			</dl>

@@ -134,8 +134,8 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
   }
   return (
     <div>
-      <div id='scatter_parent' ref={ref} className={`p-3 ${watermarkCss}`}>
-        <VolcanoPlotD3 dataProps={data}/>
+      <div id='scatter_parent'  >
+        <VolcanoPlotD3 watermarkCss={watermarkCss} dataProps={data}/>
       </div>
       {/* <button type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-8" onClick={resetChart}>reset</button>
       <button type="button" onClick={zoomIn} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 ml-8 rounded" >zoom in</button>

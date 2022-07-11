@@ -70,7 +70,8 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   }
 
   useEffect(() => {
-    if(circosSanpleRnidListData && Object.keys(circosSanpleRnidListData).length > 0){
+    
+    if(circosSanpleRnidListData ){
       setSamplesCount(Object.keys(circosSanpleRnidListData).length)
     }
   }, [circosSanpleRnidListData])

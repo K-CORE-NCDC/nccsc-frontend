@@ -142,6 +142,27 @@ export function getLolipopInformation(type, data) {
   };
 }
 
+export function getClinicalMaxMinInfo(type,data) {
+  return (dispatch) => {
+    let url = config.auth + "getClinicalMaxMinInfo/";
+    sendRequest(url, type, data)
+      .then((result) => {
+        const d = result
+        if (d.status === 200) {
+          dispatch({
+            type: dataVisualization.CLINICALMAXMIN_REQUEST,
+            payload: { ...d["data"], status: 200 },
+          });
+        }
+      }).catch((e) => {
+        console.log("error", e);
+        dispatch({
+          type: dataVisualization.VOLCANO_REQUEST,
+          payload: { status: 204 },
+        });
+      });
+  }
+}
 export function getVolcanoPlotInfo(type, data) {
   return (dispatch) => {
     let url = config.auth + "volcano/";
@@ -586,6 +607,24 @@ export function getScatterInformation(type, data) {
   };
 }
 
+export function getGeneFusionInformation (type,data){
+  return (dispatch) => {
+    let url = config.auth + "check-fusion-genes/";
+    sendRequest(url, type, data)
+      .then((result) => {
+        const d = result;
+        dispatch({ type: dataVisualization.REQUEST_DONE });
+        dispatch({
+          type: dataVisualization.CHECK_GENE_FUSION_REQUEST,
+          payload: d["data"],
+        });
+        dispatch({ type: dataVisualization.REQUEST_DONE });
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
+  };
+}
 
 export function getFusionInformation(type, data) {
   return (dispatch) => {
@@ -692,6 +731,43 @@ export function getCircosTimelineTable(method, data) {
   };
 }
 
+export function getPassEncodeId(type,data){
+  return (dispatch) => {
+    let url = config.auth + "niceKey/";
+    sendRequest(url, type, data)
+      .then((result) => {
+        let r = result['data']
+        if(result['status']===200){
+          dispatch({ type: dataVisualization.REQUEST_DONE });
+          dispatch({
+            type: dataVisualization.PASS_ENCODE_ID,
+            payload: r,
+          });  
+        }
+      }).catch((e)=>{
+        console.log("error",e)
+      })
+  }
+}
+
+export function checkUserName(type, data) {
+  return (dispatch) => {
+    let url = config.auth + "registration/?type="+data['type']+'&value='+data['value'];
+    sendRequest(url, type, data)
+      .then((result) => {
+        let r = result['data']
+        if(result['status']===200){
+          dispatch({ type: dataVisualization.REQUEST_DONE });
+          dispatch({
+            type: dataVisualization.CHECK_USER,
+            payload: r,
+          });  
+        }
+      }).catch((e)=>{
+        console.log("error",e)
+      })
+  }
+}
 
 export function userRegister(type, data) {
   return (dispatch) => {

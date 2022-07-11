@@ -14,10 +14,11 @@ import {
   } from '@heroicons/react/outline'
 
 const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
+    console.log(`---`,data);
     const [inputRule,setInputRule] = useState({})
     const [customName,setCustomName] = useState({})
     const [oncoprintObj,setOncoprintObj] = useState({})
-
+    const [clickType,setClickType] = useState([])
     let names_variant ={
         "Missense Mutation":"variant_classification||Missense_Mutation||4",
         "Nonsense Mutation":"variant_classification||Nonsense_Mutation||6",
@@ -30,15 +31,18 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
         "Protein Downregulation (value <= 0.5)":"protein||down||4",
         "Protein Upregulation (value >= 1.5)":"protein||up||4",
         "mRNA Downregulation (z-score <= -1)":"regulation||down||3",
-        "mRNA Upregulation (z-score >= 1)":"regulation||up||3"
-
+        "mRNA Upregulation (z-score >= 1)":"regulation||up||3",
+        "Cnv (value = 2)":"cnv||white",
+        "Cnv (value <= 1)":"cnv||blue",
+        "Cnv (value >= 3)":"cnv||red"
     }
-    var type = []
+    
     const [state, setState] = useState({});
     const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
 
     
     const drawChart = (w,gData,cData,rule_types,inputRule) => {
+
         var oncoprint     
         
         if($('#oncoprint-glyphmap').length>0){
@@ -104,13 +108,13 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
             geneData = state['geneData']
         }
 
+        
+
         var share_id = null;
 
 
         function calculateMutation(genes) {
-
             let total = genes.length;
-
             var i = 0;
             for (var key in genes) {
                 if (Object.keys(genes[key]).indexOf("variant_classification") != -1){
@@ -164,6 +168,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
         if(geneData.length>0){
             for (var i = 0; i < geneData.length; i++) {
                 var results = [];
+                
                 for (var j = 0; j < geneData[i].data.length; j++) {
                     var result = _.cloneDeep(geneData[i].data[j]);
                     if(result.type == 'search') {
@@ -173,9 +178,10 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
                     }
                     results[j] = result;
                 }
-
+                
                 oncoprint.setTrackData(geneData[i].track_id, results, 'sample');
                 oncoprint.setTrackInfo(geneData[i].track_id, calculateMutation(results));
+                
                 oncoprint.setTrackTooltipFn(geneData[i].track_id, function(data) {
 
                     var result = "<b>Sample: " + BrstKeys[data.sample] + "</b>"
@@ -212,9 +218,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
                 clinical_custom_track_params['label'] = customName[originDatum.displayName];
                 clinical_custom_track_params['description'] = customName[originDatum.displayName];
 
-                
                 var track_id = oncoprint.addTracks([_.clone(clinical_custom_track_params)])[0];
-
                 oncoprint.setTrackInfo(track_id, "");
                 oncoprint.setTrackData(track_id, custom_datum[i]['data'], 'sample');
                 oncoprint.setTrackTooltipFn(track_id,function(data) {
@@ -299,6 +303,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
         oncoprint.releaseRendering();
         // });
         setTimeout(function(){ 
+            console.log(names_variant,rule_types)
             if(rule_types.length>0){
                 var legends = document.getElementsByClassName('legends')
                 for (let r = 0; r < rule_types.length; r++) {
@@ -310,7 +315,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
                     }
                 }
             }
-        },500);
+        },100);
         setOncoprintObj(oncoprint)
     }
 
@@ -347,35 +352,38 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
 
         }
     },[data])
-
-   
+    
+ 
     
     document.addEventListener('click',function(e){
         let elem = e.target.parentNode
         if(elem){
             if(elem.classList.contains('legends')){
                 let name = elem.getAttribute('data-text')
+                console.log(names_variant,name)
                 if (name in names_variant){
+                    let types = (clickType)?clickType:[]
                     let zx = names_variant[name]
-                    let index = type.indexOf(zx)
+                    let index = types.indexOf(zx)
                     let r = zx.split('||')
                     let key = r[0]
                     let value = r[1]
                     let z = r[2]
                     let rule = window.geneticrules.genetic_rule_set_custom
                     if(index > -1){
-                        type.splice(index, 1);
+                        types.splice(index, 1);
                         rule.rule_params[key][value]['shapes'][0]['z']=z
                     }else{
-                        type.push(zx)
+                        types.push(zx)
                         rule.rule_params[key][value]['shapes'][0]['z']=0
                     }
+                    setClickType(types)
                     let gData = state['geneData']
                     let cData = state['clinicalData']
                     if(gData){
                         if(gData.length>0){
                             
-                            drawChart(width-300,gData,cData,type,rule)
+                            drawChart(width-300,gData,cData,clickType,rule)
                         }
                     }
 
@@ -392,7 +400,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
         if(Object.keys(state).length>0){
             let gData = state['geneData']
             let cData = state['clinicalData']
-            drawChart(width-300,gData,cData,type,inputRule)
+            drawChart(width-300,gData,cData,clickType,inputRule)
         }
     },[state,inputRule])
 

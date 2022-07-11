@@ -109,8 +109,8 @@ export default function DataDeliverGuidance() {
           <br/><br/>
           <div className="btn_wrap center">
               <a href="#" className="btn btn-color3 btn-md"><FormattedMessage  id = "Download application form" defaultMessage="Download application form"/></a>
-              <a href="/web/usr/mypage.do" className="btn btn-color4 btn-md"><FormattedMessage  id = "Inquiry of application" defaultMessage="Inquiry of application"/></a>
-              <a href="/web/sub/sub4_1.do?sub=4_3" className="btn btn-color4 btn-md"><FormattedMessage  id = "Data Application" defaultMessage="Data Application"/></a>
+              <a href="#" className="btn btn-color4 btn-md"><FormattedMessage  id = "Inquiry of application" defaultMessage="Inquiry of application"/></a>
+              <a href="#" className="btn btn-color4 btn-md"><FormattedMessage  id = "Data Application" defaultMessage="Data Application"/></a>
           </div>
       </div>
     )

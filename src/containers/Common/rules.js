@@ -29,11 +29,13 @@ var non_mutation_rule_params = {
   			'fill': 'rgba(190, 190, 190, 1)',
   			'z': 1
 			}],
-  		exclude_from_legend: true,
+  		exclude_from_legend: false,
+			legend_label:'No alteration'
     },
+		
     // mRNA regulation
     'regulation': {
-		// Light red outline for upregulation
+			// Light red outline for upregulation
   		'up': {
   			shapes: [{
   				'type': 'rectangle',
@@ -48,7 +50,7 @@ var non_mutation_rule_params = {
   			}],
   			legend_label: 'mRNA Upregulation (z-score >= 1)',
   		},
-		// Light blue outline for downregulation
+			// Light blue outline for downregulation
   		'down': {
   			shapes: [{
   				'type': 'rectangle',
@@ -97,8 +99,8 @@ var non_mutation_rule_params = {
   			legend_label: 'Protein Downregulation (value <= 0.5)',
   		}
     },
-	'cnv': {
-		// small up arrow for upregulated
+		'cnv': {
+			// small up arrow for upregulated
   		'blue': {
   			shapes: [
 				{

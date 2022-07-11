@@ -57,6 +57,7 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
 
   useEffect(()=>{
     if(oncoJson){
+      console.log(oncoJson)
       setChartData((prevState) => ({
         ...prevState,
         ...oncoJson
@@ -198,6 +199,7 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
       <div className='grid'>
         <div className='p-5 text-right m-5'>
           <div className='flex flex-wrap float-left'>
+            
             <label><FormattedMessage  id = "Clinical_Filters_heatmap" defaultMessage='Clinical Filters'/></label>
             <Multiselect
               options={optionChoices} // Options to display in the dropdown
@@ -225,6 +227,7 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
                 <h3>Mutation Distribution :distribution of selected mutation</h3>
                 <h3>Mutation Count :count of selected somatic mutation</h3>
                 </div>
+                {/* <div className="pl-10"><FormattedMessage  id = "oncoplot_total_samples" defaultMessage={`No of samples :${chartData['geneData']&&chartData['geneData'].length?chartData['geneData'][0].data.length:0}`}/></div> */}
                 <OncoCmp
                 watermarkCss={watermarkCss}
                 ref={reference}

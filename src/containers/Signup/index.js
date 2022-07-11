@@ -3,7 +3,7 @@ import MemberShip from './MemberShip'
 import TermsOfUse from './TermsOfUse'
 
 const SignupComponent = () => {
-    const [nextstep, setNextStep] = useState(1)
+    const [nextstep, setNextStep] = useState(2)
     const updateStep_ = (star) => {
       let step = nextstep
       setNextStep( step + 1)
@@ -33,9 +33,11 @@ const SignupComponent = () => {
         <div>
             <div className="flex flex-row justify-center items-center gap-3 mt-6">
               <div className={"p-6 text-5xl font-semibold "+(nextstep === 1?"border-b-2 border-blue-800":"border-b-2 border-gray-300")}>
-              Comments
+                STEP 01
               </div>
-              <div className={"p-6 text-5xl font-semibold "+(nextstep === 2?"border-b-2 border-blue-800":"border-b-2 border-gray-300")}>Join membership</div>
+              <div className={"p-6 text-5xl font-semibold "+(nextstep === 2?"border-b-2 border-blue-800":"border-b-2 border-gray-300")}>
+                STEP 02
+              </div>
             </div>
             <div className="mt-5">
             {components(nextstep)}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import SurvivalCmp from '../../Common/Survival'
-import { getSurvivalInformation } from '../../../actions/api_actions'
+import { getSurvivalInformation,getClinicalMaxMinInfo } from '../../../actions/api_actions'
 import { exportComponentAsPNG } from 'react-component-export-image';
 import GroupFilters, { PreDefienedFiltersSurvival } from '../../Common/GroupFilter'
 import NoContentMessage from '../../Common/NoContentComponent'
@@ -17,6 +17,7 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
   const reference = useRef()
   const dispatch = useDispatch()
   const survivalJson = useSelector((data) => data.dataVisualizationReducer.survivalSummary);
+  const clinicalMaxMinInfo = useSelector((data) => data.dataVisualizationReducer.clinicalMaxMinInfo);
   const [watermarkCss, setWatermarkCSS] = useState("")
   const [genesArray, setGenesArray] = useState([])
   const [fileredGene, setFilteredGene] = useState("")
@@ -31,6 +32,12 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
   const [userDefienedFilter, setUserDefienedFilter] = useState('static')
   const [pValueData, setPvalueData] = useState("")
   const [smallScreen, setSmallScreen] = useState(false)
+
+  useEffect(()=>{
+    if(!clinicalMaxMinInfo){
+      dispatch(getClinicalMaxMinInfo('GET',{}))
+    }
+  },[])
 
   const submitFitersAndFetchData = () => {
     if ((fileredGene !== "") || (filterTypeButton === 'clinical')) {
@@ -213,8 +220,8 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
                   <option selected={geneDatabase === 'proteome'} value="proteome">Global Proteome</option>
                 </select>
               </div>}
-              {((filterTypeButton === 'clinical') && (userDefienedFilter === 'static')) && <PreDefienedFiltersSurvival parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
-              {((filterTypeButton === 'clinical') && (userDefienedFilter === 'dynamic')) && <GroupFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
+              {((filterTypeButton === 'clinical') && (userDefienedFilter === 'static')) && <PreDefienedFiltersSurvival type='survival' parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
+              {((filterTypeButton === 'clinical') && (userDefienedFilter === 'dynamic')) && <GroupFilters type='survival' parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
               {(filterTypeButton === 'omics') && <div>
                 <div>
                   <button onClick={submitFitersAndFetchData} className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 xs:w-32 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
