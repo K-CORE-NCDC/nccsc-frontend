@@ -339,10 +339,10 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
         }
       },
       strokeColor: function(d){
-        if(d.name) {
-          return 1
+        if(d.name in selectedGenesObject) {
+          return selectedGeneColor
         }else{
-          return 0
+          return '#eee'
         }
       },
       strokeWidth: 2.0,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {userRegister} from '../../actions/api_actions';
+import {userRegister,checkUserName,getPassEncodeId} from '../../actions/api_actions';
 import { useSelector, useDispatch } from "react-redux";
 
 let initial_state = {
@@ -17,9 +17,13 @@ const MemberShip = () => {
     const [errors,setError] = useState(initial_state)
     const dispatch = useDispatch()
     const regitserResponse = useSelector((data) => data.dataVisualizationReducer.registerData);
+    const checkUserId = useSelector((data)=>data.dataVisualizationReducer.checkUserName);
+    const passKey = useSelector((data)=>data.dataVisualizationReducer.passKey);
     const [message,setMessage] = useState("")
     const [inputmail,setInputMail] = useState(false)
-
+    const [instituteDropdown,setInstituteDropdown] = useState([])
+    const [institute,setInstitute] = useState([])
+    const [encData,setEncData] = useState('')
     function formSet(e){
       if(e.target.value === "input"){
         setForm(oldState => ({ ...oldState, [e.target.name]: ""}))
@@ -74,13 +78,50 @@ const MemberShip = () => {
         }
     }
 
+    useEffect(()=>{
+      let ins = ["GOVERNMENT","UNIVERSITY","RESEARCH CENTER","HOSPITAL","INDUSTRY","OTHERS"]
+      let html = []
+      for (let i = 0; i < ins.length; i++) {
+        html.push(
+          <option key={ins[i]} value={ins[i]}>{ins[i]}</option>
+        )
+      }
+      setInstituteDropdown(html)
+    },[])
+
     useEffect(() => {
       if(regitserResponse){
         setMessage(regitserResponse['message'])
       }
     }, [regitserResponse])
 
-    // console.log(form)
+    const chekcId = () => {
+      if(form['id']){
+        let data = {
+          'value':form['id'],
+          'type':'username'
+        }
+        dispatch(checkUserName('GET', data))
+      }
+    }
+
+    useEffect(()=>{
+      window.open('', 'popupChk', 'width=500, height=550, top=100, left=100, fullscreen=no, menubar=no, status=no, toolbar=no, titlebar=yes, location=no, scrollbar=no');
+      document.form_chk.action = "https://nice.checkplus.co.kr/CheckPlusSafeModel/checkplus.cb";
+      document.form_chk.target = "popupChk";
+      document.form_chk.submit();
+    },[encData])  
+    
+    useEffect(()=>{
+      if(passKey){
+        setEncData(passKey['enc_data'])
+      }
+    },[passKey])
+    
+    const verifyMobile = () => {
+      dispatch(getPassEncodeId('GET', {}))
+    }
+
     return (
         <div>
             <section className="mt-10 flex flex-col items-center justify-center">
@@ -96,17 +137,25 @@ const MemberShip = () => {
                 <div className="border-t-2 border-gray-600 w-3/5">
                   <div className="grid grid-cols-4">
                     <div className="col-span-1 bg-gray-200 bg-gray-200 p-10 border-b-2 border-gray-300">
-                      <text className="font-bold">ID</text>
+                      <span className="font-bold">ID</span>
                       <span className="text-red-500">*</span>
                     </div>
-                    <div className="col-span-3 p-8 bg-white border-b-2 border-gray-300 inline-flex gap-3">
-                      <div className="mb-3 pt-0">
-                        <input type="text"  value={form['id']} name="id" onChange={formSet} className="px-4 py-4 text-blueGray-600 relative bg-white rounded border border-gray-400 outline-none focus:outline-none focus:ring"/>
+                    <div className="col-span-3 p-8 bg-white border-b-2 border-gray-300  gap-3">
+                      <div className='grid grid-cols-3'>
+                        <div className='col-span-2 inline-flex'>
+                          <div className="mb-3 pt-0">
+                            <input type="text" id='username'  value={form['id']} name="id" onChange={formSet} 
+                              className={(checkUserId?" border-red-400 ":"  ")+"px-4 py-4 text-blueGray-600 relative bg-white rounded border border-gray-400 outline-none focus:outline-none focus:ring"}/>
+                          </div>
+                          <button onClick={chekcId} className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded" >
+                            Check Id
+                          </button>
+                        </div>
                       </div>
-                      <button className="hover:bg-blue-700 text-white h-11 mt-2 font-bold py-1 px-6 float-left rounded" style={{backgroundColor:"#bdbdbd"}}>
-                        confirm repetition
-                      </button>
-                      {errors.id && <span className="text-red-500 text-sm">{errors['id']}</span>}
+                      <div className='flex flex-col'>
+                        {checkUserId && <span className="text-red-500 text-md">User Id Already exists</span>}
+                        {errors.id && <span className="text-red-500 text-sm">{errors['id']}</span>}
+                      </div>
                     </div>
                     <div className="col-span-1 bg-gray-200 bg-gray-200 p-8 border-b-2 border-gray-300">
                       <span className="font-bold">Password</span><span className="text-red-500">*</span>
@@ -117,7 +166,7 @@ const MemberShip = () => {
                         </div>
                         <div className="flex flex-col">
                           <div>
-                            <span className="text-red-500 text-sm">* It is less than 10-20 digits and is stored encrypted.</span>
+                            <span className="text-red-500 text-md">* It is less than 10-20 digits and is stored encrypted.</span>
                           </div>
                           <div>
                             {errors.password && <span className="text-red-500 text-sm">{errors['password']}</span>}
@@ -143,18 +192,32 @@ const MemberShip = () => {
                         </div>
                         {errors.name && <span className="text-red-500 text-sm">{errors['name']}</span>}
                     </div>
+
+                    <div className="col-span-1 bg-gray-200 bg-gray-200 p-8 border-b-2 border-gray-300">
+                      <span className="font-bold">Institute</span><span className="text-red-500">*</span>
+                    </div>
+                    <div className="col-span-3 p-8 bg-white border-b-2 border-gray-300">
+                        <div className="mb-3 pt-0">
+                          <select className="px-4 py-4 text-blueGray-600 relative bg-white rounded border border-gray-400 outline-none focus:outline-none focus:ring">
+                            <option>--Select--</option>
+                            {instituteDropdown}
+                          </select>
+                        </div>
+                        {errors.name && <span className="text-red-500 text-sm">{errors['name']}</span>}
+                    </div>
+
                     <div className="col-span-1 bg-gray-200 bg-gray-200 p-8 border-b-2 border-gray-300">
                       <span className="font-bold">Phone number</span><span className="text-red-500">*</span>
                     </div>
                     <div className="col-span-3 p-8 bg-white border-b-2 border-gray-300 inline-flex gap-3">
-                        <label className="pt-3">
-                          <input type="checkbox" className="form-radio" name="accountType" value="personal"/>
-                          <span className="ml-2 font-medium">I agree to receive SMS</span>
-                        </label>
                         <div className="pt-0">
                           <input type="text" value={form['phone_number']} name="phone_number" onChange={formSet} className="px-4 py-4 text-blueGray-600 relative bg-white rounded text-sm border border-gray-400 outline-none focus:outline-none focus:ring"/>
                         </div>
+                        <button onClick={verifyMobile} className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
+                          Verify Mobile
+                        </button>
                         {errors.phone_number && <span className="text-red-500 text-sm">{errors['phone_number']}</span>}
+
                     </div>
                     <div className="col-span-1 bg-gray-200 bg-gray-200 p-8 border-b-2 border-gray-300">
                       <span className="font-bold">E-mail</span><span className="text-red-500">*</span>
@@ -203,6 +266,10 @@ const MemberShip = () => {
                     </div>
                   </div>
                 </div>
+                <form name="form_chk" method="post">
+                  <input type="hidden" name="m" value="checkplusSerivce"/>
+                  <input type="hidden" name="EncodeData" value={encData}/>
+                </form>
                 <div className="inline-flex gap-3 mt-6">
                     <button className="hover:bg-blue-700 text-white font-bold py-6 px-6 float-left rounded" style={{backgroundColor:"#bdbdbd"}}>
                       Cancellation

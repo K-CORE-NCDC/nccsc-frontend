@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import * as d3 from 'd3'
 import '../../styles/volcano.css'
+import html2canvas from 'html2canvas';
+import {saveSvgAsPng} from 'save-svg-as-png'
 
-const VolcanoPlotD3 = ({ dataProps }) => {
+const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
     const [volcanoData, setVolcanoData] = useState([])
 
     function volcanoPlot() {
@@ -53,6 +55,7 @@ const VolcanoPlotD3 = ({ dataProps }) => {
                 var svg = d3.select(this).append('svg')
                     .attr('height', height)
                     .attr('width', width)
+                    .attr('id', 'svgVolcano')
                     .append('g')
                     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
                     .call(zoom);
@@ -344,6 +347,11 @@ const VolcanoPlotD3 = ({ dataProps }) => {
                 .call(volcanoPlot1);
         }
     }, [volcanoData])
+    useEffect(()=>{
+        if(watermarkCss){
+            saveSvgAsPng(document.getElementById("svgVolcano"), "volcano.png",{scale: 2, backgroundColor: "#FFFFFF"});
+        }
+    },[watermarkCss])
     return (
         <div>
             <div>Volcano plot</div>

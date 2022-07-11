@@ -67,7 +67,11 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state,
         scatterData : payload
       }
-
+    case dataVisualization.CHECK_GENE_FUSION_REQUEST:
+      return {
+        ...state,
+        fusionGenes : payload
+      }
     case dataVisualization.FUSION_REQUEST:
       return {
         ...state,
@@ -88,6 +92,16 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state,
         circosTimelieTableData: payload
       }
+    case dataVisualization.PASS_ENCODE_ID:
+      return {
+        ...state,
+        passKey:payload
+      }
+    case dataVisualization.CHECK_USER:
+      return {
+        ...state,
+        checkUserName: payload
+      }
     case dataVisualization.REGISTER_REQUEST:
       return {
         ...state,
@@ -97,6 +111,11 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
       return {
         ...state,
         kmeanSummary: payload
+      }
+    case dataVisualization.CLINICALMAXMIN_REQUEST:
+      return {
+        ...state,
+        clinicalMaxMinInfo: payload
       }
     case CLEAR_ALL_STATES:
       return {

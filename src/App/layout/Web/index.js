@@ -256,8 +256,8 @@ export default function Web(props) {
           <Redirect from="/" to="home" />
         </Switch>
       </Suspense>
-
-      <footer className="p-10 bg-white border-gray-300 border-t">
+      {/* fixed bottom-0 */}
+      <footer className="p-10 bg-white border-gray-300 border-t  w-full">
         <div className="grid grid-cols-2">
           <div className="text-gray-500">
             <p>경기도 고양시 일산동구 일산로 323 국립암센터</p>

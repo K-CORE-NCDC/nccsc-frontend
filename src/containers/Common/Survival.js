@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import '../../styles/survival.css'
-import { Chart } from 'react-google-charts'
-import { index } from 'd3'
-import LineChart, { StairChart } from "react-linechart";
+import LineChart  from "react-linechart";
 import "react-linechart/dist/styles.css";
+import DataTable from 'react-data-table-component';
 
 const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref) => {
   const [survivalData, setSurvivalData] = useState([])
   const [lineChartData, setLineChartData] = useState([])
   const [offsetWidth, setOffsetWidth] = useState(900)
   const [yMinValue, setYMinValue] = useState(0)
+  const [chartTable,setChartTable] = useState([])
   const colorArray = ['#4285F4', '#DB4437', '#F4B400', '#0F9D58', '#000', '#1f0cf2', '#1f0cf2']
   // console.log(yMinValue);
   useEffect(() => {
@@ -19,15 +19,27 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
       let lineChartDataTemp = []
       let counter = 0
       let minValue = 100
+      // let tableData = {}
+      let tableHtmlData = []
       for (const [key, value] of Object.entries(data.survivalJson.final)) {
+        // tableData[key] = [['Sample','X','Y']]
+        console.log(value)
+        let columns = [{name:"X",selector: row => row.x,},{name:"Y",selector: row => row.y},{name:"Sample",selector: row => row.sample},]
+        tableHtmlData.push(
+          <div className='p-3'>
+            <h3 className='mb-3 text-left'>{key}</h3>
+            <DataTable data={value} pagination  paginationPerPage={5}  paginationRowsPerPageOptions={[5, 15, 25, 50]} columns={columns}/>
+          </div>)
         let color =  `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`
         if(counter < colorArray.length){
           color = colorArray[counter]
         }
         value.forEach(e=>{
+          // tableData[key].push([e.sample,e.x,e.y])
           if(e.y < minValue){
             minValue = e.y
           }
+
         })
         lineChartDataTemp.push({
           color: color,
@@ -38,43 +50,33 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
         })
         counter += 1
       }
+      // setChartTable(tableData)
       setYMinValue(minValue - 3)
       setLineChartData(lineChartDataTemp)
+      // if(tableData){
+      //   let tableHtmlData = []
+      //   for (const [key, value] of Object.entries(tableData)) {
+      //     let options = {"title":key,curveType: "function",legend: { position: "bottom" }, pageSize: 5}
+      //     tableHtmlData.push(<div>
+      //       <h3>{key}</h3>
+      //       <DataTable
+      //       key={key}
+      //       chartType="Table"
+      //       width="100%"
+      //       height="400px"
+      //       data={value}
+      //       options={options} /></div>)
+      //   }
+        setChartTable(tableHtmlData)
+
+      // }
     }
   }, [data])
 
+  
+
   return (
     <div id="survival" ref={ref} className={`${watermarkCss} p-1`}>
-      {/* {survivalData.length > 1 && <Chart
-        width={'100%'}
-        height={'600px'}
-        chartType="LineChart"
-        loader={<div>Loading Chart</div>}
-        data={data.survivalJson.all}
-        options={{
-
-          explorer: {
-            actions: ['dragToZoom', 'rightClickToReset'],
-            axis: 'horizontal',
-            keepInBounds: true,
-            maxZoomIn: 4.0
-          },
-          allowHtml: true,
-          title: pValue,
-          vAxis: { title: 'Recurrence rate(Max : 100%)' },
-          hAxis: { title: 'Duration in Month' },
-          isStacked: true,
-          legend: { position: 'top' },
-          chart: {
-            title: 'Survival Plot Samples vs survival rate',
-            subtitle: 'in Months',
-          }
-        }}
-        rootProps={{ 'data-testid': '1' }}
-      />} */}
-      {/* <CanvasXpressReact target={target} data={survivalDataCanvas} config={config} width={500} height={500} /> */}
-      {/* <div id="kaplanmeier1" className="kaplanmeier1"><Abc /></div> */}
-      {/* <Abc /> */}
       <div className="text-left">{pValue}</div>
       {survivalData.length > 1 && <LineChart
         name={pValue}
@@ -94,6 +96,7 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
         data={lineChartData}
         tooltipClass="svg-line-chart-tooltip-custom"
       />}
+      {chartTable.length>0 && <div className={'mt-20 grid grid-cols-'+chartTable.length}>{chartTable}</div>}
     </div>
   );
 })

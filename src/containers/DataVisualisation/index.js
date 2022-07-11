@@ -192,7 +192,7 @@ export default function DataVisualization() {
       l = availableTabsForProject
     } else {
 
-      l = ['circos', 'onco', 'lollipop', 'volcano', 'heatmap', 'survival', 'correlation','cnv','box']
+      l = ['circos', 'onco', 'lollipop', 'volcano', 'heatmap', 'survival', 'correlation','cnv','box','fusion']
 
     }
     let tmp = []

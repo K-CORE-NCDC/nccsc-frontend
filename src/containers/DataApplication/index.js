@@ -22,7 +22,7 @@ export default function DataApplication() {
                    <li className={openTab === 3?"on":""}><p onClick={()=>setOpenTab(3)}><FormattedMessage  id = "Data application" defaultMessage='Data application'/></p></li>
               </ul>
               <div className="tab_cont">
-                <div class="on" style={{display:openTab === 1?"block":"none"}}>
+                <div className="on" style={{display:openTab === 1?"block":"none"}}>
                   <DataDeliverGuidance/>
                 </div>
                 <div style={{display:openTab === 2?"block":"none"}}>
