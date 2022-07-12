@@ -50,7 +50,7 @@ const filterChoicesCustom = [
     { 'type': 'boolean', 'name': 'Hormone Replace Therapy', 'id': 'hrt_yn' },
     { 'type': 'number', 'name': 'T Category', 'id': 't_category', 'input': 'number' },
     { 'type': 'number', 'name': 'N Category', 'id': 'n_category', 'input': 'number' },
-    { 'type': 'text', 'name': 'HER2 Score', 'id': 'her2_score', 'input': 'text' },
+    { 'type': 'number', 'name': 'HER2 Score', 'id': 'her2_score', 'input': 'text' },
     { 'type': 'text', 'name': 'ki67', 'id': 'ki67_score', 'input': 'text' },
     { 'type': 'boolean', 'name': 'Recurance Yes or No', 'id': 'rlps_yn' },
     { 'type': 'number', 'name': 'ER Test', 'id': 'er_score', 'input': 'number' },
@@ -65,7 +65,7 @@ let preDefienedGroups = {
     ],
     bmi_vl: [
         { label: "18.5~24.9", from: 18.5, to: 24.9 },
-        { label: "25>", from: 25, to: 100 },
+        { label: "25-", from: 25, to: 100 },
         
     ],
     mena_age: [
@@ -74,19 +74,19 @@ let preDefienedGroups = {
     ],
     feed_drtn_mnth: [
         { label: "> 1 Year", from: 12, to: 24 },
-        { label: "≤ 1 Year", from: 1, to: 11 }
+        { label: "1year ≤", from: 1, to: 11 }
     ],
     t_category: [
         { label: "Tis~T2", from: 'Tis', to: 'T2' },
         { label: "T3~T4", from: 'T3', to: 'T4' }
     ],
     n_category: [
-        { label: "Nx~N2", from: 'N1', to: 'N2' },
+        { label: "Nx~N2", from: 'Nx', to: 'N2' },
         { label: "N3", from: 'N3', to: 'N3' }
     ],
     her2_score: [
         { label: "negative(0~1+)", value: "negative(0, 0~1, 1+)" },
-        { label: "positive(2+3+)", value: "positive(2+3+)" }
+        { label: "positive(2+~3+)", value: "positive(2+3+)" }
     ],
     pr_score: [
         { label: "Positive", from: 1, to: 1 },
@@ -97,8 +97,8 @@ let preDefienedGroups = {
         { label: "Negative", from: 2, to: 2 }
     ],
     ki67_score: [
-        { label: "Positive 1-15%", value: "Positive 15%" },
-        { label: "Positive 16%-", value: "Positive 50%" }
+        { label: "low(≤15%)", value: "Positive 15%" },
+        { label: "intermediate, high(15%<)", value: "Positive 50%" }
     ],
     smok_yn: [
         { label: "No", value: "smok_yn||N" },
@@ -359,8 +359,8 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
             { 'type': 'number', 'name': 'Duration of Breastfeeding(month)', 'id': 'feed_drtn_mnth', 'input': 'number' },
             { 'type': 'dropdown', 'name': 'T Category', 'id': 't_category', 'input': 'number' },
             { 'type': 'dropdown', 'name': 'N Category', 'id': 'n_category', 'input': 'number' },
-            { 'type': 'text', 'name': 'HER2 Score', 'id': 'her2_score', 'input': 'text' },
-            { 'type': 'text', 'name': 'ki67', 'id': 'ki67_score', 'input': 'text' },
+            { 'type': 'dropdown', 'name': 'HER2 Score', 'id': 'her2_score', 'input': 'number' },
+            { 'type': 'dropdown', 'name': 'ki67', 'id': 'ki67_score', 'input': 'number' },
             { 'type': 'number', 'name': 'Relapse Duration(month)', 'id': 'rlps_cnfr_drtn', 'input': 'number' },
             
         ]
@@ -383,6 +383,19 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
             { label: "N2", from: 'N2', to: 'N2' },
             { label: "N3", from: 'N3', to: 'N3' }
         ]
+        preDefienedGroups['her2_score'] = [
+            { label: "0", from: '0', to: '0' },
+            { label: "0~1", from: '0~1', to: '0~1' },
+            { label: "1+", from: '1+', to: '1+' },
+            { label: "2+", from: '2+', to: '2+' },
+            { label: "3+", from: '3+', to: '3+' },
+        ]
+        preDefienedGroups['ki67'] = [
+            { label: "low(≤15%)", from: '0', to: '15' },
+            { label: "intermediate(<15-30%≤)", from: '15', to: '30' },
+            { label: "high(30%<)", from: '30', to: '100' },
+        ]
+        
     }
 
     const submitFilters = () => {
@@ -776,9 +789,57 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters,from }
     const [resetClicked, setResetClicked] = useState(false)
     const [isGroupFilterProp, setIsGroupFilterProp] = useState(false)
 
-
+    // console.log(preDefienedGroups)
     let preDefienedGroups1 = {
-        ...preDefienedGroups,
+        diag_age: [
+            { label: "21-25", from: 21, to: 25 },
+            { label: "26-30", from: 26, to: 30 },
+            { label: "31-35", from: 31, to: 35 },
+            { label: "36-40", from: 36, to: 40 }
+        ],
+        bmi_vl: [
+            { label: "~18.5", from: 0, to: 18.5 },
+            { label: "18.6~25", from: 18.6, to: 25 },
+            { label: "25.1~30", from: 25.1, to: 30 },
+            { label: "30.1>", from: 30.1, to: 100 }
+        ],
+        mena_age: [
+            { label: "10-13", from: 10, to: 13 },
+            { label: "14-17", from: 14, to: 17 },
+        ],
+        feed_drtn_mnth: [
+            { label: "> 1 Year", from: 1, to: 11 },
+            { label: "<- 1 Year", from: 12, to: 24 }
+        ],
+        t_category: [
+            { label: "Tis~T2", from: 'T1', to: 'T2' },
+            { label: "T3~T4", from: 'T3', to: 'T4' }
+        ],
+        n_category: [
+            { label: "Nx~N2", from: 'N1', to: 'N2' },
+            { label: "N3", from: 'N3', to: 'N3' }
+        ],
+        her2_score: [
+            { label: "positive(0, 0~1, 1+)", value: "positive(0, 0~1, 1+)" },
+            { label: "negative(3+)", value: "negative(3+)" }
+        ],
+        pr_score: [
+            { label: "Positive", from: 1, to: 1 },
+            { label: "Negative", from: 2, to: 2 }
+        ],
+        er_score: [
+            { label: "Positive", from: 1, to: 1 },
+            { label: "Negative", from: 2, to: 2 }
+        ],
+        ki67_score: [
+            { label: "Positive 1-15%", value: "Positive 15%" },
+            { label: "Positive 16%-", value: "Positive 50%" }
+        ],
+        smok_yn: [
+            { label: "No Smoking", value: "no" },
+            { label: "Past Smoking", value: "past" },
+            { label: "Current Smoking", value: "current" }
+        ]
        
     }
 
