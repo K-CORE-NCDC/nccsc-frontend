@@ -1,0 +1,57 @@
+
+/* Progressbar */
+.Layout{
+    width: 80rem;
+    position: relative;
+    margin: auto;
+}
+.progressbar {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    counter-reset: step;
+    margin: 2rem 0 4rem;
+  }
+  
+  .progressbar::before,
+  .progress {
+    content: "";
+    position: absolute;
+    top: 50%;
+    /* TranslateY is to move the div into middle of the screen in y axis, which makes it look the progress bar is touching the divs(circle) */
+    transform: translateY(-50%); 
+    height: 4px;
+    width: 100%;
+    background-color: #0c3c6a;
+    z-index: -1;
+  }
+  
+  .progress {
+    background-color: #0c3c6a;
+    transition: 0.3s;
+  }
+  
+  .progress-step {
+    width: 7rem;
+    height: 7rem;
+    background-color: #0c3c6a;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .progress-step::after {
+    content: attr(data-title);
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    margin-left: 2px;
+    font-size: 1.5rem;
+    color: #666;
+  }
+  
+  .progress-step-active {
+    background-color: #0c2f4d;
+    color: #f3f3f3;
+  }

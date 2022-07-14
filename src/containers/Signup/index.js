@@ -1,49 +1,110 @@
 import React, { useState, useEffect } from 'react';
 import MemberShip from './MemberShip'
 import TermsOfUse from './TermsOfUse'
+import SigninComplete from './SigninComplete';
+import './SignupStyles.css'
+import {
+  CheckCircleIcon
+} from '@heroicons/react/outline'
 
 const SignupComponent = () => {
-    const [nextstep, setNextStep] = useState(2)
-    const updateStep_ = (star) => {
-      let step = nextstep
-      setNextStep( step + 1)
+  const [currentStep, setcurrentStep] = useState(1);
+  const [widthofProgress, setwidthofprogress] = useState(0);
+  const [Check, setCheck] = useState(0);
+  useEffect(() => {
+    console.log("current step", currentStep);
+    console.log(widthofProgress);
+    if (currentStep == 0) {
+      setwidthofprogress(0);
+      console.log(widthofProgress);
+    } else if (currentStep === 1) {
+      setwidthofprogress(50);
+      console.log(widthofProgress);
+    } else if (currentStep == 2) {
+      setwidthofprogress(100);
     }
+  },[currentStep]);
 
-    useEffect(()=>{
-
-    },[nextstep])
-
-    const components = (nextstep) => {
-      switch (nextstep) {
-          case 1:
-            return (
-              <TermsOfUse updateStep={updateStep_}/>
-            )
-          case 2:
-            return (
-              <MemberShip />
-            )
-          default:
-             // do nothing
-          }
+  function showStep(step) {
+    switch (step) {
+      case 0:
+        return (
+          <TermsOfUse step={currentStep} changestep={changeStep}></TermsOfUse>
+        );
+      case 1:
+        return (
+          <MemberShip step={currentStep} changestep={changeStep}></MemberShip>
+        );
+      case 2:
+        return (
+         <SigninComplete step={currentStep} changestep={changeStep}></SigninComplete>
+        );
     }
+  }
+  function changeStep(step) {
+    setcurrentStep(step);
+  }
 
+  return (
+    <div>
+      <div className="Layout">
+        <div className={`progressbar`}>
+          <div
+            className={"progress"}
+            style={{
+              width: `${widthofProgress}%`
+            }}
+            id="Member terms"
+          ></div>
 
-    return (
-        <div>
-            <div className="flex flex-row justify-center items-center gap-3 mt-6">
-              <div className={"p-6 text-5xl font-semibold "+(nextstep === 1?"border-b-2 border-blue-800":"border-b-2 border-gray-300")}>
-                STEP 01
+          <div
+            className={`progress-step ${
+              currentStep >= 0 ? "progress-step-active" : ""
+            }`}
+            data-title="Terms"
+          >
+            {currentStep > 0 && (
+              <CheckCircleIcon></CheckCircleIcon>
+            )}
+            {currentStep == 0 && (
+              <div className="stepNumber displayNumber">
+                <span>1</span>
               </div>
-              <div className={"p-6 text-5xl font-semibold "+(nextstep === 2?"border-b-2 border-blue-800":"border-b-2 border-gray-300")}>
-                STEP 02
+            )}
+          </div>
+
+          <div
+            className={`progress-step ${
+              currentStep >= 1 ? "progress-step-active" : ""
+            }`}
+            data-title="Registration"
+          >
+            {currentStep <= 1 && (
+              <div className="stepNumber displayNumber">
+                <span>2</span>
               </div>
+            )}
+            {currentStep > 1 && (
+               <CheckCircleIcon></CheckCircleIcon>
+            )}
+          </div>
+
+          <div
+            className={`progress-step ${
+              currentStep >= 2 ? "progress-step-active" : ""
+            }`}
+            data-title="Approval"
+          >
+            {/* { <CheckCircleIcon className="checkmark fa-solid fa-check "></CheckCircleIcon>} */}
+            <div className="stepNumber displayNumber">
+              <span>3</span>
             </div>
-            <div className="mt-5">
-            {components(nextstep)}
-            </div>
+          </div>
         </div>
-    );
+      </div>
+      {showStep(currentStep)}
+    </div>
+  );
 }
 
 export default SignupComponent;
