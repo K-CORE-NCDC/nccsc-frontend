@@ -221,7 +221,7 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
                 </select>
               </div>}
               {((filterTypeButton === 'clinical') && (userDefienedFilter === 'static')) && <PreDefienedFiltersSurvival type='survival' parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
-              {((filterTypeButton === 'clinical') && (userDefienedFilter === 'dynamic')) && <GroupFilters type='survival' parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
+              {((filterTypeButton === 'clinical') && (userDefienedFilter === 'dynamic')) && <GroupFilters viz_type='survival' parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
               {(filterTypeButton === 'omics') && <div>
                 <div>
                   <button onClick={submitFitersAndFetchData} className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 xs:w-32 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">

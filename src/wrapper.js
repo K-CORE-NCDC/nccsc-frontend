@@ -4,11 +4,11 @@ import {useDispatch} from 'react-redux';
 import Korea from './lang/kr.json';
 import English from './lang/en.json';
 import {languageChange} from "./actions/api_actions"
-export const Context = React.createContext('en');
+export const Context = React.createContext('en-US');
 
 // import reportWebVitals from './reportWebVitals';
-const local = 'kr-KO'//navigator.language;
-
+// const local = 'kr-KO'//navigator.language;
+const local = 'en-US'
 let lang;
 if (local==="kr-KO") {
     lang = Korea; 
@@ -24,6 +24,7 @@ const Wrapper = (props) => {
 
     function selectLanguage(e) {
         const newLocale = e.target.value;
+        console.log(newLocale)
         setLocale(newLocale);
 
         if (newLocale === 'kr-KO') {
@@ -39,7 +40,7 @@ const Wrapper = (props) => {
 
     return (
         <Context.Provider value = {{locale, selectLanguage}}>
-            <IntlProvider messages={messages} locale={locale} defaultLocale={(locale=='en-US') ? "en-US" :locale}>
+            <IntlProvider messages={messages} locale={locale} defaultLocale={(locale==='en-US') ? "en-US" :locale}>
                 {props.children}
             </IntlProvider>
         </Context.Provider>
