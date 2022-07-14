@@ -71,7 +71,7 @@ const Menu = ({items}) => {
     return ""
   })
   const context = useContext(Context);
-  console.log(context.locale)
+  
   return <>
     {m}
     <div className="relative inline-flex">

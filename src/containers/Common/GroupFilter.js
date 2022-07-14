@@ -7,6 +7,7 @@ const LabelCss = "block text-left text-blue-700-700 text-lg  font-bold mb-2"
 const checkBoxCss = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 const numberInputBoxCss = "shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 
+let abc = ['a','b','c','d','e','f','g','h','i','j','k']
 let filterChoices = [
     { 'type': 'static', 'name': 'sex', 'id': 'sex_cd', options: ['Male', 'Female'] },
     { 'type': 'number', 'name': 'Age Of Diaganosis', 'id': 'diag_age', 'input': 'number' },
@@ -77,16 +78,16 @@ let preDefienedGroups = {
         { label: "1year ≤", from: 1, to: 11 }
     ],
     t_category: [
-        { label: "Tis~T2", from: 'Tis', to: 'T2' },
-        { label: "T3~T4", from: 'T3', to: 'T4' }
+        { label: "Tis-T2", from: 'Tis', to: 'T2' },
+        { label: "T3-T4", from: 'T3', to: 'T4' }
     ],
     n_category: [
-        { label: "Nx~N2", from: 'Nx', to: 'N2' },
+        { label: "Nx-N2", from: 'Nx', to: 'N2' },
         { label: "N3", from: 'N3', to: 'N3' }
     ],
     her2_score: [
-        { label: "negative(0~1+)", value: "negative(0, 0~1, 1+)" },
-        { label: "positive(2+~3+)", value: "positive(2+3+)" }
+        { label: "negative(0-1+)", value: "negative(0, 0~1, 1+)" },
+        { label: "positive(2+-3+)", value: "positive(2+,3+)" }
     ],
     pr_score: [
         { label: "Positive", from: 1, to: 1 },
@@ -350,7 +351,8 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
     const [isFilterResetHappened, setIsFilterResetHappened] = useState(false)
     const [filters, setFilters] = useState({})
     const [multipleInputs, setMultipleInputs] = useState({})
-    if(viz_type==='volcono'){
+    console.log(viz_type);
+    if(viz_type==='volcono' || viz_type==='survival'){
         filterChoices = [
             { 'type': 'number', 'id': 'bmi_vl', 'name': 'Body Mass Index', 'input': 'number' },
             { 'type': 'number', 'name': 'Age Of Diagonosis', 'id': 'diag_age', 'input': 'number' },
@@ -364,6 +366,22 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
             { 'type': 'number', 'name': 'Relapse Duration(month)', 'id': 'rlps_cnfr_drtn', 'input': 'number' },
             
         ]
+        if(viz_type==='survival'){
+            filterChoices = [
+                { 'type': 'number', 'id': 'bmi_vl', 'name': 'Body Mass Index', 'input': 'number' },
+                { 'type': 'number', 'name': 'Age Of Diagonosis', 'id': 'diag_age', 'input': 'number' },
+                { 'type': 'dropdown', 'name': 'Smoking Status', 'id': 'smok_yn' },
+                { 'type': 'number', 'name': 'First Menstural Age', 'id': 'mena_age', 'input': 'number' },
+                { 'type': 'number', 'name': 'Duration of Breastfeeding(month)', 'id': 'feed_drtn_mnth', 'input': 'number' },
+                { 'type': 'dropdown', 'name': 'T Category', 'id': 't_category', 'input': 'number' },
+                { 'type': 'dropdown', 'name': 'N Category', 'id': 'n_category', 'input': 'number' },
+                { 'type': 'dropdown', 'name': 'HER2 Score', 'id': 'her2_score', 'input': 'number' },
+                { 'type': 'number', 'name': 'ki67', 'id': 'ki67_score', 'input': 'number' },
+                { 'type': 'number', 'name': 'Relapse Duration(month)', 'id': 'rlps_cnfr_drtn', 'input': 'number' },
+                
+            ]   
+        }
+        
         preDefienedGroups['smok_yn'] = [
             { label: "No Smoking", value: "smok_yn||N" },
             { label: "Past Smoking", value: "smok_yn||Y" },
@@ -384,17 +402,17 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
             { label: "N3", from: 'N3', to: 'N3' }
         ]
         preDefienedGroups['her2_score'] = [
-            { label: "0", from: '0', to: '0' },
-            { label: "0~1", from: '0~1', to: '0~1' },
-            { label: "1+", from: '1+', to: '1+' },
-            { label: "2+", from: '2+', to: '2+' },
-            { label: "3+", from: '3+', to: '3+' },
+            { label: "negative (0-1+)", from: '0', to: '1' },
+            { label: "equivocal (2+)", from: '2', to: '2' },
+            { label: "positive (3+)", from: '2+', to: '3+' }
         ]
-        preDefienedGroups['ki67'] = [
-            { label: "low(≤15%)", from: '0', to: '15' },
-            { label: "intermediate(<15-30%≤)", from: '15', to: '30' },
-            { label: "high(30%<)", from: '30', to: '100' },
-        ]
+        if(viz_type==='volcono'){
+            preDefienedGroups['ki67_score'] = [
+                { label: "low(≤15%)", from: '0', to: '15' },
+                { label: "intermediate(<15-30%≤)", from: '15', to: '30' },
+                { label: "high(30%<)", from: '30', to: '100' }
+            ]
+        }
         
     }
 
@@ -407,7 +425,6 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
     }
 
     const resetFilters = () => {
-        console.log('===here===')
         setFilterSelected('')
         setSelectedFilterDetails({})
         setFilterInputs([])
@@ -419,12 +436,10 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
     }
 
     const updateSelectedFilter = (e) => {
-        // console.log(clinicalMaxMinInfo['data'])
         resetFilters()
         setIsFilterResetHappened(true)
         setFilterInputs([])
         const targetValue = e.target.value
-        // console.log(targetValue)
         if (targetValue !== '') {
             setFilterSelected(filterChoices[parseInt(targetValue)].name)
             setSelectedFilterDetails(filterChoices[parseInt(targetValue)])
@@ -630,8 +645,7 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
         // console.log(event.target)
         // console.log(event.target.value)
         const filterData = preDefienedGroups[eventObject.colName][(eventObject.index)]
-        console.log(eventObject)
-        console.log(filterData)
+        
         let tmp = multipleInputs
         if(eventObject.group in tmp){
             tmp[eventObject.group].push(filterData.value)
@@ -678,49 +692,76 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
                 setUserGivenInputValues({ column: selectedFilterDetails.id, type: selectedFilterDetails.type })
                 componentData.push(componetSwitch('text'))
             }else if(filterType==="dropdown"){
-                
-                // console.log(groupFilters['group_a'])
                 let tr = []
-                // console.log(preDefienedGroups[colName])
-                if(Object.keys(groupFilters).length>0 && groupFilters['type']==='static'){
-                    if (groupFilters['group_a'].length>0 && groupFilters['group_b'].length>0){
-                        preDefienedGroups[colName].forEach((element, index)=>{
-                            let group_a = false
-                            let group_b = false
-                            if(groupFilters['group_a'].indexOf(element.value)>-1){
-                                group_a = true
-                            }
-                            if(groupFilters['group_b'].indexOf(element.value)>-1){
-                                group_b = true
-                            }
+                if(viz_type==='volcono'){
+                    if(Object.keys(groupFilters).length>0 && groupFilters['type']==='static'){
+                        if (groupFilters['group_a'].length>0 && groupFilters['group_b'].length>0){
+                            preDefienedGroups[colName].forEach((element, index)=>{
+                                let group_a = false
+                                let group_b = false
+                                if(groupFilters['group_a'].indexOf(element.value)>-1){
+                                    group_a = true
+                                }
+                                if(groupFilters['group_b'].indexOf(element.value)>-1){
+                                    group_b = true
+                                }
+                                tr.push(<tr key={colName+index} className='border-b'>
+                                    <td className='text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900'>{element.label}</td>
+                                    <td className='px-6 py-4'><input type='checkbox' checked={group_a} onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_a' })}/></td>
+                                    <td className='px-6 py-4'><input type='checkbox' checked={group_b} onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_b' })}/></td>
+                                </tr>)    
+                            })
+                        }
+                    }else{
+                        preDefienedGroups[colName].map((element, index) => (
                             tr.push(<tr key={colName+index} className='border-b'>
                                 <td className='text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900'>{element.label}</td>
-                                <td className='px-6 py-4'><input type='checkbox' checked={group_a} onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_a' })}/></td>
-                                <td className='px-6 py-4'><input type='checkbox' checked={group_b} onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_b' })}/></td>
-                            </tr>)    
-                        })
-                    }
-                }else{
-                    preDefienedGroups[colName].map((element, index) => (
+                                <td className='px-6 py-4'><input type='checkbox' onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_a' })}/></td>
+                                <td className='px-6 py-4'><input type='checkbox' onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_b' })}/></td>
+                            </tr>)
+                        ))
                         
-                        tr.push(<tr key={colName+index} className='border-b'>
-                            <td className='text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900'>{element.label}</td>
-                            <td className='px-6 py-4'><input type='checkbox' onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_a' })}/></td>
-                            <td className='px-6 py-4'><input type='checkbox' onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_b' })}/></td>
-                        </tr>)
-                    ))
-                    
+                    }
+                    componentData.push(<table className='table' key={'group_table'}>
+                        <thead className='border-b w-full' key={'group_thead'}>
+                            <tr>
+                            <th></th>
+                            <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Group A</th>
+                            <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Group B</th>
+                            </tr>
+                        </thead>
+                        <tbody key={'group_tbody'}>{tr}</tbody>
+                    </table>)
+                } else if(viz_type==='survival') {
+                    let d = preDefienedGroups[colName]
+                    let thead = []
+                    let boxes = d.length
+                    for (let sv = 0; sv < d.length; sv++) {
+                        const element = d[sv];
+                        thead.push(<th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Group {abc[sv]}:</th>)
+                        let checkbox = []
+                        for (let index = 0; index < boxes; index++) {
+                            checkbox.push(
+                                <td className='px-6 py-4'><input type='checkbox' onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_'+abc[sv] })}/></td>
+                            )
+                        }
+                        tr.push(
+                            <tr key={colName+sv} className='border-b'>
+                                <td className='text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900'>{element.label}</td>
+                                {checkbox}
+                            </tr>
+                        )
+                    }
+                    componentData.push(<table className='table' key={'group_table'}>
+                        <thead className='border-b w-full' key={'group_thead'}>
+                            <tr><th></th>{thead}</tr>
+                        </thead>
+                        <tbody key={'group_tbody'}>
+                            {tr}
+                        </tbody>
+                        </table>
+                    )
                 }
-                componentData.push(<table className='table' key={'group_table'}>
-                    <thead className='border-b w-full' key={'group_thead'}>
-                        <tr>
-                        <th></th>
-                        <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Group A</th>
-                        <th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Group B</th>
-                        </tr>
-                    </thead>
-                    <tbody key={'group_tbody'}>{tr}</tbody>
-                </table>)
                 
             }
             
@@ -798,30 +839,38 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters,from }
             { label: "36-40", from: 36, to: 40 }
         ],
         bmi_vl: [
-            { label: "~18.5", from: 0, to: 18.5 },
-            { label: "18.6~25", from: 18.6, to: 25 },
-            { label: "25.1~30", from: 25.1, to: 30 },
-            { label: "30.1>", from: 30.1, to: 100 }
+            { label: "<18.5", from: 0, to: 18.5 },
+            { label: "18.6-24.9", from: 18.6, to: 25 },
+            { label: "25.0-29.9", from: 25.1, to: 30 },
+            { label: "30.0≤", from: 30.1, to: 100 }
         ],
         mena_age: [
             { label: "10-13", from: 10, to: 13 },
             { label: "14-17", from: 14, to: 17 },
         ],
         feed_drtn_mnth: [
-            { label: "> 1 Year", from: 1, to: 11 },
-            { label: "<- 1 Year", from: 12, to: 24 }
+            { label: "< 1year", from: 1, to: 11 },
+            { label: "1year ≤", from: 12, to: 24 }
         ],
         t_category: [
-            { label: "Tis~T2", from: 'T1', to: 'T2' },
-            { label: "T3~T4", from: 'T3', to: 'T4' }
+            { label: "Tis", from: 'Tis', to: 'Tis' },
+            { label: "T1", from: 'T1', to: 'T1' },
+            { label: "T2", from: 'T2', to: 'T2' },
+            { label: "T3", from: 'T3', to: 'T3' },
+            { label: "T4", from: 'T4', to: 'T4' }
         ],
         n_category: [
-            { label: "Nx~N2", from: 'N1', to: 'N2' },
-            { label: "N3", from: 'N3', to: 'N3' }
+            { label: "Nx", from: 'Nx', to: 'Nx' },
+            { label: "N0", from: 'N0', to: 'N0' },
+            { label: "N1", from: 'N1', to: 'N1' },
+            { label: "N2", from: 'N2', to: 'N2' },
+            { label: "N3", from: 'N3', to: 'N3' },
+            
         ],
         her2_score: [
-            { label: "positive(0, 0~1, 1+)", value: "positive(0, 0~1, 1+)" },
-            { label: "negative(3+)", value: "negative(3+)" }
+            { label: "negative(0-1+)", value: "negative(0-1+)" },
+            { label: "equivocal(2+)", value: "equivocal(2+)" },
+            { label: "positive(3+)", value: "positive(3+)" }
         ],
         pr_score: [
             { label: "Positive", from: 1, to: 1 },
@@ -832,8 +881,9 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters,from }
             { label: "Negative", from: 2, to: 2 }
         ],
         ki67_score: [
-            { label: "Positive 1-15%", value: "Positive 15%" },
-            { label: "Positive 16%-", value: "Positive 50%" }
+            { label: "low(≤15%)", value: "low(≤15%)" },
+            { label: "intermediate(<15-30%≤)", value: "intermediate(<15-30%≤)" },
+            { label: "high(30%<)", value: "high 30%<" }
         ],
         smok_yn: [
             { label: "No Smoking", value: "no" },
