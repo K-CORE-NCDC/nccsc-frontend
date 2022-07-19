@@ -159,7 +159,7 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
       let h = 'rgba('+hex_color[0]+','+hex_color[1]+','+hex_color[2]+','
 
       let linear = 1
-
+      console.log(id)
       // if(id === 'chart_pie_AgeOfDaignosis'){
       //   let ageofdiag = {}
       //   for (var i = 0; i < data.length; i++) {
@@ -216,6 +216,132 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
         }
         data = d
 
+      }else if(id==='chart_pie_DurationofBreastfeeding'){
+        let dbf = {}
+        for (var i = 0; i < data.length; i++) {
+          let name = data[i].name
+          if(name==="1~4"||name==="5~8"||name==="9~12"){
+            if('< 1year' in dbf){
+              dbf['< 1year'] = dbf['< 1year']+data[i].cnt
+            }else{
+              dbf['< 1year'] = data[i].cnt
+            }
+          }else if(name==="13~"){
+            dbf['1year ≤'] = data[i].cnt
+          }else{
+            dbf['N/A'] = data[i].cnt
+          }
+        }
+        let d = []
+        for (var key in dbf) {
+          d.push({
+            'name': key,
+            'cnt': dbf[key]
+          })
+        }
+        data = d
+      }
+      else if(id==='chart_pie_Timeuntilrelapseisconfirmed'){
+        let turc = {}
+        for (var i = 0; i < data.length; i++) {
+          console.log(data[i])
+          let name = parseInt(data[i].name)
+          if(name<=9){
+            if('0~9' in turc){
+              turc['0~9'] = turc['0~9']+data[i].cnt
+            }else{
+              turc['0~9'] = data[i].cnt
+            }
+          }else{
+            turc[name] = data[i].cnt
+          }
+        }
+        let d = []
+        for (var key in turc) {
+          d.push({
+            'name': key,
+            'cnt': turc[key]
+          })
+        }
+        data = d
+      }
+      else if(id==='chart_pie_HER2Score'){
+        let her2 = {}
+        for (var i = 0; i < data.length; i++) {
+          let name = data[i].name
+          if(name==="0"||name==="0~1"||name==="1+"){
+            if ('negative(0-1+)' in her2){
+              her2['negative(0-1+)'] = her2['negative(0-1+)']+data[i].cnt
+            }else{
+              her2['negative(0-1+)'] = data[i].cnt
+            }
+          }else if(name==="2"||name==="2+"){
+            if ('equivocal(2+)' in her2){
+              her2['equivocal(2+)'] = her2['equivocal(2+)']+data[i].cnt
+            }else{
+              her2['equivocal(2+)'] = data[i].cnt
+            }
+          }else if(name==="3"||name==="3+"){
+            if ('positive(3+)' in her2){
+              her2['positive(3+)'] = her2['positive(3+)']+data[i].cnt
+            }else{
+              her2['positive(3+)'] = data[i].cnt
+            }
+          }else{
+            if ('N/A' in her2){
+              her2['N/A'] = her2['N/A']+data[i].cnt
+            }else{
+              her2['N/A'] = data[i].cnt
+            }
+          }
+        }
+        let d = []
+        for (var key in her2) {
+          d.push({
+            'name': key,
+            'cnt': her2[key]
+          })
+        }
+        data = d
+      }
+      else if(id==="chart_pie_Ki-67Index"){
+        let ki = {}
+        for (var i = 0; i < data.length; i++) {
+          let name = data[i].name
+          if(name==="Positive ~ 15"){
+            if ('low(≤15%)' in ki){
+              ki['low(≤15%)'] = ki['low(≤15%)']+data[i].cnt
+            }else{
+              ki['low(≤15%)'] = data[i].cnt
+            }
+          }else if(name==="Positive 16 ~ 30"){
+            if ('intermediate (<15-30%≤)' in ki){
+              ki['intermediate (<15-30%≤)'] = ki['intermediate (<15-30%≤)']+data[i].cnt
+            }else{
+              ki['intermediate (<15-30%≤)'] = data[i].cnt
+            }
+          }else if(name==="Positive 31 ~"){
+            if ('high (30%<)' in ki){
+              ki['high (30%<)'] = ki['high (30%<)']+data[i].cnt
+            }else{
+              ki['high (30%<)'] = data[i].cnt
+            }
+          }else{
+            if ('N/A' in ki){
+              ki['N/A'] = ki['N/A']+data[i].cnt
+            }else{
+              ki['N/A'] = data[i].cnt
+            }
+          }
+        }
+        let d = []
+        for (var key in ki) {
+          d.push({
+            'name': key,
+            'cnt': ki[key]
+          })
+        }
+        data = d
       }
       else if(id==='chart_pie_BodyMassIndex') {
         let bmi = {}

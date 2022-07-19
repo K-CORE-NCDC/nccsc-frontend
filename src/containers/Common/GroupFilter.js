@@ -39,7 +39,7 @@ const filterChoicesCustom = [
     { 'type': 'number', 'name': 'Age Of Diagonosis', 'id': 'diag_age', 'input': 'number' },
     { 'type': 'number', 'id': 'bmi_vl', 'name': 'BMI', 'input': 'number' },
     { 'type': 'boolean', 'id': 'bila_cncr_yn', 'name': 'Diagnosis of Bilateral Breast Cancer' },
-    { 'type': 'text', 'name': 'Smoking Status', 'id': 'smok_yn' },
+    { 'type': 'boolean', 'name': 'Smoking Status', 'id': 'smok_yn' },
     { 'type': 'boolean', 'name': 'Alcohol Consuption', 'id': 'drnk_yn', 'value': 'Yes' },
     { 'type': 'boolean', 'name': 'Breast cancer family history', 'id': 'fmhs_brst_yn', 'value': 'Yes' },
     { 'type': 'number', 'name': 'Menarche age', 'id': 'mena_age', 'input': 'number' },
@@ -51,8 +51,8 @@ const filterChoicesCustom = [
     { 'type': 'boolean', 'name': 'Hormone Replace Therapy', 'id': 'hrt_yn' },
     { 'type': 'number', 'name': 'T Category', 'id': 't_category', 'input': 'number' },
     { 'type': 'number', 'name': 'N Category', 'id': 'n_category', 'input': 'number' },
-    { 'type': 'number', 'name': 'HER2 Score', 'id': 'her2_score', 'input': 'text' },
-    { 'type': 'text', 'name': 'ki67', 'id': 'ki67_score', 'input': 'text' },
+    { 'type': 'text', 'name': 'HER2 Score', 'id': 'her2_score', 'input': 'text' },
+    { 'type': 'number', 'name': 'ki67', 'id': 'ki67_score', 'input': 'text' },
     { 'type': 'boolean', 'name': 'Recurance Yes or No', 'id': 'rlps_yn' },
     { 'type': 'number', 'name': 'ER Test', 'id': 'er_score', 'input': 'number' },
     { 'type': 'number', 'name': 'PR Test', 'id': 'pr_score', 'input': 'number' }
@@ -86,20 +86,20 @@ let preDefienedGroups = {
         { label: "N3", from: 'N3', to: 'N3' }
     ],
     her2_score: [
-        { label: "negative(0-1+)", value: "negative(0, 0~1, 1+)" },
-        { label: "positive(2+-3+)", value: "positive(2+,3+)" }
+        { label: "negative(0-1+)", from:'negative(0, 0~1, 1+)', to:'negative(0, 0~1, 1+)',value: "negative(0, 0~1, 1+)" },
+        { label: "positive(2+-3+)", from:'positive(2+,3+)', to:'positive(2+,3+)', value: "positive(2+,3+)" }
     ],
     pr_score: [
-        { label: "Positive", from: 1, to: 1 },
-        { label: "Negative", from: 2, to: 2 }
+        { label: "Positive", from: 0, to: 1 },
+        { label: "Negative", from: 1, to: 2 }
     ],
     er_score: [
-        { label: "Positive", from: 1, to: 1 },
-        { label: "Negative", from: 2, to: 2 }
+        { label: "Positive", from: 0, to: 1 },
+        { label: "Negative", from: 1, to: 2 }
     ],
     ki67_score: [
-        { label: "low(≤15%)", value: "Positive 15%" },
-        { label: "intermediate, high(15%<)", value: "Positive 50%" }
+        { label: "low(≤15%)", from: 'Positive 0%', to: 'Positive 15%' },
+        { label: "intermediate, high(15%<)", from: 'Positive 15%', to: 'Positive 100%'}
     ],
     smok_yn: [
         { label: "No", value: "smok_yn||N" },
@@ -121,13 +121,84 @@ let preDefienedGroups = {
     //     { label: "N3", from: 'N3', to: 'N3' }
     // ]
 }
-export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
+export const PreDefienedFilters = ({ volcanoType,parentCallback, groupFilters }) => {
     const [selectedFilterType, setSelectedFilterType] = useState({})
     const [filterGroupsHtml, setFilterGroupsHtml] = useState([])
     const [filters, setFilters] = useState({})
     const [resetClicked, setResetClicked] = useState(false)
     const [isGroupFilterProp, setIsGroupFilterProp] = useState(false)
+    const [filterType,setFilterType] = useState('transcriptome')
+    const preDefienedGroups1 = {
+        diag_age: [
+            { label: "21-35", from: 21, to: 35 },
+            { label: "35-40", from: 35, to: 40 },
+            
+        ],
+        bmi_vl: [
+            { label: "18.5~24.9", from: 18.5, to: 24.9 },
+            { label: "25-", from: 25, to: 100 },
+            
+        ],
+        mena_age: [
+            { label: "10-13", from: 10, to: 13 },
+            { label: "14-17", from: 14, to: 17 },
+        ],
+        feed_drtn_mnth: [
+            { label: "> 1 Year", from: 12, to: 24 },
+            { label: "1year ≤", from: 1, to: 11 }
+        ],
+        t_category: [
+            { label: "Tis-T2", from: 'Tis', to: 'T2' },
+            { label: "T3-T4", from: 'T3', to: 'T4' }
+        ],
+        n_category: [
+            { label: "Nx-N2", from: 'Nx', to: 'N2' },
+            { label: "N3", from: 'N3', to: '' }
+        ],
+        her2_score: [
+            { label: "negative(0-1+)", from:'negative(0-1+)', to:'negative(0, 0~1, 1+)',value: "negative(0-1+)" },
+            { label: "positive(2+-3+)", from:'positive(2+-3+)', to:'positive(2+,3+)', value: "positive(2+-3+)" }
+        ],
+        pr_score: [
+            { label: "Positive", from: 0, to: 1 },
+            { label: "Negative", from: 1, to: 2 }
+        ],
+        er_score: [
+            { label: "Positive", from: 0, to: 1 },
+            { label: "Negative", from: 1, to: 2 }
+        ],
+        ki67_score: [
+            { label: "low(≤15%)", from: '0', to: '15' },
+            { label: "intermediate, high(15%<)", from: '15', to: '100'}
+        ],
+        smok_yn: [
+            { label: "No", value: "smok_yn||N" },
+            { label: "Yes", value: "smok_yn||Y" },
+            // { label: "Current Smoking", value: "smok_curr_yn||Y" }
+        ]
+        
+    
+        // t_category: [
+        //     { label: "Tis", from: 'Tis', to: 'Tis',value: 'Tis' },
+        //     { label: "T1", from: 'T1', to: 'T1',value: 'T1' },
+        //     { label: "T2", from: 'T2', to: 'T2',value: 'T2' },
+        //     { label: "T3", from: 'T3', to: 'T3',value: 'T3' },
+        //     { label: "T4", from: 'T4', to: 'T4',value: 'T4' },
+        // ],
+        // n_category: [
+        //     { label: "N1", from: 'N1', to: 'N1' },
+        //     { label: "N2", from: 'N2', to: 'N2' },
+        //     { label: "N3", from: 'N3', to: 'N3' }
+        // ]
+    }
 
+    useEffect(()=>{
+        if(volcanoType!==filterType){
+            setFilterType(volcanoType)
+            resetFilters()
+            setResetClicked(false)
+        }
+    },[volcanoType])
     const submitFilters = () => {
         if (Object.keys(filters).length > 0) {
             parentCallback(filters)
@@ -149,17 +220,19 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
             if (resetClicked === false) {
                 setIsGroupFilterProp(true)
             }
+            
+            let colName = groupFilters['column']
             let filterGroupsHtmlTemp = []
             if (groupFilters.type === 'boolean') {
                 filterGroupsHtmlTemp.push(
                     <div key='bool'>
-                        <div className="flex flex-row">
-                            <h5 className="xs:text-xl">Group 1 : </h5>
-                            <h5 className="text-bold text-blue-700 xs:text-xl">Yes</h5>
+                        <div className="flex flex-row justify-around">
+                            <h5 className="p-4 xs:text-xl">Group 1 : </h5>
+                            <h5 className="p-4 text-bold xs:text-xl text-blue-700">Yes</h5>
                         </div>
-                        <div className="flex flex-row">
-                            <h5 className="xs:text-xl">Group 2 : </h5>
-                            <h5 className="text-bold text-blue-700 xs:text-xl">No</h5>
+                        <div className="flex flex-row justify-around">
+                            <h5 className="p-4 xs:text-xl">Group 2 : </h5>
+                            <h5 className="p-4 text-bold xs:text-xl text-blue-700">No</h5>
                         </div>
                     </div>
                 )
@@ -168,28 +241,29 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
             if (groupFilters.type === 'static') {
                 filterGroupsHtmlTemp.push(
                     <div key='bool'>
-                        <div className="flex flex-row">
-                            <h5 className="xs:text-xl">Group 1 : </h5>
-                            <h5 className="text-bold xs:text-xl text-blue-700">Male</h5>
+                        <div className="flex flex-row justify-around">
+                            <h5 className="p-4 xs:text-xl">Group 1 : </h5>
+                            <h5 className="p-4 text-bold xs:text-xl text-blue-700">Male</h5>
                         </div>
-                        <div className="flex flex-row">
-                            <h5 className="xs:text-xl">Group 2 : </h5>
-                            <h5 className="text-bold xs:text-xl text-blue-700">Female</h5>
+                        <div className="flex flex-row justify-around">
+                            <h5 className="p-4 xs:text-xl">Group 2 : </h5>
+                            <h5 className="p-4 text-bold xs:text-xl text-blue-700">Female</h5>
                         </div>
                     </div>
                 )
             }
 
             if (groupFilters.type === 'text') {
+                
                 filterGroupsHtmlTemp.push(
                     <div key='bool'>
-                        <div className="flex flex-row">
-                            <h5 className="xs:text-xl">Group 1 : </h5>
-                            <h5 className="text-bold xs:text-xl text-blue-700">{groupFilters[1]}</h5>
+                        <div className="flex flex-row justify-around">
+                            <h5 className="p-4 xs:text-xl">Group 1 : </h5>
+                            <h5 className="p-4 text-bold xs:text-xl text-blue-700">{preDefienedGroups1[colName][0]['label']}</h5>
                         </div>
-                        <div className="flex flex-row">
-                            <h5 className="xs:text-xl">Group 2 : </h5>
-                            <h5 className="text-bold xs:text-xl text-blue-700">{groupFilters[2]}</h5>
+                        <div className="flex flex-row justify-around">
+                            <h5 className="p-4 xs:text-xl">Group 2 : </h5>
+                            <h5 className="p-4 text-bold xs:text-xl text-blue-700">{preDefienedGroups1[colName][1]['label']}</h5>
                         </div>
                     </div>
                 )
@@ -197,13 +271,13 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
             if (groupFilters.type === 'number') {
                 filterGroupsHtmlTemp.push(
                     <div key='bool'>
-                        <div className="flex flex-row">
-                            <h5 className="xs:text-xl">Group 1 : </h5>
-                            <h5 className="text-bold xs:text-xl text-blue-700">{`${groupFilters['1_from']}-${groupFilters['1_to']}`}</h5>
+                        <div className="flex flex-row justify-around">
+                            <h5 className="p-4 xs:text-xl">Group 1 : </h5>
+                            <h5 className="p-4 text-bold xs:text-xl text-blue-700">{preDefienedGroups1[colName][0]['label']}</h5>
                         </div>
-                        <div className="flex flex-row">
-                            <h5 className="xs:text-xl">Group 2 : </h5>
-                            <h5 className="text-bold xs:text-xl text-blue-700">{`${groupFilters['2_from']}-${groupFilters['2_to']}`}</h5>
+                        <div className="flex flex-row justify-around">
+                            <h5 className="p-4 xs:text-xl">Group 2 : </h5>
+                            <h5 className="p-4 text-bold xs:text-xl text-blue-700">{preDefienedGroups1[colName][1]['label']}</h5>
                         </div>
                     </div>
                 )
@@ -214,13 +288,12 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
 
     const filterTypeDropdownSelection = event => {
         let key = event.target.value
-        console.log(key)
         setSelectedFilterType({ details: filterChoicesCustom[parseInt(key)], index: key })
     }
 
     const dropDownChange = (event) => {
         const eventObject = JSON.parse(event.target.value)
-        const filterData = preDefienedGroups[eventObject.colName][(eventObject.index)]
+        const filterData = preDefienedGroups1[eventObject.colName][(eventObject.index)]
         if ('value' in filterData) {
             setFilters(prevState => ({
                 ...prevState,
@@ -235,6 +308,8 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
     }
 
     useEffect(() => {
+        console.log(selectedFilterType)
+        
         let filterGroupsHtmlTemp = []
         if (selectedFilterType && selectedFilterType.details) {
             if (selectedFilterType.details.type === 'boolean') {
@@ -272,13 +347,12 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
             if ((selectedFilterType.details.type === 'number') || (selectedFilterType.details.type === 'text')) {
                 const colName = selectedFilterType.details.id
                 
-                
-                
-                let t = preDefienedGroups[colName]
+                let t = preDefienedGroups1[colName]
                 let tmp = {'column':colName,'type':selectedFilterType.details.type}
+                
                 for (let index = 0; index < t.length; index++) {
+
                     const element = t[index];
-                    console.log(element)
                     let indx = index+1
                     filterGroupsHtmlTemp.push(
                         <div key={'drop-user-'+index}>
@@ -292,7 +366,9 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
                     tmp[indx+"_to"] = element.to 
                     
                 }
+                
                 setFilters(tmp)
+
             }
 
 
@@ -300,7 +376,7 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
 
         }
     }, [selectedFilterType])
-
+    // console.log(filterGroupsHtml)
     return (
         <div className="m-1 bg-gray-100">
             <div className="p-1 py-3 px-2 col-span-2">
@@ -309,6 +385,7 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
                 </div>
                 {((resetClicked === true) || (isGroupFilterProp === false)) && <select
                     onChange={filterTypeDropdownSelection}
+                    defaultValue=''
                     className='w-full lg:p-4 xs:p-2 border xs:text-sm lg:text-lg focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
                     <option value=''></option>
                     {filterChoicesCustom.map((type, index) => (
@@ -339,7 +416,7 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
 }
 
 
-const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
+const GroupFilters = ({ volcanoType,parentCallback, groupFilters,viz_type }) => {
     const clinicalMaxMinInfo = useSelector((data) => data.dataVisualizationReducer.clinicalMaxMinInfo);
     const [filterSelected, setFilterSelected] = useState('')
     const [selectedFilterDetails, setSelectedFilterDetails] = useState({})
@@ -351,7 +428,9 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
     const [isFilterResetHappened, setIsFilterResetHappened] = useState(false)
     const [filters, setFilters] = useState({})
     const [multipleInputs, setMultipleInputs] = useState({})
-    console.log(viz_type);
+    const [filterType,setFilterType] = useState('transcriptome')
+    const [selectDefaultValue,setSelectDefaultValue] = useState('0')
+    const preDefienedGroups1 = preDefienedGroups
     if(viz_type==='volcono' || viz_type==='survival'){
         filterChoices = [
             { 'type': 'number', 'id': 'bmi_vl', 'name': 'Body Mass Index', 'input': 'number' },
@@ -382,41 +461,50 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
             ]   
         }
         
-        preDefienedGroups['smok_yn'] = [
+        preDefienedGroups1['smok_yn'] = [
             { label: "No Smoking", value: "smok_yn||N" },
             { label: "Past Smoking", value: "smok_yn||Y" },
             { label: "Current Smoking", value: "smok_curr_yn||Y" },
         ]
-        preDefienedGroups['t_category'] = [
+        preDefienedGroups1['t_category'] = [
                 { label: "Tis", from: 'Tis', to: 'Tis',value: 'Tis' },
                 { label: "T1", from: 'T1', to: 'T1',value: 'T1' },
                 { label: "T2", from: 'T2', to: 'T2',value: 'T2' },
                 { label: "T3", from: 'T3', to: 'T3',value: 'T3' },
                 { label: "T4", from: 'T4', to: 'T4',value: 'T4' },
             ]
-        preDefienedGroups['n_category'] = [
-            { label: "Nx", from: 'Nx', to: 'Nx' },
-            { label: "N0", from: 'N0', to: 'N0' },
-            { label: "N1", from: 'N1', to: 'N1' },
-            { label: "N2", from: 'N2', to: 'N2' },
-            { label: "N3", from: 'N3', to: 'N3' }
+        preDefienedGroups1['n_category'] = [
+            { label: "Nx", from: 'Nx', to: 'Nx',value: 'Nx' },
+            { label: "N0", from: 'N0', to: 'N0',value: 'N0' },
+            { label: "N1", from: 'N1', to: 'N1',value: 'N1' },
+            { label: "N2", from: 'N2', to: 'N2',value: 'N2' },
+            { label: "N3", from: 'N3', to: 'N3',value: 'N3' }
         ]
-        preDefienedGroups['her2_score'] = [
-            { label: "negative (0-1+)", from: '0', to: '1' },
-            { label: "equivocal (2+)", from: '2', to: '2' },
-            { label: "positive (3+)", from: '2+', to: '3+' }
+        preDefienedGroups1['her2_score'] = [
+            {value: "negative (0-1+)", label: "negative (0-1+)", from: '0', to: '(0-1+)' },
+            {value: "equivocal (2+)", label: "equivocal (2+)", from: '2', to: '(2+)' },
+            {value: "positive (3+)", label: "positive (3+)", from: '2+', to: '(3+)' }
         ]
         if(viz_type==='volcono'){
-            preDefienedGroups['ki67_score'] = [
-                { label: "low(≤15%)", from: '0', to: '15' },
-                { label: "intermediate(<15-30%≤)", from: '15', to: '30' },
-                { label: "high(30%<)", from: '30', to: '100' }
+            preDefienedGroups1['ki67_score'] = [
+                { label: "low(≤15%)",value:'low', from: '0', to: '15' },
+                { label: "intermediate(<15-30%≤)",value:'intermediate', from: '15', to: '30' },
+                { label: "high(30%<)",value:'high', from: '30', to: '100' }
             ]
         }
         
     }
 
+    useEffect(()=>{
+        
+        if(volcanoType!==filterType){
+            setFilterType(volcanoType)
+            resetFilters()
+        }
+    },[volcanoType])
+
     const submitFilters = () => {
+        console.log(groupFilters)
         if (isFilterResetHappened) {
             parentCallback(userGivenInputValues)
         } else {
@@ -426,6 +514,7 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
 
     const resetFilters = () => {
         setFilterSelected('')
+        setSelectDefaultValue('')
         setSelectedFilterDetails({})
         setFilterInputs([])
         setUserGivenInputValues({})
@@ -440,11 +529,14 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
         setIsFilterResetHappened(true)
         setFilterInputs([])
         const targetValue = e.target.value
+        
         if (targetValue !== '') {
             setFilterSelected(filterChoices[parseInt(targetValue)].name)
+            setSelectDefaultValue(String(targetValue))
             setSelectedFilterDetails(filterChoices[parseInt(targetValue)])
         } else {
             setFilterSelected('')
+            setSelectDefaultValue('0')
             setSelectedFilterDetails({})
         }
         // setGroupsCounter(1)
@@ -459,6 +551,7 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
     }
 
     useEffect(() => {
+        
         if (groupFilters && Object.keys(groupFilters).length > 0) {
             let filterType = groupFilters.type
             setUserGivenInputValues(groupFilters)
@@ -469,6 +562,7 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
                 }
             })
             setFilterSelected(filterChoices[targetNumber].name)
+            setSelectDefaultValue(String(targetNumber))
             setSelectedFilterDetails(filterChoices[targetNumber])
             let valsArray = []
             let counter = 1
@@ -642,18 +736,15 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
 
     const dropDownChange = (event) => {
         const eventObject = JSON.parse(event.target.value)
-        // console.log(event.target)
-        // console.log(event.target.value)
-        const filterData = preDefienedGroups[eventObject.colName][(eventObject.index)]
-        
+        const filterData = preDefienedGroups1[eventObject.colName][(eventObject.index)]
         let tmp = multipleInputs
         if(eventObject.group in tmp){
             tmp[eventObject.group].push(filterData.value)
         }else{
             tmp[eventObject.group] = [filterData.value]
         }
-        console.log(tmp)
-        setMultipleInputs(tmp)
+        console.log(eventObject)
+        setMultipleInputs(tmp,filterData)
         if ('value' in filterData) {
             setUserGivenInputValues(prevState => ({
                 ...prevState,
@@ -666,11 +757,9 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
         
         let filterType = selectedFilterDetails.type
         let colName = selectedFilterDetails.id
-        console.log(groupFilters)
         if (filterType) {
             let componentData = []
-            // console.log('this after state update');
-
+            
             if (filterType === 'boolean' || filterType === 'static') {
                 let options = ['Yes', 'No']
                 if (filterType === 'static') {
@@ -693,10 +782,11 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
                 componentData.push(componetSwitch('text'))
             }else if(filterType==="dropdown"){
                 let tr = []
+                console.log(groupFilters)
                 if(viz_type==='volcono'){
                     if(Object.keys(groupFilters).length>0 && groupFilters['type']==='static'){
                         if (groupFilters['group_a'].length>0 && groupFilters['group_b'].length>0){
-                            preDefienedGroups[colName].forEach((element, index)=>{
+                            preDefienedGroups1[colName].forEach((element, index)=>{
                                 let group_a = false
                                 let group_b = false
                                 if(groupFilters['group_a'].indexOf(element.value)>-1){
@@ -713,7 +803,7 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
                             })
                         }
                     }else{
-                        preDefienedGroups[colName].map((element, index) => (
+                        preDefienedGroups1[colName].map((element, index) => (
                             tr.push(<tr key={colName+index} className='border-b'>
                                 <td className='text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900'>{element.label}</td>
                                 <td className='px-6 py-4'><input type='checkbox' onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_a' })}/></td>
@@ -733,7 +823,7 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
                         <tbody key={'group_tbody'}>{tr}</tbody>
                     </table>)
                 } else if(viz_type==='survival') {
-                    let d = preDefienedGroups[colName]
+                    let d = preDefienedGroups1[colName]
                     let thead = []
                     let boxes = d.length
                     for (let sv = 0; sv < d.length; sv++) {
@@ -780,7 +870,8 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
         setFilterInputs(prevState => [...prevState, componentData])
         setGroupsCounter(prevState => prevState + 1)
     }
-
+   
+    
     return (
         <div className="m-1 bg-gray-100">
             <div className="p-1 py-3 px-2 col-span-2">
@@ -788,12 +879,13 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
                     <FormattedMessage id="Clinical Filters" defaultMessage='Clinical Filters' />
                 </div>
                 <select
+                    defaultValue={selectDefaultValue}
                     onChange={updateSelectedFilter}
-                    defaultValue={filterSelected}
+                    name='selectOptions'
                     className='w-full lg:p-4 xs:p-2 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
-                    <option value=''></option>
+                    <option value='0'></option>
                     {filterChoices.map((type, index) => (
-                        <option selected={filterSelected === type.name} className="lg:text-lg xs:text-sm" key={type.name} value={index}>{type.name}</option>
+                        <option selected={filterSelected===type.name} className="lg:text-lg xs:text-sm" key={type.id} value={index}>{type.name}</option>
                     ))}
                 </select>
             </div>
@@ -868,9 +960,9 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters,from }
             
         ],
         her2_score: [
-            { label: "negative(0-1+)", value: "negative(0-1+)" },
-            { label: "equivocal(2+)", value: "equivocal(2+)" },
-            { label: "positive(3+)", value: "positive(3+)" }
+            {from:'negative (0-1+)', to:'negative (0-1+)', label: "negative (0-1+)", value: "negative (0-1+)", },
+            {from:'equivocal (2+)', to:'equivocal (2+)', label: "equivocal (2+)", value: "equivocal (2+)", },
+            {from:'positive (3+)', to:'positive (3+)', label: "positive (3+)", value: "positive (3+)" }
         ],
         pr_score: [
             { label: "Positive", from: 1, to: 1 },
@@ -881,9 +973,9 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters,from }
             { label: "Negative", from: 2, to: 2 }
         ],
         ki67_score: [
-            { label: "low(≤15%)", value: "low(≤15%)" },
-            { label: "intermediate(<15-30%≤)", value: "intermediate(<15-30%≤)" },
-            { label: "high(30%<)", value: "high 30%<" }
+            { label: "low(≤15%)", value: "low(≤15%)",from:"low",to:"low(≤15%)" },
+            { label: "intermediate(<15-30%≤)", value: "intermediate(<15-30%≤)",from:"intermediate",to:"intermediate(<15-30%≤)" },
+            { label: "high(30%<)", value: "high(30%<)",from:"high",to:"high 30%<" }
         ],
         smok_yn: [
             { label: "No Smoking", value: "no" },
@@ -984,7 +1076,7 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters,from }
 
     const dropDownChange = (event) => {
         const eventObject = JSON.parse(event.target.value)
-        console.log(eventObject)
+        
         const filterData = preDefienedGroups1[eventObject.colName][(eventObject.index)]
         if ('value' in filterData) {
             setFilters(prevState => ({

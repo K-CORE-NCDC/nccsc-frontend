@@ -85,7 +85,6 @@ export default function DataVisualization() {
   },[filterApplied])
 
   useEffect(() => {
-
     return () => {
       dispatch(clearDataVisualizationState())
     }

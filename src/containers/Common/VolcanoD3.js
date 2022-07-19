@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as d3 from 'd3'
 import '../../styles/volcano.css'
 import html2canvas from 'html2canvas';
-import {saveSvgAsPng} from 'save-svg-as-png'
+import {saveSvgAsPng,saveSvg} from 'save-svg-as-png'
 
 const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
     const [volcanoData, setVolcanoData] = useState([])
@@ -31,9 +31,9 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
         function chart(selection) {
             var innerWidth = width - margin.left - margin.right, // set the size of the chart within its container
                 innerHeight = height - margin.top - margin.bottom;
-
+            document.getElementById('chart-d3-volcano').innerHTML = ''
             selection.each(function (data) {
-
+                
                 // set up the scaling for the axes based on the inner width/height of the chart and also the range
                 // of value for the x and y axis variables. This range is defined by their min and max values as
                 // calculated by d3.extent()
@@ -120,15 +120,18 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
                     .on('mouseleave', function (d) {
                         return tooltip.style('visibility', 'hidden');
                     });
-
-                var gdots = svg.selectAll("g.dot")
-                    .data(data)
+                let dt = data.filter(function(xi){
+                    if(xi.color==='black'){
+                        return xi
+                    }
+                })
+                
+                var gdots = svg.selectAll("g.black")
+                    .data(dt)
                     .enter().append('g');
                 gdots.append("text").text(function (d) {
                     if(d.color === 'black'){
                         return d.gene
-                    }else{
-                        return undefined
                     }
                 })
                 .attr("x", function (d) {
@@ -349,7 +352,8 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
     }, [volcanoData])
     useEffect(()=>{
         if(watermarkCss){
-            saveSvgAsPng(document.getElementById("svgVolcano"), "volcano.png",{scale: 2, backgroundColor: "#FFFFFF"});
+            saveSvg(document.getElementById('svgVolcano'),'volcano.svg',{scale: 0.5,background:'#FFFFFF'})
+            // saveSvgAsPng(document.getElementById('svgVolcano'),'volcano.png',{scale: 0.5,background:'#FFFFFF'})
         }
     },[watermarkCss])
     return (

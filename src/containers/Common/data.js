@@ -277,13 +277,16 @@ let filterBoxes = {
   },
   "Clinical Information":{
     "T Stage":[
-      {'type':'checkbox','name':'tstage','id':'tstage_1','value':'T1(is, 1, 1a, 1b, 1c, 1mi)'},
+      {'type':'checkbox','name':'tstage','id':'tstage_is','value':'Tis'},
+      {'type':'checkbox','name':'tstage','id':'tstage_1','value':'T1(1, 1a, 1b, 1c, 1mi)'},
       {'type':'checkbox','name':'tstage','id':'tstage_2','value':'T2(2)'},
       {'type':'checkbox','name':'tstage','id':'tstage_3','value':'T3(3)'},
       {'type':'checkbox','name':'tstage','id':'tstage_4','value':'T4(4b, 4d)'},
     ],
     "N Stage":[
-      {'type':'checkbox','name':'nstage','id':'nstage_n1','value':'N1(x,0,1mi, 1a, 1b)'},
+      {'type':'checkbox','name':'nstage','id':'nstage_nx','value':'Nx'},
+      {'type':'checkbox','name':'nstage','id':'nstage_n0','value':'N0'},
+      {'type':'checkbox','name':'nstage','id':'nstage_n1','value':'N1(1mi, 1a, 1b)'},
       {'type':'checkbox','name':'nstage','id':'nstage_n2','value':' N2(2, 2a)'},
       {'type':'checkbox','name':'nstage','id':'nstage_n3','value':'N3(3, 3a)'},
     ],

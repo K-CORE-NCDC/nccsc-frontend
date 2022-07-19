@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {FormattedMessage} from 'react-intl';
+import { FormattedMessage } from "react-intl";
 import {
   userRegister,
   checkUserName,
@@ -23,14 +23,14 @@ let initial_state = {
   verification: "",
   // isVerified: "",
   errors: {
-    id:"",
-    koreanid:"",
+    id: "",
+    koreanid: "",
     password: "",
-    koreanpassword:"",
+    koreanpassword: "",
     verify_password: "",
     koreanverify_password: "",
-    name:"",
-    koreanname:"",
+    name: "",
+    koreanname: "",
     institute: "",
     koreaninstitute: "",
     phone_number: "",
@@ -43,19 +43,19 @@ let initial_state = {
     koreanverification: "",
     // isVerified: "",
     // koreanisVerified: "",
-  }
+  },
 };
 
 const AlphaNumRegex = new RegExp("^[a-zA-Z0-9]*$");
 const NumRegex = new RegExp("^[0-9]*$");
-const AlphaNumRegexwithSpecialChars= new RegExp("^[ A-Za-z0-9_@./#&+-]*$")
+const AlphaNumRegexwithSpecialChars = new RegExp("^[ A-Za-z0-9_@./#&+-]*$");
 
 const MemberShip = ({ changestep }) => {
   const [form, setForm] = useState(initial_state);
   const [errors, setError] = useState(initial_state);
   const [verificationState, setverificationState] = useState("");
-  const [ClickEmailverifyButton, setClickEmailverifyButton] = useState(false)
-  const [ClickMobileverifyButton, setClickMobileverifyButton] = useState(false)
+  const [ClickEmailverifyButton, setClickEmailverifyButton] = useState(false);
+  const [ClickMobileverifyButton, setClickMobileverifyButton] = useState(false);
   const dispatch = useDispatch();
   const regitserResponse = useSelector(
     (data) => data.dataVisualizationReducer.registerData
@@ -69,15 +69,14 @@ const MemberShip = ({ changestep }) => {
   const [instituteDropdown, setInstituteDropdown] = useState([]);
   const [institute, setInstitute] = useState([]);
   const [encData, setEncData] = useState("");
-  
 
-  useEffect(()=>{
+  useEffect(() => {
     setError(initial_state);
-  },[])
+  }, []);
 
   function formSet(e) {
-  const {name,value}=e.target;
-  console.log(name, value);
+    const { name, value } = e.target;
+    console.log(name, value);
     if (e.target.name === "verification") {
       setverificationState(e.target.value);
       console.log(verificationState);
@@ -92,147 +91,133 @@ const MemberShip = ({ changestep }) => {
 
     const errors = form.errors;
 
-    if (name==="id" && value==="") {
-      errors.id="Please enter 6-10 characters";
-      errors.koreanid="IDLength";
+    if (name === "id" && value === "") {
+      errors.id = "Please enter 6-10 characters";
+      errors.koreanid = "IDLength";
+    } else if (name === "id" && !AlphaNumRegex.test(value)) {
+      errors.id = "(e.g. @$#!*&) Special characters cannot be used";
+      errors.koreanid = "IDSpecialCharecters";
+    } else if (name === "id" && value.length < 6) {
+      errors.id = "Please enter 6-10 characters";
+      errors.koreanid = "IDLength";
+    } else if (name === "id") {
+      errors.id = " ";
+      errors.koreanid = " ";
     }
-    else if (name==="id" && !AlphaNumRegex.test(value)){
-     errors.id="(e.g. @$#!*&) Special characters cannot be used"
-     errors.koreanid="IDSpecialCharecters"
-   } 
-    else if (name==="id" && value.length<6) {
-      errors.id="Please enter 6-10 characters";
-      errors.koreanid="IDLength";
+    if (name === "password" && value === "") {
+      errors.password = "Please enter 9-20 characters";
+      errors.koreanpassword = "PasswordLength";
+    } else if (name === "password" && value.length > 9 && value.length < 20) {
+      errors.password = " ";
+      errors.koreanpassword = " ";
+    } else if (name === "password" && (value.length < 9 || value.length > 20)) {
+      errors.password = "Please enter 9-20 characters";
+      errors.koreanpassword = "PasswordLength";
     }
-    else if (name==="id"){
-      errors.id=" "
-      errors.koreanid=" ";
-    }
-    if (name==="password" && value==="") {
-      errors.password='Please enter 9-20 characters';
-      errors.koreanpassword='PasswordLength';
-    }
-   else if (name==="password" && value.length>9 && value.length<20)  {
-      errors.password=" ";
-      errors.koreanpassword=" ";
-    }
-    else if (name==="password" && (value.length<9 || value.length >20) ) {
-      errors.password='Please enter 9-20 characters';
-      errors.koreanpassword='PasswordLength';
-    }
-    let passwordforConfirming= document.getElementById('PasswordField');
+    let passwordforConfirming = document.getElementById("PasswordField");
 
-    if(name==="verify_password" && value ===""){
-      errors.verify_password="Please verify Password"
-      errors.koreanverify_password="EnterVerifyPassword"
-    }
-   else if(name==="verify_password" && value != passwordforConfirming.value){
-      errors.verify_password="verify password should be same as password"
-      errors.koreanverify_password="VerifyPassword"
-    }
-   else if(name==="verify_password" && value == passwordforConfirming.value){
-      errors.verify_password=" "
-      errors.koreanverify_password=" "
-    }
-
-    
-    if (name=="name" && value==="") {
-      errors.name="Please Enter your Name"
-      errors.koreanname="Name"
-    }
-    else if (name=="name" && value!=="") {
-      errors.name=" "
-      errors.koreanname=" " 
-    }
-    if (name==="institute" && value=== "--Select--" ) {
-      errors.institute="Please Select any Institute";
-      errors.koreaninstitute="Organization";
-    }
-    else if (name==="institute" && value=== "" ) {
-      errors.institute="Please Select any Institute";
-      errors.koreaninstitute="Organization";
-    }
-    else if (name==="institute"){
-      errors.institute=" ";
-      errors.koreaninstitute=" ";
-    }
-
-    if (name==="phone_number"&& value==="") {
-      errors.phone_number="Please Enter Phone Number";
-      errors.koreanphone_number="EnterPhoneNumber";
-    }
-     else if (name==="phone_number"&&!NumRegex.test(value)) {
-      errors.phone_number="Please Enter Valid Phone Number";
-      errors.koreanphone_number="EnterValidPhoneNumber";
-    } 
-    else if (name==="phone_number"&&
-      (value.length > 10 ||
-      value.length < 10)
+    if (name === "verify_password" && value === "") {
+      errors.verify_password = "Please verify Password";
+      errors.koreanverify_password = "EnterVerifyPassword";
+    } else if (
+      name === "verify_password" &&
+      value != passwordforConfirming.value
     ) {
-      errors.phone_number="Please Enter only 10 Numbers";
-      errors.koreanphone_number="PhoneNumber10Digits"; 
-    }
-    else if (name==="phone_number"){
-      errors.phone_number=" ";
-      errors.koreanphone_number=" " 
-    }
-
-    if (name==="email" && value==="") {
-      errors.email="Please Enter your EmailID";
-      errors.koreanemail="EnterEmailID" 
-    }
-   else if (name==="email") {
-      errors.email=" ";
-      errors.koreanemail=" " 
-    }
-     if (name==="domain_email" && value==="option") {
-       errors.domain_email="Please Select Domain";
-       errors.koreandomain_email="SelectEmailDomain" 
-     }
-
-   else if (name==="domain_email" && value==="") {
-      errors.domain_email="Please Select Domain";
-      errors.koreandomain_email="SelectEmailDomain" 
-    }
-   else if (name==="domain_email") {
-      errors.domain_email=" ";
-      errors.koreandomain_email=" " 
+      errors.verify_password = "verify password should be same as password";
+      errors.koreanverify_password = "VerifyPassword";
+    } else if (
+      name === "verify_password" &&
+      value == passwordforConfirming.value
+    ) {
+      errors.verify_password = " ";
+      errors.koreanverify_password = " ";
     }
 
-    if (name==="verification" && value==="") {
-      errors.verification="Please Select anyone verification ";
-      errors.koreanverification="Verification" 
+    if (name == "name" && value === "") {
+      errors.name = "Please Enter your Name";
+      errors.koreanname = "Name";
+    } else if (name == "name" && value !== "") {
+      errors.name = " ";
+      errors.koreanname = " ";
+    }
+    if (name === "institute" && value === "--Select--") {
+      errors.institute = "Please Select any Institute";
+      errors.koreaninstitute = "Organization";
+    } else if (name === "institute" && value === "") {
+      errors.institute = "Please Select any Institute";
+      errors.koreaninstitute = "Organization";
+    } else if (name === "institute") {
+      errors.institute = " ";
+      errors.koreaninstitute = " ";
     }
 
-    if (name==="verification" && value!=="") {
-      errors.verification=" ";
-      errors.koreanverification=" " 
+    if (name === "phone_number" && value === "") {
+      errors.phone_number = "Please Enter Phone Number";
+      errors.koreanphone_number = "EnterPhoneNumber";
+    } else if (name === "phone_number" && !NumRegex.test(value)) {
+      errors.phone_number = "Please Enter Valid Phone Number";
+      errors.koreanphone_number = "EnterValidPhoneNumber";
+    } else if (
+      name === "phone_number" &&
+      (value.length > 10 || value.length < 10)
+    ) {
+      errors.phone_number = "Please Enter only 10 Numbers";
+      errors.koreanphone_number = "PhoneNumber10Digits";
+    } else if (name === "phone_number") {
+      errors.phone_number = " ";
+      errors.koreanphone_number = " ";
     }
-    form.errors=errors;
+
+    if (name === "email" && value === "") {
+      errors.email = "Please Enter your EmailID";
+      errors.koreanemail = "EnterEmailID";
+    } else if (name === "email") {
+      errors.email = " ";
+      errors.koreanemail = " ";
+    }
+    if (name === "domain_email" && value === "option") {
+      errors.domain_email = "Please Select Domain";
+      errors.koreandomain_email = "SelectEmailDomain";
+    } else if (name === "domain_email" && value === "") {
+      errors.domain_email = "Please Select Domain";
+      errors.koreandomain_email = "SelectEmailDomain";
+    } else if (name === "domain_email") {
+      errors.domain_email = " ";
+      errors.koreandomain_email = " ";
+    }
+
+    if (name === "verification" && value === "") {
+      errors.verification = "Please Select anyone verification ";
+      errors.koreanverification = "Verification";
+    }
+
+    if (name === "verification" && value !== "") {
+      errors.verification = " ";
+      errors.koreanverification = " ";
+    }
+    form.errors = errors;
   }
 
   function validation() {
-    let count=0;
-  //   for (let x in form) {
-  //     if(x!="errors")
-  //     {
-  //       if(form[x]===""){
-  //         count++;
-  //       }
-  //     }
-  //  }
-  
+    let count = 0;
+    //   for (let x in form) {
+    //     if(x!="errors")
+    //     {
+    //       if(form[x]===""){
+    //         count++;
+    //       }
+    //     }
+    //  }
   }
-
 
   function register() {
     console.log("Values", form);
     console.log("errors", errors);
-//  console.log(form.id,form.koreanid);
-    if(!form["id"] && !form["koreanid"]){
+    //  console.log(form.id,form.koreanid);
+    if (!form["id"] && !form["koreanid"]) {
       console.log("bucked");
-      form.errors.id="Please Enter Your ID";
-      form.errors.koreanid="DefaultID";
+      form.errors.id = "Please Enter Your ID";
+      form.errors.koreanid = "DefaultID";
     }
   }
   useEffect(() => {
@@ -351,7 +336,12 @@ const MemberShip = ({ changestep }) => {
                   </span>
                 )}
                 {form.errors.id && (
-                  <span className="text-red-500 text-sm"><FormattedMessage  id = {form.errors.koreanid} defaultMessage={form.errors.id}/></span>
+                  <span className="text-red-500 text-sm">
+                    <FormattedMessage
+                      id={form.errors.koreanid}
+                      defaultMessage={form.errors.id}
+                    />
+                  </span>
                 )}
               </div>
             </div>
@@ -379,7 +369,10 @@ const MemberShip = ({ changestep }) => {
                 <div>
                   {form.errors.password && (
                     <span className="text-red-500 text-sm">
-                     <FormattedMessage  id = {form.errors.koreanpassword} defaultMessage={form.errors.password}/>
+                      <FormattedMessage
+                        id={form.errors.koreanpassword}
+                        defaultMessage={form.errors.password}
+                      />
                     </span>
                   )}
                 </div>
@@ -401,7 +394,10 @@ const MemberShip = ({ changestep }) => {
               </div>
               {form.errors.verify_password && (
                 <span className="text-red-500 text-sm">
-                  <FormattedMessage  id = {form.errors.koreanverify_password} defaultMessage={form.errors.verify_password}/>
+                  <FormattedMessage
+                    id={form.errors.koreanverify_password}
+                    defaultMessage={form.errors.verify_password}
+                  />
                 </span>
               )}
             </div>
@@ -420,7 +416,12 @@ const MemberShip = ({ changestep }) => {
                 />
               </div>
               {form.errors.name && (
-                <span className="text-red-500 text-sm"><FormattedMessage  id = {form.errors.koreanname} defaultMessage={form.errors.name}/></span>
+                <span className="text-red-500 text-sm">
+                  <FormattedMessage
+                    id={form.errors.koreanname}
+                    defaultMessage={form.errors.name}
+                  />
+                </span>
               )}
             </div>
 
@@ -441,7 +442,10 @@ const MemberShip = ({ changestep }) => {
               </div>
               {form.errors.institute && (
                 <span className="text-red-500 text-sm">
-                  <FormattedMessage  id = {form.errors.koreaninstitute} defaultMessage={form.errors.institute}/>
+                  <FormattedMessage
+                    id={form.errors.koreaninstitute}
+                    defaultMessage={form.errors.institute}
+                  />
                 </span>
               )}
             </div>
@@ -463,7 +467,10 @@ const MemberShip = ({ changestep }) => {
                   {" "}
                   {form.errors.phone_number && (
                     <span className="text-red-500 text-sm">
-                      <FormattedMessage  id = {form.errors.koreanphone_number} defaultMessage={form.errors.phone_number}/>
+                      <FormattedMessage
+                        id={form.errors.koreanphone_number}
+                        defaultMessage={form.errors.phone_number}
+                      />
                     </span>
                   )}
                 </div>
@@ -486,7 +493,10 @@ const MemberShip = ({ changestep }) => {
                   {" "}
                   {form.errors.email && (
                     <span className="text-red-500 text-sm">
-                        <FormattedMessage  id = {form.errors.koreanemail} defaultMessage={form.errors.email}/>
+                      <FormattedMessage
+                        id={form.errors.koreanemail}
+                        defaultMessage={form.errors.email}
+                      />
                     </span>
                   )}
                 </div>
@@ -504,7 +514,10 @@ const MemberShip = ({ changestep }) => {
                 <div>
                   {form.errors.domain_email && (
                     <span className="text-red-500 text-sm">
-                     <FormattedMessage  id = {form.errors.koreandomain_email} defaultMessage={form.errors.domain_email}/>
+                      <FormattedMessage
+                        id={form.errors.koreandomain_email}
+                        defaultMessage={form.errors.domain_email}
+                      />
                     </span>
                   )}
                 </div>
@@ -574,7 +587,6 @@ const MemberShip = ({ changestep }) => {
               </div>
               <div>
                 {verificationState === "email" && (
-                
                   <button
                     className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
                     style={{ height: "45px" }}
@@ -585,28 +597,32 @@ const MemberShip = ({ changestep }) => {
                 )}
               </div>
 
-              { form["verification"]=='email' && ClickEmailverifyButton   && !ClickMobileverifyButton && (
-                <>
-                <div className="d-flex flex-row">
-                  <div className="mb-3 mx-2 pt-0">
-                    <input
-                      type="text"
-                      className="px-4 py-4 mt-2  text-blueGray-600 relative bg-white rounded border border-gray-400 outline-none focus:outline-none focus:ring"
-                      style={{ width: "150px" }}
-                    />
-                  </div>
+              {form["verification"] == "email" &&
+                ClickEmailverifyButton &&
+                !ClickMobileverifyButton && (
                   <>
-                    <button
-                      className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
-                      style={{ width: "200px", height: "45px" }}
-                    >
-                      check verification code 
-                    </button>
+                    <div className="d-flex flex-row">
+                      <div className="mb-3 mx-2 pt-0">
+                        <input
+                          type="text"
+                          className="px-4 py-4 mt-2  text-blueGray-600 relative bg-white rounded border border-gray-400 outline-none focus:outline-none focus:ring"
+                          style={{ width: "150px" }}
+                        />
+                      </div>
+                      <>
+                        <button
+                          className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
+                          style={{ width: "200px", height: "45px" }}
+                        >
+                          check verification code
+                        </button>
+                      </>
+                    </div>
+                    <p className="text-warning">
+                      Please Enter the Code you have recieved in your Email
+                    </p>
                   </>
-                </div>
-                <p className="text-warning">Please Enter the Code you have recieved in your Email</p>
-                </>
-              )}
+                )}
             </div>
           </div>
         </div>

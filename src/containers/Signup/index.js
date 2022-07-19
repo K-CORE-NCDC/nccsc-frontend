@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import MemberShip from './MemberShip'
-import TermsOfUse from './TermsOfUse'
-import SigninComplete from './SigninComplete';
-import './SignupStyles.css'
-import {
-  CheckCircleIcon
-} from '@heroicons/react/outline'
+import React, { useState, useEffect } from "react";
+import MemberShip from "./MemberShip";
+import TermsOfUse from "./TermsOfUse";
+import SigninComplete from "./SigninComplete";
+import "./SignupStyles.css";
+import { CheckCircleIcon } from "@heroicons/react/outline";
 
 const SignupComponent = () => {
-  const [currentStep, setcurrentStep] = useState(1);
+  const [currentStep, setcurrentStep] = useState(0);
   const [widthofProgress, setwidthofprogress] = useState(0);
   const [Check, setCheck] = useState(0);
   useEffect(() => {
@@ -23,7 +21,7 @@ const SignupComponent = () => {
     } else if (currentStep == 2) {
       setwidthofprogress(100);
     }
-  },[currentStep]);
+  }, [currentStep]);
 
   function showStep(step) {
     switch (step) {
@@ -37,7 +35,10 @@ const SignupComponent = () => {
         );
       case 2:
         return (
-         <SigninComplete step={currentStep} changestep={changeStep}></SigninComplete>
+          <SigninComplete
+            step={currentStep}
+            changestep={changeStep}
+          ></SigninComplete>
         );
     }
   }
@@ -52,7 +53,7 @@ const SignupComponent = () => {
           <div
             className={"progress"}
             style={{
-              width: `${widthofProgress}%`
+              width: `${widthofProgress}%`,
             }}
             id="Member terms"
           ></div>
@@ -63,9 +64,7 @@ const SignupComponent = () => {
             }`}
             data-title="Terms"
           >
-            {currentStep > 0 && (
-              <CheckCircleIcon></CheckCircleIcon>
-            )}
+            {currentStep > 0 && <CheckCircleIcon></CheckCircleIcon>}
             {currentStep == 0 && (
               <div className="stepNumber displayNumber">
                 <span>1</span>
@@ -84,9 +83,7 @@ const SignupComponent = () => {
                 <span>2</span>
               </div>
             )}
-            {currentStep > 1 && (
-               <CheckCircleIcon></CheckCircleIcon>
-            )}
+            {currentStep > 1 && <CheckCircleIcon></CheckCircleIcon>}
           </div>
 
           <div
@@ -105,6 +102,6 @@ const SignupComponent = () => {
       {showStep(currentStep)}
     </div>
   );
-}
+};
 
 export default SignupComponent;
