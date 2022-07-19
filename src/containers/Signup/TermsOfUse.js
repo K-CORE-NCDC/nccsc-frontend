@@ -1,18 +1,12 @@
 import React, { useState } from "react";
 
-import config from "../../config";
-import { UserIcon } from "@heroicons/react/outline";
-
-const TermsOfUse = ({ updateStep, changestep }) => {
-  const [errorClass, setErrorClass] = useState("");
-  const [errorMessage, setErrorMessage] = useState([]);
+const TermsOfUse = ({changestep }) => {
   const [firstAgree, setFirstAgree] = useState(false);
   const [secondAgree, setSecondAgree] = useState(false);
   const [allCheck, setAllCheck] = useState(false);
 
-  function agreeFunction() {
+  const agreeFunction=()=> {
     if (firstAgree && secondAgree) {
-      //   updateStep("increment")
       changestep(1);
     } else {
       window.alert("please check agreement");
@@ -31,8 +25,7 @@ const TermsOfUse = ({ updateStep, changestep }) => {
           </h1>
         </div>
         <div
-          className="overflow-auto bg-white border border-gray-400 rounded shadow-sm w-4/6 p-10"
-          style={{ height: "280px" }}
+          className="overflow-auto bg-white border border-gray-400 rounded shadow-sm w-4/6 p-10 h-100"
         >
           <div className="scrollBox">
             <h4 className="font-medium">
@@ -505,8 +498,7 @@ const TermsOfUse = ({ updateStep, changestep }) => {
           </label>
         </div>
         <div
-          className="overflow-auto bg-white border border-gray-400 rounded shadow-sm w-4/6 p-10"
-          style={{ height: "280px" }}
+          className="overflow-auto bg-white border border-gray-400 rounded shadow-sm w-4/6 p-10 h-100"
         >
           <div className="scrollBox">
             <h4 className="font-medium">
@@ -600,16 +592,14 @@ const TermsOfUse = ({ updateStep, changestep }) => {
             <span className="ml-2 font-medium">Complete agreement.</span>
           </label>
         </div>
-        <div className="inline-flex gap-3">
+        <div className="inline-flex gap-5 mb-5">
           <button
-            className="hover:bg-blue-700 text-white font-bold py-6 px-6 float-left rounded"
-            style={{ backgroundColor: "#bdbdbd" }}
+            className="hover:bg-blue-700 text-white font-bold py-6 px-6 float-left rounded bg-grey-700 "
           >
             disagree
           </button>
           <button
-            className="hover:bg-blue-700 text-white font-bold py-6 px-6 float-right rounded"
-            style={{ backgroundColor: "#194872" }}
+            className="hover:bg-blue-700 text-white font-bold py-6 px-6 float-right rounded bg-NccBlue-700"
             onClick={agreeFunction}
           >
             agree
