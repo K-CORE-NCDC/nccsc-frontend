@@ -10,6 +10,11 @@ const Logout = React.lazy(() => import('./containers/Login/logout'))
 const Terms = React.lazy(() => import('./containers/Signup/TermsOfUse'))
 const Join = React.lazy(() => import('./containers/Signup/MemberShip'))
 const Signup = React.lazy(() => import('./containers/Signup/'))
+const TermsandConditions=React.lazy(()=> import('./containers/TermsAndPolicy/TermsAndConditionsIndex'))
+const PrivacyPolicy=React.lazy(()=>import('./containers/TermsAndPolicy/PrivacyActIndex'))
+const findID = React.lazy(()=>import('./containers/Login/FindID'))
+const findPassword = React.lazy(()=>import('./containers/Login/FindPassword'))
+
 
 const Introduce = React.lazy(() => import('./containers/Home/introduce'))
 const Pipeline = React.lazy(() => import('./containers/Home/pipeline'))
@@ -42,7 +47,11 @@ const route = [
 
   { path: '/faq/:slug?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: Faq},
   { path: '/notice/:slug?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: Notice},
-  { path: '/qa/:slug?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: Qa}
+  { path: '/qa/:slug?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: Qa},
+  { path: '/termsandconditions/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage id="TermsofService" defaultMessage="TermsofService" />, component: TermsandConditions},
+  { path: '/privacypolicy/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="PrivacyPolicy" defaultMessage="PrivacyPolicy" />, component: PrivacyPolicy},
+  { path: '/findid/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="" defaultMessage="" />, component: findID},
+  { path: '/findpassword/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="" defaultMessage="" />, component: findPassword},
 
 ]
 

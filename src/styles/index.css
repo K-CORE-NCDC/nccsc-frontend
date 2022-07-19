@@ -413,6 +413,32 @@ input:checked ~ .dot {
     color: #152a52;
 }
 
+.Terms_Conditions_Wrap{
+  max-width: 1200px;
+  margin: 50px auto;
+  padding:0 1%;
+}
+.Terms_Conditions_Wrap h1{
+  margin-bottom: 15px;
+  font-size: 24px;
+  text-align: left;
+  color: #152a52;
+}
+
+/* extra  */
+.ktable, .kth, .ktd {
+  border: 1px solid;
+  text-align: center;
+}
+
+
+.KtermsandconditionsH1{
+  line-Height: "2";
+   position: "relative";
+    font-Size: "40px" 
+}
+
+
 
 .intro_tab {
     display: flex;
@@ -426,7 +452,6 @@ input:checked ~ .dot {
 
 .intro_tab li {
     width: 33.2%;
-    /* background-color: #4472c4; */
 }
 
 

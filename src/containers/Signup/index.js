@@ -1,31 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import MemberShip from './MemberShip'
-import TermsOfUse from './TermsOfUse'
-import SigninComplete from './SigninComplete';
-import './SignupStyles.css'
-import {
-  CheckCircleIcon
-} from '@heroicons/react/outline'
+import React, { useState, useEffect } from "react";
+import MemberShip from "./MemberShip";
+import TermsOfUse from "./TermsOfUse";
+import SigninComplete from "./SigninComplete";
+import "../../styles/SignupStyles.css";
+import { CheckCircleIcon } from "@heroicons/react/outline";
+import NewMemberShip from './NewMemberShip'
 
 const SignupComponent = () => {
   const [currentStep, setcurrentStep] = useState(1);
   const [widthofProgress, setwidthofprogress] = useState(0);
-  const [Check, setCheck] = useState(0);
+
   useEffect(() => {
-    console.log("current step", currentStep);
-    console.log(widthofProgress);
     if (currentStep == 0) {
       setwidthofprogress(0);
-      console.log(widthofProgress);
     } else if (currentStep === 1) {
       setwidthofprogress(50);
-      console.log(widthofProgress);
     } else if (currentStep == 2) {
       setwidthofprogress(100);
     }
-  },[currentStep]);
+  }, [currentStep]);
 
-  function showStep(step) {
+  let showStep = (step) => {
     switch (step) {
       case 0:
         return (
@@ -37,13 +32,17 @@ const SignupComponent = () => {
         );
       case 2:
         return (
-         <SigninComplete step={currentStep} changestep={changeStep}></SigninComplete>
+          <SigninComplete
+            step={currentStep}
+            changestep={changeStep}
+          ></SigninComplete>
         );
     }
-  }
-  function changeStep(step) {
+  };
+
+  let changeStep = (step) => {
     setcurrentStep(step);
-  }
+  };
 
   return (
     <div>
@@ -52,7 +51,7 @@ const SignupComponent = () => {
           <div
             className={"progress"}
             style={{
-              width: `${widthofProgress}%`
+              width: `${widthofProgress}%`,
             }}
             id="Member terms"
           ></div>
@@ -63,9 +62,7 @@ const SignupComponent = () => {
             }`}
             data-title="Terms"
           >
-            {currentStep > 0 && (
-              <CheckCircleIcon></CheckCircleIcon>
-            )}
+            {currentStep > 0 && <CheckCircleIcon></CheckCircleIcon>}
             {currentStep == 0 && (
               <div className="stepNumber displayNumber">
                 <span>1</span>
@@ -84,9 +81,7 @@ const SignupComponent = () => {
                 <span>2</span>
               </div>
             )}
-            {currentStep > 1 && (
-               <CheckCircleIcon></CheckCircleIcon>
-            )}
+            {currentStep > 1 && <CheckCircleIcon></CheckCircleIcon>}
           </div>
 
           <div
@@ -95,7 +90,6 @@ const SignupComponent = () => {
             }`}
             data-title="Approval"
           >
-            {/* { <CheckCircleIcon className="checkmark fa-solid fa-check "></CheckCircleIcon>} */}
             <div className="stepNumber displayNumber">
               <span>3</span>
             </div>
@@ -105,6 +99,6 @@ const SignupComponent = () => {
       {showStep(currentStep)}
     </div>
   );
-}
+};
 
 export default SignupComponent;

@@ -320,11 +320,11 @@ export default function Web(props) {
       {/* fixed bottom-0 */}
       <footer className="border-gray-300 border-t  w-full">
         <div className="d-flex flex-row text-white" style={{height:"50px",backgroundColor:"#203239"}}>
-          <Link to="/" className="m-5">
+          <Link to="/termsandconditions/" className="m-5">
             <FormattedMessage id="TermsofService" defaultMessage="TermsofService" />
           </Link>
           <p className="m-5">|</p>
-          <Link to="/" className="m-5">
+          <Link to="/privacypolicy/" className="m-5">
             <FormattedMessage id="PrivacyPolicy" defaultMessage="PrivacyPolicy" />
           </Link>
         </div>
