@@ -23,7 +23,7 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
       let tableHtmlData = []
       for (const [key, value] of Object.entries(data.survivalJson.final)) {
         // tableData[key] = [['Sample','X','Y']]
-        console.log(value)
+        
         let columns = [{name:"X",selector: row => row.x,},{name:"Y",selector: row => row.y},{name:"Sample",selector: row => row.sample},]
         tableHtmlData.push(
           <div className='p-3'>

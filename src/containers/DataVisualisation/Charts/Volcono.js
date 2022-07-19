@@ -41,7 +41,7 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
 
 
   const updateGroupFilters = (filtersObject) => {
-    console.log(filtersObject)
+    
     if (filtersObject) {
       setGroupFilters(filtersObject)
     }
@@ -60,9 +60,13 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
       setActiveCmp(false)
       if (inputData.type !== '' && Object.keys(groupFilters).length > 0) {
         setLoader(true)
+        if('volcanoProteomeType' in inputData){
+          delete inputData['volcanoProteomeType']
+        }
         if(volcanoType==='proteome'){
           inputData['volcanoProteomeType'] = proteomeValue
         }
+        inputData['filterType'] = userDefienedFilter
         dispatch(getVolcanoPlotInfo('POST', { ...inputData, filterGroup: groupFilters }))
         
       }
@@ -124,7 +128,7 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
     }
 
     if (watermarkCss !== "" && screenCapture) {
-      console.log(reference)
+      
       // exportComponentAsPNG(reference)
       setToFalseAfterScreenCapture()
     }
@@ -154,10 +158,15 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
     }else{
       setVolcanoType('proteome')
     }
+    let d = {}
+    setGroupFilters({...d})
+    
   }
   const submitProteomeNT = (e)=>{
     setLoader(true)
+    
     inputData['volcanoProteomeType'] = proteomeValue
+    inputData['filterType'] = userDefienedFilter
     dispatch(getVolcanoPlotInfo('POST', { ...inputData, filterGroup: groupFilters }))
   }
 
@@ -221,19 +230,19 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
               {(proteomeValue!=='NT') && <>
               <h6 className="p-4 ml-1 text-left text-bold sm:text-xl lg:text-2xl text-blue-700"><FormattedMessage  id = "Choose Filter group" defaultMessage='Choose Filter group'/></h6>
               <div className="m-1 flex flex-row justify-around">
-                <button onClick={() => setUserDefienedFilter('static')}
+                <button onClick={() => {setUserDefienedFilter('static');setGroupFilters({})}}
                   className={userDefienedFilter === 'static' ? selectedCss : nonSelectedCss}
                 >
                   <FormattedMessage  id = "Static_volcano" defaultMessage='Static'/>
                 </button>
-                <button onClick={() => setUserDefienedFilter('dynamic')}
+                <button onClick={() => {setUserDefienedFilter('dynamic');setGroupFilters({})}}
                   className={userDefienedFilter === 'dynamic' ? selectedCss : nonSelectedCss}
                 >
                   <FormattedMessage  id = "Dynamic_volcano" defaultMessage='Dynamic'/>
                 </button>
               </div>
-              {(userDefienedFilter === 'static') && <PreDefienedFilters viz_type='volcono' parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
-              {(userDefienedFilter === 'dynamic') && <GroupFilters viz_type='volcono' parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
+              {(userDefienedFilter === 'static') && <PreDefienedFilters volcanoType={volcanoType}  viz_type='volcono' parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
+              {(userDefienedFilter === 'dynamic') && <GroupFilters volcanoType={volcanoType} viz_type='volcono' parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
               </>}
               {(proteomeValue==='NT') && 
                 <button onClick={()=>submitProteomeNT()} className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
