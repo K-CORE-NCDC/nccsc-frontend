@@ -1,62 +1,72 @@
 import React, { useState, useEffect } from "react";
 import { FormattedMessage } from "react-intl";
+import "../../styles/clustergram.css";
 import {
   userRegister,
   checkUserName,
   getPassEncodeId,
 } from "../../actions/api_actions";
-import TermsofService from "../TermsAndPolicy/TermsofService";
-import PrivacyPolicy from "../TermsAndPolicy/PrivacyPolicy";
-
 import { useSelector, useDispatch } from "react-redux";
+import { UserIcon, eye, EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
 import { logDOM } from "@testing-library/react";
 
-let initial_state = {
-  id: "",
-  password: "",
-  verify_password: "",
-  name: "",
-  institute: "",
-  phone_number: "",
-  email: "",
-  domain_email: "",
-  verification: "",
-  // isVerified: "",
-  errors: {
-    id: "",
-    koreanid: "",
-    password: "",
-    koreanpassword: "",
-    verify_password: "",
-    koreanverify_password: "",
-    name: "",
-    koreanname: "",
-    institute: "",
-    koreaninstitute: "",
-    phone_number: "",
-    koreanphone_number: "",
-    email: "",
-    koreanemail: "",
-    domain_email: "",
-    koreandomain_email: "",
-    verification: "",
-    koreanverification: "",
-    // isVerified: "",
-    // koreanisVerified: "",
-  },
-};
-
+const AlphaRegex = new RegExp("^[a-zA-Z]*$");
 const AlphaNumRegex = new RegExp("^[a-zA-Z0-9]*$");
 const NumRegex = new RegExp("^[0-9]*$");
 const AlphaNumRegexwithSpecialChars = new RegExp("^[ A-Za-z0-9_@./#&+-]*$");
+const AlphaNumRegexwithSpecialCharsExceptDot = new RegExp("^[ A-Za-z0-9_/#&+-]*$");
 
 const MemberShip = ({ changestep }) => {
+  const register_user = () => {
+    console.log("hi", form);
+  };
+  let initial_state = {
+    id: "",
+    password: "",
+    verify_password: "",
+    name: "",
+    institute: "",
+    phone_number: "",
+    email: "",
+    domain_email: "",
+    verification: "",
+    isVerified: false,
+    errors: {
+      id: "",
+      koreanid: "",
+      password: "",
+      koreanpassword: "",
+      verify_password: "",
+      koreanverify_password: "",
+      name: "",
+      koreanname: "",
+      institute: "",
+      koreaninstitute: "",
+      phone_number: "",
+      koreanphone_number: "",
+      email: "",
+      koreanemail: "",
+      domain_email: "",
+      koreandomain_email: "",
+      verification: "",
+      koreanverification: "",
+      // isVerified: "",
+      // koreanisVerified: "",
+    },
+  };
+
   const [form, setForm] = useState(initial_state);
-  const [errors, setError] = useState(initial_state);
   const [verificationState, setverificationState] = useState("");
   const [ClickEmailverifyButton, setClickEmailverifyButton] = useState(false);
   const [ClickMobileverifyButton, setClickMobileverifyButton] = useState(false);
+  const [message, setMessage] = useState("");
+  const [inputmail, setInputMail] = useState(false);
+  const [instituteDropdown, setInstituteDropdown] = useState([]);
+  const [encData, setEncData] = useState("");
+  const [visibility, setvisibility] = useState(false);
+
   const dispatch = useDispatch();
+
   const regitserResponse = useSelector(
     (data) => data.dataVisualizationReducer.registerData
   );
@@ -64,32 +74,27 @@ const MemberShip = ({ changestep }) => {
     (data) => data.dataVisualizationReducer.checkUserName
   );
   const passKey = useSelector((data) => data.dataVisualizationReducer.passKey);
-  const [message, setMessage] = useState("");
-  const [inputmail, setInputMail] = useState(false);
-  const [instituteDropdown, setInstituteDropdown] = useState([]);
-  const [institute, setInstitute] = useState([]);
-  const [encData, setEncData] = useState("");
 
-  useEffect(() => {
-    setError(initial_state);
-  }, []);
-
-  function formSet(e) {
+  const formSet = (e) => {
     const { name, value } = e.target;
     console.log(name, value);
-    if (e.target.name === "verification") {
-      setverificationState(e.target.value);
-      console.log(verificationState);
-    }
     if (e.target.value === "input") {
       setForm((oldState) => ({ ...oldState, [e.target.name]: "" }));
       setInputMail(true);
     } else {
       setForm((oldState) => ({ ...oldState, [e.target.name]: e.target.value }));
     }
-    console.log(form);
+    if (e.target.name === "verification") {
+      setverificationState(e.target.value);
+    }
 
     const errors = form.errors;
+
+    const isKoreanWord = (input) => {
+      const match = input.match(/[\u3131-\uD79D]/g);
+      return match ? match.length === input.length : false;
+    }
+    // ID Validation
 
     if (name === "id" && value === "") {
       errors.id = "Please enter 6-10 characters";
@@ -100,46 +105,76 @@ const MemberShip = ({ changestep }) => {
     } else if (name === "id" && value.length < 6) {
       errors.id = "Please enter 6-10 characters";
       errors.koreanid = "IDLength";
-    } else if (name === "id") {
+    }
+    else if (name === "id" && value.length > 10) {
+      errors.id = "Please enter 6-10 characters";
+      errors.koreanid = "IDLength";
+    }
+
+    else if (name === "id") {
       errors.id = " ";
       errors.koreanid = " ";
     }
+
+
+    //  Password Validation
+
     if (name === "password" && value === "") {
       errors.password = "Please enter 9-20 characters";
       errors.koreanpassword = "PasswordLength";
-    } else if (name === "password" && value.length > 9 && value.length < 20) {
+    }
+
+    // else if (name == "password", isKoreanWord(value)) {
+    //   errors.password = "Korean is not available";
+    //   errors.koreanpassword = "KoreanNotAvailable";
+    // }
+
+    else if (name === "password" && value.length > 9 && value.length < 20) {
       errors.password = " ";
       errors.koreanpassword = " ";
     } else if (name === "password" && (value.length < 9 || value.length > 20)) {
       errors.password = "Please enter 9-20 characters";
       errors.koreanpassword = "PasswordLength";
     }
-    let passwordforConfirming = document.getElementById("PasswordField");
+    const password_is = form.password;
+
+    //  Verify Password Validation
 
     if (name === "verify_password" && value === "") {
       errors.verify_password = "Please verify Password";
       errors.koreanverify_password = "EnterVerifyPassword";
-    } else if (
-      name === "verify_password" &&
-      value != passwordforConfirming.value
-    ) {
+    } else if (name === "verify_password" && value != password_is) {
       errors.verify_password = "verify password should be same as password";
       errors.koreanverify_password = "VerifyPassword";
-    } else if (
-      name === "verify_password" &&
-      value == passwordforConfirming.value
-    ) {
+    } else if (name === "verify_password" && value == password_is) {
       errors.verify_password = " ";
       errors.koreanverify_password = " ";
     }
 
+    //  Name Validation
+
     if (name == "name" && value === "") {
       errors.name = "Please Enter your Name";
       errors.koreanname = "Name";
-    } else if (name == "name" && value !== "") {
+    }
+
+    else if (name == "name", isKoreanWord(value)) {
+      errors.name = "Korean is not available";
+      errors.koreanname = "KoreanNotAvailable";
+    } else if (name == "name" && !AlphaNumRegex.test(value)) {
+      errors.name = "Name should only contain Alphabets";
+      errors.koreanname = "ValidName";
+    }
+
+    else if (name == "name" && value !== "") {
       errors.name = " ";
       errors.koreanname = " ";
     }
+
+
+
+    // Institue Validation
+
     if (name === "institute" && value === "--Select--") {
       errors.institute = "Please Select any Institute";
       errors.koreaninstitute = "Organization";
@@ -150,6 +185,8 @@ const MemberShip = ({ changestep }) => {
       errors.institute = " ";
       errors.koreaninstitute = " ";
     }
+
+    // Phone Number Validation
 
     if (name === "phone_number" && value === "") {
       errors.phone_number = "Please Enter Phone Number";
@@ -168,6 +205,9 @@ const MemberShip = ({ changestep }) => {
       errors.koreanphone_number = " ";
     }
 
+
+    // Email Validation
+
     if (name === "email" && value === "") {
       errors.email = "Please Enter your EmailID";
       errors.koreanemail = "EnterEmailID";
@@ -175,6 +215,13 @@ const MemberShip = ({ changestep }) => {
       errors.email = " ";
       errors.koreanemail = " ";
     }
+    else if (name === "email" && !AlphaNumRegexwithSpecialCharsExceptDot.test(value)) {
+      errors.email = "Please valid EmailID";
+      errors.koreanemail = "EnterValidEmailID";
+    }
+
+    // Domain Validation 
+
     if (name === "domain_email" && value === "option") {
       errors.domain_email = "Please Select Domain";
       errors.koreandomain_email = "SelectEmailDomain";
@@ -186,42 +233,56 @@ const MemberShip = ({ changestep }) => {
       errors.koreandomain_email = " ";
     }
 
+    // Verification
+
     if (name === "verification" && value === "") {
       errors.verification = "Please Select anyone verification ";
       errors.koreanverification = "Verification";
     }
-
     if (name === "verification" && value !== "") {
       errors.verification = " ";
       errors.koreanverification = " ";
     }
+
     form.errors = errors;
-  }
+  };
 
-  function validation() {
-    let count = 0;
-    //   for (let x in form) {
-    //     if(x!="errors")
-    //     {
-    //       if(form[x]===""){
-    //         count++;
-    //       }
-    //     }
-    //  }
-  }
+  // const register = () => {
+  //   console.log(form);
+  //   console.log(form.id);
+  //   if (form["id"] == "") {
+  //     console.log("id is empty");
+  //     form.errors.id = "Please Enter Your ID";
+  //     form.errors.koreanid = "DefaultID";
+  //   }
+  // };
 
-  function register() {
-    console.log("Values", form);
-    console.log("errors", errors);
-    //  console.log(form.id,form.koreanid);
-    if (!form["id"] && !form["koreanid"]) {
-      console.log("bucked");
-      form.errors.id = "Please Enter Your ID";
-      form.errors.koreanid = "DefaultID";
+  const chekcId = () => {
+    if (form["id"]) {
+      let data = {
+        value: form["id"],
+        type: "username",
+      };
+      dispatch(checkUserName("GET", data));
     }
-  }
+  };
+
+  const verifyMobile = () => {
+    setClickMobileverifyButton(true);
+    setClickEmailverifyButton(false);
+    dispatch(getPassEncodeId("GET", {}));
+  };
+  const verifyEmail = () => {
+    setClickEmailverifyButton(true);
+    setClickMobileverifyButton(false);
+  };
+
+  const gotopreviousStep = () => {
+    changestep(0);
+  };
+
   useEffect(() => {
-    let ins = [
+    let instituteOptions = [
       "GOVERNMENT",
       "UNIVERSITY",
       "RESEARCH CENTER",
@@ -230,10 +291,10 @@ const MemberShip = ({ changestep }) => {
       "OTHERS",
     ];
     let html = [];
-    for (let i = 0; i < ins.length; i++) {
+    for (let i = 0; i < instituteOptions.length; i++) {
       html.push(
-        <option key={ins[i]} value={ins[i]}>
-          {ins[i]}
+        <option key={instituteOptions[i]} value={instituteOptions[i]}>
+          {instituteOptions[i]}
         </option>
       );
     }
@@ -246,18 +307,6 @@ const MemberShip = ({ changestep }) => {
     }
   }, [regitserResponse]);
 
-  const chekcId = () => {
-    if (form["id"]) {
-      let data = {
-        value: form["id"],
-        type: "username",
-      };
-      dispatch(checkUserName("GET", data));
-    }
-  };
-  const gotopreviousStep = () => {
-    changestep(0);
-  };
   // useEffect(()=>{
   //   window.open('', 'popupChk', 'width=500, height=550, top=100, left=100, fullscreen=no, menubar=no, status=no, toolbar=no, titlebar=yes, location=no, scrollbar=no');
   //   document.form_chk.action = "https://nice.checkplus.co.kr/CheckPlusSafeModel/checkplus.cb";
@@ -270,16 +319,6 @@ const MemberShip = ({ changestep }) => {
       setEncData(passKey["enc_data"]);
     }
   }, [passKey]);
-
-  const verifyMobile = () => {
-    setClickMobileverifyButton(true);
-    setClickEmailverifyButton(false);
-    dispatch(getPassEncodeId("GET", {}));
-  };
-  const verifyEmail = () => {
-    setClickEmailverifyButton(true);
-    setClickMobileverifyButton(false);
-  };
 
   return (
     <div>
@@ -350,15 +389,17 @@ const MemberShip = ({ changestep }) => {
               <span className="text-red-500">*</span>
             </div>
             <div className="col-span-3 p-8 bg-white border-b-2 border-gray-300">
-              <div className="mb-3 pt-0">
+              <div className="mb-3 pt-0 relative">
                 <input
-                  type="password"
+                  type={visibility?"input":"password"}
                   value={form["password"]}
                   id="PasswordField"
                   name="password"
                   onChange={formSet}
                   className="px-4 py-4 text-blueGray-600 relative bg-white rounded  border border-gray-400 outline-none focus:outline-none focus:ring"
                 />
+                <span className="absolute cursor-pointer left-80 top-2" > {visibility ? <EyeIcon className="h-14 w-12 inline text-main-white" onClick={() => setvisibility(visibility => !visibility)}></EyeIcon> : <EyeOffIcon className="h-14 w-12 inline text-main-white" onClick={() => setvisibility(visibility => !visibility)}></EyeOffIcon>}</span>
+
               </div>
               <div className="flex flex-col">
                 {/* <div>
@@ -383,14 +424,16 @@ const MemberShip = ({ changestep }) => {
               <span className="text-red-500">*</span>
             </div>
             <div className="col-span-3 p-8 bg-white border-b-2 border-gray-300">
-              <div className="mb-3 pt-0">
+              <div className="mb-3 pt-0 relative">
                 <input
-                  type="password"
+                  type={visibility?"input":"password"}
                   value={form["verify_password"]}
                   name="verify_password"
                   onChange={formSet}
                   className="px-4 py-4 text-blueGray-600 relative bg-white rounded border border-gray-400 outline-none focus:outline-none focus:ring"
                 />
+                <span className="absolute cursor-pointer left-80 top-2" > {visibility ? <EyeIcon className="h-14 w-12 inline text-main-white" onClick={() => setvisibility(visibility => !visibility)}></EyeIcon> : <EyeOffIcon className="h-14 w-12 inline text-main-white" onClick={() => setvisibility(visibility => !visibility)}></EyeOffIcon>}</span>
+
               </div>
               {form.errors.verify_password && (
                 <span className="text-red-500 text-sm">
@@ -566,13 +609,13 @@ const MemberShip = ({ changestep }) => {
                   <br />
                 </div>
 
-                <div>
-                  {errors.verification && (
+                {/* <div>
+                  {form.errors.verification && (
                     <span className="text-red-500 text-sm mt-2">
                       {errors["verification"]}
                     </span>
                   )}
-                </div>
+                </div> */}
               </div>
 
               <div>
@@ -588,8 +631,7 @@ const MemberShip = ({ changestep }) => {
               <div>
                 {verificationState === "email" && (
                   <button
-                    className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
-                    style={{ height: "45px" }}
+                    className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded h-11"
                     onClick={verifyEmail}
                   >
                     verify Email
@@ -605,15 +647,11 @@ const MemberShip = ({ changestep }) => {
                       <div className="mb-3 mx-2 pt-0">
                         <input
                           type="text"
-                          className="px-4 py-4 mt-2  text-blueGray-600 relative bg-white rounded border border-gray-400 outline-none focus:outline-none focus:ring"
-                          style={{ width: "150px" }}
+                          className="px-4 py-4 mt-2  text-blueGray-600 relative bg-white rounded border border-gray-400 outline-none focus:outline-none focus:ring w-40"
                         />
                       </div>
                       <>
-                        <button
-                          className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
-                          style={{ width: "200px", height: "45px" }}
-                        >
+                        <button className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded w-48 h-12">
                           check verification code
                         </button>
                       </>
@@ -630,18 +668,22 @@ const MemberShip = ({ changestep }) => {
           <input type="hidden" name="m" value="checkplusSerivce" />
           <input type="hidden" name="EncodeData" value={encData} />
         </form>
-        <div className="inline-flex gap-3 mt-6">
+
+        <div className="inline-flex gap-2  my-6">
           <button
-            className="hover:bg-blue-700 text-white font-bold py-6 px-6 float-left rounded"
-            style={{ backgroundColor: "#bdbdbd" }}
+            className="hover:bg-blue-700 text-white font-bold py-6 px-6 float-left rounded bg-NccBlue-700"
             onClick={gotopreviousStep}
           >
-            Cancellation
+            BACK
           </button>
+
           <button
-            className="hover:bg-blue-700 text-white font-bold py-6 px-6  float-right rounded"
-            onClick={register}
-            style={{ backgroundColor: "#194872" }}
+            className={`text-white font-bold py-6 px-6  float-right rounded ${form.isVerified
+              ? "bg-NccBlue-700"
+              : "bg-grey-700 hover:bg-blue-700"
+              }`}
+            onClick={() => console.log(form)}
+          // disabled={form.isVerified? false : true}
           >
             Registration
           </button>

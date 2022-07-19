@@ -2,28 +2,25 @@ import React, { useState, useEffect } from "react";
 import MemberShip from "./MemberShip";
 import TermsOfUse from "./TermsOfUse";
 import SigninComplete from "./SigninComplete";
-import "./SignupStyles.css";
+import "../../styles/SignupStyles.css";
 import { CheckCircleIcon } from "@heroicons/react/outline";
+import NewMemberShip from './NewMemberShip'
 
 const SignupComponent = () => {
   const [currentStep, setcurrentStep] = useState(0);
   const [widthofProgress, setwidthofprogress] = useState(0);
-  const [Check, setCheck] = useState(0);
+
   useEffect(() => {
-    console.log("current step", currentStep);
-    console.log(widthofProgress);
     if (currentStep == 0) {
       setwidthofprogress(0);
-      console.log(widthofProgress);
     } else if (currentStep === 1) {
       setwidthofprogress(50);
-      console.log(widthofProgress);
     } else if (currentStep == 2) {
       setwidthofprogress(100);
     }
   }, [currentStep]);
 
-  function showStep(step) {
+  let showStep = (step) => {
     switch (step) {
       case 0:
         return (
@@ -41,10 +38,11 @@ const SignupComponent = () => {
           ></SigninComplete>
         );
     }
-  }
-  function changeStep(step) {
+  };
+
+  let changeStep = (step) => {
     setcurrentStep(step);
-  }
+  };
 
   return (
     <div>
@@ -92,7 +90,6 @@ const SignupComponent = () => {
             }`}
             data-title="Approval"
           >
-            {/* { <CheckCircleIcon className="checkmark fa-solid fa-check "></CheckCircleIcon>} */}
             <div className="stepNumber displayNumber">
               <span>3</span>
             </div>
