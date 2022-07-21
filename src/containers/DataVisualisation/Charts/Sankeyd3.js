@@ -3,10 +3,8 @@ import d3 from 'd3v3/d3'
 
 import React,{useEffect} from 'react'
 
-import Sankey from './Sankey';
 function Bisanky() {
-    console.log(d3);
-      
+
     var biHiSankey = {},
     nodeWidth = 24,
     nodeSpacing = 8,
@@ -688,16 +686,11 @@ function Bisanky() {
       
         return biHiSankey;
       };
-
-      useEffect(() => {
-        console.log("BihiSanky",biHiSankey);
-    
-      })
       
 
   return (
     <div>
-        <Sankey></Sankey>
+    
     </div>
   )
 }

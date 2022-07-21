@@ -576,7 +576,7 @@ const TermsOfUse = ({changestep }) => {
               I agree to the Privacy Act.
             </span>
           </label>
-          <label>
+          {/* <label>
             <input
               type="checkbox"
               className="form-radio"
@@ -590,7 +590,7 @@ const TermsOfUse = ({changestep }) => {
               }}
             />
             <span className="ml-2 font-medium">Complete agreement.</span>
-          </label>
+          </label> */}
         </div>
         <div className="inline-flex gap-5 mb-5">
           <button

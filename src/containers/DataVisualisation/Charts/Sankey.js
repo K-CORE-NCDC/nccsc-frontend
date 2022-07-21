@@ -1,10 +1,17 @@
-import React, { useEffect } from 'react'
+
+import React, { useState,useEffect } from 'react'
 
 import d3 from 'd3v3/d3'
 
-
 function Sankey() {
-  console.log("D3",d3);
+  'use strict';
+const [render, setrender] = useState(false)
+
+
+  useEffect(() => {
+    update();
+  },[render]
+  )
 
   var svg, tooltip, biHiSankey, path, defs, colorScale, highlightColorScale, isTransitioning;
 
@@ -428,16 +435,20 @@ function Sankey() {
     // allow nodes to be dragged to new positions
 
     // commented
-    console.log("node is: ", node);
+
+    // node.call(d3.behavior.drag()
+    //     .origin((d) => { return d })
+    //     .on("dragstart", () => {
+    //         //  node.event;
+    //          this.parentNode.appendChild(this) })
+    //     .on("dragend", isclicked)
+    //     .on("drag", dragmove));
 
     node.call(d3.behavior.drag()
-      .origin((d) => { return d })
-      .on("dragstart"
-        , () => {
-          // node.event;
-          this.parentNode.appendChild(this)
-        }
-      )
+      .origin(function (d) { return d; })
+      .on("dragstart", function () {
+        d3.event['sourceEvent'].stopPropagation();
+        this.parentNode.appendChild(this); })
       .on("dragend", isclicked)
       .on("drag", dragmove));
 
@@ -529,6 +540,7 @@ function Sankey() {
     });
 
     collapser.exit().remove();
+    setrender(true);
 
   }
 
@@ -635,13 +647,8 @@ function Sankey() {
 
   disableUserInterractions(2 * TRANSITION_DURATION);
 
-  useEffect(() => {
-    update();
-  }
-  )
-
   return (
-    <div id="chart">SankeyChart</div>
+    <div id="chart"></div>
   )
 }
 

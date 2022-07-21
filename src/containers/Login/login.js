@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
 import config from "../../config";
-import { UserIcon,eye, EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
+import { UserIcon, eye, EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
 import { Link } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
 
 const LoginComponent = () => {
   const [userFormData, setUserFormData] = useState({
     username: "",
     password: "",
   });
-  const[visibility,setvisibility]=useState(false);
+  const [visibility, setvisibility] = useState(false);
 
   const [errorClass, setErrorClass] = useState("");
   const [errorMessage, setErrorMessage] = useState([]);
@@ -26,7 +27,7 @@ const LoginComponent = () => {
       <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
         Invalid username/Password
       </p>,
-      <h1 className="p-1 font-bold text-3xl text-red-500 italic" key="CountToEnterCredentials"> 
+      <h1 className="p-1 font-bold text-3xl text-red-500 italic" key="CountToEnterCredentials">
         {" "}
         If an error in consecutive password input (5 times) occurs, the account
         is locked.
@@ -43,7 +44,6 @@ const LoginComponent = () => {
   };
 
   const formSubmitAction = (e) => {
-    console.log('formsubmit')
     // e.preventDefault();
     const url = `${config.auth}api/token/`;
     let x = axios({ method: "POST", url: url, data: userFormData });
@@ -97,19 +97,19 @@ const LoginComponent = () => {
             <div>
               <div className="mb-4 pr-45 col-span-2 relative">
                 <div>
-                <input
-                  value={userFormData.password}
-                  onChange={updateUserNamePassword}
-                  name="password"
-                  className={`shadow appearance-none border rounded-lg w-full py-8 px-5 text-gray-700 leading-tight focus:border-blue-500  w-28 ${errorClass}`}
-                  id="password"
-                  type={visibility?"input":"password"}
-                  placeholder="Please Enter a password "
-                
-                >
-                </input>
-               <span className="absolute cursor-pointer left-80 top-4" > {visibility?<EyeIcon className="h-14 w-12 inline text-main-white" onClick={()=>setvisibility(visibility=> !visibility)}></EyeIcon>:<EyeOffIcon className="h-14 w-12 inline text-main-white"onClick={()=>setvisibility(visibility=> !visibility)}></EyeOffIcon>}</span>
-               </div>
+                  <input
+                    value={userFormData.password}
+                    onChange={updateUserNamePassword}
+                    name="password"
+                    className={`shadow appearance-none border rounded-lg w-full py-8 px-5 text-gray-700 leading-tight focus:border-blue-500  w-28 ${errorClass}`}
+                    id="password"
+                    type={visibility ? "input" : "password"}
+                    placeholder="Please Enter a password "
+
+                  >
+                  </input>
+                  <span className="absolute cursor-pointer left-80 top-4" > {visibility ? <EyeIcon className="h-14 w-12 inline text-main-white" onClick={() => setvisibility(visibility => !visibility)}></EyeIcon> : <EyeOffIcon className="h-14 w-12 inline text-main-white" onClick={() => setvisibility(visibility => !visibility)}></EyeOffIcon>}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -123,10 +123,10 @@ const LoginComponent = () => {
               <button
                 onClick={formSubmitAction}
                 className="bg-blue-500 hover:bg-blue-700 text-white h-28 font-bold py-2 px-4 border border-blue-700 w-full rounded"
-               
+
               >
                 <UserIcon className="h-14 w-12 inline text-main-white" />{" "}
-                
+
                 <span>Login</span>
               </button>
             </div>
@@ -134,16 +134,18 @@ const LoginComponent = () => {
           <div className="grid grid-cols-3 pt-12">
             <div className="w-full col-span-3">
               <div className="d-flex flex-row float-right">
-                <Link to="/findid/">
-                <p className="border-r-2 border-gray-600 pr-5">
-                  Find ID
-                </p>
+                <Link to="/findid/" className=" pr-5">
+                  <p className="border-r-2 border-gray-600 pr-5">
+                    Find ID
+                  </p>
                 </Link>
-                <Link to="/findpassword/">
-                <p  className="pl-5">
-                  Find password
-                </p>
+                <Link to="/findpassword/" className=" pr-5">
+                  <p className=" pr-5">
+                    Find Password
+                  </p>
                 </Link>
+
+
               </div>
             </div>
           </div>

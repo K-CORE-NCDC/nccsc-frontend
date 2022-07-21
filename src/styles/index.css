@@ -63,6 +63,10 @@ select{
   color:#fff !important;
 }
 
+::-ms-reveal {
+  display: none !important;
+}
+
 
 /* reset */
 html {height:100%; font-size:10px;}
@@ -419,8 +423,8 @@ input:checked ~ .dot {
   padding:0 1%;
 }
 .Terms_Conditions_Wrap h1{
-  margin-bottom: 15px;
-  font-size: 24px;
+  /* margin-bottom: 15px; */
+  /* font-size: 24px; */
   text-align: left;
   color: #152a52;
 }
@@ -428,8 +432,12 @@ input:checked ~ .dot {
 /* extra  */
 .ktable, .kth, .ktd {
   border: 1px solid;
-  text-align: center;
+  /* text-align: center; */
+  text-align: start;
+  margin:10px;
+  padding: 10px;
 }
+
 
 
 .KtermsandconditionsH1{

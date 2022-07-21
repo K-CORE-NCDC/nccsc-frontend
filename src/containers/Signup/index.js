@@ -4,10 +4,8 @@ import TermsOfUse from "./TermsOfUse";
 import SigninComplete from "./SigninComplete";
 import "../../styles/SignupStyles.css";
 import { CheckCircleIcon } from "@heroicons/react/outline";
-import NewMemberShip from './NewMemberShip'
-
 const SignupComponent = () => {
-  const [currentStep, setcurrentStep] = useState(1);
+  const [currentStep, setcurrentStep] = useState(0);
   const [widthofProgress, setwidthofprogress] = useState(0);
 
   useEffect(() => {
@@ -15,7 +13,7 @@ const SignupComponent = () => {
       setwidthofprogress(0);
     } else if (currentStep === 1) {
       setwidthofprogress(50);
-    } else if (currentStep == 2) {
+  } else if (currentStep == 2) {
       setwidthofprogress(100);
     }
   }, [currentStep]);

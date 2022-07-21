@@ -3,17 +3,17 @@ import React from "react";
 function EnglishTermsAndConditions() {
   return (
     <div className="Terms_Conditions_Wrap">
-      <h1 className="text-center text-5xl relative">
+      <h1 className="text-5xl m-4">
         National Cancer Center (National Cancer Data Center) K-CORE Member Terms
         and Conditions
       </h1>
 
-      <h1 className="text-center text-5xl relative">Article 1 (Purpose) </h1>
+      <h1 className="text-center text-5xl relative m-2">Article 1 (Purpose) </h1>
       <div
         className="ms-5 text-5xl relative"
         style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
       >
-        <ul>
+        <ul className="m-8">
           <li>
             ① These terms and conditions are for the purpose of stipulating
             basic matters such as the terms and conditions of use and procedures
@@ -34,14 +34,14 @@ function EnglishTermsAndConditions() {
         </ul>
       </div>
 
-      <h1 className="text-center text-4xl relative">
+      <h1 className="text-center text-5xl relative m-2">
         Article 2 (Explanation and Amendment of Terms and Conditions)
       </h1>
       <div
         className="ms-5 text-4xl relative"
         style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
       >
-        <ul>
+        <ul className="m-8">
           <li>
             ① Post the contents of these terms and conditions, address, name of
             the manager, name of the person in charge of personal information
@@ -84,7 +84,7 @@ function EnglishTermsAndConditions() {
       </div>
 
       {/* 3 */}
-      <h1 className="text-center text-4xl relative">
+      <h1 className="text-center text-5xl relative m-2">
         Article 3 (Definition of Terms)
       </h1>
       <h2>
@@ -95,7 +95,7 @@ function EnglishTermsAndConditions() {
         className="ms-5 text-4xl relative"
         style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
       >
-        <ul>
+        <ul className="m-8">
           <li>
             ① User (Member): A person who has registered as a member by
             providing personal information necessary for membership on the
@@ -139,12 +139,12 @@ function EnglishTermsAndConditions() {
         </ul>
       </div>
       {/* 4 */}
-      <h1 className="text-center text-4xl relative">Article 4 (Membership)</h1>
+      <h1 className="text-center text-5xl relative m-2">Article 4 (Membership)</h1>
       <div
         className="ms-5 text-4xl relative"
         style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
       >
-        <ul>
+        <ul className="m-8">
           <li>
             ① Membership registration is established when the user agrees to the
             contents of these Terms of Use and consents to the use of the site
@@ -158,7 +158,7 @@ function EnglishTermsAndConditions() {
           <li>
             ③ National Cancer Center (National Cancer Data Center) K-CORE may
             cancel membership registration for any of the following.
-            <ul>
+            <ul className="m-8">
               <li>
                 1. If the applicant for membership has previously lost
                 membership in accordance with Article 5, Paragraph 2 of these
@@ -193,7 +193,7 @@ function EnglishTermsAndConditions() {
             ④ National Cancer Center (National Cancer Data Center) K-CORE may
             suspend the establishment of the contract of use until the cause is
             resolved in each of the following cases.
-            <ul>
+            <ul className="m-8">
               <li>1. In case of insufficient service-related capacity</li>
               <li>2. If there is a technical obstacle</li>
             </ul>
@@ -207,14 +207,14 @@ function EnglishTermsAndConditions() {
         </ul>
       </div>
       {/* 5  */}
-      <h1 className="text-center text-4xl relative">
+      <h1 className="text-center text-5xl relative m-2">
         Article 5 (Withdrawal of membership and loss of qualifications, etc.)
       </h1>
       <div
         className="ms-5"
         style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
       >
-        <ul>
+        <ul className="m-8">
           <li>
             ① A user may withdraw from membership (cancellation) at any time
             after signing up for membership in the event that he or she does not
@@ -225,7 +225,7 @@ function EnglishTermsAndConditions() {
             ② If the user falls under any of the following reasons, the National
             Cancer Center (National Cancer Data Center) K-CORE may lose
             membership.
-            <ul>
+            <ul className="m-8">
               <li>
                 1. In case of registering false information when applying for
                 registration
@@ -264,18 +264,18 @@ function EnglishTermsAndConditions() {
       </div>
 
       {/* 6 */}
-      <h1 className="text-center text-4xl relative">
+      <h1 className="text-center text-5xl relative m-2">
         Article 6 (Contents and Changes of Services)
       </h1>
       <div
         className="ms-5"
         style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
       >
-        <ul>
+        <ul className="m-8">
           <li>
             ① National Cancer Center (National Cancer Data Center) K-CORE
             provides the following services.
-            <ul>
+            <ul className="m-8">
               <li>
                 1. National Cancer Center (National Cancer Data Center)
                 K-CORE-related business introduction
@@ -307,14 +307,14 @@ function EnglishTermsAndConditions() {
         </ul>
       </div>
       {/* 7*/}
-      <h1 className="text-center text-4xl relative">
+      <h1 className="text-center text-5xl relative m-2">
         Article 7 (Suspension of Service)
       </h1>
       <div
         className="ms-5"
         style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
       >
-        <ul>
+        <ul className="m-8">
           <li>
             ① National Cancer Center (National Cancer Data Center) K-CORE may
             temporarily suspend the provision of services in the event of
@@ -342,14 +342,14 @@ function EnglishTermsAndConditions() {
         </ul>
       </div>
       {/* 8*/}
-      <h1 className="text-center text-4xl relative">
+      <h1 className="text-center text-5xl relative m-2">
         Article 8 (Notification to Members)
       </h1>
       <div
         className="ms-5"
         style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
       >
-        <ul>
+        <ul className="m-8">
           <li>
             ① National Cancer Center (National Cancer Data Center) When K-CORE
             notifies a member, it can do so with the e-mail address or phone
@@ -363,14 +363,14 @@ function EnglishTermsAndConditions() {
         </ul>
       </div>
       {/* 9*/}
-      <h1 className="text-center text-4xl relative">
+      <h1 className="text-center text-5xl relative m-2">
         Article 9 (Member's Personal Information Protection)
       </h1>
       <div
         className="ms-5"
         style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
       >
-        <ul>
+        <ul className="m-8">
           <li>
             ① National Cancer Center (National Cancer Data Center) K-CORE
             strives to protect users' personal information, including user
@@ -382,7 +382,7 @@ function EnglishTermsAndConditions() {
         </ul>
       </div>
       {/* 10*/}
-      <h1 className="text-center text-4xl relative">
+      <h1 className="text-center text-5xl relative m-2">
         Article 10 (National Cancer Center (National Cancer Data Center)
         K-CORE's Obligations)
       </h1>
@@ -390,7 +390,7 @@ function EnglishTermsAndConditions() {
         className="ms-5"
         style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
       >
-        <ul>
+        <ul className="m-8">
           <li>
             ① National Cancer Center (National Cancer Data Center) K-CORE does
             not engage in acts prohibited by laws and regulations or these Terms
@@ -410,14 +410,14 @@ function EnglishTermsAndConditions() {
         </ul>
       </div>
       {/* 11*/}
-      <h1 className="text-center text-4xl relative">
+      <h1 className="text-center text-5xl relative m-2">
         Article 11 (Obligations for User ID and Password)
       </h1>
       <div
         className="ms-5"
         style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
       >
-        <ul>
+        <ul className="m-8">
           <li>
             ① Each user is responsible for managing his/her ID and password,
             except in cases where the National Cancer Center (National Cancer
@@ -437,17 +437,17 @@ function EnglishTermsAndConditions() {
         </ul>
       </div>
       {/* 12*/}
-      <h1 className="text-center text-4xl relative">
+      <h1 className="text-center text-5xl relative m-2">
         Article 12 (Obligations of Users)
       </h1>
       <div
         className="ms-5"
         style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
       >
-        <ul>
+        <ul className="m-8">
           <li>
             ① Users must not engage in any of the following acts.
-            <ul>
+            <ul className="m-8">
               <li>
                 1. Registering false information when applying for membership or
                 changing
@@ -516,14 +516,14 @@ function EnglishTermsAndConditions() {
       </div>
 
       {/* 13*/}
-      <h1 className="text-center text-4xl relative">
+      <h1 className="text-center text-5xl relative m-2">
         Article 13 (Attribution of Copyright and Restriction on Use)
       </h1>
       <div
         className="ms-5"
         style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
       >
-        <ul>
+        <ul className="m-8">
           <li>
             ① Copyrights and other intellectual property rights for works
             created by the National Cancer Center (National Cancer Data Center)
@@ -540,14 +540,14 @@ function EnglishTermsAndConditions() {
         </ul>
       </div>
       {/* 14*/}
-      <h1 className="text-center text-4xl relative">
+      <h1 className="text-center text-5xl relative m-2">
         Article 14 (Jurisdiction){" "}
       </h1>
       <div
         className="ms-5"
         style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
       >
-        <ul>
+        <ul className="m-8">
           <li>
             ① National Cancer Center (National Cancer Data Center) Korean law
             applies to disputes regarding service use between K-CORE and users,
@@ -558,14 +558,14 @@ function EnglishTermsAndConditions() {
         </ul>
       </div>
       {/* 15*/}
-      <h1 className="text-center text-4xl relative">
+      <h1 className="text-center text-5xl relative m-2">
         Article 15 (Enforcement Date)
       </h1>
       <div
         className="ms-5"
         style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
       >
-        <ul>
+        <ul className="m-8">
           <li>
             ① These Terms and Conditions shall apply from September 30, 2022.
           </li>
