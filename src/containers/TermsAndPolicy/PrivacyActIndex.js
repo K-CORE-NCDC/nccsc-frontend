@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../../wrapper";
 import EnglishPrivacyAct from "./EnglishPrivacyAct";
-import Koreanprivacyact from "./Koreanprivacyact";
+import Koreanprivacyact from "./KoreanPrivacyAct";
 function PrivacyActIndex() {
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const [Englishlanguage, setEnglishlanguage] = useState(true);
