@@ -504,7 +504,7 @@ const GroupFilters = ({ volcanoType,parentCallback, groupFilters,viz_type }) => 
     },[volcanoType])
 
     const submitFilters = () => {
-        console.log(groupFilters)
+        
         if (isFilterResetHappened) {
             parentCallback(userGivenInputValues)
         } else {
@@ -743,7 +743,7 @@ const GroupFilters = ({ volcanoType,parentCallback, groupFilters,viz_type }) => 
         }else{
             tmp[eventObject.group] = [filterData.value]
         }
-        console.log(eventObject)
+        console.log(tmp)
         setMultipleInputs(tmp,filterData)
         if ('value' in filterData) {
             setUserGivenInputValues(prevState => ({
@@ -782,7 +782,7 @@ const GroupFilters = ({ volcanoType,parentCallback, groupFilters,viz_type }) => 
                 componentData.push(componetSwitch('text'))
             }else if(filterType==="dropdown"){
                 let tr = []
-                console.log(groupFilters)
+                
                 if(viz_type==='volcono'){
                     if(Object.keys(groupFilters).length>0 && groupFilters['type']==='static'){
                         if (groupFilters['group_a'].length>0 && groupFilters['group_b'].length>0){
@@ -824,16 +824,55 @@ const GroupFilters = ({ volcanoType,parentCallback, groupFilters,viz_type }) => 
                     </table>)
                 } else if(viz_type==='survival') {
                     let d = preDefienedGroups1[colName]
+                    
                     let thead = []
                     let boxes = d.length
                     for (let sv = 0; sv < d.length; sv++) {
                         const element = d[sv];
                         thead.push(<th className='text-sm font-medium text-gray-900 px-6 py-4 text-left'>Group {abc[sv]}:</th>)
                         let checkbox = []
+                        let group_i = 0
+                        
                         for (let index = 0; index < boxes; index++) {
-                            checkbox.push(
-                                <td className='px-6 py-4'><input type='checkbox' onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_'+abc[sv] })}/></td>
-                            )
+                            let name = 'group_'+abc[index]+'_'+element.label
+                            console.log(name);
+                            // console.log(sv,index)
+                            if(Object.keys(userGivenInputValues).length>0){
+                                let group_check = false
+                                if ('group_'+abc[index] in userGivenInputValues && userGivenInputValues['group_'+abc[index]].length>0){
+                                    if(userGivenInputValues['group_'+abc[index]].indexOf(element.value)>-1 ){ 
+                                        let gi_val = userGivenInputValues['group_'+abc[index]]
+                                        // console.log(name,gi_val)
+                                        for (let gi = 0; gi < gi_val.length; gi++) {
+                                            let n = gi_val[gi];
+                                            if ('group_'+abc[index]+'_'+n===name){
+                                                group_check = true
+                                                break
+                                            }
+                                            
+                                        }
+                                        // if( abc[group_i]===abc[index] && d[index].value===element.value){
+                                        //     group_check = true
+                                        // }
+                                    }
+                                }
+                                checkbox.push(
+                                    <td className='px-6 py-4' key={index+'_'+sv+abc[sv]+'_'+element.label}>
+                                        <input data-type={element.label} data-name={abc[index]} type='checkbox' checked={group_check} onChange={dropDownChange} value={JSON.stringify({ index: sv, colName: colName, group: 'group_'+abc[index] })}/>
+                                    </td>
+                                )
+                                group_i++
+                            }else{
+                                checkbox.push(
+                                    <td className='px-6 py-4' key={index+'_'+sv+abc[sv]+'_'+element.label}>
+                                        <input type='checkbox' onChange={dropDownChange} value={JSON.stringify({ index: sv, colName: colName, group: 'group_'+abc[index] })}/>
+                                    </td>
+                                )
+                            }
+                            
+
+                            
+                            
                         }
                         tr.push(
                             <tr key={colName+sv} className='border-b'>

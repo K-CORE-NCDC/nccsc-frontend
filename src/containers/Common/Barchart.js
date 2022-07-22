@@ -85,8 +85,8 @@ export default function Barchart({id,data,width,color, chart_type,title}) {
           t.push(data[i].cnt)
         }
         colors.push(h+linear+")")
-        
-        if(id!=='chart_bar_Ki-67Index' && id!=='chart_bar_HER2Score' && id!=='chart_bar_Timeuntilrelapseisconfirmed' && id!=='chart_bar_FirstMenstrualAge' && id!=='chart_bar_AgeOfDaignosis' && id!=="chart_bar_BodyMassIndex"){
+        console.log(id)
+        if(id!=='chart_bar_DurationofBreastfeeding' && id!=='chart_bar_Ki-67Index' && id!=='chart_bar_HER2Score' && id!=='chart_bar_Timeuntilrelapseisconfirmed' && id!=='chart_bar_FirstMenstrualAge' && id!=='chart_bar_AgeOfDaignosis' && id!=="chart_bar_BodyMassIndex"){
           linear = linear-0.2
         }
       }

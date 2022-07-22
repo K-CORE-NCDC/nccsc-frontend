@@ -23,11 +23,11 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
   // console.log(closeShowTimelineTables, circosTimelieTableData);
   const [bmiChart, setBmiChart] = useState([])
   const [ki67Chart, setKi67Chart] = useState([])
+  const [tab,setTab] = useState('bmi')
   const [bmiChartTable, setBmiChartTable] = useState({"columns":[],'data':[]})
   const [ki67ChartTable,setKi67ChartTable] = useState({"columns":[],'data':[]})
   const convertStrToDate = (dateString) => {
       let dateSplits = dateString.split('-')
-
       return new Date(dateSplits[0], dateSplits[1], dateSplits[2])
   }
   useEffect(() => {
@@ -134,57 +134,63 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
     }
   }, [circosTimelieTableData])
 
+  let navClass = "text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none"
+
+  let activeNavClass = 'py-4 px-6 block hover:text-slate-50 focus:outline-none font-medium text-white  bg-main-blue '
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 h-full w-full z-50">
       <div className="relative top-20 m-10 p-5 border shadow-lg rounded-md bg-white text-left ">
         <div className='overflow-y-scroll  oncoimages_height'>
 
-          <div className="grid grid-cols-4 gaps-6 p-6">
-            <div className='col-span-4'>
-              <h3>BMI Timeline</h3>
-              <hr/>
-              {/* {bmiChart && <Chart
-                height={"300px"}
+          <div className="p-6">
+            <nav className="flex flex-col sm:flex-row">
+              <button onClick={e=>setTab('bmi')} className={((tab==='bmi')?activeNavClass:navClass)}>
+                BMI
+              </button>
+              <button onClick={e=>setTab('ki67')} className = {((tab==='ki67')?activeNavClass:navClass)}>
+                KI-67 (%)
+              </button>
+              <button onClick={e=>setTab('ca15')} className = {((tab==='ca15')?activeNavClass:navClass)}>
+                CA15-2
+              </button>
+              <button onClick={e=>setTab('cea')} className = {((tab==='cea')?activeNavClass:navClass)}>
+                CEA
+              </button>
+              <button onClick={e=>setTab('her2')} className = {((tab==='her2')?activeNavClass:navClass)}>
+                Her2
+              </button>
+            </nav>
+            <div className="grid tab-content  w-full col-span-4" id="tabs-tabContent">
+              <div className={"py-6 tab-pane fade flex-inline "+" "+((tab==='bmi')?"show active":' hidden ')} id="tabs-bmi" >
+                <h3>BMI Timeline</h3>
+                <hr/>
+                {circosTimelieTableData && <TimeLineChart data={circosTimelieTableData.bmi} yearKey="rgst_ymd" valueKey="bmi_vl" />}
+                <div className='col-span-2'>
+                  {bmiChart && <DataTable pagination
+                    columns={bmiChartTable['columns']}
+                    data={bmiChartTable['data']}
+                  />}
+                </div>
 
-                chartType="Timeline"
-                loader={<div>Loading Chart</div>}
-                data={bmiChart}
-                options={{
-                  showRowNumber: true,
-                  allowHtml: true,
-                }}
-                rootProps={{ 'data-testid': '1' }}
-              />} */}
-              {circosTimelieTableData && <TimeLineChart data={circosTimelieTableData.bmi} yearKey="rgst_ymd" valueKey="bmi_vl" />}
-            </div>
-            <div className='col-span-4'>
-              <h3>KI-67 % Timeline</h3>
-              <hr/>
-              {/* {ki67Chart && <Chart
-                height={'300px'}
-                chartType="Timeline"
-                loader={<div>Loading Chart</div>}
-                data={ki67Chart}
-                options={{
-                  showRowNumber: true,
-                  allowHtml: true,
-                }}
-                rootProps={{ 'data-testid': '1' }}
-              />} */}
-              {circosTimelieTableData && <TimeLineChart data={circosTimelieTableData.ki67} yearKey="imnl_read_ymd" valueKey="ki67_score" />}
-            </div>
-
-            <div className='col-span-2'>
-              {bmiChart && <DataTable pagination
-                columns={bmiChartTable['columns']}
-                data={bmiChartTable['data']}
-              />}
-            </div>
-            <div className='col-start-3 col-span-2'>
-              {ki67Chart && <DataTable pagination
-                columns={ki67ChartTable['columns']}
-                data={ki67ChartTable['data']}
-              />}
+              </div>
+              <div className={"py-6 tab-pane fade flex-inline "+" "+((tab==='ki67')?"show active":' hidden ')} id="tabs-ki67" >
+                <h3>KI-67 % Timeline</h3>
+                <hr/>
+                {circosTimelieTableData && <TimeLineChart data={circosTimelieTableData.ki67} yearKey="imnl_read_ymd" valueKey="ki67_score" />}
+                {ki67Chart && <DataTable pagination
+                  columns={ki67ChartTable['columns']}
+                  data={ki67ChartTable['data']}
+                />}
+              </div>
+              <div className={"py-6 tab-pane fade flex-inline "+" "+((tab==='ca15')?"show active":' hidden ')} id="tabs-ca15">
+                Tab 4 content
+              </div>
+              <div className={"py-6 tab-pane fade flex-inline "+" "+((tab==='cea')?"show active":' hidden ')} id="tabs-cea">
+                Tab 3 content
+              </div>
+              <div className={"py-6 tab-pane fade flex-inline "+" "+((tab==='her2')?"show active":' hidden ')} id="tabs-her2">
+                Tab 3 content
+              </div>
             </div>
           </div>
         </div>
