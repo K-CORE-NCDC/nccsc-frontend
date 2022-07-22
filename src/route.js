@@ -12,8 +12,8 @@ const Join = React.lazy(() => import('./containers/Signup/MemberShip'))
 const Signup = React.lazy(() => import('./containers/Signup/'))
 const TermsandConditions=React.lazy(()=> import('./containers/TermsAndPolicy/TermsAndConditionsIndex'))
 const PrivacyPolicy=React.lazy(()=>import('./containers/TermsAndPolicy/PrivacyActIndex'))
-const findID = React.lazy(()=>import('./containers/Login/FindID'))
-const findPassword = React.lazy(()=>import('./containers/Login/FindPassword'))
+const FindID = React.lazy(()=>import('./containers/Login/FindID'))
+const FindPassword = React.lazy(()=>import('./containers/Login/FindPassword'))
 
 
 const Introduce = React.lazy(() => import('./containers/Home/introduce'))
@@ -50,8 +50,8 @@ const route = [
   { path: '/qa/:slug?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: Qa},
   { path: '/termsandconditions/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage id="TermsofService" defaultMessage="TermsofService" />, component: TermsandConditions},
   { path: '/privacypolicy/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="PrivacyPolicy" defaultMessage="PrivacyPolicy" />, component: PrivacyPolicy},
-  { path: '/findid/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="" defaultMessage="" />, component: findID},
-  { path: '/findpassword/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="" defaultMessage="" />, component: findPassword},
+  { path: '/findid/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="FindID" defaultMessage="FindId" />, component: FindID},
+  { path: '/findpassword/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="FindPassword" defaultMessage="FindPassword" />, component: FindPassword},
 
 ]
 

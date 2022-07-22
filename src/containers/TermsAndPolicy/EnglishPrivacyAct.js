@@ -11,7 +11,7 @@ function EnglishPrivacyAct() {
         National Cancer Center (National Cancer Data Center) K-CORE processes
         users' personal information as follows.
       </h2>
-      <ul style={{ lineHeight: "2.3",fontSize: "20px" }}>
+      <ul  className="m-6" style={{ lineHeight: "2.3",fontSize: "20px" }}>
         <li>
           1. Purpose of collection and use of personal information Website
           membership registration and management Securing a smooth communication

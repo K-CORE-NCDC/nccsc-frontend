@@ -15,11 +15,19 @@ const AlphaNumRegex = new RegExp("^[a-zA-Z0-9]*$");
 const NumRegex = new RegExp("^[0-9]*$");
 const AlphaNumRegexwithSpecialChars = new RegExp("^[ A-Za-z0-9_@./#&+-]*$");
 const AlphaNumRegexwithSpecialCharsExceptDot = new RegExp("^[ A-Za-z0-9_/#&+-]*$");
+const AlphaNumbericalWithAtleastoneSpecialCharecters = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{9,20}$");
+const KoreanRegex = new RegExp("(\S*[\u3131-\u314e|\u314f-\u3163|\uac00-\ud7a3]+\S*)")
 
 const MemberShip = ({ changestep }) => {
   const register_user = () => {
-    console.log("hi", form);
   };
+
+
+  let defaultMessageValue = {
+    name: "",
+    password: ""
+
+  }
   let initial_state = {
     id: "",
     password: "",
@@ -56,6 +64,7 @@ const MemberShip = ({ changestep }) => {
   };
 
   const [form, setForm] = useState(initial_state);
+  const [defaultMessageValues, setdefaultMessagevalues] = useState(defaultMessageValue);
   const [verificationState, setverificationState] = useState("");
   const [ClickEmailverifyButton, setClickEmailverifyButton] = useState(false);
   const [ClickMobileverifyButton, setClickMobileverifyButton] = useState(false);
@@ -76,6 +85,7 @@ const MemberShip = ({ changestep }) => {
   const passKey = useSelector((data) => data.dataVisualizationReducer.passKey);
 
   const formSet = (e) => {
+    console.log(form.errors);
     const { name, value } = e.target;
     console.log(name, value);
     if (e.target.value === "input") {
@@ -99,7 +109,12 @@ const MemberShip = ({ changestep }) => {
     if (name === "id" && value === "") {
       errors.id = "Please enter 6-10 characters";
       errors.koreanid = "IDLength";
-    } else if (name === "id" && !AlphaNumRegex.test(value)) {
+    }
+    else if (name === "id" && KoreanRegex.test(value)) {
+      errors.id = "Korean is not available";
+      errors.koreanid = "IDKoreanNotAllowed";
+    }
+    else if (name === "id" && !AlphaNumRegex.test(value)) {
       errors.id = "(e.g. @$#!*&) Special characters cannot be used";
       errors.koreanid = "IDSpecialCharecters";
     } else if (name === "id" && value.length < 6) {
@@ -123,19 +138,21 @@ const MemberShip = ({ changestep }) => {
       errors.password = "Please enter 9-20 characters";
       errors.koreanpassword = "PasswordLength";
     }
+    else if (name === "password"  && KoreanRegex.test(value)) {
+      errors.password = "Korean is not available";
+      errors.koreanpassword = "KoreanPasswordNotAvailable";
+    }
+    else if (name === "password" && !AlphaNumbericalWithAtleastoneSpecialCharecters.test(value)) {
+      errors.password = "Password should be combination of alphabets, numbers and special symbols(@#$%^&*) in 9-20 letters.";
+      errors.koreanpassword = "DefaultPasswordMsg";
+    }
 
-    // else if (name == "password", isKoreanWord(value)) {
-    //   errors.password = "Korean is not available";
-    //   errors.koreanpassword = "KoreanNotAvailable";
-    // }
-
-    else if (name === "password" && value.length > 9 && value.length < 20) {
+    else if (name === "password") {
       errors.password = " ";
       errors.koreanpassword = " ";
-    } else if (name === "password" && (value.length < 9 || value.length > 20)) {
-      errors.password = "Please enter 9-20 characters";
-      errors.koreanpassword = "PasswordLength";
     }
+
+
     const password_is = form.password;
 
     //  Verify Password Validation
@@ -157,11 +174,7 @@ const MemberShip = ({ changestep }) => {
       errors.name = "Please Enter your Name";
       errors.koreanname = "Name";
     }
-
-    else if (name == "name", isKoreanWord(value)) {
-      errors.name = "Korean is not available";
-      errors.koreanname = "KoreanNotAvailable";
-    } else if (name == "name" && !AlphaNumRegex.test(value)) {
+    else if (name == "name" && !AlphaRegex.test(value)) {
       errors.name = "Name should only contain Alphabets";
       errors.koreanname = "ValidName";
     }
@@ -196,10 +209,10 @@ const MemberShip = ({ changestep }) => {
       errors.koreanphone_number = "EnterValidPhoneNumber";
     } else if (
       name === "phone_number" &&
-      (value.length > 10 || value.length < 10)
+      (value.length > 15 || value.length < 12)
     ) {
-      errors.phone_number = "Please Enter only 10 Numbers";
-      errors.koreanphone_number = "PhoneNumber10Digits";
+      errors.phone_number = "Please Enter less than 12-15 Numbers";
+      errors.koreanphone_number = "PhoneNumberNoOfDigits";
     } else if (name === "phone_number") {
       errors.phone_number = " ";
       errors.koreanphone_number = " ";
@@ -211,14 +224,16 @@ const MemberShip = ({ changestep }) => {
     if (name === "email" && value === "") {
       errors.email = "Please Enter your EmailID";
       errors.koreanemail = "EnterEmailID";
-    } else if (name === "email") {
-      errors.email = " ";
-      errors.koreanemail = " ";
     }
     else if (name === "email" && !AlphaNumRegexwithSpecialCharsExceptDot.test(value)) {
       errors.email = "Please valid EmailID";
       errors.koreanemail = "EnterValidEmailID";
     }
+    else if (name === "email") {
+      errors.email = " ";
+      errors.koreanemail = " ";
+    }
+
 
     // Domain Validation 
 
@@ -369,9 +384,18 @@ const MemberShip = ({ changestep }) => {
                 </div>
               </div>
               <div className="flex flex-col">
+                <p></p>
                 {checkUserId && (
                   <span className="text-red-500 text-md">
                     User Id Already exists
+                  </span>
+                )}
+                {!form.errors.id && (
+                  <span className="text-gray-700 text-sm lh-2">
+                    <FormattedMessage
+                      id="DefaultIDMsg"
+                      defaultMessage={"ID should be combination of capital/lowercase alphabets and numbers in 6-10 letters. Koreans and special symbols are not allowed"}
+                    />
                   </span>
                 )}
                 {form.errors.id && (
@@ -391,7 +415,7 @@ const MemberShip = ({ changestep }) => {
             <div className="col-span-3 p-8 bg-white border-b-2 border-gray-300">
               <div className="mb-3 pt-0 relative">
                 <input
-                  type={visibility?"input":"password"}
+                  type={visibility ? "input" : "password"}
                   value={form["password"]}
                   id="PasswordField"
                   name="password"
@@ -408,6 +432,15 @@ const MemberShip = ({ changestep }) => {
                   </span>
                 </div> */}
                 <div>
+                  {!form.errors.password && (
+                    <span className="text-gray-700 text-sm">
+                      <FormattedMessage
+                        id="DefaultPasswordMsg"
+                        defaultMessage="Password should be combination of alphabets, numbers and special symbols(@#$%^&*) in 9-20 letters."
+                      />
+                    </span>
+                  )}
+
                   {form.errors.password && (
                     <span className="text-red-500 text-sm">
                       <FormattedMessage
@@ -426,7 +459,7 @@ const MemberShip = ({ changestep }) => {
             <div className="col-span-3 p-8 bg-white border-b-2 border-gray-300">
               <div className="mb-3 pt-0 relative">
                 <input
-                  type={visibility?"input":"password"}
+                  type={visibility ? "input" : "password"}
                   value={form["verify_password"]}
                   name="verify_password"
                   onChange={formSet}

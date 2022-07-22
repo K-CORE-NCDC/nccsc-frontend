@@ -6,7 +6,7 @@ function SankeyIndex() {
         <div>
 
             <Sankeyd3></Sankeyd3>
-            {/* <Sankey></Sankey> */}
+            <Sankey></Sankey>
         </div>
     )
 }

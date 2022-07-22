@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../../wrapper";
-import KoreanPrivacyAct from "./KoreanPrivacyAct";
 import EnglishPrivacyAct from "./EnglishPrivacyAct";
+import Koreanprivacyact from "./Koreanprivacyact";
 function PrivacyActIndex() {
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const [Englishlanguage, setEnglishlanguage] = useState(true);
@@ -21,12 +21,12 @@ function PrivacyActIndex() {
     <div>
       {koreanlanguage && (
         <div>
-          <KoreanPrivacyAct></KoreanPrivacyAct>
+           <Koreanprivacyact></Koreanprivacyact>
         </div>
       )}
       {Englishlanguage && (
         <div>
-          <EnglishPrivacyAct></EnglishPrivacyAct>
+         <EnglishPrivacyAct></EnglishPrivacyAct>
         </div>
       )}
     </div>

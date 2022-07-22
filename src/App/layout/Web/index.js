@@ -321,11 +321,11 @@ export default function Web(props) {
       <footer className="border-gray-300 border-t  w-full">
         <div className="d-flex flex-row text-white" style={{height:"50px",backgroundColor:"#203239"}}>
           <Link to="/termsandconditions/" className="m-5">
-            <FormattedMessage id="TermsofService" defaultMessage="TermsofService" />
+            <FormattedMessage id="TermsofService" defaultMessage="Member Terms and Conditions" />
           </Link>
           <p className="m-5">|</p>
-          <Link to="/privacypolicy/" className="m-5">
-            <FormattedMessage id="PrivacyPolicy" defaultMessage="PrivacyPolicy" />
+          <Link to="/privacypolicy/" className="m-5 text-yellow-200">
+            <FormattedMessage id="PrivacyPolicy" defaultMessage="Privacy Policy" />
           </Link>
         </div>
         <div className="grid grid-cols-2" style={{backgroundColor:"#F0EBE3", height:"80px"}}>
