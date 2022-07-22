@@ -42,12 +42,14 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
   const submitFitersAndFetchData = () => {
     if ((fileredGene !== "") || (filterTypeButton === 'clinical')) {
       setLoader(true)
+      inputData['filterType'] = userDefienedFilter
       if (filterTypeButton === 'clinical') {
         dispatch(getSurvivalInformation('POST', {
           ...inputData,
           filter_gene: fileredGene,
           gene_database: geneDatabase,
           group_filters: groupFilters,
+          
           clinical: true
         }))
       } else {
@@ -175,12 +177,12 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
                 <FormattedMessage id="Choose Filter group" defaultMessage='Choose Filter group' />
               </h6>
               <div className="m-1 flex flex-row justify-around">
-                <button onClick={() => setUserDefienedFilter('static')}
+                <button onClick={() => {setUserDefienedFilter('static');setGroupFilters({})}}
                   className={userDefienedFilter === 'static' ? selectedCss : nonSelectedCss}
                 >
                   <FormattedMessage id="Static_volcano" defaultMessage='Static' />
                 </button>
-                <button onClick={() => setUserDefienedFilter('dynamic')}
+                <button onClick={() => {setUserDefienedFilter('dynamic');setGroupFilters({})}}
                   className={userDefienedFilter === 'dynamic' ? selectedCss : nonSelectedCss}
                 >
                   <FormattedMessage id="Dynamic_volcano" defaultMessage='Dynamic' />

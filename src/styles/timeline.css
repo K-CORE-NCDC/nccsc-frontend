@@ -1,11 +1,11 @@
 .wraper-timeline-graph {
-    padding: 50px;
+    padding: 30px;
     text-align: center;
     font-family: sans-serif;
     /* width: 500px; */
     margin: 10px auto;
     width: 100%;
-    overflow: scroll;
+    overflow-x: scroll;
 }
 
 .container-timeline-graph {
