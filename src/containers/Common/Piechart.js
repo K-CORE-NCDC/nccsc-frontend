@@ -159,7 +159,7 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
       let h = 'rgba('+hex_color[0]+','+hex_color[1]+','+hex_color[2]+','
 
       let linear = 1
-      console.log(id)
+      
       // if(id === 'chart_pie_AgeOfDaignosis'){
       //   let ageofdiag = {}
       //   for (var i = 0; i < data.length; i++) {
