@@ -5,6 +5,7 @@ import {
   userRegister,
   checkUserName,
   getPassEncodeId,
+  sendEmail
 } from "../../actions/api_actions";
 import { useSelector, useDispatch } from "react-redux";
 import { UserIcon, eye, EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
@@ -138,7 +139,7 @@ const MemberShip = ({ changestep }) => {
       errors.password = "Please enter 9-20 characters";
       errors.koreanpassword = "PasswordLength";
     }
-    else if (name === "password"  && KoreanRegex.test(value)) {
+    else if (name === "password" && KoreanRegex.test(value)) {
       errors.password = "Korean is not available";
       errors.koreanpassword = "KoreanPasswordNotAvailable";
     }
@@ -288,8 +289,22 @@ const MemberShip = ({ changestep }) => {
     dispatch(getPassEncodeId("GET", {}));
   };
   const verifyEmail = () => {
-    setClickEmailverifyButton(true);
-    setClickMobileverifyButton(false);
+    if (form.email === "" || form.domain_email === "") {
+      form.errors.email = "Please valid EmailID";
+      form.errors.koreanemail = "EnterValidEmailID";
+      form.errors.domain_email = "Please Select Domain";
+      form.errors.koreandomain_email = "SelectEmailDomain";
+    } else {
+      let data = {
+        email_id: `${form.email}${form.domain_email}`
+      };
+      
+      setClickEmailverifyButton(true);
+      setClickMobileverifyButton(false);
+      console.log(data.email_id);
+      dispatch(sendEmail("POST", {data}));
+
+    }
   };
 
   const gotopreviousStep = () => {
@@ -664,7 +679,7 @@ const MemberShip = ({ changestep }) => {
                 )}
               </div>
               <div>
-                {verificationState === "email" && (
+                {verificationState === "email" &&  (
                   <button
                     className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded h-11"
                     onClick={verifyEmail}
@@ -717,7 +732,7 @@ const MemberShip = ({ changestep }) => {
               ? "bg-NccBlue-700"
               : "bg-grey-700 hover:bg-blue-700"
               }`}
-            onClick={() => console.log(form)}
+            onClick={register_user}
           // disabled={form.isVerified? false : true}
           >
             Registration

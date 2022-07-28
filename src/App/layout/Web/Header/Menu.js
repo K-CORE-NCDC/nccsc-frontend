@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import {Context} from '../../../../wrapper'
 import {FormattedMessage} from 'react-intl';
 
+var islogin1=localStorage.getItem('ncc_access_token') 
+var islogin2=localStorage.getItem('ncc_refresh_token')
+
 const SingleElem = ({elem}) =>{
   if (elem.url){
     return (
@@ -64,6 +67,9 @@ const Menu = ({items}) => {
   const item = items
   const m = item.map((ele,index)=>{
     if(ele.type==='item'){
+      if(ele.type === 'item' && ele.id === 'signup' &&  (islogin1) && (islogin2) ){
+        return null;
+      }
       return <SingleElem key={"single"+index} elem={ele}/>
     }else if (ele.type==='group') {
       return <MultipleElem key={"multiple"+index} elem={ele} ind={index} />

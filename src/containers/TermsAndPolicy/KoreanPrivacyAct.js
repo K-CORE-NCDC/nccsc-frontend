@@ -18,6 +18,7 @@ import Purposeofpersonalinformationprocessing from '../../assets/images/PrivacyA
 import RemediesforInfringementofRights from '../../assets/images/PrivacyACTImages/RemediesforInfringementofRights.png'
 import requestforreading from '../../assets/images/PrivacyACTImages/requestforreading.png'
 import RightsandObligationsofDataSubjects from '../../assets/images/PrivacyACTImages/RightsandObligationsofDataSubjects.png'
+// import Attachmentone from '../../assests/attachment'
 
 
 function Koreanprivacyact() {
@@ -591,7 +592,9 @@ function Koreanprivacyact() {
                                 - 연락처 : 031-920-1891(전화번호), evolution@ncc.re.kr(이메일)
                             </li>
                         </ul>
-                        <span id="SPAN_284">개인정보열람_정정_삭제_처리요구서 다운로드 [첨부2]</span>
+                        <span id="SPAN_284">
+                            <a href="." download></a>
+                        </span>
                     </div>
 
                     {/* 8 */}
