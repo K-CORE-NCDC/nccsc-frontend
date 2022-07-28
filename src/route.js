@@ -3,9 +3,9 @@ import {FormattedMessage} from 'react-intl';
 
 const Home = React.lazy(() => import('./containers/Home/'));
 const DataSummary = React.lazy(() => import('./containers/DataSummary/'));
+const Login = React.lazy(() => import('./containers/Login/login'));
 const DataVisualization = React.lazy(() => import('./containers/DataVisualisation/'));
 const UserDataVisualization = React.lazy(() => import('./containers/UserDataVisualization/'));
-const Login = React.lazy(() => import('./containers/Login/login'));
 const Logout = React.lazy(() => import('./containers/Login/logout'))
 const Terms = React.lazy(() => import('./containers/Signup/TermsOfUse'))
 const Join = React.lazy(() => import('./containers/Signup/MemberShip'))
@@ -44,6 +44,7 @@ const route = [
   { path: '/signup/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: Signup},
   { path: '/genefusion/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: genefusion},
   { path: '/user-data/:id', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: UserDataTable},
+  
 
   { path: '/faq/:slug?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: Faq},
   { path: '/notice/:slug?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: Notice},
@@ -58,3 +59,5 @@ const route = [
 export default route;
 
 // adding user data visualization
+
+

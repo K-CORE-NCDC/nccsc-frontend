@@ -2,6 +2,9 @@ import { FormattedMessage } from 'react-intl';
 
 const sessionAuth = localStorage.getItem('ncc_access_token');
 
+var islogin1=localStorage.getItem('ncc_access_token') 
+var islogin2=localStorage.getItem('ncc_refresh_token')
+
 
 const login = {
   id: 'login',
@@ -25,7 +28,9 @@ const logout = {
 let childMenu = {
   "social": {
     items: [
+    
       {
+
         id: 'signup',
         title: <FormattedMessage id="Signup" defaultMessage="Sign Up" />,
         type: 'item',
@@ -185,4 +190,5 @@ if (sessionAuth) {
 } else {
   childMenu["social"]["items"].push(login)
 }
+
 export default childMenu;
