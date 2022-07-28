@@ -27,6 +27,7 @@ export default function DropdownMenu() {
       let children = items[i].children
       let tmp = []
       for (var j = 0; j < children.length; j++) {
+        console.log("childeren is",children[j].url);
         tmp.push(
           <li key={i+"_"+j} className='px-3 py-5'>
             <Link key={i+"link_"+j }

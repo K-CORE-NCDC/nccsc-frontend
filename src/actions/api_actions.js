@@ -1,4 +1,4 @@
-import { homeConstants, dataVisualization, userdataVisualization, CLEAR_ALL_STATES } from "./Constants";
+import { homeConstants, dataVisualization, userdataVisualization, membership, CLEAR_ALL_STATES } from "./Constants";
 import config from '../config'
 import axios from "axios";
 import '../assets/interceptor/interceptor'
@@ -7,6 +7,24 @@ import '../assets/interceptor/interceptor'
 function sendRequest(url, method, data) {
   let x = axios({ method: method, url, data: data });
   return x
+}
+
+export function sendEmail(data){
+  console.log(data);
+  return (dispatch) => {
+    let url = config.auth + "send-mail";
+    sendRequest(url, "POST", data)
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: membership.OTP_REQUEST,
+          payload: d["data"],
+        });
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
+  }
 }
 
 export function getDashboardCount() {
