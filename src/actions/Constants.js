@@ -47,4 +47,8 @@ export const userdataVisualization = {
   USER_DATA_PROJECT_TABLE_PROJECT : 'USER_DATA_PROJECT_TABLE_PROJECT'
 }
 
+export const membership={
+  OTP_REQUEST:"OTP_REQUEST"
+}
+
 export const  CLEAR_ALL_STATES = "CLEAR_ALL_STATES"
