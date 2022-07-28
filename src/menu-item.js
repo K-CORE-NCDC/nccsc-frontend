@@ -184,9 +184,8 @@ let childMenu = {
 
 if (sessionAuth) {
   childMenu["social"]["items"].push(logout)
-  childMenu["social"]["items"].filter()
   // childMenu["social"]["items"].splice(0, childMenu["social"]["items"],...childMenu["social"]["items"].filter(function(item){
-  //   return item.id!=='signup'
+  //   return (item.id!=='signup' ||  item.id!=='logout')
   // }))
 } else {
   childMenu["social"]["items"].push(login)
