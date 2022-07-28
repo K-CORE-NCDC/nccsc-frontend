@@ -5,7 +5,7 @@ import SigninComplete from "./SigninComplete";
 import "../../styles/SignupStyles.css";
 import { CheckCircleIcon } from "@heroicons/react/outline";
 const SignupComponent = () => {
-  const [currentStep, setcurrentStep] = useState(0);
+  const [currentStep, setcurrentStep] = useState(1);
   const [widthofProgress, setwidthofprogress] = useState(0);
 
   useEffect(() => {
