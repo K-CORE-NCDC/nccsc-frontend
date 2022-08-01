@@ -352,7 +352,7 @@ const MemberShip = ({ changestep }) => {
   }, [passKey]);
 
   const verifyOTP = (e) =>{
-    dispatch(verifyOTP("POST", {'email_id':email,'otp':''}));
+    // dispatch(verifyOTP("POST", {'email_id':email,'otp':''}));
   }
 
   

@@ -1,4 +1,4 @@
-import { homeConstants, dataVisualization, userdataVisualization, membership, CLEAR_ALL_STATES } from "./Constants";
+import { homeConstants, dataVisualization, userdataVisualization, membership, notice, CLEAR_ALL_STATES } from "./Constants";
 import config from '../config'
 import axios from "axios";
 import '../assets/interceptor/interceptor'
@@ -18,6 +18,25 @@ export function sendEmail(method,data){
         const d = result;
         dispatch({
           type: membership.OTP_REQUEST,
+          payload: d["data"],
+        });
+      })
+      .catch((e) => {
+        console.log("error", e);
+      });
+  }
+}
+
+export function getNoticeDetail(type, data) {
+
+  return (dispatch) => {
+    let url = config.auth + `notice-api-get/${data.id}/`;
+    // let url = config.auth + `notice-api-get/${data.id}?id=${data.id}`;
+    sendRequest(url, type, "")
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: notice.NOTICE_DETAILS,
           payload: d["data"],
         });
       })
@@ -160,7 +179,7 @@ export function getLolipopInformation(type, data) {
   };
 }
 
-export function getClinicalMaxMinInfo(type,data) {
+export function getClinicalMaxMinInfo(type, data) {
   return (dispatch) => {
     let url = config.auth + "getClinicalMaxMinInfo/";
     sendRequest(url, type, data)
@@ -625,7 +644,7 @@ export function getScatterInformation(type, data) {
   };
 }
 
-export function getGeneFusionInformation (type,data){
+export function getGeneFusionInformation(type, data) {
   return (dispatch) => {
     let url = config.auth + "check-fusion-genes/";
     sendRequest(url, type, data)
@@ -749,40 +768,40 @@ export function getCircosTimelineTable(method, data) {
   };
 }
 
-export function getPassEncodeId(type,data){
+export function getPassEncodeId(type, data) {
   return (dispatch) => {
     let url = config.auth + "niceKey/";
     sendRequest(url, type, data)
       .then((result) => {
         let r = result['data']
-        if(result['status']===200){
+        if (result['status'] === 200) {
           dispatch({ type: dataVisualization.REQUEST_DONE });
           dispatch({
             type: dataVisualization.PASS_ENCODE_ID,
             payload: r,
-          });  
+          });
         }
-      }).catch((e)=>{
-        console.log("error",e)
+      }).catch((e) => {
+        console.log("error", e)
       })
   }
 }
 
 export function checkUserName(type, data) {
   return (dispatch) => {
-    let url = config.auth + "registration/?type="+data['type']+'&value='+data['value'];
+    let url = config.auth + "registration/?type=" + data['type'] + '&value=' + data['value'];
     sendRequest(url, type, data)
       .then((result) => {
         let r = result['data']
-        if(result['status']===200){
+        if (result['status'] === 200) {
           dispatch({ type: dataVisualization.REQUEST_DONE });
           dispatch({
             type: dataVisualization.CHECK_USER,
             payload: r,
-          });  
+          });
         }
-      }).catch((e)=>{
-        console.log("error",e)
+      }).catch((e) => {
+        console.log("error", e)
       })
   }
 }
@@ -901,8 +920,8 @@ export function updateDownloadVisualizationPurpose(data) {
         console.log(e);
       })
 
-    }
   }
+}
 
 
 export function languageChange(data) {
@@ -917,7 +936,7 @@ export function languageChange(data) {
 
 export function getFaqData(id) {
   return (dispatch) => {
-    let url = config.auth + "faq-api/?id="+id;
+    let url = config.auth + "faq-api/?id=" + id;
     sendRequest(url, "GET", "")
       .then((result) => {
         const d = result;
@@ -934,7 +953,7 @@ export function getFaqData(id) {
 
 export function getNoticeData(id) {
   return (dispatch) => {
-    let url = config.auth + "notice-api/?id="+id;
+    let url = config.auth + "notice-api/?id=" + id;
     sendRequest(url, "GET", "")
       .then((result) => {
         const d = result;
@@ -952,20 +971,20 @@ export function getNoticeData(id) {
 export function getQaData(id, data) {
   return (dispatch) => {
     let request
-    if(id){
-      let url = config.auth + "qa-api/?id="+id;
+    if (id) {
+      let url = config.auth + "qa-api/?id=" + id;
       request = sendRequest(url, "GET", "")
-    }else{
+    } else {
       let url = config.auth + "qa-api/";
       request = sendRequest(url, "POST", data)
     }
-      request.then((result) => {
-        const d = result;
-        dispatch({
-          type: homeConstants.DATA_QA,
-          payload: d["data"],
-        });
-      })
+    request.then((result) => {
+      const d = result;
+      dispatch({
+        type: homeConstants.DATA_QA,
+        payload: d["data"],
+      });
+    })
       .catch((e) => {
         console.log("error", e);
       });

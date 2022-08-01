@@ -12,7 +12,6 @@ import { Fragment } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import logoNew from "../../../assets/images/Left_up.png";
 import footer_logo from "../../../assets/images/f_logo.png";
-
 import { useSelector, useDispatch } from "react-redux";
 import {
   MenuIcon,
@@ -24,6 +23,7 @@ import MenuItems from "../../../menu-item";
 import { useParams } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 import { getDashboardCount } from "../../../actions/api_actions";
+import Popup from "../../../containers/Popup/Popup";
 
 const menu = route.map((route, index) => {
   return route.component ? (
@@ -267,7 +267,6 @@ export default function Web(props) {
                 </div>
               </div>
             )}
-
             <Transition
               show={open}
               as={Fragment}
@@ -318,8 +317,12 @@ export default function Web(props) {
         </Switch>
       </Suspense>
       {/* fixed bottom-0 */}
+      <div>
+
+        <Popup></Popup>
+      </div>
       <footer className="border-gray-300 border-t  w-full">
-        <div className="d-flex flex-row text-white" style={{height:"50px",backgroundColor:"#203239"}}>
+        <div className="d-flex flex-row text-white" style={{ height: "50px", backgroundColor: "#203239" }}>
           <Link to="/termsandconditions/" className="m-5">
             <FormattedMessage id="TermsofService" defaultMessage="Member Terms and Conditions" />
           </Link>
@@ -328,7 +331,7 @@ export default function Web(props) {
             <FormattedMessage id="PrivacyPolicy" defaultMessage="Privacy Policy" />
           </Link>
         </div>
-        <div className="grid grid-cols-2" style={{backgroundColor:"#F0EBE3", height:"80px"}}>
+        <div className="grid grid-cols-2" style={{ backgroundColor: "#F0EBE3", height: "80px" }}>
           <div className="text-gray-500 my-auto">
             <p>경기도 고양시 일산동구 일산로 323 국립암센터</p>
             <p>Copyright ⓒ 2021 by NCC. All rights reserved.</p>
