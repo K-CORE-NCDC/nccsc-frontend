@@ -140,7 +140,7 @@ if(errors.id){
   const verifyMobile = () => {
     setClickMobileverifyButton(true);
     setClickEmailverifyButton(false);
-    dispatch(getPassEncodeId("GET", {}));
+    dispatch(getPassEncodeId("POST", {}));
   };
   const verifyEmail = () => {
     setClickEmailverifyButton(true);
