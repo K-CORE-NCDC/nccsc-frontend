@@ -9,11 +9,11 @@ function sendRequest(url, method, data) {
   return x
 }
 
-export function sendEmail(data) {
+export function sendEmail(method,data){
   console.log(data);
   return (dispatch) => {
-    let url = config.auth + "send-mail";
-    sendRequest(url, "POST", data)
+    let url = config.auth + "send-mail/";
+    sendRequest(url, method, data)
       .then((result) => {
         const d = result;
         dispatch({

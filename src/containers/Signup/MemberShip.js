@@ -283,26 +283,25 @@ const MemberShip = ({ changestep }) => {
     }
   };
 
-  const verifyMobile = () => {
+  const verifyMobile = (e) => {
+    
     setClickMobileverifyButton(true);
     setClickEmailverifyButton(false);
-    dispatch(getPassEncodeId("GET", {}));
+    dispatch(getPassEncodeId("GET", {'mobile':form['phone_number']}));
   };
-  const verifyEmail = () => {
+  const verifyEmail = (e) => {
+    
     if (form.email === "" || form.domain_email === "") {
       form.errors.email = "Please valid EmailID";
       form.errors.koreanemail = "EnterValidEmailID";
       form.errors.domain_email = "Please Select Domain";
       form.errors.koreandomain_email = "SelectEmailDomain";
     } else {
-      let data = {
-        email_id: `${form.email}${form.domain_email}`
-      };
-      
+      // e.target.classList.add('hidden')
+      let email = `${form.email}@${form.domain_email}`
       setClickEmailverifyButton(true);
       setClickMobileverifyButton(false);
-      console.log(data.email_id);
-      dispatch(sendEmail("POST", {data}));
+      dispatch(sendEmail("POST", {'email_id':email,'send_otp':true}));
 
     }
   };
@@ -351,6 +350,12 @@ const MemberShip = ({ changestep }) => {
       setEncData(passKey["enc_data"]);
     }
   }, [passKey]);
+
+  const verifyOTP = (e) =>{
+    dispatch(verifyOTP("POST", {'email_id':email,'otp':''}));
+  }
+
+  
 
   return (
     <div>
@@ -645,16 +650,16 @@ const MemberShip = ({ changestep }) => {
                     value="mobile"
                     className="mt-5"
                     onChange={formSet}
-                  />
+                  />&nbsp;
                   <label htmlFor="mobile_verification">Mobile</label>
                   <input
                     type="radio"
                     id="email_verification"
                     name="verification"
                     value="email"
-                    className="mt-5 m-2"
+                    className="mt-5 ml-5"
                     onChange={formSet}
-                  />
+                  />&nbsp;
                   <label htmlFor="email_verification">Email</label>
                   <br />
                 </div>
@@ -671,7 +676,7 @@ const MemberShip = ({ changestep }) => {
               <div>
                 {verificationState === "mobile" && (
                   <button
-                    onClick={verifyMobile}
+                    onClick={(e)=>verifyMobile(e)}
                     className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
                   >
                     Verify Mobile
@@ -682,7 +687,7 @@ const MemberShip = ({ changestep }) => {
                 {verificationState === "email" &&  (
                   <button
                     className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded h-11"
-                    onClick={verifyEmail}
+                    onClick={(e)=>verifyEmail(e)}
                   >
                     verify Email
                   </button>
@@ -695,13 +700,13 @@ const MemberShip = ({ changestep }) => {
                   <>
                     <div className="d-flex flex-row">
                       <div className="mb-3 mx-2 pt-0">
-                        <input
-                          type="text"
-                          className="px-4 py-4 mt-2  text-blueGray-600 relative bg-white rounded border border-gray-400 outline-none focus:outline-none focus:ring w-40"
+                        <input type="text" className="px-4 py-4 mt-2  
+                        text-blueGray-600 relative bg-white rounded border 
+                        border-gray-400 outline-none focus:outline-none focus:ring w-80"
                         />
                       </div>
                       <>
-                        <button className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded w-48 h-12">
+                        <button onClick={e=>verifyOTP(e)} className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded w-48 h-12">
                           check verification code
                         </button>
                       </>
