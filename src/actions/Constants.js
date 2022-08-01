@@ -51,4 +51,8 @@ export const membership={
   OTP_REQUEST:"OTP_REQUEST"
 }
 
+export const notice={
+  NOTICE_DETAILS:"NOTICE_DETAILS"
+}
+
 export const  CLEAR_ALL_STATES = "CLEAR_ALL_STATES"
