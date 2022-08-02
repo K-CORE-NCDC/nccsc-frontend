@@ -49,6 +49,12 @@ const homeReducer = (state = { 'home': 'home' }, { type, payload }) => {
         ...state,
         dataQA: payload
       }
+    case homeConstants.VERIFY_ENCODE:
+      return {
+        ...state,
+        verifyMobile:payload
+      }
+
     default:
       return state
   }
