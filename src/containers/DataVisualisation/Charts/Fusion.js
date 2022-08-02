@@ -1,243 +1,122 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, Fragment, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import CircosCmp from '../../Common/Circos'
-import NoContentMessage from '../../Common/NoContentComponent'
-import PagenationTableComponent from '../../Common/PagenationTable'
-import GraphsModal from '../../Common/circostimelineGraph'
-import LoaderCmp from '../../Common/Loader'
-import ImageGrid from '../../Common/ImageGrid'
-import { getCircosInformation, getCircosTimelineTable, getOncoImages, getBreastKeys } from '../../../actions/api_actions'
-import '../../../assets/css/style.css'
-import { exportComponentAsPNG } from 'react-component-export-image';
-import placeholder from '../../../assets/img/circos_ncc.png';
-import {FormattedMessage} from 'react-intl';
+import VolcanoCmp from "../../Common/Volcano";
+import GroupFilters, { PreDefienedFilters } from "../../Common/FusionGroupFilter";
+import { exportComponentAsPNG } from "react-component-export-image";
+import NoContentMessage from "../../Common/NoContentComponent";
+import { AdjustmentsIcon } from "@heroicons/react/outline";
 
+import {
+  getClinicalMaxMinInfo,
+  getFusionVennDaigram,
+} from "../../../actions/api_actions";
+// import Loader from "react-loader-spinner";
+import LoaderCmp from "../../Common/Loader";
+import { FormattedMessage } from "react-intl";
 
-export default function DataCircos({ width, inputData, screenCapture, setToFalseAfterScreenCapture, toggle}) {
-  const reference = useRef()
-  const dispatch = useDispatch()
-  const [sampleKey, setSampleKey] = useState('')
-  const circosJson = useSelector((data) => data.dataVisualizationReducer.circosSummary);
-  // const fusionJson = useSelector((data) => data.dataVisualizationReducer.fusionData);
-  const oncoImageJson = useSelector((data) => data.dataVisualizationReducer.oncoSampleImagesData);
-  const circosTimelieTableData = useSelector(state => state.dataVisualizationReducer.circosTimelieTableData)
+const selectedCss =
+  "w-1/2 rounded-r-none  hover:scale-110 focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 xs:text-sm sm:text-sm md:text-2xl md:text-2xl ease-in-out border-gray-600 transition";
+const nonSelectedCss =
+  "w-1/2 rounded-l-none  hover:scale-110 focus:outline-none flex justify-center p-5 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 text-teal-700 border xs:text-sm sm:text-sm md:text-2xl md:text-2xl duration-200 ease-in-out border-teal-600 transition";
 
-  const circosSanpleRnidListData = useSelector((data) => data.dataVisualizationReducer.Keys);
-  const [sampleListElements, setSampleListElements] = useState([])
-  const [displaySamples, setDisplaySamples] = useState(false)
-  const [watermarkCss, setWatermarkCSS] = useState("")
+export default function FusionPlot({
+  width,
+  inputData,
+  screenCapture,
+  setToFalseAfterScreenCapture,
+}) {
+  const dispatch = useDispatch();
   const [loader, setLoader] = useState(false)
-  const [showOncoImages, setShowOncoImages] = useState(false)
-  const [showOncoTimelineTables, setShowOncoTimelineTables] = useState(false)
-  const [showNoContent, setShowNoContent] = useState(false)
-  const [renderCircos, setRenderCircos] = useState(false)
-  const [samplesCount, setSamplesCount] = useState(0)
-
-
-  const closeShowOncoImages = () => {
-    setShowOncoImages(false)
-  }
-
-  const closeShowTimelineTables = () =>{
-    setShowOncoTimelineTables(false)
-  }
-
-  const oncoImagesClickFunction = () =>{
-    // setLoader(true)
-    setShowOncoImages(true)
-    dispatch(getOncoImages('POST', {sample_id: sampleKey}))
-  }
-
-  const timelineGraphClickFunction = () =>{
-    setShowOncoImages(false)
-    setShowOncoTimelineTables(true)
-    dispatch(getCircosTimelineTable('POST', {sample_id: sampleKey}))
-  }
-
-
-  const reA = /[^a-zA-Z]/g;
-  const reN = /[^0-9]/g;
-  function sortAlphaNum(a, b) {
-    var aA = a.replace(reA, "");
-    var bA = b.replace(reA, "");
-    if (aA === bA) {
-      var aN = parseInt(a.replace(reN, ""), 10);
-      var bN = parseInt(b.replace(reN, ""), 10);
-      return aN === bN ? 0 : aN > bN ? 1 : -1;
-    } else {
-      return aA > bA ? 1 : -1;
+  const [smallScreen, setSmallScreen] = useState(false)
+  const [sampleCount, setSampleCount] = useState({})
+  const [userDefienedFilter, setUserDefienedFilter] = useState('static')
+  const [groupFilters, setGroupFilters] = useState({})
+  const clinicalMaxMinInfo = useSelector((data) => data.dataVisualizationReducer.clinicalMaxMinInfo);
+  const updateGroupFilters = (filtersObject) => {
+    if (filtersObject) {
+      console.log(filtersObject)
+      setGroupFilters(filtersObject)
     }
   }
 
   useEffect(() => {
     
-    if(circosSanpleRnidListData ){
-      setSamplesCount(Object.keys(circosSanpleRnidListData).length)
-    }
-  }, [circosSanpleRnidListData])
-
-  useEffect(() => {
     if (inputData) {
-      if(sampleKey!=='all'){
-        let imageDocumentObject = document.getElementById('images')
-        if(imageDocumentObject){
-          imageDocumentObject.classList.remove("opacity-50")
-        }
-        let tableDocumentObject = document.getElementById('tables')
-        if (tableDocumentObject){
-          tableDocumentObject.classList.remove("opacity-50")
-        }
-      }else{
-        let imageDocumentObject = document.getElementById('images')
-        if(imageDocumentObject){
-          imageDocumentObject.classList.add("opacity-50")
-        }
-        let tableDocumentObject = document.getElementById('tables')
-        if (tableDocumentObject){
-          tableDocumentObject.classList.add("opacity-50")
-        }
-      }
-
-      let editInputData = inputData
-      editInputData = { ...editInputData, sampleKey: sampleKey }
-      dispatch(getBreastKeys(editInputData))
-      if (editInputData.type !== '' && sampleKey!='') {
-
+      
+      
+      if (inputData.type !== '' && Object.keys(groupFilters).length > 0) {
         setLoader(true)
-        setRenderCircos(false)
-        // dispatch(getBreastKeys(editInputData))
-        dispatch(getCircosInformation('POST', editInputData))
+        inputData['filterType'] = userDefienedFilter
+        dispatch(getFusionVennDaigram('POST', { ...inputData, filterGroup: groupFilters }))
+        
       }
     }
-  }, [inputData, sampleKey])
+  }, [inputData, groupFilters])
 
-  useEffect(() => {
-
-    return () => {
-      dispatch(getBreastKeys({}))
+  useEffect(()=>{
+    if(!clinicalMaxMinInfo){
+      dispatch(getClinicalMaxMinInfo('GET',{}))
     }
-  }, [])
-
-  useEffect(() => {
-    if (inputData && inputData.genes.length > 0) {
-      setDisplaySamples(true)
-    } else {
-      setDisplaySamples(false)
-    }
-  }, [inputData])
-
-
-  useEffect(() => {
-    if (screenCapture) {
-      setWatermarkCSS("watermark")
-    } else {
-      setWatermarkCSS("")
-    }
-    if (watermarkCss !== "" && screenCapture) {
-      exportComponentAsPNG(reference)
-      setToFalseAfterScreenCapture()
-    }
-  }, [screenCapture, watermarkCss])
-
-  useEffect(() => {
-    if (circosSanpleRnidListData) {
-      let sampleListElementsTemp = []
-      let brstKeysObject = {}
-      Object.keys(circosSanpleRnidListData).forEach(e => {
-        brstKeysObject = { ...brstKeysObject, [circosSanpleRnidListData[e]]: e }
-      })
-      let brstKeysArray = Object.keys(brstKeysObject).sort(sortAlphaNum)
-      brstKeysArray.forEach((element) => {
-        sampleListElementsTemp.push(<option className="xs:text-sm lg:text-xl" key={element} value={brstKeysObject[element]}>{element}</option>)
-      })
-      setSampleListElements(sampleListElementsTemp)
-    }
-  }, [circosSanpleRnidListData])
-
-  useEffect(() => {
-    setTimeout(function () {
-      if (circosJson && circosJson.status !== 0) {
-        setLoader(false)
-        if(sampleKey!=='all'){
-          document.getElementById('images').classList.remove("opacity-50")
-          document.getElementById('tables').classList.remove("opacity-50")
-        }else{
-          document.getElementById('images').classList.add("opacity-50")
-          document.getElementById('tables').classList.add("opacity-50")
-        }
-      }
-    }, (1000));
-  }, [circosJson])
-
-  useEffect(() => {
-    if(circosJson && circosJson.status) {
-
-        if(circosJson.status === 200 && Object.keys(circosJson).length > 1){
-          setShowNoContent(false)
-          setRenderCircos(true)
-        }else if(circosJson.status === 0){
-          setLoader(true)
-          setShowNoContent(false)
-          setRenderCircos(false)
-        }else{
-          setRenderCircos(false)
-          setShowNoContent(true)
-        }
-    }
-
-  }, [circosJson])
-
-
-  var w = Math.floor((width / 100) * 75)
-
+  },[])
   
   return (
-    <>{
-      loader ?
+    <>
+      {loader ? (
         <LoaderCmp />
-        :
-        <div className="grid ">
-          <div className={`p-1 grid xs:grid-cols-3 ${toggle?"lg:grid-cols-4":"lg:grid-cols-4"}`}>
-            <div className='flex xs:col-span-3 sm:col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-2'>
-              <div className='flex-col text-left sm:w-2/6 xs:w-2/6'>
-                {circosSanpleRnidListData && <div htmlFor="samples" className="lg:text-2xl sm:text-xl xs:text-sm"><FormattedMessage  id = "Cir_choose_sample" defaultMessage='Choose a Sample'/>: ({samplesCount}) </div>}
-                <select
-                  className="w-full  border bg-white rounded px-3 py-2 outline-none lg:text-xl sm:text-xl xs:text-sm"
-                  value={sampleKey}
-                  onChange={e => setSampleKey(e.target.value)}
-                  name="samples"
-                  id="samples"
-                >
-                  <option className="xs:text-sm sm:text-sm lg:text-xl">--Select Sample--</option>
-                  {sampleListElements}
-                  <option className="xs:text-sm lg:text-xl" value="all">all</option>
-
-                </select>
-              </div>
-              <div className='p-3 lg:mt-6 xs:mt-3 sm:pt-0 sm:mt-8'>
-                <button id='images' className="opacity-50 bg-main-blue hover:bg-blue-700 xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40" onClick={oncoImagesClickFunction}>Pathological image</button>
-              </div>
-              <div className='p-3 lg:mt-6 xs:mt-3 sm:pt-0 sm:mt-8'>
-                <button id='tables' className="opacity-50 bg-main-blue hover:bg-blue-700 xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40" onClick={timelineGraphClickFunction}>F/U Timeline</button>
-              </div>
-            </div>
+      ) : (
+        <div className="flex flex-row justify-around">
+          <div className={`lg:hidden md:hidden xs:ml-8`}>
+            <button
+              className="bg-blue-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              onClick={() => setSmallScreen(!smallScreen)}
+              type="button"
+            >
+              <AdjustmentsIcon className="h-6 w-6 inline" />
+            </button>
           </div>
-          <div>
+          <div
+            className={`lg:w-1/5 md:w-4/5 lg:block md:block lg:block sm:hidden ${
+              smallScreen
+                ? "xs:mr-80 xs:z-10 xs:opacity-95 xs:bg-white"
+                : "xs:hidden"
+            } `}
+          >
             <div>
-              {renderCircos && <CircosCmp
-                watermarkCss={watermarkCss}
-                ref={reference}
-                width={w}
-                data={circosJson}
-                selectedGenes={inputData.genes}
-              />}
-              {showNoContent && <NoContentMessage />}
+              {sampleCount && Object.keys(sampleCount).length > 0 && (
+                <div className="m-1 p-1 border border-black border-dashed">
+                  {Object.keys(sampleCount).map((e) => (
+                    <div
+                      key={e}
+                      className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue"
+                    >
+                      Group {e} : {sampleCount[e]}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
+            <h6 className="p-4 ml-1 text-left text-bold sm:text-xl lg:text-2xl text-blue-700"><FormattedMessage  id = "Choose Filter group" defaultMessage='Choose Filter group'/></h6>
+            <div className="m-1 flex flex-row justify-around">
+              <button onClick={() => {setUserDefienedFilter('static');setGroupFilters({})}}
+                className={userDefienedFilter === 'static' ? selectedCss : nonSelectedCss}
+              >
+                <FormattedMessage  id = "Static_volcano" defaultMessage='Static'/>
+              </button>
+              <button onClick={() => {setUserDefienedFilter('dynamic');setGroupFilters({})}}
+                className={userDefienedFilter === 'dynamic' ? selectedCss : nonSelectedCss}
+              >
+                <FormattedMessage  id = "Dynamic_volcano" defaultMessage='Dynamic'/>
+              </button>
+            </div>
+            {(userDefienedFilter === 'static') && <PreDefienedFilters   viz_type='fusion' parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
+            {(userDefienedFilter === 'dynamic') && <GroupFilters  viz_type='fusion' parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
+          </div>
+          <div className={`lg:w-4/5 md:w-4/5 sm:w-full lg:block ${smallScreen?"xs:absolute":"xs:w-full"}`} style={{ 'overflowX': 'scroll' }}>
+            
           </div>
         </div>
-    }
-      {showOncoImages && <PagenationTableComponent closeShowOncoImages={closeShowOncoImages} imageData={oncoImageJson} />}
-      {showOncoTimelineTables && <GraphsModal circosTimelieTableData={circosTimelieTableData} closeShowTimelineTables={closeShowTimelineTables} />}
+        
+      )}
     </>
-  )
+  );
 }

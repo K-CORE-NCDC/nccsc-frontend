@@ -23,9 +23,16 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
   // console.log(closeShowTimelineTables, circosTimelieTableData);
   const [bmiChart, setBmiChart] = useState([])
   const [ki67Chart, setKi67Chart] = useState([])
+  const [ca15Chart, setCa15Chart] = useState([])
+  const [ceaChart, setCeaChart] = useState([])
+  const [her2Chart, setHer2Chart] = useState([])
   const [tab,setTab] = useState('bmi')
   const [bmiChartTable, setBmiChartTable] = useState({"columns":[],'data':[]})
   const [ki67ChartTable,setKi67ChartTable] = useState({"columns":[],'data':[]})
+  const [ca15ChartTable,setCa15ChartTable] = useState({"columns":[],'data':[]})
+  const [ceaChartTable,setCeaChartTable] = useState({"columns":[],'data':[]})
+  const [her2ChartTable,setHer2ChartTable] = useState({"columns":[],'data':[]})
+
   const convertStrToDate = (dateString) => {
       let dateSplits = dateString.split('-')
       return new Date(dateSplits[0], dateSplits[1], dateSplits[2])
@@ -39,8 +46,8 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
         { type: 'date', id: 'End' },
     ]]
     const tableData = [[
-        { type: 'string', label:'BMI Value' },
-        { type: 'string', label:'Date' },
+        { type: 'string', label:'Exam Value' },
+        { type: 'string', label:'Exam Date' },
     ]]
 
     const ki67ChartData = [[
@@ -56,6 +63,9 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
       if(Object.keys(circosTimelieTableData).length > 0){
         var bmi = circosTimelieTableData['bmi']
         var ki67 = circosTimelieTableData['ki67']
+        var ca15 = circosTimelieTableData['ca15']
+        var cea = circosTimelieTableData['cea']
+        var her2 = circosTimelieTableData['her2']
         if(bmi.length>0){
           let t = ChartData
           let table_cols = [
@@ -127,6 +137,118 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
             'data':circosTimelieTableData['ki67']
           }))
         }
+        if(ca15.length>0){
+          let t = tableData
+
+          for (var i = 0; i < ca15.length; i++) {
+
+            let d = convertStrToDate(ca15[i]['exam_ymd']);
+            let score = ca15[i]['exam_val'].replace(/[^\d]/g,'');
+            let tooltip = "<div>exam_ymd: "+ca15[i]['exam_ymd']+"<hr/>"+ca15[i]['exam_val']+"</div>"
+            if(ca15.length==1){
+              var year  = new Date(d).getFullYear();
+              var month = new Date(d).getMonth();
+              var day   = new Date(d).getDate();
+              var date  = new Date(year , month, day+ 1);
+              t.push([score,'',tooltip,d,date])
+            } else {
+              t.push([score,'',tooltip,d,d])
+            }
+
+          }
+          let table_cols = [
+            {
+              name: 'Exam Value',
+              selector: row => row.exam_ymd
+            },
+            {
+              name: 'Date',
+              selector: row => row.exam_val
+            },
+          ]
+          setCa15Chart(t)
+          setCa15ChartTable((prevState) => ({
+            ...prevState,
+            'columns':table_cols,
+            'data':circosTimelieTableData['ca15']
+          }))
+        }
+
+        if(cea.length>0){
+          let t = tableData
+
+          for (var i = 0; i < cea.length; i++) {
+
+            let d = convertStrToDate(cea[i]['exam_ymd']);
+            let score = cea[i]['exam_val'].replace(/[^\d]/g,'');
+            let tooltip = "<div>exam_ymd: "+cea[i]['exam_ymd']+"<hr/>"+cea[i]['exam_val']+"</div>"
+            if(cea.length==1){
+              var year  = new Date(d).getFullYear();
+              var month = new Date(d).getMonth();
+              var day   = new Date(d).getDate();
+              var date  = new Date(year , month, day+ 1);
+              t.push([score,'',tooltip,d,date])
+            } else {
+              t.push([score,'',tooltip,d,d])
+            }
+
+          }
+          let table_cols = [
+            {
+              name: 'Exam Value',
+              selector: row => row.exam_ymd
+            },
+            {
+              name: 'Date',
+              selector: row => row.exam_val
+            },
+          ]
+          setCeaChart(t)
+          setCeaChartTable((prevState) => ({
+            ...prevState,
+            'columns':table_cols,
+            'data':circosTimelieTableData['cea']
+          }))
+        }
+
+        if(her2.length>0){
+          let t = tableData
+
+          for (var i = 0; i < her2.length; i++) {
+
+            let d = convertStrToDate(her2[i]['exam_ymd']);
+            let score = cea[i]['exam_val'].replace(/[^\d]/g,'');
+            let tooltip = "<div>exam_ymd: "+her2[i]['exam_ymd']+"<hr/>"+her2[i]['exam_val']+"</div>"
+            if(her2.length==1){
+              var year  = new Date(d).getFullYear();
+              var month = new Date(d).getMonth();
+              var day   = new Date(d).getDate();
+              var date  = new Date(year , month, day+ 1);
+              t.push([score,'',tooltip,d,date])
+            } else {
+              t.push([score,'',tooltip,d,d])
+            }
+
+          }
+          let table_cols = [
+            {
+              name: 'Exam Value',
+              selector: row => row.exam_ymd
+            },
+            {
+              name: 'Date',
+              selector: row => row.exam_val
+            },
+          ]
+          setHer2Chart(t)
+          setHer2ChartTable((prevState) => ({
+            ...prevState,
+            'columns':table_cols,
+            'data':circosTimelieTableData['her2']
+          }))
+        }
+
+
       }
 
     }else{
@@ -183,13 +305,31 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
                 />}
               </div>
               <div className={"py-6 tab-pane fade flex-inline "+" "+((tab==='ca15')?"show active":' hidden ')} id="tabs-ca15">
-                Tab 4 content
+                <h3>CA15 Timeline</h3>
+                <hr/>
+                {circosTimelieTableData && <TimeLineChart data={circosTimelieTableData.ca15} yearKey="exam_ymd" valueKey="exam_val" />}
+                {ca15Chart && <DataTable pagination
+                  columns={ca15ChartTable['columns']}
+                  data={ca15ChartTable['data']}
+                />}
               </div>
               <div className={"py-6 tab-pane fade flex-inline "+" "+((tab==='cea')?"show active":' hidden ')} id="tabs-cea">
-                Tab 3 content
+                <h3>CEA Timeline</h3>
+                <hr/>
+                {circosTimelieTableData && <TimeLineChart data={circosTimelieTableData.cea} yearKey="exam_ymd" valueKey="exam_val" />}
+                {ceaChart && <DataTable pagination
+                  columns={ceaChartTable['columns']}
+                  data={ceaChartTable['data']}
+                />}
               </div>
               <div className={"py-6 tab-pane fade flex-inline "+" "+((tab==='her2')?"show active":' hidden ')} id="tabs-her2">
-                Tab 3 content
+                <h3>Her2 Timeline</h3>
+                <hr/>
+                {circosTimelieTableData && <TimeLineChart data={circosTimelieTableData.her2} yearKey="exam_ymd" valueKey="exam_val" />}
+                {ceaChart && <DataTable pagination
+                  columns={her2ChartTable['columns']}
+                  data={her2ChartTable['data']}
+                />}
               </div>
             </div>
           </div>

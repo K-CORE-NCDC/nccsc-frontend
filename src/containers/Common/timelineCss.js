@@ -9,16 +9,15 @@ const TimeLineChart = ({ yearKey, valueKey, data }) => {
 
     useEffect(() => {
         if (data && data.length > 0) {
-            // console.log(data);
             let yearsObjectTemp = {}
             let yearsArrayTemp = []
-            for (let i = 0; i < 22; i++) {
+            for (let i = 0; i < 23; i++) {
                 yearsObjectTemp = { ...yearsObjectTemp, [`${2000 + i}`]: [] }
                 yearsArrayTemp.push(`${2000 + i}`)
             }
             data.forEach(element => {
                 let year = element[yearKey].split("-")[0]
-                yearsObjectTemp[year] = [...yearsObjectTemp[year], element]
+                yearsObjectTemp[year].push(element)
             })
             setYearsObject(yearsObjectTemp)
             setYearsArray(yearsArrayTemp)

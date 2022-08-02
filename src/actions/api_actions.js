@@ -83,7 +83,23 @@ export function findPassword(method,data){
       });
   }
 }
-
+export function verifyEncodeData(method, data) {
+  return (dispatch) => {
+    let url = config.auth + `checkplus_success/?`+data
+    
+    sendRequest(encodeURI(url), method, data)
+    .then((result) => {
+      const d = result;
+      dispatch({
+        type: homeConstants.VERIFY_ENCODE,
+        payload: d["data"],
+      });
+    })
+    .catch((e) => {
+      console.log("error", e);
+    });
+  }
+}
 export function getNoticeDetail(type, data) {
 
   return (dispatch) => {
@@ -236,7 +252,27 @@ export function getLolipopInformation(type, data) {
       });
   };
 }
-
+export function getFusionVennDaigram(type, data) {
+  return (dispatch) => {
+    let url = config.auth + "getFusionVenn/";
+    sendRequest(url, type, data)
+      .then((result) => {
+        const d = result
+        if (d.status === 200) {
+          dispatch({
+            type: dataVisualization.CLINICALMAXMIN_REQUEST,
+            payload: { ...d["data"], status: 200 },
+          });
+        }
+      }).catch((e) => {
+        console.log("error", e);
+        dispatch({
+          type: dataVisualization.VOLCANO_REQUEST,
+          payload: { status: 204 },
+        });
+      });
+  }
+}
 export function getClinicalMaxMinInfo(type, data) {
   return (dispatch) => {
     let url = config.auth + "getClinicalMaxMinInfo/";

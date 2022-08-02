@@ -78,6 +78,12 @@ const homeReducer = (state = { 'home': 'home' }, { type, payload }) => {
         return{
           ...state
         }
+    case homeConstants.VERIFY_ENCODE:
+      return {
+        ...state,
+        verifyMobile:payload
+      }
+
     default:
       return state
   }

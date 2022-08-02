@@ -6,7 +6,7 @@ import { getNoticeDetail } from '../../actions/api_actions'
 
 function Popup({ }) {
   const dispatch = useDispatch()
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
 
   const noticedetails = useSelector((data) => data.homeReducer.noticedata);
@@ -14,10 +14,15 @@ function Popup({ }) {
    let data={
       id:'16'
     }
-    dispatch(getNoticeDetail("GET", data));
+    // dispatch(getNoticeDetail("GET", data));
   }, [])
 
-  console.log("Notice is", noticedetails);
+  useEffect(() => {
+    return () => {
+      dispatch(clearProjectTableDataTableData())
+    }
+  }, [])
+
   return (
     <>
       <button

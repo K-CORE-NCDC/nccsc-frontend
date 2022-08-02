@@ -16,6 +16,7 @@ export const homeConstants = {
   FIND_ID:"FIND_ID",
   FIND_PASSWORD:"FIND_PASSWORD",
   REQUEST_DONE:'REQUEST_DONE',
+  VERIFY_ENCODE:"VERIFY_ENCODE"
 }
 
 export const dataVisualization = {
