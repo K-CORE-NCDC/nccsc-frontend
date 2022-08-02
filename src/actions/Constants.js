@@ -9,7 +9,8 @@ export const homeConstants = {
   FILE_REQUEST: "FILE_REQUEST",
   DATA_FAQ:"DATA_FAQ",
   DATA_NOTICE:"DATA_NOTICE",
-  DATA_QA:"DATA_QA"
+  DATA_QA:"DATA_QA",
+  VERIFY_ENCODE:"VERIFY_ENCODE"
 }
 
 export const dataVisualization = {
@@ -48,7 +49,9 @@ export const userdataVisualization = {
 }
 
 export const membership={
-  OTP_REQUEST:"OTP_REQUEST"
+  OTP_REQUEST:"OTP_REQUEST",
+  
+
 }
 
 export const notice={

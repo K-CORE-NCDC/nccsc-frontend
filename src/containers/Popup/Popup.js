@@ -6,7 +6,7 @@ import { getNoticeDetail, clearProjectTableDataTableData } from '../../actions/a
 
 function Popup({ }) {
   const dispatch = useDispatch()
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
 
   const noticedetails = useSelector((data) => data.dataVisualizationReducer.noticedata);
@@ -14,7 +14,7 @@ function Popup({ }) {
    let data={
       id:'16'
     }
-    dispatch(getNoticeDetail("GET", data));
+    // dispatch(getNoticeDetail("GET", data));
   }, [])
 
   useEffect(() => {
@@ -23,7 +23,6 @@ function Popup({ }) {
     }
   }, [])
 
-  console.log("Notice is", noticedetails);
   return (
     <>
       <button
