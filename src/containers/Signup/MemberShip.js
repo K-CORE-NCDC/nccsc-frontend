@@ -5,7 +5,8 @@ import {
   userRegister,
   checkUserName,
   getPassEncodeId,
-  sendEmail
+  sendEmail,
+  verifyOTP
 } from "../../actions/api_actions";
 import { useSelector, useDispatch } from "react-redux";
 import { UserIcon, eye, EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
@@ -20,7 +21,10 @@ const AlphaNumbericalWithAtleastoneSpecialCharecters = new RegExp("^(?=.*?[A-Z])
 const KoreanRegex = new RegExp("(\S*[\u3131-\u314e|\u314f-\u3163|\uac00-\ud7a3]+\S*)")
 
 const MemberShip = ({ changestep }) => {
+  
   const register_user = () => {
+    form.isVerified = true
+    changestep(2);
   };
 
 
@@ -39,6 +43,7 @@ const MemberShip = ({ changestep }) => {
     email: "",
     domain_email: "",
     verification: "",
+    otp: "",
     isVerified: false,
     errors: {
       id: "",
@@ -59,7 +64,7 @@ const MemberShip = ({ changestep }) => {
       koreandomain_email: "",
       verification: "",
       koreanverification: "",
-      // isVerified: "",
+      isVerified: false,
       // koreanisVerified: "",
     },
   };
@@ -74,6 +79,7 @@ const MemberShip = ({ changestep }) => {
   const [instituteDropdown, setInstituteDropdown] = useState([]);
   const [encData, setEncData] = useState("");
   const [visibility, setvisibility] = useState(false);
+  const [otpStatus, setotpStatus] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -83,13 +89,15 @@ const MemberShip = ({ changestep }) => {
   const checkUserId = useSelector(
     (data) => data.dataVisualizationReducer.checkUserName
   );
+  
   const passKey = useSelector((data) => data.dataVisualizationReducer.passKey);
+  const otp_verification_status = useSelector((data) => data.homeReducer.otp_validation_status);
 
   const formSet = (e) => {
-    console.log(form.errors);
     const { name, value } = e.target;
-    console.log(name, value);
-    if (e.target.value === "input") {
+    // console.log(name, value);
+    // console.log(e.target.id);
+    if (e.target.value === "input" ) {
       setForm((oldState) => ({ ...oldState, [e.target.name]: "" }));
       setInputMail(true);
     } else {
@@ -249,6 +257,7 @@ const MemberShip = ({ changestep }) => {
       errors.koreandomain_email = " ";
     }
 
+
     // Verification
 
     if (name === "verification" && value === "") {
@@ -284,13 +293,13 @@ const MemberShip = ({ changestep }) => {
   };
 
   const verifyMobile = (e) => {
-    
+
     setClickMobileverifyButton(true);
     setClickEmailverifyButton(false);
-    dispatch(getPassEncodeId("GET", {'mobile':form['phone_number']}));
+    dispatch(getPassEncodeId("GET", { 'mobile': form['phone_number'] }));
   };
   const verifyEmail = (e) => {
-    
+
     if (form.email === "" || form.domain_email === "") {
       form.errors.email = "Please valid EmailID";
       form.errors.koreanemail = "EnterValidEmailID";
@@ -301,7 +310,7 @@ const MemberShip = ({ changestep }) => {
       let email = `${form.email}@${form.domain_email}`
       setClickEmailverifyButton(true);
       setClickMobileverifyButton(false);
-      dispatch(sendEmail("POST", {'email_id':email,'send_otp':true}));
+      dispatch(sendEmail("POST", { 'email_id': email, 'send_otp': true }));
 
     }
   };
@@ -336,14 +345,14 @@ const MemberShip = ({ changestep }) => {
     }
   }, [regitserResponse]);
 
-  useEffect(()=>{
-    if (encData!==''){
+  useEffect(() => {
+    if (encData !== '') {
       window.open('', 'popupChk', 'width=500, height=550, top=100, left=100, fullscreen=no, menubar=no, status=no, toolbar=no, titlebar=yes, location=no, scrollbar=no');
       document.form_chk.action = "https://nice.checkplus.co.kr/CheckPlusSafeModel/checkplus.cb";
       document.form_chk.target = "popupChk";
       document.form_chk.submit();
     }
-  },[encData])
+  }, [encData])
 
   useEffect(() => {
     if (passKey) {
@@ -351,11 +360,24 @@ const MemberShip = ({ changestep }) => {
     }
   }, [passKey]);
 
-  const verifyOTP = (e) =>{
-    // dispatch(verifyOTP("POST", {'email_id':email,'otp':''}));
-  }
+  useEffect(() => {
+    if (otp_verification_status  && otp_verification_status.status===true) {
+      setotpStatus(true);
+    }
+  }, [otp_verification_status]);
 
-  
+
+  const CheckVerificationCode = (e) => {
+    console.log("verified");
+    let otp = form.otp;
+    console.log("otp is", otp);
+    let email = `${form.email}@${form.domain_email}`
+    dispatch(verifyOTP("POST", { 'email_id': email, 'otp': otp }));
+    console.log("Status is", otp_verification_status);
+
+}
+
+
 
   return (
     <div>
@@ -676,7 +698,7 @@ const MemberShip = ({ changestep }) => {
               <div>
                 {verificationState === "mobile" && (
                   <button
-                    onClick={(e)=>verifyMobile(e)}
+                    onClick={(e) => verifyMobile(e)}
                     className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
                   >
                     Verify Mobile
@@ -684,10 +706,10 @@ const MemberShip = ({ changestep }) => {
                 )}
               </div>
               <div>
-                {verificationState === "email" &&  (
+                {verificationState === "email" && (
                   <button
                     className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded h-11"
-                    onClick={(e)=>verifyEmail(e)}
+                    onClick={(e) => verifyEmail(e)}
                   >
                     verify Email
                   </button>
@@ -703,10 +725,16 @@ const MemberShip = ({ changestep }) => {
                         <input type="text" className="px-4 py-4 mt-2  
                         text-blueGray-600 relative bg-white rounded border 
                         border-gray-400 outline-none focus:outline-none focus:ring w-80"
+                          value={form["otp"]}
+                          id="OTP_is"
+                          name="otp"
+                          onChange={formSet}
                         />
                       </div>
                       <>
-                        <button onClick={e=>verifyOTP(e)} className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded w-48 h-12">
+                        <button onClick={(e) =>
+                          CheckVerificationCode(e)
+                        } className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded w-48 h-12">
                           check verification code
                         </button>
                       </>
@@ -734,11 +762,11 @@ const MemberShip = ({ changestep }) => {
 
           <button
             className={`text-white font-bold py-6 px-6  float-right rounded ${form.isVerified
-              ? "bg-NccBlue-700"
-              : "bg-grey-700 hover:bg-blue-700"
+              ? "bg-NccBlue-700 hover:bg-blue-700"
+              : "bg-grey-700 "
               }`}
             onClick={register_user}
-          // disabled={form.isVerified? false : true}
+            disabled={otpStatus===true ? false : true}
           >
             Registration
           </button>

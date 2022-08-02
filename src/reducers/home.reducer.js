@@ -27,7 +27,7 @@ const homeReducer = (state = { 'home': 'home' }, { type, payload }) => {
     case homeConstants.USERDATA_VISUALIZATION_ERROR:
       return {
         ...state,
-        fileUploadStatus: {...state.fileUploadStatus, ...payload}
+        fileUploadStatus: { ...state.fileUploadStatus, ...payload }
       }
     case homeConstants.APPLICATION_LANGUAGE:
       return {
@@ -49,6 +49,35 @@ const homeReducer = (state = { 'home': 'home' }, { type, payload }) => {
         ...state,
         dataQA: payload
       }
+    case homeConstants.NOTICE_DETAILS:
+      return {
+        ...state,
+        noticedata: payload
+      }
+    case homeConstants.OTP_REQUEST:
+      return {
+        ...state,
+        emailsentstatus: payload
+      }
+    case homeConstants.OTP_VALIDATION:
+      return {
+        ...state,
+        otp_validation_status: payload
+      }
+    case homeConstants.FIND_ID:
+      return {
+        ...state,
+        find_id: payload
+      }
+    case homeConstants.FIND_PASSWORD:
+      return {
+        ...state,
+        find_password: payload
+      }
+      case homeConstants.REQUEST_DONE:
+        return{
+          ...state
+        }
     case homeConstants.VERIFY_ENCODE:
       return {
         ...state,

@@ -1,4 +1,4 @@
-import { dataVisualization, userdataVisualization,notice, CLEAR_ALL_STATES } from '../actions/Constants';
+import { dataVisualization, userdataVisualization, CLEAR_ALL_STATES } from '../actions/Constants';
 
 const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
   switch (type) {
@@ -125,11 +125,6 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
       return {
         ...state, 
         userDataProjectTable: payload
-      }
-    case notice.NOTICE_DETAILS:
-      return {
-        ...state, 
-        noticedata: payload
       }
     default:
       return state
