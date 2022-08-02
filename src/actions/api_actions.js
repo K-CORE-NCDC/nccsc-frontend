@@ -2,6 +2,7 @@ import { homeConstants, dataVisualization, userdataVisualization, membership, no
 import config from '../config'
 import axios from "axios";
 import '../assets/interceptor/interceptor'
+import homeReducer from "../reducers/home.reducer";
 
 
 function sendRequest(url, method, data) {
@@ -10,17 +11,73 @@ function sendRequest(url, method, data) {
 }
 
 export function sendEmail(method,data){
-  console.log(data);
   return (dispatch) => {
     let url = config.auth + "send-mail/";
     sendRequest(url, method, data)
       .then((result) => {
         const d = result;
         dispatch({
-          type: membership.OTP_REQUEST,
+          type: homeConstants.OTP_REQUEST,
           payload: d["data"],
         });
+        dispatch({ type: homeConstants.REQUEST_DONE });
       })
+      
+      .catch((e) => {
+        console.log("error", e);
+      });
+  }
+}
+export function verifyOTP(method,data){
+  return (dispatch) => {
+    let url = config.auth + "validate/";
+    sendRequest(url, method, data)
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: homeConstants.OTP_VALIDATION,
+          payload: d["data"],
+        });
+        dispatch({ type: homeConstants.REQUEST_DONE });
+      })
+
+      .catch((e) => {
+        console.log("error", e);
+      });
+  }
+}
+
+export function findID(method,data){
+  return (dispatch) => {
+    let url = config.auth + "findid/";
+    sendRequest(url, method, data)
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: homeConstants.FIND_ID,
+          payload: d["data"],
+        });
+        dispatch({ type: homeConstants.REQUEST_DONE });
+      })
+      
+      .catch((e) => {
+        console.log("error", e);
+      });
+  }
+}
+export function findPassword(method,data){
+  return (dispatch) => {
+    let url = config.auth + "findpassword/";
+    sendRequest(url, method, data)
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: homeConstants.FIND_PASSWORD,
+          payload: d["data"],
+        });
+        dispatch({ type: homeConstants.REQUEST_DONE });
+      })
+      
       .catch((e) => {
         console.log("error", e);
       });
@@ -36,9 +93,10 @@ export function getNoticeDetail(type, data) {
       .then((result) => {
         const d = result;
         dispatch({
-          type: notice.NOTICE_DETAILS,
+          type: homeConstants.NOTICE_DETAILS,
           payload: d["data"],
         });
+        dispatch({ type: homeConstants.REQUEST_DONE });
       })
       .catch((e) => {
         console.log("error", e);

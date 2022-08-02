@@ -9,7 +9,13 @@ export const homeConstants = {
   FILE_REQUEST: "FILE_REQUEST",
   DATA_FAQ:"DATA_FAQ",
   DATA_NOTICE:"DATA_NOTICE",
-  DATA_QA:"DATA_QA"
+  DATA_QA:"DATA_QA",
+  NOTICE_DETAILS:"NOTICE_DETAILS" ,
+  OTP_REQUEST:"OTP_REQUEST",
+  OTP_VALIDATION:"OTP_VALIDATION",
+  FIND_ID:"FIND_ID",
+  FIND_PASSWORD:"FIND_PASSWORD",
+  REQUEST_DONE:'REQUEST_DONE',
 }
 
 export const dataVisualization = {
@@ -48,11 +54,8 @@ export const userdataVisualization = {
 }
 
 export const membership={
-  OTP_REQUEST:"OTP_REQUEST"
-}
-
-export const notice={
-  NOTICE_DETAILS:"NOTICE_DETAILS"
+  OTP_REQUEST:"OTP_REQUEST",
+  OTP_VALIDATION:"OTP_VALIDATION"
 }
 
 export const  CLEAR_ALL_STATES = "CLEAR_ALL_STATES"

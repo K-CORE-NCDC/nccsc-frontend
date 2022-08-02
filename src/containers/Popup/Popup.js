@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux';
-import { getNoticeDetail, clearProjectTableDataTableData } from '../../actions/api_actions'
+import { getNoticeDetail } from '../../actions/api_actions'
 
 
 function Popup({ }) {
@@ -9,18 +9,12 @@ function Popup({ }) {
   const [showModal, setShowModal] = useState(true);
 
 
-  const noticedetails = useSelector((data) => data.dataVisualizationReducer.noticedata);
+  const noticedetails = useSelector((data) => data.homeReducer.noticedata);
   useEffect(() => {
    let data={
       id:'16'
     }
     dispatch(getNoticeDetail("GET", data));
-  }, [])
-
-  useEffect(() => {
-    return () => {
-      dispatch(clearProjectTableDataTableData())
-    }
   }, [])
 
   console.log("Notice is", noticedetails);
