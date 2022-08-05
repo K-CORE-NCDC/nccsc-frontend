@@ -6,14 +6,17 @@ import PagenationTableComponent from '../../Common/PagenationTable'
 import GraphsModal from '../../Common/circostimelineGraph'
 import LoaderCmp from '../../Common/Loader'
 import ImageGrid from '../../Common/ImageGrid'
-import { getCircosInformation, getCircosTimelineTable, getOncoImages, getBreastKeys } from '../../../actions/api_actions'
+import { getCircosInformation, getCircosTimelineTable, getOncoImages, getBreastKeys, getRNIDetails } from '../../../actions/api_actions'
 import '../../../assets/css/style.css'
 import { exportComponentAsPNG } from 'react-component-export-image';
 import placeholder from '../../../assets/img/circos_ncc.png';
-import {FormattedMessage} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
+import Report from '../../UserDataVisualization/Components/Circos/Report';
+import DataTable from 'react-data-table-component';
+import { selector } from 'd3';
 
 
-export default function DataCircos({ width, inputData, screenCapture, setToFalseAfterScreenCapture, toggle}) {
+export default function DataCircos({ width, inputData, screenCapture, setToFalseAfterScreenCapture, toggle, state }) {
   const reference = useRef()
   const dispatch = useDispatch()
   const [sampleKey, setSampleKey] = useState('')
@@ -21,6 +24,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   // const fusionJson = useSelector((data) => data.dataVisualizationReducer.fusionData);
   const oncoImageJson = useSelector((data) => data.dataVisualizationReducer.oncoSampleImagesData);
   const circosTimelieTableData = useSelector(state => state.dataVisualizationReducer.circosTimelieTableData)
+  const rniData = useSelector(state => state.dataVisualizationReducer.rniData)
 
   const circosSanpleRnidListData = useSelector((data) => data.dataVisualizationReducer.Keys);
   const [sampleListElements, setSampleListElements] = useState([])
@@ -28,31 +32,124 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   const [watermarkCss, setWatermarkCSS] = useState("")
   const [loader, setLoader] = useState(false)
   const [showOncoImages, setShowOncoImages] = useState(false)
+  const [showReportTable, setshowReportTable] = useState(false)
   const [showOncoTimelineTables, setShowOncoTimelineTables] = useState(false)
   const [showNoContent, setShowNoContent] = useState(false)
   const [renderCircos, setRenderCircos] = useState(false)
   const [samplesCount, setSamplesCount] = useState(0)
+  const [tableData, setTableData]=useState([])
+  const [basicInformationData, setBasicInformationData]=useState([])
+
+  const tableColumnsData = [
+    {
+      name: 'Gene Name',
+      selector: row => row.gene,
+      sortable: true
+    },
+    {
+      name: 'Y',
+      selector: row => {if (row.dna==='YES'){ return row.dna } else return ''},
+      sortable: true
+    },
+    {
+      name: 'N',
+      selector: row => {if (row.dna==='NO'){ return row.dna } else return ''},
+      sortable: true
+    },
+    {
+      name: 'H',
+      selector: row => {if (row.rna==='HIGH'){ return row.rna } else return ''},
+      sortable: true
+    },
+    {
+      name: 'L',
+      selector: row => {if (row.rna==='LOW'){ return row.rna } else return ''},
+      sortable: true
+    },
+    {
+      name: 'H',
+      selector: row => {if (row.proteome==='HIGH'){ return row.proteome } else return ''},
+      sortable: true
+    },
+    {
+      name: 'L',
+      selector: row =>  {if (row.proteome==='LOW'){ return row.proteome } else return ''},
+      sortable: true
+    },
+  ]
+
+  const baisInformationColumnsData = [
+    {
+      name: 'SEX',
+      selector: row => row.Sex,
+      sortable: true
+    },
+    {
+      name: 'AgeOfDiagnosis',
+      selector: row => row.AgeOfDiagnosis,
+      sortable: true
+    },
+    {
+      name: 'BMI',
+      selector: row => row.BMI,
+      sortable: true
+    },
+    {
+      name: 'AlcoholConsumtionStatus',
+      selector: row => {if (row.AlcoholConsumtionStatus===true){ return 'true' } else return 'false'},
+      sortable: true
+    },
+    {
+      name: 'SmokingStatus',
+      selector: row => {if (row.SmokingStatus===true){ return 'true' } else return 'false'},
+      sortable: true
+    }
+  ]
 
 
   const closeShowOncoImages = () => {
     setShowOncoImages(false)
   }
 
-  const closeShowTimelineTables = () =>{
+  const closeShowTimelineTables = () => {
     setShowOncoTimelineTables(false)
   }
 
-  const oncoImagesClickFunction = () =>{
+  const oncoImagesClickFunction = () => {
     // setLoader(true)
     setShowOncoImages(true)
-    dispatch(getOncoImages('POST', {sample_id: sampleKey}))
+    dispatch(getOncoImages('POST', { sample_id: sampleKey }))
   }
 
-  const timelineGraphClickFunction = () =>{
+  const timelineGraphClickFunction = () => {
     setShowOncoImages(false)
     setShowOncoTimelineTables(true)
-    dispatch(getCircosTimelineTable('POST', {sample_id: sampleKey}))
+    dispatch(getCircosTimelineTable('POST', { sample_id: sampleKey }))
   }
+
+
+  const RNIDetailsFunction = () => {
+
+    // let genelist = state.genes
+    // setshowReportTable(true)
+    dispatch(getRNIDetails('POST', { rnid: sampleKey}))
+  
+  }
+
+  useEffect(()=>{
+    if(rniData){
+      setTableData(rniData.genomic_summary)
+      setBasicInformationData(rniData.basic_information)
+      setshowReportTable(true)
+      
+    }
+  },[rniData])
+
+  const closeRNIDetailsFunction = () => {
+    setshowReportTable(false)
+  }
+
+
 
 
   const reA = /[^a-zA-Z]/g;
@@ -70,30 +167,30 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   }
 
   useEffect(() => {
-    
-    if(circosSanpleRnidListData ){
+
+    if (circosSanpleRnidListData) {
       setSamplesCount(Object.keys(circosSanpleRnidListData).length)
     }
   }, [circosSanpleRnidListData])
 
   useEffect(() => {
     if (inputData) {
-      if(sampleKey!=='all'){
+      if (sampleKey !== 'all') {
         let imageDocumentObject = document.getElementById('images')
-        if(imageDocumentObject){
+        if (imageDocumentObject) {
           imageDocumentObject.classList.remove("opacity-50")
         }
         let tableDocumentObject = document.getElementById('tables')
-        if (tableDocumentObject){
+        if (tableDocumentObject) {
           tableDocumentObject.classList.remove("opacity-50")
         }
-      }else{
+      } else {
         let imageDocumentObject = document.getElementById('images')
-        if(imageDocumentObject){
+        if (imageDocumentObject) {
           imageDocumentObject.classList.add("opacity-50")
         }
         let tableDocumentObject = document.getElementById('tables')
-        if (tableDocumentObject){
+        if (tableDocumentObject) {
           tableDocumentObject.classList.add("opacity-50")
         }
       }
@@ -101,7 +198,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
       let editInputData = inputData
       editInputData = { ...editInputData, sampleKey: sampleKey }
       dispatch(getBreastKeys(editInputData))
-      if (editInputData.type !== '' && sampleKey!='') {
+      if (editInputData.type !== '' && sampleKey != '') {
 
         setLoader(true)
         setRenderCircos(false)
@@ -158,10 +255,10 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
     setTimeout(function () {
       if (circosJson && circosJson.status !== 0) {
         setLoader(false)
-        if(sampleKey!=='all'){
+        if (sampleKey !== 'all') {
           document.getElementById('images').classList.remove("opacity-50")
           document.getElementById('tables').classList.remove("opacity-50")
-        }else{
+        } else {
           document.getElementById('images').classList.add("opacity-50")
           document.getElementById('tables').classList.add("opacity-50")
         }
@@ -170,19 +267,19 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   }, [circosJson])
 
   useEffect(() => {
-    if(circosJson && circosJson.status) {
+    if (circosJson && circosJson.status) {
 
-        if(circosJson.status === 200 && Object.keys(circosJson).length > 1){
-          setShowNoContent(false)
-          setRenderCircos(true)
-        }else if(circosJson.status === 0){
-          setLoader(true)
-          setShowNoContent(false)
-          setRenderCircos(false)
-        }else{
-          setRenderCircos(false)
-          setShowNoContent(true)
-        }
+      if (circosJson.status === 200 && Object.keys(circosJson).length > 1) {
+        setShowNoContent(false)
+        setRenderCircos(true)
+      } else if (circosJson.status === 0) {
+        setLoader(true)
+        setShowNoContent(false)
+        setRenderCircos(false)
+      } else {
+        setRenderCircos(false)
+        setShowNoContent(true)
+      }
     }
 
   }, [circosJson])
@@ -190,17 +287,17 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
   var w = Math.floor((width / 100) * 75)
 
-  
+
   return (
     <>{
       loader ?
         <LoaderCmp />
         :
         <div className="grid ">
-          <div className={`p-1 grid xs:grid-cols-3 ${toggle?"lg:grid-cols-4":"lg:grid-cols-4"}`}>
-            <div className='flex xs:col-span-3 sm:col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-2'>
+          <div className={`p-1 grid xs:grid-cols-3 ${toggle ? "lg:grid-cols-4" : "lg:grid-cols-4"}`}>
+            <div className='flex xs:col-span-3 sm:col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-3'>
               <div className='flex-col text-left sm:w-2/6 xs:w-2/6'>
-                {circosSanpleRnidListData && <div htmlFor="samples" className="lg:text-2xl sm:text-xl xs:text-sm"><FormattedMessage  id = "Cir_choose_sample" defaultMessage='Choose a Sample'/>: ({samplesCount}) </div>}
+                {circosSanpleRnidListData && <div htmlFor="samples" className="lg:text-2xl sm:text-xl xs:text-sm"><FormattedMessage id="Cir_choose_sample" defaultMessage='Choose a Sample' />: ({samplesCount}) </div>}
                 <select
                   className="w-full  border bg-white rounded px-3 py-2 outline-none lg:text-xl sm:text-xl xs:text-sm"
                   value={sampleKey}
@@ -220,6 +317,9 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
               <div className='p-3 lg:mt-6 xs:mt-3 sm:pt-0 sm:mt-8'>
                 <button id='tables' className="opacity-50 bg-main-blue hover:bg-blue-700 xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40" onClick={timelineGraphClickFunction}>F/U Timeline</button>
               </div>
+              <div className='p-3 lg:mt-6 xs:mt-3 sm:pt-0 sm:mt-8'>
+                <button id='rnidata' className="bg-main-blue hover:bg-blue-700  xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40" onClick={RNIDetailsFunction}>Report</button>
+              </div>
             </div>
           </div>
           <div>
@@ -238,6 +338,18 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
     }
       {showOncoImages && <PagenationTableComponent closeShowOncoImages={closeShowOncoImages} imageData={oncoImageJson} />}
       {showOncoTimelineTables && <GraphsModal circosTimelieTableData={circosTimelieTableData} closeShowTimelineTables={closeShowTimelineTables} />}
+      {showReportTable
+        &&
+        <Report 
+          tableColumnsData={tableColumnsData}
+          tableData={tableData}
+          closeRNIDetailsFunction={closeRNIDetailsFunction}
+          baisInformationColumnsData={baisInformationColumnsData}
+          basicInformationData={basicInformationData}
+        />
+
+      }
+
     </>
   )
 }

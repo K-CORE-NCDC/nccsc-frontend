@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
-const TermsOfUse = ({changestep }) => {
+const TermsOfUse = ({ changestep }) => {
   const [firstAgree, setFirstAgree] = useState(false);
   const [secondAgree, setSecondAgree] = useState(false);
   const [allCheck, setAllCheck] = useState(false);
 
-  const agreeFunction=()=> {
+  const agreeFunction = () => {
     if (firstAgree && secondAgree) {
       changestep(1);
     } else {
@@ -98,7 +98,10 @@ const TermsOfUse = ({changestep }) => {
                   </li>
                   <li>
                     제3조 (용어의 정의)
-                    <li>본 약관에서 사용하는 용어의 정의는 다음과 같습니다.</li>
+
+                    <ul>
+                      <li>본 약관에서 사용하는 용어의 정의는 다음과 같습니다.</li>
+                    </ul>
                     <ul>
                       <li>
                         ① 이용자(회원) : 홈페이지 회원가입에 필요한 개인 정보를
@@ -140,7 +143,7 @@ const TermsOfUse = ({changestep }) => {
                       <li>
                         ⑧ 해지 : 이용자가 서비스 개통 후 이용계약을 종료시키는
                         행위를 말합니다.
-                      </li> 
+                      </li>
                     </ul>
                   </li>
                   <li>
@@ -163,6 +166,7 @@ const TermsOfUse = ({changestep }) => {
                         회원 자격을 상실한 적이 있는 경우
                       </li>
                       <li>2. 등록내용에 허위, 기재누락, 오기가 있는 경우</li>
+
                       <li>
                         3. 기타 회원으로 등록하는 것이 센터의 기술상 또는 업무
                         수행 상 현저히 지장이 있다고 판단하는 경우
@@ -191,7 +195,7 @@ const TermsOfUse = ({changestep }) => {
                         ⑤ 이용자는 등록사항에 변경이 있는 경우, 즉시 회원정보
                         수정 등 기타 방법으로 국립암센터(국가암데이터센터)
                         K-CORE에 대하여 그 변경사항을 알려야 합니다.
-                      </li> 
+                      </li>
                     </ul>
                   </li>
 
@@ -210,6 +214,7 @@ const TermsOfUse = ({changestep }) => {
                         상실시킬 수 있습니다.
                       </li>
                       <li>1. 등록 신청 시에 허위 내용을 등록한 경우</li>
+                      
                       <li>
                         2. 다른 이용자의 서비스 이용을 방해하거나 그 정보를
                         도용하는 등 질서를 위협하는 경우
@@ -235,7 +240,7 @@ const TermsOfUse = ({changestep }) => {
                       <li>
                         7. 기타 회원으로서의 자격을 지속시키는 것이 부적절하다고
                         판단되는 경우
-                      </li> 
+                      </li>
                     </ul>
                   </li>
 
@@ -341,7 +346,7 @@ const TermsOfUse = ({changestep }) => {
                       <li>
                         ② 국립암센터(국가암데이터센터) K-CORE는 이용자가
                         안전하게 인터넷 서비스를 이용할 수 있도록 이용자의
-                        개인정보보호를 위한 보안 시스템을 구축합니다. 
+                        개인정보보호를 위한 보안 시스템을 구축합니다.
                       </li>
                       <li>
                         ③ 국립암센터(국가암데이터센터) K-CORE는 이용자가 원하지
@@ -361,7 +366,7 @@ const TermsOfUse = ({changestep }) => {
                       </li>
                       <li>
                         ② 이용자는 자신의 ID 및 비밀번호를 제3자에게 이용하게
-                        해서는 안됩니다. 
+                        해서는 안됩니다.
                       </li>
                       <li>
                         ③ 이용자는 자신의 ID 및 비밀번호를 도난당하거나 제3자가
@@ -502,24 +507,24 @@ const TermsOfUse = ({changestep }) => {
         >
           <div className="scrollBox">
             <h4 className="font-medium">
-            개인정보보호법 제15조, 제24조에 의한 수집·이용 동의
+              개인정보보호법 제15조, 제24조에 의한 수집·이용 동의
             </h4>
             <p className="font-medium">
-            국립암센터(국가암데이터센터) K-CORE는 이용자의 개인정보를 아래와 같이 처리함을 알려드립니다.
+              국립암센터(국가암데이터센터) K-CORE는 이용자의 개인정보를 아래와 같이 처리함을 알려드립니다.
             </p>
             <ul className="scrollList">
               <li>
                 <font>
-                   
-                  1. 개인정보의 수집·이용 목적 
+
+                  1. 개인정보의 수집·이용 목적
                 </font>
                 <ul>
                   <li>
-                     
+
                     홈페이지 회원가입 및 관리
                   </li>
                   <li>
-                     
+
                     고지사항 전달, 불만처리 등을 위한 원활한 의사소통 경로의 확보
                   </li>
                 </ul>
@@ -534,16 +539,16 @@ const TermsOfUse = ({changestep }) => {
               </li>
               <li>
                 <font>
-                   
-                  3. 개인정보의 보유 및 이용 기간   홈페이지 회원 정보는 회원 탈퇴시까지 혹은 2년간 보유하고 파기하며, 삭제 요청시(회원 탈퇴 시) 요청자의 개인정보를 재생이 불가능한 방법으로 즉시 파기 합니다. 
+
+                  3. 개인정보의 보유 및 이용 기간   홈페이지 회원 정보는 회원 탈퇴시까지 혹은 2년간 보유하고 파기하며, 삭제 요청시(회원 탈퇴 시) 요청자의 개인정보를 재생이 불가능한 방법으로 즉시 파기 합니다.
                 </font>
                 <ul>
                   <li>
-                    &nbsp;&nbsp; - 
+                    &nbsp;&nbsp; -
                     <ins>
                       <b>
-                      홈페이지 회원 정보는 회원 탈퇴시까지 혹은 2년간 보유하고 파기하며, 삭제 요청시(회원 탈퇴 시) 요청자의 개인정보를 재생이 불가능한 방법으로 즉시 파기 합니다.
-                      </b> 
+                        홈페이지 회원 정보는 회원 탈퇴시까지 혹은 2년간 보유하고 파기하며, 삭제 요청시(회원 탈퇴 시) 요청자의 개인정보를 재생이 불가능한 방법으로 즉시 파기 합니다.
+                      </b>
                     </ins>
                   </li>
                   <li>

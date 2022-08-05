@@ -117,6 +117,11 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state,
         clinicalMaxMinInfo: payload
       }
+    case dataVisualization.RNI_DATA:
+      return {
+        ...state,
+        rniData: payload
+      }
     case dataVisualization.FUSIONVENN_REQUEST:
       return {
         ...state,

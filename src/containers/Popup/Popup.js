@@ -17,6 +17,12 @@ function Popup({ }) {
     // dispatch(getNoticeDetail("GET", data));
   }, [])
 
+  useEffect(() => {
+    return () => {
+      // dispatch(clearProjectTableDataTableData())
+    }
+  }, [])
+
   return (
     <>
       <button

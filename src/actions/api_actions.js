@@ -1,4 +1,4 @@
-import { homeConstants, dataVisualization, userdataVisualization, membership, notice, CLEAR_ALL_STATES } from "./Constants";
+import { homeConstants, dataVisualization, userdataVisualization,  CLEAR_ALL_STATES } from "./Constants";
 import config from '../config'
 import axios from "axios";
 import '../assets/interceptor/interceptor'
@@ -83,6 +83,24 @@ export function findPassword(method,data){
       });
   }
 }
+export function changePassword(method,data){
+  return (dispatch) => {
+    let url = config.auth + "change-password/";
+    sendRequest(url, method, data)
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: homeConstants.CHANGE_PASSWORD,
+          payload: d["data"],
+        });
+        dispatch({ type: homeConstants.REQUEST_DONE });
+      })
+      
+      .catch((e) => {
+        console.log("error", e);
+      });
+  }
+}
 export function verifyEncodeData(method, data) {
   return (dispatch) => {
     let url = config.auth + `checkplus_success/?`+data
@@ -120,6 +138,7 @@ export function getNoticeDetail(type, data) {
   }
 }
 
+
 export function getDashboardCount() {
   return (dispatch) => {
     let url = config.auth + "data-count/";
@@ -135,6 +154,36 @@ export function getDashboardCount() {
         console.log("error", e);
       });
   }
+}
+
+export function getRNIDetails(type, data) {
+  return (dispatch) => {
+
+    let url = config.auth + "report/";
+    sendRequest(url, type, data)
+      .then((result) => {
+        const d = result;
+        if (d.status === 200) {
+          dispatch({
+            type: dataVisualization.RNI_DATA,
+            payload: { ...d["data"], status: 200 },
+          });
+        } else {
+          dispatch({
+            type: dataVisualization.RNI_DATA,
+            payload: { status: d.status },
+          });
+        }
+        dispatch({ type: dataVisualization.REQUEST_DONE });
+      })
+      .catch((e) => {
+        console.log("error", e);
+        dispatch({
+          type: dataVisualization.RNI_DATA,
+          payload: { status: 204 },
+        });
+      });
+  };
 }
 export function getUserFiles() {
   return (dispatch) => {
