@@ -1,19 +1,19 @@
 import React, { useState, useEffect, Fragment, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import VolcanoCmp from "../../Common/Volcano";
 import GroupFilters, { PreDefienedFilters } from "../../Common/FusionGroupFilter";
-import { exportComponentAsPNG } from "react-component-export-image";
-import NoContentMessage from "../../Common/NoContentComponent";
 import { AdjustmentsIcon } from "@heroicons/react/outline";
-
+import FusionVennCmp from '../../Common/FusionVenn';
 import {
   getClinicalMaxMinInfo,
   getFusionVennDaigram,
+  
 } from "../../../actions/api_actions";
 // import Loader from "react-loader-spinner";
 import LoaderCmp from "../../Common/Loader";
+import FusionCustomPlot from '../../Common/FusionCustomPlot'
 import { FormattedMessage } from "react-intl";
-
+import DataTable from 'react-data-table-component';
+import { selector } from "d3";
 const selectedCss =
   "w-1/2 rounded-r-none  hover:scale-110 focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 xs:text-sm sm:text-sm md:text-2xl md:text-2xl ease-in-out border-gray-600 transition";
 const nonSelectedCss =
@@ -31,19 +31,69 @@ export default function FusionPlot({
   const [sampleCount, setSampleCount] = useState({})
   const [userDefienedFilter, setUserDefienedFilter] = useState('static')
   const [groupFilters, setGroupFilters] = useState({})
+  const [tableData, setTableData] = useState([])
+  const [fusionId, setFusionId] = useState(0)
   const clinicalMaxMinInfo = useSelector((data) => data.dataVisualizationReducer.clinicalMaxMinInfo);
+  const VennData = useSelector((data) => data.dataVisualizationReducer.VennData);
+  
+  const tableColumnsData = [
+    {
+      name: 'Sample Name',
+      selector: row => row.sample_id,
+      sortable: true
+    },
+    {
+      name: 'Left Gene Name',
+      selector: row => row.left_gene_name,
+      sortable: true
+    },
+    {
+      name: 'Left Ensembl Id',
+      selector: row => row.left_gene_ensmbl_id,
+      sortable: true
+    },
+    {
+      name: 'Left Gene Chr',
+      selector: row => row.left_gene_chr,
+      sortable: true
+    },
+    {
+      name: 'Right Gene Name',
+      selector: row => row.right_gene_name,
+      sortable: true
+    },
+    {
+      name: 'Right Ensembl Id',
+      selector: row => row.right_gene_ensmbl_id,
+      sortable: true
+    },
+    {
+      name: 'Right Gene Chr',
+      selector: row => row.right_gene_chr,
+      sortable: true
+    },
+    {
+      button:true,
+      cell: (row,index,column,id) => {
+        return <button onClick={(e)=>generateFusion(e,row.id)} id={row.id} className="bg-main-blue hover:bg-main-blue mb-3 w-50  text-md text-white mt-2 px-8 py-4 border border-blue-700 rounded">View</button>
+      }
+    }
+  ]
+  
+  const generateFusion = (e,id)=>{
+    setFusionId(id)
+  }
+
   const updateGroupFilters = (filtersObject) => {
     if (filtersObject) {
-      console.log(filtersObject)
       setGroupFilters(filtersObject)
     }
   }
 
+  
+
   useEffect(() => {
-    
     if (inputData) {
-      
-      
       if (inputData.type !== '' && Object.keys(groupFilters).length > 0) {
         setLoader(true)
         inputData['filterType'] = userDefienedFilter
@@ -59,6 +109,24 @@ export default function FusionPlot({
     }
   },[])
   
+  useEffect(()=>{
+    if(VennData){
+      if(VennData.status===200){
+        setLoader(false)
+      }
+    }
+  },[VennData])
+  
+  const getVennIds = (key) => {
+
+    if(key){
+      console.log(key)
+      let r = VennData.res.data
+      setTableData(r[key])
+    }
+
+  }
+
   return (
     <>
       {loader ? (
@@ -111,9 +179,18 @@ export default function FusionPlot({
             {(userDefienedFilter === 'static') && <PreDefienedFilters   viz_type='fusion' parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
             {(userDefienedFilter === 'dynamic') && <GroupFilters  viz_type='fusion' parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
           </div>
-          <div className={`lg:w-4/5 md:w-4/5 sm:w-full lg:block ${smallScreen?"xs:absolute":"xs:w-full"}`} style={{ 'overflowX': 'scroll' }}>
-            
+          <div className={`lg:w-4/5 md:w-4/5 sm:w-full lg:block ${smallScreen?"xs:absolute":"xs:w-full"}`} >
+            {VennData && <FusionVennCmp parentCallback={getVennIds} VennData={VennData} width={width}/>}
+            {fusionId && <div className='mt-5 my-0 mx-auto h-auto w-11/12 shadow-lg'><FusionCustomPlot fusionId={fusionId}/></div>}
+            {tableData.length > 0 && 
+              <div className='mt-5 my-0 mx-auto  w-11/12 shadow-lg'>
+                <DataTable pagination
+                  columns={tableColumnsData}
+                  data={tableData}/>
+              </div>}
+              
           </div>
+
         </div>
         
       )}
