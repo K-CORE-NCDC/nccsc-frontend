@@ -20,6 +20,7 @@ const AlphaNumbericalWithAtleastoneSpecialCharecters = new RegExp("^(?=.*?[A-Z])
 const KoreanRegex = new RegExp("(\S*[\u3131-\u314e|\u314f-\u3163|\uac00-\ud7a3]+\S*)")
 
 const MemberShip = ({ changestep }) => {
+
   
   const register_user = () => {
     form.isVerified = true
@@ -79,6 +80,7 @@ const MemberShip = ({ changestep }) => {
   const [encData, setEncData] = useState("");
   const [visibility, setvisibility] = useState(false);
   const [otpStatus, setotpStatus] = useState(false);
+  const [emailStatus,setEmailStatus] = useState(false)
 
   const dispatch = useDispatch();
 
@@ -298,15 +300,19 @@ const MemberShip = ({ changestep }) => {
     dispatch(getPassEncodeId("GET", { 'mobile': form['phone_number'] }));
   };
   const verifyEmail = (e) => {
-
+       
+    let abcd= document.getElementsByName('email').value
+    console.log("abcd",abcd);
     if (form.email === "" || form.domain_email === "") {
-      form.errors.email = "Please valid EmailID";
+      setEmailStatus(false);
+      console.log("email is",form.errors.email);
+      form.errors.email = "Please Enter valid EmailID";
       form.errors.koreanemail = "EnterValidEmailID";
       form.errors.domain_email = "Please Select Domain";
       form.errors.koreandomain_email = "SelectEmailDomain";
       console.log("form erros",form.errors.email);
     } else {
-      // e.target.classList.add('hidden')
+      setEmailStatus(true);
       let email = `${form.email}@${form.domain_email}`
       setClickEmailverifyButton(true);
       setClickMobileverifyButton(false);
@@ -610,7 +616,6 @@ const MemberShip = ({ changestep }) => {
                   className="px-4 py-4 text-blueGray-600 relative bg-white rounded border border-gray-400 outline-none focus:outline-none focus:ring"
                 />
                 <div>
-                  {" "}
                   {form.errors.email && (
                     <span className="text-red-500 text-sm">
                       <FormattedMessage
@@ -716,7 +721,7 @@ const MemberShip = ({ changestep }) => {
                 )}
               </div>
 
-              {form["verification"] == "email" &&
+              {form["verification"] === "email" &&
                 ClickEmailverifyButton &&
                 !ClickMobileverifyButton && (
                   <>

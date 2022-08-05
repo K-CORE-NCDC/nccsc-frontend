@@ -1,5 +1,10 @@
 import React,{ useState, useEffect} from 'react'
 import DataTable from 'react-data-table-component';
+import SankeyIndex from '../../../DataVisualisation/Charts/SankeyIndex';
+
+
+
+
 import ReportSubHeader from '../../../Common/ReportSubHeader';
 
 
@@ -54,6 +59,7 @@ function Report({ tableData, tableColumnsData, closeRNIDetailsFunction,basicInfo
                     data={tableData}
                     subHeader
                     subHeaderComponent={<ReportSubHeader />}
+                    expandableRows expandableRowsComponent={SankeyIndex} 
                     subHeaderWrap
                   />
                 </div>}
