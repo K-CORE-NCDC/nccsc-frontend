@@ -51,7 +51,7 @@ const filterChoicesCustom = [
     { 'type': 'boolean', 'name': 'Hormone Replace Therapy', 'id': 'hrt_yn' },
     { 'type': 'number', 'name': 'T Category', 'id': 't_category', 'input': 'number' },
     { 'type': 'number', 'name': 'N Category', 'id': 'n_category', 'input': 'number' },
-    { 'type': 'text', 'name': 'HER2 Score', 'id': 'her2_score', 'input': 'text' },
+    { 'type': 'number', 'name': 'HER2 Score', 'id': 'her2_score', 'input': 'text' },
     { 'type': 'number', 'name': 'ki67', 'id': 'ki67_score', 'input': 'text' },
     { 'type': 'boolean', 'name': 'Recurance Yes or No', 'id': 'rlps_yn' },
     { 'type': 'number', 'name': 'ER Test', 'id': 'er_score', 'input': 'number' },
@@ -156,8 +156,8 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
             { label: "N3", from: 'N3', to: '' }
         ],
         her2_score: [
-            { label: "negative(0-1+)", from:'negative(0-1+)', to:'negative(0, 0~1, 1+)',value: "negative(0-1+)" },
-            { label: "positive(2+-3+)", from:'positive(2+-3+)', to:'positive(2+,3+)', value: "positive(2+-3+)" }
+            { label: "negative(0-1+)", from:'negative(0-1+)', to:'0,0~1,1+',value: "negative(0-1+)" },
+            { label: "positive(2+-3+)", from:'positive(2+-3+)', to:'2+,3+', value: "positive(2+-3+)" }
         ],
         pr_score: [
             { label: "Positive", from: 0, to: 1 },

@@ -301,6 +301,7 @@ export function getLolipopInformation(type, data) {
       });
   };
 }
+
 export function getFusionVennDaigram(type, data) {
   return (dispatch) => {
     let url = config.auth + "getFusionVenn/";
@@ -309,16 +310,13 @@ export function getFusionVennDaigram(type, data) {
         const d = result
         if (d.status === 200) {
           dispatch({
-            type: dataVisualization.CLINICALMAXMIN_REQUEST,
-            payload: { ...d["data"], status: 200 },
+            type: dataVisualization.FUSIONVENN_REQUEST,
+            payload: { "res":{...d["data"]}, status: 200 },
           });
         }
       }).catch((e) => {
         console.log("error", e);
-        dispatch({
-          type: dataVisualization.VOLCANO_REQUEST,
-          payload: { status: 204 },
-        });
+        
       });
   }
 }
@@ -336,10 +334,7 @@ export function getClinicalMaxMinInfo(type, data) {
         }
       }).catch((e) => {
         console.log("error", e);
-        dispatch({
-          type: dataVisualization.VOLCANO_REQUEST,
-          payload: { status: 204 },
-        });
+        
       });
   }
 }

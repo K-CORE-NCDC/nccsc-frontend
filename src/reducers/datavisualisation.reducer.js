@@ -122,6 +122,16 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state,
         rniData: payload
       }
+    case dataVisualization.FUSIONVENN_REQUEST:
+      return {
+        ...state,
+        VennData: payload
+      }
+    case dataVisualization.FUSIONVENN_RNID:
+      return {
+        ...state,
+        VennRnid:payload
+      }
     case CLEAR_ALL_STATES:
       return {
         
