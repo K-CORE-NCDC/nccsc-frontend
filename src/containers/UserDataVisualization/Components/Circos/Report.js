@@ -1,5 +1,6 @@
 import React from 'react'
 import DataTable from 'react-data-table-component';
+import SankeyIndex from '../../../DataVisualisation/Charts/SankeyIndex';
 
 
 function Report({ tableData, tableColumnsData, closeRNIDetailsFunction,basicInformationData,baisInformationColumnsData }) {
@@ -57,6 +58,7 @@ function Report({ tableData, tableColumnsData, closeRNIDetailsFunction,basicInfo
 
             {tableData && <div className='mt-5 my-0 mx-auto  w-11/12 shadow-lg'>
               <DataTable pagination
+              expandableRows expandableRowsComponent={SankeyIndex} 
                 columns={tableColumnsData}
                 data={tableData}
 
