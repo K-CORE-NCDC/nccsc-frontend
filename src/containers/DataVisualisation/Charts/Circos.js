@@ -43,9 +43,12 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   const tableColumnsData = [
     {
       name: 'Gene Name',
-      selector: row => row.gene,
+      cell:( row ) => {
+        return <div>{row.gene}</div>
+      } ,
       sortable: true
     },
+    
     {
       name: 'Y',
       selector: row => {if (row.dna==='YES'){ return row.dna } else return ''},
@@ -78,34 +81,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
     },
   ]
 
-  const baisInformationColumnsData = [
-    {
-      name: 'SEX',
-      selector: row => row.Sex,
-      sortable: true
-    },
-    {
-      name: 'AgeOfDiagnosis',
-      selector: row => row.AgeOfDiagnosis,
-      sortable: true
-    },
-    {
-      name: 'BMI',
-      selector: row => row.BMI,
-      sortable: true
-    },
-    {
-      name: 'AlcoholConsumtionStatus',
-      selector: row => {if (row.AlcoholConsumtionStatus===true){ return 'true' } else return 'false'},
-      sortable: true
-    },
-    {
-      name: 'SmokingStatus',
-      selector: row => {if (row.SmokingStatus===true){ return 'true' } else return 'false'},
-      sortable: true
-    }
-  ]
-
+  
 
   const closeShowOncoImages = () => {
     setShowOncoImages(false)
@@ -344,7 +320,6 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
           tableColumnsData={tableColumnsData}
           tableData={tableData}
           closeRNIDetailsFunction={closeRNIDetailsFunction}
-          baisInformationColumnsData={baisInformationColumnsData}
           basicInformationData={basicInformationData}
         />
 
