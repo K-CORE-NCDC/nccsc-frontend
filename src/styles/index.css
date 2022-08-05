@@ -1131,3 +1131,6 @@ dd {
   border-color: inherit;
   bottom:-20px;
 }
+.report_table  header{
+  padding:0px
+}
