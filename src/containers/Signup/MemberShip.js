@@ -9,8 +9,7 @@ import {
   verifyOTP
 } from "../../actions/api_actions";
 import { useSelector, useDispatch } from "react-redux";
-import { UserIcon, eye, EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
-import { logDOM } from "@testing-library/react";
+import {  EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
 
 const AlphaRegex = new RegExp("^[a-zA-Z]*$");
 const AlphaNumRegex = new RegExp("^[a-zA-Z0-9]*$");
@@ -305,6 +304,7 @@ const MemberShip = ({ changestep }) => {
       form.errors.koreanemail = "EnterValidEmailID";
       form.errors.domain_email = "Please Select Domain";
       form.errors.koreandomain_email = "SelectEmailDomain";
+      console.log("form erros",form.errors.email);
     } else {
       // e.target.classList.add('hidden')
       let email = `${form.email}@${form.domain_email}`
@@ -632,7 +632,7 @@ const MemberShip = ({ changestep }) => {
                   className="px-4 py-4 text-blueGray-600 relative bg-white rounded border border-gray-400 outline-none focus:outline-none focus:ring"
                 />
                 <div>
-                  {form.errors.domain_email && (
+                  { form.errors.domain_email && (
                     <span className="text-red-500 text-sm">
                       <FormattedMessage
                         id={form.errors.koreandomain_email}

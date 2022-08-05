@@ -22,9 +22,16 @@ import { FormattedMessage } from "react-intl";
 import { element } from "prop-types";
 
 export default function DataVisualization() {
-  const elementRef = useRef(null);
 
+  const elementRef = useRef(null);
+  
   const [state, setState] = useState({ genes: [], filter: "", type: "" });
+
+  // const geneFilterData = useSelector(state => state.dataVisualizationReducer.geneFilterData)
+  // useEffect(()=>{
+  //    console.log("gene data",geneFilterData);
+  // })
+
   // const [advanceFilters, setAdvanceFilters] = useState({})
   const [boolChartState, setBoolChartState] = useState(true);
   const [filterState, setFilterState] = useState({});
@@ -311,7 +318,8 @@ export default function DataVisualization() {
           state,
           screenCapture,
           setToFalseAfterScreenCapture,
-          toggle
+          toggle,
+          state
         );
       case "OncoPrint":
         return Charts.onco(

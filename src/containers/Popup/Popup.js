@@ -19,7 +19,7 @@ function Popup({ }) {
 
   useEffect(() => {
     return () => {
-      dispatch(clearProjectTableDataTableData())
+      // dispatch(clearProjectTableDataTableData())
     }
   }, [])
 

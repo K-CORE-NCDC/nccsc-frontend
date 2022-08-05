@@ -16,7 +16,8 @@ function circos(
   inputData,
   screenCapture,
   setToFalseAfterScreenCapture,
-  toggle
+  toggle,
+  state
 ) {
   return (
     <DataCircos
@@ -26,6 +27,7 @@ function circos(
       screenCapture={screenCapture}
       setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
       toggle={toggle}
+      state={state}
     />
   );
 }

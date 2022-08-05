@@ -14,6 +14,7 @@ const TermsandConditions=React.lazy(()=> import('./containers/TermsAndPolicy/Ter
 const PrivacyPolicy=React.lazy(()=>import('./containers/TermsAndPolicy/PrivacyActIndex'))
 const FindID = React.lazy(()=>import('./containers/Login/FindID'))
 const FindPassword = React.lazy(()=>import('./containers/Login/FindPassword'))
+const ResetPassword =React.lazy(()=>import('./containers/Login/ResetPassword'))
 
 
 const Introduce = React.lazy(() => import('./containers/Home/introduce'))
@@ -28,6 +29,8 @@ const Qa = React.lazy(() => import('./containers/CustomerVoice/QA'))
 const genefusion = React.lazy(() => import('./containers/Common/genefusion'))
 const UserDataTable = React.lazy(() => import('./containers/UserDataVisualization/Components/MainComponents/projectDataTable'))
 const MobileSuccess = React.lazy(() => import('./containers/Signup/MobileVerify'))
+
+const Report = React.lazy(()=>import ('./containers/UserDataVisualization/Components/Circos/Report'))
 
 const route = [
   { path: '/home/', exact: true, type:'unauth', name: 'Home', component: Home },
@@ -54,6 +57,8 @@ const route = [
   { path: '/privacypolicy/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="PrivacyPolicy" defaultMessage="PrivacyPolicy" />, component: PrivacyPolicy},
   { path: '/findid/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="FindID" defaultMessage="FindId" />, component: FindID},
   { path: '/findpassword/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="FindPassword" defaultMessage="FindPassword" />, component: FindPassword},
+  { path: `/resetpassword/:token`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="ChangePassword" defaultMessage="ChangePassword" />, component: ResetPassword},
+  { path: `/gettable/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="ChangePassword" defaultMessage="ChangePassword" />, component: Report},
   
 ]
 

@@ -8,12 +8,12 @@ function FindPassword() {
   const [status, setstatus] = useState("")
   const dispatch = useDispatch();
   let findPasswordfunction = () => {
-    let user_id_is = document.getElementById('FindPassword').value
-    if (user_id_is === "") {
+    let user_name_is = document.getElementById('FindPassword').value
+    if (user_name_is === "") {
       setstatus('Please Enter Your User ID');
     }
     else {
-      dispatch(findPassword("POST", { 'id': user_id_is }));
+      dispatch(findPassword("POST", { 'username': user_name_is }));
     }
   }
 
