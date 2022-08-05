@@ -1,70 +1,65 @@
-import React from 'react'
+import React,{ useState, useEffect} from 'react'
 import DataTable from 'react-data-table-component';
+import ReportSubHeader from '../../../Common/ReportSubHeader';
 
 
-function Report({ tableData, tableColumnsData, closeRNIDetailsFunction,basicInformationData,baisInformationColumnsData }) {
-  console.log(tableData);
 
+function Report({ tableData, tableColumnsData, closeRNIDetailsFunction,basicInformationData }) {
+  const [basicHtml, setBasicHtml] = useState([])
+  useEffect(()=>{
+    if(basicInformationData.length>0){
+      let tmp = []
+      for (let i = 0; i < basicInformationData.length; i++) {
+        const row = basicInformationData[i];
+        for (const key in row) {
+          tmp.push(
+            <div key={key} className='grid grid-cols-2 px-6 py-3 border-b border-gray-200 w-full'>
+              <div>{key}</div>
+              <div>{row[key]}</div>
+            </div>
+          )  
+        }
+      }
+      setBasicHtml(tmp)
+    }
+  },[basicInformationData])
+  
   return (
     <>
-      <div className=' overflow-y-scroll fixed inset-0 bg-gray-600 bg-opacity-50 w-full z-50'>
-        <div className="relative w-1/2 h-1/2 my-10 mx-auto">
-          {/*content*/}
+      <div className='overflow-y-scroll fixed inset-0 bg-gray-600 bg-opacity-50 h-full w-full z-50'>
+        <div className="relative top-20 m-10 p-5 border shadow-lg rounded-md bg-white text-left">
+          <div className="border-0  relative flex flex-col w-full bg-white outline-none focus:outline-none">
+            <div className='grid grid-cols-4 gap-8'>
+              <div className='rounded-lg border border-gray-200'>
+                <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+                  <h3 className="lg:text-3xl sm:text-xl font-semibold">
+                    Basic Information
+                  </h3>
+                </div>
+                <div className='mt-5'>
+                  {basicHtml}
+                </div>
+              </div>
+              <div className='col-span-3 rounded-lg border border-gray-200'>
+                <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+                  <h3 className="lg:text-3xl  sm:text-xl font-semibold">
+                    Genomic Summary
+                  </h3>
+                  
+                </div>
+                
+                {tableData && <div className=' report_table'>
+                  <DataTable pagination
+                    columns={tableColumnsData}
+                    data={tableData}
+                    subHeader
+                    subHeaderComponent={<ReportSubHeader />}
+                    subHeaderWrap
+                  />
+                </div>}
+              </div>
 
-          <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-            {/*header*/}
-
-            {/* Table 1 */}
-
-            <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-              <h3 className="lg:text-3xl sm:text-xl font-semibold">
-                Basic Information
-              </h3>
-              <button
-                className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-              >
-                <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                  ×
-                </span>
-              </button>
             </div>
-            {/*body*/}
-
-            {tableData && <div className='mt-5 my-0 mx-auto  w-11/12 shadow-lg'>
-              <DataTable pagination
-                columns={baisInformationColumnsData}
-                data={basicInformationData}
-
-
-              />
-            </div>}
-
-            {/* table 2 */}
-
-            <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-              <h3 className="lg:text-3xl mt-2 sm:text-xl font-semibold">
-                Genomic Summary
-              </h3>
-              <button
-                className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-              >
-                <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                  ×
-                </span>
-              </button>
-            </div>
-            {/*body*/}
-
-            {tableData && <div className='mt-5 my-0 mx-auto  w-11/12 shadow-lg'>
-              <DataTable pagination
-                columns={tableColumnsData}
-                data={tableData}
-
-
-              />
-            </div>}
-
-
             {/*footer*/}
             <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
               <button
