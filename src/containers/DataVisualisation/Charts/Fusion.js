@@ -33,6 +33,8 @@ export default function FusionPlot({
   const [groupFilters, setGroupFilters] = useState({})
   const [tableData, setTableData] = useState([])
   const [fusionId, setFusionId] = useState(0)
+  const [groupName, setGroupName] = useState('')
+
   const clinicalMaxMinInfo = useSelector((data) => data.dataVisualizationReducer.clinicalMaxMinInfo);
   const VennData = useSelector((data) => data.dataVisualizationReducer.VennData);
   
@@ -120,7 +122,14 @@ export default function FusionPlot({
   const getVennIds = (key) => {
 
     if(key){
-      console.log(key)
+      let name = key.split('_')
+      let tmp_name = name.join(' & ')
+      tmp_name = tmp_name.replace(/g/g,'G')
+      tmp_name = tmp_name.replace(/a/g,'A')
+      tmp_name = tmp_name.replace(/b/g,'B')
+      tmp_name = tmp_name.replace(/c/g,'C')
+      tmp_name +=' : Core Fusion Gene Table '
+      setGroupName(tmp_name)
       let r = VennData.res.data
       setTableData(r[key])
     }
@@ -142,7 +151,7 @@ export default function FusionPlot({
               <AdjustmentsIcon className="h-6 w-6 inline" />
             </button>
           </div>
-          <div
+          <div id="filterBox"
             className={`lg:w-1/5 md:w-4/5 lg:block md:block lg:block sm:hidden ${
               smallScreen
                 ? "xs:mr-80 xs:z-10 xs:opacity-95 xs:bg-white"
@@ -181,12 +190,15 @@ export default function FusionPlot({
           </div>
           <div className={`lg:w-4/5 md:w-4/5 sm:w-full lg:block ${smallScreen?"xs:absolute":"xs:w-full"}`} >
             {VennData && <FusionVennCmp parentCallback={getVennIds} VennData={VennData} width={width}/>}
-            {fusionId && <div className='mt-5 my-0 mx-auto h-auto w-11/12 shadow-lg'><FusionCustomPlot fusionId={fusionId}/></div>}
+            {fusionId && <div className='mt-5 my-0 mx-auto h-auto w-11/12 shadow-lg'>
+              <FusionCustomPlot fusionId={fusionId}/></div>}
             {tableData.length > 0 && 
-              <div className='mt-5 my-0 mx-auto  w-11/12 shadow-lg'>
+              <div className='mt-20 my-0 mx-auto  w-11/12 shadow-lg'>
+                <div className="bg-white border-b border-gray-200 py-5 text-left px-5">{groupName}</div>
                 <DataTable pagination
                   columns={tableColumnsData}
                   data={tableData}/>
+
               </div>}
               
           </div>

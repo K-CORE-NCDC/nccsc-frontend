@@ -21,13 +21,13 @@ export default function FusionVennCmp({ parentCallback,width, VennData = null })
       let tmp = []
       for (const key in res) {
         let k = key.split('_')
-        let size = 50
+        let size = 150
         if(k.length === 2){
-          size = 10
+          size = 30
         }else if (k.length === 3){
-          size = 5
+          size = 20
         }else{
-          size = 50
+          size = 150
         }
         tmp.push({"sets":k,"size":size,'total_size':res[key].length,'key':key})
       }
@@ -39,11 +39,11 @@ export default function FusionVennCmp({ parentCallback,width, VennData = null })
     if (data) {
       document.getElementById('venn').innerHTML = ''
       let sets = data;
-      var chart = venn.VennDiagram().width(300);
+      var chart = venn.VennDiagram().width(600);
       var div1 = d3.select("#venn").datum(sets).call(chart);
       div1.select("svg").attr("class", "inline");
       var tooltip = d3
-        .select("body")
+        .select("#venn")
         .append("div")
         .attr("class", "venntooltip");
 
@@ -57,7 +57,8 @@ export default function FusionVennCmp({ parentCallback,width, VennData = null })
         "group a_group b": "#c74a52",
         "group b_group c": "#b49cd6",
         "group c_group b": "#b49cd6",
-        "group c_group a": "#3777af",
+        "group a_group c": "#3777af",
+
         "group a_group b_group c": "#fffebc",
       };
       console.log(sets)
@@ -130,7 +131,7 @@ export default function FusionVennCmp({ parentCallback,width, VennData = null })
         .data(data)
         .on("click", function (i, data) {
           let key = data['key']
-          let r = VennData.res
+          console.log(i)
           setRnid(key)
         })
         .on("mouseover", function (d, i) {
@@ -144,13 +145,14 @@ export default function FusionVennCmp({ parentCallback,width, VennData = null })
           tooltip.html(ht);
           tooltip.transition().duration(40).style("opacity", 1);
         })
-        // .on("mousemove", function(d) {
-        //     tooltip.style("left", (d.pageX) + "px")
-        //            .style("top", (d.pageY - 28) + "px");
-        // })
-        // .on("mouseout", function(d, i) {
-        //   tooltip.transition().duration(2500).style("opacity", 0);
-        // });
+        .on("mousemove", function(d) {
+          
+            tooltip.style("left", (d.layerX) + "px")
+                   .style("top", (d.offsetY-50) + "px");
+        })
+        .on("mouseout", function(d, i) {
+          tooltip.transition().duration(2500).style("opacity", 0);
+        });
     }
   },[data])
 

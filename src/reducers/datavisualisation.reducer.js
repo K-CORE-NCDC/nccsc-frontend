@@ -127,6 +127,11 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state,
         VennData: payload
       }
+    case dataVisualization.FUSION_EXON_REQUEST:
+      return {
+        ...state,
+        ExonData: payload
+      }
     case dataVisualization.FUSIONVENN_RNID:
       return {
         ...state,
