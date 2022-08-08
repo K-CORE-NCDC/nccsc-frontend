@@ -30,7 +30,7 @@ const genefusion = React.lazy(() => import('./containers/Common/genefusion'))
 const UserDataTable = React.lazy(() => import('./containers/UserDataVisualization/Components/MainComponents/projectDataTable'))
 const MobileSuccess = React.lazy(() => import('./containers/Signup/MobileVerify'))
 
-const Report = React.lazy(()=>import ('./containers/UserDataVisualization/Components/Circos/Report'))
+const Report = React.lazy(()=>import ('./containers/Common/Report'))
 
 const route = [
   { path: '/home/', exact: true, type:'unauth', name: 'Home', component: Home },

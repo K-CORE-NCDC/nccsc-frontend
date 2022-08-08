@@ -11,7 +11,7 @@ import '../../../assets/css/style.css'
 import { exportComponentAsPNG } from 'react-component-export-image';
 import placeholder from '../../../assets/img/circos_ncc.png';
 import { FormattedMessage } from 'react-intl';
-import Report from '../../UserDataVisualization/Components/Circos/Report';
+import Report from '../../Common/Report';
 import DataTable from 'react-data-table-component';
 import { selector } from 'd3';
 
@@ -24,7 +24,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   // const fusionJson = useSelector((data) => data.dataVisualizationReducer.fusionData);
   const oncoImageJson = useSelector((data) => data.dataVisualizationReducer.oncoSampleImagesData);
   const circosTimelieTableData = useSelector(state => state.dataVisualizationReducer.circosTimelieTableData)
-  const rniData = useSelector(state => state.dataVisualizationReducer.rniData)
+  const reportData = useSelector(state => state.dataVisualizationReducer.rniData)
 
   const circosSanpleRnidListData = useSelector((data) => data.dataVisualizationReducer.Keys);
   const [sampleListElements, setSampleListElements] = useState([])
@@ -37,51 +37,89 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   const [showNoContent, setShowNoContent] = useState(false)
   const [renderCircos, setRenderCircos] = useState(false)
   const [samplesCount, setSamplesCount] = useState(0)
-  const [tableData, setTableData]=useState([])
-  const [basicInformationData, setBasicInformationData]=useState([])
+  const [tableData, setTableData] = useState([])
+  const [basicInformationData, setBasicInformationData] = useState([])
 
   const tableColumnsData = [
     {
       name: 'Gene Name',
-      cell:( row ) => {
+      cell: (row) => {
         return <div>{row.gene}</div>
-      } ,
-      sortable: true
+      },
+      sortable: true,
+      width:'15%'
     },
-    
+
     {
       name: 'Y',
-      selector: row => {if (row.dna==='YES'){ return row.dna } else return ''},
-      sortable: true
+      selector: row => { if (row.dna === 'YES') { return row.dna } else return '' },
+      sortable: true,
+      width:'13.3%',
+      style: {
+        borderLeft: '1px solid #6F7378',
+        boxSizing: 'border-box'
+        
+    },
+
     },
     {
       name: 'N',
-      selector: row => {if (row.dna==='NO'){ return row.dna } else return ''},
-      sortable: true
+      selector: row => { if (row.dna === 'NO') { return row.dna } else return '' },
+      sortable: true,
+      width:'13.3%',
+      style: {
+        borderLeft: '1px solid #ABB0B8',
+        boxSizing: 'border-box',
+
+      },
     },
     {
       name: 'H',
-      selector: row => {if (row.rna==='HIGH'){ return row.rna } else return ''},
-      sortable: true
+      selector: row => { if (row.rna === 'HIGH') { return row.rna } else return '' },
+      sortable: true,
+      width:'13.3%',
+      style: {
+        borderLeft: '1px solid #6F7378',
+        boxSizing: 'border-box',
+
+      },
     },
     {
       name: 'L',
-      selector: row => {if (row.rna==='LOW'){ return row.rna } else return ''},
-      sortable: true
+      selector: row => { if (row.rna === 'LOW') { return row.rna } else return '' },
+      sortable: true,
+      width:'13.3%',
+      style: {
+        borderLeft: '1px solid #ABB0B8',
+        boxSizing: 'border-box',
+
+      },
     },
     {
       name: 'H',
-      selector: row => {if (row.proteome==='HIGH'){ return row.proteome } else return ''},
-      sortable: true
+      selector: row => { if (row.proteome === 'HIGH') { return row.proteome } else return '' },
+      sortable: true,
+      width:'13.3%',
+      style: {
+        borderLeft: '1px solid #6F7378',
+        boxSizing: 'border-box',
+
+      },
     },
     {
       name: 'L',
-      selector: row =>  {if (row.proteome==='LOW'){ return row.proteome } else return ''},
-      sortable: true
+      selector: row => { if (row.proteome === 'LOW') { return row.proteome } else return '' },
+      sortable: true,
+      width:'13.3%',
+      style: {
+        borderLeft: '1px solid #ABB0B8',
+        boxSizing: 'border-box',
+
+      },
     },
   ]
 
-  
+
 
   const closeShowOncoImages = () => {
     setShowOncoImages(false)
@@ -104,24 +142,24 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   }
 
 
-  const RNIDetailsFunction = () => {
+  const ReportDataFunction = () => {
 
     // let genelist = state.genes
     // setshowReportTable(true)
-    dispatch(getRNIDetails('POST', { rnid: sampleKey}))
-  
+    dispatch(getRNIDetails('POST', { rnid: sampleKey }))
+
   }
 
-  useEffect(()=>{
-    if(rniData){
-      setTableData(rniData.genomic_summary)
-      setBasicInformationData(rniData.basic_information)
+  useEffect(() => {
+    if (reportData) {
+      setTableData(reportData.genomic_summary)
+      setBasicInformationData(reportData.basic_information)
       setshowReportTable(true)
-      
-    }
-  },[rniData])
 
-  const closeRNIDetailsFunction = () => {
+    }
+  }, [reportData])
+
+  const closeReportFunction = () => {
     setshowReportTable(false)
   }
 
@@ -294,7 +332,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
                 <button id='tables' className="opacity-50 bg-main-blue hover:bg-blue-700 xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40" onClick={timelineGraphClickFunction}>F/U Timeline</button>
               </div>
               <div className='p-3 lg:mt-6 xs:mt-3 sm:pt-0 sm:mt-8'>
-                <button id='rnidata' className="bg-main-blue hover:bg-blue-700  xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40" onClick={RNIDetailsFunction}>Report</button>
+                <button id='reportData' className="bg-main-blue hover:bg-blue-700  xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40" onClick={ReportDataFunction}>Report</button>
               </div>
             </div>
           </div>
@@ -316,10 +354,10 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
       {showOncoTimelineTables && <GraphsModal circosTimelieTableData={circosTimelieTableData} closeShowTimelineTables={closeShowTimelineTables} />}
       {showReportTable
         &&
-        <Report 
+        <Report
           tableColumnsData={tableColumnsData}
           tableData={tableData}
-          closeRNIDetailsFunction={closeRNIDetailsFunction}
+          closeReportFunction={closeReportFunction}
           basicInformationData={basicInformationData}
         />
 

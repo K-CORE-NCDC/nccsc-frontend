@@ -1,15 +1,15 @@
 import React,{ useState, useEffect} from 'react'
 import DataTable from 'react-data-table-component';
-import SankeyIndex from '../../../DataVisualisation/Charts/SankeyIndex';
+import SankeyIndex from '../DataVisualisation/Charts/SankeyIndex';
 
 
 
 
-import ReportSubHeader from '../../../Common/ReportSubHeader';
+import ReportSubHeader from './ReportSubHeader';
 
 
 
-function Report({ tableData, tableColumnsData, closeRNIDetailsFunction,basicInformationData }) {
+function Report({ tableData, tableColumnsData, closeReportFunction,basicInformationData }) {
   const [basicHtml, setBasicHtml] = useState([])
   useEffect(()=>{
     if(basicInformationData.length>0){
@@ -69,7 +69,7 @@ function Report({ tableData, tableColumnsData, closeRNIDetailsFunction,basicInfo
             {/*footer*/}
             <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
               <button
-                onClick={closeRNIDetailsFunction}
+                onClick={closeReportFunction}
                 className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 type="button"
               >
