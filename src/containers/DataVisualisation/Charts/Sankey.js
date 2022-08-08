@@ -545,12 +545,35 @@ const [render, setrender] = useState(false)
 
   }
 
-  var exampleNodes = [{"type":"Gene","id":"g","parent":null,"name":"Genes"},
-  {"type":"Gene","id":1,"parent":"g","number":"101","name":"PIK3CA"},
+  var exampleNodes = [
+    
+    {"type":"Gene","id":"g","parent":null,"name":"Genes"},
+
+
+  {"id":1, "name":"PIK3CA"},
+  
+
+  {"id":2,"name":"Missense Mutation"},
+
+  {"type":"variant","id":3,"name":" 3UTR"},
+
+  {"type":"variant","id":4,"name":"INFR"},
+
+
+
+  {"type":"variant","id":5,"parent":"g","number":"101","name":"rn123"},
+
+  {"type":"variant","id":6,"parent":"g","number":"101","name":"rn1345"},
+
+
+
+
   {"type":"Gene","id":2,"parent":"g","number":"120","name":"TP53"},
   {"type":"Gene","id":3,"parent":"g","number":"140","name":"KRAS"},
   {"type":"Variant","id":"v","parent":null,"number":"v","name":"Variants"},
+
   {"type":"Variant","id":4,"parent":"v","number":"210","name":"rs121913279"},
+  
   {"type":"Variant","id":5,"parent":"v","number":"215","name":"rs28934578"},
   {"type":"Variant","id":6,"parent":"v","number":"220","name":"rs786201057"},
   {"type":"Variant","id":7,"parent":"v","number":"230","name":"rs587782529"},
@@ -563,8 +586,11 @@ const [render, setrender] = useState(false)
   {"type":"Expense","id":12,"parent":"dr","number":"500","name":"Mitotane"},
   {"type":"Expense","id":13,"parent":"dr","number":"510","name":"Pemigatinib"}]
 
-  var exampleLinks = [{"source":1, "target":4, "value":Math.floor(Math.random() * 100)},
-  {"source":2, "target":5, "value":Math.floor(Math.random() * 100)},
+  var exampleLinks = [
+    
+    {"source":2, "target":5},
+    {"source":1, "target":4, "value":Math.floor(Math.random() * 100)},
+  {"source":2, "target":3, "value":Math.floor(Math.random() * 100)},
   {"source":2, "target":6, "value":Math.floor(Math.random() * 100)},
   {"source":2, "target":7, "value":Math.floor(Math.random() * 100)},
   {"source":1, "target":8, "value":Math.floor(Math.random() * 100)},
