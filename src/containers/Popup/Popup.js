@@ -11,11 +11,11 @@ function Popup({ }) {
 
   const noticedetails = useSelector((data) => data.homeReducer.noticedata);
   useEffect(() => {
-   let data={
-      id:'16'
-    }
-    // dispatch(getNoticeDetail("GET", data));
-  }, [])
+  //  let data={
+  //     id:'16'
+  //   }
+    dispatch(getNoticeDetail("GET",{}));
+  },[])
 
   useEffect(() => {
     return () => {
