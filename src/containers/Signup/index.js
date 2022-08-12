@@ -5,15 +5,15 @@ import SigninComplete from "./SigninComplete";
 import "../../styles/SignupStyles.css";
 import { CheckCircleIcon } from "@heroicons/react/outline";
 const SignupComponent = () => {
-  const [currentStep, setcurrentStep] = useState(1);
+  const [currentStep, setcurrentStep] = useState(0);
   const [widthofProgress, setwidthofprogress] = useState(0);
 
   useEffect(() => {
-    if (currentStep == 0) {
+    if (currentStep === 0) {
       setwidthofprogress(0);
     } else if (currentStep === 1) {
       setwidthofprogress(50);
-  } else if (currentStep == 2) {
+    } else if (currentStep === 2) {
       setwidthofprogress(100);
     }
   }, [currentStep]);
@@ -35,6 +35,10 @@ const SignupComponent = () => {
             changestep={changeStep}
           ></SigninComplete>
         );
+      default:
+        return (
+          <TermsOfUse step={currentStep} changestep={changeStep}></TermsOfUse>
+        );
     }
   };
 
@@ -55,9 +59,8 @@ const SignupComponent = () => {
           ></div>
 
           <div
-            className={`progress-step ${
-              currentStep >= 0 ? "progress-step-active" : ""
-            }`}
+            className={`progress-step ${currentStep >= 0 ? "progress-step-active" : ""
+              }`}
             data-title="Terms"
           >
             {currentStep > 0 && <CheckCircleIcon></CheckCircleIcon>}
@@ -69,9 +72,8 @@ const SignupComponent = () => {
           </div>
 
           <div
-            className={`progress-step ${
-              currentStep >= 1 ? "progress-step-active" : ""
-            }`}
+            className={`progress-step ${currentStep >= 1 ? "progress-step-active" : ""
+              }`}
             data-title="Registration"
           >
             {currentStep <= 1 && (
@@ -83,9 +85,8 @@ const SignupComponent = () => {
           </div>
 
           <div
-            className={`progress-step ${
-              currentStep >= 2 ? "progress-step-active" : ""
-            }`}
+            className={`progress-step ${currentStep >= 2 ? "progress-step-active" : ""
+              }`}
             data-title="Approval"
           >
             <div className="stepNumber displayNumber">
