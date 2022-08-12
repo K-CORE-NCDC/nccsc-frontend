@@ -6,33 +6,27 @@ import {
   checkUserName,
   getPassEncodeId,
   sendEmail,
-  verifyOTP
+  verifyOTP,
+  checkEmail
 } from "../../actions/api_actions";
 import { useSelector, useDispatch } from "react-redux";
-import {  EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
+import { EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
 
 const AlphaRegex = new RegExp("^[a-zA-Z]*$");
 const AlphaNumRegex = new RegExp("^[a-zA-Z0-9]*$");
 const NumRegex = new RegExp("^[0-9]*$");
-const AlphaNumRegexwithSpecialChars = new RegExp("^[ A-Za-z0-9_@./#&+-]*$");
 const AlphaNumRegexwithSpecialCharsExceptDot = new RegExp("^[ A-Za-z0-9_/#&+-]*$");
 const AlphaNumbericalWithAtleastoneSpecialCharecters = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{9,20}$");
 const KoreanRegex = new RegExp("(\S*[\u3131-\u314e|\u314f-\u3163|\uac00-\ud7a3]+\S*)")
 
 const MemberShip = ({ changestep }) => {
 
-  
+
   const register_user = () => {
     form.isVerified = true
     changestep(2);
   };
 
-
-  let defaultMessageValue = {
-    name: "",
-    password: ""
-
-  }
   let initial_state = {
     id: "",
     password: "",
@@ -70,7 +64,6 @@ const MemberShip = ({ changestep }) => {
   };
 
   const [form, setForm] = useState(initial_state);
-  const [defaultMessageValues, setdefaultMessagevalues] = useState(defaultMessageValue);
   const [verificationState, setverificationState] = useState("");
   const [ClickEmailverifyButton, setClickEmailverifyButton] = useState(false);
   const [ClickMobileverifyButton, setClickMobileverifyButton] = useState(false);
@@ -80,7 +73,8 @@ const MemberShip = ({ changestep }) => {
   const [encData, setEncData] = useState("");
   const [visibility, setvisibility] = useState(false);
   const [otpStatus, setotpStatus] = useState(false);
-  const [emailStatus,setEmailStatus] = useState(false)
+  const [emailExist, setEmailExist] = useState("")
+  const [emailStatus, setEmailStatus] = useState(false)
 
   const dispatch = useDispatch();
 
@@ -90,15 +84,24 @@ const MemberShip = ({ changestep }) => {
   const checkUserId = useSelector(
     (data) => data.dataVisualizationReducer.checkUserName
   );
-  
+  const isEmailExist = useSelector(
+    (data) => data.homeReducer.is_email_exist
+  )
+
+  useEffect(() => {
+    isEmailExist && setEmailExist(isEmailExist.status)
+  }, [isEmailExist]);
+
   const passKey = useSelector((data) => data.dataVisualizationReducer.passKey);
   const otp_verification_status = useSelector((data) => data.homeReducer.otp_validation_status);
+  const emailsentstatus = useSelector((data) => data.homeReducer.emailsentstatus);
+  console.log("sfsdfvc", emailsentstatus);
 
   const formSet = (e) => {
     const { name, value } = e.target;
     // console.log(name, value);
     // console.log(e.target.id);
-    if (e.target.value === "input" ) {
+    if (e.target.value === "input") {
       setForm((oldState) => ({ ...oldState, [e.target.name]: "" }));
       setInputMail(true);
     } else {
@@ -110,10 +113,10 @@ const MemberShip = ({ changestep }) => {
 
     const errors = form.errors;
 
-    const isKoreanWord = (input) => {
-      const match = input.match(/[\u3131-\uD79D]/g);
-      return match ? match.length === input.length : false;
-    }
+    // const isKoreanWord = (input) => {
+    //   const match = input.match(/[\u3131-\uD79D]/g);
+    //   return match ? match.length === input.length : false;
+    // }
     // ID Validation
 
     if (name === "id" && value === "") {
@@ -145,15 +148,15 @@ const MemberShip = ({ changestep }) => {
     //  Password Validation
 
     if (name === "password" && value === "") {
-      errors.password = "Please enter 9-20 characters";
+      errors.password = "Password should contain atleast 9 charecters";
       errors.koreanpassword = "PasswordLength";
     }
     else if (name === "password" && KoreanRegex.test(value)) {
-      errors.password = "Korean is not available";
+      errors.password = "Korean is not allowed";
       errors.koreanpassword = "KoreanPasswordNotAvailable";
     }
     else if (name === "password" && !AlphaNumbericalWithAtleastoneSpecialCharecters.test(value)) {
-      errors.password = "Password should be combination of alphabets, numbers and special symbols(@#$%^&*) in 9-20 letters.";
+      errors.password = "Password should be combination of alphabets, numbers and special symbols(@#$%^&*) and atleast 9 charecters.";
       errors.koreanpassword = "DefaultPasswordMsg";
     }
 
@@ -170,26 +173,26 @@ const MemberShip = ({ changestep }) => {
     if (name === "verify_password" && value === "") {
       errors.verify_password = "Please verify Password";
       errors.koreanverify_password = "EnterVerifyPassword";
-    } else if (name === "verify_password" && value != password_is) {
+    } else if (name === "verify_password" && value !== password_is) {
       errors.verify_password = "verify password should be same as password";
       errors.koreanverify_password = "VerifyPassword";
-    } else if (name === "verify_password" && value == password_is) {
+    } else if (name === "verify_password" && value === password_is) {
       errors.verify_password = " ";
       errors.koreanverify_password = " ";
     }
 
     //  Name Validation
 
-    if (name == "name" && value === "") {
+    if (name === "name" && value === "") {
       errors.name = "Please Enter your Name";
       errors.koreanname = "Name";
     }
-    else if (name == "name" && !AlphaRegex.test(value)) {
-      errors.name = "Name should only contain Alphabets";
-      errors.koreanname = "ValidName";
-    }
 
-    else if (name == "name" && value !== "") {
+    // else if (name === "name" && (!KoreanRegex.test(value)) {
+    //   errors.name = "Enter a Valid Name";
+    //   errors.koreanname = "ValidName";
+    // }
+    else if (name === "name" && value !== "") {
       errors.name = " ";
       errors.koreanname = " ";
     }
@@ -217,13 +220,23 @@ const MemberShip = ({ changestep }) => {
     } else if (name === "phone_number" && !NumRegex.test(value)) {
       errors.phone_number = "Please Enter Valid Phone Number";
       errors.koreanphone_number = "EnterValidPhoneNumber";
-    } else if (
+    }
+
+    else if (
       name === "phone_number" &&
-      (value.length > 15 || value.length < 12)
+      (value.length > 20)
     ) {
-      errors.phone_number = "Please Enter less than 12-15 Numbers";
+      errors.phone_number = "Please Enter less than 20 Numbers";
       errors.koreanphone_number = "PhoneNumberNoOfDigits";
-    } else if (name === "phone_number") {
+    }
+    // else if (
+    //   name === "phone_number" &&
+    //   (value.length > 20 || value.length < 12)
+    // ) {
+    //   errors.phone_number = "Please Enter less than 12-15 Numbers";
+    //   errors.koreanphone_number = "PhoneNumberNoOfDigits";
+    // }
+    else if (name === "phone_number") {
       errors.phone_number = " ";
       errors.koreanphone_number = " ";
     }
@@ -232,6 +245,7 @@ const MemberShip = ({ changestep }) => {
     // Email Validation
 
     if (name === "email" && value === "") {
+      setEmailExist("")
       errors.email = "Please Enter your EmailID";
       errors.koreanemail = "EnterEmailID";
     }
@@ -273,16 +287,6 @@ const MemberShip = ({ changestep }) => {
     form.errors = errors;
   };
 
-  // const register = () => {
-  //   console.log(form);
-  //   console.log(form.id);
-  //   if (form["id"] == "") {
-  //     console.log("id is empty");
-  //     form.errors.id = "Please Enter Your ID";
-  //     form.errors.koreanid = "DefaultID";
-  //   }
-  // };
-
   const chekcId = () => {
     if (form["id"]) {
       let data = {
@@ -293,32 +297,60 @@ const MemberShip = ({ changestep }) => {
     }
   };
 
+  const checkEmailExist = () => {
+    let email = `${form.email}@${form.domain_email}`
+    dispatch(checkEmail("POST", { "email_id": email }))
+  };
+
   const verifyMobile = (e) => {
 
     setClickMobileverifyButton(true);
     setClickEmailverifyButton(false);
     dispatch(getPassEncodeId("GET", { 'mobile': form['phone_number'] }));
   };
+
+
+
   const verifyEmail = (e) => {
-       
-    let abcd= document.getElementsByName('email').value
-    console.log("abcd",abcd);
     if (form.email === "" || form.domain_email === "") {
+      // isEmailExist.status = ""
+      setEmailExist("")
       setEmailStatus(false);
-      console.log("email is",form.errors.email);
-      form.errors.email = "Please Enter valid EmailID";
-      form.errors.koreanemail = "EnterValidEmailID";
-      form.errors.domain_email = "Please Select Domain";
-      form.errors.koreandomain_email = "SelectEmailDomain";
-      console.log("form erros",form.errors.email);
-    } else {
-      setEmailStatus(true);
+      setForm((prevState) => ({
+        ...prevState,
+        errors: {
+          ...prevState.errors,
+          email: "Please Enter valid EmailID",
+          koreanemail: "EnterValidEmailID",
+          domain_email: "Please Select Domain",
+          koreandomain_email: "SelectEmailDomain"
+
+        }
+      }))
+    }
+
+    else if (emailExist && emailExist === "Email is Not Registered") {
       let email = `${form.email}@${form.domain_email}`
+      dispatch(sendEmail("POST", { 'email_id': email, 'send_otp': true }));
+      console.log("I exist");
+      setForm((prevState) => ({
+        ...prevState,
+        errors: {
+          ...prevState.errors,
+          email: "",
+          koreanemail: "",
+          domain_email: "",
+          koreandomain_email: ""
+
+        }
+      }))
+      setEmailStatus(true);
       setClickEmailverifyButton(true);
       setClickMobileverifyButton(false);
-      dispatch(sendEmail("POST", { 'email_id': email, 'send_otp': true }));
-
     }
+
+
+
   };
 
   const gotopreviousStep = () => {
@@ -367,11 +399,10 @@ const MemberShip = ({ changestep }) => {
   }, [passKey]);
 
   useEffect(() => {
-    if (otp_verification_status  && otp_verification_status.status===true) {
+    if (otp_verification_status && otp_verification_status.status === true) {
       setotpStatus(true);
     }
   }, [otp_verification_status]);
-
 
   const CheckVerificationCode = (e) => {
     console.log("verified");
@@ -381,7 +412,7 @@ const MemberShip = ({ changestep }) => {
     dispatch(verifyOTP("POST", { 'email_id': email, 'otp': otp }));
     console.log("Status is", otp_verification_status);
 
-}
+  }
 
 
 
@@ -621,9 +652,17 @@ const MemberShip = ({ changestep }) => {
                       <FormattedMessage
                         id={form.errors.koreanemail}
                         defaultMessage={form.errors.email}
-                      />
+                        />
                     </span>
                   )}
+                  <br></br>
+                  {emailExist && (
+                    <span className={`text-red-500 text-sm ${emailExist === 'Email is Already Registerd' ? '' : 'hidden'}`}
+                    >
+                     {emailExist === 'Email is Already Registerd' ? 'Email Already exists' : ''}
+                    </span>
+                  )}
+  
                 </div>
               </div>
               <h1 className="p-3">@</h1>
@@ -637,7 +676,7 @@ const MemberShip = ({ changestep }) => {
                   className="px-4 py-4 text-blueGray-600 relative bg-white rounded border border-gray-400 outline-none focus:outline-none focus:ring"
                 />
                 <div>
-                  { form.errors.domain_email && (
+                  {form.errors.domain_email && (
                     <span className="text-red-500 text-sm">
                       <FormattedMessage
                         id={form.errors.koreandomain_email}
@@ -658,6 +697,13 @@ const MemberShip = ({ changestep }) => {
                 <option value="daum.com">daum.net</option>
                 <option value="input">Direct input</option>
               </select>
+
+              <button
+                onClick={checkEmailExist}
+                className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
+              >
+                Check Email
+              </button>
             </div>
 
             {/* Verification Row */}
@@ -711,7 +757,7 @@ const MemberShip = ({ changestep }) => {
                 )}
               </div>
               <div>
-                {verificationState === "email" && (
+                { emailExist === "Email is Not Registered" && verificationState === "email" && (
                   <button
                     className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded h-11"
                     onClick={(e) => verifyEmail(e)}
@@ -721,7 +767,7 @@ const MemberShip = ({ changestep }) => {
                 )}
               </div>
 
-              {form["verification"] === "email" &&
+              {emailExist === "Email is Not Registered" && form["verification"] === "email" &&
                 ClickEmailverifyButton &&
                 !ClickMobileverifyButton && (
                   <>
@@ -771,13 +817,13 @@ const MemberShip = ({ changestep }) => {
               : "bg-grey-700 "
               }`}
             onClick={register_user}
-            disabled={otpStatus===true ? false : true}
+            disabled={otpStatus === true ? false : true}
           >
             Registration
           </button>
         </div>
-      </section>
-    </div>
+      </section >
+    </div >
   );
 };
 

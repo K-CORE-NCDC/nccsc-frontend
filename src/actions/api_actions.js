@@ -2,12 +2,22 @@ import { homeConstants, dataVisualization, userdataVisualization,  CLEAR_ALL_STA
 import config from '../config'
 import axios from "axios";
 import '../assets/interceptor/interceptor'
-import homeReducer from "../reducers/home.reducer";
 
 
 function sendRequest(url, method, data) {
   let x = axios({ method: method, url, data: data });
   return x
+}
+
+
+export function clearIDPasswordResetPASSWORD() {
+  return (dispatch) => {
+    // console.log("clearing state");
+    dispatch({
+      type: homeConstants.CLEAR_ID_PASSWORD_RESET_PASSWORD,
+      payload: {},
+    });
+  };
 }
 
 export function sendEmail(method,data){
@@ -83,6 +93,26 @@ export function findPassword(method,data){
       });
   }
 }
+export function checkEmail(method,data){
+  return (dispatch) => {
+    let url = config.auth + "checkemail/";
+    sendRequest(url, method, data)
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: homeConstants.CHECK_EMAIL,
+          payload: d["data"],
+        });
+        dispatch({ type: homeConstants.REQUEST_DONE });
+      })
+      
+      .catch((e) => {
+        console.log("error", e);
+      });
+  }
+}
+
+
 export function changePassword(method,data){
   return (dispatch) => {
     let url = config.auth + "change-password/";
@@ -121,7 +151,7 @@ export function verifyEncodeData(method, data) {
 export function getNoticeDetail(type, data) {
 
   return (dispatch) => {
-    let url = config.auth + `notice-api-get/${data.id}/`;
+    let url = config.auth + `notice-api-get/`;
     // let url = config.auth + `notice-api-get/${data.id}?id=${data.id}`;
     sendRequest(url, type, "")
       .then((result) => {

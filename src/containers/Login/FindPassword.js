@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import {
-  findPassword
+  findPassword,
+  clearIDPasswordResetPASSWORD
 } from "../../actions/api_actions";
+import swal from 'sweetalert';
 import { useSelector, useDispatch } from "react-redux";
 function FindPassword() {
+  const [errorClass, setErrorClass] = useState("");
 
   const [status, setstatus] = useState("")
   const dispatch = useDispatch();
   let findPasswordfunction = () => {
     let user_name_is = document.getElementById('FindPassword').value
     if (user_name_is === "") {
+      setErrorClass("border-red-500");
       setstatus('Please Enter Your User ID');
     }
     else {
@@ -17,37 +21,80 @@ function FindPassword() {
     }
   }
 
-  const change_password_status = useSelector((data) => data.homeReducer.find_password);
+  const find_password = useSelector((data) => data.homeReducer.find_password);
+
+  if (status === "Password Reset Link is sent to your Email"){
+    swal("Password Reset Link is sent to your Email",{
+      closeOnClickOutside: false
+    })
+      .then((value) => {
+        setTimeout(()=>{
+
+          window.location.href = '/login/'
+        },2000)
+      });
+  }
   useEffect(() => {
-    console.log("change_password_status", change_password_status);
-    change_password_status && setstatus(change_password_status.status)
-  }, [change_password_status])
+    find_password && setstatus(find_password.status)
+  }, [find_password])
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearIDPasswordResetPASSWORD());
+    };
+  }, []);
 
   return (
     <div>
-      <div className='m-5'>
-
-        <h1 className='text-center text-7xl font-sans'>Forget Password</h1>
-        <div className="mt-10 flex flex-col items-center ">
-          <div>
-            <label className='mx-5  text-4xl' htmlFor="FindPassword">Enter User ID:</label>
-            <input
-              type="text"
-              id="FindPassword"
-              name="findpassword"
-              className={
-                // (checkUserId ? " border-red-400 " : "  ") +
-                "px-4 py-4 text-blueGray-600 relative bg-white rounded border border-gray-400 outline-none focus:outline-none focus:ring"
-              }
-            />
+      <div>
+        <section className="mt-10 flex flex-col items-center justify-center">
+        <div>
+          <span className="text-7xl font-bold text-gray-800">Forget Password</span>
+        </div>
+        <div className="my-14">
+          <h1 className="font-bold text-3xl text-gray-800">
+            Please Enter your User ID.
+          </h1>
+        </div>
+        
+        <div className="my-10">
+          <div className="grid grid-cols-3 border-b-2 border-gray-600 pt-12 pb-12">
+            <div className="pt-6 pl-48 col-span-1">
+              <h1 className="font-bold">User ID :</h1>
+            </div>
+            <div>
+              <div className="mb-4 pr-45 col-span-2">
+                <input
+                   type="text"
+                   id="FindPassword"
+                   name="findpassword"
+                  className={`shadow appearance-none border rounded-lg w-full py-8 px-5 text-gray-700 leading-tight focus:border-blue-500  w-28 ${errorClass}`}
+                  placeholder="Please Enter your User ID"
+                />
+              </div>
+              
+            </div>
           </div>
-          {status && <p className='ml-32'>{status}</p>}
-          <div className='rounded-sm'>
-            <button type='submit' className='text-white font-bold py-6 px-6 rounded bg-NccBlue-700 mt-8' onClick={findPasswordfunction}>Reset Password</button>
+          <div className="grid grid-cols-3 pt-12">
+            <div className="w-full col-span-3">
+               
+               {/* Error Message */}
+               {status && <div className='font-bold text-3xl text-red-500 py-4 text-center'>{status}</div>}
+              <button
+                onClick={findPasswordfunction}
+                className="bg-blue-500 hover:bg-blue-700 text-white h-28 font-bold py-2 px-4 border border-blue-700 w-full rounded"
+
+              >
+
+                <span>Reset Password</span>
+              </button>
+            </div>
           </div>
         </div>
+      </section>
 
-      </div>
+     
+    </div>
     </div>
   )
 }

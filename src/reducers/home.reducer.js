@@ -83,11 +83,22 @@ const homeReducer = (state = { 'home': 'home' }, { type, payload }) => {
         return{
           ...state
         }
+      case homeConstants.CHECK_EMAIL:
+        return{
+          ...state,
+          is_email_exist:payload
+        }
     case homeConstants.VERIFY_ENCODE:
       return {
         ...state,
         verifyMobile:payload
       }
+
+    case homeConstants.CLEAR_ID_PASSWORD_RESET_PASSWORD:
+      const {find_id,find_password,change_password_status, ...rest}=state 
+      state= rest
+      return  state
+      
 
     default:
       return state

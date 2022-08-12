@@ -6,6 +6,7 @@ function KoreanTermsAndConditionsIndex() {
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const [Englishlanguage, setEnglishlanguage] = useState(true);
   const context = useContext(Context);
+  
   useEffect(() => {
     if (context["locale"] === "kr-KO") {
       setKoreanlanguage(true);
