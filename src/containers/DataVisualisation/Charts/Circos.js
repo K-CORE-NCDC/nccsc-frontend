@@ -16,6 +16,7 @@ import DataTable from 'react-data-table-component';
 import { selector } from 'd3';
 
 
+
 export default function DataCircos({ width, inputData, screenCapture, setToFalseAfterScreenCapture, toggle, state }) {
   const reference = useRef()
   const dispatch = useDispatch()
@@ -43,44 +44,74 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   const tableColumnsData = [
     {
       name: 'Gene Name',
-      cell: (row) => {
-        return <div>{row.gene}</div>
-      },
+      selector: (row) => {return row.gene},
       sortable: true,
-      width:'15%'
+      classNames:['report_sankey'],
+      minWidth:'15.2%',
+      style: {
+        minWidth:'15.2%',
+        display:'block',
+        textAlign:'center',
+        lineHeight:'3.5',
+      }
     },
 
     {
       name: 'Y',
-      selector: row => { if (row.dna === 'YES') { return row.dna } else return '' },
+      selector: row => { 
+        if (row.dna === 'YES') { 
+          if(row.gene in reportData['variant_info']){
+            let variants = reportData['variant_info'][row.gene]
+            variants = variants.join('-')
+            return <div data-bs-toggle="tooltip" title={variants}>{row.dna+"("+reportData['variant_info'][row.gene].length+")"}</div>
+          }else{
+            return row.dna 
+
+          }
+        } 
+        else return '' 
+      },
       sortable: true,
-      width:'13.3%',
+      minWidth:'13.3%',
       style: {
         borderLeft: '1px solid #6F7378',
-        boxSizing: 'border-box'
-        
-    },
+        borderRight:'1px solid #fff',
+        boxSizing: 'border-box',
+        textAlign:'center',
+        minWidth:'13.3%',
+        display:'block',
+        lineHeight:'3.5',
+      },
 
     },
     {
       name: 'N',
       selector: row => { if (row.dna === 'NO') { return row.dna } else return '' },
       sortable: true,
-      width:'13.3%',
+      minWidth:'13.3%',
       style: {
         borderLeft: '1px solid #ABB0B8',
+        borderRight:'1px solid #fff',
         boxSizing: 'border-box',
-
+        textAlign:'center',
+        minWidth:'13.3%',
+        display:'block',
+        lineHeight:'3.5',
       },
     },
     {
       name: 'H',
       selector: row => { if (row.rna === 'HIGH') { return row.rna } else return '' },
       sortable: true,
-      width:'13.3%',
+      minWidth:'13.3%',
       style: {
         borderLeft: '1px solid #6F7378',
+        borderRight:'1px solid #fff',
         boxSizing: 'border-box',
+        textAlign:'center',
+        minWidth:'13.3%',
+        display:'block',
+        lineHeight:'3.5',
 
       },
     },
@@ -88,21 +119,30 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
       name: 'L',
       selector: row => { if (row.rna === 'LOW') { return row.rna } else return '' },
       sortable: true,
-      width:'13.3%',
+      minWidth:'13.3%',
       style: {
         borderLeft: '1px solid #ABB0B8',
+        borderRight:'1px solid #fff',
         boxSizing: 'border-box',
-
+        textAlign:'center',
+        minWidth:'13.3%',
+        display:'block',
+        lineHeight:'3.5',
       },
     },
     {
       name: 'H',
       selector: row => { if (row.proteome === 'HIGH') { return row.proteome } else return '' },
       sortable: true,
-      width:'13.3%',
+      minWidth:'13.3%',
       style: {
         borderLeft: '1px solid #6F7378',
+        borderRight:'1px solid #fff',
         boxSizing: 'border-box',
+        textAlign:'center',
+        minWidth:'13.3%',
+        display:'block',
+        lineHeight:'3.5',
 
       },
     },
@@ -110,11 +150,14 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
       name: 'L',
       selector: row => { if (row.proteome === 'LOW') { return row.proteome } else return '' },
       sortable: true,
-      width:'13.3%',
       style: {
         borderLeft: '1px solid #ABB0B8',
+        borderRight: '1px solid #6F7378',
         boxSizing: 'border-box',
-
+        textAlign:'center',
+        width:'13.3%',
+        display:'block',
+        lineHeight:'3.5',
       },
     },
   ]
@@ -143,19 +186,15 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
 
   const ReportDataFunction = () => {
-
-    // let genelist = state.genes
-    // setshowReportTable(true)
+    setshowReportTable(true)
     dispatch(getRNIDetails('POST', { rnid: sampleKey }))
-
   }
 
   useEffect(() => {
     if (reportData) {
       setTableData(reportData.genomic_summary)
       setBasicInformationData(reportData.basic_information)
-      setshowReportTable(true)
-
+      // setshowReportTable(true)
     }
   }, [reportData])
 
@@ -300,8 +339,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
 
   var w = Math.floor((width / 100) * 75)
-
-
+  
   return (
     <>{
       loader ?
@@ -311,27 +349,28 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
           <div className={`p-1 grid xs:grid-cols-3 ${toggle ? "lg:grid-cols-4" : "lg:grid-cols-4"}`}>
             <div className='flex xs:col-span-3 sm:col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-3'>
               <div className='flex-col text-left sm:w-2/6 xs:w-2/6'>
-                {circosSanpleRnidListData && <div htmlFor="samples" className="lg:text-2xl sm:text-xl xs:text-sm"><FormattedMessage id="Cir_choose_sample" defaultMessage='Choose a Sample' />: ({samplesCount}) </div>}
-                <select
-                  className="w-full  border bg-white rounded px-3 py-2 outline-none lg:text-xl sm:text-xl xs:text-sm"
-                  value={sampleKey}
-                  onChange={e => setSampleKey(e.target.value)}
-                  name="samples"
-                  id="samples"
-                >
-                  <option className="xs:text-sm sm:text-sm lg:text-xl">--Select Sample--</option>
-                  {sampleListElements}
-                  <option className="xs:text-sm lg:text-xl" value="all">all</option>
+                {circosSanpleRnidListData && 
+                <div htmlFor="samples" className="lg:text-2xl sm:text-xl xs:text-sm"><FormattedMessage id="Cir_choose_sample" defaultMessage='Choose a Sample' />: ({samplesCount}) </div>}
+                  <select
+                    className="w-full  border bg-white rounded px-3 py-4 outline-none lg:text-xl sm:text-xl xs:text-sm"
+                    value={sampleKey}
+                    onChange={e => setSampleKey(e.target.value)}
+                    name="samples"
+                    id="samples"
+                  >
+                    <option className="xs:text-sm sm:text-sm lg:text-xl">--Select Sample--</option>
+                    {sampleListElements}
+                    <option className="xs:text-sm lg:text-xl" value="all">all</option>
 
-                </select>
-              </div>
-              <div className='p-3 lg:mt-6 xs:mt-3 sm:pt-0 sm:mt-8'>
+                  </select>
+                </div>
+              <div className='p-3 mt-6'>
                 <button id='images' className="opacity-50 bg-main-blue hover:bg-blue-700 xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40" onClick={oncoImagesClickFunction}>Pathological image</button>
               </div>
-              <div className='p-3 lg:mt-6 xs:mt-3 sm:pt-0 sm:mt-8'>
+              <div className='p-3 mt-6'>
                 <button id='tables' className="opacity-50 bg-main-blue hover:bg-blue-700 xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40" onClick={timelineGraphClickFunction}>F/U Timeline</button>
               </div>
-              <div className='p-3 lg:mt-6 xs:mt-3 sm:pt-0 sm:mt-8'>
+              <div className='p-3 mt-6'>
                 <button id='reportData' className="bg-main-blue hover:bg-blue-700  xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40" onClick={ReportDataFunction}>Report</button>
               </div>
             </div>
@@ -355,10 +394,12 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
       {showReportTable
         &&
         <Report
-          tableColumnsData={tableColumnsData}
-          tableData={tableData}
-          closeReportFunction={closeReportFunction}
-          basicInformationData={basicInformationData}
+          
+          sampleKey = {circosSanpleRnidListData[sampleKey]}
+          tableColumnsData = {tableColumnsData}
+          tableData = {tableData}
+          closeReportFunction = {closeReportFunction}
+          basicInformationData = {basicInformationData}
         />
 
       }

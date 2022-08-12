@@ -1134,3 +1134,51 @@ dd {
 .report_table  header{
   padding:0px
 }
+
+.report_table > div > div > .rdt_Table > .rdt_TableHead > .rdt_TableHeadRow > .rdt_TableCol:first-child{
+  border-left: 1px solid transparent !important;
+  border-right: 1px solid transparent !important;
+}
+.report_table > div > div > .rdt_Table > .rdt_TableHead > .rdt_TableHeadRow > .rdt_TableCol:nth-child(2){
+  border-left: 1px solid transparent !important;
+}
+.report_table > div > div > .rdt_Table > .rdt_TableHead > .rdt_TableHeadRow > .rdt_TableCol:nth-child(even){
+  border-left: 1px solid #ABB0B8 ;
+  border-right:1px solid transparent;
+}
+
+.report_table > div > div > .rdt_Table > .rdt_TableHead > .rdt_TableHeadRow > .rdt_TableCol:nth-child(odd){
+  border-left: 1px solid #6F7378 ;
+  border-right: 1px solid transparent;
+}
+.report_table > div > div > .rdt_Table > .rdt_TableHead > .rdt_TableHeadRow > .rdt_TableCol:last-child {
+  border-right: 1px solid #6F7378 !important;
+}
+.leftGene.left_arrow::before{
+  content: '> >';
+  position: absolute;
+  left:0;
+  color:inherit;
+  bottom:-8px;
+}
+.leftGene.right_arrow::before{
+  content: '< <';
+  position: absolute;
+  left:0;
+  color:inherit;
+  bottom:-8px;
+}
+.rightGene.right_arrow::before{
+  content: '< <';
+  position: absolute;
+  right:0;
+  color:inherit;
+  bottom:-8px;
+}
+.rightGene.left_arrow::before{
+  content: '> >';
+  position: absolute;
+  right:0;
+  color:inherit;
+  bottom:-8px;
+}

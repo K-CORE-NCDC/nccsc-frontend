@@ -230,7 +230,6 @@ export default function DataVisualization() {
         "cnv",
         "box",
         "fusion",
-        "sankey",
       ];
     }
     let tmp = [];
@@ -380,13 +379,6 @@ export default function DataVisualization() {
         );
       case "box":
         return Charts.box(
-          w,
-          state,
-          screenCapture,
-          setToFalseAfterScreenCapture
-        );
-      case "sankey":
-        return Charts.sankey(
           w,
           state,
           screenCapture,

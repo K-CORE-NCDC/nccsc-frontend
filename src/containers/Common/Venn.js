@@ -9,7 +9,7 @@ export default function VennCmp({ width, data = null }) {
   useEffect(() => {
     if (data) {
       let sets = data;
-      console.log(sets)
+      
       var chart = venn.VennDiagram().width(width);
 
       var div = d3.select("#venn").datum(sets).call(chart);
