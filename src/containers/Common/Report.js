@@ -1,16 +1,14 @@
 import React,{ useState, useEffect} from 'react'
 import DataTable from 'react-data-table-component';
 import SankeyIndex from '../DataVisualisation/Charts/SankeyIndex';
-
-
-
-
 import ReportSubHeader from './ReportSubHeader';
+import { useSelector } from "react-redux";
 
 
-
-function Report({ tableData, tableColumnsData, closeReportFunction,basicInformationData }) {
+function Report({ sampleKey,tableData, tableColumnsData, closeReportFunction,basicInformationData }) {
   const [basicHtml, setBasicHtml] = useState([])
+  const reportData = useSelector(state => state.dataVisualizationReducer.rniData)
+ 
   useEffect(()=>{
     if(basicInformationData.length>0){
       let tmp = []
@@ -18,9 +16,17 @@ function Report({ tableData, tableColumnsData, closeReportFunction,basicInformat
         const row = basicInformationData[i];
         for (const key in row) {
           tmp.push(
-            <div key={key} className='grid grid-cols-2 px-6 py-3 border-b border-gray-200 w-full'>
-              <div>{key}</div>
-              <div>{row[key]}</div>
+            <div key={key} className='grid grid-cols-2  border-b border-gray-200 w-full'>
+              <div className='border-r border-gray-200'>
+                <p className='px-6 py-3'>
+                  {key}
+                </p>
+              </div>
+              <div >
+                <p className='px-6 py-3'>
+                  {row[key]}
+                </p>
+              </div>
             </div>
           )  
         }
@@ -28,12 +34,48 @@ function Report({ tableData, tableColumnsData, closeReportFunction,basicInformat
       setBasicHtml(tmp)
     }
   },[basicInformationData])
+
+  const customStyles = {
+    headCells:{
+      classNames:['report_sankey'],
+      style:{
+        'textAlign':'center',
+        'display':'block',
+      }
+    },
+    expanderCell:{
+      style:{
+        'minWidth':'5%',
+        'display':'block',
+      }
+    }
+  }
+
+  const rowPreDisabled = (row) =>{
+    let variant = reportData.variant_info
+    let gene = row.gene
+    if(gene in variant){
+      // return row
+    }else{
+      return row
+    }
+  } 
   
+  const rowExpandFunc = (expanded,row) =>{
+    
+    
+  }
+  const expandableRowExpanded = (row) =>{
+    // console.log(row)
+  }
+  
+
   return (
     <>
       <div className='overflow-y-scroll fixed inset-0 bg-gray-600 bg-opacity-50 h-full w-full z-50'>
         <div className="relative top-20 m-10 p-5 border shadow-lg rounded-md bg-white text-left">
           <div className="border-0  relative flex flex-col w-full bg-white outline-none focus:outline-none">
+            <h3 className='py-4 px-3'>Sample Name : {sampleKey}</h3>
             <div className='grid grid-cols-4 gap-8'>
               <div className='rounded-lg border border-gray-200'>
                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
@@ -41,7 +83,7 @@ function Report({ tableData, tableColumnsData, closeReportFunction,basicInformat
                     Basic Information
                   </h3>
                 </div>
-                <div className='mt-5'>
+                <div className=''>
                   {basicHtml}
                 </div>
               </div>
@@ -58,8 +100,13 @@ function Report({ tableData, tableColumnsData, closeReportFunction,basicInformat
                     columns={tableColumnsData}
                     data={tableData}
                     subHeader
+                    customStyles={customStyles}
                     subHeaderComponent={<ReportSubHeader />}
-                    expandableRows expandableRowsComponent={SankeyIndex} 
+                    expandableRows 
+                    expandableRowDisabled={rowPreDisabled}
+                    expandableRowsComponent={SankeyIndex} 
+                    expandableRowExpanded={expandableRowExpanded}
+                    onRowExpandToggled={rowExpandFunc}
                     subHeaderWrap
                   />
                 </div>}

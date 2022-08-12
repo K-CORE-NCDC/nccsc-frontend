@@ -122,13 +122,18 @@ export default function FusionPlot({
   const getVennIds = (key) => {
 
     if(key){
+      setFusionId(0)
       let name = key.split('_')
+      let t = 'Unique'
+      if(name.length>1){
+        t = 'Core'
+      }
       let tmp_name = name.join(' & ')
       tmp_name = tmp_name.replace(/g/g,'G')
       tmp_name = tmp_name.replace(/a/g,'A')
       tmp_name = tmp_name.replace(/b/g,'B')
       tmp_name = tmp_name.replace(/c/g,'C')
-      tmp_name +=' : Core Fusion Gene Table '
+      tmp_name +=' : '+t+' Fusion Gene Table '
       setGroupName(tmp_name)
       let r = VennData.res.data
       setTableData(r[key])
@@ -188,9 +193,9 @@ export default function FusionPlot({
             {(userDefienedFilter === 'static') && <PreDefienedFilters   viz_type='fusion' parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
             {(userDefienedFilter === 'dynamic') && <GroupFilters  viz_type='fusion' parentCallback={updateGroupFilters} groupFilters={groupFilters} />}
           </div>
-          <div className={`lg:w-4/5 md:w-4/5 sm:w-full lg:block ${smallScreen?"xs:absolute":"xs:w-full"}`} >
+          <div className={`lg:w-4/5 md:w-4/5 sm:w-full lg:block ${smallScreen?" xs:absolute":"xs:w-full"}`} >
             {VennData && <FusionVennCmp parentCallback={getVennIds} VennData={VennData} width={width}/>}
-            {fusionId && <div className='mt-5 my-0 mx-auto h-auto w-11/12 shadow-lg'>
+            {fusionId!==0 && <div className='mt-5 my-0 mx-auto h-auto w-11/12 shadow-lg'>
               <FusionCustomPlot fusionId={fusionId}/></div>}
             {tableData.length > 0 && 
               <div className='mt-20 my-0 mx-auto  w-11/12 shadow-lg'>

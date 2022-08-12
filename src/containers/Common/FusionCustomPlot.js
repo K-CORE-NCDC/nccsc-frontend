@@ -2,6 +2,8 @@ import React, { useState,useEffect, useRef, } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getFusionInformation,getFusionExons} from '../../actions/api_actions'
 import LoaderCmp from "./Loader";
+
+
 export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
   const listRef = useRef();
   const dispatch = useDispatch()
@@ -43,7 +45,7 @@ export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
   useEffect(()=>{
     
     if(fusionPlotJson.status){
-      
+      console.log(fusionPlotJson)
       // document.getElementById('fusionPlot').innerHTML=''
       let h = []
       let i = 0
@@ -89,25 +91,46 @@ export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
           left_w = true
           id = 'leftGene'
         }
-        let direction = 'right'
-        
+        let direction = 'right_arrow'
+        let leftSecondRow = true
+        let RightSecondRow = false
         for (let index = 0; index < r.length; index++) {
           
           const element = r[index];
-          if(element.startCodon>element.endCodon){
-            direction = 'right'
+          console.log(exon_pos)
+          if(exon_pos > element.startCodon){
+            direction = 'right_arrow'
           }else{
-            direction = 'left'
-          }
+            direction = 'left_arrow'
+          } 
           let w = element.endCodon-element.startCodon
           w = (w/r.length)
           if(w>500){
             w = 500
           }
-          if(exon_pos === element.endCodon||exon_pos === element.startCodon){
-            
+          if(id==='leftGene' && leftSecondRow){
+            htmlExons1.push(
+              <div title={element.startCodon} key={index} style={{width:w+'px',backgroundColor:element.color,marginRight:'5px',marginLeft:'5px',height:'20px',borderRight:'1px solid '+element.color}}>
+              </div>
+            )
+            htmlExons2.push(
+              <div title={element.startCodon} key={index} style={{width:w+'px',backgroundColor:element.color,height:'20px',border:'1px solid #333'}}>
+              </div>
+            )
+          }
+          if(id==='rightGene' && RightSecondRow){
+            htmlExons1.push(
+              <div title={element.startCodon} key={index} style={{width:w+'px',backgroundColor:element.color,marginRight:'5px',marginLeft:'5px',height:'20px',borderRight:'1px solid '+element.color}}>
+              </div>
+            )
+            htmlExons2.push(
+              <div title={element.startCodon} key={index} style={{width:w+'px',backgroundColor:element.color,height:'20px',border:'1px solid #333'}}>
+              </div>
+            )
+          }
+          if((exon_pos === element.endCodon||exon_pos === element.startCodon) ||(exon_pos>=element.startCodon && exon_pos<=element.endCodon) ){
             htmlExons.push(
-              <div id={id}  key={index} style={{width:w+'px',marginRight:'5px',marginLeft:'5px',height:'80px',borderRight:'1px solid '+element.color}}>
+              <div  title={element.startCodon} id={id}  key={index} style={{width:w+'px',marginRight:'5px',marginLeft:'5px',height:'80px',borderRight:'1px solid '+element.color}}>
                 <div style={{backgroundColor:element.color,height:'20px',marginTop:'60px'}}>
                 </div>
               </div>
@@ -115,36 +138,36 @@ export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
             if(left_w){
               f_w = f_w+w+20
             }
+            leftSecondRow = false
+            RightSecondRow = true
           }else{
             htmlExons.push(
-              <div key={index} style={{width:w+'px',backgroundColor:element.color,marginRight:'5px',marginLeft:'5px',height:'20px',borderRight:'1px solid '+element.color}}>
+              <div title={element.startCodon} key={index} style={{width:w+'px',backgroundColor:element.color,marginRight:'5px',marginLeft:'5px',height:'20px',borderRight:'1px solid '+element.color}}>
               </div>
             )
-            htmlExons1.push(
-              <div key={index} style={{width:w+'px',backgroundColor:element.color,marginRight:'5px',marginLeft:'5px',height:'20px',borderRight:'1px solid '+element.color}}>
-              </div>
-            )
-            htmlExons2.push(
-              <div key={index} style={{width:w+'px',backgroundColor:element.color,height:'20px',border:'1px solid #333'}}>
-              </div>
-            )
+            // htmlExons1.push(
+            //   <div title={element.startCodon} key={index} style={{width:w+'px',backgroundColor:element.color,marginRight:'5px',marginLeft:'5px',height:'20px',borderRight:'1px solid '+element.color}}>
+            //   </div>
+            // )
+            
           }
+          
         }
         
         
         h.push(
           <div key={key} className='grid w-full overflow-hidden' >  
-            <h3>{key}</h3>
+            <h3 style={{color:fusionJson['exons'][key][0].color}}>{key} -- {fusionPlotJson['pos'][key]}</h3>
             
-            <div id={'row_'+i} className={'grid_row flex justify-center items-end  mt-10 relative '+direction} style={{height:'100px',borderBottom:'1px solid '+fusionJson['exons'][key][0].color,borderColor:fusionJson['exons'][key][0].color}}>
+            <div id={'row_'+i} className={'grid_row flex justify-center items-end  mt-10 relative '+id+' '+direction} style={{color:fusionJson['exons'][key][0].color,height:'100px',borderBottom:'1px solid '+fusionJson['exons'][key][0].color,borderColor:fusionJson['exons'][key][0].color}}>
               {htmlExons}   
-              <div id={id+"1"} className={gene_type} style={{borderColor:fusionJson['exons'][key][0].color,width:f_w,position:'absolute'}}>
+              <div id={id+"1"} className={gene_type} style={{borderColor:fusionJson['exons'][key][0].color,width:f_w,position:'absolute',}}>
               </div>         
             </div>
-            <div className={'grid_row flex  items-end  mt-10 relative '+name+" "+direction} style={{height:'60px',borderBottom:'1px solid '+fusionJson['exons'][key][0].color}}>
+            <div className={'grid_row flex  items-end  mt-10 relative '+id+' '+name+" "+direction} style={{height:'60px',borderBottom:'1px solid '+fusionJson['exons'][key][0].color,color:fusionJson['exons'][key][0].color}}>
               {htmlExons1}            
             </div>
-            <div className={'grid_row flex  items-end  mt-10 relative '+name+" "+direction} style={{height:'60px',borderBottom:'1px solid '+fusionJson['exons'][key][0].color}}>
+            <div className={'grid_row flex  items-end  mt-10 relative '+id+' '+name+" "+direction} style={{height:'60px',borderBottom:'1px solid '+fusionJson['exons'][key][0].color,color:fusionJson['exons'][key][0].color}}>
               {htmlExons2}            
             </div>
             

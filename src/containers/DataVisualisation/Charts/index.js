@@ -8,8 +8,7 @@ import Scatter from "./Scatter";
 import DataIgv from "./igv";
 import FusionPlot from "./Fusion";
 import Box from "./Box";
-import Sankey from "./Sankey";
-import SankeyIndex from "./SankeyIndex";
+
 
 function circos(
   width,
@@ -166,24 +165,7 @@ function box(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
     />
   );
 }
-function sankey(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
-  return (
-    <SankeyIndex
-      key="sankey"
-      width={width}
-      inputData={inputData}
-      screenCapture={screenCapture}
-      setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
-    />
-    // <Sankey
-    //   key="sankey"
-    //   width={width}
-    //   inputData={inputData}
-    //   screenCapture={screenCapture}
-    //   setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
-    // />
-  );
-}
+
 
 export const Charts = {
   circos,
@@ -196,5 +178,5 @@ export const Charts = {
   igv,
   fusion,
   box,
-  sankey,
+  
 };

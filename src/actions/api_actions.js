@@ -338,6 +338,28 @@ export function getClinicalMaxMinInfo(type, data) {
       });
   }
 }
+export function getSankeyJson(type,data){
+  return (dispatch) => {
+    let url = config.auth + "getSankeyJson/";
+    sendRequest(url, type, data)
+      .then((result) => {
+        const d = result
+        if (d.status === 200) {
+          dispatch({
+            type: dataVisualization.SANKEYJSON_REQUEST,
+            payload: { ...d["data"], status: 200 },
+          });
+          
+        }
+        dispatch({ type: dataVisualization.REQUEST_DONE });
+
+      }).catch((e) => {
+        console.log("error", e);
+        
+      });
+  }
+}
+
 export function getVolcanoPlotInfo(type, data) {
   return (dispatch) => {
     let url = config.auth + "volcano/";
@@ -649,19 +671,17 @@ export function getOncoUserData(data) {
   };
 }
 
+
+
 export function getVolcanoUserData(data) {
   return (dispatch) => {
     const data = new FormData()
-
     if ('selected_genes' in data) {
       data.set('genes', data.selected_genes);
     }
-
-
     if ('filter' in data) {
       data.set('filters', data.filter);
     }
-
     let url = config.auth + "volcano-user-data/"
     sendRequest(url, "POST", data)
       .then((result) => {
@@ -707,6 +727,7 @@ export function getVolcanoData() {
 
   };
 }
+
 
 
 export function getUserDataProjectsTableData(project = false) {
