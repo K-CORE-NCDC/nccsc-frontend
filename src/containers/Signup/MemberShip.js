@@ -517,7 +517,9 @@ const MemberShip = ({ changestep }) => {
                     <span className="text-gray-700 text-sm">
                       <FormattedMessage
                         id="DefaultPasswordMsg"
-                        defaultMessage="Password should be combination of alphabets, numbers and special symbols(@#$%^&*) in 9-20 letters."
+                        defaultMessage="The password should be more than 9 and less
+                        than 20 characters (contain at least three character categories among the
+                        following: uppercase, lowercase, numeric, or special character)"
                       />
                     </span>
                   )}
