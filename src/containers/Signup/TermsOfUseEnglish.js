@@ -1,16 +1,25 @@
 import React, { useState } from "react";
+import swal from 'sweetalert';
 
-const TermsOfUse = ({ changestep }) => {
+const TermsOfUseEnglish = ({ changestep }) => {
     const [firstAgree, setFirstAgree] = useState(false);
     const [secondAgree, setSecondAgree] = useState(false);
-    const [allCheck, setAllCheck] = useState(false);
 
     const agreeFunction = () => {
         if (firstAgree && secondAgree) {
-            changestep(1);
+          changestep(1);
         } else {
-            window.alert("please check agreement");
-        }
+          swal("Please Accept Both Membership terms and Privacy Act",{
+            closeOnClickOutside: false,
+            buttons:{
+          ok:{
+            text: "Ok",
+            className:"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 w-full rounded",
+          }
+            }
+            
+          })
+      }
     }
 
     return (
@@ -28,9 +37,10 @@ const TermsOfUse = ({ changestep }) => {
                     className="overflow-auto bg-white border border-gray-400 rounded shadow-sm w-4/6 p-10 h-100"
                 >
                     <div className="scrollBox">
+                    <h4 className="font-medium">National Cancer Center (National Cancer Data Center) K-CORE Member Terms and Conditions</h4>
                         <ul className="scrollList">
-                            <li>
-                                National Cancer Center (National Cancer Data Center) K-CORE Member Terms and Conditions<ul>
+                            <li >
+                                <ul>
                                     <li>
                                         Article 1 (Purpose)
                                         <ul>
@@ -109,7 +119,7 @@ const TermsOfUse = ({ changestep }) => {
                                                 5. When using the website and performing acts prohibited by laws and these terms and conditions
                                             </li>
                                             <li>
-                                                <span style={{ "color": "red" }}> 6. If the password entered is not more than 9 and less than 20 characters (contain at least three character categories among the following: uppercase, lowercase, numeric, or special character)</span>
+                                                <span> 6. If the password entered is not more than 9 and less than 20 characters (contain at least three character categories among the following: uppercase, lowercase, numeric, or special character)</span>
                                             </li>
                                             <li>
                                                 ④ National Cancer Center (National Cancer Data Center) K-CORE may suspend the establishment of the contract of use until the cause is resolved in each of the following cases.                                            </li>
@@ -311,26 +321,26 @@ const TermsOfUse = ({ changestep }) => {
                                 </ul>
                             </li>
                             <li>
-                                <font>2. Personal Information Collected 항목</font>
+                                <font>2. Personal Information Collected</font>
                                 <ul>
                                     <li>
-                                    When a user signs up for membership, ID, password, name, contact information, email, affiliation information (government/public institution, university, research institute, medical institution, industry, etc.), and access information are collected as required fields.                                    </li>
+                                        When a user signs up for membership, ID, password, name, contact information, email, affiliation information (government/public institution, university, research institute, medical institution, industry, etc.), and access information are collected as required fields.                                    </li>
                                 </ul>
                             </li>
                             <li>
                                 <font>
 
-                                3. Period of retention and use of personal information                                </font>
+                                    3. Period of retention and use of personal information                                </font>
                                 <ul>
                                     <li>
                                         &nbsp;&nbsp; -
                                         <ins>
                                             <b>
-                                            The period during which personal information is processed and retained is two years (or until a user withdraws from membership). Personal information can also be destroyed immediately upon the user’s request. Personal information recorded shall be destroyed using technical methods ensuring that the records cannot be reproduced.                                            </b>
+                                                The period during which personal information is processed and retained is two years (or until a user withdraws from membership). Personal information can also be destroyed immediately upon the user’s request. Personal information recorded shall be destroyed using technical methods ensuring that the records cannot be reproduced.                                            </b>
                                         </ins>
                                     </li>
                                     <font>
-                                    4. User has the right to refuse consent.
+                                        4. User has the right to refuse consent.
                                     </font>
                                     <ul>
                                         <li>however, relevant services including website use and delivery of notices may not run smoothly.</li>
@@ -339,7 +349,7 @@ const TermsOfUse = ({ changestep }) => {
                                 </ul>
                                 <ul>
                                     <li>
-                                    In accordance with the Personal Information Protection Act, I have been informed of each of the above and hereby consent to the processing of the personal information. 
+                                        In accordance with the Personal Information Protection Act, I have been informed of each of the above and hereby consent to the processing of the personal information.
                                     </li>
                                 </ul>
                             </li>
@@ -394,4 +404,4 @@ const TermsOfUse = ({ changestep }) => {
     );
 };
 
-export default TermsOfUse;
+export default TermsOfUseEnglish;

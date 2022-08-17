@@ -1,66 +1,77 @@
 import React, { useState, useEffect } from 'react'
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
 import {
-    useParams
+  useParams
 } from "react-router-dom";
 
 import {
-    changePassword,
-    clearIDPasswordResetPASSWORD
+  changePassword,
+  clearIDPasswordResetPASSWORD
 } from "../../actions/api_actions";
 import swal from 'sweetalert';
 import { useSelector, useDispatch } from "react-redux";
 
 function ResetPassword() {
-    const [status, setstatus] = useState("")
-    const [visibility, setvisibility] = useState(false);
-    const [errorClass, setErrorClass] = useState("");
-    const dispatch = useDispatch();
-    const { token } = useParams();
-    let changePasswordfunction = () => {
-        let new_password = document.getElementById('NewPassword').value
-        let confirm_password = document.getElementById('ConfirmNewPassword').value
-        if (new_password === "" || confirm_password === "") {
-            setErrorClass("border-red-500");
-            setstatus('Please Enter Password');
-        }
-        else if (new_password !== confirm_password) {
-            setErrorClass("border-red-500");
-            setstatus('Password and confirm password must match');
-        }
-        else {
-            dispatch(changePassword("POST", { 'new_password': new_password, 'confirm_password': confirm_password, 'token': token }));
-        }
-     
+  const [status, setstatus] = useState("")
+  const [visibility, setvisibility] = useState(false);
+  const [errorClass, setErrorClass] = useState("");
+  const dispatch = useDispatch();
+  const { token } = useParams();
+  const change_password_status = useSelector((data) => data.homeReducer.change_password_status);
+  let changePasswordfunction = () => {
+    // const dateandtime = new Date().toUTCString();
+    let date = new Date();
+    let timeanddate={
+      year:date.getUTCFullYear(),
+      month:date.getUTCMonth(),
+      date:date.getUTCDate(),
+      hour:date.getUTCHours(),
+      minute:date.getUTCMinutes(),
     }
-    const change_password_status = useSelector((data) => data.homeReducer.change_password_status);
+    console.log(timeanddate);
+    let new_password = document.getElementById('NewPassword').value
+    let confirm_password = document.getElementById('ConfirmNewPassword').value
+    if (new_password === "" || confirm_password === "") {
+      setErrorClass("border-red-500");
+      setstatus('Please Enter Password');
+    }
+    else if (new_password !== confirm_password) {
+      setErrorClass("border-red-500");
+      setstatus('Password and confirm password must match');
+    }
+    else {
+      dispatch(changePassword("POST", { 'new_password': new_password, 'confirm_password': confirm_password, 'token': token,  'timeanddate':timeanddate }));
+    }
+    // 'year':year,'month':month, 'date': date, 'hour':hour
 
-    if (status === "Password Updated Successfully"){
-      swal("Password Updated Successfully.",{
+  }
+
+  useEffect(() => {
+    console.log("change_password_status", change_password_status);
+    change_password_status && setstatus(change_password_status.status)
+    if (status === "Password Updated Successfully") {
+      swal("Password Updated Successfully.", {
         closeOnClickOutside: false
       })
         .then((value) => {
-          setTimeout(()=>{
+          setTimeout(() => {
   
-            window.location.href = '/login/'
-          },2000)
+            // window.location.href = '/login/'
+          }, 2000)
         });
     }
-    useEffect(() => {
-        console.log("change_password_status", change_password_status);
-        change_password_status && setstatus(change_password_status.status)
-      }, [change_password_status])
+  }, [change_password_status, status])
 
-        
+
   useEffect(() => {
     return () => {
       dispatch(clearIDPasswordResetPASSWORD());
     };
   }, []);
 
-    return (
-        <div>
-            <section className="mt-10 flex flex-col items-center justify-center">
+  return (
+    <div>
+      <section className="mt-10 flex flex-col items-center justify-center">
         <div>
           <span className="text-7xl font-bold text-gray-800">Reset Password</span>
         </div>
@@ -74,9 +85,9 @@ function ResetPassword() {
               <div className="mb-4 pr-45 col-span-2 relative">
                 <div>
                   <input
-                     type={visibility ? "input" : "password"}
-                     id="NewPassword"
-                     name="newpassword"
+                    type={visibility ? "input" : "password"}
+                    id="NewPassword"
+                    name="newpassword"
                     className={`shadow appearance-none border rounded-lg w-full py-8 px-5 text-gray-700 leading-tight focus:border-blue-500  w-28 ${errorClass}`}
                     placeholder="Please Enter a password "
 
@@ -95,9 +106,9 @@ function ResetPassword() {
               <div className="mb-4 pr-45 col-span-2 relative">
                 <div>
                   <input
-                     type={visibility ? "input" : "password"}
-                     id="ConfirmNewPassword"
-                     name="confirmnewpassword"
+                    type={visibility ? "input" : "password"}
+                    id="ConfirmNewPassword"
+                    name="confirmnewpassword"
                     className={`shadow appearance-none border rounded-lg w-full py-8 px-5 text-gray-700 leading-tight focus:border-blue-500  w-28 ${errorClass}`}
                     placeholder="Please Enter a password "
 
@@ -126,8 +137,8 @@ function ResetPassword() {
           </div>
         </div>
       </section>
-        </div>
-    )
+    </div>
+  )
 }
 
 export default ResetPassword

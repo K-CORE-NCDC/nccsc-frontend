@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MemberShip from "./MemberShip";
-import TermsOfUse from "./TermsOfUse";
+import TermsandConditions from "./TermsandConditions";
 import SigninComplete from "./SigninComplete";
 import "../../styles/SignupStyles.css";
 import { CheckCircleIcon } from "@heroicons/react/outline";
@@ -22,7 +22,7 @@ const SignupComponent = () => {
     switch (step) {
       case 0:
         return (
-          <TermsOfUse step={currentStep} changestep={changeStep}></TermsOfUse>
+          <TermsandConditions step={currentStep} changestep={changeStep}></TermsandConditions>
         );
       case 1:
         return (
@@ -37,7 +37,7 @@ const SignupComponent = () => {
         );
       default:
         return (
-          <TermsOfUse step={currentStep} changestep={changeStep}></TermsOfUse>
+          <TermsandConditions step={currentStep} changestep={changeStep}></TermsandConditions>
         );
     }
   };
