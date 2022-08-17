@@ -191,6 +191,7 @@ export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
   useEffect(() => {
     if(fusionJson){
       if(fusionJson.status){
+        setErrorHtml('')
         setLoader(true)
         setFusionPlotJson(fusionJson)
         
