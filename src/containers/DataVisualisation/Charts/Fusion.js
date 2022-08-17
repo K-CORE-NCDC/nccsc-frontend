@@ -37,11 +37,12 @@ export default function FusionPlot({
 
   const clinicalMaxMinInfo = useSelector((data) => data.dataVisualizationReducer.clinicalMaxMinInfo);
   const VennData = useSelector((data) => data.dataVisualizationReducer.VennData);
-  
+  const circosSanpleRnidListData = useSelector((data) => data.dataVisualizationReducer.Keys);
+
   const tableColumnsData = [
     {
       name: 'Sample Name',
-      selector: row => row.sample_id,
+      selector: row => circosSanpleRnidListData[row.sample_id],
       sortable: true
     },
     {
@@ -55,8 +56,10 @@ export default function FusionPlot({
       sortable: true
     },
     {
-      name: 'Left Gene Chr',
-      selector: row => row.left_gene_chr,
+      name: 'Left Breakpoint',
+      cell:(row,index)=>{
+        return row.left_gene_chr+":"+row.left_hg38_pos
+      },
       sortable: true
     },
     {
@@ -70,8 +73,10 @@ export default function FusionPlot({
       sortable: true
     },
     {
-      name: 'Right Gene Chr',
-      selector: row => row.right_gene_chr,
+      name: 'Right Breakpoint',
+      cell:(row,index)=>{
+        return row.right_gene_chr+":"+row.right_hg38_pos
+      },
       sortable: true
     },
     {
