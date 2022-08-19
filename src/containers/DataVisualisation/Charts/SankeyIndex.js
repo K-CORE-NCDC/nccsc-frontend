@@ -16,7 +16,6 @@ function SankeyIndex({...props}) {
     const [render,setRender] = useState(false)
 
     useEffect(()=>{
-        console.log(initalProps);
         if(initalProps && 'data' in initalProps){
             let d = initalProps
             let variants = reportData.variant_info

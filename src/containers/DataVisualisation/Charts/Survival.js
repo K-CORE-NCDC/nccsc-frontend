@@ -30,6 +30,7 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
   const [renderNoContent, setRenderNoContent] = useState(false)
   const [filterTypeButton, setFilterTypeButton] = useState('clinical')
   const [userDefienedFilter, setUserDefienedFilter] = useState('static')
+  const [survivalModel, setSurvivalModel] = useState('kaplan')
   const [pValueData, setPvalueData] = useState("")
   const [smallScreen, setSmallScreen] = useState(false)
 
@@ -43,13 +44,13 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
     if ((fileredGene !== "") || (filterTypeButton === 'clinical')) {
       setLoader(true)
       inputData['filterType'] = userDefienedFilter
+      inputData['survival_type'] = survivalModel
       if (filterTypeButton === 'clinical') {
         dispatch(getSurvivalInformation('POST', {
           ...inputData,
           filter_gene: fileredGene,
           gene_database: geneDatabase,
           group_filters: groupFilters,
-          
           clinical: true
         }))
       } else {
@@ -155,21 +156,35 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
     }
   }, [survivalJson])
 
+  const survivalModelFun = (e,type)=>{
+    setSurvivalModel(type)
+    if(type==='cox'){
+      inputData['survival_type'] = type
+      dispatch(getSurvivalInformation('POST', inputData))
+    }
+  }
+
   return (
     <>{
       loader ?
         <LoaderCmp />
         :
-        <div className="grid grid-row-3">
-          <div className="">
-              <button className="float-left bg-blue-500 xs:ml-8 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-              onClick={()=>setSmallScreen(!smallScreen)}
-              type="button">
-                <AdjustmentsIcon className="h-6 w-6 inline"/>
+        <div className="grid grid-cols-6 p-5">
+          <div className="flex flex-col">
+            <div className='flex flex-row'>
+              <button onClick={(e) =>{survivalModelFun(e,'kaplan')}}
+                className={survivalModel === 'kaplan' ? selectedCss : nonSelectedCss}
+              >
+                Kaplan-Meier
               </button>
-          </div>
-          <div className="flex flex-row justify-around">
-            <div className={`border bg-white ${smallScreen?" xs:z-10 xs:opacity-95 xs:bg-white":"xs:hidden"}`}>
+              <button onClick={(e) =>{survivalModelFun(e,'cox')}}
+                className={survivalModel === 'cox' ? selectedCss : nonSelectedCss}
+              >
+                CoxPh-filter
+              </button>
+            </div>
+             
+            <div className={`flex flex-col border bg-white ${(survivalModel==='cox')?" opacity-50 pointer-events-none ":""}  ${smallScreen?" flex flex-row xs:z-10 xs:opacity-95 xs:bg-white":"xs:hidden"}`}>
               {sampleCountsCard.length > 0 && <div className="m-1 p-1 border border-black border-dashed">
                 {sampleCountsCard}
               </div>}
@@ -237,7 +252,10 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
                 </div>
               </div>}
             </div>
-            <div className="lg:w-4/5 xs:w-full">
+          
+            
+          </div>
+          <div className="col-span-5">
               {renderSurvival && <SurvivalCmp
                 watermarkCss={watermarkCss}
                 ref={reference} width={width}
@@ -251,7 +269,6 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
               />}
               {renderNoContent && <NoContentMessage />}
             </div>
-          </div>
         </div>
     }
     </>
