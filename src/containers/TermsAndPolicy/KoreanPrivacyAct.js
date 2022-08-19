@@ -21,7 +21,7 @@ import Purposeofpersonalinformationprocessing from '../../assets/images/PrivacyA
 import RemediesforInfringementofRights from '../../assets/images/PrivacyACTImages/RemediesforInfringementofRights.png'
 import requestforreading from '../../assets/images/PrivacyACTImages/requestforreading.png'
 import RightsandObligationsofDataSubjects from '../../assets/images/PrivacyACTImages/RightsandObligationsofDataSubjects.png'
-import Attachments from '../../assets/Attachments.hwp.29bff68a.zip'
+import Attachments from '../../assets/Attachment.hwp'
 
 
 function Koreanprivacyact() {

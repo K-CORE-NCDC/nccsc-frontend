@@ -74,6 +74,11 @@ const homeReducer = (state = { 'home': 'home' }, { type, payload }) => {
         ...state,
         find_password: payload
       }
+    case homeConstants.REGISTRATION:
+      return {
+        ...state,
+        registration_status: payload
+      }
       case homeConstants.CHANGE_PASSWORD:
         return {
           ...state,
