@@ -51,15 +51,15 @@ export default function FusionVennCmp({ parentCallback,width, VennData = null })
 
       // chart.colours = ['#d2352b','#529d3f','#f18532']
       let colors = {
-        "group a": "#f18532",
-        "group b": "#d2352b",
-        "group c": "#529d3f",
-        "group a_group b": "#c74a52",
-        "group b_group c": "#b49cd6",
-        "group c_group b": "#b49cd6",
-        "group a_group c": "#3777af",
+        "group 1": "#f18532",
+        "group 2": "#d2352b",
+        "group 3": "#529d3f",
+        "group 1_group 2": "#c74a52",
+        "group 2_group 3": "#b49cd6",
+        "group 3_group 2": "#b49cd6",
+        "group 1_group 3": "#3777af",
 
-        "group a_group b_group c": "#fffebc",
+        "group 1_group 2_group 3": "#fffebc",
       };
       console.log(sets)
       var div = d3.select("#venn").datum(sets).call(chart);

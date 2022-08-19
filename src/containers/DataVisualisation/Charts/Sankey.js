@@ -77,10 +77,14 @@ function Sankey({gene,width,exampleNodes,exampleLinks}) {
 
       colorScale = d3.scale.ordinal().domain(TYPES).range(TYPE_COLORS);
       highlightColorScale = d3.scale.ordinal().domain(TYPES).range(TYPE_HIGHLIGHT_COLORS);
-
+      let h = 500
+      if(exampleNodes.length>50){
+        h=10000
+      }
       svg = d3.select("#chart_"+gene).append("svg")
         .attr("width", WIDTH + MARGIN.LEFT + MARGIN.RIGHT)
-        .attr("height", 5000)
+        .attr("height",h)
+        .style("overflow-y", "auto")
         .append("g")
         .attr("transform", "translate(" + MARGIN.LEFT + "," + MARGIN.TOP + ")");
 
@@ -328,7 +332,7 @@ function Sankey({gene,width,exampleNodes,exampleLinks}) {
         })
         .style("stroke", function (d) { return d3.rgb(colorScale(d.type.replace(/ .*/, ""))).darker(0.1); })
         .style("stroke-WIDTH", "1px")
-        .attr("height", function (d) { return d.height; })
+        .attr("height", function (d) { return d.height })
         .attr("width", biHiSankey.nodeWidth());
 
 
@@ -560,7 +564,7 @@ function Sankey({gene,width,exampleNodes,exampleLinks}) {
     }
   },[])  
   return (
-    <div id={"chart_"+gene}></div>
+    <div id={"chart_"+gene} className='overflow-y-scroll h-screen'></div>
   )
 }
 

@@ -428,63 +428,66 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
         </button>
       </div>
       <div className="flex flex-row mb-4 ml-4">
-        <label className="text-2xl font-bold">Condition </label>
-        <div className="flex items-center ml-4">
-          {filterCondition === "and" ? (
-            <input
-              id="default-radio-1"
-              type="radio"
-              value="and"
-              name="condition"
-              checked
-              onChange={e=>changeFilterCondition(e)}
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-            />
-          ) : (
-            <input
-              id="default-radio-1"
-              type="radio"
-              value="and"
-              name="condition"
-              onChange={e=>changeFilterCondition(e)}
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-            />
-          )}
+          <label className="text-2xl font-bold">
+            <FormattedMessage id='filterCondition' defaultMessage={'Filter condition between clinical features'}/>:
+          </label>
+          <div className="flex items-center ml-4">
+            {filterCondition === "and" ? (
+              <input
+                id="default-radio-1"
+                type="radio"
+                value="and"
+                name="condition"
+                checked
+                onChange={e=>changeFilterCondition(e)}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+            ) : (
+              <input
+                id="default-radio-1"
+                type="radio"
+                value="and"
+                name="condition"
+                onChange={e=>changeFilterCondition(e)}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+            )}
 
-          <label
-            htmlFor="default-radio-1"
-            className="ml-2 text-gray-900 dark:text-gray-300"
-          >
-            And
-          </label>
-        </div>
-        <div className="flex items-center ml-4">
-          {filterCondition === "or" ? (
-            <input
-              id="default-radio-2"
-              type="radio"
-              value="or"
-              name="condition"
-              onChange={e=>changeFilterCondition(e)}
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-            />
-          ) : (
-            <input
-              id="default-radio-2"
-              type="radio"
-              value="or"
-              name="condition"
-              onChange={e=>changeFilterCondition(e)}
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-            />
-          )}
-          <label
-            htmlFor="default-radio-2"
-            className="ml-2 text-gray-900 dark:text-gray-300"
-          >
-            Or
-          </label>
-        </div>
+            <label
+              htmlFor="default-radio-1"
+              className="ml-2 text-gray-900 dark:text-gray-300"
+            >
+              And
+            </label>
+          </div>
+          <div className="flex items-center ml-4">
+            {filterCondition === "or" ? (
+              <input
+                id="default-radio-2"
+                type="radio"
+                value="or"
+                name="condition"
+                onChange={e=>changeFilterCondition(e)}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+            ) : (
+              <input
+                id="default-radio-2"
+                type="radio"
+                value="or"
+                name="condition"
+                onChange={e=>changeFilterCondition(e)}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+            )}
+            <label
+              htmlFor="default-radio-2"
+              className="ml-2 text-gray-900 dark:text-gray-300"
+            >
+              Or
+            </label>
+          </div>
+        
       </div>
       <div className="col-span-2" id="all_checkboxes">
         {state["html"]}

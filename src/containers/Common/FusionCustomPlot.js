@@ -110,27 +110,27 @@ export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
           }
           if(id==='leftGene' && leftSecondRow){
             htmlExons1.push(
-              <div title={element.startCodon} key={index} style={{width:w+'px',backgroundColor:element.color,marginRight:'5px',marginLeft:'5px',height:'20px',borderRight:'1px solid '+element.color}}>
+              <div title={"exon -"+(index+1)+" "+element.startCodon} key={index} style={{width:w+'px',backgroundColor:element.color,marginRight:'5px',marginLeft:'5px',height:'20px',borderRight:'1px solid '+element.color}}>
               </div>
             )
             htmlExons2.push(
-              <div title={element.startCodon} key={index} style={{width:w+'px',backgroundColor:element.color,height:'20px',border:'1px solid #333'}}>
+              <div title={"exon -"+(index+1)+" "+element.startCodon} key={index} style={{width:w+'px',backgroundColor:element.color,height:'20px',border:'1px solid #333'}}>
               </div>
             )
           }
           if(id==='rightGene' && RightSecondRow){
             htmlExons1.push(
-              <div title={element.startCodon} key={index} style={{width:w+'px',backgroundColor:element.color,marginRight:'5px',marginLeft:'5px',height:'20px',borderRight:'1px solid '+element.color}}>
+              <div title={"exon -"+(index+1)+" "+element.startCodon} key={index} style={{width:w+'px',backgroundColor:element.color,marginRight:'5px',marginLeft:'5px',height:'20px',borderRight:'1px solid '+element.color}}>
               </div>
             )
             htmlExons2.push(
-              <div title={element.startCodon} key={index} style={{width:w+'px',backgroundColor:element.color,height:'20px',border:'1px solid #333'}}>
+              <div title={"exon -"+(index+1)+" "+element.startCodon} key={index} style={{width:w+'px',backgroundColor:element.color,height:'20px',border:'1px solid #333'}}>
               </div>
             )
           }
           if((exon_pos === element.endCodon||exon_pos === element.startCodon) ||(exon_pos>=element.startCodon && exon_pos<=element.endCodon) ){
             htmlExons.push(
-              <div  title={element.startCodon} id={id}  key={index} style={{width:w+'px',marginRight:'5px',marginLeft:'5px',height:'80px',borderRight:'1px solid '+element.color}}>
+              <div  title={"exon -"+(index+1)+" "+element.startCodon} id={id}  key={index} style={{width:w+'px',marginRight:'5px',marginLeft:'5px',height:'80px',borderRight:'1px solid '+element.color}}>
                 <div style={{backgroundColor:element.color,height:'20px',marginTop:'60px'}}>
                 </div>
               </div>
@@ -142,7 +142,7 @@ export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
             RightSecondRow = true
           }else{
             htmlExons.push(
-              <div title={element.startCodon} key={index} style={{width:w+'px',backgroundColor:element.color,marginRight:'5px',marginLeft:'5px',height:'20px',borderRight:'1px solid '+element.color}}>
+              <div title={"exon -"+(index+1)+" "+element.startCodon} key={index} style={{width:w+'px',backgroundColor:element.color,marginRight:'5px',marginLeft:'5px',height:'20px',borderRight:'1px solid '+element.color}}>
               </div>
             )
             // htmlExons1.push(
