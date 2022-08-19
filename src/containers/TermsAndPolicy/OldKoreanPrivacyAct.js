@@ -16,7 +16,7 @@ import Purposeofpersonalinformationprocessing from '../../assets/images/PrivacyA
 import RemediesforInfringementofRights from '../../assets/images/PrivacyACTImages/RemediesforInfringementofRights.png'
 import requestforreading from '../../assets/images/PrivacyACTImages/requestforreading.png'
 import RightsandObligationsofDataSubjects from '../../assets/images/PrivacyACTImages/RightsandObligationsofDataSubjects.png'
-import Attachments from '../../assets/Attachments.hwp.29bff68a.zip'
+import Attachments from '../../assets/Attachment.hwp'
 
 
 function OldKoreanprivacyact() {
@@ -167,52 +167,52 @@ function OldKoreanprivacyact() {
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td className='ktd'>제1</td>
-                                        <td className='ktd'>조(개인정보의 처리 목적, 처리 항목, 보유기간)</td>
+                                        <td className='ktd'>제1 조</td>
+                                        <td className='ktd'>개인정보의 처리 목적, 처리 항목, 보유기간</td>
 
                                     </tr>
                                     <tr className='text-right'>
-                                        <td className='ktd'>제2</td>
-                                        <td className='ktd'>조(인터넷 접속정보파일 등 개인정보를 자동으로 수집 </td>
+                                        <td className='ktd'>제2 조</td>
+                                        <td className='ktd'>인터넷 접속정보파일 등 개인정보를 자동으로 수집 </td>
                                     </tr>
                                     <tr>
-                                        <td className='ktd'>제3</td>
-                                        <td className='ktd'>조 (개인정보의 파기 절차 및 방법)</td>
+                                        <td className='ktd'>제3 조</td>
+                                        <td className='ktd'>개인정보의 파기 절차 및 방법</td>
 
                                     </tr>
                                     <tr>
-                                        <td className='ktd'>제4</td>
-                                        <td className='ktd'>조 (개인정보처리의 위탁에 관한 사항)</td>
+                                        <td className='ktd'>제4 조</td>
+                                        <td className='ktd'>개인정보처리의 위탁에 관한 사항</td>
 
                                     </tr>
                                     <tr>
-                                        <td className='ktd'>제5</td>
-                                        <td className='ktd'> 조 (개인정보 안정성 확보조치)</td>
+                                        <td className='ktd'>제5 조</td>
+                                        <td className='ktd'> 개인정보 안정성 확보조치</td>
 
                                     </tr>
                                     <tr>
-                                        <td className='ktd'>제6</td>
-                                        <td className='ktd'>조 (정보주체와 법정대리인의 권리·의무 및 그 행사법)</td>
+                                        <td className='ktd'>제6 조</td>
+                                        <td className='ktd'> 정보주체와 법정대리인의 권리·의무 및 그 행사법</td>
 
                                     </tr>
                                     <tr>
-                                        <td className='ktd'>제7</td>
-                                        <td className='ktd'>조 (개인정보의 열람청구를 접수·처리하는 부서)</td>
+                                        <td className='ktd'>제7 조</td>
+                                        <td className='ktd'> 개인정보의 열람청구를 접수·처리하는 부서</td>
 
                                     </tr>
                                     <tr>
-                                        <td className='ktd'>제8</td>
-                                        <td className='ktd'>조 (권익침해 구제방법)</td>
+                                        <td className='ktd'>제8 조</td>
+                                        <td className='ktd'> 권익침해 구제방법</td>
 
                                     </tr>
                                     <tr>
-                                        <td className='ktd'>제9</td>
-                                        <td className='ktd'>조 (개인정보보호 책임자 및 담당자 연락처)</td>
+                                        <td className='ktd'>제9 조</td>
+                                        <td className='ktd'> 개인정보보호 책임자 및 담당자 연락처</td>
 
                                     </tr>
                                     <tr>
-                                        <td className='ktd'>제10</td>
-                                        <td className='ktd'>조 (개인정보 처리방침의 변경)</td>
+                                        <td className='ktd'>제10 조</td>
+                                        <td className='ktd'> 개인정보 처리방침의 변경</td>
 
                                     </tr>
                                 </tbody>
@@ -742,7 +742,7 @@ function OldKoreanprivacyact() {
                             id="IMG_356" />
                     </h5>
                     <div id="DIV_357">
-                        <p>이 개인정보 처리방침은 2022. 9. 30부터 적용됩니다. 이전의 개인정보 처리방침은 아래에서 확인할 수 있습니다.</p>
+                        <p>이 개인정보 처리방침은 2022. 9. 30부터 적용됩니다.</p>
                     </div>
                 </div>
 

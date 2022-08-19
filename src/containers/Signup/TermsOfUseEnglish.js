@@ -116,10 +116,10 @@ const TermsOfUseEnglish = ({ changestep }) => {
                                                 4. When an application is made to disturb the social well-being or public morals
                                             </li>
                                             <li>
-                                                5. When using the website and performing acts prohibited by laws and these terms and conditions
+                                                5. When ss using the website and performing acts prohibited by laws and these terms and conditions
                                             </li>
                                             <li>
-                                                <span> 6. If the password entered is not more than 9 and less than 20 characters (contain at least three character categories among the following: uppercase, lowercase, numeric, or special character)</span>
+                                                6. If the password entered is not more than 9 and less than 20 characters (contain at least three character categories among the following: uppercase, lowercase, numeric, or special character)
                                             </li>
                                             <li>
                                                 ④ National Cancer Center (National Cancer Data Center) K-CORE may suspend the establishment of the contract of use until the cause is resolved in each of the following cases.                                            </li>

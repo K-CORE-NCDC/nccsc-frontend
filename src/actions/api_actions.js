@@ -20,6 +20,7 @@ export function clearIDPasswordResetPASSWORD() {
   };
 }
 
+
 export function sendEmail(method,data){
   return (dispatch) => {
     let url = config.auth + "send-mail/";
@@ -1020,12 +1021,12 @@ export function userRegister(type, data) {
     sendRequest(url, type, data)
       .then((result) => {
         const d = result;
-        dispatch({ type: dataVisualization.REQUEST_DONE });
+        dispatch({ type: homeConstants.REQUEST_DONE });
         dispatch({
-          type: dataVisualization.REGISTER_REQUEST,
+          type: homeConstants.REGISTRATION,
           payload: d["data"],
         });
-        dispatch({ type: dataVisualization.REQUEST_DONE });
+        dispatch({ type: homeConstants.REQUEST_DONE });
       })
       .catch((e) => {
         console.log("error", e);

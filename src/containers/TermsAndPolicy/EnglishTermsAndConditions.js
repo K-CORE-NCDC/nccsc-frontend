@@ -121,7 +121,7 @@ function EnglishTermsAndConditions() {
               5. When using the website and performing acts prohibited by laws and these terms and conditions
               </li>
               <li>
-              6. If the entered password is not more than 9 characters (a mix of uppercase and lowercase letters, lowercase letters, numbers, and three special characters)
+              6. If the password entered is not more than 9 and less than 20 characters (contain at least three character categories among the following: uppercase, lowercase, numeric, or special character)
               </li>
             </ul>
           </li>
