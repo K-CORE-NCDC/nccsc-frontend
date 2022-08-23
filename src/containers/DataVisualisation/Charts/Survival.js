@@ -9,7 +9,7 @@ import {AdjustmentsIcon} from '@heroicons/react/outline'
 
 import LoaderCmp from '../../Common/Loader'
 import { FormattedMessage } from 'react-intl';
-
+import inputJson from '../../Common/data'
 const selectedCss = "w-1/2 rounded-r-none  hover:scale-110 xs:h-14 xs:text-sm focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition"
 const nonSelectedCss = "w-1/2 rounded-l-none border-l-0 xs:h-14 xs:text-sm hover:scale-110 focus:outline-none flex justify-center p-5 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 text-teal-700 border duration-200 ease-in-out border-teal-600 transition"
 
@@ -34,6 +34,8 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
   const [pValueData, setPvalueData] = useState("")
   const [smallScreen, setSmallScreen] = useState(false)
 
+  const [coxTable,setCoxTable] = useState([])
+  
   useEffect(()=>{
     if(!clinicalMaxMinInfo){
       dispatch(getClinicalMaxMinInfo('GET',{}))
@@ -91,37 +93,98 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
     setTimeout(function () {
       setLoader(false)
     }, (1000));
-    if (survivalJson && survivalJson.sample_counts) {
-      const sampleCountsObject = survivalJson.sample_counts
-      let totalCount = 0
-      let htmlArray = []
-      if (Object.keys(sampleCountsObject).length > 0) {
-        Object.keys(sampleCountsObject).map(e => {
-          totalCount += sampleCountsObject[e]
-          htmlArray.push(
-            <div key={e} className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue">
-              <FormattedMessage id={e} defaultMessage={e} /> {`: ${sampleCountsObject[e]}`}
+    if(survivalModel==='kaplan'){
+      if (survivalJson && survivalJson.sample_counts) {
+        const sampleCountsObject = survivalJson.sample_counts
+        let totalCount = 0
+        let htmlArray = []
+        if (Object.keys(sampleCountsObject).length > 0) {
+          Object.keys(sampleCountsObject).map(e => {
+            totalCount += sampleCountsObject[e]
+            htmlArray.push(
+              <div key={e} className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue">
+                <FormattedMessage id={e} defaultMessage={e} /> {`: ${sampleCountsObject[e]}`}
+              </div>
+            )
+          })
+        }
+        if (htmlArray.length > 1) {
+          // setPvalueData(`P-Value : ${survivalJson.pvalue.toPrecision(3)} / R-Value : ${survivalJson.rvalue.toFixed(6)}`)
+          setPvalueData(`P-Value : ${survivalJson.pvalue.toPrecision(3)}`)
+          setSampleCountsCard([
+            <div key='total' className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue">
+              <FormattedMessage id="Total" defaultMessage='Total' /> : {totalCount}
+            </div>,
+            ...htmlArray
+          ])
+        } else {
+          setPvalueData(`P-Value : ${survivalJson.pvalue.toPrecision(3)}`)
+          setSampleCountsCard([
+            <div key='total' className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue">
+              <FormattedMessage id="Total" defaultMessage='Total' /> : {totalCount}
             </div>
+          ])
+        }
+      }
+    }
+    else if(survivalModel==='cox'){
+      let inputDataJson = {}
+      for (let z = 0; z < inputJson['filterChoices'].length; z++) {
+        inputDataJson[inputJson['filterChoices'][z]['id']] = inputJson['filterChoices'][z]['name']
+        
+      }
+      
+      let tmp = []
+      let columns = survivalJson['columns']
+      let table = []
+      let thead = [<th></th>]
+      let data = JSON.parse(survivalJson['data'])
+      let cf = survivalJson['clinical_filter']
+      let image = survivalJson['image']
+      let trow = []
+      for (let c = 0; c < columns.length; c++) {
+        thead.push(<th className='font-medium text-gray-900 px-6 py-4 text-left' key={`${c}'_'${columns[c]}`}>{columns[c]}</th>)
+      }
+
+      for (let c = 0; c < cf.length; c++) {
+        let col = cf[c]
+        let td = []
+        td.push(<td key={col} className=' text-gray-900  text-left px-5 py-6'>{col}</td>)
+        for (const key in data) {
+          let v = data[key][col]
+          v = parseFloat(v).toFixed(2)
+          td.push(
+            <td key={`${col}"_"${key}"_"${v}`} className=' text-gray-900 text-left px-5 py-6'>{v}</td>
           )
-        })
+        }
+        trow.push(
+          <tr className="border-b py-4" key={`${col}"_"${c}`}>{td}</tr>
+        )
       }
-      if (htmlArray.length > 1) {
-        // setPvalueData(`P-Value : ${survivalJson.pvalue.toPrecision(3)} / R-Value : ${survivalJson.rvalue.toFixed(6)}`)
-        setPvalueData(`P-Value : ${survivalJson.pvalue.toPrecision(3)}`)
-        setSampleCountsCard([
-          <div key='total' className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue">
-            <FormattedMessage id="Total" defaultMessage='Total' /> : {totalCount}
-          </div>,
-          ...htmlArray
-        ])
-      } else {
-        setPvalueData(`P-Value : ${survivalJson.pvalue.toPrecision(3)}`)
-        setSampleCountsCard([
-          <div key='total' className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue">
-            <FormattedMessage id="Total" defaultMessage='Total' /> : {totalCount}
+     
+      tmp.push(
+        <div className="flex flex-col p-12" key={'cox'}>
+          <div className='bg-white  text-left  shadow-lg' key={'co'}>
+            <h3 className='border-b border-gray-200 p-8 '>Co-efficient Table</h3>
+            <table className='table w-full'>
+              <thead className='border-b'>
+                <tr>{thead}</tr>
+              </thead>
+              <tbody>
+                {trow}
+              </tbody>
+            </table>
           </div>
-        ])
-      }
+          <div key={'ci'} className='flex flex-col mt-20 bg-white  text-left  shadow-lg w-full' >
+            <h3 className='border-b border-gray-200 p-8'>Confidence Interval Plot</h3>
+            <div className='w-full'>
+              <img alt='box-plot' width="960" src={"data:image/png;base64,"+image}/>
+
+            </div>
+          </div>
+        </div>
+      )
+      setCoxTable(tmp)
     }
   }, [survivalJson])
 
@@ -140,7 +203,6 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
   }, [screenCapture, watermarkCss])
 
   const updateGroupFilters = (filtersObject) => {
-    // console.log(filtersObject);
     if (filtersObject) {
       setGroupFilters(filtersObject)
     }
@@ -172,6 +234,9 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
         <div className="grid grid-cols-6 p-5">
           <div className="flex flex-col">
             <div className='flex flex-row'>
+              <h3 className="p-4 ml-1 text-left text-bold xs:text-xl text-blue-700">Choose Model</h3>
+            </div>
+            <div className='flex flex-row'>
               <button onClick={(e) =>{survivalModelFun(e,'kaplan')}}
                 className={survivalModel === 'kaplan' ? selectedCss : nonSelectedCss}
               >
@@ -180,7 +245,7 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
               <button onClick={(e) =>{survivalModelFun(e,'cox')}}
                 className={survivalModel === 'cox' ? selectedCss : nonSelectedCss}
               >
-                CoxPh-filter
+                Cox Regression
               </button>
             </div>
              
@@ -256,7 +321,7 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
             
           </div>
           <div className="col-span-5">
-              {renderSurvival && <SurvivalCmp
+              {renderSurvival && survivalModel==='kaplan' && <SurvivalCmp
                 watermarkCss={watermarkCss}
                 ref={reference} width={width}
                 data={
@@ -267,6 +332,11 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
                 }
                 pValue={pValueData}
               />}
+              {renderSurvival && survivalModel==='cox' && <>
+                <div>
+                  {coxTable }
+                </div>
+              </>}
               {renderNoContent && <NoContentMessage />}
             </div>
         </div>
