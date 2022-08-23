@@ -1182,3 +1182,7 @@ dd {
   color:inherit;
   bottom:-8px;
 }
+
+.my-tooltip .multi-line {
+  text-align: left !important;
+}

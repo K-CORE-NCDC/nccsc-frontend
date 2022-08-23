@@ -1,16 +1,21 @@
-import React,{ useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import DataTable from 'react-data-table-component';
 import SankeyIndex from '../DataVisualisation/Charts/SankeyIndex';
 import ReportSubHeader from './ReportSubHeader';
 import { useSelector } from "react-redux";
-
-
-function Report({ sampleKey,tableData, tableColumnsData, closeReportFunction,basicInformationData }) {
+import PdfPrint from './PdfPrint';
+function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, basicInformationData, showPdfReportTablefunction }) {
   const [basicHtml, setBasicHtml] = useState([])
+
   const reportData = useSelector(state => state.dataVisualizationReducer.rniData)
- 
-  useEffect(()=>{
-    if(basicInformationData.length>0){
+
+  // useEffect(() => {
+  //   if (reportData) {
+  //   }
+  // }, [reportData])
+
+  useEffect(() => {
+    if (basicInformationData.length > 0) {
       let tmp = []
       for (let i = 0; i < basicInformationData.length; i++) {
         const row = basicInformationData[i];
@@ -28,52 +33,55 @@ function Report({ sampleKey,tableData, tableColumnsData, closeReportFunction,bas
                 </p>
               </div>
             </div>
-          )  
+          )
         }
       }
       setBasicHtml(tmp)
     }
-  },[basicInformationData])
+  }, [basicInformationData])
 
   const customStyles = {
-    headCells:{
-      classNames:['report_sankey'],
-      style:{
-        'textAlign':'center',
-        'display':'block',
+    headCells: {
+      classNames: ['report_sankey'],
+      style: {
+        'textAlign': 'center',
+        'display': 'block',
       }
     },
-    expanderCell:{
-      style:{
-        'minWidth':'5%',
-        'display':'block',
+    expanderCell: {
+      style: {
+        'minWidth': '5%',
+        'display': 'block',
       }
     }
   }
 
-  const rowPreDisabled = (row) =>{
+  const rowPreDisabled = (row) => {
     let variant = reportData.variant_info
     let gene = row.gene
-    if(gene in variant){
+    if (gene in variant) {
       // return row
-    }else{
+    } else {
       return row
     }
-  } 
-  
-  const rowExpandFunc = (expanded,row) =>{
-    
-    
   }
-  const expandableRowExpanded = (row) =>{
+
+  const rowExpandFunc = (expanded, row) => {
+
+
+  }
+  const expandableRowExpanded = (row) => {
     // console.log(row)
   }
-  
+
 
   return (
     <>
       <div className='overflow-y-scroll fixed inset-0 bg-gray-600 bg-opacity-50 h-full w-full z-50'>
         <div className="relative top-20 m-10 p-5 border shadow-lg rounded-md bg-white text-left">
+          <div className='float-right m-5'>
+            <PdfPrint showPdfReportTablefunction={showPdfReportTablefunction} />
+          </div>
           <div className="border-0  relative flex flex-col w-full bg-white outline-none focus:outline-none">
             <h3 className='py-4 px-3'>Sample Name : {sampleKey}</h3>
             <div className='grid grid-cols-4 gap-8'>
@@ -92,9 +100,9 @@ function Report({ sampleKey,tableData, tableColumnsData, closeReportFunction,bas
                   <h3 className="lg:text-3xl  sm:text-xl font-semibold">
                     Genomic Summary
                   </h3>
-                  
+
                 </div>
-                
+
                 {tableData && <div className=' report_table'>
                   <DataTable pagination
                     columns={tableColumnsData}
@@ -102,9 +110,9 @@ function Report({ sampleKey,tableData, tableColumnsData, closeReportFunction,bas
                     subHeader
                     customStyles={customStyles}
                     subHeaderComponent={<ReportSubHeader />}
-                    expandableRows 
+                    expandableRows
                     expandableRowDisabled={rowPreDisabled}
-                    expandableRowsComponent={SankeyIndex} 
+                    expandableRowsComponent={SankeyIndex}
                     expandableRowExpanded={expandableRowExpanded}
                     onRowExpandToggled={rowExpandFunc}
                     subHeaderWrap
