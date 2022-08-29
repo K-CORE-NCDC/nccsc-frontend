@@ -97,7 +97,7 @@ function Bisanky() {
         function computeNodeLinks() {
           var sourceNode, targetNode;
           links.forEach(function (link) {
-            console.log(link)
+            // console.log(link)
             sourceNode = nodeMap[link.source] || link.source;
             targetNode = nodeMap[link.target] || link.target;
             link.id = link.source + '-' + link.target;

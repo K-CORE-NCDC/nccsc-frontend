@@ -44,7 +44,9 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   const [samplesCount, setSamplesCount] = useState(0)
   const [tableData, setTableData] = useState([])
   const [basicInformationData, setBasicInformationData] = useState([])
-  const [showPdfReportTable, setPdfShowReportTable] = useState(false)
+
+  const [isReportClicked, setIsReportClicked]= useState(false)
+
 
 
   const tableColumnsData = [
@@ -206,11 +208,12 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
   const closeReportFunction = () => {
     setshowReportTable(false)
-    setPdfShowReportTable(false)
   }
-  const showPdfReportTablefunction = (value) => {
-    setPdfShowReportTable(value)
+
+  const isReportClickedFunction = (value)=>{
+    setIsReportClicked(value)
   }
+
 
 
 
@@ -408,19 +411,21 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
           sampleKey={circosSanpleRnidListData[sampleKey]}
           tableColumnsData={tableColumnsData}
           tableData={tableData}
-          closeReportFunction={closeReportFunction}
           basicInformationData={basicInformationData}
-          showPdfReportTablefunction={showPdfReportTablefunction}
+          closeReportFunction={closeReportFunction}
+          isReportClickedFunction={isReportClickedFunction}
+          isReportClicked={isReportClicked}
         />
 
       }
-      {showPdfReportTable === true && <PDFReport
+      
+       { showReportTable && <PDFReport
 
         sampleKey={circosSanpleRnidListData[sampleKey]}
         tableColumnsData={tableColumnsData}
         tableData={tableData}
         basicInformationData={basicInformationData}
-      />}
+      />} 
 
 
 

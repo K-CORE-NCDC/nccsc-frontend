@@ -226,6 +226,7 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
                 <h3>Global Mutation Count :count of total somatic mutation</h3>
                 <h3>Mutation Distribution :distribution of selected mutation</h3>
                 <h3>Mutation Count :count of selected somatic mutation</h3>
+                <h3>You can activate or deactivate each variant classification legend by clicking on each item. (Maximum 4 items)</h3>
                 </div>
                 {/* <div className="pl-10"><FormattedMessage  id = "oncoplot_total_samples" defaultMessage={`No of samples :${chartData['geneData']&&chartData['geneData'].length?chartData['geneData'][0].data.length:0}`}/></div> */}
                 <OncoCmp
