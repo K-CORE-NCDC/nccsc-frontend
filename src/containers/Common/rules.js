@@ -416,9 +416,11 @@ window.geneticrules.clinical_rule_set_stacked_bar = {
 	'value_key': 'val'
 }
 
+
 window.geneticrules.genetic_rule_set_custom = {
 	'type':'gene',
-	'legend_label': 'Variant Classification',
+	'legend_label': 'Variant Classification ',
+	
 	'rule_params': $.extend({}, non_mutation_rule_params, {
 		'no_maf': {
 			'no_maf': {
@@ -530,3 +532,5 @@ window.geneticrules.genetic_rule_set_custom = {
 		}
 	})
 }
+
+console.log(window.geneticrules)
