@@ -113,11 +113,11 @@ let childMenu = {
         ],
       },
       {
-        id: 'dataapplication',
-        title: <FormattedMessage id="DataApplication" defaultMessage='Data Application' />,
+        id: 'tools',
+        title: "Tools",
         type: 'group',
         icon: 'fa fa-dashboard',
-        url: '/application/',
+        url: '/tools/',
         children: [
           {
             id: 'dataprovision',

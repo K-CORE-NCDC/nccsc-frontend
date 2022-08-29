@@ -131,7 +131,7 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
     const preDefienedGroups1 = {
         diag_age: [
             { label: "21-35", from: 21, to: 35 },
-            { label: "35-40", from: 35, to: 40 },
+            { label: "36-40", from: 36, to: 40 },
             
         ],
         bmi_vl: [
