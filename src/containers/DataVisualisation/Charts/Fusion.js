@@ -202,12 +202,22 @@ export default function FusionPlot({
             {VennData && <FusionVennCmp parentCallback={getVennIds} VennData={VennData} width={width}/>}
             {fusionId!==0 && <div className='mt-5 my-0 mx-auto h-auto w-11/12 shadow-lg'>
               <FusionCustomPlot fusionId={fusionId}/></div>}
-            {tableData.length > 0 && 
-              <div className='mt-20 my-0 mx-auto  w-11/12 shadow-lg'>
-                <div className="bg-white border-b border-gray-200 py-5 text-left px-5">{groupName}</div>
-                <DataTable pagination
-                  columns={tableColumnsData}
-                  data={tableData}/>
+              {tableData.length > 0 &&
+              <div>
+                <div className="mt-20  w-11/12 mx-auto" style={{textAlign:'start', marginBottom: '-42px', lineHeight:'1.4',fontSize:'12px'}} >
+                  <p>Fusion gene detected in at least 1 patient in a paitent group is counted.</p>
+                 
+                  <p>Core : Fusion genes found in both Group 1 and Group 2</p>
+                  
+                  <p>Unique : Fusion genes found in certain patient group.</p>
+                </div>
+                <div className='mt-20 my-0 mx-auto  w-11/12 shadow-lg'>
+                  <div className="bg-white border-b border-gray-200 py-5 text-left px-5">{groupName}</div>
+                  <DataTable pagination
+                    columns={tableColumnsData}
+                    data={tableData} />
+
+                </div>
 
               </div>}
               

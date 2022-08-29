@@ -1,5 +1,7 @@
 // Feed this in as
 import ReactDOM from 'react-dom';
+import ReactTooltip from 'react-tooltip';
+import { QuestionMarkCircleIcon } from "@heroicons/react/outline";
 import $ from "jquery";
 // Mutation colors
 var MUT_COLOR_MISSENSE = '#008000';
@@ -416,6 +418,10 @@ window.geneticrules.clinical_rule_set_stacked_bar = {
 	'value_key': 'val'
 }
 
+
+const tooltip = ()=>{
+	return  <span><QuestionMarkCircleIcon data-multiline="true"   className='inline ml-2 mb-1' data-tip="RNA high : z-score ≥ 1,<br>  <br/>RNA low : z-score ≤ -1 " style={{ width: '20px' , cursor:'pointer' }}></QuestionMarkCircleIcon><ReactTooltip /></span>
+}
 window.geneticrules.genetic_rule_set_custom = {
 	'type':'gene',
 	'legend_label': 'Variant Classification',
