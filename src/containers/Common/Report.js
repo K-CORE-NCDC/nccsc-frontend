@@ -1,18 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import DataTable from 'react-data-table-component';
 import SankeyIndex from '../DataVisualisation/Charts/SankeyIndex';
 import ReportSubHeader from './ReportSubHeader';
 import { useSelector } from "react-redux";
 import PdfPrint from './PdfPrint';
-function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, basicInformationData, showPdfReportTablefunction }) {
+function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, basicInformationData, isReportClicked, isReportClickedFunction }) {
   const [basicHtml, setBasicHtml] = useState([])
-
+  const basicTable = useRef()
   const reportData = useSelector(state => state.dataVisualizationReducer.rniData)
-
-  // useEffect(() => {
-  //   if (reportData) {
-  //   }
-  // }, [reportData])
 
   useEffect(() => {
     if (basicInformationData.length > 0) {
@@ -38,6 +33,8 @@ function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, b
       }
       setBasicHtml(tmp)
     }
+
+    
   }, [basicInformationData])
 
   const customStyles = {
@@ -80,21 +77,26 @@ function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, b
       <div className='overflow-y-scroll fixed inset-0 bg-gray-600 bg-opacity-50 h-full w-full z-50'>
         <div className="relative top-20 m-10 p-5 border shadow-lg rounded-md bg-white text-left">
           <div className='float-right m-5'>
-            <PdfPrint showPdfReportTablefunction={showPdfReportTablefunction} />
+            <PdfPrint isReportClickedFunction={isReportClickedFunction} isReportClicked={isReportClicked} />
           </div>
           <div className="border-0  relative flex flex-col w-full bg-white outline-none focus:outline-none">
+
+
             <h3 className='py-4 px-3'>Sample Name : {sampleKey}</h3>
             <div className='grid grid-cols-4 gap-8'>
+
+
               <div className='rounded-lg border border-gray-200'>
                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                   <h3 className="lg:text-3xl sm:text-xl font-semibold">
                     Basic Information
                   </h3>
                 </div>
-                <div className=''>
+                <div className='basicTable' ref={basicTable}>
                   {basicHtml}
                 </div>
               </div>
+
               <div className='col-span-3 rounded-lg border border-gray-200'>
                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                   <h3 className="lg:text-3xl  sm:text-xl font-semibold">

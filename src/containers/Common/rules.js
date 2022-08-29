@@ -1,5 +1,7 @@
 // Feed this in as
 import ReactDOM from 'react-dom';
+import ReactTooltip from 'react-tooltip';
+import { QuestionMarkCircleIcon } from "@heroicons/react/outline";
 import $ from "jquery";
 // Mutation colors
 var MUT_COLOR_MISSENSE = '#008000';

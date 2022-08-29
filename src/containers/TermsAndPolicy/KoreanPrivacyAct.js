@@ -624,7 +624,7 @@ function Koreanprivacyact() {
                             <li>- 경찰청 사이버안전국 : 182 (http://cyberbureau.police.go.kr)</li>
                         </ul>
 
-                        <p>- 경찰청 사이버안전국 : 182 (http://cyberbureau.police.go.kr)</p>
+                        <p>②「개인정보보호법」제35조(개인정보의 열람), 제37조(개인정보의 처리정지 등)의 규정에 의한 정보주체의 요구에 대하여 공공기관의 장이 행한 처분 또는 부작위로 인하여 권리 또는 이익의 침해를 받은 정보주체는 행정심판법이 정하는 바에 따라 행정심판을 청구할 수 있습니다.</p>
                         <p>※ 행정심판에 대해 자세한 사항은 행정심판위원회(http://www.simpan.go.kr) 홈페이지를 참고하시기 바랍니다. </p>
                     </div>
 
@@ -645,7 +645,7 @@ function Koreanprivacyact() {
                                         구분
                                     </th>
                                     <th id="TH_319">
-                                        지책
+                                    담당자
                                     </th>
                                     <th id="TH_320">
                                         부서명
