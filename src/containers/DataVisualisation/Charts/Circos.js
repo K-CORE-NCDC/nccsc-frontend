@@ -211,6 +211,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   }
 
   const isReportClickedFunction = (value)=>{
+    console.log('----')
     setIsReportClicked(value)
   }
 
@@ -419,13 +420,13 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
       }
       
-       { showReportTable && <PDFReport
-
+      { showReportTable && <PDFReport
         sampleKey={circosSanpleRnidListData[sampleKey]}
         tableColumnsData={tableColumnsData}
         tableData={tableData}
         basicInformationData={basicInformationData}
-      />} 
+        />
+      } 
 
 
 

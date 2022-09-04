@@ -7,6 +7,7 @@ import {
   getClinicalMaxMinInfo,
   getFusionVennDaigram,
   
+  
 } from "../../../actions/api_actions";
 // import Loader from "react-loader-spinner";
 import LoaderCmp from "../../Common/Loader";
@@ -34,15 +35,43 @@ export default function FusionPlot({
   const [tableData, setTableData] = useState([])
   const [fusionId, setFusionId] = useState(0)
   const [groupName, setGroupName] = useState('')
-
+  
   const clinicalMaxMinInfo = useSelector((data) => data.dataVisualizationReducer.clinicalMaxMinInfo);
   const VennData = useSelector((data) => data.dataVisualizationReducer.VennData);
   const circosSanpleRnidListData = useSelector((data) => data.dataVisualizationReducer.Keys);
+  
 
   const tableColumnsData = [
     {
       name: 'Sample Name',
-      selector: row => circosSanpleRnidListData[row.sample_id],
+      cell:(row,index)=>{
+        let html = []
+        let check = false
+        if ('group 1' in row){
+          let s = row['group 1']
+          html.push(<p><strong>Group 1:</strong> {s.join(',')}</p>)
+          check = true
+        }
+        if ('group 2' in row){
+          let s = row['group 2']
+          html.push(<p><strong>Group 2:</strong> {s.join(',')}</p>)
+          check = true
+        }
+        if ('group 3' in row){
+          let s = row['group 3']
+          html.push(<p><strong>Group 3:</strong> {s.join(',')}</p>)
+          check = true
+        }
+        if(!check){
+          let s = row['sample_id']
+          html.push(s.join(','))
+        }
+        let main_html = []
+        main_html.push(
+          <div className='flex flex-col w-full text-left'>{html}</div>
+        )
+        return main_html
+      },
       sortable: true
     },
     {
@@ -91,21 +120,23 @@ export default function FusionPlot({
     setFusionId(id)
   }
 
+  
+
   const updateGroupFilters = (filtersObject) => {
     if (filtersObject) {
       setGroupFilters(filtersObject)
     }
   }
 
-  
 
+
+ 
   useEffect(() => {
     if (inputData) {
       if (inputData.type !== '' && Object.keys(groupFilters).length > 0) {
         setLoader(true)
         inputData['filterType'] = userDefienedFilter
         dispatch(getFusionVennDaigram('POST', { ...inputData, filterGroup: groupFilters }))
-        
       }
     }
   }, [inputData, groupFilters])
@@ -125,11 +156,12 @@ export default function FusionPlot({
   },[VennData])
   
   const getVennIds = (key) => {
-
-    if(key){
+    console.log(key)
+    if(key.length>0){
       setFusionId(0)
       let name = key.split('_')
       let t = 'Unique'
+          
       if(name.length>1){
         t = 'Core'
       }
@@ -141,9 +173,10 @@ export default function FusionPlot({
       tmp_name +=' : '+t+' Fusion Gene Table '
       setGroupName(tmp_name)
       let r = VennData.res.data
+
+      
       setTableData(r[key])
     }
-
   }
 
   return (
@@ -216,15 +249,10 @@ export default function FusionPlot({
                   <DataTable pagination
                     columns={tableColumnsData}
                     data={tableData} />
-
                 </div>
-
               </div>}
-              
           </div>
-
         </div>
-        
       )}
     </>
   );

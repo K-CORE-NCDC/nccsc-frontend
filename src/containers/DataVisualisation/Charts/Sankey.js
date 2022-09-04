@@ -272,9 +272,9 @@ function Sankey({gene,width,exampleNodes,exampleLinks}) {
         if (!isTransitioning) {
           showTooltip().select(".value").text(function () {
             if (d.direction > 0) {
-              return d.source.name + " â†’ " + d.target.name + "\n" + formatNumber(d.value);
+              return d.source.name + " - " + d.target.name + "\n" + formatNumber(d.value);
             }
-            return d.target.name + " â† " + d.source.name + "\n" + formatNumber(d.value);
+            return d.target.name + " - " + d.source.name + "\n" + formatNumber(d.value);
           });
 
           d3.select(this)

@@ -64,7 +64,13 @@ function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, b
   }
 
   const rowExpandFunc = (expanded, row) => {
-
+    
+    if(expanded){
+      let gene = row['gene']
+      if(document.getElementById('chart_'+gene)){
+        document.getElementById('chart_'+gene).innerHTML=''
+      }
+    }
 
   }
   const expandableRowExpanded = (row) => {
