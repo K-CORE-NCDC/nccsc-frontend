@@ -1,22 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react'
-<<<<<<< HEAD
-
-import { useSelector, useDispatch } from "react-redux";
-import { getSankeyJson } from '../../../actions/api_actions'
-import {
-    format as d3Format,
-    event,
-    scaleOrdinal,
-    schemeCategory10,
-    select
-  } from 'd3'
-import {
-    sankey as d3Sankey,
-    sankeyJustify,
-    sankeyLinkHorizontal
-  } from 'd3-sankey'
-
-=======
 // import Sankeyd3 from './Sankeyd3'
 // import Sankey from './Sankey'
 import { useSelector, useDispatch } from "react-redux";
@@ -25,7 +7,6 @@ import Sankey from './NewSankey'
 import NewSankeyd3 from './NewSankeyd3'
 import { values } from 'd3-collection';
 import { randomBates } from 'd3';
->>>>>>> 694a8ba4834805d5900d9cc5434973c50e8cf0bd
 function SankeyIndex({ ...props }) {
     const d = { ...props }
     const [initalProps, setInitialProps] = useState({})
@@ -50,11 +31,11 @@ function SankeyIndex({ ...props }) {
             let d = initalProps
             let variants = reportData.variant_info
             let sankyTableData_is
+
             console.log("props are ", d);
             console.log("props are ", initalProps);
-            
+
             let gene = d['data']['gene']
-            
             let inputData = {
                 'gene': gene,
                 'mutation': variants[gene]
@@ -88,14 +69,15 @@ function SankeyIndex({ ...props }) {
             // }
 
         }
-        console.log("sanky table data is", reportData);
+        // console.log("sanky table data is", reportData);
+        // console.log("nodes are", nodes);
 
     }, [initalProps])
-    
 
 
     useEffect(() => {
         if (d) {
+            console.log("first");
             setRender(false)
             setNodes([])
             setLinks([])
@@ -239,6 +221,15 @@ function SankeyIndex({ ...props }) {
 
                         <tr key={index} className="border-b">
 
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{genedata['hugo_symbol']}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{genedata['variant_classification']}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{genedata['dbsnp_rs']}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{genedata['diseasename']}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{genedata['drugname']}</td>
+                        </tr>
+                    ))}
+                </tbody>
+
             </table>
             setSankyTableData(tableHTML)
         }
@@ -326,18 +317,14 @@ function SankeyIndex({ ...props }) {
     return (
 
         <div id="main_chart_cont">
-<<<<<<< HEAD
-            <div id='sankey-parent'>
-                <div id='sankey'>
-
-                </div>
-            </div>
-            {gene && nodes.length > 0 && links.length > 0 &&
-=======
             {/* {gene && nodes.length > 0 && links.length > 0 &&
->>>>>>> 694a8ba4834805d5900d9cc5434973c50e8cf0bd
                 <>
-                    {sankyTableData && sankyTable}
+                    <Sankeyd3></Sankeyd3>
+                    <Sankey gene={gene} width={width} exampleNodes={nodes} exampleLinks={links}></Sankey>
+                    <p>Double Click To Expand</p>
+
+                    {sankyTableData && sankyTable
+                    }
                 </>
             } */}
 
@@ -349,9 +336,6 @@ function SankeyIndex({ ...props }) {
                 </>
             }
 
-<<<<<<< HEAD
-            {gene && (links.length <= 0) &&<> {sankyTable}</>}
-=======
             {gene && (listOfLinks.length <= 0) &&
                 <>
                     {sankyTableData}
@@ -371,7 +355,6 @@ function SankeyIndex({ ...props }) {
 
                 </>
             } */}
->>>>>>> 694a8ba4834805d5900d9cc5434973c50e8cf0bd
         </div>
     )
 }

@@ -426,12 +426,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
         tableColumnsData={tableColumnsData}
         tableData={tableData}
         basicInformationData={basicInformationData}
-<<<<<<< HEAD
-        />
-      } 
-=======
       />}  */}
->>>>>>> 694a8ba4834805d5900d9cc5434973c50e8cf0bd
 
 
 
