@@ -51,17 +51,18 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
   const tableColumnsData = [
     {
-      name: 'Gene Name',
+      name: <div><p>geneName</p>
+                 </div>,
       selector: (row) => { return row.gene },
       sortable: true,
       classNames: ['report_sankey'],
       minWidth: '15.2%',
-      style: {
-        minWidth: '15.2%',
-        display: 'block',
-        textAlign: 'center',
-        lineHeight: '3.5',
-      }
+      // style: {
+      //   minWidth: '15.2%',
+      //   display: 'block',
+      //   textAlign: 'center',
+      //   lineHeight: '3.5',
+      // }
     },
 
     {
@@ -419,13 +420,13 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
       }
       
-       { showReportTable && <PDFReport
+       {/* { showReportTable && <PDFReport
 
         sampleKey={circosSanpleRnidListData[sampleKey]}
         tableColumnsData={tableColumnsData}
         tableData={tableData}
         basicInformationData={basicInformationData}
-      />} 
+      />}  */}
 
 
 
