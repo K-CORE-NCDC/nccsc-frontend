@@ -103,6 +103,8 @@ function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, b
                 </div>
               </div>
 
+              <div className='col-span-3'>
+              <p>Click on the dropdown to view Drug Prediction report</p>   
               <div className='col-span-3 rounded-lg border border-gray-200'>
                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                   <h3 className="lg:text-3xl  sm:text-xl font-semibold">
@@ -126,6 +128,7 @@ function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, b
                     subHeaderWrap
                   />
                 </div>}
+              </div>
               </div>
 
             </div>

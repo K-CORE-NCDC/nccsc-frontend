@@ -15,6 +15,7 @@ import swal from 'sweetalert';
 
 const AlphaNumRegex = new RegExp("^[a-zA-Z0-9]*$");
 const AlphaNumRegexwithNoSpecialCharecters = new RegExp("(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{2,}$");
+const AlphaNumRegexwithNoSpecialCharecterss = new RegExp("[A-Za-zÀ-ȕ0-9 ]");
 const NumRegex = new RegExp("^[0-9]*$");
 const AlphaNumRegexwithSpecialCharsExceptDot = new RegExp("^[ A-Za-z0-9_/#&+-]*$");
 const KoreanRegex = new RegExp("(\S*[\u3131-\u314e|\u314f-\u3163|\uac00-\ud7a3]+\S*)")
@@ -197,17 +198,16 @@ const MemberShip = ({ changestep }) => {
   let idValidator = (id) => {
     let count = 0, alphas = 0, numbers = 0;
     for (let i = 0; i < id.length; i++) {
-
       if ((id.charCodeAt(i) >= 65 && id.charCodeAt(i) <= 90) || (id.charCodeAt(i) >= 97 && id.charCodeAt(i) <= 122)) {
         alphas++;
         if (alphas === 1)
           count++;
       }
-
       else if (id.charCodeAt(i) >= 48 && id.charCodeAt(i) <= 57) {
         numbers++;
-        if (numbers === 1)
+        if (numbers === 1) {
           count++;
+        }
       }
       if (count >= 2) {
         return true
@@ -215,20 +215,6 @@ const MemberShip = ({ changestep }) => {
     }
     return false;
   }
-
-  let idValidatorforspecial = (id) => {
-    for (let i = 0; i < id.length; i++) {
-
-      if ((id.charCodeAt(i) >= 33 && id.charCodeAt(i) <= 47) || id.charCodeAt(i) === 64) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-
-
-
 
 
   const formSet = (e) => {
@@ -252,41 +238,72 @@ const MemberShip = ({ changestep }) => {
     //   return match ? match.length === input.length : false;
     // }
     // ID Validation
-
+    let format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+    // console.log(format.test(value))
     if (name === "id" && value === "") {
       errors.id = "Please enter 6-10 characters";
       errors.koreanid = "IDLength";
+    }
+    else if (name === "id" && !idValidator(value)) {
+      errors.id = "ID should be combination of capital/lowercase alphabets and numbers in 6-10 letters. Koreans and special symbols are not allowed";
+      errors.koreanid = "DefaultIDMsg";
+
+    }
+    else if (format.test(value)) {
+      errors.id = "(e.g. @$#!*&) Special characters cannot be used";
+      errors.koreanid = "IDSpecialCharecters";
+
     }
     else if (name === "id" && KoreanRegex.test(value)) {
       errors.id = "Korean is not available";
       errors.koreanid = "IDKoreanNotAllowed";
     }
+    else if ((name === "id" && value.length < 6) || (name === "id" && value.length > 10)) {
+      console.log("dddd");
+      errors.id = "Please enter 6-10 characters";
+      errors.koreanid = "IDLength";
+    }
+    else  if (name === "id") {
+          errors.id = "";
+          errors.koreanid = "";
+        
+
+    }
+    // if (name === "id") {
+    //     errors.id = "";
+    //     errors.koreanid = "";
+    //   }
+    // else if (name === "id" && KoreanRegex.test(value)) {
+    //   errors.id = "Korean is not available";
+    //   errors.koreanid = "IDKoreanNotAllowed";
+    // }
     // else if (name === "id" && AlphaNumRegexwithNoSpecialCharecters.test(value)) {
     //   errors.id = "(e.g. @$#!*&) Special characters cannot be used";
     //   errors.koreanid = "IDSpecialCharecters";
     // }
-    else if (name === "id" && !idValidator(value)) {
-      errors.id = "Please enter 6-10 characters";
-      errors.koreanid = "IDLength";
-    }
 
-    else if (name === "id" && !idValidatorforspecial(value)) {
-      errors.id = "(e.g. @$#!*&) Special characters cannot be used";
-      errors.koreanid = "IDSpecialCharecters";
-    }
-    else if (name === "id" && value.length < 6) {
-      errors.id = "Please enter 6-10 characters";
-      errors.koreanid = "IDLength";
-    }
-    else if (name === "id" && value.length > 10) {
-      errors.id = "Please enter 6-10 characters";
-      errors.koreanid = "IDLength";
-    }
+    // else if ((name === "id" && value.length < 6) || (name === "id" && value.length > 10)) {
+    //   errors.id = "Please enter 6-10 characters";
+    //   errors.koreanid = "IDLength";
+    // }
 
-    else if (name === "id") {
-      errors.id = "";
-      errors.koreanid = "";
-    }
+    // else if (name === "id" && !idValidator(value)) {
+    //   console.log("Inside idvalidator");
+    //   errors.id = "Please enter 6-10 characters";
+    //   errors.koreanid = "IDLength";
+    // }
+
+    // else if (name === "id" && !idValidatorforspecial(value)) {
+    //   console.log("Inside idvalidatorforSpecial");
+    //   errors.id = "(e.g. @$#!*&) Special characters cannot be used";
+    //   errors.koreanid = "IDSpecialCharecters";
+    // }
+
+
+    // else if (name === "id") {
+    //   errors.id = "";
+    //   errors.koreanid = "";
+    // }
 
 
     //  Password Validation

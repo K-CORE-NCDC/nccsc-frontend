@@ -121,7 +121,7 @@ function NoticeList() {
                     </select>
                   </div>
                   <div class="flex-initial w-80 mr-4 mb-4">
-                    <input type="text" value={searchInput} onChange={(e)=>setSearchInput(e.target.value)}className="border border-slate-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text"/>
+                    <input type="text" value={searchInput} onChange={(e)=>setSearchInput(e.target.value)}className="border border-slate-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" />
                   </div>
                   <div class="flex-initial w-32">
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={searchTerm}>
