@@ -31,11 +31,11 @@ function SankeyIndex({ ...props }) {
             let d = initalProps
             let variants = reportData.variant_info
             let sankyTableData_is
+
             console.log("props are ", d);
             console.log("props are ", initalProps);
-            
+
             let gene = d['data']['gene']
-            
             let inputData = {
                 'gene': gene,
                 'mutation': variants[gene]
@@ -73,16 +73,26 @@ function SankeyIndex({ ...props }) {
         // console.log("nodes are", nodes);
 
     }, [initalProps])
-    
 
 
     useEffect(() => {
         if (d) {
+            console.log("first");
             setRender(false)
             setNodes([])
             setLinks([])
             setInitialProps(d)
         }
+
+
+        // return()=>{
+        //     console.log("Clean up")
+        //     setWidth(960)
+        //     setNodes([])
+        //     setLinks([])
+
+        // };
+
     }, [])
 
     useEffect(() => {
@@ -309,7 +319,12 @@ function SankeyIndex({ ...props }) {
         <div id="main_chart_cont">
             {/* {gene && nodes.length > 0 && links.length > 0 &&
                 <>
-                    {sankyTableData && sankyTable}
+                    <Sankeyd3></Sankeyd3>
+                    <Sankey gene={gene} width={width} exampleNodes={nodes} exampleLinks={links}></Sankey>
+                    <p>Double Click To Expand</p>
+
+                    {sankyTableData && sankyTable
+                    }
                 </>
             } */}
 
