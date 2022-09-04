@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from "react";
-import {useSelector} from "react-redux";
+import React, { useState, useEffect, useContext } from "react";
+import { useSelector } from "react-redux";
 import cancer_capture from '../../assets/images/sub/cancer_capture.png'
 import oncoprint from '../../assets/images/sub/Oncoprint.png'
 import scatter_plot from '../../assets/images/sub/scatter_plot.png'
@@ -9,30 +9,58 @@ import cnv_plot from '../../assets/images/sub/cnv_plot.png'
 import heatmap from '../../assets/images/sub/heatmap.png'
 import lollipop_plot from '../../assets/images/sub/lollipop_plot.png'
 import survival_plot from '../../assets/images/sub/survival_plot.png'
+import { Context } from "../../wrapper";
 
 import pipeline from '../../assets/images/sub/pipeline.png'
+import englishPipeline from '../../assets/images/sub/English_NCC_Pipeline.png'
 
 export default function Pipeline() {
-    const [boolChartState, setBoolChartState] = useState(true)
-    const language = useSelector((state)=>state.homeReducer.languageReducer)
-    const [sysLang, setSysLang] = useState("kr");
+  const context = useContext(Context);
+  const [boolChartState, setBoolChartState] = useState(true)
+  const language = useSelector((state) => state.homeReducer.languageReducer)
+  const [sysLang, setSysLang] = useState("kr");
+  const [koreanlanguage, setKoreanlanguage] = useState(false);
+  const [Englishlanguage, setEnglishlanguage] = useState(true);
+  console.log(context["locale"]);
+  useEffect(() => {
+    console.log(context["locale"]);
+    if (context["locale"] === "kr-KO") {
+      setKoreanlanguage(true);
+      setEnglishlanguage(false);
+    } else {
+      setKoreanlanguage(false);
+      setEnglishlanguage(true);
+    }
+  });
 
-    useEffect(()=>{
-      if(language === undefined){
-        setSysLang("kr")
-      }else{
-        setSysLang(language)
-      }
-    },[language])
+  // useEffect(()=>{
+  //   if(language === undefined){
+  //     setSysLang("kr")
+  //   }else{
+  //     setSysLang(language)
+  //   }
+  // },[language])
 
-    // console.log(language)
-    return (
-        <div className="cont_wrap my-10">
-          <div className="flex justify-center">
-            <div className="pl-8 pr-8 w-3/5">
-              {sysLang === "kr"?<img src={pipeline} />:""}
+  console.log("language", language)
+  return (
+    <div className="cont_wrap my-10">
+      <div className="flex justify-center">
+        <div className="pl-8 pr-8 w-3/5">
+          {/* {sysLang === "kr"?<img src={pipeline} />:""} */}
+
+          {koreanlanguage && (
+            <div >
+              <img src={pipeline} alt="pipeline" />
             </div>
-          </div>
+          )}
+          {Englishlanguage && (
+            <div >
+              <img src={englishPipeline} alt="english pipeline" />
+            </div>
+          )}
+
         </div>
-    )
+      </div>
+    </div>
+  )
 }

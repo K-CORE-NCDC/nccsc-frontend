@@ -1,8 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
-import Sankeyd3 from './Sankeyd3'
-import Sankey from './Sankey'
+// import Sankeyd3 from './Sankeyd3'
+// import Sankey from './Sankey'
 import { useSelector, useDispatch } from "react-redux";
 import { getSankeyJson } from '../../../actions/api_actions'
+import Sankey from './NewSankey'
+import NewSankeyd3 from './NewSankeyd3'
+import { values } from 'd3-collection';
+import { randomBates } from 'd3';
 function SankeyIndex({ ...props }) {
     const d = { ...props }
     const [initalProps, setInitialProps] = useState({})
@@ -14,8 +18,13 @@ function SankeyIndex({ ...props }) {
     const [gene, setGene] = useState('')
     const dispatch = useDispatch()
     const [render, setRender] = useState(false)
-    const [sankyTableData, setSankyTableData] = useState({})
-
+    const [listOfNodes, setListOfNodes] = useState([])
+    const [listOfLinks, setListOfLinks] = useState([])
+    const [detailGeneData, setDetailGeneData] = useState([])
+    const [SankeyJsonData, setSankeyJsonData] = useState()
+    const [sankyTableData, setSankyTableData] = useState()
+    const [sankyTableData2,setSankyTableData2]  = useState('')
+    let sankyTable;
 
     useEffect(() => {
         if (initalProps && 'data' in initalProps) {
@@ -32,26 +41,36 @@ function SankeyIndex({ ...props }) {
                 'mutation': variants[gene]
             }
             setGene(gene)
+            setRender(true)
+            dispatch(getSankeyJson('POST', inputData))
+            setSankyTableData2(variants[gene].filter(Boolean).toString())
             // setNodes([])
             // setLinks([])
-            setRender(true)
-            // dispatch(getSankeyJson('POST', inputData))
 
-            sankyTableData_is = {
-                'Gene': reportData['detail_gene_data'][gene]["gene_name"],
-                'Variant': reportData['detail_gene_data'][gene]["Variant"].filter(Boolean).toString(),
-                'Rsid': reportData['detail_gene_data'][gene]["Rsid"].filter(Boolean).toString(),
-                'Disease': reportData['detail_gene_data'][gene]["Disease"].filter(Boolean).toString(),
-                'Drug': reportData['detail_gene_data'][gene]["Drug"].filter(Boolean).toString()
+            // sankyTableData_is = {
+            //     'Gene': reportData['detail_gene_data'][gene]["gene_name"],
+            //     'Variant': reportData['detail_gene_data'][gene]["Variant"].filter(Boolean).toString(),
+            //     'Rsid': reportData['detail_gene_data'][gene]["Rsid"].filter(Boolean).toString(),
+            //     'Disease': reportData['detail_gene_data'][gene]["Disease"].filter(Boolean).toString(),
+            //     'Drug': reportData['detail_gene_data'][gene]["Drug"].filter(Boolean).toString()
 
-            }
-            setSankyTableData(sankyTableData_is)
+            // }
+            // setSankyTableData(sankyTableData_is)
 
-            setNodes(reportData['response_sanky_data'][gene]["nodes"])
-            setLinks(reportData['response_sanky_data'][gene]["links"])
+            // setNodes(reportData['response_sanky_data'][gene]["nodes"])
+            // setLinks(reportData['response_sanky_data'][gene]["links"])
+
+            // if(reportData['response_sanky_data'][gene]["nodes"].length > 0){
+            //     let nodes = reportData['response_sanky_data'][gene]["nodes"]
+            //     let nodesJson ={}
+            //     for(let i = 0; i<reportData['response_sanky_data'][gene]["nodes"].length;i++){
+            //         console.log("i is",reportData['response_sanky_data'][gene]["nodes"][i]);
+            //     }
+            // }
 
         }
-        console.log("sanky table data is", reportData);
+        // console.log("sanky table data is", reportData);
+        // console.log("nodes are", nodes);
 
     }, [initalProps])
 
@@ -76,63 +95,229 @@ function SankeyIndex({ ...props }) {
 
     }, [])
 
-    // useEffect(() => {
-    //     console.log("first function",gene);
-    // },[gene])
+    useEffect(() => {
+        if (sankeyJson) {
+            console.log("sankeyJson", sankeyJson)
+            let detailgeneData = [];
+            for (let i = 0; i < Object.keys(sankeyJson).length - 1; i++) {
+                detailgeneData.push(sankeyJson[i])
+            }
+            console.log("detail gene is", detailgeneData);
+            setDetailGeneData(detailgeneData)
+            // setSankeyJsonData(detailgeneData)
+            // hugo_symbol,variant_classification, dbsnp_rs,diseasename,drugname            
+            // {"source":1, "target":4, "value":Math.floor(Math.random() * 100)},
+            // console.log("abcd ar3e", Object.keys(geneNodes).length);
+            let firsttime = true;
+            let prev = 0, next = 1;
+            let geneNodes = {}
+            let geneLinks = []
+            let listOfNodes = []
+            let count = 1;
+            geneNodes[gene] = prev;
+            count = 1;
+            for (let obj in sankeyJson) {
+                if (!(sankeyJson[obj]['variant_classification'] in geneNodes) && (sankeyJson[obj]['variant_classification'])) {
+                    geneNodes[sankeyJson[obj]['variant_classification']] = count;
+                    next = sankeyJson[obj]['variant_classification'];
+                    console.log("in variant_classification", sankeyJson[obj]['variant_classification']);
+                    if (firsttime) {
 
-    // useEffect(() => {
-    //     if (sankeyJson) {
-    //         let x = document.getElementById('main_chart_cont').offsetWidth
-    //         setWidth(x)
-    //         let n = sankeyJson['nodes']
-    //         let l = sankeyJson['links']
-    //         setNodes(n)
-    //         setLinks(l)
-    //     }
-    // }, [sankeyJson])
+                        geneLinks.push({ 'source': 0, 'target': geneNodes[next], 'value': 10 })
+                        firsttime = false;
+                    }
+                    else {
+                        geneLinks.push({ 'source': geneNodes[prev], 'target': geneNodes[next], 'value': 10 })
+                    }
+                    prev = next;
+                    count++;
+                }
+                else if ((sankeyJson[obj]['variant_classification'] in geneNodes)) {
+                    prev = sankeyJson[obj]['variant_classification'];
+                }
+                if (!(sankeyJson[obj]['dbsnp_rs'] in geneNodes) && (sankeyJson[obj]['dbsnp_rs'])) {
+                    console.log("in dbsnp_rs", sankeyJson[obj]['dbsnp_rs']);
+                    geneNodes[sankeyJson[obj]['dbsnp_rs']] = count;
+                    next = sankeyJson[obj]['dbsnp_rs'];
+                    geneLinks.push({ 'source': geneNodes[prev], 'target': geneNodes[next], 'value': 10 })
+                    prev = next;
+                    count++;
+                }
+                else if ((sankeyJson[obj]['dbsnp_rs'] in geneNodes)) {
+                    prev = sankeyJson[obj]['dbsnp_rs'];
+                }
+                if (!(sankeyJson[obj]['diseasename'] in geneNodes) && (sankeyJson[obj]['diseasename'])) {
+                    console.log("in diseasename", sankeyJson[obj]['diseasename']);
+                    geneNodes[sankeyJson[obj]['diseasename']] = count;
+                    next = sankeyJson[obj]['diseasename'];
+                    geneLinks.push({ 'source': geneNodes[prev], 'target': geneNodes[next], 'value': 10 })
+                    prev = next;
+                    count++;
+                }
+                else if ((sankeyJson[obj]['diseasename'] in geneNodes)) {
+                    prev = sankeyJson[obj]['diseasename'];
+                }
+                if (!(sankeyJson[obj]['drugname'] in geneNodes) && (sankeyJson[obj]['drugname'])) {
+                    console.log("in drugname", typeof (sankeyJson[obj]['drugname']));
+                    geneNodes[sankeyJson[obj]['drugname']] = count;
+                    next = sankeyJson[obj]['drugname'];
+                    geneLinks.push({ 'source': geneNodes[prev], 'target': geneNodes[next], 'value': 10 })
+                    prev = next;
+                    count++;
+                }
+                else if ((sankeyJson[obj]['drugname'] in geneNodes)) {
+                    prev = sankeyJson[obj]['drugname'];
+                }
+            }
 
-    let sankyTable = <div>
-        <table className="min-w-full border text-center">
-            <thead className="border-b">
-                <tr>
-                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 border-r">
-                        Variant
-                    </th>
-                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 border-r">
-                        Rsid
-                    </th>
-                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 border-r">
-                        Disease
-                    </th>
-                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4">
-                        Drug
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr className="border-b">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{sankyTableData['Variant'] ? sankyTableData['Variant'] : " "}</td>
-                    <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        {sankyTableData['Rsid'] ? sankyTableData['Rsid'] : " "}
-                    </td>
-                    <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        {sankyTableData['Disease'] ? sankyTableData['Disease'] : " "}
-                    </td>
-                    <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                        {sankyTableData['Drug'] ? sankyTableData['Drug'] : " "}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+            for (let i in geneNodes) {
+                if (i !== 'undefined') {
+                    // console.log("i", i, "geneNodes", geneNodes[i]);
+                    listOfNodes.push({ "name": i })
+                }
+            }
+            listOfNodes.pop()   // for removing the last undefined node.
+            geneLinks.pop()     // for removing the last undefined link.
+            setListOfNodes(listOfNodes)
+            setListOfLinks(geneLinks)
+            let sankeyjsondata = {
+                "nodes": listOfNodes,
+                "links": geneLinks
+            }
+
+            setSankeyJsonData(sankeyjsondata)
 
 
+        }
+    }, [sankeyJson])
 
+    useEffect(() => {
+        // console.log("list of node are in useffect", listOfNodes);
+        // console.log("list of links are in useffect", listOfLinks);
+        console.log("data is changed", detailGeneData);
+        if (detailGeneData.length > 0) {
+            let tableHTML = <table className="min-w-full border text-center">
+                <thead className="border-b">
+                    <tr>
+                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+                            gene
+                        </th>
+                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+                            Variant
+                        </th>
+                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+                            Rsid
+                        </th>
+                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+                            Disease
+                        </th>
+                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4">
+                            Drug
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {detailGeneData.map((genedata, index) => (
+
+                        <tr key={index} className="border-b">
+
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{genedata['hugo_symbol']}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{genedata['variant_classification']}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{genedata['dbsnp_rs']}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{genedata['diseasename']}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{genedata['drugname']}</td>
+                        </tr>
+                    ))}
+                </tbody>
+
+            </table>
+            setSankyTableData(tableHTML)
+        }
+        else {
+            let tableHTML = <table className="min-w-full border text-center">
+                <thead className="border-b">
+                    <tr>
+                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+                            gene
+                        </th>
+                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+                            Variant
+                        </th>
+                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+                            Rsid
+                        </th>
+                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+                            Disease
+                        </th>
+                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4">
+                            Drug
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr className="border-b">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{gene}</td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{sankyTableData2}</td>
+                        </tr>
+                </tbody>
+
+            </table>
+            setSankyTableData(tableHTML)
+        }
+
+    }, [detailGeneData])
+
+    // sankyTable = <div>
+    //     <table className="min-w-full border text-center">
+    //         <thead className="border-b">
+    //             <tr>
+    //                 <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+    //                     gene
+    //                 </th>
+    //                 <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+    //                     Variant
+    //                 </th>
+    //                 <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+    //                     Rsid
+    //                 </th>
+    //                 <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 border-r">
+    //                     Disease
+    //                 </th>
+    //                 <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4">
+    //                     Drug
+    //                 </th>
+    //             </tr>
+    //         </thead>
+    //         <tbody>
+    //             {detailGeneData.map((item) => {
+
+    //                 <tr className="border-b">
+
+    //                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{item['hugo_symbol']}</td>
+    //                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{item['hugo_symbol']}</td>
+    //                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{item['hugo_symbol']}</td>
+    //                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{item['hugo_symbol']}</td>
+    //                     {/* <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{sankyTableData[0]['Variant'] ? sankyTableData[0]['Variant'] : " "}</td>
+    //             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
+    //                 {sankyTableData[0]['Rsid'] ? sankyTableData[0]['Rsid'] : " "}
+    //             </td>
+    //             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
+    //                 {sankyTableData[0]['Disease'] ? sankyTableData[0]['Disease'] : " "}
+    //             </td>
+    //             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+    //                 {sankyTableData[0]['Drug'] ? sankyTableData[0]['Drug'] : " "}
+    //             </td> */}
+    //                 </tr>
+
+    //             })}
+    //         </tbody>
+    //     </table>
+    // </div>
 
     return (
 
         <div id="main_chart_cont">
-            {gene && nodes.length > 0 && links.length > 0 &&
+            {/* {gene && nodes.length > 0 && links.length > 0 &&
                 <>
                     <Sankeyd3></Sankeyd3>
                     <Sankey gene={gene} width={width} exampleNodes={nodes} exampleLinks={links}></Sankey>
@@ -141,18 +326,35 @@ function SankeyIndex({ ...props }) {
                     {sankyTableData && sankyTable
                     }
                 </>
+            } */}
+
+            {gene && listOfNodes.length > 0 && listOfLinks.length > 0 &&
+                <>
+                    <Sankey></Sankey>
+                    <NewSankeyd3 SankeyJson={SankeyJsonData} idName={`chart`}></NewSankeyd3>
+                    {sankyTableData}
+                </>
             }
 
+            {gene && (listOfLinks.length <= 0) &&
+                <>
+                    {sankyTableData}
+                    {reportData.variant_info[gene].map((gene, i) => {
+                        <p key={i}></p>
+                    })
+                    }
 
+                </>
+            }
 
-            {gene && (links.length <= 0) &&
+            {/* {gene && (links.length <= 0) &&
                 <>
                     <p>Double Click To Expand</p>
                     <p>Double Click To Expand</p>
                     {sankyTable}
 
                 </>
-            }
+            } */}
         </div>
     )
 }

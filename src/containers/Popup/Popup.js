@@ -59,9 +59,9 @@ function Popup({ }) {
 
                 {noticedetails &&
                   <div className="relative p-6 flex-auto">
-                    {/* <p>{noticedetails.id}</p> */}
-                    {/* <p>{noticedetails.content}</p> */}
-                    {/* <p>{noticedetails.title}</p> */}
+                    <p>{noticedetails.id}</p>
+                    <p>{noticedetails.content}</p>
+                    <p>{noticedetails.title}</p>
 
                   </div>
                 }

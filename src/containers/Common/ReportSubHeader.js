@@ -29,7 +29,7 @@ function ReportSubHeader() {
         </div>
         <div style={{ minWidth: '26.5%', 'borderRight': '1px solid transparent' }} className=' px-5 py-8 text-center  '>Proteome
           <span>
-          <QuestionMarkCircleIcon data-multiline="true"  className='inline ml-2 mb-1' data-tip="RNA high : z-score ≥ 1,<br>  <br/>RNA low : z-score ≤ -1 " style={{ width: '20px' , cursor:'pointer' }}>
+          <QuestionMarkCircleIcon data-multiline="true"  className='inline ml-2 mb-1' data-tip="Proteome high : z-score ≥ 1.5,<br>  <br/>Proteome low : z-score ≤ 0.5" style={{ width: '20px' , cursor:'pointer' }}>
             </QuestionMarkCircleIcon>
             <ReactTooltip   />
           </span>
