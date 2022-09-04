@@ -69,13 +69,14 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
         if(bmi.length>0){
           let t = ChartData
           let table_cols = [
-            {
-              name: 'BMI Value',
-              selector: row => row.bmi_vl
-            },
+            
             {
               name: 'Date',
               selector: row => row.rgst_ymd
+            },
+            {
+              name: 'BMI Value',
+              selector: row => row.bmi_vl
             },
           ]
           for (var i = 0; i < bmi.length; i++) {
@@ -122,12 +123,12 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
           }
           let table_cols = [
             {
-              name: 'KI-67 % Value',
-              selector: row => row.ki67_score
-            },
-            {
               name: 'Date',
               selector: row => row.imnl_read_ymd
+            },
+            {
+              name: 'KI-67 % Value',
+              selector: row => row.ki67_score
             },
           ]
           setKi67Chart(t)
@@ -158,11 +159,11 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
           }
           let table_cols = [
             {
-              name: 'Exam Value',
+              name: 'Date ',
               selector: row => row.exam_ymd
             },
             {
-              name: 'Date',
+              name: 'Exam Value',
               selector: row => row.exam_val
             },
           ]
@@ -195,11 +196,11 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
           }
           let table_cols = [
             {
-              name: 'Exam Value',
+              name: 'Date ',
               selector: row => row.exam_ymd
             },
             {
-              name: 'Date',
+              name: 'Exam Value',
               selector: row => row.exam_val
             },
           ]
@@ -232,11 +233,11 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
           }
           let table_cols = [
             {
-              name: 'Exam Value',
+              name: 'Date',
               selector: row => row.exam_ymd
             },
             {
-              name: 'Date',
+              name: 'Exam Value',
               selector: row => row.exam_val
             },
           ]
@@ -279,7 +280,7 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
                 CEA
               </button>
               <button onClick={e=>setTab('her2')} className = {((tab==='her2')?activeNavClass:navClass)}>
-                Her2
+                HER2
               </button>
             </nav>
             <div className="grid tab-content  w-full col-span-4" id="tabs-tabContent">
@@ -305,7 +306,7 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
                 />}
               </div>
               <div className={"py-6 tab-pane fade flex-inline "+" "+((tab==='ca15')?"show active":' hidden ')} id="tabs-ca15">
-                <h3>CA15 Timeline</h3>
+                <h3>CA15-2 Timeline</h3>
                 <hr/>
                 {circosTimelieTableData && <TimeLineChart data={circosTimelieTableData.ca15} yearKey="exam_ymd" valueKey="exam_val" />}
                 {ca15Chart && <DataTable pagination
@@ -323,7 +324,7 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
                 />}
               </div>
               <div className={"py-6 tab-pane fade flex-inline "+" "+((tab==='her2')?"show active":' hidden ')} id="tabs-her2">
-                <h3>Her2 Timeline</h3>
+                <h3>HER2 Timeline</h3>
                 <hr/>
                 {circosTimelieTableData && <TimeLineChart data={circosTimelieTableData.her2} yearKey="exam_ymd" valueKey="exam_val" />}
                 {ceaChart && <DataTable pagination

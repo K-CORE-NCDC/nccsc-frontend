@@ -56,12 +56,12 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
       sortable: true,
       classNames: ['report_sankey'],
       minWidth: '15.2%',
-      style: {
-        minWidth: '15.2%',
-        display: 'block',
-        textAlign: 'center',
-        lineHeight: '3.5',
-      }
+      // style: {
+      //   minWidth: '15.2%',
+      //   display: 'block',
+      //   textAlign: 'center',
+      //   lineHeight: '3.5',
+      // }
     },
 
     {
@@ -420,13 +420,18 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
       }
       
-      { showReportTable && <PDFReport
+       {/* { showReportTable && <PDFReport
+
         sampleKey={circosSanpleRnidListData[sampleKey]}
         tableColumnsData={tableColumnsData}
         tableData={tableData}
         basicInformationData={basicInformationData}
+<<<<<<< HEAD
         />
       } 
+=======
+      />}  */}
+>>>>>>> 694a8ba4834805d5900d9cc5434973c50e8cf0bd
 
 
 
