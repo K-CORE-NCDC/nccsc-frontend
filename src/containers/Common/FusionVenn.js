@@ -11,13 +11,14 @@ export default function FusionVennCmp({ parentCallback,width, VennData = null })
   const [rnid,setRnid] = useState([])
 
   useEffect(()=>{
-    if(rnid.length>0){
+    if(rnid){
+      
       parentCallback(rnid)
     }
   },[rnid])
   useEffect(() => {
     if(VennData.status===200){
-      let res = VennData.res.venn
+      let res = VennData.res.data
       let tmp = []
       for (const key in res) {
         let k = key.split('_')
@@ -61,7 +62,7 @@ export default function FusionVennCmp({ parentCallback,width, VennData = null })
 
         "group 1_group 2_group 3": "#fffebc",
       };
-      console.log(sets)
+      
       var div = d3.select("#venn").datum(sets).call(chart);
 
       
@@ -131,7 +132,6 @@ export default function FusionVennCmp({ parentCallback,width, VennData = null })
         .data(data)
         .on("click", function (i, data) {
           let key = data['key']
-          console.log(i)
           setRnid(key)
         })
         .on("mouseover", function (d, i) {
