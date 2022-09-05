@@ -1,10 +1,11 @@
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 import { Switch } from 'react-router-dom';
 import Loadable from 'react-loadable';
 import Loader from './layout/Loader/';
 import { PrivateRoute } from './PrivateRoute';
 import '../assets/css/style.css'
 import Wrapper  from '../wrapper';
+// import ReactGA from 'react-ga';
 require('dotenv').config()
 
 const Web = Loadable({
@@ -14,8 +15,15 @@ const Web = Loadable({
 });
 
 
+
 export default function App() {
   const [blurScreenCss, setBlurScreenCss] = useState("")
+
+  // useEffect(()=>{
+  //   const TRACKING_ID = "G-895Q141Y83"; // YOUR_OWN_TRACKING_ID
+  //   ReactGA.initialize(TRACKING_ID);
+  // })
+ 
 
   return (
     <Wrapper>
