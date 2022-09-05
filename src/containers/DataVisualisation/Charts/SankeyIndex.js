@@ -44,33 +44,7 @@ function SankeyIndex({ ...props }) {
             setRender(true)
             dispatch(getSankeyJson('POST', inputData))
             setSankyTableData2(variants[gene].filter(Boolean).toString())
-            // setNodes([])
-            // setLinks([])
-
-            // sankyTableData_is = {
-            //     'Gene': reportData['detail_gene_data'][gene]["gene_name"],
-            //     'Variant': reportData['detail_gene_data'][gene]["Variant"].filter(Boolean).toString(),
-            //     'Rsid': reportData['detail_gene_data'][gene]["Rsid"].filter(Boolean).toString(),
-            //     'Disease': reportData['detail_gene_data'][gene]["Disease"].filter(Boolean).toString(),
-            //     'Drug': reportData['detail_gene_data'][gene]["Drug"].filter(Boolean).toString()
-
-            // }
-            // setSankyTableData(sankyTableData_is)
-
-            // setNodes(reportData['response_sanky_data'][gene]["nodes"])
-            // setLinks(reportData['response_sanky_data'][gene]["links"])
-
-            // if(reportData['response_sanky_data'][gene]["nodes"].length > 0){
-            //     let nodes = reportData['response_sanky_data'][gene]["nodes"]
-            //     let nodesJson ={}
-            //     for(let i = 0; i<reportData['response_sanky_data'][gene]["nodes"].length;i++){
-            //         console.log("i is",reportData['response_sanky_data'][gene]["nodes"][i]);
-            //     }
-            // }
-
         }
-        // console.log("sanky table data is", reportData);
-        // console.log("nodes are", nodes);
 
     }, [initalProps])
 
@@ -267,53 +241,7 @@ function SankeyIndex({ ...props }) {
 
     }, [detailGeneData])
 
-    // sankyTable = <div>
-    //     <table className="min-w-full border text-center">
-    //         <thead className="border-b">
-    //             <tr>
-    //                 <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 border-r">
-    //                     gene
-    //                 </th>
-    //                 <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 border-r">
-    //                     Variant
-    //                 </th>
-    //                 <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 border-r">
-    //                     Rsid
-    //                 </th>
-    //                 <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 border-r">
-    //                     Disease
-    //                 </th>
-    //                 <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4">
-    //                     Drug
-    //                 </th>
-    //             </tr>
-    //         </thead>
-    //         <tbody>
-    //             {detailGeneData.map((item) => {
-
-    //                 <tr className="border-b">
-
-    //                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{item['hugo_symbol']}</td>
-    //                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{item['hugo_symbol']}</td>
-    //                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{item['hugo_symbol']}</td>
-    //                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{item['hugo_symbol']}</td>
-    //                     {/* <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{sankyTableData[0]['Variant'] ? sankyTableData[0]['Variant'] : " "}</td>
-    //             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-    //                 {sankyTableData[0]['Rsid'] ? sankyTableData[0]['Rsid'] : " "}
-    //             </td>
-    //             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-    //                 {sankyTableData[0]['Disease'] ? sankyTableData[0]['Disease'] : " "}
-    //             </td>
-    //             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-    //                 {sankyTableData[0]['Drug'] ? sankyTableData[0]['Drug'] : " "}
-    //             </td> */}
-    //                 </tr>
-
-    //             })}
-    //         </tbody>
-    //     </table>
-    // </div>
-
+  
     return (
 
         <div id="main_chart_cont">
@@ -331,7 +259,7 @@ function SankeyIndex({ ...props }) {
             {gene && listOfNodes.length > 0 && listOfLinks.length > 0 &&
                 <>
                     <Sankey></Sankey>
-                    <NewSankeyd3 SankeyJson={SankeyJsonData} idName={`chart`}></NewSankeyd3>
+                    <NewSankeyd3 SankeyJson={SankeyJsonData} idName='chart'></NewSankeyd3>
                     {sankyTableData}
                 </>
             }

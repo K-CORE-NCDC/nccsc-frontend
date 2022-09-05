@@ -108,8 +108,8 @@ function PdfPrint({ isReportClicked, isReportClickedFunction }) {
 
     return (
         <div>
-            {/* <button className='hover:bg-blue-700 text-white font-bold py-6 px-6 float-left rounded bg-NccBlue-700' onClick={printpdf}>Download Report</button> */}
-            <button className='hover:bg-blue-700 text-white font-bold py-6 px-6 float-left rounded bg-NccBlue-700'>Download Report</button>
+            <button className='hover:bg-blue-700 text-white font-bold py-6 px-6 float-left rounded bg-NccBlue-700' onClick={printpdf}>Download Report</button>
+            {/* <button className='hover:bg-blue-700 text-white font-bold py-6 px-6 float-left rounded bg-NccBlue-700'>Download Report</button> */}
         </div>
     )
 }

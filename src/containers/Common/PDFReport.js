@@ -5,6 +5,7 @@ import ReportSubHeader from './ReportSubHeader';
 import { useSelector, useDispatch } from "react-redux";
 import Sankey from '../DataVisualisation/Charts/NewSankey'
 import NewSankeyd3 from '../DataVisualisation/Charts/NewSankeyd3'
+import NccLogo from '../../assets/images/logoncc.png'
 
 
 function PDFReport({ sampleKey, tableData, tableColumnsData, basicInformationData }) {
@@ -21,8 +22,13 @@ function PDFReport({ sampleKey, tableData, tableColumnsData, basicInformationDat
   const [listOfLinks, setListOfLinks] = useState([])
   const [SankeyJsonData, setSankeyJsonData] = useState()
   const [sankyTableData2, setSankyTableData2] = useState('')
+  const [todayDate, setTodayDate] = useState('')
+
 
   useEffect(() => {
+    var today = new Date()
+    let todaydate =today.getDate()+ '-' +(today.getMonth() + 1) + '-' + today.getFullYear();
+    setTodayDate(todaydate)
     if (basicInformationData && basicInformationData.length > 0) {
       let tmp = []
       for (let i = 0; i < basicInformationData.length; i++) {
@@ -407,7 +413,12 @@ function PDFReport({ sampleKey, tableData, tableColumnsData, basicInformationDat
 
       <div>
         <div className='printpdf'>
-
+          <div>
+            <h1 className='font-medium leading-tight text-5xl mt-0 mb-2 text-center text-black-600'>NCC Report</h1>
+            <h1 className='font-medium leading-tight text-5xl mt-0 mb-2 text-center text-black-600'>{`Date : ${todayDate}`}</h1>
+            {/* <img src={NccLogo} alt="National Cancer Center"></img> */}
+          </div>
+            <img src={NccLogo} className="block mx-auto" alt="National Cancer Center" ></img>
           <h3 className='py-4 px-3 my-10'>Sample Name : {sampleKey}</h3>
           <div className='rounded-lg border border-gray-200 my-5 '>
             <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">

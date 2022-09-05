@@ -420,13 +420,13 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
       }
       
-       {/* { showReportTable && <PDFReport
+       { <PDFReport
 
         sampleKey={circosSanpleRnidListData[sampleKey]}
         tableColumnsData={tableColumnsData}
         tableData={tableData}
         basicInformationData={basicInformationData}
-      />}  */}
+      />} 
 
 
 
