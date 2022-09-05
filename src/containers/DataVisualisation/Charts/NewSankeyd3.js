@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import d3 from 'd3v3/d3'
 import '../../../styles/sankey.css'
 
@@ -8,7 +8,6 @@ function NewSankeyd3({SankeyJson, idName}) {
   var margin = {top: 1, right: 1, bottom: 6, left: 1},
   width = 960 - margin.left - margin.right,
   height = 500 - margin.top - margin.bottom;
-  const chartRef = useRef(null)
   const drawChart = (energyjson)=>{
       
     var sankey = d3.sankey().nodeWidth(15).nodePadding(10).size([width, height]);
@@ -16,9 +15,8 @@ function NewSankeyd3({SankeyJson, idName}) {
     var formatNumber = d3.format(",.0f"),
         format = function(d) { return formatNumber(d) + " TWh"; },
         color = d3.scale.category20();
-        // color = '#ff0000';
-  
-    var svg = d3.select(chartRef.current).append("svg")
+
+    var svg = d3.select(`#${idName}`).append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
       .append("g")
@@ -130,12 +128,12 @@ function NewSankeyd3({SankeyJson, idName}) {
   }
 
   useEffect(()=>{
-    if(SankeyJson['SankeyJson']){
-      if(document.getElementById('chart')){
-        document.getElementById('chart').innerHTML = ''
+    if(SankeyJson){
+      if(document.getElementById(idName)){
+        document.getElementById(idName).innerHTML = ''
       }
       // console.log("json for chart is",SankeyJson)
-      let j = SankeyJson['SankeyJson']
+      let j = SankeyJson
 
       drawChart(j)
     }
@@ -143,7 +141,7 @@ function NewSankeyd3({SankeyJson, idName}) {
 
   return (
     <div>
-        <div id="chart" ref={chartRef} className='overflow-y-scroll h-screen'></div>
+        <div id={idName} className='overflow-y-scroll h-screen'></div>
     </div>
   )
 }

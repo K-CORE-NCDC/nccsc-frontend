@@ -1,7 +1,8 @@
 import React from "react";
 import config from "../../config";
 import { CheckCircleIcon } from "@heroicons/react/outline";
-import Success from '../../assets/images/success_image.png'
+import Success from '../../assets/images/logoncc.png'
+
 
 const SigninComplete = () => {
   return (
