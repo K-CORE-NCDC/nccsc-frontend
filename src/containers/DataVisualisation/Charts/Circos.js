@@ -51,8 +51,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
   const tableColumnsData = [
     {
-      name: <div><p>geneName</p>
-                 </div>,
+      name: 'Gene Name',
       selector: (row) => { return row.gene },
       sortable: true,
       classNames: ['report_sankey'],
@@ -212,6 +211,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   }
 
   const isReportClickedFunction = (value)=>{
+    console.log('----')
     setIsReportClicked(value)
   }
 

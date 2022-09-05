@@ -142,6 +142,11 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state,
         SankeyJson:payload
       }
+    case dataVisualization.FUSIONTABLE_REQUEST:
+      return {
+        ...state,
+        FusionTable:payload
+      }
     case CLEAR_ALL_STATES:
       return {
         

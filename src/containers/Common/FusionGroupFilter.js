@@ -749,34 +749,34 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
                 let tr = []
                 console.log(colName,)
                 if(Object.keys(groupFilters).length>0 && groupFilters['type']==='static'){
-                    if (groupFilters['column'] ===colName &&groupFilters['group_a'].length>0 && groupFilters['group_b'].length>0 && groupFilters['group_c'].length>0){
+                    if (groupFilters['column'] ===colName &&groupFilters['group_1'].length>0 && groupFilters['group_2'].length>0 && groupFilters['group_3'].length>0){
                         preDefienedGroups1[colName].forEach((element, index)=>{
                             let group_a = false
                             let group_b = false
                             let group_c = false
-                            if(groupFilters['group_a'].indexOf(element.value)>-1){
+                            if(groupFilters['group_1'].indexOf(element.value)>-1){
                                 group_a = true
                             }
-                            if(groupFilters['group_b'].indexOf(element.value)>-1){
+                            if(groupFilters['group_2'].indexOf(element.value)>-1){
                                 group_b = true
                             }
-                            if(groupFilters['group_c'].indexOf(element.value)>-1){
+                            if(groupFilters['group_3'].indexOf(element.value)>-1){
                               group_c = true
                             }
                             tr.push(<tr key={colName+index} className='border-b'>
                                 <td className='text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900'>{element.label}</td>
-                                <td className='px-6 py-4'><input type='checkbox' checked={group_a} onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_a' })}/></td>
-                                <td className='px-6 py-4'><input type='checkbox' checked={group_b} onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_b' })}/></td>
-                                <td className='px-6 py-4'><input type='checkbox' checked={group_c} onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_c' })}/></td>
+                                <td className='px-6 py-4'><input type='checkbox' checked={group_a} onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_1' })}/></td>
+                                <td className='px-6 py-4'><input type='checkbox' checked={group_b} onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_2' })}/></td>
+                                <td className='px-6 py-4'><input type='checkbox' checked={group_c} onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_3' })}/></td>
                             </tr>)    
                         })
                     }else{
                         preDefienedGroups1[colName].map((element, index) => (
                             tr.push(<tr key={colName+index} className='border-b'>
                                 <td className='text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900'>{element.label}</td>
-                                <td className='px-6 py-4'><input type='checkbox' onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_a' })}/></td>
-                                <td className='px-6 py-4'><input type='checkbox' onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_b' })}/></td>
-                                <td className='px-6 py-4'><input type='checkbox' onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_c' })}/></td>
+                                <td className='px-6 py-4'><input type='checkbox' onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_1' })}/></td>
+                                <td className='px-6 py-4'><input type='checkbox' onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_2' })}/></td>
+                                <td className='px-6 py-4'><input type='checkbox' onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_3' })}/></td>
                             </tr>)
                         ))
                     }
@@ -784,9 +784,9 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
                     preDefienedGroups1[colName].map((element, index) => (
                         tr.push(<tr key={colName+index} className='border-b'>
                             <td className='text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900'>{element.label}</td>
-                            <td className='px-6 py-4'><input type='checkbox' onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_a' })}/></td>
-                            <td className='px-6 py-4'><input type='checkbox' onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_b' })}/></td>
-                            <td className='px-6 py-4'><input type='checkbox' onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_c' })}/></td>
+                            <td className='px-6 py-4'><input type='checkbox' onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_1' })}/></td>
+                            <td className='px-6 py-4'><input type='checkbox' onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_2' })}/></td>
+                            <td className='px-6 py-4'><input type='checkbox' onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_3' })}/></td>
                         </tr>)
                     ))
                     

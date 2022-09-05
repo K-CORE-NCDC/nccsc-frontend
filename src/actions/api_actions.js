@@ -333,6 +333,25 @@ export function getLolipopInformation(type, data) {
   };
 }
 
+export function getFusionTable(type, data) {
+  return (dispatch) => {
+    let url = config.auth + "getFusionTable/";
+    sendRequest(url, type, data)
+      .then((result) => {
+        const d = result
+        if (d.status === 200) {
+          dispatch({
+            type: dataVisualization.FUSIONTABLE_REQUEST,
+            payload:  d 
+          });
+        }
+        console.log(d)
+      }).catch((e) => {
+        console.log("error", e);
+      });
+  }
+}
+
 export function getFusionVennDaigram(type, data) {
   return (dispatch) => {
     let url = config.auth + "getFusionVenn/";
@@ -347,7 +366,6 @@ export function getFusionVennDaigram(type, data) {
         }
       }).catch((e) => {
         console.log("error", e);
-        
       });
   }
 }
