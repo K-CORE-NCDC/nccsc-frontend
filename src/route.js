@@ -26,6 +26,8 @@ const Faq = React.lazy(() => import('./containers/CustomerVoice/Faq'))
 const Notice = React.lazy(() => import('./containers/CustomerVoice/Notice'))
 const Qa = React.lazy(() => import('./containers/CustomerVoice/QA'))
 
+const InterPro =  React.lazy(() => import('./containers/Tools/InterPro'))
+
 
 const genefusion = React.lazy(() => import('./containers/Common/genefusion'))
 const UserDataTable = React.lazy(() => import('./containers/UserDataVisualization/Components/MainComponents/projectDataTable'))
@@ -61,6 +63,8 @@ const route = [
   { path: '/findpassword/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="FindPassword" defaultMessage="FindPassword" />, component: FindPassword},
   { path: `/resetpassword/:token`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="ChangePassword" defaultMessage="ChangePassword" />, component: ResetPassword},
   { path: `/gettable/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="ChangePassword" defaultMessage="ChangePassword" />, component: Report},
+
+  { path: `/interpro/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Interpro" defaultMessage="Interpro" />, component: InterPro},
   
 ]
 

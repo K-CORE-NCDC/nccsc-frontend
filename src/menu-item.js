@@ -120,27 +120,27 @@ let childMenu = {
         url: '/tools/',
         children: [
           {
-            id: 'dataprovision',
-            title: <FormattedMessage id="DataProvision" defaultMessage='Data delivery guidance' />,
+            id: 'Blast',
+            title: <FormattedMessage id="Blast" defaultMessage='Blast' />,
             type: 'item',
             icon: 'fa fa-dashboard',
-            url: '/application/',
+            url: '/blast/',
             children: []
           },
           {
-            id: 'datadb',
-            title: <FormattedMessage id="DataDb" defaultMessage='MaterialDB Guides' />,
+            id: 'V2FMap',
+            title: <FormattedMessage id="V2FMap" defaultMessage='V2FMap' />,
             type: 'item',
             icon: 'fa fa-dashboard',
-            url: '/application/',
+            url: '/v2fmap/',
             children: []
           },
           {
-            id: 'datarequest',
-            title: <FormattedMessage id="DataRequest" defaultMessage='Data Application' />,
+            id: 'Interpro',
+            title: <FormattedMessage id="Interpro" defaultMessage='Interpro' />,
             type: 'item',
             icon: 'fa fa-dashboard',
-            url: '/application/',
+            url: '/interpro/',
             children: []
           }
         ],
