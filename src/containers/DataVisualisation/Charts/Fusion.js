@@ -156,7 +156,7 @@ export default function FusionPlot({
   },[VennData])
   
   const getVennIds = (key) => {
-    console.log(key)
+    
     if(key.length>0){
       setFusionId(0)
       let name = key.split('_')
