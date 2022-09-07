@@ -98,6 +98,16 @@ const homeReducer = (state = { 'home': 'home' }, { type, payload }) => {
         ...state,
         verifyMobile:payload
       }
+    case homeConstants.INTERPRO:
+      return {
+        ...state,
+        interpro:payload
+      }
+    case homeConstants.VCFMAF:
+      return {
+        ...state,
+        vcfmaf:payload
+      }
 
     case homeConstants.CLEAR_ID_PASSWORD_RESET_PASSWORD:
       const {find_id,find_password,change_password_status, ...rest}=state 
