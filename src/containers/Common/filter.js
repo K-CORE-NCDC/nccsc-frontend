@@ -18,7 +18,11 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
   const [filtersUi, setFiltersUi] = useState({});
   const [filterHtml, setFilterHtml] = useState([]);
   const totalCount = useSelector((state) => {
-    return Object.keys(state.dataVisualizationReducer.Keys).length || 0;
+    if ('Keys' in state.dataVisualizationReducer){
+      return Object.keys(state.dataVisualizationReducer.Keys).length || 0;
+    }else{
+      return 0
+    }
   });
   const [totalCountS] = useState(totalCount);
   const [filterCondition, setFilterCondition] = useState("and");

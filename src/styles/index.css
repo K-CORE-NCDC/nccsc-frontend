@@ -1134,26 +1134,46 @@ dd {
 .report_table  header{
   padding:0px
 }
+/* .rdt_Table > .rdt_TableHead > .rdt_TableHeadRow > div:first-child{
+  min-width:4.888% !important;
+} */
 
-.report_table > div > div > .rdt_Table > .rdt_TableHead > .rdt_TableHeadRow > .rdt_TableCol:first-child{
-  border-left: 1px solid transparent !important;
-  border-right: 1px solid transparent !important;
+.report_table > div > div > .rdt_Table > .rdt_TableHead > .rdt_TableHeadRow > .rdt_TableCol{
+  border-left: 1px solid #fff ;
+  border-right: 1px solid #fff;
 }
-.report_table > div > div > .rdt_Table > .rdt_TableHead > .rdt_TableHeadRow > .rdt_TableCol:nth-child(2){
-  border-left: 1px solid transparent !important;
-}
+
 .report_table > div > div > .rdt_Table > .rdt_TableHead > .rdt_TableHeadRow > .rdt_TableCol:nth-child(even){
   border-left: 1px solid #ABB0B8 ;
-  border-right:1px solid transparent;
+  border-right:1px solid #fff;
 }
 
 .report_table > div > div > .rdt_Table > .rdt_TableHead > .rdt_TableHeadRow > .rdt_TableCol:nth-child(odd){
   border-left: 1px solid #6F7378 ;
-  border-right: 1px solid transparent;
+  border-right: 1px solid #fff;
 }
 .report_table > div > div > .rdt_Table > .rdt_TableHead > .rdt_TableHeadRow > .rdt_TableCol:last-child {
   border-right: 1px solid #6F7378 !important;
 }
+.report_table > div > div > .rdt_Table > .rdt_TableHead > .rdt_TableHeadRow > .rdt_TableCol:nth-child(7){
+  border-left: 1px solid #ABB0B8 ;
+  border-right: 1px solid #fff ;
+}
+.report_table > div > div > .rdt_Table > .rdt_TableHead > .rdt_TableHeadRow > .rdt_TableCol:nth-child(8){
+  border-left: 1px solid #6F7378 ;
+  border-right: 1px solid #fff ;
+}
+.report_table > div > div > .rdt_Table > .rdt_TableHead > .rdt_TableHeadRow > .rdt_TableCol:nth-child(9){
+  border-left: 1px solid #ABB0B8 ;
+}
+.report_table > div > div > .rdt_Table > .rdt_TableHead > .rdt_TableHeadRow > .rdt_TableCol:nth-child(6){
+  border-right: 1px solid #fff !important;
+}
+.report_table > div > div > .rdt_Table > .rdt_TableHead > .rdt_TableHeadRow > .rdt_TableCol:nth-child(2){
+  border-left: 1px solid #fff !important;
+}
+
+
 .leftGene.left_arrow::before{
   content: '> >';
   position: absolute;

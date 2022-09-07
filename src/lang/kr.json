@@ -32,7 +32,7 @@
     "Dynamic_volcano": "사용자지정그룹",
     "Submit_volcano": "적용",
     "Reset_volcano": "초기화",
-    "Clinical_Filters_heatmap": "임상 변수 주석",
+    "Clinical_Filters_heatmap": "임상정보 속성",
     "Select_heatmap": "선택",
     "View_By_heatmap": "변수 선택",
     "Total": "전체",
