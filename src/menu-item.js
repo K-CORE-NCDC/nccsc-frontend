@@ -128,11 +128,11 @@ let childMenu = {
             children: []
           },
           {
-            id: 'V2FMap',
-            title: <FormattedMessage id="V2FMap" defaultMessage='V2FMap' />,
+            id: 'VCFMAF',
+            title: <FormattedMessage id="VCFMAF" defaultMessage='VCFMAF' />,
             type: 'item',
             icon: 'fa fa-dashboard',
-            url: '/v2fmap/',
+            url: '/vcfmaf/',
             children: []
           },
           {

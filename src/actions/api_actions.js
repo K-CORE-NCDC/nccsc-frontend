@@ -76,6 +76,44 @@ export function findID(method,data){
       });
   }
 }
+
+export function interPro(method,data){
+  return (dispatch) => {
+    let url = config.auth + "interpro/";
+    sendRequest(url, method, data)
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: homeConstants.INTERPRO,
+          payload: d["data"],
+        });
+        dispatch({ type: homeConstants.REQUEST_DONE });
+      })
+      
+      .catch((e) => {
+        console.log("error", e);
+      });
+  }
+}
+export function vcfmaf(method,data){
+  return (dispatch) => {
+    let url = config.auth + "vcfmaf/";
+    sendRequest(url, method, data)
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: homeConstants.VCFMAF,
+          payload: d["data"],
+        });
+        dispatch({ type: homeConstants.REQUEST_DONE });
+      })
+      
+      .catch((e) => {
+        console.log("error", e);
+      });
+  }
+}
+
 export function findPassword(method,data){
   return (dispatch) => {
     let url = config.auth + "findpassword/";
