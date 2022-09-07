@@ -21,6 +21,8 @@ import PDFReport from '../../Common/PDFReport';
 
 
 
+
+
 export default function DataCircos({ width, inputData, screenCapture, setToFalseAfterScreenCapture, toggle, state }) {
   const reference = useRef()
   const dispatch = useDispatch()
@@ -51,18 +53,18 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
   const tableColumnsData = [
     {
-      name: <div><p>geneName</p>
-                 </div>,
+      name: 'geneName',
       selector: (row) => { return row.gene },
       sortable: true,
       classNames: ['report_sankey'],
-      minWidth: '13%',
-      // style: {
-      //   minWidth: '15.2%',
-      //   display: 'block',
-      //   textAlign: 'center',
-      //   lineHeight: '3.5',
-      // }
+      style: {
+        borderLeft: '1px solid #fff',
+        borderRight: '1px solid #fff',
+        boxSizing: 'border-box',
+        textAlign: 'center',
+        display: 'block',
+        lineHeight: '3.5',
+      },
     },
 
     {
@@ -81,13 +83,11 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
         else return ''
       },
       sortable: true,
-      minWidth: '10.5%',
       style: {
         borderLeft: '1px solid #6F7378',
         borderRight: '1px solid #fff',
         boxSizing: 'border-box',
         textAlign: 'center',
-        minWidth: '10.5%',
         display: 'block',
         lineHeight: '3.5',
       },
@@ -97,13 +97,11 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
       name: 'No',
       selector: row => { if (row.dna === 'NO') { return 'O ' } else return '' },
       sortable: true,
-      minWidth: '10.5%',
       style: {
         borderLeft: '1px solid #ABB0B8',
         borderRight: '1px solid #fff',
         boxSizing: 'border-box',
         textAlign: 'center',
-        minWidth: '10.5%',
         display: 'block',
         lineHeight: '3.5',
       },
@@ -112,13 +110,11 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
       name: 'High',
       selector: row => { if (row.rna === 'HIGH') { return 'O ' } else return '' },
       sortable: true,
-      minWidth: '10.5%',
       style: {
         borderLeft: '1px solid #6F7378',
         borderRight: '1px solid #fff',
         boxSizing: 'border-box',
         textAlign: 'center',
-        minWidth: '10.5%',
         display: 'block',
         lineHeight: '3.5',
 
@@ -128,13 +124,11 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
       name: 'Intermediate',
       selector: row => { if (row.rna !== 'HIGH' && row.rna !== 'LOW' ) { return 'O ' } else return '' },
       sortable: true,
-      minWidth: '10.5%',
       style: {
-        borderLeft: '1px solid #6F7378',
+        borderLeft: '1px solid #ABB0B8',
         borderRight: '1px solid #fff',
         boxSizing: 'border-box',
         textAlign: 'center',
-        minWidth: '10.5%',
         display: 'block',
         lineHeight: '3.5',
 
@@ -144,13 +138,11 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
       name: 'Low',
       selector: row => { if (row.rna === 'LOW') { return 'O ' } else return '' },
       sortable: true,
-      minWidth: '10.5%',
       style: {
         borderLeft: '1px solid #ABB0B8',
         borderRight: '1px solid #fff',
         boxSizing: 'border-box',
         textAlign: 'center',
-        minWidth: '10.5%',
         display: 'block',
         lineHeight: '3.5',
       },
@@ -159,13 +151,11 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
       name: 'High',
       selector: row => { if (row.proteome === 'HIGH') { return 'O ' } else return '' },
       sortable: true,
-      minWidth: '10.5%',
       style: {
         borderLeft: '1px solid #6F7378',
         borderRight: '1px solid #fff',
         boxSizing: 'border-box',
         textAlign: 'center',
-        minWidth: '10.5%',
         display: 'block',
         lineHeight: '3.5',
 
@@ -175,13 +165,11 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
       name: 'Intermediate',
       selector: row => { if (row.proteome !== 'HIGH' && row.proteome !== 'LOW' ) { return 'O ' } else return '' },
       sortable: true,
-      minWidth: '10.5%',
       style: {
-        borderLeft: '1px solid #6F7378',
+        borderLeft: '1px solid #ABB0B8',
         borderRight: '1px solid #fff',
         boxSizing: 'border-box',
         textAlign: 'center',
-        minWidth: '10.5%',
         display: 'block',
         lineHeight: '3.5',
 
@@ -196,7 +184,6 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
         borderRight: '1px solid #6F7378',
         boxSizing: 'border-box',
         textAlign: 'center',
-        width: '10.5%',
         display: 'block',
         lineHeight: '3.5',
       },

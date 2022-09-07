@@ -47,7 +47,7 @@ export default function DataVisualization() {
   const [menuItems, setMenuItems] = useState([]);
   const [screenCapture, setScreenCapture] = useState(false);
   const [availableTabsForProject, setavailableTabsForProject] = useState([]);
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(true);
   const [filterApplied, setfilterApplied] = useState(false);
   const [screenCaptureConfirmation, setScreenCaptureConfirmation] =
     useState(false);
@@ -149,29 +149,35 @@ export default function DataVisualization() {
   }, [project_id, userProjectDetails]);
 
   const toggleTab = (event) => {
+    let t = ["Volcano Plot","Survival Plot","Fusion Plot"]
+    if(t.indexOf(event.target.innerText)!==-1){
+      setToggle(false)
+    }else{
+      setToggle(true)
+    }
     
-    setToggle(false)
     let tabsContainer = document.querySelector("#tabs");
     let tabTogglers = tabsContainer.querySelectorAll("a");
     tabTogglers.forEach(function (toggler) {
       toggler.addEventListener("click", function (e) {
-        let tabName = this.getAttribute("href");
         for (var i = 0; i < tabTogglers.length; i++) {
           tabTogglers[i].parentElement.classList.remove(
-            "border-blue-400",
+            "border-transparent",
             "border-b",
             "-mb-px",
             "opacity-100"
           );
         }
         e.target.parentElement.classList.add(
-          "border-blue-400",
+          "border-transparent",
           "border-b-4",
           "-mb-px",
           "opacity-100"
         );
       });
     });
+    
+    
   };
 
   useEffect(() => {
@@ -240,7 +246,7 @@ export default function DataVisualization() {
       let classes =
         "lg:px-4 sm:px-2 xs:px-2 py-2 xs:text-sm sm:text-xl lg:text-2xl font-semibold rounded-t opacity-50 ";
       if (tab === element) {
-        classes = classes + " border-blue-400 border-b-4 -mb-px opacity-100";
+        classes = classes + " border-transparent border-b-4 -mb-px opacity-100";
       }
       let name = " Plot";
       if (element === "heatmap") {

@@ -4,11 +4,19 @@ import SankeyIndex from '../DataVisualisation/Charts/SankeyIndex';
 import ReportSubHeader from './ReportSubHeader';
 import { useSelector } from "react-redux";
 import PdfPrint from './PdfPrint';
+
+
+
 function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, basicInformationData, isReportClicked, isReportClickedFunction }) {
   const [basicHtml, setBasicHtml] = useState([])
   const basicTable = useRef()
   const reportData = useSelector(state => state.dataVisualizationReducer.rniData)
-
+  const [tableRender,setTableRender] = useState(false)
+  useEffect(()=>{
+    if(tableData.length>0){
+      setTableRender(true)
+    }
+  },[tableData])
   useEffect(() => {
     if (basicInformationData.length > 0) {
       let tmp = []
@@ -59,6 +67,7 @@ function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, b
     if (gene in variant) {
       // return row
     } else {
+      
       return row
     }
   }
@@ -114,19 +123,23 @@ function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, b
                 </div>
 
                 {tableData && <div className=' report_table'>
+                  
                   <DataTable pagination
+                  responsive
                     columns={tableColumnsData}
                     data={tableData}
                     subHeader
+                    
                     customStyles={customStyles}
-                    subHeaderComponent={<ReportSubHeader />}
+                    subHeaderComponent={<ReportSubHeader tData={tableRender}/>}
                     expandableRows
                     expandableRowDisabled={rowPreDisabled}
                     expandableRowsComponent={SankeyIndex}
                     expandableRowExpanded={expandableRowExpanded}
                     onRowExpandToggled={rowExpandFunc}
-                    subHeaderWrap
+                    
                   />
+                  
                 </div>}
               </div>
               </div>
