@@ -11,7 +11,14 @@ function NewSankeyd3({SankeyJson, idName}) {
   const drawChart = (energyjson)=>{
       
     var sankey = d3.sankey().nodeWidth(15).nodePadding(10).size([width, height]);
-  
+    let color_types = {
+                        "gene":'#1f77b4',
+                        "vc":'#17becf',
+                        "rsid":'#ff7f0e',
+                        "disease":'#e377c2',
+                        'drug':"#9467bd"
+                      }
+
     var formatNumber = d3.format(",.0f"),
         format = function(d) { return formatNumber(d) + " TWh"; },
         color = d3.scale.category20();
@@ -59,7 +66,11 @@ function NewSankeyd3({SankeyJson, idName}) {
     node.append("rect")
         .attr("height", function(d) { return d.dy; })
         .attr("width", sankey.nodeWidth())
-        .style("fill", function(d) { return d.color = color(d.name.replace(/ .*/, "")); })
+        .style("fill", function(d) { 
+          let t = d['type']
+          return color_types[t]
+          // return d.color = color(d.name.replace(/ .*/, "")); 
+        })
         .style("stroke", function(d) { return d3.rgb(d.color).darker(2); })
       .append("title")
         .text(function(d) { return d.name + "\n" + format(d.value); });
@@ -141,7 +152,7 @@ function NewSankeyd3({SankeyJson, idName}) {
 
   return (
     <div>
-        <div id={idName} className='overflow-y-scroll h-screen'></div>
+        <div id={idName} className='overflow-y-scroll' style={{"height":"400px",'padding':"50px"}}></div>
     </div>
   )
 }

@@ -71,7 +71,7 @@ function SankeyIndex({ ...props }) {
 
     useEffect(() => {
         if (sankeyJson) {
-            console.log("sankeyJson", sankeyJson)
+            let tmp = {}
             let detailgeneData = [];
             for (let i = 0; i < Object.keys(sankeyJson).length - 1; i++) {
                 detailgeneData.push(sankeyJson[i])
@@ -89,12 +89,13 @@ function SankeyIndex({ ...props }) {
             let listOfNodes = []
             let count = 1;
             geneNodes[gene] = prev;
+            tmp[gene] = 'gene'
             count = 1;
             for (let obj in sankeyJson) {
                 if (!(sankeyJson[obj]['variant_classification'] in geneNodes) && (sankeyJson[obj]['variant_classification'])) {
                     geneNodes[sankeyJson[obj]['variant_classification']] = count;
+                    tmp[sankeyJson[obj]['variant_classification']] = 'vc'
                     next = sankeyJson[obj]['variant_classification'];
-                    console.log("in variant_classification", sankeyJson[obj]['variant_classification']);
                     if (firsttime) {
 
                         geneLinks.push({ 'source': 0, 'target': geneNodes[next], 'value': 10 })
@@ -110,8 +111,8 @@ function SankeyIndex({ ...props }) {
                     prev = sankeyJson[obj]['variant_classification'];
                 }
                 if (!(sankeyJson[obj]['dbsnp_rs'] in geneNodes) && (sankeyJson[obj]['dbsnp_rs'])) {
-                    console.log("in dbsnp_rs", sankeyJson[obj]['dbsnp_rs']);
                     geneNodes[sankeyJson[obj]['dbsnp_rs']] = count;
+                    tmp[sankeyJson[obj]['dbsnp_rs']] = 'rsid'
                     next = sankeyJson[obj]['dbsnp_rs'];
                     geneLinks.push({ 'source': geneNodes[prev], 'target': geneNodes[next], 'value': 10 })
                     prev = next;
@@ -121,8 +122,8 @@ function SankeyIndex({ ...props }) {
                     prev = sankeyJson[obj]['dbsnp_rs'];
                 }
                 if (!(sankeyJson[obj]['diseasename'] in geneNodes) && (sankeyJson[obj]['diseasename'])) {
-                    console.log("in diseasename", sankeyJson[obj]['diseasename']);
                     geneNodes[sankeyJson[obj]['diseasename']] = count;
+                    tmp[sankeyJson[obj]['diseasename']] = 'disease'
                     next = sankeyJson[obj]['diseasename'];
                     geneLinks.push({ 'source': geneNodes[prev], 'target': geneNodes[next], 'value': 10 })
                     prev = next;
@@ -132,8 +133,8 @@ function SankeyIndex({ ...props }) {
                     prev = sankeyJson[obj]['diseasename'];
                 }
                 if (!(sankeyJson[obj]['drugname'] in geneNodes) && (sankeyJson[obj]['drugname'])) {
-                    console.log("in drugname", typeof (sankeyJson[obj]['drugname']));
                     geneNodes[sankeyJson[obj]['drugname']] = count;
+                    tmp[sankeyJson[obj]['drugname']] = 'drug'
                     next = sankeyJson[obj]['drugname'];
                     geneLinks.push({ 'source': geneNodes[prev], 'target': geneNodes[next], 'value': 10 })
                     prev = next;
@@ -145,9 +146,13 @@ function SankeyIndex({ ...props }) {
             }
 
             for (let i in geneNodes) {
+
                 if (i !== 'undefined') {
-                    // console.log("i", i, "geneNodes", geneNodes[i]);
-                    listOfNodes.push({ "name": i })
+                    let type = ''
+                    if (i in tmp){
+                        type = tmp[i]
+                    }
+                    listOfNodes.push({ "name": i,"type": type })
                 }
             }
             listOfNodes.pop()   // for removing the last undefined node.
@@ -245,16 +250,6 @@ function SankeyIndex({ ...props }) {
     return (
 
         <div id="main_chart_cont">
-            {/* {gene && nodes.length > 0 && links.length > 0 &&
-                <>
-                    <Sankeyd3></Sankeyd3>
-                    <Sankey gene={gene} width={width} exampleNodes={nodes} exampleLinks={links}></Sankey>
-                    <p>Double Click To Expand</p>
-
-                    {sankyTableData && sankyTable
-                    }
-                </>
-            } */}
 
             {gene && listOfNodes.length > 0 && listOfLinks.length > 0 &&
                 <>
@@ -271,18 +266,9 @@ function SankeyIndex({ ...props }) {
                         <p key={i}></p>
                     })
                     }
-
                 </>
             }
 
-            {/* {gene && (links.length <= 0) &&
-                <>
-                    <p>Double Click To Expand</p>
-                    <p>Double Click To Expand</p>
-                    {sankyTable}
-
-                </>
-            } */}
         </div>
     )
 }
