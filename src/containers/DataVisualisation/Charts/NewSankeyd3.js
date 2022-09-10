@@ -132,10 +132,10 @@ function NewSankeyd3({SankeyJson, idName}) {
       if(document.getElementById(idName)){
         document.getElementById(idName).innerHTML = ''
       }
-      // console.log("json for chart is",SankeyJson)
+      console.log("json for chart is",SankeyJson)
       let j = SankeyJson
 
-      drawChart(j)
+      // drawChart(j)
     }
   },[SankeyJson])
 

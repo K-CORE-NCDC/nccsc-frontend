@@ -109,6 +109,19 @@ const homeReducer = (state = { 'home': 'home' }, { type, payload }) => {
         vcfmaf:payload
       }
 
+    case homeConstants.LOGMANAGEMENT:
+      console.log("I am called from logmanagement");
+      return {
+        ...state,
+        logmanagement:[ ...payload]
+      }
+
+    case homeConstants.SENDLOGMANAGEMENT:
+      return {
+        ...state,
+        sendlogmanagement:payload
+      }
+
     case homeConstants.CLEAR_ID_PASSWORD_RESET_PASSWORD:
       const {find_id,find_password,change_password_status, ...rest}=state 
       state= rest
