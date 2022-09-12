@@ -21,6 +21,38 @@ export function clearIDPasswordResetPASSWORD() {
 }
 
 
+export function logManagement(method,data) {
+  return (dispatch) => {
+    // console.log("clearing state");
+    dispatch({
+      type: homeConstants.CLEAR_ID_PASSWORD_RESET_PASSWORD,
+      payload: data,
+    });
+  };
+}
+
+
+export function sendlogManagement(method,data){
+  console.log("data is", data);
+  return (dispatch) => {
+    let url = config.auth + "sendlogmanagement/";
+    sendRequest(url, method, data)
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: homeConstants.SENDLOGMANAGEMENT,
+          payload: d["data"],
+        });
+        dispatch({ type: homeConstants.REQUEST_DONE });
+      })
+      
+      .catch((e) => {
+        console.log("error", e);
+      });
+  }
+}
+
+
 export function sendEmail(method,data){
   return (dispatch) => {
     let url = config.auth + "send-mail/";
