@@ -54,6 +54,22 @@ export default function Barchart({id,data,width,color, chart_type,title}) {
   useEffect(() => {
     
     if (data){
+      if(id==='chart_bar_BodyMassIndex'){
+        let d = {}
+        for (let i = 0; i < data.length; i++) {
+          const element = data[i];
+          let n = parseInt(element.name)
+          if(n in d){
+            d[n] = d[n]+element.cnt
+          }else{
+            d[n] = element.cnt
+          }
+        }
+        data = []
+        for (const key in d) {
+          data.push({"name":key,"cnt":d[key]})
+        }
+      }
       let g_dat = {"labels":[],"datasets":[]}
       let t = []
       let colors = []
@@ -85,8 +101,8 @@ export default function Barchart({id,data,width,color, chart_type,title}) {
           t.push(data[i].cnt)
         }
         colors.push(h+linear+")")
-        console.log(id)
-        if(id!=='chart_bar_DurationofBreastfeeding' && id!=='chart_bar_Ki-67Index' && id!=='chart_bar_HER2Score' && id!=='chart_bar_Timeuntilrelapseisconfirmed' && id!=='chart_bar_FirstMenstrualAge' && id!=='chart_bar_AgeOfDaignosis' && id!=="chart_bar_BodyMassIndex"){
+        
+        if(id!=='chart_bar_TCategory' && id!=='chart_bar_NCategory' && id!=='chart_bar_DurationofBreastfeeding' && id!=='chart_bar_Ki-67Index' && id!=='chart_bar_HER2Score' && id!=='chart_bar_Timeuntilrelapseisconfirmed' && id!=='chart_bar_FirstMenstrualAge' && id!=='chart_bar_AgeOfDaignosis' && id!=="chart_bar_BodyMassIndex"){
           linear = linear-0.2
         }
       }
@@ -96,9 +112,6 @@ export default function Barchart({id,data,width,color, chart_type,title}) {
         g_dat['labels'].push(na[0])
         t.push(parseInt(na[1]))
       }
-      // var tmp = generateColor(color,"#FFFFCC",data.length);
-      // console.log(tmp)
-      
       
       g_dat['datasets'].push({
         data:t,
