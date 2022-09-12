@@ -1,4 +1,5 @@
 import React, { Suspense, useEffect, useState } from "react";
+// import { useBeforeunload } from 'react-beforeunload';
 import { Route, Switch, Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 import config from "../../../config";
@@ -13,6 +14,7 @@ import { Popover, Transition } from "@headlessui/react";
 import logoNew from "../../../assets/images/Left_up.png";
 import footer_logo from "../../../assets/images/f_logo.png";
 import { useSelector, useDispatch } from "react-redux";
+import uuid from 'react-uuid';
 import {
   MenuIcon,
   ChevronRightIcon,
@@ -22,8 +24,9 @@ import {
 import MenuItems from "../../../menu-item";
 import { useParams } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
-import { getDashboardCount } from "../../../actions/api_actions";
+import { getDashboardCount, sendlogManagement } from "../../../actions/api_actions";
 import Popup from "../../../containers/Popup/Popup";
+
 
 const menu = route.map((route, index) => {
   return route.component ? (
@@ -45,6 +48,37 @@ export default function Web(props) {
   const [currentTime, setCurrentTime] = useState("");
   const dispatch = useDispatch();
   const countJson = useSelector((data) => data.homeReducer.dataCount);
+
+  // const logmanagement = useSelector((data) => data.homeReducer.logmanagement);
+
+  useEffect(() => {
+    sessionStorage.setItem('sessionId', uuid())
+    sessionStorage.setItem('firstTime', true)
+
+    if (sessionStorage.getItem("firstTime")) {
+      var today = new Date();
+      var loginTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      sessionStorage.setItem('loginTime', loginTime)
+      sessionStorage.setItem('prevTime', loginTime)
+      sessionStorage.setItem('firstTime', false)
+      sessionStorage.setItem('IdNumber', 0)
+      let sessionId = sessionStorage.getItem('sessionId')
+      let arrayOfLog = []
+      let object = {
+        'id': 0,
+        'sessionId': sessionId,
+        'url': 'home',
+        'startTime': loginTime,
+        'endTime': ''
+      }
+      arrayOfLog[0] = object
+      let alid = sessionStorage.getItem('IdNumber')
+      console.log("alid is", alid);
+      sessionStorage.setItem('logData', JSON.stringify(arrayOfLog))
+
+    }
+
+  }, [])
 
   useEffect(() => {
     let html = [];
@@ -103,10 +137,85 @@ export default function Web(props) {
       }
     }
   }, []);
+
+  useEffect(() => {
+
+    console.log("logmanagement ----->", window.location.href)
+    var url = window.location.href.split('/').filter(Boolean).pop();
+    let sessionId = sessionStorage.getItem('sessionId')
+    let idNumber = JSON.parse(sessionStorage.getItem('IdNumber'))
+    let logData = sessionStorage.getItem('logData')
+    let logDataIs = JSON.parse(logData)
+
+    var today = new Date();
+    var currentTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+    logDataIs[idNumber]['endTime'] = currentTime
+
+    idNumber++;
+
+    let object = {
+      'id': idNumber,
+      'sessionId': sessionId,
+      'url': url,
+      'startTime': currentTime,
+      'endTime': ''
+    }
+    sessionStorage.setItem('IdNumber', idNumber)
+    logDataIs[idNumber] = object
+    sessionStorage.setItem('logData', JSON.stringify(logDataIs))
+    console.log("log data length is", logDataIs.length);
+
+    if (logDataIs.length >= 10) {
+      idNumber = 0
+      sessionStorage.setItem('IdNumber', idNumber)
+      dispatch(sendlogManagement("POST", logDataIs))
+      logDataIs.length = 0
+      let object = {
+        'id': 0,
+        'url': url,
+        'startTime': currentTime,
+        'endTime': ''
+      }
+      logDataIs[idNumber] = object
+      sessionStorage.setItem('logData', JSON.stringify(logDataIs))
+    }
+
+  }, [window.location.href])
+
+  // const unloadCallback = () => {
+  //   let logDataIs = sessionStorage.getItem('logData')
+  //   alert('tab close')
+  //   console.log("remaining data if tab suddenly closes");
+  //   dispatch(sendlogManagement("POST", logDataIs))
+  // }
+
+  // useEffect(() => {
+  //   return () => { 
+  //     unloadCallback()
+  //   }
+  // }, [])
+
+
+  // useBeforeunload(() => unloadCallback);
+
+  useEffect(() => {
+    const unloadCallback = (event) => {
+      event.preventDefault();
+      event.returnValue = "";
+      return "";
+    };
+
+    window.addEventListener("beforeunload", unloadCallback);
+    return () => window.removeEventListener("beforeunload", unloadCallback);
+  }, []);
+
   let classes = "";
   if (id[0] === "/home") {
     classes = "screen-2 xl:h-full lg:h-full ";
   }
+
+
 
   return (
     <div className="relative">
