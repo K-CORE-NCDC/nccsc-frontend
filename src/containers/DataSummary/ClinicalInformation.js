@@ -23,6 +23,7 @@ export default function ClinicalInformation() {
   const [leftSide, setLeftSide] = useState({"charts":[],"leftSide":[],"activeCharts":[]});
   const [activeChartsList, setActiveChartsList] = useState(["Sex","Age Of Daignosis","Body Mass Index","Diagnosis Of Bilateral Breast Cancer"]);
   const [selected, setSelected] = useState('Basic/Diagnostic Information');
+  
   const dispatch = useDispatch()
   const [firstLoad, setFirstLoad] = useState(true)
   const [loader, setLoader] = useState(true)
