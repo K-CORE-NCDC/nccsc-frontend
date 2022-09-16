@@ -159,82 +159,87 @@ function PDFReport({ sampleKey, tableData, tableColumnsData, basicInformationDat
 
   useEffect(() => {
     let getSankyData = (sankeyJson) => {
-
-      let firsttime = true;
-      let prev = 0, next = 1;
-      let geneNodes = {}
-      let geneLinks = []
-      let listOfNodes = []
-      let count = 1;
-      geneNodes[gene] = prev;
-      count = 1;
-      for (let obj in sankeyJson) {
-        if (!(sankeyJson[obj]['variant_classification'] in geneNodes) && (sankeyJson[obj]['variant_classification'])) {
-          geneNodes[sankeyJson[obj]['variant_classification']] = count;
-          next = sankeyJson[obj]['variant_classification'];
-          // console.log("in variant_classification", sankeyJson[obj]['variant_classification']);
-          if (firsttime) {
-
-            geneLinks.push({ 'source': 0, 'target': geneNodes[next], 'value': 10 })
-            firsttime = false;
+      
+      let nodes = {};
+      let node_type = {};
+      let i = 1;
+      sankeyJson.forEach((element) => {
+        for (const key in element) {
+          if (key !== "sourceurl") {
+            if (!nodes.hasOwnProperty(element[key]) && element[key]) {
+              nodes[element[key]] = i;
+              node_type[i] = key;
+              i = i + 1;
+            }
           }
-          else {
-            geneLinks.push({ 'source': geneNodes[prev], 'target': geneNodes[next], 'value': 10 })
+        }
+      });
+
+      let final_nodes = [];
+      for (const key in nodes) {
+        final_nodes.push({ name: key, type: node_type[nodes[key]] });
+      }
+      let fn = {};
+      let final_links = [];
+      sankeyJson.forEach((element) => {
+        if (element["hugo_symbol"] && element["variant_classification"]) {
+          let k =
+            nodes[element["hugo_symbol"]] +
+            "_" +
+            nodes[element["variant_classification"]];
+          if (!(k in fn)) {
+            fn[k] = "";
+            final_links.push({
+              source: element["hugo_symbol"],
+              target: element["variant_classification"],
+              value: 10,
+            });
           }
-          prev = next;
-          count++;
         }
-        else if ((sankeyJson[obj]['variant_classification'] in geneNodes)) {
-          prev = sankeyJson[obj]['variant_classification'];
+        if (element["variant_classification"] && element["dbsnp_rs"]) {
+          let k =
+            nodes[element["variant_classification"]] +
+            "_" +
+            nodes[element["dbsnp_rs"]];
+          if (!(k in fn)) {
+            fn[k] = "";
+            final_links.push({
+              source: element["variant_classification"],
+              target: element["dbsnp_rs"],
+              value: 10,
+            });
+          }
         }
-        if (!(sankeyJson[obj]['dbsnp_rs'] in geneNodes) && (sankeyJson[obj]['dbsnp_rs'])) {
-          // console.log("in dbsnp_rs", sankeyJson[obj]['dbsnp_rs']);
-          geneNodes[sankeyJson[obj]['dbsnp_rs']] = count;
-          next = sankeyJson[obj]['dbsnp_rs'];
-          geneLinks.push({ 'source': geneNodes[prev], 'target': geneNodes[next], 'value': 10 })
-          prev = next;
-          count++;
+        if (element["dbsnp_rs"] && element["diseasename"]) {
+          let k =
+            nodes[element["dbsnp_rs"]] + "_" + nodes[element["diseasename"]];
+          if (!(k in fn)) {
+            fn[k] = "";
+            final_links.push({
+              source: element["dbsnp_rs"],
+              target: element["diseasename"],
+              value: 10,
+            });
+          }
         }
-        else if ((sankeyJson[obj]['dbsnp_rs'] in geneNodes)) {
-          prev = sankeyJson[obj]['dbsnp_rs'];
+        if (element["diseasename"] && element["drugname"]) {
+          let k =
+            nodes[element["diseasename"]] + "_" + nodes[element["drugname"]];
+          if (!(k in fn)) {
+            fn[k] = "";
+            final_links.push({
+              source: element["diseasename"],
+              target: element["drugname"],
+              value: 10,
+            });
+          }
         }
-        if (!(sankeyJson[obj]['diseasename'] in geneNodes) && (sankeyJson[obj]['diseasename'])) {
-          // console.log("in diseasename", sankeyJson[obj]['diseasename']);
-          geneNodes[sankeyJson[obj]['diseasename']] = count;
-          next = sankeyJson[obj]['diseasename'];
-          geneLinks.push({ 'source': geneNodes[prev], 'target': geneNodes[next], 'value': 10 })
-          prev = next;
-          count++;
-        }
-        else if ((sankeyJson[obj]['diseasename'] in geneNodes)) {
-          prev = sankeyJson[obj]['diseasename'];
-        }
-        if (!(sankeyJson[obj]['drugname'] in geneNodes) && (sankeyJson[obj]['drugname'])) {
-          // console.log("in drugname", typeof (sankeyJson[obj]['drugname']));
-          geneNodes[sankeyJson[obj]['drugname']] = count;
-          next = sankeyJson[obj]['drugname'];
-          geneLinks.push({ 'source': geneNodes[prev], 'target': geneNodes[next], 'value': 10 })
-          prev = next;
-          count++;
-        }
-        else if ((sankeyJson[obj]['drugname'] in geneNodes)) {
-          prev = sankeyJson[obj]['drugname'];
-        }
-      }
+      });
 
-      for (let i in geneNodes) {
-        if (i !== 'undefined') {
-          // console.log("i", i, "geneNodes", geneNodes[i]);
-          listOfNodes.push({ "name": i })
-        }
-      }
-
-      listOfNodes.pop()   // for removing the last undefined node.
-      geneLinks.pop()     // for removing the last undefined link.
 
       let sankeyjsondata = {
-        "nodes": listOfNodes,
-        "links": geneLinks
+        "nodes": final_nodes,
+        "links": final_links
       }
 
       return sankeyjsondata;
@@ -322,49 +327,12 @@ function PDFReport({ sampleKey, tableData, tableColumnsData, basicInformationDat
           <div>
             <Sankey></Sankey>
             <NewSankeyd3 SankeyJson={SankeyJsonDataIs} idName={`chart${i}`}></NewSankeyd3>
-            {/* {sankyTableData} */}
-
-            {/* <div>
-              <table className="min-w-full border text-center">
-                <thead className="border-b">
-                  <tr>
-                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 border-r">
-                      Variant
-                    </th>
-                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 border-r">
-                      Rsid
-                    </th>
-                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 border-r">
-                      Disease
-                    </th>
-                    <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4">
-                      Drug
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-b">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">{sankyTableData[sankeyData[i]['gene_name']]['Variant'] ? sankyTableData[sankeyData[i]['gene_name']]['Variant'] : " "}</td>
-                    <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                      {sankyTableData[sankeyData[i]['gene_name']]['Rsid'] ? sankyTableData[sankeyData[i]['gene_name']]['Rsid'] : " "}
-                    </td>
-                    <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                      {sankyTableData[sankeyData[i]['gene_name']]['Disease'] ? sankyTableData[sankeyData[i]['gene_name']]['Disease'] : " "}
-                    </td>
-                    <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                      {sankyTableData[sankeyData[i]['gene_name']]['Drug'] ? sankyTableData[sankeyData[i]['gene_name']]['Drug'] : " "}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div> */}
             {SankeyTableData}
           </div>
         }
       </div>
       )
     }
-    // console.log(sankeyCharts)
     setSankyDataCharts(sankeyCharts)
   }, [sankeyData])
 
@@ -408,17 +376,15 @@ function PDFReport({ sampleKey, tableData, tableColumnsData, basicInformationDat
 
 
   return (
-
     <>
-
       <div>
-        <div className='printpdf'>
+        <div className='printpdf' id='printpdf'>
           <div>
             <h1 className='font-medium leading-tight text-5xl mt-0 mb-2 text-center text-black-600'>NCC Report</h1>
             <h1 className='font-medium leading-tight text-5xl mt-0 mb-2 text-center text-black-600'>{`Date : ${todayDate}`}</h1>
             {/* <img src={NccLogo} alt="National Cancer Center"></img> */}
           </div>
-            <img src={NccLogo} className="block mx-auto" alt="National Cancer Center" ></img>
+            
           <h3 className='py-4 px-3 my-10'>Sample Name : {sampleKey}</h3>
           <div className='rounded-lg border border-gray-200 my-5 '>
             <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
@@ -426,11 +392,9 @@ function PDFReport({ sampleKey, tableData, tableColumnsData, basicInformationDat
                 Basic Information
               </h3>
             </div>
-
             <div className=''>
               {basicHtml}
             </div>
-
           </div>
 
 
@@ -464,7 +428,7 @@ function PDFReport({ sampleKey, tableData, tableColumnsData, basicInformationDat
 
         </div>
         <div>
-          {sankyDataCharts}
+          
         </div>
       </div>
     </>

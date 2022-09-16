@@ -12,11 +12,11 @@ function NewSankeyd3({SankeyJson, idName}) {
       
     var sankey = d3.sankey().nodeWidth(15).nodePadding(10).size([width, height]);
     let color_types = {
-                        "gene":'#1f77b4',
-                        "vc":'#17becf',
-                        "rsid":'#ff7f0e',
-                        "disease":'#e377c2',
-                        'drug':"#9467bd"
+                        "hugo_symbol":'#1f77b4',
+                        "variant_classification":'#17becf',
+                        "dbsnp_rs":'#ff7f0e',
+                        "diseasename":'#e377c2',
+                        'drugname':"#9467bd"
                       }
 
     var formatNumber = d3.format(",.0f"),
@@ -31,7 +31,15 @@ function NewSankeyd3({SankeyJson, idName}) {
 
  
     var path = sankey.link();
-  
+    var nodeMap = {};
+    energyjson.nodes.forEach(function(x) { nodeMap[x.name] = x; });
+    energyjson.links = energyjson.links.map(function(x) {
+      return {
+        source: nodeMap[x.source],
+        target: nodeMap[x.target],
+        value: x.value
+      };
+    });
     sankey
         .nodes(energyjson.nodes)
         .links(energyjson.links)
@@ -146,7 +154,7 @@ function NewSankeyd3({SankeyJson, idName}) {
       console.log("json for chart is",SankeyJson)
       let j = SankeyJson
 
-      // drawChart(j)
+      drawChart(j)
     }
   },[SankeyJson])
 

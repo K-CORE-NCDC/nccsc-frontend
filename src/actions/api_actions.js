@@ -466,8 +466,11 @@ export function getSankeyJson(type,data){
         if (d.status === 200) {
           dispatch({
             type: dataVisualization.SANKEYJSON_REQUEST,
-            payload: { ...d["data"], status: 200 },
+            payload: { "data":[...d["data"]], status: 200 },
           });
+          
+
+          
           
         }
         dispatch({ type: dataVisualization.REQUEST_DONE });

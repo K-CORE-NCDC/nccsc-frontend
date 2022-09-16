@@ -9,12 +9,8 @@ import ImageGrid from '../../Common/ImageGrid'
 import { getCircosInformation, getCircosTimelineTable, getOncoImages, getBreastKeys, getRNIDetails } from '../../../actions/api_actions'
 import '../../../assets/css/style.css'
 import { exportComponentAsPNG } from 'react-component-export-image';
-import placeholder from '../../../assets/img/circos_ncc.png';
 import { FormattedMessage } from 'react-intl';
 import Report from '../../Common/Report';
-import DataTable from 'react-data-table-component';
-import { selector } from 'd3';
-
 
 
 import PDFReport from '../../Common/PDFReport';
@@ -231,6 +227,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   }
 
   const isReportClickedFunction = (value)=>{
+    console.log(value)
     setIsReportClicked(value)
   }
 
@@ -383,7 +380,8 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
             <div className='flex xs:col-span-3 sm:col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 2xl:col-span-3'>
               <div className='flex-col text-left sm:w-2/6 xs:w-2/6'>
                 {circosSanpleRnidListData &&
-                  <div htmlFor="samples" className="lg:text-2xl sm:text-xl xs:text-sm"><FormattedMessage id="Cir_choose_sample" defaultMessage='Choose a Sample' />: ({samplesCount}) </div>}
+                  <div htmlFor="samples" className="lg:text-2xl sm:text-xl xs:text-sm">
+                    <FormattedMessage id="Cir_choose_sample" defaultMessage='Choose a Sample' />: ({samplesCount}) </div>}
                 <select
                   className="w-full  border bg-white rounded px-3 py-4 outline-none lg:text-xl sm:text-xl xs:text-sm"
                   value={sampleKey}
@@ -438,14 +436,14 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
         />
 
       }
-      
-       { showReportTable && <PDFReport
+      { showReportTable && <PDFReport
 
         sampleKey={circosSanpleRnidListData[sampleKey]}
         tableColumnsData={tableColumnsData}
         tableData={tableData}
         basicInformationData={basicInformationData}
-      />} 
+        />}
+      
 
 
 

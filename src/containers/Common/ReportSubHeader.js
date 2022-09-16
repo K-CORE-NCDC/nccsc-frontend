@@ -7,39 +7,47 @@ function ReportSubHeader({tData}) {
   const [sm,setSm] = useState(0)
   const [md,setMd] = useState(0)
   const [width,setWidth] = useState(0)
+  const [dataExist,setDataExist] = useState(false)
+  
   useEffect(()=>{
-    if(tData!==undefined){
+    if(dataExist){
       let w=0,s=0,m=0
+      
       if(document.getElementsByClassName('rdt_TableRow')){
         let row = document.getElementsByClassName('rdt_TableRow')[0]
-        if(row && row.childNodes){
+        if(row && w===0 && s===0 && m===0){
           let r = row.childNodes
-          for (let index = 0; index < r.length; index++) {
-            const element = r[index];
-            if (index===0){
-              // eslint-disable-next-line react-hooks/exhaustive-deps
-              s = element.offsetWidth
-              w = w+s
-            }else{
-              // eslint-disable-next-line react-hooks/exhaustive-deps
-              m = element.offsetWidth
-              w = w+m
+          if(r.length>0){
+            for (let index = 0; index < r.length; index++) {
+              const element = r[index];
+              if (index===0){
+                // eslint-disable-next-line react-hooks/exhaustive-deps
+                s = element.offsetWidth
+                w = w+s
+              }else{
+                // eslint-disable-next-line react-hooks/exhaustive-deps
+                m = element.offsetWidth
+                w = w+m
+              }
             }
+            setSm(s)
+            setMd(m)
+            setWidth(w)
           }
         }
       }
-      console.log(w)
-      setSm(s)
-      setMd(m)
-      setWidth(w)
     }
-    
+  },[dataExist])
+  useEffect(()=>{
+    if(tData!==undefined && tData){
+      setDataExist(tData)
+    }
   },[tData,sm,md])
   
 
   return (
     <>
-      {width && sm && md && 
+      {width >0 && sm>0 && md>0 && 
       <div className='flex  w-full  border-b border-gray-200' style={{ "borderRight": '1px solid #6F7378',minWidth:width+'px' }}>
 
         <div style={{ minWidth: (sm+md+2)+'px', 'borderRight': '1px solid #6F7378','borderLeft': '1px solid #fff' }} className=' px-5 py-8 text-center'>Cancer Major Genes
