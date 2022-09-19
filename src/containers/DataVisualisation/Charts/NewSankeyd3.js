@@ -25,7 +25,8 @@ function NewSankeyd3({SankeyJson, idName}) {
 
     var svg = d3.select(`#${idName}`).append("svg")
         .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("height", "100vh")
+        .attr('class',"inline")
       .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -160,7 +161,7 @@ function NewSankeyd3({SankeyJson, idName}) {
 
   return (
     <div>
-        <div id={idName} className='overflow-y-scroll' style={{"height":"400px",'padding':"50px"}}></div>
+        <div id={idName} className='relative w-full text-center'  style={{'padding':"50px"}}></div>
     </div>
   )
 }

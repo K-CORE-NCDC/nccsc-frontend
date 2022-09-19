@@ -422,7 +422,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
     }
       {showOncoImages && <PagenationTableComponent closeShowOncoImages={closeShowOncoImages} imageData={oncoImageJson} />}
       {showOncoTimelineTables && <GraphsModal circosTimelieTableData={circosTimelieTableData} closeShowTimelineTables={closeShowTimelineTables} />}
-      {showReportTable
+      {/* {showReportTable
         &&
         <Report
 
@@ -435,10 +435,10 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
           isReportClicked={isReportClicked}
         />
 
-      }
+      } */}
 
-      { showReportTable
-        &&<PDFReport
+      {showReportTable
+        && <PDFReport
           sampleKey={circosSanpleRnidListData[sampleKey]}
           tableColumnsData={tableColumnsData}
           tableData={tableData}

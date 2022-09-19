@@ -5,11 +5,154 @@ import ReportSubHeader from './ReportSubHeader';
 import { useSelector, useDispatch } from "react-redux";
 import Sankey from '../DataVisualisation/Charts/NewSankey'
 import NewSankeyd3 from '../DataVisualisation/Charts/NewSankeyd3'
+// ../../assets/images/sub/pipeline.png
 // import logoNew from "../../../assets/images/Left_up.png";
-import NccLogo from "../../assets/images/logoncc.png";
+import NccLogo1 from "../../assets/images/menu-logo-2.png";
+import NccLogo2 from "../../assets/images/f_ci6.png";
+
 
 
 function PDFReport({ sampleKey, tableData, tableColumnsData, basicInformationData }) {
+
+  let newtableColumnsData = [
+    {
+      name: 'geneName',
+      selector: (row) => { return row.gene },
+      sortable: false,
+      classNames: ['report_sankey'],
+      style: {
+        borderLeft: '1px solid #fff',
+        borderRight: '1px solid #fff',
+        boxSizing: 'border-box',
+        textAlign: 'center',
+        display: 'block',
+        lineHeight: '3.5',
+      },
+    },
+
+    {
+      name: 'Yes',
+      selector: row => {
+        if (row.dna === 'YES') {
+          if (row.gene in reportData['variant_info']) {
+            let variants = reportData['variant_info'][row.gene]
+            variants = variants.join('-')
+            return <div data-bs-toggle="tooltip" title={variants}>{'O ' + "(" + reportData['variant_info'][row.gene].length + ")"}</div>
+          } else {
+            return row.dna
+
+          }
+        }
+        else return ''
+      },
+      sortable: false,
+      style: {
+        borderLeft: '1px solid #6F7378',
+        borderRight: '1px solid #fff',
+        boxSizing: 'border-box',
+        textAlign: 'center',
+        display: 'block',
+        lineHeight: '3.5',
+      },
+
+    },
+    {
+      name: 'No',
+      selector: row => { if (row.dna === 'NO') { return 'O ' } else return '' },
+      sortable: false,
+      style: {
+        borderLeft: '1px solid #ABB0B8',
+        borderRight: '1px solid #fff',
+        boxSizing: 'border-box',
+        textAlign: 'center',
+        display: 'block',
+        lineHeight: '3.5',
+      },
+    },
+    {
+      name: 'High',
+      selector: row => { if (row.rna === 'HIGH') { return 'O ' } else return '' },
+      sortable: false,
+      style: {
+        borderLeft: '1px solid #6F7378',
+        borderRight: '1px solid #fff',
+        boxSizing: 'border-box',
+        textAlign: 'center',
+        display: 'block',
+        lineHeight: '3.5',
+
+      },
+    },
+    {
+      name: 'Intermediate',
+      selector: row => { if (row.rna !== 'HIGH' && row.rna !== 'LOW') { return 'O ' } else return '' },
+      sortable: false,
+      style: {
+        borderLeft: '1px solid #ABB0B8',
+        borderRight: '1px solid #fff',
+        boxSizing: 'border-box',
+        textAlign: 'center',
+        display: 'block',
+        lineHeight: '3.5',
+
+      },
+    },
+    {
+      name: 'Low',
+      selector: row => { if (row.rna === 'LOW') { return 'O ' } else return '' },
+      sortable: false,
+      style: {
+        borderLeft: '1px solid #ABB0B8',
+        borderRight: '1px solid #fff',
+        boxSizing: 'border-box',
+        textAlign: 'center',
+        display: 'block',
+        lineHeight: '3.5',
+      },
+    },
+    {
+      name: 'High',
+      selector: row => { if (row.proteome === 'HIGH') { return 'O ' } else return '' },
+      sortable: false,
+      style: {
+        borderLeft: '1px solid #6F7378',
+        borderRight: '1px solid #fff',
+        boxSizing: 'border-box',
+        textAlign: 'center',
+        display: 'block',
+        lineHeight: '3.5',
+
+      },
+    },
+    {
+      name: 'Intermediate',
+      selector: row => { if (row.proteome !== 'HIGH' && row.proteome !== 'LOW') { return 'O ' } else return '' },
+      sortable: false,
+      style: {
+        borderLeft: '1px solid #ABB0B8',
+        borderRight: '1px solid #fff',
+        boxSizing: 'border-box',
+        textAlign: 'center',
+        display: 'block',
+        lineHeight: '3.5',
+
+      },
+    },
+    {
+      name: 'Low',
+      selector: row => { if (row.proteome === 'LOW') { return 'O ' } else return '' },
+      sortable: false,
+      style: {
+        borderLeft: '1px solid #ABB0B8',
+        borderRight: '1px solid #6F7378',
+        boxSizing: 'border-box',
+        textAlign: 'center',
+        display: 'block',
+        lineHeight: '3.5',
+      },
+    },
+  ]
+
   const [basicHtml, setBasicHtml] = useState([])
   const reportData = useSelector(state => state.dataVisualizationReducer.rniData)
   const sankeyJson = useSelector(state => state.dataVisualizationReducer.SankeyJson)
@@ -61,6 +204,25 @@ function PDFReport({ sampleKey, tableData, tableColumnsData, basicInformationDat
     }
   }, [basicInformationData])
 
+  let ReportHeader = () => {
+    return <div>
+      <div style={{ marginTop: '150px' }} id='pdfReportHeader'>
+        <div style={{ fontSize: "30px", fontWeight: '600', marginBottom: '20px', color: '#0c2f4d' }}>K-CORE</div>
+        <div style={{ fontSize: "20px", fontWeight: '600', color: '#0c2f4d' }}>Cancer Omics Research Portal</div>
+        <div style={{ width: "95%", height: "8px", backgroundColor: '#0c2f4d', margin: 'auto', marginTop: 'inherit' }}></div>
+      </div>
+    </div>
+  }
+
+  let ReportFooter = () => {
+    return <div id='pdfReportFooter'>
+      <div
+        style={{ display: 'flex', justifyContent: 'end', marginRight: '45px', marginTop: '20px' }}>
+        <img src={NccLogo1} style={{ width: '15%', }} alt="ncc logo"></img>
+        <img src={NccLogo2} style={{ marginLeft: '20px' }} alt="ncc cancer logo"></img>
+      </div>
+    </div>
+  }
 
   useEffect(() => {
     if (reportData) {
@@ -188,6 +350,7 @@ function PDFReport({ sampleKey, tableData, tableColumnsData, basicInformationDat
       }
       let fn = {};
       let final_links = [];
+      let tmpTable = {}
       sankeyJson.forEach((element) => {
         if (element["hugo_symbol"] && element["variant_classification"]) {
           let k =
@@ -241,6 +404,19 @@ function PDFReport({ sampleKey, tableData, tableColumnsData, basicInformationDat
             });
           }
         }
+
+        if (element["hugo_symbol"] && element["variant_classification"] && element["dbsnp_rs"] && element["diseasename"]) {
+          let kt = element["hugo_symbol"] + "||" + element["variant_classification"] + "||" + element["dbsnp_rs"] + "||" + element["diseasename"]
+          if (kt in tmpTable) {
+            if (tmpTable[kt].indexOf(element["drugname"]) === -1) {
+              tmpTable[kt].push(element["drugname"])
+            }
+          } else {
+            tmpTable[kt] = [element["drugname"]]
+          }
+        }
+        console.log("tmp table ------------ >>>>>>>>>>>>>", tmpTable);
+
       });
 
 
@@ -254,6 +430,7 @@ function PDFReport({ sampleKey, tableData, tableColumnsData, basicInformationDat
     }
 
     let getSankyTable = (detailGeneData) => {
+      console.log("Detail", detailGeneData);
       if (detailGeneData.length > 0) {
         let tableHTML = <table className="min-w-full border text-center">
           <thead className="border-b">
@@ -327,14 +504,34 @@ function PDFReport({ sampleKey, tableData, tableColumnsData, basicInformationDat
     const sankeyCharts = []
     for (let i = 0; i < sankeyData.length; i++) {
       let SankeyJsonDataIs = getSankyData(sankeyData[i]['links'])
+      console.log("SankeyJsonDataIs is", SankeyJsonDataIs);
       let SankeyTableData = getSankyTable(sankeyData[i]['links'])
-      console.log("sankeyjsin data", SankeyJsonDataIs);
+      console.log("sankeyjsin data", SankeyTableData);
       sankeyCharts.push(<div key={i} className={`sanky_chart_pdf${i}`}>
         {
           <div>
-            <Sankey></Sankey>
-            <NewSankeyd3 SankeyJson={SankeyJsonDataIs} idName={`chart${i}`}></NewSankeyd3>
-            {SankeyTableData}
+            <ReportHeader />
+            {
+              i === 0 &&
+              <div>
+                <h1 className="" style={{ textAlign: "left", marginLeft: '40px', fontWeight: '800', marginTop: '20px', marginBottom: '20px' }}>
+                  3. Sankey plot of mutated gene
+                </h1>
+                <div style={{ width: "95%", height: "6px", backgroundColor: '#0c2f4d', margin: 'auto', marginTop: 'inherit' }}></div>
+              </div>
+
+            }
+
+
+            <h1 className="" style={{ textAlign: "left", marginLeft: '80px', fontWeight: '800', marginTop: '20px', marginBottom: '20px' }}>
+              Gene : {SankeyJsonDataIs.nodes[0].name}
+            </h1>
+            <div>
+              <Sankey></Sankey>
+              <NewSankeyd3 SankeyJson={SankeyJsonDataIs} idName={`chart${i}`}></NewSankeyd3>
+              {SankeyTableData}
+            </div>
+            <ReportFooter />
           </div>
         }
       </div>
@@ -385,29 +582,35 @@ function PDFReport({ sampleKey, tableData, tableColumnsData, basicInformationDat
   return (
     <>
       <div>
-      
+
         <div className='printpdf' id='printpdf'>
           <div className='Basic_Information_Table'>
-            <div>
+            {/* <div>
               <div style={{ width: '880px', height: '12px', background: '#19BDFF', margin: 'auto' }}></div>
               <h1 className='font-medium leading-tight text-5xl text-center text-black-600' style={{ margin: '22px' }}>Drug Prediction Report</h1>
               <h3 style={{ margin: '26px', fontSize: '20px' }} >Sample Name : {sampleKey}</h3>
 
               <div style={{ width: '880px', height: '12px', background: '#19BDFF', margin: 'auto' }}></div>
-              {/* <img   src={logoNew} alt="" /> */}
-            </div>
+            </div> */}
 
-            <h1 className='font-medium leading-tight text-5xl text-center text-black-600' style={{ margin: '95px' }}>{`${todayDate}`}</h1>
+            {/* <h1 className='font-medium leading-tight text-5xl text-center text-black-600' style={{ margin: '95px' }}>{`${todayDate}`}</h1> */}
 
-            <div style={{ width: '200px', margin: 'auto' }}>
+            {/* <div style={{ width: '200px', margin: 'auto' }}>
               <img src={NccLogo} width="210" style={{ background: '#eae3dd' }} alt="National Cancer Center"></img>
+            </div> */}
+
+            <div>
+              <ReportHeader />
+            </div>
+            <div>
+
+              <h1 className="" style={{ textAlign: "left", marginLeft: '169px', fontWeight: '800', marginTop: '20px', marginBottom: '20px' }}>
+                1. Basic Information
+              </h1>
+
             </div>
 
-            <h1 className="" style={{ marginLeft: '20px', fontWeight: '800', marginTop: '20px', marginBottom: '20px' }}>
-              Basic Information
-            </h1>
-
-            <div className='my-5 ' style={{ width: '710px', margin: 'auto', border: ' 1px solid black' }}>
+            <div className='my-5 ' style={{ width: '80%', border: ' 1px solid black' }}>
               <div className=''>
                 {basicHtml}
               </div>
@@ -423,16 +626,17 @@ function PDFReport({ sampleKey, tableData, tableColumnsData, basicInformationDat
                 </h3>
               </div> */}
               <h1 className="" style={{
-                marginLeft: '20px', fontWeight: '800', marginTop: '20px',
+                textAlign: "left",
+                marginLeft: '169px', fontWeight: '800', marginTop: '20px',
                 marginBottom: '20px'
               }}>
-                Genomic Summary
+                2.Genomic Summary
               </h1>
 
-              <div style={{ width: '80%', margin: 'auto', border: '1px solid black' }}>
+              <div style={{ width: '80%', border: '1px solid black' }}>
                 {tableData && <div className='report_table'>
                   <DataTable
-                    columns={tableColumnsData}
+                    columns={newtableColumnsData}
                     data={tableData}
                     subHeader
                     customStyles={customStyles}
@@ -448,6 +652,10 @@ function PDFReport({ sampleKey, tableData, tableColumnsData, basicInformationDat
               </div>
             </div>
           </div>
+          <ReportFooter />
+        </div>
+        <div>
+
         </div>
         <div>
           {sankyDataCharts && sankyDataCharts}
