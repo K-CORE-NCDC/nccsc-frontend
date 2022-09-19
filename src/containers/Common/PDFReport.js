@@ -5,7 +5,8 @@ import ReportSubHeader from './ReportSubHeader';
 import { useSelector, useDispatch } from "react-redux";
 import Sankey from '../DataVisualisation/Charts/NewSankey'
 import NewSankeyd3 from '../DataVisualisation/Charts/NewSankeyd3'
-import NccLogo from '../../assets/images/logoncc.png'
+// import logoNew from "../../../assets/images/Left_up.png";
+import NccLogo from "../../assets/images/logoncc.png";
 
 
 function PDFReport({ sampleKey, tableData, tableColumnsData, basicInformationData }) {
@@ -23,25 +24,31 @@ function PDFReport({ sampleKey, tableData, tableColumnsData, basicInformationDat
   const [SankeyJsonData, setSankeyJsonData] = useState()
   const [sankyTableData2, setSankyTableData2] = useState('')
   const [todayDate, setTodayDate] = useState('')
-
+  const [tableRender, setTableRender] = useState(false)
+  useEffect(() => {
+    if (tableData.length > 0) {
+      setTableRender(true)
+    }
+  }, [tableData])
 
   useEffect(() => {
     var today = new Date()
-    let todaydate =today.getDate()+ '-' +(today.getMonth() + 1) + '-' + today.getFullYear();
+    let todaydate = today.getFullYear() + '.' + (today.getMonth() + 1) + '.' + today.getDate();
     setTodayDate(todaydate)
+    console.log("basic Inforamtion", basicInformationData[0]);
     if (basicInformationData && basicInformationData.length > 0) {
       let tmp = []
       for (let i = 0; i < basicInformationData.length; i++) {
         const row = basicInformationData[i];
         for (const key in row) {
           tmp.push(
-            <div key={key} className='grid grid-cols-2  border-b border-gray-200 w-full'>
-              <div className='border-r border-gray-200'>
+            <div key={key} className='grid grid-cols-2 '>
+              <div className='' style={{ border: '1px solid black' }}>
                 <p className='px-6 py-3'>
                   {key}
                 </p>
               </div>
-              <div >
+              <div style={{ border: '1px solid black' }}>
                 <p className='px-6 py-3'>
                   {row[key]}
                 </p>
@@ -83,7 +90,7 @@ function PDFReport({ sampleKey, tableData, tableColumnsData, basicInformationDat
   useEffect(() => {
     // console.log("list of node are in useffect", listOfNodes);
     // console.log("list of links are in useffect", listOfLinks);
-    console.log("detailGeneData", detailGeneData);
+    // console.log("detailGeneData", detailGeneData);
     if (detailGeneData.length > 0) {
       let tableHTML = <table className="min-w-full border text-center">
         <thead className="border-b">
@@ -159,7 +166,7 @@ function PDFReport({ sampleKey, tableData, tableColumnsData, basicInformationDat
 
   useEffect(() => {
     let getSankyData = (sankeyJson) => {
-      
+
       let nodes = {};
       let node_type = {};
       let i = 1;
@@ -378,57 +385,72 @@ function PDFReport({ sampleKey, tableData, tableColumnsData, basicInformationDat
   return (
     <>
       <div>
+      
         <div className='printpdf' id='printpdf'>
-          <div>
-            <h1 className='font-medium leading-tight text-5xl mt-0 mb-2 text-center text-black-600'>NCC Report</h1>
-            <h1 className='font-medium leading-tight text-5xl mt-0 mb-2 text-center text-black-600'>{`Date : ${todayDate}`}</h1>
-            {/* <img src={NccLogo} alt="National Cancer Center"></img> */}
-          </div>
-            
-          <h3 className='py-4 px-3 my-10'>Sample Name : {sampleKey}</h3>
-          <div className='rounded-lg border border-gray-200 my-5 '>
-            <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-              <h3 className="lg:text-3xl sm:text-xl font-semibold">
-                Basic Information
-              </h3>
+          <div className='Basic_Information_Table'>
+            <div>
+              <div style={{ width: '880px', height: '12px', background: '#19BDFF', margin: 'auto' }}></div>
+              <h1 className='font-medium leading-tight text-5xl text-center text-black-600' style={{ margin: '22px' }}>Drug Prediction Report</h1>
+              <h3 style={{ margin: '26px', fontSize: '20px' }} >Sample Name : {sampleKey}</h3>
+
+              <div style={{ width: '880px', height: '12px', background: '#19BDFF', margin: 'auto' }}></div>
+              {/* <img   src={logoNew} alt="" /> */}
             </div>
-            <div className=''>
-              {basicHtml}
+
+            <h1 className='font-medium leading-tight text-5xl text-center text-black-600' style={{ margin: '95px' }}>{`${todayDate}`}</h1>
+
+            <div style={{ width: '200px', margin: 'auto' }}>
+              <img src={NccLogo} width="210" style={{ background: '#eae3dd' }} alt="National Cancer Center"></img>
+            </div>
+
+            <h1 className="" style={{ marginLeft: '20px', fontWeight: '800', marginTop: '20px', marginBottom: '20px' }}>
+              Basic Information
+            </h1>
+
+            <div className='my-5 ' style={{ width: '710px', margin: 'auto', border: ' 1px solid black' }}>
+              <div className=''>
+                {basicHtml}
+              </div>
             </div>
           </div>
 
 
-          <div>
-            <div className='col-span-3 rounded-lg border border-gray-200'>
-              <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+          <div className='Genomic_Summary_Table'>
+            <div className='col-span-3'>
+              {/* <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                 <h3 className="lg:text-3xl  sm:text-xl font-semibold">
                   Genomic Summary
                 </h3>
+              </div> */}
+              <h1 className="" style={{
+                marginLeft: '20px', fontWeight: '800', marginTop: '20px',
+                marginBottom: '20px'
+              }}>
+                Genomic Summary
+              </h1>
 
+              <div style={{ width: '80%', margin: 'auto', border: '1px solid black' }}>
+                {tableData && <div className='report_table'>
+                  <DataTable
+                    columns={tableColumnsData}
+                    data={tableData}
+                    subHeader
+                    customStyles={customStyles}
+                    subHeaderComponent={<ReportSubHeader tData={tableRender} />}
+                    expandableRows
+                    expandableRowDisabled={rowPreDisabled}
+                    expandableRowsComponent={SankeyIndex}
+                    expandableRowExpanded={expandableRowExpanded}
+                    onRowExpandToggled={rowExpandFunc}
+                    subHeaderWrap
+                  />
+                </div>}
               </div>
-
-              {tableData && <div className='report_table'>
-                <DataTable
-                  columns={tableColumnsData}
-                  data={tableData}
-                  subHeader
-                  customStyles={customStyles}
-                  subHeaderComponent={<ReportSubHeader />}
-                  expandableRows
-                  expandableRowDisabled={rowPreDisabled}
-                  expandableRowsComponent={SankeyIndex}
-                  expandableRowExpanded={expandableRowExpanded}
-                  onRowExpandToggled={rowExpandFunc}
-                  subHeaderWrap
-                />
-              </div>}
             </div>
           </div>
-
-
         </div>
         <div>
-          
+          {sankyDataCharts && sankyDataCharts}
         </div>
       </div>
     </>

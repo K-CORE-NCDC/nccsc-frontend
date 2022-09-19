@@ -43,7 +43,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   const [tableData, setTableData] = useState([])
   const [basicInformationData, setBasicInformationData] = useState([])
 
-  const [isReportClicked, setIsReportClicked]= useState(false)
+  const [isReportClicked, setIsReportClicked] = useState(false)
 
 
 
@@ -118,7 +118,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
     },
     {
       name: 'Intermediate',
-      selector: row => { if (row.rna !== 'HIGH' && row.rna !== 'LOW' ) { return 'O ' } else return '' },
+      selector: row => { if (row.rna !== 'HIGH' && row.rna !== 'LOW') { return 'O ' } else return '' },
       sortable: true,
       style: {
         borderLeft: '1px solid #ABB0B8',
@@ -159,7 +159,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
     },
     {
       name: 'Intermediate',
-      selector: row => { if (row.proteome !== 'HIGH' && row.proteome !== 'LOW' ) { return 'O ' } else return '' },
+      selector: row => { if (row.proteome !== 'HIGH' && row.proteome !== 'LOW') { return 'O ' } else return '' },
       sortable: true,
       style: {
         borderLeft: '1px solid #ABB0B8',
@@ -226,7 +226,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
     setshowReportTable(false)
   }
 
-  const isReportClickedFunction = (value)=>{
+  const isReportClickedFunction = (value) => {
     console.log(value)
     setIsReportClicked(value)
   }
@@ -436,16 +436,14 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
         />
 
       }
-      { showReportTable && <PDFReport
 
-        sampleKey={circosSanpleRnidListData[sampleKey]}
-        tableColumnsData={tableColumnsData}
-        tableData={tableData}
-        basicInformationData={basicInformationData}
+      { showReportTable
+        &&<PDFReport
+          sampleKey={circosSanpleRnidListData[sampleKey]}
+          tableColumnsData={tableColumnsData}
+          tableData={tableData}
+          basicInformationData={basicInformationData}
         />}
-      
-
-
 
     </>
   )
