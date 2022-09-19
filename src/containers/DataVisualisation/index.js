@@ -59,6 +59,7 @@ export default function DataVisualization() {
       setScreenCapture(true);
     }
   };
+  
 
   const setScreenCaptureFunction = (capture) => {
     // setScreenCapture(capture)
@@ -148,6 +149,8 @@ export default function DataVisualization() {
     }
   }, [project_id, userProjectDetails]);
 
+
+
   const toggleTab = (event) => {
     let t = ["Volcano Plot","Survival Plot","Fusion Plot"]
     if(t.indexOf(event.target.innerText)!==-1){
@@ -189,28 +192,31 @@ export default function DataVisualization() {
   }, []);
 
   useEffect(() => {
-    let tabsContainer = document.querySelector("#tabs");
-    let tabTogglers = tabsContainer.querySelectorAll("li");
-    tabTogglers.forEach(function (toggler) {
-      let href = toggler.children[0].href;
-      href = href.split("/");
-      toggler.classList.remove(
-        "border-blue-400",
-        "border-b",
-        "-mb-px",
-        "opacity-100"
-      );
-      if (href.includes(tab)) {
-        toggler.classList.add(
+    if(chartName){
+      let tabsContainer = document.querySelector("#tabs");
+      let tabTogglers = tabsContainer.querySelectorAll("li");
+      tabTogglers.forEach(function (toggler) {
+        let href = toggler.children[0].href;
+        href = href.split("/");
+        // console.log(href,tab)
+        toggler.classList.remove(
           "border-blue-400",
-          "border-b-4",
+          "border-b",
           "-mb-px",
           "opacity-100"
         );
-      }
-    });
-    submitFilter();
-  }, [tab]);
+        if (href.includes(tab)) {
+          toggler.classList.add(
+            "border-blue-400",
+            "border-b-4",
+            "-mb-px",
+            "opacity-100"
+          );
+        }
+      });
+      submitFilter();
+    }
+  }, [tab,chartName]);
 
   useEffect(() => {
     let w = elementRef.current.getBoundingClientRect().width;
@@ -241,12 +247,13 @@ export default function DataVisualization() {
       ];
     }
     let tmp = [];
-
+    
     l.forEach((element) => {
       let classes =
         "lg:px-4 sm:px-2 xs:px-2 py-2 xs:text-sm sm:text-xl lg:text-2xl font-semibold rounded-t opacity-50 ";
-      if (tab === element) {
-        classes = classes + " border-transparent border-b-4 -mb-px opacity-100";
+      
+      if (chartName === element) {
+        classes = classes + " border-blue-400 border-b-4 -mb-px opacity-100";
       }
       let name = " Plot";
       if (element === "heatmap") {
@@ -279,9 +286,12 @@ export default function DataVisualization() {
         );
       }
     });
-
+    let t = ["volcano","survival","fusion"]
+    if(t.indexOf(chartName)!==-1){
+      setToggle(false)
+    }
     setMenuItems(tmp);
-  }, [availableTabsForProject]);
+  }, [availableTabsForProject,chartName]);
 
   useEffect(() => {
     if (BrstKeys) {
@@ -412,7 +422,7 @@ export default function DataVisualization() {
   
 
 
-  // console.log(toggle)
+  
   return (
     <div className="header">
       <div className="mx-auto border-t rounded overflow-hidden ">
@@ -437,7 +447,7 @@ export default function DataVisualization() {
               <div className="grid grid-cols-3 gap-1 p-5 bg-white">
                 <div
                   className={`col-span-3 lg:hidden md:hidden ${
-                    tab === "volcano" ? "xs:hidden" : ""
+                    chartName === "volcano" ? "xs:hidden" : ""
                   }`}
                 >
                   <button

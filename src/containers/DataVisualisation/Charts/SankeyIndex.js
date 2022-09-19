@@ -53,8 +53,9 @@ function SankeyIndex({ ...props }) {
       let nodes = {};
       let node_type = {};
       let i = 1;
+      let table = []
       sankeyJson["data"].forEach((element) => {
-        detailgeneData.push(element);
+        // detailgeneData.push(element);
         for (const key in element) {
           if (key !== "sourceurl") {
             if (!nodes.hasOwnProperty(element[key]) && element[key]) {
@@ -72,7 +73,19 @@ function SankeyIndex({ ...props }) {
       }
       let fn = {};
       let final_links = [];
+      let tmpTable = {}
       sankeyJson["data"].forEach((element) => {
+        if (element["hugo_symbol"] && element["variant_classification"] && element["dbsnp_rs"] && element["diseasename"] ){
+          let kt = element["hugo_symbol"]+"||"+element["variant_classification"]+"||"+element["dbsnp_rs"]+"||"+element["diseasename"]
+          if(kt in tmpTable){
+            if (tmpTable[kt].indexOf(element["drugname"]) === -1){
+              tmpTable[kt].push(element["drugname"])
+            }
+          }else{
+            tmpTable[kt] = [element["drugname"]]
+          }
+        }
+        
         if (element["hugo_symbol"] && element["variant_classification"]) {
           let k =
             nodes[element["hugo_symbol"]] +
@@ -126,6 +139,19 @@ function SankeyIndex({ ...props }) {
           }
         }
       });
+      for (const key in tmpTable) {
+        let r = key.split("||")
+        let d = tmpTable[key]
+        let row = {
+          "hugo_symbol":r[0],
+          "variant_classification":r[1],
+          "dbsnp_rs":r[2],
+          "diseasename":r[3],
+          "drugname": d.join(",")
+        }
+        detailgeneData.push(row)
+
+      }
       setDetailGeneData(detailgeneData);
       setSankeyJsonData({ nodes: final_nodes, links: final_links });
     }
@@ -139,31 +165,31 @@ function SankeyIndex({ ...props }) {
             <tr>
               <th
                 scope="col"
-                className="text-sm font-medium text-gray-900 px-6 py-4 border-r"
+                className="text-md font-medium text-gray-900 px-6 py-4 border-r"
               >
                 gene
               </th>
               <th
                 scope="col"
-                className="text-sm font-medium text-gray-900 px-6 py-4 border-r"
+                className="text-md font-medium text-gray-900 px-6 py-4 border-r"
               >
                 Variant
               </th>
               <th
                 scope="col"
-                className="text-sm font-medium text-gray-900 px-6 py-4 border-r"
+                className="text-md font-medium text-gray-900 px-6 py-4 border-r"
               >
                 Rsid
               </th>
               <th
                 scope="col"
-                className="text-sm font-medium text-gray-900 px-6 py-4 border-r"
+                className="text-md font-medium text-gray-900 px-6 py-4 border-r"
               >
                 Disease
               </th>
               <th
                 scope="col"
-                className="text-sm font-medium text-gray-900 px-6 py-4"
+                className="text-md font-medium text-gray-900 px-6 py-4"
               >
                 Drug
               </th>
@@ -174,20 +200,20 @@ function SankeyIndex({ ...props }) {
               <tr key={index} className="border-b">
                 <td
                   className="
-                            px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r"
+                            px-6 py-4  text-md font-medium text-gray-900 border-r"
                 >
                   {genedata["hugo_symbol"]}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
+                <td className="px-6 py-4  text-md font-medium text-gray-900 border-r">
                   {genedata["variant_classification"]}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
+                <td className="px-6 py-4  text-md font-medium text-gray-900 border-r">
                   {genedata["dbsnp_rs"]}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
+                <td className="px-6 py-4 text-md font-medium text-gray-900 border-r">
                   {genedata["diseasename"]}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
+                <td className="px-6 py-4 text-md font-medium text-gray-900 border-r">
                   {genedata["drugname"]}
                 </td>
               </tr>
