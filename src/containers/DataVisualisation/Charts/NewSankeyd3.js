@@ -18,22 +18,42 @@ function NewSankeyd3({SankeyJson, idName}) {
                         "diseasename":'#e377c2',
                         'drugname':"#9467bd"
                       }
-
+    let nodesLength = energyjson.nodes
+    
     var formatNumber = d3.format(",.0f"),
         format = function(d) { return formatNumber(d) + " TWh"; },
         color = d3.scale.category20();
 
-    var svg = d3.select(`#${idName}`).append("svg")
+    var svg1 = d3.select(`#${idName}`).append("svg")
         .attr("width", width + margin.left + margin.right)
-        .attr("height", "100vh")
-        .attr('class',"inline")
-      .append("g")
+        .attr("height", '500')
+        .attr('class',"inline mt-5");
+    var svg = svg1.append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
  
     var path = sankey.link();
     var nodeMap = {};
-    energyjson.nodes.forEach(function(x) { nodeMap[x.name] = x; });
+    let maxNode = {
+      "hugo_symbol":0,
+      "variant_classification":0,
+      "dbsnp_rs":0,
+      "diseasename":0,
+      "drugname":0,
+    }
+    energyjson.nodes.forEach(function(x) { 
+      nodeMap[x.name] = x; 
+      maxNode[x['type']] = maxNode[x['type']]+1
+    });
+    let maxNameCount = 0
+    let maxName = ''
+    for (const key in maxNode) {
+      if(maxNode[key]>maxNameCount){
+        maxNameCount = maxNode[key]
+        maxName = key
+      }
+    }
+    console.log(maxNode)
     energyjson.links = energyjson.links.map(function(x) {
       return {
         source: nodeMap[x.source],
@@ -71,9 +91,15 @@ function NewSankeyd3({SankeyJson, idName}) {
         .origin(function(d) { return d; })
         // interfering with click .on("dragstart", function() { this.parentNode.appendChild(this); })
       .on("drag", dragmove));
- 
+    var heigthCalc = 0
     node.append("rect")
-        .attr("height", function(d) { return d.dy; })
+        .attr("height", function(d) { 
+          console.log(maxName)
+          if(d['type']===maxName){
+            heigthCalc = heigthCalc+d.dy
+          }
+          return d.dy; 
+        })
         .attr("width", sankey.nodeWidth())
         .style("fill", function(d) { 
           let t = d['type']
@@ -145,6 +171,7 @@ function NewSankeyd3({SankeyJson, idName}) {
     function highlight_link(id,opacity){
         d3.select("#link-"+id).style("stroke-opacity", opacity);
     }
+    svg1.attr("height",400+heigthCalc)
   }
 
   useEffect(()=>{
@@ -152,9 +179,7 @@ function NewSankeyd3({SankeyJson, idName}) {
       if(document.getElementById(idName)){
         document.getElementById(idName).innerHTML = ''
       }
-      console.log("json for chart is",SankeyJson)
       let j = SankeyJson
-
       drawChart(j)
     }
   },[SankeyJson])

@@ -153,12 +153,12 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
         for (const key in data) {
           let v = data[key][col]
           v = parseFloat(v).toFixed(2)
-          console.log(col+"_"+key+"_"+v)
+          
           td.push(
             <td key={`${col}"_"${key}"_"${v}`} className=' text-gray-900 text-left px-5 py-6'>{v}</td>
           )
         }
-        console.log("coxtr_"+c)
+        
         trow.push(
           <tr className="border-b py-4" key={`coxtr_${c}`}>{td}</tr>
         )
@@ -351,6 +351,18 @@ export default function DataSurvival({ width, inputData, screenCapture, setToFal
                   <div className="flex justify-center">
                     <div>
                       {coxClinical}
+                      <div className='flex flex-row gap-5'>
+                        <button 
+                          className={survivalModel === 'cox' ? selectedCss : nonSelectedCss}
+                        >
+                          Select All
+                        </button>
+                        <button 
+                          className={survivalModel === 'cox' ? selectedCss : nonSelectedCss}
+                        >
+                          Reset
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
