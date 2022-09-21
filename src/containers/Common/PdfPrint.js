@@ -34,17 +34,17 @@ function PdfPrint({ isReportClicked, isReportClickedFunction }) {
         // }
         // isReportClickedFunction(true)
         if (document.getElementById("printpdf")) {
-            //     console.log('print')
+            
             var page = document.getElementById("printpdf")
-            // console.log("page.style",page.style);
-            for (const each of page.children) {
-                console.log("each", each);
-            }
+            
+            // for (const each of page.children) {
+            //     console.log("each", each);
+            // }
             var doc = new jsPDF('p', 'pt', 'a4');
 
             doc.html(document.getElementById('printpdf'), {
                 callback: function (pdf) {
-                    console.log(pdf)
+                    // console.log(pdf)
                     pdf.save('DOC.pdf');
                 },
 
@@ -71,7 +71,7 @@ function PdfPrint({ isReportClicked, isReportClickedFunction }) {
         var width = pdf.internal.pageSize.getWidth();
         var height = pdf.internal.pageSize.getHeight();
         pdf.page = 1
-        // console.log("width, height", width, height);
+        
 
         function footer() {
             pdf.text(500, 800, 'page ' + pdf.page); //print number bottom right
@@ -81,21 +81,52 @@ function PdfPrint({ isReportClicked, isReportClickedFunction }) {
 
         await html2canvas(captureElement1).then(canvas => {
             const imgData = canvas.toDataURL('image/jpeg');
-            pdf.addImage(imgData, 'JPEG', 20, 0, 500, 0, undefined, 'FAST');
+            var imgWidth = 500; 
+            var pageHeight = 295; 
+            var imgHeight = canvas.height * imgWidth / canvas.width;
+            var heightLeft = imgHeight;
+            var position = 0; 
             pdf.addPage();
+            // pdf.addImage(imgData, 'JPEG', 20, 0, 500, 0, undefined, 'FAST');
+            pdf.addImage(imgData, 'JPEG', 20, position, imgWidth, imgHeight,undefined,'FAST');
             footer()
+            heightLeft -= pageHeight;
+            while (heightLeft >= 0) {
+                position += heightLeft - imgHeight; // top padding for other pages
+                pdf.addPage();
+                pdf.addImage(imgData, 'JPEG', 20, position, imgWidth, imgHeight,undefined,'FAST');
+                footer()
+                heightLeft -= pageHeight;
+            }
+            // pdf.addPage();
 
         });
 
-        // for (let i = 0; i < count - 1; i++) {
-        //     let element = document.querySelector(`.sanky_chart_pdf${i}`)
-        //     await html2canvas(element).then(canvas => {
-        //         const imgData = canvas.toDataURL('image/jpeg');
-        //         pdf.addImage(imgData, 'JPEG', 0, 0, 550, 0, undefined, 'FAST');
-        //         pdf.addPage();
-        //         footer()
-        //     });
-        // }
+        for (let i = 0; i < count - 1; i++) {
+            let element = document.querySelector(`.sanky_chart_pdf${i}`)
+            await html2canvas(element).then(canvas => {
+                const imgData = canvas.toDataURL('image/jpeg');
+                var imgWidth = 550; 
+                var pageHeight = 295; 
+                var imgHeight = canvas.height * imgWidth / canvas.width;
+                var heightLeft = imgHeight;
+                var position = 0; 
+                pdf.addPage();
+                pdf.addImage(imgData, 'JPEG', 20, position, imgWidth, imgHeight,undefined,'FAST');
+                footer()
+                heightLeft -= pageHeight;
+                while (heightLeft >= 0) {
+                    position += heightLeft - imgHeight; // top padding for other pages
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'JPEG', 20, position, imgWidth, imgHeight,undefined,'FAST');
+                    
+                    footer()
+                    heightLeft -= pageHeight;
+                }
+                // pdf.addImage(imgData, 'JPEG', 0, 0, 550, 0, undefined, 'FAST');
+                // pdf.addPage();
+            });
+        }
         pdf.save("Report.pdf");
     }
 
