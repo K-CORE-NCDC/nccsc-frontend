@@ -46,16 +46,34 @@ export default function Web(props) {
   const [breadCrumb, setBreadCrumb] = useState([]);
   const [currentDate, setCurrentDate] = useState("");
   const [currentTime, setCurrentTime] = useState("");
+  const [latandLong, setLatandLog] = useState({});
   const dispatch = useDispatch();
   const countJson = useSelector((data) => data.homeReducer.dataCount);
 
   // const logmanagement = useSelector((data) => data.homeReducer.logmanagement);
 
+  function updateLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(handle_geolocation_query);
+    } else {
+      alert("I'm sorry, but geolocation services are not supported by your browser.");
+    }
+  }
+
+  function handle_geolocation_query(position) {
+    // alert('Lat: ' + position.coords.latitude + ' ' + 'Lon: ' + position.coords.latitude);
+    let location = { 'lat': position.coords.latitude, 'lon': position.coords.longitude }
+    sessionStorage.setItem('Location', JSON.stringify(location))
+    setLatandLog(location)
+    return location;
+  }
+
   useEffect(() => {
     sessionStorage.setItem('sessionId', uuid())
     sessionStorage.setItem('firstTime', true)
-
+    updateLocation();
     if (sessionStorage.getItem("firstTime")) {
+      updateLocation();
       var today = new Date();
       var loginTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       sessionStorage.setItem('loginTime', loginTime)
@@ -67,18 +85,122 @@ export default function Web(props) {
       let object = {
         'id': 0,
         'sessionId': sessionId,
-        'url': 'home',
+        'url': 'http://localhost:9192/home',
         'startTime': loginTime,
         'endTime': ''
       }
       arrayOfLog[0] = object
       let alid = sessionStorage.getItem('IdNumber')
-      console.log("alid is", alid);
       sessionStorage.setItem('logData', JSON.stringify(arrayOfLog))
 
     }
 
   }, [])
+
+  useEffect(() => {
+    updateLocation()
+  }, [latandLong])
+
+
+  useEffect(() => {
+
+    console.log("logmanagement ----->", window.location.href)
+
+    if (!sessionStorage.getItem('location')) {
+      updateLocation();
+    }
+    // var url = window.location.href.split('/').filter(Boolean).pop();
+    var url = window.location.href;
+    let sessionId = sessionStorage.getItem('sessionId')
+    let idNumber = JSON.parse(sessionStorage.getItem('IdNumber'))
+    let logData = sessionStorage.getItem('logData')
+    let logDataIs = JSON.parse(logData)
+    let latitude = latandLong['lat']
+    let longitude = latandLong['lon']
+    var today = new Date();
+    var currentTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+    logDataIs[idNumber]['endTime'] = currentTime
+
+    idNumber++;
+
+    let object = {
+      'id': idNumber,
+      'sessionId': sessionId,
+      'url': url,
+      'startTime': currentTime,
+      'endTime': '',
+      'latitude': latitude,
+      'longitude': longitude,
+    }
+    sessionStorage.setItem('IdNumber', idNumber)
+    logDataIs[idNumber] = object
+    sessionStorage.setItem('logData', JSON.stringify(logDataIs))
+
+    if (logDataIs.length >= 10) {
+      idNumber = 0
+      sessionStorage.setItem('IdNumber', idNumber)
+      dispatch(sendlogManagement("POST", logDataIs))
+      logDataIs.length = 0
+      let latitude = latandLong['lat']
+      let longitude = latandLong['lon']
+      let object = {
+        'id': 0,
+        'sessionId': sessionId,
+        'url': url,
+        'startTime': currentTime,
+        'endTime': '',
+        'latitude': latitude,
+        'longitude': longitude,
+      }
+      logDataIs[idNumber] = object
+      sessionStorage.setItem('logData', JSON.stringify(logDataIs))
+    }
+
+  }, [window.location.href])
+
+
+  // main unload function
+
+  // useEffect(() => {
+
+  //   const unloadCallback = (event) => {
+  //     event.preventDefault();
+  //     event.returnValue = "Are you sure you want to";
+  //     console.log("Enter", event.returnValue);
+  //     return '';
+  //   };
+
+  //   window.addEventListener("beforeunload", unloadCallback);
+  //   return () => {
+  //     console.log("Dead");
+  //     window.removeEventListener("beforeunload", (e) => {
+  //       console.log("e.target.value", e.target.value);
+  //     });
+  //     console.log("Last");
+  //   }
+  // }, []);
+
+
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', alertUser)
+    window.addEventListener('unload', handleEndConcert)
+    return () => {
+      window.removeEventListener('beforeunload', alertUser)
+      window.removeEventListener('unload', handleEndConcert)
+      handleEndConcert()
+    }
+  }, [])
+  const alertUser = e => {
+    e.preventDefault()
+    e.returnValue = ''
+  }
+  const handleEndConcert = async () => {
+    dispatch(sendlogManagement("POST", JSON.parse(sessionStorage.getItem('logData'))))
+  }
+
+
 
   useEffect(() => {
     let html = [];
@@ -138,77 +260,6 @@ export default function Web(props) {
     }
   }, []);
 
-  useEffect(() => {
-
-    console.log("logmanagement ----->", window.location.href)
-    var url = window.location.href.split('/').filter(Boolean).pop();
-    let sessionId = sessionStorage.getItem('sessionId')
-    let idNumber = JSON.parse(sessionStorage.getItem('IdNumber'))
-    let logData = sessionStorage.getItem('logData')
-    let logDataIs = JSON.parse(logData)
-
-    var today = new Date();
-    var currentTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-
-    logDataIs[idNumber]['endTime'] = currentTime
-
-    idNumber++;
-
-    let object = {
-      'id': idNumber,
-      'sessionId': sessionId,
-      'url': url,
-      'startTime': currentTime,
-      'endTime': ''
-    }
-    sessionStorage.setItem('IdNumber', idNumber)
-    logDataIs[idNumber] = object
-    sessionStorage.setItem('logData', JSON.stringify(logDataIs))
-    console.log("log data length is", logDataIs.length);
-
-    if (logDataIs.length >= 10) {
-      idNumber = 0
-      sessionStorage.setItem('IdNumber', idNumber)
-      dispatch(sendlogManagement("POST", logDataIs))
-      logDataIs.length = 0
-      let object = {
-        'id': 0,
-        'url': url,
-        'startTime': currentTime,
-        'endTime': ''
-      }
-      logDataIs[idNumber] = object
-      sessionStorage.setItem('logData', JSON.stringify(logDataIs))
-    }
-
-  }, [window.location.href])
-
-  // const unloadCallback = () => {
-  //   let logDataIs = sessionStorage.getItem('logData')
-  //   alert('tab close')
-  //   console.log("remaining data if tab suddenly closes");
-  //   dispatch(sendlogManagement("POST", logDataIs))
-  // }
-
-  // useEffect(() => {
-  //   return () => { 
-  //     unloadCallback()
-  //   }
-  // }, [])
-
-
-  // useBeforeunload(() => unloadCallback);
-
-  useEffect(() => {
-    const unloadCallback = (event) => {
-      event.preventDefault();
-      event.returnValue = "";
-      return "";
-    };
-
-    window.addEventListener("beforeunload", unloadCallback);
-    return () => window.removeEventListener("beforeunload", unloadCallback);
-  }, []);
 
   let classes = "";
   if (id[0] === "/home") {
