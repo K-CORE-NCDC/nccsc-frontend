@@ -34,6 +34,8 @@ const genefusion = React.lazy(() => import('./containers/Common/genefusion'))
 const UserDataTable = React.lazy(() => import('./containers/UserDataVisualization/Components/MainComponents/projectDataTable'))
 const MobileSuccess = React.lazy(() => import('./containers/Signup/MobileVerify'))
 
+const Organoid = React.lazy(() => import('./containers/CustomerVoice/OtherServices/Organoid'))
+
 // const Report = React.lazy(()=>import ('./containers/DataVisualisation/Charts/NewSankeyIndex'))
 
 const route = [
@@ -67,6 +69,7 @@ const route = [
 
   { path: `/interpro/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Interpro" defaultMessage="Interpro" />, component: InterPro},
   { path: `/vcfmaf/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Interpro" defaultMessage="Interpro" />, component: VcfMaf},
+  { path: `/organoid/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="organoid" defaultMessage="organoid" />, component: Organoid},
   
 ]
 

@@ -912,7 +912,7 @@ const GroupFilters = ({ volcanoType,parentCallback, groupFilters,viz_type }) => 
    
     
     return (
-        <div className="m-1 bg-gray-100">
+        <div className="m-1 bg-gray-100" >
             <div className="p-1 py-3 px-2 col-span-2">
                 <div className="block text-left text-blue-700-700 text-lg  font-bold mb-2">
                     <FormattedMessage id="Clinical Filters" defaultMessage='Clinical Filters' />
@@ -933,7 +933,7 @@ const GroupFilters = ({ volcanoType,parentCallback, groupFilters,viz_type }) => 
                     Add Group
                 </button>
             </div>}
-            <div className="p-1 py-3 px-2 col-span-2">
+            <div className="p-1 py-3 px-2 col-span-2"  style={{width:'250px', overflowX:'auto'}}>
                 {filterInputs}
             </div>
             {filterSelected && <div>

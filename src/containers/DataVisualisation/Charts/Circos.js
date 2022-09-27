@@ -234,7 +234,6 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
 
 
-
   const reA = /[^a-zA-Z]/g;
   const reN = /[^0-9]/g;
   function sortAlphaNum(a, b) {

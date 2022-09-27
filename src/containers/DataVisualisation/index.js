@@ -24,7 +24,7 @@ import { element } from "prop-types";
 export default function DataVisualization() {
 
   const elementRef = useRef(null);
-  
+
   const [state, setState] = useState({ genes: [], filter: "", type: "" });
 
   // const geneFilterData = useSelector(state => state.dataVisualizationReducer.geneFilterData)
@@ -152,13 +152,13 @@ export default function DataVisualization() {
 
 
   const toggleTab = (event) => {
-    let t = ["Volcano Plot","Survival Plot","Fusion Plot"]
-    if(t.indexOf(event.target.innerText)!==-1){
+    let t = ["Volcano Plot", "Survival Plot", "Fusion Plot"]
+    if (t.indexOf(event.target.innerText) !== -1) {
       setToggle(false)
-    }else{
+    } else {
       setToggle(true)
     }
-    
+
     let tabsContainer = document.querySelector("#tabs");
     let tabTogglers = tabsContainer.querySelectorAll("a");
     tabTogglers.forEach(function (toggler) {
@@ -179,8 +179,8 @@ export default function DataVisualization() {
         );
       });
     });
-    
-    
+
+
   };
 
   useEffect(() => {
@@ -412,14 +412,16 @@ export default function DataVisualization() {
   }, []);
 
   const leftFilterClose = (e) => {
-    let t = ["volcano","survival","fusion"]
-    if(t.indexOf(tab)!==-1){
+    let t = ["volcano", "survival", "fusion"]
+    if (t.indexOf(tab) !== -1) {
       return false
-    }else{
+    } else {
       setToggle(!toggle)
     }
   }
-  
+
+
+
 
 
   
@@ -427,7 +429,7 @@ export default function DataVisualization() {
     <div className="header">
       <div className="mx-auto border-t rounded overflow-hidden ">
         <div id="main_div">
-          <div className={(toggle ) ? "grid grid-cols-4" : "grid "}>
+          <div className={(toggle) ? "grid grid-cols-4" : "grid "}>
             {toggle && (
               <div className="xs:col-span-3 lg:col-span-1 xs:z-10 xs:opacity-95 bg-white border border-gray-200 transition duration-150 ease-in-out">
                 <Filter
@@ -452,7 +454,7 @@ export default function DataVisualization() {
                 >
                   <button
                     className="bg-blue-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    onClick={e=>leftFilterClose(e)}
+                    onClick={e => leftFilterClose(e)}
                     type="button"
                   >
                     <AdjustmentsIcon className="h-6 w-6 inline" />
@@ -462,7 +464,7 @@ export default function DataVisualization() {
                   <div className="inline-flex relative xs:hidden lg:block md:block">
                     <MenuIcon
                       className="h-8 w-8 inline text-main-blue mt-3 cursor-pointer"
-                      onClick={e=>leftFilterClose(e)}
+                      onClick={e => leftFilterClose(e)}
                     />
                   </div>
                   <div className="inline-flex lg:w-2/5 xs:w-60">

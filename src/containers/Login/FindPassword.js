@@ -32,7 +32,7 @@ function FindPassword() {
       })
         .then((value) => {
           setTimeout(() => {
-  
+
             window.location.href = '/login/'
           }, 2000)
         });
@@ -73,7 +73,6 @@ function FindPassword() {
                     placeholder="Please Enter your User ID"
                   />
                 </div>
-
               </div>
             </div>
             <div className="grid grid-cols-3 pt-12">
