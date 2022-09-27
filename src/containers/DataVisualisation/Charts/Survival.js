@@ -659,6 +659,7 @@ export default function DataSurvival({
               </>
             )}
           </div>
+          
           <div className="col-span-5">
             {renderSurvival && survivalModel === "kaplan" && (
               <SurvivalCmp

@@ -175,6 +175,31 @@ let childMenu = {
             icon: 'fa fa-dashboard',
             url: '/notice',
             children: []
+          },
+          {
+            id: 'otherservice',
+            title: <FormattedMessage id="Notice" defaultMessage='Other Service' />,
+            type: 'group',
+            icon: 'fa fa-dashboard',
+            url: '/otherservice',
+            children: [
+              {
+                id: 'organoid',
+                title: <FormattedMessage id="FAQ" defaultMessage='Organoid' />,
+                type: 'item',
+                icon: 'fa fa-dashboard',
+                url: '/organoid',
+                children: []
+              },
+              {
+                id: 'qa',
+                title: <FormattedMessage id="QA" defaultMessage='Q&A' />,
+                type: 'item',
+                icon: 'fa fa-dashboard',
+                url: '/qa',
+                children: []
+              }
+            ]
           }
         ],
       },

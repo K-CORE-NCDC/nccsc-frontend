@@ -160,45 +160,7 @@ export default function Web(props) {
   }, [window.location.href])
 
 
-  // main unload function
 
-  // useEffect(() => {
-
-  //   const unloadCallback = (event) => {
-  //     event.preventDefault();
-  //     event.returnValue = "Are you sure you want to";
-  //     console.log("Enter", event.returnValue);
-  //     return '';
-  //   };
-
-  //   window.addEventListener("beforeunload", unloadCallback);
-  //   return () => {
-  //     console.log("Dead");
-  //     window.removeEventListener("beforeunload", (e) => {
-  //       console.log("e.target.value", e.target.value);
-  //     });
-  //     console.log("Last");
-  //   }
-  // }, []);
-
-
-
-  useEffect(() => {
-    window.addEventListener('beforeunload', alertUser)
-    window.addEventListener('unload', handleEndConcert)
-    return () => {
-      window.removeEventListener('beforeunload', alertUser)
-      window.removeEventListener('unload', handleEndConcert)
-      handleEndConcert()
-    }
-  }, [])
-  const alertUser = e => {
-    e.preventDefault()
-    e.returnValue = ''
-  }
-  const handleEndConcert = async () => {
-    dispatch(sendlogManagement("POST", JSON.parse(sessionStorage.getItem('logData'))))
-  }
 
 
 
