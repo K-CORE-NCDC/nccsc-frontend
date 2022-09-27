@@ -134,12 +134,12 @@ function Organoid() {
                     </li>
                 </ul>
 
-                <li>
+                <li className='m-12'>
                     <h1 className='m-5 text-5xl font-bold my-5'>
                         오가노이드 서비스 신청
                     </h1>
                     <ul>
-                        <li><img src={organoid06} alt='organoid' style={{ margin: 'auto' }}></img></li>
+                        <li><img src={organoid06} alt='organoid' className='my-9' style={{ margin: 'auto' }}></img></li>
                     </ul>
                 </li>
 
