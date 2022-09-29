@@ -66,6 +66,7 @@ export default function DataVisualization() {
     setScreenCaptureConfirmation(true);
   };
   const submitFilter = (e) => {
+    console.log("while submiting the filter");
     // e.preventDefault()
     setBoolChartState(false);
     setChartName(tab);
@@ -77,6 +78,7 @@ export default function DataVisualization() {
   };
 
   const callback = useCallback((filters) => {
+    console.log("callback the filter");
     let type = document.getElementById("gene_type").value;
     let g = genes[type].data;
     document.getElementById("genes").value = g.join(" ");
@@ -90,17 +92,12 @@ export default function DataVisualization() {
   }, []);
 
   useEffect(() => {
+    console.log("Filter Applied");
     if (filterApplied) {
       setfilterApplied(false);
       submitFilter();
     }
   }, [filterApplied]);
-
-  useEffect(() => {
-    return () => {
-      dispatch(clearDataVisualizationState());
-    };
-  }, []);
 
   const selectGene = (event) => {
     let val_ = event.target.value;
@@ -151,6 +148,7 @@ export default function DataVisualization() {
 
 
 
+
   const toggleTab = (event) => {
     let t = ["Volcano Plot", "Survival Plot", "Fusion Plot"]
     if (t.indexOf(event.target.innerText) !== -1) {
@@ -182,14 +180,6 @@ export default function DataVisualization() {
 
 
   };
-
-  useEffect(() => {
-    if (project_id !== undefined) {
-      dispatch(getBreastKeys({ project_id: project_id }));
-    } else {
-      dispatch(getBreastKeys({}));
-    }
-  }, []);
 
   useEffect(() => {
     if(chartName){
@@ -293,6 +283,14 @@ export default function DataVisualization() {
     setMenuItems(tmp);
   }, [availableTabsForProject,chartName]);
 
+    useEffect(() => {
+    if (project_id !== undefined) {
+      dispatch(getBreastKeys({ project_id: project_id }));
+    } else {
+      dispatch(getBreastKeys({}));
+    }
+  }, []);
+
   useEffect(() => {
     if (BrstKeys) {
       let tmp = [];
@@ -336,7 +334,7 @@ export default function DataVisualization() {
           screenCapture,
           setToFalseAfterScreenCapture,
           toggle,
-          state
+          // state
         );
       case "OncoPrint":
         return Charts.onco(
@@ -423,6 +421,14 @@ export default function DataVisualization() {
 
 
 
+
+
+  useEffect(() => {
+    return () => {
+      console.log("leaving the current chart");
+      dispatch(clearDataVisualizationState());
+    };
+  }, []);
 
   
   return (

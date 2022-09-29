@@ -44,7 +44,7 @@ const MultipleElem = ({elem,ind}) =>{
         <i className={elem.icon}></i>
         <span>{elem.title}</span>
       </a>
-      <div className="text-base z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1" id={"multisubmenu_"+ind}>
+      <div className="text-base z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1 abc" id={"multisubmenu_"+ind}>
 
           {
             elem['children'].map((e,i)=>{

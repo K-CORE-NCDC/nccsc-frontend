@@ -933,7 +933,7 @@ const GroupFilters = ({ volcanoType,parentCallback, groupFilters,viz_type }) => 
                     Add Group
                 </button>
             </div>}
-            <div className="p-1 py-3 px-2 col-span-2"  style={{width:'250px', overflowX:'auto'}}>
+            <div className="p-1 py-3 px-2 col-span-2"  style={{ overflowX:'auto'}}>
                 {filterInputs}
             </div>
             {filterSelected && <div>

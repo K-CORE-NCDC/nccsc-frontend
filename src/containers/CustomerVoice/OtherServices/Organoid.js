@@ -11,7 +11,7 @@ import Attachments from '../../../assets/organoidZipAttachment.zip'
 
 function Organoid() {
     return (
-        <div>
+        <div className=''>
             <h1 className="m-5 text-5xl font-bold my-5">오가노이드 서비스 안내</h1>
             <div>
                 <div className="">
@@ -58,40 +58,38 @@ function Organoid() {
                 </li>
 
                 <li>
-                    <h1> 오가노이드 제공방법 </h1>
-                    <ul>
-                        <li>
-                            <ul>
-                                <li>
-                                    <div className='flex mx-auto'>
-                                        <div>
-                                            <img src={organoid04} alt='organoid' style={{ margin: 'auto' }}></img>
-                                        </div>
-                                        <div>
-                                            <h3>동결바이얼</h3>
-                                            <h3>- 드라이아이스 상태의 1 바이얼 (106 cells/vial)</h3>
-                                            <h3>- 매주 화요일 오전, 택배 혹은 직접분양</h3>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
+                    <h1 className='m-5 text-5xl font-bold my-5'> 오가노이드 제공방법 </h1>
+                    <div className='ml-32 my-16'>
+                        <div className='flex'>
+                            <div className='w-64'>
+                                <img src={organoid04} alt='organoid'></img>
+                            </div>
 
-                                    <div className='flex mx-auto'>
-                                        <div>
-                                            <img src={organoid05} alt='organoid' style={{ margin: 'auto' }}></img>
-                                        </div>
-                                        <div>
-                                            <p>배양바이얼</p>
-                                            <p>- matrigel 배양상태의 오가노이드 1 바이얼 (상온)</p>
-                                            <p>- 매주 화요일 오후 3시, 직접분양만 가능</p>
-                                        </div>
-                                    </div>
-                                </li>
+                            <div>
+                                <ul className='mt-8 ml-8'>
+                                    <li className='mb-4'>1) 동결바이얼</li>
+                                    <li className='ml-12'>- 드라이아이스 상태의 1 바이얼 (106 cells/vial)</li>
+                                    <li className='ml-12'>- 매주 화요일 오전, 택배 혹은 직접분양</li>
+                                </ul>
+                            </div>
 
-                            </ul>
-                        </li>
-                    </ul>
+                        </div>
 
+
+                        <div className='flex '>
+                            <div className='w-64'>
+                                <img className='mt-5 ml-5' src={organoid05} alt='organoid'></img>
+                            </div>
+
+                            <div>
+                                <ul className='mt-8 ml-8'>
+                                    <li className='mb-4'>2) 배양바이얼</li>
+                                    <li className='ml-12'>- matrigel 배양상태의 오가노이드 1 바이얼 (상온)</li>
+                                    <li className='ml-12'>- 매주 화요일 오후 3시, 직접분양만 가능</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </li>
 
                 <li>
@@ -139,25 +137,25 @@ function Organoid() {
                         오가노이드 서비스 신청
                     </h1>
                     <ul>
-                        <li><img src={organoid06} alt='organoid' className='my-9' style={{ margin: 'auto' }}></img></li>
+                        <li><img src={organoid06} alt='organoid' className='my-32 mx-auto'></img></li>
                     </ul>
                 </li>
 
-                <li>
+                <li className='m-12'>
                     <h1 className='m-5 text-5xl font-bold my-5'>신청자 구비서류 </h1>
 
                     <ul>
                         <li>
-                            <div>
-                                <h1>신청단계</h1>
+                            <div className='container flex justify-items-start m-8'>
+                                <h1 className='mr-5'>◦ 신청단계  </h1>
                                 <p>IRB 승인서
                                     오가노이드/데이터 제공 신청서
                                 </p>
                             </div>
                         </li>
                         <li>
-                            <div>
-                                <h1>제공단계</h1>
+                            <div className='container flex justify-items-start m-8'>
+                                <h1 className='mr-5'>◦ 제공단계</h1>
                                 <p>오가노이드 제공 확인서
                                     MTA
                                 </p>
@@ -167,22 +165,25 @@ function Organoid() {
                 </li>
 
             </ul>
-            <div>
-                <h1># 검색 및 신청
-                </h1>
-                <li >
-                    <a href={Attachments} download className='text-blue-300'>신청서류 다운로드</a>
-                </li>
+
+
+            <div className='flex container m-12 justify-between'>
+                <h1 className='m-5 text-5xl font-bold my-5'>검색 및 신청</h1>
+                <div className='m-12 rounded bg-blue-100 '>
+
+                    <a className='m-5 text-3xl font-normal my-5 block' href={Attachments} download>신청서류 다운로드</a>
+
+                </div>
+
             </div>
 
             {/* table */}
-            <div>
-                신청자 정보
-                <table className='table-auto'>
-                    <tbody>
-                        <tr>
-                            <td>신청자 정보</td>
-                            <td className='grid grid-cols-3 gap-6'>
+            <div className=''>
+                <table className='table-auto  border border-black mx-auto'>
+                    <tbody className=' border border-black'>
+                        <tr className=' border border-black bg-gray-100'>
+                            <td className=' border border-black m-20 p-7'>신청자 정보</td>
+                            <td className='grid grid-cols-3 gap-6 m-5'>
                                 <p>◦성명________   </p>
                                 <p>◦ 연락처________   </p>
                                 <p>◦ E-mail________   </p>
@@ -191,23 +192,23 @@ function Organoid() {
                                 <p>◦ 직위________   </p>
                             </td>
                         </tr>
-                        <tr>
-                            <td>제공유형</td>
-                            <td className='grid grid-cols-2 gap-6'>
+                        <tr className=' border border-black'>
+                            <td className=' border border-black m-5 p-7'>제공유형</td>
+                            <td className='grid grid-cols-3 gap-6 m-5'>
                                 <p>◦단순제공</p>
                                 <p>◦ 공동협력 연구</p>
                             </td>
                         </tr>
-                        <tr>
-                            <td>기본검색</td>
-                            <td className='grid grid-cols-2 gap-6'>
+                        <tr className=' border border-black bg-gray-100'>
+                            <td className=' border border-black m-5 p-7'>기본검색</td>
+                            <td className='grid grid-cols-3 gap-6 m-5'>
                                 <p>◦암종 _______ </p>
                                 <p>◦ 조직 (오가노이드 기원) _______</p>
                             </td>
                         </tr>
-                        <tr>
-                            <td>심화검색</td>
-                            <td className='grid grid-cols-5 gap-6'>
+                        <tr className=' border border-black'>
+                            <td className=' border border-black m-5 p-7'>심화검색</td>
+                            <td className='grid grid-cols-3 gap-6 m-5'>
                                 <p>◦면역병리    </p>
                                 <p>◦ 조직병리   </p>
                                 <p>◦치료반응성     </p>
@@ -215,9 +216,9 @@ function Organoid() {
                                 <p>◦ 오믹스정보  </p>
                             </td>
                         </tr>
-                        <tr>
-                            <td>특화서비스</td>
-                            <td className='grid grid-cols-3 gap-6'>
+                        <tr className=' border border-black bg-gray-100'>
+                            <td className=' border border-black m-5 p-7'>특화서비스</td>
+                            <td className='grid grid-cols-3 gap-6 m-5'>
                                 <p>◦교육</p>
                                 <p>◦ 연구컨설팅   </p>
                                 <p>◦ STR analysis</p>
@@ -230,9 +231,9 @@ function Organoid() {
 
 
             <div>
-                <h1>검색 및 신청은 서류 작성 후 이메일 사전신청</h1>
-                <h1>#문의</h1>
-                <div className='grid grid-cols-3 gap-6'>
+                <h1 className='m-12 text-3xl font-bold my-12'>검색 및 신청은 서류 작성 후 이메일 사전신청</h1>
+                <h1 className='m-12 text-3xl font-bold my-8'>문의</h1>
+                <div className='grid grid-cols-3 gap-6 m-12 text-3xl font-normal my-8'>
                     <p>공선영</p>
                     <p>ksy@ncc.re.kr </p>
                     <p>031-920-2362</p>
@@ -241,6 +242,7 @@ function Organoid() {
                     <p>031-920-2511</p>
                 </div>
             </div>
+
         </div>
     )
 }
