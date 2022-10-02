@@ -69,7 +69,7 @@ const route = [
 
   { path: `/interpro/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Interpro" defaultMessage="Interpro" />, component: InterPro},
   { path: `/vcfmaf/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Interpro" defaultMessage="Interpro" />, component: VcfMaf},
-  { path: `/organoid/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="organoid" defaultMessage="organoid" />, component: Organoid},
+  { path: `/organoid/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Organoid" defaultMessage="organoid" />, component: Organoid},
   
 ]
 

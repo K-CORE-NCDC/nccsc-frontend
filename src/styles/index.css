@@ -224,6 +224,16 @@ input:checked ~ .dot {
   position: relative;
 }
 
+.hover-target {
+  display: none;
+}
+    
+.hover-trigger:hover + .hover-target {
+  display: block;
+  color: red;
+  background-color: red;
+}
+
 /* .con ul li:nth-child(1) a::after{
   content: url('../assets/images/list.png');
   margin: 0 0 0 -2px;

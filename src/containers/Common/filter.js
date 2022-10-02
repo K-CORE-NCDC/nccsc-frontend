@@ -18,7 +18,6 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
   const [filtersUi, setFiltersUi] = useState({});
   const [filterHtml, setFilterHtml] = useState([]);
   const totalCount = useSelector((state) => {
-    console.log("let",Object.keys(state.dataVisualizationReducer.lollipopSummary).length);
 
     if ('Keys' in state.dataVisualizationReducer){
       // console.log("sdsdsdsdsds",Object.keys(state.dataVisualizationReducer.Keys));

@@ -59,7 +59,7 @@ export default function DataVisualization() {
       setScreenCapture(true);
     }
   };
-  
+
 
   const setScreenCaptureFunction = (capture) => {
     // setScreenCapture(capture)
@@ -89,6 +89,11 @@ export default function DataVisualization() {
       type: type,
     }));
     setfilterApplied(true);
+    dispatch(getBreastKeys({
+      filter: filters,
+      genes: g,
+      type: type,
+    }))
   }, []);
 
   useEffect(() => {
@@ -182,7 +187,7 @@ export default function DataVisualization() {
   };
 
   useEffect(() => {
-    if(chartName){
+    if (chartName) {
       let tabsContainer = document.querySelector("#tabs");
       let tabTogglers = tabsContainer.querySelectorAll("li");
       tabTogglers.forEach(function (toggler) {
@@ -206,7 +211,7 @@ export default function DataVisualization() {
       });
       submitFilter();
     }
-  }, [tab,chartName]);
+  }, [tab, chartName]);
 
   useEffect(() => {
     let w = elementRef.current.getBoundingClientRect().width;
@@ -237,11 +242,11 @@ export default function DataVisualization() {
       ];
     }
     let tmp = [];
-    
+
     l.forEach((element) => {
       let classes =
         "lg:px-4 sm:px-2 xs:px-2 py-2 xs:text-sm sm:text-xl lg:text-2xl font-semibold rounded-t opacity-50 ";
-      
+
       if (chartName === element) {
         classes = classes + " border-blue-400 border-b-4 -mb-px opacity-100";
       }
@@ -276,17 +281,18 @@ export default function DataVisualization() {
         );
       }
     });
-    let t = ["volcano","survival","fusion"]
-    if(t.indexOf(chartName)!==-1){
+    let t = ["volcano", "survival", "fusion"]
+    if (t.indexOf(chartName) !== -1) {
       setToggle(false)
     }
     setMenuItems(tmp);
-  }, [availableTabsForProject,chartName]);
+  }, [availableTabsForProject, chartName]);
 
-    useEffect(() => {
+  useEffect(() => {
     if (project_id !== undefined) {
       dispatch(getBreastKeys({ project_id: project_id }));
     } else {
+      console.log("Call brstkey");
       dispatch(getBreastKeys({}));
     }
   }, []);
@@ -334,7 +340,7 @@ export default function DataVisualization() {
           screenCapture,
           setToFalseAfterScreenCapture,
           toggle,
-          // state
+          state
         );
       case "OncoPrint":
         return Charts.onco(
@@ -430,7 +436,7 @@ export default function DataVisualization() {
     };
   }, []);
 
-  
+
   return (
     <div className="header">
       <div className="mx-auto border-t rounded overflow-hidden ">
@@ -454,9 +460,8 @@ export default function DataVisualization() {
             >
               <div className="grid grid-cols-3 gap-1 p-5 bg-white">
                 <div
-                  className={`col-span-3 lg:hidden md:hidden ${
-                    chartName === "volcano" ? "xs:hidden" : ""
-                  }`}
+                  className={`col-span-3 lg:hidden md:hidden ${chartName === "volcano" ? "xs:hidden" : ""
+                    }`}
                 >
                   <button
                     className="bg-blue-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
