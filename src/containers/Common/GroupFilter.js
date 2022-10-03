@@ -61,7 +61,7 @@ const filterChoicesCustom = [
 let preDefienedGroups = {
     diag_age: [
         { label: "21-35", from: 21, to: 35 },
-        { label: "35-40", from: 35, to: 40 },
+        { label: "36-40", from: 36, to: 40 },
         
     ],
     bmi_vl: [
@@ -131,7 +131,7 @@ export const PreDefienedFilters = ({ volcanoType,parentCallback, groupFilters })
     const preDefienedGroups1 = {
         diag_age: [
             { label: "21-35", from: 21, to: 35 },
-            { label: "35-40", from: 35, to: 40 },
+            { label: "36-40", from: 36, to: 40 },
             
         ],
         bmi_vl: [
@@ -933,7 +933,7 @@ const GroupFilters = ({ volcanoType,parentCallback, groupFilters,viz_type }) => 
                     Add Group
                 </button>
             </div>}
-            <div className="p-1 py-3 px-2 col-span-2"  style={{width:'250px', overflowX:'auto'}}>
+            <div className="p-1 py-3 px-2 col-span-2"  style={{ overflowX:'auto'}}>
                 {filterInputs}
             </div>
             {filterSelected && <div>

@@ -1174,7 +1174,7 @@ export function userRegister(type, data) {
 
 export function clearDataVisualizationState() {
   return (dispatch) => {
-    // console.log("clearing state");
+    console.log("clearing state");
     dispatch({
       type: CLEAR_ALL_STATES,
       payload: {},
