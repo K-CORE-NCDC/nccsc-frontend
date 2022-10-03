@@ -1,27 +1,73 @@
 import React, { useState, useEffect } from "react";
 
 import { interPro } from "../../actions/api_actions";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
+import LoaderCmp from '../Common/Loader'
 
 function InterPro() {
-    const [interproFile, setInterproFile] = useState();
+    const [interProFile, setInterProFile] = useState();
+    const [loader, setLoader] = useState(false)
+    const [msg, setMsg] = useState('')
+    const [loop,setLoop] = useState(null)
+    const [html, setHtml] = useState([])
+    const [startInterval, setStartInterval] = useState(false)
+    const interproResponse = useSelector((data) => data.homeReducer.interpro);    
     const dispatch = useDispatch();
 
-    // let extension = '	.fasta, .fna, .ffn, .faa, .frn, .fa'
-
-    let InterProTool = () => {
-        let element = document.getElementById("FastaFile");
-        setInterproFile(element.files[0]);
+    let InterProTool = (event) => {
+        setInterProFile(event.target.files[0])
+        
     };
-    useEffect(() => {
-        console.log("interprofile is ----- >>>", interproFile);
-    }, [interproFile]);
 
     let uploadFile = () => {
-        dispatch(
-            interPro("POST", { file: interproFile, filename: interproFile["name"] })
-        );
+        setLoader(true)
+        console.log(interProFile)
+        dispatch(interPro("POST", { "file": interProFile, "filename": interProFile["name"] }));
+        setMsg('File Uploading, Please Wait......')
     };
+
+    useEffect(()=>{
+        if(startInterval){
+            setLoop(setInterval(() => {
+                dispatch(interPro("GET", { "container_name": interproResponse['container_name']  }))
+            }, 10000));
+        }
+    },[startInterval])
+
+
+    useEffect(()=>{
+        if(interproResponse){
+            if(interproResponse['status']==='running'){
+                setLoader(true)
+                setStartInterval(true)
+                setMsg('File Uploaded, Conversion Started.....')
+            }else{
+                setLoader(false)
+                setStartInterval(false)
+                setLoop(interval => {
+                    clearInterval(interval);
+                    return null;
+                });
+                let h = []
+                h.push(
+                    <>
+                        <div className='flex flex-row'>
+                            <div>
+                                Your Results are ready kindly click link to download &nbsp;
+                                <a className='text-blue-600 hover:text-blue-700 transition duration-300 ease-in-out mb-4'
+                                 href={"http://3.141.3.176:9798/media/Interpro/files/"+interproResponse['container_name']+".tsv"} 
+                                 download={interproResponse['container_name']+".tsv"}>{interproResponse['container_name']}</a>
+                            </div>
+                            {/* <div>
+                                <p className='text-blue-400 hover:text-blue-500 transition duration-300 ease-in-out mb-4'>logs</p>
+                            </div> */}
+                        </div>
+                    </>
+                )
+                setHtml(h)
+            }
+        }
+    },[interproResponse])
 
     return (
         <div>
@@ -30,7 +76,7 @@ function InterPro() {
                     Interpro
                 </h1>
                 <div className="py-5">
-                    <section className="mt-2 flex flex-col items-center justify-center">
+                    {!loader ?<section className="mt-2 flex flex-col items-center justify-center">
                         <div>
                             <div
                                 className="bg-white p-8"
@@ -38,8 +84,20 @@ function InterPro() {
                                     width: "90rem",
                                 }}
                             >
+                                <p className="text-md leading-10 text-justify">
+                                    InterPro is a resource that provides functional analysis of protein sequences by classifying them into families and predicting the presence of domains and important sites.
+                                    To classify proteins, InterPro uses predictive models called signatures, provided by several collaborating databases that collectively make up the InterPro consortium
+                                </p>
+                            </div>
+                            <div
+                                className="bg-white p-8"
+                                style={{
+                                    width: "90rem",
+                                }}
+                            >
                                 <div className="">
-                                    <div>
+                                    
+                                    <div className="hidden">
                                         <label
                                             htmlFor="message"
                                             className=" py-2 block mb-2  text-md text-gray-900 dark:text-gray-400"
@@ -64,14 +122,14 @@ function InterPro() {
                                                     htmlFor="FastaFile"
                                                     className="mx-2 my-2 form-label inline-block mb-2 text-gray-700 text-md"
                                                 >
-                                                    or upload file
+                                                    Upload file
                                                 </label>
                                                 <input
                                                     className="text-md block w-full text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-outm-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                                     accept=".fasta, .fna, .ffn, .faa, .frn, .fa"
                                                     type="file"
                                                     id="FastaFile"
-                                                    onChange={InterProTool}
+                                                    onChange={(e)=>InterProTool(e)}
                                                 />
                                             </div>
                                         </div>
@@ -84,9 +142,28 @@ function InterPro() {
                                     </div>
                                 </div>
                             </div>
+                            <span className='text-base'>
+                                Note: protein sequence in .fasta format
+                            </span>
+                        </div>
+                    </section>:
+                    <>
+                        <LoaderCmp/>
+                        <p className='text-center'>
+                            {msg}
+                        </p>
+                    </>
+                    }
+                </div>
+                {html.length>0 && 
+                    <section className="mt-2 flex flex-col items-center justify-center">
+                        <div>
+                            <div className="bg-white p-8" style={{width: "90rem"}}>
+                                {html}
+                            </div>
                         </div>
                     </section>
-                </div>
+                }
             </div>
         </div>
     );

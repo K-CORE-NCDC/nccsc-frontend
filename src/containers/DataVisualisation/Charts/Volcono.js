@@ -11,6 +11,7 @@ import { getClinicalMaxMinInfo, getVolcanoPlotInfo } from '../../../actions/api_
 // import Loader from "react-loader-spinner";
 import LoaderCmp from '../../Common/Loader';
 import {FormattedMessage} from 'react-intl';
+import { useParams } from "react-router-dom";
 
 const selectedCss = "w-1/2 rounded-r-none  hover:scale-110 focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 xs:text-sm sm:text-sm md:text-2xl md:text-2xl ease-in-out border-gray-600 transition"
 const nonSelectedCss = "w-1/2 rounded-l-none  hover:scale-110 focus:outline-none flex justify-center p-5 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 text-teal-700 border xs:text-sm sm:text-sm md:text-2xl md:text-2xl duration-200 ease-in-out border-teal-600 transition"
@@ -38,7 +39,7 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
   const [volcanoType, setVolcanoType] = useState('transcriptome')
   const [proteomeValue, setProteomeValue] = useState('N')
   const [smallScreen, setSmallScreen] = useState(false)
-
+  let { tab,project_id } = useParams();
 
   const updateGroupFilters = (filtersObject) => {
     
@@ -49,7 +50,12 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
 
   useEffect(()=>{
     if(!clinicalMaxMinInfo){
-      dispatch(getClinicalMaxMinInfo('GET',{}))
+      console.log(project_id)
+      if(project_id){
+        dispatch(getClinicalMaxMinInfo('GET',{'project_id':project_id}))
+      }else{
+        dispatch(getClinicalMaxMinInfo('GET',{}))
+      }
     }
   },[])
 
