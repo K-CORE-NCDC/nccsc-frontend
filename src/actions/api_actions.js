@@ -2,6 +2,7 @@ import { homeConstants, dataVisualization, userdataVisualization,  CLEAR_ALL_STA
 import config from '../config'
 import axios from "axios";
 import '../assets/interceptor/interceptor'
+import { formatDate } from "@formatjs/intl";
 
 
 function sendRequest(url, method, data) {
@@ -112,7 +113,27 @@ export function findID(method,data){
 export function interPro(method,data){
   return (dispatch) => {
     let url = config.auth + "interpro/";
-    sendRequest(url, method, data)
+    let formData = new FormData()
+    if(method==="POST"){
+      formData.append('file',data['file'])
+      formData.append('filename',data['filename'])
+      sendRequest(url, method, formData)
+        .then((result) => {
+          const d = result;
+          dispatch({
+            type: homeConstants.INTERPRO,
+            payload: d["data"],
+          });
+          dispatch({ type: homeConstants.REQUEST_DONE });
+        })
+        
+        .catch((e) => {
+          console.log("error", e);
+        });
+    }else{
+      // formData.append('container_name',data['container_name'])
+      url += '?container_name='+data['container_name']
+      sendRequest(url, method, formData)
       .then((result) => {
         const d = result;
         dispatch({
@@ -125,12 +146,17 @@ export function interPro(method,data){
       .catch((e) => {
         console.log("error", e);
       });
+    }
   }
 }
 export function vcfmaf(method,data){
   return (dispatch) => {
     let url = config.auth + "vcfmaf/";
-    sendRequest(url, method, data)
+    let formData = new FormData()
+    if(method==="POST"){
+      formData.append('file',data['file'])
+      formData.append('filename',data['filename'])
+      sendRequest(url, method, formData)
       .then((result) => {
         const d = result;
         dispatch({
@@ -143,6 +169,24 @@ export function vcfmaf(method,data){
       .catch((e) => {
         console.log("error", e);
       });
+    }else{
+      // formData.append('container_name',data['container_name'])
+      url += '?container_name='+data['container_name']
+      sendRequest(url, method, formData)
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: homeConstants.VCFMAF,
+          payload: d["data"],
+        });
+        dispatch({ type: homeConstants.REQUEST_DONE });
+      })
+      
+      .catch((e) => {
+        console.log("error", e);
+      });
+    }
+    
   }
 }
 
@@ -442,6 +486,10 @@ export function getFusionVennDaigram(type, data) {
 export function getClinicalMaxMinInfo(type, data) {
   return (dispatch) => {
     let url = config.auth + "getClinicalMaxMinInfo/";
+    if('project_id' in data){
+      url += "?project_id="+data['project_id']
+    }
+    
     sendRequest(url, type, data)
       .then((result) => {
         const d = result

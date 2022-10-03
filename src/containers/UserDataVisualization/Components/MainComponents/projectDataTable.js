@@ -63,6 +63,7 @@ const ProjectDataTable = () => {
                     }
                 )
             })
+            console.log(allColumns,fileDataAsTableRendered)
             setTableHeaders(allColumns)
             setShow(true)
         }

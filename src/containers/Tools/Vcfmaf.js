@@ -4,48 +4,82 @@ import {
     vcfmaf
 } from "../../actions/api_actions";
 import { useSelector, useDispatch } from "react-redux";
-
+import LoaderCmp from '../Common/Loader'
 
 function Vcfmaf() {
     const [vcfMafFile, setVcfMafFile] = useState()
+    const [loader, setLoader] = useState(false)
+    const [startInterval, setStartInterval] = useState(false)
+    const [msg, setMsg] = useState('')
+    const [loop,setLoop] = useState(null)
+    const [html, setHtml] = useState([])
     const dispatch = useDispatch();
+    const vcf2mafResponse = useSelector((data) => data.homeReducer.vcfmaf);    
+    
 
-
-
-    // let extension = '	.fasta, .fna, .ffn, .faa, .frn, .fa'
-
-    let VcfMafTool = () => {
-        let element = document.getElementById('VcfMafFile')
-        setVcfMafFile(element.files[0])
+    let VcfMafTool = (event) => {
+        setVcfMafFile(event.target.files[0])
     }
-    useEffect(() => {
-        console.log("interprofile is ----- >>>", vcfMafFile);
-    }, [vcfMafFile])
+    
 
     let uploadFile = () => {
+        setLoader(true)
         dispatch(vcfmaf("POST", { "file": vcfMafFile, "filename": vcfMafFile['name'] }))
+        setMsg('File Uploading, Please Wait......')
     }
+
+    useEffect(()=>{
+        if(startInterval){
+            setLoop(setInterval(() => {
+                dispatch(vcfmaf("GET", { "container_name": vcf2mafResponse['container_name']  }))
+            }, 10000));
+        }
+    },[startInterval])
+
+    
+    
+    useEffect(()=>{
+        if(vcf2mafResponse){
+            if(vcf2mafResponse['status']==='running'){
+                setLoader(true)
+                setStartInterval(true)
+                setMsg('File Uploaded, Conversion Started.....')
+            }else{
+                setLoader(false)
+                setStartInterval(false)
+                setLoop(interval => {
+                    clearInterval(interval);
+                    return null;
+                });
+                let h = []
+                h.push(
+                    <>
+                        <div className='flex flex-row'>
+                            <div>
+                                Your Results are ready kindly click link to download &nbsp;
+                                <a className='text-blue-600 hover:text-blue-700 transition duration-300 ease-in-out mb-4'
+                                 href={"http://3.141.3.176:9798/media/VcfMap/files/"+vcf2mafResponse['container_name']+".maf"} 
+                                 download={vcf2mafResponse['container_name']+".maf"}>{vcf2mafResponse['container_name']}</a>
+                            </div>
+                            {/* <div>
+                                <p className='text-blue-400 hover:text-blue-500 transition duration-300 ease-in-out mb-4'>logs</p>
+                            </div> */}
+                        </div>
+                    </>
+                )
+                setHtml(h)
+            }
+        }
+    },[vcf2mafResponse])
 
 
 
     return (
         <div>
-            {/* <div className='grid place-items-center' style={{ width: '200px', border: '12px solid red' }}>
-                <h1>InterPro</h1>
-                <div>
-                    <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Input V2F</label>
-                    <textarea id="message" rows="4" className="block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your sequence"></textarea>
-                </div>
-            </div> */}
-
-
-
-
-
             <div>
                 <h1 className='text-center font-medium leading-tight text-5xl mt-4 mb-2 text-black-600'>VcfMaf</h1>
                 <div className="py-5">
-                    <section className="mt-2 flex flex-col items-center justify-center">
+                {!loader ? <section className="mt-2 flex flex-col items-center justify-center">
                         <div>
                             <div className="bg-white p-8"
                                 style={{
@@ -70,7 +104,7 @@ function Vcfmaf() {
                                                     transition
                                                     ease-in-out
                                                     m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
-                                                    accept=".vcf, " type="file" id="VcfMafFile" onChange={VcfMafTool} />
+                                                    accept=".vcf, " type="file" id="VcfMafFile" onChange={(e)=>VcfMafTool(e)} />
                                                     
                                             </div>
                                         </div>
@@ -82,12 +116,26 @@ function Vcfmaf() {
                                 </div>
                             </div>
                             <span className='text-base'>
-                                Note: only .vcf file accepted
+                                Note: only .vcf file accepted and files which are generated using genome version hg38
                             </span>
                         </div>
                     </section>
-                    
+                    :<>
+                        <LoaderCmp/>
+                        <p className='text-center'>
+                            {msg}
+                        </p>
+                    </>}
                 </div>
+                {html.length>0 && 
+                    <section className="mt-2 flex flex-col items-center justify-center">
+                        <div>
+                            <div className="bg-white p-8" style={{width: "90rem"}}>
+                                {html}
+                            </div>
+                        </div>
+                    </section>
+                }
             </div>
         </div>
     )
