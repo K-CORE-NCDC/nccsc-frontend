@@ -1,4 +1,3 @@
-import React from 'react';
 import LocalStorageService from "./LocalStorageService";
 import config from "../../config";
 import axios from "axios";

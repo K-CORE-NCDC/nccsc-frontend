@@ -126,10 +126,12 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
                     }
                 })
                 
-                var gdots = svg.selectAll("g.black")
+                var gdots = circles.selectAll("g.dot")
                     .data(dt)
                     .enter().append('g');
+                gdots.attr('class','dot')
                 gdots.append("text").text(function (d) {
+                    console.log(d)
                     if(d.color === 'black'){
                         return d.gene
                     }

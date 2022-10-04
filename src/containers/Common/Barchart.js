@@ -49,7 +49,7 @@ export default function Barchart({id,data,width,color, chart_type,title}) {
     });
             
 
-  },[])
+  },[id, title])
 
   useEffect(() => {
     
@@ -65,6 +65,7 @@ export default function Barchart({id,data,width,color, chart_type,title}) {
             d[n] = element.cnt
           }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         data = []
         for (const key in d) {
           data.push({"name":key,"cnt":d[key]})

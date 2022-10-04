@@ -2,7 +2,6 @@ import { homeConstants, dataVisualization, userdataVisualization,  CLEAR_ALL_STA
 import config from '../config'
 import axios from "axios";
 import '../assets/interceptor/interceptor'
-import { formatDate } from "@formatjs/intl";
 
 
 function sendRequest(url, method, data) {
@@ -1261,7 +1260,8 @@ export function updateDownloadVisualizationPurpose(data) {
     let url = config.auth + "download-capture-info/";
     sendRequest(url, 'POST', data)
       .then((result) => {
-        let res = result
+        // let res = result
+        return result
       })
       .catch(e => {
         console.log(e);

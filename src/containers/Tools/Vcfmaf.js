@@ -77,7 +77,7 @@ function Vcfmaf() {
     return (
         <div>
             <div>
-                <h1 className='text-center font-medium leading-tight text-5xl mt-4 mb-2 text-black-600'>VcfMaf</h1>
+                <h1 className='text-center font-medium leading-tight text-5xl mt-4 mb-2 text-black-600'>Vcf to Maf</h1>
                 <div className="py-5">
                 {!loader ? <section className="mt-2 flex flex-col items-center justify-center">
                         <div>

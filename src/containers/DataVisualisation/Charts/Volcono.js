@@ -73,6 +73,7 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
           inputData['volcanoProteomeType'] = proteomeValue
         }
         inputData['filterType'] = userDefienedFilter
+        // console.log(inputData,groupFilters)
         dispatch(getVolcanoPlotInfo('POST', { ...inputData, filterGroup: groupFilters }))
         
       }

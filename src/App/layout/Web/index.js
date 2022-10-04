@@ -1,8 +1,9 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { Suspense, useEffect, useState } from "react";
 // import { useBeforeunload } from 'react-beforeunload';
 import { Route, Switch, Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
-import config from "../../../config";
 import route from "../../../route";
 import Loader from "../Loader";
 import Header from "./Header";
@@ -21,7 +22,6 @@ import {
   XIcon,
   HomeIcon,
 } from "@heroicons/react/outline";
-import MenuItems from "../../../menu-item";
 import { useParams } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 import { getDashboardCount, sendlogManagement } from "../../../actions/api_actions";
@@ -90,10 +90,11 @@ export default function Web(props) {
         'endTime': ''
       }
       arrayOfLog[0] = object
-      let alid = sessionStorage.getItem('IdNumber')
+      // let alid = sessionStorage.getItem('IdNumber')
       sessionStorage.setItem('logData', JSON.stringify(arrayOfLog))
 
     }
+
 
   }, [])
 
@@ -426,7 +427,7 @@ export default function Web(props) {
           </div>
         )}
       </Popover>
-      {classes == "" && (
+      {classes === "" && (
         <nav className="bg-grey-light rounded w-full bg-white p-5">
           <ol className="list-reset flex text-grey-dark p-5">{breadCrumb}</ol>
         </nav>

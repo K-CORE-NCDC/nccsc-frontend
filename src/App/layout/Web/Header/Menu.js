@@ -1,12 +1,12 @@
 import React,{useContext} from 'react'
 import { Link } from 'react-router-dom';
 import {Context} from '../../../../wrapper'
-import {FormattedMessage} from 'react-intl';
-var islogin1=localStorage.getItem('ncc_access_token') 
-var islogin2=localStorage.getItem('ncc_refresh_token')
 
 var islogin1=localStorage.getItem('ncc_access_token') 
 var islogin2=localStorage.getItem('ncc_refresh_token')
+
+// var islogin1=localStorage.getItem('ncc_access_token') 
+// var islogin2=localStorage.getItem('ncc_refresh_token')
 
 const SingleElem = ({elem}) =>{
   if (elem.url){
