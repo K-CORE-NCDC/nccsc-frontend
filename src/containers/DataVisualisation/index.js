@@ -51,7 +51,6 @@ export default function DataVisualization() {
   const [filterApplied, setfilterApplied] = useState(false);
   const [screenCaptureConfirmation, setScreenCaptureConfirmation] =
     useState(false);
-
   const setToFalseAfterScreenCapture = (param = false) => {
     if (param === false) {
       setScreenCapture(false);
@@ -66,19 +65,21 @@ export default function DataVisualization() {
     setScreenCaptureConfirmation(true);
   };
   const submitFilter = (e) => {
-    console.log("while submiting the filter");
     // e.preventDefault()
-    setBoolChartState(false);
-    setChartName(tab);
-    let chartx = LoadChart(width, tab);
-    setCharts((prevState) => ({
-      ...prevState,
-      viz: chartx,
-    }));
+    console.log("state.genes.length",state.genes.length);
+    // if (state.genes.length > 0) {
+      setBoolChartState(false);
+      setChartName(tab);
+      let chartx = LoadChart(width, tab);
+      setCharts((prevState) => ({
+        ...prevState,
+        viz: chartx,
+      }));
+    // }
+    
   };
 
   const callback = useCallback((filters) => {
-    console.log("callback the filter");
     let type = document.getElementById("gene_type").value;
     let g = genes[type].data;
     document.getElementById("genes").value = g.join(" ");
@@ -97,7 +98,6 @@ export default function DataVisualization() {
   }, []);
 
   useEffect(() => {
-    console.log("Filter Applied");
     if (filterApplied) {
       setfilterApplied(false);
       submitFilter();
@@ -483,11 +483,13 @@ export default function DataVisualization() {
                       id="gene_type"
                       value={state["type"]}
                       onChange={(e) => selectGene(e)}
+                      placeholder='Enter your Genes'
                       className="btn_input_height lg:w-full xs:w-56 p-3 border bg-white focus:outline-none border-blue-300 focus:ring focus:border-blue-300 xs:h-14 lg:h-16 xs:text-sm lg:text-xl"
                     >
                       <option
                         className="xs:text-sm lg:text-xl"
                         value="user-defined"
+                        placeholder='Enter your Genes'
                       >
                         User-Defined List
                       </option>
@@ -627,6 +629,17 @@ export default function DataVisualization() {
                       id="genes"
                       className="btn_input_height lg:w-full sm:w-13 xs:w-56 p-3 xs:text-sm lg:text-xl border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 xs:h-14 lg:h-16"
                       name="genes"
+                      onChange={e => {
+                        let abc = document.getElementById("gene_type").value;
+                        if (abc === 'user-defined') {
+                          let usergenes = document.getElementById("genes").value.split(" ")
+                          setState((prevState) => ({
+                            ...prevState,
+                            genes: usergenes,
+                            type: 'user-defined',
+                          }));
+                        }
+                      }}
                     />
                   </div>
                   <div className="inline-flex lg:w-2/12 sm:w-1/5">
