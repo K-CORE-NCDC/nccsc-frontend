@@ -18,9 +18,7 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
   const [filtersUi, setFiltersUi] = useState({});
   const [filterHtml, setFilterHtml] = useState([]);
   const totalCount = useSelector((state) => {
-
     if ('Keys' in state.dataVisualizationReducer){
-      // console.log("sdsdsdsdsds",Object.keys(state.dataVisualizationReducer.Keys));
       return Object.keys(state.dataVisualizationReducer.Keys).length || 0;
     }else{
       return 0
@@ -35,8 +33,6 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
   }, []);
 
   useEffect(() => {
-    console.log("totalCount",totalCount);
-    console.log("totalCounts",totalCountS);
     drawTags();
     leftSide();
   }, [selected, selectState]);

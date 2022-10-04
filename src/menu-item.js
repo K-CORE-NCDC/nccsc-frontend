@@ -129,7 +129,7 @@ let childMenu = {
           },
           {
             id: 'VCFMAF',
-            title: <FormattedMessage id="VCFMAF" defaultMessage='VCFMAF' />,
+            title: <FormattedMessage id="VCFMAF" defaultMessage='VCF to MAF' />,
             type: 'item',
             icon: 'fa fa-dashboard',
             url: '/vcfmaf/',

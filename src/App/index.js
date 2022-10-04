@@ -1,4 +1,4 @@
-import React, { Suspense, useState, useEffect } from 'react';
+import React, { Suspense, useState } from 'react';
 import { Switch } from 'react-router-dom';
 import Loadable from 'react-loadable';
 import Loader from './layout/Loader/';
@@ -17,7 +17,7 @@ const Web = Loadable({
 
 
 export default function App() {
-  const [blurScreenCss, setBlurScreenCss] = useState("")
+  const [blurScreenCss] = useState("")
 
   // useEffect(()=>{
   //   const TRACKING_ID = "G-895Q141Y83"; // YOUR_OWN_TRACKING_ID

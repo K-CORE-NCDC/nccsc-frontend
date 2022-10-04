@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useRef, useCallback, Fragment } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable array-callback-return */
+/* eslint-disable no-loop-func */
+import React, {  useEffect } from "react";
+import { useSelector } from "react-redux";
 import * as d3 from 'd3';
 import { nest } from 'd3-collection';
-import {FormattedMessage} from 'react-intl';
-// import genes from '../Common/gene.json'
-// import { getBreastKeys, getUserDataProjectsTableData } from '../../actions/api_actions'
+
+
 
 const BoxPlot = React.forwardRef(({view_type, box_data,chart_type, watermarkCss }, ref) => {
-  const box_elementRef = useRef(null);
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
 
   function drawChart(d_){
@@ -65,7 +65,7 @@ const BoxPlot = React.forwardRef(({view_type, box_data,chart_type, watermarkCss 
               domains.push(d[i]['Species'])
             }
 
-            if(d[i]['type']=="T"){
+            if(d[i]['type']==="T"){
               let q1 = d3.quantile(d.map(function(g) {
                 if (g.type==="T") return g.Sepal_Length;
               }).sort(d3.ascending),.25)
@@ -218,8 +218,8 @@ const BoxPlot = React.forwardRef(({view_type, box_data,chart_type, watermarkCss 
           .data([key])
           .enter()
           .append("line")
-          .attr("x1", function(d){return (key-8) })
-          .attr("x2", function(d){return(key+50) })
+          .attr("x1", function(_d){return (key-8) })
+          .attr("x2", function(_d){return(key+50) })
           .attr("y1", function(d){
             return 10
           })

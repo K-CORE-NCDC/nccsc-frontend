@@ -1,15 +1,12 @@
-import React,{useState,useEffect,useRef,Fragment } from "react";
+import React,{useState,useEffect } from "react";
 import childMenu from '../../../../menu-item'
 import { Link } from 'react-router-dom';
-import {
-  MenuIcon,
-  XIcon
-} from '@heroicons/react/outline'
+
 
 
 export default function DropdownMenuMobile() {
   const [state, setState] = useState({"menu":[]});
-  const [openClass,setOpenClass] = useState(false);
+  // const [openClass,setOpenClass] = useState(false);
   useEffect(()=>{
     let items = childMenu.mainmenu.items
 

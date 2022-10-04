@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import childMenu from '../../../../menu-item'
 import { Link } from 'react-router-dom';
 import {
@@ -136,10 +136,10 @@ export default function DropdownMenu() {
 
     <ul className="dropdownHeader t" id='mainHeader'>
       <li className='group h-full table-cell relative cursor-pointer' onClick={e => openMenu(e)}>
-        <a className='text-3xl group_box h-full font-bold items-center w-full' style={{ 'minWidth': '50px' }}>
+        <button className='text-3xl group_box h-full font-bold items-center w-full' style={{ 'minWidth': '50px' }}>
           {!openClass && <MenuIcon className='w-6' />}
           {openClass && <XIcon className='w-6' />}
-        </a>
+        </button>
       </li>
       {state['menu']}
     </ul>
