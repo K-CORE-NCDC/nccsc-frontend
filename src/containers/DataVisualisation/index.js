@@ -89,11 +89,11 @@ export default function DataVisualization() {
       type: type,
     }));
     setfilterApplied(true);
-    dispatch(getBreastKeys({
-      filter: filters,
-      genes: g,
-      type: type,
-    }))
+    // dispatch(getBreastKeys({
+    //   filter: filters,
+    //   genes: g,
+    //   type: type,
+    // }))
   }, []);
 
   useEffect(() => {

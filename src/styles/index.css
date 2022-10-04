@@ -186,6 +186,14 @@ input:checked ~ .dot {
   top: 60px;
   z-index: 999999;
 }
+
+.group:hover ul li ul{
+  display:none !important;
+}
+.group:hover ul li:hover ul{
+  display:block !important;
+}
+
 .openmenu .group .group_box{
   background: #0c2f4d;
   width: 100%;
@@ -230,8 +238,8 @@ input:checked ~ .dot {
     
 .hover-trigger:hover + .hover-target {
   display: block;
-  color: red;
-  background-color: red;
+  color: #fff;
+  background-color: #0c3c6a;
 }
 
 /* .con ul li:nth-child(1) a::after{

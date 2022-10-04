@@ -11,7 +11,7 @@ import Attachments from '../../../assets/organoidZipAttachment.zip'
 
 function Organoid() {
     return (
-        <div className=''>
+        <div className='container mx-auto px-4'>
             <h1 className="m-5 text-5xl font-bold my-5">오가노이드 서비스 안내</h1>
             <div>
                 <div className="">

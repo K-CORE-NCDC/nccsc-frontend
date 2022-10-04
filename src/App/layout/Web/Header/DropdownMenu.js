@@ -28,7 +28,7 @@ export default function DropdownMenu() {
       let tmp = []
       for (var j = 0; j < children.length; j++) {
         tmp.push(
-          <li key={i + "_" + j} className='px-3 py-5'>
+          <li key={i + "_" + j} className={(children[j]['id']==='otherservice')? 'child-group h-full relative px-3 py-4' :'px-3 py-5'}>
             <Link key={i + "link_" + j}
               className={`text-3xl py-2 px-4 block whitespace-no-wrap ${children[j]['id'] === 'otherservice' ? 'relative hover-trigger' : ''}`}
               to={children[j].url}
@@ -36,7 +36,7 @@ export default function DropdownMenu() {
             </Link>
 
             {children[j]['id'] === 'otherservice' &&
-              <ul className="list-none text-center h-auto absolute hover-target" style={{left:'100%', top:'58.5%'}}>
+              <ul className="list-none text-center h-auto absolute hidden hover-target" style={{left:'100%', top:'5%'}}>
                 <li key={i + "_" + j} className='px-3 py-5'>
                   <Link key={i + "link_" + j} className="text-3xl py-2 px-4  whitespace-no-wrap" to='/organoid'>
                     organoid
