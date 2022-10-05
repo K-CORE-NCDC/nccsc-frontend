@@ -308,7 +308,7 @@ export const PreDefienedFilters = ({ volcanoType,parentCallback, groupFilters })
     }
 
     useEffect(() => {
-        console.log(selectedFilterType)
+        console.log("selectedFilterType",selectedFilterType)
         
         let filterGroupsHtmlTemp = []
         if (selectedFilterType && selectedFilterType.details) {
@@ -735,16 +735,37 @@ const GroupFilters = ({ volcanoType,parentCallback, groupFilters,viz_type }) => 
     }
 
     const dropDownChange = (event) => {
+        console.log("dropdown change");
         const eventObject = JSON.parse(event.target.value)
         const filterData = preDefienedGroups1[eventObject.colName][(eventObject.index)]
+        // console.log("event",event.target.checked);
+        // console.log("eventObject",eventObject);
+        // console.log("filterData",filterData);
         let tmp = multipleInputs
         if(eventObject.group in tmp){
             tmp[eventObject.group].push(filterData.value)
         }else{
             tmp[eventObject.group] = [filterData.value]
         }
-        console.log(tmp)
+        console.log("tmp is",tmp)
+        let group = eventObject['group'];
+        let value = filterData['value']
+        let shouldExist = event.target.checked
+        console.log(group,value,shouldExist);
+
+        if(shouldExist === false){
+            console.log("event is",event.target.checked);
+            event.target.checked = false
+            event.target.removeAttribute("checked");
+            console.log("event is",event);
+            console.log("group",group,"value",value);
+            let newTmp = tmp[group].filter(e=> e !== value)
+            tmp[group] = newTmp
+        }
+        
         setMultipleInputs(tmp,filterData)
+
+        console.log("multipleInputs",multipleInputs);
         if ('value' in filterData) {
             setUserGivenInputValues(prevState => ({
                 ...prevState,
@@ -803,10 +824,11 @@ const GroupFilters = ({ volcanoType,parentCallback, groupFilters,viz_type }) => 
                             })
                         }
                     }else{
+                        console.log("dynamic");
                         preDefienedGroups1[colName].map((element, index) => (
                             tr.push(<tr key={colName+index} className='border-b'>
                                 <td className='text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900'>{element.label}</td>
-                                <td className='px-6 py-4'><input type='checkbox' onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_a' })}/></td>
+                                <td className='px-6 py-4'><input type='checkbox'  onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_a' })}/></td>
                                 <td className='px-6 py-4'><input type='checkbox' onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_b' })}/></td>
                             </tr>)
                         ))
@@ -835,7 +857,7 @@ const GroupFilters = ({ volcanoType,parentCallback, groupFilters,viz_type }) => 
                         
                         for (let index = 0; index < boxes; index++) {
                             let name = 'group_'+abc[index]+'_'+element.label
-                            console.log(name);
+                            console.log("name",name);
                             // console.log(sv,index)
                             if(Object.keys(userGivenInputValues).length>0){
                                 let group_check = false
@@ -906,6 +928,7 @@ const GroupFilters = ({ volcanoType,parentCallback, groupFilters,viz_type }) => 
     const AppendNewGroup = () => {
         const filterType = selectedFilterDetails.type
         const componentData = componetSwitch(filterType)
+        console.log("I'm here");
         setFilterInputs(prevState => [...prevState, componentData])
         setGroupsCounter(prevState => prevState + 1)
     }
