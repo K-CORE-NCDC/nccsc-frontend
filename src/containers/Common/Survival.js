@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-loop-func */
 import React, { useState, useEffect } from 'react'
 import '../../styles/survival.css'
 import LineChart  from "react-linechart";

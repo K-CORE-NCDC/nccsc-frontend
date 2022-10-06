@@ -42,7 +42,7 @@ export default function DataVolcono({ width, inputData, screenCapture, setToFals
   let { tab,project_id } = useParams();
 
   const updateGroupFilters = (filtersObject) => {
-    
+    console.log(filtersObject)
     if (filtersObject) {
       setGroupFilters(filtersObject)
     }

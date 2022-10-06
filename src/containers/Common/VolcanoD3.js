@@ -32,8 +32,17 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
             var innerWidth = width - margin.left - margin.right, // set the size of the chart within its container
                 innerHeight = height - margin.top - margin.bottom;
             document.getElementById('chart-d3-volcano').innerHTML = ''
+            
             selection.each(function (data) {
-                
+                let max = 0
+                for (let idx = 0; idx < data.length; idx++) {
+                    const element = data[idx];
+                    if(element.q_value>max){
+                        max = element.q_value
+                    }
+                }
+                max = Math.round(max)+1
+                console.log(max)
                 // set up the scaling for the axes based on the inner width/height of the chart and also the range
                 // of value for the x and y axis variables. This range is defined by their min and max values as
                 // calculated by d3.extent()
@@ -44,7 +53,7 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
                 // normally would set the y-range to [height, 0] but by swapping it I can flip the axis and thus
                 // have -log10 scale without having to do extra parsing
                 yScale.range([0, innerHeight])
-                    .domain([10, 0])
+                    .domain([max, 0])
                     .nice(); // adds "padding" so the domain extent is exactly the min and max values
                 var zoom = d3.zoom()
                     .scaleExtent([1, 20])
@@ -131,7 +140,6 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
                     .enter().append('g');
                 gdots.attr('class','dot')
                 gdots.append("text").text(function (d) {
-                    console.log(d)
                     if(d.color === 'black'){
                         return d.gene
                     }
@@ -321,12 +329,6 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
     }
 
     useEffect(() => {
-        // let data = []
-        // d3.tsv("https://gist.githubusercontent.com/mbhall88/3eb7f295657d9fb81f039de6642727e0/raw/b3c6fced77ed6856878e4684b512c52866ae6827/data.diff", (d) => {
-        //     return d
-        // }).then(res => {
-        //     setVolcanoData(res);
-        // })
         if (dataProps && dataProps.length > 0) {
             setVolcanoData(dataProps);
         }
