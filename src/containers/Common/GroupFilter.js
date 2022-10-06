@@ -504,11 +504,11 @@ const GroupFilters = ({ volcanoType,parentCallback, groupFilters,viz_type }) => 
     },[volcanoType])
 
     const submitFilters = () => {
-        
+        console.log(userGivenInputValues)
         if (isFilterResetHappened) {
             parentCallback(userGivenInputValues)
         } else {
-            parentCallback({ ...userGivenInputValues, ...groupFilters })
+            parentCallback(userGivenInputValues)
         }
     }
 
@@ -731,41 +731,38 @@ const GroupFilters = ({ volcanoType,parentCallback, groupFilters,viz_type }) => 
                         </div>
                     )
                 }
+            default:
+                return
         }
     }
 
     const dropDownChange = (event) => {
-        console.log("dropdown change");
+        
         const eventObject = JSON.parse(event.target.value)
         const filterData = preDefienedGroups1[eventObject.colName][(eventObject.index)]
-        // console.log("event",event.target.checked);
-        // console.log("eventObject",eventObject);
-        // console.log("filterData",filterData);
+        
         let tmp = multipleInputs
         if(eventObject.group in tmp){
             tmp[eventObject.group].push(filterData.value)
         }else{
             tmp[eventObject.group] = [filterData.value]
         }
-        console.log("tmp is",tmp)
+        
         let group = eventObject['group'];
         let value = filterData['value']
         let shouldExist = event.target.checked
-        console.log(group,value,shouldExist);
+        
 
         if(shouldExist === false){
-            console.log("event is",event.target.checked);
             event.target.checked = false
             event.target.removeAttribute("checked");
-            console.log("event is",event);
-            console.log("group",group,"value",value);
             let newTmp = tmp[group].filter(e=> e !== value)
             tmp[group] = newTmp
         }
         
         setMultipleInputs(tmp,filterData)
-
-        console.log("multipleInputs",multipleInputs);
+        console.log(filterData)
+        
         if ('value' in filterData) {
             setUserGivenInputValues(prevState => ({
                 ...prevState,
@@ -805,26 +802,26 @@ const GroupFilters = ({ volcanoType,parentCallback, groupFilters,viz_type }) => 
                 let tr = []
                 
                 if(viz_type==='volcono'){
-                    if(Object.keys(groupFilters).length>0 && groupFilters['type']==='static'){
-                        if (groupFilters['group_a'].length>0 && groupFilters['group_b'].length>0){
+                    if(Object.keys(userGivenInputValues).length>0 && userGivenInputValues['type']==='static'){
+                        if (userGivenInputValues['group_a'].length>0 && userGivenInputValues['group_b'].length>0){
                             preDefienedGroups1[colName].forEach((element, index)=>{
                                 let group_a = false
                                 let group_b = false
-                                if(groupFilters['group_a'].indexOf(element.value)>-1){
+                                if(userGivenInputValues['group_a'].indexOf(element.value)>-1){
                                     group_a = true
                                 }
-                                if(groupFilters['group_b'].indexOf(element.value)>-1){
+                                if(userGivenInputValues['group_b'].indexOf(element.value)>-1){
                                     group_b = true
                                 }
                                 tr.push(<tr key={colName+index} className='border-b'>
                                     <td className='text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900'>{element.label}</td>
-                                    <td className='px-6 py-4'><input type='checkbox' checked={group_a} onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_a' })}/></td>
-                                    <td className='px-6 py-4'><input type='checkbox' checked={group_b} onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_b' })}/></td>
+                                    <td className='px-6 py-4'><input type='checkbox' defaultChecked={group_a} onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_a' })}/></td>
+                                    <td className='px-6 py-4'><input type='checkbox' defaultChecked={group_b} onChange={dropDownChange} value={JSON.stringify({ index: index, colName: colName, group: 'group_b' })}/></td>
                                 </tr>)    
                             })
                         }
                     }else{
-                        console.log("dynamic");
+                        
                         preDefienedGroups1[colName].map((element, index) => (
                             tr.push(<tr key={colName+index} className='border-b'>
                                 <td className='text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900'>{element.label}</td>
@@ -846,7 +843,6 @@ const GroupFilters = ({ volcanoType,parentCallback, groupFilters,viz_type }) => 
                     </table>)
                 } else if(viz_type==='survival') {
                     let d = preDefienedGroups1[colName]
-                    
                     let thead = []
                     let boxes = d.length
                     for (let sv = 0; sv < d.length; sv++) {
@@ -857,7 +853,7 @@ const GroupFilters = ({ volcanoType,parentCallback, groupFilters,viz_type }) => 
                         
                         for (let index = 0; index < boxes; index++) {
                             let name = 'group_'+abc[index]+'_'+element.label
-                            console.log("name",name);
+                            
                             // console.log(sv,index)
                             if(Object.keys(userGivenInputValues).length>0){
                                 let group_check = false
@@ -880,7 +876,7 @@ const GroupFilters = ({ volcanoType,parentCallback, groupFilters,viz_type }) => 
                                 }
                                 checkbox.push(
                                     <td className='px-6 py-4' key={index+'_'+sv+abc[sv]+'_'+element.label}>
-                                        <input data-type={element.label} data-name={abc[index]} type='checkbox' checked={group_check} onChange={dropDownChange} value={JSON.stringify({ index: sv, colName: colName, group: 'group_'+abc[index] })}/>
+                                        <input data-type={element.label} data-name={abc[index]} type='checkbox' defaultChecked={group_check} onChange={dropDownChange} value={JSON.stringify({ index: sv, colName: colName, group: 'group_'+abc[index] })}/>
                                     </td>
                                 )
                                 group_i++
@@ -891,10 +887,6 @@ const GroupFilters = ({ volcanoType,parentCallback, groupFilters,viz_type }) => 
                                     </td>
                                 )
                             }
-                            
-
-                            
-                            
                         }
                         tr.push(
                             <tr key={colName+sv} className='border-b'>
@@ -983,7 +975,7 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters,from }
     const [filters, setFilters] = useState({})
     const [resetClicked, setResetClicked] = useState(false)
     const [isGroupFilterProp, setIsGroupFilterProp] = useState(false)
-
+  
     // console.log(preDefienedGroups)
     let preDefienedGroups1 = {
         diag_age: [
@@ -1046,8 +1038,8 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters,from }
         ]
        
     }
-
-
+  
+  
     const submitFilters = () => {
         if (Object.keys(filters).length > 0) {
             parentCallback(filters)
@@ -1055,7 +1047,7 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters,from }
             parentCallback(groupFilters)
         }
     }
-
+  
     const resetFilters = () => {
         setSelectedFilterType({})
         setFilterGroupsHtml([])
@@ -1063,7 +1055,7 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters,from }
         setResetClicked(true)
         setIsGroupFilterProp(false)
     }
-
+  
     useEffect(() => {
         if (groupFilters && groupFilters.type) {
             if (resetClicked === false) {
@@ -1084,7 +1076,7 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters,from }
                     </div>
                 )
             }
-
+  
             if (groupFilters.type === 'static') {
                 filterGroupsHtmlTemp.push(
                     <div key='bool'>
@@ -1099,7 +1091,7 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters,from }
                     </div>
                 )
             }
-
+  
             // if (groupFilters.type === 'text') {
             //     filterGroupsHtmlTemp.push(
             //         <div key='bool'>
@@ -1130,12 +1122,12 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters,from }
             setFilterGroupsHtml(filterGroupsHtmlTemp)
         }
     }, [groupFilters])
-
+  
     const filterTypeDropdownSelection = event => {
         let key = event.target.value
         setSelectedFilterType({ details: filterChoicesCustom[parseInt(key)], index: key })
     }
-
+  
     const dropDownChange = (event) => {
         const eventObject = JSON.parse(event.target.value)
         
@@ -1152,7 +1144,7 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters,from }
             }))
         }
     }
-
+  
     useEffect(() => {
         let filterGroupsHtmlTemp = []
         if (selectedFilterType && selectedFilterType.details) {
@@ -1171,7 +1163,7 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters,from }
                     </div>
                 )
             }
-
+  
             if (selectedFilterType.details.type === 'static') {
                 setFilters({ group_a: 'F', group_b: 'M', column: selectedFilterType.details.id, type: "static" })
                 filterGroupsHtmlTemp.push(
@@ -1187,7 +1179,7 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters,from }
                     </div>
                 )
             }
-
+  
             if ((selectedFilterType.details.type === 'number') || (selectedFilterType.details.type === 'text')) {
                 const colName = selectedFilterType.details.id
                 // console.log(selectedFilterType);
@@ -1212,13 +1204,13 @@ export const PreDefienedFiltersSurvival = ({ parentCallback, groupFilters,from }
                     </div>
                 )
             }
-
-
+  
+  
             setFilterGroupsHtml(filterGroupsHtmlTemp)
-
+  
         }
     }, [selectedFilterType])
-
+  
     return (
         <div className="m-1 bg-gray-100">
             <div className="p-1 py-3 px-2 col-span-2">

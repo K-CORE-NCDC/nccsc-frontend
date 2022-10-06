@@ -66,7 +66,7 @@ export default function DataVisualization() {
   };
   const submitFilter = (e) => {
     // e.preventDefault()
-    console.log("state.genes.length",state.genes.length);
+    
     // if (state.genes.length > 0) {
       setBoolChartState(false);
       setChartName(tab);
@@ -292,7 +292,7 @@ export default function DataVisualization() {
     if (project_id !== undefined) {
       dispatch(getBreastKeys({ project_id: project_id }));
     } else {
-      console.log("Call brstkey");
+      
       dispatch(getBreastKeys({}));
     }
   }, []);
@@ -431,7 +431,7 @@ export default function DataVisualization() {
 
   useEffect(() => {
     return () => {
-      console.log("leaving the current chart");
+      
       dispatch(clearDataVisualizationState());
     };
   }, []);

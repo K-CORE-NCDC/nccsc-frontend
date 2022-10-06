@@ -532,4 +532,4 @@ window.geneticrules.genetic_rule_set_custom = {
 	})
 }
 
-console.log(window.geneticrules)
+
