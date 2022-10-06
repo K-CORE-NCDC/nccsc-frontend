@@ -10,7 +10,7 @@ import {
 import { getUserDataProjectsTableData } from '../../actions/api_actions'
 import { useSelector, useDispatch } from "react-redux";
 import UserFilesTable from './Components/TableDisplay/table'
-import FileUpload from './Components/MainComponents/ClinicalFileUpload'
+import FileUpload from './Components/MainComponents/NewClinicalFileUpload'
 
 import { useHistory } from "react-router-dom";
 
@@ -45,6 +45,7 @@ export default function DataVisualization() {
 
   useEffect(() => {
     if(accessToken){
+      console.log("inside index");
       dispatch(getUserDataProjectsTableData())
     }else{
       history.push("/login")

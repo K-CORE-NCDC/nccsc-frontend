@@ -24,6 +24,21 @@ const homeReducer = (state = { 'home': 'home' }, { type, payload }) => {
         ...state,
         fileUploadData: payload
       }
+    case homeConstants.NEWUSERDATA_VISUALIZATION:
+      return {
+        ...state,
+        newFileUploadData: payload
+      }
+    case homeConstants.UPLOAD_CLININCAL_COLUMNS:
+      return {
+        ...state,
+        uploadClinicalColumns: payload
+      }
+    case homeConstants.NEWUSERDATA_VISUALIZATION_ERROR:
+      return {
+        ...state,
+        newFileUploadStatus: { ...state.fileUploadStatus, ...payload }
+      }
     case homeConstants.USERDATA_VISUALIZATION_ERROR:
       return {
         ...state,
