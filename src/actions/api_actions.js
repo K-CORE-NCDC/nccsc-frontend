@@ -650,6 +650,67 @@ export function file_upload(fileData, projectName) {
   }
 }
 
+export function new_file_upload(fileData, projectName) {
+  return (dispatch) => {
+    const data = new FormData()
+    // dispatch({ type: homeConstants.DATA_SUMMARY });
+    // fileData.forEach(file=>{
+    //   formData.append("arrayOfFilesName", file);
+    // });
+    Object.keys(fileData).forEach(element => {
+      if (fileData[element].type !== undefined) {
+        data.append(fileData[element].type, fileData[element].file);
+      }
+    })
+    data.set("project_name", projectName)
+
+    let url = config.auth + "new-user-data-visualization/";
+    sendRequest(url, "POST", data)
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: homeConstants.NEWUSERDATA_VISUALIZATION,
+          payload: d["data"],
+        });
+      })
+      .catch((e) => {
+        console.log("error", e);
+        dispatch({
+          type: homeConstants.USERDATA_VISUALIZATION_ERROR,
+          payload: { [fileData.type]: 'failed' }
+        })
+      });
+  }
+}
+
+export function uploadClinincalSamples(fileData, projectName) {
+  return (dispatch) => {
+    const data = new FormData()
+    // dispatch({ type: homeConstants.DATA_SUMMARY });
+    // fileData.forEach(file=>{
+    //   formData.append("arrayOfFilesName", file);
+    // });
+  
+
+    let url = config.auth + "upload-clinical-columns/";
+    sendRequest(url, "POST", data)
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: homeConstants.NEWUSERDATA_VISUALIZATION,
+          payload: d["data"],
+        });
+      })
+      .catch((e) => {
+        console.log("error", e);
+        dispatch({
+          type: homeConstants.USERDATA_VISUALIZATION_ERROR,
+          payload: { [fileData.type]: 'failed' }
+        })
+      });
+  }
+}
+
 export function getCircosInformation(type, data) {
   return (dispatch) => {
     //   dispatch({ type: homeConstants.DATA_SUMMARY });
