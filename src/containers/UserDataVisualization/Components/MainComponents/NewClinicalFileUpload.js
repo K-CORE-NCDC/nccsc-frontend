@@ -19,6 +19,8 @@ import {
 } from "react-router-dom";
 import config from "../../../../config";
 
+import FileUploadDropdowncomponent from "./FileUploadDropdowncomponent";
+
 
 
 
@@ -184,7 +186,6 @@ export default function FileUpload({ parentCallBack }) {
 
 
   const updateFileTypeOnChange = (e) => {
-    console.log("sdsdsd");
     // console.log(e.target.value, e.target.name);
     const divName = e.target.name
     const divValue = e.target.value
@@ -196,26 +197,6 @@ export default function FileUpload({ parentCallBack }) {
     setSelectedFileSampleType((prevState) => ({
       ...prevState,
       [divName]: divValue
-    }))
-  }
-
-  const clinicalUpdateFileTypeOnChange = (e) => {
-    // console.log(e.target.value, e.target.name);
-    const divName = e.target.name
-    const divValue = e.target.value
-    console.log(divName,divValue);
-    // setUploadFile(prevState)
-    const tmp = {...clinincalFilterColumns} 
-    Object.keys(tmp).forEach((obj)=>{
-      if(tmp[obj].id === divName){
-        tmp[obj].value = divValue
-      }
-
-    })
-    setClinincalFilterColumns(tmp)
-    setResponseData(prevState => ({
-      ...prevState,
-      [divName]:divValue
     }))
   }
 
@@ -268,59 +249,6 @@ export default function FileUpload({ parentCallBack }) {
       setFileDataAsTableAll(filesUploadedStatus.table)
     }
   }, [response])
-
-  useEffect(() => {
-    if (clinicalfileresponse && clinicalfileresponse.columns !== null) {
-      console.log(clinicalfileresponse.columns);
-      let columns = clinicalfileresponse.columns
-      for (let i = 0; i < columns.length; i++) {
-        let obj = {
-          id: columns[i],
-          title: columns[i],
-          type: 'select',
-          options: ['','text', 'number', 'decimal', 'boolean', 'date'],
-          value:"",
-        }
-        setClinincalFilterColumns(prevState => ({
-          ...prevState,
-          [i]: obj
-        }))
-
-      }
-    }
-  }, [clinicalfileresponse])
-
-  useEffect(() => {
-    // console.log("clinincalFilterColumns-------->", clinincalFilterColumns);
-    let firstInput = []
-    if (clinicalfileresponse) {
-      Object.keys(clinincalFilterColumns).forEach(key => {
-        console.log("key", clinincalFilterColumns[key]);
-        firstInput.push(
-          <div className="flex " >
-            <div className="my-auto mr-20">
-              <h2>{clinincalFilterColumns[key].title}</h2>
-            </div>
-            <div key={key} className="grid grid-cols-12 gap-6 ">
-              <div className="relative w-full col-span-4">
-                <select onChange={clinicalUpdateFileTypeOnChange}
-                  name={clinincalFilterColumns[key].title}
-                  defaultChecked='false'
-                  defaultValue={clinincalFilterColumns[key].value}
-                  className='select-color w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
-                  {Object.keys(clinincalFilterColumns[key].options).map(type => (
-                    <option className='text-gray-900' key={type} value={clinincalFilterColumns[key].options[type]}>{clinincalFilterColumns[key].options[type]}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </div>
-        )
-      })
-    }
-    setSelectClinincalFilterColumn(firstInput)
-    // console.log("firstInput", firstInput);
-  }, [clinincalFilterColumns])
 
   useEffect(() => {
     if (fileDataAsTableAll) {
@@ -636,7 +564,8 @@ export default function FileUpload({ parentCallBack }) {
 
               {
                 <div>
-                  {selectClinincalFilterColumn}
+                  {/* {selectClinincalFilterColumn} */}
+                  <FileUploadDropdowncomponent/>
                   <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
