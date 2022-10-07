@@ -10,7 +10,7 @@ import {
 import { getUserDataProjectsTableData } from '../../actions/api_actions'
 import { useSelector, useDispatch } from "react-redux";
 import UserFilesTable from './Components/TableDisplay/table'
-import FileUpload from './Components/MainComponents/NewClinicalFileUpload'
+import FileUpload from './Components/MainComponents/ClinicalFileUpload'
 
 import { useHistory } from "react-router-dom";
 
