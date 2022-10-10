@@ -41,13 +41,14 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
       setActiveCmp(false)
       setInputState((prevState) => ({...prevState,...inputData }))
     }
+    console.log("-->>",inputData,inputState);
   },[inputData])
 
 
   useEffect(()=>{
     if(inputState && 'genes' in inputState){
       setActiveCmp(false)
-      if(inputState.type !==''){
+      if(inputState.type !=='' && inputState.genes.length > 0){
         setLoader(true)
         let dataJson = inputState
         dispatch(getOncoInformation('POST',dataJson))
@@ -167,7 +168,7 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
     });
 
     setActiveCmp(false)
-    if(inputState.type !==''){
+    if(inputState.type !=='' && inputState.genes.length > 0){
       setLoader(true)
       let dataJson = inputState
       dataJson['clinicalFilters'] = cf
@@ -184,7 +185,7 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
     });
 
     setActiveCmp(false)
-    if(inputState.type !==''){
+    if(inputState.type !=='' && inputState.genes.length > 0){
       setLoader(true)
       let dataJson = inputState
       dataJson['clinicalFilters'] = cf

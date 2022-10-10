@@ -98,7 +98,7 @@ const bim_vl = (vl)=>{
       setInputGene(t)
       setGenes(genes)
       setSelectedGene([genes[0]])
-      if(inputData.type !==''){
+      if(inputData.type !=='' && inputData['genes'].length > 0){
         setLoader(true)
         inputData['table_type'] = tableType
         inputData['view'] = viewType
@@ -273,7 +273,7 @@ const changeType = (e, type) => {
       dataJson['genes'] = selectedGene
     }
     setOption([])
-    if(inputData.type !==''){
+    if(inputData.type !=='' && inputData['genes'].length > 0){
       dataJson['table_type'] = type
       dataJson['view'] = viewType
       inputData['heat_type'] = mainTab
@@ -292,7 +292,7 @@ const changeMainType = (e, type) => {
     setMainTab(type)
     setOption([])
     let dataJson = { ...inputData }
-    if(inputData.type !==''){
+    if(inputData.type !=='' && inputData['genes'].length > 0){
       // setClusterRange
       // console.log(dataJson['genes'])
       setClusterRange(dataJson['genes'].length)
@@ -339,7 +339,7 @@ const setGene = (e)=>{
       dataJson['genes'] = [gene]
     }
 
-    if(inputData.type !==''){
+    if(inputData.type !=='' && inputData['genes'].length > 0){
       dataJson['table_type'] = tableType
       dataJson['view'] = viewType
       dataJson['heat_type'] = mainTab
@@ -357,7 +357,7 @@ function onSelect(selectedList, selectedItem) {
     });
 
 
-    if(inputData.type !==''){
+    if(inputData.type !=='' && inputData['genes'].length > 0){
       setLoader(true)
       setActiveCmp(false)
       let dataJson = { ...inputData }
@@ -378,7 +378,7 @@ function onRemove(selectedList, removedItem) {
     selectedList.forEach((item, i) => {
       items.push(item['id'])
     });
-    if(inputData.type !==''){
+    if(inputData.type !=='' && inputData['genes'].length > 0){
       setLoader(true)
       setActiveCmp(false)
       let dataJson = { ...inputData }
@@ -403,7 +403,7 @@ const changeView = (e,view)=>{
     let dataJson = { ...inputData }
     dataJson['view'] = view
     dataJson['heat_type'] = mainTab
-    if(inputData.type !==''){
+    if(inputData.type !=='' && inputData['genes'].length > 0){
       dispatch(getHeatmapInformation('POST', dataJson))
     }
   }
@@ -432,7 +432,7 @@ normal_button += " border duration-200 ease-in-out border-teal-600 transition px
     let cf = []
     setRangeValue(e.target.value)
 
-    if(inputData.type !==''){
+    if(inputData.type !=='' && inputData['genes'].length > 0){
       setLoader(true)
       setActiveCmp(false)
       let dataJson = { ...inputData }

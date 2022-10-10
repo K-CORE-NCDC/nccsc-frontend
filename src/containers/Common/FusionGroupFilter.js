@@ -847,7 +847,7 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
                     Add Group
                 </button>
             </div>}
-            <div className="p-1 py-3 px-2 col-span-2">
+            <div className="p-1 py-3 px-2 col-span-2 overflow-x-auto">
                 {filterInputs}
             </div>
             {filterSelected && <div>

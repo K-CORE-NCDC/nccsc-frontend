@@ -290,10 +290,13 @@ export default function DataVisualization() {
 
   useEffect(() => {
     if (project_id !== undefined) {
-      dispatch(getBreastKeys({ project_id: project_id }));
+      if(state.genes.length > 0){
+        dispatch(getBreastKeys({ project_id: project_id }));
+      }
     } else {
-      
-      dispatch(getBreastKeys({}));
+      if(state.genes.length > 0){
+        dispatch(getBreastKeys({}));
+      }
     }
   }, []);
 
@@ -629,13 +632,16 @@ export default function DataVisualization() {
                       id="genes"
                       className="btn_input_height lg:w-full sm:w-13 xs:w-56 p-3 xs:text-sm lg:text-xl border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 xs:h-14 lg:h-16"
                       name="genes"
+                      placeholder="Enter Genes"
                       onChange={e => {
                         let abc = document.getElementById("gene_type").value;
                         if (abc === 'user-defined') {
-                          let usergenes = document.getElementById("genes").value.split(" ")
+                          let usergenes = document.getElementById("genes").value.split(" ").filter(element => element);
+                          let UserGenes =[]
+                          usergenes.forEach(element => {UserGenes.push(element.toUpperCase());});
                           setState((prevState) => ({
                             ...prevState,
-                            genes: usergenes,
+                            genes: UserGenes,
                             type: 'user-defined',
                           }));
                         }

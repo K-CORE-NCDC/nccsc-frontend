@@ -52,7 +52,7 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
       let g = inputState['genes']
       loadGenesDropdown(g)
       setGene(g)
-      if (inputState.type !== '') {
+      if (inputState.type !== '' && inputState['genes'].length > 0) {
         let dataJson = inputState
         setLoader(true)
         dataJson['genes'] = [g[0]]
@@ -105,7 +105,7 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
       genes.push(item['name'])
     });
     // loadGenesDropdown(genes)
-    if (inputData.type !== '') {
+    if (inputData.type !== '' && inputState['genes'].length > 0) {
       let dataJson = { ...inputData }
       dataJson['genes'] = genes
       setLoader(true)
@@ -153,7 +153,7 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
       setSelectAll(!selectall)
       setSelectedValue("")
       if (inputState && 'genes' in inputState) {
-        if (inputState.type !== '') {
+        if (inputState.type !== '' && inputState['genes'].length > 0) {
           let dataJson = inputState
           setLoader(true)
           dataJson['genes'] = gene
@@ -165,7 +165,7 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
       setSelectAll(!selectall)
       setSelectedValue(primaryGene)
       if (inputState && 'genes' in inputState) {
-        if (inputState.type !== '') {
+        if (inputState.type !== '' && inputState['genes'].length > 0) {
           let dataJson = inputState
           setLoader(true)
           dataJson['genes'] = [gene[0]]

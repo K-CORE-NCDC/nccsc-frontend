@@ -53,7 +53,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   const geneSet = (e) => {
     let gene = e.target.value
     setGene(gene)
-    if (inputData.type !== '') {
+    if (inputData.type !== '' && inputState.genes.length > 0) {
       let dataJson = { ...inputData }
       dataJson['genes'] = gene
       dataJson['table_type'] = tableType
@@ -400,7 +400,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
     setTableType(type)
     setActiveCmp(false)
     setLoader(true)
-    if (inputData.type !== '') {
+    if (inputData.type !== '' && inputState.genes.length > 0) {
       let dataJson = { ...inputData }
       dataJson['genes'] = gene
       dataJson['table_type'] = type

@@ -67,7 +67,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
   const geneSet = (e) => {
     let gene = e.target.value
     setGene(gene)
-    if (inputData.type !== '') {
+    if (inputData.type !== '' && inputData['genes'].length > 0) {
       let dataJson = {...inputData}
       dataJson['genes'] = [gene]
       dataJson['table_type'] = tableType
@@ -92,7 +92,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
         dataJson['genes'] = [g[0]]
       }
 
-      if(inputState.type !==''){
+      if(inputState.type !=='' && inputData['genes'].length > 0){
         setLoader(true)
         dataJson['table_type'] = tableType
         dataJson['view'] = viewType
@@ -154,7 +154,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
     selectedList.forEach((item, i) => {
       genes.push(item['name'])
     });
-    if(inputData.type !==''){
+    if(inputData.type !=='' && inputData['genes'].length > 0){
       let dataJson = {...inputData}
       dataJson['genes'] = genes
       dataJson['table_type'] = tableType
@@ -175,7 +175,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
     if(genes.length === 0){
       genes = inputState['genes']
     }
-    if(inputData.type !==''){
+    if(inputData.type !=='' && inputData['genes'].length > 0){
       let dataJson = {...inputData}
       dataJson['genes'] = genes
       dataJson['table_type'] = tableType
@@ -240,7 +240,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
     setViewType(view)
 
     let dataJson = inputState
-    if(inputData.type !==''){
+    if(inputData.type !=='' && inputData['genes'].length > 0){
       dataJson['table_type'] = tableType
       dataJson['view'] = view
       dispatchActionCommon(dataJson)

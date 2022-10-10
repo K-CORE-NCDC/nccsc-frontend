@@ -8,7 +8,7 @@ import {
   MinusCircleIcon,
   DownloadIcon
 } from '@heroicons/react/outline'
-import { new_file_upload } from '../../../../actions/api_actions'
+import { new_file_upload,uploadClinincalSamples } from '../../../../actions/api_actions'
 import { useSelector, useDispatch } from "react-redux";
 import XLSX from 'xlsx';
 import Loader from '../../Widgets/loader';
@@ -122,7 +122,7 @@ export default function FileUpload({ parentCallBack }) {
   const [clinincalFilterColumns, setClinincalFilterColumns] = useState({
   })
   const [selectClinincalFilterColumn, setSelectClinincalFilterColumn] = useState([])
-  const [responseData, setResponseData]= useState({})
+  const [responseData, setResponseData] = useState({})
   const [fileDataAsTableAll, setFileDataAsTableAll] = useState({})
   const [fileDataAsTableRendered, setFileDataAsTableRendered] = useState({})
   const [showFileDataTable, setShowFileDataTable] = useState(false)
@@ -515,6 +515,11 @@ export default function FileUpload({ parentCallBack }) {
     setInitialInputState(firstInput)
   }, [selectedFileSampleType, loader, selectedFiles])
 
+  let sendColumnsData = (columnsData) => {
+    // console.log("columnsData",columnsData);
+    dispatch(uploadClinincalSamples(columnsData))
+  }
+
   // console.log(showModalInfo);
   return (
     <>
@@ -565,16 +570,17 @@ export default function FileUpload({ parentCallBack }) {
               {
                 <div>
                   {/* {selectClinincalFilterColumn} */}
-                  <FileUploadDropdowncomponent/>
+                  <FileUploadDropdowncomponent sendColumnsData={sendColumnsData} />
                   <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                  <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => {}}
-                  >
-                    send
-                  </button>
-                </div>
+                    <button
+                      className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                      type="button"
+                      onClick={() => {
+                      }}
+                    >
+                      send
+                    </button>
+                  </div>
                 </div>
               }
             </div>
