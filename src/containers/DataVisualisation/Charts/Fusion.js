@@ -133,7 +133,7 @@ export default function FusionPlot({
  
   useEffect(() => {
     if (inputData) {
-      if (inputData.type !== '' && Object.keys(groupFilters).length > 0) {
+      if (inputData.type !== '' && Object.keys(groupFilters).length > 0 && inputData['genes'].length > 0) {
         setLoader(true)
         inputData['filterType'] = userDefienedFilter
         dispatch(getFusionVennDaigram('POST', { ...inputData, filterGroup: groupFilters }))

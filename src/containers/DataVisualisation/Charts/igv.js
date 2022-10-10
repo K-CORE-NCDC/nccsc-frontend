@@ -20,7 +20,7 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
 
 
   useEffect(()=>{
-    if(inputData.type !==''){
+    if(inputData.type !=='' && inputData['genes'].length > 0){
       let dataJson = inputData
       setLoader(true)
       dispatch(getIgv('POST',dataJson))

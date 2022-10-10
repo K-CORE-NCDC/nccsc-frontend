@@ -685,7 +685,7 @@ export function new_file_upload(fileData, projectName) {
 
 export function uploadClinincalSamples(fileData, projectName) {
   return (dispatch) => {
-    const data = new FormData()
+    // const data = new FormData()
     // dispatch({ type: homeConstants.DATA_SUMMARY });
     // fileData.forEach(file=>{
     //   formData.append("arrayOfFilesName", file);
@@ -693,11 +693,11 @@ export function uploadClinincalSamples(fileData, projectName) {
   
 
     let url = config.auth + "upload-clinical-columns/";
-    sendRequest(url, "POST", data)
+    sendRequest(url, "POST", fileData)
       .then((result) => {
         const d = result;
         dispatch({
-          type: homeConstants.NEWUSERDATA_VISUALIZATION,
+          type: homeConstants.UPLOAD_CLININCAL_COLUMNS,
           payload: d["data"],
         });
       })

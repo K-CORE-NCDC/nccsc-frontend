@@ -280,8 +280,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
       let editInputData = inputData
       editInputData = { ...editInputData, sampleKey: sampleKey }
       dispatch(getBreastKeys(editInputData))
-      if (editInputData.type !== '' && sampleKey != '') {
-
+      if (editInputData.type !== '' && sampleKey != '' && editInputData['genes'].length > 0) {
         setLoader(true)
         setRenderCircos(false)
         // dispatch(getBreastKeys(editInputData))
@@ -291,7 +290,6 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   }, [inputData, sampleKey])
 
   useEffect(() => {
-
     return () => {
       dispatch(getBreastKeys({}))
     }
