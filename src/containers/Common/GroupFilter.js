@@ -869,9 +869,7 @@ const GroupFilters = ({ volcanoType,parentCallback, groupFilters,viz_type }) => 
                                             }
                                             
                                         }
-                                        // if( abc[group_i]===abc[index] && d[index].value===element.value){
-                                        //     group_check = true
-                                        // }
+                                        
                                     }
                                 }
                                 checkbox.push(
@@ -879,7 +877,7 @@ const GroupFilters = ({ volcanoType,parentCallback, groupFilters,viz_type }) => 
                                         <input data-type={element.label} data-name={abc[index]} type='checkbox' defaultChecked={group_check} onChange={dropDownChange} value={JSON.stringify({ index: sv, colName: colName, group: 'group_'+abc[index] })}/>
                                     </td>
                                 )
-                                group_i++
+                                group_i = group_i+1
                             }else{
                                 checkbox.push(
                                     <td className='px-6 py-4' key={index+'_'+sv+abc[sv]+'_'+element.label}>
