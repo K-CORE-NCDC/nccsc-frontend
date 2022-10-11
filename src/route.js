@@ -17,6 +17,8 @@ const FindID = React.lazy(()=>import('./containers/Login/FindID'))
 const FindPassword = React.lazy(()=>import('./containers/Login/FindPassword'))
 const ResetPassword =React.lazy(()=>import('./containers/Login/ResetPassword'))
 
+const FileProjectDataTable =React.lazy(()=>import('./containers/UserDataVisualization/Components/MainComponents/FileProjectDataTable'))
+
 
 const Introduce = React.lazy(() => import('./containers/Home/introduce'))
 const Pipeline = React.lazy(() => import('./containers/Home/pipeline'))
@@ -70,6 +72,8 @@ const route = [
   { path: `/interpro/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Interpro" defaultMessage="Interpro" />, component: InterPro},
   { path: `/vcfmaf/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="VCFMAF" defaultMessage="VCF to MAF" />, component: VcfMaf},
   { path: `/organoid/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Organoid" defaultMessage="organoid" />, component: Organoid},
+
+  { path: `/fileprojectdatatable/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Organoid" defaultMessage="organoid" />, component: FileProjectDataTable},
   
 ]
 

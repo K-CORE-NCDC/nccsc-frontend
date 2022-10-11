@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from "react-redux";
+import FileProjectDataTable from './FileProjectDataTable';
 
 function FileUploadDropdowncomponent({sendColumnsData}) {
   const [selectClinincalFilterColumn, setSelectClinincalFilterColumn] = useState([])
@@ -9,6 +10,9 @@ function FileUploadDropdowncomponent({sendColumnsData}) {
   const [currentFilename, setCurrentFilename] = useState("")
   const [tableNavTabs, setTableNavTabs] = useState([])
   const clinicalfileresponse = useSelector((data) => data.homeReducer.newFileUploadData);
+  const verificationResponse = useSelector((data) => data.homeReducer.uploadClinicalColumns);
+  const [message, setMessage] = useState('')
+
 
 
   const getFileName = () => {
@@ -46,7 +50,7 @@ function FileUploadDropdowncomponent({sendColumnsData}) {
       tempresponseData[activeTableKey]['types'][divName] = divValue
     }
     setResponseData(tempresponseData)
-    console.log(responseData);
+    console.log("responseData",responseData);
   }
 
   const onSubmit = (e) => {
@@ -103,8 +107,13 @@ function FileUploadDropdowncomponent({sendColumnsData}) {
 
       }
       setTableNavTabs(temptabs)
-
-
+    }
+    else if(clinicalfileresponse){
+      for(let i=0; i < clinicalfileresponse['res'].length; i++){
+        if(clinicalfileresponse['res'][i]['tab'] === activeTableKey ){
+          setMessage(clinicalfileresponse['res'][i]['message'])
+        }
+      }
     }
   }, [clinicalfileresponse])
 
@@ -117,11 +126,11 @@ function FileUploadDropdowncomponent({sendColumnsData}) {
         if (key === activeTableKey) {
           clinincalFilterColumns[key].forEach(obj => {
             firstInput.push(
-              <div className="flex " >
-                <div className="my-auto mr-20">
+              <div className="flex justify-between" >
+                <div className="my-auto">
                   <h2>{obj.title}</h2>
                 </div>
-                <div key={obj.id} className="grid grid-cols-12 gap-6 ">
+                <div key={obj.id} className="">
                   <div className="relative w-full col-span-4">
                     <select onChange={clinicalUpdateFileTypeOnChange}
                       name={obj.title}
@@ -171,6 +180,7 @@ function FileUploadDropdowncomponent({sendColumnsData}) {
           send
         </button>
       </div>
+      <FileProjectDataTable verificationResponse = {verificationResponse} activeTableKey = {activeTableKey}/>
     </div>
   )
 }
