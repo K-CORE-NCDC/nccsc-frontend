@@ -404,7 +404,7 @@ const BoxPlot = React.forwardRef(({view_type, box_data,chart_type, watermarkCss 
 
   useEffect(()=>{
     if(Object.keys(box_data).length !== 0){
-      console.log(box_data)
+      console.log("box_data",box_data)
       drawChart(box_data)
     }
   },[box_data])
