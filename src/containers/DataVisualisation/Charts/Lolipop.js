@@ -162,12 +162,14 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
               refseq_id.push(data[i]['refseq_mrna_id'])
               enst_id.push(data[i]['annotation_transcript'])
 
-            } else if (tableType == "Phospho") {
+            } else if (tableType === "Phospho") {
               let site_sample = data[i]['site'].split(' ')
-
+              let regex = /\D/g;
               for (var k = 0; k < site_sample.length; k++) {
+                let phospho_num = site_sample[k].replace(regex, "");
+                width.push(parseInt(phospho_num))
                 if (site_sample[k] in lollipopLegenedTmp) {
-                  if (lollipopLegenedTmp[site_sample[k]].includes(data[i].sample) == false) {
+                  if (lollipopLegenedTmp[site_sample[k]].includes(data[i].sample) === false) {
                     lollipopLegenedTmp[site_sample[k]].push(data[i].sample)
                     unique_sample.push(data[i].sample)
                   }
@@ -315,10 +317,10 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
         }
 
         let domains_data = lolipopJson['domains']
-        for (var i = 0; i < domains_data.length; i++) {
+        for (let i = 0; i < domains_data.length; i++) {
           let l = (domains_data[i].end - domains_data[i].start) / domains_data[i]['domain'].length
           let name = domains_data[i]['domain'].substring(0, l)
-          if (name == '') {
+          if (name === '') {
             name = domains_data[i]['domain'].substring(0, 1)
           }
 

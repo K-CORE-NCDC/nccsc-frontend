@@ -150,7 +150,7 @@ let childMenu = {
         title: <FormattedMessage id="CustomerVoice" defaultMessage='Customer Voice' />,
         type: 'group',
         icon: 'fa fa-dashboard',
-        url: '/summary/',
+        url: '/faq/',
         children: [
           {
             id: 'faq',

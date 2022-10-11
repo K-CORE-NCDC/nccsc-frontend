@@ -11,6 +11,7 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
   const [lineChartData, setLineChartData] = useState([])
   const [offsetWidth, setOffsetWidth] = useState(900)
   const [yMinValue, setYMinValue] = useState(0)
+  const [xMaxValue, setXmaxValue] = useState(100)
   const [chartTable,setChartTable] = useState([])
   const colorArray = ['#4285F4', '#DB4437', '#F4B400', '#0F9D58', '#000', '#1f0cf2', '#1f0cf2']
   // console.log(yMinValue);
@@ -21,6 +22,7 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
       let lineChartDataTemp = []
       let counter = 0
       let minValue = 100
+      let maxXvalue = 0
       // let tableData = {}
       let tableHtmlData = []
       for (const [key, value] of Object.entries(data.survivalJson.final)) {
@@ -37,6 +39,10 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
           color = colorArray[counter]
         }
         value.forEach(e=>{
+          console.log(e)
+          if(e.x > maxXvalue){
+            maxXvalue = e.x
+          }
           // tableData[key].push([e.sample,e.x,e.y])
           if(e.y < minValue){
             minValue = e.y
@@ -52,26 +58,13 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
         })
         counter += 1
       }
-      // setChartTable(tableData)
+      
+      setXmaxValue(maxXvalue+20)
       setYMinValue(minValue - 3)
       setLineChartData(lineChartDataTemp)
-      // if(tableData){
-      //   let tableHtmlData = []
-      //   for (const [key, value] of Object.entries(tableData)) {
-      //     let options = {"title":key,curveType: "function",legend: { position: "bottom" }, pageSize: 5}
-      //     tableHtmlData.push(<div>
-      //       <h3>{key}</h3>
-      //       <DataTable
-      //       key={key}
-      //       chartType="Table"
-      //       width="100%"
-      //       height="400px"
-      //       data={value}
-      //       options={options} /></div>)
-      //   }
-        setChartTable(tableHtmlData)
+      setChartTable(tableHtmlData)
 
-      // }
+      
     }
   }, [data])
 
@@ -89,10 +82,11 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
         interpolate="step-before"
         pointRadius={1}
         onPointHover={(e) => {
-          return `<div><b>duration: </b>${e.x}<br /><b>Survival Rate: </b>${e.y}<br /><b>Sample: </b>${e.sample}</div>`;
+          return `<div style='position:absolute'><b>duration: </b>${e.x}<br /><b>Survival Rate: </b>${e.y}<br /><b>Sample: </b>${e.sample}</div>`;
         }}
         yMin={yMinValue}
         xMin={-5}
+        xMax={xMaxValue}
         width={offsetWidth}
         height={700}
         data={lineChartData}
