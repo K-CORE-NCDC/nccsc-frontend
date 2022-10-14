@@ -58,9 +58,9 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
         })
         counter += 1
       }
-      
+      console.log(minValue)
       setXmaxValue(maxXvalue+20)
-      setYMinValue(minValue - 3)
+      setYMinValue(minValue) //previously it was minvalue-3 
       setLineChartData(lineChartDataTemp)
       setChartTable(tableHtmlData)
 
@@ -85,7 +85,7 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
           return `<div style='position:absolute'><b>duration: </b>${e.x}<br /><b>Survival Rate: </b>${e.y}<br /><b>Sample: </b>${e.sample}</div>`;
         }}
         yMin={yMinValue}
-        xMin={-5}
+        xMin={0}
         xMax={xMaxValue}
         width={offsetWidth}
         height={700}
