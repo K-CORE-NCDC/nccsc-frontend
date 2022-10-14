@@ -8,18 +8,18 @@ import {
   MinusCircleIcon,
   DownloadIcon
 } from '@heroicons/react/outline'
-import { new_file_upload,uploadClinincalSamples } from '../../../../actions/api_actions'
+import { new_file_upload,uploadClinincalSamples,clear_new_file_upload_state } from '../../../../actions/api_actions'
 import { useSelector, useDispatch } from "react-redux";
 import XLSX from 'xlsx';
 import Loader from '../../Widgets/loader';
 import { useHistory } from 'react-router-dom'
 import ExampleUserTable from "../TableDisplay/cellColorTable";
+
 import {
   Link
 } from "react-router-dom";
 import config from "../../../../config";
 
-import FileUploadDropdowncomponent from "./FileUploadDropdowncomponent";
 
 
 
@@ -84,7 +84,7 @@ const InforIcon = () => {
 }
 
 
-export default function FileUpload({ parentCallBack }) {
+export default function FileUpload({ parentCallBack, updateComponentNumber}) {
   const projectNameRef = useRef(null);
   const history = useHistory()
   const response = useSelector((data) => data.homeReducer.fileUploadData);
@@ -104,6 +104,7 @@ export default function FileUpload({ parentCallBack }) {
   const [showModalInfo, setShowModalInfo] = useState(false)
   const [modalData, setModalData] = useState([])
   const [initialInputState, setInitialInputState] = useState(undefined)
+  const [componentNumber, setComponentNumber] = useState(0)
   const [selectedFileSampleType, setSelectedFileSampleType] = useState({
     1: "clinical_information",
   })
@@ -161,6 +162,10 @@ export default function FileUpload({ parentCallBack }) {
     setShowModal(stateData)
   }
 
+  useEffect(()=>{
+    // console.log("firsttttttttttttt------------------------------------------------------------>");
+    // dispatch(clear_new_file_upload_state())
+  },[])
   useEffect(() => {
     if (Object.values(loader).some(element => (element === 'failed'))) {
       setFormSubmitButtonText('retry')
@@ -370,12 +375,15 @@ export default function FileUpload({ parentCallBack }) {
   //             <option value="proteome">Porteome</option>
 
   const on_upload = () => {
-    console.log("file is uploading from new clinical component");
+    // console.log("file is uploading from new clinical component");
     dispatch(new_file_upload(uploadFile, projectName))
+    updateComponentNumber(1)
+
     for (let key in uploadFile) {
       setLoader((prevState) => ({ ...prevState, [uploadFile[key].type]: 'loader' }))
     }
   }
+
 
   const formSubmitButtonActions = () => {
     if (projectName.length > 0) {
@@ -515,10 +523,21 @@ export default function FileUpload({ parentCallBack }) {
     setInitialInputState(firstInput)
   }, [selectedFileSampleType, loader, selectedFiles])
 
-  let sendColumnsData = (columnsData) => {
-    // console.log("columnsData",columnsData);
-    dispatch(uploadClinincalSamples(columnsData))
-  }
+  // let sendColumnsData = (columnsData, totalFiles) => {
+  //   console.log("columnsData",columnsData,Object.keys(columnsData).length,totalFiles);
+  //   setTotalNoFiles(totalFiles)
+  //   setFinalResponseData(columnsData)
+  //   // if(Object.keys(columnsData).length === totalFiles && sendColumnRequest){
+     
+  //   // }
+  // }
+
+  // let sendFinalResponseData = () =>{
+  //   console.log("sdsdsds",Object.keys(finalResponseData).length,totalNoFiles);
+  //   if(sendColumnRequest && Object.keys(finalResponseData).length === totalNoFiles ){
+  //     dispatch(uploadClinincalSamples(finalResponseData))
+  //   }
+  // }
 
   // console.log(showModalInfo);
   return (
@@ -570,16 +589,17 @@ export default function FileUpload({ parentCallBack }) {
               {
                 <div>
                   {/* {selectClinincalFilterColumn} */}
-                  <FileUploadDropdowncomponent sendColumnsData={sendColumnsData} />
                   <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                    <button
+                    {/* <button
                       className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                       type="button"
-                      onClick={() => {
-                      }}
+                      // onClick={() => {
+                      //   setSendColumnRequest(true)
+                      //   // sendFinalResponseData()
+                      // }}
                     >
                       send
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               }

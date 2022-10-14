@@ -11,12 +11,15 @@ import { getUserDataProjectsTableData } from '../../actions/api_actions'
 import { useSelector, useDispatch } from "react-redux";
 import UserFilesTable from './Components/TableDisplay/table'
 import FileUpload from './Components/MainComponents/NewClinicalFileUpload'
+import FileUploadDropdowncomponent from "./Components/MainComponents/FileUploadDropdowncomponent";
+import FileProjectDataTable from "./Components/MainComponents/FileProjectDataTable";
 
 import { useHistory } from "react-router-dom";
 
 export default function DataVisualization() {
   let history = useHistory();
   const userDataTableData = useSelector(state => state.dataVisualizationReducer.userProjectsDataTable)
+  const [componentNumber, setComponentNumber] = useState(0)
   const [hideupload, setHideUpload] = useState(true)
   const [showVisualization, setShowviualization] = useState(false)
   const [showLoginForm, setShowLoginForm] = useState(false)
@@ -52,6 +55,10 @@ export default function DataVisualization() {
     }
   }, [accessToken])
 
+  const updateComponentNumber = (num) =>{
+    setComponentNumber(num)
+  }
+
 
   // console.log(userDataTableData)
   return (
@@ -70,7 +77,11 @@ export default function DataVisualization() {
         </div>}
         <div>
           {/* {hideupload ? showVisualization ? <Visualization /> : <TabelDisplay parentcallBack={viusalizationCall} /> : <FileUpload parentCallBack={fileUploadCallBack} />} */}
-          {!hideupload && <FileUpload parentCallBack={fileUploadCallBack} />}
+          {!hideupload && componentNumber === 0 && <FileUpload parentCallBack={fileUploadCallBack} updateComponentNumber ={updateComponentNumber}  />}
+          { componentNumber === 1 && <FileUploadDropdowncomponent updateComponentNumber ={updateComponentNumber}  />
+          }
+          { componentNumber === 2 && <FileProjectDataTable updateComponentNumber ={updateComponentNumber}  />
+          }
         </div>
       </div>}
     </div>
