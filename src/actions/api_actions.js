@@ -682,6 +682,14 @@ export function new_file_upload(fileData, projectName) {
       });
   }
 }
+export function clear_new_file_upload_state() {
+  console.log("function called");
+  return (dispatch) => 
+        dispatch({
+          type: homeConstants.CLEARNEWUSERDATA_VISUALIZATION,
+          payload: {}
+        });
+  }
 
 export function uploadClinincalSamples(fileData, projectName) {
   return (dispatch) => {

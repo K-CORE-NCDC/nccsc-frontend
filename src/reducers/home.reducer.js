@@ -25,6 +25,14 @@ const homeReducer = (state = { 'home': 'home' }, { type, payload }) => {
         fileUploadData: payload
       }
     case homeConstants.NEWUSERDATA_VISUALIZATION:
+      console.log("from iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+      return {
+        ...state,
+        newFileUploadData: payload
+      }
+
+    case homeConstants.CLEARNEWUSERDATA_VISUALIZATION:
+      console.log("from --------------------------------------------");
       return {
         ...state,
         newFileUploadData: payload
@@ -125,7 +133,6 @@ const homeReducer = (state = { 'home': 'home' }, { type, payload }) => {
       }
 
     case homeConstants.LOGMANAGEMENT:
-      console.log("I am called from logmanagement");
       return {
         ...state,
         logmanagement:[ ...payload]
