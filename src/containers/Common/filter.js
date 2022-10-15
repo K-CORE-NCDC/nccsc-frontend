@@ -33,12 +33,16 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
   }, []);
 
   useEffect(() => {
+    // console.log("a",selected);
+    // console.log("b",selectState);
     drawTags();
     leftSide();
   }, [selected, selectState]);
 
   useEffect(() => {
+    // console.log("filter state ------------->",filterState);
     if (Object.keys(filterState).length !== 0) {
+      // console.log("filterstate",filterState);
       setSelectState({ ...filterState });
       switchButton();
     }
@@ -49,9 +53,11 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
 
     if (Object.keys(filtersUi).length > 0) {
       Object.keys(filtersUi).forEach((e) => {
+        console.log("filtersUi",filtersUi);
         let tmp = [];
         if (filtersUi[e].length > 0) {
           filtersUi[e].forEach((sub) => {
+            console.log("sub",sub.key, sub.value);
             tmp.push(
               <span
                 key={`${sub.key}-${Math.random()}`}
@@ -72,6 +78,7 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
         }
       });
     }
+    
     setFilterHtml(html);
   }, [filtersUi]);
 
@@ -163,6 +170,7 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
   const selectFn = (e) => {
     let val = e.target.value;
     let id = e.target.id;
+    console.log("val",val,"id",id);
 
     let tmp = selectState;
     if (e.target.type === "text") {
@@ -180,6 +188,7 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
   };
 
   const leftSide = () => {
+    // console.log("filter ");
     let filterBoxes = inputJson.filterBoxes;
     let html = [];
     Object.keys(filterBoxes).forEach((item, k) => {
@@ -280,6 +289,7 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
         </div>
       );
     });
+    // console.log("html 0000", html);
     setState((prevState) => ({
       ...prevState,
       html: html,
@@ -288,6 +298,52 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
 
   const checkBoxFn = (event, id) => {
     var did = document.getElementById(id);
+    console.log("did------>",did.getAttribute("data-parent"));
+    if(did.hasAttribute("id")){
+      let name = did.getAttribute("id")
+      console.log(name);
+      let names = name.split("_")
+      let key,value
+      if(names[1]){
+         key = did.getAttribute("data-parent")
+         console.log("sssssssssss",key);
+      }
+      if(names[2]){
+         value = names[2];
+      }
+      let MainKey 
+
+      let filterBoxes = inputJson.filterBoxes;
+
+      Object.keys(filterBoxes).forEach((item, k) => {
+        let t = [];
+        if (filterBoxes[item]) {
+          let childElements = filterBoxes[item];
+          // let itemr = item.split(" ")
+          // let finalkey = itemr.join('')
+          // console.log("childElemens->",finalkey, key);
+          Object.keys(childElements).forEach((childelm, c) => {
+            if(item === key &&  c.toString() === value){
+              MainKey = childelm
+              console.log("MainKey",MainKey);
+            }
+          })
+        }
+      })
+
+      let temp =  {...filtersUi}
+      console.log("temp",temp[key]);
+      
+      for(let i = 0; i < temp[key].length; i++){
+        if(temp[key][i]['key'].indexOf(MainKey)>-1){
+          console.log(temp[key][i]['key']);
+          temp[key].splice(i,1)
+        }
+      }   
+      setFiltersUi(temp)
+    }
+
+    
     var checkbox_elm = document.getElementById(id).checked;
     if (checkbox_elm) {
       document.getElementById(id).checked = false;
@@ -322,6 +378,7 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
   const drawTags = () => {
     let filterBoxes = inputJson.filterBoxes;
     let tx = ["aod", "bmi", "fma", "dob", "ki67", "turc"];
+    console.log("selectState 11111",selectState);
     if (Object.keys(selectState).length > 0) {
       let filterSelectedHtml = {};
       Object.keys(filterBoxes).forEach((header) => {
@@ -361,6 +418,7 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
           });
         });
       });
+      console.log("filterSelectedHtml",filterSelectedHtml);
       setFiltersUi(filterSelectedHtml);
     }
   };
@@ -371,6 +429,7 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
   };
 
   const reset = () => {
+    console.log("reset called",selectState);
     let toggle_check = [
       "Basic/Diagnostic Information",
       "Patient Health Information",
@@ -395,8 +454,15 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
       delete tmp[il.id];
       il.value = "";
     });
-    setSelectState(tmp);
+    console.log("tmp is culprit",tmp);
+    // setSelectState(tmp);
+    setSelectState({'filterCondition':'and'});
     parentCallback("");
+    setFilterHtml([])
+    let abcd = {...filtersUi}
+    console.log("abcd",abcd);
+    abcd['Basic/Diagnostic Information'] = []
+    setFiltersUi(abcd)
   };
 
   const changeFilterCondition = (e)=>{

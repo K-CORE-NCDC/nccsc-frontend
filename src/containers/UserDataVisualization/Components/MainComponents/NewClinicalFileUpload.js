@@ -153,7 +153,9 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
     setShowModal(stateData)
   }
 
-  
+  useEffect(()=>{
+    dispatch(clear_new_file_upload_state())
+  },[])
   useEffect(() => {
     if (Object.values(loader).some(element => (element === 'failed'))) {
       setFormSubmitButtonText('retry')

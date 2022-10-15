@@ -34,8 +34,8 @@ const homeReducer = (state = { 'home': 'home' }, { type, payload }) => {
     case homeConstants.CLEARNEWUSERDATA_VISUALIZATION:
       console.log("from --------------------------------------------");
       return {
-        ...state,
-        newFileUploadData: payload
+        // ...state,
+        // newFileUploadData: payload
       }
     case homeConstants.UPLOAD_CLININCAL_COLUMNS:
       return {
