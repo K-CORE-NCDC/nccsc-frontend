@@ -26,7 +26,7 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
 
   const getFileName = (clinicalfileresponse, tab) => {
     // console.log("inside getfilename------------->",tab);
-    if (clinicalfileresponse && clinicalfileresponse["res"].length > 0) {
+    if (clinicalfileresponse && clinicalfileresponse["res"] && clinicalfileresponse["res"].length > 0) {
       for (let i = 0; i < clinicalfileresponse["res"].length; i++) {
         if (clinicalfileresponse["res"][i]["tab"] === tab) {
           return clinicalfileresponse["res"][i]["filename"];
@@ -96,7 +96,7 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
   const tabDropdownTable = (tab) => {
     // console.log("tab", tab);
     setActiveTableKey(tab);
-    if (clinicalfileresponse && clinicalfileresponse["res"].length > 0) {
+    if (clinicalfileresponse && clinicalfileresponse["res"] && clinicalfileresponse["res"].length > 0) {
       for (let i = 0; i < clinicalfileresponse["res"].length; i++) {
         let row = clinicalfileresponse["res"][i];
         let column = row["columns"];
@@ -176,7 +176,7 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
 
     // checking if clinical filter response has clinical filter in it:
 
-    if (clinicalfileresponse && clinicalfileresponse["res"].length > 0) {
+    if (clinicalfileresponse && clinicalfileresponse["res"] && clinicalfileresponse["res"].length > 0) {
       let temptabs = [];
       for (let i = 0; i < clinicalfileresponse["res"].length; i++) {
         setColumnTypes(clinicalfileresponse["res"][i]["types"]);
