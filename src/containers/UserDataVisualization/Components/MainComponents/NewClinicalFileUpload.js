@@ -163,8 +163,8 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
   }
 
   useEffect(()=>{
-    // console.log("firsttttttttttttt------------------------------------------------------------>");
-    // dispatch(clear_new_file_upload_state())
+    console.log("firsttttttttttttt------------------------------------------------------------>");
+    dispatch(clear_new_file_upload_state())
   },[])
   useEffect(() => {
     if (Object.values(loader).some(element => (element === 'failed'))) {
