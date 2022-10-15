@@ -18,10 +18,10 @@ import { useHistory } from "react-router-dom";
 
 export default function DataVisualization() {
   let history = useHistory();
-  const userDataTableData = useSelector(state => state.dataVisualizationReducer.userProjectsDataTable)
+  // const userDataTableData = useSelector(state => state.dataVisualizationReducer.userProjectsDataTable)
   const [componentNumber, setComponentNumber] = useState(0)
-  const [hideupload, setHideUpload] = useState(true)
-  const [showVisualization, setShowviualization] = useState(false)
+  const [hideupload, setHideUpload] = useState(false)
+  // const [showVisualization, setShowviualization] = useState(false)
   const [showLoginForm, setShowLoginForm] = useState(false)
   const dispatch = useDispatch()
   const fileUploadCallBack = (d_) => {
@@ -29,27 +29,18 @@ export default function DataVisualization() {
   }
   const [uploadNewSamplesToggle, setUploadNewSamplesToggle] = useState('Upload new Samples')
 
-  const handleUploadNewSamplesToggle = () => {
-    setHideUpload((prevState) => (!prevState))
-    setUploadNewSamplesToggle(prevState => {
-      if(prevState === 'Upload new Samples'){
-        return 'View Table'
-      }else{
-        return 'Upload new Samples'
-      }
-    })
-  }
+  
 
-  // console.log(userDataTableData);
+  
   const accessToken = localStorage.getItem('ncc_access_token')
-  const viusalizationCall = (da) => {
-    setShowviualization(true)
-  }
+  // const viusalizationCall = (da) => {
+  //   setShowviualization(true)
+  // }
 
   useEffect(() => {
     if(accessToken){
       console.log("inside index");
-      dispatch(getUserDataProjectsTableData())
+      // dispatch(getUserDataProjectsTableData())
     }else{
       history.push("/login")
     }
@@ -58,29 +49,23 @@ export default function DataVisualization() {
   const updateComponentNumber = (num) =>{
     setComponentNumber(num)
   }
-
-
-  // console.log(userDataTableData)
+  
   return (
     <div className="w-full">
       <div className="flex flex-row-reverse">
-        <button
-          className={`bg-main-blue hover:bg-main-blue w-80 h-20 text-white m-4 font-bold py-2 px-4 border border-blue-700 rounded`}
-          onClick={handleUploadNewSamplesToggle}
-        >
-          {uploadNewSamplesToggle}
-        </button>
+        
       </div>
       {!showLoginForm && <div className="m-4 max-w-full">
-        {hideupload && <div className="">
-          <UserFilesTable userDataTableData={userDataTableData} />
-        </div>}
         <div>
-          {/* {hideupload ? showVisualization ? <Visualization /> : <TabelDisplay parentcallBack={viusalizationCall} /> : <FileUpload parentCallBack={fileUploadCallBack} />} */}
-          {!hideupload && componentNumber === 0 && <FileUpload parentCallBack={fileUploadCallBack} updateComponentNumber ={updateComponentNumber}  />}
-          { componentNumber === 1 && <FileUploadDropdowncomponent updateComponentNumber ={updateComponentNumber}  />
+          
+          { !hideupload && componentNumber === 0 && 
+            <FileUpload parentCallBack={fileUploadCallBack} updateComponentNumber ={updateComponentNumber}  />
+            }
+          { componentNumber === 1 && 
+            <FileUploadDropdowncomponent updateComponentNumber ={updateComponentNumber}  />
           }
-          { componentNumber === 2 && <FileProjectDataTable updateComponentNumber ={updateComponentNumber}  />
+          { componentNumber === 2 && 
+            <FileProjectDataTable updateComponentNumber ={updateComponentNumber}  />
           }
         </div>
       </div>}
@@ -88,22 +73,3 @@ export default function DataVisualization() {
   )
 }
 
-// <TabsComponent/>
-
-// ______
-// {circosJson && <CircosCmp width={width} data={circosJson}/> }
-// <OncoCmp/>
-// <LollipopCmp/>
-// <VolcanoCmp/>
-// <HeatmapCmp/>
-// ________
-
-// <TabsComponent/>
-
-// <FileUpload/>
-
-
-// {response?<Table data_={fileData}/>:""}
-
-// {loader['child_'+id]?<Loader/>:""}
-// {loader['child_1']?<Loader/>:""}

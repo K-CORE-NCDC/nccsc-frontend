@@ -15,9 +15,6 @@ import Loader from '../../Widgets/loader';
 import { useHistory } from 'react-router-dom'
 import ExampleUserTable from "../TableDisplay/cellColorTable";
 
-import {
-  Link
-} from "react-router-dom";
 import config from "../../../../config";
 
 
@@ -120,10 +117,6 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
       fusion: "fusion"
     }
   })
-  const [clinincalFilterColumns, setClinincalFilterColumns] = useState({
-  })
-  const [selectClinincalFilterColumn, setSelectClinincalFilterColumn] = useState([])
-  const [responseData, setResponseData] = useState({})
   const [fileDataAsTableAll, setFileDataAsTableAll] = useState({})
   const [fileDataAsTableRendered, setFileDataAsTableRendered] = useState({})
   const [showFileDataTable, setShowFileDataTable] = useState(false)
@@ -131,8 +124,6 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
   const [activeTableKey, setActiveTableKey] = useState("")
   const [disableUploadButton, setDisableUploadButton] = useState(true)
   const [borderRed, setBorderRed] = useState(false)
-
-  // console.log(activeTableKey);
 
   const resetStates = () => {
     setSelectedFileSampleType({
@@ -162,10 +153,7 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
     setShowModal(stateData)
   }
 
-  useEffect(()=>{
-    // console.log("firsttttttttttttt------------------------------------------------------------>");
-    // dispatch(clear_new_file_upload_state())
-  },[])
+  
   useEffect(() => {
     if (Object.values(loader).some(element => (element === 'failed'))) {
       setFormSubmitButtonText('retry')
@@ -184,17 +172,14 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
   }
 
   const changeErrorDataTable = (tableTabName) => {
-    // console.log(tableTabName, fileDataAsTableAll);
     setActiveTableKey(tableTabName)
     setFileDataAsTableRendered(fileDataAsTableAll[tableTabName])
   }
 
 
   const updateFileTypeOnChange = (e) => {
-    // console.log(e.target.value, e.target.name);
     const divName = e.target.name
     const divValue = e.target.value
-    // setUploadFile(prevState)
     setDropdownOptionsSelected(prevState => ({
       ...prevState,
       [divValue]: dropdownOptions[divValue]
@@ -267,7 +252,6 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
   }, [fileDataAsTableAll])
 
   useEffect(() => {
-    // console.log(selectedFiles, selectedFileSampleType);
     if (projectName) {
       if (selectedFiles.length === Object.keys(selectedFileSampleType).length) {
         setDisableUploadButton(false)
@@ -302,109 +286,7 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
     }
   }, [projectName])
 
-  const selectGene = (event) => {
-    const { name, value } = event.target;
-    // console.log(name, value)
-    setSelect(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-    localStorage.setItem(name, value)
-  }
-
-  const handle_error = (type_, message) => {
-    setErrorMessage(prevState => ({
-      ...prevState,
-      type: type_,
-      message: message
-    }));
-  }
-
-  const file_types = {
-    clinical_information: ["xlsx", 'csv'],
-    dna_mutation: ['txt', 'maf', "xlsx", 'csv'],
-    dna_methylation: ['txt', 'maf', "xlsx", 'csv'],
-    rna_zscore: ["txt", "xlsx", 'csv'],
-    proteome: ["txt", "xlsx", 'csv']
-  }
-
-  const file_Upload_ = (e, div_name) => {
-    let selected_files = selectedFiles;
-    let type_name = e.target.name;
-    let divKey = e.target.getAttribute('filename')
-
-    if (type_name && e.target.files) {
-      let file_name = e.target.files[0]['name']
-      selectedFiles.push(file_name)
-      // let extension = file_name.split('.')
-      // let validation_error = file_types[type_name].includes(extension[1]) ? false : true
-      // if (validation_error) {
-      //   setError(true)
-      //   handle_error(e.target.name, "please upload file in ." + file_types[type_name].join(" .") + "  format")
-      // }
-      setUploadFile(prevState => ({
-        ...prevState,
-        [divKey]: { type: type_name, file: e.target.files[0] }
-      }));
-      setSelectedFiles([...selected_files])
-
-    }
-  }
-
-  const renderSwitch = (param) => {
-    switch (param) {
-      case 'clinical_information':
-        return "/SAMPLE_FILES/clinical_information.csv";
-      case 'rna_zscore':
-        return "/SAMPLE_FILES/rna_zscore.csv";
-      case 'dna_mutation':
-        return "/SAMPLE_FILES/dna_mutation.csv";
-      case 'dna_methylation':
-        return "/SAMPLE_FILES/dna_methylation.csv";
-      case 'proteome':
-        return "/SAMPLE_FILES/global_proteome_rawdata.csv";
-      default:
-        return "/SAMPLE_FILES/clinical_information.csv";
-    }
-  }
-
-  // <option value="clinical_information">Clinical Information</option>
-  //             <option value="rna_zscore">RNA</option>
-  //             <option value="dna_mutation">DNA Mutation</option>
-  //             <option value="dna_methylation">DNA Methylation</option>
-  //             <option value="proteome">Porteome</option>
-
-  const on_upload = () => {
-    // console.log("file is uploading from new clinical component");
-    dispatch(new_file_upload(uploadFile, projectName))
-    updateComponentNumber(1)
-
-    for (let key in uploadFile) {
-      setLoader((prevState) => ({ ...prevState, [uploadFile[key].type]: 'loader' }))
-    }
-  }
-
-
-  const formSubmitButtonActions = () => {
-    if (projectName.length > 0) {
-      if (formSbubmitButtonText === 'upload') {
-        on_upload()
-      }
-      if (formSbubmitButtonText === 'retry') {
-        on_upload()
-      }
-      if (formSbubmitButtonText === 'visualize') {
-        history.push(`/visualise/circos/${response['serializer'].id}`)
-      }
-    } else {
-      projectNameRef.current.focus()
-      setBorderRed(true)
-    }
-  }
-
   useEffect(() => {
-    // console.log(Object.keys(uploadFile), uploadFile);
-
     Object.keys(uploadFile).forEach(element => {
       if (uploadFile[element].type !== selectedFileSampleType[element]) {
         setUploadFile(prevState => ({
@@ -416,56 +298,8 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
 
   }, [selectedFileSampleType])
 
-  const addNewHTML = () => {
-    const newElementId = Math.max(...Object.keys(selectedFileSampleType)) + 1
-    if (newElementId < 9) {
-      let checkedFileTypes = Object.values(selectedFileSampleType)
-      let availableTypes = Object.keys(dropdownOptions).filter(step => (!checkedFileTypes.includes(step)))
-      // console.log(availableTypes);
-      let availableTypesJson = {}
-      availableTypes.forEach(element => {
-        availableTypesJson[element] = dropdownOptions[element]
-      })
-      setDropdownOptionsSelected(prevState => ({
-        ...prevState,
-        [newElementId]: availableTypesJson
-      }))
-      setSelectedFileSampleType((prevState) => ({
-        ...prevState,
-        [newElementId]: availableTypes[0]
-      }))
-    }
-  }
-
-  const deleteHtml = (e) => {
-    let deleteKey = e.target.id
-    let selected_ = selectedFiles
-    if (deleteKey !== 1) {
-      let activeElementKeys = {}
-      Object.keys(selectedFileSampleType).forEach(key => {
-        if (key != deleteKey) {
-          activeElementKeys = { ...activeElementKeys, [key]: selectedFileSampleType[key] }
-          selected_.splice(key, 1)
-        }
-      })
-      setSelectedFileSampleType(activeElementKeys)
-      setSelectedFiles([...selected_])
-    }
-  }
-
-  const removeUnderscore = (underscoreString) => {
-    return underscoreString.replace('_', ' ')
-  }
-
-  // console.log(fileDataAsTableRendered)
   useEffect(() => {
     let firstInput = []
-    let dropdownOptionsArray = Object.keys(dropdownOptions).filter(value => {
-      if (!Object.keys(dropdownOptionsSelected).includes(value)) {
-        return true
-      }
-    })
-    // console.log(dropdownOptionsArray);
 
     Object.keys(selectedFileSampleType).forEach(key => {
 
@@ -478,11 +312,7 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
               defaultChecked={selectedFileSampleType[key]}
               value={selectedFileSampleType[key]}
               className='select-color w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
-              {/* <option value="clinical_information">Clinical Information</option>
-              <option value="rna_zscore">RNA</option>
-              <option value="dna_mutation">DNA Mutation</option>
-              <option value="dna_methylation">DNA Methylation</option>
-              <option value="proteome">Porteome</option> */}
+              
               {Object.keys(dropdownOptionsSelected[key]).map(type => (
                 <option className='text-gray-900' key={type} value={type}>{dropdownOptionsSelected[key][type]}</option>
               ))}
@@ -522,29 +352,116 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
     })
     setInitialInputState(firstInput)
   }, [selectedFileSampleType, loader, selectedFiles])
+  
 
-  // let sendColumnsData = (columnsData, totalFiles) => {
-  //   console.log("columnsData",columnsData,Object.keys(columnsData).length,totalFiles);
-  //   setTotalNoFiles(totalFiles)
-  //   setFinalResponseData(columnsData)
-  //   // if(Object.keys(columnsData).length === totalFiles && sendColumnRequest){
-     
-  //   // }
-  // }
+  const file_Upload_ = (e, div_name) => {
+    let selected_files = selectedFiles;
+    let type_name = e.target.name;
+    let divKey = e.target.getAttribute('filename')
 
-  // let sendFinalResponseData = () =>{
-  //   console.log("sdsdsds",Object.keys(finalResponseData).length,totalNoFiles);
-  //   if(sendColumnRequest && Object.keys(finalResponseData).length === totalNoFiles ){
-  //     dispatch(uploadClinincalSamples(finalResponseData))
-  //   }
-  // }
+    if (type_name && e.target.files) {
+      let file_name = e.target.files[0]['name']
+      selectedFiles.push(file_name)
+      setUploadFile(prevState => ({
+        ...prevState,
+        [divKey]: { type: type_name, file: e.target.files[0] }
+      }));
+      setSelectedFiles([...selected_files])
 
-  // console.log(showModalInfo);
+    }
+  }
+
+  const renderSwitch = (param) => {
+    switch (param) {
+      case 'clinical_information':
+        return "/SAMPLE_FILES/clinical_information.csv";
+      case 'rna_zscore':
+        return "/SAMPLE_FILES/rna_zscore.csv";
+      case 'dna_mutation':
+        return "/SAMPLE_FILES/dna_mutation.csv";
+      case 'dna_methylation':
+        return "/SAMPLE_FILES/dna_methylation.csv";
+      case 'proteome':
+        return "/SAMPLE_FILES/global_proteome_rawdata.csv";
+      default:
+        return "/SAMPLE_FILES/clinical_information.csv";
+    }
+  }
+
+
+  const on_upload = () => {
+    dispatch(new_file_upload(uploadFile, projectName))
+    updateComponentNumber(1)
+    for (let key in uploadFile) {
+      setLoader((prevState) => ({ ...prevState, [uploadFile[key].type]: 'loader' }))
+    }
+  }
+
+
+  const formSubmitButtonActions = () => {
+    if (projectName.length > 0) {
+      if (formSbubmitButtonText === 'upload') {
+        on_upload()
+      }
+      if (formSbubmitButtonText === 'retry') {
+        on_upload()
+      }
+      if (formSbubmitButtonText === 'visualize') {
+        history.push(`/visualise/circos/${response['serializer'].id}`)
+      }
+    } else {
+      projectNameRef.current.focus()
+      setBorderRed(true)
+    }
+  }
+
+ 
+
+  const addNewHTML = () => {
+    const newElementId = Math.max(...Object.keys(selectedFileSampleType)) + 1
+    if (newElementId < 9) {
+      let checkedFileTypes = Object.values(selectedFileSampleType)
+      let availableTypes = Object.keys(dropdownOptions).filter(step => (!checkedFileTypes.includes(step)))
+      // console.log(availableTypes);
+      let availableTypesJson = {}
+      availableTypes.forEach(element => {
+        availableTypesJson[element] = dropdownOptions[element]
+      })
+      setDropdownOptionsSelected(prevState => ({
+        ...prevState,
+        [newElementId]: availableTypesJson
+      }))
+      setSelectedFileSampleType((prevState) => ({
+        ...prevState,
+        [newElementId]: availableTypes[0]
+      }))
+    }
+  }
+
+  const deleteHtml = (e) => {
+    let deleteKey = e.target.id
+    let selected_ = selectedFiles
+    if (deleteKey !== 1) {
+      let activeElementKeys = {}
+      Object.keys(selectedFileSampleType).forEach(key => {
+        if (key != deleteKey) {
+          activeElementKeys = { ...activeElementKeys, [key]: selectedFileSampleType[key] }
+          selected_.splice(key, 1)
+        }
+      })
+      setSelectedFileSampleType(activeElementKeys)
+      setSelectedFiles([...selected_])
+    }
+  }
+
+  
+
+  
   return (
     <>
-      <ModalTest modalStateButton={showModalInfo} setShowModalFunction={hideModal} />
+      {/* <ModalTest modalStateButton={showModalInfo} setShowModalFunction={hideModal} /> */}
       <div>
-        <Modal showModal={showModal} setShowModal={setShowModalFunction} body={modalData} />
+        {/* <Modal showModal={showModal} setShowModal={setShowModalFunction} body={modalData} /> */}
       </div>
       {!showFileDataTable && <div className="py-20 h-screen ">
         {error ? <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
@@ -581,28 +498,10 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
               </button>&nbsp;&nbsp;&nbsp;&nbsp;
               <button className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded ${disableUploadButton ? 'bg-opacity-10' : ''}`}
                 onClick={formSubmitButtonActions}
-
               >
                 {formSbubmitButtonText}
               </button>
-
-              {
-                <div>
-                  {/* {selectClinincalFilterColumn} */}
-                  <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                    {/* <button
-                      className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button"
-                      // onClick={() => {
-                      //   setSendColumnRequest(true)
-                      //   // sendFinalResponseData()
-                      // }}
-                    >
-                      send
-                    </button> */}
-                  </div>
-                </div>
-              }
+              
             </div>
           </div>
         </div>
@@ -729,10 +628,6 @@ function SampleDataTable() {
 
 
 function ModalTest({ modalStateButton, setShowModalFunction }) {
-  // console.log(modalStateButton);
-  // const [showModal, setShowModal] = useState(false);
-
-
   return (
     <>
       {modalStateButton ? (
