@@ -1,5 +1,5 @@
 
-import React, { useState,useEffect,useRef } from 'react'
+import React, { useEffect } from 'react'
 import {Chart, registerables} from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
@@ -7,8 +7,8 @@ Chart.register(...registerables);
 
 function hex (c) {
   var s = "0123456789abcdef";
-  var i = parseInt (c);
-  if (i == 0 || isNaN (c))
+  let i = parseInt (c);
+  if (i === 0 || isNaN (c))
     return "00";
   i = Math.round (Math.min (Math.max (0, i), 255));
   return s.charAt ((i - i % 16) / 16) + s.charAt (i % 16);
@@ -20,7 +20,7 @@ function convertToHex (rgb) {
 }
 
 /* Remove '#' in color hex string */
-function trim (s) { return (s.charAt(0) == '#') ? s.substring(1, 7) : s }
+function trim (s) { return (s.charAt(0) === '#') ? s.substring(1, 7) : s }
 
 /* Convert a hex string to an RGB triplet */
 function convertToRGB (hex) {
@@ -47,7 +47,7 @@ function generateColor(colorStart,colorEnd,colorCount){
 
   var saida = [];
   
-  for (var i = 0; i < len; i++) {
+  for (let i = 0; i < len; i++) {
     var c = [];
     alpha += (1.0/len);
     
@@ -96,9 +96,9 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
     let ctx = document.getElementById(id).getContext('2d');
 
     // console.log(g_data)
-    let segment;
-    let selectedIndex;
-    var myChart = new Chart(ctx, {
+    // let segment;
+    // let selectedIndex;
+    new Chart(ctx, {
         type: 'pie',
         data: g_data,
         options: {
@@ -162,7 +162,7 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
       
       if(id==='chart_pie_FirstMenstrualAge'){
         let fma = {}
-        for (var i = 0; i < data.length; i++) {
+        for (let i = 0; i < data.length; i++) {
           let n = parseInt(data[i].name)
           
           let tmp =''
@@ -178,7 +178,7 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
           }
         }
         let d = []
-        for (var key in fma) {
+        for (let key in fma) {
           d.push({
             'name': key,
             'cnt': fma[key]
@@ -188,7 +188,7 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
 
       }else if(id==='chart_pie_DurationofBreastfeeding'){
         let dbf = {}
-        for (var i = 0; i < data.length; i++) {
+        for (let i = 0; i < data.length; i++) {
           let name = parseInt(data[i].name)
           if(name<=12){
             if('< 1year' in dbf){
@@ -203,7 +203,7 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
           }
         }
         let d = []
-        for (var key in dbf) {
+        for (let key in dbf) {
           d.push({
             'name': key,
             'cnt': dbf[key]
@@ -213,7 +213,7 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
       }
       else if(id==='chart_pie_Timeuntilrelapseisconfirmed'){
         let turc = {}
-        for (var i = 0; i < data.length; i++) {
+        for (let i = 0; i < data.length; i++) {
           let name = parseInt(data[i].name)
           if(name<=9){
             if('0~9' in turc){
@@ -226,7 +226,7 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
           }
         }
         let d = []
-        for (var key in turc) {
+        for (let key in turc) {
           d.push({
             'name': key,
             'cnt': turc[key]
@@ -236,7 +236,7 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
       }
       else if(id==='chart_pie_HER2Score'){
         let her2 = {}
-        for (var i = 0; i < data.length; i++) {
+        for (let i = 0; i < data.length; i++) {
           let name = data[i].name
           if(name==="0"||name==="0~1"||name==="1+"){
             if ('negative(0-1+)' in her2){
@@ -265,7 +265,7 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
           }
         }
         let d = []
-        for (var key in her2) {
+        for (let key in her2) {
           d.push({
             'name': key,
             'cnt': her2[key]
@@ -275,7 +275,7 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
       }
       else if(id==="chart_pie_Ki-67Index"){
         let ki = {}
-        for (var i = 0; i < data.length; i++) {
+        for (let i = 0; i < data.length; i++) {
           let name = parseInt(data[i].name)
           if(name>0 && name<15){
             if ('low(≤15%)' in ki){
@@ -304,7 +304,7 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
           }
         }
         let d = []
-        for (var key in ki) {
+        for (let key in ki) {
           d.push({
             'name': key,
             'cnt': ki[key]
@@ -314,7 +314,7 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
       }
       else if(id==='chart_pie_BodyMassIndex') {
         let bmi = {}
-        for (var i = 0; i < data.length; i++) {
+        for (let i = 0; i < data.length; i++) {
           let n = data[i].name
           
           let tmp =''
@@ -334,7 +334,7 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
           }
         }
         let d = []
-        for (var key in bmi) {
+        for (let key in bmi) {
           d.push({
             'name': key,
             'cnt': bmi[key]
@@ -344,18 +344,18 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
 
       }
       var tmp = generateColor(color,"#fefefe",data.length);
-      for (var i = 0; i < data.length; i++) {
+      for (let i = 0; i < data.length; i++) {
         t.push(data[i].cnt)
-        if(data[i].name==null){
+        if(data[i].name === null){
           g_dat['labels'].push("N/A")
         }
-        else if(data[i].name=="null"){
+        else if(data[i].name === "null"){
           g_dat['labels'].push("N/A")
         }
-        else if(data[i].name==""){
+        else if(data[i].name === ""){
           g_dat['labels'].push("N/A")
         }
-        else if(data[i].name=="N/A"){
+        else if(data[i].name === "N/A"){
           g_dat['labels'].push("N/A")
         }
         else{
