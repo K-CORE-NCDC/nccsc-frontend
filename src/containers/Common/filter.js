@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 // import filterBoxes from './data'
 import { FormattedMessage } from "react-intl";
 
-export default function Filter({ parentCallback, filterState, set_screen }) {
+export default function Filter({ parentCallback, filterState, set_screen,project_id }) {
   const [state, setState] = useState({ html: [] });
   const [selectState, setSelectState] = useState({'filterCondition':'and'});
   const [selected, setSelected] = useState("Basic/Diagnostic Information");
@@ -23,13 +23,16 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
     }else{
       return 0
     }
-    
   });
   const [totalCountS] = useState(totalCount);
   const [filterCondition, setFilterCondition] = useState("and");
 
   useEffect(() => {
-    leftSide();
+    if(project_id!==undefined){
+
+    }else{
+      leftSide();
+    }
   }, []);
 
   useEffect(() => {

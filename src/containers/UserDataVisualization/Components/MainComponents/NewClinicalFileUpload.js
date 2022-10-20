@@ -1,12 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  AdjustmentsIcon,
-  BeakerIcon,
   PlusCircleIcon,
   MinusCircleIcon,
-  DownloadIcon
+
 } from '@heroicons/react/outline'
 import { new_file_upload,uploadClinincalSamples,clear_new_file_upload_state } from '../../../../actions/api_actions'
 import { useSelector, useDispatch } from "react-redux";
@@ -154,7 +150,7 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
   }
 
   useEffect(()=>{
-    dispatch(clear_new_file_upload_state())
+    // dispatch(clear_new_file_upload_state())
   },[])
   useEffect(() => {
     if (Object.values(loader).some(element => (element === 'failed'))) {
@@ -323,7 +319,7 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
           <div className='relative col-span-4 w-full '>
             <label
               className="select-color w-full block text-right border focus:outline-none border-b-color focus:ring focus:border-blue-300 p-4 mt-3">
-              <input type='file' className="" data={key} name={selectedFileSampleType[key]} id="user-file-input" filename={key} onChange={file_Upload_} />
+              <input type='file' className="w-full" data={key} name={selectedFileSampleType[key]} id="user-file-input" filename={key} onChange={file_Upload_} />
             </label>
           </div>
           <div className='p-5 col-span-2 flex'>
@@ -392,6 +388,7 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
 
 
   const on_upload = () => {
+    console.log(uploadFile,projectName)
     dispatch(new_file_upload(uploadFile, projectName))
     updateComponentNumber(1)
     for (let key in uploadFile) {
