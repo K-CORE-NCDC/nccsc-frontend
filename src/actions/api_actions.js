@@ -693,13 +693,6 @@ export function clear_new_file_upload_state() {
 
 export function uploadClinincalSamples(fileData, projectName) {
   return (dispatch) => {
-    // const data = new FormData()
-    // dispatch({ type: homeConstants.DATA_SUMMARY });
-    // fileData.forEach(file=>{
-    //   formData.append("arrayOfFilesName", file);
-    // });
-  
-
     let url = config.auth + "upload-clinical-columns/";
     sendRequest(url, "POST", fileData)
       .then((result) => {
