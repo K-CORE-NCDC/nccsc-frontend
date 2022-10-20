@@ -129,7 +129,6 @@ export default function DataVisualization() {
       } else {
         Object.keys(projectAvailableSteps).forEach((stepName) => {
           if (projectAvailableSteps[stepName].length > 0) {
-            // console.log(projectAvailableSteps, stepName, );
             if (stepName === "fusion") {
               return;
             }
@@ -328,11 +327,6 @@ export default function DataVisualization() {
     }));
   }, [screenCapture]);
 
-  // useEffect(() => {
-  //   if(state.filter !== advanceFilters){
-  //     setAdvanceFilters(state.filter)
-  //   }
-  // }, [state])
 
   const LoadChart = (w, type) => {
     switch (type) {
@@ -428,10 +422,6 @@ export default function DataVisualization() {
   }
 
 
-
-
-
-
   useEffect(() => {
     return () => {
       
@@ -451,6 +441,7 @@ export default function DataVisualization() {
                   parentCallback={callback}
                   filterState={state["filter"]}
                   set_screen={screen_call}
+                  project_id={project_id}
                 />
               </div>
             )}
