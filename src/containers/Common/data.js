@@ -221,12 +221,12 @@ let filterBoxes = {
       {'type':'checkbox','name':'sex','id':'sex_female','value':'Female'}
     ],
     "Age Of Daignosis":[
-      {'type':'number','id':'aod','value':''},
+      {'type':'number','id':'aod','value':'', 'min':20,'max':40},
       
 
     ],
     "Body Mass Index":[
-      {'type':'number','id':'bmi','value':''},
+      {'type':'number','id':'bmi','value':'','min':15.82,'max':36.33},
     ],
     "Diagnosis Of Bilateral Breast Cancer":[
       {'type':'checkbox','name':'dbbc','id':'dbbc_from','value':'Yes'},
@@ -249,7 +249,7 @@ let filterBoxes = {
       {'type':'checkbox','name':'fhbc','id':'fhbc_no','value':'No'},
     ],
     "First Menstrual Age":[
-      {'type':'number','name':'fma','id':'fma','value':''},
+      {'type':'number','name':'fma','id':'fma','value':'','min':10,'max':17},
     ],
     "Menopause":[
       {'type':'checkbox','name':'menopause','id':'menopause_yes','value':'Yes'},
@@ -264,7 +264,7 @@ let filterBoxes = {
       {'type':'checkbox','name':'eob','id':'eob_no','value':'No'},
     ],
     "Duration of Breastfeeding":[
-      {'type':'number','name':'dob','id':'dob','value':''},
+      {'type':'number','name':'dob','id':'dob','value':'','min':1,'max':24},
     ],
     "Intake of Oral Contraceptive Pill":[
       {'type':'checkbox','name':'iocp','id':'iocp_yes','value':'Yes'},
@@ -310,7 +310,7 @@ let filterBoxes = {
       {'type':'checkbox','name':'herscore','id':'herscore_3+','value':'3+'},
     ],
     "Ki-67 Index":[
-      {'type':'number','name':'ki67','id':'ki67','value':''},
+      {'type':'number','name':'ki67','id':'ki67','value':'','min':1,'max':95},
     ]
   },
   "Follow-up Observation":{
@@ -319,7 +319,7 @@ let filterBoxes = {
       {'type':'checkbox','name':'cr','id':'cr_no','value':'No'},
     ],
     "Time until relapse is confirmed":[
-      {'type':'number','name':'turc','id':'turc','value':''},
+      {'type':'number','name':'turc','id':'turc','value':'','min':1,'max':16},
     ]
   },
 }

@@ -1330,6 +1330,10 @@ export function updateDownloadVisualizationPurpose(data) {
     sendRequest(url, 'POST', data)
       .then((result) => {
         // let res = result
+        dispatch({
+          type: userdataVisualization.UPDATE_DOWNLOAD_VISUALIZATION_PURPOSE,
+          payload: result,
+        });
         return result
       })
       .catch(e => {

@@ -13,17 +13,16 @@ import { FormattedMessage } from "react-intl";
 
 export default function Filter({ parentCallback, filterState, set_screen }) {
   const [state, setState] = useState({ html: [] });
-  const [selectState, setSelectState] = useState({'filterCondition':'and'});
+  const [selectState, setSelectState] = useState({ filterCondition: "and" });
   const [selected, setSelected] = useState("Basic/Diagnostic Information");
   const [filtersUi, setFiltersUi] = useState({});
   const [filterHtml, setFilterHtml] = useState([]);
   const totalCount = useSelector((state) => {
-    if ('Keys' in state.dataVisualizationReducer){
+    if ("Keys" in state.dataVisualizationReducer) {
       return Object.keys(state.dataVisualizationReducer.Keys).length || 0;
-    }else{
-      return 0
+    } else {
+      return 0;
     }
-    
   });
   const [totalCountS] = useState(totalCount);
   const [filterCondition, setFilterCondition] = useState("and");
@@ -74,12 +73,12 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
         }
       });
     }
-    
+
     setFilterHtml(html);
   }, [filtersUi]);
 
-   // for rendering the filter // inputs and checkboxes all html store in state
-   const leftSide = () => {
+  // for rendering the filter // inputs and checkboxes all html store in state
+  const leftSide = () => {
     // console.log("filter ");
     let filterBoxes = inputJson.filterBoxes;
     let html = [];
@@ -181,7 +180,6 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
         </div>
       );
     });
-    // console.log("html 0000", html);
     setState((prevState) => ({
       ...prevState,
       html: html,
@@ -213,7 +211,6 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
       "Time until relapse is confirmed (1-16 Y)",
   };
 
-
   let checkbox = (d) => {
     let check = false;
     if (d.id in selectState) {
@@ -240,6 +237,7 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
   };
 
   let inputbox = (d) => {
+    // console.log("d",d);
     return (
       <div
         key={d.id}
@@ -247,12 +245,15 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
       >
         <div className="col-span-2">
           <input
-            type="text"
+            type="number"
             id={"from_" + d.id}
             className="h-full shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight"
+            onKeyDown={(e) =>["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
             value={selectState["from_" + d.id]}
             onChange={(e) => selectFn(e)}
-            placeholder=""
+            placeholder={d.min}
+            min={d.min}
+            max={d.max}
           />
         </div>
         <div className="col-span-1">
@@ -262,24 +263,73 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
         </div>
         <div className="col-span-2">
           <input
-            type="text"
+            type="number"
             id={"to_" + d.id}
             className="h-full  shadow appearance-none w-full py-2 px-3 text-gray-700 leading-tight"
+            onKeyDown={(e) =>["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
             value={selectState["to_" + d.id]}
             onChange={(e) => selectFn(e)}
-            placeholder=""
+            placeholder={d.max}
+            min={d.min}
+            max={d.max}
           />
         </div>
       </div>
     );
   };
 
+
   const selectFn = (e) => {
     let val = e.target.value;
     let id = e.target.id;
     let tmp = selectState;
-    if (e.target.type === "text") {
-      tmp[id] = val;
+    let ids = id.split('_')
+    let m_id = ids[1]
+    if (e.target.type === "number") {
+      let from_0 = document.getElementById(`from_${m_id}`);
+      let from_ = from_0 ? +(from_0.value) : from_0.min;
+      let min_value = from_0 ? +(from_0.min) : 0
+      let to_0 = document.getElementById(`to_${m_id}`);
+      let to_ = to_0 ? +(to_0.value) : from_0.max ;
+      let max_value = from_0 ? +(from_0.max) : 0
+
+      let checked = true
+
+      if(from_ > max_value || from_ < min_value ||  from_ > to_ ){
+        delete tmp[`from_${m_id}`];
+        delete tmp[`to_${m_id}`];
+        setSelectState(tmp)
+        checked = false
+
+      }
+      else if(to_ >max_value || to_ < min_value || to_ < from_){
+        delete tmp[`from_${m_id}`];
+        delete tmp[`to_${m_id}`];
+        setSelectState(tmp)
+        checked = false
+      }
+      else{
+        tmp[`from_${m_id}`] = from_;
+        tmp[`to_${m_id}`] = to_;
+        setSelectState(tmp)
+      }
+
+      if (checked) {
+        from_0.classList.remove('border-2')
+        from_0.classList.remove('border-red-400')
+        to_0.classList.remove('border-2')
+        to_0.classList.remove('border-red-400')
+       
+      } 
+      else {
+        from_0.classList.add('border-2')
+        from_0.classList.add('border-red-400')
+        to_0.classList.add('border-2')
+        to_0.classList.add('border-red-400')
+        delete tmp[`from_${m_id}`];
+        delete tmp[`to_${m_id}`];
+        setSelectState(tmp)
+      }
     } else {
       if (id in tmp) {
         delete tmp[id];
@@ -289,98 +339,93 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
         document.getElementById(id).checked = true;
       }
     }
-    setSelectState({...tmp});
+    setSelectState({ ...tmp });
   };
 
   const checkboxselectFn = (e) => {
-    let id = e.id
+    let id = e.id;
     let tmp = selectState;
-    if (e.type === "text") {
-      if(id in tmp){
-        delete tmp[id] ;
-      }
-      e.value =''
-    }
-    else {
+    if (e.type === "number") {
       if (id in tmp) {
         delete tmp[id];
-      } 
+      }
+      e.value = "";
+    } else {
+      if (id in tmp) {
+        delete tmp[id];
+      }
       e.checked = false;
     }
-    console.log("main temp",tmp);
+    // console.log("main temp", tmp);
     // setSelectState({...tmp});
   };
 
-
   const checkBoxFn = (event, id) => {
     // console.log("id",id);
-    let child_id = 'child_'+id
+    let child_id = "child_" + id;
     // console.log("cildid",child_id);
 
     let child_did = document.getElementById(child_id);
-    const inputElements = child_did.querySelectorAll("input, select, checkbox, textarea")
-    for (let e in inputElements){
-      if(inputElements[e].id){
+    const inputElements = child_did.querySelectorAll(
+      "input, select, checkbox, textarea"
+    );
+    for (let e in inputElements) {
+      if (inputElements[e].id) {
         // console.log(inputElements[e]);
         // console.log(inputElements[e],inputElements[e].id,inputElements[e].value, inputElements[e].type);
-        checkboxselectFn((inputElements[e]))
+        checkboxselectFn(inputElements[e]);
         // selectFn(inputElements[e])
       }
     }
     // console.log("selectState",selectState)
 
     var did = document.getElementById(id);
-    // console.log("did------>",did.getAttribute("data-parent"));
-    
-    if(did.hasAttribute("id")){
-      let name = did.getAttribute("id")
-      // console.log(name);
-      let names = name.split("_")
-      let key,value
-      if(names[1]){
-         key = did.getAttribute("data-parent")
-      }
-      if(names[2]){
-         value = names[2];
-      }
-      let MainKey 
+    // // console.log("did------>",did.getAttribute("data-parent"));
 
-      let filterBoxes = inputJson.filterBoxes;
+    // if (did.hasAttribute("id")) {
+    //   let name = did.getAttribute("id");
+    //   // console.log(name);
+    //   let names = name.split("_");
+    //   let key, value;
+    //   if (names[1]) {
+    //     key = did.getAttribute("data-parent");
+    //   }
+    //   if (names[2]) {
+    //     value = names[2];
+    //   }
+    //   let MainKey;
 
-      Object.keys(filterBoxes).forEach((item, k) => {
-        let t = [];
-        if (filterBoxes[item]) {
-          let childElements = filterBoxes[item];
-          // let itemr = item.split(" ")
-          // let finalkey = itemr.join('')
-          // console.log("childElemens->",finalkey, key);
-          Object.keys(childElements).forEach((childelm, c) => {
-            if(item === key &&  c.toString() === value){
-              MainKey = childelm
-              // console.log("MainKey",MainKey);
-            }
-          })
-        }
-      })
+      // let filterBoxes = inputJson.filterBoxes;
 
-      let temp =  {...filtersUi}
-      // console.log("temp",temp[key]);
-      if(temp[key]){
+      // Object.keys(filterBoxes).forEach((item, k) => {
+      //   let t = [];
+      //   if (filterBoxes[item]) {
+      //     let childElements = filterBoxes[item];
+      //     // let itemr = item.split(" ")
+      //     // let finalkey = itemr.join('')
+      //     // console.log("childElemens->",finalkey, key);
+      //     Object.keys(childElements).forEach((childelm, c) => {
+      //       if (item === key && c.toString() === value) {
+      //         MainKey = childelm;
+      //         // console.log("MainKey",MainKey);
+      //       }
+      //     });
+      //   }
+      // });
 
-        for(let i = 0; i < temp[key].length; i++){
-          if(temp[key][i]['key'].indexOf(MainKey)>-1){
-            console.log(temp[key][i]['key']);
-            temp[key].splice(i,1)
-          }
-        }   
-      }
-      setFiltersUi(temp)
-    }
+      // let temp = { ...filtersUi };
+      // // console.log("temp",temp[key]);
+      // if (temp[key]) {
+      //   for (let i = 0; i < temp[key].length; i++) {
+      //     if (temp[key][i]["key"].indexOf(MainKey) > -1) {
+      //       console.log(temp[key][i]["key"]);
+      //       temp[key].splice(i, 1);
+      //     }
+      //   }
+      // }
+      // setFiltersUi(temp);
+    // }
 
-
-
-
-    
     var checkbox_elm = document.getElementById(id).checked;
     if (checkbox_elm) {
       document.getElementById(id).checked = false;
@@ -415,7 +460,7 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
   const drawTags = () => {
     let filterBoxes = inputJson.filterBoxes;
     let tx = ["aod", "bmi", "fma", "dob", "ki67", "turc"];
-    console.log("selectState 11111",selectState);
+    console.log("selectState 11111", selectState);
     if (Object.keys(selectState).length > 0) {
       let filterSelectedHtml = {};
       Object.keys(filterBoxes).forEach((header) => {
@@ -455,7 +500,7 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
           });
         });
       });
-      console.log("filterSelectedHtml",filterSelectedHtml);
+      console.log("filterSelectedHtml", filterSelectedHtml);
       setFiltersUi(filterSelectedHtml);
     }
   };
@@ -466,7 +511,7 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
   };
 
   const reset = () => {
-    console.log("reset called",selectState);
+    console.log("reset called", selectState);
     let toggle_check = [
       "Basic/Diagnostic Information",
       "Patient Health Information",
@@ -485,7 +530,7 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
     });
 
     let input_boxes = document.querySelectorAll(
-      "#all_checkboxes input[type=text]"
+      "#all_checkboxes input[type=number]"
     );
     [...input_boxes].forEach((il) => {
       delete tmp[il.id];
@@ -493,23 +538,22 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
     });
     // console.log("tmp is culprit",tmp);
     // setSelectState(tmp);
-    setSelectState({'filterCondition':'and'});
+    setSelectState({ filterCondition: "and" });
     parentCallback("");
-    setFilterHtml([])
+    setFilterHtml([]);
     // let abcd = {...filtersUi}
     // console.log("abcd",abcd);
     // abcd['Basic/Diagnostic Information'] = []
     // setFiltersUi(abcd)
   };
 
-  const changeFilterCondition = (e)=>{
-    
-    let tmp = selectState
-    let val = e.target.value
-    setFilterCondition(val)
-    tmp['filterCondition'] = val
-    setSelectState(tmp)
-  }
+  const changeFilterCondition = (e) => {
+    let tmp = selectState;
+    let val = e.target.value;
+    setFilterCondition(val);
+    tmp["filterCondition"] = val;
+    setSelectState(tmp);
+  };
 
   return (
     <div>
@@ -536,66 +580,69 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
         </button>
       </div>
       <div className="flex flex-row mb-4 ml-4">
-          <label className="text-2xl font-bold">
-            <FormattedMessage id='filterCondition' defaultMessage={'Filter condition between clinical features'}/>:
-          </label>
-          <div className="flex items-center ml-4">
-            {filterCondition === "and" ? (
-              <input
-                id="default-radio-1"
-                type="radio"
-                value="and"
-                name="condition"
-                checked
-                onChange={e=>changeFilterCondition(e)}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              />
-            ) : (
-              <input
-                id="default-radio-1"
-                type="radio"
-                value="and"
-                name="condition"
-                onChange={e=>changeFilterCondition(e)}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              />
-            )}
+        <label className="text-2xl font-bold">
+          <FormattedMessage
+            id="filterCondition"
+            defaultMessage={"Filter condition between clinical features"}
+          />
+          :
+        </label>
+        <div className="flex items-center ml-4">
+          {filterCondition === "and" ? (
+            <input
+              id="default-radio-1"
+              type="radio"
+              value="and"
+              name="condition"
+              checked
+              onChange={(e) => changeFilterCondition(e)}
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+          ) : (
+            <input
+              id="default-radio-1"
+              type="radio"
+              value="and"
+              name="condition"
+              onChange={(e) => changeFilterCondition(e)}
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+          )}
 
-            <label
-              htmlFor="default-radio-1"
-              className="ml-2 text-gray-900 dark:text-gray-300"
-            >
-              And
-            </label>
-          </div>
-          <div className="flex items-center ml-4">
-            {filterCondition === "or" ? (
-              <input
-                id="default-radio-2"
-                type="radio"
-                value="or"
-                name="condition"
-                onChange={e=>changeFilterCondition(e)}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              />
-            ) : (
-              <input
-                id="default-radio-2"
-                type="radio"
-                value="or"
-                name="condition"
-                onChange={e=>changeFilterCondition(e)}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              />
-            )}
-            <label
-              htmlFor="default-radio-2"
-              className="ml-2 text-gray-900 dark:text-gray-300"
-            >
-              Or
-            </label>
-          </div>
-        
+          <label
+            htmlFor="default-radio-1"
+            className="ml-2 text-gray-900 dark:text-gray-300"
+          >
+            And
+          </label>
+        </div>
+        <div className="flex items-center ml-4">
+          {filterCondition === "or" ? (
+            <input
+              id="default-radio-2"
+              type="radio"
+              value="or"
+              name="condition"
+              onChange={(e) => changeFilterCondition(e)}
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+          ) : (
+            <input
+              id="default-radio-2"
+              type="radio"
+              value="or"
+              name="condition"
+              onChange={(e) => changeFilterCondition(e)}
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+          )}
+          <label
+            htmlFor="default-radio-2"
+            className="ml-2 text-gray-900 dark:text-gray-300"
+          >
+            Or
+          </label>
+        </div>
       </div>
       <div className="col-span-2" id="all_checkboxes">
         {state["html"]}

@@ -65,13 +65,14 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
 
   const loadGenesDropdown = (genes) => {
     let t = []
-    for (var i = 0; i < genes.length; i++) {
-      t.push(
-        { "name": genes[i], "id": i }
-      )
+      for (let i = 0; i < genes.length; i++) {
+        t.push(
+          { "name": genes[i], "id": i }
+        )
     }
+    console.log('t final',t);
     setGenesHtml(t)
-    let select_ = t.splice(0,1)
+    let select_ = t.slice(0,1)
     setSelectedValue(select_)
     setPrimaryGene(select_)
   }

@@ -22,7 +22,6 @@ import { FormattedMessage } from "react-intl";
 import { element } from "prop-types";
 
 export default function DataVisualization() {
-
   const elementRef = useRef(null);
 
   const [state, setState] = useState({ genes: [], filter: "", type: "" });
@@ -59,24 +58,22 @@ export default function DataVisualization() {
     }
   };
 
-
   const setScreenCaptureFunction = (capture) => {
     // setScreenCapture(capture)
     setScreenCaptureConfirmation(true);
   };
   const submitFilter = (e) => {
     // e.preventDefault()
-    
+
     // if (state.genes.length > 0) {
-      setBoolChartState(false);
-      setChartName(tab);
-      let chartx = LoadChart(width, tab);
-      setCharts((prevState) => ({
-        ...prevState,
-        viz: chartx,
-      }));
+    setBoolChartState(false);
+    setChartName(tab);
+    let chartx = LoadChart(width, tab);
+    setCharts((prevState) => ({
+      ...prevState,
+      viz: chartx,
+    }));
     // }
-    
   };
 
   const callback = useCallback((filters) => {
@@ -151,15 +148,12 @@ export default function DataVisualization() {
     }
   }, [project_id, userProjectDetails]);
 
-
-
-
   const toggleTab = (event) => {
-    let t = ["Volcano Plot", "Survival Plot", "Fusion Plot"]
+    let t = ["Volcano Plot", "Survival Plot", "Fusion Plot"];
     if (t.indexOf(event.target.innerText) !== -1) {
-      setToggle(false)
+      setToggle(false);
     } else {
-      setToggle(true)
+      setToggle(true);
     }
 
     let tabsContainer = document.querySelector("#tabs");
@@ -182,8 +176,6 @@ export default function DataVisualization() {
         );
       });
     });
-
-
   };
 
   useEffect(() => {
@@ -281,24 +273,30 @@ export default function DataVisualization() {
         );
       }
     });
-    let t = ["volcano", "survival", "fusion"]
+    let t = ["volcano", "survival", "fusion"];
     if (t.indexOf(chartName) !== -1) {
-      setToggle(false)
+      setToggle(false);
     }
     setMenuItems(tmp);
   }, [availableTabsForProject, chartName]);
 
   useEffect(() => {
     if (project_id !== undefined) {
-      if(state.genes.length > 0){
+      if (state.genes.length > 0) {
         dispatch(getBreastKeys({ project_id: project_id }));
       }
     } else {
-      if(state.genes.length > 0){
+      if (state.genes.length > 0) {
         dispatch(getBreastKeys({}));
       }
     }
   }, []);
+
+  useEffect(() => {
+    if (state.genes.length > 0) {
+      dispatch(getBreastKeys({}));
+    }
+  }, [state["genes"]]);
 
   useEffect(() => {
     if (BrstKeys) {
@@ -419,32 +417,25 @@ export default function DataVisualization() {
   }, []);
 
   const leftFilterClose = (e) => {
-    let t = ["volcano", "survival", "fusion"]
+    let t = ["volcano", "survival", "fusion"];
     if (t.indexOf(tab) !== -1) {
-      return false
+      return false;
     } else {
-      setToggle(!toggle)
+      setToggle(!toggle);
     }
-  }
-
-
-
-
-
+  };
 
   useEffect(() => {
     return () => {
-      
       dispatch(clearDataVisualizationState());
     };
   }, []);
-
 
   return (
     <div className="header">
       <div className="mx-auto border-t rounded overflow-hidden ">
         <div id="main_div">
-          <div className={(toggle) ? "grid grid-cols-4" : "grid "}>
+          <div className={toggle ? "grid grid-cols-4" : "grid "}>
             {toggle && (
               <div className="xs:col-span-3 lg:col-span-1 xs:z-10 xs:opacity-95 bg-white border border-gray-200 transition duration-150 ease-in-out">
                 <Filter
@@ -463,12 +454,13 @@ export default function DataVisualization() {
             >
               <div className="grid grid-cols-3 gap-1 p-5 bg-white">
                 <div
-                  className={`col-span-3 lg:hidden md:hidden ${chartName === "volcano" ? "xs:hidden" : ""
-                    }`}
+                  className={`col-span-3 lg:hidden md:hidden ${
+                    chartName === "volcano" ? "xs:hidden" : ""
+                  }`}
                 >
                   <button
                     className="bg-blue-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    onClick={e => leftFilterClose(e)}
+                    onClick={(e) => leftFilterClose(e)}
                     type="button"
                   >
                     <AdjustmentsIcon className="h-6 w-6 inline" />
@@ -478,7 +470,7 @@ export default function DataVisualization() {
                   <div className="inline-flex relative xs:hidden lg:block md:block">
                     <MenuIcon
                       className="h-8 w-8 inline text-main-blue mt-3 cursor-pointer"
-                      onClick={e => leftFilterClose(e)}
+                      onClick={(e) => leftFilterClose(e)}
                     />
                   </div>
                   <div className="inline-flex lg:w-2/5 xs:w-60">
@@ -486,13 +478,13 @@ export default function DataVisualization() {
                       id="gene_type"
                       value={state["type"]}
                       onChange={(e) => selectGene(e)}
-                      placeholder='Enter your Genes'
+                      placeholder="Enter your Genes"
                       className="btn_input_height lg:w-full xs:w-56 p-3 border bg-white focus:outline-none border-blue-300 focus:ring focus:border-blue-300 xs:h-14 lg:h-16 xs:text-sm lg:text-xl"
                     >
                       <option
                         className="xs:text-sm lg:text-xl"
                         value="user-defined"
-                        placeholder='Enter your Genes'
+                        placeholder="Enter your Genes"
                       >
                         User-Defined List
                       </option>
@@ -633,16 +625,21 @@ export default function DataVisualization() {
                       className="btn_input_height lg:w-full sm:w-13 xs:w-56 p-3 xs:text-sm lg:text-xl border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 xs:h-14 lg:h-16"
                       name="genes"
                       placeholder="Enter Genes"
-                      onChange={e => {
+                      onChange={(e) => {
                         let abc = document.getElementById("gene_type").value;
-                        if (abc === 'user-defined') {
-                          let usergenes = document.getElementById("genes").value.split(" ").filter(element => element);
-                          let UserGenes =[]
-                          usergenes.forEach(element => {UserGenes.push(element.toUpperCase());});
+                        if (abc === "user-defined") {
+                          let usergenes = document
+                            .getElementById("genes")
+                            .value.split(" ")
+                            .filter((element) => element);
+                          let UserGenes = [];
+                          usergenes.forEach((element) => {
+                            UserGenes.push(element.toUpperCase());
+                          });
                           setState((prevState) => ({
                             ...prevState,
                             genes: UserGenes,
-                            type: 'user-defined',
+                            type: "user-defined",
                           }));
                         }
                       }}
@@ -697,6 +694,26 @@ export default function DataVisualization() {
                             Loading...
                           </button>
                         )}
+                        {
+                          screenCapture === true && 
+                          <>
+                          <div
+                            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none m-auto"
+                           
+                          >
+                            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none h-56" style={{width:'400px'}}>
+                                <div className="relative p-6 flex-auto my-auto" style={{height:'100%'}}>
+                                  <p className="my-4 text-slate-500 text-lg leading-relaxed py-12">
+                                    Image is downloading..... 
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                        </>
+                        }
                         {screenCaptureConfirmation && (
                           <ConfirmDownload
                             screenCaptureFunction={setToFalseAfterScreenCapture}
