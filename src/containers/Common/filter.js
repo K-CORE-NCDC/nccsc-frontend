@@ -33,16 +33,12 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
   }, []);
 
   useEffect(() => {
-    // console.log("a",selected);
-    // console.log("b",selectState);
     drawTags();
     leftSide();
   }, [selected, selectState]);
 
   useEffect(() => {
-    // console.log("filter state ------------->",filterState);
     if (Object.keys(filterState).length !== 0) {
-      // console.log("filterstate",filterState);
       setSelectState({ ...filterState });
       switchButton();
     }
@@ -53,11 +49,11 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
 
     if (Object.keys(filtersUi).length > 0) {
       Object.keys(filtersUi).forEach((e) => {
-        console.log("filtersUi",filtersUi);
+        // console.log("filtersUi",filtersUi);
         let tmp = [];
         if (filtersUi[e].length > 0) {
           filtersUi[e].forEach((sub) => {
-            console.log("sub",sub.key, sub.value);
+            // console.log("sub",sub.key, sub.value);
             tmp.push(
               <span
                 key={`${sub.key}-${Math.random()}`}
@@ -82,112 +78,8 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
     setFilterHtml(html);
   }, [filtersUi]);
 
-  let icon_type = {
-    "Basic/Diagnostic Information": (
-      <UserCircleIcon className="h-8 w-8 inline text-main-blue" />
-    ),
-    "Patient Health Information": (
-      <DocumentAddIcon className="h-8 w-8 inline text-main-blue" />
-    ),
-    "Clinical Information": (
-      <BeakerIcon className="h-8 w-8 inline text-main-blue" />
-    ),
-    "Follow-up Observation": (
-      <SearchIcon className="h-8 w-8 inline text-main-blue" />
-    ),
-  };
-
-  let chart_names = {
-    "Age Of Daignosis": "Age of Diagnosis (20-40 Y)",
-    "Body Mass Index": "Body Mass Index (15.82-36.33 kg/㎡)",
-    "First Menstrual Age": "First Menstrual Age (10-17 Y)",
-    "Duration of Breastfeeding": "Duration of Breastfeeding (1-24 M)",
-    "Ki-67 Index": "Ki-67 Index(1-95 %)",
-    "Time until relapse is confirmed":
-      "Time until relapse is confirmed (1-16 Y)",
-  };
-
-  let checkbox = (d) => {
-    let check = false;
-    if (d.id in selectState) {
-      check = true;
-    }
-    return (
-      <div key={d.id} className="px-10">
-        <label className="inline-flex items-center">
-          <input
-            type="checkbox"
-            id={d.id}
-            name={d.name}
-            className="form-checkbox"
-            value={d.value}
-            defaultChecked={check}
-            onChange={(e) => selectFn(e)}
-          />
-          <span className="ml-2 lg:text-2xl sm:text-xl md:text-xl">
-            <FormattedMessage id={d.value} defaultMessage={d.value} />
-          </span>
-        </label>
-      </div>
-    );
-  };
-
-  let inputbox = (d) => {
-    return (
-      <div
-        key={d.id}
-        className="grid grid-cols-5  rounded mx-10 border border-b-color"
-      >
-        <div className="col-span-2">
-          <input
-            type="text"
-            id={"from_" + d.id}
-            className="h-full shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight"
-            value={selectState["from_" + d.id]}
-            onChange={(e) => selectFn(e)}
-            placeholder=""
-          />
-        </div>
-        <div className="col-span-1">
-          <div className="box-border border-r border-l border-b-color bg-gray-100 h-full w-30  px-3 mb-6 text-center">
-            <b>-</b>
-          </div>
-        </div>
-        <div className="col-span-2">
-          <input
-            type="text"
-            id={"to_" + d.id}
-            className="h-full  shadow appearance-none w-full py-2 px-3 text-gray-700 leading-tight"
-            value={selectState["to_" + d.id]}
-            onChange={(e) => selectFn(e)}
-            placeholder=""
-          />
-        </div>
-      </div>
-    );
-  };
-
-  const selectFn = (e) => {
-    let val = e.target.value;
-    let id = e.target.id;
-    console.log("val",val,"id",id);
-
-    let tmp = selectState;
-    if (e.target.type === "text") {
-      tmp[id] = val;
-    } else {
-      if (id in tmp) {
-        delete tmp[id];
-        document.getElementById(id).checked = false;
-      } else {
-        tmp[id] = val;
-        document.getElementById(id).checked = true;
-      }
-    }
-    setSelectState({...tmp});
-  };
-
-  const leftSide = () => {
+   // for rendering the filter // inputs and checkboxes all html store in state
+   const leftSide = () => {
     // console.log("filter ");
     let filterBoxes = inputJson.filterBoxes;
     let html = [];
@@ -296,17 +188,157 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
     }));
   };
 
+  let icon_type = {
+    "Basic/Diagnostic Information": (
+      <UserCircleIcon className="h-8 w-8 inline text-main-blue" />
+    ),
+    "Patient Health Information": (
+      <DocumentAddIcon className="h-8 w-8 inline text-main-blue" />
+    ),
+    "Clinical Information": (
+      <BeakerIcon className="h-8 w-8 inline text-main-blue" />
+    ),
+    "Follow-up Observation": (
+      <SearchIcon className="h-8 w-8 inline text-main-blue" />
+    ),
+  };
+
+  let chart_names = {
+    "Age Of Daignosis": "Age of Diagnosis (20-40 Y)",
+    "Body Mass Index": "Body Mass Index (15.82-36.33 kg/㎡)",
+    "First Menstrual Age": "First Menstrual Age (10-17 Y)",
+    "Duration of Breastfeeding": "Duration of Breastfeeding (1-24 M)",
+    "Ki-67 Index": "Ki-67 Index(1-95 %)",
+    "Time until relapse is confirmed":
+      "Time until relapse is confirmed (1-16 Y)",
+  };
+
+
+  let checkbox = (d) => {
+    let check = false;
+    if (d.id in selectState) {
+      check = true;
+    }
+    return (
+      <div key={d.id} className="px-10">
+        <label className="inline-flex items-center">
+          <input
+            type="checkbox"
+            id={d.id}
+            name={d.name}
+            className="form-checkbox"
+            value={d.value}
+            defaultChecked={check}
+            onChange={(e) => selectFn(e)}
+          />
+          <span className="ml-2 lg:text-2xl sm:text-xl md:text-xl">
+            <FormattedMessage id={d.value} defaultMessage={d.value} />
+          </span>
+        </label>
+      </div>
+    );
+  };
+
+  let inputbox = (d) => {
+    return (
+      <div
+        key={d.id}
+        className="grid grid-cols-5  rounded mx-10 border border-b-color"
+      >
+        <div className="col-span-2">
+          <input
+            type="text"
+            id={"from_" + d.id}
+            className="h-full shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight"
+            value={selectState["from_" + d.id]}
+            onChange={(e) => selectFn(e)}
+            placeholder=""
+          />
+        </div>
+        <div className="col-span-1">
+          <div className="box-border border-r border-l border-b-color bg-gray-100 h-full w-30  px-3 mb-6 text-center">
+            <b>-</b>
+          </div>
+        </div>
+        <div className="col-span-2">
+          <input
+            type="text"
+            id={"to_" + d.id}
+            className="h-full  shadow appearance-none w-full py-2 px-3 text-gray-700 leading-tight"
+            value={selectState["to_" + d.id]}
+            onChange={(e) => selectFn(e)}
+            placeholder=""
+          />
+        </div>
+      </div>
+    );
+  };
+
+  const selectFn = (e) => {
+    let val = e.target.value;
+    let id = e.target.id;
+    let tmp = selectState;
+    if (e.target.type === "text") {
+      tmp[id] = val;
+    } else {
+      if (id in tmp) {
+        delete tmp[id];
+        document.getElementById(id).checked = false;
+      } else {
+        tmp[id] = val;
+        document.getElementById(id).checked = true;
+      }
+    }
+    setSelectState({...tmp});
+  };
+
+  const checkboxselectFn = (e) => {
+    let id = e.id
+    let tmp = selectState;
+    if (e.type === "text") {
+      if(id in tmp){
+        delete tmp[id] ;
+      }
+      e.value =''
+    }
+    else {
+      if (id in tmp) {
+        delete tmp[id];
+      } 
+      e.checked = false;
+    }
+    console.log("main temp",tmp);
+    // setSelectState({...tmp});
+  };
+
+
   const checkBoxFn = (event, id) => {
+    // console.log("id",id);
+    let child_id = 'child_'+id
+    // console.log("cildid",child_id);
+
+    let child_did = document.getElementById(child_id);
+    const inputElements = child_did.querySelectorAll("input, select, checkbox, textarea")
+    for (let e in inputElements){
+      if(inputElements[e].id){
+        // console.log(inputElements[e]);
+        // console.log(inputElements[e],inputElements[e].id,inputElements[e].value, inputElements[e].type);
+        checkboxselectFn((inputElements[e]))
+        // selectFn(inputElements[e])
+      }
+    }
+    // console.log("selectState",selectState)
+
     var did = document.getElementById(id);
-    console.log("did------>",did.getAttribute("data-parent"));
+    // console.log("did------>",did.getAttribute("data-parent"));
+    
     if(did.hasAttribute("id")){
       let name = did.getAttribute("id")
-      console.log(name);
+      // console.log(name);
       let names = name.split("_")
       let key,value
       if(names[1]){
          key = did.getAttribute("data-parent")
-         console.log("sssssssssss",key);
       }
       if(names[2]){
          value = names[2];
@@ -325,23 +357,28 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
           Object.keys(childElements).forEach((childelm, c) => {
             if(item === key &&  c.toString() === value){
               MainKey = childelm
-              console.log("MainKey",MainKey);
+              // console.log("MainKey",MainKey);
             }
           })
         }
       })
 
       let temp =  {...filtersUi}
-      console.log("temp",temp[key]);
-      
-      for(let i = 0; i < temp[key].length; i++){
-        if(temp[key][i]['key'].indexOf(MainKey)>-1){
-          console.log(temp[key][i]['key']);
-          temp[key].splice(i,1)
-        }
-      }   
+      // console.log("temp",temp[key]);
+      if(temp[key]){
+
+        for(let i = 0; i < temp[key].length; i++){
+          if(temp[key][i]['key'].indexOf(MainKey)>-1){
+            console.log(temp[key][i]['key']);
+            temp[key].splice(i,1)
+          }
+        }   
+      }
       setFiltersUi(temp)
     }
+
+
+
 
     
     var checkbox_elm = document.getElementById(id).checked;
@@ -454,15 +491,15 @@ export default function Filter({ parentCallback, filterState, set_screen }) {
       delete tmp[il.id];
       il.value = "";
     });
-    console.log("tmp is culprit",tmp);
+    // console.log("tmp is culprit",tmp);
     // setSelectState(tmp);
     setSelectState({'filterCondition':'and'});
     parentCallback("");
     setFilterHtml([])
-    let abcd = {...filtersUi}
-    console.log("abcd",abcd);
-    abcd['Basic/Diagnostic Information'] = []
-    setFiltersUi(abcd)
+    // let abcd = {...filtersUi}
+    // console.log("abcd",abcd);
+    // abcd['Basic/Diagnostic Information'] = []
+    // setFiltersUi(abcd)
   };
 
   const changeFilterCondition = (e)=>{
