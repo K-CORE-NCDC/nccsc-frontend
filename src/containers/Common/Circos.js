@@ -13,7 +13,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
   })
   const selectedGeneColor = "#000"
   const [state, setState] = useState({"cytobands":[],'genes':[],'GRCh37':[]});
-  const [loader, setLoader] = useState(false)
+  // const [loader, setLoader] = useState(false)
 
   const staticPositionValues =  {
     "chr1": 249250621,
@@ -106,7 +106,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
       let strchr = 0
       let iter = 1
       let dna_mutation_data = api_data['dna_mutation']
-      for (var i = 0; i < dna_mutation_data.length; i++) {
+      for (let i = 0; i < dna_mutation_data.length; i++) {
         // let position = (parseInt(dna_mutation_data[i].start) + parseInt(dna_mutation_data[i].end)) / 2
         const startPos = staticPositionValues[dna_mutation_data[i].chromosome]
         let position = Math.floor((Math.random() * startPos))
@@ -132,7 +132,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
       let strchr = 0
       let iter = 1
       let dna_methylation_data = api_data['dna_methylation']
-      for (var i = 0; i < dna_methylation_data.length; i++) {
+      for (let i = 0; i < dna_methylation_data.length; i++) {
         // let position = (parseInt(dna_methylation_data[i].start) + parseInt(dna_methylation_data[i].end)) / 2
         // position < 150000000 ? position += 150000000 : position = position
         const startPos = staticPositionValues[dna_methylation_data[i].chromosome]
@@ -155,7 +155,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
     var rna_expression_up = [...all_chr];
     if ('rna_expression' in api_data){
       let rna_expression_data = api_data['rna_expression']
-      for (var i = 0; i < rna_expression_data.length; i++) {
+      for (let i = 0; i < rna_expression_data.length; i++) {
         // let position = (parseInt(rna_expression_data[i].start) + parseInt(rna_expression_data[i].end)) / 2
         // position < 150000000 ? position += 150000000 : position = position
         const startPos = staticPositionValues[rna_expression_data[i].chromosome]
@@ -173,7 +173,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
     var global_proteome_up = [...all_chr];
     if ('global_proteome' in api_data){
       let global_proteome_data = api_data['global_proteome']
-      for (var i = 0; i < global_proteome_data.length; i++) {
+      for (let i = 0; i < global_proteome_data.length; i++) {
         // let position = (parseInt(global_proteome_data[i].start) + parseInt(global_proteome_data[i].end)) / 2
         // position < 150000000 ? position += 150000000 : position = position
         const startPos = staticPositionValues[global_proteome_data[i].chromosome]
@@ -209,7 +209,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
     // }))
     if('cnv' in api_data){
       let cnv_data = api_data['cnv']
-      for (var i = 0; i < cnv_data.length; i++) {
+      for (let i = 0; i < cnv_data.length; i++) {
         // let position = (parseInt(global_proteome_data[i].start) + parseInt(global_proteome_data[i].end)) / 2
         // position < 150000000 ? position += 150000000 : position = position
         const startPos = staticPositionValues[cnv_data[i].chromosome]

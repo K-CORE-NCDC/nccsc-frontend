@@ -288,8 +288,8 @@ const BoxPlot = React.forwardRef(({view_type, box_data,chart_type, watermarkCss 
               .style('opacity', 0.9);
 
             tooltip.html(html)
-              .style('left', d.pageX + 'px')
-              .style('top', d.pageY - 28 + 'px');
+              .style('left', d.pageX - 550 + 'px')
+              .style('top', d.pageY - 150 + 'px');
           })
           .on('mouseout', () => {
             tooltip
@@ -372,15 +372,13 @@ const BoxPlot = React.forwardRef(({view_type, box_data,chart_type, watermarkCss 
             }
           })
           .on("mouseover", (d,i)=> {
-
-
             tooltip.transition()
               .duration(200)
               .style('opacity', 0.9);
 
             tooltip.html("Sample:<br/>"+BrstKeys[i.Sample]+"<br/>gene val<br/>"+i.Sepal_Length)
-              .style('left', d.pageX + 'px')
-              .style('top', d.pageY - 28 + 'px');
+              .style('left', d.pageX - 550 + 'px')
+              .style('top', d.pageY - 150 + 'px');
           })
           .on('mouseout', () => {
             tooltip
@@ -404,7 +402,6 @@ const BoxPlot = React.forwardRef(({view_type, box_data,chart_type, watermarkCss 
 
   useEffect(()=>{
     if(Object.keys(box_data).length !== 0){
-      console.log("box_data",box_data)
       drawChart(box_data)
     }
   },[box_data])

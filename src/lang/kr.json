@@ -28,6 +28,7 @@
     "Selected Gene": "유전자 선택",
     "Choose Filter group": "임상정보 선택",
     "Clinical_Filters": "임상정보",
+    "Clinical Attribute":"임상 속성",
     "Static_volcano": "지정그룹",
     "Dynamic_volcano": "사용자지정그룹",
     "Submit_volcano": "적용",

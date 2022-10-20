@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import { FormattedMessage } from 'react-intl';
-import Multiselect from 'multiselect-react-dropdown';
+// import Multiselect from 'multiselect-react-dropdown';
 
 const LabelCss = "block text-left text-blue-700-700 text-lg  font-bold mb-2"
 const checkBoxCss = "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 const numberInputBoxCss = "shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 
-let abc = ['a','b','c','d','e','f','g','h','i','j','k']
+// let abc = ['a','b','c','d','e','f','g','h','i','j','k']
 let filterChoices = [
     { 'type': 'static', 'name': 'sex', 'id': 'sex_cd', options: ['Male', 'Female'] },
     { 'type': 'number', 'name': 'Age Of Diaganosis', 'id': 'diag_age', 'input': 'number' },
@@ -127,7 +127,7 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
     const [filters, setFilters] = useState({})
     const [resetClicked, setResetClicked] = useState(false)
     const [isGroupFilterProp, setIsGroupFilterProp] = useState(false)
-    const [filterType,setFilterType] = useState('transcriptome')
+    // const [filterType,setFilterType] = useState('transcriptome')
     const preDefienedGroups1 = {
         diag_age: [
             { label: "21-35", from: 21, to: 35 },
@@ -362,7 +362,7 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
         <div className="m-1 bg-gray-100">
             <div className="p-1 py-3 px-2 col-span-2">
                 <div className="block text-left text-blue-700-700 text-lg  font-bold mb-2">
-                    <FormattedMessage id="Clinical Filters" defaultMessage='Clinical Attribute' />
+                    <FormattedMessage id="Clinical Attribute" defaultMessage='Clinical Attribute' />
                 </div>
                 {((resetClicked === true) || (isGroupFilterProp === false)) && <select
                     onChange={filterTypeDropdownSelection}
@@ -601,7 +601,7 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
                 )
 
             case "number":
-                if(viz_type==='volcono'){
+                if(viz_type==='volcono' || viz_type==='fusion' ){
                     return (
                         <>
                         <div key={`${compCase}-1${Math.random()}`} className="mb-4">
@@ -829,7 +829,7 @@ const GroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
         <div className="m-1 bg-gray-100">
             <div className="p-1 py-3 px-2 col-span-2">
                 <div className="block text-left text-blue-700-700 text-lg  font-bold mb-2">
-                    <FormattedMessage id="Clinical Filters" defaultMessage='Clinical Filters' />
+                    <FormattedMessage id="Clinical Attribute" defaultMessage='Clinical Attribute' />
                 </div>
                 <select
                     defaultValue={selectDefaultValue}
