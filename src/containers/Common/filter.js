@@ -7,16 +7,27 @@ import {
   DocumentAddIcon,
 } from "@heroicons/react/outline";
 import inputJson from "./data";
-import { useSelector } from "react-redux";
 // import filterBoxes from './data'
 import { FormattedMessage } from "react-intl";
+import {
+  getUserDefinedFilter
+} from "../../actions/api_actions";
+import { useSelector, useDispatch } from "react-redux";
+
+
+
 
 export default function Filter({ parentCallback, filterState, set_screen,project_id }) {
+  const dispatch = useDispatch();
   const [state, setState] = useState({ html: [] });
   const [selectState, setSelectState] = useState({ filterCondition: "and" });
   const [selected, setSelected] = useState("Basic/Diagnostic Information");
   const [filtersUi, setFiltersUi] = useState({});
   const [filterHtml, setFilterHtml] = useState([]);
+  const userDefinedFilter = useSelector((data) => data.dataVisualizationReducer.userDefinedFilter);
+  const [filterJson,setFilterJson] = useState({})
+
+  
   const totalCount = useSelector((state) => {
     if ("Keys" in state.dataVisualizationReducer) {
       return Object.keys(state.dataVisualizationReducer.Keys).length || 0;
@@ -27,18 +38,48 @@ export default function Filter({ parentCallback, filterState, set_screen,project
   const [totalCountS] = useState(totalCount);
   const [filterCondition, setFilterCondition] = useState("and");
 
+  useEffect(()=>{
+    dispatch(getUserDefinedFilter({
+      "project_id":project_id
+    })); 
+  },[project_id])
+
+  useEffect(()=>{
+    if(project_id!==undefined){
+      if(userDefinedFilter && Object.keys(userDefinedFilter).length > 0){
+        setFilterJson(userDefinedFilter['filterJson'])
+      }}
+      else{
+        let filterBoxes = inputJson.filterBoxes;
+        setFilterJson(filterBoxes)
+      }
+  },[project_id,userDefinedFilter])
   useEffect(() => {
     if(project_id!==undefined){
-
+      if(userDefinedFilter && Object.keys(userDefinedFilter).length > 0){
+        leftSide(filterJson);
+        drawTags(filterJson);
+      }
     }else{
-      leftSide();
+      // let filterBoxes = inputJson.filterBoxes;
+      leftSide(filterJson);
+      drawTags(filterJson)
     }
-  }, []);
+  }, [userDefinedFilter,filterJson]);
 
   useEffect(() => {
-    drawTags();
-    leftSide();
-  }, [selected, selectState]);
+    if(project_id!==undefined){
+      if(userDefinedFilter && Object.keys(userDefinedFilter).length > 0){
+        leftSide(filterJson);
+        drawTags(filterJson);
+      }
+    }else{
+      // let filterBoxes = inputJson.filterBoxes;
+      leftSide(filterJson);
+      drawTags(filterJson)
+    }
+    // leftSide();
+  }, [selected, selectState,filterJson]);
 
   useEffect(() => {
     if (Object.keys(filterState).length !== 0) {
@@ -82,9 +123,9 @@ export default function Filter({ parentCallback, filterState, set_screen,project
   }, [filtersUi]);
 
   // for rendering the filter // inputs and checkboxes all html store in state
-  const leftSide = () => {
-    // console.log("filter ");
-    let filterBoxes = inputJson.filterBoxes;
+  const leftSide = (filterBoxes) => {
+    // let filterBoxes = inputJson.filterBoxes;
+
     let html = [];
     Object.keys(filterBoxes).forEach((item, k) => {
       let t = [];
@@ -287,8 +328,12 @@ export default function Filter({ parentCallback, filterState, set_screen,project
     let val = e.target.value;
     let id = e.target.id;
     let tmp = selectState;
-    let ids = id.split('_')
-    let m_id = ids[1]
+
+    // let ids = id.split('_')
+    // let m_id = ids[1]
+
+    var index = id.indexOf("_")
+    var m_id = id.substr(index + 1);
     if (e.target.type === "number") {
       let from_0 = document.getElementById(`from_${m_id}`);
       let from_ = from_0 ? +(from_0.value) : from_0.min;
@@ -350,6 +395,8 @@ export default function Filter({ parentCallback, filterState, set_screen,project
     let id = e.id;
     let tmp = selectState;
     if (e.type === "number") {
+      e.classList.remove('border-2')
+      e.classList.remove('border-red-400')
       if (id in tmp) {
         delete tmp[id];
       }
@@ -461,10 +508,10 @@ export default function Filter({ parentCallback, filterState, set_screen,project
     }
   };
 
-  const drawTags = () => {
-    let filterBoxes = inputJson.filterBoxes;
-    let tx = ["aod", "bmi", "fma", "dob", "ki67", "turc"];
-    console.log("selectState 11111", selectState);
+  const drawTags = (filterBoxes) => {
+    // let filterBoxes = inputJson.filterBoxes;
+    let tx = ["aod", "bmi", "fma", "dob", "ki67", "turc",];
+    // console.log("selectState 11111", selectState);
     if (Object.keys(selectState).length > 0) {
       let filterSelectedHtml = {};
       Object.keys(filterBoxes).forEach((header) => {
@@ -511,11 +558,11 @@ export default function Filter({ parentCallback, filterState, set_screen,project
 
   const sendFilter = () => {
     parentCallback(selectState);
-    drawTags();
+    drawTags(filterJson);
   };
 
   const reset = () => {
-    console.log("reset called", selectState);
+    // console.log("reset called", selectState);
     let toggle_check = [
       "Basic/Diagnostic Information",
       "Patient Health Information",
@@ -655,7 +702,7 @@ export default function Filter({ parentCallback, filterState, set_screen,project
         {filterHtml.length && totalCount !== totalCountS ? (
           <>
             <div className="mb-5">
-              <h6>Total Number of Samples : {totalCountS}</h6>
+              <h6>Total Number of Samples : 126</h6>
             </div>
             {filterHtml}
             <div className="mt-5">
