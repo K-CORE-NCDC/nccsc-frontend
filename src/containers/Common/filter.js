@@ -7,16 +7,27 @@ import {
   DocumentAddIcon,
 } from "@heroicons/react/outline";
 import inputJson from "./data";
-import { useSelector } from "react-redux";
 // import filterBoxes from './data'
 import { FormattedMessage } from "react-intl";
+import {
+  getUserDefinedFilter
+} from "../../actions/api_actions";
+import { useSelector, useDispatch } from "react-redux";
+
+
+
 
 export default function Filter({ parentCallback, filterState, set_screen,project_id }) {
+  const dispatch = useDispatch();
   const [state, setState] = useState({ html: [] });
   const [selectState, setSelectState] = useState({'filterCondition':'and'});
   const [selected, setSelected] = useState("Basic/Diagnostic Information");
   const [filtersUi, setFiltersUi] = useState({});
   const [filterHtml, setFilterHtml] = useState([]);
+  const userDefinedFilter = useSelector((data) => data.dataVisualizationReducer.userDefinedFilter);
+  const [filterJson,setFilterJson] = useState({})
+
+  
   const totalCount = useSelector((state) => {
     if ('Keys' in state.dataVisualizationReducer){
       return Object.keys(state.dataVisualizationReducer.Keys).length || 0;
@@ -27,20 +38,48 @@ export default function Filter({ parentCallback, filterState, set_screen,project
   const [totalCountS] = useState(totalCount);
   const [filterCondition, setFilterCondition] = useState("and");
 
+  useEffect(()=>{
+    dispatch(getUserDefinedFilter({
+      "project_id":project_id
+    })); 
+  },[project_id])
+
+  useEffect(()=>{
+    if(project_id!==undefined){
+      if(userDefinedFilter && Object.keys(userDefinedFilter).length > 0){
+        setFilterJson(userDefinedFilter['filterJson'])
+      }}
+      else{
+        let filterBoxes = inputJson.filterBoxes;
+        setFilterJson(filterBoxes)
+      }
+  },[project_id,userDefinedFilter])
   useEffect(() => {
     if(project_id!==undefined){
-
+      if(userDefinedFilter && Object.keys(userDefinedFilter).length > 0){
+        leftSide(filterJson);
+        drawTags(filterJson);
+      }
     }else{
-      leftSide();
+      // let filterBoxes = inputJson.filterBoxes;
+      leftSide(filterJson);
+      drawTags(filterJson)
     }
-  }, []);
+  }, [userDefinedFilter,filterJson]);
 
   useEffect(() => {
-    // console.log("a",selected);
-    // console.log("b",selectState);
-    drawTags();
-    leftSide();
-  }, [selected, selectState]);
+    if(project_id!==undefined){
+      if(userDefinedFilter && Object.keys(userDefinedFilter).length > 0){
+        leftSide(filterJson);
+        drawTags(filterJson);
+      }
+    }else{
+      // let filterBoxes = inputJson.filterBoxes;
+      leftSide(filterJson);
+      drawTags(filterJson)
+    }
+    // leftSide();
+  }, [selected, selectState,filterJson]);
 
   useEffect(() => {
     // console.log("filter state ------------->",filterState);
@@ -85,114 +124,10 @@ export default function Filter({ parentCallback, filterState, set_screen,project
     setFilterHtml(html);
   }, [filtersUi]);
 
-  let icon_type = {
-    "Basic/Diagnostic Information": (
-      <UserCircleIcon className="h-8 w-8 inline text-main-blue" />
-    ),
-    "Patient Health Information": (
-      <DocumentAddIcon className="h-8 w-8 inline text-main-blue" />
-    ),
-    "Clinical Information": (
-      <BeakerIcon className="h-8 w-8 inline text-main-blue" />
-    ),
-    "Follow-up Observation": (
-      <SearchIcon className="h-8 w-8 inline text-main-blue" />
-    ),
-  };
+  // for rendering the filter // inputs and checkboxes all html store in state
+  const leftSide = (filterBoxes) => {
+    // let filterBoxes = inputJson.filterBoxes;
 
-  let chart_names = {
-    "Age Of Daignosis": "Age of Diagnosis (20-40 Y)",
-    "Body Mass Index": "Body Mass Index (15.82-36.33 kg/㎡)",
-    "First Menstrual Age": "First Menstrual Age (10-17 Y)",
-    "Duration of Breastfeeding": "Duration of Breastfeeding (1-24 M)",
-    "Ki-67 Index": "Ki-67 Index(1-95 %)",
-    "Time until relapse is confirmed":
-      "Time until relapse is confirmed (1-16 Y)",
-  };
-
-  let checkbox = (d) => {
-    let check = false;
-    if (d.id in selectState) {
-      check = true;
-    }
-    return (
-      <div key={d.id} className="px-10">
-        <label className="inline-flex items-center">
-          <input
-            type="checkbox"
-            id={d.id}
-            name={d.name}
-            className="form-checkbox"
-            value={d.value}
-            defaultChecked={check}
-            onChange={(e) => selectFn(e)}
-          />
-          <span className="ml-2 lg:text-2xl sm:text-xl md:text-xl">
-            <FormattedMessage id={d.value} defaultMessage={d.value} />
-          </span>
-        </label>
-      </div>
-    );
-  };
-
-  let inputbox = (d) => {
-    return (
-      <div
-        key={d.id}
-        className="grid grid-cols-5  rounded mx-10 border border-b-color"
-      >
-        <div className="col-span-2">
-          <input
-            type="text"
-            id={"from_" + d.id}
-            className="h-full shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight"
-            value={selectState["from_" + d.id]}
-            onChange={(e) => selectFn(e)}
-            placeholder=""
-          />
-        </div>
-        <div className="col-span-1">
-          <div className="box-border border-r border-l border-b-color bg-gray-100 h-full w-30  px-3 mb-6 text-center">
-            <b>-</b>
-          </div>
-        </div>
-        <div className="col-span-2">
-          <input
-            type="text"
-            id={"to_" + d.id}
-            className="h-full  shadow appearance-none w-full py-2 px-3 text-gray-700 leading-tight"
-            value={selectState["to_" + d.id]}
-            onChange={(e) => selectFn(e)}
-            placeholder=""
-          />
-        </div>
-      </div>
-    );
-  };
-
-  const selectFn = (e) => {
-    let val = e.target.value;
-    let id = e.target.id;
-    console.log("val",val,"id",id);
-
-    let tmp = selectState;
-    if (e.target.type === "text") {
-      tmp[id] = val;
-    } else {
-      if (id in tmp) {
-        delete tmp[id];
-        document.getElementById(id).checked = false;
-      } else {
-        tmp[id] = val;
-        document.getElementById(id).checked = true;
-      }
-    }
-    setSelectState({...tmp});
-  };
-
-  const leftSide = () => {
-    // console.log("filter ");
-    let filterBoxes = inputJson.filterBoxes;
     let html = [];
     Object.keys(filterBoxes).forEach((item, k) => {
       let t = [];
@@ -299,6 +234,186 @@ export default function Filter({ parentCallback, filterState, set_screen,project
     }));
   };
 
+  let icon_type = {
+    "Basic/Diagnostic Information": (
+      <UserCircleIcon className="h-8 w-8 inline text-main-blue" />
+    ),
+    "Patient Health Information": (
+      <DocumentAddIcon className="h-8 w-8 inline text-main-blue" />
+    ),
+    "Clinical Information": (
+      <BeakerIcon className="h-8 w-8 inline text-main-blue" />
+    ),
+    "Follow-up Observation": (
+      <SearchIcon className="h-8 w-8 inline text-main-blue" />
+    ),
+  };
+
+  let chart_names = {
+    "Age Of Daignosis": "Age of Diagnosis (20-40 Y)",
+    "Body Mass Index": "Body Mass Index (15.82-36.33 kg/㎡)",
+    "First Menstrual Age": "First Menstrual Age (10-17 Y)",
+    "Duration of Breastfeeding": "Duration of Breastfeeding (1-24 M)",
+    "Ki-67 Index": "Ki-67 Index(1-95 %)",
+    "Time until relapse is confirmed":
+      "Time until relapse is confirmed (1-16 Y)",
+  };
+
+  let checkbox = (d) => {
+    let check = false;
+    if (d.id in selectState) {
+      check = true;
+    }
+    return (
+      <div key={d.id} className="px-10">
+        <label className="inline-flex items-center">
+          <input
+            type="checkbox"
+            id={d.id}
+            name={d.name}
+            className="form-checkbox"
+            value={d.value}
+            defaultChecked={check}
+            onChange={(e) => selectFn(e)}
+          />
+          <span className="ml-2 lg:text-2xl sm:text-xl md:text-xl">
+            <FormattedMessage id={d.value} defaultMessage={d.value} />
+          </span>
+        </label>
+      </div>
+    );
+  };
+
+  let inputbox = (d) => {
+    // console.log("d",d);
+    return (
+      <div
+        key={d.id}
+        className="grid grid-cols-5  rounded mx-10 border border-b-color"
+      >
+        <div className="col-span-2">
+          <input
+            type="number"
+            id={"from_" + d.id}
+            className="h-full shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight"
+            onKeyDown={(e) =>["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
+            value={selectState["from_" + d.id]}
+            onChange={(e) => selectFn(e)}
+            placeholder={d.min}
+            min={d.min}
+            max={d.max}
+          />
+        </div>
+        <div className="col-span-1">
+          <div className="box-border border-r border-l border-b-color bg-gray-100 h-full w-30  px-3 mb-6 text-center">
+            <b>-</b>
+          </div>
+        </div>
+        <div className="col-span-2">
+          <input
+            type="number"
+            id={"to_" + d.id}
+            className="h-full  shadow appearance-none w-full py-2 px-3 text-gray-700 leading-tight"
+            onKeyDown={(e) =>["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
+            value={selectState["to_" + d.id]}
+            onChange={(e) => selectFn(e)}
+            placeholder={d.max}
+            min={d.min}
+            max={d.max}
+          />
+        </div>
+      </div>
+    );
+  };
+
+
+  const selectFn = (e) => {
+    let val = e.target.value;
+    let id = e.target.id;
+    let tmp = selectState;
+
+    // let ids = id.split('_')
+    // let m_id = ids[1]
+
+    var index = id.indexOf("_")
+    var m_id = id.substr(index + 1);
+    if (e.target.type === "number") {
+      let from_0 = document.getElementById(`from_${m_id}`);
+      let from_ = from_0 ? +(from_0.value) : from_0.min;
+      let min_value = from_0 ? +(from_0.min) : 0
+      let to_0 = document.getElementById(`to_${m_id}`);
+      let to_ = to_0 ? +(to_0.value) : from_0.max ;
+      let max_value = from_0 ? +(from_0.max) : 0
+
+      let checked = true
+
+      if(from_ > max_value || from_ < min_value ||  from_ > to_ ){
+        delete tmp[`from_${m_id}`];
+        delete tmp[`to_${m_id}`];
+        setSelectState(tmp)
+        checked = false
+
+      }
+      else if(to_ >max_value || to_ < min_value || to_ < from_){
+        delete tmp[`from_${m_id}`];
+        delete tmp[`to_${m_id}`];
+        setSelectState(tmp)
+        checked = false
+      }
+      else{
+        tmp[`from_${m_id}`] = from_;
+        tmp[`to_${m_id}`] = to_;
+        setSelectState(tmp)
+      }
+
+      if (checked) {
+        from_0.classList.remove('border-2')
+        from_0.classList.remove('border-red-400')
+        to_0.classList.remove('border-2')
+        to_0.classList.remove('border-red-400')
+       
+      } 
+      else {
+        from_0.classList.add('border-2')
+        from_0.classList.add('border-red-400')
+        to_0.classList.add('border-2')
+        to_0.classList.add('border-red-400')
+        delete tmp[`from_${m_id}`];
+        delete tmp[`to_${m_id}`];
+        setSelectState(tmp)
+      }
+    } else {
+      if (id in tmp) {
+        delete tmp[id];
+        document.getElementById(id).checked = false;
+      } else {
+        tmp[id] = val;
+        document.getElementById(id).checked = true;
+      }
+    }
+    setSelectState({ ...tmp });
+  };
+
+  const checkboxselectFn = (e) => {
+    let id = e.id;
+    let tmp = selectState;
+    if (e.type === "number") {
+      e.classList.remove('border-2')
+      e.classList.remove('border-red-400')
+      if (id in tmp) {
+        delete tmp[id];
+      }
+      e.value = "";
+    } else {
+      if (id in tmp) {
+        delete tmp[id];
+      }
+      e.checked = false;
+    }
+    // console.log("main temp", tmp);
+    // setSelectState({...tmp});
+  };
+
   const checkBoxFn = (event, id) => {
     var did = document.getElementById(id);
     console.log("did------>",did.getAttribute("data-parent"));
@@ -378,10 +493,10 @@ export default function Filter({ parentCallback, filterState, set_screen,project
     }
   };
 
-  const drawTags = () => {
-    let filterBoxes = inputJson.filterBoxes;
-    let tx = ["aod", "bmi", "fma", "dob", "ki67", "turc"];
-    console.log("selectState 11111",selectState);
+  const drawTags = (filterBoxes) => {
+    // let filterBoxes = inputJson.filterBoxes;
+    let tx = ["aod", "bmi", "fma", "dob", "ki67", "turc",];
+    // console.log("selectState 11111", selectState);
     if (Object.keys(selectState).length > 0) {
       let filterSelectedHtml = {};
       Object.keys(filterBoxes).forEach((header) => {
@@ -428,11 +543,11 @@ export default function Filter({ parentCallback, filterState, set_screen,project
 
   const sendFilter = () => {
     parentCallback(selectState);
-    drawTags();
+    drawTags(filterJson);
   };
 
   const reset = () => {
-    console.log("reset called",selectState);
+    // console.log("reset called", selectState);
     let toggle_check = [
       "Basic/Diagnostic Information",
       "Patient Health Information",
@@ -570,7 +685,7 @@ export default function Filter({ parentCallback, filterState, set_screen,project
         {filterHtml.length && totalCount !== totalCountS ? (
           <>
             <div className="mb-5">
-              <h6>Total Number of Samples : {totalCountS}</h6>
+              <h6>Total Number of Samples : 126</h6>
             </div>
             {filterHtml}
             <div className="mt-5">

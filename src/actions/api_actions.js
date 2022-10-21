@@ -1317,6 +1317,31 @@ export function fetchProjectTableData(data) {
   };
 }
 
+export function getUserDefinedFilter(data) {
+  return (dispatch) => {
+    //   dispatch({ type: homeConstants.DATA_SUMMARY });
+    let url = config.auth + "new-user-data-visualization_filter/";
+    dispatch({
+      type: userdataVisualization.USER_DEFINED_FILTER,
+      payload: {},
+    });
+    sendRequest(url, 'POST', data)
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: userdataVisualization.USER_DEFINED_FILTER,
+          payload: d["data"],
+        });
+      })
+      .catch((e) => {
+        dispatch({
+          type: userdataVisualization.USER_DEFINED_FILTER,
+          payload: {},
+        });
+      });
+  };
+}
+
 export function updateDownloadVisualizationPurpose(data) {
   return (dispatch) => {
     let url = config.auth + "download-capture-info/";

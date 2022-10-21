@@ -156,6 +156,11 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state, 
         userDataProjectTable: payload
       }
+    case userdataVisualization.USER_DEFINED_FILTER:
+      return {
+        ...state, 
+        userDefinedFilter: payload
+      }
     case userdataVisualization.UPDATE_DOWNLOAD_VISUALIZATION_PURPOSE:
       return {
         ...state, 
