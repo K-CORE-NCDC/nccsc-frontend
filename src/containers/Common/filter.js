@@ -13,15 +13,15 @@ import { FormattedMessage } from "react-intl";
 
 export default function Filter({ parentCallback, filterState, set_screen,project_id }) {
   const [state, setState] = useState({ html: [] });
-  const [selectState, setSelectState] = useState({ filterCondition: "and" });
+  const [selectState, setSelectState] = useState({'filterCondition':'and'});
   const [selected, setSelected] = useState("Basic/Diagnostic Information");
   const [filtersUi, setFiltersUi] = useState({});
   const [filterHtml, setFilterHtml] = useState([]);
   const totalCount = useSelector((state) => {
-    if ("Keys" in state.dataVisualizationReducer) {
+    if ('Keys' in state.dataVisualizationReducer){
       return Object.keys(state.dataVisualizationReducer.Keys).length || 0;
-    } else {
-      return 0;
+    }else{
+      return 0
     }
   });
   const [totalCountS] = useState(totalCount);
@@ -36,12 +36,16 @@ export default function Filter({ parentCallback, filterState, set_screen,project
   }, []);
 
   useEffect(() => {
+    // console.log("a",selected);
+    // console.log("b",selectState);
     drawTags();
     leftSide();
   }, [selected, selectState]);
 
   useEffect(() => {
+    // console.log("filter state ------------->",filterState);
     if (Object.keys(filterState).length !== 0) {
+      // console.log("filterstate",filterState);
       setSelectState({ ...filterState });
       switchButton();
     }
@@ -52,11 +56,11 @@ export default function Filter({ parentCallback, filterState, set_screen,project
 
     if (Object.keys(filtersUi).length > 0) {
       Object.keys(filtersUi).forEach((e) => {
-        // console.log("filtersUi",filtersUi);
+        console.log("filtersUi",filtersUi);
         let tmp = [];
         if (filtersUi[e].length > 0) {
           filtersUi[e].forEach((sub) => {
-            // console.log("sub",sub.key, sub.value);
+            console.log("sub",sub.key, sub.value);
             tmp.push(
               <span
                 key={`${sub.key}-${Math.random()}`}
@@ -77,11 +81,115 @@ export default function Filter({ parentCallback, filterState, set_screen,project
         }
       });
     }
-
+    
     setFilterHtml(html);
   }, [filtersUi]);
 
-  // for rendering the filter // inputs and checkboxes all html store in state
+  let icon_type = {
+    "Basic/Diagnostic Information": (
+      <UserCircleIcon className="h-8 w-8 inline text-main-blue" />
+    ),
+    "Patient Health Information": (
+      <DocumentAddIcon className="h-8 w-8 inline text-main-blue" />
+    ),
+    "Clinical Information": (
+      <BeakerIcon className="h-8 w-8 inline text-main-blue" />
+    ),
+    "Follow-up Observation": (
+      <SearchIcon className="h-8 w-8 inline text-main-blue" />
+    ),
+  };
+
+  let chart_names = {
+    "Age Of Daignosis": "Age of Diagnosis (20-40 Y)",
+    "Body Mass Index": "Body Mass Index (15.82-36.33 kg/㎡)",
+    "First Menstrual Age": "First Menstrual Age (10-17 Y)",
+    "Duration of Breastfeeding": "Duration of Breastfeeding (1-24 M)",
+    "Ki-67 Index": "Ki-67 Index(1-95 %)",
+    "Time until relapse is confirmed":
+      "Time until relapse is confirmed (1-16 Y)",
+  };
+
+  let checkbox = (d) => {
+    let check = false;
+    if (d.id in selectState) {
+      check = true;
+    }
+    return (
+      <div key={d.id} className="px-10">
+        <label className="inline-flex items-center">
+          <input
+            type="checkbox"
+            id={d.id}
+            name={d.name}
+            className="form-checkbox"
+            value={d.value}
+            defaultChecked={check}
+            onChange={(e) => selectFn(e)}
+          />
+          <span className="ml-2 lg:text-2xl sm:text-xl md:text-xl">
+            <FormattedMessage id={d.value} defaultMessage={d.value} />
+          </span>
+        </label>
+      </div>
+    );
+  };
+
+  let inputbox = (d) => {
+    return (
+      <div
+        key={d.id}
+        className="grid grid-cols-5  rounded mx-10 border border-b-color"
+      >
+        <div className="col-span-2">
+          <input
+            type="text"
+            id={"from_" + d.id}
+            className="h-full shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight"
+            value={selectState["from_" + d.id]}
+            onChange={(e) => selectFn(e)}
+            placeholder=""
+          />
+        </div>
+        <div className="col-span-1">
+          <div className="box-border border-r border-l border-b-color bg-gray-100 h-full w-30  px-3 mb-6 text-center">
+            <b>-</b>
+          </div>
+        </div>
+        <div className="col-span-2">
+          <input
+            type="text"
+            id={"to_" + d.id}
+            className="h-full  shadow appearance-none w-full py-2 px-3 text-gray-700 leading-tight"
+            value={selectState["to_" + d.id]}
+            onChange={(e) => selectFn(e)}
+            placeholder=""
+          />
+        </div>
+      </div>
+    );
+  };
+
+  const selectFn = (e) => {
+    let val = e.target.value;
+    let id = e.target.id;
+    console.log("val",val,"id",id);
+
+    let tmp = selectState;
+    if (e.target.type === "text") {
+      tmp[id] = val;
+    } else {
+      if (id in tmp) {
+        delete tmp[id];
+        document.getElementById(id).checked = false;
+      } else {
+        tmp[id] = val;
+        document.getElementById(id).checked = true;
+      }
+    }
+    setSelectState({...tmp});
+  };
+
   const leftSide = () => {
     // console.log("filter ");
     let filterBoxes = inputJson.filterBoxes;
@@ -184,252 +292,61 @@ export default function Filter({ parentCallback, filterState, set_screen,project
         </div>
       );
     });
+    // console.log("html 0000", html);
     setState((prevState) => ({
       ...prevState,
       html: html,
     }));
   };
 
-  let icon_type = {
-    "Basic/Diagnostic Information": (
-      <UserCircleIcon className="h-8 w-8 inline text-main-blue" />
-    ),
-    "Patient Health Information": (
-      <DocumentAddIcon className="h-8 w-8 inline text-main-blue" />
-    ),
-    "Clinical Information": (
-      <BeakerIcon className="h-8 w-8 inline text-main-blue" />
-    ),
-    "Follow-up Observation": (
-      <SearchIcon className="h-8 w-8 inline text-main-blue" />
-    ),
-  };
-
-  let chart_names = {
-    "Age Of Daignosis": "Age of Diagnosis (20-40 Y)",
-    "Body Mass Index": "Body Mass Index (15.82-36.33 kg/㎡)",
-    "First Menstrual Age": "First Menstrual Age (10-17 Y)",
-    "Duration of Breastfeeding": "Duration of Breastfeeding (1-24 M)",
-    "Ki-67 Index": "Ki-67 Index(1-95 %)",
-    "Time until relapse is confirmed":
-      "Time until relapse is confirmed (1-16 Y)",
-  };
-
-  let checkbox = (d) => {
-    let check = false;
-    if (d.id in selectState) {
-      check = true;
-    }
-    return (
-      <div key={d.id} className="px-10">
-        <label className="inline-flex items-center">
-          <input
-            type="checkbox"
-            id={d.id}
-            name={d.name}
-            className="form-checkbox"
-            value={d.value}
-            defaultChecked={check}
-            onChange={(e) => selectFn(e)}
-          />
-          <span className="ml-2 lg:text-2xl sm:text-xl md:text-xl">
-            <FormattedMessage id={d.value} defaultMessage={d.value} />
-          </span>
-        </label>
-      </div>
-    );
-  };
-
-  let inputbox = (d) => {
-    // console.log("d",d);
-    return (
-      <div
-        key={d.id}
-        className="grid grid-cols-5  rounded mx-10 border border-b-color"
-      >
-        <div className="col-span-2">
-          <input
-            type="number"
-            id={"from_" + d.id}
-            className="h-full shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight"
-            onKeyDown={(e) =>["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
-            value={selectState["from_" + d.id]}
-            onChange={(e) => selectFn(e)}
-            placeholder={d.min}
-            min={d.min}
-            max={d.max}
-          />
-        </div>
-        <div className="col-span-1">
-          <div className="box-border border-r border-l border-b-color bg-gray-100 h-full w-30  px-3 mb-6 text-center">
-            <b>-</b>
-          </div>
-        </div>
-        <div className="col-span-2">
-          <input
-            type="number"
-            id={"to_" + d.id}
-            className="h-full  shadow appearance-none w-full py-2 px-3 text-gray-700 leading-tight"
-            onKeyDown={(e) =>["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
-            value={selectState["to_" + d.id]}
-            onChange={(e) => selectFn(e)}
-            placeholder={d.max}
-            min={d.min}
-            max={d.max}
-          />
-        </div>
-      </div>
-    );
-  };
-
-
-  const selectFn = (e) => {
-    let val = e.target.value;
-    let id = e.target.id;
-    let tmp = selectState;
-    let ids = id.split('_')
-    let m_id = ids[1]
-    if (e.target.type === "number") {
-      let from_0 = document.getElementById(`from_${m_id}`);
-      let from_ = from_0 ? +(from_0.value) : from_0.min;
-      let min_value = from_0 ? +(from_0.min) : 0
-      let to_0 = document.getElementById(`to_${m_id}`);
-      let to_ = to_0 ? +(to_0.value) : from_0.max ;
-      let max_value = from_0 ? +(from_0.max) : 0
-
-      let checked = true
-
-      if(from_ > max_value || from_ < min_value ||  from_ > to_ ){
-        delete tmp[`from_${m_id}`];
-        delete tmp[`to_${m_id}`];
-        setSelectState(tmp)
-        checked = false
-
-      }
-      else if(to_ >max_value || to_ < min_value || to_ < from_){
-        delete tmp[`from_${m_id}`];
-        delete tmp[`to_${m_id}`];
-        setSelectState(tmp)
-        checked = false
-      }
-      else{
-        tmp[`from_${m_id}`] = from_;
-        tmp[`to_${m_id}`] = to_;
-        setSelectState(tmp)
-      }
-
-      if (checked) {
-        from_0.classList.remove('border-2')
-        from_0.classList.remove('border-red-400')
-        to_0.classList.remove('border-2')
-        to_0.classList.remove('border-red-400')
-       
-      } 
-      else {
-        from_0.classList.add('border-2')
-        from_0.classList.add('border-red-400')
-        to_0.classList.add('border-2')
-        to_0.classList.add('border-red-400')
-        delete tmp[`from_${m_id}`];
-        delete tmp[`to_${m_id}`];
-        setSelectState(tmp)
-      }
-    } else {
-      if (id in tmp) {
-        delete tmp[id];
-        document.getElementById(id).checked = false;
-      } else {
-        tmp[id] = val;
-        document.getElementById(id).checked = true;
-      }
-    }
-    setSelectState({ ...tmp });
-  };
-
-  const checkboxselectFn = (e) => {
-    let id = e.id;
-    let tmp = selectState;
-    if (e.type === "number") {
-      if (id in tmp) {
-        delete tmp[id];
-      }
-      e.value = "";
-    } else {
-      if (id in tmp) {
-        delete tmp[id];
-      }
-      e.checked = false;
-    }
-    // console.log("main temp", tmp);
-    // setSelectState({...tmp});
-  };
-
   const checkBoxFn = (event, id) => {
-    // console.log("id",id);
-    let child_id = "child_" + id;
-    // console.log("cildid",child_id);
-
-    let child_did = document.getElementById(child_id);
-    const inputElements = child_did.querySelectorAll(
-      "input, select, checkbox, textarea"
-    );
-    for (let e in inputElements) {
-      if (inputElements[e].id) {
-        // console.log(inputElements[e]);
-        // console.log(inputElements[e],inputElements[e].id,inputElements[e].value, inputElements[e].type);
-        checkboxselectFn(inputElements[e]);
-        // selectFn(inputElements[e])
-      }
-    }
-    // console.log("selectState",selectState)
-
     var did = document.getElementById(id);
-    // // console.log("did------>",did.getAttribute("data-parent"));
+    console.log("did------>",did.getAttribute("data-parent"));
+    if(did.hasAttribute("id")){
+      let name = did.getAttribute("id")
+      console.log(name);
+      let names = name.split("_")
+      let key,value
+      if(names[1]){
+         key = did.getAttribute("data-parent")
+         console.log("sssssssssss",key);
+      }
+      if(names[2]){
+         value = names[2];
+      }
+      let MainKey 
 
-    // if (did.hasAttribute("id")) {
-    //   let name = did.getAttribute("id");
-    //   // console.log(name);
-    //   let names = name.split("_");
-    //   let key, value;
-    //   if (names[1]) {
-    //     key = did.getAttribute("data-parent");
-    //   }
-    //   if (names[2]) {
-    //     value = names[2];
-    //   }
-    //   let MainKey;
+      let filterBoxes = inputJson.filterBoxes;
 
-      // let filterBoxes = inputJson.filterBoxes;
+      Object.keys(filterBoxes).forEach((item, k) => {
+        let t = [];
+        if (filterBoxes[item]) {
+          let childElements = filterBoxes[item];
+          // let itemr = item.split(" ")
+          // let finalkey = itemr.join('')
+          // console.log("childElemens->",finalkey, key);
+          Object.keys(childElements).forEach((childelm, c) => {
+            if(item === key &&  c.toString() === value){
+              MainKey = childelm
+              console.log("MainKey",MainKey);
+            }
+          })
+        }
+      })
 
-      // Object.keys(filterBoxes).forEach((item, k) => {
-      //   let t = [];
-      //   if (filterBoxes[item]) {
-      //     let childElements = filterBoxes[item];
-      //     // let itemr = item.split(" ")
-      //     // let finalkey = itemr.join('')
-      //     // console.log("childElemens->",finalkey, key);
-      //     Object.keys(childElements).forEach((childelm, c) => {
-      //       if (item === key && c.toString() === value) {
-      //         MainKey = childelm;
-      //         // console.log("MainKey",MainKey);
-      //       }
-      //     });
-      //   }
-      // });
+      let temp =  {...filtersUi}
+      console.log("temp",temp[key]);
+      
+      for(let i = 0; i < temp[key].length; i++){
+        if(temp[key][i]['key'].indexOf(MainKey)>-1){
+          console.log(temp[key][i]['key']);
+          temp[key].splice(i,1)
+        }
+      }   
+      setFiltersUi(temp)
+    }
 
-      // let temp = { ...filtersUi };
-      // // console.log("temp",temp[key]);
-      // if (temp[key]) {
-      //   for (let i = 0; i < temp[key].length; i++) {
-      //     if (temp[key][i]["key"].indexOf(MainKey) > -1) {
-      //       console.log(temp[key][i]["key"]);
-      //       temp[key].splice(i, 1);
-      //     }
-      //   }
-      // }
-      // setFiltersUi(temp);
-    // }
-
+    
     var checkbox_elm = document.getElementById(id).checked;
     if (checkbox_elm) {
       document.getElementById(id).checked = false;
@@ -464,7 +381,7 @@ export default function Filter({ parentCallback, filterState, set_screen,project
   const drawTags = () => {
     let filterBoxes = inputJson.filterBoxes;
     let tx = ["aod", "bmi", "fma", "dob", "ki67", "turc"];
-    console.log("selectState 11111", selectState);
+    console.log("selectState 11111",selectState);
     if (Object.keys(selectState).length > 0) {
       let filterSelectedHtml = {};
       Object.keys(filterBoxes).forEach((header) => {
@@ -504,7 +421,7 @@ export default function Filter({ parentCallback, filterState, set_screen,project
           });
         });
       });
-      console.log("filterSelectedHtml", filterSelectedHtml);
+      console.log("filterSelectedHtml",filterSelectedHtml);
       setFiltersUi(filterSelectedHtml);
     }
   };
@@ -515,7 +432,7 @@ export default function Filter({ parentCallback, filterState, set_screen,project
   };
 
   const reset = () => {
-    console.log("reset called", selectState);
+    console.log("reset called",selectState);
     let toggle_check = [
       "Basic/Diagnostic Information",
       "Patient Health Information",
@@ -534,30 +451,31 @@ export default function Filter({ parentCallback, filterState, set_screen,project
     });
 
     let input_boxes = document.querySelectorAll(
-      "#all_checkboxes input[type=number]"
+      "#all_checkboxes input[type=text]"
     );
     [...input_boxes].forEach((il) => {
       delete tmp[il.id];
       il.value = "";
     });
-    // console.log("tmp is culprit",tmp);
+    console.log("tmp is culprit",tmp);
     // setSelectState(tmp);
-    setSelectState({ filterCondition: "and" });
+    setSelectState({'filterCondition':'and'});
     parentCallback("");
-    setFilterHtml([]);
-    // let abcd = {...filtersUi}
-    // console.log("abcd",abcd);
-    // abcd['Basic/Diagnostic Information'] = []
-    // setFiltersUi(abcd)
+    setFilterHtml([])
+    let abcd = {...filtersUi}
+    console.log("abcd",abcd);
+    abcd['Basic/Diagnostic Information'] = []
+    setFiltersUi(abcd)
   };
 
-  const changeFilterCondition = (e) => {
-    let tmp = selectState;
-    let val = e.target.value;
-    setFilterCondition(val);
-    tmp["filterCondition"] = val;
-    setSelectState(tmp);
-  };
+  const changeFilterCondition = (e)=>{
+    
+    let tmp = selectState
+    let val = e.target.value
+    setFilterCondition(val)
+    tmp['filterCondition'] = val
+    setSelectState(tmp)
+  }
 
   return (
     <div>
@@ -584,69 +502,66 @@ export default function Filter({ parentCallback, filterState, set_screen,project
         </button>
       </div>
       <div className="flex flex-row mb-4 ml-4">
-        <label className="text-2xl font-bold">
-          <FormattedMessage
-            id="filterCondition"
-            defaultMessage={"Filter condition between clinical features"}
-          />
-          :
-        </label>
-        <div className="flex items-center ml-4">
-          {filterCondition === "and" ? (
-            <input
-              id="default-radio-1"
-              type="radio"
-              value="and"
-              name="condition"
-              checked
-              onChange={(e) => changeFilterCondition(e)}
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-            />
-          ) : (
-            <input
-              id="default-radio-1"
-              type="radio"
-              value="and"
-              name="condition"
-              onChange={(e) => changeFilterCondition(e)}
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-            />
-          )}
+          <label className="text-2xl font-bold">
+            <FormattedMessage id='filterCondition' defaultMessage={'Filter condition between clinical features'}/>:
+          </label>
+          <div className="flex items-center ml-4">
+            {filterCondition === "and" ? (
+              <input
+                id="default-radio-1"
+                type="radio"
+                value="and"
+                name="condition"
+                checked
+                onChange={e=>changeFilterCondition(e)}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+            ) : (
+              <input
+                id="default-radio-1"
+                type="radio"
+                value="and"
+                name="condition"
+                onChange={e=>changeFilterCondition(e)}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+            )}
 
-          <label
-            htmlFor="default-radio-1"
-            className="ml-2 text-gray-900 dark:text-gray-300"
-          >
-            And
-          </label>
-        </div>
-        <div className="flex items-center ml-4">
-          {filterCondition === "or" ? (
-            <input
-              id="default-radio-2"
-              type="radio"
-              value="or"
-              name="condition"
-              onChange={(e) => changeFilterCondition(e)}
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-            />
-          ) : (
-            <input
-              id="default-radio-2"
-              type="radio"
-              value="or"
-              name="condition"
-              onChange={(e) => changeFilterCondition(e)}
-              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-            />
-          )}
-          <label
-            htmlFor="default-radio-2"
-            className="ml-2 text-gray-900 dark:text-gray-300"
-          >
-            Or
-          </label>
-        </div>
+            <label
+              htmlFor="default-radio-1"
+              className="ml-2 text-gray-900 dark:text-gray-300"
+            >
+              And
+            </label>
+          </div>
+          <div className="flex items-center ml-4">
+            {filterCondition === "or" ? (
+              <input
+                id="default-radio-2"
+                type="radio"
+                value="or"
+                name="condition"
+                onChange={e=>changeFilterCondition(e)}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+            ) : (
+              <input
+                id="default-radio-2"
+                type="radio"
+                value="or"
+                name="condition"
+                onChange={e=>changeFilterCondition(e)}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+            )}
+            <label
+              htmlFor="default-radio-2"
+              className="ml-2 text-gray-900 dark:text-gray-300"
+            >
+              Or
+            </label>
+          </div>
+        
       </div>
       <div className="col-span-2" id="all_checkboxes">
         {state["html"]}
