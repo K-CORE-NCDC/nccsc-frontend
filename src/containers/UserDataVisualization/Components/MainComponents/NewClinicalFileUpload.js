@@ -104,9 +104,9 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
   const [dropdownOptionsSelected, setDropdownOptionsSelected] = useState({
     1: {
       clinical_information: "Clinical Information",
-      rna_zscore: "RNA",
+      rna: "RNA",
       dna_mutation: "DNA Mutation",
-      dna_methylation: "DNA Methylation",
+      methylation: "DNA Methylation",
       proteome: "proteome",
       phospho: "phospho",
       cnv: "cnv",
@@ -128,9 +128,9 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
     setDropdownOptionsSelected({
       1: {
         clinical_information: "Clinical Information",
-        rna_zscore: "RNA",
+        rna: "RNA",
         dna_mutation: "DNA Mutation",
-        dna_methylation: "DNA Methylation",
+        methylation: "DNA Methylation",
         proteome: "proteome",
         phospho: "phospho",
         cnv: "cnv",
@@ -160,9 +160,9 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
 
   const dropdownOptions = {
     clinical_information: "Clinical Information",
-    rna_zscore: "RNA",
+    rna: "RNA",
     dna_mutation: "DNA Mutation",
-    dna_methylation: "DNA Methylation",
+    methylation: "DNA Methylation",
     proteome: "proteome",
     phospho: "phospho",
     cnv: "cnv",

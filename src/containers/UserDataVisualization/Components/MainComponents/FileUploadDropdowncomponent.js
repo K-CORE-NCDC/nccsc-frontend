@@ -5,6 +5,8 @@ import {
   new_file_upload,
   uploadClinincalSamples,
 } from "../../../../actions/api_actions";
+import swal from "sweetalert";
+import LoaderCmp from "../../../Common/Loader";
 
 function FileUploadDropdowncomponent({ updateComponentNumber }) {
   const [selectClinincalFilterColumn, setSelectClinincalFilterColumn] =
@@ -13,6 +15,13 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
   const [clinincalFilterColumns, setClinincalFilterColumns] = useState([]);
   const [activeTableKey, setActiveTableKey] = useState("clinical_information");
   const [currentFilename, setCurrentFilename] = useState("");
+  const [clinicalInformationColumns, setClinicalInformationColumns] = useState(
+    {}
+  );
+  const [
+    defaultClinicalInformationColumns,
+    setDefaultClinicalInformationColumns,
+  ] = useState({});
   const [tableNavTabs, setTableNavTabs] = useState([]);
   const dispatch = useDispatch();
   const clinicalfileresponse = useSelector(
@@ -25,7 +34,11 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
   const [columnTypes, setColumnTypes] = useState({});
 
   const getFileName = (clinicalfileresponse, tab) => {
-    if (clinicalfileresponse && clinicalfileresponse["res"] && clinicalfileresponse["res"].length > 0) {
+    if (
+      clinicalfileresponse &&
+      clinicalfileresponse["res"] &&
+      clinicalfileresponse["res"].length > 0
+    ) {
       for (let i = 0; i < clinicalfileresponse["res"].length; i++) {
         if (clinicalfileresponse["res"][i]["tab"] === tab) {
           return clinicalfileresponse["res"][i]["filename"];
@@ -33,13 +46,50 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
       }
     }
   };
-  console.log(clinicalfileresponse)
+  console.log(clinicalfileresponse);
 
-  
+  useEffect(() => {
+    if (
+      clinicalfileresponse &&
+      clinicalfileresponse["res"] &&
+      clinicalfileresponse["res"].length > 0
+    ) {
+      for (let i = 0; i < clinicalfileresponse["res"].length; i++) {
+        if (clinicalfileresponse["res"][i]["tab"] === "clinical_information") {
+          setDefaultClinicalInformationColumns(clinicalfileresponse["res"][i]["types"]);
+        }
+      }
+    }
+  }, [clinicalfileresponse]);
 
   const clinicalUpdateFileTypeOnChange = (e) => {
     let divName = e.target.name;
     let divValue = e.target.value;
+    console.log('defaultClinicalInformationColumns',defaultClinicalInformationColumns);
+    if(divName === 'sample_id' || divName === 'rlps_yn' || divName === 'rlps_cnfr_drtn'){
+          if(defaultClinicalInformationColumns[divName] === divValue ){
+            setClinicalInformationColumns((prevState) => ({
+              ...prevState,
+              [divName]: divValue,
+            }));
+           if(e){
+            e.target.classList.remove("border-red-400")
+           }
+          }
+          else{
+            if(e){
+              e.target.classList.add("border-red-400")
+            }
+          }
+         
+    }
+    else{
+      setClinicalInformationColumns((prevState) => ({
+        ...prevState,
+        [divName]: divValue,
+      }));
+    }
+    // console.log("length is ",Object.keys(clinicalInformationColumns).length);
     if (activeTableKey === "clinical_information") {
       let tmp = { ...clinincalFilterColumns };
       Object.keys(tmp).forEach((obj) => {
@@ -72,19 +122,52 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
       Object.keys(columnsData).length,
       totalFiles
     );
-    if (columnsData && Object.keys(columnsData).length === totalFiles) {
-      let d = {
-        "project_name":clinicalfileresponse['project_name'],
-        "file_types":columnsData
+    let verifyClinincalInformationColumns = () => {
+      if (
+        clinicalfileresponse &&
+        clinicalfileresponse["res"] &&
+        clinicalfileresponse["res"].length > 0
+      ) {
+        let total_columns;
+        for (let i = 0; i < clinicalfileresponse["res"].length; i++) {
+          if (
+            clinicalfileresponse["res"][i]["tab"] === "clinical_information"
+          ) {
+            total_columns = clinicalfileresponse["res"][i]["columns"].length;
+            return (
+              total_columns === Object.keys(clinicalInformationColumns).length
+            );
+          }
+        }
       }
+    };
+    if (
+      columnsData &&
+      Object.keys(columnsData).length === totalFiles &&
+      verifyClinincalInformationColumns()
+    ) {
+      console.log("a");
+      let d = {
+        project_name: clinicalfileresponse["project_name"],
+        file_types: columnsData,
+      };
       dispatch(uploadClinincalSamples(d));
       updateComponentNumber(2);
+    } else {
+      console.log("asasd");
+      swal("Please Select All Columns in Clinical Information.", {
+        closeOnClickOutside: false,
+      });
     }
   };
 
   const tabDropdownTable = (tab) => {
     setActiveTableKey(tab);
-    if (clinicalfileresponse && clinicalfileresponse["res"] && clinicalfileresponse["res"].length > 0) {
+    if (
+      clinicalfileresponse &&
+      clinicalfileresponse["res"] &&
+      clinicalfileresponse["res"].length > 0
+    ) {
       for (let i = 0; i < clinicalfileresponse["res"].length; i++) {
         let row = clinicalfileresponse["res"][i];
         let column = row["columns"];
@@ -108,10 +191,12 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
         };
         colsarray.push(obj);
       }
+      // console.log("PC usshhh",tab);
       setClinincalFilterColumns((prevState) => ({
         ...prevState,
         [tab]: colsarray,
       }));
+      // console.log("PC ClinincalFilterColumns",clinincalFilterColumns);
       let tempresponseData = { ...responseData };
       if (tempresponseData[tab]) {
         tempresponseData[tab]["types"] = types;
@@ -125,7 +210,15 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
         tempresponseData[tab]["types"] = types;
         tempresponseData[tab]["tab"] = tab;
       }
-      setResponseData(tempresponseData);
+      console.log("temp rp", tempresponseData[tab]);
+      // setResponseData(tempresponseData);
+      setResponseData((prevState) => ({
+        ...prevState,
+        [tab]: tempresponseData[tab],
+      }));
+      // tempRP.assign(tempresponseData)
+
+      console.log("reponsedata", responseData);
     } else {
       for (let i = 0; i < columns.length; i++) {
         let obj = {
@@ -146,10 +239,21 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
 
   useEffect(() => {
     // checking if clinical filter response has clinical filter in it:
-    if (clinicalfileresponse && clinicalfileresponse["res"] && clinicalfileresponse["res"].length > 0) {
+    if (
+      clinicalfileresponse &&
+      clinicalfileresponse["res"] &&
+      clinicalfileresponse["res"].length > 0
+    ) {
+      // console.log("1111-------->",clinicalfileresponse);
       let temptabs = [];
       for (let i = 0; i < clinicalfileresponse["res"].length; i++) {
-        setColumnTypes(clinicalfileresponse["res"][i]["types"]);
+        // console.log("col types ----------->",clinicalfileresponse["res"][i]);
+        // setColumnTypes(clinicalfileresponse["res"][i]["types"]);
+        setColumnTypes((prevState) => ({
+          ...prevState,
+          [clinicalfileresponse["res"][i]["tab"]]:
+            clinicalfileresponse["res"][i]["types"],
+        }));
         let row = clinicalfileresponse["res"][i];
         let tab = row["tab"];
         let css = "px-4 py-2 font-semibold rounded-t opacity-50";
@@ -185,18 +289,20 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
   }, [clinicalfileresponse, activeTableKey]);
 
   useEffect(() => {
+    // console.log("column types are ",columnTypes);
+  }, [columnTypes]);
+
+  useEffect(() => {
     let firstInput = [];
     if (clinincalFilterColumns) {
-
       Object.keys(clinincalFilterColumns).forEach((key) => {
         if (
           activeTableKey === "clinical_information" &&
           key === "clinical_information"
         ) {
-
           clinincalFilterColumns[key].forEach((obj) => {
             firstInput.push(
-              <div className="flex justify-between" key={key+"_"+obj.id}>
+              <div className="flex justify-between" key={key + "_" + obj.id}>
                 <div className="my-auto">
                   <h2>{obj.title}</h2>
                 </div>
@@ -206,7 +312,12 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
                       onChange={clinicalUpdateFileTypeOnChange}
                       name={obj.title}
                       defaultChecked="false"
-                      defaultValue={obj.value}
+                      // defaultValue={obj.value}
+                      defaultValue={
+                        clinicalInformationColumns[obj.title]
+                          ? clinicalInformationColumns[obj.title]
+                          : ""
+                      }
                       className="select-color w-48 p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3"
                     >
                       {Object.keys(obj.options).map((type) => (
@@ -231,7 +342,7 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
           clinincalFilterColumns[key].forEach((obj) => {
             columnTypes &&
               firstInput.push(
-                <div className="flex justify-between" key={obj.id+"_"+key}>
+                <div className="flex justify-between" key={obj.id + "_" + key}>
                   <div className="my-auto">
                     <h2>{obj.title}</h2>
                   </div>
@@ -240,7 +351,7 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
                       <select
                         name={obj.title}
                         defaultChecked="false"
-                        defaultValue={columnTypes[obj.id]}
+                        defaultValue={columnTypes[key][obj.id]}
                         className="select-color w-48 p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3"
                       >
                         {Object.keys(obj.options).map((type) => (
@@ -273,8 +384,13 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
       </nav>
       <div id="tab-contents" className="mx-auto mt-20" style={{ width: "60%" }}>
         <div className="grid grid-cols-3 gap-4">
-          {selectClinincalFilterColumn}
+          {clinicalfileresponse && selectClinincalFilterColumn}
         </div>
+        {!clinicalfileresponse && (
+          <div>
+            <LoaderCmp />
+          </div>
+        )}
       </div>
       <div className="w-full">
         <h1 className="text-center">{message[activeTableKey]}</h1>

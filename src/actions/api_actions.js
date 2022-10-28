@@ -691,7 +691,7 @@ export function clear_new_file_upload_state() {
         });
   }
 
-export function uploadClinincalSamples(fileData, projectName) {
+export function uploadClinincalSamples(fileData) {
   return (dispatch) => {
     let url = config.auth + "upload-clinical-columns/";
     sendRequest(url, "POST", fileData)
