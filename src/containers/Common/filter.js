@@ -47,6 +47,7 @@ export default function Filter({ parentCallback, filterState, set_screen,project
   useEffect(()=>{
     if(project_id!==undefined){
       if(userDefinedFilter && Object.keys(userDefinedFilter).length > 0){
+        setSelected('Clinical Information')
         setFilterJson(userDefinedFilter['filterJson'])
       }}
       else{
@@ -450,14 +451,17 @@ export default function Filter({ parentCallback, filterState, set_screen,project
       })
 
       let temp =  {...filtersUi}
-      console.log("temp",temp[key]);
-      
+      console.log("before",temp);
+      console.log("before",filtersUi);
+      // console.log("temp",temp[key]);
       for(let i = 0; i < temp[key].length; i++){
         if(temp[key][i]['key'].indexOf(MainKey)>-1){
           console.log(temp[key][i]['key']);
           temp[key].splice(i,1)
         }
-      }   
+      }  
+      console.log('after',temp); 
+      console.log('after',filtersUi); 
       setFiltersUi(temp)
     }
 
@@ -572,13 +576,11 @@ export default function Filter({ parentCallback, filterState, set_screen,project
       delete tmp[il.id];
       il.value = "";
     });
-    console.log("tmp is culprit",tmp);
     // setSelectState(tmp);
     setSelectState({'filterCondition':'and'});
     parentCallback("");
     setFilterHtml([])
     let abcd = {...filtersUi}
-    console.log("abcd",abcd);
     abcd['Basic/Diagnostic Information'] = []
     setFiltersUi(abcd)
   };
