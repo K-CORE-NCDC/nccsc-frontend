@@ -47,6 +47,7 @@ export default function Filter({ parentCallback, filterState, set_screen,project
   useEffect(()=>{
     if(project_id!==undefined){
       if(userDefinedFilter && Object.keys(userDefinedFilter).length > 0){
+        console.log('fdfdds',userDefinedFilter['filterJson']);
         setSelected('Clinical Information')
         setFilterJson(userDefinedFilter['filterJson'])
       }}
@@ -420,7 +421,7 @@ export default function Filter({ parentCallback, filterState, set_screen,project
     console.log("did------>",did.getAttribute("data-parent"));
     if(did.hasAttribute("id")){
       let name = did.getAttribute("id")
-      console.log(name);
+      console.log("name",name);
       let names = name.split("_")
       let key,value
       if(names[1]){
@@ -451,11 +452,12 @@ export default function Filter({ parentCallback, filterState, set_screen,project
       })
 
       let temp =  {...filtersUi}
-      console.log("before",temp);
-      console.log("before",filtersUi);
+      // console.log("before",temp);
+      // console.log("before",filtersUi);
       // console.log("temp",temp[key]);
       for(let i = 0; i < temp[key].length; i++){
         if(temp[key][i]['key'].indexOf(MainKey)>-1){
+          console.log("ledenti");
           console.log(temp[key][i]['key']);
           temp[key].splice(i,1)
         }
@@ -468,10 +470,12 @@ export default function Filter({ parentCallback, filterState, set_screen,project
     
     var checkbox_elm = document.getElementById(id).checked;
     if (checkbox_elm) {
+      console.log("checked");
       document.getElementById(id).checked = false;
       document.getElementById(id + "_toggle").style.background = "#ccc";
       document.getElementById("child_" + id).classList.add("hidden");
     } else {
+      console.log("not checked");
       document.getElementById(id).checked = true;
       document.getElementById(id + "_toggle").style.background =
         inputJson["clinicalColor"][did.getAttribute("data-parent")];
