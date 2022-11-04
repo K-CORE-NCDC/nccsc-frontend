@@ -5,8 +5,8 @@ import organoid03 from '../../../assets/images/figure03.png'
 import organoid04 from '../../../assets/images/figure04.png'
 import organoid05 from '../../../assets/images/figure05.png'
 import organoid06 from '../../../assets/images/figure06.png'
-import organoidTable from '../../../assets/images/organoidTable.png'
-import Attachments from '../../../assets/organoidZipAttachment.zip'
+import organoidTable from '../../../assets/images/organoidNewTable.jpeg'
+import Attachments from '../../../assets/organoid_application_document.zip'
 
 
 function Organoid() {
@@ -147,18 +147,26 @@ function Organoid() {
                     <ul>
                         <li>
                             <div className='container flex justify-items-start m-8'>
+                                <div>
                                 <h1 className='mr-5'>◦ 신청단계  </h1>
-                                <p>IRB 승인서
-                                    오가노이드/데이터 제공 신청서
-                                </p>
+                                <br></br>
+                                <p className='ml-8'>- IRB 승인서</p>
+                                <br></br>
+                                <p className='ml-8'>- 오가노이드 데이터 제공 신청서</p>
+                                <br></br>
+                                </div>
                             </div>
                         </li>
                         <li>
                             <div className='container flex justify-items-start m-8'>
+                                <div>
                                 <h1 className='mr-5'>◦ 제공단계</h1>
-                                <p>오가노이드 제공 확인서
-                                    MTA
-                                </p>
+                                <br></br>
+                                <p className='ml-8'>- 오가노이드 제공 확인서</p>
+                                <br></br>
+                                <p className='ml-8'>- MTA</p>
+                                <br></br>
+                                </div>
                             </div>
                         </li>
                     </ul>
@@ -171,7 +179,7 @@ function Organoid() {
                 <h1 className='m-5 text-5xl font-bold my-5'>검색 및 신청</h1>
                 <div className='m-12 rounded bg-blue-100 '>
 
-                    <a className='m-5 text-3xl font-normal my-5 block' href={Attachments} download>신청서류 다운로드</a>
+                    <a className='m-5 text-3xl font-normal my-5 block' href={Attachments} download = 'organoid_application_document'>신청서류 다운로드</a>
 
                 </div>
 

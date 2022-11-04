@@ -9,8 +9,10 @@ import { exportComponentAsPNG } from "react-component-export-image";
 import GroupFilters, {
   PreDefienedFiltersSurvival,
 } from "../../Common/GroupFilter";
+import UserDefinedGroupFilters  from "../../Common/GroupFilterUserDefined";
 import NoContentMessage from "../../Common/NoContentComponent";
 import { AdjustmentsIcon } from "@heroicons/react/outline";
+import { useParams } from "react-router-dom";
 
 import LoaderCmp from "../../Common/Loader";
 import { FormattedMessage } from "react-intl";
@@ -45,28 +47,31 @@ export default function DataSurvival({
   const [renderSurvival, setRenderSurvival] = useState(true);
   const [renderNoContent, setRenderNoContent] = useState(false);
   const [filterTypeButton, setFilterTypeButton] = useState("clinical");
-  const [userDefienedFilter, setUserDefienedFilter] = useState("static");
+  let { tab, project_id } = useParams();
+  const [userDefienedFilter, setUserDefienedFilter] = useState(
+    project_id === undefined ? "static" : "dynamic"
+  );
   const [survivalModel, setSurvivalModel] = useState("kaplan");
   const [pValueData, setPvalueData] = useState("");
   const [smallScreen, setSmallScreen] = useState(false);
   const [coxClinical, setCoxClinical] = useState([]);
   const [coxTable, setCoxTable] = useState([]);
-  
-  const [coxFilter,setCoxFilter]  = useState({
+
+  const [coxFilter, setCoxFilter] = useState({
     "Body Mass Index": false,
     "Alcohol Consumption": false,
     "Family History of Breast Cancer": false,
     "Intake Of Contraceptive Pill": false,
     "Hormone Replace Therapy": false,
-    "Menopause": false,
-    "Childbirth": false,
+    Menopause: false,
+    Childbirth: false,
     "Diagnosis of Bilateral Breast Cancer": false,
     "First Menstrual Age": false,
     "ER Test Results": false,
-    "PR Test Results": false, 
+    "PR Test Results": false,
     "Ki67 Index": false,
-    "Age Of Diagnosis": false
-  })
+    "Age Of Diagnosis": false,
+  });
   useEffect(() => {
     if (!clinicalMaxMinInfo) {
       dispatch(getClinicalMaxMinInfo("GET", {}));
@@ -291,17 +296,13 @@ export default function DataSurvival({
   }, [survivalJson]);
 
   const selectCoxFiler = (e) => {
-    
-    let val_ = e.target.value
-    let check = e.target.checked
-    if(check){
-      setCoxFilter({...coxFilter,[val_]:true})  
-    }else{
-      setCoxFilter({...coxFilter,[val_]:false})
+    let val_ = e.target.value;
+    let check = e.target.checked;
+    if (check) {
+      setCoxFilter({ ...coxFilter, [val_]: true });
+    } else {
+      setCoxFilter({ ...coxFilter, [val_]: false });
     }
-    
-
-    
   };
   let tmp = [
     "Body Mass Index",
@@ -318,7 +319,6 @@ export default function DataSurvival({
     "Ki67 Index",
     "Age Of Diagnosis",
   ];
-  
 
   const survivalModelFun = (e, type) => {
     setSurvivalModel(type);
@@ -329,32 +329,31 @@ export default function DataSurvival({
     }
   };
 
-  const submitCox = (e,type)=>{
+  const submitCox = (e, type) => {
     setSurvivalModel(type);
     if (type === "cox") {
       inputData["survival_type"] = type;
-      inputData['coxFilter'] = coxFilter
+      inputData["coxFilter"] = coxFilter;
       dispatch(getSurvivalInformation("POST", inputData));
     }
-  }
+  };
 
-  useEffect(()=>{
-    console.log(coxFilter)
-  },[coxFilter])
+  useEffect(() => {
+    console.log(coxFilter);
+  }, [coxFilter]);
 
-  const selectAllCox = (e,type)=>{
-    let tmp = coxFilter
-    console.log(type)
+  const selectAllCox = (e, type) => {
+    let tmp = coxFilter;
+    console.log(type);
     for (const key in tmp) {
-      if(type==='select'){
-        tmp[key] = true
+      if (type === "select") {
+        tmp[key] = true;
+      } else {
+        tmp[key] = false;
       }
-      else{
-        tmp[key] = false
-      }
-    }  
-    setCoxFilter({...tmp})
-  }
+    }
+    setCoxFilter({ ...tmp });
+  };
 
   return (
     <>
@@ -404,46 +403,50 @@ export default function DataSurvival({
                       {sampleCountsCard}
                     </div>
                   )}
-                  <h6 className="p-4 ml-1 text-left text-bold xs:text-xl text-blue-700">
-                    <FormattedMessage
-                      id="Choose Filter group"
-                      defaultMessage="Choose Filter group"
-                    />
-                  </h6>
-                  <div className="m-1 flex flex-row justify-around">
-                    <button
-                      onClick={() => {
-                        setUserDefienedFilter("static");
-                        setGroupFilters({});
-                      }}
-                      className={
-                        userDefienedFilter === "static"
-                          ? selectedCss
-                          : nonSelectedCss
-                      }
-                    >
-                      <FormattedMessage
-                        id="Static_volcano"
-                        defaultMessage="Static"
-                      />
-                    </button>
-                    <button
-                      onClick={() => {
-                        setUserDefienedFilter("dynamic");
-                        setGroupFilters({});
-                      }}
-                      className={
-                        userDefienedFilter === "dynamic"
-                          ? selectedCss
-                          : nonSelectedCss
-                      }
-                    >
-                      <FormattedMessage
-                        id="Dynamic_volcano"
-                        defaultMessage="Dynamic"
-                      />
-                    </button>
-                  </div>
+
+                  {project_id === undefined && (
+                      <h6 className="p-4 ml-1 text-left text-bold xs:text-xl text-blue-700">
+                        <FormattedMessage
+                          id="Choose Filter group"
+                          defaultMessage="Choose Filter group"
+                        />
+                      </h6>
+                    ) && (
+                      <div className="m-1 flex flex-row justify-around">
+                        <button
+                          onClick={() => {
+                            setUserDefienedFilter("static");
+                            setGroupFilters({});
+                          }}
+                          className={
+                            userDefienedFilter === "static"
+                              ? selectedCss
+                              : nonSelectedCss
+                          }
+                        >
+                          <FormattedMessage
+                            id="Static_volcano"
+                            defaultMessage="Static"
+                          />
+                        </button>
+                        <button
+                          onClick={() => {
+                            setUserDefienedFilter("dynamic");
+                            setGroupFilters({});
+                          }}
+                          className={
+                            userDefienedFilter === "dynamic"
+                              ? selectedCss
+                              : nonSelectedCss
+                          }
+                        >
+                          <FormattedMessage
+                            id="Dynamic_volcano"
+                            defaultMessage="Dynamic"
+                          />
+                        </button>
+                      </div>
+                    )}
                   <h6 className="ml-1 mt-1 p-4 text-left text-bold xs:text-xl text-blue-700">
                     Choose Filter Type
                   </h6>
@@ -539,7 +542,8 @@ export default function DataSurvival({
                     </div>
                   )}
                   {filterTypeButton === "clinical" &&
-                    userDefienedFilter === "static" && (
+                    userDefienedFilter === "static" &&
+                    project_id === undefined && (
                       <PreDefienedFiltersSurvival
                         type="survival"
                         parentCallback={updateGroupFilters}
@@ -547,8 +551,17 @@ export default function DataSurvival({
                       />
                     )}
                   {filterTypeButton === "clinical" &&
-                    userDefienedFilter === "dynamic" && (
+                    userDefienedFilter === "dynamic" &&
+                    project_id === undefined && (
                       <GroupFilters
+                        viz_type="survival"
+                        parentCallback={updateGroupFilters}
+                        groupFilters={groupFilters}
+                      />
+                    )}
+                  {filterTypeButton === "clinical" &&
+                    project_id !== undefined && (
+                      <UserDefinedGroupFilters
                         viz_type="survival"
                         parentCallback={updateGroupFilters}
                         groupFilters={groupFilters}
@@ -598,13 +611,15 @@ export default function DataSurvival({
                   <div className="m-1 flex flex-row justify-around">
                     <div className="flex justify-center">
                       <div>
-                        {
-                          tmp.map( (element,index)=>(
-                            <div className="form-check flex mb-4" key={"cox" + index}>
-                              <label
-                                className="form-check-label inline text-left text-gray-800"
-                                htmlFor={"flexCheckChecked_"+index}
-                              >
+                        {tmp.map((element, index) => (
+                          <div
+                            className="form-check flex mb-4"
+                            key={"cox" + index}
+                          >
+                            <label
+                              className="form-check-label inline text-left text-gray-800"
+                              htmlFor={"flexCheckChecked_" + index}
+                            >
                               <input
                                 onChange={(e) => selectCoxFiler(e)}
                                 className="form-check-input 
@@ -613,18 +628,17 @@ export default function DataSurvival({
                                 bg-center bg-contain float-left mr-2 cursor-pointer"
                                 type="checkbox"
                                 name={element}
-                                id={"flexCheckChecked_"+index}
-                                checked = {coxFilter[element]}
+                                id={"flexCheckChecked_" + index}
+                                checked={coxFilter[element]}
                                 value={element}
                               />
                               {element}
                             </label>
                           </div>
-                          ))
-                        }
+                        ))}
                         <div className="flex flex-row gap-5">
                           <button
-                            onClick={e=>selectAllCox(e,'select')}
+                            onClick={(e) => selectAllCox(e, "select")}
                             className={
                               survivalModel === "cox"
                                 ? selectedCss
@@ -634,7 +648,7 @@ export default function DataSurvival({
                             Select All
                           </button>
                           <button
-                            onClick={e=>selectAllCox(e,'reset')}
+                            onClick={(e) => selectAllCox(e, "reset")}
                             className={
                               survivalModel === "cox"
                                 ? selectedCss
@@ -646,8 +660,8 @@ export default function DataSurvival({
                         </div>
                         <div className="flex flex-row gap-5">
                           <button
-                            onClick={e=>submitCox(e,'cox')}
-                            className='w-full mt-5 rounded-r-none  hover:scale-110 xs:h-14 xs:text-sm focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition'
+                            onClick={(e) => submitCox(e, "cox")}
+                            className="w-full mt-5 rounded-r-none  hover:scale-110 xs:h-14 xs:text-sm focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition"
                           >
                             Submit
                           </button>
@@ -659,7 +673,7 @@ export default function DataSurvival({
               </>
             )}
           </div>
-          
+
           <div className="col-span-5">
             {renderSurvival && survivalModel === "kaplan" && (
               <SurvivalCmp
