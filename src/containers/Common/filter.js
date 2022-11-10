@@ -513,7 +513,14 @@ export default function Filter({ parentCallback, filterState, set_screen,project
           [header]: [],
         };
         Object.keys(filterBoxes[header]).forEach((field) => {
+          // console.log('filterBoxes',filterBoxes[header]);
+          // console.log('field',field);
           filterBoxes[header][field].forEach((subField) => {
+            tx.push(subField.id)
+          })
+          filterBoxes[header][field].forEach((subField) => {
+            // console.log("subField",subField.id);
+            // console.log("selectState",selectState);
             if (subField.id in selectState) {
               filterSelectedHtml = {
                 ...filterSelectedHtml,
@@ -584,6 +591,10 @@ export default function Filter({ parentCallback, filterState, set_screen,project
     setSelectState({'filterCondition':'and'});
     parentCallback("");
     setFilterHtml([])
+    let el1 = document.getElementById('default-radio-1')
+    el1.checked = true
+    let el2 = document.getElementById('default-radio-2')
+    el2.checked = false
     let abcd = {...filtersUi}
     abcd['Basic/Diagnostic Information'] = []
     setFiltersUi(abcd)
@@ -691,7 +702,7 @@ export default function Filter({ parentCallback, filterState, set_screen,project
         {filterHtml.length && totalCount !== totalCountS ? (
           <>
             <div className="mb-5">
-              <h6>Total Number of Samples : 126</h6>
+              <h6>Total Number of Samples : 3</h6>
             </div>
             {filterHtml}
             <div className="mt-5">
