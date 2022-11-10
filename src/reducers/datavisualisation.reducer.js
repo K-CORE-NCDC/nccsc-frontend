@@ -32,6 +32,11 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state,
         volcanoSummary: payload
       }
+    case dataVisualization.USER_DEFINED_VOLCANO_REQUEST:
+      return {
+        ...state,
+        userDefinedVolcanoSummary: payload
+      }
     case dataVisualization.HEATMAP_REQUEST:
       return {
         ...state,

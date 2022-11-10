@@ -590,6 +590,12 @@ export default function Filter({ parentCallback, filterState, set_screen,project
     // setSelectState(tmp);
     setSelectState({'filterCondition':'and'});
     parentCallback("");
+    if(document.getElementById('default-radio-1')){
+      document.getElementById('default-radio-1').checked = true
+    }
+    if(document.getElementById('default-radio-2')){
+      document.getElementById('default-radio-2').checked = false
+    }
     setFilterHtml([])
     let el1 = document.getElementById('default-radio-1')
     el1.checked = true
@@ -606,6 +612,7 @@ export default function Filter({ parentCallback, filterState, set_screen,project
     let val = e.target.value
     setFilterCondition(val)
     tmp['filterCondition'] = val
+    console.log("filterCondition",selectState);
     setSelectState(tmp)
   }
 
