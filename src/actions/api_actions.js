@@ -559,6 +559,36 @@ export function getVolcanoPlotInfo(type, data) {
       });
   };
 }
+export function userDefinedGetVolcanoPlotInfo(type, data) {
+  return (dispatch) => {
+    let url = config.auth + "userdefined-volcano-info/";
+
+    // console.log(type)
+    sendRequest(url, type, data)
+      .then((result) => {
+        const d = result
+        if (d.status === 200) {
+          dispatch({
+            type: dataVisualization.USER_DEFINED_VOLCANO_REQUEST,
+            payload: { ...d["data"], status: 200 },
+          });
+        } else {
+          dispatch({
+            type: dataVisualization.USER_DEFINED_VOLCANO_REQUEST,
+            payload: { status: 204 },
+          });
+        }
+        dispatch({ type: dataVisualization.REQUEST_DONE });
+      })
+      .catch((e) => {
+        console.log("error", e);
+        dispatch({
+          type: dataVisualization.USER_DEFINED_VOLCANO_REQUEST,
+          payload: { status: 204 },
+        });
+      });
+  };
+}
 
 export function getHeatmapInformation(type, data) {
   return (dispatch) => {

@@ -513,7 +513,14 @@ export default function Filter({ parentCallback, filterState, set_screen,project
           [header]: [],
         };
         Object.keys(filterBoxes[header]).forEach((field) => {
+          // console.log('filterBoxes',filterBoxes[header]);
+          // console.log('field',field);
           filterBoxes[header][field].forEach((subField) => {
+            tx.push(subField.id)
+          })
+          filterBoxes[header][field].forEach((subField) => {
+            // console.log("subField",subField.id);
+            // console.log("selectState",selectState);
             if (subField.id in selectState) {
               filterSelectedHtml = {
                 ...filterSelectedHtml,
@@ -583,6 +590,12 @@ export default function Filter({ parentCallback, filterState, set_screen,project
     // setSelectState(tmp);
     setSelectState({'filterCondition':'and'});
     parentCallback("");
+    if(document.getElementById('default-radio-1')){
+      document.getElementById('default-radio-1').checked = true
+    }
+    if(document.getElementById('default-radio-2')){
+      document.getElementById('default-radio-2').checked = false
+    }
     setFilterHtml([])
     let abcd = {...filtersUi}
     abcd['Basic/Diagnostic Information'] = []
@@ -595,6 +608,7 @@ export default function Filter({ parentCallback, filterState, set_screen,project
     let val = e.target.value
     setFilterCondition(val)
     tmp['filterCondition'] = val
+    console.log("filterCondition",selectState);
     setSelectState(tmp)
   }
 

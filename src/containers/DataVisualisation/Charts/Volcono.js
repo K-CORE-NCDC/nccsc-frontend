@@ -10,6 +10,7 @@ import { AdjustmentsIcon } from "@heroicons/react/outline";
 import {
   getClinicalMaxMinInfo,
   getVolcanoPlotInfo,
+  userDefinedGetVolcanoPlotInfo
 } from "../../../actions/api_actions";
 // import Loader from "react-loader-spinner";
 import LoaderCmp from "../../Common/Loader";
@@ -88,12 +89,16 @@ export default function DataVolcono({
         }
         inputData["filterType"] = userDefienedFilter;
         // console.log(inputData,groupFilters)
-        dispatch(
-          getVolcanoPlotInfo("POST", {
-            ...inputData,
-            filterGroup: groupFilters,
-          })
-        );
+        if(project_id === undefined){
+
+          dispatch(
+            getVolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters })
+            );
+          }
+          else{
+            userDefinedGetVolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters })
+    
+        }
       }
     }
   }, [inputData, groupFilters]);
@@ -188,9 +193,16 @@ export default function DataVolcono({
 
     inputData["volcanoProteomeType"] = proteomeValue;
     inputData["filterType"] = userDefienedFilter;
-    dispatch(
-      getVolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters })
-    );
+    if(project_id === undefined){
+
+      dispatch(
+        getVolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters })
+        );
+      }
+      else{
+        userDefinedGetVolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters })
+
+    }
   };
 
   return (
