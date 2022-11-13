@@ -249,7 +249,7 @@ const MemberShip = ({ changestep }) => {
       errors.koreanid = "DefaultIDMsg";
 
     }
-    else if (format.test(value)) {
+    else if (name === "id" && format.test(value)) {
       errors.id = "(e.g. @$#!*&) Special characters cannot be used";
       errors.koreanid = "IDSpecialCharecters";
 
@@ -264,46 +264,11 @@ const MemberShip = ({ changestep }) => {
       errors.koreanid = "IDLength";
     }
     else  if (name === "id") {
-          errors.id = "";
-          errors.koreanid = "";
-        
-
+      errors.id = "";
+      errors.koreanid = "";
     }
-    // if (name === "id") {
-    //     errors.id = "";
-    //     errors.koreanid = "";
-    //   }
-    // else if (name === "id" && KoreanRegex.test(value)) {
-    //   errors.id = "Korean is not available";
-    //   errors.koreanid = "IDKoreanNotAllowed";
-    // }
-    // else if (name === "id" && AlphaNumRegexwithNoSpecialCharecters.test(value)) {
-    //   errors.id = "(e.g. @$#!*&) Special characters cannot be used";
-    //   errors.koreanid = "IDSpecialCharecters";
-    // }
-
-    // else if ((name === "id" && value.length < 6) || (name === "id" && value.length > 10)) {
-    //   errors.id = "Please enter 6-10 characters";
-    //   errors.koreanid = "IDLength";
-    // }
-
-    // else if (name === "id" && !idValidator(value)) {
-    //   console.log("Inside idvalidator");
-    //   errors.id = "Please enter 6-10 characters";
-    //   errors.koreanid = "IDLength";
-    // }
-
-    // else if (name === "id" && !idValidatorforspecial(value)) {
-    //   console.log("Inside idvalidatorforSpecial");
-    //   errors.id = "(e.g. @$#!*&) Special characters cannot be used";
-    //   errors.koreanid = "IDSpecialCharecters";
-    // }
-
-
-    // else if (name === "id") {
-    //   errors.id = "";
-    //   errors.koreanid = "";
-    // }
+    console.log(name)
+    
 
 
     //  Password Validation
@@ -596,6 +561,7 @@ const MemberShip = ({ changestep }) => {
 
   }
 
+  console.log(form.errors)
 
 
   return (
