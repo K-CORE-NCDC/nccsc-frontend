@@ -872,7 +872,7 @@ export default GroupFilters;
 
 
 export const UserDefinedGroupFilters = ({ parentCallback, groupFilters,viz_type }) => {
-    const clinicalMaxMinInfo = useSelector((data) => data.dataVisualizationReducer.clinicalMaxMinInfo);
+    // const clinicalMaxMinInfo = useSelector((data) => data.dataVisualizationReducer.clinicalMaxMinInfo);
     const [filterSelected, setFilterSelected] = useState('')
     const [selectedFilterDetails, setSelectedFilterDetails] = useState({})
     const [filterInputs, setFilterInputs] = useState([])
@@ -887,11 +887,34 @@ export const UserDefinedGroupFilters = ({ parentCallback, groupFilters,viz_type 
     const [selectDefaultValue,setSelectDefaultValue] = useState('0')
     const [preDefienedGroups1, setPreDefienedGroups1] =useState({}) ;
     const [filterChoices, setFilterChoices] = useState([]); 
+    const  [clinicalMaxMinInfo, setClinicalMaxMinInfo] = useState({})
     let { tab, project_id } = useParams();
-
+    
     const userDefinedFilter = useSelector(
         (data) => data.dataVisualizationReducer.userDefinedFilter
       );
+
+    useEffect(() => {
+        if (userDefinedFilter && userDefinedFilter['filterJson'] && 'Clinical Information' in  userDefinedFilter['filterJson']){
+          let minmax={}
+          for( let val in userDefinedFilter['filterJson']['Clinical Information']){
+            if(userDefinedFilter['filterJson']['Clinical Information'][val].length === 1){
+              if(userDefinedFilter['filterJson']['Clinical Information'][val][0]['type'] === 'number'){
+                let max = userDefinedFilter['filterJson']['Clinical Information'][val][0]['max']
+                let min = userDefinedFilter['filterJson']['Clinical Information'][val][0]['min']
+                let max1 = val + '_max';
+                let min1 = val + '_min';
+                minmax[max1] = max;
+                minmax[min1] = min;
+              }
+              
+            }
+          }
+          setClinicalMaxMinInfo(minmax)
+        }
+      }, [userDefinedFilter]);
+
+   
     // const preDefienedGroups1 = preDefienedGroups
     
     //   filterChoices = [

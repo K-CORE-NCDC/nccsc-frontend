@@ -10,7 +10,8 @@ import inputJson from "./data";
 // import filterBoxes from './data'
 import { FormattedMessage } from "react-intl";
 import {
-  getUserDefinedFilter
+  clearDataVisualizationState,
+  getUserDefinedFilter,samplesCount
 } from "../../actions/api_actions";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -25,8 +26,26 @@ export default function Filter({ parentCallback, filterState, set_screen,project
   const [filtersUi, setFiltersUi] = useState({});
   const [filterHtml, setFilterHtml] = useState([]);
   const userDefinedFilter = useSelector((data) => data.dataVisualizationReducer.userDefinedFilter);
+  // const [totalSamplesS,setTotalSamplesS] = useState(useSelector((data) => data.dataVisualizationReducer.samplesCount))
+  const[totalSamples, setTotalSamples] = useState(0)
   const [filterJson,setFilterJson] = useState({})
+  const totalSamplesS = useSelector((data) => data.dataVisualizationReducer.samplesCount)
+  
+  useEffect(()=>{
+    if(project_id!==undefined){
+      dispatch(samplesCount("POST",{'project_id':project_id}))
+    }
+  else{
+      dispatch(samplesCount("POST",{}))
+    }
+  },[])
 
+  useEffect(()=>{
+    // console.log("changed");
+    if  (totalSamplesS && 'no_of_samples' in totalSamplesS){
+      setTotalSamples(totalSamplesS['no_of_samples'])
+    } 
+  },[totalSamplesS])
   
   const totalCount = useSelector((state) => {
     if ('Keys' in state.dataVisualizationReducer){
@@ -47,9 +66,10 @@ export default function Filter({ parentCallback, filterState, set_screen,project
   useEffect(()=>{
     if(project_id!==undefined){
       if(userDefinedFilter && Object.keys(userDefinedFilter).length > 0){
-        console.log('fdfdds',userDefinedFilter['filterJson']);
+        // console.log('fdfdds',userDefinedFilter['filterJson']);
         setSelected('Clinical Information')
         setFilterJson(userDefinedFilter['filterJson'])
+
       }}
       else{
         let filterBoxes = inputJson.filterBoxes;
@@ -97,11 +117,11 @@ export default function Filter({ parentCallback, filterState, set_screen,project
 
     if (Object.keys(filtersUi).length > 0) {
       Object.keys(filtersUi).forEach((e) => {
-        console.log("filtersUi",filtersUi);
+        // console.log("filtersUi",filtersUi);
         let tmp = [];
         if (filtersUi[e].length > 0) {
           filtersUi[e].forEach((sub) => {
-            console.log("sub",sub.key, sub.value);
+            // console.log("sub",sub.key, sub.value);
             tmp.push(
               <span
                 key={`${sub.key}-${Math.random()}`}
@@ -417,65 +437,76 @@ export default function Filter({ parentCallback, filterState, set_screen,project
   };
 
   const checkBoxFn = (event, id) => {
+     let child_id = "child_" + id; 
+     let child_did = document.getElementById(child_id);
+     const inputElements = child_did.querySelectorAll(
+       "input, select, checkbox, textarea"
+     );
+     for (let e in inputElements) {
+       if (inputElements[e].id) {
+         checkboxselectFn(inputElements[e]);
+         // selectFn(inputElements[e])
+       }
+     }
     var did = document.getElementById(id);
-    console.log("did------>",did.getAttribute("data-parent"));
-    if(did.hasAttribute("id")){
-      let name = did.getAttribute("id")
-      console.log("name",name);
-      let names = name.split("_")
-      let key,value
-      if(names[1]){
-         key = did.getAttribute("data-parent")
-         console.log("sssssssssss",key);
-      }
-      if(names[2]){
-         value = names[2];
-      }
-      let MainKey 
+    // console.log("did------>",did.getAttribute("data-parent"));
+    // if(did.hasAttribute("id")){
+    //   let name = did.getAttribute("id")
+    //   console.log("name",name);
+    //   let names = name.split("_")
+    //   let key,value
+    //   if(names[1]){
+    //      key = did.getAttribute("data-parent")
+    //      console.log("sssssssssss",key);
+    //   }
+    //   if(names[2]){
+    //      value = names[2];
+    //   }
+    //   let MainKey 
 
-      let filterBoxes = inputJson.filterBoxes;
+    //   let filterBoxes = inputJson.filterBoxes;
 
-      Object.keys(filterBoxes).forEach((item, k) => {
-        let t = [];
-        if (filterBoxes[item]) {
-          let childElements = filterBoxes[item];
-          // let itemr = item.split(" ")
-          // let finalkey = itemr.join('')
-          // console.log("childElemens->",finalkey, key);
-          Object.keys(childElements).forEach((childelm, c) => {
-            if(item === key &&  c.toString() === value){
-              MainKey = childelm
-              console.log("MainKey",MainKey);
-            }
-          })
-        }
-      })
+    //   Object.keys(filterBoxes).forEach((item, k) => {
+    //     let t = [];
+    //     if (filterBoxes[item]) {
+    //       let childElements = filterBoxes[item];
+    //       // let itemr = item.split(" ")
+    //       // let finalkey = itemr.join('')
+    //       // console.log("childElemens->",finalkey, key);
+    //       Object.keys(childElements).forEach((childelm, c) => {
+    //         if(item === key &&  c.toString() === value){
+    //           MainKey = childelm
+    //           console.log("MainKey",MainKey);
+    //         }
+    //       })
+    //     }
+    //   })
 
-      let temp =  {...filtersUi}
-      // console.log("before",temp);
-      // console.log("before",filtersUi);
-      // console.log("temp",temp[key]);
-      for(let i = 0; i < temp[key].length; i++){
-        if(temp[key][i]['key'].indexOf(MainKey)>-1){
-          console.log("ledenti");
-          console.log(temp[key][i]['key']);
-          temp[key].splice(i,1)
-        }
-      }  
-      console.log('after',temp); 
-      console.log('after',filtersUi); 
-      setFiltersUi(temp)
-    }
+    //   let temp =  {...filtersUi}
+    //   // console.log("before",temp);
+    //   // console.log("before",filtersUi);
+    //   // console.log("temp",temp[key]);
+    //   for(let i = 0; i < temp[key].length; i++){
+    //     if(temp[key][i]['key'].indexOf(MainKey)>-1){
+    //       console.log("ledenti");
+    //       console.log(temp[key][i]['key']);
+    //       temp[key].splice(i,1)
+    //     }
+    //   }  
+    //   console.log('after',temp); 
+    //   console.log('after',filtersUi); 
+    //   setFiltersUi(temp)
+    // }
 
     
     var checkbox_elm = document.getElementById(id).checked;
     if (checkbox_elm) {
-      console.log("checked");
+      // console.log("checked");
       document.getElementById(id).checked = false;
       document.getElementById(id + "_toggle").style.background = "#ccc";
       document.getElementById("child_" + id).classList.add("hidden");
     } else {
-      console.log("not checked");
+      // console.log("not checked");
       document.getElementById(id).checked = true;
       document.getElementById(id + "_toggle").style.background =
         inputJson["clinicalColor"][did.getAttribute("data-parent")];
@@ -551,7 +582,7 @@ export default function Filter({ parentCallback, filterState, set_screen,project
           });
         });
       });
-      console.log("filterSelectedHtml",filterSelectedHtml);
+      // console.log("filterSelectedHtml",filterSelectedHtml);
       setFiltersUi(filterSelectedHtml);
     }
   };
@@ -581,9 +612,12 @@ export default function Filter({ parentCallback, filterState, set_screen,project
     });
 
     let input_boxes = document.querySelectorAll(
-      "#all_checkboxes input[type=text]"
+      "#all_checkboxes input[type=number]"
     );
     [...input_boxes].forEach((il) => {
+      // console.log("-------.",il);
+      il.classList.remove('border-2')
+      il.classList.remove('border-red-400')
       delete tmp[il.id];
       il.value = "";
     });
@@ -597,10 +631,6 @@ export default function Filter({ parentCallback, filterState, set_screen,project
       document.getElementById('default-radio-2').checked = false
     }
     setFilterHtml([])
-    let el1 = document.getElementById('default-radio-1')
-    el1.checked = true
-    let el2 = document.getElementById('default-radio-2')
-    el2.checked = false
     let abcd = {...filtersUi}
     abcd['Basic/Diagnostic Information'] = []
     setFiltersUi(abcd)
@@ -612,7 +642,7 @@ export default function Filter({ parentCallback, filterState, set_screen,project
     let val = e.target.value
     setFilterCondition(val)
     tmp['filterCondition'] = val
-    console.log("filterCondition",selectState);
+    // console.log("filterCondition",selectState);
     setSelectState(tmp)
   }
 
@@ -709,7 +739,7 @@ export default function Filter({ parentCallback, filterState, set_screen,project
         {filterHtml.length && totalCount !== totalCountS ? (
           <>
             <div className="mb-5">
-              <h6>Total Number of Samples : 3</h6>
+              <h6>Total Number of Samples : {totalSamples}</h6>
             </div>
             {filterHtml}
             <div className="mt-5">

@@ -52,6 +52,45 @@ export function sendlogManagement(method,data){
   }
 }
 
+// export function projectIdStatus(type,data) {
+//   return (dispatch) => {
+//     dispatch({
+//       type: homeConstants.PROJECT_ID,
+//       payload: { 'status':data},
+//     });
+//     dispatch({ type: homeConstants.REQUEST_DONE });
+//   };
+// }
+
+export function samplesCount(type, data) {
+  return (dispatch) => {
+    let url = config.auth + "samplescount/";
+    sendRequest(url, type, data)
+      .then((result) => {
+        const d = result;
+        if (d.status === 200) {
+          dispatch({
+            type: dataVisualization.SAMPLES_COUNT,
+            payload: { ...d["data"], status: 200 },
+          });
+        } else {
+          dispatch({
+            type: dataVisualization.SAMPLES_COUNT,
+            payload: { status: d.status },
+          });
+        }
+        // dispatch({ type: dataVisualization.REQUEST_DONE });
+      })
+      .catch((e) => {
+        console.log("error", e);
+        dispatch({
+          type: dataVisualization.SAMPLES_COUNT,
+          payload: { status: 204 },
+        });
+      });
+  };
+}
+
 
 export function sendEmail(method,data){
   return (dispatch) => {

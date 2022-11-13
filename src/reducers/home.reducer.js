@@ -142,6 +142,12 @@ const homeReducer = (state = { 'home': 'home' }, { type, payload }) => {
         sendlogmanagement:payload
       }
 
+    // case homeConstants.PROJECT_ID:
+    //   return {
+    //     ...state,
+    //     project_id_status:payload
+    //   }
+
     case homeConstants.CLEAR_ID_PASSWORD_RESET_PASSWORD:
       const {find_id,find_password,change_password_status, ...rest}=state 
       state= rest
