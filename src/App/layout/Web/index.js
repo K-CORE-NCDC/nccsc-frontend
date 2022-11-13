@@ -87,7 +87,7 @@ export default function Web(props) {
         'sessionId': sessionId,
         'url': 'http://localhost:9192/home',
         'startTime': loginTime,
-        'endTime': ''
+        'endTime': '',
       }
       arrayOfLog[0] = object
       // let alid = sessionStorage.getItem('IdNumber')
@@ -119,6 +119,18 @@ export default function Web(props) {
     let latitude = latandLong['lat']
     let longitude = latandLong['lon']
     var today = new Date();
+    console.log("date",today);
+
+    const todays = new Date();
+    const yyyy = todays.getFullYear();
+    let mm = todays.getMonth() + 1; // Months start at 0!
+    let dd = todays.getDate();
+    
+    if (dd < 10) dd = '0' + dd;
+    if (mm < 10) mm = '0' + mm;
+    
+    const formattedToday = dd + '/' + mm + '/' + yyyy;
+
     var currentTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
     logDataIs[idNumber]['endTime'] = currentTime
@@ -133,12 +145,14 @@ export default function Web(props) {
       'endTime': '',
       'latitude': latitude,
       'longitude': longitude,
+      'visitedDate':formattedToday,
     }
     sessionStorage.setItem('IdNumber', idNumber)
     logDataIs[idNumber] = object
     sessionStorage.setItem('logData', JSON.stringify(logDataIs))
-
+    console.log('idNumber',idNumber);
     if (logDataIs.length >= 10) {
+      logDataIs[idNumber]['endTime'] = currentTime
       idNumber = 0
       sessionStorage.setItem('IdNumber', idNumber)
       dispatch(sendlogManagement("POST", logDataIs))
@@ -153,6 +167,7 @@ export default function Web(props) {
         'endTime': '',
         'latitude': latitude,
         'longitude': longitude,
+        'visitedDate':formattedToday
       }
       logDataIs[idNumber] = object
       sessionStorage.setItem('logData', JSON.stringify(logDataIs))

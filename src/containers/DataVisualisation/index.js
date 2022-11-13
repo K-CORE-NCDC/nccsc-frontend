@@ -16,6 +16,7 @@ import {
   getBreastKeys,
   getUserDataProjectsTableData,
   clearDataVisualizationState,
+  // projectIdStatus
 } from "../../actions/api_actions";
 import { Link } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
@@ -40,6 +41,9 @@ export default function DataVisualization() {
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
   const userProjectDetails = useSelector(
     (data) => data.dataVisualizationReducer.userProjectsDataTable
+  );
+  const project_id_status = useSelector(
+    (data) => data.homeReducer.project_id_status
   );
   let { tab, project_id } = useParams();
   const [chartName, setChartName] = useState(tab);
@@ -115,6 +119,12 @@ export default function DataVisualization() {
 
   useEffect(() => {
     if (project_id !== undefined) {
+      // if(project_id_status && 'status' in project_id_status && project_id_status['status'] !== 'true'){
+      //   console.log('--------------->',project_id_status['status']);
+      //   console.log("first time");
+      //   dispatch(projectIdStatus('get','true'))
+      //   // dispatch(clearDataVisualizationState()) 
+      // }
       let projectAvailableSteps = undefined;
       if (userProjectDetails) {
         projectAvailableSteps = userProjectDetails.available_steps;
@@ -145,7 +155,10 @@ export default function DataVisualization() {
       }
       setavailableTabsForProject(tabList);
     }
-  }, [project_id, userProjectDetails]);
+    // else{
+    //     dispatch(projectIdStatus('get','false'))
+    // }
+  }, [project_id, userProjectDetails,project_id_status]);
 
   const toggleTab = (event) => {
     let t = ["Volcano Plot", "Survival Plot", "Fusion Plot"];
@@ -292,9 +305,18 @@ export default function DataVisualization() {
   }, []);
 
   useEffect(() => {
-    if (state.genes.length > 0) {
-      dispatch(getBreastKeys({}));
+    if (project_id !== undefined) {
+      if (state.genes.length > 0) {
+        dispatch(getBreastKeys({ project_id: project_id }));
+      }
+    } else {
+      if (state.genes.length > 0) {
+        dispatch(getBreastKeys({}));
+      }
     }
+    // if (state.genes.length > 0) {
+    //   dispatch(getBreastKeys({}));
+    // }
   }, [state["genes"]]);
 
   useEffect(() => {
