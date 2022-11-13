@@ -29,6 +29,7 @@ const Notice = React.lazy(() => import('./containers/CustomerVoice/Notice'))
 const Qa = React.lazy(() => import('./containers/CustomerVoice/QA'))
 
 const InterPro =  React.lazy(() => import('./containers/Tools/InterPro'))
+const Blast =  React.lazy(() => import('./containers/Tools/Blast'))
 const VcfMaf =  React.lazy(() => import('./containers/Tools/Vcfmaf'))
 
 
@@ -69,6 +70,7 @@ const route = [
   { path: `/resetpassword/:token`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="ChangePassword" defaultMessage="ChangePassword" />, component: ResetPassword},
   // { path: `/gettable/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="ChangePassword" defaultMessage="ChangePassword" />, component: Report},
 
+  { path: `/blast/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="blast" defaultMessage="Blast" />, component: Blast},
   { path: `/interpro/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Interpro" defaultMessage="Interpro" />, component: InterPro},
   { path: `/vcfmaf/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="VCFMAF" defaultMessage="VCF to MAF" />, component: VcfMaf},
   { path: `/organoid/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Organoid" defaultMessage="organoid" />, component: Organoid},
