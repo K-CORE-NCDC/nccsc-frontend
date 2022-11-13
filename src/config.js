@@ -2,6 +2,6 @@
 export default {
   defaultPath: '/',
   basename: '/',
-  auth: 'http://3.141.3.176:9799/',
+  auth: 'http://3.141.3.176:9798/',
   media: 'http://18.219.51.159:9798/corev/media/',
 }
