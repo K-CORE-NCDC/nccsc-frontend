@@ -16,6 +16,7 @@ import {
   getBreastKeys,
   getUserDataProjectsTableData,
   clearDataVisualizationState,
+  samplesCount,
   // projectIdStatus
 } from "../../actions/api_actions";
 import { Link } from "react-router-dom";
@@ -123,7 +124,7 @@ export default function DataVisualization() {
       //   console.log('--------------->',project_id_status['status']);
       //   console.log("first time");
       //   dispatch(projectIdStatus('get','true'))
-      //   // dispatch(clearDataVisualizationState()) 
+      //   // dispatch(clearDataVisualizationState())
       // }
       let projectAvailableSteps = undefined;
       if (userProjectDetails) {
@@ -158,7 +159,7 @@ export default function DataVisualization() {
     // else{
     //     dispatch(projectIdStatus('get','false'))
     // }
-  }, [project_id, userProjectDetails,project_id_status]);
+  }, [project_id, userProjectDetails, project_id_status]);
 
   const toggleTab = (event) => {
     let t = ["Volcano Plot", "Survival Plot", "Fusion Plot"];
@@ -292,32 +293,57 @@ export default function DataVisualization() {
     setMenuItems(tmp);
   }, [availableTabsForProject, chartName]);
 
+  // useEffect(() => {
+  //   if (project_id !== undefined) {
+  //     if (state.genes.length > 0) {
+  //       dispatch(getBreastKeys({ project_id: project_id }));
+  //     }
+  //   } else {
+  //     if (state.genes.length > 0) {
+  //       dispatch(getBreastKeys({}));
+  //     }
+  //   }
+  // }, []);
+
   useEffect(() => {
+    console.log("first time");
     if (project_id !== undefined) {
-      if (state.genes.length > 0) {
-        dispatch(getBreastKeys({ project_id: project_id }));
-      }
+      dispatch(samplesCount("POST", { project_id: project_id }));
+      dispatch(getBreastKeys({ project_id: project_id }));
     } else {
-      if (state.genes.length > 0) {
-        dispatch(getBreastKeys({}));
-      }
+      dispatch(samplesCount("POST", {}));
+      dispatch(getBreastKeys({}));
     }
   }, []);
 
+  // useEffect(() => {
+  //   if (project_id !== undefined) {
+  //     if (state.genes.length > 0) {
+  //       dispatch(getBreastKeys({ project_id: project_id }));
+  //     }
+  //   } else {
+  //     if (state.genes.length > 0) {
+  //       dispatch(getBreastKeys({}));
+  //     }
+  //   }
+  //   // if (state.genes.length > 0) {
+  //   //   dispatch(getBreastKeys({}));
+  //   // }
+  // }, [state["genes"]]);
+
   useEffect(() => {
     if (project_id !== undefined) {
-      if (state.genes.length > 0) {
-        dispatch(getBreastKeys({ project_id: project_id }));
-      }
+      dispatch(samplesCount("POST", { project_id: project_id }));
+      dispatch(getBreastKeys({ project_id: project_id }));
     } else {
-      if (state.genes.length > 0) {
-        dispatch(getBreastKeys({}));
-      }
+      dispatch(samplesCount("POST", {}));
+      dispatch(getBreastKeys({}));
     }
-    // if (state.genes.length > 0) {
-    //   dispatch(getBreastKeys({}));
-    // }
   }, [state["genes"]]);
+
+  // if (state.genes.length > 0) {
+  //   dispatch(getBreastKeys({}));
+  // }
 
   useEffect(() => {
     if (BrstKeys) {
@@ -346,7 +372,6 @@ export default function DataVisualization() {
       viz: chartx,
     }));
   }, [screenCapture]);
-
 
   const LoadChart = (w, type) => {
     switch (type) {
@@ -439,8 +464,7 @@ export default function DataVisualization() {
     } else {
       setToggle(!toggle);
     }
-  }
-
+  };
 
   useEffect(() => {
     return () => {
@@ -712,26 +736,28 @@ export default function DataVisualization() {
                             Loading...
                           </button>
                         )}
-                        {
-                          screenCapture === true && 
+                        {screenCapture === true && (
                           <>
-                          <div
-                            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none m-auto"
-                           
-                          >
-                            <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none h-56" style={{width:'400px'}}>
-                                <div className="relative p-6 flex-auto my-auto" style={{height:'100%'}}>
-                                  <p className="my-4 text-slate-500 text-lg leading-relaxed py-12">
-                                    Image is downloading..... 
-                                  </p>
+                            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none m-auto">
+                              <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                                <div
+                                  className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none h-56"
+                                  style={{ width: "400px" }}
+                                >
+                                  <div
+                                    className="relative p-6 flex-auto my-auto"
+                                    style={{ height: "100%" }}
+                                  >
+                                    <p className="my-4 text-slate-500 text-lg leading-relaxed py-12">
+                                      Image is downloading.....
+                                    </p>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-                        </>
-                        }
+                            <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                          </>
+                        )}
                         {screenCaptureConfirmation && (
                           <ConfirmDownload
                             screenCaptureFunction={setToFalseAfterScreenCapture}
