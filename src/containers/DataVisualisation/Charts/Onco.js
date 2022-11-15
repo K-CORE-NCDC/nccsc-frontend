@@ -10,12 +10,14 @@ import NoContentMessage from '../../Common/NoContentComponent'
 import Multiselect from 'multiselect-react-dropdown';
 import inputJson from '../../Common/data';
 import {FormattedMessage} from 'react-intl';
-
+import { useParams } from "react-router-dom";
 
 export default function DataOnco({ width,inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
   const dispatch = useDispatch()
   const oncoJson = useSelector((data) => data.dataVisualizationReducer.oncoSummary);
+  
+  const filterData = useSelector((data)=>data.dataVisualizationReducer.userDefinedFilter);
   const [activeCmp,setActiveCmp] = useState(false)
   const [chartData,setChartData] = useState({})
   const [inputState,setInputState] = useState({})
@@ -27,12 +29,26 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
   const [noContent, setNoContent] = useState(true)
   const [optionChoices,setOptionChoices] = useState([])
   const [option,setOption] = useState([])
+  let { tab, project_id } = useParams();
 
+  
   useEffect(()=>{
     if(inputJson['filterChoices']){
-      let f = inputJson['filterChoices']
-
-      setOptionChoices(f)
+      if (project_id !== undefined) {
+        if(filterData.status===200){
+          let filters = filterData['filterJson']
+          filters = filters['Clinical Information']
+          let tmp = []
+          for (const key in filters) {
+            tmp.push({"name":key,"id":key})
+          }
+          console.log(tmp)
+          setOptionChoices(tmp)
+        }
+      }else{
+        let f = inputJson['filterChoices']
+        setOptionChoices(f)  
+      }
     }
   },[inputJson['filterChoices']])
 
@@ -41,7 +57,6 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
       setActiveCmp(false)
       setInputState((prevState) => ({...prevState,...inputData }))
     }
-    console.log("-->>",inputData,inputState);
   },[inputData])
 
 
@@ -58,7 +73,6 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
 
   useEffect(()=>{
     if(oncoJson){
-      console.log(oncoJson)
       setChartData((prevState) => ({
         ...prevState,
         ...oncoJson
