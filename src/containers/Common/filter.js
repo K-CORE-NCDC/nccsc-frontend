@@ -31,17 +31,19 @@ export default function Filter({ parentCallback, filterState, set_screen,project
   const [filterJson,setFilterJson] = useState({})
   const totalSamplesS = useSelector((data) => data.dataVisualizationReducer.samplesCount)
   
-  useEffect(()=>{
-    if(project_id!==undefined){
-      dispatch(samplesCount("POST",{'project_id':project_id}))
-    }
-  else{
-      dispatch(samplesCount("POST",{}))
-    }
-  },[])
+  // useEffect(()=>{
+  //   if(project_id!==undefined){
+  //     dispatch(samplesCount("POST",{'project_id':project_id}))
+  //   }
+  // else{
+  //     dispatch(samplesCount("POST",{}))
+  //   }
+  // },[])
+
+  console.log('------------>',totalSamplesS);
 
   useEffect(()=>{
-    // console.log("changed");
+    console.log("changed");
     if  (totalSamplesS && 'no_of_samples' in totalSamplesS){
       setTotalSamples(totalSamplesS['no_of_samples'])
     } 
