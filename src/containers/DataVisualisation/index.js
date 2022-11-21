@@ -137,9 +137,9 @@ export default function DataVisualization() {
       } else {
         Object.keys(projectAvailableSteps).forEach((stepName) => {
           if (projectAvailableSteps[stepName].length > 0) {
-            if (stepName === "fusion") {
-              return;
-            }
+            // if (stepName === "fusion") {
+            //   return;
+            // }
             if (stepName === "lollypop") {
               tabList.push("lollipop");
             } else if (stepName === "oncoprint") {
@@ -292,6 +292,21 @@ export default function DataVisualization() {
     }
     setMenuItems(tmp);
   }, [availableTabsForProject, chartName]);
+  
+  useEffect(() => {
+    if (project_id !== undefined) {
+      if (state.genes.length > 0) {
+      dispatch(samplesCount("POST", { project_id: project_id }));
+      dispatch(getBreastKeys(state));
+      }
+    } else {
+      if (state.genes.length > 0) {
+      dispatch(samplesCount("POST", {}));
+      dispatch(getBreastKeys(state));
+    }
+  }
+}, [tab,state]);
+
 
   // useEffect(() => {
   //   if (project_id !== undefined) {
@@ -304,19 +319,7 @@ export default function DataVisualization() {
   //     }
   //   }
   // }, []);
-
-  useEffect(() => {
-    console.log("first time");
-    if (project_id !== undefined) {
-      dispatch(samplesCount("POST", { project_id: project_id }));
-      dispatch(getBreastKeys({ project_id: project_id }));
-    } else {
-      dispatch(samplesCount("POST", {}));
-      dispatch(getBreastKeys({}));
-    }
-  }, []);
-
-  // useEffect(() => {
+// useEffect(() => {
   //   if (project_id !== undefined) {
   //     if (state.genes.length > 0) {
   //       dispatch(getBreastKeys({ project_id: project_id }));
@@ -331,15 +334,15 @@ export default function DataVisualization() {
   //   // }
   // }, [state["genes"]]);
 
-  useEffect(() => {
-    if (project_id !== undefined) {
-      dispatch(samplesCount("POST", { project_id: project_id }));
-      dispatch(getBreastKeys({ project_id: project_id }));
-    } else {
-      dispatch(samplesCount("POST", {}));
-      dispatch(getBreastKeys({}));
-    }
-  }, [state["genes"]]);
+  // useEffect(() => {
+  //   if (project_id !== undefined) {
+  //     dispatch(samplesCount("POST", { project_id: project_id }));
+  //     dispatch(getBreastKeys({ project_id: project_id }));
+  //   } else {
+  //     dispatch(samplesCount("POST", {}));
+  //     dispatch(getBreastKeys({}));
+  //   }
+  // }, [state["genes"]]);
 
   // if (state.genes.length > 0) {
   //   dispatch(getBreastKeys({}));

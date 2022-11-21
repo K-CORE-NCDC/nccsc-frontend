@@ -375,8 +375,8 @@ const BoxPlot = React.forwardRef(({view_type, box_data,chart_type, watermarkCss 
             tooltip.transition()
               .duration(200)
               .style('opacity', 0.9);
-
-            tooltip.html("Sample:<br/>"+BrstKeys[i.Sample]+"<br/>gene val<br/>"+i.Sepal_Length)
+            console.log('Sepal_Length',i.Sepal_Length);
+            tooltip.html("Sample:<br/>"+BrstKeys[i.Sample]+`<br/>${view_type==="gene_vl" ? 'gene val' : 'z-score'}<br/>`+i.Sepal_Length)
               .style('left', d.pageX - 550 + 'px')
               .style('top', d.pageY - 150 + 'px');
           })

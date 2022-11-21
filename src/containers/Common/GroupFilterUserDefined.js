@@ -313,12 +313,12 @@ let UserDefinedGroupFilters = ({
     let max = "to";
     let min = "from";
     if (clinicalMaxMinInfo) {
-      // let clinicalMaxMinInfoData = clinicalMaxMinInfo["data"];
-      console.log("lastttttttttt",clinicalMaxMinInfo);
       let clinicalMaxMinInfoData = clinicalMaxMinInfo;
       let clinicalInfoId = selectedFilterDetails["id"];
-      console.log("selectedFilterDetails", selectedFilterDetails);
-      console.log("clinicalInfoId", clinicalInfoId);
+      // let clinicalMaxMinInfoData = clinicalMaxMinInfo["data"];
+      // console.log("lastttttttttt",clinicalMaxMinInfo);
+      // console.log("selectedFilterDetails", selectedFilterDetails);
+      // console.log("clinicalInfoId", clinicalInfoId);
       if (clinicalInfoId + "_min" in clinicalMaxMinInfoData) {
         min = clinicalMaxMinInfoData[clinicalInfoId + "_min"];
       }
