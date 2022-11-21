@@ -877,6 +877,7 @@ export function getIgv(type, data) {
 export function getBreastKeys(data) {
   return (dispatch) => {
     //   dispatch({ type: homeConstants.DATA_SUMMARY });
+    console.log("data--------------=============================>",data);
     let url = config.auth + "brst-key/";
     sendRequest(url, "POST", data)
       .then((result) => {

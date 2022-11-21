@@ -68,7 +68,7 @@ export default function Filter({ parentCallback, filterState, set_screen,project
   useEffect(()=>{
     if(project_id!==undefined){
       if(userDefinedFilter && Object.keys(userDefinedFilter).length > 0){
-        // console.log('fdfdds',userDefinedFilter['filterJson']);
+        console.log('fdfdds',userDefinedFilter['filterJson']);
         setSelected('Clinical Information')
         setFilterJson(userDefinedFilter['filterJson'])
 

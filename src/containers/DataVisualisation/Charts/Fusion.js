@@ -36,6 +36,7 @@ export default function FusionPlot({
   const [tableData, setTableData] = useState([]);
   const [fusionId, setFusionId] = useState(0);
   const [groupName, setGroupName] = useState("");
+  const [noData, setNoData] = useState('false')
   let { tab, project_id } = useParams();
   const [userDefienedFilter, setUserDefienedFilter] = useState(
     project_id === undefined ? "static" : "dynamic"
@@ -182,8 +183,14 @@ export default function FusionPlot({
 
   useEffect(() => {
     if (VennData) {
-      if (VennData.status === 200) {
+      console.log("lenth",Object.keys(VennData['res']).length)
+      if (VennData.status === 200 && Object.keys(VennData['res']).length !== 0) {
         setLoader(false);
+        setNoData('false')
+      }
+      else{
+        setLoader(false);
+        setNoData('true')
       }
     }
   }, [VennData]);
@@ -311,19 +318,34 @@ export default function FusionPlot({
               smallScreen ? " xs:absolute" : "xs:w-full"
             }`}
           >
-            {VennData && (
+            {VennData && noData === 'false' && (
               <FusionVennCmp
                 parentCallback={getVennIds}
                 VennData={VennData}
                 width={width}
               />
             )}
-            {fusionId !== 0 && (
+            {
+              noData === 'true' && (
+                <div
+                className="mt-20  w-11/12 mx-auto"
+                style={{
+                  textAlign: "center",
+                  marginBottom: "-42px",
+                  lineHeight: "1.4",
+                  fontSize: "25px",
+                }}
+                >
+                <h1>  No Data Found</h1>
+                </div>
+              )
+            }
+            {noData === 'false' && fusionId !== 0 &&  (
               <div className="mt-5 my-0 mx-auto h-auto w-11/12 shadow-lg">
                 <FusionCustomPlot fusionId={fusionId} />
               </div>
             )}
-            {tableData.length > 0 && (
+            {noData === 'false' && tableData.length > 0 && (
               <div>
                 <div
                   className="mt-20  w-11/12 mx-auto"

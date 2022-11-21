@@ -279,6 +279,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
       let editInputData = inputData
       editInputData = { ...editInputData, sampleKey: sampleKey }
+      console.log('editInputData',editInputData);
       dispatch(getBreastKeys(editInputData))
       if (editInputData.type !== '' && sampleKey != '' && editInputData['genes'].length > 0) {
         setLoader(true)
@@ -306,12 +307,16 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
   useEffect(() => {
     if (screenCapture) {
-      setWatermarkCSS("watermark")
+      if(reference !== null){
+        setWatermarkCSS("watermark")
+      }
     } else {
       setWatermarkCSS("")
     }
     if (watermarkCss !== "" && screenCapture) {
-      exportComponentAsPNG(reference)
+      if(reference !== null){
+        exportComponentAsPNG(reference)
+      }
       setToFalseAfterScreenCapture()
     }
   }, [screenCapture, watermarkCss])

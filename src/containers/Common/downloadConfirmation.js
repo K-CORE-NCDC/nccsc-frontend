@@ -3,6 +3,7 @@ import axios from 'axios'
 import config from '../../config'
 import { useDispatch  } from 'react-redux';
 import {updateDownloadVisualizationPurpose} from '../../actions/api_actions'
+import { useParams } from "react-router-dom";
 
 const ConfirmDownload = ({ screenCaptureFunction, hideModal }) => {
     const dispatch = useDispatch()
@@ -13,6 +14,9 @@ const ConfirmDownload = ({ screenCaptureFunction, hideModal }) => {
     const [errorMessage, setErrorMessage] = useState('')
     const [showLoginPage, setShowLoginPage] = useState(false)
     const purposeOptions = ['business', 'research', 'diagonosis']
+    let { tab, project_id } = useParams();
+    const [tab_, setTab] = useState(tab)
+    console.log("tab",tab,project_id);
 
     const accessToken = localStorage.getItem('ncc_access_token');
     // console.log('render');
@@ -68,7 +72,9 @@ const ConfirmDownload = ({ screenCaptureFunction, hideModal }) => {
         }else{
             dispatch(updateDownloadVisualizationPurpose({
                 organization: downloadOrganization,
-                purpose: downloadPurpose
+                purpose: downloadPurpose,
+                tab:tab,
+                project_id: project_id ? project_id : null
             }))
             hideModal(true)
             screenCaptureFunction(true)
