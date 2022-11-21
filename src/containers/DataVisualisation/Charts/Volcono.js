@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, Fragment, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import VolcanoCmp from "../../Common/Volcano";
@@ -58,18 +59,17 @@ export default function DataVolcono({
   );
 
   const updateGroupFilters = (filtersObject) => {
-    console.log(filtersObject);
     if (filtersObject) {
+      console.log(filtersObject)
       setGroupFilters(filtersObject);
+
     }
   };
 
   useEffect(() => {
     if (!clinicalMaxMinInfo) {
-      console.log(project_id);
       if (project_id) {
-        // dispatch(getClinicalMaxMinInfo("GET", { project_id: project_id }));
-        dispatch(getClinicalMaxMinInfo("GET", {}));
+        return false
       } else {
         dispatch(getClinicalMaxMinInfo("GET", {}));
       }
@@ -88,17 +88,12 @@ export default function DataVolcono({
           inputData["volcanoProteomeType"] = proteomeValue;
         }
         inputData["filterType"] = userDefienedFilter;
-        // console.log(inputData,groupFilters)
-        if(project_id === undefined){
-
-          dispatch(
-            getVolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters })
-            );
-          }
-          else{
-            userDefinedGetVolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters })
-    
+        console.log('----')
+        if(project_id ){
+          inputData['project_id'] = parseInt(project_id)
         }
+        dispatch(getVolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters }));
+        
       }
     }
   }, [inputData, groupFilters]);
@@ -190,18 +185,13 @@ export default function DataVolcono({
   };
   const submitProteomeNT = (e) => {
     setLoader(true);
-
     inputData["volcanoProteomeType"] = proteomeValue;
     inputData["filterType"] = userDefienedFilter;
     if(project_id === undefined){
-
-      dispatch(
-        getVolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters })
-        );
-      }
-      else{
-        userDefinedGetVolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters })
-
+      dispatch(getVolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters }));
+    }
+    else{
+      userDefinedGetVolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters });
     }
   };
 
@@ -304,13 +294,13 @@ export default function DataVolcono({
                   </div>
                   <div className="flex-row items-center mb-4">
                     <input
-                      onChange={() => setProteomeValue("NT")}
-                      checked={proteomeValue === "NT" ? true : false}
-                      id="default-radio-3"
-                      type="radio"
-                      value="normal_tumor"
-                      name="proteome"
-                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      onChange = {() => setProteomeValue("NT")}
+                      checked = {proteomeValue === "NT" ? true : false}
+                      id = "default-radio-3"
+                      type = "radio"
+                      value = "normal_tumor"
+                      name = "proteome"
+                      className = "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />
                     <label
                       htmlFor="default-radio-3"

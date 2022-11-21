@@ -1,11 +1,10 @@
-import { element } from 'prop-types';
 import React, { useState,useEffect } from 'react'
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, } from "react-redux";
 import Oncoprint from "oncoprintjs";
 // import CanvasXpressReact from 'canvasxpress-react';
 import _ from 'lodash';
 import './rules';
-import html2canvas from 'html2canvas';
+
 import $ from 'jquery'
 import inputJson from '../Common/data'
 import {
@@ -13,8 +12,7 @@ import {
     ZoomOutIcon,
   } from '@heroicons/react/outline'
 
-const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
-    console.log(`---`,data);
+const OncoCmp = React.forwardRef(({ width,data, watermarkCss,customFilterJson,project_id }, ref) => {
     const [inputRule,setInputRule] = useState({})
     const [customName,setCustomName] = useState({})
     const [oncoprintObj,setOncoprintObj] = useState({})
@@ -303,7 +301,6 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
         oncoprint.releaseRendering();
         // });
         setTimeout(function(){ 
-            console.log(names_variant,rule_types)
             if(rule_types.length>0){
                 var legends = document.getElementsByClassName('legends')
                 for (let r = 0; r < rule_types.length; r++) {
@@ -320,7 +317,6 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
     }
 
     useEffect(()=>{
-        // console.log(oncoprintObj)
         if(watermarkCss){
             var svgEl = oncoprintObj.toSVG()
             var xml = new XMLSerializer().serializeToString(svgEl);
@@ -339,12 +335,18 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
 
     useEffect(()=>{
         if (data){
+            
             let custom_name = {}
-            for (let cn = 0; cn < inputJson['filterChoices'].length; cn++) {
-                custom_name[inputJson['filterChoices'][cn]['id']] = inputJson['filterChoices'][cn]['name']
+            if(customFilterJson && project_id){
+                for (let cn = 0; cn < customFilterJson.length; cn++) {
+                    custom_name[customFilterJson[cn]['id']] = customFilterJson[cn]['name']
+                }
+            }else{
+                for (let cn = 0; cn < inputJson['filterChoices'].length; cn++) {
+                    custom_name[inputJson['filterChoices'][cn]['id']] = inputJson['filterChoices'][cn]['name']
+                }
             }
             setCustomName((prevState)=>({...prevState,...custom_name}))
-
             setState((prevState) => ({...prevState,...data }))
             let rule = window.geneticrules.genetic_rule_set_custom
             setInputRule((prevState) => ({...prevState,...rule }))
@@ -360,7 +362,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
         if(elem){
             if(elem.classList.contains('legends')){
                 let name = elem.getAttribute('data-text')
-                console.log(names_variant,name)
+                
                 if (name in names_variant){
                     let types = (clickType)?clickType:[]
                     let zx = names_variant[name]
