@@ -12,7 +12,7 @@ import {
     ZoomOutIcon,
   } from '@heroicons/react/outline'
 
-const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
+const OncoCmp = React.forwardRef(({ width,data, watermarkCss,customFilterJson,project_id }, ref) => {
     const [inputRule,setInputRule] = useState({})
     const [customName,setCustomName] = useState({})
     const [oncoprintObj,setOncoprintObj] = useState({})
@@ -335,12 +335,18 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss }, ref) => {
 
     useEffect(()=>{
         if (data){
+            
             let custom_name = {}
-            for (let cn = 0; cn < inputJson['filterChoices'].length; cn++) {
-                custom_name[inputJson['filterChoices'][cn]['id']] = inputJson['filterChoices'][cn]['name']
+            if(customFilterJson && project_id){
+                for (let cn = 0; cn < customFilterJson.length; cn++) {
+                    custom_name[customFilterJson[cn]['id']] = customFilterJson[cn]['name']
+                }
+            }else{
+                for (let cn = 0; cn < inputJson['filterChoices'].length; cn++) {
+                    custom_name[inputJson['filterChoices'][cn]['id']] = inputJson['filterChoices'][cn]['name']
+                }
             }
             setCustomName((prevState)=>({...prevState,...custom_name}))
-
             setState((prevState) => ({...prevState,...data }))
             let rule = window.geneticrules.genetic_rule_set_custom
             setInputRule((prevState) => ({...prevState,...rule }))

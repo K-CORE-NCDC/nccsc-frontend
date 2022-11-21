@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { FormattedMessage } from "react-intl";
-import Multiselect from "multiselect-react-dropdown";
 import { useParams } from "react-router-dom";
 const LabelCss = "block text-left text-blue-700-700 text-lg  font-bold mb-2";
 const checkBoxCss =
@@ -15,9 +14,6 @@ let UserDefinedGroupFilters = ({
   groupFilters,
   viz_type,
 }) => {
-  // const clinicalMaxMinInfo = useSelector(
-  //   (data) => data.dataVisualizationReducer.clinicalMaxMinInfo
-  // );
   const  [clinicalMaxMinInfo, setClinicalMaxMinInfo] = useState({})
 
   const userDefinedFilter = useSelector(
@@ -42,8 +38,8 @@ let UserDefinedGroupFilters = ({
       setClinicalMaxMinInfo(minmax)
     }
   }, [userDefinedFilter]);
-  console.log("clinicalMaxMinInfo", clinicalMaxMinInfo);
-  // console.log("userDefinedFilter", userDefinedFilter);
+  
+
   const [filterSelected, setFilterSelected] = useState("");
   const [selectedFilterDetails, setSelectedFilterDetails] = useState({});
   const [filterInputs, setFilterInputs] = useState([]);
@@ -61,15 +57,13 @@ let UserDefinedGroupFilters = ({
   let { tab, project_id } = useParams();
 
   useEffect(() => {
-    // console.log("clinincalMaxInfo",clinicalMaxMinInfo);
+    
     let preDefienedGroups1 = {};
     let filterChoices = [];
     if (project_id !== undefined) {
       if (userDefinedFilter && Object.keys(userDefinedFilter).length > 0) {
-        // console.log("columns", userDefinedFilter["filterJson"]);
         let colsobj = userDefinedFilter["filterJson"]["Clinical Information"];
         for (let i in colsobj) {
-          // console.log("range and value", i, colsobj[i]);
           for (let j in colsobj[i]) {
             if (colsobj[i][j]["type"] === "number") {
               let d_obj = {
@@ -78,7 +72,7 @@ let UserDefinedGroupFilters = ({
                 name: colsobj[i][j]["name"],
                 input: "number",
               };
-              // console.log(d_obj);
+
               let group_a = {
                 label: `${colsobj[i][j]["min"]}-${colsobj[i][j]["max"]}`,
                 from: colsobj[i][j]["min"],
@@ -236,12 +230,7 @@ let UserDefinedGroupFilters = ({
     // console.log("userGivenInputValues 000000000", userGivenInputValues);
   };
 
-  // useEffect(() => {
-  //   console.log("userGivenInputValues", userGivenInputValues);
-  //   console.log("filterInputs", filterInputs);
-  //   console.log("filterChoices", filterChoices);
-  // });
-
+ 
   useEffect(() => {
     if (groupFilters && Object.keys(groupFilters).length > 0) {
       let filterType = groupFilters.type;

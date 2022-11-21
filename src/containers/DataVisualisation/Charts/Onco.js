@@ -30,7 +30,7 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
   const [optionChoices,setOptionChoices] = useState([])
   const [option,setOption] = useState([])
   let { tab, project_id } = useParams();
-
+  const [customFilterJson,setCustomFilterJson] = useState([])
   
   useEffect(()=>{
     if(inputJson['filterChoices']){
@@ -40,10 +40,16 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
           filters = filters['Clinical Information']
           let tmp = []
           for (const key in filters) {
-            tmp.push({"name":key,"id":key})
+            console.log(filters[key])
+            if(filters[key].length>0){
+              if(filters[key][0]['type']!=='number'){
+                tmp.push({"name":key,"id":key})
+              }
+            }
+            
           }
-          console.log(tmp)
           setOptionChoices(tmp)
+          setCustomFilterJson(tmp)
         }
       }else{
         let f = inputJson['filterChoices']
@@ -251,6 +257,8 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
                 data={chartData}
                 table_data={tableData}
                 table_count={tableCount}
+                customFilterJson = {customFilterJson}
+                project_id = {project_id}
                 />
               </div>}
               {noContent && <NoContentMessage />}
