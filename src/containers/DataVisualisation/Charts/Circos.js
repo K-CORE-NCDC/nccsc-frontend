@@ -290,11 +290,11 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
     }
   }, [inputData, sampleKey])
 
-  useEffect(() => {
-    return () => {
-      dispatch(getBreastKeys({}))
-    }
-  }, [])
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(getBreastKeys({}))
+  //   }
+  // }, [])
 
   useEffect(() => {
     if (inputData && inputData.genes.length > 0) {
@@ -306,6 +306,8 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
 
 
   useEffect(() => {
+    console.log("sample",sampleKey);
+    if (inputData && inputData.genes.length > 0 && sampleKey !== '') {
     if (screenCapture) {
       if(reference !== null){
         setWatermarkCSS("watermark")
@@ -319,6 +321,11 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
       }
       setToFalseAfterScreenCapture()
     }
+  }
+  else{
+    setToFalseAfterScreenCapture()
+    console.log("abcd");
+  }
   }, [screenCapture, watermarkCss])
 
   useEffect(() => {

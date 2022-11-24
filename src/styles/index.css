@@ -236,10 +236,21 @@ input:checked ~ .dot {
   display: none;
 }
     
-.hover-trigger:hover + .hover-target {
+ /* .hover-trigger:hover + .hover-target {
   display: block;
   color: #fff;
+  background-color: #429927;
+}  */
+
+
+.dropdownHeader ul li :hover
+{
   background-color: #0c3c6a;
+}
+.hover-target li :hover  {
+  display: block;
+  color: #fff;
+  background-color: rgb(55, 136, 212) !important; 
 }
 
 /* .con ul li:nth-child(1) a::after{
@@ -433,6 +444,28 @@ input:checked ~ .dot {
     font-size: 24px;
     text-align: left;
     color: #152a52;
+}
+
+
+.intro_wrap_organoid {
+    max-width: 1200px;
+    /* margin: auto auto; */
+    padding:0 1%;
+}
+
+.intro_wrap_organoid h1 {
+    margin-bottom: 15px;
+    font-size: 24px;
+    text-align: left;
+    color: #152a52;
+}
+.intro_wrap_organoid h1::before {
+  content: "";
+  display: block;
+  height: 4px;
+  width: 70px;
+  background-color: #1a4973;
+  margin-bottom: 8px;
 }
 
 .Terms_Conditions_Wrap{

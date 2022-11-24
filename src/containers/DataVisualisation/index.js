@@ -54,7 +54,7 @@ export default function DataVisualization() {
   const [toggle, setToggle] = useState(true);
   const [filterApplied, setfilterApplied] = useState(false);
   const [screenCaptureConfirmation, setScreenCaptureConfirmation] =
-    useState(false);
+    useState(false);  
   const setToFalseAfterScreenCapture = (param = false) => {
     if (param === false) {
       setScreenCapture(false);

@@ -107,10 +107,12 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
 
           for (var i = 0; i < ki67.length; i++) {
 
-            let d = convertStrToDate(ki67[i]['imnl_read_ymd']);
+            // let d = convertStrToDate(ki67[i]['imnl_read_ymd']);
+            let d = convertStrToDate(ki67[i]['imnl_acpt_ymd']);
+            console.log("data",d);
             let score = ki67[i]['ki67_score'].replace(/[^\d]/g,'');
             let tooltip = "<div>KI67: "+ki67[i]['ki67_score']+"<hr/>"+ki67[i]['imnl_read_ymd']+"</div>"
-            if(ki67.length==1){
+            if(ki67.length===1){
               var year  = new Date(d).getFullYear();
               var month = new Date(d).getMonth();
               var day   = new Date(d).getDate();
@@ -163,7 +165,7 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
               selector: row => row.exam_ymd
             },
             {
-              name: 'Exam Value',
+              name: 'CA15-2 Value',
               selector: row => row.exam_val
             },
           ]
@@ -200,7 +202,7 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
               selector: row => row.exam_ymd
             },
             {
-              name: 'Exam Value',
+              name: 'CEA Value',
               selector: row => row.exam_val
             },
           ]
@@ -218,9 +220,10 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
           for (var i = 0; i < her2.length; i++) {
 
             let d = convertStrToDate(her2[i]['exam_ymd']);
-            let score = cea[i]['exam_val'].replace(/[^\d]/g,'');
+            // let score = cea[i]['exam_val'].replace(/[^\d]/g,'');
+            let score = her2[i]['exam_val'].replace(/[^\d]/g,'');
             let tooltip = "<div>exam_ymd: "+her2[i]['exam_ymd']+"<hr/>"+her2[i]['exam_val']+"</div>"
-            if(her2.length==1){
+            if(her2.length===1){
               var year  = new Date(d).getFullYear();
               var month = new Date(d).getMonth();
               var day   = new Date(d).getDate();
@@ -237,7 +240,7 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
               selector: row => row.exam_ymd
             },
             {
-              name: 'Exam Value',
+              name: 'HER2 Value',
               selector: row => row.exam_val
             },
           ]
@@ -299,7 +302,8 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
               <div className={"py-6 tab-pane fade flex-inline "+" "+((tab==='ki67')?"show active":' hidden ')} id="tabs-ki67" >
                 <h3>KI-67 % Timeline</h3>
                 <hr/>
-                {circosTimelieTableData && <TimeLineChart data={circosTimelieTableData.ki67} yearKey="imnl_read_ymd" valueKey="ki67_score" />}
+                {/* {circosTimelieTableData && <TimeLineChart data={circosTimelieTableData.ki67} yearKey="imnl_read_ymd" valueKey="ki67_score" />} */}
+                {circosTimelieTableData && <TimeLineChart data={circosTimelieTableData.ki67} yearKey="imnl_acpt_ymd" valueKey="ki67_score" />}
                 {ki67Chart && <DataTable pagination
                   columns={ki67ChartTable['columns']}
                   data={ki67ChartTable['data']}

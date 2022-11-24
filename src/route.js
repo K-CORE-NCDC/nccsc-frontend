@@ -1,5 +1,6 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
+import { useParams } from "react-router-dom";
 
 const Home = React.lazy(() => import('./containers/Home/'));
 const DataSummary = React.lazy(() => import('./containers/DataSummary/'));
@@ -18,7 +19,6 @@ const FindPassword = React.lazy(()=>import('./containers/Login/FindPassword'))
 const ResetPassword =React.lazy(()=>import('./containers/Login/ResetPassword'))
 
 const FileProjectDataTable =React.lazy(()=>import('./containers/UserDataVisualization/Components/MainComponents/FileProjectDataTable'))
-
 
 const Introduce = React.lazy(() => import('./containers/Home/introduce'))
 const Pipeline = React.lazy(() => import('./containers/Home/pipeline'))
@@ -40,6 +40,11 @@ const MobileSuccess = React.lazy(() => import('./containers/Signup/MobileVerify'
 const Organoid = React.lazy(() => import('./containers/CustomerVoice/OtherServices/Organoid'))
 
 // const Report = React.lazy(()=>import ('./containers/DataVisualisation/Charts/NewSankeyIndex'))
+
+// let Checkproject_id = ()=>{
+//   let { tab, project_id } = useParams()
+//   if (project_id !== undefined) return true
+// }
 
 const route = [
   { path: '/home/', exact: true, type:'unauth', name: 'Home', component: Home },
@@ -63,7 +68,7 @@ const route = [
   { path: '/notice/:slug?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Notice" defaultMessage='Notice'/>, component: Notice},
   { path: '/qa/:slug?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "QA" defaultMessage='Q&A'/>, component: Qa},
   { path: '/termsandconditions/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage id="TermsofService" defaultMessage="TermsofService" />, component: TermsandConditions},
-  { path: '/oldprivacypolicy/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="OldPrivacyPolicy" defaultMessage="PreviousPrivacyPolicy" />, component: OldKoreanprivacyact},
+  { path: '/oldprivacyact/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="OldPrivacyPolicy" defaultMessage="PreviousPrivacyPolicy" />, component: OldKoreanprivacyact},
   { path: '/privacypolicy/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="PrivacyPolicy" defaultMessage="PrivacyPolicy" />, component: PrivacyPolicy},
   { path: '/findid/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="FindID" defaultMessage="FindId" />, component: FindID},
   { path: '/findpassword/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="FindPassword" defaultMessage="FindPassword" />, component: FindPassword},

@@ -87,10 +87,8 @@ function EnglishPrivacyAct() {
 
           <div id='DIV_64'>
 
-            <div className='text-center mb-5'>
-            </div>
-
-            <div className='grid grid-cols-3 grid-rows-3'>
+          <div className='text-center mb-5'>[Primary personal information processing indication (labeling)]</div>
+            <div className='grid grid-cols-6 grid-rows-3 mr-16'>
               <div className='grid justify-items-center'>
                 <img src={RightsandObligationsofDataSubjects}
                   alt="RightsandObligationsofDataSubjects" id="IMG_82" className='m-2' />
@@ -99,75 +97,75 @@ function EnglishPrivacyAct() {
               <div className='grid justify-items-center'>
                 <img src={requestforreading}
                   alt="requestforreading" id="IMG_82" />
-                <span id="SPAN_83">request for reading
+                <span id="SPAN_83">Request for reading
                 </span>
               </div>
               <div className='grid justify-items-center'>
                 <img src={RemediesforInfringementofRights}
                   alt="RemediesforInfringementofRights" id="IMG_82" />
-                <span id="SPAN_83">RemediesforInfringementofRights</span>
+                <span id="SPAN_83">Remedies for Infringement of Rights</span>
               </div>
               <div className='grid justify-items-center'>
                 <img src={Purposeofpersonalinformationprocessing}
                   alt="Purposeofpersonalinformationprocessing" id="IMG_82" />
-                <span id="SPAN_83">Purposeofpersonalinformationprocessing</span>
+                <span id="SPAN_83">Purpose of Personal information processing</span>
               </div>
               <div className='grid justify-items-center'>
                 <img src={Provisionofpersonalinformation}
                   alt="Provisionofpersonalinformation 제공" id="IMG_82" />
-                <span id="SPAN_83">Provisionofpersonalinformation</span>
+                <span id="SPAN_83">Provision of Personal information</span>
               </div>
               <div className='grid justify-items-center'>
                 <img src={Processingitems}
                   alt="Processingitems" id="IMG_82" />
-                <span id="SPAN_83">Processingitems</span>
+                <span id="SPAN_83">Processing Items</span>
               </div>
               <div className='grid justify-items-center'>
                 <img src={processingconsignment}
                   alt="processingconsignment " id="IMG_82" />
-                <span id="SPAN_83">processingconsignment</span>
+                <span id="SPAN_83">Processing Consignment</span>
               </div>
               <div className='grid justify-items-center'>
                 <img src={PersonalInformatonProtectionOfficer}
                   alt="PersonalInformatonProtectionOfficer" id="IMG_82" />
-                <span id="SPAN_83">PersonalInformatonProtectionOfficer</span>
+                <span id="SPAN_83">Personal informaton Protection Officer</span>
               </div>
               <div className='grid justify-items-center'>
                 <img src={Personalinformationprocessing}
                   alt="Personalinformationprocessing" id="IMG_82" />
-                <span id="SPAN_83">Personalinformationprocessing</span>
+                <span id="SPAN_83">Personal information Processing</span>
               </div>
               <div className='grid justify-items-center'>
                 <img src={Measurestoensuresafety}
                   alt="Measurestoensuresafety" id="IMG_82" />
-                <span id="SPAN_83">Measurestoensuresafety</span>
+                <span id="SPAN_83">Measures to ensure Safety</span>
               </div>
               <div className='grid justify-items-center'>
                 <img src={GrievanceHandlingDepartment}
                   alt="GrievanceHandlingDepartment" id="IMG_82" />
-                <span id="SPAN_83">GrievanceHandlingDepartment</span>
+                <span id="SPAN_83">Grievance Handling Department</span>
               </div>
               <div className='grid justify-items-center'>
                 <img src={Generalpersonaliformationcollection}
                   alt="Generalpersonaliformationcollection" id="IMG_82" />
-                <span id="SPAN_83">Generalpersonaliformationcollection</span>
+                <span id="SPAN_83">General Personal information Collection</span>
               </div>
             </div>
           </div>
           <div id='DIV_94'>
             <div id='' style={{ marginLeft: "200px" }}>
-              <table class="ktable" style={{ width: "70rem" }}>
+              <table class="ktable" style={{ width: "141rem" ,marginLeft: '-200px'}} >
                 <thead className='kth'>
                   <tr>
-                    <th className='kth'>index</th>
+                    <th className='kth'>Index</th>
                     <th className='kth'>
-                      name</th>
+                      Name</th>
 
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td className='ktd'>Article 1 조</td>
+                    <td className='ktd'>Article 1 </td>
                     <td className='ktd'>Purpose of personal information processing, processing items, retention period</td>
 
                   </tr>
@@ -656,7 +654,7 @@ Measures to ensure the safety of personal information</td>
                   <td id="TD_323">
                     <ul>
                       <li>
-                        개인정보보호책임자
+                      National Cancer Center
                       </li>
                       <li>
                         Personal Information Protection, responsible
@@ -670,8 +668,8 @@ Measures to ensure the safety of personal information</td>
                     Healthcare Platform Center
                   </td>
                   <td id="TD_326">
-                    <ul id="UL_327" className='ms-5'>
-                      <li >
+                    <ul id="UL_327" >
+                      <li style={{marginLeft:'41px'}}>
                         - Phone number: +82-31-920-1636
                       </li>
                       <li >
@@ -702,7 +700,7 @@ Measures to ensure the safety of personal information</td>
                       <li id="LI_336">
                         - Phone number: +82-31-920-0642
                       </li>
-                      <li id="LI_337">
+                      <li id="LI_337" style={{marginLeft:'-15px'}}>
                         - Email: inverse76@ncc.re.kr
                       </li>
                     </ul>
@@ -730,7 +728,7 @@ Measures to ensure the safety of personal information</td>
                       <li id="LI_344">
                         - Phone number: +82-31-920-1892
                       </li>
-                      <li id="LI_345">
+                      <li id="LI_345" style={{marginLeft:'-25px'}}>
                         - Email: kkido@ncc.re.kr
                       </li>
                     </ul>
@@ -738,7 +736,7 @@ Measures to ensure the safety of personal information</td>
                 </tr>
                 <tr id="TR_346">
                   <td id="TD_347">
-                    <ul id="UL_343">
+                    <ul id="UL_343" style={{marginLeft: '-20px'}}>
                       <li id="LI_344">
                         National Cancer Data Center (NCDC)
                       </li>
@@ -748,7 +746,7 @@ Measures to ensure the safety of personal information</td>
                     </ul>
                   </td>
                   <td id="TD_348">
-                    Oh Se-hee
+                  Kim Do-Yeop
                   </td>
                   <td id="TD_349">
                     Cancer Data Center
@@ -756,10 +754,10 @@ Measures to ensure the safety of personal information</td>
                   <td id="TD_350">
                     <ul id="UL_351">
                       <li id="LI_352">
-                        - Phone number: +82-31-920-1891
+                        - Phone number: +82-31-920-0774
                       </li>
-                      <li id="LI_353">
-                        - Email: evolution@ncc.re.kr
+                      <li id="LI_353" style={{marginLeft:'-25px'}}>
+                        - Email: kimdy@ncc.re.kr
                       </li>
                     </ul>
                   </td>

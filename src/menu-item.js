@@ -114,14 +114,15 @@ let childMenu = {
       },
       {
         id: 'tools',
-        title: "Tools",
+        title: <FormattedMessage id="Tools" defaultMessage='Tools' />,
         type: 'group',
         icon: 'fa fa-dashboard',
         url: '/tools/',
         children: [
           {
             id: 'Blast',
-            title: <FormattedMessage id="Blast" defaultMessage='Blast' />,
+            // title: <FormattedMessage id="Blast" defaultMessage='Blast' />,
+            title: 'Blast',
             type: 'item',
             icon: 'fa fa-dashboard',
             url: '/blast/',
@@ -129,7 +130,7 @@ let childMenu = {
           },
           {
             id: 'VCFMAF',
-            title: <FormattedMessage id="VCFMAF" defaultMessage='VCF to MAF' />,
+            title: 'VCF to MAF',
             type: 'item',
             icon: 'fa fa-dashboard',
             url: '/vcfmaf/',
@@ -137,7 +138,7 @@ let childMenu = {
           },
           {
             id: 'Interpro',
-            title: <FormattedMessage id="Interpro" defaultMessage='Interpro' />,
+            title: "Interpro",
             type: 'item',
             icon: 'fa fa-dashboard',
             url: '/interpro/',
@@ -178,14 +179,14 @@ let childMenu = {
           },
           {
             id: 'otherservice',
-            title: <FormattedMessage id="Notice" defaultMessage='Other Service' />,
+            title: <FormattedMessage id="OtherServices" defaultMessage='Other Service' />,
             type: 'group',
             icon: 'fa fa-dashboard',
             url: '/otherservice',
             children: [
               {
                 id: 'organoid',
-                title: <FormattedMessage id="FAQ" defaultMessage='Organoid' />,
+                title: <FormattedMessage id="Organoid" defaultMessage='Organoid' />,
                 type: 'item',
                 icon: 'fa fa-dashboard',
                 url: '/organoid',
@@ -193,7 +194,7 @@ let childMenu = {
               },
               {
                 id: 'qa',
-                title: <FormattedMessage id="QA" defaultMessage='Q&A' />,
+                title: <FormattedMessage id="RelatedSites" defaultMessage='RelatedSites' />,
                 type: 'item',
                 icon: 'fa fa-dashboard',
                 url: '/qa',
