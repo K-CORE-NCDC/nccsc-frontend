@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { interPro } from "../../actions/api_actions";
 import { useDispatch,useSelector } from "react-redux";
 import LoaderCmp from '../Common/Loader'
+import config from "../../config";
 
 function InterPro() {
     const [interProFile, setInterProFile] = useState();
@@ -13,7 +14,7 @@ function InterPro() {
     const [startInterval, setStartInterval] = useState(false)
     const interproResponse = useSelector((data) => data.homeReducer.interpro);    
     const dispatch = useDispatch();
-
+    let backend_url = config['auth']
     let InterProTool = (event) => {
         setInterProFile(event.target.files[0])
         
@@ -55,7 +56,7 @@ function InterPro() {
                             <div>
                                 Your Results are ready kindly click link to download &nbsp;
                                 <a className='text-blue-600 hover:text-blue-700 transition duration-300 ease-in-out mb-4'
-                                 href={"http://3.141.3.176:9798/media/Interpro/files/"+interproResponse['container_name']+".tsv"} 
+                                 href={backend_url+"media/Interpro/files/"+interproResponse['container_name']+".tsv"} 
                                  download={interproResponse['container_name']+".tsv"}>{interproResponse['container_name']}</a>
                             </div>
                             {/* <div>
