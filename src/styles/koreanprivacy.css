@@ -31,15 +31,15 @@
     border-block-start-color: rgb(51, 51, 51);
     border-inline-end-color: rgb(51, 51, 51);
     border-inline-start-color: rgb(51, 51, 51);
+    border: 0px none rgb(51, 51, 51);
+    outline: rgb(51, 51, 51) none 0px;
     caret-color: rgb(51, 51, 51);
     color: rgb(51, 51, 51);
     column-rule-color: rgb(51, 51, 51);
     letter-spacing: -0.5px;
     text-decoration: none solid rgb(51, 51, 51);
     text-emphasis-color: rgb(51, 51, 51);
-    border: 0px none rgb(51, 51, 51);
     font: 14px / 21px NotoSans-R, "Helvetica Neue", Helvetica, sans-serif;
-    outline: rgb(51, 51, 51) none 0px;
 }/*#BODY_1:after*/
 
 #BODY_1:before {
@@ -2154,7 +2154,7 @@
     caret-color: rgb(51, 51, 51);
     color: rgb(51, 51, 51);
     column-rule-color: rgb(51, 51, 51);
-    height: 650px;
+    height: 400px;
     inline-size: 1400px;
     letter-spacing: -0.5px;
     margin-block-end: 50px;
@@ -2167,7 +2167,7 @@
     text-decoration: none solid rgb(51, 51, 51);
     text-emphasis-color: rgb(51, 51, 51);
     transform-origin: 700px 241px;
-    /* width: 1400px; */
+    width: 1700px;
     border: 1px solid rgb(217, 217, 217);
     border-radius: 10px;
     font: 14px / 21px NotoSans-R, "Helvetica Neue", Helvetica, sans-serif;
@@ -4156,7 +4156,8 @@
     border: 0px none rgb(51, 51, 51);
     font: 15px / 34.5px NotoSans-R, "Helvetica Neue", Helvetica, sans-serif;
     outline: rgb(51, 51, 51) none 0px;
-}/*#SPAN_128:before, #SPAN_158:before, #SPAN_165:before, #SPAN_173:before, #SPAN_187:before, #SPAN_227:before, #SPAN_255:before, #SPAN_277:before, #SPAN_286:before, #SPAN_301:before, #SPAN_305:before, #SPAN_355:before*/
+}
+/*#SPAN_128:before, #SPAN_158:before, #SPAN_165:before, #SPAN_173:before, #SPAN_187:before, #SPAN_227:before, #SPAN_255:before, #SPAN_277:before, #SPAN_286:before, #SPAN_301:before, #SPAN_305:before, #SPAN_355:before*/
 
 #IMG_129, #IMG_228, #IMG_256, #IMG_287, #IMG_356 {
     block-size: 30px;

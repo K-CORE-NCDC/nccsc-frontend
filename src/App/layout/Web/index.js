@@ -29,6 +29,10 @@ import Popup from "../../../containers/Popup/Popup";
 
 
 const menu = route.map((route, index) => {
+  // console.log('----->',route,'index',index);
+  // if(route.path === "/visualise/:tab?/:project_id?/" ){
+  //   console.log('s',route,route.childname.props.defaultMessage);
+  // }
   return route.component ? (
     <Route
       key={index}
@@ -40,9 +44,11 @@ const menu = route.map((route, index) => {
     />
   ) : null;
 });
-
 export default function Web(props) {
+  let { project_id } = useParams()
   let id = useParams();
+  console.log("id----",id);
+
   const [breadCrumb, setBreadCrumb] = useState([]);
   const [currentDate, setCurrentDate] = useState("");
   const [currentTime, setCurrentTime] = useState("");
@@ -176,17 +182,15 @@ export default function Web(props) {
   }, [window.location.href])
 
 
-
-
-
-
+  console.log('pi',project_id)
   useEffect(() => {
     let html = [];
-    // console.log(menu)
     for (let m = 0; m < menu.length; m++) {
       let p = id[0].split("/")[1];
+      // if (menu[m].props.path.includes(p)) {
       if (menu[m].props.path.includes(p)) {
         let name = menu[m].props.name;
+        console.log("name", menu[m].props);
         let childname = menu[m].props.childname;
         html.push(
           <li key={m + "icon"}>
@@ -200,7 +204,7 @@ export default function Web(props) {
         );
         html.push(
           <li key={m + name}>
-            <a href="#" className="font-bold">
+            <a href={name} className="font-bold">
               {name}
             </a>
           </li>
@@ -210,11 +214,21 @@ export default function Web(props) {
             <span className="mx-2">|</span>
           </li>
         );
-        html.push(<li key={m + "child"}>{childname}</li>);
+        if(p === 'visualise'){
+          if(id[0].split("/")[3] !== ''){
+            html.push(<li key={m + "child"}>MyData Visualization</li>);
+          }
+          else{
+            html.push(<li key={m + "child"}>{childname}</li>);
+          }
+        }    
+        else  {
+          html.push(<li key={m + "child"}>{childname}</li>);
+        }
       }
     }
     setBreadCrumb(html);
-  }, [props]);
+  }, [props,project_id]);
 
   useEffect(() => {
     if (id[0] === "/home") {
@@ -228,7 +242,9 @@ export default function Web(props) {
       var a_or_p = today
         .toLocaleString("en-US", { hour: "numeric", hour12: true })
         .split(" ")[1];
-      var time = a_or_p + " " + today.getHours() + ":" + today.getMinutes();
+      // var time = a_or_p + " " + today.getHours() + ":" + today.getMinutes();
+      var time = a_or_p + " " + today.getHours() + ":" + (today.getMinutes() <=9 ? `00`: today.getMinutes());
+
 
       setCurrentDate(date);
       setCurrentTime(time);

@@ -96,7 +96,7 @@ function Koreanprivacyact() {
 
                         </div>
 
-                        <div className='grid grid-cols-3 grid-rows-3'>
+                        <div className='grid grid-cols-6 grid-rows-3 mr-7'>
                             <div className='grid justify-items-center'>
                                 <img src={RightsandObligationsofDataSubjects}
                                     alt="정보주체의권리의무" id="IMG_82" className='m-2' />
@@ -161,7 +161,7 @@ function Koreanprivacyact() {
                     </div>
                     <div id='DIV_94'>
                         <div id='' style={{ marginLeft: "200px" }}>
-                            <table class="ktable" style={{ width: "70rem" }}>
+                        <table class="ktable" style={{ width: "141rem" ,marginLeft: '-200px'}} >
                                 <thead className='kth'>
                                     <tr>
                                         <th className='kth'>목 차</th>
@@ -546,9 +546,9 @@ function Koreanprivacyact() {
                                 <li >
                                     - 법률에 따라 열람이 금지되거나 제한되는 경우 
                                     <ul>
-                                        <li>-다른 사람의 생명·신체를 해할 우려가 있거나 다른 사람의 재산과 그 밖의 이익을 부당하게 침해할 우려가 있는 경우  </li>
+                                        <li>- 다른 사람의 생명·신체를 해할 우려가 있거나 다른 사람의 재산과 그 밖의 이익을 부당하게 침해할 우려가 있는 경우  </li>
                                         <li>- 공공기관이 다음 각 목의 어느 하나에 해당하는 업무를 수행할 때 중대한 지장을 초래하는 경우</li>
-                                        <li>-공공기관이 다음 각 목의 어느 하나에 해당하는 업무를 수행할 때 중대한 지장을 초래하는 경우
+                                        <li>- 공공기관이 다음 각 목의 어느 하나에 해당하는 업무를 수행할 때 중대한 지장을 초래하는 경우
                                             <ul>
                                                 <li>가. 조세의 부과ㆍ징수 또는 환급에 관한 업무</li>
                                                 <li>나. 「초ㆍ중등교육법」 및 「고등교육법」에 따른 각급 학교, 「평생교육법」에 따른 평생교육시설, 그 밖의 다른 법률에 따라 설치된 고등교육기관에서의 성적 평가 또는 입학자 선발에 관한 업무</li>
@@ -674,10 +674,10 @@ function Koreanprivacyact() {
                                     </td>
                                     <td id="TD_326">
                                         <ul id="UL_327" className='ms-5'>
-                                            <li >
+                                            <li style={{marginLeft:'32px'}}>
                                                 - 전화번호 : 031-920-1636
                                             </li>
-                                            <li >
+                                            <li style={{marginLeft:'44px'}}>
                                                 - 이메일: gsgsbal@ncc.re.kr
                                             </li>
                                         </ul>
@@ -705,7 +705,7 @@ function Koreanprivacyact() {
                                             <li id="LI_336">
                                                 - 전화번호 : 031-920-0642
                                             </li>
-                                            <li id="LI_337">
+                                            <li id="LI_337" style={{marginLeft:'13px'}}>
                                                 - 이메일: inverse76@ncc.re.kr
                                             </li>
                                         </ul>
@@ -741,7 +741,7 @@ function Koreanprivacyact() {
                                 </tr>
                                 <tr id="TR_346">
                                     <td id="TD_347">
-                                        <ul id="UL_343">
+                                        <ul id="UL_343" style={{marginLeft: '-20px'}} >
                                             <li id="LI_344">
                                                 국가암데이터센터(NCDC)
                                             </li>
@@ -751,7 +751,7 @@ function Koreanprivacyact() {
                                         </ul>
                                     </td>
                                     <td id="TD_348">
-                                        오세희
+                                    김도엽
                                     </td>
                                     <td id="TD_349">
                                         암빅데이터센터
@@ -759,10 +759,10 @@ function Koreanprivacyact() {
                                     <td id="TD_350">
                                         <ul id="UL_351">
                                             <li id="LI_352">
-                                                - 전화번호 : 031-920-1891
+                                                - 전화번호 : 031-920-0774
                                             </li>
                                             <li id="LI_353">
-                                                - 이메일: evolution@ncc.re.kr
+                                                - 이메일: kimdy@ncc.re.kr
                                             </li>
                                         </ul>
                                     </td>

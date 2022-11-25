@@ -201,5 +201,9 @@
     "Verification": "인증할 사람을 선택하세요",
     "DefaultID": "아이디를 입력해주세요",
     "filterCondition":"임상변수 필터 조건",
-    "Organoid":"오르가노이드"
+    "Tools":"분석 도구",
+    "OtherServices": "기타 서비스",
+   "Organoid" :"오가노이드 서비스",
+   "RelatedSites": "관련 사이트"
+
 }

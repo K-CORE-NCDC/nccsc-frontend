@@ -18,7 +18,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 
 
-export default function Filter({ parentCallback, filterState, set_screen,project_id }) {
+export default function Filter({ parentCallback, filterState, set_screen, project_id }) {
   const dispatch = useDispatch();
   const [state, setState] = useState({ html: [] });
   const [selectState, setSelectState] = useState({'filterCondition':'and'});
@@ -40,7 +40,16 @@ export default function Filter({ parentCallback, filterState, set_screen,project
   //   }
   // },[])
 
-  console.log('------------>',totalSamplesS);
+  // console.log('------------>',totalSamplesS);
+
+  useEffect(() => {
+    // console.log("filter state ------------->",filterState);
+    if (Object.keys(filterState).length !== 0) {
+      // console.log("filterstate",filterState);
+      setSelectState({ ...filterState });
+      switchButton();
+    }
+  }, [filterState]);
 
   useEffect(()=>{
     console.log("changed");
@@ -105,18 +114,9 @@ export default function Filter({ parentCallback, filterState, set_screen,project
     // leftSide();
   }, [selected, selectState,filterJson]);
 
-  useEffect(() => {
-    // console.log("filter state ------------->",filterState);
-    if (Object.keys(filterState).length !== 0) {
-      // console.log("filterstate",filterState);
-      setSelectState({ ...filterState });
-      switchButton();
-    }
-  }, [filterState]);
 
   useEffect(() => {
     let html = [];
-
     if (Object.keys(filtersUi).length > 0) {
       Object.keys(filtersUi).forEach((e) => {
         // console.log("filtersUi",filtersUi);
@@ -738,7 +738,8 @@ export default function Filter({ parentCallback, filterState, set_screen,project
         {state["html"]}
       </div>
       <div className="col-span-2 p-1">
-        {filterHtml.length && totalCount !== totalCountS ? (
+        {/* {filterHtml && filterHtml.length && totalCount !== totalCountS ? ( */}
+        {filterHtml && filterHtml.length  ? (
           <>
             <div className="mb-5">
               <h6>Total Number of Samples : {totalSamples}</h6>

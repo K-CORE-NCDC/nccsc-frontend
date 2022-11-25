@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import childMenu from '../../../../menu-item'
 import { Link } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import {
   MenuIcon,
   XIcon
@@ -36,15 +37,15 @@ export default function DropdownMenu() {
             </Link>
 
             {children[j]['id'] === 'otherservice' &&
-              <ul className="list-none text-center h-auto absolute hidden hover-target" style={{left:'100%', top:'5%'}}>
+              <ul className="list-none text-center h-auto absolute hidden hover-target" style={{left:'100%', top:'5%', height:'125px', backgroundColor:' #0c3c6a'}}>
                 <li key={i + "_" + j} className='px-3 py-5'>
                   <Link key={i + "link_" + j} className="text-3xl py-2 px-4  whitespace-no-wrap" to='/organoid'>
-                    organoid
+                  <FormattedMessage id="Organoid" defaultMessage='Organoid' />
                   </Link>
                 </li>
                 <li key={i + 1 + "_" + j + 1} className='px-3 py-5'>
                   <Link key={i + "link_" + j + 1} className="text-3xl py-2 px-4  whitespace-no-wrap" to='/qa'>
-                    secondpage
+                   <FormattedMessage id="RelatedSites" defaultMessage='RelatedSites' />
                   </Link>
                 </li>
               </ul>

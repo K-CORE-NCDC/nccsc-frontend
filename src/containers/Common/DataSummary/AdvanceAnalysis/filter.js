@@ -3,7 +3,10 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   AdjustmentsIcon,
-  UserCircleIcon
+  UserCircleIcon,
+  BeakerIcon,
+  SearchIcon,
+  DocumentAddIcon
 } from '@heroicons/react/outline'
 import inputJson from '../data'
 export default function Filter({parentCallback}) {

@@ -265,6 +265,7 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
     setResetClicked(true);
     setIsGroupFilterProp(false);
   };
+  
 
   useEffect(() => {
     if (groupFilters && groupFilters.type) {
@@ -1220,10 +1221,11 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
           groupFilters["type"] === "static"
         ) {
           if (
+            groupFilters &&
             groupFilters["column"] === colName &&
-            groupFilters["group_1"].length > 0 &&
-            groupFilters["group_2"].length > 0 &&
-            groupFilters["group_3"].length > 0
+            "group_1" in groupFilters  && groupFilters["group_1"].length > 0 &&
+            "group_2" in groupFilters && groupFilters["group_2"].length > 0 && 
+            "group_3" in groupFilters &&groupFilters["group_3"].length > 0
           ) {
             preDefienedGroups1[colName].forEach((element, index) => {
               let group_a = false;
@@ -1570,52 +1572,6 @@ export const UserDefinedGroupFilters = ({
     }
   }, [userDefinedFilter]);
 
-  // const preDefienedGroups1 = preDefienedGroups
-
-  //   filterChoices = [
-  //       { 'type': 'number', 'id': 'bmi_vl', 'name': 'Body Mass Index', 'input': 'number' },
-  //       { 'type': 'number', 'name': 'Age Of Diagonosis', 'id': 'diag_age', 'input': 'number' },
-  //       { 'type': 'dropdown', 'name': 'Smoking Status', 'id': 'smok_yn' },
-  //       { 'type': 'number', 'name': 'First Menstural Age', 'id': 'mena_age', 'input': 'number' },
-  //       { 'type': 'number', 'name': 'Duration of Breastfeeding(month)', 'id': 'feed_drtn_mnth', 'input': 'number' },
-  //       { 'type': 'dropdown', 'name': 'T Category', 'id': 't_category', 'input': 'number' },
-  //       { 'type': 'dropdown', 'name': 'N Category', 'id': 'n_category', 'input': 'number' },
-  //       { 'type': 'dropdown', 'name': 'HER2 Score', 'id': 'her2_score', 'input': 'number' },
-  //       { 'type': 'dropdown', 'name': 'ki67', 'id': 'ki67_score', 'input': 'number' },
-  //       { 'type': 'number', 'name': 'Relapse Duration(month)', 'id': 'rlps_cnfr_drtn', 'input': 'number' },
-
-  //   ]
-
-  //   preDefienedGroups1['smok_yn'] = [
-  //       { label: "No Smoking", value: "smok_yn||N" },
-  //       { label: "Past Smoking", value: "smok_yn||Y" },
-  //       { label: "Current Smoking", value: "smok_curr_yn||Y" },
-  //   ]
-  //   preDefienedGroups1['t_category'] = [
-  //           { label: "Tis", from: 'Tis', to: 'Tis',value: 'Tis' },
-  //           { label: "T1", from: 'T1', to: 'T1',value: 'T1' },
-  //           { label: "T2", from: 'T2', to: 'T2',value: 'T2' },
-  //           { label: "T3", from: 'T3', to: 'T3',value: 'T3' },
-  //           { label: "T4", from: 'T4', to: 'T4',value: 'T4' },
-  //       ]
-  //   preDefienedGroups1['n_category'] = [
-  //       { label: "Nx", from: 'Nx', to: 'Nx',value: 'Nx' },
-  //       { label: "N0", from: 'N0', to: 'N0',value: 'N0' },
-  //       { label: "N1", from: 'N1', to: 'N1',value: 'N1' },
-  //       { label: "N2", from: 'N2', to: 'N2',value: 'N2' },
-  //       { label: "N3", from: 'N3', to: 'N3',value: 'N3' }
-  //   ]
-  //   preDefienedGroups1['her2_score'] = [
-  //       {value: "negative (0-1+)", label: "negative (0-1+)", from: '0', to: '(0-1+)' },
-  //       {value: "equivocal (2+)", label: "equivocal (2+)", from: '2', to: '(2+)' },
-  //       {value: "positive (3+)", label: "positive (3+)", from: '2+', to: '(3+)' }
-  //   ]
-
-  //   preDefienedGroups1['ki67_score'] = [
-  //       { label: "low(≤15%)",value:'low', from: '0', to: '15' },
-  //       { label: "intermediate(<15-30%≤)",value:'intermediate', from: '15', to: '30' },
-  //       { label: "high(30%<)",value:'high', from: '30', to: '100' }
-  //   ]
   useEffect(() => {
     console.log("clinincalMaxInfo", clinicalMaxMinInfo);
     let preDefienedGroups1 = {};
@@ -1809,13 +1765,14 @@ export const UserDefinedGroupFilters = ({
       if (send_response === true) {
         // console.log("userGivenInputValues last", userGivenInputValues);
         parentCallback(userGivenInputValues);
-        // resetFilters();
+        resetFilters();
       }
     } 
     else {
       console.log("fail");
-    //   resetFilters();
-      parentCallback({ ...userGivenInputValues });
+      resetFilters();
+      // parentCallback({ ...userGivenInputValues });
+      parentCallback(userGivenInputValues );
     }
   };
 
@@ -2388,6 +2345,7 @@ const dropDownChange = (event) => {
                           colName: colName,
                           group: "group_1",
                         })}
+                        defaultChecked = {false}
                       />
                     </td>
                     <td className="px-6 py-4">
@@ -2399,6 +2357,7 @@ const dropDownChange = (event) => {
                           colName: colName,
                           group: "group_2",
                         })}
+                        defaultChecked = {false}
                       />
                     </td>
                     <td className="px-6 py-4">
@@ -2410,6 +2369,7 @@ const dropDownChange = (event) => {
                           colName: colName,
                           group: "group_3",
                         })}
+                        defaultChecked = {false}
                       />
                     </td>
                   </tr>
@@ -2434,6 +2394,7 @@ const dropDownChange = (event) => {
                         colName: colName,
                         group: "group_1",
                       })}
+                      defaultChecked = {false}
                     />
                   </td>
                   <td className="px-6 py-4">
@@ -2445,6 +2406,7 @@ const dropDownChange = (event) => {
                         colName: colName,
                         group: "group_2",
                       })}
+                      defaultChecked = {false}
                     />
                   </td>
                   <td className="px-6 py-4">
@@ -2456,6 +2418,7 @@ const dropDownChange = (event) => {
                         colName: colName,
                         group: "group_3",
                       })}
+                      defaultChecked = {false}
                     />
                   </td>
                 </tr>

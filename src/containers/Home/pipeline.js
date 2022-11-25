@@ -11,8 +11,8 @@ import lollipop_plot from '../../assets/images/sub/lollipop_plot.png'
 import survival_plot from '../../assets/images/sub/survival_plot.png'
 import { Context } from "../../wrapper";
 
-import pipeline from '../../assets/images/sub/pipeline.png'
-import englishPipeline from '../../assets/images/sub/English_NCC_Pipeline.png'
+import pipeline from '../../assets/images/ncc_pipeline_kor.png'
+import englishPipeline from '../../assets/images/ncc_pipeline_eng.png'
 
 export default function Pipeline() {
   const context = useContext(Context);
