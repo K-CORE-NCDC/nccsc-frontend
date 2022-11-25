@@ -2,21 +2,20 @@ import React from "react";
 
 function KoreanTermsAndConditions() {
   return (
-    <div  className="Terms_Conditions_Wrap text-5xl m-4 ">
+    <div  className=" text-5xl ml-52">
       <h1
-        className="text-center"
+        className=""
         style={{ lineHeight: "2.3",color: 'rgb(0, 118, 192)' }} 
       >
        국립암센터(국가암데이터센터) K-CORE 회원 이용약관
       </h1>
 
       <h1
-        className="text-center text-9xl relative m-2 highlightH1 ms-5 KtermsandconditionsH1" 
+        className="text-center text-9xl relative m-2 highlightH1 w-fit ms-5 KtermsandconditionsH1" 
       >
         제1조 목적
       </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }}
-        className="ms-5"
+      <div  style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'
       >
         <ul>
           <li> <p className="paragraphAdjust"> 
@@ -28,11 +27,10 @@ function KoreanTermsAndConditions() {
         </ul>
       </div>
 
-      <h1 className="text-center text-9xl relative m-2 highlightH1">
+      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
       제2조 약관의 명시와 개정
       </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }}
-        className="ms-5"
+      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'
       >
         <ul>
           <li> <p className="paragraphAdjust"> 
@@ -57,15 +55,15 @@ function KoreanTermsAndConditions() {
       </div>
 
       {/* 3 */}
-      <h1 className="text-center text-9xl relative m-2 highlightH1">
+      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
       제3조 용어의 정의
       </h1>
       {/* <h2>본 약관에서 사용하는 용어의 정의는 다음과 같습니다.</h2> */}
-      <li> <p className="paragraphAdjust"> 
+      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
+        <ul>
+        <li> <p className="paragraphAdjust"> 
       본 약관에서 사용하는 용어의 정의는 다음과 같습니다.
           </p></li>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }}>
-        <ul>
           <li> <p className="paragraphAdjust"> 
           ① 이용자(회원) : 홈페이지 회원가입에 필요한 개인 정보를 제공하여 회원 가입을 한 자로서, 사이트의 정보 및 서비스를 이용할 수 있는 자를 말합니다.
           </p></li>
@@ -93,10 +91,10 @@ function KoreanTermsAndConditions() {
         </ul>
       </div>
       {/* 4 */}
-      <h1 className="text-center text-9xl relative m-2 highlightH1">
+      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
       제4조 회원가입
       </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }}>
+      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
         <ul>
           <li> <p className="paragraphAdjust"> 
           ① 회원가입은 이용자가 본 이용약관 내용에 대한 동의와 이용신청에 대하여 사이트의 이용승낙으로 성립합니다.
@@ -138,10 +136,10 @@ function KoreanTermsAndConditions() {
         </ul>
       </div>
       {/* 5  */}
-      <h1 className="text-center text-9xl relative m-2 highlightH1">
+      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
       제5조 회원탈퇴 및 자격의 상실 등
       </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }}>
+      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
         <ul>
           <li> <p className="paragraphAdjust"> 
           ① 이용자는 회원가입이후 국립암센터(국가암데이터센터) K-CORE에서 제공하는 인터넷 서비스를 제공받을 의사가 없는 등의 사유가 있을 경우에는 언제든지 회원탈퇴(해지)를 할 수 있습니다.
@@ -174,10 +172,10 @@ function KoreanTermsAndConditions() {
       </div>
 
       {/* 6 */}
-      <h1 className="text-center text-9xl relative m-2 highlightH1">
+      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
       제6조 서비스의 내용 및 변경
       </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }}>
+      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
         <ul>
           <li> <p className="paragraphAdjust"> 
           ① 국립암센터(국가암데이터센터) K-CORE는 다음의 서비스를 제공합니다. </p>
@@ -198,10 +196,10 @@ function KoreanTermsAndConditions() {
         </ul>
       </div>
       {/* 7*/}
-      <h1 className="text-center text-9xl relative m-2 highlightH1">
+      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
       제7조 서비스의 중단
       </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }}>
+      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
         <ul>
           <li> <p className="paragraphAdjust"> 
           ① 국립암센터(국가암데이터센터) K-CORE는 컴퓨터, 시스템 등 정보통신설비의 보수점검·교체 및 고장, 통신의 두절, 기타 불가항력적 사유 등이 발생한 경우에는 서비스의 제공을 일시적으로 중단할 수 있습니다.
@@ -224,10 +222,10 @@ function KoreanTermsAndConditions() {
         </ul>
       </div>
       {/* 8*/}
-      <h1 className="text-center text-9xl relative m-2 highlightH1">
+      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
       제8조 회원에 대한 통지
       </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }}>
+      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
         <ul>
           <li> <p className="paragraphAdjust"> 
           ① 국립암센터(국가암데이터센터) K-CORE는 회원에 대한 통지를 하는 경우, 회원이 센터에 제공한 전자우편 주소 또는 전화번호로 할 수 있습니다. 
@@ -238,10 +236,10 @@ function KoreanTermsAndConditions() {
         </ul>
       </div>
       {/* 9*/}
-      <h1 className="text-center text-9xl relative m-2 highlightH1">
+      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
       제9조 회원의 개인정보보호
       </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }}>
+      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
         <ul>
           <li> <p className="paragraphAdjust"> 
           ① 국립암센터(국가암데이터센터) K-CORE는 관련법령이 정하는 바에 따라서 이용자 등록정보를 포함한 이용자의 개인정보를 보호하기 위하여 노력합니다. 이용자의 개인정보보호에 관해서는 관련법령 및 국립암센터(국가암데이터센터) K-CORE에서 정하는 "개인정보처리방침"에 정한 바에 의합니다.
@@ -249,10 +247,10 @@ function KoreanTermsAndConditions() {
         </ul>
       </div>
       {/* 10*/}
-      <h1 className="text-center text-9xl relative m-2 highlightH1">
+      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
       제10조 국립암센터 국가암데이터센터 K-CORE의 의무
       </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }}>
+      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
         <ul>
           <li> <p className="paragraphAdjust"> 
           ① 국립암센터(국가암데이터센터) K-CORE는 법령과 본 약관이 금지하거나 공서양속에 반하는 행위를 하지 않으며, 본 약관이 정하는 바에 따라 지속적이고 안정적으로 서비스를 제공하기 위해서 노력합니다.
@@ -272,10 +270,10 @@ function KoreanTermsAndConditions() {
         </ul>
       </div>
       {/* 11*/}
-      <h1 className="text-center text-9xl relative m-2 highlightH1">
+      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
       제11조 이용자의 아이디 및 비밀번호에 대한 의무
       </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }}>
+      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
         <ul>
           <li> <p className="paragraphAdjust"> 
           ① 국립암센터(국가암데이터센터) K-CORE에서 "관계법령", "개인정보처리방침"에 의해서 그 책임을 지는 경우를 제외하고, 자신의 ID와 비밀번호에 관한 관리책임은 각 이용자에게 있습니다.
@@ -289,10 +287,10 @@ function KoreanTermsAndConditions() {
         </ul>
       </div>
       {/* 12*/}
-      <h1 className="text-center text-9xl relative m-2 highlightH1">
+      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
       제12조 이용자의 의무
       </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }}>
+      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
         <ul>
           <li> <p className="paragraphAdjust"> 
           ① 이용자는 다음 각 호의 행위를 하여서는 안됩니다. </p>
@@ -338,10 +336,10 @@ function KoreanTermsAndConditions() {
       </div>
 
       {/* 13*/}
-      <h1 className="text-center text-9xl relative m-2 highlightH1">
+      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
       제13조 저작권의 귀속 및 이용제한
       </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }}>
+      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
         <ul>
           <li> <p className="paragraphAdjust"> 
           ① 국립암센터(국가암데이터센터) K-CORE에서 작성한 저작물에 대한 저작권 기타 지적재산권은 국립암센터(국가암데이터센터) K-CORE에 귀속합니다.
@@ -352,9 +350,9 @@ function KoreanTermsAndConditions() {
         </ul>
       </div>
       {/* 14*/}
-      <h1 className="text-center text-9xl relative m-2 highlightH1">
+      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
       제14조 재판관할      </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }}>
+      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
         <ul>
           <li> <p className="paragraphAdjust"> 
           ① 국립암센터(국가암데이터센터) K-CORE와 이용자간에 발생한 서비스 이용에 관한 분쟁에 대하여는 대한민국 법을 적용하며, 본 분쟁으로 인한 소는 민사소송법상의 관할을 가지는 대한민국의 법원에 제기합니다.
@@ -362,10 +360,10 @@ function KoreanTermsAndConditions() {
         </ul>
       </div>
       {/* 15*/}
-      <h1 className="text-center text-9xl relative m-2 highlightH1">
+      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
       제15조 시행일 
       </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }}>
+      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
         <ul>
           <li> <p className="paragraphAdjust">  ①	 본 약관은 2022년 9월 30일부터 적용합니다.</p></li>
         </ul>
