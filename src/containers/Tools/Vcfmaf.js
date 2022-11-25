@@ -5,6 +5,7 @@ import {
 } from "../../actions/api_actions";
 import { useSelector, useDispatch } from "react-redux";
 import LoaderCmp from '../Common/Loader'
+import config from '../../config';
 
 function Vcfmaf() {
     const [vcfMafFile, setVcfMafFile] = useState()
@@ -16,7 +17,7 @@ function Vcfmaf() {
     const dispatch = useDispatch();
     const vcf2mafResponse = useSelector((data) => data.homeReducer.vcfmaf);    
     
-
+    let backend_url = config['auth']
     let VcfMafTool = (event) => {
         setVcfMafFile(event.target.files[0])
     }
@@ -58,7 +59,7 @@ function Vcfmaf() {
                             <div>
                                 Your Results are ready kindly click link to download &nbsp;
                                 <a className='text-blue-600 hover:text-blue-700 transition duration-300 ease-in-out mb-4'
-                                 href={"http://3.141.3.176:9798/media/VcfMap/files/"+vcf2mafResponse['container_name']+".maf"} 
+                                 href={backend_url+"media/VcfMap/files/"+vcf2mafResponse['container_name']+".maf"} 
                                  download={vcf2mafResponse['container_name']+".maf"}>{vcf2mafResponse['container_name']}</a>
                             </div>
                             {/* <div>
