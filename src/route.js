@@ -39,6 +39,8 @@ const MobileSuccess = React.lazy(() => import('./containers/Signup/MobileVerify'
 
 const Organoid = React.lazy(() => import('./containers/CustomerVoice/OtherServices/Organoid'))
 
+const Refresh = React.lazy(() => import('./containers/Refresh'))
+
 // const Report = React.lazy(()=>import ('./containers/DataVisualisation/Charts/NewSankeyIndex'))
 
 // let Checkproject_id = ()=>{
@@ -81,6 +83,7 @@ const route = [
   { path: `/organoid/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Organoid" defaultMessage="organoid" />, component: Organoid},
 
   { path: `/fileprojectdatatable/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Organoid" defaultMessage="organoid" />, component: FileProjectDataTable},
+  { path: `/refresh/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Organoid" defaultMessage="organoid" />, component: Refresh},
   
 ]
 

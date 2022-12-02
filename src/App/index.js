@@ -23,8 +23,6 @@ export default function App() {
   //   const TRACKING_ID = "UA-240000755-1"; // YOUR_OWN_TRACKING_ID
   //   ReactGA.initialize(TRACKING_ID);
   // })
- 
-
   return (
     <Wrapper>
       <div className={blurScreenCss}>

@@ -749,7 +749,7 @@ const GroupFilters = ({
           if(total_groups <2){
             send_response = false;
           }
-        console.log('userGivenInputValues', userGivenInputValues);
+        console.log('userGivenInputValues --------->', userGivenInputValues);
       }
       else{
         let min1Value = Number.MAX_VALUE;

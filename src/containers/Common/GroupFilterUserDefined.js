@@ -15,7 +15,6 @@ let UserDefinedGroupFilters = ({
   viz_type,
 }) => {
   const  [clinicalMaxMinInfo, setClinicalMaxMinInfo] = useState({})
-
   const userDefinedFilter = useSelector(
     (data) => data.dataVisualizationReducer.userDefinedFilter
   );
@@ -191,9 +190,10 @@ let UserDefinedGroupFilters = ({
     // } else {
     //   parentCallback(userGivenInputValues);
     // }
-    if (isFilterResetHappened) {
-      let send_response = true;
-      if(userGivenInputValues['type'] === 'static'){
+    if(viz_type === 'volcono'){
+      if (isFilterResetHappened) {
+        let send_response = true;
+        if(userGivenInputValues['type'] === 'static'){
         let final_payload = { ...userGivenInputValues };
         let total_groups=0;
         if('group_a' in final_payload){
@@ -217,7 +217,7 @@ let UserDefinedGroupFilters = ({
         const min_2_from = document.querySelectorAll('[name="2_from"]');
         const max_2_to = document.querySelectorAll('[name="2_to"]');
         // getting min value from all
-        console.log(min_1_from, max_1_to, min_2_from, max_2_to);
+        // console.log(min_1_from, max_1_to, min_2_from, max_2_to);
         for (let obj in min_1_from) {
           if (min_1_from[obj]) {
             // console.log('list',min_1_from[obj].classList);
@@ -309,6 +309,14 @@ let UserDefinedGroupFilters = ({
       // parentCallback({ ...userGivenInputValues });
       parentCallback(userGivenInputValues );
     }
+  }
+  else{
+    if (isFilterResetHappened) {
+      parentCallback(userGivenInputValues);
+    } else {
+      parentCallback(userGivenInputValues);
+    }
+  }
   };
 
   const resetFilters = () => {
@@ -483,7 +491,7 @@ let UserDefinedGroupFilters = ({
           targetNumber = index;
         }
       });
-      console.log("assd", filterChoices[targetNumber]);
+      // console.log("assd", filterChoices[targetNumber]);
       filterChoices &&
         filterChoices[targetNumber] &&
         setFilterSelected(filterChoices[targetNumber].name);
@@ -962,7 +970,8 @@ let UserDefinedGroupFilters = ({
                 <tbody key={"group_tbody"}>{tr}</tbody>
               </table>
             );
-          } else if (viz_type === "survival") {
+          }
+           else if (viz_type === "survival") {
             let d = preDefienedGroups1[colName];
             let thead = [];
             let boxes = d.length;

@@ -214,6 +214,12 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
     dispatch(getRNIDetails('POST', { rnid: sampleKey }))
   }
 
+  useEffect(()=>{
+console.log("C",sampleKey);
+console.log("C",tableColumnsData);
+console.log("C",tableData);
+console.log("C",basicInformationData);
+  })
   useEffect(() => {
     if (reportData) {
       setTableData(reportData.genomic_summary)
@@ -431,7 +437,8 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
     }
       {showOncoImages && <PagenationTableComponent closeShowOncoImages={closeShowOncoImages} imageData={oncoImageJson} />}
       {showOncoTimelineTables && <GraphsModal circosTimelieTableData={circosTimelieTableData} closeShowTimelineTables={closeShowTimelineTables} />}
-      {showReportTable
+           {
+          showReportTable
         &&
         <Report
 
@@ -444,15 +451,17 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
           isReportClicked={isReportClicked}
         />
 
-      } 
+      }       
 
-      {showReportTable
+       {
+       showReportTable
         && <PDFReport
           sampleKey={circosSanpleRnidListData[sampleKey]}
           tableColumnsData={tableColumnsData}
           tableData={tableData}
           basicInformationData={basicInformationData}
-        />}
+        />
+        } 
 
     </>
   )

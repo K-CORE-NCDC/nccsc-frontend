@@ -458,9 +458,9 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
   
   return (
     <>
-      {/* <ModalTest modalStateButton={showModalInfo} setShowModalFunction={hideModal} /> */}
+      <ModalTest modalStateButton={showModalInfo} setShowModalFunction={hideModal} />
       <div>
-        {/* <Modal showModal={showModal} setShowModal={setShowModalFunction} body={modalData} /> */}
+        <Modal showModal={showModal} setShowModal={setShowModalFunction} body={modalData} />
       </div>
       {!showFileDataTable && <div className="py-20 h-screen ">
         {error ? <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">

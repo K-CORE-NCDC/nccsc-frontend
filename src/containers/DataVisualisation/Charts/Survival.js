@@ -33,6 +33,7 @@ export default function DataSurvival({
   const survivalJson = useSelector(
     (data) => data.dataVisualizationReducer.survivalSummary
   );
+  // console.log("survival_json",survivalJson);
   const clinicalMaxMinInfo = useSelector(
     (data) => data.dataVisualizationReducer.clinicalMaxMinInfo
   );
@@ -51,27 +52,96 @@ export default function DataSurvival({
   const [userDefienedFilter, setUserDefienedFilter] = useState(
     project_id === undefined ? "static" : "dynamic"
   );
+
+  const [coxUserDefinedFilter, setCoxUserDefinedFilter] = useState({})
   const [survivalModel, setSurvivalModel] = useState("kaplan");
   const [pValueData, setPvalueData] = useState("");
   const [smallScreen, setSmallScreen] = useState(false);
   const [coxClinical, setCoxClinical] = useState([]);
   const [coxTable, setCoxTable] = useState([]);
+  const userDefinedFilterColumns = useSelector(
+    (data) => data.dataVisualizationReducer.userDefinedFilter
+  );
 
   const [coxFilter, setCoxFilter] = useState({
-    "Body Mass Index": false,
-    "Alcohol Consumption": false,
-    "Family History of Breast Cancer": false,
-    "Intake Of Contraceptive Pill": false,
-    "Hormone Replace Therapy": false,
-    Menopause: false,
-    Childbirth: false,
-    "Diagnosis of Bilateral Breast Cancer": false,
-    "First Menstrual Age": false,
-    "ER Test Results": false,
-    "PR Test Results": false,
-    "Ki67 Index": false,
-    "Age Of Diagnosis": false,
+    // "Body Mass Index": false,
+    // "Alcohol Consumption": false,
+    // "Family History of Breast Cancer": false,
+    // "Intake Of Contraceptive Pill": false,
+    // "Hormone Replace Therapy": false,
+    // Menopause: false,
+    // Childbirth: false,
+    // "Diagnosis of Bilateral Breast Cancer": false,
+    // "First Menstrual Age": false,
+    // "ER Test Results": false,
+    // "PR Test Results": false,
+    // "Ki67 Index": false,
+    // "Age Of Diagnosis": false,
   });
+
+  useEffect(()=>{
+    if (userDefinedFilterColumns && userDefinedFilterColumns["filterJson"] && userDefinedFilterColumns["filterJson"]["Clinical Information"] && Object.keys(userDefinedFilterColumns).length > 0) {
+      setCoxUserDefinedFilter(userDefinedFilterColumns["filterJson"]["Clinical Information"])
+    }
+  },[userDefinedFilterColumns])
+
+  useEffect(()=>{
+    // console.log("s",survivalModel);
+  if (survivalModel === "cox" && project_id !== undefined){
+    let tmpe ={}
+    if (coxUserDefinedFilter && Object.keys(coxUserDefinedFilter).length > 0) {
+      // console.log("coxUserDefinedFilter",coxUserDefinedFilter);
+      // for (const a in coxUserDefinedFilter){
+      //   if(a !== 'rlps_yn' && a!== 'rlps_cnfr_drtn')
+      //     {
+      //       tmpe[a] = false
+      //     }
+      // // setCoxFilter({ ...coxFilter, [a]: false });
+      // }
+
+      for (const a in coxUserDefinedFilter){
+        if(a !== 'rlps_yn' && a!== 'rlps_cnfr_drtn' )
+        {
+          if( 'value' in coxUserDefinedFilter[a][0] && coxUserDefinedFilter[a][0]['value'] !== 'yes' && 'value' in  coxUserDefinedFilter[a][0] && coxUserDefinedFilter[a][0]['value'] !== 'no' ){
+            continue
+          }
+          else{
+            tmpe[a] = false
+          }
+       
+        }
+      }
+      setCoxFilter(tmpe)
+      // console.log('tmpe',tmpe);
+    }
+  }
+  else{
+
+    let tmp = [
+      "Body Mass Index",
+    "Alcohol Consumption",
+    "Family History of Breast Cancer",
+    "Intake Of Contraceptive Pill",
+    "Hormone Replace Therapy",
+    "Menopause",
+    "Childbirth",
+    "Diagnosis of Bilateral Breast Cancer",
+    "First Menstrual Age",
+    "ER Test Results",
+    "PR Test Results",
+    "Ki67 Index",
+    "Age Of Diagnosis",
+    ];
+    let tmpe ={}
+  for (let i=0; i<tmp.length;i++){
+
+    tmpe[tmp[i]] = false
+  }
+  setCoxFilter(tmpe)
+}
+  },[survivalModel])
+ 
+
   useEffect(() => {
     if (!clinicalMaxMinInfo) {
       dispatch(getClinicalMaxMinInfo("GET", {}));
@@ -179,17 +249,37 @@ export default function DataSurvival({
       }
     } else if (survivalModel === "cox") {
       let inputDataJson = {};
-      for (let z = 0; z < inputJson["filterChoices"].length; z++) {
-        inputDataJson[inputJson["filterChoices"][z]["id"]] =
-          inputJson["filterChoices"][z]["name"];
+      if (project_id){
+        if (coxUserDefinedFilter && Object.keys(coxUserDefinedFilter).length > 0) {
+          for (const a in coxUserDefinedFilter){
+            if(a !== 'rlps_yn' && a!== 'rlps_cnfr_drtn' )
+            {
+              if( 'value' in coxUserDefinedFilter[a][0] && coxUserDefinedFilter[a][0]['value'] !== 'yes' && 'value' in  coxUserDefinedFilter[a][0] && coxUserDefinedFilter[a][0]['value'] !== 'no' ){
+                continue
+              }
+              else{
+                // console.log(coxUserDefinedFilter);
+                // console.log('ll',coxUserDefinedFilter[a][0]['type']);
+                inputDataJson[a] = a
+              }
+           
+            }
+          }
+        }
       }
+     else{
+       for (let z = 0; z < inputJson["filterChoices"].length; z++) {
+         inputDataJson[inputJson["filterChoices"][z]["id"]] = inputJson["filterChoices"][z]["name"];
+       }
+     }
+      // console.log("inputDataJson",inputDataJson);
 
       let tmp = [];
-      let columns = survivalJson["columns"];
+      let columns = survivalJson && 'columns' in survivalJson &&  survivalJson["columns"];
       let table = [];
       let thead = [<th></th>];
-      let data = JSON.parse(survivalJson["data"]);
-      let cf = survivalJson["clinical_filter"];
+      let data = survivalJson && 'data' in survivalJson && JSON.parse(survivalJson["data"]);
+      let cf = survivalJson && 'clinical_filter' in survivalJson &&  survivalJson["clinical_filter"];
       let image = survivalJson["image"];
       let trow = [];
       for (let c = 0; c < columns.length; c++) {
@@ -265,7 +355,7 @@ export default function DataSurvival({
       setCoxTable(tmp);
     }
   }, [survivalJson]);
-
+  
   useEffect(() => {
     if (screenCapture) {
       setWatermarkCSS("watermark");
@@ -280,6 +370,7 @@ export default function DataSurvival({
   }, [screenCapture, watermarkCss]);
 
   const updateGroupFilters = (filtersObject) => {
+    console.log("group filter",filtersObject);
     if (filtersObject) {
       setGroupFilters(filtersObject);
     }
@@ -298,14 +389,41 @@ export default function DataSurvival({
   const selectCoxFiler = (e) => {
     let val_ = e.target.value;
     let check = e.target.checked;
+    // console.log("val_,",val_, "check",check);
     if (check) {
       setCoxFilter({ ...coxFilter, [val_]: true });
     } else {
       setCoxFilter({ ...coxFilter, [val_]: false });
     }
   };
-  let tmp = [
-    "Body Mass Index",
+  let tmp = []
+  if (project_id !== undefined){
+    if (coxUserDefinedFilter && Object.keys(coxUserDefinedFilter).length > 0) {
+      // for (const a in coxUserDefinedFilter){
+
+      //   if(a !== 'rlps_yn' && a!== 'rlps_cnfr_drtn')
+      //   {
+      //     tmp.push(a);
+      //   }
+      // }
+      for (const a in coxUserDefinedFilter){
+        if(a !== 'rlps_yn' && a!== 'rlps_cnfr_drtn' )
+        {
+          if( 'value' in coxUserDefinedFilter[a][0] && coxUserDefinedFilter[a][0]['value'] !== 'yes' && 'value' in  coxUserDefinedFilter[a][0] && coxUserDefinedFilter[a][0]['value'] !== 'no' ){
+            continue
+          }
+          else{
+            tmp.push(a);
+          }
+       
+        }
+      }
+    }
+  }
+  else{
+
+    let tmpe = [
+      "Body Mass Index",
     "Alcohol Consumption",
     "Family History of Breast Cancer",
     "Intake Of Contraceptive Pill",
@@ -319,17 +437,19 @@ export default function DataSurvival({
     "Ki67 Index",
     "Age Of Diagnosis",
   ];
-
+  tmp = [...tmpe] 
+}
   const survivalModelFun = (e, type) => {
     setSurvivalModel(type);
     if (type === "cox") {
-      // inputData["survival_type"] = type;
-      // inputData['coxFilter'] = coxFilter
-      // dispatch(getSurvivalInformation("POST", inputData));
+      inputData["survival_type"] = type;
+      inputData['coxFilter'] = coxFilter
+      dispatch(getSurvivalInformation("POST", inputData));
     }
   };
 
   const submitCox = (e, type) => {
+    // console.log('=',e, type);
     setSurvivalModel(type);
     if (type === "cox") {
       inputData["survival_type"] = type;
@@ -339,12 +459,12 @@ export default function DataSurvival({
   };
 
   useEffect(() => {
-    console.log(coxFilter);
+    // console.log('coxFilter',coxFilter);
   }, [coxFilter]);
 
   const selectAllCox = (e, type) => {
     let tmp = coxFilter;
-    console.log(type);
+    // console.log(type);
     for (const key in tmp) {
       if (type === "select") {
         tmp[key] = true;

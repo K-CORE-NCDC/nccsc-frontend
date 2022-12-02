@@ -4,7 +4,8 @@ import '../../../styles/sankey.css'
 
 
 
-function NewSankeyd3({SankeyJson, idName}) {
+function NewSankeyd3({SankeyJson, idName, forGene}) {
+  console.log('->',SankeyJson);
   var margin = {top: 1, right: 1, bottom: 6, left: 1},
   width = 960 - margin.left - margin.right,
   height = 500 - margin.top - margin.bottom;
@@ -186,7 +187,7 @@ function NewSankeyd3({SankeyJson, idName}) {
 
   return (
     <div>
-        <div id={idName} className='relative w-full text-center'  style={{'padding':"50px"}}></div>
+        <div id={idName} name={forGene} className='relative w-full text-center'  style={{'padding':"50px"}}></div>
     </div>
   )
 }
