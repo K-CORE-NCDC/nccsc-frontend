@@ -29,16 +29,16 @@ function Organoid() {
           <ul>
             <li>
               <ul>
-                <li className="text-2xl">
+                <li className="text165rem lineHeightInitial">
                   <ul className="">
-                    <li className="m-8 text-2xl">
+                    <li className="m-8 text165rem lineHeightInitial">
                       - 2020년 6월부터, 임상검체의 접근성, 암종별 오가노이드
                       제작 기술, 제작비용, 시간 등 개별적 암 오가노이드 연구의
                       한계를 극복하고자 고품질 오가노이드를 제작하고 연계
                       데이터와 함께 제공할 수 있도록 수립된 수요자 친화적 서비스
                       허브
                     </li>
-                    <li className="m-8 text-2xl">
+                    <li className="m-8 text165rem lineHeightInitial">
                       - 대상암종: 희귀 및 진행성 난치암, 8암종 (간암, 담도암,
                       대장암, 췌장암, 유방암, 위암, 난소암, 구강암)
                     </li>
@@ -98,10 +98,10 @@ function Organoid() {
               <div style={{ marginLeft: "10%" }}>
                 <ul className="mt-8 ml-8">
                   <li className="mb-4">1) 동결바이얼</li>
-                  <li className="ml-12">
+                  <li className="ml-12 mb-4">
                     - 드라이아이스 상태의 1 바이얼 (106 cells/vial)
                   </li>
-                  <li className="ml-12">
+                  <li className="ml-12 mb-4">
                     - 매주 화요일 오전, 택배 혹은 직접분양
                   </li>
                 </ul>
@@ -120,10 +120,10 @@ function Organoid() {
               <div className="" style={{ marginLeft: "10%" }}>
                 <ul className="mt-8 ml-8">
                   <li className="mb-4">2) 배양바이얼</li>
-                  <li className="ml-12">
+                  <li className="ml-12 mb-4">
                     - matrigel 배양상태의 오가노이드 1 바이얼 (상온)
                   </li>
-                  <li className="ml-12">
+                  <li className="ml-12 mb-4">
                     - 매주 화요일 오후 3시, 직접분양만 가능
                   </li>
                 </ul>
@@ -141,11 +141,11 @@ function Organoid() {
           </div>
 
           <ul className="m-12">
-            <li className="m-8 text-2xl">
+            <li className="m-8 text165rem lineHeightInitial">
               - 기본정보: 연구조건에 부합하는 검체자원 검색을 위한 온라인 공개
               정보
             </li>
-            <li className="m-8 text-2xl">
+            <li className="m-8 text165rem lineHeightInitial">
               - 상세정보: 공동연구 및 임상전문가 협력 연구를 통해서만 요청가능한
               비공개 심화 임상정보
             </li>
@@ -156,145 +156,145 @@ function Organoid() {
               <table class="min-w-full">
                 <thead class="border border-black">
                   <tr className="h-20 text-center bg-blue-100">
-                    <th className="text-2xl font-medium text-gray-900 px-6 py-4 border border-black">
+                    <th className="text165rem lineHeightInitial font-medium text-gray-900 px-6 py-4 border border-black">
                     연계 임상정보
                     </th>
-                    <th className="text-2xl font-medium text-gray-900 px-6 py-4 border border-black w-80">
+                    <th className="text165rem lineHeightInitial font-medium text-gray-900 px-6 py-4 border border-black w-80">
                     기본정보
 
                     </th>
-                    <th className="text-2xl font-medium text-gray-900 px-6 py-4 border border-black w-80">
+                    <th className="text165rem lineHeightInitial font-medium text-gray-900 px-6 py-4 border border-black w-80">
                     상세정보
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr class="border border-black text-center h-20">
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-red-50">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-red-50">
                     나이
 
                     </td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-red-50">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-red-50">
                       0
                     </td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
                   </tr>
                   <tr class="border border-black text-center h-20">
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-red-50">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-red-50">
                     성별
 
                     </td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-red-50">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-red-50">
                       0
                     </td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
                   </tr>
                   <tr class="border border-black text-center h-20">
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-red-50">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-red-50">
                     원발암
 
                     </td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-red-50">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-red-50">
                       0
                     </td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
                   </tr>
                   <tr class="border border-black text-center h-20">
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
                     검체정보(오가노이드 조직 얻은 검체)
 
 
                     </td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
                       0
                     </td>
                   </tr>
                   <tr class="border border-black text-center h-20">
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
                     검체수집일
 
                     </td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
                       0
                     </td>
                   </tr>{" "}
                   <tr class="border border-black text-center h-20">
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
                     종양의 병기 및 grade
 
                     </td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
                       0
                     </td>
                   </tr>
                   <tr class="border border-black text-center h-20">
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
                     수술정보(수술일, 수술명) 및 수술병리조직결과
 
 
                     </td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
                       0
                     </td>
                   </tr>
                   <tr class="border border-black text-center h-20">
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
                     수술정보(수술일, 수술명) 및 수술병리조직결과
 
 
                     </td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
                       0
                     </td>
                   </tr>
                   <tr class="border border-black text-center h-20">
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
                     병리검사결과
 (면역조직염색 결과, EBV 분자유전학 검사결과, 종양유전체 결과 등)
 
 
 
                     </td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
                       0
                     </td>
                   </tr>
                   <tr class="border border-black text-center h-20">
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
                     항암제치료 정보 및 반응성
 
 
 
                     </td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
                       0
                     </td>
                   </tr>
                   <tr class="border border-black text-center h-20">
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
                     방사선치료유무 및 반응성
 
 
 
                     </td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
                       0
                     </td>
                   </tr>
                   <tr class="border border-black text-center h-20">
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
                     추적관찰 (재발기간 및 생존기간)
                     </td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
-                    <td class="text-2xl text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
                       0
                     </td>
                   </tr>
@@ -312,16 +312,16 @@ function Organoid() {
               오가노이드 연구 관련 특화서비스 제공
             </h1>
             <ul className="m-12">
-              <li className="m-8 text-2xl">
+              <li className="m-8 text165rem lineHeightInitial">
                 1. 종사자 대상 교육 - 오가노이드 연구 초심자 혹은 경력자를
                 대상으로 한 배양 이론 및 관련기법 교육
               </li>
-              <li className="m-8 text-2xl">
+              <li className="m-8 text165rem lineHeightInitial">
                 2. 연구 디자인 컨설팅 연구 디자인 및 결과의 임상적 의의 해석 등
                 오가노이드 제공 전/후 전문가 그룹과의 자문/협력 제공 오가노이드
                 제공 신청 단계에서 특화 서비스 항목으로 추가 신청
               </li>
-              <li className="m-8 text-2xl"> 3. STR analysis</li>
+              <li className="m-8 text165rem lineHeightInitial"> 3. STR analysis</li>
             </ul>
           </li>
         </ul>
@@ -347,7 +347,7 @@ function Organoid() {
 
           <ul>
             <li>
-              <div className="container flex justify-items-start m-8 text-2xl">
+              <div className="container flex justify-items-start m-8 text165rem lineHeightInitial">
                 <div>
                   <h1 className="mr-5">◦ 신청단계 </h1>
                   <br></br>
@@ -359,7 +359,7 @@ function Organoid() {
               </div>
             </li>
             <li>
-              <div className="container flex justify-items-start m-8 text-2xl">
+              <div className="container flex justify-items-start m-8 text165rem lineHeightInitial">
                 <div>
                   <h1 className="mr-5">◦ 제공단계</h1>
                   <br></br>
