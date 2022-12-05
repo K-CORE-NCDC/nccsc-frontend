@@ -17,6 +17,14 @@ function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, b
       setTableRender(true)
     }
   },[tableData])
+
+  useEffect(()=>{
+    console.log("R",sampleKey);
+    console.log("R",tableColumnsData);
+    console.log("R",tableData);
+    console.log("R",basicInformationData);
+      })
+
   useEffect(() => {
     if (basicInformationData.length > 0) {
       let tmp = []
@@ -91,7 +99,7 @@ function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, b
       <div className='overflow-y-scroll fixed inset-0 bg-gray-600 bg-opacity-50 h-full w-full z-50'>
         <div className="relative top-20 m-10 p-5 border shadow-lg rounded-md bg-white text-left">
           <div className='float-right m-5'>
-            <PdfPrint   />
+            <PdfPrint/>
           </div>
           <div className="border-0  relative flex flex-col w-full bg-white outline-none focus:outline-none">
             <h3 className='py-4 px-3'>Sample Name : {sampleKey}</h3>

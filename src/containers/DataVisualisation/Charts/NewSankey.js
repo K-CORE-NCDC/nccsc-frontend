@@ -1,4 +1,4 @@
-import React,{ useState, useEffect} from 'react'
+import React from 'react'
 // import d3 from 'd3'
 import d3 from 'd3v3/d3'
 

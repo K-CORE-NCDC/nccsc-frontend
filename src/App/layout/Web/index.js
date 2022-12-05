@@ -26,6 +26,7 @@ import { useParams } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 import { getDashboardCount, sendlogManagement } from "../../../actions/api_actions";
 import Popup from "../../../containers/Popup/Popup";
+import { useIdleTimer } from 'react-idle-timer'
 
 
 const menu = route.map((route, index) => {
@@ -44,10 +45,93 @@ const menu = route.map((route, index) => {
     />
   ) : null;
 });
+
+let PageRefresh = ()=>{
+    const timeout = 10000
+  const [remaining, setRemaining] = useState(timeout)
+  const [elapsed, setElapsed] = useState(0)
+  const [lastActive, setLastActive] = useState(+new Date())
+  const [isIdle, setIsIdle] = useState(false)
+
+  const handleOnActive = () => setIsIdle(false)
+  const handleOnIdle = () => setIsIdle(true)
+  const {
+    reset,
+    pause,
+    resume,
+    getRemainingTime,
+    getLastActiveTime,
+    getElapsedTime
+  } = useIdleTimer({
+    timeout,
+    onActive: handleOnActive,
+    onIdle: handleOnIdle
+  })
+
+
+  useEffect(() => {
+    setRemaining(getRemainingTime())
+    setLastActive(getLastActiveTime())
+    setElapsed(getElapsedTime())
+
+    setInterval(() => {
+      setRemaining(getRemainingTime())
+      setLastActive(getLastActiveTime())
+      setElapsed(getElapsedTime())
+    }, 1000)
+  }, [])
+ if(isIdle === true){
+       window.location.reload();
+ }
+// useEffect(()=>{
+//   console.log(isIdle);
+//   if(isIdle === true){
+//     window.location.reload();
+//   }
+// },[isIdle])
+}
 export default function Web(props) {
+
+  const timeout = 3000
+  const [remaining, setRemaining] = useState(timeout)
+  const [elapsed, setElapsed] = useState(0)
+  const [lastActive, setLastActive] = useState(+new Date())
+  const [isIdle, setIsIdle] = useState(false)
+
+  const handleOnActive = () => setIsIdle(false)
+  const handleOnIdle = () => setIsIdle(true)
+  const {
+    reset,
+    pause,
+    resume,
+    getRemainingTime,
+    getLastActiveTime,
+    getElapsedTime
+  } = useIdleTimer({
+    timeout,
+    onActive: handleOnActive,
+    onIdle: handleOnIdle
+  })
+
+
+  // useEffect(() => {
+  //   setRemaining(getRemainingTime())
+  //   setLastActive(getLastActiveTime())
+  //   setElapsed(getElapsedTime())
+
+  //   setInterval(() => {
+  //     setRemaining(getRemainingTime())
+  //     setLastActive(getLastActiveTime())
+  //     setElapsed(getElapsedTime())
+  //   }, 1000)
+  // }, [])
+
+  // useEffect(()=>{
+  //   console.log("isIdle",isIdle);
+  // },[isIdle])
   let { project_id } = useParams()
   let id = useParams();
-  console.log("id----",id);
+  // console.log("id----",id);
 
   const [breadCrumb, setBreadCrumb] = useState([]);
   const [currentDate, setCurrentDate] = useState("");
@@ -110,7 +194,7 @@ export default function Web(props) {
 
 
   useEffect(() => {
-
+    
     console.log("logmanagement ----->", window.location.href)
 
     if (!sessionStorage.getItem('location')) {
@@ -178,11 +262,11 @@ export default function Web(props) {
       logDataIs[idNumber] = object
       sessionStorage.setItem('logData', JSON.stringify(logDataIs))
     }
-
+    // dispatch(reportData())
   }, [window.location.href])
 
 
-  console.log('pi',project_id)
+  // console.log('pi',project_id)
   useEffect(() => {
     let html = [];
     for (let m = 0; m < menu.length; m++) {

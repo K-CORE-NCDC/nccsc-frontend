@@ -154,6 +154,7 @@ function SankeyIndex({ ...props }) {
       }
       setDetailGeneData(detailgeneData);
       setSankeyJsonData({ nodes: final_nodes, links: final_links });
+      // dispatch(generatereport({ nodes: final_nodes, links: final_links }))
     }
   }, [sankeyJson]);
 
@@ -282,10 +283,8 @@ function SankeyIndex({ ...props }) {
         SankeyJsonData["links"].length > 0 && (
           <>
             <Sankey></Sankey>
-            <NewSankeyd3
-              SankeyJson={SankeyJsonData}
-              idName="chart"
-            ></NewSankeyd3>
+            <NewSankeyd3 SankeyJson={SankeyJsonData} idName="chart">
+            </NewSankeyd3>
             {sankyTableData}
           </>
         )}

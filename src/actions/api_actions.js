@@ -1054,6 +1054,19 @@ export function getUserDataProjectsTableData(project = false) {
   };
 }
 
+export function sankeyImageData(data){
+  return (dispatch) => {
+    let url = config.auth + "sankeyimagedata/"
+    sendRequest(url, "POST", data)
+}
+}
+export function sendReportData(data){
+  return (dispatch) => {
+    let url = config.auth + "generatereport/"
+    sendRequest(url, "POST", data)
+}
+}
+
 export function getCircosSamplesRnidList() {
   return (dispatch) => {
     let url = config.auth + "brst-samples-rnid-list/"
