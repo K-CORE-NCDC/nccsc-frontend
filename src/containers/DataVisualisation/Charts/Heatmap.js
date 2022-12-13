@@ -511,7 +511,7 @@ normal_button += " border duration-200 ease-in-out border-teal-600 transition px
           </div>
           <div className='p-5 text-left flex col-span-2'>
             <div className={tableType!=='methylation'?'xs:w-4/5  lg:w-7/12 xl:w-7/12 2xl:w-9/12 text-right':'w-full text-right'}>
-              <label className="xs:text-sm"><FormattedMessage  id = "Clinical_Filters_heatmap" defaultMessage='Clinical Filters'/>:</label>
+              <label className="xs:text-sm"><FormattedMessage  id = "Clinical_Filters_heatmap" defaultMessage='Clinical Attribute'/>:</label>
               <Multiselect
                 style={style}
                 options={optionChoices} // Options to display in the dropdown

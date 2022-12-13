@@ -72,8 +72,8 @@ const route = [
   { path: '/termsandconditions/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage id="TermsofService" defaultMessage="TermsofService" />, component: TermsandConditions},
   { path: '/oldprivacyact/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="OldPrivacyPolicy" defaultMessage="PreviousPrivacyPolicy" />, component: OldKoreanprivacyact},
   { path: '/privacypolicy/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="PrivacyPolicy" defaultMessage="PrivacyPolicy" />, component: PrivacyPolicy},
-  { path: '/findid/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="FindID" defaultMessage="FindId" />, component: FindID},
-  { path: '/findpassword/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="FindPassword" defaultMessage="FindPassword" />, component: FindPassword},
+  { path: '/findid/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="FindID" defaultMessage="Find ID" />, component: FindID},
+  { path: '/findpassword/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="ResetPassword" defaultMessage="Reset Password" />, component: FindPassword},
   { path: `/resetpassword/:token`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="ChangePassword" defaultMessage="ChangePassword" />, component: ResetPassword},
   // { path: `/gettable/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="ChangePassword" defaultMessage="ChangePassword" />, component: Report},
 

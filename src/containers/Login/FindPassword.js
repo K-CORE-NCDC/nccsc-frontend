@@ -50,7 +50,7 @@ function FindPassword() {
       <div>
         <section className="mt-10 flex flex-col items-center justify-center">
           <div>
-            <span className="text-7xl font-bold text-gray-800">Forget Password</span>
+            <span className="text-7xl font-bold text-gray-800">Reset Password</span>
           </div>
           <div className="my-14">
             <h1 className="font-bold text-3xl text-gray-800">
@@ -61,7 +61,7 @@ function FindPassword() {
           <div className="my-10">
             <div className="grid grid-cols-3 border-b-2 border-gray-600 pt-12 pb-12">
               <div className="pt-6 pl-48 col-span-1">
-                <h1 className="font-bold">User Name :</h1>
+                <h1 className="font-bold">User ID :</h1>
               </div>
               <div>
                 <div className="mb-4 pr-45 col-span-2">
@@ -86,7 +86,7 @@ function FindPassword() {
 
                 >
 
-                  <span>Reset Password</span>
+                  <span>Submit</span>
                 </button>
               </div>
             </div>

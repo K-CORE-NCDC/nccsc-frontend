@@ -52,6 +52,10 @@
 .bg-main-blue{
   background-color: #0c2f4d;
 }
+.bg-main-blue-op5{
+  background-color: #0c2f4d;
+  opacity: 0.5;
+}
 
 .btn_input_height{
   height: 45px;

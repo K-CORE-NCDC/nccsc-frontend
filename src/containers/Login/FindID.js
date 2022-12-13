@@ -57,7 +57,7 @@ function FindID() {
     <div>
       <section className="mt-10 flex flex-col items-center justify-center">
         <div>
-          <span className="text-7xl font-bold text-gray-800">Forget ID</span>
+          <span className="text-7xl font-bold text-gray-800">Find ID</span>
         </div>
         <div className="my-14">
           <h1 className="font-bold text-3xl text-gray-800">
@@ -92,7 +92,7 @@ function FindID() {
 
               >
 
-                <span>Find ID</span>
+                <span>Submit</span>
               </button>
             </div>
           </div>

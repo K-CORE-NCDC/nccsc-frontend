@@ -521,6 +521,15 @@ export function getFusionVennDaigram(type, data) {
       });
   }
 }
+
+export function clearFusionVennDaigram(type, data) {
+  return (dispatch) => {
+    dispatch({
+      type: dataVisualization.FUSIONVENN_CLEAR,
+      payload: {},
+    });
+  }
+}
 export function getClinicalMaxMinInfo(type, data) {
   return (dispatch) => {
     let url = config.auth + "getClinicalMaxMinInfo/";
@@ -1058,12 +1067,35 @@ export function sankeyImageData(data){
   return (dispatch) => {
     let url = config.auth + "sankeyimagedata/"
     sendRequest(url, "POST", data)
+   
 }
 }
-export function sendReportData(data){
+export function sendReportData(type,data){
+  console.log('---->data',data);
   return (dispatch) => {
     let url = config.auth + "generatereport/"
-    sendRequest(url, "POST", data)
+    // sendRequest(url, "POST", data)
+    sendRequest(url, type, data)
+    .then((result) => {
+      const d = result;
+      console.log('----->',d);
+      dispatch({
+        type: dataVisualization.PDF_REPORT,
+        payload: d["data"],
+      });
+    })
+    .catch((e) => {
+      console.log("error", e);
+    });
+}
+}
+export function clearPdfLink(type,data){
+  return (dispatch) => {
+      dispatch({
+        type: dataVisualization.CLEAR_PDF_LINK,
+        payload:{}
+      });
+    
 }
 }
 
