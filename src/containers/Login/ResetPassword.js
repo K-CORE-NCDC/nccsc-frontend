@@ -55,19 +55,19 @@ function ResetPassword() {
       })
         .then((value) => {
           setTimeout(() => {
-  
-            // window.location.href = '/login/'
+            dispatch(clearIDPasswordResetPASSWORD());
+            window.location.href = '/login/'
           }, 2000)
         });
     }
   }, [change_password_status, status])
 
 
-  useEffect(() => {
-    return () => {
-      dispatch(clearIDPasswordResetPASSWORD());
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(clearIDPasswordResetPASSWORD());
+  //   };
+  // }, []);
 
   return (
     <div>

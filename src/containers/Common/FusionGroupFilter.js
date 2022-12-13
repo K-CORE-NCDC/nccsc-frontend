@@ -608,103 +608,238 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
     { label: "high(30%<)", value: "high", from: "30", to: "100" },
   ];
 
+  // const submitFilters = () => {
+  //   console.log("userGivenInputValues", userGivenInputValues);
+
+  //   if (isFilterResetHappened) {
+  //     let send_response = true;
+  //     let min1Value = Number.MAX_VALUE;
+  //     let min2Value = Number.MAX_VALUE;
+  //     let max1Value = Number.MIN_VALUE;
+  //     let max2Value = Number.MIN_VALUE;
+  //     const min_1_from = document.querySelectorAll('[name="1_from"]');
+  //     const max_1_to = document.querySelectorAll('[name="1_to"]');
+  //     const min_2_from = document.querySelectorAll('[name="2_from"]');
+  //     const max_2_to = document.querySelectorAll('[name="2_to"]');
+  //     // getting min value from all
+  //     // console.log(min_1_from,max_1_to,min_2_from,max_2_to);
+  //     for (let obj in min_1_from) {
+  //       if (min_1_from[obj]) {
+  //         // console.log('list',min_1_from[obj].classList);
+  //         if (
+  //           (min_1_from[obj].classList &&
+  //             (min_1_from[obj].classList.contains("border-2") ||
+  //               min_1_from[obj].classList.contains("border-red-400"))) ||
+  //           min_1_from[obj].value === ""
+  //         ) {
+  //           send_response = false;
+  //           // return 'error_in_1_from';
+  //         } else {
+  //           if (min_1_from[obj].value) {
+  //             min1Value = Math.min(min_1_from[obj].value);
+  //           }
+  //         }
+  //       }
+  //     }
+  //     for (let obj in max_1_to) {
+  //       if (max_1_to[obj]) {
+  //         if (
+  //           (max_1_to[obj].classList &&
+  //             (max_1_to[obj].classList.contains("border-2") ||
+  //               max_1_to[obj].classList.contains("border-red-400"))) ||
+  //           max_1_to[obj].value === ""
+  //         ) {
+  //           send_response = false;
+  //           // return 'error_in_1_to';
+  //         } else {
+  //           if (max_1_to[obj].value) {
+  //             max1Value = Math.max(max_1_to[obj].value);
+  //           }
+  //         }
+  //       }
+  //     }
+  //     for (let obj in min_2_from) {
+  //       if (min_2_from[obj]) {
+  //         if (
+  //           (min_2_from[obj].classList &&
+  //             (min_2_from[obj].classList.contains("border-2") ||
+  //               min_2_from[obj].classList.contains("border-red-400"))) ||
+  //           min_2_from[obj].value === ""
+  //         ) {
+  //           send_response = false;
+  //           // return 'error_in_2_from';
+  //         } else {
+  //           if (min_2_from[obj].value) {
+  //             min2Value = Math.min(min_2_from[obj].value);
+  //           }
+  //         }
+  //       }
+  //     }
+  //     for (let obj in max_2_to) {
+  //       if (max_2_to[obj]) {
+  //         if (
+  //           (max_2_to[obj].classList &&
+  //             (max_2_to[obj].classList.contains("border-2") ||
+  //               max_2_to[obj].classList.contains("border-red-400"))) ||
+  //           max_2_to[obj].value === ""
+  //         ) {
+  //           send_response = false;
+  //           // return 'error_in_2_to';
+  //         } else {
+  //           if (max_2_to[obj].value) {
+  //             max2Value = Math.max(max_2_to[obj].value);
+  //           }
+  //         }
+  //       }
+  //     }
+  //     if (send_response === true) {
+  //       // console.log("pass",userGivenInputValues);
+  //       let final_payload = { ...userGivenInputValues };
+  //       final_payload["1_from"] = min1Value;
+  //       final_payload["1_to"] = max1Value;
+  //       final_payload["2_from"] = min2Value;
+  //       final_payload["2_to"] = max2Value;
+  //       setUserGivenInputValues(final_payload);
+  //       parentCallback(userGivenInputValues);
+  //       resetFilters()
+  //     }
+  //   } else {
+  //     // console.log("fail");
+  //     parentCallback({ ...userGivenInputValues });
+  //   }
+  // };
+
   const submitFilters = () => {
-    console.log("userGivenInputValues", userGivenInputValues);
 
     if (isFilterResetHappened) {
       let send_response = true;
-      let min1Value = Number.MAX_VALUE;
-      let min2Value = Number.MAX_VALUE;
-      let max1Value = Number.MIN_VALUE;
-      let max2Value = Number.MIN_VALUE;
-      const min_1_from = document.querySelectorAll('[name="1_from"]');
-      const max_1_to = document.querySelectorAll('[name="1_to"]');
-      const min_2_from = document.querySelectorAll('[name="2_from"]');
-      const max_2_to = document.querySelectorAll('[name="2_to"]');
-      // getting min value from all
-      // console.log(min_1_from,max_1_to,min_2_from,max_2_to);
-      for (let obj in min_1_from) {
-        if (min_1_from[obj]) {
-          // console.log('list',min_1_from[obj].classList);
-          if (
-            (min_1_from[obj].classList &&
-              (min_1_from[obj].classList.contains("border-2") ||
-                min_1_from[obj].classList.contains("border-red-400"))) ||
-            min_1_from[obj].value === ""
-          ) {
-            send_response = false;
-            // return 'error_in_1_from';
-          } else {
-            if (min_1_from[obj].value) {
-              min1Value = Math.min(min_1_from[obj].value);
-            }
-          }
-        }
-      }
-      for (let obj in max_1_to) {
-        if (max_1_to[obj]) {
-          if (
-            (max_1_to[obj].classList &&
-              (max_1_to[obj].classList.contains("border-2") ||
-                max_1_to[obj].classList.contains("border-red-400"))) ||
-            max_1_to[obj].value === ""
-          ) {
-            send_response = false;
-            // return 'error_in_1_to';
-          } else {
-            if (max_1_to[obj].value) {
-              max1Value = Math.max(max_1_to[obj].value);
-            }
-          }
-        }
-      }
-      for (let obj in min_2_from) {
-        if (min_2_from[obj]) {
-          if (
-            (min_2_from[obj].classList &&
-              (min_2_from[obj].classList.contains("border-2") ||
-                min_2_from[obj].classList.contains("border-red-400"))) ||
-            min_2_from[obj].value === ""
-          ) {
-            send_response = false;
-            // return 'error_in_2_from';
-          } else {
-            if (min_2_from[obj].value) {
-              min2Value = Math.min(min_2_from[obj].value);
-            }
-          }
-        }
-      }
-      for (let obj in max_2_to) {
-        if (max_2_to[obj]) {
-          if (
-            (max_2_to[obj].classList &&
-              (max_2_to[obj].classList.contains("border-2") ||
-                max_2_to[obj].classList.contains("border-red-400"))) ||
-            max_2_to[obj].value === ""
-          ) {
-            send_response = false;
-            // return 'error_in_2_to';
-          } else {
-            if (max_2_to[obj].value) {
-              max2Value = Math.max(max_2_to[obj].value);
-            }
-          }
-        }
-      }
-      if (send_response === true) {
-        // console.log("pass",userGivenInputValues);
+      if(userGivenInputValues['type'] === 'static'){
         let final_payload = { ...userGivenInputValues };
-        final_payload["1_from"] = min1Value;
-        final_payload["1_to"] = max1Value;
-        final_payload["2_from"] = min2Value;
-        final_payload["2_to"] = max2Value;
-        setUserGivenInputValues(final_payload);
-        parentCallback(userGivenInputValues);
+        let total_groups=0;
+        for(let i=1;i<=3;i++){
+            if(`group_${i}` in final_payload){
+                total_groups++;
+            }
+        }
+        // if(total_groups === 1 ){
+        //     send_response = false; 
+        // }
+        // if('group_1' in final_payload  === false){
+        //   send_response = false; 
+        // }
+        // else if(total_groups === 2){
+        //     if('group_1' in final_payload === false && 'group_2' in final_payload === true && 'group_3' in final_payload === true){
+        //         let l2 = [...userGivenInputValues['group_2']]
+        //         let l3 = [...userGivenInputValues['group_3']]
+        //         userGivenInputValues['group_2'] = l3
+        //         userGivenInputValues['group_1'] = l2
+        //         delete userGivenInputValues['group_3']
+        //     }
+        // }
+        console.log('userGivenInputValues', userGivenInputValues);
       }
-    } else {
-      // console.log("fail");
-      parentCallback({ ...userGivenInputValues });
+      else{
+        let min1Value = Number.MAX_VALUE;
+        let min2Value = Number.MAX_VALUE;
+        let max1Value = Number.MIN_VALUE;
+        let max2Value = Number.MIN_VALUE;
+        const min_1_from = document.querySelectorAll('[name="1_from"]');
+        const max_1_to = document.querySelectorAll('[name="1_to"]');
+        const min_2_from = document.querySelectorAll('[name="2_from"]');
+        const max_2_to = document.querySelectorAll('[name="2_to"]');
+        // getting min value from all
+        console.log(min_1_from, max_1_to, min_2_from, max_2_to);
+        for (let obj in min_1_from) {
+          if (min_1_from[obj]) {
+            // console.log('list',min_1_from[obj].classList);
+            if (
+              (min_1_from[obj].classList &&
+                (min_1_from[obj].classList.contains("border-2") ||
+                  min_1_from[obj].classList.contains("border-red-400"))) ||
+              min_1_from[obj].value === ""
+            ) {
+              send_response = false;
+              // return 'error_in_1_from';
+            } else {
+              if (min_1_from[obj].value) {
+                min1Value = Math.min(min_1_from[obj].value,min1Value);
+              }
+            }
+          }
+        }
+        for (let obj in max_1_to) {
+          if (max_1_to[obj]) {
+            if (
+              (max_1_to[obj].classList &&
+                (max_1_to[obj].classList.contains("border-2") ||
+                  max_1_to[obj].classList.contains("border-red-400"))) ||
+              max_1_to[obj].value === ""
+            ) {
+              send_response = false;
+              // return 'error_in_1_to';
+            } else {
+              if (max_1_to[obj].value) {
+                max1Value = Math.max(max_1_to[obj].value,max1Value);
+              }
+            }
+          }
+        }
+        for (let obj in min_2_from) {
+          if (min_2_from[obj]) {
+            if (
+              (min_2_from[obj].classList &&
+                (min_2_from[obj].classList.contains("border-2") ||
+                  min_2_from[obj].classList.contains("border-red-400"))) ||
+              min_2_from[obj].value === ""
+            ) {
+              send_response = false;
+              // return 'error_in_2_from';
+            } else {
+              if (min_2_from[obj].value) {
+                min2Value = Math.min(min_2_from[obj].value,min2Value);
+              }
+            }
+          }
+        }
+        for (let obj in max_2_to) {
+          if (max_2_to[obj]) {
+            if (
+              (max_2_to[obj].classList &&
+                (max_2_to[obj].classList.contains("border-2") ||
+                  max_2_to[obj].classList.contains("border-red-400"))) ||
+              max_2_to[obj].value === ""
+            ) {
+              send_response = false;
+              // return 'error_in_2_to';
+            } else {
+              if (max_2_to[obj].value) {
+                max2Value = Math.max(max_2_to[obj].value,max2Value);
+              }
+            }
+          }
+        }
+        if (send_response === true) {
+          console.log("pass");
+          let final_payload = { ...userGivenInputValues };
+          final_payload["1_from"] = min1Value;
+          final_payload["1_to"] = max1Value;
+          final_payload["2_from"] = min2Value;
+          final_payload["2_to"] = max2Value;
+          setUserGivenInputValues(final_payload);
+          parentCallback(final_payload);
+        }
+      }
+      if (send_response === true  &&  userGivenInputValues['type'] !== 'number') {
+        // console.log("userGivenInputValues last", userGivenInputValues);
+        parentCallback(userGivenInputValues);
+        resetFilters();
+      }
+    } 
+    else {
+      console.log("fail");
+      resetFilters();
+      // parentCallback({ ...userGivenInputValues });
+      parentCallback(userGivenInputValues );
     }
   };
 
@@ -1480,28 +1615,11 @@ export const UserDefinedGroupFilters = ({
   groupFilters,
   viz_type,
 }) => {
-  // const clinicalMaxMinInfo = useSelector((data) => data.dataVisualizationReducer.clinicalMaxMinInfo);
-  const [filterSelected, setFilterSelected] = useState("");
-  const [selectedFilterDetails, setSelectedFilterDetails] = useState({});
-  const [filterInputs, setFilterInputs] = useState([]);
-  const [userGivenInputValues, setUserGivenInputValues] = useState({});
-  const [showAddGroupButton, setShowAddGroupButton] = useState(false);
-  const [groupsCounter, setGroupsCounter] = useState(2);
-  const [prevStateFilters, setPrevStateFilters] = useState([]);
-  const [isFilterResetHappened, setIsFilterResetHappened] = useState(false);
-  const [filters, setFilters] = useState({});
-  const [multipleInputs, setMultipleInputs] = useState({});
-  const [filterType, setFilterType] = useState("transcriptome");
-  const [selectDefaultValue, setSelectDefaultValue] = useState("0");
-  const [preDefienedGroups1, setPreDefienedGroups1] = useState({});
-  const [filterChoices, setFilterChoices] = useState([]);
-  const [clinicalMaxMinInfo, setClinicalMaxMinInfo] = useState({});
-  const [booleanColumns, setBooleanColumns] = useState([]);
-  let { tab, project_id } = useParams();
 
   const userDefinedFilter = useSelector(
     (data) => data.dataVisualizationReducer.userDefinedFilter
   );
+
 
   useEffect(() => {
     if (
@@ -1572,8 +1690,25 @@ export const UserDefinedGroupFilters = ({
     }
   }, [userDefinedFilter]);
 
+  // const clinicalMaxMinInfo = useSelector((data) => data.dataVisualizationReducer.clinicalMaxMinInfo);
+  const [filterSelected, setFilterSelected] = useState("");
+  const [selectedFilterDetails, setSelectedFilterDetails] = useState({});
+  const [filterInputs, setFilterInputs] = useState([]);
+  const [userGivenInputValues, setUserGivenInputValues] = useState({});
+  const [showAddGroupButton, setShowAddGroupButton] = useState(false);
+  const [groupsCounter, setGroupsCounter] = useState(2);
+  const [prevStateFilters, setPrevStateFilters] = useState([]);
+  const [isFilterResetHappened, setIsFilterResetHappened] = useState(false);
+  const [multipleInputs, setMultipleInputs] = useState({});
+  const [selectDefaultValue, setSelectDefaultValue] = useState("0");
+  const [preDefienedGroups1, setPreDefienedGroups1] = useState({});
+  const [filterChoices, setFilterChoices] = useState([]);
+  const [clinicalMaxMinInfo, setClinicalMaxMinInfo] = useState({});
+  const [booleanColumns, setBooleanColumns] = useState([]);
+  let { tab, project_id } = useParams();
+
+
   useEffect(() => {
-    console.log("clinincalMaxInfo", clinicalMaxMinInfo);
     let preDefienedGroups1 = {};
     let filterChoices = [];
     if (project_id !== undefined) {
@@ -1645,8 +1780,9 @@ export const UserDefinedGroupFilters = ({
     }
   }, [userDefinedFilter]);
 
+
+
   const submitFilters = () => {
-    console.log("userGivenInputValues", userGivenInputValues);
 
     if (isFilterResetHappened) {
       let send_response = true;
@@ -1658,19 +1794,22 @@ export const UserDefinedGroupFilters = ({
                 total_groups++;
             }
         }
-        if(total_groups === 1 ){
-            send_response = false; 
-        }
-        else if(total_groups === 2){
-            if('group_1' in final_payload === false && 'group_2' in final_payload === true && 'group_3' in final_payload === true){
-                let l2 = [...userGivenInputValues['group_2']]
-                let l3 = [...userGivenInputValues['group_3']]
-                userGivenInputValues['group_2'] = l3
-                userGivenInputValues['group_1'] = l2
-                delete userGivenInputValues['group_3']
-            }
-        }
-        console.log('userGivenInputValues', userGivenInputValues);
+        // if('group_1' in final_payload  === false){
+        //   send_response = false; 
+        // }
+        // if(total_groups === 1 ){
+        //     send_response = false; 
+        // }
+        // else if(total_groups === 2){
+        //     if('group_1' in final_payload === false && 'group_2' in final_payload === true && 'group_3' in final_payload === true){
+        //         let l2 = [...userGivenInputValues['group_2']]
+        //         let l3 = [...userGivenInputValues['group_3']]
+        //         userGivenInputValues['group_2'] = l3
+        //         userGivenInputValues['group_1'] = l2
+        //         delete userGivenInputValues['group_3']
+        //     }
+        // }
+        // console.log('userGivenInputValues', userGivenInputValues);
       }
       else{
         let min1Value = Number.MAX_VALUE;
@@ -1682,7 +1821,8 @@ export const UserDefinedGroupFilters = ({
         const min_2_from = document.querySelectorAll('[name="2_from"]');
         const max_2_to = document.querySelectorAll('[name="2_to"]');
         // getting min value from all
-        console.log(min_1_from, max_1_to, min_2_from, max_2_to);
+        console.log( '->',min_2_from);
+        // console.log( '->',max_1_to);
         for (let obj in min_1_from) {
           if (min_1_from[obj]) {
             // console.log('list',min_1_from[obj].classList);
@@ -1696,7 +1836,8 @@ export const UserDefinedGroupFilters = ({
               // return 'error_in_1_from';
             } else {
               if (min_1_from[obj].value) {
-                min1Value = Math.min(min_1_from[obj].value);
+                min1Value = Math.min(min_1_from[obj].value,min1Value);
+                console.log('->min',min1Value);
               }
             }
           }
@@ -1713,7 +1854,7 @@ export const UserDefinedGroupFilters = ({
               // return 'error_in_1_to';
             } else {
               if (max_1_to[obj].value) {
-                max1Value = Math.max(max_1_to[obj].value);
+                max1Value = Math.max(max_1_to[obj].value,max1Value);
               }
             }
           }
@@ -1729,8 +1870,9 @@ export const UserDefinedGroupFilters = ({
               send_response = false;
               // return 'error_in_2_from';
             } else {
+              // console.log(min_2_from[obj].value);
               if (min_2_from[obj].value) {
-                min2Value = Math.min(min_2_from[obj].value);
+                min2Value = Math.min(min_2_from[obj].value,min2Value);
               }
             }
           }
@@ -1746,8 +1888,9 @@ export const UserDefinedGroupFilters = ({
               send_response = false;
               // return 'error_in_2_to';
             } else {
+              console.log(max_2_to[obj].value);
               if (max_2_to[obj].value) {
-                max2Value = Math.max(max_2_to[obj].value);
+                max2Value = Math.max(max_2_to[obj].value,max2Value);
               }
             }
           }
@@ -1755,22 +1898,24 @@ export const UserDefinedGroupFilters = ({
         if (send_response === true) {
           console.log("pass");
           let final_payload = { ...userGivenInputValues };
+          console.log('final_payload',final_payload);
           final_payload["1_from"] = min1Value;
           final_payload["1_to"] = max1Value;
           final_payload["2_from"] = min2Value;
           final_payload["2_to"] = max2Value;
           setUserGivenInputValues(final_payload);
+          parentCallback(final_payload);
         }
       }
-      if (send_response === true) {
+      if (send_response === true &&  userGivenInputValues['type'] !== 'number') {
         // console.log("userGivenInputValues last", userGivenInputValues);
         parentCallback(userGivenInputValues);
-        resetFilters();
+        // resetFilters();
       }
     } 
     else {
       console.log("fail");
-      resetFilters();
+      // resetFilters();
       // parentCallback({ ...userGivenInputValues });
       parentCallback(userGivenInputValues );
     }
@@ -1987,66 +2132,7 @@ export const UserDefinedGroupFilters = ({
         );
 
       case "number":
-        if (viz_type === "volcono" || viz_type === "fusion") {
-          return (
-            <>
-              <div key={`${compCase}-1${Math.random()}`} className="mb-4">
-                <div>
-                  <div className={LabelCss} htmlFor="username">
-                    Group 1
-                  </div>
-                  <div>
-                    <input
-                      onChange={onChangeFilterInput}
-                      className={numberInputBoxCss}
-                      name="1_from"
-                      type="number"
-                      placeholder={min}
-                      min={min}
-                      max={max}
-                    ></input>
-                    <input
-                      onChange={onChangeFilterInput}
-                      className={numberInputBoxCss}
-                      name="1_to"
-                      type="number"
-                      placeholder={max}
-                      min={min}
-                      max={max}
-                    ></input>
-                  </div>
-                </div>
-              </div>
-              <div key={`${compCase}-2${Math.random()}`} className="mb-4">
-                <div>
-                  <div className={LabelCss} htmlFor="username">
-                    Group 2
-                  </div>
-                  <div>
-                    <input
-                      onChange={onChangeFilterInput}
-                      className={numberInputBoxCss}
-                      name={`2_from`}
-                      type="number"
-                      placeholder={min}
-                      min={min}
-                      max={max}
-                    ></input>
-                    <input
-                      onChange={onChangeFilterInput}
-                      className={numberInputBoxCss}
-                      name={`2_to`}
-                      type="number"
-                      placeholder={max}
-                      min={min}
-                      max={max}
-                    ></input>
-                  </div>
-                </div>
-              </div>
-            </>
-          );
-        } else {
+       
           return (
             <div
               key={`${compCase}-${groupsCounter}${Math.random()}`}
@@ -2079,7 +2165,7 @@ export const UserDefinedGroupFilters = ({
               </div>
             </div>
           );
-        }
+        
       case "text":
         if (viz_type === "volcono") {
           return (
@@ -2526,3 +2612,5 @@ const dropDownChange = (event) => {
     </div>
   );
 };
+
+

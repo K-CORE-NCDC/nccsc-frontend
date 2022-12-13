@@ -6,6 +6,7 @@ import PagenationTableComponent from "../../Common/PagenationTable";
 import GraphsModal from "../../Common/circostimelineGraph";
 import LoaderCmp from "../../Common/Loader";
 import ImageGrid from "../../Common/ImageGrid";
+import { useParams } from "react-router-dom";
 import {
   getCircosInformation,
   getCircosTimelineTable,
@@ -60,6 +61,7 @@ export default function DataCircos({
   const [samplesCount, setSamplesCount] = useState(0);
   const [tableData, setTableData] = useState([]);
   const [basicInformationData, setBasicInformationData] = useState([]);
+  let { tab, project_id } = useParams();
 
   const [isReportClicked, setIsReportClicked] = useState(false);
 
@@ -475,17 +477,19 @@ export default function DataCircos({
               <div className="p-3 mt-6">
                 <button
                   id="images"
-                  className="opacity-50 bg-main-blue hover:bg-blue-700 xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40"
+                  className={`opacity-50 ${project_id!== undefined ? 'bg-main-blue-op5':'bg-main-blue hover:bg-blue-700'} xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40`}
                   onClick={oncoImagesClickFunction}
+                  disabled = {project_id!== undefined ? true:false}
                 >
-                  Pathological image
+                  Pathological images
                 </button>
               </div>
               <div className="p-3 mt-6">
                 <button
                   id="tables"
-                  className="opacity-50 bg-main-blue hover:bg-blue-700 xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40"
+                  className={`opacity-50  ${project_id!== undefined ? 'bg-main-blue-op5':'bg-main-blue hover:bg-blue-700'} xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40`}
                   onClick={timelineGraphClickFunction}
+                  disabled= {project_id!== undefined ? true:false}
                 >
                   F/U Timeline
                 </button>

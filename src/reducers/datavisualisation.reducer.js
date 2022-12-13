@@ -132,6 +132,10 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state,
         VennData: payload
       }
+    case dataVisualization.FUSIONVENN_CLEAR:
+      const {VennData, ...remaining}=state 
+      state= remaining
+      return  state
     case dataVisualization.FUSION_EXON_REQUEST:
       return {
         ...state,
@@ -176,6 +180,17 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state, 
         UpdateDownloadVisualizationPurpose: payload
       }
+    case dataVisualization.PDF_REPORT:
+      return {
+        ...state, 
+        PDF_Report: payload
+      }
+
+      case dataVisualization.CLEAR_PDF_LINK:
+        const {PDF_Report, ...rest}=state 
+        state= rest
+        return  state
+        
     default:
       return state
   }

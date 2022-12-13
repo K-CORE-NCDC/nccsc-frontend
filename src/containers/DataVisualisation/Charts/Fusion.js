@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import GroupFilters, {
   PreDefienedFilters,UserDefinedGroupFilters
 } from "../../Common/FusionGroupFilter";
+// import UserDefinedGroupFilters  from "../../Common/GroupFilterUserDefined";
 import { AdjustmentsIcon } from "@heroicons/react/outline";
 import FusionVennCmp from "../../Common/FusionVenn";
 import { useParams } from "react-router-dom";
@@ -10,6 +11,7 @@ import { useParams } from "react-router-dom";
 import {
   getClinicalMaxMinInfo,
   getFusionVennDaigram,
+  clearFusionVennDaigram
 } from "../../../actions/api_actions";
 // import Loader from "react-loader-spinner";
 import LoaderCmp from "../../Common/Loader";
@@ -59,6 +61,7 @@ export default function FusionPlot({
         let check = false;
         if ("group 1" in row) {
           let s = row["group 1"];
+          
           html.push(
             <p>
               <strong>Group 1:</strong> {s.join(",")}
@@ -86,7 +89,9 @@ export default function FusionPlot({
         }
         if (!check) {
           let s = row["sample_id"];
+          s = [...new Set(s)]
           html.push(s.join(","));
+          // html.push(s);
         }
         let main_html = [];
         main_html.push(
@@ -147,6 +152,7 @@ export default function FusionPlot({
   ];
 
   const generateFusion = (e, id) => {
+    console.log(id  )
     setFusionId(id);
   };
 
@@ -157,6 +163,10 @@ export default function FusionPlot({
   };
 
   useEffect(() => {
+    dispatch(clearFusionVennDaigram())
+    setGroupName("")
+    setNoData('true')
+    setTableData([])
     if (inputData) {
       if (
         inputData.type !== "" &&
@@ -171,9 +181,10 @@ export default function FusionPlot({
             filterGroup: groupFilters,
           })
         );
+        
       }
     }
-  }, [inputData, groupFilters]);
+  }, [inputData, groupFilters,userDefienedFilter]);
 
   useEffect(() => {
     if (!clinicalMaxMinInfo) {
@@ -182,8 +193,10 @@ export default function FusionPlot({
   }, []);
 
   useEffect(() => {
+    setNoData('true')
+    setTableData([])
     if (VennData) {
-      console.log("lenth",Object.keys(VennData['res']).length)
+      
       if (VennData.status === 200 && Object.keys(VennData['res']).length !== 0) {
         setLoader(false);
         setNoData('false')
@@ -193,6 +206,7 @@ export default function FusionPlot({
         setNoData('true')
       }
     }
+
   }, [VennData]);
 
   const getVennIds = (key) => {
@@ -212,7 +226,8 @@ export default function FusionPlot({
       tmp_name += " : " + t + " Fusion Gene Table ";
       setGroupName(tmp_name);
       let r = VennData.res.data;
-
+      console.log("r",r);
+      console.log("r.key",r[key]);
       setTableData(r[key]);
     }
   };
@@ -305,7 +320,7 @@ export default function FusionPlot({
                 groupFilters={groupFilters}
               />
             )}
-            {userDefienedFilter === "dynamic" && project_id !== undefined && (
+            { project_id !== undefined && (
               <UserDefinedGroupFilters
                 viz_type="fusion"
                 parentCallback={updateGroupFilters}
@@ -340,12 +355,12 @@ export default function FusionPlot({
                 </div>
               )
             }
-            {noData === 'false' && fusionId !== 0 &&  (
+            {VennData && noData === 'false' && fusionId !== 0 &&  (
               <div className="mt-5 my-0 mx-auto h-auto w-11/12 shadow-lg">
                 <FusionCustomPlot fusionId={fusionId} />
               </div>
             )}
-            {noData === 'false' && tableData.length > 0 && (
+            {VennData && noData === 'false' && tableData.length > 0 && (
               <div>
                 <div
                   className="mt-20  w-11/12 mx-auto"
@@ -369,11 +384,12 @@ export default function FusionPlot({
                   <div className="bg-white border-b border-gray-200 py-5 text-left px-5">
                     {groupName}
                   </div>
-                  <DataTable
+                 { VennData && noData === 'false' && <DataTable
                     pagination
                     columns={tableColumnsData}
                     data={tableData}
                   />
+                }
                 </div>
               </div>
             )}

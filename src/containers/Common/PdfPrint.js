@@ -1,14 +1,16 @@
 import React, { useState,useEffect } from 'react'
 import ReactDOM from 'react-dom';
-import { sankeyImageData,sendReportData} from '../../actions/api_actions'
+import { logManagement, sankeyImageData,sendReportData,clearPdfLink} from '../../actions/api_actions'
 import Sankey from '../DataVisualisation/Charts/NewSankey'
 import NewSankeyd3 from '../DataVisualisation/Charts/NewSankeyd3'
 import html2canvas from 'html2canvas';
 import { useSelector, useDispatch } from "react-redux";
+import config from '../../config';
 function PdfPrint({ isReportClicked }) {
     const dispatch = useDispatch()
     const reportData = useSelector(state => state.dataVisualizationReducer.rniData)
     const GeneMutationData = useSelector((data) => data.dataVisualizationReducer.rniData);
+    const PDF_Report_Status = useSelector((data) => data.dataVisualizationReducer.PDF_Report);
     // const sankeyJson = useSelector(state => state.dataVisualizationReducer.SankeyJson)
     // const [basicHtml, setBasicHtml] = useState([])
     // const [gene, setGene] = useState('NRAS')
@@ -157,6 +159,7 @@ function PdfPrint({ isReportClicked }) {
     //     return sankeyjsondata;
     // }
 
+    console.log("PDF_Report_Status->",PDF_Report_Status);
       useEffect(() => {
         let className = `.printpdf`, count = 0
         if (isReportClicked === true) {
@@ -197,18 +200,26 @@ function PdfPrint({ isReportClicked }) {
         for (let i = 0; i < count - 1; i++) {
             // let element = document.querySelector(`.sanky_chart_pdf${i}`)
             let element = document.querySelector(`#chart${i}`)
-            await html2canvas(element).then(canvas => {
-                const imgData = canvas.toDataURL('image/jpeg',1.0);
+            // await html2canvas(element).then(canvas => {
+            //     const imgData = canvas.toDataURL('image/jpeg',1.0);
                 
-                dispatch(sankeyImageData({'filename':element.getAttribute('name'), 'imgdata':imgData}))
-            });
+            //     // dispatch(sankeyImageData({'filename':element.getAttribute('name'), 'imgdata':imgData}))
+            // });
         }
         setTimeout(()=>{
-            dispatch(sendReportData({"GeneandMutationList":GeneandMutationList,'BasicInformation':reportData.basic_information[0],'rows':reportData.genomic_summary}))
+            dispatch(sendReportData("POST",{"GeneandMutationList":GeneandMutationList,'BasicInformation':reportData.basic_information[0],'rows':reportData.genomic_summary}))
         },1000)
     }
 
-
+useEffect(()=>{
+  if(PDF_Report_Status && 'res' in PDF_Report_Status){
+    let link = PDF_Report_Status['res']
+    let navlink = config.auth+link
+    console.log("navlink",navlink);
+    dispatch(clearPdfLink())
+    window.location.href = navlink;
+  }
+},[PDF_Report_Status])
     return (
         <div>
             {/* <a className='hover:bg-blue-700 text-white font-bold py-6 px-6 float-left rounded bg-NccBlue-700' rel='noreferrer' target="_blank" href='http://3.137.187.168:8009/media/sohel.pdf'>

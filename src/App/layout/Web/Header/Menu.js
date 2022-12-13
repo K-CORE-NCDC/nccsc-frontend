@@ -1,13 +1,13 @@
-import React,{useContext} from 'react'
+import React,{useContext,useState} from 'react'
 import { Link } from 'react-router-dom';
 import {Context} from '../../../../wrapper'
+import config from '../../../../config';
 
 var islogin1=localStorage.getItem('ncc_access_token') 
 var islogin2=localStorage.getItem('ncc_refresh_token')
 
 // var islogin1=localStorage.getItem('ncc_access_token') 
 // var islogin2=localStorage.getItem('ncc_refresh_token')
-
 const SingleElem = ({elem}) =>{
   if (elem.url){
     return (
@@ -66,6 +66,7 @@ const MultipleElem = ({elem,ind}) =>{
 }
 
 const Menu = ({items}) => {
+
   const item = items
   const m = item.map((ele,index)=>{
     if(ele.type==='item'){
@@ -76,6 +77,10 @@ const Menu = ({items}) => {
     }else if (ele.type==='group') {
       return <MultipleElem key={"multiple"+index} elem={ele} ind={index} />
     }
+    else if(ele.type === 'admin'){
+      return <a className="px-3 py-4 lg:py-2 flex  " href={config['auth']+'login'} target='__blank'>Admin</a>
+    }
+
     return ""
   })
   const context = useContext(Context);

@@ -18,6 +18,7 @@ let UserDefinedGroupFilters = ({
   const userDefinedFilter = useSelector(
     (data) => data.dataVisualizationReducer.userDefinedFilter
   );
+ 
   useEffect(() => {
     if (
       userDefinedFilter &&
@@ -96,7 +97,6 @@ let UserDefinedGroupFilters = ({
   const [groupsCounter, setGroupsCounter] = useState(2);
   const [prevStateFilters, setPrevStateFilters] = useState([]);
   const [isFilterResetHappened, setIsFilterResetHappened] = useState(false);
-  const [filters, setFilters] = useState({});
   const [multipleInputs, setMultipleInputs] = useState({});
   const [filterType, setFilterType] = useState("transcriptome");
   const [selectDefaultValue, setSelectDefaultValue] = useState("0");
@@ -231,7 +231,7 @@ let UserDefinedGroupFilters = ({
               // return 'error_in_1_from';
             } else {
               if (min_1_from[obj].value) {
-                min1Value = Math.min(min_1_from[obj].value);
+                min1Value = Math.min(min_1_from[obj].value,min1Value);
               }
             }
           }
@@ -248,7 +248,7 @@ let UserDefinedGroupFilters = ({
               // return 'error_in_1_to';
             } else {
               if (max_1_to[obj].value) {
-                max1Value = Math.max(max_1_to[obj].value);
+                max1Value = Math.max(max_1_to[obj].value,max1Value);
               }
             }
           }
@@ -265,7 +265,7 @@ let UserDefinedGroupFilters = ({
               // return 'error_in_2_from';
             } else {
               if (min_2_from[obj].value) {
-                min2Value = Math.min(min_2_from[obj].value);
+                min2Value = Math.min(min_2_from[obj].value,min2Value);
               }
             }
           }
@@ -282,7 +282,7 @@ let UserDefinedGroupFilters = ({
               // return 'error_in_2_to';
             } else {
               if (max_2_to[obj].value) {
-                max2Value = Math.max(max_2_to[obj].value);
+                max2Value = Math.max(max_2_to[obj].value,max2Value);
               }
             }
           }
@@ -295,9 +295,10 @@ let UserDefinedGroupFilters = ({
           final_payload["2_from"] = min2Value;
           final_payload["2_to"] = max2Value;
           setUserGivenInputValues(final_payload);
+          parentCallback(final_payload);
         }
       }
-      if (send_response === true) {
+      if (send_response === true &&  userGivenInputValues['type'] !== 'number') {
         // console.log("userGivenInputValues last", userGivenInputValues);
         parentCallback(userGivenInputValues);
         // resetFilters();
@@ -320,6 +321,7 @@ let UserDefinedGroupFilters = ({
   };
 
   const resetFilters = () => {
+    console.log("called reset filter ");
     setFilterSelected("");
     setSelectDefaultValue("");
     setSelectedFilterDetails({});

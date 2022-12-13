@@ -40,7 +40,8 @@ const LoginComponent = () => {
     localStorage.setItem("ncc_access_token", data.access);
     localStorage.setItem("ncc_refresh_token", data.refresh);
     // history.push("/userdata")
-    window.location.href = "/core/userdata";
+    // window.location.href = "/core/userdata";
+    window.location.href = "/home";
   };
 
   const formSubmitAction = (e) => {
@@ -74,7 +75,7 @@ const LoginComponent = () => {
         <div className="my-32">
           <div className="grid grid-cols-3 border-b-2 border-gray-600 pt-12 pb-12">
             <div className="pt-6 pl-48 col-span-1">
-              <h1 className="font-bold">Username</h1>
+              <h1 className="font-bold">User ID</h1>
             </div>
             <div>
               <div className="mb-4 pr-45 col-span-2">
