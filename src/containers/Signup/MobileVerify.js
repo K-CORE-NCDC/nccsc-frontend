@@ -20,13 +20,11 @@ const MobileVerify = () => {
   },[])
   useEffect(()=>{
     if(encodeData!==''){
-      console.log(encodeData)
       let data = 'EncodeData='+encodeData
       
       dispatch(verifyEncodeData("GET", data));
     }
   },[encodeData])
-  console.log(verifyMobile)
 
   return (
     <>

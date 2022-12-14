@@ -39,21 +39,16 @@ export default function Home() {
       .toLocaleString("en-US", { hour: "numeric", hour12: true })
       .split(" ")[1];
     var time = a_or_p + " " + today.getHours() + ":" + (today.getMinutes() <=9 ? `0${today.getMinutes()}`: today.getMinutes());
-    console.log("time",typeof(time));
-    console.log("time",time);
-    console.log("minutes",today.getMinutes());
-    console.log("hours",today.getHours());
+ 
 
     setCurrentDate(date);
     setCurrentTime(time);
   }, []);
 
-console.log(currentTime);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const [Englishlanguage, setEnglishlanguage] = useState(true);
   const context = useContext(Context);
   useEffect(() => {
-    console.log(context["locale"]);
     if (context["locale"] === "kr-KO") {
       setKoreanlanguage(true);
       setEnglishlanguage(false);

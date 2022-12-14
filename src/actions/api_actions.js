@@ -12,7 +12,6 @@ function sendRequest(url, method, data) {
 
 export function clearIDPasswordResetPASSWORD() {
   return (dispatch) => {
-    // console.log("clearing state");
     dispatch({
       type: homeConstants.CLEAR_ID_PASSWORD_RESET_PASSWORD,
       payload: {},
@@ -23,7 +22,6 @@ export function clearIDPasswordResetPASSWORD() {
 
 export function logManagement(method,data) {
   return (dispatch) => {
-    // console.log("clearing state");
     dispatch({
       type: homeConstants.CLEAR_ID_PASSWORD_RESET_PASSWORD,
       payload: data,
@@ -33,7 +31,6 @@ export function logManagement(method,data) {
 
 
 export function sendlogManagement(method,data){
-  console.log("data is", data);
   return (dispatch) => {
     let url = config.auth + "sendlogmanagement/";
     sendRequest(url, method, data)
@@ -47,7 +44,7 @@ export function sendlogManagement(method,data){
       })
       
       .catch((e) => {
-        console.log("error", e);
+
       });
   }
 }
@@ -82,7 +79,7 @@ export function samplesCount(type, data) {
         // dispatch({ type: dataVisualization.REQUEST_DONE });
       })
       .catch((e) => {
-        console.log("error", e);
+
         dispatch({
           type: dataVisualization.SAMPLES_COUNT,
           payload: { status: 204 },
@@ -106,7 +103,7 @@ export function sendEmail(method,data){
       })
       
       .catch((e) => {
-        console.log("error", e);
+
       });
   }
 }
@@ -124,7 +121,7 @@ export function verifyOTP(method,data){
       })
 
       .catch((e) => {
-        console.log("error", e);
+
       });
   }
 }
@@ -143,7 +140,7 @@ export function findID(method,data){
       })
       
       .catch((e) => {
-        console.log("error", e);
+
       });
   }
 }
@@ -166,7 +163,7 @@ export function interPro(method,data){
         })
         
         .catch((e) => {
-          console.log("error", e);
+
         });
     }else{
       // formData.append('container_name',data['container_name'])
@@ -182,7 +179,7 @@ export function interPro(method,data){
       })
       
       .catch((e) => {
-        console.log("error", e);
+
       });
     }
   }
@@ -205,7 +202,7 @@ export function vcfmaf(method,data){
       })
       
       .catch((e) => {
-        console.log("error", e);
+
       });
     }else{
       // formData.append('container_name',data['container_name'])
@@ -221,7 +218,7 @@ export function vcfmaf(method,data){
       })
       
       .catch((e) => {
-        console.log("error", e);
+
       });
     }
     
@@ -242,7 +239,7 @@ export function findPassword(method,data){
       })
       
       .catch((e) => {
-        console.log("error", e);
+
       });
   }
 }
@@ -260,7 +257,7 @@ export function checkEmail(method,data){
       })
       
       .catch((e) => {
-        console.log("error", e);
+
       });
   }
 }
@@ -280,7 +277,7 @@ export function changePassword(method,data){
       })
       
       .catch((e) => {
-        console.log("error", e);
+
       });
   }
 }
@@ -297,7 +294,7 @@ export function verifyEncodeData(method, data) {
       });
     })
     .catch((e) => {
-      console.log("error", e);
+
     });
   }
 }
@@ -316,7 +313,7 @@ export function getNoticeDetail(type, data) {
         dispatch({ type: homeConstants.REQUEST_DONE });
       })
       .catch((e) => {
-        console.log("error", e);
+
       });
   }
 }
@@ -334,7 +331,7 @@ export function getDashboardCount() {
         });
       })
       .catch((e) => {
-        console.log("error", e);
+
       });
   }
 }
@@ -360,7 +357,7 @@ export function getRNIDetails(type, data) {
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
       .catch((e) => {
-        console.log("error", e);
+
         dispatch({
           type: dataVisualization.RNI_DATA,
           payload: { status: 204 },
@@ -381,7 +378,7 @@ export function getUserFiles() {
         });
       })
       .catch((e) => {
-        console.log("error", e);
+
       });
   };
 }
@@ -399,7 +396,7 @@ export function getDashboardDsummaryData() {
         });
       })
       .catch((e) => {
-        console.log("error", e);
+
       });
   };
 }
@@ -409,19 +406,16 @@ export function getGenomicInformation(method, data) {
   return (dispatch) => {
     //   dispatch({ type: homeConstants.DATA_SUMMARY });
     let url = config.auth + "genomic-information/";
-    // console.log(method)
-    // console.log(data)
     sendRequest(url, method, data)
       .then((result) => {
         const d = result;
-        // console.log()
         dispatch({
           type: homeConstants.GENOMIC_INFORMATION,
           payload: d["data"],
         });
       })
       .catch((e) => {
-        console.log("error", e);
+
       });
   };
 }
@@ -446,7 +440,7 @@ export function getOncoInformation(type, data) {
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
       .catch((e) => {
-        // console.log("error", e);
+        
         dispatch({
           type: dataVisualization.ONCO_REQUEST,
           payload: { status: 204 },
@@ -476,7 +470,7 @@ export function getLolipopInformation(type, data) {
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
       .catch((e) => {
-        console.log("error", e);
+
         dispatch({
           type: dataVisualization.LOLLIPOP_REQUEST,
           payload: { data: [], domains: [], status: 204 },
@@ -497,9 +491,8 @@ export function getFusionTable(type, data) {
             payload:  d 
           });
         }
-        console.log(d)
       }).catch((e) => {
-        console.log("error", e);
+
       });
   }
 }
@@ -517,7 +510,7 @@ export function getFusionVennDaigram(type, data) {
           });
         }
       }).catch((e) => {
-        console.log("error", e);
+
       });
   }
 }
@@ -547,7 +540,7 @@ export function getClinicalMaxMinInfo(type, data) {
           });
         }
       }).catch((e) => {
-        console.log("error", e);
+
         
       });
   }
@@ -571,7 +564,7 @@ export function getSankeyJson(type,data){
         dispatch({ type: dataVisualization.REQUEST_DONE });
 
       }).catch((e) => {
-        console.log("error", e);
+
         
       });
   }
@@ -581,7 +574,6 @@ export function getVolcanoPlotInfo(type, data) {
   return (dispatch) => {
     let url = config.auth + "volcano/";
 
-    // console.log(type)
     sendRequest(url, type, data)
       .then((result) => {
         const d = result
@@ -599,7 +591,7 @@ export function getVolcanoPlotInfo(type, data) {
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
       .catch((e) => {
-        console.log("error", e);
+
         dispatch({
           type: dataVisualization.VOLCANO_REQUEST,
           payload: { status: 204 },
@@ -611,7 +603,6 @@ export function userDefinedGetVolcanoPlotInfo(type, data) {
   return (dispatch) => {
     let url = config.auth + "userdefined-volcano-info/";
 
-    // console.log(type)
     sendRequest(url, type, data)
       .then((result) => {
         const d = result
@@ -629,7 +620,7 @@ export function userDefinedGetVolcanoPlotInfo(type, data) {
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
       .catch((e) => {
-        console.log("error", e);
+
         dispatch({
           type: dataVisualization.USER_DEFINED_VOLCANO_REQUEST,
           payload: { status: 204 },
@@ -690,7 +681,7 @@ export function getHeatmapInformation(type, data) {
           type: dataVisualization.HEATMAP_REQUEST,
           payload: { status: 204 }
         });
-        console.log("error", e);
+
       });
   };
 }
@@ -719,7 +710,7 @@ export function file_upload(fileData, projectName) {
         });
       })
       .catch((e) => {
-        console.log("error", e);
+
         dispatch({
           type: homeConstants.USERDATA_VISUALIZATION_ERROR,
           payload: { [fileData.type]: 'failed' }
@@ -752,7 +743,7 @@ export function new_file_upload(fileData, projectName) {
         });
       })
       .catch((e) => {
-        console.log("error", e);
+
         dispatch({
           type: homeConstants.USERDATA_VISUALIZATION_ERROR,
           payload: { [fileData.type]: 'failed' }
@@ -761,7 +752,6 @@ export function new_file_upload(fileData, projectName) {
   }
 }
 export function clear_new_file_upload_state() {
-  console.log("function called");
   return (dispatch) => 
         dispatch({
           type: homeConstants.CLEARNEWUSERDATA_VISUALIZATION,
@@ -781,7 +771,7 @@ export function uploadClinincalSamples(fileData) {
         });
       })
       .catch((e) => {
-        console.log("error", e);
+
         dispatch({
           type: homeConstants.USERDATA_VISUALIZATION_ERROR,
           payload: { [fileData.type]: 'failed' }
@@ -801,7 +791,6 @@ export function getCircosInformation(type, data) {
     sendRequest(url, type, data)
       .then((result) => {
         const d = result;
-        // console.log(d);
         if (d.status === 200) {
           dispatch({
             type: dataVisualization.CIRCOS_REQUEST,
@@ -816,7 +805,7 @@ export function getCircosInformation(type, data) {
         }
       })
       .catch((e) => {
-        console.log("error", e);
+
         dispatch({ type: dataVisualization.CIRCOS_REQUEST, payload: { status: 400 } });
       });
   };
@@ -874,7 +863,7 @@ export function getIgv(type, data) {
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
       .catch((e) => {
-        console.log("error", e);
+
         dispatch({
           type: dataVisualization.IGV_REQUEST,
           payload: [],
@@ -886,7 +875,6 @@ export function getIgv(type, data) {
 export function getBreastKeys(data) {
   return (dispatch) => {
     //   dispatch({ type: homeConstants.DATA_SUMMARY });
-    console.log("data--------------=============================>",data);
     let url = config.auth + "brst-key/";
     sendRequest(url, "POST", data)
       .then((result) => {
@@ -903,7 +891,7 @@ export function getBreastKeys(data) {
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
       .catch((e) => {
-        console.log("error", e);
+
       });
   };
 }
@@ -914,14 +902,13 @@ export function getHeadersFiles() {
     sendRequest(url, "GET", "")
       .then((result) => {
         const d = result;
-        // console.log()
         dispatch({
           type: homeConstants.USERDATA_VISUALIZATION,
           payload: d["data"],
         });
       })
       .catch((e) => {
-        console.log("error", e);
+
       });
   };
 }
@@ -949,7 +936,7 @@ export function getCircosUserData(data) {
         });
       })
       .catch((e) => {
-        console.log("error", e);
+
       });
   };
 }
@@ -976,7 +963,7 @@ export function getOncoUserData(data) {
         });
       })
       .catch((e) => {
-        console.log("error", e);
+
       });
   };
 }
@@ -1002,7 +989,7 @@ export function getVolcanoUserData(data) {
         });
       })
       .catch((e) => {
-        console.log("error", e);
+
       });
 
   };
@@ -1028,7 +1015,7 @@ export function getVolcanoData() {
         }
       })
       .catch((e) => {
-        console.log("error", e);
+
         dispatch({
           type: userdataVisualization.VOLCANO_DATA_VISUALIZATION_REQUEST,
           payload: { status: 204 },
@@ -1057,7 +1044,7 @@ export function getUserDataProjectsTableData(project = false) {
         });
       })
       .catch((e) => {
-        console.log("error", e);
+
       });
 
   };
@@ -1071,21 +1058,19 @@ export function sankeyImageData(data){
 }
 }
 export function sendReportData(type,data){
-  console.log('---->data',data);
   return (dispatch) => {
     let url = config.auth + "generatereport/"
     // sendRequest(url, "POST", data)
     sendRequest(url, type, data)
     .then((result) => {
       const d = result;
-      console.log('----->',d);
       dispatch({
         type: dataVisualization.PDF_REPORT,
         payload: d["data"],
       });
     })
     .catch((e) => {
-      console.log("error", e);
+
     });
 }
 }
@@ -1111,7 +1096,7 @@ export function getCircosSamplesRnidList() {
         });
       })
       .catch((e) => {
-        console.log("error", e);
+
       });
 
   };
@@ -1140,7 +1125,7 @@ export function getScatterInformation(type, data) {
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
       .catch((e) => {
-        console.log("error", e);
+
         dispatch({
           type: dataVisualization.SCATTER_REQUEST,
           payload: { status: 204 },
@@ -1163,7 +1148,7 @@ export function getGeneFusionInformation(type, data) {
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
       .catch((e) => {
-        console.log("error", e);
+
       });
   };
 }
@@ -1182,7 +1167,7 @@ export function getFusionExons(type,data){
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
       .catch((e) => {
-        console.log("error", e);
+
       });
   }
 }
@@ -1201,7 +1186,7 @@ export function getFusionInformation(type, data) {
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
       .catch((e) => {
-        console.log("error", e);
+
       });
   };
 }
@@ -1229,7 +1214,7 @@ export function getBoxInformation(type, data) {
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
       .catch((e) => {
-        console.log("error", e);
+
         dispatch({
           type: dataVisualization.BOX_REQUEST,
           payload: { status: 204 },
@@ -1248,7 +1233,6 @@ export function getOncoImages(method, data) {
     sendRequest(url, method, data)
       .then((result) => {
         const d = result;
-        // console.log()
         let payload = []
         if (d.status === 200) {
           payload = d["data"]
@@ -1259,7 +1243,7 @@ export function getOncoImages(method, data) {
         });
       })
       .catch((e) => {
-        console.log("error", e);
+
       });
   };
 }
@@ -1275,7 +1259,6 @@ export function getCircosTimelineTable(method, data) {
     sendRequest(url, method, data)
       .then((result) => {
         const d = result;
-        // console.log()
         let payload = []
         if (d.status === 200) {
           payload = d["data"]
@@ -1286,7 +1269,7 @@ export function getCircosTimelineTable(method, data) {
         });
       })
       .catch((e) => {
-        console.log("error", e);
+
       });
   };
 }
@@ -1305,7 +1288,6 @@ export function getPassEncodeId(type, data) {
           });
         }
       }).catch((e) => {
-        console.log("error", e)
       })
   }
 }
@@ -1324,7 +1306,6 @@ export function checkUserName(type, data) {
           });
         }
       }).catch((e) => {
-        console.log("error", e)
       })
   }
 }
@@ -1344,7 +1325,7 @@ export function userRegister(type, data) {
         dispatch({ type: homeConstants.REQUEST_DONE });
       })
       .catch((e) => {
-        console.log("error", e);
+
       });
   };
 }
@@ -1352,7 +1333,6 @@ export function userRegister(type, data) {
 
 // export function getKMeanformation(type, data) {
 //   return (dispatch) => {
-//     console.log("type--->",type)
 //     let url = config.auth + "k-mean/";
 //     // const data = new FormData()
 //
@@ -1390,7 +1370,7 @@ export function userRegister(type, data) {
 //           type: dataVisualization.KMEAN_REQUEST,
 //           payload: {status:204}
 //         });
-//         console.log("error", e);
+//
 //       });
 //   };
 // }
@@ -1398,7 +1378,6 @@ export function userRegister(type, data) {
 
 export function clearDataVisualizationState() {
   return (dispatch) => {
-    console.log("clearing state");
     dispatch({
       type: CLEAR_ALL_STATES,
       payload: {},
@@ -1470,7 +1449,6 @@ export function updateDownloadVisualizationPurpose(data) {
         return result
       })
       .catch(e => {
-        console.log(e);
       })
 
   }
@@ -1499,7 +1477,7 @@ export function getFaqData(id) {
         });
       })
       .catch((e) => {
-        console.log("error", e);
+
       });
   }
 }
@@ -1516,7 +1494,7 @@ export function getNoticeData(id) {
         });
       })
       .catch((e) => {
-        console.log("error", e);
+
       });
   }
 }
@@ -1539,7 +1517,7 @@ export function getQaData(id, data) {
       });
     })
       .catch((e) => {
-        console.log("error", e);
+
       });
   }
 }

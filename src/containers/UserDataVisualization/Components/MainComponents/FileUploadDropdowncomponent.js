@@ -46,7 +46,6 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
       }
     }
   };
-  console.log(clinicalfileresponse);
 
   useEffect(() => {
     if (
@@ -65,7 +64,6 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
   const clinicalUpdateFileTypeOnChange = (e) => {
     let divName = e.target.name;
     let divValue = e.target.value;
-    console.log('defaultClinicalInformationColumns',defaultClinicalInformationColumns);
     if(divName === 'sample_id' || divName === 'rlps_yn' || divName === 'rlps_cnfr_drtn'){
           if(defaultClinicalInformationColumns[divName] === divValue ){
             setClinicalInformationColumns((prevState) => ({
@@ -89,7 +87,6 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
         [divName]: divValue,
       }));
     }
-    // console.log("length is ",Object.keys(clinicalInformationColumns).length);
     if (activeTableKey === "clinical_information") {
       let tmp = { ...clinincalFilterColumns };
       Object.keys(tmp).forEach((obj) => {
@@ -116,12 +113,6 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
   };
 
   const sendColumnsData = (columnsData, totalFiles) => {
-    console.log(
-      "columnsData",
-      columnsData,
-      Object.keys(columnsData).length,
-      totalFiles
-    );
     let verifyClinincalInformationColumns = () => {
       if (
         clinicalfileresponse &&
@@ -146,7 +137,6 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
       Object.keys(columnsData).length === totalFiles &&
       verifyClinincalInformationColumns()
     ) {
-      console.log("a");
       let d = {
         project_name: clinicalfileresponse["project_name"],
         file_types: columnsData,
@@ -154,7 +144,6 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
       dispatch(uploadClinincalSamples(d));
       updateComponentNumber(2);
     } else {
-      console.log("asasd");
       swal("Please Select All Columns in Clinical Information.", {
         closeOnClickOutside: false,
       });
@@ -191,12 +180,10 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
         };
         colsarray.push(obj);
       }
-      // console.log("PC usshhh",tab);
       setClinincalFilterColumns((prevState) => ({
         ...prevState,
         [tab]: colsarray,
       }));
-      // console.log("PC ClinincalFilterColumns",clinincalFilterColumns);
       let tempresponseData = { ...responseData };
       if (tempresponseData[tab]) {
         tempresponseData[tab]["types"] = types;
@@ -210,7 +197,6 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
         tempresponseData[tab]["types"] = types;
         tempresponseData[tab]["tab"] = tab;
       }
-      console.log("temp rp", tempresponseData[tab]);
       // setResponseData(tempresponseData);
       setResponseData((prevState) => ({
         ...prevState,
@@ -218,7 +204,6 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
       }));
       // tempRP.assign(tempresponseData)
 
-      console.log("reponsedata", responseData);
     } else {
       for (let i = 0; i < columns.length; i++) {
         let obj = {
@@ -244,11 +229,8 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
       clinicalfileresponse["res"] &&
       clinicalfileresponse["res"].length > 0
     ) {
-      // console.log("1111-------->",clinicalfileresponse);
       let temptabs = [];
       for (let i = 0; i < clinicalfileresponse["res"].length; i++) {
-        // console.log("col types ----------->",clinicalfileresponse["res"][i]);
-        // setColumnTypes(clinicalfileresponse["res"][i]["types"]);
         setColumnTypes((prevState) => ({
           ...prevState,
           [clinicalfileresponse["res"][i]["tab"]]:
@@ -289,7 +271,6 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
   }, [clinicalfileresponse, activeTableKey]);
 
   useEffect(() => {
-    // console.log("column types are ",columnTypes);
   }, [columnTypes]);
 
   useEffect(() => {

@@ -401,7 +401,6 @@ export const PreDefienedFilters = ({
   };
 
   useEffect(() => {
-    // console.log("selectedFilterType", selectedFilterType);
 
     let filterGroupsHtmlTemp = [];
     if (selectedFilterType && selectedFilterType.details) {
@@ -479,7 +478,6 @@ export const PreDefienedFilters = ({
       setFilterGroupsHtml(filterGroupsHtmlTemp);
     }
   }, [selectedFilterType]);
-  // console.log(filterGroupsHtml)
   return (
     <div className="m-1 bg-gray-100">
       <div className="p-1 py-3 px-2 col-span-2">
@@ -729,7 +727,6 @@ const GroupFilters = ({
   }, [volcanoType]);
 
   const submitFilters = () => {
-    // console.log("userGivenInputValues ---->",userGivenInputValues);
     // if (isFilterResetHappened) {
     //   parentCallback(userGivenInputValues);
     // } else {
@@ -749,7 +746,6 @@ const GroupFilters = ({
           if(total_groups <2){
             send_response = false;
           }
-        console.log('userGivenInputValues --------->', userGivenInputValues);
       }
       else{
         let min1Value = Number.MAX_VALUE;
@@ -761,10 +757,8 @@ const GroupFilters = ({
         const min_2_from = document.querySelectorAll('[name="2_from"]');
         const max_2_to = document.querySelectorAll('[name="2_to"]');
         // getting min value from all
-        console.log(min_1_from, max_1_to, min_2_from, max_2_to);
         for (let obj in min_1_from) {
           if (min_1_from[obj]) {
-            // console.log('list',min_1_from[obj].classList);
             if (
               (min_1_from[obj].classList &&
                 (min_1_from[obj].classList.contains("border-2") ||
@@ -832,7 +826,6 @@ const GroupFilters = ({
           }
         }
         if (send_response === true) {
-          console.log("pass");
           let final_payload = { ...userGivenInputValues };
           final_payload["1_from"] = min1Value;
           final_payload["1_to"] = max1Value;
@@ -842,13 +835,11 @@ const GroupFilters = ({
         }
       }
       if (send_response === true) {
-        // console.log("userGivenInputValues last", userGivenInputValues);
         parentCallback(userGivenInputValues);
         // resetFilters();
       }
     } 
     else {
-      console.log("fail");
     //   resetFilters();
       // parentCallback({ ...userGivenInputValues });
       parentCallback(userGivenInputValues );
@@ -886,7 +877,6 @@ const GroupFilters = ({
   };
 
   // const onChangeFilterInput = (e) => {
-  //   // console.log(selectedFilterDetails);
   //   if (e.target.type === "number") {
   //     let id = e.target.id;
   //     let ids = id.split("_");
@@ -918,7 +908,6 @@ const GroupFilters = ({
   //       one_to_0.classList.add("border-2");
   //       one_to_0.classList.add("border-red-400");
   //     } else {
-  //       // console.log("final",one_from_0.name,one_from_0.value,one_to_0.name,one_to_0.value);
   //       one_from_0.classList.remove("border-2");
   //       one_from_0.classList.remove("border-red-400");
   //       one_to_0.classList.remove("border-2");
@@ -938,21 +927,15 @@ const GroupFilters = ({
   //       [e.target.name]: e.target.value,
   //     }));
   //   }
-  //   console.log("userGivenInputValues 000000000",userGivenInputValues);
   // };
   
   const onChangeFilterInput = (e) => {
-    // console.log("e", e);
     if (e.target.type === "number") {
-      //   console.log(e);
       let id = e.target.name;
       let ids = id.split("_");
       let m_id = ids[0];
 
-        // console.log(id);
-        // console.log(ids);
-        // console.log(m_id);
-        // console.log(e.target);
+      
       let one_to_0, one_to, one_max_value, one_from_0, one_from, one_min_value;
       if (ids.includes("from")) {
         one_from_0 = e.target;
@@ -989,7 +972,6 @@ const GroupFilters = ({
         one_to_0.classList.add("border-2");
         one_to_0.classList.add("border-red-400");
       } else {
-        // console.log("final",one_from_0.name,one_from_0.value,one_to_0.name,one_to_0.value);
         one_from_0.classList.remove("border-2");
         one_from_0.classList.remove("border-red-400");
         one_to_0.classList.remove("border-2");
@@ -1005,13 +987,11 @@ const GroupFilters = ({
         }));
       }
     } else {
-      //   console.log("b");
       setUserGivenInputValues((prevState) => ({
         ...prevState,
         [e.target.name]: e.target.value,
       }));
     }
-    // console.log("userGivenInputValues 000000000", userGivenInputValues);
   };
  
   useEffect(() => {
@@ -1504,7 +1484,6 @@ const GroupFilters = ({
             for (let index = 0; index < boxes; index++) {
               let name = "group_" + abc[index] + "_" + element.label;
 
-              // console.log(sv,index)
               if (Object.keys(userGivenInputValues).length > 0) {
                 let group_check = false;
                 if (
@@ -1517,7 +1496,6 @@ const GroupFilters = ({
                     ) > -1
                   ) {
                     let gi_val = userGivenInputValues["group_" + abc[index]];
-                    // console.log(name,gi_val)
                     for (let gi = 0; gi < gi_val.length; gi++) {
                       let n = gi_val[gi];
                       if ("group_" + abc[index] + "_" + n === name) {
@@ -1680,7 +1658,6 @@ export const PreDefienedFiltersSurvival = ({
   const [resetClicked, setResetClicked] = useState(false);
   const [isGroupFilterProp, setIsGroupFilterProp] = useState(false);
 
-  // console.log(preDefienedGroups)
   let preDefienedGroups1 = {
     diag_age: [
       { label: "21-25", from: 21, to: 25 },
@@ -1936,7 +1913,6 @@ export const PreDefienedFiltersSurvival = ({
         selectedFilterType.details.type === "text"
       ) {
         const colName = selectedFilterType.details.id;
-        // console.log(selectedFilterType);
         let filtersTemp = {
           type: selectedFilterType.details.type,
           column: colName,
@@ -2054,15 +2030,12 @@ export const UserDefinedGroupFilters = ({
   let { tab, project_id } = useParams();
 
   useEffect(() => {
-    console.log("clinincalMaxInfo",clinicalMaxMinInfo);
     let preDefienedGroups1 = {}
     let filterChoices = []
     if (project_id !== undefined) {
       if (userDefinedFilter && Object.keys(userDefinedFilter).length > 0) {
-        console.log("columns", userDefinedFilter["filterJson"]);
         let colsobj = userDefinedFilter["filterJson"]["Clinical Information"];
         for (let i in colsobj) {
-          console.log(i, colsobj[i]);
           for (let j in colsobj[i]) {
             if (colsobj[i][j]["type"] === "number") {
               let d_obj = {
@@ -2071,7 +2044,6 @@ export const UserDefinedGroupFilters = ({
                 name: colsobj[i][j]["name"],
                 input: "number",
               };
-              // console.log(d_obj);
               let group_a = { label: `${colsobj[i][j]['min']}-${colsobj[i][j]['max']}`, from: colsobj[i][j]['min'], to: colsobj[i][j]['max'] }
               let group_b = { label: `${colsobj[i][j]['min']}-${colsobj[i][j]['max']}`, from: colsobj[i][j]['min'], to: colsobj[i][j]['max'] }
               if(!preDefienedGroups1[colsobj[i][j]["name"]])
@@ -2101,17 +2073,13 @@ export const UserDefinedGroupFilters = ({
                 preDefienedGroups1[colsobj[i][j]["name"]] = [];
               }
               preDefienedGroups1[colsobj[i][j]["name"]].push(group)
-              // console.log(d_obj);
-              console.log(group);
               filterChoices.push(d_obj);
             }
           }
         }
         const uniqueFilterChoices = [...new Map(filterChoices.map(v => [v.id, v])).values()]
-        console.log(preDefienedGroups1);
        setFilterChoices(uniqueFilterChoices) 
        setPreDefienedGroups1(preDefienedGroups1)
-        console.log("filtet", uniqueFilterChoices);
       }
     }
   },[userDefinedFilter]);
@@ -2162,8 +2130,6 @@ export const UserDefinedGroupFilters = ({
   };
 
   const onChangeFilterInput = (e) => {
-    console.log("selectedFilterDetails---->",filterSelected);
-    console.log("selectedFilterDetails---->",selectedFilterDetails);
     if (e.target.type === "number") {
       let id = e.target.id;
       let ids = id.split("_");
@@ -2195,7 +2161,6 @@ export const UserDefinedGroupFilters = ({
         one_to_0.classList.add("border-2");
         one_to_0.classList.add("border-red-400");
       } else {
-        // console.log("final",one_from_0.name,one_from_0.value,one_to_0.name,one_to_0.value);
         one_from_0.classList.remove("border-2");
         one_from_0.classList.remove("border-red-400");
         one_to_0.classList.remove("border-2");
@@ -2707,7 +2672,6 @@ export const UserDefinedGroupFilters = ({
             for (let index = 0; index < boxes; index++) {
               let name = "group_" + abc[index] + "_" + element.label;
 
-              // console.log(sv,index)
               if (Object.keys(userGivenInputValues).length > 0) {
                 let group_check = false;
                 if (
@@ -2720,7 +2684,6 @@ export const UserDefinedGroupFilters = ({
                     ) > -1
                   ) {
                     let gi_val = userGivenInputValues["group_" + abc[index]];
-                    // console.log(name,gi_val)
                     for (let gi = 0; gi < gi_val.length; gi++) {
                       let n = gi_val[gi];
                       if ("group_" + abc[index] + "_" + n === name) {

@@ -60,7 +60,6 @@ export default function DataVolcono({
 
   const updateGroupFilters = (filtersObject) => {
     if (filtersObject) {
-      console.log(filtersObject)
       setGroupFilters(filtersObject);
 
     }
@@ -88,7 +87,6 @@ export default function DataVolcono({
           inputData["volcanoProteomeType"] = proteomeValue;
         }
         inputData["filterType"] = userDefienedFilter;
-        console.log('----')
         if(project_id ){
           inputData['project_id'] = parseInt(project_id)
         }
@@ -114,7 +112,6 @@ export default function DataVolcono({
       let positiveCount = 0;
       if ("table_data" in volcanoJson) {
         volcanoJson["table_data"].forEach((item, i) => {
-          // console.log(item)
           let log2foldchange = parseFloat(item["log2(fold_change)"]);
           if (log2foldchange < 0) {
             negativeCount += 1;

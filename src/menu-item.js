@@ -1,18 +1,12 @@
 import { FormattedMessage } from 'react-intl';
-import { useEffect } from 'react';
 import config from './config';
 const sessionAuth = localStorage.getItem('ncc_access_token');
 
-var islogin1=localStorage.getItem('ncc_access_token') 
-var islogin2=localStorage.getItem('ncc_refresh_token')
-console.log("islogin1--->",islogin1);
 
 function parseJwt (islogin1) {
-  console.log("islogin",islogin1);
     var base64Url = islogin1 && islogin1.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-      console.log("jsonPayload",jsonPayload);
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
   
@@ -235,7 +229,6 @@ let childMenu = {
 
 if (sessionAuth) {
   let jwt = parseJwt(sessionAuth)
-  console.log("jwt",jwt);
   childMenu["social"]["items"].push(logout)
   if(jwt['is_superuser']){
     childMenu["social"]["items"].push(superAdmin)

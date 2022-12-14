@@ -30,9 +30,7 @@ import { useIdleTimer } from 'react-idle-timer'
 
 
 const menu = route.map((route, index) => {
-  // console.log('----->',route,'index',index);
   // if(route.path === "/visualise/:tab?/:project_id?/" ){
-  //   console.log('s',route,route.childname.props.defaultMessage);
   // }
   return route.component ? (
     <Route
@@ -84,7 +82,6 @@ let PageRefresh = ()=>{
        window.location.reload();
  }
 // useEffect(()=>{
-//   console.log(isIdle);
 //   if(isIdle === true){
 //     window.location.reload();
 //   }
@@ -127,11 +124,9 @@ export default function Web(props) {
   // }, [])
 
   // useEffect(()=>{
-  //   console.log("isIdle",isIdle);
   // },[isIdle])
   let { project_id } = useParams()
   let id = useParams();
-  // console.log("id----",id);
 
   const [breadCrumb, setBreadCrumb] = useState([]);
   const [currentDate, setCurrentDate] = useState("");
@@ -195,7 +190,6 @@ export default function Web(props) {
 
   useEffect(() => {
     
-    console.log("logmanagement ----->", window.location.href)
 
     if (!sessionStorage.getItem('location')) {
       updateLocation();
@@ -209,7 +203,6 @@ export default function Web(props) {
     let latitude = latandLong['lat']
     let longitude = latandLong['lon']
     var today = new Date();
-    console.log("date",today);
 
     const todays = new Date();
     const yyyy = todays.getFullYear();
@@ -240,7 +233,6 @@ export default function Web(props) {
     sessionStorage.setItem('IdNumber', idNumber)
     logDataIs[idNumber] = object
     sessionStorage.setItem('logData', JSON.stringify(logDataIs))
-    console.log('idNumber',idNumber);
     if (logDataIs.length >= 10) {
       logDataIs[idNumber]['endTime'] = currentTime
       idNumber = 0
@@ -266,7 +258,6 @@ export default function Web(props) {
   }, [window.location.href])
 
 
-  // console.log('pi',project_id)
   useEffect(() => {
     let html = [];
     for (let m = 0; m < menu.length; m++) {
@@ -274,7 +265,6 @@ export default function Web(props) {
       // if (menu[m].props.path.includes(p)) {
       if (menu[m].props.path.includes(p)) {
         let name = menu[m].props.name;
-        console.log("name", menu[m].props);
         let childname = menu[m].props.childname;
         html.push(
           <li key={m + "icon"}>

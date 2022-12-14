@@ -5,7 +5,6 @@ import '../../../styles/sankey.css'
 
 
 function NewSankeyd3({SankeyJson, idName, forGene}) {
-  console.log('->',SankeyJson);
   var margin = {top: 1, right: 1, bottom: 6, left: 1},
   width = 960 - margin.left - margin.right,
   height = 500 - margin.top - margin.bottom;
@@ -54,7 +53,6 @@ function NewSankeyd3({SankeyJson, idName, forGene}) {
         maxName = key
       }
     }
-    console.log(maxNode)
     energyjson.links = energyjson.links.map(function(x) {
       return {
         source: nodeMap[x.source],
@@ -95,7 +93,6 @@ function NewSankeyd3({SankeyJson, idName, forGene}) {
     var heigthCalc = 0
     node.append("rect")
         .attr("height", function(d) { 
-          console.log(maxName)
           if(d['type']===maxName){
             heigthCalc = heigthCalc+d.dy
           }
@@ -216,14 +213,12 @@ export default NewSankeyd3
 
 //   const[id_is, setId]= useState('')
 //   const chartRef = useRef(null)
-//   console.log("id Name is ---->", `#${idName}`);
 //   if(idName !== ''){
 //     idName='chart'
 //   }
 //   // useEffect(()=>{
 //   //   setId(idName)
 //   // },[idName])
-//   // console.log("SankeyJson is ---->", SankeyJson);
 
 //   var margin = {top: 1, right: 1, bottom: 6, left: 1},
 //   width = 960 - margin.left - margin.right,
@@ -354,10 +349,8 @@ export default NewSankeyd3
 //       if(document.getElementById('chart')){
 //         document.getElementById('chart').innerHTML = ''
 //       }
-//       // console.log("json for chart is",SankeyJson)
 //       let j = SankeyJson['SankeyJson']
       
-//         console.log("is_is", id_is);
 //         drawChart(j)
 //     }
 //   },[SankeyJson, idName])

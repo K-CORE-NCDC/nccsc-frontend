@@ -36,7 +36,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const [renderNoContent, setRenderNoContent] = useState(false)
   const [renderHeatmap, setRenderHeatmap] = useState(true)
 
-  console.log(mainTab);
 
 const diag_age = (vl)=>{
   let n = parseInt(vl)
@@ -125,7 +124,6 @@ const bim_vl = (vl)=>{
       }
 
       let d_ = ""
-      console.log(mainTab);
       if(mainTab === "k-mean"){
         d_ = heatmapJson['data']
       }else{
@@ -202,7 +200,6 @@ const bim_vl = (vl)=>{
           }
         })
       }
-      console.log({"z":tmp,"x":x,"y":y});
       if(setStateTrue){
         setRenderNoContent(false)
         setActiveCmp(true)
@@ -294,7 +291,6 @@ const changeMainType = (e, type) => {
     let dataJson = { ...inputData }
     if(inputData.type !=='' && inputData['genes'].length > 0){
       // setClusterRange
-      // console.log(dataJson['genes'])
       setClusterRange(dataJson['genes'].length)
       setActiveCmp(false)
       setLoader(true)
@@ -428,7 +424,6 @@ normal_button += " rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-10
 normal_button += " border duration-200 ease-in-out border-teal-600 transition px-10 xs:p-2 xs:text-sm xs:w-28"
 
   function rangeCall(e){
-    // console.log("----->")
     let cf = []
     setRangeValue(e.target.value)
 

@@ -4,7 +4,6 @@ import config from '../../../../config';
 import { Link } from 'react-router-dom'
 
 const UserFilesTable = ({ userDataTableData }) => {
-    // console.log(userDataTableData);
     const columns = ['name', 'dna_mutation', 'methylation', 'rna', 'proteome', 'clinical_information', 'cnv', 'phospho', 'fusion']
     const [showTableRows, setShowTableRows] = useState(false)
 
@@ -54,7 +53,6 @@ const UserFilesTable = ({ userDataTableData }) => {
         }
     ]
     const clickHandler = (event)=>{
-        console.log(event.target.id)
     }
 
     useEffect(() => {

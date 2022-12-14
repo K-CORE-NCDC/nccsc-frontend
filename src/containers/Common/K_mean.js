@@ -91,7 +91,6 @@ const KmeanCmp = React.forwardRef(({  inputData, watermarkCss,width,clinicalFilt
 
     useEffect(()=>{
         if(Object.keys(inputData).length>0){
-            // console.log(inputData)
             setData(inputData)
         }
     },[inputData])

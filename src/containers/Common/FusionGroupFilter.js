@@ -250,8 +250,7 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
 
   const submitFilters = () => {
     if (Object.keys(filters).length > 0) {
-      // console.log("abcd");
-      // console.log("---->",filters);
+      
       parentCallback(filters);
     } else {
       parentCallback(groupFilters);
@@ -456,7 +455,6 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
       setFilterGroupsHtml(filterGroupsHtmlTemp);
     }
   }, [selectedFilterType]);
-  // console.log(filterGroupsHtml)
   return (
     <div className="m-1 bg-gray-100">
       <div className="p-1 py-3 px-2 col-span-2">
@@ -609,7 +607,6 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
   ];
 
   // const submitFilters = () => {
-  //   console.log("userGivenInputValues", userGivenInputValues);
 
   //   if (isFilterResetHappened) {
   //     let send_response = true;
@@ -622,10 +619,8 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
   //     const min_2_from = document.querySelectorAll('[name="2_from"]');
   //     const max_2_to = document.querySelectorAll('[name="2_to"]');
   //     // getting min value from all
-  //     // console.log(min_1_from,max_1_to,min_2_from,max_2_to);
   //     for (let obj in min_1_from) {
   //       if (min_1_from[obj]) {
-  //         // console.log('list',min_1_from[obj].classList);
   //         if (
   //           (min_1_from[obj].classList &&
   //             (min_1_from[obj].classList.contains("border-2") ||
@@ -693,7 +688,6 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
   //       }
   //     }
   //     if (send_response === true) {
-  //       // console.log("pass",userGivenInputValues);
   //       let final_payload = { ...userGivenInputValues };
   //       final_payload["1_from"] = min1Value;
   //       final_payload["1_to"] = max1Value;
@@ -704,7 +698,6 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
   //       resetFilters()
   //     }
   //   } else {
-  //     // console.log("fail");
   //     parentCallback({ ...userGivenInputValues });
   //   }
   // };
@@ -736,7 +729,6 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
         //         delete userGivenInputValues['group_3']
         //     }
         // }
-        console.log('userGivenInputValues', userGivenInputValues);
       }
       else{
         let min1Value = Number.MAX_VALUE;
@@ -748,10 +740,8 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
         const min_2_from = document.querySelectorAll('[name="2_from"]');
         const max_2_to = document.querySelectorAll('[name="2_to"]');
         // getting min value from all
-        console.log(min_1_from, max_1_to, min_2_from, max_2_to);
         for (let obj in min_1_from) {
           if (min_1_from[obj]) {
-            // console.log('list',min_1_from[obj].classList);
             if (
               (min_1_from[obj].classList &&
                 (min_1_from[obj].classList.contains("border-2") ||
@@ -819,7 +809,6 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
           }
         }
         if (send_response === true) {
-          console.log("pass");
           let final_payload = { ...userGivenInputValues };
           final_payload["1_from"] = min1Value;
           final_payload["1_to"] = max1Value;
@@ -830,13 +819,11 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
         }
       }
       if (send_response === true  &&  userGivenInputValues['type'] !== 'number') {
-        // console.log("userGivenInputValues last", userGivenInputValues);
         parentCallback(userGivenInputValues);
         resetFilters();
       }
     } 
     else {
-      console.log("fail");
       resetFilters();
       // parentCallback({ ...userGivenInputValues });
       parentCallback(userGivenInputValues );
@@ -944,15 +931,11 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
 
   const onChangeFilterInput = (e) => {
     if (e.target.type === "number") {
-      //   console.log(e);
       let id = e.target.name;
       let ids = id.split("_");
       let m_id = ids[0];
 
-      //   console.log(id);
-      //   console.log(ids);
-      //   console.log(m_id);
-      //   console.log(e.target);
+      
       let one_to_0, one_to, one_max_value, one_from_0, one_from, one_min_value;
       if (ids.includes("from")) {
         one_from_0 = e.target;
@@ -989,7 +972,6 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
         one_to_0.classList.add("border-2");
         one_to_0.classList.add("border-red-400");
       } else {
-        // console.log("final",one_from_0.name,one_from_0.value,one_to_0.name,one_to_0.value);
         one_from_0.classList.remove("border-2");
         one_from_0.classList.remove("border-red-400");
         one_to_0.classList.remove("border-2");
@@ -1005,13 +987,11 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
         }));
       }
     } else {
-      //   console.log("b");
       setUserGivenInputValues((prevState) => ({
         ...prevState,
         [e.target.name]: e.target.value,
       }));
     }
-    // console.log("userGivenInputValues 000000000", userGivenInputValues);
   };
 
   useEffect(() => {
@@ -1281,7 +1261,6 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
 
   const dropDownChange = (event) => {
     const eventObject = JSON.parse(event.target.value);
-    // console.log(eventObject)
     const filterData =
       preDefienedGroups1[eventObject.colName][eventObject.index];
     let tmp = multipleInputs;
@@ -1290,7 +1269,6 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
     } else {
       tmp[eventObject.group] = [filterData.value];
     }
-    // console.log(userGivenInputValues,groupFilters)
     setMultipleInputs(tmp, filterData);
     if ("value" in filterData) {
       setUserGivenInputValues((prevState) => ({
@@ -1350,7 +1328,6 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
         componentData.push(componetSwitch("text"));
       } else if (filterType === "dropdown") {
         let tr = [];
-        // console.log(colName,)
         if (
           Object.keys(groupFilters).length > 0 &&
           groupFilters["type"] === "static"
@@ -1679,14 +1656,9 @@ export const UserDefinedGroupFilters = ({
             }
           }
         }
-        // console.log('bool_cols',bool_cols);
       }
       setClinicalMaxMinInfo(minmax);
       setBooleanColumns([...new Set(bool_cols)]);
-      //   console.log(booleanColumns);
-
-      //   console.log("minmax",minmax);
-      //   console.log("userDefinedFilter",userDefinedFilter);
     }
   }, [userDefinedFilter]);
 
@@ -1713,10 +1685,8 @@ export const UserDefinedGroupFilters = ({
     let filterChoices = [];
     if (project_id !== undefined) {
       if (userDefinedFilter && Object.keys(userDefinedFilter).length > 0) {
-        // console.log("columns", userDefinedFilter["filterJson"]);
         let colsobj = userDefinedFilter["filterJson"]["Clinical Information"];
         for (let i in colsobj) {
-          //   console.log('---->',i, colsobj[i]);
           for (let j in colsobj[i]) {
             if (colsobj[i][j]["type"] === "number") {
               let d_obj = {
@@ -1725,7 +1695,6 @@ export const UserDefinedGroupFilters = ({
                 name: colsobj[i][j]["name"],
                 input: "number",
               };
-              // console.log(d_obj);
               let group_a = {
                 label: `${colsobj[i][j]["min"]}-${colsobj[i][j]["max"]}`,
                 from: colsobj[i][j]["min"],
@@ -1763,8 +1732,6 @@ export const UserDefinedGroupFilters = ({
               if (group["value"] !== "None") {
                 preDefienedGroups1[colsobj[i][j]["name"]].push(group);
               }
-              // console.log(d_obj);
-              //   console.log(group);
               filterChoices.push(d_obj);
             }
           }
@@ -1772,8 +1739,6 @@ export const UserDefinedGroupFilters = ({
         const uniqueFilterChoices = [
           ...new Map(filterChoices.map((v) => [v.id, v])).values(),
         ];
-        // console.log("filter", uniqueFilterChoices);
-        // console.log('preDefienedGroups1',preDefienedGroups1);
         setFilterChoices(uniqueFilterChoices);
         setPreDefienedGroups1(preDefienedGroups1);
       }
@@ -1809,7 +1774,6 @@ export const UserDefinedGroupFilters = ({
         //         delete userGivenInputValues['group_3']
         //     }
         // }
-        // console.log('userGivenInputValues', userGivenInputValues);
       }
       else{
         let min1Value = Number.MAX_VALUE;
@@ -1821,11 +1785,8 @@ export const UserDefinedGroupFilters = ({
         const min_2_from = document.querySelectorAll('[name="2_from"]');
         const max_2_to = document.querySelectorAll('[name="2_to"]');
         // getting min value from all
-        console.log( '->',min_2_from);
-        // console.log( '->',max_1_to);
         for (let obj in min_1_from) {
           if (min_1_from[obj]) {
-            // console.log('list',min_1_from[obj].classList);
             if (
               (min_1_from[obj].classList &&
                 (min_1_from[obj].classList.contains("border-2") ||
@@ -1837,7 +1798,6 @@ export const UserDefinedGroupFilters = ({
             } else {
               if (min_1_from[obj].value) {
                 min1Value = Math.min(min_1_from[obj].value,min1Value);
-                console.log('->min',min1Value);
               }
             }
           }
@@ -1870,7 +1830,6 @@ export const UserDefinedGroupFilters = ({
               send_response = false;
               // return 'error_in_2_from';
             } else {
-              // console.log(min_2_from[obj].value);
               if (min_2_from[obj].value) {
                 min2Value = Math.min(min_2_from[obj].value,min2Value);
               }
@@ -1888,7 +1847,6 @@ export const UserDefinedGroupFilters = ({
               send_response = false;
               // return 'error_in_2_to';
             } else {
-              console.log(max_2_to[obj].value);
               if (max_2_to[obj].value) {
                 max2Value = Math.max(max_2_to[obj].value,max2Value);
               }
@@ -1896,9 +1854,7 @@ export const UserDefinedGroupFilters = ({
           }
         }
         if (send_response === true) {
-          console.log("pass");
           let final_payload = { ...userGivenInputValues };
-          console.log('final_payload',final_payload);
           final_payload["1_from"] = min1Value;
           final_payload["1_to"] = max1Value;
           final_payload["2_from"] = min2Value;
@@ -1908,13 +1864,11 @@ export const UserDefinedGroupFilters = ({
         }
       }
       if (send_response === true &&  userGivenInputValues['type'] !== 'number') {
-        // console.log("userGivenInputValues last", userGivenInputValues);
         parentCallback(userGivenInputValues);
         // resetFilters();
       }
     } 
     else {
-      console.log("fail");
       // resetFilters();
       // parentCallback({ ...userGivenInputValues });
       parentCallback(userGivenInputValues );
@@ -1951,17 +1905,12 @@ export const UserDefinedGroupFilters = ({
   };
 
   const onChangeFilterInput = (e) => {
-    // console.log("e", e);
     if (e.target.type === "number") {
-      //   console.log(e);
       let id = e.target.name;
       let ids = id.split("_");
       let m_id = ids[0];
 
-      //   console.log(id);
-      //   console.log(ids);
-      //   console.log(m_id);
-      //   console.log(e.target);
+      
       let one_to_0, one_to, one_max_value, one_from_0, one_from, one_min_value;
       if (ids.includes("from")) {
         one_from_0 = e.target;
@@ -1998,7 +1947,6 @@ export const UserDefinedGroupFilters = ({
         one_to_0.classList.add("border-2");
         one_to_0.classList.add("border-red-400");
       } else {
-        // console.log("final",one_from_0.name,one_from_0.value,one_to_0.name,one_to_0.value);
         one_from_0.classList.remove("border-2");
         one_from_0.classList.remove("border-red-400");
         one_to_0.classList.remove("border-2");
@@ -2014,13 +1962,11 @@ export const UserDefinedGroupFilters = ({
         }));
       }
     } else {
-      //   console.log("b");
       setUserGivenInputValues((prevState) => ({
         ...prevState,
         [e.target.name]: e.target.value,
       }));
     }
-    // console.log("userGivenInputValues 000000000", userGivenInputValues);
   };
 
   useEffect(() => {
@@ -2113,7 +2059,6 @@ export const UserDefinedGroupFilters = ({
         max = clinicalMaxMinInfoData[clinicalInfoId + "_max"];
       }
     }
-    // console.log("compcase",compCase);
     switch (compCase) {
       case "static":
         return (
@@ -2303,7 +2248,6 @@ const dropDownChange = (event) => {
   };
   useEffect(() => {
     if (selectedFilterDetails && "type" in selectedFilterDetails && "id" in selectedFilterDetails) {
-      // console.log("--------->",selectedFilterDetails);
       let filterType = selectedFilterDetails.type;
       let colName = selectedFilterDetails.id;
       let booleanType = booleanColumns.includes(selectedFilterDetails["name"]) ? "yes": "no";
@@ -2350,7 +2294,6 @@ const dropDownChange = (event) => {
         } else if (filterType === "dropdown") {
           let tr = [];
           if (Object.keys(groupFilters).length > 0 && groupFilters["type"] === "static") {
-            console.log("group filter", groupFilters);
             if (
               groupFilters &&
               groupFilters["column"] === colName &&
@@ -2463,8 +2406,6 @@ const dropDownChange = (event) => {
               );
             }
           } else {
-            console.log("rendered there", preDefienedGroups1);
-            console.log("rendered there", preDefienedGroups1[colName]);
             preDefienedGroups1[colName].map((element, index) =>
               tr.push(
                 <tr key={colName + index} className="border-b">

@@ -227,7 +227,6 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                 <span style={{ 'color': colors[key] }}><strong className="xs:text-sm sm:text-xl">{key}</strong></span>
               </div>
             )
-            console.log(lollipopTmp)
             for (var vc in lollipopTmp) {
               if (vc.includes(key)) {
                 let codon = vc.split("||")

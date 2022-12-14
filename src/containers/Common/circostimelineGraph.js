@@ -20,7 +20,6 @@ const months = {
 }
 
 const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
-  // console.log(closeShowTimelineTables, circosTimelieTableData);
   const [bmiChart, setBmiChart] = useState([])
   const [ki67Chart, setKi67Chart] = useState([])
   const [ca15Chart, setCa15Chart] = useState([])
@@ -109,7 +108,6 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
 
             // let d = convertStrToDate(ki67[i]['imnl_read_ymd']);
             let d = convertStrToDate(ki67[i]['imnl_acpt_ymd']);
-            console.log("data",d);
             let score = ki67[i]['ki67_score'].replace(/[^\d]/g,'');
             let tooltip = "<div>KI67: "+ki67[i]['ki67_score']+"<hr/>"+ki67[i]['imnl_read_ymd']+"</div>"
             if(ki67.length===1){

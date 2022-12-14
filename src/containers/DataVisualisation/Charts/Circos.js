@@ -257,12 +257,6 @@ export default function DataCircos({
   };
 
   useEffect(() => {
-    console.log("C", sampleKey);
-    console.log("C", tableColumnsData);
-    console.log("C", tableData);
-    console.log("C", basicInformationData);
-  });
-  useEffect(() => {
     if (reportData) {
       setTableData(reportData.genomic_summary);
       setBasicInformationData(reportData.basic_information);
@@ -275,7 +269,6 @@ export default function DataCircos({
   };
 
   const isReportClickedFunction = (value) => {
-    console.log(value);
     setIsReportClicked(value);
   };
 
@@ -323,7 +316,6 @@ export default function DataCircos({
 
       let editInputData = inputData;
       editInputData = { ...editInputData, sampleKey: sampleKey };
-      console.log("editInputData", editInputData);
       dispatch(getBreastKeys(editInputData));
       if (
         editInputData.type !== "" &&
@@ -353,7 +345,6 @@ export default function DataCircos({
   }, [inputData]);
 
   useEffect(() => {
-    console.log("sample", sampleKey);
     if (inputData && inputData.genes.length > 0 && sampleKey !== "") {
       if (screenCapture) {
         if (reference !== null) {
@@ -370,7 +361,6 @@ export default function DataCircos({
       }
     } else {
       setToFalseAfterScreenCapture();
-      console.log("abcd");
     }
   }, [screenCapture, watermarkCss]);
 

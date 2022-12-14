@@ -33,7 +33,6 @@ export default function DataSurvival({
   const survivalJson = useSelector(
     (data) => data.dataVisualizationReducer.survivalSummary
   );
-  // console.log("survival_json",survivalJson);
   const clinicalMaxMinInfo = useSelector(
     (data) => data.dataVisualizationReducer.clinicalMaxMinInfo
   );
@@ -86,11 +85,9 @@ export default function DataSurvival({
   },[userDefinedFilterColumns])
 
   useEffect(()=>{
-    // console.log("s",survivalModel);
   if (survivalModel === "cox" && project_id !== undefined){
     let tmpe ={}
     if (coxUserDefinedFilter && Object.keys(coxUserDefinedFilter).length > 0) {
-      // console.log("coxUserDefinedFilter",coxUserDefinedFilter);
       // for (const a in coxUserDefinedFilter){
       //   if(a !== 'rlps_yn' && a!== 'rlps_cnfr_drtn')
       //     {
@@ -112,7 +109,6 @@ export default function DataSurvival({
         }
       }
       setCoxFilter(tmpe)
-      // console.log('tmpe',tmpe);
     }
   }
   else{
@@ -258,8 +254,6 @@ export default function DataSurvival({
                 continue
               }
               else{
-                // console.log(coxUserDefinedFilter);
-                // console.log('ll',coxUserDefinedFilter[a][0]['type']);
                 inputDataJson[a] = a
               }
            
@@ -272,7 +266,6 @@ export default function DataSurvival({
          inputDataJson[inputJson["filterChoices"][z]["id"]] = inputJson["filterChoices"][z]["name"];
        }
      }
-      // console.log("inputDataJson",inputDataJson);
 
       let tmp = [];
       let columns = survivalJson && 'columns' in survivalJson &&  survivalJson["columns"];
@@ -370,7 +363,6 @@ export default function DataSurvival({
   }, [screenCapture, watermarkCss]);
 
   const updateGroupFilters = (filtersObject) => {
-    console.log("group filter",filtersObject);
     if (filtersObject) {
       setGroupFilters(filtersObject);
     }
@@ -389,7 +381,6 @@ export default function DataSurvival({
   const selectCoxFiler = (e) => {
     let val_ = e.target.value;
     let check = e.target.checked;
-    // console.log("val_,",val_, "check",check);
     if (check) {
       setCoxFilter({ ...coxFilter, [val_]: true });
     } else {
@@ -449,7 +440,6 @@ export default function DataSurvival({
   };
 
   const submitCox = (e, type) => {
-    // console.log('=',e, type);
     setSurvivalModel(type);
     if (type === "cox") {
       inputData["survival_type"] = type;
@@ -459,12 +449,10 @@ export default function DataSurvival({
   };
 
   useEffect(() => {
-    // console.log('coxFilter',coxFilter);
   }, [coxFilter]);
 
   const selectAllCox = (e, type) => {
     let tmp = coxFilter;
-    // console.log(type);
     for (const key in tmp) {
       if (type === "select") {
         tmp[key] = true;

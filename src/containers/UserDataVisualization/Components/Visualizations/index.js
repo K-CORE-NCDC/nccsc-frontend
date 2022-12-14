@@ -35,7 +35,6 @@ export default function Visualization() {
   const elementRef = useRef(null);
 
   // const callback = (count) => {
-  //   console.log(count);
   //   // setCount(count);
   // }, []);
   let filters = ''
@@ -87,7 +86,6 @@ export default function Visualization() {
     if(selectedGenesList){
       data['selected_genes'] = selectedGenesList
     }
-    // console.log("filters--->",filters)
     if(filters){
       data['filter'] = filters
     }

@@ -7,7 +7,6 @@ function PrivacyActIndex() {
   const [Englishlanguage, setEnglishlanguage] = useState(true);
   const context = useContext(Context);
   useEffect(() => {
-    console.log(context["locale"]);
     if (context["locale"] === "kr-KO") {
       setKoreanlanguage(true);
       setEnglishlanguage(false);

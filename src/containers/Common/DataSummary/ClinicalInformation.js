@@ -116,7 +116,6 @@ export default function ClinicalInformation() {
           )
         })
 
-        // console.log("item---->",item)
         tmp.push(
           <div key={item+'_'+k} className="tab w-full overflow-hidden border-t" onClick={(e)=>switchButton(e,item,k)}>
             <input className="absolute opacity-0" id={"tab-single-"+k} type="radio" name="tabs2"/>
@@ -130,7 +129,6 @@ export default function ClinicalInformation() {
           </div>
         )
       })
-      // console.log(selected);
       setLeftSide((prevState)=>({
         ...prevState,
         'leftSide':tmp

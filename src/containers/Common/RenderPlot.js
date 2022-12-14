@@ -7,7 +7,6 @@ import uniqueId from 'lodash.uniqueid'
 import inRange from 'lodash.inrange'
 // export * as d32 from 'd3-selection';
 function noop() {}
-// console.log(scale);
 // const linearScale = scale ? d3.scaleBand(): d3.scaleBand()
 const linearScale =  d3.scaleBand()
 
@@ -56,7 +55,6 @@ export function renderPlot (params) {
 
   var outerWidth = containerBounds.width
   var outerHeight = params.height || outerWidth * 0.5
-  // console.log(outerWidth);
   var axisWidth = outerWidth - margins.left - margins.right
   var axisHeight = outerHeight - margins.top - margins.bottom
 

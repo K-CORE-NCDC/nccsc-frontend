@@ -22,14 +22,10 @@ const MemberShip = ({ changestep }) => {
     formState,
     formState: { isSubmitSuccessful, errors },
   } = useForm({ mode: "all" });
-console.log("errors",errors);
 if(errors.id){
 
-  console.log("error ",errors.id.koreanmessage);
 }
   const register_user = (data) => {
-    // console.log(domain_value.domain_email);
-    console.log(data);
     reset();
   };
 

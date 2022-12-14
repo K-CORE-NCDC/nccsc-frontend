@@ -77,14 +77,10 @@ let UserDefinedGroupFilters = ({
             }
           }
         }
-        // console.log('bool_cols',bool_cols);
       }
       setClinicalMaxMinInfo(minmax);
       setBooleanColumns([...new Set(bool_cols)]);
-      //   console.log(booleanColumns);
 
-      //   console.log("minmax",minmax);
-      //   console.log("userDefinedFilter",userDefinedFilter);
     }
   }, [userDefinedFilter]);
 
@@ -159,8 +155,6 @@ let UserDefinedGroupFilters = ({
               if (group["value"] !== "None") {
                 preDefienedGroups1[colsobj[i][j]["name"]].push(group);
               }
-              // console.log(d_obj);
-              // console.log("->", group);
               filterChoices.push(d_obj);
             }
           }
@@ -168,10 +162,8 @@ let UserDefinedGroupFilters = ({
         const uniqueFilterChoices = [
           ...new Map(filterChoices.map((v) => [v.id, v])).values(),
         ];
-        // console.log(preDefienedGroups1);
         setFilterChoices(uniqueFilterChoices);
         setPreDefienedGroups1(preDefienedGroups1);
-        // console.log("filtet", uniqueFilterChoices);
       }
     }
   }, [userDefinedFilter]);
@@ -184,7 +176,6 @@ let UserDefinedGroupFilters = ({
   }, [volcanoType]);
 
   const submitFilters = () => {
-    // console.log("final", userGivenInputValues);
     // if (isFilterResetHappened) {
     //   parentCallback(userGivenInputValues);
     // } else {
@@ -205,7 +196,6 @@ let UserDefinedGroupFilters = ({
           if(total_groups <2){
             send_response = false;
           }
-        console.log('userGivenInputValues', userGivenInputValues);
       }
       else{
         let min1Value = Number.MAX_VALUE;
@@ -217,10 +207,8 @@ let UserDefinedGroupFilters = ({
         const min_2_from = document.querySelectorAll('[name="2_from"]');
         const max_2_to = document.querySelectorAll('[name="2_to"]');
         // getting min value from all
-        // console.log(min_1_from, max_1_to, min_2_from, max_2_to);
         for (let obj in min_1_from) {
           if (min_1_from[obj]) {
-            // console.log('list',min_1_from[obj].classList);
             if (
               (min_1_from[obj].classList &&
                 (min_1_from[obj].classList.contains("border-2") ||
@@ -288,7 +276,6 @@ let UserDefinedGroupFilters = ({
           }
         }
         if (send_response === true) {
-          console.log("pass");
           let final_payload = { ...userGivenInputValues };
           final_payload["1_from"] = min1Value;
           final_payload["1_to"] = max1Value;
@@ -299,13 +286,11 @@ let UserDefinedGroupFilters = ({
         }
       }
       if (send_response === true &&  userGivenInputValues['type'] !== 'number') {
-        // console.log("userGivenInputValues last", userGivenInputValues);
         parentCallback(userGivenInputValues);
         // resetFilters();
       }
     } 
     else {
-      console.log("fail");
     //   resetFilters();
       // parentCallback({ ...userGivenInputValues });
       parentCallback(userGivenInputValues );
@@ -321,7 +306,6 @@ let UserDefinedGroupFilters = ({
   };
 
   const resetFilters = () => {
-    console.log("called reset filter ");
     setFilterSelected("");
     setSelectDefaultValue("");
     setSelectedFilterDetails({});
@@ -352,10 +336,7 @@ let UserDefinedGroupFilters = ({
   };
 
   // const onChangeFilterInput = (e) => {
-  //   // console.log("selectedFilterDetails---->",filterSelected);
-  //   // console.log("selectedFilterDetails---->",selectedFilterDetails);
   //   if (e.target.type === "number") {
-  //     console.log("a");
   //     let id = e.target.id;
   //     let ids = id.split("_");
   //     let m_id = ids[0];
@@ -386,7 +367,6 @@ let UserDefinedGroupFilters = ({
   //       one_to_0.classList.add("border-2");
   //       one_to_0.classList.add("border-red-400");
   //     } else {
-  //       // console.log("final",one_from_0.name,one_from_0.value,one_to_0.name,one_to_0.value);
   //       one_from_0.classList.remove("border-2");
   //       one_from_0.classList.remove("border-red-400");
   //       one_to_0.classList.remove("border-2");
@@ -401,27 +381,19 @@ let UserDefinedGroupFilters = ({
   //       }));
   //     }
   //   } else {
-  //     console.log("b");
   //     setUserGivenInputValues((prevState) => ({
   //       ...prevState,
   //       [e.target.name]: e.target.value,
   //     }));
   //   }
-  //   // console.log("userGivenInputValues 000000000", userGivenInputValues);
   // };
 
   const onChangeFilterInput = (e) => {
-    // console.log("e", e);
     if (e.target.type === "number") {
-      //   console.log(e);
       let id = e.target.name;
       let ids = id.split("_");
       let m_id = ids[0];
 
-      //   console.log(id);
-      //   console.log(ids);
-      //   console.log(m_id);
-      //   console.log(e.target);
       let one_to_0, one_to, one_max_value, one_from_0, one_from, one_min_value;
       if (ids.includes("from")) {
         one_from_0 = e.target;
@@ -458,7 +430,6 @@ let UserDefinedGroupFilters = ({
         one_to_0.classList.add("border-2");
         one_to_0.classList.add("border-red-400");
       } else {
-        // console.log("final",one_from_0.name,one_from_0.value,one_to_0.name,one_to_0.value);
         one_from_0.classList.remove("border-2");
         one_from_0.classList.remove("border-red-400");
         one_to_0.classList.remove("border-2");
@@ -474,13 +445,11 @@ let UserDefinedGroupFilters = ({
         }));
       }
     } else {
-      //   console.log("b");
       setUserGivenInputValues((prevState) => ({
         ...prevState,
         [e.target.name]: e.target.value,
       }));
     }
-    // console.log("userGivenInputValues 000000000", userGivenInputValues);
   };
  
   useEffect(() => {
@@ -493,7 +462,6 @@ let UserDefinedGroupFilters = ({
           targetNumber = index;
         }
       });
-      // console.log("assd", filterChoices[targetNumber]);
       filterChoices &&
         filterChoices[targetNumber] &&
         setFilterSelected(filterChoices[targetNumber].name);
@@ -568,9 +536,7 @@ let UserDefinedGroupFilters = ({
       let clinicalMaxMinInfoData = clinicalMaxMinInfo;
       let clinicalInfoId = selectedFilterDetails["id"];
       // let clinicalMaxMinInfoData = clinicalMaxMinInfo["data"];
-      // console.log("lastttttttttt",clinicalMaxMinInfo);
-      // console.log("selectedFilterDetails", selectedFilterDetails);
-      // console.log("clinicalInfoId", clinicalInfoId);
+     
       if (clinicalInfoId + "_min" in clinicalMaxMinInfoData) {
         min = clinicalMaxMinInfoData[clinicalInfoId + "_min"];
       }
@@ -814,7 +780,6 @@ let UserDefinedGroupFilters = ({
 
   useEffect(() => {
     // if(selectedFilterDetails){
-    //   console.log("--------------------------start",selectedFilterDetails);
     // }
     if (
       selectedFilterDetails &&
@@ -990,7 +955,6 @@ let UserDefinedGroupFilters = ({
               for (let index = 0; index < boxes; index++) {
                 let name = "group_" + abc[index] + "_" + element.label;
 
-                // console.log(sv,index)
                 if (Object.keys(userGivenInputValues).length > 0) {
                   let group_check = false;
                   if (
@@ -1003,7 +967,6 @@ let UserDefinedGroupFilters = ({
                       ) > -1
                     ) {
                       let gi_val = userGivenInputValues["group_" + abc[index]];
-                      // console.log(name,gi_val)
                       for (let gi = 0; gi < gi_val.length; gi++) {
                         let n = gi_val[gi];
                         if ("group_" + abc[index] + "_" + n === name) {

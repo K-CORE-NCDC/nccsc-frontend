@@ -42,7 +42,6 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
                     }
                 }
                 max = Math.round(max)+1
-                console.log(max)
                 // set up the scaling for the axes based on the inner width/height of the chart and also the range
                 // of value for the x and y axis variables. This range is defined by their min and max values as
                 // calculated by d3.extent()

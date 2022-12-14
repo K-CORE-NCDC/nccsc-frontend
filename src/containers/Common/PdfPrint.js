@@ -159,7 +159,6 @@ function PdfPrint({ isReportClicked }) {
     //     return sankeyjsondata;
     // }
 
-    console.log("PDF_Report_Status->",PDF_Report_Status);
       useEffect(() => {
         let className = `.printpdf`, count = 0
         if (isReportClicked === true) {
@@ -215,7 +214,6 @@ useEffect(()=>{
   if(PDF_Report_Status && 'res' in PDF_Report_Status){
     let link = PDF_Report_Status['res']
     let navlink = config.auth+link
-    console.log("navlink",navlink);
     dispatch(clearPdfLink())
     window.location.href = navlink;
   }

@@ -42,13 +42,6 @@ function PDFReport() {
       }
       setSankeyData(listofSankey)
       setSankyGeneList(GeneListSanky)
-      if(GeneListSanky.length > 0){
-        if(GeneMutationData && "rniData" in GeneMutationData && "variant_info" in GeneMutationData["rniData"]["variant_info"]  ){
-          for(let i=0; i<GeneListSanky.length; i++){
-            console.log(GeneMutationData["rniData"]["variant_info"][GeneListSanky[i]]);
-          }
-        }
-      }
 
     }
   }, [reportData])

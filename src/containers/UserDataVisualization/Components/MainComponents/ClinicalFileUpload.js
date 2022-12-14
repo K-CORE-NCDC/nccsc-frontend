@@ -124,7 +124,6 @@ export default function FileUpload({ parentCallBack }) {
   const [disableUploadButton, setDisableUploadButton] = useState(true)
   const [borderRed, setBorderRed] = useState(false)
 
-  // console.log(activeTableKey);
 
   const resetStates = () => {
     setSelectedFileSampleType({
@@ -172,7 +171,6 @@ export default function FileUpload({ parentCallBack }) {
   }
 
   const changeErrorDataTable = (tableTabName) => {
-    // console.log(tableTabName, fileDataAsTableAll);
     setActiveTableKey(tableTabName)
     setFileDataAsTableRendered(fileDataAsTableAll[tableTabName])
   }
@@ -239,7 +237,6 @@ export default function FileUpload({ parentCallBack }) {
   }, [fileDataAsTableAll])
 
   useEffect(() => {
-    // console.log(selectedFiles, selectedFileSampleType);
     if(projectName){
       if(selectedFiles.length === Object.keys(selectedFileSampleType).length){
         setDisableUploadButton(false)
@@ -276,7 +273,6 @@ export default function FileUpload({ parentCallBack }) {
 
   const selectGene = (event) => {
     const { name, value } = event.target;
-    // console.log(name, value)
     setSelect(prevState => ({
       ...prevState,
       [name]: value
@@ -371,7 +367,6 @@ export default function FileUpload({ parentCallBack }) {
   }
 
   const updateFileTypeOnChange = (e) => {
-    // console.log(e.target.value, e.target.name);
     const divName = e.target.name
     const divValue = e.target.value
     // setUploadFile(prevState)
@@ -386,7 +381,6 @@ export default function FileUpload({ parentCallBack }) {
   }
 
   useEffect(() => {
-    // console.log(Object.keys(uploadFile), uploadFile);
 
     Object.keys(uploadFile).forEach(element => {
       if (uploadFile[element].type !== selectedFileSampleType[element]) {
@@ -404,7 +398,6 @@ export default function FileUpload({ parentCallBack }) {
     if (newElementId < 9) {
       let checkedFileTypes = Object.values(selectedFileSampleType)
       let availableTypes = Object.keys(dropdownOptions).filter(step => (!checkedFileTypes.includes(step)))
-      // console.log(availableTypes);
       let availableTypesJson = {}
       availableTypes.forEach(element => {
         availableTypesJson[element] = dropdownOptions[element]
@@ -440,7 +433,6 @@ export default function FileUpload({ parentCallBack }) {
     return underscoreString.replace('_', ' ')
   }
 
-  // console.log(fileDataAsTableRendered)
   useEffect(() => {
     let firstInput = []
     let dropdownOptionsArray = Object.keys(dropdownOptions).filter(value => {
@@ -448,7 +440,6 @@ export default function FileUpload({ parentCallBack }) {
         return true
       }
     })
-    // console.log(dropdownOptionsArray);
 
     Object.keys(selectedFileSampleType).forEach(key => {
 
@@ -506,7 +497,6 @@ export default function FileUpload({ parentCallBack }) {
     setInitialInputState(firstInput)
   }, [selectedFileSampleType, loader, selectedFiles])
 
-  // console.log(showModalInfo);
   return (
     <>
       <ModalTest modalStateButton={showModalInfo} setShowModalFunction={hideModal} />
@@ -678,8 +668,6 @@ function SampleDataTable() {
 
 
 function ModalTest({ modalStateButton, setShowModalFunction }) {
-  // console.log(modalStateButton);
-  // const [showModal, setShowModal] = useState(false);
 
 
   return (

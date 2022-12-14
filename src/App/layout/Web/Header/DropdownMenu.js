@@ -16,7 +16,6 @@ export default function DropdownMenu() {
 
     let html = []
     for (var i = 0; i < items.length; i++) {
-      // console.log("item is ", i);
       let htmlbutton = []
       htmlbutton.push(
         <Link key={'button_' + i}
@@ -53,14 +52,10 @@ export default function DropdownMenu() {
 
           </li >
         )
-        // console.log("abcdfdfd",tmp[0]);
         // tmp[j].append()
-        // console.log("inner child --------->",innerchild);
 
         // let innertmp = []
-        // console.log("innerchild", innerchild);
         // for (var k = 0; k < innerchild.length; k++) {
-        //   console.log("entered loop", children, "ssdsdsds", j);
         //   innertmp.push(
         //     <li key={i + "_" + j} className='px-3 py-5'>
         //       <Link key={i + "link_" + j}
@@ -71,10 +66,7 @@ export default function DropdownMenu() {
         //       <></>
         //     </li>
         //   )
-        //   console.log("entered loop", children, "ssdsdsds", j);
         // }
-
-        // console.log("tmp of j is", tmp[j]);
 
         // if(innertmp.length>0){
         //   tmp.push(
@@ -93,7 +85,6 @@ export default function DropdownMenu() {
         //     </li>
         //   )
         // }
-        // console.log("tmp is", tmp);
 
       }
       if (tmp.length > 0) {

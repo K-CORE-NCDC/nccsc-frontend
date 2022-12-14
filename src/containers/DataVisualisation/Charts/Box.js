@@ -158,7 +158,6 @@ export default function Box({
       dataJson["genes"] = genes;
       dataJson["table_type"] = tableType;
       dataJson["view"] = viewType;
-      // console.log(genes)
       setLoader(true);
       dispatchActionCommon(dataJson);
     }
@@ -167,7 +166,6 @@ export default function Box({
   function onRemove(selectedList, removedItem) {
     let genes = [];
     setSelectedValue(selectedList);
-    // console.log(removedItem)
     selectedList.forEach((item, i) => {
       genes.push(item["name"]);
     });

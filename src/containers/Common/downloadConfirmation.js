@@ -16,10 +16,8 @@ const ConfirmDownload = ({ screenCaptureFunction, hideModal }) => {
     const purposeOptions = ['business', 'research', 'diagonosis']
     let { tab, project_id } = useParams();
     const [tab_, setTab] = useState(tab)
-    console.log("tab",tab,project_id);
 
     const accessToken = localStorage.getItem('ncc_access_token');
-    // console.log('render');
     useEffect(() => {
         if ((accessToken === null) | (accessToken === undefined)) {
             setShowLoginPage(true)
@@ -47,7 +45,6 @@ const ConfirmDownload = ({ screenCaptureFunction, hideModal }) => {
 
 
     const formSubmitAction = (e) => {
-        // console.log('formsubmit')
         e.preventDefault()
         const url = `${config.auth}api/token/`
         let x = axios({ method: 'POST', url: url, data: userFormData })

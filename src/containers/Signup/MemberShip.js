@@ -219,8 +219,6 @@ const MemberShip = ({ changestep }) => {
 
   const formSet = (e) => {
     const { name, value } = e.target;
-    // console.log(name, value);
-    // console.log(e.target.id);
     if (e.target.value === "input") {
       setForm((oldState) => ({ ...oldState, [e.target.name]: "" }));
       setInputMail(true);
@@ -239,7 +237,6 @@ const MemberShip = ({ changestep }) => {
     // }
     // ID Validation
     let format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
-    // console.log(format.test(value))
     if (name === "id" && value === "") {
       errors.id = "Please enter 6-10 characters";
       errors.koreanid = "IDLength";
@@ -259,7 +256,6 @@ const MemberShip = ({ changestep }) => {
       errors.koreanid = "IDKoreanNotAllowed";
     }
     else if ((name === "id" && value.length < 6) || (name === "id" && value.length > 10)) {
-      console.log("dddd");
       errors.id = "Please enter 6-10 characters";
       errors.koreanid = "IDLength";
     }
@@ -267,7 +263,6 @@ const MemberShip = ({ changestep }) => {
       errors.id = "";
       errors.koreanid = "";
     }
-    console.log(name)
     
 
 
@@ -561,7 +556,6 @@ const MemberShip = ({ changestep }) => {
 
   }
 
-  console.log(form.errors)
 
 
   return (

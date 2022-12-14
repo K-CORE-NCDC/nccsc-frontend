@@ -1583,7 +1583,6 @@ import $ from "jquery";
                     callback(canvas, truncated);
                 };
                 img.onerror = function() {
-                    console.log("IMAGE LOAD ERROR");
                 };
 
                 img.src = svg_data_uri;
@@ -5962,7 +5961,6 @@ import $ from "jquery";
                 // removeCallback: function(track_id)
                 var position = $div.css('position');
                 if (position !== 'absolute' && position !== 'relative') {
-                    console.log("WARNING: div passed to OncoprintTrackOptionsView must be absolute or relative positioned - layout problems will occur");
                 }
 
                 this.moveUpCallback = moveUpCallback;

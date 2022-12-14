@@ -6,7 +6,6 @@ import placeholder from '../../assets/img/circosImage.png'
 
 
 const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, selectedGenes }, ref) => {
-  // console.log(fusionJson, data);
   let selectedGenesObject = {}
   selectedGenes.forEach(e =>{
     selectedGenesObject[e] = true
@@ -466,7 +465,6 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
       },
       events: {
         'mouseover.demo': function (d, i, nodes, event) {
-          // console.log(d, i, nodes, event.pageX)
         }
       },
       labels: {
@@ -557,7 +555,6 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
         {"id":"chrX","label":"chrX","color":"#999999","len":155270560},
         {"id":"chrY","label":"chrY","color":"#CCCCCC","len":59373566}
       ]
-      // console.log(state['cytobands']);
 
       drawCircos(width,d,state['cytobands'],data)
     }

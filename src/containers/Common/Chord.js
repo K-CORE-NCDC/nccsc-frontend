@@ -39,7 +39,6 @@ const ChordCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
       },
       events: {
         'click.demo': function (d, i, nodes, event) {
-          // console.log('clicked on layout block', d, event)
         }
       }
     }
@@ -72,7 +71,6 @@ const ChordCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
       },
       events: {
         'mouseover.demo': function (d, i, nodes, event) {
-          // console.log(d, i, nodes, event.pageX)
         }
       },
       labels: {
@@ -188,7 +186,6 @@ const ChordCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
     //     {"id":"chrX","label":"chrX","color":"#999999","len":155270560},
     //     {"id":"chrY","label":"chrY","color":"#CCCCCC","len":59373566}
     //   ]
-    //   // console.log(state['cytobands']);
     //   drawCircos(width,d,state['cytobands'],data)
     }
   },[state, ])

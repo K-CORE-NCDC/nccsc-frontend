@@ -45,7 +45,6 @@ export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
   useEffect(()=>{
     
     if(fusionPlotJson.status){
-      console.log(fusionPlotJson)
       // document.getElementById('fusionPlot').innerHTML=''
       let h = []
       let i = 0
@@ -97,7 +96,6 @@ export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
         for (let index = 0; index < r.length; index++) {
           
           const element = r[index];
-          console.log(exon_pos)
           if(exon_pos > element.startCodon){
             direction = 'right_arrow'
           }else{
@@ -224,7 +222,6 @@ export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
   },[renderPlot])
 
   const transcriptChange = (e,from)=>{
-    console.log(e.target.value,gene);
     let g = ''
 
     if(from==='left'){

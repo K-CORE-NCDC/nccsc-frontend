@@ -21,9 +21,7 @@ export default function Pipeline() {
   const [sysLang, setSysLang] = useState("kr");
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const [Englishlanguage, setEnglishlanguage] = useState(true);
-  console.log(context["locale"]);
   useEffect(() => {
-    console.log(context["locale"]);
     if (context["locale"] === "kr-KO") {
       setKoreanlanguage(true);
       setEnglishlanguage(false);
@@ -41,7 +39,6 @@ export default function Pipeline() {
   //   }
   // },[language])
 
-  console.log("language", language)
   return (
     <div className="cont_wrap my-10">
       <div className="flex justify-center">

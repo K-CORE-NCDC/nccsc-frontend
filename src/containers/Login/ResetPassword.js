@@ -28,7 +28,6 @@ function ResetPassword() {
       hour:date.getUTCHours(),
       minute:date.getUTCMinutes(),
     }
-    console.log(timeanddate);
     let new_password = document.getElementById('NewPassword').value
     let confirm_password = document.getElementById('ConfirmNewPassword').value
     if (new_password === "" || confirm_password === "") {
@@ -47,7 +46,6 @@ function ResetPassword() {
   }
 
   useEffect(() => {
-    console.log("change_password_status", change_password_status);
     change_password_status && setstatus(change_password_status.status)
     if (status === "Password Updated Successfully") {
       swal("Password Updated Successfully.", {
