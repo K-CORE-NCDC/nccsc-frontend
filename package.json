@@ -60,6 +60,7 @@
     "web-vitals": "^1.1.2",
     "xlsx": "^0.17.1"
   },
+  "homepage": "/k-core/",
   "scripts": {
     "start": "CHOKIDAR_USEPOLLING=true HOST=0.0.0.0 PORT=8282  react-scripts start ",
     "build": "react-scripts build",
