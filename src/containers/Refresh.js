@@ -42,7 +42,6 @@ export default function Refresh () {
   }, [])
 
   useEffect(()=>{
-    console.log("isIdle",isIdle);
   },[isIdle])
 
   return (

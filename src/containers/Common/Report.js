@@ -18,12 +18,6 @@ function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, b
     }
   },[tableData])
 
-  useEffect(()=>{
-    console.log("R",sampleKey);
-    console.log("R",tableColumnsData);
-    console.log("R",tableData);
-    console.log("R",basicInformationData);
-      })
 
   useEffect(() => {
     if (basicInformationData.length > 0) {
@@ -90,7 +84,6 @@ function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, b
 
   }
   const expandableRowExpanded = (row) => {
-    // console.log(row)
   }
 
 

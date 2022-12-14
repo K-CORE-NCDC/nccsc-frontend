@@ -103,7 +103,6 @@ export default function VennCmp({ width, data = null }) {
         .selectAll("g")
         .data(data)
         .on("click", function (d, i) {
-          console.log(d,i);
         })
         .on("mouseover", function (d, i) {
           var s = i["sets"];

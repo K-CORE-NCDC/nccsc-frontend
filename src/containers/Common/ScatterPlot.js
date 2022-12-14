@@ -62,7 +62,6 @@ const ScatterPlot = React.forwardRef(({ scatter_data, watermarkCss }, ref) => {
       data: data_,
       options:option,
     });
-    // console.log(myChart);
   }
 
   useEffect(()=>{

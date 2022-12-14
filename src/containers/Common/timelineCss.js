@@ -8,9 +8,6 @@ const TimeLineChart = ({ yearKey, valueKey, data }) => {
     const [showGraph, setShowGraph] = useState(false)
 
     useEffect(() => {
-        if(data){
-            console.log('---------->',data);
-        }
         if (data && data.length > 0) {
             let yearsObjectTemp = {}
             let yearsArrayTemp = []

@@ -28,7 +28,6 @@ export default function ScatterVolcono({}) {
         //   return "";
         // },
         label: (tooltipItems, data) => {
-          // console.log("data--->",data)
           return "[" + tooltipItems.xLabel + "," + tooltipItems.yLabel + "]";
         }
       }
@@ -90,13 +89,11 @@ export default function ScatterVolcono({}) {
           "label":'genes'
         }]
       }
-      // console.log(tmp);
       myChart = new Chart(scatter_plot.current, {
         type: 'scatter',
         data: tmp,
         options:option
       })
-      // console.log(t);
     })
 
   },[])

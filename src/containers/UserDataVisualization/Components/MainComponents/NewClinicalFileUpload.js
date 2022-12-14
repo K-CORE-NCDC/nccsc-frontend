@@ -388,7 +388,6 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
 
 
   const on_upload = () => {
-    console.log(uploadFile,projectName)
     dispatch(new_file_upload(uploadFile, projectName))
     updateComponentNumber(1)
     for (let key in uploadFile) {
@@ -421,7 +420,6 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
     if (newElementId < 9) {
       let checkedFileTypes = Object.values(selectedFileSampleType)
       let availableTypes = Object.keys(dropdownOptions).filter(step => (!checkedFileTypes.includes(step)))
-      // console.log(availableTypes);
       let availableTypesJson = {}
       availableTypes.forEach(element => {
         availableTypesJson[element] = dropdownOptions[element]

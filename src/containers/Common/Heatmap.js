@@ -38,7 +38,6 @@ const HeatmapCmp = React.forwardRef(({ width, data, watermarkCss }, ref) => {
   },[data])
 
   // useEffect(()=>{
-  //   console.log(heatData)
   // },[heatData])
 
   return (

@@ -95,7 +95,6 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
   const drawGraph = (g_data,ct_type) => {
     let ctx = document.getElementById(id).getContext('2d');
 
-    // console.log(g_data)
     // let segment;
     // let selectedIndex;
     new Chart(ctx, {
@@ -126,7 +125,6 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
               //     // var data = chart.data;
               //     let sum = 0;
               //     let dataArr = ctx.chart.data;
-              //     console.log(dataArr)
               //     // dataArr.map(data => {
               //     //     sum += data;
               //     // });

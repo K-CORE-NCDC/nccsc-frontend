@@ -21,7 +21,6 @@ function FileProjectDataTable({ updateComponentNumber }) {
 
   useEffect(() => {
     if (verificationResponse && verificationResponse["result"]) {
-      console.log("verificationResponse",verificationResponse["result"]);
       let temptabs = [];
 
       for (const tabrow in verificationResponse["result"]) {
@@ -74,12 +73,10 @@ function FileProjectDataTable({ updateComponentNumber }) {
           setColData(Tablecolumns);
           // setting the row data
           let rawRowData = verificationResponse["result"][key];
-          console.log("rawRowData",rawRowData);
           let noOfRows = rawRowData.length;
           for (let i = 1; i < noOfRows; i++) {
             if (rawRowData[i]) {
               let row = rawRowData[i][i];
-          console.log("row",row);
               for (const colname in row) {
                 if (rowObject[colname] === "") {
                   rowObject[colname] =

@@ -152,7 +152,6 @@ export default function FusionPlot({
   ];
 
   const generateFusion = (e, id) => {
-    console.log(id  )
     setFusionId(id);
   };
 
@@ -226,8 +225,6 @@ export default function FusionPlot({
       tmp_name += " : " + t + " Fusion Gene Table ";
       setGroupName(tmp_name);
       let r = VennData.res.data;
-      console.log("r",r);
-      console.log("r.key",r[key]);
       setTableData(r[key]);
     }
   };

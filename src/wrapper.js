@@ -24,7 +24,6 @@ const Wrapper = (props) => {
 
     function selectLanguage(e) {
         const newLocale = e.target.value;
-        console.log(newLocale)
         setLocale(newLocale);
 
         if (newLocale === 'kr-KO') {

@@ -29,7 +29,6 @@ const ProjectDataTable = () => {
     const [show, setShow] = useState(false)
     const params = useParams()
 
-    // console.log(fileDataAsTableRendered);
 
     const changeErrorDataTable = (tableTabName) => {
         setShow(false)
@@ -63,7 +62,6 @@ const ProjectDataTable = () => {
                     }
                 )
             })
-            console.log(allColumns,fileDataAsTableRendered)
             setTableHeaders(allColumns)
             setShow(true)
         }
@@ -74,7 +72,6 @@ const ProjectDataTable = () => {
         if (fileDataAsTableAll) {
             setShow(false)
             let currentRenderedTable = Object.keys(fileDataAsTableAll)
-            // console.log(currentRenderedTable)
             if (currentRenderedTable.length > 0) {
                 setFileDataAsTableRendered(fileDataAsTableAll[currentRenderedTable[0]])
                 setActiveTableKey(currentRenderedTable[0])

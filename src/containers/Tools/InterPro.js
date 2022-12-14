@@ -22,7 +22,6 @@ function InterPro() {
 
     let uploadFile = () => {
         setLoader(true)
-        console.log(interProFile)
         dispatch(interPro("POST", { "file": interProFile, "filename": interProFile["name"] }));
         setMsg('File Uploading, Please Wait......')
     };

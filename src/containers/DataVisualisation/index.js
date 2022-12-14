@@ -30,7 +30,6 @@ export default function DataVisualization() {
 
   // const geneFilterData = useSelector(state => state.dataVisualizationReducer.geneFilterData)
   // useEffect(()=>{
-  //    console.log("gene data",geneFilterData);
   // })
 
   // const [advanceFilters, setAdvanceFilters] = useState({})
@@ -121,8 +120,6 @@ export default function DataVisualization() {
   useEffect(() => {
     if (project_id !== undefined) {
       // if(project_id_status && 'status' in project_id_status && project_id_status['status'] !== 'true'){
-      //   console.log('--------------->',project_id_status['status']);
-      //   console.log("first time");
       //   dispatch(projectIdStatus('get','true'))
       //   // dispatch(clearDataVisualizationState())
       // }
@@ -198,7 +195,6 @@ export default function DataVisualization() {
       tabTogglers.forEach(function (toggler) {
         let href = toggler.children[0].href;
         href = href.split("/");
-        // console.log(href,tab)
         toggler.classList.remove(
           "border-blue-400",
           "border-b",

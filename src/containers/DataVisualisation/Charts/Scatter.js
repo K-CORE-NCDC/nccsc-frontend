@@ -70,7 +70,6 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
           { "name": genes[i], "id": i }
         )
     }
-    console.log('t final',t);
     setGenesHtml(t)
     let select_ = t.slice(0,1)
     setSelectedValue(select_)

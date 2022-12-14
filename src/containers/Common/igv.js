@@ -31,14 +31,11 @@ const Igv = React.forwardRef(({width,data, watermarkCss}, ref) => {
     };
 
     igv.createBrowser(igvDiv, options).then(function (browser) {
-      // console.log('created igv browser')
     })
 
   }
   useEffect(()=>{
-    // console.log(file_name);
     // if(file_name){
-    //   console.log(file_name);
     if(data){
       loadIgv(data)
     }

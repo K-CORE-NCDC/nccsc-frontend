@@ -40,19 +40,15 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
   //   }
   // },[])
 
-  // console.log('------------>',totalSamplesS);
 
   useEffect(() => {
-    // console.log("filter state ------------->",filterState);
     if (Object.keys(filterState).length !== 0) {
-      // console.log("filterstate",filterState);
       setSelectState({ ...filterState });
       switchButton();
     }
   }, [filterState]);
 
   useEffect(()=>{
-    console.log("changed");
     if  (totalSamplesS && 'no_of_samples' in totalSamplesS){
       setTotalSamples(totalSamplesS['no_of_samples'])
     } 
@@ -77,7 +73,6 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
   useEffect(()=>{
     if(project_id!==undefined){
       if(userDefinedFilter && Object.keys(userDefinedFilter).length > 0){
-        console.log('fdfdds',userDefinedFilter['filterJson']);
         setSelected('Clinical Information')
         setFilterJson(userDefinedFilter['filterJson'])
 
@@ -119,11 +114,9 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
     let html = [];
     if (Object.keys(filtersUi).length > 0) {
       Object.keys(filtersUi).forEach((e) => {
-        // console.log("filtersUi",filtersUi);
         let tmp = [];
         if (filtersUi[e].length > 0) {
           filtersUi[e].forEach((sub) => {
-            // console.log("sub",sub.key, sub.value);
             tmp.push(
               <span
                 key={`${sub.key}-${Math.random()}`}
@@ -251,7 +244,6 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
         </div>
       );
     });
-    // console.log("html 0000", html);
     setState((prevState) => ({
       ...prevState,
       html: html,
@@ -309,7 +301,6 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
   };
 
   let inputbox = (d) => {
-    // console.log("d",d);
     return (
       <div
         key={d.id}
@@ -434,7 +425,6 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
       }
       e.checked = false;
     }
-    // console.log("main temp", tmp);
     // setSelectState({...tmp});
   };
 
@@ -451,15 +441,12 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
        }
      }
     var did = document.getElementById(id);
-    // console.log("did------>",did.getAttribute("data-parent"));
     // if(did.hasAttribute("id")){
     //   let name = did.getAttribute("id")
-    //   console.log("name",name);
     //   let names = name.split("_")
     //   let key,value
     //   if(names[1]){
     //      key = did.getAttribute("data-parent")
-    //      console.log("sssssssssss",key);
     //   }
     //   if(names[2]){
     //      value = names[2];
@@ -474,41 +461,30 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
     //       let childElements = filterBoxes[item];
     //       // let itemr = item.split(" ")
     //       // let finalkey = itemr.join('')
-    //       // console.log("childElemens->",finalkey, key);
     //       Object.keys(childElements).forEach((childelm, c) => {
     //         if(item === key &&  c.toString() === value){
     //           MainKey = childelm
-    //           console.log("MainKey",MainKey);
     //         }
     //       })
     //     }
     //   })
 
     //   let temp =  {...filtersUi}
-    //   // console.log("before",temp);
-    //   // console.log("before",filtersUi);
-    //   // console.log("temp",temp[key]);
     //   for(let i = 0; i < temp[key].length; i++){
     //     if(temp[key][i]['key'].indexOf(MainKey)>-1){
-    //       console.log("ledenti");
-    //       console.log(temp[key][i]['key']);
     //       temp[key].splice(i,1)
     //     }
     //   }  
-    //   console.log('after',temp); 
-    //   console.log('after',filtersUi); 
     //   setFiltersUi(temp)
     // }
 
     
     var checkbox_elm = document.getElementById(id).checked;
     if (checkbox_elm) {
-      // console.log("checked");
       document.getElementById(id).checked = false;
       document.getElementById(id + "_toggle").style.background = "#ccc";
       document.getElementById("child_" + id).classList.add("hidden");
     } else {
-      // console.log("not checked");
       document.getElementById(id).checked = true;
       document.getElementById(id + "_toggle").style.background =
         inputJson["clinicalColor"][did.getAttribute("data-parent")];
@@ -537,7 +513,6 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
   const drawTags = (filterBoxes) => {
     // let filterBoxes = inputJson.filterBoxes;
     let tx = ["aod", "bmi", "fma", "dob", "ki67", "turc",];
-    // console.log("selectState 11111", selectState);
     if (Object.keys(selectState).length > 0) {
       let filterSelectedHtml = {};
       Object.keys(filterBoxes).forEach((header) => {
@@ -546,14 +521,10 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
           [header]: [],
         };
         Object.keys(filterBoxes[header]).forEach((field) => {
-          // console.log('filterBoxes',filterBoxes[header]);
-          // console.log('field',field);
           filterBoxes[header][field].forEach((subField) => {
             tx.push(subField.id)
           })
           filterBoxes[header][field].forEach((subField) => {
-            // console.log("subField",subField.id);
-            // console.log("selectState",selectState);
             if (subField.id in selectState) {
               filterSelectedHtml = {
                 ...filterSelectedHtml,
@@ -584,7 +555,6 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
           });
         });
       });
-      // console.log("filterSelectedHtml",filterSelectedHtml);
       setFiltersUi(filterSelectedHtml);
     }
   };
@@ -595,7 +565,6 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
   };
 
   const reset = () => {
-    // console.log("reset called", selectState);
     let toggle_check = [
       "Basic/Diagnostic Information",
       "Patient Health Information",
@@ -617,7 +586,6 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
       "#all_checkboxes input[type=number]"
     );
     [...input_boxes].forEach((il) => {
-      // console.log("-------.",il);
       il.classList.remove('border-2')
       il.classList.remove('border-red-400')
       delete tmp[il.id];
@@ -644,7 +612,6 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
     let val = e.target.value
     setFilterCondition(val)
     tmp['filterCondition'] = val
-    // console.log("filterCondition",selectState);
     setSelectState(tmp)
   }
 

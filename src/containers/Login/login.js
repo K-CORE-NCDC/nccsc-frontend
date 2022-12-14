@@ -5,6 +5,7 @@ import { UserIcon, eye, EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
 import { Link } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
+
 const LoginComponent = () => {
   const [userFormData, setUserFormData] = useState({
     username: "",
@@ -41,7 +42,7 @@ const LoginComponent = () => {
     localStorage.setItem("ncc_refresh_token", data.refresh);
     // history.push("/userdata")
     // window.location.href = "/core/userdata";
-    window.location.href = "/home";
+    window.location.href = window.location.origin+config['basename']+"userdata/";
   };
 
   const formSubmitAction = (e) => {

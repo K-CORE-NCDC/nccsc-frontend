@@ -139,7 +139,6 @@ function PagenationTable({ imageData }) {
 
 
 const PagenationTableComponent = ({ closeShowOncoImages, imageData }) => {
-    // console.log(imageData);
     return (
         <div className='fixed inset-0 bg-gray-600 bg-opacity-50 w-full z-50'>
             <div className="relative w-1/2 h-1/2 my-10 mx-auto">

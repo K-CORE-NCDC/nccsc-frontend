@@ -353,7 +353,6 @@ const BoxPlot = React.forwardRef(({view_type, box_data,chart_type, watermarkCss 
             return(key - jitterWidth/2 + Math.random()*jitterWidth )
           })
           .attr("cy", function(d){
-            // console.log(d);
             return(y(d.Sepal_Length))
           })
           .attr("r", 2)
@@ -375,7 +374,6 @@ const BoxPlot = React.forwardRef(({view_type, box_data,chart_type, watermarkCss 
             tooltip.transition()
               .duration(200)
               .style('opacity', 0.9);
-            console.log('Sepal_Length',i.Sepal_Length);
             tooltip.html("Sample:<br/>"+BrstKeys[i.Sample]+`<br/>${view_type==="gene_vl" ? 'gene val' : 'z-score'}<br/>`+i.Sepal_Length)
               .style('left', d.pageX - 550 + 'px')
               .style('top', d.pageY - 150 + 'px');
@@ -394,7 +392,6 @@ const BoxPlot = React.forwardRef(({view_type, box_data,chart_type, watermarkCss 
     }
 
 
-    // console.log(d3)
 
       // Add individual points with jitter
       //

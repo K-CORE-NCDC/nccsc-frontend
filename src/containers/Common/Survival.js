@@ -14,7 +14,6 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
   const [xMaxValue, setXmaxValue] = useState(100)
   const [chartTable,setChartTable] = useState([])
   const colorArray = ['#4285F4', '#DB4437', '#F4B400', '#0F9D58', '#000', '#1f0cf2', '#1f0cf2']
-  // console.log(yMinValue);
   useEffect(() => {
     if (data.survivalJson && data.survivalJson.all) {
       setSurvivalData(data.survivalJson.all);
@@ -39,7 +38,6 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
           color = colorArray[counter]
         }
         value.forEach(e=>{
-          console.log(e)
           if(e.x > maxXvalue){
             maxXvalue = e.x
           }
@@ -58,7 +56,6 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
         })
         counter += 1
       }
-      console.log(minValue)
       setXmaxValue(maxXvalue+20)
       setYMinValue(minValue) //previously it was minvalue-3 
       setLineChartData(lineChartDataTemp)

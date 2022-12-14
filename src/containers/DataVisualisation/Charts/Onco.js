@@ -40,7 +40,6 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
           filters = filters['Clinical Information']
           let tmp = []
           for (const key in filters) {
-            console.log(filters[key])
             if(filters[key].length>0){
               if(filters[key][0]['type']!=='number'){
                 tmp.push({"name":key,"id":key})

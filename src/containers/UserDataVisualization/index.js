@@ -39,7 +39,6 @@ export default function DataVisualization() {
 
   useEffect(() => {
     if(accessToken){
-      console.log("inside index");
       // dispatch(getUserDataProjectsTableData())
     }else{
       history.push("/login")
