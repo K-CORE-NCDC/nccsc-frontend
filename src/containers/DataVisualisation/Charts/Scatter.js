@@ -28,7 +28,8 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
   const [noContent, setNoContent] = useState(true)
   const [selectall, setSelectAll] = useState(false)
   const [primaryGene, setPrimaryGene] = useState('')
-
+  const [lastRemoveItem,setLastRemoveItem] = useState([])
+  const [lastRemove,setLastRemove] = useState(false)
   // useEffect(() => {
   //   if (inputData) {
   //     let editInputData = inputData
@@ -56,6 +57,7 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
         let dataJson = inputState
         setLoader(true)
         dataJson['genes'] = [g[0]]
+        console.log(dataJson,'----from inputstate')
         // dataJson['genes'] = g
         dispatch(getScatterInformation('POST', dataJson))
       }
@@ -115,33 +117,51 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
   }
 
   function onRemove(selectedList, removedItem) {
-    let genes = []
-    setSelectedValue(selectedList)
-    selectedList.forEach((item, i) => {
-      genes.push(item['name'])
-    });
-    if (genes.length === 0) {
-      genes = inputState['genes']
-    }
-    if (inputData.type !== '') {
-      let dataJson = { ...inputData }
-      dataJson['genes'] = genes
-      setLoader(true)
-      // setActiveCmp(false)
-      dispatch(getScatterInformation('POST', dataJson))
-    }
+    
+      let genes = []
+      setSelectedValue(selectedList)
+      selectedList.forEach((item, i) => {
+        genes.push(item['name'])
+      });
+      
+      if(selectedList.length === 0){
+        setLastRemoveItem([removedItem])
+        setLastRemove(true)
+      }else{
+        setLastRemove(false)
+      }
+      console.log('gene-------',genes)
+      if (genes.length === 0 && selectedList.length===0) {
+        // genes = inputState['genes']
+        genes = [removedItem['name']]
+      }
+      console.log('inputState-------',genes)
+      if (inputData.type !== '') {
+        let dataJson = { ...inputData }
+        dataJson['genes'] = genes
+        setLoader(true)
+        console.log(dataJson,'----from remove')
+        // setActiveCmp(false)
+        dispatch(getScatterInformation('POST', dataJson))
+      }
+    
   }
 
   useEffect(() => {
     setTimeout(function () {
       setLoader(false)
     }, (10000));
+    
   }, [scatterJson])
 
   useEffect(() => {
     if (scatterJson && scatterJson.status === 200) {
+      
       setShowScatter(true)
       setNoContent(false)
+      if(lastRemove){
+        setSelectedValue(lastRemoveItem)
+      }
     } else {
       setShowScatter(false)
       setNoContent(true)

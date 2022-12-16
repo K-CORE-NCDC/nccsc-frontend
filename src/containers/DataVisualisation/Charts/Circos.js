@@ -13,6 +13,7 @@ import {
   getOncoImages,
   getBreastKeys,
   getRNIDetails,
+  clearCircosInfomation
 } from "../../../actions/api_actions";
 import "../../../assets/css/style.css";
 import { exportComponentAsPNG } from "react-component-export-image";
@@ -330,11 +331,12 @@ export default function DataCircos({
     }
   }, [inputData, sampleKey]);
 
-  // useEffect(() => {
-  //   return () => {
-  //     dispatch(getBreastKeys({}))
-  //   }
-  // }, [])
+  useEffect(() => {
+    return () => {
+      dispatch(clearCircosInfomation())
+      setSampleKey("")
+    }
+  }, [])
 
   useEffect(() => {
     if (inputData && inputData.genes.length > 0) {

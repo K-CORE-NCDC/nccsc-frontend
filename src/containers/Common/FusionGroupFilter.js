@@ -702,7 +702,7 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
   //   }
   // };
 
-  const submitFilters = () => {
+ const submitFilters = () => {
 
     if (isFilterResetHappened) {
       let send_response = true;
@@ -714,117 +714,69 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
                 total_groups++;
             }
         }
-        // if(total_groups === 1 ){
-        //     send_response = false; 
-        // }
-        // if('group_1' in final_payload  === false){
-        //   send_response = false; 
-        // }
-        // else if(total_groups === 2){
-        //     if('group_1' in final_payload === false && 'group_2' in final_payload === true && 'group_3' in final_payload === true){
-        //         let l2 = [...userGivenInputValues['group_2']]
-        //         let l3 = [...userGivenInputValues['group_3']]
-        //         userGivenInputValues['group_2'] = l3
-        //         userGivenInputValues['group_1'] = l2
-        //         delete userGivenInputValues['group_3']
-        //     }
-        // }
       }
       else{
         let min1Value = Number.MAX_VALUE;
-        let min2Value = Number.MAX_VALUE;
         let max1Value = Number.MIN_VALUE;
-        let max2Value = Number.MIN_VALUE;
-        const min_1_from = document.querySelectorAll('[name="1_from"]');
-        const max_1_to = document.querySelectorAll('[name="1_to"]');
-        const min_2_from = document.querySelectorAll('[name="2_from"]');
-        const max_2_to = document.querySelectorAll('[name="2_to"]');
-        // getting min value from all
-        for (let obj in min_1_from) {
-          if (min_1_from[obj]) {
-            if (
-              (min_1_from[obj].classList &&
-                (min_1_from[obj].classList.contains("border-2") ||
-                  min_1_from[obj].classList.contains("border-red-400"))) ||
-              min_1_from[obj].value === ""
-            ) {
-              send_response = false;
-              // return 'error_in_1_from';
-            } else {
-              if (min_1_from[obj].value) {
-                min1Value = Math.min(min_1_from[obj].value,min1Value);
+        let final_payload = { ...userGivenInputValues };
+        for(let i = 1; i <groupsCounter; i++){
+          const min_1_from = document.querySelectorAll(`[name="${i}_from"]`);
+          const max_1_to = document.querySelectorAll(`[name="${i}_to"]`);
+          let min_1_num,max_1_num
+          for (let obj in min_1_from) {
+            if (min_1_from[obj]) {
+              if (
+                (min_1_from[obj].classList &&
+                  (min_1_from[obj].classList.contains("border-2") ||
+                    min_1_from[obj].classList.contains("border-red-400"))) ||
+                min_1_from[obj].value === ""
+              ) {
+                send_response = false;
+              } else {
+                if (min_1_from[obj].value) {
+                  min1Value = Math.min(min_1_from[obj].value,min1Value);
+                  min_1_num = +(min_1_from[obj].value)
+                }
               }
             }
           }
-        }
-        for (let obj in max_1_to) {
-          if (max_1_to[obj]) {
-            if (
-              (max_1_to[obj].classList &&
-                (max_1_to[obj].classList.contains("border-2") ||
-                  max_1_to[obj].classList.contains("border-red-400"))) ||
-              max_1_to[obj].value === ""
-            ) {
-              send_response = false;
-              // return 'error_in_1_to';
-            } else {
-              if (max_1_to[obj].value) {
-                max1Value = Math.max(max_1_to[obj].value,max1Value);
+          for (let obj in max_1_to) {
+            if (max_1_to[obj]) {
+              if (
+                (max_1_to[obj].classList &&
+                  (max_1_to[obj].classList.contains("border-2") ||
+                    max_1_to[obj].classList.contains("border-red-400"))) ||
+                max_1_to[obj].value === ""
+              ) {
+                send_response = false;
+              } else {
+                if (max_1_to[obj].value) {
+                  max1Value = Math.max(max_1_to[obj].value,max1Value);
+                  max_1_num = +(max_1_to[obj].value)
+                }
               }
             }
           }
+              let one_from = `${i}_from`
+              let one_to = `${i}_to`
+              final_payload[one_from] = min_1_num;
+              final_payload[one_to] = max_1_num ;
         }
-        for (let obj in min_2_from) {
-          if (min_2_from[obj]) {
-            if (
-              (min_2_from[obj].classList &&
-                (min_2_from[obj].classList.contains("border-2") ||
-                  min_2_from[obj].classList.contains("border-red-400"))) ||
-              min_2_from[obj].value === ""
-            ) {
-              send_response = false;
-              // return 'error_in_2_from';
-            } else {
-              if (min_2_from[obj].value) {
-                min2Value = Math.min(min_2_from[obj].value,min2Value);
-              }
-            }
-          }
-        }
-        for (let obj in max_2_to) {
-          if (max_2_to[obj]) {
-            if (
-              (max_2_to[obj].classList &&
-                (max_2_to[obj].classList.contains("border-2") ||
-                  max_2_to[obj].classList.contains("border-red-400"))) ||
-              max_2_to[obj].value === ""
-            ) {
-              send_response = false;
-              // return 'error_in_2_to';
-            } else {
-              if (max_2_to[obj].value) {
-                max2Value = Math.max(max_2_to[obj].value,max2Value);
-              }
-            }
-          }
-        }
+
         if (send_response === true) {
-          let final_payload = { ...userGivenInputValues };
-          final_payload["1_from"] = min1Value;
-          final_payload["1_to"] = max1Value;
-          final_payload["2_from"] = min2Value;
-          final_payload["2_to"] = max2Value;
+          setGroupsCounter(1)
           setUserGivenInputValues(final_payload);
           parentCallback(final_payload);
         }
       }
-      if (send_response === true  &&  userGivenInputValues['type'] !== 'number') {
+      if (send_response === true &&  userGivenInputValues['type'] !== 'number') {
         parentCallback(userGivenInputValues);
-        resetFilters();
+        setGroupsCounter(1)
+        // resetFilters();
       }
     } 
     else {
-      resetFilters();
+      // resetFilters();
       // parentCallback({ ...userGivenInputValues });
       parentCallback(userGivenInputValues );
     }
@@ -1106,7 +1058,7 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
               <div key={`${compCase}-1${Math.random()}`} className="mb-4">
                 <div>
                   <div className={LabelCss} htmlFor="username">
-                    Group 1
+                  {`Group ${groupsCounter}`}
                   </div>
                   <div>
                     <input
@@ -1114,7 +1066,7 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
                       className={numberInputBoxCss}
                       min={min}
                       max={max}
-                      name="1_from"
+                      name={`${groupsCounter}_from`}
                       type="number"
                       placeholder={min}
                     ></input>
@@ -1123,14 +1075,14 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
                       className={numberInputBoxCss}
                       min={min}
                       max={max}
-                      name="1_to"
+                      name={`${groupsCounter}_to`}
                       type="number"
                       placeholder={max}
                     ></input>
                   </div>
                 </div>
               </div>
-              <div key={`${compCase}-2${Math.random()}`} className="mb-4">
+              {/* <div key={`${compCase}-2${Math.random()}`} className="mb-4">
                 <div>
                   <div className={LabelCss} htmlFor="username">
                     Group 2
@@ -1156,7 +1108,7 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
                     ></input>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </>
           );
         } else {
@@ -1518,6 +1470,7 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
     if (groupsCounter <= 3) {
       const filterType = selectedFilterDetails.type;
       const componentData = componetSwitch(filterType);
+      console.log("compof",filterType);
       setFilterInputs((prevState) => [...prevState, componentData]);
       setGroupsCounter((prevState) => prevState + 1);
     }
@@ -1777,94 +1730,61 @@ export const UserDefinedGroupFilters = ({
       }
       else{
         let min1Value = Number.MAX_VALUE;
-        let min2Value = Number.MAX_VALUE;
         let max1Value = Number.MIN_VALUE;
-        let max2Value = Number.MIN_VALUE;
-        const min_1_from = document.querySelectorAll('[name="1_from"]');
-        const max_1_to = document.querySelectorAll('[name="1_to"]');
-        const min_2_from = document.querySelectorAll('[name="2_from"]');
-        const max_2_to = document.querySelectorAll('[name="2_to"]');
-        // getting min value from all
-        for (let obj in min_1_from) {
-          if (min_1_from[obj]) {
-            if (
-              (min_1_from[obj].classList &&
-                (min_1_from[obj].classList.contains("border-2") ||
-                  min_1_from[obj].classList.contains("border-red-400"))) ||
-              min_1_from[obj].value === ""
-            ) {
-              send_response = false;
-              // return 'error_in_1_from';
-            } else {
-              if (min_1_from[obj].value) {
-                min1Value = Math.min(min_1_from[obj].value,min1Value);
+        let final_payload = { ...userGivenInputValues };
+        for(let i = 1; i <groupsCounter; i++){
+          const min_1_from = document.querySelectorAll(`[name="${i}_from"]`);
+          const max_1_to = document.querySelectorAll(`[name="${i}_to"]`);
+          let min_1_num,max_1_num
+          for (let obj in min_1_from) {
+            if (min_1_from[obj]) {
+              if (
+                (min_1_from[obj].classList &&
+                  (min_1_from[obj].classList.contains("border-2") ||
+                    min_1_from[obj].classList.contains("border-red-400"))) ||
+                min_1_from[obj].value === ""
+              ) {
+                send_response = false;
+              } else {
+                if (min_1_from[obj].value) {
+                  min1Value = Math.min(min_1_from[obj].value,min1Value);
+                  min_1_num = +(min_1_from[obj].value)
+                }
               }
             }
           }
-        }
-        for (let obj in max_1_to) {
-          if (max_1_to[obj]) {
-            if (
-              (max_1_to[obj].classList &&
-                (max_1_to[obj].classList.contains("border-2") ||
-                  max_1_to[obj].classList.contains("border-red-400"))) ||
-              max_1_to[obj].value === ""
-            ) {
-              send_response = false;
-              // return 'error_in_1_to';
-            } else {
-              if (max_1_to[obj].value) {
-                max1Value = Math.max(max_1_to[obj].value,max1Value);
+          for (let obj in max_1_to) {
+            if (max_1_to[obj]) {
+              if (
+                (max_1_to[obj].classList &&
+                  (max_1_to[obj].classList.contains("border-2") ||
+                    max_1_to[obj].classList.contains("border-red-400"))) ||
+                max_1_to[obj].value === ""
+              ) {
+                send_response = false;
+              } else {
+                if (max_1_to[obj].value) {
+                  max1Value = Math.max(max_1_to[obj].value,max1Value);
+                  max_1_num = +(max_1_to[obj].value)
+                }
               }
             }
           }
+              let one_from = `${i}_from`
+              let one_to = `${i}_to`
+              final_payload[one_from] = min_1_num;
+              final_payload[one_to] = max_1_num ;
         }
-        for (let obj in min_2_from) {
-          if (min_2_from[obj]) {
-            if (
-              (min_2_from[obj].classList &&
-                (min_2_from[obj].classList.contains("border-2") ||
-                  min_2_from[obj].classList.contains("border-red-400"))) ||
-              min_2_from[obj].value === ""
-            ) {
-              send_response = false;
-              // return 'error_in_2_from';
-            } else {
-              if (min_2_from[obj].value) {
-                min2Value = Math.min(min_2_from[obj].value,min2Value);
-              }
-            }
-          }
-        }
-        for (let obj in max_2_to) {
-          if (max_2_to[obj]) {
-            if (
-              (max_2_to[obj].classList &&
-                (max_2_to[obj].classList.contains("border-2") ||
-                  max_2_to[obj].classList.contains("border-red-400"))) ||
-              max_2_to[obj].value === ""
-            ) {
-              send_response = false;
-              // return 'error_in_2_to';
-            } else {
-              if (max_2_to[obj].value) {
-                max2Value = Math.max(max_2_to[obj].value,max2Value);
-              }
-            }
-          }
-        }
+
         if (send_response === true) {
-          let final_payload = { ...userGivenInputValues };
-          final_payload["1_from"] = min1Value;
-          final_payload["1_to"] = max1Value;
-          final_payload["2_from"] = min2Value;
-          final_payload["2_to"] = max2Value;
+          setGroupsCounter(1)
           setUserGivenInputValues(final_payload);
           parentCallback(final_payload);
         }
       }
       if (send_response === true &&  userGivenInputValues['type'] !== 'number') {
         parentCallback(userGivenInputValues);
+        setGroupsCounter(1)
         // resetFilters();
       }
     } 
@@ -1952,13 +1872,15 @@ export const UserDefinedGroupFilters = ({
         one_to_0.classList.remove("border-2");
         one_to_0.classList.remove("border-red-400");
         // let is_valid = validate_fusion()
+        console.log(one_to,one_from);
+
         setUserGivenInputValues((prevState) => ({
           ...prevState,
-          [one_from_0.name]: one_from_0.value,
+          [one_from_0.name]: one_from,
         }));
         setUserGivenInputValues((prevState) => ({
           ...prevState,
-          [one_to_0.name]: one_to_0.value,
+          [one_to_0.name]: one_to,
         }));
       }
     } else {

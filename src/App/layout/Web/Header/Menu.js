@@ -39,7 +39,7 @@ const addActiveClass = (e)=> {
 
 const MultipleElem = ({elem,ind}) =>{
   return (
-    <li className="sidebar-dropdown" id={"multi_"+ind} onClick={addActiveClass}>
+    <li className="sidebar-dropdown" id={"multi_"+ind} onClick={addActiveClass} key={elem.title+'_li'}>
       <a href={"#"+elem.title}>
         <i className={elem.icon}></i>
         <span>{elem.title}</span>
@@ -78,7 +78,7 @@ const Menu = ({items}) => {
       return <MultipleElem key={"multiple"+index} elem={ele} ind={index} />
     }
     else if(ele.type === 'admin'){
-      return <a className="px-3 py-4 lg:py-2 flex  " href={config['auth']+'login'} target='__blank'>Admin</a>
+      return <a key='admin_button' className="px-3 py-4 lg:py-2 flex  " href={config['auth']+'login'} target='__blank'>Admin</a>
     }
 
     return ""

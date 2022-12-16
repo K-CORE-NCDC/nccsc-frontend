@@ -1601,7 +1601,7 @@ const GroupFilters = ({
           <option value="0"></option>
           {filterChoices.map((type, index) => (
             <option
-              selected={filterSelected === type.name}
+              defaultValue={filterSelected === type.name}
               className="lg:text-lg xs:text-sm"
               key={type.id}
               value={index}
@@ -2789,7 +2789,7 @@ export const UserDefinedGroupFilters = ({
           <option value="0"></option>
           {filterChoices.map((type, index) => (
             <option
-              selected={filterSelected === type.name}
+              defaultValue={filterSelected === type.name}
               className="lg:text-lg xs:text-sm"
               key={type.id}
               value={index}

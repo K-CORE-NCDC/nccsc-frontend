@@ -140,7 +140,9 @@ export default function DataSurvival({
 
   useEffect(() => {
     if (!clinicalMaxMinInfo) {
-      dispatch(getClinicalMaxMinInfo("GET", {}));
+      if(project_id === undefined){
+        dispatch(getClinicalMaxMinInfo("GET", {}));
+      }
     }
   }, []);
 

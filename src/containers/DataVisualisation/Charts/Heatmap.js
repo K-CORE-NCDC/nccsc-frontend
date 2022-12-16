@@ -517,7 +517,7 @@ normal_button += " border duration-200 ease-in-out border-teal-600 transition px
               />
               {mainTab === 'k-mean'?
                 <div className="mt-8">
-                  <label for="points"><strong className="sm:text-xl lg:text-2xl">Cluster (between {rangeValue} and {clusterRange}):</strong></label>
+                  <label htmlFor="points"><strong className="sm:text-xl lg:text-2xl">Cluster (between {rangeValue} and {clusterRange}):</strong></label>
                   <input type="range" className="ml-4 border-4 border-gray-500 rounded-lg overflow-hidden appearance-none bg-white h-6 w-128"
                   id="points" name="points" min="1" max={clusterRange} value={rangeValue} onChange={rangeCall}/>
                 </div>:""
