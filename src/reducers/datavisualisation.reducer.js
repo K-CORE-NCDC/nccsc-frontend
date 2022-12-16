@@ -8,6 +8,10 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state,
         circosSummary: payload
       }
+    case dataVisualization.CLEAR_CIRCOS_INFORMATION:
+        const {circosSummary, ...restt}=state 
+        state= restt
+        return  state
     case dataVisualization.ONCO_REQUEST:
       return {
         ...state,
@@ -180,6 +184,7 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state, 
         UpdateDownloadVisualizationPurpose: payload
       }
+      
     case dataVisualization.PDF_REPORT:
       return {
         ...state, 

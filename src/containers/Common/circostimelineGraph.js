@@ -109,13 +109,14 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
             // let d = convertStrToDate(ki67[i]['imnl_read_ymd']);
             let d = convertStrToDate(ki67[i]['imnl_acpt_ymd']);
             let score = ki67[i]['ki67_score'].replace(/[^\d]/g,'');
-            let tooltip = "<div>KI67: "+ki67[i]['ki67_score']+"<hr/>"+ki67[i]['imnl_read_ymd']+"</div>"
+            let tooltip = "<div>KI67: "+ki67[i]['ki67_score']+"<hr/>"+ki67[i]['imnl_acpt_ymd']+"</div>"
             if(ki67.length===1){
               var year  = new Date(d).getFullYear();
               var month = new Date(d).getMonth();
               var day   = new Date(d).getDate();
               var date  = new Date(year , month, day+ 1);
               t.push([score,'',tooltip,d,date])
+              console.log('---->',t);
             }else{
               t.push([score,'',tooltip,d,d])
             }
@@ -124,7 +125,7 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
           let table_cols = [
             {
               name: 'Date',
-              selector: row => row.imnl_read_ymd
+              selector: row => row.imnl_acpt_ymd
             },
             {
               name: 'KI-67 % Value',

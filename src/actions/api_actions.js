@@ -811,6 +811,15 @@ export function getCircosInformation(type, data) {
   };
 }
 
+export function clearCircosInfomation() {
+  return (dispatch) => {
+    dispatch({
+      type: dataVisualization.CLEAR_CIRCOS_INFORMATION,
+      payload:{}
+    });
+  };
+}
+
 export function getSurvivalInformation(type, data) {
   return (dispatch) => {
     //   dispatch({ type: homeConstants.DATA_SUMMARY });

@@ -75,7 +75,7 @@ let childMenu = {
         title: <FormattedMessage id="Introduce" defaultMessage="Introduction" />,
         type: 'group',
         icon: 'fa fa-dashboard',
-        // url: '/introduce/',
+        url: '/introduce/',
         children: [
           {
             id: 'Business',
@@ -100,7 +100,7 @@ let childMenu = {
         title: <FormattedMessage id="Visualization" defaultMessage='Visualization' />,
         type: 'group',
         icon: 'fa fa-dashboard',
-        // url: '/summary/',
+        url: '/summary/',
         children: [
           {
             id: 'DataSummary',
@@ -136,7 +136,7 @@ let childMenu = {
         title: <FormattedMessage id="Tools" defaultMessage='Tools' />,
         type: 'group',
         icon: 'fa fa-dashboard',
-        // url: '/tools/',
+        url: '/blast/',
         children: [
           {
             id: 'Blast',
@@ -170,7 +170,7 @@ let childMenu = {
         title: <FormattedMessage id="CustomerVoice" defaultMessage='Customer Voice' />,
         type: 'group',
         icon: 'fa fa-dashboard',
-        // url: '/faq/',
+        url: '/faq/',
         children: [
           {
             id: 'faq',
