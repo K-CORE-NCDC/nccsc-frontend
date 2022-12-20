@@ -38,6 +38,7 @@ const UserDataTable = React.lazy(() => import('./containers/UserDataVisualizatio
 const MobileSuccess = React.lazy(() => import('./containers/Signup/MobileVerify'))
 
 const Organoid = React.lazy(() => import('./containers/CustomerVoice/OtherServices/Organoid'))
+const RelatedSites = React.lazy(()=>import('./containers/CustomerVoice/OtherServices/RelatedSitesIndex'))
 
 const Refresh = React.lazy(() => import('./containers/Refresh'))
 
@@ -81,7 +82,7 @@ const route = [
   { path: `/interpro/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Interpro" defaultMessage="Interpro" />, component: InterPro},
   { path: `/vcfmaf/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="VCFMAF" defaultMessage="VCF to MAF" />, component: VcfMaf},
   { path: `/organoid/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Organoid" defaultMessage="organoid" />, component: Organoid},
-
+  { path: `/related-sites/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="RelatedSites" defaultMessage="Related Sites" />, component: RelatedSites},
   { path: `/fileprojectdatatable/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Organoid" defaultMessage="organoid" />, component: FileProjectDataTable},
   { path: `/refresh/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Organoid" defaultMessage="organoid" />, component: Refresh},
   

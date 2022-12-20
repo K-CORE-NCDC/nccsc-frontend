@@ -264,7 +264,6 @@ export const PreDefienedFilters = ({
     //     { label: "N3", from: 'N3', to: 'N3' }
     // ]
   };
-
   useEffect(() => {
     if (volcanoType !== filterType) {
       setFilterType(volcanoType);
@@ -725,7 +724,6 @@ const GroupFilters = ({
       resetFilters();
     }
   }, [volcanoType]);
-
   const submitFilters = () => {
     // if (isFilterResetHappened) {
     //   parentCallback(userGivenInputValues);
@@ -1611,6 +1609,9 @@ const GroupFilters = ({
           ))}
         </select>
       </div>
+      {userGivenInputValues['type'] === 'number' &&
+      <p className="text-left text-base ml-6">Max and Min Values are based on Clinincal Information File</p>
+      }
       {showAddGroupButton && (
         <div onClick={AppendNewGroup} className="p-1 py-3 px-2 col-span-2">
           <button className="bg-main-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
@@ -2799,6 +2800,9 @@ export const UserDefinedGroupFilters = ({
           ))}
         </select>
       </div>
+      {userGivenInputValues['type'] === 'number' &&
+      <p className="text-left text-base ml-6">Max and Min Values are based on Clinincal Information File</p>
+      }
       {showAddGroupButton && (
         <div onClick={AppendNewGroup} className="p-1 py-3 px-2 col-span-2">
           <button className="bg-main-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">

@@ -44,8 +44,8 @@ export default function DropdownMenu() {
                   </Link>
                 </li>
                 <li key={i + 1 + "_" + j + 1} className='px-3 py-5'>
-                  <Link key={i + "link_" + j + 1} className="text-3xl py-2 px-4  whitespace-no-wrap" to='/qa'>
-                   <FormattedMessage id="RelatedSites" defaultMessage='RelatedSites' />
+                  <Link key={i + "link_" + j + 1} className="text-3xl py-2 px-4  whitespace-no-wrap" to='/related-sites'>
+                   <FormattedMessage id="RelatedSites" defaultMessage='Related Sites' />
                   </Link>
                 </li>
               </ul>

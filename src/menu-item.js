@@ -213,7 +213,7 @@ let childMenu = {
               },
               {
                 id: 'qa',
-                title: <FormattedMessage id="RelatedSites" defaultMessage='RelatedSites' />,
+                title: <FormattedMessage id="RelatedSites" defaultMessage='Related Sites' />,
                 type: 'item',
                 icon: 'fa fa-dashboard',
                 url: '/qa',

@@ -4,6 +4,7 @@ import SurvivalCmp from "../../Common/Survival";
 import {
   getSurvivalInformation,
   getClinicalMaxMinInfo,
+  clearSurvivalIMage
 } from "../../../actions/api_actions";
 import { exportComponentAsPNG } from "react-component-export-image";
 import GroupFilters, {
@@ -62,6 +63,7 @@ export default function DataSurvival({
     (data) => data.dataVisualizationReducer.userDefinedFilter
   );
 
+    
   const [coxFilter, setCoxFilter] = useState({
     // "Body Mass Index": false,
     // "Alcohol Consumption": false,
@@ -77,7 +79,9 @@ export default function DataSurvival({
     // "Ki67 Index": false,
     // "Age Of Diagnosis": false,
   });
-
+// useEffect(()=>{
+//   console.log('sddsdsdsd',survivalJson); 
+// })
   useEffect(()=>{
     if (userDefinedFilterColumns && userDefinedFilterColumns["filterJson"] && userDefinedFilterColumns["filterJson"]["Clinical Information"] && Object.keys(userDefinedFilterColumns).length > 0) {
       setCoxUserDefinedFilter(userDefinedFilterColumns["filterJson"]["Clinical Information"])
@@ -275,19 +279,22 @@ export default function DataSurvival({
       let thead = [<th></th>];
       let data = survivalJson && 'data' in survivalJson && JSON.parse(survivalJson["data"]);
       let cf = survivalJson && 'clinical_filter' in survivalJson &&  survivalJson["clinical_filter"];
-      let image = survivalJson["image"];
+      let image = survivalJson && 'image' in survivalJson &&  survivalJson["image"];
+      // let image = survivalJson["image"];
       let trow = [];
-      for (let c = 0; c < columns.length; c++) {
-        thead.push(
-          <th
+      if(columns){
+        for (let c = 0; c < columns.length; c++) {
+          thead.push(
+            <th
             className="font-medium text-gray-900 px-6 py-4 text-left"
             key={`${c}'_'${columns[c]}`}
-          >
+            >
             {columns[c]}
           </th>
         );
       }
-
+    }
+    if(cf){
       for (let c = 0; c < cf.length; c++) {
         let col = cf[c];
         let td = [];
@@ -316,6 +323,7 @@ export default function DataSurvival({
           </tr>
         );
       }
+    }
 
       tmp.push(
         <div className="flex flex-col p-12" key={"cox"}>
@@ -442,6 +450,7 @@ export default function DataSurvival({
   };
 
   const submitCox = (e, type) => {
+    dispatch(clearSurvivalIMage())
     setSurvivalModel(type);
     if (type === "cox") {
       inputData["survival_type"] = type;
@@ -454,6 +463,7 @@ export default function DataSurvival({
   }, [coxFilter]);
 
   const selectAllCox = (e, type) => {
+    dispatch(clearSurvivalIMage())
     let tmp = coxFilter;
     for (const key in tmp) {
       if (type === "select") {
@@ -803,6 +813,7 @@ export default function DataSurvival({
               </>
             )}
             {renderNoContent && <NoContentMessage />}
+            
           </div>
         </div>
       )}

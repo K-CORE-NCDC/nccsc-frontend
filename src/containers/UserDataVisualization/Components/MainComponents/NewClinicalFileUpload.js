@@ -122,6 +122,7 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
   const [borderRed, setBorderRed] = useState(false)
 
   const resetStates = () => {
+    dispatch(clear_new_file_upload_state())
     setSelectedFileSampleType({
       1: "clinical_information",
     })
@@ -148,10 +149,10 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
   const setShowModalFunction = (stateData) => {
     setShowModal(stateData)
   }
-
   useEffect(()=>{
-    // dispatch(clear_new_file_upload_state())
+    dispatch(clear_new_file_upload_state())
   },[])
+
   useEffect(() => {
     if (Object.values(loader).some(element => (element === 'failed'))) {
       setFormSubmitButtonText('retry')
@@ -358,13 +359,16 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
     let divKey = e.target.getAttribute('filename')
 
     if (type_name && e.target.files) {
-      let file_name = e.target.files[0]['name']
-      selectedFiles.push(file_name)
-      setUploadFile(prevState => ({
-        ...prevState,
-        [divKey]: { type: type_name, file: e.target.files[0] }
-      }));
-      setSelectedFiles([...selected_files])
+      if(e.target.files[0] && 'name' in e.target.files[0] ){
+        let file_name = e.target.files[0]['name']
+        selectedFiles.push(file_name)
+        setUploadFile(prevState => ({
+          ...prevState,
+          [divKey]: { type: type_name, file: e.target.files[0] }
+        }));
+        setSelectedFiles([...selected_files])
+      }
+      
 
     }
   }

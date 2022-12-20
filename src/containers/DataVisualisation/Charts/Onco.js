@@ -220,7 +220,7 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
         <div className='p-5 text-right m-5'>
           <div className='flex flex-wrap float-left'>
             
-            <label><FormattedMessage  id = "Clinical_Filters_heatmap" defaultMessage='Clinical Attribute'/></label>
+            <label><FormattedMessage  id = "Clinical_Filters_heatmap" defaultMessage='Clinical Attribute annotation'/></label>
             <Multiselect
               options={optionChoices} // Options to display in the dropdown
               selectedValues={option} // Preselected value to persist in dropdown

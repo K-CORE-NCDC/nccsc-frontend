@@ -7,6 +7,7 @@ import UserDefinedGroupFilters  from "../../Common/GroupFilterUserDefined";
 import { exportComponentAsPNG } from "react-component-export-image";
 import NoContentMessage from "../../Common/NoContentComponent";
 import { AdjustmentsIcon } from "@heroicons/react/outline";
+import swal from 'sweetalert';
 
 import {
   getClinicalMaxMinInfo,
@@ -48,23 +49,36 @@ export default function DataVolcono({
   const [tabCount, setTabCount] = useState();
   const [groupFilters, setGroupFilters] = useState({});
   const [showVolcano, setShowVolcano] = useState(false);
-  const [noContent, setNoContent] = useState(true);
+  const [noContent, setNoContent] = useState(false);
   const [sampleCount, setSampleCount] = useState({});
   const [volcanoType, setVolcanoType] = useState("transcriptome");
   const [proteomeValue, setProteomeValue] = useState("N");
   const [smallScreen, setSmallScreen] = useState(false);
   let { tab, project_id } = useParams();
+  
   const [userDefienedFilter, setUserDefienedFilter] = useState(
     project_id === undefined ? "static" : "dynamic"
   );
 
   const updateGroupFilters = (filtersObject) => {
-    if (filtersObject) {
-      setGroupFilters(filtersObject);
 
+    if (filtersObject) {
+     
+        swal("If processed information is big, it takes time to Load",{
+          closeOnClickOutside: false,
+          buttons: ["Cancel", "Continue"],
+          className:"text-center"
+        })
+          .then((value) => {
+            setTimeout(()=>{
+            if(value)
+            setGroupFilters(filtersObject);
+            },1000)
+          });
+    
+      
     }
   };
-
   useEffect(() => {
     if (!clinicalMaxMinInfo) {
       if (project_id) {
@@ -164,10 +178,11 @@ export default function DataVolcono({
         setShowVolcano(false);
         setNoContent(true);
       }
-    } else {
+    } else if (volcanoJson && (volcanoJson.status !== undefined)) {
       setShowVolcano(false);
       setNoContent(true);
     }
+
   }, [volcanoJson]);
 
   const changeVolcanoType = (e) => {
@@ -421,6 +436,7 @@ export default function DataVolcono({
               />
             )}
             {noContent && <NoContentMessage />}
+            {Object.keys(groupFilters).length === 0 && <p>Please Select the Filter Data</p>}
           </div>
         </div>
       )}

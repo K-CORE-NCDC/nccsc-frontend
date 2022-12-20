@@ -84,7 +84,6 @@ let UserDefinedGroupFilters = ({
     }
   }, [userDefinedFilter]);
 
-
   const [filterSelected, setFilterSelected] = useState("");
   const [selectedFilterDetails, setSelectedFilterDetails] = useState({});
   const [filterInputs, setFilterInputs] = useState([]);
@@ -100,9 +99,7 @@ let UserDefinedGroupFilters = ({
   const [filterChoices, setFilterChoices] = useState([]);
   const [booleanColumns, setBooleanColumns] = useState([]);
   let { tab, project_id } = useParams();
-
   useEffect(() => {
-    
     let preDefienedGroups1 = {};
     let filterChoices = [];
     if (project_id !== undefined) {
@@ -176,11 +173,6 @@ let UserDefinedGroupFilters = ({
   }, [volcanoType]);
 
   const submitFilters = () => {
-    // if (isFilterResetHappened) {
-    //   parentCallback(userGivenInputValues);
-    // } else {
-    //   parentCallback(userGivenInputValues);
-    // }
     if(viz_type === 'volcono'){
       if (isFilterResetHappened) {
         let send_response = true;
@@ -779,8 +771,6 @@ let UserDefinedGroupFilters = ({
   };
 
   useEffect(() => {
-    // if(selectedFilterDetails){
-    // }
     if (
       selectedFilterDetails &&
       "type" in selectedFilterDetails &&
@@ -1036,6 +1026,186 @@ let UserDefinedGroupFilters = ({
               </table>
             );
           }
+          else if(viz_type === 'fusion'){
+            if (Object.keys(groupFilters).length > 0 && groupFilters["type"] === "static") {
+              if (
+                groupFilters &&
+                groupFilters["column"] === colName &&
+                "group_1" in groupFilters  && groupFilters["group_1"].length > 0 &&
+                "group_2" in groupFilters && groupFilters["group_2"].length > 0 && 
+                "group_3" in groupFilters &&groupFilters["group_3"].length > 0
+              ) {
+                preDefienedGroups1[colName].forEach((element, index) => {
+                  let group_a = false;
+                  let group_b = false;
+                  let group_c = false;
+                  if (groupFilters["group_1"].indexOf(element.value) > -1) {
+                    group_a = true;
+                  }
+                  if (groupFilters["group_2"].indexOf(element.value) > -1) {
+                    group_b = true;
+                  }
+                  if (groupFilters["group_3"].indexOf(element.value) > -1) {
+                    group_c = true;
+                  }
+                  tr.push(
+                    <tr key={colName + index} className="border-b">
+                      <td className="text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                        {element.label}
+                      </td>
+                      <td className="px-6 py-4">
+                        <input
+                          type="checkbox"
+                          checked={group_a}
+                          onChange={dropDownChange}
+                          value={JSON.stringify({
+                            index: index,
+                            colName: colName,
+                            group: "group_1",
+                          })}
+                        />
+                      </td>
+                      <td className="px-6 py-4">
+                        <input
+                          type="checkbox"
+                          checked={group_b}
+                          onChange={dropDownChange}
+                          value={JSON.stringify({
+                            index: index,
+                            colName: colName,
+                            group: "group_2",
+                          })}
+                        />
+                      </td>
+                      <td className="px-6 py-4">
+                        <input
+                          type="checkbox"
+                          checked={group_c}
+                          onChange={dropDownChange}
+                          value={JSON.stringify({
+                            index: index,
+                            colName: colName,
+                            group: "group_3",
+                          })}
+                        />
+                      </td>
+                    </tr>
+                  );
+                });
+              } else {
+                preDefienedGroups1[colName].map((element, index) =>
+                  tr.push(
+                    <tr key={colName + index} className="border-b">
+                      <td className="text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                        {element.label}
+                      </td>
+                      <td className="px-6 py-4">
+                        <input
+                          type="checkbox"
+                          onChange={dropDownChange}
+                          value={JSON.stringify({
+                            index: index,
+                            colName: colName,
+                            group: "group_1",
+                          })}
+                          defaultChecked = {false}
+                        />
+                      </td>
+                      <td className="px-6 py-4">
+                        <input
+                          type="checkbox"
+                          onChange={dropDownChange}
+                          value={JSON.stringify({
+                            index: index,
+                            colName: colName,
+                            group: "group_2",
+                          })}
+                          defaultChecked = {false}
+                        />
+                      </td>
+                      <td className="px-6 py-4">
+                        <input
+                          type="checkbox"
+                          onChange={dropDownChange}
+                          value={JSON.stringify({
+                            index: index,
+                            colName: colName,
+                            group: "group_3",
+                          })}
+                          defaultChecked = {false}
+                        />
+                      </td>
+                    </tr>
+                  )
+                );
+              }
+            } else {
+              preDefienedGroups1[colName].map((element, index) =>
+                tr.push(
+                  <tr key={colName + index} className="border-b">
+                    <td className="text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                      {element.label}
+                    </td>
+                    <td className="px-6 py-4">
+                      <input
+                        type="checkbox"
+                        onChange={dropDownChange}
+                        value={JSON.stringify({
+                          index: index,
+                          colName: colName,
+                          group: "group_1",
+                        })}
+                        defaultChecked = {false}
+                      />
+                    </td>
+                    <td className="px-6 py-4">
+                      <input
+                        type="checkbox"
+                        onChange={dropDownChange}
+                        value={JSON.stringify({
+                          index: index,
+                          colName: colName,
+                          group: "group_2",
+                        })}
+                        defaultChecked = {false}
+                      />
+                    </td>
+                    <td className="px-6 py-4">
+                      <input
+                        type="checkbox"
+                        onChange={dropDownChange}
+                        value={JSON.stringify({
+                          index: index,
+                          colName: colName,
+                          group: "group_3",
+                        })}
+                        defaultChecked = {false}
+                      />
+                    </td>
+                  </tr>
+                )
+              );
+            }
+            componentData.push(
+              <table className="table" key={"group_table"}>
+                <thead className="border-b w-full" key={"group_thead"}>
+                  <tr>
+                    <th></th>
+                    <th className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                      Group A
+                    </th>
+                    <th className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                      Group B
+                    </th>
+                    <th className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                      Group C
+                    </th>
+                  </tr>
+                </thead>
+                <tbody key={"group_tbody"}>{tr}</tbody>
+              </table>
+            );
+          }
         }
 
         if (prevStateFilters.length > 0) {
@@ -1049,10 +1219,20 @@ let UserDefinedGroupFilters = ({
   }, [selectedFilterDetails]);
 
   const AppendNewGroup = () => {
-    const filterType = selectedFilterDetails.type;
-    const componentData = componetSwitch(filterType);
-    setFilterInputs((prevState) => [...prevState, componentData]);
-    setGroupsCounter((prevState) => prevState + 1);
+    if(viz_type === 'fusion'){
+      if (groupsCounter <= 3) {
+        const filterType = selectedFilterDetails.type;
+        const componentData = componetSwitch(filterType);
+        setFilterInputs((prevState) => [...prevState, componentData]);
+        setGroupsCounter((prevState) => prevState + 1);
+      }
+    }
+    else{
+      const filterType = selectedFilterDetails.type;
+      const componentData = componetSwitch(filterType);
+      setFilterInputs((prevState) => [...prevState, componentData]);
+      setGroupsCounter((prevState) => prevState + 1);
+    }
   };
 
   return (
@@ -1083,6 +1263,10 @@ let UserDefinedGroupFilters = ({
           ))}
         </select>
       </div>
+      {userGivenInputValues['type'] === 'number' &&
+      <p className="text-left text-base ml-6">Max and Min Values are based on Clinincal Information File</p>
+      }
+      
       {showAddGroupButton && (
         <div onClick={AppendNewGroup} className="p-1 py-3 px-2 col-span-2">
           <button className="bg-main-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">

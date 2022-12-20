@@ -142,7 +142,7 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
       <button type="button" onClick={zoomOut} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4  ml-8 rounded">zoom out</button> */}
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <h2 className="text-left text-blue-800 mb-12 mt-12"><strong>{"Expression Down Level(log2FC <= -5)"}</strong></h2>
+          <h2 className="text-left text-blue-800 mb-12 mt-12"><strong>{"Expression Down Level"}</strong></h2>
           <div>
             {/* <UserFilesTable userDataTableData={negative_data} /> */}
             <DataTable pagination
@@ -159,7 +159,7 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
           </div>
         </div>
         <div>
-          <h2 className="text-left text-blue-800 mb-12 mt-12"><strong>{"Expression Up Level(log2FC >= 5)"}</strong></h2>
+          <h2 className="text-left text-blue-800 mb-12 mt-12"><strong>{"Expression Up Level"}</strong></h2>
           {/* <UserFilesTable userDataTableData={positive_data} /> */}
           <DataTable pagination
             columns={table_cols}

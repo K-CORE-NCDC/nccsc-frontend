@@ -164,7 +164,7 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
               selector: row => row.exam_ymd
             },
             {
-              name: 'CA15-2 Value',
+              name: 'CA15-3 Value',
               selector: row => row.exam_val
             },
           ]
@@ -276,7 +276,7 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
                 KI-67 (%)
               </button>
               <button onClick={e=>setTab('ca15')} className = {((tab==='ca15')?activeNavClass:navClass)}>
-                CA15-2
+                CA15-3
               </button>
               <button onClick={e=>setTab('cea')} className = {((tab==='cea')?activeNavClass:navClass)}>
                 CEA
@@ -309,7 +309,7 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
                 />}
               </div>
               <div className={"py-6 tab-pane fade flex-inline "+" "+((tab==='ca15')?"show active":' hidden ')} id="tabs-ca15">
-                <h3>CA15-2 Timeline</h3>
+                <h3>CA15-3 Timeline</h3>
                 <hr/>
                 {circosTimelieTableData && <TimeLineChart data={circosTimelieTableData.ca15} yearKey="exam_ymd" valueKey="exam_val" />}
                 {ca15Chart && <DataTable pagination
