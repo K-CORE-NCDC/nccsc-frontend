@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
+
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import LoaderCmp from "../../../Common/Loader";
+import {
+  clear_new_file_upload_state
+} from "../../../../actions/api_actions";
 
 function FileProjectDataTable({ updateComponentNumber }) {
+  const dispatch = useDispatch();
   const [rowData, setRowData] = useState([]);
   const [colData, setColData] = useState([]);
   const [tableNavTabs, setTableNavTabs] = useState([]);
   const [projectId, setProjectId] = useState(0);
   const [activeTableKey, setActiveTableKey] = useState("clinical_information");
+  const [navTabIs, setNavTabIs] = useState('circos')
   let history = useHistory();
   const verificationResponse = useSelector(
     (data) => data.homeReducer.uploadClinicalColumns
@@ -19,6 +25,16 @@ function FileProjectDataTable({ updateComponentNumber }) {
     setActiveTableKey(tab);
   };
 
+  useEffect(()=>{
+    if (verificationResponse && verificationResponse["project_details"]) {
+      
+      for(const available_step in verificationResponse["project_details"]["available_steps"]){
+        if(verificationResponse["project_details"]["available_steps"][available_step].length > 0){
+          setNavTabIs(available_step)
+        }
+      }
+    }
+  },[verificationResponse])
   useEffect(() => {
     if (verificationResponse && verificationResponse["result"]) {
       let temptabs = [];
@@ -121,7 +137,9 @@ function FileProjectDataTable({ updateComponentNumber }) {
         </button>
         {projectId !== 0 && (
           <button
-            onClick={() => history.push(`/visualise/circos/${projectId}`)}
+            onClick={() => {
+              dispatch(clear_new_file_upload_state())
+              history.push(`/visualise/${navTabIs}/${projectId}`)}}
             className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
           >
             visualize

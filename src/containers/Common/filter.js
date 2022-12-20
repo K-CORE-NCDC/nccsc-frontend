@@ -641,7 +641,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
       </div>
       <div className="flex flex-row mb-4 ml-4">
           <label className="text-2xl font-bold">
-            <FormattedMessage id='filterCondition' defaultMessage={'Filter condition between clinical features'}/>:
+            <FormattedMessage id='filterCondition' defaultMessage={'Sample filter condition'}/>:
           </label>
           <div className="flex items-center ml-4">
             {filterCondition === "and" ? (

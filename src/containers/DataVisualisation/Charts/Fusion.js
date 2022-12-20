@@ -39,6 +39,7 @@ export default function FusionPlot({
   const [fusionId, setFusionId] = useState(0);
   const [groupName, setGroupName] = useState("");
   const [noData, setNoData] = useState('false')
+  const [firstTime, setFirstTime] = useState(true)
   let { tab, project_id } = useParams();
   const [userDefienedFilter, setUserDefienedFilter] = useState(
     project_id === undefined ? "static" : "dynamic"
@@ -180,7 +181,7 @@ export default function FusionPlot({
             filterGroup: groupFilters,
           })
         );
-        
+ 
       }
     }
   }, [inputData, groupFilters,userDefienedFilter]);
@@ -200,11 +201,12 @@ export default function FusionPlot({
         setLoader(false);
         setNoData('false')
       }
-      else{
+      else if(VennData.status !== 200){
         setLoader(false);
         setNoData('true')
       }
     }
+
 
   }, [VennData]);
 
@@ -338,7 +340,7 @@ export default function FusionPlot({
               />
             )}
             {
-              noData === 'true' && (
+              noData === 'true' && firstTime === false && (
                 <div
                 className="mt-20  w-11/12 mx-auto"
                 style={{
@@ -352,6 +354,7 @@ export default function FusionPlot({
                 </div>
               )
             }
+             {Object.keys(groupFilters).length === 0 && <p>Please Select the Filter Data</p>}
             {VennData && noData === 'false' && fusionId !== 0 &&  (
               <div className="mt-5 my-0 mx-auto h-auto w-11/12 shadow-lg">
                 <FusionCustomPlot fusionId={fusionId} />

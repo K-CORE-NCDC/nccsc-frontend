@@ -1,237 +1,172 @@
-import React, { useState,useEffect } from 'react'
-import ReactDOM from 'react-dom';
-import { logManagement, sankeyImageData,sendReportData,clearPdfLink} from '../../actions/api_actions'
-import Sankey from '../DataVisualisation/Charts/NewSankey'
-import NewSankeyd3 from '../DataVisualisation/Charts/NewSankeyd3'
-import html2canvas from 'html2canvas';
+import React, { useState, useEffect } from "react";
+import LoaderCmp from "../Common/Loader";
+import ReactDOM from "react-dom";
+import {
+  logManagement,
+  sankeyImageData,
+  sendReportData,
+  clearPdfLink,
+} from "../../actions/api_actions";
+import uuid from 'react-uuid';
+import Sankey from "../DataVisualisation/Charts/NewSankey";
+import NewSankeyd3 from "../DataVisualisation/Charts/NewSankeyd3";
+import html2canvas from "html2canvas";
 import { useSelector, useDispatch } from "react-redux";
-import config from '../../config';
+import config from "../../config";
+import { Link } from "react-router-dom";
 function PdfPrint({ isReportClicked }) {
-    const dispatch = useDispatch()
-    const reportData = useSelector(state => state.dataVisualizationReducer.rniData)
-    const GeneMutationData = useSelector((data) => data.dataVisualizationReducer.rniData);
-    const PDF_Report_Status = useSelector((data) => data.dataVisualizationReducer.PDF_Report);
-    // const sankeyJson = useSelector(state => state.dataVisualizationReducer.SankeyJson)
-    // const [basicHtml, setBasicHtml] = useState([])
-    // const [gene, setGene] = useState('NRAS')
-    // const [sankeyData, setSankeyData] = useState([])
-    // const [sankyGeneList, setSankyGeneList] = useState([])
-    // const [sankyDataCharts, setSankyDataCharts] = useState([])
-  
-  
-    // useEffect(() => {
-    //     if (reportData) {
-            
-    //     setGene(gene)
-    //     let listofSankey = []
-    //     let GeneListSanky = []
-  
-    //     for (let i in reportData['response_sanky_data']) {
-    //       if (reportData['response_sanky_data'][i]['gene_data'].length <= 0) {
-    //         continue
-    //       }
-    //       listofSankey.push({ 'gene_name': i, 'links': reportData['response_sanky_data'][i]['gene_data'] })
-    //       GeneListSanky.push(i)
-    //     }
-    //     setSankeyData(listofSankey)
-    //     setSankyGeneList(GeneListSanky)  
-    //   }
-    // }, [reportData,isReportClicked])
-    
-    // useEffect(() => {
-    //     const sankeyCharts = []
-    //     for (let i = 0; i < sankeyData.length; i++) {
-    //       let SankeyJsonDataIs = getSankyData(sankeyData[i]['links'])
-    //       sankeyCharts.push(<div key={i} className={`sanky_chart_pdf${i}`}>
-    //         {
-    //           <div>
-    //             <h1 className="" style={{ textAlign: "left", marginLeft: '80px', fontWeight: '800', marginTop: '20px', marginBottom: '20px' }}>
-    //               Gene : {SankeyJsonDataIs.nodes[0].name}
-    //             </h1>
-    //             <div>
-    //               <Sankey></Sankey>
-    //               <NewSankeyd3 SankeyJson={SankeyJsonDataIs} idName={`chart${i}`} forGene = {SankeyJsonDataIs.nodes[0].name}></NewSankeyd3>
-    //             </div>
-    //           </div>
-    //         }
-    //       </div>
-    //       )
-    //     }
-    //     setSankyDataCharts(sankeyCharts)
-    //   }, [sankeyData,isReportClicked])
-     // const getSankyData = (sankeyJson) => {
-  
-    //     let nodes = {};
-    //     let node_type = {};
-    //     let i = 1;
-    //     sankeyJson.forEach((element) => {
-    //       for (const key in element) {
-    //         if (key !== "sourceurl") {
-    //           if (!nodes.hasOwnProperty(element[key]) && element[key]) {
-    //             nodes[element[key]] = i;
-    //             node_type[i] = key;
-    //             i = i + 1;
-    //           }
-    //         }
-    //       }
-    //     });
-    
-    //     let final_nodes = [];
-    //     for (const key in nodes) {
-    //       final_nodes.push({ name: key, type: node_type[nodes[key]] });
-    //     }
-    //     let fn = {};
-    //     let final_links = [];
-    //     let tmpTable = {}
-    //     sankeyJson.forEach((element) => {
-    //       if (element["hugo_symbol"] && element["variant_classification"]) {
-    //         let k =
-    //           nodes[element["hugo_symbol"]] +
-    //           "_" +
-    //           nodes[element["variant_classification"]];
-    //         if (!(k in fn)) {
-    //           fn[k] = "";
-    //           final_links.push({
-    //             source: element["hugo_symbol"],
-    //             target: element["variant_classification"],
-    //             value: 10,
-    //           });
-    //         }
-    //       }
-    //       if (element["variant_classification"] && element["dbsnp_rs"]) {
-    //         let k =
-    //           nodes[element["variant_classification"]] +
-    //           "_" +
-    //           nodes[element["dbsnp_rs"]];
-    //         if (!(k in fn)) {
-    //           fn[k] = "";
-    //           final_links.push({
-    //             source: element["variant_classification"],
-    //             target: element["dbsnp_rs"],
-    //             value: 10,
-    //           });
-    //         }
-    //       }
-    //       if (element["dbsnp_rs"] && element["diseasename"]) {
-    //         let k =
-    //           nodes[element["dbsnp_rs"]] + "_" + nodes[element["diseasename"]];
-    //         if (!(k in fn)) {
-    //           fn[k] = "";
-    //           final_links.push({
-    //             source: element["dbsnp_rs"],
-    //             target: element["diseasename"],
-    //             value: 10,
-    //           });
-    //         }
-    //       }
-    //       if (element["diseasename"] && element["drugname"]) {
-    //         let k =
-    //           nodes[element["diseasename"]] + "_" + nodes[element["drugname"]];
-    //         if (!(k in fn)) {
-    //           fn[k] = "";
-    //           final_links.push({
-    //             source: element["diseasename"],
-    //             target: element["drugname"],
-    //             value: 10,
-    //           });
-    //         }
-    //       }
-    
-    //       if (element["hugo_symbol"] && element["variant_classification"] && element["dbsnp_rs"] && element["diseasename"]) {
-    //         let kt = element["hugo_symbol"] + "||" + element["variant_classification"] + "||" + element["dbsnp_rs"] + "||" + element["diseasename"]
-    //         if (kt in tmpTable) {
-    //           if (tmpTable[kt].indexOf(element["drugname"]) === -1) {
-    //             tmpTable[kt].push(element["drugname"])
-    //           }
-    //         } else {
-    //           tmpTable[kt] = [element["drugname"]]
-    //         }
-    //       }
-          
-    
-    //     });
-    
-    
-    //     let sankeyjsondata = {
-    //       "nodes": final_nodes,
-    //       "links": final_links
-    //     }
-    //     return sankeyjsondata;
-    // }
+  const [loader, setLoader] = useState(false);
+  const [anchorTag, setAnchorTag] = useState([])
+  const dispatch = useDispatch();
+  const reportData = useSelector(
+    (state) => state.dataVisualizationReducer.rniData
+  );
+  const GeneMutationData = useSelector(
+    (data) => data.dataVisualizationReducer.rniData
+  );
+  const PDF_Report_Status = useSelector(
+    (data) => data.dataVisualizationReducer.PDF_Report
+  );
 
-      useEffect(() => {
-        let className = `.printpdf`, count = 0
-        if (isReportClicked === true) {
-            className = `sanky_chart_pdf${count}`
-            while (document.querySelector(`.${className}`) !== null) {
-                className = `sanky_chart_pdf${count}`
-                const abcd = document.querySelector(`.${className}`)
-                count++;
-            }
-            DownloadPDF(count)
-        }
-    }, [isReportClicked])
-  
-    
-   
-    let DownloadPDF = async () => {
-        let GeneListSanky = []
-        for (let i in reportData['response_sanky_data']) {
-            if (reportData['response_sanky_data'][i]['gene_data'].length <= 0) {
-              continue
-            }
-            GeneListSanky.push(i)
-          }
-        let GeneandMutationList = {}
-        let className = `printpdf`, count = 0
-        while (document.querySelector(`.${className}`) !== null) {
-            className = `sanky_chart_pdf${count}`
-            count++;
-        }        
-        if(GeneListSanky.length > 0){
-            if(GeneMutationData && "variant_info" in GeneMutationData  ){
-              for(let i=0; i<GeneListSanky.length; i++){
-                GeneandMutationList[GeneListSanky[i]] = GeneMutationData["variant_info"][GeneListSanky[i]]
-              }
-            }
-          }
 
-        for (let i = 0; i < count - 1; i++) {
-            // let element = document.querySelector(`.sanky_chart_pdf${i}`)
-            let element = document.querySelector(`#chart${i}`)
-            // await html2canvas(element).then(canvas => {
-            //     const imgData = canvas.toDataURL('image/jpeg',1.0);
-                
-            //     // dispatch(sankeyImageData({'filename':element.getAttribute('name'), 'imgdata':imgData}))
-            // });
-        }
-        setTimeout(()=>{
-            dispatch(sendReportData("POST",{"GeneandMutationList":GeneandMutationList,'BasicInformation':reportData.basic_information[0],'rows':reportData.genomic_summary}))
-        },1000)
+  useEffect(() => {
+    let className = `.printpdf`,
+      count = 0;
+    if (isReportClicked === true) {
+      className = `sanky_chart_pdf${count}`;
+      while (document.querySelector(`.${className}`) !== null) {
+        className = `sanky_chart_pdf${count}`;
+        const abcd = document.querySelector(`.${className}`);
+        count++;
+      }
+      DownloadPDF(count);
     }
+  }, [isReportClicked]);
 
-useEffect(()=>{
-  if(PDF_Report_Status && 'res' in PDF_Report_Status){
-    let link = PDF_Report_Status['res']
-    let navlink = config.auth+link
-    dispatch(clearPdfLink())
-    window.location.href = navlink;
-  }
-},[PDF_Report_Status])
-    return (
-        <div>
-            {/* <a className='hover:bg-blue-700 text-white font-bold py-6 px-6 float-left rounded bg-NccBlue-700' rel='noreferrer' target="_blank" href='http://3.137.187.168:8009/media/sohel.pdf'>
+  let DownloadPDF = async () => {
+    setLoader(true);
+    let GeneListSanky = [];
+    for (let i in reportData["response_sanky_data"]) {
+      if (reportData["response_sanky_data"][i]["gene_data"].length <= 0) {
+        continue;
+      }
+      GeneListSanky.push(i);
+    }
+    let GeneandMutationList = {};
+    let className = `printpdf`,
+      count = 0;
+    while (document.querySelector(`.${className}`) !== null) {
+      className = `sanky_chart_pdf${count}`;
+      count++;
+    }
+    if (GeneListSanky.length > 0) {
+      if (GeneMutationData && "variant_info" in GeneMutationData) {
+        for (let i = 0; i < GeneListSanky.length; i++) {
+          GeneandMutationList[GeneListSanky[i]] =
+            GeneMutationData["variant_info"][GeneListSanky[i]];
+        }
+      }
+    }
+    let unq = uuid()
+    for (let i = 0; i < count - 1; i++) {
+      console.log("asdsadsa");
+      // let element = document.querySelector(`.sanky_chart_pdf${i}`)
+      let element = document.querySelector(`#chart${i}`);
+      await html2canvas(element).then(canvas => {
+          const imgData = canvas.toDataURL('image/jpeg',1.0);
+
+          dispatch(sankeyImageData({'filename':element.getAttribute('name'), 'imgdata':imgData, 'unq':unq}))
+      });
+    }
+    setTimeout(() => {
+      dispatch(
+        sendReportData("POST", {
+          GeneandMutationList: GeneandMutationList,
+          BasicInformation: reportData.basic_information[0],
+          rows: reportData.genomic_summary,
+          'unq':unq
+        })
+      );
+    }, 4000);
+  };
+
+  useEffect(() => {
+    if (PDF_Report_Status && "res" in PDF_Report_Status) {
+      let link = PDF_Report_Status["res"];
+      let navlink = config.auth + link;
+      console.log("navLink",navlink);
+      dispatch(clearPdfLink());
+      setLoader(false);
+      // setAnchorTag([<a to={navlink} target='_blank' download={navlink}  id="downloadPDF"></a>])
+      // let a= React.createElement('a');
+      // console.log("download");
+      // a.target= '__blank';
+      // a.href= navlink;
+      // a.download = 'report.pdf'
+      // a.click();
+      window.location.href = navlink;
+      
+    }
+  }, [PDF_Report_Status]);
+  useEffect(()=>{
+    if(anchorTag.length > 0 && document.getElementById('downloadPDF')){
+      document.getElementById('downloadPDF').click()
+      setAnchorTag([])
+    }
+  },[anchorTag])
+  return (
+    <div>
+      {/* <a className='hover:bg-blue-700 text-white font-bold py-6 px-6 float-left rounded bg-NccBlue-700' rel='noreferrer' target="_blank" href='http://3.137.187.168:8009/media/sohel.pdf'>
                 Download Report
             </a> */}
-            <button
+      {/* <button
                 className='hover:bg-blue-700 text-white font-bold py-6 px-6 float-left rounded bg-NccBlue-700'
                 // onClick={(e)=>printpdf(e)}
                 onClick={(e) => DownloadPDF(e)}
             >
+              
                 Download Report
-            </button>
-        </div>
-    )
-          }
+            </button> */}
+      <div className="flex items-center justify-center">
+        <button
+          type="button"
+          className={`inline-flex  items-center py-6 px-6  float-left font-semibold leading-6 text-white ${loader ? 'cursor-not-allowed':""}transition duration-150 ease-in-out bg-NccBlue-700 rounded-md shadow  hover:bg-blue-700`}
+          onClick={(e) => DownloadPDF(e)}
+          disabled={loader ? true : false}
+        >
+          {loader === true && (
+            <div className="">
+              <svg
+                className="w-36 h-5 mr-3 -ml-1 text-white animate-spin"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              </div>
+            ) }
 
-export default PdfPrint
+          {loader === false  && <p>Download</p>}
+        </button>
+      </div>
+      {
+        (anchorTag.length > 0) ? anchorTag : '' 
+      }
+    </div>
+  );
+}
+
+export default PdfPrint;

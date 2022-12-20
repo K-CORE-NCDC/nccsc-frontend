@@ -56,6 +56,15 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state,
         survivalSummary: payload
       }
+
+    case dataVisualization.CLEAR_SURVIVAL_IMAGE:
+        const {survivalSummary, ...survivalRest}=state 
+        if('image' in survivalSummary) {
+          survivalSummary['image'] = ''
+        }
+        console.log("survivalSummary",survivalSummary);
+        state= survivalSummary
+        return  state
       case dataVisualization.IGV_REQUEST:
         return {
           ...state,

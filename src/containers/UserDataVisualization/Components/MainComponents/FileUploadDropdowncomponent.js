@@ -4,6 +4,7 @@ import FileProjectDataTable from "./FileProjectDataTable";
 import {
   new_file_upload,
   uploadClinincalSamples,
+  clear_upload_clinical_columns
 } from "../../../../actions/api_actions";
 import swal from "sweetalert";
 import LoaderCmp from "../../../Common/Loader";
@@ -60,6 +61,9 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
       }
     }
   }, [clinicalfileresponse]);
+  useEffect(()=>{
+  dispatch(clear_upload_clinical_columns())
+  },[])
 
   const clinicalUpdateFileTypeOnChange = (e) => {
     let divName = e.target.name;

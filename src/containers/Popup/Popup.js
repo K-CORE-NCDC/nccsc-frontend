@@ -16,7 +16,9 @@ function Popup({ }) {
   //   }
     dispatch(getNoticeDetail("GET",{}));
   },[])
-
+  useEffect(()=>{
+    setShowModal(true)
+  },[noticedetails])
   useEffect(() => {
     return () => {
       // dispatch(clearProjectTableDataTableData())
@@ -25,13 +27,13 @@ function Popup({ }) {
 
   return (
     <>
-      <button
+      {/* <button
         className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
         type="button"
         onClick={() => setShowModal(true)}
       >
         Open regular modal
-      </button>
+      </button> */}
       {showModal ? (
         <>
           <div
@@ -43,7 +45,7 @@ function Popup({ }) {
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-semibold">
-                    Modal Title
+                    K-Core Portal Notice
                   </h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -57,17 +59,17 @@ function Popup({ }) {
                 </div>
                 {/*body*/}
 
-                {noticedetails &&
+                {/* {noticedetails && 'data' in noticedetails &&
                   <div className="relative p-6 flex-auto">
-                    <p>{noticedetails.id}</p>
-                    <p>{noticedetails.content}</p>
-                    <p>{noticedetails.title}</p>
+                    <p>{noticedetails.data.id}</p>
+                    <p>{noticedetails.data.content}</p>
+                    <p>{noticedetails.data.title}</p>
 
                   </div>
-                }
+                } */}
 
 
-                {noticedetails && <div  dangerouslySetInnerHTML={{ __html: noticedetails.content }}></div>}
+                {noticedetails && 'data' in noticedetails && <div  dangerouslySetInnerHTML={{ __html: noticedetails.data.content }}></div>}
 
 
                 {/*footer*/}

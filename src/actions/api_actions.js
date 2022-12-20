@@ -758,6 +758,13 @@ export function clear_new_file_upload_state() {
           payload: {}
         });
   }
+export function clear_upload_clinical_columns() {
+  return (dispatch) => 
+        dispatch({
+          type: homeConstants.CLEAR_UPLOAD_CLININCAL_COLUMNS,
+          payload: {}
+        });
+  }
 
 export function uploadClinincalSamples(fileData) {
   return (dispatch) => {
@@ -847,6 +854,15 @@ export function getSurvivalInformation(type, data) {
           payload: { status: 204 },
         });
       });
+  };
+}
+
+export function clearSurvivalIMage(){
+  return (dispatch) => {
+    dispatch({
+      type: dataVisualization.CLEAR_SURVIVAL_IMAGE,
+      payload:{}
+    });
   };
 }
 
