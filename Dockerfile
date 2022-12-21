@@ -17,7 +17,7 @@ RUN npm install btoa
 RUN apt-get install -y vim
 RUN npm install -g serve
 COPY . .
-RUN npm install
+RUN npm install --legacy-peer-deps
 COPY oncoprint.bundle.js node_modules/oncoprintjs/dist/
 
 #for production

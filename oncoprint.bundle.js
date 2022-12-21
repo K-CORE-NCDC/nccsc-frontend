@@ -1583,6 +1583,7 @@ import $ from "jquery";
                     callback(canvas, truncated);
                 };
                 img.onerror = function() {
+                    console.log("IMAGE LOAD ERROR");
                 };
 
                 img.src = svg_data_uri;
@@ -5961,6 +5962,7 @@ import $ from "jquery";
                 // removeCallback: function(track_id)
                 var position = $div.css('position');
                 if (position !== 'absolute' && position !== 'relative') {
+                    console.log("WARNING: div passed to OncoprintTrackOptionsView must be absolute or relative positioned - layout problems will occur");
                 }
 
                 this.moveUpCallback = moveUpCallback;
@@ -6101,7 +6103,7 @@ import $ from "jquery";
                 var $div, $img, $sortarrow, $dropdown;
                 var top = model.getZoomedTrackTops(track_id);
                 $div = $('<div>').appendTo(view.$buttons_ctr).css({ 'position': 'absolute', 'left': '0px', 'top': top + 'px', 'white-space': 'nowrap' });
-                $img = $('<img/>').appendTo($div).attr({ 'src': 'https://3bigsclient.s3.us-east-2.amazonaws.com/menudots.svg', 'width': view.img_size, 'height': view.img_size }).css({ 'float': 'left', 'cursor': 'pointer', 'border': '1px solid rgba(125,125,125,0)' });
+                $img = $('<img/>').appendTo($div).attr({ 'src': 'data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB3aWR0aD0iNHB4IiBoZWlnaHQ9IjE2cHgiIHZpZXdCb3g9Ii0wLjAzMSAwIDQgMTYiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgLTAuMDMxIDAgNCAxNiIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxjaXJjbGUgZmlsbD0iI0IyQjNCMyIgY3g9IjEuOTY5IiBjeT0iNCIgcj0iMS41Ii8+CjxjaXJjbGUgZmlsbD0iI0IyQjNCMyIgY3g9IjEuOTY5IiBjeT0iOCIgcj0iMS41Ii8+CjxjaXJjbGUgZmlsbD0iI0IyQjNCMyIgY3g9IjEuOTY5IiBjeT0iMTIiIHI9IjEuNSIvPgo8L3N2Zz4=', 'width': view.img_size, 'height': view.img_size }).css({ 'float': 'left', 'cursor': 'pointer', 'border': '1px solid rgba(125,125,125,0)' });
                 $sortarrow = $('<span>').appendTo($div).css({ 'position': 'absolute', 'top': Math.floor(view.img_size / 4) + 'px' });
                 $dropdown = $('<ul>').appendTo(view.$dropdown_ctr).css({
                     'position': 'absolute',
