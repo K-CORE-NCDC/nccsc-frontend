@@ -50,7 +50,7 @@ const Refresh = React.lazy(() => import('./containers/Refresh'))
 // }
 
 const route = [
-  { path: '/home/', exact: true, type:'unauth', name: 'Home', component: Home },
+  { path: '/home/', exact: true, type:'unauth', name: 'Home',childname:'', component: Home },
   { path: '/mobile_verify/', exact: true, type:'unauth', name: '', component: MobileSuccess },
   { path: '/summary/:tab?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Visualization" defaultMessage='Visualization'/>,childname:<FormattedMessage  id = "DataSummary" defaultMessage='Data Summary'/>, component: DataSummary },
   { path: '/visualise/:tab?/:project_id?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Visualization" defaultMessage='Visualization'/>,childname:<FormattedMessage  id = "DataVisualization" defaultMessage='DataVisualization'/>, component: DataVisualization },

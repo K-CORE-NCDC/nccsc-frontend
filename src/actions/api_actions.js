@@ -602,7 +602,7 @@ export function getVolcanoPlotInfo(type, data) {
 export function userDefinedGetVolcanoPlotInfo(type, data) {
   return (dispatch) => {
     let url = config.auth + "userdefined-volcano-info/";
-
+    console.log(url)
     sendRequest(url, type, data)
       .then((result) => {
         const d = result

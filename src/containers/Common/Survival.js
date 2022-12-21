@@ -89,7 +89,7 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
         data={lineChartData}
         tooltipClass="svg-line-chart-tooltip-custom"
       />}
-      {chartTable.length>0 && <div className={'mt-20 grid grid-cols-'+chartTable.length}>{chartTable}</div>}
+      {chartTable.length>0 && <div className={'mt-20 hidden grid grid-cols-'+chartTable.length}>{chartTable}</div>}
     </div>
   );
 })
