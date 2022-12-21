@@ -196,6 +196,7 @@ export default function DataVolcono({
     setGroupFilters({ ...d });
   };
   const submitProteomeNT = (e) => {
+    console.log('===========')
     setLoader(true);
     inputData["volcanoProteomeType"] = proteomeValue;
     inputData["filterType"] = userDefienedFilter;
@@ -203,7 +204,8 @@ export default function DataVolcono({
       dispatch(getVolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters }));
     }
     else{
-      userDefinedGetVolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters });
+      dispatch(getVolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters }));
+      // userDefinedGetVolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters });
     }
   };
 
