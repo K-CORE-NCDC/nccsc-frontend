@@ -79,9 +79,7 @@ export default function DataSurvival({
     // "Ki67 Index": false,
     // "Age Of Diagnosis": false,
   });
-// useEffect(()=>{
-//   console.log('sddsdsdsd',survivalJson); 
-// })
+
   useEffect(()=>{
     if (userDefinedFilterColumns && userDefinedFilterColumns["filterJson"] && userDefinedFilterColumns["filterJson"]["Clinical Information"] && Object.keys(userDefinedFilterColumns).length > 0) {
       setCoxUserDefinedFilter(userDefinedFilterColumns["filterJson"]["Clinical Information"])
@@ -118,19 +116,19 @@ export default function DataSurvival({
   else{
 
     let tmp = [
-      "Body Mass Index",
-    "Alcohol Consumption",
-    "Family History of Breast Cancer",
-    "Intake Of Contraceptive Pill",
-    "Hormone Replace Therapy",
-    "Menopause",
-    "Childbirth",
-    "Diagnosis of Bilateral Breast Cancer",
-    "First Menstrual Age",
-    "ER Test Results",
-    "PR Test Results",
-    "Ki67 Index",
-    "Age Of Diagnosis",
+      "BodyMassIndex",
+      "AlcoholConsumption",
+      "FamilyHistoryofBreastCancer",
+      "IntakeOfContraceptivePill",
+      "HormoneReplaceTherapy",
+      "Menopause",
+      "Childbirth",
+      "DiagnosisofBilateralBreastCancer",
+      "FirstMenstrualAge",
+      "ERTestResults",
+      "PRTestResults",
+      "Ki67Index",
+      "AgeOfDiagnosis",
     ];
     let tmpe ={}
   for (let i=0; i<tmp.length;i++){
@@ -193,7 +191,6 @@ export default function DataSurvival({
       setGenesArray(inputData.genes);
     }
   }, [inputData]);
-
   useEffect(() => {
     if (fileredGene !== "") {
       setShowClinicalFilters(true);
@@ -382,7 +379,7 @@ export default function DataSurvival({
     if (survivalJson && survivalJson.status === 200) {
       setRenderNoContent(false);
       setRenderSurvival(true);
-    } else {
+    } else if(survivalJson && survivalJson.status !== 200) {
       setRenderNoContent(true);
       setRenderSurvival(false);
     }
@@ -424,29 +421,29 @@ export default function DataSurvival({
   else{
 
     let tmpe = [
-      "Body Mass Index",
-    "Alcohol Consumption",
-    "Family History of Breast Cancer",
-    "Intake Of Contraceptive Pill",
-    "Hormone Replace Therapy",
-    "Menopause",
-    "Childbirth",
-    "Diagnosis of Bilateral Breast Cancer",
-    "First Menstrual Age",
-    "ER Test Results",
-    "PR Test Results",
-    "Ki67 Index",
-    "Age Of Diagnosis",
+      "BodyMassIndex",
+      "AlcoholConsumption",
+      "FamilyHistoryofBreastCancer",
+      "IntakeOfContraceptivePill",
+      "HormoneReplaceTherapy",
+      "Menopause",
+      "Childbirth",
+      "DiagnosisofBilateralBreastCancer",
+      "FirstMenstrualAge",
+      "ERTestResults",
+      "PRTestResults",
+      "Ki67Index",
+      "AgeOfDiagnosis",
   ];
   tmp = [...tmpe] 
 }
   const survivalModelFun = (e, type) => {
     setSurvivalModel(type);
-    if (type === "cox") {
-      inputData["survival_type"] = type;
-      inputData['coxFilter'] = coxFilter
-      dispatch(getSurvivalInformation("POST", inputData));
-    }
+    // if (type === "cox") {
+    //   inputData["survival_type"] = type;
+    //   inputData['coxFilter'] = coxFilter
+    //   dispatch(getSurvivalInformation("POST", inputData));
+    // }
   };
 
   const submitCox = (e, type) => {
@@ -813,7 +810,9 @@ export default function DataSurvival({
               </>
             )}
             {renderNoContent && <NoContentMessage />}
-            
+            {
+              inputData.genes.length === 0 &&  <p>Please Select the Gene Set Data</p>
+            }
           </div>
         </div>
       )}

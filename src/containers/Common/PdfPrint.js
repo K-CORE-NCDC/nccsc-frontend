@@ -44,14 +44,16 @@ function PdfPrint({ isReportClicked }) {
   }, [isReportClicked]);
 
   let DownloadPDF = async () => {
-    setLoader(true);
-    let GeneListSanky = [];
-    for (let i in reportData["response_sanky_data"]) {
-      if (reportData["response_sanky_data"][i]["gene_data"].length <= 0) {
-        continue;
+    if(reportData && 'response_sanky_data' in reportData ){
+      setLoader(true);
+      let GeneListSanky = [];
+      for (let i in reportData["response_sanky_data"]) {
+        if (reportData["response_sanky_data"][i]["gene_data"].length <= 0) {
+          continue;
+        }
+        GeneListSanky.push(i);
       }
-      GeneListSanky.push(i);
-    }
+   
     let GeneandMutationList = {};
     let className = `printpdf`,
       count = 0;
@@ -69,7 +71,6 @@ function PdfPrint({ isReportClicked }) {
     }
     let unq = uuid()
     for (let i = 0; i < count - 1; i++) {
-      console.log("asdsadsa");
       // let element = document.querySelector(`.sanky_chart_pdf${i}`)
       let element = document.querySelector(`#chart${i}`);
       await html2canvas(element).then(canvas => {
@@ -88,13 +89,14 @@ function PdfPrint({ isReportClicked }) {
         })
       );
     }, 4000);
+  }
   };
 
   useEffect(() => {
     if (PDF_Report_Status && "res" in PDF_Report_Status) {
       let link = PDF_Report_Status["res"];
       let navlink = config.auth + link;
-      console.log("navLink",navlink);
+      // console.log("navLink",navlink);
       dispatch(clearPdfLink());
       setLoader(false);
       // setAnchorTag([<a to={navlink} target='_blank' download={navlink}  id="downloadPDF"></a>])

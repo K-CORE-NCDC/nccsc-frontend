@@ -25,7 +25,7 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
   const [inputState, setInputState] = useState({})
   const [selectedValue, setSelectedValue] = useState('')
   const [showScatter, setShowScatter] = useState(false)
-  const [noContent, setNoContent] = useState(true)
+  const [noContent, setNoContent] = useState(false)
   const [selectall, setSelectAll] = useState(false)
   const [primaryGene, setPrimaryGene] = useState('')
   const [lastRemoveItem,setLastRemoveItem] = useState([])
@@ -57,7 +57,6 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
         let dataJson = inputState
         setLoader(true)
         dataJson['genes'] = [g[0]]
-        console.log(dataJson,'----from inputstate')
         // dataJson['genes'] = g
         dispatch(getScatterInformation('POST', dataJson))
       }
@@ -130,17 +129,14 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
       }else{
         setLastRemove(false)
       }
-      console.log('gene-------',genes)
       if (genes.length === 0 && selectedList.length===0) {
         // genes = inputState['genes']
         genes = [removedItem['name']]
       }
-      console.log('inputState-------',genes)
       if (inputData.type !== '') {
         let dataJson = { ...inputData }
         dataJson['genes'] = genes
         setLoader(true)
-        console.log(dataJson,'----from remove')
         // setActiveCmp(false)
         dispatch(getScatterInformation('POST', dataJson))
       }
@@ -157,12 +153,12 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
   useEffect(() => {
     if (scatterJson && scatterJson.status === 200) {
       
-      setShowScatter(true)
+      setShowScatter(true)  
       setNoContent(false)
       if(lastRemove){
         setSelectedValue(lastRemoveItem)
       }
-    } else {
+    } else  if (scatterJson && scatterJson.status !== 200)  {
       setShowScatter(false)
       setNoContent(true)
     }
@@ -234,6 +230,9 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
           {noContent && <NoContentMessage />}
           </>
       }
+        {
+              inputData.genes.length === 0 &&  <p>Please Select the Gene Set Data</p>
+            }
     </div>
   )
 }

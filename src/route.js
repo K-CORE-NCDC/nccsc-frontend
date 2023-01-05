@@ -50,7 +50,7 @@ const Refresh = React.lazy(() => import('./containers/Refresh'))
 // }
 
 const route = [
-  { path: '/home/', exact: true, type:'unauth', name: 'Home',childname:'', component: Home },
+  { path: '/', exact: true, type:'unauth', name: 'Home',childname:'', component: Home },
   { path: '/mobile_verify/', exact: true, type:'unauth', name: '', component: MobileSuccess },
   { path: '/summary/:tab?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Visualization" defaultMessage='Visualization'/>,childname:<FormattedMessage  id = "DataSummary" defaultMessage='Data Summary'/>, component: DataSummary },
   { path: '/visualise/:tab?/:project_id?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Visualization" defaultMessage='Visualization'/>,childname:<FormattedMessage  id = "DataVisualization" defaultMessage='DataVisualization'/>, component: DataVisualization },
@@ -67,10 +67,10 @@ const route = [
   { path: '/user-data/:id', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Signup" defaultMessage='Signup'/>, component: UserDataTable},
   
 
-  { path: '/faq/:slug?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "FAQ" defaultMessage='FAQ'/>, component: Faq},
-  { path: '/notice/:slug?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "Notice" defaultMessage='Notice'/>, component: Notice},
-  { path: '/qa/:slug?/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage  id = "QA" defaultMessage='Q&A'/>, component: Qa},
-  { path: '/termsandconditions/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage id="TermsofService" defaultMessage="TermsofService" />, component: TermsandConditions},
+  { path: '/faq/:slug?/', exact: true, type:'unauth', name: <FormattedMessage  id = "CustomerVoice" defaultMessage='Customer Voice'/>, childname:<FormattedMessage  id = "FAQ" defaultMessage='FAQ'/>, component: Faq},
+  { path: '/notice/:slug?/', exact: true, type:'unauth', name: <FormattedMessage  id = "CustomerVoice" defaultMessage='Customer Voice'/>, childname:<FormattedMessage  id = "Notice" defaultMessage='Notice'/>, component: Notice},
+  { path: '/qa/:slug?/', exact: true, type:'unauth', name: <FormattedMessage  id = "CustomerVoice" defaultMessage='Customer Voice'/>, childname:<FormattedMessage  id = "QA" defaultMessage='Q&A'/>, component: Qa},
+  { path: '/termsandconditions/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname:<FormattedMessage id="TermsofService" defaultMessage="Terms of Service" />, component: TermsandConditions},
   { path: '/oldprivacyact/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="OldPrivacyPolicy" defaultMessage="PreviousPrivacyPolicy" />, component: OldKoreanprivacyact},
   { path: '/privacypolicy/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="PrivacyPolicy" defaultMessage="PrivacyPolicy" />, component: PrivacyPolicy},
   { path: '/findid/', exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="FindID" defaultMessage="Find ID" />, component: FindID},
@@ -78,11 +78,11 @@ const route = [
   { path: `/resetpassword/:token`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="ChangePassword" defaultMessage="ChangePassword" />, component: ResetPassword},
   // { path: `/gettable/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="ChangePassword" defaultMessage="ChangePassword" />, component: Report},
 
-  { path: `/blast/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="blast" defaultMessage="Blast" />, component: Blast},
-  { path: `/interpro/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Interpro" defaultMessage="Interpro" />, component: InterPro},
-  { path: `/vcfmaf/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="VCFMAF" defaultMessage="VCF to MAF" />, component: VcfMaf},
-  { path: `/organoid/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Organoid" defaultMessage="organoid" />, component: Organoid},
-  { path: `/related-sites/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="RelatedSites" defaultMessage="Related Sites" />, component: RelatedSites},
+  { path: `/blast/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Tools" defaultMessage='Tools'/>, childname: <FormattedMessage id="blast" defaultMessage="Blast" />, component: Blast},
+  { path: `/interpro/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Tools" defaultMessage='Tools'/>, childname: <FormattedMessage id="Interpro" defaultMessage="Interpro" />, component: InterPro},
+  { path: `/vcfmaf/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Tools" defaultMessage='Tools'/>, childname: <FormattedMessage id="VCFMAF" defaultMessage="VCF to MAF" />, component: VcfMaf},
+  { path: `/organoid/`, exact: true, type:'unauth', name: <FormattedMessage  id = "OtherServices" defaultMessage='Other Services'/>, childname: <FormattedMessage id="Organoid" defaultMessage="organoid" />, component: Organoid},
+  { path: `/related-sites/`, exact: true, type:'unauth', name: <FormattedMessage  id = "OtherServices" defaultMessage='Other Services'/>, childname: <FormattedMessage id="RelatedSites" defaultMessage="Related Sites" />, component: RelatedSites},
   { path: `/fileprojectdatatable/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Organoid" defaultMessage="organoid" />, component: FileProjectDataTable},
   { path: `/refresh/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Organoid" defaultMessage="organoid" />, component: Refresh},
   

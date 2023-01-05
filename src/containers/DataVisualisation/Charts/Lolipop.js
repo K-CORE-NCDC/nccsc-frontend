@@ -4,7 +4,7 @@ import LollipopCmp from '../../Common/Lollipop'
 import { getLolipopInformation } from '../../../actions/api_actions'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
-import { exportComponentAsPNG } from 'react-component-export-image';
+import { exportComponentAsJPEG } from 'react-component-export-image';
 // import Loader from "react-loader-spinner";
 import LoaderCmp from '../../Common/Loader'
 import DataTable from 'react-data-table-component';
@@ -188,8 +188,8 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
           }
         }
 
-        setRefSeqId(refseq_id)
-        setEnstId(enst_id)
+        setRefSeqId( [...new Set(refseq_id )])
+        setEnstId( [...new Set(enst_id )])
         let tmp = []
         let height = []
         let colors
@@ -384,7 +384,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
       setWatermarkCSS("")
     }
     if (watermarkCss !== "" && screenCapture) {
-      exportComponentAsPNG(reference)
+      exportComponentAsJPEG(reference,{fileName:'Lollipop'})
       setToFalseAfterScreenCapture()
     }
   }, [screenCapture, watermarkCss])
@@ -481,7 +481,8 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                   </div>
                   <div className='grid grid-rows bg-blue-100 p-10'>
                     <div className="lg:w-full sm:w-3/6 xs:w-1/2 p-3">
-                      <h5 className="float-left sm:text-xl lg:text-2xl xs:text-xl mb-5">Somantic Mutation Frequency: {percentage?percentage:""} % (mutation sample number/total selected sample number(%))</h5>
+                    {tableType === "Mutation" &&  <h5 className="float-left sm:text-xl lg:text-2xl xs:text-xl mb-5"> Somantic Mutation Frequency:{percentage?percentage:""} % (mutation sample number/total selected sample number(%))</h5>}
+                    {tableType !== "Mutation" &&  <h5 className="float-left sm:text-xl lg:text-2xl xs:text-xl mb-5"> Phosphorylation Frequency: {percentage?percentage:""} % (mutation sample number/total selected sample number(%))</h5>}
                     </div>
                     <div className='flex sm:flex-wrap xs:flex-wrap xs:w-1/2'>
                       {mutationLabel}

@@ -113,19 +113,19 @@ function FaqList() {
               <div className="col-span-2">
               </div>
               <div className="col-span-2">
-                <div class="flex float-right">
-                  <div class="flex-none w-40 h-14">
+                <div className="flex float-right">
+                  <div className="flex-none w-40 h-14">
                     <select value={selectInput} onChange={(e)=>setSelectInput(e.target.value)} name="cars" id="cars" className="border border-slate-400 rounded pt-1 pb-1">
                       <option className="text-xl" value="title">Title</option>
                       <option className="text-xl" value="content">Content</option>
                       <option className="text-xl" value="writer">Writer</option>
                     </select>
                   </div>
-                  <div class="flex-initial w-80 mr-4 mb-4">
-                    <input type="text" value={searchInput} onChange={(e)=>setSearchInput(e.target.value)}className="border border-slate-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text"/>
+                  <div className="flex-initial w-80 mr-4 mb-4">
+                    <input type="text" value={searchInput} onChange={(e)=>setSearchInput(e.target.value)}className="border border-slate-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" />
                   </div>
-                  <div class="flex-initial w-32">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={searchTerm}>
+                  <div className="flex-initial w-32">
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={searchTerm}>
                       Search
                     </button>
                   </div>
@@ -192,7 +192,7 @@ function FaqDetail({slug_id}){
               </tr>
               <tr className="h-8">
                 <td className="p-4">Content</td>
-                <td className="p-4"><div dangerouslySetInnerTML={{__html: notice_data['content']}} /></td>
+                <td className="p-4"><div dangerouslySetInnerHTML={{__html: notice_data['content']}} /></td>
               </tr>
             </tbody>
             </table>

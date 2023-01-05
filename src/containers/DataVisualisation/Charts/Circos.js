@@ -7,6 +7,7 @@ import GraphsModal from "../../Common/circostimelineGraph";
 import LoaderCmp from "../../Common/Loader";
 import ImageGrid from "../../Common/ImageGrid";
 import { useParams } from "react-router-dom";
+// import { useScreenshot, createFileName } from "use-react-screenshot";
 import {
   getCircosInformation,
   getCircosTimelineTable,
@@ -16,9 +17,11 @@ import {
   clearCircosInfomation
 } from "../../../actions/api_actions";
 import "../../../assets/css/style.css";
-import { exportComponentAsPNG } from "react-component-export-image";
+import { exportComponentAsJPEG } from "react-component-export-image";
 import { FormattedMessage } from "react-intl";
 import Report from "../../Common/Report";
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 import PDFReport from "../../Common/PDFReport";
 
@@ -63,6 +66,17 @@ export default function DataCircos({
   const [tableData, setTableData] = useState([]);
   const [basicInformationData, setBasicInformationData] = useState([]);
   let { tab, project_id } = useParams();
+
+  // const [image, takeScreenShot] = useScreenshot({
+  //   type: "image/jpeg",
+  //   quality: 1.0
+  // });
+  // const download = (image, { name = "img", extension = "jpg" } = {}) => {
+  //   const a = document.createElement("a");
+  //   a.href = image;
+  //   a.download = createFileName(extension, name);
+  //   a.click();
+  // };
 
   const [isReportClicked, setIsReportClicked] = useState(false);
 
@@ -320,7 +334,7 @@ export default function DataCircos({
       dispatch(getBreastKeys(editInputData));
       if (
         editInputData.type !== "" &&
-        sampleKey != "" &&
+        sampleKey !== "" &&
         editInputData["genes"].length > 0
       ) {
         setLoader(true);
@@ -345,6 +359,37 @@ export default function DataCircos({
       setDisplaySamples(false);
     }
   }, [inputData]);
+  let abcd = async()=>{
+    console.log('1');
+    const element = document.getElementById('circos')
+    console.log('->',element);
+    let imgData 
+    await html2canvas(element).then(canvas => {
+       imgData = canvas.toDataURL('image/jpeg',1.0);
+
+  });
+  console.log('->',imgData);
+  let link = document.createElement('a');
+  link.href = imgData;
+  link.download = 'downloaded-image.jpg';
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+    // const element = document.getElementById('circos'),
+    // canvas = await html2canvas(element),
+    // data = canvas.toDataURL('image/jpg'),
+    // link = document.createElement('a');
+
+
+    // link.href = data;
+    // link.download = 'downloaded-image.jpg';
+
+    // document.body.appendChild(link);
+    // link.click();
+    // document.body.removeChild(link);
+  }
 
   useEffect(() => {
     if (inputData && inputData.genes.length > 0 && sampleKey !== "") {
@@ -357,7 +402,8 @@ export default function DataCircos({
       }
       if (watermarkCss !== "" && screenCapture) {
         if (reference !== null) {
-          exportComponentAsPNG(reference);
+          // exportComponentAsJPEG(reference,{fileName:'Circos'});
+          abcd()
         }
         setToFalseAfterScreenCapture();
       }
@@ -529,7 +575,6 @@ export default function DataCircos({
           showReportTable
         &&
         <Report
-
           sampleKey={circosSanpleRnidListData[sampleKey]}
           tableColumnsData={tableColumnsData}
           tableData={tableData}

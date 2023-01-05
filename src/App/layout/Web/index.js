@@ -154,6 +154,12 @@ export default function Web(props) {
   }
 
   useEffect(() => {
+    if(localStorage.getItem('today') === null){
+      console.log('null but');
+      let d = new Date();
+      let day = d.getDay();
+      localStorage.setItem('today',day)
+    }
     sessionStorage.setItem('sessionId', uuid())
     sessionStorage.setItem('firstTime', true)
     updateLocation();
@@ -262,10 +268,12 @@ export default function Web(props) {
     let html = [];
     for (let m = 0; m < menu.length; m++) {
       let p = id[0].split("/")[1];
+      // console.log('menu',menu);
       // if (menu[m].props.path.includes(p)) {
       if (menu[m].props.path.includes(p)) {
         let name = menu[m].props.name;
         let childname = menu[m].props.childname;
+       
         html.push(
           <li key={m + "icon"}>
             <HomeIcon className="h-6 w-6" aria-hidden="true" />
@@ -278,9 +286,12 @@ export default function Web(props) {
         );
         html.push(
           <li key={m + name}>
-            <a href={name} className="font-bold">
+            <a  className="font-bold">
               {name}
             </a>
+            {/* <a href={name} className="font-bold">
+              {name}
+            </a> */}
           </li>
         );
         html.push(
@@ -305,7 +316,7 @@ export default function Web(props) {
   }, [props,project_id]);
 
   useEffect(() => {
-    if (id[0] === "/home") {
+    if (id[0] === "/") {
       let today = new Date();
       var date =
         today.getFullYear() +
@@ -330,7 +341,7 @@ export default function Web(props) {
 
 
   let classes = "";
-  if (id[0] === "/home") {
+  if (id[0] === "/") {
     classes = "screen-2 xl:h-full lg:h-full ";
   }
 
@@ -541,7 +552,7 @@ export default function Web(props) {
       <Suspense fallback={<Loader />}>
         <Switch>
           {menu}
-          <Redirect from="/" to="home" />
+          <Redirect  from="/" to="/introduce" />
         </Switch>
       </Suspense>
       {/* fixed bottom-0 */}

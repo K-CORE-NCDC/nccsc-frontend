@@ -75,7 +75,7 @@ const ConfirmDownload = ({ screenCaptureFunction, hideModal }) => {
         updateDownloadVisualizationPurpose({
           organization: downloadOrganization,
           purpose: downloadPurpose,
-          tab: tab,
+          chart_name: tab,
           project_id: project_id ? project_id : null,
         })
       );
