@@ -196,7 +196,6 @@ export default function DataVolcono({
     setGroupFilters({ ...d });
   };
   const submitProteomeNT = (e) => {
-    console.log('===========')
     setLoader(true);
     inputData["volcanoProteomeType"] = proteomeValue;
     inputData["filterType"] = userDefienedFilter;

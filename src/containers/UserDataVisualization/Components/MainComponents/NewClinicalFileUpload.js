@@ -10,8 +10,10 @@ import XLSX from 'xlsx';
 import Loader from '../../Widgets/loader';
 import { useHistory } from 'react-router-dom'
 import ExampleUserTable from "../TableDisplay/cellColorTable";
+import DataTable from 'react-data-table-component';
 
 import config from "../../../../config";
+import $ from 'jquery';
 
 
 
@@ -120,6 +122,173 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
   const [activeTableKey, setActiveTableKey] = useState("")
   const [disableUploadButton, setDisableUploadButton] = useState(true)
   const [borderRed, setBorderRed] = useState(false)
+
+  // const tableColumnsData = [
+  //   {
+  //     name: "geneName",
+  //     selector: (row) => {
+  //       return row.gene;
+  //     },
+  //     sortable: true,
+  //     classNames: ["report_sankey"],
+  //     style: {
+  //       borderLeft: "1px solid #fff",
+  //       borderRight: "1px solid #fff",
+  //       boxSizing: "border-box",
+  //       textAlign: "center",
+  //       display: "block",
+  //       lineHeight: "3.5",
+  //     },
+  //   },
+
+  //   {
+  //     name: "Yes",
+  //     selector: (row) => {
+  //       if (row.dna === "YES") {
+  //         if (row.gene in reportData["variant_info"]) {
+  //           let variants = reportData["variant_info"][row.gene];
+  //           variants = variants.join("-");
+  //           return (
+  //             <div data-bs-toggle="tooltip" title={variants}>
+  //               {"O " + "(" + reportData["variant_info"][row.gene].length + ")"}
+  //             </div>
+  //           );
+  //         } else {
+  //           return row.dna;
+  //         }
+  //       } else return "";
+  //     },
+  //     sortable: true,
+  //     style: {
+  //       borderLeft: "1px solid #6F7378",
+  //       borderRight: "1px solid #fff",
+  //       boxSizing: "border-box",
+  //       textAlign: "center",
+  //       display: "block",
+  //       lineHeight: "3.5",
+  //     },
+  //   },
+  //   {
+  //     name: "No",
+  //     selector: (row) => {
+  //       if (row.dna === "NO") {
+  //         return "O ";
+  //       } else return "";
+  //     },
+  //     sortable: true,
+  //     style: {
+  //       borderLeft: "1px solid #ABB0B8",
+  //       borderRight: "1px solid #fff",
+  //       boxSizing: "border-box",
+  //       textAlign: "center",
+  //       display: "block",
+  //       lineHeight: "3.5",
+  //     },
+  //   },
+  //   {
+  //     name: "High",
+  //     selector: (row) => {
+  //       if (row.rna === "HIGH") {
+  //         return "O ";
+  //       } else return "";
+  //     },
+  //     sortable: true,
+  //     style: {
+  //       borderLeft: "1px solid #6F7378",
+  //       borderRight: "1px solid #fff",
+  //       boxSizing: "border-box",
+  //       textAlign: "center",
+  //       display: "block",
+  //       lineHeight: "3.5",
+  //     },
+  //   },
+  //   {
+  //     name: "Intermediate",
+  //     selector: (row) => {
+  //       if (row.rna !== "HIGH" && row.rna !== "LOW") {
+  //         return "O ";
+  //       } else return "";
+  //     },
+  //     sortable: true,
+  //     style: {
+  //       borderLeft: "1px solid #ABB0B8",
+  //       borderRight: "1px solid #fff",
+  //       boxSizing: "border-box",
+  //       textAlign: "center",
+  //       display: "block",
+  //       lineHeight: "3.5",
+  //     },
+  //   },
+  //   {
+  //     name: "Low",
+  //     selector: (row) => {
+  //       if (row.rna === "LOW") {
+  //         return "O ";
+  //       } else return "";
+  //     },
+  //     sortable: true,
+  //     style: {
+  //       borderLeft: "1px solid #ABB0B8",
+  //       borderRight: "1px solid #fff",
+  //       boxSizing: "border-box",
+  //       textAlign: "center",
+  //       display: "block",
+  //       lineHeight: "3.5",
+  //     },
+  //   },
+  //   {
+  //     name: "High",
+  //     selector: (row) => {
+  //       if (row.proteome === "HIGH") {
+  //         return "O ";
+  //       } else return "";
+  //     },
+  //     sortable: true,
+  //     style: {
+  //       borderLeft: "1px solid #6F7378",
+  //       borderRight: "1px solid #fff",
+  //       boxSizing: "border-box",
+  //       textAlign: "center",
+  //       display: "block",
+  //       lineHeight: "3.5",
+  //     },
+  //   },
+  //   {
+  //     name: "Intermediate",
+  //     selector: (row) => {
+  //       if (row.proteome !== "HIGH" && row.proteome !== "LOW") {
+  //         return "O ";
+  //       } else return "";
+  //     },
+  //     sortable: true,
+  //     style: {
+  //       borderLeft: "1px solid #ABB0B8",
+  //       borderRight: "1px solid #fff",
+  //       boxSizing: "border-box",
+  //       textAlign: "center",
+  //       display: "block",
+  //       lineHeight: "3.5",
+  //     },
+  //   },
+  //   {
+  //     name: "Low",
+  //     selector: (row) => {
+  //       if (row.proteome === "LOW") {
+  //         return "O ";
+  //       } else return "";
+  //     },
+  //     sortable: true,
+  //     style: {
+  //       borderLeft: "1px solid #ABB0B8",
+  //       borderRight: "1px solid #6F7378",
+  //       boxSizing: "border-box",
+  //       textAlign: "center",
+  //       display: "block",
+  //       lineHeight: "3.5",
+  //     },
+  //   },
+  // ];
+
 
   const resetStates = () => {
     dispatch(clear_new_file_upload_state())
@@ -541,6 +710,22 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
 
 
 function SampleDataTable() {
+useEffect(()=>{
+  $(function() {
+    $("td[colspan=3]").find("p").hide();
+    $("table").on('click',function(event) {
+        event.stopPropagation();
+        var $target = $(event.target);
+        if ( $target.closest("td").attr("colspan") > 1 ) {
+            $target.slideUp();
+        } else {
+            $target.closest("tr").next().find("p").slideToggle();
+        }                    
+    }
+    );
+  });
+})
+
 
   const renderSwitch = {
     'clinical_information': "/SAMPLE_FILES/clinical_information.csv",
@@ -562,19 +747,35 @@ function SampleDataTable() {
       ['CNV', `${config.media}samples/cnv.csv`, true, false, false, false, false, false, false, true, false, false]
     ]
   }
+  const newdata = {
+    headers: ['plots', 'Clinical information', 'DNA mutation', 'RNA Zscore', 'DNA Methylation', 'Phospo Proteome', 'Global Proteome', 'Gene fusion', 'Gene fusion'],
+    downloads:['', `${config.media}samples/clinical_information.csv`,`${config.media}samples/dna_mutation.csv`,`${config.media}samples/rna_zscore.csv`,`${config.media}samples/dna_methylation.csv`,`${config.media}samples/phospo.csv`,`${config.media}samples/global_proteome_rawdata.csv`,`${config.media}samples/fusion.csv`,`${config.media}samples/cnv.csv`],
+    body: [
+      ['Circos', true, true, true, true, true, true, true, true],
+      ['Onco print',  true, true, false, false, false, false, false, false],
+      ['Lollipop',  true, true, false, false, false, false, false, false],
+      ['Volcano', true, false, true, false, false, false, false, false],
+      ['Heatmap', true, false, true, true, true, true, false, false],
+      ['Survival',  true, false, false, false, false, false, false, false],
+      ['Fusion gene',  true, false, false, false, false, false, false, false],
+      ['CNV',  true, false, false, false, false, false, false, true],
+      ['Box', true, true, false, false, false, true, false, false],
+      ['Correlation', true, false, true, false, false, true, false, false]
+    ]
+  }
   return (
     <div className="flex flex-col">
       <div className="-my-2 overflow-x-auto">
         <div className="py-2 align-middle inline-block min-w-full">
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-200">
+            <table className="min-w-full divide-y divide-gray-200 border border-collapse">
               <thead className="bg-gray-50">
                 <tr>
-                  {data.headers.map(headerName => (
+                  {newdata.headers.map(headerName => (
                     <th
                       key={headerName}
                       scope="col"
-                      className="px-6 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider"
+                      className="px-6 py-3 text-left text-lg font-medium text-gray-500 uppercase tracking-wider border"
                     >
                       {headerName}
                     </th>
@@ -582,40 +783,62 @@ function SampleDataTable() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {data.body.map((row, index) => (
+                <tr>
+                {newdata.downloads.map((d,i) => {
+                  if(i === 0){
+                    return (<td key = {`${Math.random()*100}`} className="border"></td>)
+                  }
+                    if(i !== 0){
+                      return (<td key={`${Math.random()*100}`+ i} className="px-6 py-4 whitespace-nowrap text-center text-lg font-medium border">
+                             <a href={d} className="text-indigo-600 hover:text-indigo-900">
+                               download 
+                             </a>
+                          </td>)
+                    }})}
+                </tr>
+                {newdata.body.map((row, index) => (
                   <tr key={index}>
                     {row.map((cellData, cellIndex) => {
                       if (cellIndex === 0) {
                         return (
-                          <td key={`${index}-${cellIndex}-${cellData}`} className="px-6 py-4 whitespace-nowrap">
+                          <td key={`${index}-${cellIndex}-${cellData}`+ Math.random()*100} className="px-6 py-4 whitespace-nowrap border">
                             <div className="capitalize text-lg text-gray-900">{cellData}</div>
                           </td>
                         )
                       }
-                      else if (cellIndex === 1) {
-                        return (
-                          <td key={`${index}-${cellIndex}-${cellData}`} className="px-6 py-4 whitespace-nowrap text-right text-lg font-medium">
-                            <a href={cellData} className="text-indigo-600 hover:text-indigo-900">
-                              download
-                            </a>
-                          </td>
-                        )
-                      } else {
+                      // else if (cellIndex === 1 && index === 1) {
+                      //   return (
+                      //     <td key={`${index}-${cellIndex}-${cellData}`} className="px-6 py-4 whitespace-nowrap text-right text-lg font-medium">
+                      //       <a href={cellData} className="text-indigo-600 hover:text-indigo-900">
+                      //         download
+                      //       </a>
+                      //     </td>
+                      //   )
+                      // }
+                       else {
                         if (cellData === true) {
                           return (
-                            <td key={`${index}-${cellIndex}-${cellData}`} className="px-6 py-4 whitespace-nowrap">
-                              <span className="px-2 inline-flex text-lg leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                            <td key={`${index}-${cellIndex}-${cellData}`+ Math.random()*100} className="px-6 py-4 whitespace-nowrap text-center border">
+                              <span className="px-2 text-center inline-flex text-lg leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                 yes
                               </span>
                             </td>
                           )
                         } else {
-                          return (<td key={`${index}-${cellIndex}-${cellData}`}></td>)
+                          return (<td key={`${index}-${cellIndex}-${cellData}`+Math.random()*100} className='border'></td>)
                         }
                       }
                     })}
                   </tr>
+                  
                 ))}
+                 <tr>
+                  <td colspan="3">
+                    <p>Blah blah blah blah blah blah blah blah blah blah blah
+                      blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+                      blah blah blah blah blah blah blah blah blah blah blah blah blah blah.</p>
+                  </td>
+                  </tr>    
               </tbody>
             </table>
           </div>
@@ -625,6 +848,18 @@ function SampleDataTable() {
   )
 }
 
+
+// let SampleDataTable =()=>{
+//   <DataTable
+
+//   sampleKey={circosSanpleRnidListData[sampleKey]}
+//   tableColumnsData={tableColumnsData}
+//   tableData={tableData}
+//   basicInformationData={basicInformationData}
+//   closeReportFunction={closeReportFunction}
+//   isReportClickedFunction={isReportClickedFunction}
+//   isReportClicked={isReportClicked}/>
+// }
 
 
 

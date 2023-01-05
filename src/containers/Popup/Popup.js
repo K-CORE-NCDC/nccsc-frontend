@@ -7,7 +7,8 @@ import { getNoticeDetail } from '../../actions/api_actions'
 function Popup({ }) {
   const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false);
-
+  const d = new Date();
+  const day = d.getDay();
 
   const noticedetails = useSelector((data) => data.homeReducer.noticedata);
   useEffect(() => {
@@ -15,11 +16,23 @@ function Popup({ }) {
   },[])
   useEffect(()=>{
     let currentUrl = window.location
-    console.log(currentUrl['pathname'])
-    if(currentUrl['pathname'] === '/k-core/' || currentUrl['pathname']==='/k-core/home/' || currentUrl['pathname']==='/k-core/home'){
+    // console.log(currentUrl['pathname'])
+    console.log(typeof(day));
+    
+    if((currentUrl['pathname'] === '/k-core/' || currentUrl['pathname']==='/k-core/home/' || currentUrl['pathname']==='/k-core/home' || currentUrl['pathname']==='/k-core/') && Number(localStorage.getItem('today')) === day){
       setShowModal(true)
-    }
+      }
   },[noticedetails])
+
+  let changeDay = ()=>{
+    setShowModal(false)
+    if(day === 7){
+      localStorage.setItem('today',1)
+    }
+    else{
+      localStorage.setItem('today',day+1)
+    }
+  }
   
 
   return (
@@ -74,9 +87,9 @@ function Popup({ }) {
                   <button
                     className="bg-emerald-500 text-dark active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={() => changeDay() }
                   >
-                    Dont remind me Again
+                    Remind after 24 hrs
                   </button>
                 </div>
               </div>
