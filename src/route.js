@@ -44,6 +44,7 @@ const Refresh = React.lazy(() => import('./containers/Refresh'))
 // const MobileSuccess = React.lazy(()=>import('./containers/Signup/MobileSuccess'))
 // const Report = React.lazy(()=>import ('./containers/DataVisualisation/Charts/NewSankeyIndex'))
 
+// const Report = React.lazy(()=>import ('./containers/DataVisualisation/Charts/NewSankeyIndex'))
 // let Checkproject_id = ()=>{
 //   let { tab, project_id } = useParams()
 //   if (project_id !== undefined) return true
@@ -85,7 +86,7 @@ const route = [
   { path: `/related-sites/`, exact: true, type:'unauth', name: <FormattedMessage  id = "OtherServices" defaultMessage='Other Services'/>, childname: <FormattedMessage id="RelatedSites" defaultMessage="Related Sites" />, component: RelatedSites},
   { path: `/fileprojectdatatable/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Organoid" defaultMessage="organoid" />, component: FileProjectDataTable},
   { path: `/refresh/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Organoid" defaultMessage="organoid" />, component: Refresh},
-  {path:'/checkplus_success',exact:true,type:'unauth','childname':'',component:MobileSuccess}
+  // { path:'/checkplus_success',exact:true,type:'unauth','childname':'',component:MobileSuccess}
 ]
 
 export default route;

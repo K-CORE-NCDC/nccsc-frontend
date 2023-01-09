@@ -8,6 +8,8 @@ import { exportComponentAsPNG } from "react-component-export-image";
 import Multiselect from "multiselect-react-dropdown";
 import NoContentMessage from "../../Common/NoContentComponent";
 import { FormattedMessage } from "react-intl";
+import saveSvgAsPng  from 'save-svg-as-png'
+import html2canvas from 'html2canvas';
 
 export default function Box({
   width,
@@ -33,6 +35,11 @@ export default function Box({
   const [gene, setGene] = useState("");
   const [geneOption, setGeneOption] = useState("");
   const [genes, setGenes] = useState("");
+  const imageOptions = {
+    scale: 5,
+    encoderOptions: 1,
+    backgroundColor: 'white',
+  }
 
   useEffect(() => {
     if (inputData && "genes" in inputData) {
@@ -110,6 +117,53 @@ export default function Box({
   //     setDisplaySamples(false)
   //   }
   // }, [inputData])
+  function downloadSVGAsPNG(e){
+  const canvas = document.createElement("canvas");
+  const svg = document.querySelector('svg');
+  const base64doc = btoa(unescape(encodeURIComponent(svg.outerHTML)));
+  const w = parseInt(svg.getAttribute('width'));
+  const h = parseInt(svg.getAttribute('height'));
+  const img_to_download = document.createElement('img');
+  img_to_download.src = 'data:image/svg+xml;base64,' + base64doc;
+  console.log(w, h);
+  img_to_download.onload = function () {
+    console.log('img loaded');
+    canvas.setAttribute('width', w);
+    canvas.setAttribute('height', h);
+    const context = canvas.getContext("2d");
+    //context.clearRect(0, 0, w, h);
+    context.drawImage(img_to_download,0,0,w,h);
+    const dataURL = canvas.toDataURL('image/png');
+    if (window.navigator.msSaveBlob) {
+      window.navigator.msSaveBlob(canvas.msToBlob(), "download.png");
+      e.preventDefault();
+    } else {
+      const a = document.createElement('a');
+      const my_evt = new MouseEvent('click');
+      a.download = 'download.png';
+      a.href = dataURL;
+      a.dispatchEvent(my_evt);
+    }
+    //canvas.parentNode.removeChild(canvas);
+  }  
+}
+let takeScreenshot = async()=>{
+  console.log('1');
+  const element = document.getElementById('box2')
+  console.log('->',element);
+  let imgData 
+  await html2canvas(element).then(canvas => {
+     imgData = canvas.toDataURL('image/jpeg',1.0);
+
+});
+  let link = document.createElement('a');
+  link.href = imgData;
+  link.download = 'downloaded-image.jpg';
+
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 
   useEffect(() => {
     if (screenCapture) {
@@ -118,7 +172,7 @@ export default function Box({
       setWatermarkCSS("");
     }
     if (watermarkCss !== "" && screenCapture) {
-      exportComponentAsPNG(reference);
+      takeScreenshot()
       setToFalseAfterScreenCapture();
     }
   }, [screenCapture, watermarkCss]);
@@ -271,6 +325,7 @@ export default function Box({
   // <select value={gene} onChange={e=>geneSet(e)} className="w-full border bg-white rounded px-3 py-2 outline-none text-gray-700">
   //   {geneOption}
   // </select>
+  
 
   return (
     <div className="grid">

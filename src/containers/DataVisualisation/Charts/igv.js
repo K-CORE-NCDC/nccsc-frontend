@@ -17,6 +17,7 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
   const [igvLegend,setIgvLegend] = useState("")
   const [loader, setLoader] = useState(false)
   const [watermarkCss, setWatermarkCSS] = useState("")
+  const [selectGenemsg,setSelectGenemsg] = useState(true)
 
 
   useEffect(()=>{
@@ -34,9 +35,16 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
       }, (1000));
     }
     if(igvJson && igvJson.length > 0){
-      setActiveCmp(true)
-    }else{
       setActiveCmp(false)
+      setSelectGenemsg(false)
+    }
+    else if(inputData['genes'].length <= 0){
+      setSelectGenemsg(true)
+    }
+    else{
+      console.log('no content');
+      setSelectGenemsg(false)
+      setActiveCmp(true)
     }
   },[igvJson])
 
@@ -64,13 +72,13 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
 
   return (
     <>{
+
       loader?
       <LoaderCmp/>
       :
       <div>
         {
-          activeCmp
-          &&
+          
           <>
           <div className="flex flex-row justify-start pl-12 gap-6">
             <div>
@@ -86,10 +94,12 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
               <h3><strong className="xs:text-sm sm:text-xl lg:text-2xl">Loss (&lt;=1)</strong></h3>
             </div>
           </div>
+          {selectGenemsg && <p>Please select Gene Set Data</p>}
+        {activeCmp === true && <NoContentMessage />}
           <Igv watermarkCss={watermarkCss} ref={reference} data={igvJson}/>
           </>
         }
-        {!activeCmp && <NoContentMessage />}
+        
       </div>
     }
     </>

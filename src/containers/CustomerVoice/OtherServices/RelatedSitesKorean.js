@@ -5,7 +5,7 @@ function RelatedSites() {
 <div className=" mx-auto p-4">
         <div className="grid grid-col-4">
           <div className="col-span-4">
-            <section className="intro_wrap_organoid">
+            <section className="intro_wrap_organoid mx-auto">
         <h1
           className="m-5 text-4xl font-bold my-5"
           style={{ marginLeft: "-5px" }}
@@ -26,7 +26,7 @@ function RelatedSites() {
           </div>
         </div>
 
-    <table className=' table border border-black text-center mx-auto'>
+    <table className=' table border border-black text-center mx-auto' >
   <tr className='border border-black text-center'>
     <th className='border border-black text-center py-10' style={{width:'5rem'}}>번호.</th>
     <th className='border border-black text-center' style={{width:'70rem'}}>관련 사이트</th> 

@@ -6,7 +6,7 @@ import {
   getClinicalMaxMinInfo,
   clearSurvivalIMage
 } from "../../../actions/api_actions";
-import { exportComponentAsPNG } from "react-component-export-image";
+import { exportComponentAsPNG, exportComponentAsJPEG } from "react-component-export-image";
 import GroupFilters, {
   PreDefienedFiltersSurvival,
 } from "../../Common/GroupFilter";
@@ -59,6 +59,7 @@ export default function DataSurvival({
   const [smallScreen, setSmallScreen] = useState(false);
   const [coxClinical, setCoxClinical] = useState([]);
   const [coxTable, setCoxTable] = useState([]);
+  const [coxNoData, setCoxNoData] = useState(true)
   const userDefinedFilterColumns = useSelector(
     (data) => data.dataVisualizationReducer.userDefinedFilter
   );
@@ -364,7 +365,10 @@ export default function DataSurvival({
     }
 
     if (watermarkCss !== "" && screenCapture) {
-      exportComponentAsPNG(reference);
+      if (reference !== null) {
+        exportComponentAsJPEG(reference,{'fileName':'Survival',html2CanvasOptions:{
+        }});
+      }
       setToFalseAfterScreenCapture();
     }
   }, [screenCapture, watermarkCss]);
@@ -379,9 +383,11 @@ export default function DataSurvival({
     if (survivalJson && survivalJson.status === 200) {
       setRenderNoContent(false);
       setRenderSurvival(true);
+      setCoxNoData(false)
     } else if(survivalJson && survivalJson.status !== 200) {
       setRenderNoContent(true);
       setRenderSurvival(false);
+      setCoxNoData(false)
     }
   }, [survivalJson]);
 
@@ -447,7 +453,7 @@ export default function DataSurvival({
   };
 
   const submitCox = (e, type) => {
-    dispatch(clearSurvivalIMage())
+    // dispatch(clearSurvivalIMage())
     setSurvivalModel(type);
     if (type === "cox") {
       inputData["survival_type"] = type;
@@ -460,12 +466,15 @@ export default function DataSurvival({
   }, [coxFilter]);
 
   const selectAllCox = (e, type) => {
-    dispatch(clearSurvivalIMage())
+    // dispatch(clearSurvivalIMage())
     let tmp = coxFilter;
     for (const key in tmp) {
       if (type === "select") {
         tmp[key] = true;
       } else {
+        setRenderNoContent(false);
+        setCoxNoData(true)
+        setRenderSurvival(false)
         tmp[key] = false;
       }
     }
@@ -725,7 +734,7 @@ export default function DataSurvival({
                       defaultMessage="Choose Filter group"
                     />
                   </h6>
-                  <div className="m-1 flex flex-row justify-around">
+                  <div className="m-1 flex flex-row justify-around w-max">
                     <div className="flex justify-center">
                       <div>
                         {tmp.map((element, index) => (
@@ -806,12 +815,15 @@ export default function DataSurvival({
             )}
             {renderSurvival && survivalModel === "cox" && (
               <>
-                <div>{coxTable}</div>
+                <div  ref={reference}>{coxTable}</div>
               </>
             )}
             {renderNoContent && <NoContentMessage />}
             {
               inputData.genes.length === 0 &&  <p>Please Select the Gene Set Data</p>
+            }
+            {
+              coxNoData && survivalModel === "cox" && <p>Please Select the Filter </p>
             }
           </div>
         </div>
