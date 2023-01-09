@@ -142,7 +142,11 @@ const homeReducer = (state = { 'home': 'home' }, { type, payload }) => {
         ...state,
         logmanagement:[ ...payload]
       }
-
+    case homeConstants.CHECK_MOBILE:
+      return {
+        ...state,
+        mobileVerified:payload
+      }
     case homeConstants.SENDLOGMANAGEMENT:
       return {
         ...state,

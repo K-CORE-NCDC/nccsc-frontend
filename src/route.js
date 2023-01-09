@@ -41,9 +41,8 @@ const Organoid = React.lazy(() => import('./containers/CustomerVoice/OtherServic
 const RelatedSites = React.lazy(()=>import('./containers/CustomerVoice/OtherServices/RelatedSitesIndex'))
 
 const Refresh = React.lazy(() => import('./containers/Refresh'))
-
-// const Random = React.lazy(()=>import('./containers/UserDataVisualization/Components/GuideLines/CNVGuidelinesKorean'))
-
+// const MobileSuccess = React.lazy(()=>import('./containers/Signup/MobileSuccess'))
+// const Report = React.lazy(()=>import ('./containers/DataVisualisation/Charts/NewSankeyIndex'))
 
 // const Report = React.lazy(()=>import ('./containers/DataVisualisation/Charts/NewSankeyIndex'))
 // let Checkproject_id = ()=>{
@@ -87,8 +86,7 @@ const route = [
   { path: `/related-sites/`, exact: true, type:'unauth', name: <FormattedMessage  id = "OtherServices" defaultMessage='Other Services'/>, childname: <FormattedMessage id="RelatedSites" defaultMessage="Related Sites" />, component: RelatedSites},
   { path: `/fileprojectdatatable/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Organoid" defaultMessage="organoid" />, component: FileProjectDataTable},
   { path: `/refresh/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Organoid" defaultMessage="organoid" />, component: Refresh},
-  // { path: `/random/`, exact: true, type:'unauth', name: <FormattedMessage  id = "Home" defaultMessage='Home'/>, childname: <FormattedMessage id="Organoid" defaultMessage="organoid" />, component: Random}
-  
+  // { path:'/checkplus_success',exact:true,type:'unauth','childname':'',component:MobileSuccess}
 ]
 
 export default route;

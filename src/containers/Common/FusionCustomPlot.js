@@ -2,7 +2,7 @@ import React, { useState,useEffect, useRef, } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getFusionInformation,getFusionExons} from '../../actions/api_actions'
 import LoaderCmp from "./Loader";
-
+import { useParams } from "react-router-dom";
 
 export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
   const listRef = useRef();
@@ -19,6 +19,7 @@ export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
   const [exonData,setExonData] = useState([])
   const [fromGene,setFromGene] = useState('')
   const [renderPlot,setRenderPlot] = useState(false)
+  let { tab, project_id } = useParams();
   useEffect(()=>{
     if(exonJson){
       setExonData(exonJson)
@@ -37,6 +38,9 @@ export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
       setLoader(true)
       let dataJson = {}
       dataJson['id'] = fusionId
+      if(project_id!==undefined){
+        dataJson['project_id'] = parseInt(project_id)
+      }
       dispatch(getFusionInformation('POST', dataJson))
       setLoader(true)
     }
