@@ -107,6 +107,7 @@ const dataVisualizationReducer = (state = {'data':'data'}, {type,payload}) => {
         ...state,
         circosTimelieTableData: payload
       }
+    
     case dataVisualization.PASS_ENCODE_ID:
       return {
         ...state,
