@@ -5,10 +5,10 @@ function RelatedSites() {
 <div className="container mx-auto p-4">
         <div className="grid grid-col-4">
           <div className="col-span-4">
-            <section className="intro_wrap_organoid">
+            <section className="intro_wrap_organoid mx-auto">
         <h1
           className="m-5 text-4xl font-bold my-5"
-          style={{ marginLeft: "-5px" }}
+          style={{ marginLeft: "-8px" }}
         >
         Related Sites
         </h1>
@@ -26,7 +26,7 @@ function RelatedSites() {
           </div>
         </div>
 
-    <table className=' table border border-black text-center mx-auto' style={{margin:'10px'}}>
+    <table className=' table border border-black text-center mx-auto'>
   <tr className='border border-black text-center py-10'>
     <th className='border border-black text-center p-12' style={{width:'5rem'}}>No.</th>
     <th className='border border-black text-center' style={{width:'70rem'}}>Related Sites</th> 

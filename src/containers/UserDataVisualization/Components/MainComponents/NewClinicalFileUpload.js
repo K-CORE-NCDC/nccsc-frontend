@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect,useContext, useRef } from "react";
 import {
   PlusCircleIcon,
   MinusCircleIcon,
@@ -11,9 +11,30 @@ import Loader from '../../Widgets/loader';
 import { useHistory } from 'react-router-dom'
 import ExampleUserTable from "../TableDisplay/cellColorTable";
 import DataTable from 'react-data-table-component';
+import { Context } from "../../../../wrapper";
 
 import config from "../../../../config";
-import $ from 'jquery';
+import CircosPlotGuidelines from "../GuideLines/CircosPlotGuidelines";
+import CircosPlotGuidelinesKorean from "../GuideLines/CircosPlotGuidelinesKorean"
+import OncoprintGuidelines from "../GuideLines/OncoprintGuidelines";
+import LollipopGuidelines from "../GuideLines/LollipopGuidelines";
+import VolcanoPlotGuidelines from "../GuideLines/VolcanoPlotGuidelines";
+import VolcanoPlotGuidelinesKorean from "../GuideLines/VolcanoPlotGuidelinesKorean";
+import HeatmapGuideliens from "../GuideLines/HeatMapGuidelines";
+import SurvivalGuidelines from "../GuideLines/SurvivalGuidelines";
+import SurvivalGuidelinesKorean from "../GuideLines/SurvivalGuidelinesKorean";
+import FusionPlotGuidelines from "../GuideLines/FusionPlotGuidelines";
+import FusionPlotGuidelinesKorean from "../GuideLines/FusionPlotGuidelinesKorean";
+import CNVGuidelines from "../GuideLines/CNVGuidelines";
+import CNVGuidelinesKorean from "../GuideLines/CNVGuidelinesKorean"
+import BoxPlotGuidelines from "../GuideLines/BoxPlotGuidelines";
+import BoxPlotGuidelinesKorean from "../GuideLines/BoxPlotGuidelinesKorean";
+import CorrelationGuidelines from "../GuideLines/CorrelationGuidelines";
+import OncoprintGuidelinesKorean from "../GuideLines/OncoprintGuidelinesKorean";
+import LollipopplotGuidelinesKorean from "../GuideLines/LollipopGuidelinesKorean";
+import HeatMapGuidelinesKorean from "../GuideLines/HeatmapGuidelinesKorean";
+
+
 
 
 
@@ -710,23 +731,8 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
 
 
 function SampleDataTable() {
-useEffect(()=>{
-  $(function() {
-    $("td[colspan=3]").find("p").hide();
-    $("table").on('click',function(event) {
-        event.stopPropagation();
-        var $target = $(event.target);
-        if ( $target.closest("td").attr("colspan") > 1 ) {
-            $target.slideUp();
-        } else {
-            $target.closest("tr").next().find("p").slideToggle();
-        }                    
-    }
-    );
-  });
-})
-
-
+  const[hideClass, setHideClass]= useState(true)
+  const[compindex, setIndex]= useState(-1)
   const renderSwitch = {
     'clinical_information': "/SAMPLE_FILES/clinical_information.csv",
     'rna_zscore': "/SAMPLE_FILES/rna_zscore.csv",
@@ -734,25 +740,39 @@ useEffect(()=>{
     'dna_methylation': "/SAMPLE_FILES/dna_methylation.csv",
     'proteome': "/SAMPLE_FILES/global_proteome_rawdata.csv"
   }
-  const data = {
-    headers: ['type', 'Download', 'Circos plot', 'Oncoprinter', 'Lollipop plot', 'Volcano Plot', 'Heatmap', 'Survival Plot', 'Gene fusion', 'CNV chart', 'Box plot', 'Correlation plot'],
-    body: [
-      ['Clinical information', `${config.media}samples/clinical_information.csv`, true, true, true, true, true, true, true, true, true, true],
-      ['DNA mutation', `${config.media}samples/dna_mutation.csv`, true, true, true, false, true, true, false, false, false, false],
-      ['RNA Zscore', `${config.media}samples/rna_zscore.csv`, true, true, false, true, true, false, false, false, false, false],
-      ['DNA Methylation', `${config.media}samples/dna_methylation.csv`, true, false, false, false, true, false, false, false, true, false],
-      ['Phospo Proteome', `${config.media}samples/phospo.csv`, true, true, true, false, true, false, false, false, true, false],
-      ['Global Proteome', `${config.media}samples/global_proteome_rawdata.csv`, false, false, false, false, true, false, false, false, false, false],
-      ['Gene fusion', `${config.media}samples/fusion.csv`, true, false, false, false, false, false, true, false, false, false],
-      ['CNV', `${config.media}samples/cnv.csv`, true, false, false, false, false, false, false, true, false, false]
-    ]
-  }
+
+  const [koreanlanguage, setKoreanlanguage] = useState(false);
+  const [Englishlanguage, setEnglishlanguage] = useState(true);
+  const context = useContext(Context);
+  
+  useEffect(() => {
+    if (context["locale"] === "kr-KO") {
+      setKoreanlanguage(true);
+      setEnglishlanguage(false);
+    } else {
+      setKoreanlanguage(false);
+      setEnglishlanguage(true);
+    }
+  });
+  // const data = {
+  //   headers: ['type', 'Download', 'Circos plot', 'Oncoprinter', 'Lollipop plot', 'Volcano Plot', 'Heatmap', 'Survival Plot', 'Gene fusion', 'CNV chart', 'Box plot', 'Correlation plot'],
+  //   body: [
+  //     ['Clinical information', `${config.media}samples/clinical_information.csv`, true, true, true, true, true, true, true, true, true, true],
+  //     ['DNA mutation', `${config.media}samples/dna_mutation.csv`, true, true, true, false, true, true, false, false, false, false],
+  //     ['RNA', `${config.media}samples/rna_zscore.csv`, true, true, false, true, true, false, false, false, false, false],
+  //     ['DNA Methylation', `${config.media}samples/dna_methylation.csv`, true, false, false, false, true, false, false, false, true, false],
+  //     ['Phospo Proteome', `${config.media}samples/phospo.csv`, true, true, true, false, true, false, false, false, true, false],
+  //     ['Global Proteome', `${config.media}samples/global_proteome_rawdata.csv`, false, false, false, false, true, false, false, false, false, false],
+  //     ['Gene fusion', `${config.media}samples/fusion.csv`, true, false, false, false, false, false, true, false, false, false],
+  //     ['CNV', `${config.media}samples/cnv.csv`, true, false, false, false, false, false, false, true, false, false]
+  //   ]
+  // }
   const newdata = {
-    headers: ['plots', 'Clinical information', 'DNA mutation', 'RNA Zscore', 'DNA Methylation', 'Phospo Proteome', 'Global Proteome', 'Gene fusion', 'Gene fusion'],
+    headers: ['plots', 'Clinical information', 'DNA mutation', 'RNA', 'DNA Methylation', 'Phospo Proteome', 'Global Proteome', 'Gene fusion', 'CNV'],
     downloads:['', `${config.media}samples/clinical_information.csv`,`${config.media}samples/dna_mutation.csv`,`${config.media}samples/rna_zscore.csv`,`${config.media}samples/dna_methylation.csv`,`${config.media}samples/phospo.csv`,`${config.media}samples/global_proteome_rawdata.csv`,`${config.media}samples/fusion.csv`,`${config.media}samples/cnv.csv`],
     body: [
       ['Circos', true, true, true, true, true, true, true, true],
-      ['Onco print',  true, true, false, false, false, false, false, false],
+      ['Oncoprint',  true, true, false, false, false, false, false, false],
       ['Lollipop',  true, true, false, false, false, false, false, false],
       ['Volcano', true, false, true, false, false, false, false, false],
       ['Heatmap', true, false, true, true, true, true, false, false],
@@ -761,7 +781,8 @@ useEffect(()=>{
       ['CNV',  true, false, false, false, false, false, false, true],
       ['Box', true, true, false, false, false, true, false, false],
       ['Correlation', true, false, true, false, false, true, false, false]
-    ]
+    ],
+    componets:[CircosPlotGuidelines,OncoprintGuidelines,LollipopGuidelines,VolcanoPlotGuidelines,HeatmapGuideliens,SurvivalGuidelines,FusionPlotGuidelines,CNVGuidelines,BoxPlotGuidelines,CorrelationGuidelines]
   }
   return (
     <div className="flex flex-col">
@@ -797,24 +818,38 @@ useEffect(()=>{
                     }})}
                 </tr>
                 {newdata.body.map((row, index) => (
-                  <tr key={index}>
+                  <>
+                  <tr key={index} trindex={index}  >
+                    
                     {row.map((cellData, cellIndex) => {
                       if (cellIndex === 0) {
                         return (
-                          <td key={`${index}-${cellIndex}-${cellData}`+ Math.random()*100} className="px-6 py-4 whitespace-nowrap border">
-                            <div className="capitalize text-lg text-gray-900">{cellData}</div>
+                          <td trindex={index} key={`${index}-${cellIndex}-${cellData}`+ Math.random()*100} className="px-6 py-4 whitespace-nowrap border" >
+                            <div trindex={index} className="capitalize text-lg text-gray-900" onClick={(e)=>{
+                                setIndex(index)
+                                for( let i = 0; i<=9;i++){
+                                  if(i !== index){
+                                    let ele = document.getElementById(`hidden${i}`)
+                                    if (!ele.classList.contains('hidden')){
+                                      ele.classList.add('hidden');
+                                    }
+                                  }
+                                  else if(i === index){
+                                    let ele = document.getElementById(`hidden${i}`)
+                                    if (ele.classList.contains('hidden')){
+                                      ele.classList.remove('hidden');
+                                    }
+                                    else if (!ele.classList.contains('hidden')){
+                                      ele.classList.add('hidden');
+                                    }
+                                  }
+                                 
+                              }
+                              }}>{`${cellData}`}
+                              </div>
                           </td>
                         )
                       }
-                      // else if (cellIndex === 1 && index === 1) {
-                      //   return (
-                      //     <td key={`${index}-${cellIndex}-${cellData}`} className="px-6 py-4 whitespace-nowrap text-right text-lg font-medium">
-                      //       <a href={cellData} className="text-indigo-600 hover:text-indigo-900">
-                      //         download
-                      //       </a>
-                      //     </td>
-                      //   )
-                      // }
                        else {
                         if (cellData === true) {
                           return (
@@ -829,16 +864,46 @@ useEffect(()=>{
                         }
                       }
                     })}
+                    
                   </tr>
+                  <tr id={`hidden${index}`} className='hidden' trindex={index}>
+                  {
+                    index === 0 &&   (Englishlanguage ? <td colSpan={9}> <CircosPlotGuidelines/></td> :  <td colSpan={9}> <CircosPlotGuidelinesKorean/></td>)
+                  }
+                  {
+                      index === 1 &&  (Englishlanguage ? <td colSpan={9}> <OncoprintGuidelines/></td> :  <td colSpan={9}> <OncoprintGuidelinesKorean/></td>)
+                  }
+                  {
+                     index === 2 && (Englishlanguage ? <td colSpan={9}> <LollipopGuidelines/></td> :  <td colSpan={9}> <LollipopplotGuidelinesKorean/></td>)
+                  }
+                  {
+                      index === 3 && (Englishlanguage ? <td colSpan={9}> <VolcanoPlotGuidelines/></td> :  <td colSpan={9}> <VolcanoPlotGuidelinesKorean/></td>)
+                  }
+                  {
+                      index === 4 && (Englishlanguage ? <td colSpan={9}> <HeatmapGuideliens/></td> :  <td colSpan={9}> <HeatMapGuidelinesKorean/></td>)
+                  }
+                  {
+                      index === 5 && (Englishlanguage ? <td colSpan={9}> <SurvivalGuidelines/></td> :  <td colSpan={9}> <SurvivalGuidelinesKorean/></td>)
+                  }
+                  {
+                      index === 6 && (Englishlanguage ? <td colSpan={9}> <FusionPlotGuidelines/></td> :  <td colSpan={9}> <FusionPlotGuidelinesKorean/></td>)
+                     
+                  }
+                  {
+                     index === 7 && (Englishlanguage ? <td colSpan={9}> <CNVGuidelines/></td> :  <td colSpan={9}> <CNVGuidelinesKorean/></td>)
+                   
+                  }
+                  {
+                      index === 8 && (Englishlanguage ? <td colSpan={9}> <BoxPlotGuidelines/></td> :  <td colSpan={9}> <BoxPlotGuidelinesKorean/></td>)
+                      
+                  }
+                  {
+                    index === 9 && <td colSpan={9}><CorrelationGuidelines/></td>
+                  }
+                  </tr>
+                  </>
                   
                 ))}
-                 <tr>
-                  <td colspan="3">
-                    <p>Blah blah blah blah blah blah blah blah blah blah blah
-                      blah blah blah blah blah blah blah blah blah blah blah blah blah blah
-                      blah blah blah blah blah blah blah blah blah blah blah blah blah blah.</p>
-                  </td>
-                  </tr>    
               </tbody>
             </table>
           </div>
@@ -869,7 +934,8 @@ function ModalTest({ modalStateButton, setShowModalFunction }) {
       {modalStateButton ? (
         <>
           <div
-            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none m-auto"
+            style={{maxWidth:'1000px'}}  
           >
             <div className="relative w-auto my-6 mx-auto max-w-full">
               {/*content*/}

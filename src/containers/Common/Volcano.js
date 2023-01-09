@@ -103,6 +103,7 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
   // </div>
   // <button id="resetBtn">Reset</button>
   const downloadTableAsCsv = (tableType) => {
+    console.log('--->',tableData);
     let rows = [
       ["GENE NAME", "LOG2FC", "LOG(PVALUE) negative"],
     ];
@@ -111,6 +112,7 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
         if (element["log2(fold_change)"] <= -5) {
           rows.push([element["gene"], element["log2(fold_change)"], element["q_value"]])
         }
+        
       });
     } else if (tableType === "negative") {
       tableData.forEach(element => {
