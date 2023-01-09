@@ -357,7 +357,7 @@ export default function FusionPlot({
              {Object.keys(groupFilters).length === 0 && <p>Please Select the Filter Data</p>}
             {VennData && noData === 'false' && fusionId !== 0 &&  (
               <div className="mt-5 my-0 mx-auto h-auto w-11/12 shadow-lg">
-                <FusionCustomPlot fusionId={fusionId} />
+                <FusionCustomPlot fusionId={fusionId}  />
               </div>
             )}
             {VennData && noData === 'false' && tableData.length > 0 && (

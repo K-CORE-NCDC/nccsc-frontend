@@ -262,6 +262,25 @@ export function checkEmail(method,data){
   }
 }
 
+export function checkMobile(method,data){
+  return (dispatch) => {
+    let url = config.auth + "checkMobile/";
+    sendRequest(url, method, data)
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: homeConstants.CHECK_MOBILE,
+          payload: d["data"],
+        });
+        dispatch({ type: homeConstants.REQUEST_DONE });
+      })
+      
+      .catch((e) => {
+
+      });
+  }
+}
+
 
 export function changePassword(method,data){
   return (dispatch) => {

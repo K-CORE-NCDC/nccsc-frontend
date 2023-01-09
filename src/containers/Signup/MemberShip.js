@@ -7,7 +7,8 @@ import {
   getPassEncodeId,
   sendEmail,
   verifyOTP,
-  checkEmail
+  checkEmail,
+  checkMobile
 } from "../../actions/api_actions";
 import { useSelector, useDispatch } from "react-redux";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
@@ -24,7 +25,8 @@ const MemberShip = ({ changestep }) => {
 
 
   const register_user = () => {
-
+    
+    console.log(form)
     for (let i in form['errors']) {
       if (form['errors'][i] === "") {
         form.isVerified = true
@@ -32,17 +34,17 @@ const MemberShip = ({ changestep }) => {
         form.isVerified = false
         break;
       }
+    //   console.log(form,'erorr-0-------')  
+    //   for (let i in form) {
+    //     if (i !== 'mobileVerified' && i !== 'emailVerified' && i !== 'errors' && form[i] === "") {
+    //       form.isVerified = false
+    //       break;
+    //     } else if (i !== 'mobileVerified' && i !== 'emailVerified' && i !== 'errors') {
+    //       form.isVerified = true
 
-      for (let i in form) {
-        if (i !== 'mobileVerified' && i !== 'emailVerified' && i !== 'errors' && form[i] === "") {
-          form.isVerified = false
-          break;
-        } else if (i !== 'mobileVerified' && i !== 'emailVerified' && i !== 'errors') {
-          form.isVerified = true
+    //     }
 
-        }
-
-      }
+    //   }
     }
     if ((form.mobileVerified === true || form.emailVerified === true) && (form.isVerified === true)) {
       let data = {
@@ -51,7 +53,8 @@ const MemberShip = ({ changestep }) => {
         name: form.name,
         phone_number: form.phone_number,
         email: form.email,
-        domain_email: form.domain_email
+        domain_email: form.domain_email,
+        
       }
       dispatch(userRegister("POST", data));
       changestep(2);
@@ -121,6 +124,10 @@ const MemberShip = ({ changestep }) => {
   )
   const registration_status = useSelector(
     (data) => data.homeReducer.registration_status
+  )
+
+  const mobile_verified = useSelector(
+    (data) => data.homeReducer.mobileVerified
   )
 
   useEffect(() => {
@@ -425,12 +432,35 @@ const MemberShip = ({ changestep }) => {
   };
 
   const verifyMobile = (e) => {
-
+    
     setClickMobileverifyButton(true);
     setClickEmailverifyButton(false);
     dispatch(getPassEncodeId("GET", { 'mobile': form['phone_number'] }));
   };
 
+  const checkMobileVerified = (e) => {
+    console.log(form)
+    dispatch(checkMobile("POST",{'mobile_no':form['phone_number']}))
+    // var ncm = {}
+    // if(ncm ){
+    //   setRegistrationClass(true)
+    //   setForm((oldState) => ({ ...oldState, ['isVerified']: true }));
+    //   setForm((oldState) => ({ ...oldState, ['mobileVerified']: true }));
+    // }
+  }
+  useEffect(()=>{
+    if(mobile_verified && mobile_verified['status']===true){
+      console.log(mobile_verified)
+      let f = form
+      f.isVerified = true
+      f.mobileVerified= true
+      setForm({...f})
+      // setRegistrationClass(true)
+      // setForm((oldState) => ({ ...oldState, ['mobileVerified']: true }));
+      // setForm((oldState) => ({ ...oldState, ['isVerified']: true }));
+
+    }
+  },[mobile_verified])
 
 
   const verifyEmail = (e) => {
@@ -545,7 +575,9 @@ const MemberShip = ({ changestep }) => {
     }
   }, [registration_status]);
 
-  useEffect(() => {
+  useEffect(() => { 
+    console.log('----from usefeff')
+    console.log(form)
     setRegistrationClass(form.isVerified)
   }, [form.isVerified])
 
@@ -892,7 +924,7 @@ const MemberShip = ({ changestep }) => {
               </div>
 
               <div>
-                {verificationState === "mobile" && (
+                {verificationState === "mobile" && !ClickMobileverifyButton &&(
                   <button
                     onClick={(e) => verifyMobile(e)}
                     className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
@@ -900,6 +932,15 @@ const MemberShip = ({ changestep }) => {
                     Verify Mobile
                   </button>
                 )}
+                {verificationState ==="mobile" && ClickMobileverifyButton 
+                  && (
+                    <button
+                      onClick={(e)=>checkMobileVerified(e)}
+                      className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
+                    >
+                      Check Verification</button>
+                  )
+                }
               </div>
               <div>
                 {emailExist === "Email is Not Registered" && verificationState === "email" && (
