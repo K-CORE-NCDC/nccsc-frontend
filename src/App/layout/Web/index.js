@@ -154,12 +154,14 @@ export default function Web(props) {
   }
 
   useEffect(() => {
-    if(localStorage.getItem('today') === null){
-      console.log('null but');
-      let d = new Date();
-      let day = d.getDay();
-      localStorage.setItem('today',day)
+    let d = new Date();
+    let day = d.getDay();
+    if(localStorage.getItem('ncc_notice_popup') === null){
+      localStorage.setItem('ncc_notice_popup',day)
     }
+
+    
+    
     sessionStorage.setItem('sessionId', uuid())
     sessionStorage.setItem('firstTime', true)
     updateLocation();
@@ -195,7 +197,12 @@ export default function Web(props) {
 
 
   useEffect(() => {
-    
+    let d = new Date();
+    let day = d.getDay();
+    let currentUrl = window.location
+    if((currentUrl['pathname'] === '/k-core/' || currentUrl['pathname']==='/k-core/home/' || currentUrl['pathname']==='/k-core/home' || currentUrl['pathname']==='/k-core/') && Number(localStorage.getItem('ncc_notice_popup')) === day){
+      localStorage.setItem('ncc_notice_popup',day)
+    }
 
     if (!sessionStorage.getItem('location')) {
       updateLocation();
@@ -558,7 +565,7 @@ export default function Web(props) {
       {/* fixed bottom-0 */}
       <div>
 
-        <Popup></Popup>
+        <Popup></Popup> 
       </div>
       <footer className="border-gray-300 border-t  w-full">
         <div className="d-flex flex-row text-white" style={{ height: "50px", backgroundColor: "#203239" }}>

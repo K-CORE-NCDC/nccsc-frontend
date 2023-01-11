@@ -17,9 +17,9 @@ function Popup({ }) {
   useEffect(()=>{
     let currentUrl = window.location
     // console.log(currentUrl['pathname'])
-    console.log(typeof(day));
+    // console.log(typeof(day));
     
-    if((currentUrl['pathname'] === '/k-core/' || currentUrl['pathname']==='/k-core/home/' || currentUrl['pathname']==='/k-core/home' || currentUrl['pathname']==='/k-core/') && Number(localStorage.getItem('today')) === day){
+    if((currentUrl['pathname'] === '/k-core/' || currentUrl['pathname']==='/k-core/home/' || currentUrl['pathname']==='/' || currentUrl['pathname']==='/k-core/') && Number(localStorage.getItem('ncc_notice_popup')) === day){
       setShowModal(true)
       }
   },[noticedetails])
@@ -27,17 +27,17 @@ function Popup({ }) {
   let changeDay = ()=>{
     setShowModal(false)
     if(day === 7){
-      localStorage.setItem('today',1)
+      localStorage.setItem('ncc_notice_popup',1)
     }
     else{
-      localStorage.setItem('today',day+1)
+      localStorage.setItem('ncc_notice_popup',day+1)
     }
   }
   
 
   return (
     <>
-      {showModal ? (
+      {showModal && (noticedetails && 'data' in noticedetails && ( Object.keys(noticedetails['data']).length > 0) ) ? (
         <>
           <div
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
@@ -72,7 +72,7 @@ function Popup({ }) {
                 } */}
 
 
-                {noticedetails && 'data' in noticedetails && <div  dangerouslySetInnerHTML={{ __html: noticedetails.data.content }}></div>}
+                {noticedetails && 'data' in noticedetails && ( Object.keys(noticedetails['data']).length > 0) &&<div  dangerouslySetInnerHTML={{ __html: noticedetails.data.content }}></div>}
 
 
                 {/*footer*/}

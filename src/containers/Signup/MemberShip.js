@@ -35,16 +35,15 @@ const MemberShip = ({ changestep }) => {
         break;
       }
     //   console.log(form,'erorr-0-------')  
-    //   for (let i in form) {
-    //     if (i !== 'mobileVerified' && i !== 'emailVerified' && i !== 'errors' && form[i] === "") {
-    //       form.isVerified = false
-    //       break;
-    //     } else if (i !== 'mobileVerified' && i !== 'emailVerified' && i !== 'errors') {
-    //       form.isVerified = true
+      // for (let i in form) {
+      //   if (i !== 'mobileVerified' && i !== 'emailVerified' && i !== 'errors' && form[i] === "") {
+      //     form.isVerified = false
+      //     break;
+      //   } else if (i !== 'mobileVerified' && i !== 'emailVerified' && i !== 'errors') {
+      //     form.isVerified = true
 
-    //     }
-
-    //   }
+      //   }
+      // }
     }
     if ((form.mobileVerified === true || form.emailVerified === true) && (form.isVerified === true)) {
       let data = {
