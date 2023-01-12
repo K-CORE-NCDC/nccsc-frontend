@@ -27,6 +27,7 @@ import { FormattedMessage } from "react-intl";
 import { getDashboardCount, sendlogManagement } from "../../../actions/api_actions";
 import Popup from "../../../containers/Popup/Popup";
 import { useIdleTimer } from 'react-idle-timer'
+import { json } from "d3";
 
 
 const menu = route.map((route, index) => {
@@ -94,7 +95,7 @@ export default function Web(props) {
   const [elapsed, setElapsed] = useState(0)
   const [lastActive, setLastActive] = useState(+new Date())
   const [isIdle, setIsIdle] = useState(false)
-
+  const [showPopup, setShowPopup] = useState(false)
   const handleOnActive = () => setIsIdle(false)
   const handleOnIdle = () => setIsIdle(true)
   const {
@@ -153,15 +154,12 @@ export default function Web(props) {
     return location;
   }
 
+  let toggleModal = (close)=>{
+    setShowPopup(close)
+  }
   useEffect(() => {
-    let d = new Date();
-    let day = d.getDay();
-    if(localStorage.getItem('ncc_notice_popup') === null){
-      localStorage.setItem('ncc_notice_popup',day)
-    }
 
-    
-    
+     
     sessionStorage.setItem('sessionId', uuid())
     sessionStorage.setItem('firstTime', true)
     updateLocation();
@@ -187,7 +185,28 @@ export default function Web(props) {
       sessionStorage.setItem('logData', JSON.stringify(arrayOfLog))
 
     }
+    if (id[0] === "/") {
+      let today = new Date();
+      let date = today.getFullYear() +
+        "." +
+        (today.getMonth() + 1) +
+        "." +
+        today.getDate();
+      var a_or_p = today
+        .toLocaleString("en-US", { hour: "numeric", hour12: true })
+        .split(" ")[1];
+      // var time = a_or_p + " " + today.getHours() + ":" + today.getMinutes();
+      var time = a_or_p + " " + today.getHours() + ":" + (today.getMinutes() <=9 ? `00`: today.getMinutes());
 
+      
+      let check_popup = localStorage.getItem('show_popup') 
+      
+      setCurrentDate(date);
+      setCurrentTime(time);
+      if (!countJson) {
+        dispatch(getDashboardCount());
+      }
+    }
 
   }, [])
 
@@ -195,15 +214,29 @@ export default function Web(props) {
     updateLocation()
   }, [latandLong])
 
+  
 
   useEffect(() => {
-    let d = new Date();
-    let day = d.getDay();
-    let currentUrl = window.location
-    if((currentUrl['pathname'] === '/k-core/' || currentUrl['pathname']==='/k-core/home/' || currentUrl['pathname']==='/k-core/home' || currentUrl['pathname']==='/k-core/') && Number(localStorage.getItem('ncc_notice_popup')) === day){
-      localStorage.setItem('ncc_notice_popup',day)
+    // let day = date.getDay();
+    let date = new Date().toISOString().split('T')[0]
+    if(localStorage.getItem('ncc_notice_popup') === null){
+      localStorage.setItem('ncc_notice_popup',JSON.stringify({'date':date, 'showpopup':true}))
+      setShowPopup(true)
     }
+    else if(localStorage.getItem('ncc_notice_popup') !== null){ 
+      let check_popup = JSON.parse(localStorage.getItem('ncc_notice_popup'))
+      if(check_popup['date'] === date && check_popup['showpopup']){
+        setShowPopup(true)
+      }
+      else if(check_popup['date'] === date && !check_popup['showpopup']){
+        setShowPopup(false)
+      }
+      else{
+        localStorage.setItem('ncc_notice_popup',JSON.stringify({'date':date, 'showpopup':true}))
+        setShowPopup(true)
+      }
 
+    } 
     if (!sessionStorage.getItem('location')) {
       updateLocation();
     }
@@ -271,6 +304,8 @@ export default function Web(props) {
   }, [window.location.href])
 
 
+
+
   useEffect(() => {
     let html = [];
     for (let m = 0; m < menu.length; m++) {
@@ -322,29 +357,6 @@ export default function Web(props) {
     setBreadCrumb(html);
   }, [props,project_id]);
 
-  useEffect(() => {
-    if (id[0] === "/") {
-      let today = new Date();
-      var date =
-        today.getFullYear() +
-        "." +
-        (today.getMonth() + 1) +
-        "." +
-        today.getDate();
-      var a_or_p = today
-        .toLocaleString("en-US", { hour: "numeric", hour12: true })
-        .split(" ")[1];
-      // var time = a_or_p + " " + today.getHours() + ":" + today.getMinutes();
-      var time = a_or_p + " " + today.getHours() + ":" + (today.getMinutes() <=9 ? `00`: today.getMinutes());
-
-
-      setCurrentDate(date);
-      setCurrentTime(time);
-      if (!countJson) {
-        dispatch(getDashboardCount());
-      }
-    }
-  }, []);
 
 
   let classes = "";
@@ -564,8 +576,7 @@ export default function Web(props) {
       </Suspense>
       {/* fixed bottom-0 */}
       <div>
-
-        <Popup></Popup> 
+        { showPopup  ? <Popup toggleModal = {toggleModal}/> : '' }
       </div>
       <footer className="border-gray-300 border-t  w-full">
         <div className="d-flex flex-row text-white" style={{ height: "50px", backgroundColor: "#203239" }}>

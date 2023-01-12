@@ -19,6 +19,14 @@ export function clearIDPasswordResetPASSWORD() {
   };
 }
 
+export function clearNotice() {
+  return (dispatch) => {
+    dispatch({
+      type: homeConstants.CLEAR_NOTICE_DETAILS,
+      payload: {},
+    });
+  };
+}
 
 export function logManagement(method,data) {
   return (dispatch) => {

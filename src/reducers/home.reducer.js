@@ -159,6 +159,12 @@ const homeReducer = (state = { 'home': 'home' }, { type, payload }) => {
     //     project_id_status:payload
     //   }
 
+    case homeConstants.CLEAR_NOTICE_DETAILS:
+      const {noticedata, ...remains}=state
+      state = remains
+      return state
+      
+      
     case homeConstants.CLEAR_ID_PASSWORD_RESET_PASSWORD:
       const {find_id,find_password,change_password_status, ...rest}=state 
       state= rest
