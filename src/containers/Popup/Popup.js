@@ -1,39 +1,40 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux';
-import { getNoticeDetail } from '../../actions/api_actions'
+import { getNoticeDetail, clearNotice} from '../../actions/api_actions'
 
 
-function Popup({ }) {
+function Popup({toggleModal}) {
   const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false);
   const d = new Date();
   const day = d.getDay();
 
+ 
   const noticedetails = useSelector((data) => data.homeReducer.noticedata);
   useEffect(() => {
     dispatch(getNoticeDetail("GET",{}));
   },[])
+
   useEffect(()=>{
     let currentUrl = window.location
-    // console.log(currentUrl['pathname'])
-    // console.log(typeof(day));
     
-    if((currentUrl['pathname'] === '/k-core/' || currentUrl['pathname']==='/k-core/home/' || currentUrl['pathname']==='/' || currentUrl['pathname']==='/k-core/') && Number(localStorage.getItem('ncc_notice_popup')) === day){
+    if((currentUrl['pathname'] === '/k-core/' || currentUrl['pathname']==='/k-core/home/' || currentUrl['pathname']==='/' || currentUrl['pathname']==='/k-core/') ){
       setShowModal(true)
       }
-  },[noticedetails])
+  })
 
   let changeDay = ()=>{
+    let date = new Date().toISOString().split('T')[0]
+    localStorage.setItem('ncc_notice_popup',JSON.stringify({'date':date, 'showpopup':false}))
     setShowModal(false)
-    if(day === 7){
-      localStorage.setItem('ncc_notice_popup',1)
-    }
-    else{
-      localStorage.setItem('ncc_notice_popup',day+1)
-    }
+    toggleModal(false)
   }
-  
+  let closeModal = ()=>{
+    // dispatch(clearNotice())
+    setShowModal(false)
+    toggleModal(false)
+  }  
 
   return (
     <>
@@ -52,7 +53,7 @@ function Popup({ }) {
                   </h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setShowModal(false)}
+                    onClick={() => closeModal()}
 
                   >
                     <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
@@ -80,7 +81,7 @@ function Popup({ }) {
                   <button
                     className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={() => closeModal()}
                   >
                     Close
                   </button>
