@@ -769,7 +769,7 @@ function SampleDataTable() {
   // }
   const newdata = {
     headers: ['plots', 'Clinical information', 'DNA mutation', 'RNA', 'DNA Methylation', 'Phospo Proteome', 'Global Proteome', 'Gene fusion', 'CNV'],
-    downloads:['', `${config.media}samples/clinical_information.csv`,`${config.media}samples/dna_mutation.csv`,`${config.media}samples/rna_zscore.csv`,`${config.media}samples/dna_methylation.csv`,`${config.media}samples/phospo.csv`,`${config.media}samples/global_proteome_rawdata.csv`,`${config.media}samples/fusion.csv`,`${config.media}samples/cnv.csv`],
+    downloads:['', `${config.media}samples/clinicalinformation.tsv`,`${config.media}samples/dna_mutation.tsv`,`${config.media}samples/rna.tsv`,`${config.media}samples/methylation.tsv`,`${config.media}samples/phospho.tsv`,`${config.media}samples/proteome.tsv`,`${config.media}samples/fusion.tsv`,`${config.media}samples/cnv.tsv`],
     body: [
       ['Circos', true, true, true, true, true, true, true, true],
       ['Oncoprint',  true, true, false, false, false, false, false, false],

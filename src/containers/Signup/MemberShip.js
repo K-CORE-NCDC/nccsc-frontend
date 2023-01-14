@@ -53,6 +53,7 @@ const MemberShip = ({ changestep }) => {
         phone_number: form.phone_number,
         email: form.email,
         domain_email: form.domain_email,
+        institute : form.institute
         
       }
       dispatch(userRegister("POST", data));
