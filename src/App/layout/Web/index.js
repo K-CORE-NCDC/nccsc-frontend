@@ -29,6 +29,17 @@ import Popup from "../../../containers/Popup/Popup";
 import { useIdleTimer } from 'react-idle-timer'
 import { json } from "d3";
 
+let  parseJwt =  (islogin1)=> {
+  var base64Url = islogin1 && islogin1.split('.')[1];
+  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+
+  return JSON.parse(jsonPayload);
+
+
+}
 
 const menu = route.map((route, index) => {
   // if(route.path === "/visualise/:tab?/:project_id?/" ){
@@ -159,10 +170,28 @@ export default function Web(props) {
   }
   useEffect(() => {
 
-     
+
+    let sessionAuth = ''
+    let userid = ''
+    let category = 'Visualization'
+    if(window.location.href.substring(window.location.href.lastIndexOf('/')+1)){
+      category = 'User DataVisualization'
+    }
+    if(localStorage.getItem('ncc_access_token')){
+       sessionAuth = localStorage.getItem('ncc_access_token');
+       if (sessionAuth) {
+        let jwt = parseJwt(sessionAuth)
+        console.log('jwt',jwt);
+        if(jwt['user_id']){
+          userid = jwt['user_id']
+        }
+      }
+    }
+
     sessionStorage.setItem('sessionId', uuid())
     sessionStorage.setItem('firstTime', true)
     updateLocation();
+
     if (sessionStorage.getItem("firstTime")) {
       updateLocation();
       var today = new Date();
@@ -179,6 +208,9 @@ export default function Web(props) {
         'url': 'http://localhost:9192/home',
         'startTime': loginTime,
         'endTime': '',
+        'userid':userid,
+        'category':category,
+        
       }
       arrayOfLog[0] = object
       // let alid = sessionStorage.getItem('IdNumber')
@@ -241,6 +273,22 @@ export default function Web(props) {
       updateLocation();
     }
     // var url = window.location.href.split('/').filter(Boolean).pop();
+    let sessionAuth = ''
+    let userid = ''
+    let category = 'Visualization'
+    if(window.location.href.substring(window.location.href.lastIndexOf('/')+1)){
+      category = 'User DataVisualization'
+    }
+    if(localStorage.getItem('ncc_access_token')){
+       sessionAuth = localStorage.getItem('ncc_access_token');
+       if (sessionAuth) {
+        let jwt = parseJwt(sessionAuth)
+        if(jwt['user_id']){
+          userid = jwt['user_id']
+        }
+      }
+    }
+    
     var url = window.location.href;
     let sessionId = sessionStorage.getItem('sessionId')
     let idNumber = JSON.parse(sessionStorage.getItem('IdNumber'))
@@ -275,6 +323,8 @@ export default function Web(props) {
       'latitude': latitude,
       'longitude': longitude,
       'visitedDate':formattedToday,
+      'userid':userid,
+      'category':category
     }
     sessionStorage.setItem('IdNumber', idNumber)
     logDataIs[idNumber] = object
@@ -295,11 +345,15 @@ export default function Web(props) {
         'endTime': '',
         'latitude': latitude,
         'longitude': longitude,
-        'visitedDate':formattedToday
+        'visitedDate':formattedToday,
+        'username':'sameer',
+        'category':'userdata'
       }
       logDataIs[idNumber] = object
       sessionStorage.setItem('logData', JSON.stringify(logDataIs))
     }
+    // console.log('---->',typeof(window.location.href.substring(window.location.href.lastIndexOf('/')+1)));
+
     // dispatch(reportData())
   }, [window.location.href])
 

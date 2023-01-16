@@ -229,6 +229,7 @@ let childMenu = {
 
 if (sessionAuth) {
   let jwt = parseJwt(sessionAuth)
+  console.log('jwt',jwt);
   childMenu["social"]["items"].push(logout)
   if(jwt['is_superuser']){
     childMenu["social"]["items"].push(superAdmin)
