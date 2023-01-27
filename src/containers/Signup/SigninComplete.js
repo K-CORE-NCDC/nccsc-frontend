@@ -1,7 +1,7 @@
 import React from "react";
 import config from "../../config";
 import { CheckCircleIcon } from "@heroicons/react/outline";
-import Success from '../../assets/images/logoncc.png'
+import Success from '../../assets/images/KoreanImageNcc.png'
 
 
 const SigninComplete = () => {
@@ -15,14 +15,17 @@ const SigninComplete = () => {
                 width: "90rem"
               }}
             >
-              <img src={Success} className="block mx-auto" alt="Registration Success" width="25%" height="100px"></img>
+              <div className="py-12">
+              <img src={Success} className="block mx-auto" alt="Registration Success" style={{height:'100px'}} ></img>
+              </div>
              
               <div className="">
                 <p className="text-center py-2">
-                  K-CORE 회원가입이 완료되었습니다.
+
+                 <span > K-CORE 회원가입이 완료되었습니다.</span>
                 </p>
                 <p className="text-center py-5">
-                  관리자 승인 후, 이용 가능합니다.
+                <span >  관리자 승인 후, 이용 가능합니다. </span>
                 </p>
               </div>
             </div>

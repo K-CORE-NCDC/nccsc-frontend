@@ -196,17 +196,17 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
         if (tableType === "Mutation") {
           table_cols = [
             {
-              name: 'Sample Id',
+              name: <FormattedMessage id="sampleid" defaultMessage="Sample Id"/>,
               selector: row => row.sample,
               sortable: true
             },
             {
-              name: 'Protein Change',
+              name: <FormattedMessage id="ProtienChange" defaultMessage="Protein Change"/>,
               selector: row => row.protein,
               sortable: true
             },
             {
-              name: 'Mutation Type',
+              name: <FormattedMessage id="MutationType" defaultMessage="Mutation Type"/>,
               selector: row => row.variant_classification,
               sortable: true
             }
@@ -247,17 +247,17 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
         } else {
           table_cols = [
             {
-              name: 'Sample Id',
+              name: <FormattedMessage id="sampleid" defaultMessage="Sample Id"/>,
               selector: row => row.sample,
               sortable: true
             },
             {
-              name: 'Site',
+              name: <FormattedMessage id="Site" defaultMessage="Site"/>,
               selector: row => row.site,
               sortable: true
             },
             {
-              name: 'Gene',
+              name:  <FormattedMessage id="Gene" defaultMessage="Gene"/>,
               selector: row => row.gene,
               sortable: true
             }
@@ -435,13 +435,13 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                       <button onClick={e => changeType(e, 'Mutation')} id='Mutation' name='type' className="rounded-r-none  hover:scale-110
                       focus:outline-none flex lg:p-5 sm:p-3 rounded font-bold cursor-pointer
                       hover:bg-main-blue  bg-main-blue sm:text-xl lg:text-2xl xs:text-sm xs:p-2 text-white border duration-200 ease-in-out border-gray-600 transition">
-                        Mutation
+                        <FormattedMessage  id = "Mutation" defaultMessage='Mutation'/>
                       </button>
                       <button onClick={e => changeType(e, 'Phospho')} id='Phospho' name='type' className="rounded-l-none border-l-0
                       hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-3
                       rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100
                       text-teal-700 sm:text-xl xs:text-sm lg:text-2xl xs:p-2 border duration-200 ease-in-out border-teal-600 transition">
-                        Phospho
+                        <FormattedMessage  id = "Phospho" defaultMessage='Phospho'/>
                       </button>
                     </div>
                   </div>
@@ -481,8 +481,8 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                   </div>
                   <div className='grid grid-rows bg-blue-100 p-10'>
                     <div className="lg:w-full sm:w-3/6 xs:w-1/2 p-3">
-                    {tableType === "Mutation" &&  <h5 className="float-left sm:text-xl lg:text-2xl xs:text-xl mb-5"> Somantic Mutation Frequency:{percentage?percentage:""} % (mutation sample number/total selected sample number(%))</h5>}
-                    {tableType !== "Mutation" &&  <h5 className="float-left sm:text-xl lg:text-2xl xs:text-xl mb-5"> Phosphorylation Frequency: {percentage?percentage:""} % (Phosphorylation sample number/total selected sample number(%))</h5>}
+                    {tableType === "Mutation" &&  <h5 className="float-left sm:text-xl lg:text-2xl xs:text-xl mb-5"> <FormattedMessage  id="SomanticMutationFrequency" defaultMessage="Somantic Mutation Frequency: -"/>{percentage?percentage:""}<FormattedMessage  id="SomanticMutationmutationsamplenumber/totalselectedsamplenumber(%)Frequency" defaultMessage="%(mutation sample number/total selected sample number(%))"/></h5>}
+                    {tableType !== "Mutation" &&  <h5 className="float-left sm:text-xl lg:text-2xl xs:text-xl mb-5"> <FormattedMessage  id="PhosphorylationFrequency" defaultMessage="Phosphorylation Frequency: -"/>{percentage?percentage:""}<FormattedMessage  id="Phosphorylationsamplenumber/totalselectedsamplenumber(%)" defaultMessage="Phosphorylation sample number/total selected sample number(%)"/></h5>}
                     </div>
                     <div className='flex sm:flex-wrap xs:flex-wrap xs:w-1/2'>
                       {mutationLabel}

@@ -4,6 +4,7 @@ import { interPro } from "../../actions/api_actions";
 import { useDispatch,useSelector } from "react-redux";
 import LoaderCmp from '../Common/Loader'
 import config from "../../config";
+import {FormattedMessage} from 'react-intl';
 
 function InterPro() {
     const [interProFile, setInterProFile] = useState();
@@ -85,8 +86,9 @@ function InterPro() {
                                 }}
                             >
                                 <p className="text-md leading-10 text-justify">
-                                    InterPro is a resource that provides functional analysis of protein sequences by classifying them into families and predicting the presence of domains and important sites.
-                                    To classify proteins, InterPro uses predictive models called signatures, provided by several collaborating databases that collectively make up the InterPro consortium
+                                    <FormattedMessage id="InterproDesc" defaultMessage=" InterPro is a resource that provides functional analysis of protein sequences by classifying them into families and predicting the presence of domains and important sites.
+                                    To classify proteins, InterPro uses predictive models called signatures, provided by several collaborating databases that collectively make up the InterPro consortium" />
+                                    
                                 </p>
                             </div>
                             <div
@@ -122,7 +124,7 @@ function InterPro() {
                                                     htmlFor="FastaFile"
                                                     className="mx-2 my-2 form-label inline-block mb-2 text-gray-700 text-md"
                                                 >
-                                                    Upload file
+                                                    <FormattedMessage id="UploadFile" defaultMessage="Upload File" />
                                                 </label>
                                                 <input
                                                     className="text-md block w-full text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-outm-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
@@ -137,7 +139,7 @@ function InterPro() {
                                             className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white mt-4 font-bold py-2 px-4 border border-blue-700 rounded"
                                             onClick={uploadFile}
                                         >
-                                            Submit
+                                            <FormattedMessage id="Submit" defaultMessage="Submit" />
                                         </button>
                                     </div>
                                 </div>

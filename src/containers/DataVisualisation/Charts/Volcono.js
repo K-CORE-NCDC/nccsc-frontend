@@ -251,7 +251,7 @@ export default function DataVolcono({
                   volcanoType === "transcriptome" ? selectedCss : nonSelectedCss
                 }
               >
-                Transcriptome
+                <FormattedMessage id="Transcriptome" defaultMessage="Transcriptome" />
               </button>
               <button
                 onClick={() => changeVolcanoType("proteome")}
@@ -259,7 +259,7 @@ export default function DataVolcono({
                   volcanoType === "proteome" ? selectedCss : nonSelectedCss
                 }
               >
-                Proteome
+                <FormattedMessage id="Proteome" defaultMessage="Proteome" />
               </button>
             </div>
             {volcanoType === "proteome" && (
@@ -285,7 +285,7 @@ export default function DataVolcono({
                       htmlFor="default-radio-1"
                       className="ml-2 text-md font-medium text-gray-900 dark:text-gray-300"
                     >
-                      Normal
+                      <FormattedMessage id="Normal" defaultMessage="정상" />
                     </label>
                   </div>
                   <div className="flex-row items-center mb-4">
@@ -302,7 +302,7 @@ export default function DataVolcono({
                       htmlFor="default-radio-2"
                       className="ml-2 text-md font-medium text-gray-900 dark:text-gray-300"
                     >
-                      Tumor
+                      <FormattedMessage id="Tumor" defaultMessage="암" />
                     </label>
                   </div>
                   <div className="flex-row items-center mb-4">
@@ -319,7 +319,7 @@ export default function DataVolcono({
                       htmlFor="default-radio-3"
                       className="ml-2 text-md font-medium text-gray-900 dark:text-gray-300"
                     >
-                      Normal Vs Tumor
+                      <FormattedMessage id="TumorVsNormal" defaultMessage="정상 vs 암" />
                     </label>
                   </div>
                 </div>
@@ -408,13 +408,13 @@ export default function DataVolcono({
             )}
             {/* <GroupFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} /> */}
             <div className="m-1 p-1 border border-black border-dashed">
-              <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left">{`Blue: Log2FC <= -1.5 & pvalue >= 0.05`}</p>
-              <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left">{`Red: Log2FC >= 1.5 & pvalue >= 0.05`}</p>
+              <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left"><FormattedMessage id="Blue" defaultMessage = "Blue :" />{`Blue: Log2FC <= -1.5 & pvalue >= 0.05`}</p>
+              <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left"><FormattedMessage id="Red" defaultMessage = "Red :" />{`Log2FC >= 1.5 & pvalue >= 0.05`}</p>
               <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left">
-                Grey: Not significant gene
+              <FormattedMessage id="Grey" defaultMessage = "Grey :" /> Not significant gene
               </p>
               <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left">
-                Black: Selected genes
+              <FormattedMessage id="Black" defaultMessage = "Black :" /> Selected genes
               </p>
             </div>
           </div>
@@ -437,7 +437,7 @@ export default function DataVolcono({
               />
             )}
             {noContent && <NoContentMessage />}
-            {Object.keys(groupFilters).length === 0 && <p>Please Select the Filter Data</p>}
+            {Object.keys(groupFilters).length === 0 && <p><FormattedMessage id="PleaseSelectFilterData" defaultMessage = "Please Select the Filter Data" /></p>}
           </div>
         </div>
       )}

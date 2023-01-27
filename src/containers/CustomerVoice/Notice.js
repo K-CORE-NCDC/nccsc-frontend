@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect, useContext } from "react";
 import {useSelector, useDispatch} from "react-redux";
 import pipeline from '../../assets/images/sub/pipeline.png'
 import DataTable from "react-data-table-component";
@@ -6,11 +6,22 @@ import '../../assets/interceptor/interceptor'
 import axios from "axios";
 import config from '../../config';
 import { Link, Redirect, useParams } from "react-router-dom";
+import { Context } from "../../wrapper";
 // import { Route } from 'react-router-dom';
 // import DataTableExtensions from "react-data-table-component-extensions
 import { getNoticeData } from '../../actions/api_actions'
+import {FormattedMessage} from 'react-intl';
 
 function NoticeList() {
+    const context = useContext(Context);
+    const [koreanlanguage, setKoreanlanguage] = useState(false);
+    const [Englishlanguage, setEnglishlanguage] = useState(true);
+    const [ title, setTitle] = useState('Title')
+    const [content, setContent] = useState("Content")
+    const [writer, setWriter] = useState("Writer")
+    const [order, setOrder] = useState("Order")
+    const [Dateofissue, setDateofissue] = useState("Date Of Issue")
+
     const [tableData, setTableData] = useState([])
     const faq_data = useSelector((state)=>state.homeReducer.dataQA)
     const [totalRows, setTotalRows] = useState(0);
@@ -21,6 +32,33 @@ function NoticeList() {
     const [searchInput, setSearchInput] = useState("");
     const [redirState, setState] = useState(false);
     const [shortName, setData] = useState('');
+
+    useEffect(() => {
+      if (context["locale"] === "kr-KO") {
+        setKoreanlanguage(true);
+        setEnglishlanguage(false);
+      } else {
+        setKoreanlanguage(false);
+        setEnglishlanguage(true);
+      }
+    });
+
+    useEffect(()=>{
+      if(koreanlanguage){
+        setTitle( '제목')
+        setContent( "내용")
+        setWriter( "작성자")
+        setOrder("번호")
+        setDateofissue("일시")
+      }
+      else{
+        setTitle( 'Title')
+        setContent( "Content")
+        setWriter( "Writer")
+        setOrder("Order")
+        setDateofissue("Date Of Issue")
+      }
+    })
 
     const fetchUsers = async (page,method) => {
       setLoading(true);
@@ -57,23 +95,23 @@ function NoticeList() {
 
     const columns =  [
       {
-        name: 'Order',
+        name: order,
         selector: row => row.id,
         sortable: true
         // render: ({ row }) => (<Link to={{ pathname: `/notice/${row.url_slug}/` }}></Link>)
       },
       {
-        name: 'Title',
+        name: title,
         selector: row => row.title,
         sortable: true
       },
       {
-        name: 'Writer',
+        name: writer,
         selector: row => row.writer,
         sortable: true
       },
       {
-        name: 'Date Of Issue',
+        name: Dateofissue,
         selector: row => row.created_on,
         sortable: true
       }
@@ -115,9 +153,9 @@ function NoticeList() {
                 <div className="flex float-right">
                   <div className="flex-none w-40 h-14">
                     <select value={selectInput} onChange={(e)=>setSelectInput(e.target.value)} name="cars" id="cars" className="border border-slate-400 rounded pt-1 pb-1">
-                      <option className="text-xl" value="title">Title</option>
-                      <option className="text-xl" value="content">Content</option>
-                      <option className="text-xl" value="writer">Writer</option>
+                      <option className="text-xl" value="title">{title}</option> 
+                      <option className="text-xl" value="content">{content}</option>
+                      <option className="text-xl" value="writer">{writer}</option>
                     </select>
                   </div>
                   <div className="flex-initial w-80 mr-4 mb-4">
@@ -125,7 +163,7 @@ function NoticeList() {
                   </div>
                   <div className="flex-initial w-32">
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={searchTerm}>
-                      Search
+                      <FormattedMessage id="Search" defaultMessage="Search"/>
                     </button>
                   </div>
                 </div>

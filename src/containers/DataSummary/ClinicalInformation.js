@@ -39,9 +39,9 @@ export default function ClinicalInformation() {
     let c_type = e.target.value
     let current_class_name = "parent_chart_"+c_type+"_"+id
     let toggle_name =''
-    if(c_type=="bar"){
+    if(c_type === "bar"){
       toggle_name ='pie'
-    }else if(c_type=="pie"){
+    }else if(c_type === "pie"){
       toggle_name ='bar'
     }
     // document.getElementById(id+"_"toggle_name).remove

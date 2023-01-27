@@ -16,6 +16,7 @@ import logoNew from "../../../assets/images/Left_up.png";
 import footer_logo from "../../../assets/images/f_logo.png";
 import { useSelector, useDispatch } from "react-redux";
 import uuid from 'react-uuid';
+
 import {
   MenuIcon,
   ChevronRightIcon,
@@ -173,17 +174,20 @@ export default function Web(props) {
 
     let sessionAuth = ''
     let userid = ''
-    let category = 'Visualization'
+    let category = 'Others'
     if(window.location.href.substring(window.location.href.lastIndexOf('/')+1)){
       category = 'User DataVisualization'
+    }
+    else if (['circos', 'OncoPrint','lollipop','volcano', 'heatmap', 'survival','correlation','CNV','box','fusion'].some(r=> window.location.href.split("/").indexOf(r) >= 0)){
+      category = 'DataVisualization'
     }
     if(localStorage.getItem('ncc_access_token')){
        sessionAuth = localStorage.getItem('ncc_access_token');
        if (sessionAuth) {
         let jwt = parseJwt(sessionAuth)
-        console.log('jwt',jwt);
-        if(jwt['user_id']){
-          userid = jwt['user_id']
+        // console.log('jwt',jwt);
+        if(jwt['username']){
+          userid = jwt['username']
         }
       }
     }
@@ -275,16 +279,20 @@ export default function Web(props) {
     // var url = window.location.href.split('/').filter(Boolean).pop();
     let sessionAuth = ''
     let userid = ''
-    let category = 'Visualization'
+    let category = 'Others'
     if(window.location.href.substring(window.location.href.lastIndexOf('/')+1)){
       category = 'User DataVisualization'
     }
+    else if (['circos', 'OncoPrint','lollipop','volcano', 'heatmap', 'survival','correlation','CNV','box','fusion'].some(r=> window.location.href.split("/").indexOf(r) >= 0)){
+      category = 'DataVisualization'
+    }
+
     if(localStorage.getItem('ncc_access_token')){
        sessionAuth = localStorage.getItem('ncc_access_token');
        if (sessionAuth) {
         let jwt = parseJwt(sessionAuth)
-        if(jwt['user_id']){
-          userid = jwt['user_id']
+        if(jwt['username']){
+          userid = jwt['username']
         }
       }
     }
@@ -347,7 +355,7 @@ export default function Web(props) {
         'longitude': longitude,
         'visitedDate':formattedToday,
         'username':'sameer',
-        'category':'userdata'
+        'category':category
       }
       logDataIs[idNumber] = object
       sessionStorage.setItem('logData', JSON.stringify(logDataIs))

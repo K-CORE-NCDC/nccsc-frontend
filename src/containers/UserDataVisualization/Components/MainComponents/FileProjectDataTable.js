@@ -7,6 +7,7 @@ import LoaderCmp from "../../../Common/Loader";
 import {
   clear_new_file_upload_state
 } from "../../../../actions/api_actions";
+import { FormattedMessage } from "react-intl";
 
 function FileProjectDataTable({ updateComponentNumber }) {
   const dispatch = useDispatch();
@@ -133,7 +134,7 @@ function FileProjectDataTable({ updateComponentNumber }) {
           onClick={() => history.push("/userdata/")}
           className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
         >
-          back
+          <FormattedMessage id="Back" defaultMessage="Back" />
         </button>
         {projectId !== 0 && (
           <button
@@ -142,7 +143,7 @@ function FileProjectDataTable({ updateComponentNumber }) {
               history.push(`/visualise/${navTabIs}/${projectId}`)}}
             className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
           >
-            visualize
+            <FormattedMessage id="Visualize" defaultMessage="Visualize" />
           </button>
         )}
       </div>
@@ -177,7 +178,7 @@ function FileProjectDataTable({ updateComponentNumber }) {
             updateComponentNumber(1);
           }}
         >
-          Back
+          <FormattedMessage id="Back" defaultMessage="Back" />
         </button>
       </div>
     </div>

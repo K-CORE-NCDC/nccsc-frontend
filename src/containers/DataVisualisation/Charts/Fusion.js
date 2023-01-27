@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment, useRef } from "react";
+import React, { useState, useEffect, Fragment, useRef, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import GroupFilters, {
   PreDefienedFilters,UserDefinedGroupFilters
@@ -19,6 +19,7 @@ import FusionCustomPlot from "../../Common/FusionCustomPlot";
 import { FormattedMessage } from "react-intl";
 import DataTable from "react-data-table-component";
 import { selector } from "d3";
+import { Context } from "../../../wrapper";
 const selectedCss =
   "w-1/2 rounded-r-none  hover:scale-110 focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 xs:text-sm sm:text-sm md:text-2xl md:text-2xl ease-in-out border-gray-600 transition";
 const nonSelectedCss =
@@ -31,6 +32,9 @@ export default function FusionPlot({
   setToFalseAfterScreenCapture,
 }) {
   const dispatch = useDispatch();
+  const context = useContext(Context);
+  const [koreanlanguage, setKoreanlanguage] = useState(false);
+  const [Englishlanguage, setEnglishlanguage] = useState(true);
   const [loader, setLoader] = useState(false);
   const [smallScreen, setSmallScreen] = useState(false);
   const [sampleCount, setSampleCount] = useState({});
@@ -40,6 +44,17 @@ export default function FusionPlot({
   const [groupName, setGroupName] = useState("");
   const [noData, setNoData] = useState('false')
   const [firstTime, setFirstTime] = useState(true)
+
+  useEffect(() => {
+    if (context["locale"] === "kr-KO") {
+      setKoreanlanguage(true);
+      setEnglishlanguage(false);
+    } else {
+      setKoreanlanguage(false);
+      setEnglishlanguage(true);
+    }
+  });
+
   let { tab, project_id } = useParams();
   const [userDefienedFilter, setUserDefienedFilter] = useState(
     project_id === undefined ? "static" : "dynamic"
@@ -56,7 +71,7 @@ export default function FusionPlot({
 
   const tableColumnsData = [
     {
-      name: "Sample Name",
+      name: <FormattedMessage id="SampleName" defaultMessage = "Sample Name" />,
       cell: (row, index) => {
         let html = [];
         let check = false;
@@ -103,34 +118,34 @@ export default function FusionPlot({
       sortable: true,
     },
     {
-      name: "Left Gene Name",
+      name:<FormattedMessage id="LeftGeneName" defaultMessage = "Left Gene Name" />,
       selector: (row) => row.left_gene_name,
       sortable: true,
     },
     {
-      name: "Left Ensembl Id",
+      name: <FormattedMessage id="LeftEnsemblId" defaultMessage = "Left Ensembl Id" />,
       selector: (row) => row.left_gene_ensmbl_id,
       sortable: true,
     },
     {
-      name: "Left Breakpoint",
+      name: <FormattedMessage id="LeftBreakpoint" defaultMessage = "Left Breakpoint" />,
       cell: (row, index) => {
         return row.left_gene_chr + ":" + row.left_hg38_pos;
       },
       sortable: true,
     },
     {
-      name: "Right Gene Name",
+      name: <FormattedMessage id="RightGeneName" defaultMessage = "Right Gene Name" />,
       selector: (row) => row.right_gene_name,
       sortable: true,
     },
     {
-      name: "Right Ensembl Id",
+      name: <FormattedMessage id="RightEnsemblId" defaultMessage = "Right Ensembl Id" />,
       selector: (row) => row.right_gene_ensmbl_id,
       sortable: true,
     },
     {
-      name: "Right Breakpoint",
+      name: <FormattedMessage id="RightBreakpoint" defaultMessage = "Right Breakpoint" />,
       cell: (row, index) => {
         return row.right_gene_chr + ":" + row.right_hg38_pos;
       },
@@ -354,7 +369,7 @@ export default function FusionPlot({
                 </div>
               )
             }
-             {Object.keys(groupFilters).length === 0 && <p>Please Select the Filter Data</p>}
+             {Object.keys(groupFilters).length === 0 && <p>{koreanlanguage ? "필터 정보를 선택해 주세요.":"Please Select the Filter Data"}</p>}
             {VennData && noData === 'false' && fusionId !== 0 &&  (
               <div className="mt-5 my-0 mx-auto h-auto w-11/12 shadow-lg">
                 <FusionCustomPlot fusionId={fusionId}  />
@@ -372,13 +387,14 @@ export default function FusionPlot({
                   }}
                 >
                   <p>
-                    Fusion gene detected in at least 1 patient in a paitent
-                    group is counted.
+                    {koreanlanguage ? "환자군에서 적어도 1명의 환자에게 검출된 융합 유전자의 수를 센다." : "Fusion gene detected in at least 1 patient in a paitent group is counted"}
                   </p>
-
-                  <p>Core : Fusion genes found in both Group 1 and Group 2</p>
-
-                  <p>Unique : Fusion genes found in certain patient group.</p>
+                  <p>
+                    {koreanlanguage ? "Core: Group1과 Group2 모두에서 발견되는 융합 유전자" : "Core : Fusion genes found in both Group 1 and Group 2"}
+                  </p>
+                  <p>
+                    {koreanlanguage ? "Unique: 특정 환자군에서 발견된 융합 유전자" : "Unique : Fusion genes found in certain patient group."}
+                  </p>
                 </div>
                 <div className="mt-20 my-0 mx-auto  w-11/12 shadow-lg">
                   <div className="bg-white border-b border-gray-200 py-5 text-left px-5">

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext} from "react";
 import { useSelector } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import Multiselect from "multiselect-react-dropdown";
 import { useParams } from "react-router-dom";
-
+import { Context } from "../../wrapper";
 const LabelCss = "block text-left text-blue-700-700 text-lg  font-bold mb-2";
 const checkBoxCss =
   "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline";
@@ -11,6 +11,7 @@ const numberInputBoxCss =
   "shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline";
 
 let abc = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"];
+
 let filterChoices = [
   { type: "static", name: "sex", id: "sex_cd", options: ["Male", "Female"] },
   {
@@ -109,6 +110,49 @@ const filterChoicesCustom = [
   { type: "number", name: "PR Test", id: "pr_score", input: "number" },
 ];
 
+
+const filterChoicesCustomKorean = [
+  { type: "static", name: "성별", id: "sex_cd", options: ["Male", "Female"] },
+  {
+    type: "number",
+    name: "진단 시 나이",
+    id: "diag_age",
+    input: "number",
+  },
+  { type: "number", id: "bmi_vl", name: "체질량지수(BMI)", input: "number" },
+  {
+    type: "boolean",
+    id: "bila_cncr_yn",
+    name: "양측성 유방암 여부",
+  },
+  { type: "boolean", name: "흡연 정보", id: "smok_yn" },
+  { type: "boolean", name: "음주 정보", id: "drnk_yn", value: "Yes" },
+  {
+    type: "boolean",
+    name: "유방암 가족력",
+    id: "fmhs_brst_yn",
+    value: "Yes",
+  },
+  { type: "number", name: "초경 나이", id: "mena_age", input: "number" },
+  { type: "boolean", name: "폐경 여부", id: "meno_yn" },
+  { type: "boolean", name: "출산 여부", id: "delv_yn" },
+  { type: "boolean", name: "모유수유경험 유무", id: "feed_yn" },
+  {
+    type: "number",
+    name: "수유기간",
+    id: "feed_drtn_mnth",
+    input: "number",
+  },
+  { type: "boolean", name: "경구피임약 사용 유무", id: "oc_yn" },
+  { type: "boolean", name: "호르몬대체요법(HRT) 유무", id: "hrt_yn" },
+  { type: "number", name: "T Stage", id: "t_category", input: "number" },
+  { type: "number", name: "N Category", id: "n_category", input: "number" },
+  { type: "text", name: "HER2 점수", id: "her2_score", input: "text" },
+  { type: "number", name: "세포증식지수(Ki-67)", id: "ki67_score", input: "text" },
+  { type: "boolean", name: "재발 유무", id: "rlps_yn" },
+  { type: "number", name: "ER 검사 결과", id: "er_score", input: "number" },
+  { type: "number", name: "PR 검사 결과", id: "pr_score", input: "number" },
+];
 let preDefienedGroups = {
   diag_age: [
     { label: "21-35", from: 21, to: 35 },
@@ -187,13 +231,26 @@ export const PreDefienedFilters = ({
   volcanoType,
   parentCallback,
   groupFilters,
-}) => {
+}) => { 
+  const context = useContext(Context);
+  const [koreanlanguage, setKoreanlanguage] = useState(false);
+  const [Englishlanguage, setEnglishlanguage] = useState(true);
   const [selectedFilterType, setSelectedFilterType] = useState({});
   const [filterGroupsHtml, setFilterGroupsHtml] = useState([]);
   const [filters, setFilters] = useState({});
   const [resetClicked, setResetClicked] = useState(false);
   const [isGroupFilterProp, setIsGroupFilterProp] = useState(false);
   const [filterType, setFilterType] = useState("transcriptome");
+
+  useEffect(() => {
+    if (context["locale"] === "kr-KO") {
+      setKoreanlanguage(true);
+      setEnglishlanguage(false);
+    } else {
+      setKoreanlanguage(false);
+      setEnglishlanguage(true);
+    }
+  });
   const preDefienedGroups1 = {
     diag_age: [
       { label: "21-35", from: 21, to: 35 },
@@ -367,10 +424,18 @@ export const PreDefienedFilters = ({
 
   const filterTypeDropdownSelection = (event) => {
     let key = event.target.value;
-    setSelectedFilterType({
-      details: filterChoicesCustom[parseInt(key)],
-      index: key,
-    });
+    if(koreanlanguage){
+      setSelectedFilterType({
+        details: filterChoicesCustomKorean[parseInt(key)],
+        index: key,
+      });
+    }
+    else{
+      setSelectedFilterType({
+        details: filterChoicesCustom[parseInt(key)],
+        index: key,
+      });
+    }
   };
 
   const dropDownChange = (event) => {
@@ -493,7 +558,8 @@ export const PreDefienedFilters = ({
             className="w-full lg:p-4 xs:p-2 border xs:text-sm lg:text-lg focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3"
           >
             <option value=""></option>
-            {filterChoicesCustom.map((type, index) => (
+            
+            {koreanlanguage ? filterChoicesCustomKorean.map((type, index) => (
               <option
                 className="lg:text-lg xs:text-sm"
                 key={type.name}
@@ -501,7 +567,15 @@ export const PreDefienedFilters = ({
               >
                 {type.name}
               </option>
-            ))}
+            )) : filterChoicesCustom.map((type, index) => (
+              <option
+                className="lg:text-lg xs:text-sm"
+                key={type.name}
+                value={index}
+              >
+                {type.name}
+              </option>
+            )) }
           </select>
         )}
         {resetClicked === false && isGroupFilterProp === true && (
@@ -544,6 +618,9 @@ const GroupFilters = ({
   const clinicalMaxMinInfo = useSelector(
     (data) => data.dataVisualizationReducer.clinicalMaxMinInfo
   );
+  const context = useContext(Context);
+  const [koreanlanguage, setKoreanlanguage] = useState(false);
+  const [Englishlanguage, setEnglishlanguage] = useState(true);
   const [filterSelected, setFilterSelected] = useState("");
   const [selectedFilterDetails, setSelectedFilterDetails] = useState({});
   const [filterInputs, setFilterInputs] = useState([]);
@@ -557,7 +634,75 @@ const GroupFilters = ({
   const [filterType, setFilterType] = useState("transcriptome");
   const [selectDefaultValue, setSelectDefaultValue] = useState("0");
   const preDefienedGroups1 = preDefienedGroups;
+
+  useEffect(() => {
+    if (context["locale"] === "kr-KO") {
+      setKoreanlanguage(true);
+      setEnglishlanguage(false);
+    } else {
+      setKoreanlanguage(false);
+      setEnglishlanguage(true);
+    }
+  });
   if (viz_type === "volcono" || viz_type === "survival") {
+
+    if(koreanlanguage){
+      filterChoices = [
+        {
+          type: "number",
+          id: "bmi_vl",
+          name: "체질량지수(BMI)",
+          input: "number",
+        },
+        {
+          type: "number",
+          name: "진단 시 나이",
+          id: "diag_age",
+          input: "number",
+        },
+        { type: "dropdown", name: "흡연 정보", id: "smok_yn" },
+        {
+          type: "number",
+          name: "초경 나이",
+          id: "mena_age",
+          input: "number",
+        },
+        {
+          type: "number",
+          name: "수유기간",
+          id: "feed_drtn_mnth",
+          input: "number",
+        },
+        {
+          type: "dropdown",
+          name: "T Stage",
+          id: "t_category",
+          input: "number",
+        },
+        {
+          type: "dropdown",
+          name: "N Stage",
+          id: "n_category",
+          input: "number",
+        },
+        {
+          type: "dropdown",
+          name: "HER2 점수",
+          id: "her2_score",
+          input: "number",
+        },
+        { type: "dropdown", name: "세포증식지수(Ki-67)", id: "ki67_score", input: "number" },
+        {
+          type: "number",
+          name: "재발이 확인되기까지의 시간",
+          id: "rlps_cnfr_drtn",
+          input: "number",
+        },
+      ];
+    }
+    else{
+
+    
     filterChoices = [
       {
         type: "number",
@@ -610,6 +755,11 @@ const GroupFilters = ({
         input: "number",
       },
     ];
+    
+  }
+
+
+
     if (viz_type === "survival") {
       filterChoices = [
         {
