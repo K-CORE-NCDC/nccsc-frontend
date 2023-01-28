@@ -75,7 +75,7 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
         xLabel='Time (in month)'
         showLegends={true}
         legendPosition='top-right'
-        yLabel='Recurrence free survival(%)'
+        yLabel='Survival(%)'
         interpolate="step-before"
         pointRadius={1}
         onPointHover={(e) => {

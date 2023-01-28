@@ -12,6 +12,7 @@ import { useHistory } from 'react-router-dom'
 import ExampleUserTable from "../TableDisplay/cellColorTable";
 import DataTable from 'react-data-table-component';
 import { Context } from "../../../../wrapper";
+import {FormattedMessage} from 'react-intl';
 
 import config from "../../../../config";
 import CircosPlotGuidelines from "../GuideLines/CircosPlotGuidelines";
@@ -30,6 +31,7 @@ import CNVGuidelinesKorean from "../GuideLines/CNVGuidelinesKorean"
 import BoxPlotGuidelines from "../GuideLines/BoxPlotGuidelines";
 import BoxPlotGuidelinesKorean from "../GuideLines/BoxPlotGuidelinesKorean";
 import CorrelationGuidelines from "../GuideLines/CorrelationGuidelines";
+import CorrelationGuidelinesKorean from "../GuideLines/CorrelationGuidelinesKorean"
 import OncoprintGuidelinesKorean from "../GuideLines/OncoprintGuidelinesKorean";
 import LollipopplotGuidelinesKorean from "../GuideLines/LollipopGuidelinesKorean";
 import HeatMapGuidelinesKorean from "../GuideLines/HeatmapGuidelinesKorean";
@@ -673,19 +675,18 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
                 </button>
               </div>
               <div className="flex">
-                <div>Project Name:</div>
+                <div><FormattedMessage id="ProjectName" defaultMessage="Project Name" />:</div>
                 <div className="mb-4">
                   <input ref={projectNameRef} onChange={(e) => setProjectName(e.target.value)} value={projectName} className={` ${borderRed ? "border-red-400" : ""} ml-10 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} required={true} id="project" type="text" placeholder="Project Name" />
                 </div>
               </div>
               {/* <div className="pb-3">{selectedFiles ? <h2> Selected Files: <b>{selectedFiles.join(', ')}</b></h2> : ""}</div> */}
-              <h2>Upload</h2>
+              <h2><FormattedMessage id="Upload" defaultMessage="Upload" /></h2>
             </div>
             {initialInputState}
             {state}
             <div className="relative w-full col-span-12 text-center">
               <button onClick={resetStates} className="capitalize bg-white  w-80 h-20  mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded">
-                Reset
               </button>&nbsp;&nbsp;&nbsp;&nbsp;
               <button className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded ${disableUploadButton ? 'bg-opacity-10' : ''}`}
                 onClick={formSubmitButtonActions}
@@ -743,6 +744,7 @@ function SampleDataTable() {
 
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const [Englishlanguage, setEnglishlanguage] = useState(true);
+  const [icon, setIcon] = useState(true);
   const context = useContext(Context);
   
   useEffect(() => {
@@ -783,6 +785,7 @@ function SampleDataTable() {
       ['Correlation', true, false, true, false, false, true, false, false]
     ],
     componets:[CircosPlotGuidelines,OncoprintGuidelines,LollipopGuidelines,VolcanoPlotGuidelines,HeatmapGuideliens,SurvivalGuidelines,FusionPlotGuidelines,CNVGuidelines,BoxPlotGuidelines,CorrelationGuidelines]
+
   }
   return (
     <div className="flex flex-col">
@@ -823,8 +826,9 @@ function SampleDataTable() {
                     
                     {row.map((cellData, cellIndex) => {
                       if (cellIndex === 0) {
+                        
                         return (
-                          <td trindex={index} key={`${index}-${cellIndex}-${cellData}`+ Math.random()*100} className="px-6 py-4 whitespace-nowrap border" >
+                         <td trindex={index} key={`${index}-${cellIndex}-${cellData}`+ Math.random()*100} className="px-6 py-4 whitespace-nowrap border" >
                             <div trindex={index} className="capitalize text-lg text-gray-900" onClick={(e)=>{
                                 setIndex(index)
                                 for( let i = 0; i<=9;i++){
@@ -838,14 +842,31 @@ function SampleDataTable() {
                                     let ele = document.getElementById(`hidden${i}`)
                                     if (ele.classList.contains('hidden')){
                                       ele.classList.remove('hidden');
+                                      setIcon(true)
                                     }
                                     else if (!ele.classList.contains('hidden')){
+                                      setIcon(false)
                                       ele.classList.add('hidden');
                                     }
                                   }
                                  
                               }
-                              }}>{`${cellData}`}
+                              }}>
+                                {
+                                  icon === true ?  <div className="d-flex flex-row">
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                   <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                   </svg>
+                                   {`${cellData}`}
+                                  </div> 
+                                  :
+                                  <div className="d-flex flex-row">
+                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                  </svg>
+                                  {`${cellData}`}
+                                  </div>
+                                } 
                               </div>
                           </td>
                         )
@@ -898,7 +919,8 @@ function SampleDataTable() {
                       
                   }
                   {
-                    index === 9 && <td colSpan={9}><CorrelationGuidelines/></td>
+                      index === 9 && (Englishlanguage ? <td colSpan={9}> <CorrelationGuidelines/></td> :  <td colSpan={9}> <CorrelationGuidelinesKorean/></td>)
+                      
                   }
                   </tr>
                   </>
@@ -943,7 +965,7 @@ function ModalTest({ modalStateButton, setShowModalFunction }) {
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                   <h6 className="font-semibold">
-                    File Type Description
+                  <FormattedMessage id="FileTypeDescription" defaultMessage="File Type Description" />
                   </h6>
                 </div>
                 {/*body*/}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment, useRef } from 'react'
+import React, { useState, useEffect, Fragment, useRef, useContext } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import HeatmapNewCmp from '../../Common/testH'
 import { getHeatmapInformation } from '../../../actions/api_actions'
@@ -11,8 +11,12 @@ import { ZoomInIcon } from '@heroicons/react/solid';
 import Multiselect from 'multiselect-react-dropdown';
 import KmeanCmp from '../../Common/K_mean';
 import {FormattedMessage} from 'react-intl';
+import { Context } from "../../../wrapper";
 
 export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, setToFalseAfterScreenCapture }) {
+  const context = useContext(Context);
+  const [koreanlanguage, setKoreanlanguage] = useState(false);
+  const [Englishlanguage, setEnglishlanguage] = useState(true);
   const reference = useRef()
   const dispatch = useDispatch()
   const [activeCmp,setActiveCmp] = useState(false)
@@ -35,7 +39,15 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const [inSufficientData, setInSufficientData] = useState(true)
   const [renderNoContent, setRenderNoContent] = useState(false)
   const [renderHeatmap, setRenderHeatmap] = useState(true)
-
+  useEffect(() => {
+    if (context["locale"] === "kr-KO") {
+      setKoreanlanguage(true);
+      setEnglishlanguage(false);
+    } else {
+      setKoreanlanguage(false);
+      setEnglishlanguage(true);
+    }
+  });
 
 const diag_age = (vl)=>{
   let n = parseInt(vl)
@@ -80,11 +92,20 @@ const bim_vl = (vl)=>{
   }
 
   useEffect(()=>{
-    if(inputJson['filterChoices']){
-      let f = inputJson['filterChoices']
-      setOptionChoices(f)
+    if(koreanlanguage){
+
+      if(inputJson['filterChoicesKorean']){
+        let f = inputJson['filterChoicesKorean']
+        setOptionChoices(f)
+      }
+    }else{
+      
+      if(inputJson['filterChoices']){
+        let f = inputJson['filterChoices']
+        setOptionChoices(f)
+      }
     }
-  },[inputJson['filterChoices']])
+  },[inputJson['filterChoices'],koreanlanguage])
 
   useEffect(() => {
     if (inputData) {
@@ -540,7 +561,7 @@ normal_button += " border duration-200 ease-in-out border-teal-600 transition px
               <div className='mx-5 flex-wrap text-right'>
                 {inputGene &&
                   <>
-                  <label>Select Gene</label>
+                  <label><FormattedMessage  id = "Select Gene" defaultMessage='Select Gene'/></label>
                   <select value={selectedGene[0]} onChange={e=>setGene(e)} className="w-full border bg-white rounded px-3 py-2 outline-none text-gray-700" >
                     {inputGene}
                   </select>

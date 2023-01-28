@@ -519,7 +519,10 @@ export default function DataCircos({
                   onClick={oncoImagesClickFunction}
                   disabled = {project_id!== undefined ? true:false}
                 >
-                  Pathological images
+                  <FormattedMessage
+                      id="Cir_choose_sample"
+                      defaultMessage="Pathological images"
+                    />
                 </button>
               </div>
               <div className="p-3 mt-6">
@@ -529,7 +532,10 @@ export default function DataCircos({
                   onClick={timelineGraphClickFunction}
                   disabled= {project_id!== undefined ? true:false}
                 >
-                  F/U Timeline
+                   <FormattedMessage
+                      id="F/U Timeline"
+                      defaultMessage="F/U Timeline"
+                    />
                 </button>
               </div>
               <div className="p-3 mt-6">
@@ -538,7 +544,10 @@ export default function DataCircos({
                   className="bg-main-blue hover:bg-blue-700  xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40"
                   onClick={ReportDataFunction}
                 >
-                  Report
+                  <FormattedMessage
+                      id="Report"
+                      defaultMessage="Report"
+                    />
                 </button>
               </div>
             </div>

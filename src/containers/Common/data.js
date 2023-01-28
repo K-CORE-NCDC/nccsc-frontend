@@ -348,12 +348,37 @@ let filterChoices = [
     {'name': 'Time until relapse confirmed', 'id': 'rlps_cnfr_drtn',},
     {'name': 'Cancer Recurrence', 'id': 'rlps_yn' }
 ]
+let filterChoicesKorean = [
+  {'name': '성별', 'id': 'sex_cd'},
+  {'name': '진단 시 나이', 'id': 'diag_age'},
+  {'id': 'bmi_vl', 'name': '체질량지수(BMI)'},
+  {'id': 'bila_cncr_yn', 'name': '양측성 유방암 여부' },
+  {'name': '흡연 정보', 'id': 'smok_curr_yn' },
+  {'name': '음주 정보', 'id': 'drnk_yn',  },
+  {'name': '유방암 가족력 ', 'id': 'fmhs_brst_yn' },
+  {'name': '초경 나이', 'id': 'mena_age'},
+  {'name': '폐경 여부', 'id': 'meno_yn' },
+  {'name': '출산 여부', 'id': 'delv_yn' },
+  {'name': '모유수유경험 유무', 'id': 'feed_yn' },
+  {'name': '수유기간', 'id': 'feed_drtn_mnth'},
+  {'name': '경구피임약 사용 유무', 'id': 'oc_yn' },
+  {'name': '호르몬대체요법(HRT) 유무', 'id': 'hrt_yn' },
+  {'name': 'T Stage', 'id': 't_category'  },
+  {'name': 'N Stage', 'id': 'n_category' },
+  {'name': 'ER 검사 결과', 'id': 'er_score' },
+  {'name': 'PR 검사 결과', 'id': 'pr_score' },
+  {'name': 'HER2 점수', 'id': 'her2_score' },
+  {'name': '세포증식지수(Ki-67)', 'id': 'ki67_score'},
+  {'name': '재발이 확인되기까지의 시간', 'id': 'rlps_cnfr_drtn',},
+  {'name': '재발 유무', 'id': 'rlps_yn' }
+]
 let inputJson = {
   "clinicalColor":clinicalColor,
   'clinicalColorGradient':clinicalColorGradient,
   "filterBoxes":filterBoxes,
   "gene_selection":gene_selection,
-  "filterChoices":filterChoices
+  "filterChoices":filterChoices,
+  "filterChoicesKorean":filterChoicesKorean
 }
 
 

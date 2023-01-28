@@ -4,6 +4,7 @@ import React, {
   useRef,
   useCallback,
   Fragment,
+  useContext
 } from "react";
 import { MenuIcon, AdjustmentsIcon } from "@heroicons/react/outline";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,6 +13,7 @@ import Filter from "../Common/filter";
 import ConfirmDownload from "../Common/downloadConfirmation";
 import { Charts } from "./Charts/";
 import genes from "../Common/gene.json";
+import { Context } from "../../wrapper";
 import {
   getBreastKeys,
   getUserDataProjectsTableData,
@@ -24,6 +26,11 @@ import { FormattedMessage } from "react-intl";
 import { element } from "prop-types";
 
 export default function DataVisualization() {
+  const context = useContext(Context);
+  const [koreanlanguage, setKoreanlanguage] = useState(false);
+  const [Englishlanguage, setEnglishlanguage] = useState(true);
+  const [userDefinedList, setUserDefinedList] = useState("User-Defined List")
+  const [enterGenes, setEnterGenes] = useState("Enter Genes")
   const elementRef = useRef(null);
 
   const [state, setState] = useState({ genes: [], filter: "", type: "" });
@@ -61,6 +68,27 @@ export default function DataVisualization() {
       setScreenCapture(true);
     }
   };
+
+  useEffect(() => {
+    if (context["locale"] === "kr-KO") {
+      setKoreanlanguage(true);
+      setEnglishlanguage(false);
+    } else {
+      setKoreanlanguage(false);
+      setEnglishlanguage(true);
+    }
+  });
+
+  useEffect(()=>{
+    if(koreanlanguage){
+      setUserDefinedList( "사용자 정의")
+      setEnterGenes("유전자 입력")
+    }
+    else{
+      setUserDefinedList( "User-Defined List")
+      setEnterGenes("Enter Genes")
+    }
+  })
 
   const setScreenCaptureFunction = (capture) => {
     // setScreenCapture(capture)
@@ -527,7 +555,8 @@ export default function DataVisualization() {
                         value="user-defined"
                         placeholder="Enter your Genes"
                       >
-                        User-Defined List
+                        
+                        {userDefinedList}
                       </option>
                       <option
                         className="xs:text-sm lg:text-xl"
@@ -665,7 +694,7 @@ export default function DataVisualization() {
                       id="genes"
                       className="btn_input_height lg:w-full sm:w-13 xs:w-56 p-3 xs:text-sm lg:text-xl border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 xs:h-14 lg:h-16"
                       name="genes"
-                      placeholder="Enter Genes"
+                      placeholder={enterGenes}
                       onChange={(e) => {
                         let abc = document.getElementById("gene_type").value;
                         if (abc === "user-defined") {

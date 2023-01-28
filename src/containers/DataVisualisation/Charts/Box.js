@@ -338,7 +338,7 @@ let takeScreenshot = async()=>{
               className="rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 sm:p-2 lg:px-10 md:px-10 sm:px-8 sm:w-48 md:w-56  lg:w-56 sm:text-xl lg:text-2xl sm:h-20 lg:h-24 rounded
               font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 ease-in-out transition xs:p-3 xs:text-sm"
             >
-             Tumor vs Normal
+             <FormattedMessage id="TumorVsNormal" defaultMessage = "Tumor Vs Normal" />
             </button>
             <button
               onClick={(e) => changeType(e, "mutation")}
@@ -346,7 +346,7 @@ let takeScreenshot = async()=>{
               className="rounded-l-none  hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-2 sm:w-40 md:w-48 lg:w-56 sm:text-xl lg:text-2xl sm:h-20 lg:h-24 rounded font-bold cursor-pointer hover:bg-teal-200
               bg-teal-100 border duration-200 ease-in-out border-teal-600 transition px-10 xs:p-3 xs:text-sm"
             >
-              Variant type
+              <FormattedMessage id="VariantType" defaultMessage = "Variant Type" />
             </button>
           </div>
         </div>
@@ -420,7 +420,7 @@ let takeScreenshot = async()=>{
       ) : (
         boxJson && (
           <>
-          {tableType && <p className="text-left ml-8 my-8">{tableType === 'proteome' ? `Proteome expression of Tumor samples vs Normal samples`:`Proteome expression by variant type number (Missense mutation, Nonsense mutation, Splice site, Frame-shift insertion, Frame-shift deletion, In-frame insertion, In-frame deletion`}</p> }
+          {tableType && <p className="text-left ml-8 my-8">{tableType === 'proteome' ? <FormattedMessage id="BoxTvNDesc" defaultMessage="Proteome expression of Tumor samples vs Normal samples" />:<FormattedMessage id="BoxVariantDesc" defaultMessage="Proteome expression by variant type number (Missense mutation, Nonsense mutation, Splice site, Frame-shift insertion, Frame-shift deletion, In-frame insertion, In-frame deletion" /> }</p> }
             {showBoxPlot && (
               <BoxPlot
                 view_type={viewType}

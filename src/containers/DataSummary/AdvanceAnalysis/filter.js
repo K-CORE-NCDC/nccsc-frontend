@@ -614,14 +614,15 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
           className="bg-white  lg:w-80 sm:w-52  lg:h-20 sm:h-16  hover:text-white mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded"
           onClick={reset}
         >
-          Reset
+          <FormattedMessage id='Reset' defaultMessage={' Reset '}/>
+          
         </button>
         &nbsp;&nbsp;&nbsp;&nbsp;
         <button
           className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 lg:h-20 sm:w-52 sm:h-16 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
           onClick={sendFilter}
         >
-          Search
+          <FormattedMessage id='Search' defaultMessage={' Search '}/>
         </button>
         <button
           className="float-right lg:hidden md:hidden bg-blue-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 my-4 mr-4 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"

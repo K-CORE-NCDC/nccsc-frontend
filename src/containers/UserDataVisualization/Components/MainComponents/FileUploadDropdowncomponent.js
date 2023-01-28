@@ -8,6 +8,7 @@ import {
 } from "../../../../actions/api_actions";
 import swal from "sweetalert";
 import LoaderCmp from "../../../Common/Loader";
+import { FormattedMessage } from "react-intl";
 
 function FileUploadDropdowncomponent({ updateComponentNumber }) {
   const [selectClinincalFilterColumn, setSelectClinincalFilterColumn] =
@@ -390,7 +391,7 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
               updateComponentNumber(0);
             }}
           >
-            Back
+             <FormattedMessage id="Back" defaultMessage="Back" />
           </button>
         </div>
         <div className="">
@@ -401,7 +402,7 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
               sendColumnsData(responseData, clinicalfileresponse["res"].length);
             }}
           >
-            send
+            <FormattedMessage id="Send" defaultMessage="Send" />
           </button>
         </div>
       </div>

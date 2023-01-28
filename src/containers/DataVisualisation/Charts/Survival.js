@@ -327,7 +327,7 @@ export default function DataSurvival({
         <div className="flex flex-col p-12" key={"cox"}>
           <div className="bg-white  text-left  shadow-lg" key={"co"}>
             <h3 className="border-b border-gray-200 p-8 ">
-              Co-efficient Table
+              <FormattedMessage id="Co-efficientTable" defaultMessage = "Co-efficient Table" />
             </h3>
             <table className="table w-full">
               <thead className="border-b">
@@ -490,7 +490,7 @@ export default function DataSurvival({
           <div className="flex flex-col">
             <div className="flex flex-row">
               <h3 className="p-4 ml-1 text-left text-bold xs:text-xl text-blue-700">
-                Choose Model
+                <FormattedMessage id="ChooseModel" defaultMessage = "Choose Model" />
               </h3>
             </div>
             <div className="flex flex-row">
@@ -574,7 +574,7 @@ export default function DataSurvival({
                       </div>
                     )}
                   <h6 className="ml-1 mt-1 p-4 text-left text-bold xs:text-xl text-blue-700">
-                    Choose Filter Type
+                    <FormattedMessage id="ChooseFilterType" defaultMessage = "Choose Filter Type" />
                   </h6>
                   <div className="m-1 flex flex-row justify-around">
                     <button
@@ -771,7 +771,7 @@ export default function DataSurvival({
                                 : nonSelectedCss
                             }
                           >
-                            Select All
+                            <FormattedMessage id="SelectAll" defaultMessage = "Select All" />
                           </button>
                           <button
                             onClick={(e) => selectAllCox(e, "reset")}
@@ -781,7 +781,10 @@ export default function DataSurvival({
                                 : nonSelectedCss
                             }
                           >
-                            Reset
+                            <FormattedMessage
+                            id="Reset_volcano"
+                            defaultMessage="Reset"
+                          />
                           </button>
                         </div>
                         <div className="flex flex-row gap-5">
@@ -789,7 +792,10 @@ export default function DataSurvival({
                             onClick={(e) => submitCox(e, "cox")}
                             className="w-full mt-5 rounded-r-none  hover:scale-110 xs:h-14 xs:text-sm focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition"
                           >
-                            Submit
+                            <FormattedMessage
+                            id="Submit_volcano"
+                            defaultMessage="Submit"
+                          />
                           </button>
                         </div>
                       </div>
