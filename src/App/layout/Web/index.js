@@ -633,7 +633,7 @@ export default function Web(props) {
       <Suspense fallback={<Loader />}>
         <Switch>
           {menu}
-          <Redirect  from="/" to="/introduce" />
+          <Redirect  from="/" to="/" />
         </Switch>
       </Suspense>
       {/* fixed bottom-0 */}
