@@ -97,7 +97,7 @@ function Vcfmaf() {
                                                     block
                                                     w-full
                                                     px-3
-                                                    py-1.5
+                                                    py-1.5VcfMafFile
                                                     text-md
                                                     text-gray-700
                                                     bg-white bg-clip-padding
@@ -106,8 +106,7 @@ function Vcfmaf() {
                                                     transition
                                                     ease-in-out
                                                     m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" 
-                                                    accept=".vcf, " type="file" id="VcfMafFile" onChange={(e)=>VcfMafTool(e)} />
-                                                    
+                                                    accept=".vcf, " type="file" id="VcfMafFile" onChange={(e)=>VcfMafTool(e)} /> 
                                             </div>
                                         </div>
                                         <button

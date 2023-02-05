@@ -264,7 +264,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
           ]
           tmp.push(
             <div className='p-3' key='total_site'>
-              <span>Total Site:</span>
+              <FormattedMessage id='TotalSite' defaultMessage="Total Site :"  />
             </div>
           )
           colors = phospo_colors
@@ -307,7 +307,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
               </div>
             )
           }
-          tmp.push(<div className='p-3' key={'major'}> / Major Site:</div>)
+          tmp.push(<div className='p-3' key={'major'}> <FormattedMessage id="MajorSite" defaultMessage=" / Major Site :" /></div>)
           for (var key in lollipopLegenedTmp) {
             tmp.push(<div className='p-3' key={key}>
               <span ><strong>{key + "(" + lollipopLegenedTmp[key].length + ")"}</strong></span>

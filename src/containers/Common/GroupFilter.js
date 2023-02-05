@@ -28,7 +28,7 @@ let filterChoices = [
   },
   { type: "boolean", name: "Smoking Status", id: "smok_curr_yn" },
   { type: "boolean", name: "Former Smoker", id: "smok_yn" },
-  { type: "boolean", name: "Alcohol Consuption", id: "drnk_yn", value: "Yes" },
+  { type: "boolean", name: "Alcohol Consumption", id: "drnk_yn", value: "Yes" },
   {
     type: "boolean",
     name: "Family History of Breast Cancer",
@@ -82,7 +82,7 @@ const filterChoicesCustom = [
     name: "Diagnosis of Bilateral Breast Cancer",
   },
   { type: "boolean", name: "Smoking Status", id: "smok_yn" },
-  { type: "boolean", name: "Alcohol Consuption", id: "drnk_yn", value: "Yes" },
+  { type: "boolean", name: "Alcohol Consumption", id: "drnk_yn", value: "Yes" },
   {
     type: "boolean",
     name: "Breast cancer family history",
@@ -432,7 +432,7 @@ export const PreDefienedFilters = ({
     }
     else{
       setSelectedFilterType({
-        details: filterChoicesCustom[parseInt(key)],
+        details:  filterChoicesCustom[parseInt(key)],
         index: key,
       });
     }
@@ -645,8 +645,8 @@ const GroupFilters = ({
     }
   });
   if (viz_type === "volcono" || viz_type === "survival") {
-
     if(koreanlanguage){
+      console.log();
       filterChoices = [
         {
           type: "number",
@@ -760,60 +760,7 @@ const GroupFilters = ({
 
 
 
-    if (viz_type === "survival") {
-      filterChoices = [
-        {
-          type: "number",
-          id: "bmi_vl",
-          name: "Body Mass Index",
-          input: "number",
-        },
-        {
-          type: "number",
-          name: "Age Of Diagonosis",
-          id: "diag_age",
-          input: "number",
-        },
-        { type: "dropdown", name: "Smoking Status", id: "smok_yn" },
-        {
-          type: "number",
-          name: "First Menstural Age",
-          id: "mena_age",
-          input: "number",
-        },
-        {
-          type: "number",
-          name: "Duration of Breastfeeding(month)",
-          id: "feed_drtn_mnth",
-          input: "number",
-        },
-        {
-          type: "dropdown",
-          name: "T Category",
-          id: "t_category",
-          input: "number",
-        },
-        {
-          type: "dropdown",
-          name: "N Category",
-          id: "n_category",
-          input: "number",
-        },
-        {
-          type: "dropdown",
-          name: "HER2 Score",
-          id: "her2_score",
-          input: "number",
-        },
-        { type: "number", name: "ki67", id: "ki67_score", input: "number" },
-        {
-          type: "number",
-          name: "Relapse Duration(month)",
-          id: "rlps_cnfr_drtn",
-          input: "number",
-        },
-      ];
-    }
+    
 
     preDefienedGroups1["smok_yn"] = [
       { label: "No Smoking", value: "smok_yn||N" },
@@ -1803,11 +1750,26 @@ export const PreDefienedFiltersSurvival = ({
   groupFilters,
   from,
 }) => {
+  
   const [selectedFilterType, setSelectedFilterType] = useState({});
   const [filterGroupsHtml, setFilterGroupsHtml] = useState([]);
   const [filters, setFilters] = useState({});
   const [resetClicked, setResetClicked] = useState(false);
   const [isGroupFilterProp, setIsGroupFilterProp] = useState(false);
+
+  const context = useContext(Context);
+  const [koreanlanguage, setKoreanlanguage] = useState(false);
+  const [Englishlanguage, setEnglishlanguage] = useState(true);
+
+  useEffect(() => {
+    if (context["locale"] === "kr-KO") {
+      setKoreanlanguage(true);
+      setEnglishlanguage(false);
+    } else {
+      setKoreanlanguage(false);
+      setEnglishlanguage(true);
+    }
+  });
 
   let preDefienedGroups1 = {
     diag_age: [
@@ -1982,7 +1944,7 @@ export const PreDefienedFiltersSurvival = ({
   const filterTypeDropdownSelection = (event) => {
     let key = event.target.value;
     setSelectedFilterType({
-      details: filterChoicesCustom[parseInt(key)],
+      details: koreanlanguage ? filterChoicesCustomKorean[parseInt(key)]  : filterChoicesCustom[parseInt(key)],
       index: key,
     });
   };
@@ -2111,7 +2073,13 @@ export const PreDefienedFiltersSurvival = ({
             className="w-full lg:p-4 xs:p-2 border lg:text-xl xs:text-sm focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3"
           >
             <option value=""></option>
-            {filterChoicesCustom.map((type, index) => (
+
+            {Englishlanguage && filterChoicesCustom.map((type, index) => (
+              <option className="text-lg" key={type.name} value={index}>
+                {type.name}
+              </option>
+            ))}
+             {koreanlanguage && filterChoicesCustomKorean.map((type, index) => (
               <option className="text-lg" key={type.name} value={index}>
                 {type.name}
               </option>
@@ -2120,7 +2088,12 @@ export const PreDefienedFiltersSurvival = ({
         )}
         {resetClicked === false && isGroupFilterProp === true && (
           <h6 className="border p-4">
-            {filterChoicesCustom.map((e) => {
+            {Englishlanguage && filterChoicesCustom.map((e) => {
+              if (groupFilters.column === e.id) {
+                return e.name;
+              }
+            })}
+             { koreanlanguage && filterChoicesCustomKorean.map((e) => {
               if (groupFilters.column === e.id) {
                 return e.name;
               }

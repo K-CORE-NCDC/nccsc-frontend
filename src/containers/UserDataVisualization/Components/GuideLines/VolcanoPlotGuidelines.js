@@ -77,7 +77,7 @@ const CircosPlot = (plot_type) => {
         well as ‘sample_id’.</p>
         <ol className="list-decimal px-10 py-2">
           <li className="py-1">
-            <span className="text-red-400">Sample Id</span> &nbsp; should match
+            <span className="text-red-400">sample_id</span> &nbsp; should match
             clinical information.
           </li>
           <li className="py-1">
@@ -103,7 +103,7 @@ const CircosPlot = (plot_type) => {
         well as ‘sample_id’.</p>
         <ol className="list-decimal px-10 py-2">
           <li className="py-1">
-            <span className="text-red-400">Sample Id</span> &nbsp; should match
+            <span className="text-red-400">sample_id</span> &nbsp; should match
             clinical information.
           </li>
           <li className="py-1">

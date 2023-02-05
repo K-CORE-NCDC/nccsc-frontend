@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FormattedMessage } from "react-intl";
 import "../../styles/clustergram.css";
 import {
@@ -12,7 +12,9 @@ import {
 } from "../../actions/api_actions";
 import { useSelector, useDispatch } from "react-redux";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
+import { Context } from "../../wrapper";
 import swal from 'sweetalert';
+
 
 const AlphaNumRegex = new RegExp("^[a-zA-Z0-9]*$");
 const AlphaNumRegexwithNoSpecialCharecters = new RegExp("(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{2,}$");
@@ -61,6 +63,19 @@ const MemberShip = ({ changestep }) => {
     }
   };
 
+  const [koreanlanguage, setKoreanlanguage] = useState(false);
+  const [Englishlanguage, setEnglishlanguage] = useState(true);
+  const context = useContext(Context);
+  
+  useEffect(() => {
+    if (context["locale"] === "kr-KO") {
+      setKoreanlanguage(true);
+      setEnglishlanguage(false);
+    } else {
+      setKoreanlanguage(false);
+      setEnglishlanguage(true);
+    }
+  });
   let initial_state = {
     id: "",
     password: "",
@@ -509,6 +524,14 @@ const MemberShip = ({ changestep }) => {
   };
 
   useEffect(() => {
+    let instituteOptionsKorean = [
+      '정부기관',
+      '대학기관',
+      '연구센터',
+      '병원',
+      '산업',
+      '그 외'
+    ]
     let instituteOptions = [
       "GOVERNMENT",
       "UNIVERSITY",
@@ -521,12 +544,12 @@ const MemberShip = ({ changestep }) => {
     for (let i = 0; i < instituteOptions.length; i++) {
       html.push(
         <option key={instituteOptions[i]} value={instituteOptions[i]}>
-          {instituteOptions[i]}
+          {koreanlanguage ? instituteOptionsKorean[i] : instituteOptions[i]}
         </option>
       );
     }
     setInstituteDropdown(html);
-  }, []);
+  }, [koreanlanguage, Englishlanguage]);
 
   useEffect(() => {
     if (regitserResponse) {
@@ -595,12 +618,12 @@ const MemberShip = ({ changestep }) => {
       <section className="mt-10 flex flex-col items-center justify-center" >
         <div>
           <span className="text-6xl font-bold text-gray-800">
-            Join membership
+          {koreanlanguage ? '회원가입': 'Join membership'}
           </span>
         </div>
         <div className="my-14">
           <h1 className="font-light text-3xl text-gray-800">
-            Please use the service after registering as a member.
+            {koreanlanguage ? '회원가입 후 서비스를 이용해주세요.' : 'Please use the service after registering as a member.'}
           </h1>
         </div>
         <div className="my-6">
@@ -611,7 +634,7 @@ const MemberShip = ({ changestep }) => {
         <div className="border-t-2 border-gray-600 w-4/6" >
           <div className="grid grid-cols-4">
             <div className="col-span-1 bg-gray-200 bg-gray-200 p-10 border-b-2 border-gray-300">
-              <span className="font-bold">ID</span>
+              <span className="font-bold">{koreanlanguage ? '아이디' : 'ID'}</span>
               <span className="text-red-500">*</span>
             </div>
             <div className="col-span-3 p-8 bg-white border-b-2 border-gray-300  gap-3">
@@ -634,7 +657,7 @@ const MemberShip = ({ changestep }) => {
                     onClick={chekcId}
                     className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
                   >
-                    Check Id
+                    {koreanlanguage ?"아이디 확인" : "Check Id"}
                   </button>
                 </div>
               </div>
@@ -664,7 +687,7 @@ const MemberShip = ({ changestep }) => {
               </div>
             </div>
             <div className="col-span-1 bg-gray-200 bg-gray-200 p-8 border-b-2 border-gray-300">
-              <span className="font-bold">Password</span>
+              <span className="font-bold">{koreanlanguage ? '비밀번호' : 'Password'}</span>
               <span className="text-red-500">*</span>
             </div>
             <div className="col-span-3 p-8 bg-white border-b-2 border-gray-300">
@@ -710,7 +733,7 @@ const MemberShip = ({ changestep }) => {
               </div>
             </div>
             <div className="col-span-1 bg-gray-200 bg-gray-200 p-8 border-b-2 border-gray-300">
-              <span className="font-bold">Verify password</span>
+              <span className="font-bold">{koreanlanguage ? '비밀번호 확인' : 'Verify Password'}</span>
               <span className="text-red-500">*</span>
             </div>
             <div className="col-span-3 p-8 bg-white border-b-2 border-gray-300">
@@ -735,7 +758,7 @@ const MemberShip = ({ changestep }) => {
               )}
             </div>
             <div className="col-span-1 bg-gray-200 bg-gray-200 p-8 border-b-2 border-gray-300">
-              <span className="font-bold">Name</span>
+              <span className="font-bold">{koreanlanguage ? '이름' : 'Name'}</span>
               <span className="text-red-500">*</span>
             </div>
             <div className="col-span-3 p-8 bg-white border-b-2 border-gray-300">
@@ -759,7 +782,7 @@ const MemberShip = ({ changestep }) => {
             </div>
 
             <div className="col-span-1 bg-gray-200 bg-gray-200 p-8 border-b-2 border-gray-300">
-              <span className="font-bold">ORGANIZATION</span>
+              <span className="font-bold">{koreanlanguage ? '기관' : 'ORGANIZATION'}</span>
               <span className="text-red-500">*</span>
             </div>
             <div className="col-span-3 p-8 bg-white border-b-2 border-gray-300">
@@ -769,7 +792,7 @@ const MemberShip = ({ changestep }) => {
                   name="institute"
                   onChange={formSet}
                 >
-                  <option>--Select--</option>
+                  <option>{koreanlanguage ? "--선택--" : "--Select--"}</option>
                   {instituteDropdown}
                 </select>
               </div>
@@ -784,7 +807,7 @@ const MemberShip = ({ changestep }) => {
             </div>
 
             <div className="col-span-1 bg-gray-200 bg-gray-200 p-8 border-b-2 border-gray-300">
-              <span className="font-bold">Phone number</span>
+              <span className="font-bold">{koreanlanguage ? "휴대폰 번호": "Phone number"}</span>
               <span className="text-red-500">*</span>
             </div>
             <div className="col-span-3 p-8 bg-white border-b-2 border-gray-300 inline-flex gap-3">
@@ -811,7 +834,7 @@ const MemberShip = ({ changestep }) => {
               </div>
             </div>
             <div className="col-span-1 bg-gray-200 bg-gray-200 p-8 border-b-2 border-gray-300">
-              <span className="font-bold">E-mail</span>
+              <span className="font-bold">{koreanlanguage ? "이메일" : "E-mail"}</span>
               <span className="text-red-500">*</span>
             </div>
             <div className="col-span-3 p-8 bg-white border-b-2 border-gray-300 inline-flex">
@@ -879,14 +902,14 @@ const MemberShip = ({ changestep }) => {
                 onClick={checkEmailExist}
                 className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
               >
-                Check Email
+                {koreanlanguage ? "이메일 확인" : "Check Email"}
               </button>
             </div>
 
             {/* Verification Row */}
             <div className="col-span-1 bg-gray-200 bg-gray-200 p-8 border-b-2 border-gray-300">
               {/* <p>need to remove invsible</p> span*/}
-              <span className="font-bold">Verification</span>
+              <span className="font-bold">{koreanlanguage ?"인증": "Verification"}</span>
               <span className="text-red-500">*</span>
             </div>
 
@@ -901,7 +924,7 @@ const MemberShip = ({ changestep }) => {
                     className="mt-5"
                     onChange={formSet}
                   />&nbsp;
-                  <label htmlFor="mobile_verification">Mobile</label>
+                  <label htmlFor="mobile_verification">{koreanlanguage ? "휴대폰" : "Mobile"}</label>
                   <input
                     type="radio"
                     id="email_verification"
@@ -910,7 +933,7 @@ const MemberShip = ({ changestep }) => {
                     className="mt-5 ml-5"
                     onChange={formSet}
                   />&nbsp;
-                  <label htmlFor="email_verification">Email</label>
+                  <label htmlFor="email_verification">{koreanlanguage ? "이메일" : "Email"}</label>
                   <br />
                 </div>
 
@@ -929,7 +952,7 @@ const MemberShip = ({ changestep }) => {
                     onClick={(e) => verifyMobile(e)}
                     className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
                   >
-                    Verify Mobile
+                     {koreanlanguage ? "Verify Mobile" : "모바일 인증"}
                   </button>
                 )}
                 {verificationState ==="mobile" && ClickMobileverifyButton 
@@ -938,7 +961,7 @@ const MemberShip = ({ changestep }) => {
                       onClick={(e)=>checkMobileVerified(e)}
                       className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
                     >
-                      Check Verification</button>
+                    {koreanlanguage ? "Verify Mobile" : "확인 확인"}</button>
                   )
                 }
               </div>
@@ -948,7 +971,7 @@ const MemberShip = ({ changestep }) => {
                     className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded h-11"
                     onClick={(e) => verifyEmail(e)}
                   >
-                    Verify Email
+                    {koreanlanguage ? "이메일 확인" : "Verify Email"}
                   </button>
                 )}
               </div>
@@ -994,7 +1017,7 @@ const MemberShip = ({ changestep }) => {
             className="hover:bg-blue-700 text-white font-bold py-6 px-6 float-left rounded bg-NccBlue-700"
             onClick={gotopreviousStep}
           >
-            BACK
+            {koreanlanguage ? '뒤로가기' : 'Back'}
           </button>
 
           <button
@@ -1005,7 +1028,7 @@ const MemberShip = ({ changestep }) => {
             onClick={register_user}
           // disabled={form.isVerified === true ? false : true}
           >
-            Registration
+            {koreanlanguage ? '등록' : 'Registration'}
           </button>
         </div>
       </section >

@@ -73,7 +73,7 @@ return (
 <p>첫번째 (머리) 행은 ‘sample_id’ 와 각 유전정보의 이름으로 이루어집니다.</p>
 <ol className="list-decimal px-10 py-2 pt-8">
 <li className="py-1">
-<span className="text-red-400">Sample Id:</span> &nbsp; 는 임상정보와 일치해야 합니다.
+<span className="text-red-400">sample_id:</span> &nbsp; 는 임상정보와 일치해야 합니다.
 </li>
 <li className="py-1">
 <span className="text-red-400">gene_name: </span> &nbsp; 은 공식 유전자 심볼(HUGO) 형식으로 주어져야 합니다.
@@ -95,7 +95,7 @@ RNA 발현 값 (예. 24.74)
 <p>첫번째 (머리) 행은 ‘sample_id’ 와 각 유전정보의 이름으로 이루어집니다.</p>
 <ol className="list-decimal px-10 py-2">
 <li className="py-1">
-<span className="text-red-400">Sample Id</span> &nbsp; 는 임상정보와 일치해야 합니다.
+<span className="text-red-400">sample_id</span> &nbsp; 는 임상정보와 일치해야 합니다.
 </li>
 <li className="py-1">
 <span className="text-red-400">type : </span> &nbsp; 샘플의 타입.
