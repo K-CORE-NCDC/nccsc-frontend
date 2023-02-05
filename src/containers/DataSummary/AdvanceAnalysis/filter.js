@@ -611,7 +611,7 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
     <div>
       <div className="py-3 px-2 w-full col-span-2">
         <button
-          className="bg-white  lg:w-80 sm:w-52  lg:h-20 sm:h-16  hover:text-white mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded"
+          className="bg-white  lg:w-80 sm:w-52  lg:h-20 sm:h-16 mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded"
           onClick={reset}
         >
           <FormattedMessage id='Reset' defaultMessage={' Reset '}/>

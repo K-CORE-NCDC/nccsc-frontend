@@ -1,12 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import MemberShip from "./MemberShip";
 import TermsandConditions from "./TermsandConditions";
 import SigninComplete from "./SigninComplete";
 import "../../styles/SignupStyles.css";
 import { CheckCircleIcon } from "@heroicons/react/outline";
+import { Context } from "../../wrapper";
 const SignupComponent = () => {
   const [currentStep, setcurrentStep] = useState(0);
   const [widthofProgress, setwidthofprogress] = useState(0);
+
+  const [koreanlanguage, setKoreanlanguage] = useState(false);
+  const [Englishlanguage, setEnglishlanguage] = useState(true);
+  const context = useContext(Context);
+  
+  useEffect(() => {
+    if (context["locale"] === "kr-KO") {
+      setKoreanlanguage(true);
+      setEnglishlanguage(false);
+    } else {
+      setKoreanlanguage(false);
+      setEnglishlanguage(true);
+    }
+  });
 
   useEffect(() => {
     if (currentStep === 0) {
@@ -61,10 +76,10 @@ const SignupComponent = () => {
           <div
             className={`progress-step ${currentStep >= 0 ? "progress-step-active" : ""
               }`}
-            data-title="Terms"
+            data-title={koreanlanguage ? '이용약관' : 'Terms'}
           >
             {currentStep > 0 && <CheckCircleIcon></CheckCircleIcon>}
-            {currentStep == 0 && (
+            {currentStep === 0 && (
               <div className="stepNumber displayNumber">
                 <span>1</span>
               </div>
@@ -74,7 +89,7 @@ const SignupComponent = () => {
           <div
             className={`progress-step ${currentStep >= 1 ? "progress-step-active" : ""
               }`}
-            data-title="Registration"
+              data-title={koreanlanguage ? '등록' : 'Registration'}
           >
             {currentStep <= 1 && (
               <div className="stepNumber displayNumber">
@@ -87,7 +102,7 @@ const SignupComponent = () => {
           <div
             className={`progress-step ${currentStep >= 2 ? "progress-step-active" : ""
               }`}
-            data-title="Approval"
+              data-title={koreanlanguage ? '승인' : 'Approval'}
           >
             <div className="stepNumber displayNumber">
               <span>3</span>

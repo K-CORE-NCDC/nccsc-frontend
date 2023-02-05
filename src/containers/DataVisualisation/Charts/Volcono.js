@@ -115,6 +115,7 @@ export default function DataVolcono({
       if (Object.keys(volcanoJson).length > 0) {
         setActiveCmp(true);
         setData(volcanoJson);
+        console.log('Volcj',volcanoJson);
       }
       setTimeout(function () {
         setLoader(false);
@@ -134,6 +135,7 @@ export default function DataVolcono({
               Log2FC: parseFloat(item["log2(fold_change)"]),
               "-Log(Pvalue)": item["q_value"],
             });
+            console.log('item["q_value"]',item["q_value"]);
           } else {
             positiveCount += 1;
             positive.push({
@@ -285,7 +287,7 @@ export default function DataVolcono({
                       htmlFor="default-radio-1"
                       className="ml-2 text-md font-medium text-gray-900 dark:text-gray-300"
                     >
-                      <FormattedMessage id="Normal" defaultMessage="정상" />
+                      <FormattedMessage id="Normal" defaultMessage="Normal" />
                     </label>
                   </div>
                   <div className="flex-row items-center mb-4">
@@ -302,7 +304,7 @@ export default function DataVolcono({
                       htmlFor="default-radio-2"
                       className="ml-2 text-md font-medium text-gray-900 dark:text-gray-300"
                     >
-                      <FormattedMessage id="Tumor" defaultMessage="암" />
+                      <FormattedMessage id="Tumor" defaultMessage="Tumor" />
                     </label>
                   </div>
                   <div className="flex-row items-center mb-4">
@@ -319,7 +321,7 @@ export default function DataVolcono({
                       htmlFor="default-radio-3"
                       className="ml-2 text-md font-medium text-gray-900 dark:text-gray-300"
                     >
-                      <FormattedMessage id="TumorVsNormal" defaultMessage="정상 vs 암" />
+                      <FormattedMessage id="TumorVsNormal" defaultMessage="Normal vs Tumor" />
                     </label>
                   </div>
                 </div>
@@ -408,8 +410,8 @@ export default function DataVolcono({
             )}
             {/* <GroupFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} /> */}
             <div className="m-1 p-1 border border-black border-dashed">
-              <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left"><FormattedMessage id="Blue" defaultMessage = "Blue :" />{`Blue: Log2FC <= -1.5 & pvalue >= 0.05`}</p>
-              <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left"><FormattedMessage id="Red" defaultMessage = "Red :" />{`Log2FC >= 1.5 & pvalue >= 0.05`}</p>
+              <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left"><FormattedMessage id="Blue" defaultMessage = "Blue :" />{`Blue: Log2FC <= -1.5 & pvalue <= 0.05`}</p>
+              <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left"><FormattedMessage id="Red" defaultMessage = "Red :" />{`Log2FC >= 1.5 & pvalue <= 0.05`}</p>
               <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left">
               <FormattedMessage id="Grey" defaultMessage = "Grey :" /> Not significant gene
               </p>

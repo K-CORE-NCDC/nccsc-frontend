@@ -27,7 +27,7 @@ let filterChoices = [
   },
   { type: "boolean", name: "Smoking Status", id: "smok_curr_yn" },
   { type: "boolean", name: "Former Smoker", id: "smok_yn" },
-  { type: "boolean", name: "Alcohol Consuption", id: "drnk_yn", value: "Yes" },
+  { type: "boolean", name: "Alcohol Consumption", id: "drnk_yn", value: "Yes" },
   {
     type: "boolean",
     name: "Family History of Breast Cancer",
@@ -81,7 +81,7 @@ const filterChoicesCustom = [
     name: "Diagnosis of Bilateral Breast Cancer",
   },
   { type: "boolean", name: "Smoking Status", id: "smok_yn" },
-  { type: "boolean", name: "Alcohol Consuption", id: "drnk_yn", value: "Yes" },
+  { type: "boolean", name: "Alcohol Consumption", id: "drnk_yn", value: "Yes" },
   {
     type: "boolean",
     name: "Breast cancer family history",
@@ -715,7 +715,7 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
             }
         }
         if(total_groups === 1 ){
-          send_response = false; 
+          send_response = true; 
       }
       }
       else{

@@ -2,8 +2,8 @@ import React from "react";
 import organoid01 from "../../../assets/images/organoid_flow_chart.png";
 import organoid02 from "../../../assets/images/figure02.png";
 import organoid03 from "../../../assets/images/organoid_flow_chart_2.png";
-import organoid04 from "../../../assets/images/vial_01.png";
-import organoid05 from "../../../assets/images/dish_01.png";
+import organoid04 from "../../../assets/images/cbottle.png";
+import organoid05 from "../../../assets/images/petridish.png";
 import organoid06 from "../../../assets/images/flowchart_02.png";
 import organoidTable from "../../../assets/images/organoidNewTable.jpeg";
 import Attachments from "../../../assets/organoid_application_document.zip";
@@ -155,146 +155,108 @@ function Organoid() {
             <div className="w-86per">
               <table class="min-w-full">
                 <thead class="border border-black">
-                  <tr className="h-20 text-center bg-blue-100">
-                    <th className="text165rem lineHeightInitial font-medium text-gray-900 px-6 py-4 border border-black">
+                  <tr className="h-20 text-center text-white" style={{background:"#0c3c6a"}}>
+                    <th className="text165rem lineHeightInitial font-medium text-white px-6 py-4 border border-black">
                     연계 임상정보
                     </th>
-                    <th className="text165rem lineHeightInitial font-medium text-gray-900 px-6 py-4 border border-black w-80">
+                    <th className="text165rem lineHeightInitial font-medium text-white px-6 py-4 border border-black w-80">
                     기본정보
 
                     </th>
-                    <th className="text165rem lineHeightInitial font-medium text-gray-900 px-6 py-4 border border-black w-80">
+                    <th className="text165rem lineHeightInitial font-medium text-white px-6 py-4 border border-black w-80">
                     상세정보
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="border border-black text-center h-20">
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-red-50">
+                  <tr class="border border-black h-20">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-slate-50">
                     나이
 
                     </td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-red-50">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-slate-50 text-center">
                       0
                     </td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-white"></td>
                   </tr>
-                  <tr class="border border-black text-center h-20">
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-red-50">
+                  <tr class="border border-black h-20">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-slate-50">
                     성별
 
                     </td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-red-50">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-slate-50 text-center">
                       0
                     </td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-white"></td>
                   </tr>
-                  <tr class="border border-black text-center h-20">
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-red-50">
+                  <tr class="border border-black h-20">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-slate-50">
                     원발암
 
                     </td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-red-50">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-slate-50 text-center">
                       0
                     </td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-white"></td>
                   </tr>
-                  <tr class="border border-black text-center h-20">
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
-                    검체정보(오가노이드 조직 얻은 검체)
+                  <tr class="border border-black h-20">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-slate-50 ">
+                    검체정보
 
 
                     </td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
-                      0
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-slate-50 text-center">0</td>
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-white">
                     </td>
                   </tr>
-                  <tr class="border border-black text-center h-20">
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
-                    검체수집일
+                  <tr class="border border-black h-20">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-blue-100 ">
+                    병리검사결과
 
                     </td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-white"></td>
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-blue-100 text-center">
                       0
                     </td>
                   </tr>{" "}
-                  <tr class="border border-black text-center h-20">
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
-                    종양의 병기 및 grade
+                  <tr class="border border-black h-20">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-blue-100 ">
+                    수술정보 및 수술병리조직결과
 
                     </td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-white"></td>
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-blue-100 text-center">
                       0
                     </td>
                   </tr>
-                  <tr class="border border-black text-center h-20">
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
-                    수술정보(수술일, 수술명) 및 수술병리조직결과
+                  <tr class="border border-black h-20">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-blue-100 ">
+                    항암제 치료 정보 및 반응성
 
 
                     </td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-white"></td>
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-blue-100 text-center">
                       0
                     </td>
                   </tr>
-                  <tr class="border border-black text-center h-20">
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
-                    수술정보(수술일, 수술명) 및 수술병리조직결과
+                  <tr class="border border-black h-20">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-blue-100 ">
+                    방사선 치료 유무 및 반응성
 
 
                     </td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-white"></td>
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-blue-100 text-center">
                       0
                     </td>
                   </tr>
-                  <tr class="border border-black text-center h-20">
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
-                    병리검사결과
-(면역조직염색 결과, EBV 분자유전학 검사결과, 종양유전체 결과 등)
-
-
-
+                  <tr class="border border-black h-20">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-blue-100 ">
+                    추적관찰
                     </td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
-                      0
-                    </td>
-                  </tr>
-                  <tr class="border border-black text-center h-20">
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
-                    항암제치료 정보 및 반응성
-
-
-
-                    </td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
-                      0
-                    </td>
-                  </tr>
-                  <tr class="border border-black text-center h-20">
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
-                    방사선치료유무 및 반응성
-
-
-
-                    </td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
-                      0
-                    </td>
-                  </tr>
-                  <tr class="border border-black text-center h-20">
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
-                    추적관찰 (재발기간 및 생존기간)
-                    </td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black"></td>
-                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-yellow-50 ">
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-white"></td>
+                    <td class="text165rem lineHeightInitial text-balck font-light px-6 py-4 whitespace-nowrap border border-black bg-blue-100 text-center text-center">
                       0
                     </td>
                   </tr>

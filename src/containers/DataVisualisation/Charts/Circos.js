@@ -520,7 +520,7 @@ export default function DataCircos({
                   disabled = {project_id!== undefined ? true:false}
                 >
                   <FormattedMessage
-                      id="Cir_choose_sample"
+                      id="Pathological images"
                       defaultMessage="Pathological images"
                     />
                 </button>
@@ -532,10 +532,7 @@ export default function DataCircos({
                   onClick={timelineGraphClickFunction}
                   disabled= {project_id!== undefined ? true:false}
                 >
-                   <FormattedMessage
-                      id="F/U Timeline"
-                      defaultMessage="F/U Timeline"
-                    />
+                   <FormattedMessage id="F/U Timeline" defaultMessage="F/U Timeline" />
                 </button>
               </div>
               <div className="p-3 mt-6">

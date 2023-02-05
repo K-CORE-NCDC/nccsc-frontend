@@ -129,7 +129,7 @@ function QAList({new_post}) {
     const columns =  [
       {
         name: order,
-        selector: row => row.id,
+        selector: (row, index) => index+1,
         sortable: true
       },
       {

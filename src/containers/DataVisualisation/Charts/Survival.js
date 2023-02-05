@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import SurvivalCmp from "../../Common/Survival";
 import {
@@ -18,6 +18,7 @@ import { useParams } from "react-router-dom";
 import LoaderCmp from "../../Common/Loader";
 import { FormattedMessage } from "react-intl";
 import inputJson from "../../Common/data";
+import { Context } from "../../../wrapper";
 const selectedCss =
   "w-1/2 rounded-r-none  hover:scale-110 xs:h-14 xs:text-sm focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition";
 const nonSelectedCss =
@@ -63,7 +64,19 @@ export default function DataSurvival({
   const userDefinedFilterColumns = useSelector(
     (data) => data.dataVisualizationReducer.userDefinedFilter
   );
-
+  const [koreanlanguage, setKoreanlanguage] = useState(false);
+  const [Englishlanguage, setEnglishlanguage] = useState(true);
+  const context = useContext(Context);
+  
+  useEffect(() => {
+    if (context["locale"] === "kr-KO") {
+      setKoreanlanguage(true);
+      setEnglishlanguage(false);
+    } else {
+      setKoreanlanguage(false);
+      setEnglishlanguage(true);
+    }
+  });
     
   const [coxFilter, setCoxFilter] = useState({
     // "Body Mass Index": false,
@@ -341,7 +354,7 @@ export default function DataSurvival({
             className="flex flex-col mt-20 bg-white  text-left  shadow-lg w-full"
           >
             <h3 className="border-b border-gray-200 p-8">
-              Confidence Interval Plot
+              <FormattedMessage id="ConfidenceIntervalPlot" defaultMessage="Confidence Interval Plot" />
             </h3>
             <div className="w-full">
               <img
@@ -653,16 +666,16 @@ export default function DataSurvival({
                           selected={geneDatabase === "dna_mutation"}
                           value="dna_mutation"
                         >
-                          DNA Mutation
+                          <FormattedMessage id="" defaultMessage="Default Mutation" />
                         </option>
                         <option selected={geneDatabase === "rna"} value="rna">
-                          RNA Expression
+                        <FormattedMessage id="RNAExpression" defaultMessage="RNA Expression" />
                         </option>
                         <option
                           selected={geneDatabase === "proteome"}
                           value="proteome"
                         >
-                          Global Proteome
+                          <FormattedMessage id="GlobalProteome" defaultMessage="Global Proteome" />
                         </option>
                       </select>
                     </div>
@@ -758,7 +771,7 @@ export default function DataSurvival({
                                 checked={coxFilter[element]}
                                 value={element}
                               />
-                              {element}
+                             <FormattedMessage id={element} defaultMessage={element} />
                             </label>
                           </div>
                         ))}
@@ -826,10 +839,10 @@ export default function DataSurvival({
             )}
             {renderNoContent && <NoContentMessage />}
             {
-              inputData.genes.length === 0 &&  <p>Please Select the Gene Set Data</p>
+              inputData.genes.length === 0 &&  <p><FormattedMessage  id="PleaseSelecttheGeneSetData" defaultMessage="PleaseSelect the Gene Set Data" /></p>
             }
             {
-              coxNoData && survivalModel === "cox" && <p>Please Select the Filter </p>
+              coxNoData && survivalModel === "cox" && <p><FormattedMessage id="PleaseSelectFilterData" defaultMessage="Please Select Filter Data" /> </p>
             }
           </div>
         </div>

@@ -231,7 +231,7 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
           </>
       }
         {
-              inputData.genes.length === 0 &&  <p>Please Select the Gene Set Data</p>
+              inputData.genes.length === 0 &&  <p><FormattedMessage  id="PleaseSelecttheGeneSetData" defaultMessage="PleaseSelect the Gene Set Data" /></p>
             }
     </div>
   )

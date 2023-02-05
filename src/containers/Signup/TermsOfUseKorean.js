@@ -25,11 +25,11 @@ return (
   <div>
     <section className="mt-10 flex flex-col items-center justify-center">
       <div>
-        <span className="text-6xl font-bold text-gray-800">Terms of Use</span>
+        <span className="text-6xl font-bold text-gray-800">이용약관</span>
       </div>
       <div className="my-14">
         <h1 className="font-medium text-3xl text-gray-800">
-          Please proceed after agreeing to the terms of use.
+        이용약관 동의 후 절차를 진행해주세요.
         </h1>
       </div>
       <div
@@ -355,7 +355,8 @@ return (
             onChange={() => setFirstAgree(!firstAgree)}
           />
           <span className="ml-2 font-medium">
-            I agree to the website membership terms and conditions.
+           홈페이지 가입 약관 및 조건에 동의합니다.
+
           </span>
         </label>
       </div>
@@ -431,7 +432,7 @@ return (
             onChange={() => setSecondAgree(!secondAgree)}
           />
           <span className="ml-2 font-medium">
-            I agree to the Privacy Act.
+          개인정보 이용에 동의합니다.
           </span>
         </label>
         {/* <label>
@@ -454,13 +455,13 @@ return (
         <button
           className="hover:bg-blue-700 text-white font-bold py-6 px-6 float-left rounded bg-grey-700 "
         >
-          disagree
+          비동의
         </button>
         <button
           className="hover:bg-blue-700 text-white font-bold py-6 px-6 float-right rounded bg-NccBlue-700"
           onClick={agreeFunction}
         >
-          agree
+          동의
         </button>
       </div>
     </section>

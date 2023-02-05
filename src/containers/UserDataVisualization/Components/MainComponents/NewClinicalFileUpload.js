@@ -117,7 +117,7 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
   const [selectedFiles, setSelectedFiles] = useState([])
   const [uploadFile, setUploadFile] = useState({})
   const [projectName, setProjectName] = useState("")
-  const [formSbubmitButtonText, setFormSubmitButtonText] = useState("upload")
+  const [formSbubmitButtonText, setFormSubmitButtonText] = useState("업로드 파일")
   const [showModal, setShowModal] = useState(false)
   const [showModalInfo, setShowModalInfo] = useState(false)
   const [modalData, setModalData] = useState([])
@@ -145,6 +145,34 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
   const [activeTableKey, setActiveTableKey] = useState("")
   const [disableUploadButton, setDisableUploadButton] = useState(true)
   const [borderRed, setBorderRed] = useState(false)
+
+
+
+  const [koreanlanguage, setKoreanlanguage] = useState(false);
+  const [Englishlanguage, setEnglishlanguage] = useState(true);
+  const [icon, setIcon] = useState(true);
+  const context = useContext(Context);
+  
+  useEffect(() => {
+    if (context["locale"] === "kr-KO") {
+      setKoreanlanguage(true);
+      setEnglishlanguage(false);
+    } else {
+      setKoreanlanguage(false);
+      setEnglishlanguage(true);
+    }
+  });
+
+  useEffect(()=>{
+    if(formSbubmitButtonText === 'upload' || formSbubmitButtonText === '업로드 파일'){
+      if(koreanlanguage){
+        setFormSubmitButtonText('업로드 파일')
+      }
+      else{
+        setFormSubmitButtonText('upload')
+      }
+    }
+  },[koreanlanguage,Englishlanguage])
 
   // const tableColumnsData = [
   //   {
@@ -347,7 +375,13 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
 
   useEffect(() => {
     if (Object.values(loader).some(element => (element === 'failed'))) {
-      setFormSubmitButtonText('retry')
+      if(koreanlanguage){
+        setFormSubmitButtonText('Retry')
+      }
+      else{
+
+        setFormSubmitButtonText('다시 해 보다')
+      }
     }
   }, [loader])
 
@@ -421,9 +455,21 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
       setShowModal(modaShowTemp)
 
       if (Object.values(filesUploadedStatus).some(element => (element === false))) {
-        setFormSubmitButtonText('retry')
+        if(koreanlanguage){
+          setFormSubmitButtonText('Retry')
+        }
+        else{
+
+          setFormSubmitButtonText('다시 해 보다')
+        }
       } else {
-        setFormSubmitButtonText('visualize')
+        if(koreanlanguage){
+          setFormSubmitButtonText('시각화')
+        }
+        else{
+
+          setFormSubmitButtonText('Visualize')
+        }
       }
     }
     if (filesUploadedStatus && filesUploadedStatus.table) {
@@ -687,6 +733,7 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
             {state}
             <div className="relative w-full col-span-12 text-center">
               <button onClick={resetStates} className="capitalize bg-white  w-80 h-20  mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded">
+                <FormattedMessage id="Reset" defaultMessage="Reset" />
               </button>&nbsp;&nbsp;&nbsp;&nbsp;
               <button className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded ${disableUploadButton ? 'bg-opacity-10' : ''}`}
                 onClick={formSubmitButtonActions}
@@ -734,6 +781,7 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
 function SampleDataTable() {
   const[hideClass, setHideClass]= useState(true)
   const[compindex, setIndex]= useState(-1)
+  const[currentIndex, setCurrentIndex]= useState(-1)
   const renderSwitch = {
     'clinical_information': "/SAMPLE_FILES/clinical_information.csv",
     'rna_zscore': "/SAMPLE_FILES/rna_zscore.csv",
@@ -779,7 +827,7 @@ function SampleDataTable() {
       ['Volcano', true, false, true, false, false, false, false, false],
       ['Heatmap', true, false, true, true, true, true, false, false],
       ['Survival',  true, false, false, false, false, false, false, false],
-      ['Fusion gene',  true, false, false, false, false, false, false, false],
+      ['Fusion gene',  true, false, false, false, false, false, true, false],
       ['CNV',  true, false, false, false, false, false, false, true],
       ['Box', true, true, false, false, false, true, false, false],
       ['Correlation', true, false, true, false, false, true, false, false]
@@ -826,12 +874,11 @@ function SampleDataTable() {
                     
                     {row.map((cellData, cellIndex) => {
                       if (cellIndex === 0) {
-                        
+                        let i, current_index
                         return (
                          <td trindex={index} key={`${index}-${cellIndex}-${cellData}`+ Math.random()*100} className="px-6 py-4 whitespace-nowrap border" >
                             <div trindex={index} className="capitalize text-lg text-gray-900" onClick={(e)=>{
-                                setIndex(index)
-                                for( let i = 0; i<=9;i++){
+                                for( i = 0; i<=9;i++){
                                   if(i !== index){
                                     let ele = document.getElementById(`hidden${i}`)
                                     if (!ele.classList.contains('hidden')){
@@ -842,28 +889,34 @@ function SampleDataTable() {
                                     let ele = document.getElementById(`hidden${i}`)
                                     if (ele.classList.contains('hidden')){
                                       ele.classList.remove('hidden');
+                                      current_index = index
+                                      setCurrentIndex(index)
+                                      setIndex(i)
                                       setIcon(true)
                                     }
                                     else if (!ele.classList.contains('hidden')){
-                                      setIcon(false)
+                                      // setIcon(false)
                                       ele.classList.add('hidden');
+                                      setCurrentIndex(-1)
                                     }
                                   }
                                  
                               }
                               }}>
                                 {
-                                  icon === true ?  <div className="d-flex flex-row">
-                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                   <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                                   </svg>
+                                  
+                                  (currentIndex === index) ? 
+                                  <div className="d-flex flex-row">
+                                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                  </svg>
                                    {`${cellData}`}
                                   </div> 
                                   :
                                   <div className="d-flex flex-row">
-                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                  </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                   <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                   </svg>
                                   {`${cellData}`}
                                   </div>
                                 } 

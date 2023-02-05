@@ -131,9 +131,12 @@ function FileProjectDataTable({ updateComponentNumber }) {
     <div>
       <div className="p-1 flex justify-around">
         <button
-          onClick={() => history.push("/userdata/")}
-          className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
-        >
+           className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
+          type="button"
+          onClick={() => {
+            updateComponentNumber(1);
+          }}
+          >
           <FormattedMessage id="Back" defaultMessage="Back" />
         </button>
         {projectId !== 0 && (
@@ -170,7 +173,7 @@ function FileProjectDataTable({ updateComponentNumber }) {
         )}
       </div>
 
-      <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+      {/* <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
         <button
           className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
           type="button"
@@ -180,7 +183,7 @@ function FileProjectDataTable({ updateComponentNumber }) {
         >
           <FormattedMessage id="Back" defaultMessage="Back" />
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }

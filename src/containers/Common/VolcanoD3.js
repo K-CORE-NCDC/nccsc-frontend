@@ -339,7 +339,7 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
             arr.forEach(function (part, index, theArray) {
                 theArray[index] = { ...part, q_value: parseFloat(part.q_value), "log2(fold_change)": parseFloat(part["log2(fold_change)"]) };
             });
-            var yLabel = '-log<tspan baseline-shift="sub">10</tspan>False Discovery Rate',
+            var yLabel = '-log<tspan baseline-shift="sub">10</tspan>P-Value',
                 xLabel = 'log<tspan baseline-shift="sub">2</tspan>Fold-change';
             var volcanoPlot1 = volcanoPlot()
                 .xAxisLabel(xLabel)

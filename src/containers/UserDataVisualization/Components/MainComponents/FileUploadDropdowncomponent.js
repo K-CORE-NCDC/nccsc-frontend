@@ -66,15 +66,38 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
   dispatch(clear_upload_clinical_columns())
   },[])
 
+
   const clinicalUpdateFileTypeOnChange = (e) => {
     let divName = e.target.name;
     let divValue = e.target.value;
+    if(responseData && 'clinical_information' in responseData && 'types' in responseData['clinical_information'] && ('sample_id' in responseData['clinical_information']['types'] === false || 'rlps_yn' in  responseData['clinical_information']['types'] === false  || 'rlps_cnfr_drtn' in  responseData['clinical_information']['types'] === false)){
+      let tempresponseData = { ...responseData };
+          tempresponseData[activeTableKey]["types"]["sample_id"] = 'character';
+          tempresponseData[activeTableKey]["types"]["rlps_yn"] = 'yesorno';
+          tempresponseData[activeTableKey]["types"]["rlps_cnfr_drtn"] = 'decimal';
+          setResponseData(tempresponseData);
+    }
     if(divName === 'sample_id' || divName === 'rlps_yn' || divName === 'rlps_cnfr_drtn'){
+
           if(defaultClinicalInformationColumns[divName] === divValue ){
             setClinicalInformationColumns((prevState) => ({
               ...prevState,
               [divName]: divValue,
             }));
+            let tempresponseData = { ...responseData };
+            if (tempresponseData[activeTableKey]) {
+              tempresponseData[activeTableKey]["types"][divName] = divValue;
+          } else {
+            tempresponseData[activeTableKey] = {};
+            tempresponseData[activeTableKey]["tab"] = activeTableKey;
+            tempresponseData[activeTableKey]["filename"] = getFileName(
+              clinicalfileresponse,
+              activeTableKey
+              );
+              tempresponseData[activeTableKey]["types"] = {};
+              tempresponseData[activeTableKey]["types"][divName] = divValue;
+            }
+            setResponseData(tempresponseData);
            if(e){
             e.target.classList.remove("border-red-400")
            }
@@ -83,6 +106,20 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
             if(e){
               e.target.classList.add("border-red-400")
             }
+            let tempresponseData = { ...responseData };
+            if (tempresponseData[activeTableKey]) {
+              tempresponseData[activeTableKey]["types"][divName] = '';
+          } else {
+            tempresponseData[activeTableKey] = {};
+            tempresponseData[activeTableKey]["tab"] = activeTableKey;
+            tempresponseData[activeTableKey]["filename"] = getFileName(
+              clinicalfileresponse,
+              activeTableKey
+              );
+              tempresponseData[activeTableKey]["types"] = {};
+              tempresponseData[activeTableKey]["types"][divName] = '';
+            }
+            setResponseData(tempresponseData);
           }
          
     }
@@ -101,19 +138,22 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
       });
       setClinincalFilterColumns(tmp);
       let tempresponseData = { ...responseData };
-      if (tempresponseData[activeTableKey]) {
-        tempresponseData[activeTableKey]["types"][divName] = divValue;
+
+      if(divName !== 'sample_id' && divName !== 'rlps_yn' && divName !== 'rlps_cnfr_drtn'){
+        if (tempresponseData[activeTableKey]) {
+          tempresponseData[activeTableKey]["types"][divName] = divValue;
       } else {
         tempresponseData[activeTableKey] = {};
         tempresponseData[activeTableKey]["tab"] = activeTableKey;
         tempresponseData[activeTableKey]["filename"] = getFileName(
           clinicalfileresponse,
           activeTableKey
-        );
-        tempresponseData[activeTableKey]["types"] = {};
-        tempresponseData[activeTableKey]["types"][divName] = divValue;
+          );
+          tempresponseData[activeTableKey]["types"] = {};
+          tempresponseData[activeTableKey]["types"][divName] = divValue;
+        }
+        setResponseData(tempresponseData);
       }
-      setResponseData(tempresponseData);
     }
   };
 
@@ -125,16 +165,42 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
         clinicalfileresponse["res"].length > 0
       ) {
         let total_columns;
-        for (let i = 0; i < clinicalfileresponse["res"].length; i++) {
+        let send_c = true
+        total_columns = 0
+          for (let i = 0; i < clinicalfileresponse["res"].length; i++) {
           if (
             clinicalfileresponse["res"][i]["tab"] === "clinical_information"
           ) {
             total_columns = clinicalfileresponse["res"][i]["columns"].length;
-            return (
-              total_columns === Object.keys(clinicalInformationColumns).length
-            );
           }
         }
+        for (let i = 0; i < clinicalfileresponse["res"].length; i++) {
+          if (clinicalfileresponse["res"][i]["tab"] === "clinical_information") 
+          {
+            if(columnsData && 'clinical_information' in columnsData && 'types' in   columnsData['clinical_information']){
+              for(let kv in columnsData['clinical_information']['types'])
+              {
+                if(columnsData['clinical_information']['types'][kv] === ''){
+                  send_c = false
+                }
+              }
+            }
+          }
+        }
+        // console.log('se',send_c, 'l',Object.keys(columnsData['clinical_information']['types']).length, 'c',total_columns );
+        if(send_c && Object.keys(columnsData['clinical_information']['types']).length  === total_columns ){
+          return true
+        }
+        // for (let i = 0; i < clinicalfileresponse["res"].length; i++) {
+        //   if (
+        //     clinicalfileresponse["res"][i]["tab"] === "clinical_information"
+        //   ) {
+        //     total_columns = clinicalfileresponse["res"][i]["columns"].length;
+        //     return (
+        //       total_columns === Object.keys(clinicalInformationColumns).length
+        //     );
+        //   }
+        // }
       }
     };
     if (
@@ -285,7 +351,7 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
         if (
           activeTableKey === "clinical_information" &&
           key === "clinical_information"
-        ) {
+        ) { 
           clinincalFilterColumns[key].forEach((obj) => {
             firstInput.push(
               <div className="flex justify-between" key={key + "_" + obj.id}>
@@ -297,13 +363,8 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
                     <select
                       onChange={clinicalUpdateFileTypeOnChange}
                       name={obj.title}
-                      defaultChecked="false"
-                      // defaultValue={obj.value}
-                      defaultValue={
-                        clinicalInformationColumns[obj.title]
-                          ? clinicalInformationColumns[obj.title]
-                          : ""
-                      }
+                      // defaultChecked="false"
+                      defaultValue={(obj.id === 'rlps_yn') ? 'yesorno': (obj.id === 'rlps_cnfr_drtn') ? 'decimal': (obj.id === 'sample_id') ? 'character' : '' }
                       className="select-color w-48 p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3"
                     >
                       {Object.keys(obj.options).map((type) => (

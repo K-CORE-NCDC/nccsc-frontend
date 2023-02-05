@@ -96,7 +96,7 @@ function NoticeList() {
     const columns =  [
       {
         name: order,
-        selector: row => row.id,
+        selector: (row, index) => index+1,
         sortable: true
         // render: ({ row }) => (<Link to={{ pathname: `/notice/${row.url_slug}/` }}></Link>)
       },
