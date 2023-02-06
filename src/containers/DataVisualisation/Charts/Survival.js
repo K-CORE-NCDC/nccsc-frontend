@@ -666,16 +666,16 @@ export default function DataSurvival({
                           selected={geneDatabase === "dna_mutation"}
                           value="dna_mutation"
                         >
-                          <FormattedMessage id="" defaultMessage="Default Mutation" />
+                         DNA Mutation
                         </option>
                         <option selected={geneDatabase === "rna"} value="rna">
-                        <FormattedMessage id="RNAExpression" defaultMessage="RNA Expression" />
+                        RNA Expression
                         </option>
                         <option
                           selected={geneDatabase === "proteome"}
                           value="proteome"
                         >
-                          <FormattedMessage id="GlobalProteome" defaultMessage="Global Proteome" />
+                          Global Proteome
                         </option>
                       </select>
                     </div>
