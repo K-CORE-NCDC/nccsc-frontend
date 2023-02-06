@@ -952,7 +952,7 @@ const MemberShip = ({ changestep }) => {
                     onClick={(e) => verifyMobile(e)}
                     className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
                   >
-                     {koreanlanguage ? "Verify Mobile" : "모바일 인증"}
+                     {koreanlanguage ? "모바일 인증" : "Verify Mobile"}
                   </button>
                 )}
                 {verificationState ==="mobile" && ClickMobileverifyButton 
@@ -961,7 +961,7 @@ const MemberShip = ({ changestep }) => {
                       onClick={(e)=>checkMobileVerified(e)}
                       className="bg-main-blue mt-2 hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-16 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
                     >
-                    {koreanlanguage ? "Verify Mobile" : "확인 확인"}</button>
+                    {koreanlanguage ? "확인 확인" : "Verify Mobile"}</button>
                   )
                 }
               </div>

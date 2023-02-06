@@ -481,8 +481,8 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                   </div>
                   <div className='grid grid-rows bg-blue-100 p-10'>
                     <div className="lg:w-full sm:w-3/6 xs:w-1/2 p-3">
-                    {tableType === "Mutation" &&  <h5 className="float-left sm:text-xl lg:text-2xl xs:text-xl mb-5"> <FormattedMessage  id="SomanticMutationFrequency" defaultMessage="Somantic Mutation Frequency: -"/>{percentage?percentage:""}<FormattedMessage  id="SomanticMutationmutationsamplenumber/totalselectedsamplenumber(%)Frequency" defaultMessage="%(mutation sample number/total selected sample number(%))"/></h5>}
-                    {tableType !== "Mutation" &&  <h5 className="float-left sm:text-xl lg:text-2xl xs:text-xl mb-5"> <FormattedMessage  id="PhosphorylationFrequency" defaultMessage="Phosphorylation Frequency: -"/>{percentage?percentage:""}<FormattedMessage  id="Phosphorylationsamplenumber/totalselectedsamplenumber(%)" defaultMessage="Phosphorylation sample number/total selected sample number(%)"/></h5>}
+                    {tableType === "Mutation" &&  <h5 className="float-left sm:text-xl lg:text-2xl xs:text-xl mb-5"> <FormattedMessage  id="SomanticMutationFrequency" defaultMessage="Somatic Mutation Frequency: "/>{percentage?percentage:""}<FormattedMessage  id="SomanticMutationmutationsamplenumber/totalselectedsamplenumber(%)Frequency" defaultMessage="%(mutation sample number/total selected sample number(%))"/></h5>}
+                    {tableType !== "Mutation" &&  <h5 className="float-left sm:text-xl lg:text-2xl xs:text-xl mb-5"> <FormattedMessage  id="PhosphorylationFrequency" defaultMessage="Phosphorylation Frequency: "/>{percentage?percentage:""}<FormattedMessage  id="Phosphorylationsamplenumber/totalselectedsamplenumber(%)" defaultMessage="%(Phosphorylation sample number/total selected sample number(%))"/></h5>}
                     </div>
                     <div className='flex sm:flex-wrap xs:flex-wrap xs:w-1/2'>
                       {mutationLabel}
