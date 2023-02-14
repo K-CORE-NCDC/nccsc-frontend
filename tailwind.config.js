@@ -25,6 +25,14 @@ module.exports = {
       backgroundColor:{
         'main-blue':'#0c2f4d'
       },
+      fontSize: {
+        'xs':'12px',
+        'sm': '14px',
+        'base': '16px',
+        'lg': '18px',
+        'xl': '20px',
+        '2xl': '22px',
+    },
       fontFamily:{
 
       },
@@ -39,6 +47,7 @@ module.exports = {
       '2xl': '1536px',
 
     },
+    
 
   },
   variants: {

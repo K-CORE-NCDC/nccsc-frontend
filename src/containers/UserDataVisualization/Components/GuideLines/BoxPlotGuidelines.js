@@ -2,7 +2,7 @@ import React from "react";
 
 const CircosPlot = (plot_type) => {
   return (
-    <div className="px-10 py-10 overflow-auto" style={{height:'340px'}}>
+    <div className="px-10 py-10 overflow-auto" style={{height:'60vh'}}>
       <h1 className="pt-5 text-4xl"  >Step 1) Input clinical data :</h1>
       <h2 className="py-2 text-3xl text-green-300">Clinical data format</h2>
       <h1 className="py-4">All rows are tab-delimited.</h1>

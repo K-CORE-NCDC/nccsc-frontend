@@ -2,7 +2,7 @@ import React from "react";
 
 const CNVGuidelinesKorean = () => {
 return (
-<div className="px-10 py-10 overflow-auto" style={{height:'340px'}}>
+<div className="px-10 py-10 overflow-auto" style={{height:'60vh'}}>
 <h1 className="pt-5 text-4xl" >1단계) 임상정보 입력 :</h1>
 <h2 className="py-2 text-3xl text-green-300">임상정보 형식</h2>
 <h1 className="py-4">모든 행은 탭(tab)으로 분리된 형식입니다.</h1>

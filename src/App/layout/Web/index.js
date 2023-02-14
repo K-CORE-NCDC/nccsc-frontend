@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState,useContext } from "react";
 // import { useBeforeunload } from 'react-beforeunload';
 import { Route, Switch, Redirect } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link,useLocation } from "react-router-dom";
 import route from "../../../route";
 import Loader from "../Loader";
 import Header from "./Header";
@@ -17,6 +17,25 @@ import footer_logo from "../../../assets/images/f_logo.png";
 import { useSelector, useDispatch } from "react-redux";
 import uuid from 'react-uuid';
 
+
+import banner_img from "../../../assets/img/top_banner01.png";
+import { Context } from "../../../wrapper";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import s1 from "../../../assets/images/f_ci1.png";
+import s2 from "../../../assets/images/f_ci2.png";
+import s3 from "../../../assets/images/f_ci3.png";
+import s4 from "../../../assets/images/f_ci4.png";
+import s5 from "../../../assets/images/f_ci5.png";
+import s6 from "../../../assets/images/f_ci6.png";
+import s7 from "../../../assets/images/f_ci7.png";
+import breast from "../../../assets/images/breast_cancer.png";
+import breast_cancer_english from "../../../assets/images/breast_cancer_english.png";
+import breast_cancer_korean from "../../../assets/images/breast_cancer_korean.png";
+import s8 from "../../../assets/images/right_below_add.png";
+import { FormattedMessage } from "react-intl";
+
 import {
   MenuIcon,
   ChevronRightIcon,
@@ -24,7 +43,6 @@ import {
   HomeIcon,
 } from "@heroicons/react/outline";
 import { useParams } from "react-router-dom";
-import { FormattedMessage } from "react-intl";
 import { getDashboardCount, sendlogManagement } from "../../../actions/api_actions";
 import Popup from "../../../containers/Popup/Popup";
 import { useIdleTimer } from 'react-idle-timer'
@@ -58,7 +76,7 @@ const menu = route.map((route, index) => {
 });
 
 let PageRefresh = ()=>{
-    const timeout = 10000
+  const timeout = 10000
   const [remaining, setRemaining] = useState(timeout)
   const [elapsed, setElapsed] = useState(0)
   const [lastActive, setLastActive] = useState(+new Date())
@@ -100,8 +118,10 @@ let PageRefresh = ()=>{
 //   }
 // },[isIdle])
 }
+
 export default function Web(props) {
 
+  const routeLocation = useLocation(); 
   const timeout = 3000
   const [remaining, setRemaining] = useState(timeout)
   const [elapsed, setElapsed] = useState(0)
@@ -110,6 +130,34 @@ export default function Web(props) {
   const [showPopup, setShowPopup] = useState(false)
   const handleOnActive = () => setIsIdle(false)
   const handleOnIdle = () => setIsIdle(true)
+
+  const [showModal, setShowModal] = useState(false);
+  const dispatch = useDispatch();
+  const countJson = useSelector((data) => data.homeReducer.dataCount);
+
+
+  const [koreanlanguage, setKoreanlanguage] = useState(false);
+  const [Englishlanguage, setEnglishlanguage] = useState(true);
+  const context = useContext(Context);
+  useEffect(() => {
+    if (context["locale"] === "kr-KO") {
+      setKoreanlanguage(true);
+      setEnglishlanguage(false);
+    } else {
+      setKoreanlanguage(false);
+      setEnglishlanguage(true);
+    }
+  });
+
+  var settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 6,
+    slidesToScroll: 4,
+    initialSlide: 0,
+  };
+
   const {
     reset,
     pause,
@@ -145,8 +193,6 @@ export default function Web(props) {
   const [currentDate, setCurrentDate] = useState("");
   const [currentTime, setCurrentTime] = useState("");
   const [latandLong, setLatandLog] = useState({});
-  const dispatch = useDispatch();
-  const countJson = useSelector((data) => data.homeReducer.dataCount);
 
   // const logmanagement = useSelector((data) => data.homeReducer.logmanagement);
 
@@ -364,10 +410,6 @@ export default function Web(props) {
 
     // dispatch(reportData())
   }, [window.location.href])
-
-
-
-
   useEffect(() => {
     let html = [];
     for (let m = 0; m < menu.length; m++) {
@@ -629,7 +671,7 @@ export default function Web(props) {
           <ol className="list-reset flex text-grey-dark p-5">{breadCrumb}</ol>
         </nav>
       )}
-
+      <div  className={`${routeLocation.pathname === '/' ? '':'min-h-70'}`}>
       <Suspense fallback={<Loader />}>
         <Switch>
           {menu}
@@ -638,9 +680,217 @@ export default function Web(props) {
       </Suspense>
       {/* fixed bottom-0 */}
       <div>
+        
         { showPopup  ? <Popup toggleModal = {toggleModal}/> : '' }
       </div>
-      <footer className="border-gray-300 border-t  w-full">
+      </div>
+{/* Home COmponent */}
+
+   { routeLocation.pathname === '/' && <div>
+          <div className="grid grid-cols-2">
+            <div className="bg-main-blue p-14 2xl:p-5  2xl:col-span-2">
+              <div className="grid h-72 2xl:grid-cols-12">
+                <div className="text-white grid text-center mb-16 content-center text-3xl 2xl:col-span-2">
+                  <FormattedMessage
+                    id="Data of included cancer type"
+                    defaultMessage="Data of included cancer type"
+                  />
+                  <br />
+                  <FormattedMessage
+                    id="Table relationship"
+                    defaultMessage="[Table relationship]"
+                  />
+                </div>
+                <div className=" con 2xl:col-span-10">
+                  <ul className="grid lg:grid-cols-3 2xl:grid-cols-10">
+                    <li className="text-center pt-1  relative">
+                      <a>
+                        <button
+                          onClick={() => setShowModal(true)}
+                          className="w-full"
+                        >
+                          <span></span>
+                          <font className="text-white text-3xl text-3xl ">
+                            <FormattedMessage
+                              id="breast cancer"
+                              defaultMessage="Breast cancer"
+                            />
+                          </font>
+                        </button>
+                      </a>
+                    </li>
+                    <li className="text-center pt-1 relative">
+                      <a>
+                        <span></span>
+                        <font className="text-white text-3xl text-center">
+                          <FormattedMessage
+                            id="Thyroid cancer"
+                            defaultMessage="Thyroid cancer"
+                          />
+                        </font>
+                      </a>
+                    </li>
+                    <li className="text-center pt-1 relative">
+                      <a>
+                        <span></span>
+                        <font className="text-white text-3xl text-center">
+                          <FormattedMessage
+                            id="Cervical cancer"
+                            defaultMessage="Cervical cancer"
+                          />
+                        </font>
+                      </a>
+                    </li>
+                    <li className="text-center pt-1 relative">
+                      <a>
+                        <span></span>
+                        <font className="text-white text-3xl">
+                          <FormattedMessage
+                            id="lung cancer"
+                            defaultMessage="lung cancer"
+                          />
+                        </font>
+                      </a>
+                    </li>
+                    <li className="text-center pt-1  relative">
+                      <a>
+                        <span></span>
+                        <font className="text-white text-3xl text-center">
+                          <FormattedMessage
+                            id="Colorectal cancer"
+                            defaultMessage="Colorectal cancer"
+                          />
+                        </font>
+                      </a>
+                    </li>
+                    <li className="text-center pt-1 relative">
+                      <a>
+                        <span></span>
+                        <font className="text-white text-3xl text-center">
+                          <FormattedMessage
+                            id="renal cancer"
+                            defaultMessage="Renal cancer"
+                          />
+                        </font>
+                      </a>
+                    </li>
+                    <li className="text-center pt-1 relative">
+                      <a>
+                        <span></span>
+                        <font className="text-white text-3xl ">
+                          <FormattedMessage
+                            id="Liver cancer"
+                            defaultMessage="Liver cancer"
+                          />
+                        </font>
+                      </a>
+                    </li>
+                    <li className="text-center pt-1 relative">
+                      <a>
+                        <span></span>
+                        <font className="text-white text-3xl text-center">
+                          <FormattedMessage
+                            id="cancer of the stomach"
+                            defaultMessage="Cancer of the stomach"
+                          />
+                        </font>
+                      </a>
+                    </li>
+                    <li className="text-center pt-1 relative">
+                      <a>
+                        <span></span>
+                        <font className="text-white text-3xl text-center">
+                          <FormattedMessage
+                            id="Prostate cancer"
+                            defaultMessage="Prostate cancer"
+                          />
+                        </font>
+                      </a>
+                    </li>
+                    <li className="text-center pt-1 relative">
+                      <a>
+                        <span></span>
+                        <font className="text-white text-3xl text-center">
+                          <FormattedMessage
+                            id="Pancreatic cancer"
+                            defaultMessage="Pancreatic cancer"
+                          />
+                        </font>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className=" bg-white lg:pt-0  pt-20">
+            <div className="py-10 border-t ">
+              <Slider {...settings}>
+                <div>
+                  <img src={s1} />
+                </div>
+                <div>
+                  <img src={s2} />
+                </div>
+                <div>
+                  <img src={s3} />
+                </div>
+                <div>
+                  <img src={s4} />
+                </div>
+                <div>
+                  <img src={s5} />
+                </div>
+                <div>
+                  <img src={s6} />
+                </div>
+                <div>
+                  <img src={s7} />
+                </div>
+                <div>
+                  <img src={s8} width="250" />
+                </div>
+              </Slider>
+            </div>
+          </div>
+          {showModal ? (
+            <>
+              <div className="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+                <div className="relative w-auto my-6 mx-auto container md-container">
+                  {/*content*/}
+                  <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                    {/*body*/}
+                    <div>
+                      {koreanlanguage && (
+                        <div className="relative p-6 flex-auto">
+                            <img src={breast_cancer_korean} />
+                        </div>
+                      )}
+                      {Englishlanguage && (
+                        <div className="relative p-6 flex-auto">
+                          <img src={breast_cancer_english} />
+                        </div>
+                      )}
+                    </div>
+                    {/*modal footer*/}
+                    <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                      <button
+                        className="bg-gray-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                        type="button"
+                        onClick={() => setShowModal(false)}
+                      >
+                        <FormattedMessage id="Close" defaultMessage="Close" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+            </>
+          ) : null}
+    </div>}
+
+      <footer className="border-gray-300 border-t w-full ">
         <div className="d-flex flex-row text-white" style={{ height: "50px", backgroundColor: "#203239" }}>
           <Link to="/termsandconditions/" className="m-5">
             <FormattedMessage id="TermsofService" defaultMessage="Member Terms and Conditions" />
@@ -663,3 +913,5 @@ export default function Web(props) {
     </div>
   );
 }
+
+// className="border-gray-300 border-t w-full"
