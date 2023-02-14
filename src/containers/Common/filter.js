@@ -618,7 +618,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
 
   return (
     <div>
-      <div className="py-3 px-2 w-full col-span-2">
+      <div className="py-3 px-2 w-full col-span-2 flex">
         <button
           className="bg-white  lg:w-80 sm:w-52  lg:h-20 sm:h-16  mb-3 text-black-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded"
           onClick={reset}
@@ -632,14 +632,16 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
         >
           <FormattedMessage id='Search' defaultMessage={' Search '}/>
         </button>
-        <button
+      </div>
+      <div className="m-2">
+      <button
           className="float-right lg:hidden md:hidden bg-blue-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 my-4 mr-4 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
           onClick={() => set_screen(false)}
           type="button"
         >
           close
         </button>
-      </div>
+        </div>
       <div className="flex flex-row mb-4 ml-4">
           <label className="text-2xl font-bold">
             <FormattedMessage id='filterCondition' defaultMessage={'Sample filter condition'}/>:

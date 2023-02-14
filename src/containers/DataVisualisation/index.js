@@ -273,8 +273,9 @@ export default function DataVisualization() {
     let tmp = [];
 
     l.forEach((element) => {
+      console.log('t',toggle);
       let classes =
-        "lg:px-4 sm:px-2 xs:px-2 py-2 xs:text-sm sm:text-xl lg:text-2xl font-semibold rounded-t opacity-50 ";
+        toggle ?  "lg:px-4 sm:px-2 xs:px-2 py-2 xs:text-sm sm:text-sm md:text-xs lg:text-base font-semibold rounded-t opacity-50 BorderDiv" : "lg:px-4 sm:px-2 xs:px-2 py-2 xs:text-sm sm:text-sm md:text-xl lg:text-xl font-semibold rounded-t opacity-50 ";
 
       if (chartName === element) {
         classes = classes + " border-blue-400 border-b-4 -mb-px opacity-100";
@@ -315,7 +316,7 @@ export default function DataVisualization() {
       setToggle(false);
     }
     setMenuItems(tmp);
-  }, [availableTabsForProject, chartName]);
+  }, [availableTabsForProject, chartName,toggle]);
   
   useEffect(() => {
     if (project_id !== undefined) {
@@ -503,7 +504,7 @@ export default function DataVisualization() {
     <div className="header">
       <div className="mx-auto border-t rounded overflow-hidden ">
         <div id="main_div">
-          <div className={toggle ? "grid grid-cols-4" : "grid "}>
+          <div className={toggle ? "grid grid-cols-4" : "grid"}>
             {toggle && (
               <div className="xs:col-span-3 lg:col-span-1 xs:z-10 xs:opacity-95 bg-white border border-gray-200 transition duration-150 ease-in-out">
                 <Filter
@@ -521,7 +522,7 @@ export default function DataVisualization() {
                   : ""
               }
             >
-              <div className="grid grid-cols-3 gap-1 p-5 bg-white">
+              <div className="grid lg:grid-cols-3 lg:gap-1 lg:p-5 bg-white  md:grid-cols-2 md:gap-1 md:p-5">
                 <div
                   className={`col-span-3 lg:hidden md:hidden ${
                     chartName === "volcano" ? "xs:hidden" : ""
@@ -535,20 +536,20 @@ export default function DataVisualization() {
                     <AdjustmentsIcon className="h-6 w-6 inline" />
                   </button>
                 </div>
-                <div className="flex xs:col-span-3 lg:col-span-3 sm:col-span-3 sm:gap-0 xs:gap-0 lg:gap-6">
+                <div className="flex xs:col-span-3 lg:col-span-3 sm:col-span-3 xs:gap-2 lg:gap-6 md:gap-6 sm:gap-6">
                   <div className="inline-flex relative xs:hidden lg:block md:block">
                     <MenuIcon
                       className="h-8 w-8 inline text-main-blue mt-3 cursor-pointer"
                       onClick={(e) => leftFilterClose(e)}
                     />
                   </div>
-                  <div className="inline-flex lg:w-2/5 xs:w-60">
+                  <div className="inline-flex lg:w-2/5 xs:w-60 md:w-2/5 sm:w-2/5 xs:w-1/5">
                     <select
                       id="gene_type"
                       value={state["type"]}
                       onChange={(e) => selectGene(e)}
                       placeholder="Enter your Genes"
-                      className="btn_input_height lg:w-full xs:w-56 p-3 border bg-white focus:outline-none border-blue-300 focus:ring focus:border-blue-300 xs:h-14 lg:h-16 xs:text-sm lg:text-xl"
+                      className="btn_input_height lg:w-full xs:w-56 sm:w-full md:w-full p-3 border bg-white focus:outline-none border-blue-300 focus:ring focus:border-blue-300 xs:h-14 lg:h-16 xs:text-sm lg:text-xl"
                     >
                       <option
                         className="xs:text-sm lg:text-xl"
@@ -730,7 +731,7 @@ export default function DataVisualization() {
                   <nav id="second_header" className=" px-8 pt-2 shadow-md">
                     <ul
                       id="tabs"
-                      className="inline-flex justify-center w-full lg:px-1 sm:px-0 pt-2"
+                      className="inline-flex justify-center w-full lg:px-1 sm:px-0 pt-2 md:text-xs sm:text-xs md:text-xs lg:text-xs"
                       onClick={(e) => toggleTab(e)}
                     >
                       {menuItems}
@@ -747,7 +748,7 @@ export default function DataVisualization() {
                       <div className="lg:col-start-6 sm:col-start-1 md:col-start-6 inline-flex justify-center p-2 ">
                         {screenCapture === false && (
                           <button
-                            className="bg-main-blue hover:bg-main-blue mb-3 lg:w-full sm:w-40 sm:h-14  lg:h-20 sm:h-16 xs:text-sm sm:text-xl lg:text-2xl text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
+                            className="bg-main-blue hover:bg-main-blue mb-3 lg:w-full sm:w-40 sm:h-14  lg:h-20 sm:h-16 xs:text-sm sm:text-sm md:text-md lg:text-md text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded "
                             onClick={() => setScreenCaptureFunction(true)}
                           >
                             <FormattedMessage
