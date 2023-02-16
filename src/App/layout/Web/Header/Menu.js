@@ -11,7 +11,7 @@ var islogin2=localStorage.getItem('ncc_refresh_token')
 const SingleElem = ({elem}) =>{
   if (elem.url){
     return (
-      <li className="flex mx-3">
+      <li className="flex mx-3 text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md">
         <Link to={elem.url}  className="px-3 py-4 lg:py-2 flex  ">
           {elem.icon && <i  className={elem.icon}></i>}
           <span>{elem.title}</span>
@@ -44,7 +44,7 @@ const MultipleElem = ({elem,ind}) =>{
         <i className={elem.icon}></i>
         <span>{elem.title}</span>
       </a>
-      <div className="text-base z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1 abc" id={"multisubmenu_"+ind}>
+      <div className="text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1 abc" id={"multisubmenu_"+ind}>
 
           {
             elem['children'].map((e,i)=>{
@@ -78,7 +78,7 @@ const Menu = ({items}) => {
       return <MultipleElem key={"multiple"+index} elem={ele} ind={index} />
     }
     else if(ele.type === 'admin'){
-      return <a key='admin_button' className="px-3 py-4 lg:py-2 flex  " href={config['auth']+'login'} target='__blank'>Admin</a>
+      return <a key='admin_button' className="px-3 py-4 lg:py-2 flex text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md " href={config['auth']+'login'} target='__blank'>Admin</a>
     }
 
     return ""

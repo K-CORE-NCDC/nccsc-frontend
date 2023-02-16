@@ -236,7 +236,9 @@ export default function DataSurvival({
         }
         if (htmlArray.length > 1) {
           // setPvalueData(`P-Value : ${survivalJson.pvalue.toPrecision(3)} / R-Value : ${survivalJson.rvalue.toFixed(6)}`)
-          setPvalueData(`P-Value : ${survivalJson.pvalue.toPrecision(3)}`);
+          if(survivalJson.pvalue!==0){
+            setPvalueData(`P-Value : ${survivalJson.pvalue.toPrecision(3)}`);
+          }
           setSampleCountsCard([
             <div
               key="total"
@@ -248,7 +250,9 @@ export default function DataSurvival({
             ...htmlArray,
           ]);
         } else {
-          setPvalueData(`P-Value : ${survivalJson.pvalue.toPrecision(3)}`);
+          if(survivalJson.pvalue!==0){
+            setPvalueData(`P-Value : ${survivalJson.pvalue.toPrecision(3)}`);
+          }
           setSampleCountsCard([
             <div
               key="total"

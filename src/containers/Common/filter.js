@@ -168,12 +168,12 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
           let color = inputJson["clinicalColor"][item];
           let id = item.split(" ").join("");
           t.push(
-            <div className="px-5 py-3 relative z-10" key={"div_mb_" + c}>
+            <div className=" py-3 relative z-10" key={"div_mb_" + c}>
               <label
                 htmlFor="toogleA"
                 className="flex items-center cursor-pointer"
               >
-                <div className="ml-3 text-gray-700 w-10/12 lg:text-2xl sm:text-xl md:text-xl tracking-wide">
+                <div className="ml-3 text-gray-700 w-10/12 tracking-wide text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">
                   {childelm in chart_names ? (
                     <FormattedMessage
                       id={childelm}
@@ -280,7 +280,6 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
     if (d.id in selectState) {
       check = true;
     }
-    console.log(d.value)
     return (
       <div key={d.id} className="px-10">
         <label className="inline-flex items-center">
@@ -620,14 +619,15 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
     <div>
       <div className="py-3 px-2 w-full col-span-2 flex">
         <button
-          className="bg-white  lg:w-80 sm:w-52  lg:h-20 sm:h-16  mb-3 text-black-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded"
+          className="text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md bg-white btn_input_height w-full  mb-3 text-black-500 font-bold py-2 px-4 border border-gray-900 rounded "
           onClick={reset}
+          
         >
           <FormattedMessage id='Reset' defaultMessage={' Reset '}/>
         </button>
         &nbsp;&nbsp;&nbsp;&nbsp;
         <button
-          className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 lg:h-20 sm:w-52 sm:h-16 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
+          className="text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md btn_input_height bg-main-blue hover:bg-main-blue mb-3 w-full text-white font-bold py-2 px-4 border border-blue-700 rounded xs:h-14 lg:h-16"
           onClick={sendFilter}
         >
           <FormattedMessage id='Search' defaultMessage={' Search '}/>
@@ -670,7 +670,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
 
             <label
               htmlFor="default-radio-1"
-              className="ml-2 text-gray-900 dark:text-gray-300"
+              className="ml-2 text-gray-900 dark:text-gray-300 text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
             >
               And
             </label>
@@ -697,7 +697,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
             )}
             <label
               htmlFor="default-radio-2"
-              className="ml-2 text-gray-900 dark:text-gray-300"
+              className="ml-2 text-gray-900 dark:text-gray-300 text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
             >
               Or
             </label>
