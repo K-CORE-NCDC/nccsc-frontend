@@ -241,10 +241,10 @@ export default function Web(props) {
     sessionStorage.setItem('sessionId', uuid())
     sessionStorage.setItem('firstTime', true)
     updateLocation();
+    var today = new Date();
 
     if (sessionStorage.getItem("firstTime")) {
       updateLocation();
-      var today = new Date();
       var loginTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       sessionStorage.setItem('loginTime', loginTime)
       sessionStorage.setItem('prevTime', loginTime)
@@ -267,28 +267,21 @@ export default function Web(props) {
       sessionStorage.setItem('logData', JSON.stringify(arrayOfLog))
 
     }
+    // let today = new Date();
+    let date = today.getFullYear() +"." +(today.getMonth() + 1) +"." +today.getDate();
     if (id[0] === "/") {
-      let today = new Date();
-      let date = today.getFullYear() +
-        "." +
-        (today.getMonth() + 1) +
-        "." +
-        today.getDate();
-      var a_or_p = today
-        .toLocaleString("en-US", { hour: "numeric", hour12: true })
-        .split(" ")[1];
+      console.log(today.toLocaleString("en-US"))
+      var a_or_p = today.toLocaleString("en-US", { hour: "numeric", hour12: true }).split(" ")[1];
+      console.log(a_or_p)
       // var time = a_or_p + " " + today.getHours() + ":" + today.getMinutes();
-      var time = a_or_p + " " + today.getHours() + ":" + (today.getMinutes() <=9 ? `00`: today.getMinutes());
-
-      
+      var time =  today.getHours() + ":" + (today.getMinutes() <=9 ? `00`: today.getMinutes());
       let check_popup = localStorage.getItem('show_popup') 
-      
-      setCurrentDate(date);
       setCurrentTime(time);
       if (!countJson) {
         dispatch(getDashboardCount());
       }
     }
+    setCurrentDate(date);
 
   }, [])
 
@@ -465,7 +458,7 @@ export default function Web(props) {
 
   let classes = "";
   if (id[0] === "/") {
-    classes = "screen-2 xl:h-full lg:h-full ";
+    classes = "2xl:screen-2 2xl:h-full h-full ";
   }
 
 
@@ -483,7 +476,7 @@ export default function Web(props) {
                     <img className="" width="210" src={logoNew} alt="" />
                   </Link>
                   <Popover.Button
-                    className="xs:block sm:block lg:hidden  text-white  cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block outline-none focus:outline-none"
+                    className="xs:block sm:block md:block lg:hidden  text-white  cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block outline-none focus:outline-none"
                     type="button"
                   >
                     <MenuIcon className="h-6 w-6" aria-hidden="true" />
@@ -495,7 +488,7 @@ export default function Web(props) {
                 <div className="hidden md:block lg:block xl:block 2xl:block md:col-span-2 lg:col-span-7 xl:col-span-7 2xl:col-span-2 py-5">
                   <Header />
                 </div>
-                <div className="hidden md:block lg:block xl:block 2xl:block md:col-span-3 lg:col-span-8  2xl:hidden px-5 py-5">
+                <div className="hidden lg:block xl:block 2xl:block md:col-span-3 lg:col-span-8  2xl:hidden px-5 py-5">
                   <DropdownMenu />
                 </div>
               </div>
@@ -512,8 +505,8 @@ export default function Web(props) {
                   </h2>
                   <div className="pl-6">
                     <p
-                      className="lg:border-l-2 lg:text-2xl xs:text-sm sm:text-xl p-5 font-medium mt-8 border-gray-600"
-                      style={{ textAlign: "right" }}
+                      className="lg:border-l-2 lg:text-2xl xs:text-sm sm:text-xl p-5 font-medium mt-8 border-gray-600 2xl:text-right"
+                      
                     >
                       <FormattedMessage
                         id="home_child_title"
@@ -525,7 +518,7 @@ export default function Web(props) {
               </div>
             )}
             {classes !== "" && (
-              <div className="lg:hidden 2xl:block 2xl:grid  grid-rows-2 grid-col-12 grid-flow-col gap-4  text-right text-main-blue px-5">
+              <div className="hidden 2xl:block 2xl:grid  grid-rows-2 grid-col-12 grid-flow-col gap-4  text-right text-main-blue px-5">
                 <div className="row-span-3 col-span-2 text-6xl py-10">
                   <div className="row-span-1">
                     <p>
@@ -642,7 +635,7 @@ export default function Web(props) {
               <Popover.Panel
                 focus
                 static
-                className="absolute top-0 right-0 transition transform origin-top-right md:hidden w-10/12 z-50"
+                className="absolute top-0 right-0 transition transform origin-top-right  w-10/12 z-50"
               >
                 <div className=" shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
                   <div className="py-6  mobile-background">
@@ -668,7 +661,7 @@ export default function Web(props) {
       </Popover>
       {classes === "" && (
         <nav className="bg-grey-light rounded w-full bg-white p-5">
-          <ol className="list-reset flex text-grey-dark p-5">{breadCrumb}</ol>
+          <ol className="list-reset flex text-grey-dark p-5 text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md">{breadCrumb}</ol>
         </nav>
       )}
       <div  className={`${routeLocation.pathname === '/' ? '':'min-h-70'}`}>
@@ -680,16 +673,110 @@ export default function Web(props) {
       </Suspense>
       {/* fixed bottom-0 */}
       <div>
-        
         { showPopup  ? <Popup toggleModal = {toggleModal}/> : '' }
       </div>
       </div>
-{/* Home COmponent */}
+    {/* Home COmponent */}
 
    { routeLocation.pathname === '/' && <div>
-          <div className="grid grid-cols-2">
+          <div className="grid md:grid-cols-2 lg:grid-cols-2 ">
+            <div className="bg-white 2xl:hidden">
+              <div className="grid grid-cols-5 p-14 border-b border-blue">
+                <div className="text-right sm:text-3xl xs:text-xl sm:col-start-1 lg:text-5xl lg:col-start-2">
+                  Today
+                </div>
+                <div className="text-left sm:text-4xl xs:text-xl lg:text-6xl px-10 lg:col-span-3 sm:col-span-4">
+                  <p>
+                    {currentDate ? currentDate : ""}
+                    <br />
+                    <br />
+                    {currentTime ? currentTime : ""}
+                  </p>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 ">
+                <div className="border-r border-blue ">
+                  <div className="p-20 lg:text-3xl sm:text-2xl xs:text-sm text-right">
+                    <FormattedMessage
+                      id="Primary_Sites"
+                      defaultMessage="Primary Sites"
+                    />
+                    <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex" />
+                  </div>
+                  <div className="p-20 lg:text-3xl sm:text-2xl xs:text-sm text-right">
+                    <FormattedMessage id="Sample" defaultMessage="Sample" />
+                    <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex" />
+                  </div>
+                  <div className="p-20 lg:text-3xl sm:text-2xl xs:text-sm text-right">
+                    <FormattedMessage id="Genes" defaultMessage="Genes" />
+                    <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex" />
+                  </div>
+                  <div className="p-20 lg:text-3xl sm:text-2xl xs:text-sm text-right">
+                    <FormattedMessage id="Mutations" defaultMessage="Mutations" />
+                    <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex" />
+                  </div>
+                  <div className="p-20 lg:text-3xl sm:text-2xl xs:text-sm text-right">
+                    <FormattedMessage id="cnv" defaultMessage="CNV" />
+                    <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex" />
+                  </div>
+                  <div className="p-20 lg:text-3xl sm:text-2xl xs:text-sm text-right">
+                    <FormattedMessage
+                      id="Fusion Genes"
+                      defaultMessage="Fusion Genes"
+                    />
+                    <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex" />
+                  </div>
+                  <div className="p-20 lg:text-3xl sm:text-2xl xs:text-sm text-right">
+                    <FormattedMessage
+                      id="Global Proteome"
+                      defaultMessage="Global Proteome"
+                    />
+                    <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex" />
+                  </div>
+                  <div className="p-20 lg:text-3xl sm:text-2xl xs:text-sm text-right">
+                    <FormattedMessage
+                      id="Phospho Site"
+                      defaultMessage="Phospho Site"
+                    />
+                    <ChevronRightIcon className="h-5 w-5 text-main-blue inline-flex" />
+                  </div>
+                </div>
+                <div>
+                  <div className="p-20  pl-24 lg:text-3xl sm:text-2xl xs:text-sm text-left">
+                    1
+                  </div>
+                  <div className="p-20  pl-24 lg:text-3xl sm:text-2xl xs:text-sm text-left">
+                    {countJson && "sample" in countJson ? countJson["sample"] : ""}
+                  </div>
+                  <div className="p-20  pl-24 lg:text-3xl sm:text-2xl xs:text-sm text-left">
+                    {countJson && "genes" in countJson ? countJson["genes"] : ""}
+                  </div>
+                  <div className="p-20  pl-24 lg:text-3xl sm:text-2xl xs:text-sm text-left">
+                    {countJson && "mutation" in countJson
+                      ? countJson["mutation"]
+                      : ""}
+                  </div>
+                  <div className="p-20  pl-24 lg:text-3xl sm:text-2xl xs:text-sm text-left">
+                    {countJson && "cnv" in countJson ? countJson["cnv"] : ""}
+                  </div>
+                  <div className="p-20  pl-24 lg:text-3xl sm:text-2xl xs:text-sm text-left">
+                    {countJson && "fusion" in countJson ? countJson["fusion"] : ""}
+                  </div>
+                  <div className="p-20  pl-24 lg:text-3xl sm:text-2xl xs:text-sm text-left">
+                    {countJson && "proteome" in countJson
+                      ? countJson["proteome"]
+                      : ""}
+                  </div>
+                  <div className="p-20  pl-24 lg:text-3xl sm:text-2xl xs:text-sm text-left">
+                    {countJson && "phospho" in countJson
+                      ? countJson["phospho"]
+                      : ""}
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className="bg-main-blue p-14 2xl:p-5  2xl:col-span-2">
-              <div className="grid h-72 2xl:grid-cols-12">
+              <div className="grid 2xl:grid-cols-12">
                 <div className="text-white grid text-center mb-16 content-center text-3xl 2xl:col-span-2">
                   <FormattedMessage
                     id="Data of included cancer type"
@@ -822,6 +909,7 @@ export default function Web(props) {
                 </div>
               </div>
             </div>
+
           </div>
           <div className=" bg-white lg:pt-0  pt-20">
             <div className="py-10 border-t ">

@@ -275,7 +275,7 @@ export default function DataVisualization() {
     l.forEach((element) => {
       console.log('t',toggle);
       let classes =
-        toggle ?  "lg:px-4 sm:px-2 xs:px-2 py-2 xs:text-sm sm:text-sm md:text-xs lg:text-base font-semibold rounded-t opacity-50 BorderDiv" : "lg:px-4 sm:px-2 xs:px-2 py-2 xs:text-sm sm:text-sm md:text-xl lg:text-xl font-semibold rounded-t opacity-50 ";
+        toggle ?  "lg:px-4 sm:px-2 xs:px-2 py-2 font-semibold rounded-t opacity-50 BorderDiv" : "lg:px-4 sm:px-2 xs:px-2 py-2 font-semibold rounded-t opacity-50 ";
 
       if (chartName === element) {
         classes = classes + " border-blue-400 border-b-4 -mb-px opacity-100";
@@ -504,9 +504,9 @@ export default function DataVisualization() {
     <div className="header">
       <div className="mx-auto border-t rounded overflow-hidden ">
         <div id="main_div">
-          <div className={toggle ? "grid grid-cols-4" : "grid"}>
+          <div className={toggle ? "grid md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4" : "grid "}>
             {toggle && (
-              <div className="xs:col-span-3 lg:col-span-1 xs:z-10 xs:opacity-95 bg-white border border-gray-200 transition duration-150 ease-in-out">
+              <div className="hidden md:block lg:block xl:block 2xl:block  xs:z-10 xs:opacity-95 bg-white border border-gray-200 transition duration-150 ease-in-out">
                 <Filter
                   parentCallback={callback}
                   filterState={state["filter"]}
@@ -543,13 +543,13 @@ export default function DataVisualization() {
                       onClick={(e) => leftFilterClose(e)}
                     />
                   </div>
-                  <div className="inline-flex lg:w-2/5 xs:w-60 md:w-2/5 sm:w-2/5 xs:w-1/5">
+                  <div className="inline-flex w-2/5">
                     <select
                       id="gene_type"
                       value={state["type"]}
                       onChange={(e) => selectGene(e)}
                       placeholder="Enter your Genes"
-                      className="btn_input_height lg:w-full xs:w-56 sm:w-full md:w-full p-3 border bg-white focus:outline-none border-blue-300 focus:ring focus:border-blue-300 xs:h-14 lg:h-16 xs:text-sm lg:text-xl"
+                      className="btn_input_height w-full p-3 border bg-white focus:outline-none border-blue-300 focus:ring focus:border-blue-300 xs:h-14 lg:h-16 xs:text-sm lg:text-xl"
                     >
                       <option
                         className="xs:text-sm lg:text-xl"
@@ -689,11 +689,11 @@ export default function DataVisualization() {
                       </option>
                     </select>
                   </div>
-                  <div className="inline-flex lg:w-2/5 sm:w-13 xs:w-60">
+                  <div className="inline-flex w-2/5">
                     <input
                       type="text"
                       id="genes"
-                      className="btn_input_height lg:w-full sm:w-13 xs:w-56 p-3 xs:text-sm lg:text-xl border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 xs:h-14 lg:h-16"
+                      className="btn_input_height w-full p-3 xs:text-sm lg:text-xl border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 xs:h-14 lg:h-16"
                       name="genes"
                       placeholder={enterGenes}
                       onChange={(e) => {
@@ -716,9 +716,9 @@ export default function DataVisualization() {
                       }}
                     />
                   </div>
-                  <div className="inline-flex lg:w-2/12 sm:w-1/5">
+                  <div className="inline-flex w-1/5">
                     <button
-                      className="btn_input_height bg-main-blue hover:bg-main-blue mb-3 xs:text-sm lg:text-xl lg:w-full text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded xs:h-14 lg:h-16"
+                      className="w-full text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md btn_input_height bg-main-blue hover:bg-main-blue mb-3 lg:w-full text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded xs:h-14 lg:h-16"
                       onClick={submitFilter}
                     >
                       <FormattedMessage id="Filter" defaultMessage="Filter" />
@@ -728,10 +728,10 @@ export default function DataVisualization() {
               </div>
               <div className="gap-6">
                 <section>
-                  <nav id="second_header" className=" px-8 pt-2 shadow-md">
+                  <nav id="second_header" className=" pt-2 shadow-md">
                     <ul
                       id="tabs"
-                      className="inline-flex justify-center w-full lg:px-1 sm:px-0 pt-2 md:text-xs sm:text-xs md:text-xs lg:text-xs"
+                      className="inline-flex justify-center w-full lg:px-1 sm:px-0 pt-2 text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
                       onClick={(e) => toggleTab(e)}
                     >
                       {menuItems}
@@ -744,11 +744,11 @@ export default function DataVisualization() {
                     className="block text-center"
                     ref={elementRef}
                   >
-                    <div className="grid grid-cols-6 p-5">
-                      <div className="lg:col-start-6 sm:col-start-1 md:col-start-6 inline-flex justify-center p-2 ">
+                    <div className="flex justify-end p-5">
+                      <div className=" inline-flex  ">
                         {screenCapture === false && (
                           <button
-                            className="bg-main-blue hover:bg-main-blue mb-3 lg:w-full sm:w-40 sm:h-14  lg:h-20 sm:h-16 xs:text-sm sm:text-sm md:text-md lg:text-md text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded "
+                            className="text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md btn_input_height bg-main-blue hover:bg-main-blue mb-3 lg:w-full text-white  font-bold py-2 px-10 border border-blue-700 rounded xs:h-14 lg:h-16"
                             onClick={() => setScreenCaptureFunction(true)}
                           >
                             <FormattedMessage
@@ -759,7 +759,7 @@ export default function DataVisualization() {
                         )}
                         {screenCapture === true && (
                           <button
-                            className="bg-main-blue hover:bg-main-blue mb-3 w-full h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
+                            className="text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md btn_input_height bg-main-blue hover:bg-main-blue mb-3 lg:w-full text-white  font-bold py-2 px-4 border border-blue-700 rounded xs:h-14 lg:h-16"
                             disabled={true}
                           >
                             Loading...
@@ -799,7 +799,7 @@ export default function DataVisualization() {
                     </div>
                     {boolChartState && <div>{chart["viz"]}</div>}
                     {!boolChartState && (
-                      <div className="p-1">Please select Genes</div>
+                      <div className="p-1 text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">Please select Genes</div>
                     )}
                   </div>
                 </section>
