@@ -38,6 +38,11 @@ export default function DataVolcono({
   const clinicalMaxMinInfo = useSelector(
     (data) => data.dataVisualizationReducer.clinicalMaxMinInfo
   );
+
+  const tabList = useSelector(
+    (data) => data.dataVisualizationReducer
+  );
+
   const [activeCmp, setActiveCmp] = useState(false);
   const [comp, setComp] = useState([]);
   // const didMountRef = useRef(false)
@@ -54,11 +59,20 @@ export default function DataVolcono({
   const [volcanoType, setVolcanoType] = useState("transcriptome");
   const [proteomeValue, setProteomeValue] = useState("N");
   const [smallScreen, setSmallScreen] = useState(false);
+  const [alltabList, setAllTabList] = useState({});
   let { tab, project_id } = useParams();
   
   const [userDefienedFilter, setUserDefienedFilter] = useState(
     project_id === undefined ? "static" : "dynamic"
   );
+  
+
+  useEffect(()=>{
+    if('userProjectsDataTable' in tabList ){
+      setAllTabList(tabList.userProjectsDataTable)
+    }
+    
+    },[tabList])
 
   const updateGroupFilters = (filtersObject) => {
 
@@ -115,7 +129,7 @@ export default function DataVolcono({
       if (Object.keys(volcanoJson).length > 0) {
         setActiveCmp(true);
         setData(volcanoJson);
-        console.log('Volcj',volcanoJson);
+        // console.log('Volcj',volcanoJson);
       }
       setTimeout(function () {
         setLoader(false);
@@ -135,7 +149,7 @@ export default function DataVolcono({
               Log2FC: parseFloat(item["log2(fold_change)"]),
               "-Log(Pvalue)": item["q_value"],
             });
-            console.log('item["q_value"]',item["q_value"]);
+            // console.log('item["q_value"]',item["q_value"]);
           } else {
             positiveCount += 1;
             positive.push({
@@ -255,14 +269,25 @@ export default function DataVolcono({
               >
                 <FormattedMessage id="Transcriptome" defaultMessage="Transcriptome" />
               </button>
-              <button
+              {project_id !== undefined &&  alltabList['proteome'] && <button
                 onClick={() => changeVolcanoType("proteome")}
                 className={
-                  volcanoType === "proteome" ? selectedCss : nonSelectedCss
+                  volcanoType === "proteome" ? `${ alltabList['proteome'] ? `${selectedCss} hidden` : selectedCss}` : `${nonSelectedCss}`
                 }
               >
                 <FormattedMessage id="Proteome" defaultMessage="Proteome" />
+              </button> }
+
+            { project_id === undefined &&
+              <button
+              onClick={() => changeVolcanoType("proteome")}
+              className={
+                volcanoType === "proteome" ? selectedCss: nonSelectedCss
+              }
+              >
+                <FormattedMessage id="Proteome" defaultMessage="Proteome" />
               </button>
+              }
             </div>
             {volcanoType === "proteome" && (
               <>
@@ -405,7 +430,10 @@ export default function DataVolcono({
                 onClick={() => submitProteomeNT()}
                 className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
               >
-                Submit
+               <FormattedMessage
+                            id="Submit_volcano"
+                            defaultMessage="Submit"
+                          />
               </button>
             )}
             {/* <GroupFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} /> */}

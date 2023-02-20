@@ -53,6 +53,20 @@ export default function DataSurvival({
   const [userDefienedFilter, setUserDefienedFilter] = useState(
     project_id === undefined ? "static" : "dynamic"
   );
+  const [alltabList, setAllTabList] = useState({});
+  const tabList = useSelector(
+    (data) => data.dataVisualizationReducer
+  );
+
+  useEffect(()=>{
+    if('userProjectsDataTable' in tabList ){
+      setAllTabList(tabList.userProjectsDataTable)
+    }
+    
+    },[tabList])
+
+
+
 
   const [coxUserDefinedFilter, setCoxUserDefinedFilter] = useState({})
   const [survivalModel, setSurvivalModel] = useState("kaplan");
@@ -662,21 +676,48 @@ export default function DataSurvival({
                         defaultValue={geneDatabase}
                         className="w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3"
                       >
-                        <option
+
+                      {project_id !== undefined &&  alltabList['dna_mutation'] && <option
                           selected={geneDatabase === "dna_mutation"}
                           value="dna_mutation"
                         >
                          DNA Mutation
                         </option>
+                        }
+                        {project_id === undefined && <option
+                          selected={geneDatabase === "dna_mutation"}
+                          value="dna_mutation"
+                        >
+                         DNA Mutation
+                        </option>}
+
+                        {project_id !== undefined &&  alltabList['rna'] && 
                         <option selected={geneDatabase === "rna"} value="rna">
                         RNA Expression
                         </option>
+                        }
+
+                        {
+                          project_id === undefined &&  <option selected={geneDatabase === "rna"} value="rna">
+                          RNA Expression
+                          </option>
+                        }
+
+                        {project_id !== undefined &&  alltabList['proteome'] && 
                         <option
                           selected={geneDatabase === "proteome"}
                           value="proteome"
                         >
                           Global Proteome
                         </option>
+                        }
+
+                        {project_id === undefined &&  <option
+                          selected={geneDatabase === "proteome"}
+                          value="proteome"
+                        >
+                          Global Proteome
+                        </option>}
                       </select>
                     </div>
                   )}

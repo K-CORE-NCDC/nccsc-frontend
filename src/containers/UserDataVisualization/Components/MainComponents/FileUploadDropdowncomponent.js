@@ -373,7 +373,7 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
                           key={type}
                           value={obj.options[type]}
                         >
-                          {obj.options[type]}
+                          {obj.options[type] === 'yesorno' ? 'YES/NO' : obj.options[type]}
                         </option>
                       ))}
                     </select>
@@ -407,7 +407,7 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
                             key={type}
                             value={obj.options[type]}
                           >
-                            {obj.options[type]}
+                            {obj.options[type] === 'yesorno' ? 'YES/NO' : obj.options[type]}
                           </option>
                         ))}
                       </select>

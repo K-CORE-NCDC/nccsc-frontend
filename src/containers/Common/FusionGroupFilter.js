@@ -796,7 +796,7 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
     setIsFilterResetHappened(true);
     setPrevStateFilters([]);
     setFilters({});
-
+    parentCallback({});
   
   };
 

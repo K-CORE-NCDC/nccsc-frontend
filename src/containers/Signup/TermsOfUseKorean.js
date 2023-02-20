@@ -33,7 +33,7 @@ return (
         </h1>
       </div>
       <div
-        className="overflow-auto bg-white border border-gray-400 rounded shadow-sm w-4/6 p-10 h-100"
+        className="overflow-auto bg-white border border-gray-400 rounded shadow-sm p-10 resize h-48" style={{width:'40%'}}
       >
         <div className="scrollBox">
           <h4 className="font-medium"> 국립암센터(국가암데이터센터) K-CORE 회원 이용약관 </h4>
@@ -361,7 +361,7 @@ return (
         </label>
       </div>
       <div
-        className="overflow-auto bg-white border border-gray-400 rounded shadow-sm w-4/6 p-10 h-100"
+        className="overflow-auto bg-white border border-gray-400 rounded shadow-sm p-10 resize h-48" style={{width:'40%'}}
       >
         <div className="scrollBox">
           <h4 className="font-medium">

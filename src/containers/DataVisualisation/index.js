@@ -731,7 +731,7 @@ export default function DataVisualization() {
                   <nav id="second_header" className=" px-8 pt-2 shadow-md">
                     <ul
                       id="tabs"
-                      className="inline-flex justify-center w-full lg:px-1 sm:px-0 pt-2 md:text-xs sm:text-xs md:text-xs lg:text-xs"
+                      className= { toggle ? "inline-flex justify-between w-full lg:px-1 sm:px-0 pt-2 md:text-xs sm:text-xs md:text-xs lg:text-xs": "inline-flex justify-center w-full lg:px-1 sm:px-0 pt-2 md:text-xs sm:text-xs md:text-xs lg:text-xs"}
                       onClick={(e) => toggleTab(e)}
                     >
                       {menuItems}
