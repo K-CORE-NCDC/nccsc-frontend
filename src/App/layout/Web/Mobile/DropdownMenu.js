@@ -25,7 +25,7 @@ export default function DropdownMenuMobile() {
       let tmp = []
       for (var j = 0; j < children.length; j++) {
         tmp.push(
-            <button key={i+"_"+j} className="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-full md:w-52">
+            <button key={i+"_"+j} className="flex justify-start space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-full ">
                 <Link key={i+"link_"+j } className="text-2xl py-2 px-4 block whitespace-no-wrap"
                     to={children[j].url}>
                     {children[j].title}
@@ -35,11 +35,11 @@ export default function DropdownMenuMobile() {
       }
       if(tmp.length>0){
         html.push(
-          <div key={'li_'+i} className="flex flex-col justify-start items-center   px-6  w-full  border-b border-gray-800">
+          <div key={'li_'+i} className="flex flex-col justify-start   px-6  w-full  border-b border-gray-800">
             <button className="focus:outline-none focus:text-indigo-400  text-white flex justify-between items-center w-full py-5 space-x-14 " key={'li_'+i}>
               <p className="leading-5  uppercase">{htmlbutton}</p>
             </button>
-            <div id="menu1" className={`justify-start  flex-col w-full md:w-auto items-start pb-1 `} >
+            <div id="menu1" className={`justify-start  flex-col w-full  items-start pb-1 `} >
               {tmp}
             </div>
           </div>

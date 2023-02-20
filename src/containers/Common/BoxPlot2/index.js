@@ -408,7 +408,7 @@ const BoxPlot = React.forwardRef(({view_type, box_data,chart_type, watermarkCss 
     <>
       <div id="box3">
       </div>
-      <div ref={ref} className={watermarkCss + "sm:w-5/6"} id="box2" >
+      <div ref={ref} className={watermarkCss + "w-full overflow-x-auto"} id="box2" >
       </div>
     </>
   )
