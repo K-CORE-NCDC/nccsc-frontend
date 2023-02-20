@@ -39,8 +39,10 @@ function Popup({toggleModal}) {
   useEffect(()=>{
     if(noticedetails && 'data' in noticedetails && ( Object.keys(noticedetails['data']).length > 0)){
       let content = noticedetails['data']['content']
-      content = content.replaceAll('="/media','="'+config['media']+'')
-      setContent(content)
+      if(content){
+        content = content.replaceAll('="/media','="'+config['media']+'')
+        setContent(content)
+      }
     }
   },[noticedetails])
 
