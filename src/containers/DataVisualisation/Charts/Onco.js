@@ -276,21 +276,18 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
                 <h3>
                 <FormattedMessage  id = "MutationDistribution" defaultMessage="Mutation Distribution :distribution of selected mutation"/>
                 </h3>
+                { Englishlanguage && <h3>Mutation count: count of selected somatic mutation</h3>}
+
                 {
-                  koreanlanguage &&
-                  <h3>선택된 체세포 변이의 수</h3> 
+                  Englishlanguage && <h3> You can activate or deactivate each variant classification legend by clicking on each item. (Maximum 4 items)</h3>
                 }
+
+                { koreanlanguage && <h3>Mutation count: 선택된 체세포 변이의 수</h3>}
+
                 {
-                  koreanlanguage &&
-                  <h3>선택된 체세포 변이의 수</h3> 
+                  koreanlanguage && <h3>각 항목을 클릭하여 각 변이 분류 범례를 활성화 또는 비활성화 할 수 있습니다.(최대 4개)</h3>
                 }
-                
-                {Englishlanguage && <h3>
-                 Mutation count: count of selected somatic mutation
-                  </h3>}
-                  {
-                    Englishlanguage && <h3> You can activate or deactivate each variant classification legend by clicking on each item. (Maximum 4 items)</h3>
-                  }
+
                 </div>
                 {/* <div className="pl-10"><FormattedMessage  id = "oncoplot_total_samples" defaultMessage={`No of samples :${chartData['geneData']&&chartData['geneData'].length?chartData['geneData'][0].data.length:0}`}/></div> */}
                 <OncoCmp

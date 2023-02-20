@@ -644,6 +644,9 @@ const GroupFilters = ({
       setEnglishlanguage(true);
     }
   });
+
+ 
+
   if (viz_type === "volcono" || viz_type === "survival") {
     if(koreanlanguage){
       console.log();
@@ -758,15 +761,12 @@ const GroupFilters = ({
     
   }
 
-
-
-    
-
     preDefienedGroups1["smok_yn"] = [
       { label: "No Smoking", value: "smok_yn||N" },
       { label: "Past Smoking", value: "smok_yn||Y" },
       { label: "Current Smoking", value: "smok_curr_yn||Y" },
     ];
+
     preDefienedGroups1["t_category"] = [
       { label: "Tis", from: "Tis", to: "Tis", value: "Tis" },
       { label: "T1", from: "T1", to: "T1", value: "T1" },
@@ -1459,6 +1459,20 @@ const GroupFilters = ({
         let tr = [];
 
         if (viz_type === "volcono") {
+          if(koreanlanguage){
+            preDefienedGroups1["smok_yn"] = [
+              { label: "비흡연자", value: "smok_yn||N" },
+              { label: "과거 흡연자", value: "smok_yn||Y" },
+              { label: "현재 흡연자", value: "smok_curr_yn||Y" },
+            ];
+          }
+          else{
+            preDefienedGroups1["smok_yn"] = [
+              { label: "No Smoking", value: "smok_yn||N" },
+              { label: "Past Smoking", value: "smok_yn||Y" },
+              { label: "Current Smoking", value: "smok_curr_yn||Y" },
+            ];
+          }
           if (
             Object.keys(userGivenInputValues).length > 0 &&
             userGivenInputValues["type"] === "static"
@@ -1514,6 +1528,20 @@ const GroupFilters = ({
               });
             }
           } else {
+            if(koreanlanguage){
+              preDefienedGroups1["smok_yn"] = [
+                { label: "비흡연자", value: "smok_yn||N" },
+                { label: "과거 흡연자", value: "smok_yn||Y" },
+                { label: "현재 흡연자", value: "smok_curr_yn||Y" },
+              ];
+            }
+            else{
+              preDefienedGroups1["smok_yn"] = [
+                { label: "No Smoking", value: "smok_yn||N" },
+                { label: "Past Smoking", value: "smok_yn||Y" },
+                { label: "Current Smoking", value: "smok_curr_yn||Y" },
+              ];
+            }
             preDefienedGroups1[colName].map((element, index) =>
               tr.push(
                 <tr key={colName + index} className="border-b">
@@ -1562,7 +1590,22 @@ const GroupFilters = ({
               <tbody key={"group_tbody"}>{tr}</tbody>
             </table>
           );
-        } else if (viz_type === "survival") {
+        } 
+        else if (viz_type === "survival") {
+          if(koreanlanguage){
+            preDefienedGroups1["smok_yn"] = [
+              { label: "비흡연자", value: "smok_yn||N" },
+              { label: "과거 흡연자", value: "smok_yn||Y" },
+              { label: "현재 흡연자", value: "smok_curr_yn||Y" },
+            ];
+          }
+          else{
+            preDefienedGroups1["smok_yn"] = [
+              { label: "No Smoking", value: "smok_yn||N" },
+              { label: "Past Smoking", value: "smok_yn||Y" },
+              { label: "Current Smoking", value: "smok_curr_yn||Y" },
+            ];
+          }
           let d = preDefienedGroups1[colName];
           let thead = [];
           let boxes = d.length;
@@ -1669,7 +1712,7 @@ const GroupFilters = ({
         setGroupsCounter((prevState) => prevState + 1);
       }
     }
-  }, [selectedFilterDetails]);
+  }, [selectedFilterDetails,koreanlanguage]);
 
   const AppendNewGroup = () => {
     const filterType = selectedFilterDetails.type;
@@ -1725,7 +1768,7 @@ const GroupFilters = ({
             onClick={submitFilters}
             className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
           >
-            Submit
+             <FormattedMessage id="Submit_volcano" defaultMessage="Submit" />
           </button>
         </div>
       )}
@@ -1735,7 +1778,10 @@ const GroupFilters = ({
             onClick={resetFilters}
             className="bg-white hover:bg-gray-700 mb-3 lg:w-80 sm:w-40 h-20 text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
           >
-            Reset
+          <FormattedMessage
+                            id="Reset_volcano"
+                            defaultMessage="Reset"
+                          />
           </button>
         </div>
       )}
@@ -2942,7 +2988,10 @@ export const UserDefinedGroupFilters = ({
             onClick={submitFilters}
             className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
           >
-            Submit
+             <FormattedMessage
+                            id="Submit_volcano"
+                            defaultMessage="Submit"
+                          />
           </button>
         </div>
       )}
@@ -2952,7 +3001,10 @@ export const UserDefinedGroupFilters = ({
             onClick={resetFilters}
             className="bg-white hover:bg-gray-700 mb-3 lg:w-80 sm:w-40 h-20 text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
           >
-            Reset
+            <FormattedMessage
+                            id="Reset_volcano"
+                            defaultMessage="Reset"
+                          />
           </button>
         </div>
       )}

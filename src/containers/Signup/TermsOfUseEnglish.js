@@ -24,17 +24,17 @@ const TermsOfUseEnglish = ({ changestep }) => {
 
     return (
         <div>
-            <section className="mt-10 flex flex-col items-center justify-center">
+            <section className="mt- flex flex-col items-center justify-center">
                 <div>
                     <span className="text-6xl font-bold text-gray-800">Terms of Use</span>
                 </div>
-                <div className="my-14">
+                <div className="my-8">
                     <h1 className="font-medium text-3xl text-gray-800">
                         Please proceed after agreeing to the terms of use.
                     </h1>
                 </div>
                 <div
-                    className="overflow-auto bg-white border border-gray-400 rounded shadow-sm w-4/6 p-10 h-100"
+                    className="overflow-auto bg-white border border-gray-400 rounded shadow-sm p-10 resize h-48" style={{width:'40%'}}
                 >
                     <div className="scrollBox">
                     <h4 className="font-medium">National Cancer Center (National Cancer Data Center) K-CORE Member Terms and Conditions</h4>
@@ -282,7 +282,7 @@ const TermsOfUseEnglish = ({ changestep }) => {
                         </ul>
                     </div>
                 </div>
-                <div className="my-8 pb-6">
+                <div className="my-4 pb-6">
                     <label className="inline-flex items-center">
                         <input
                             type="checkbox"
@@ -298,7 +298,7 @@ const TermsOfUseEnglish = ({ changestep }) => {
                     </label>
                 </div>
                 <div
-                    className="overflow-auto bg-white border border-gray-400 rounded shadow-sm w-4/6 p-10 h-100"
+                    className="overflow-auto bg-white border border-gray-400 rounded shadow-sm p-10 resize h-48" style={{width:'40%'}}
                 >
                     <div className="scrollBox">
                         <h4 className="font-medium">

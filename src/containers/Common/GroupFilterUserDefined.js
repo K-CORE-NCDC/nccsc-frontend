@@ -1283,7 +1283,10 @@ let UserDefinedGroupFilters = ({
             onClick={submitFilters}
             className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
           >
-            Submit
+          <FormattedMessage
+                            id="Submit_volcano"
+                            defaultMessage="Submit"
+                          />
           </button>
         </div>
       )}
@@ -1293,7 +1296,10 @@ let UserDefinedGroupFilters = ({
             onClick={resetFilters}
             className="bg-white hover:bg-gray-700 mb-3 lg:w-80 sm:w-40 h-20 text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
           >
-            Reset
+         <FormattedMessage
+                            id="Reset_volcano"
+                            defaultMessage="Reset"
+                          />
           </button>
         </div>
       )}

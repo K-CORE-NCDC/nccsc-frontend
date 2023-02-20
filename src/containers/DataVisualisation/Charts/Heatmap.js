@@ -12,7 +12,7 @@ import Multiselect from 'multiselect-react-dropdown';
 import KmeanCmp from '../../Common/K_mean';
 import {FormattedMessage} from 'react-intl';
 import { Context } from "../../../wrapper";
-
+import { useParams } from "react-router-dom";
 export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, setToFalseAfterScreenCapture }) {
   const context = useContext(Context);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
@@ -39,6 +39,17 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const [inSufficientData, setInSufficientData] = useState(true)
   const [renderNoContent, setRenderNoContent] = useState(false)
   const [renderHeatmap, setRenderHeatmap] = useState(true)
+  let { tab, project_id } = useParams();
+  const [userDefienedFilter, setUserDefienedFilter] = useState(
+    project_id === undefined ? "static" : "dynamic"
+  );
+
+  const [alltabList, setAllTabList] = useState({});
+  const tabList = useSelector(
+    (data) => data.dataVisualizationReducer
+  );
+
+
   useEffect(() => {
     if (context["locale"] === "kr-KO") {
       setKoreanlanguage(true);
@@ -48,6 +59,12 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       setEnglishlanguage(true);
     }
   });
+
+  useEffect(()=>{
+    if('userProjectsDataTable' in tabList ){
+      setAllTabList(tabList.userProjectsDataTable)
+    }
+    },[tabList])
 
 const diag_age = (vl)=>{
   let n = parseInt(vl)
@@ -510,18 +527,39 @@ normal_button += " border duration-200 ease-in-out border-teal-600 transition px
                     text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
                   Methylation
                 </button>
+
+                {
+                  project_id === undefined &&   <button onClick={e => changeType(e, 'proteome')} name='type' className="rounded-l-none border-l-0
+                  hover:scale-110 focus:outline-none flex justify-center p-5
+                  rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl xs:text-sm xs:p-3
+                  text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
+                  Global Proteome
+                  </button> 
+                }
+                {project_id !== undefined &&  alltabList['proteome'] && 
                 <button onClick={e => changeType(e, 'proteome')} name='type' className="rounded-l-none border-l-0
                     hover:scale-110 focus:outline-none flex justify-center p-5
                     rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl xs:text-sm xs:p-3
                     text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
                   Global Proteome
-                </button>
+                </button> }
+
+                {project_id !== undefined &&  alltabList['proteome'] && 
                 <button onClick={e => changeType(e, 'phospo')} name='type' className="rounded-l-none border-l-0
-                    hover:scale-110 focus:outline-none flex justify-center p-5
-                    rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl xs:text-sm xs:p-3
-                    text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
+                hover:scale-110 focus:outline-none flex justify-center p-5
+                rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl xs:text-sm xs:p-3
+                text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
+                Phospho </button>
+                }
+                {project_id === undefined && 
+                  <button onClick={e => changeType(e, 'phospo')} name='type' className="rounded-l-none border-l-0
+                  hover:scale-110 focus:outline-none flex justify-center p-5
+                  rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl xs:text-sm xs:p-3
+                  text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
                   Phospho
-                </button>
+                  </button>
+                  }
+               
               </div>
             </div>
           </div>
