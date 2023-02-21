@@ -49,22 +49,22 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     }
   });
 
-const diag_age = (vl)=>{
-  let n = parseInt(vl)
-  let tmp = ''
-  if(n >20 && n<=25){
-    tmp = '21~25'
-  } else if(n>25 && n<=30 )  {
-    tmp = '26~30'
-  } else if(n>30 && n<=35) {
-    tmp = '31~35'
-  } else if(n>35 && n<=40) {
-    tmp = '36~40'
+  const diag_age = (vl)=>{
+    let n = parseInt(vl)
+    let tmp = ''
+    if(n >20 && n<=25){
+      tmp = '21~25'
+    } else if(n>25 && n<=30 )  {
+      tmp = '26~30'
+    } else if(n>30 && n<=35) {
+      tmp = '31~35'
+    } else if(n>35 && n<=40) {
+      tmp = '36~40'
+    }
+    return tmp
   }
-  return tmp
-}
 
-const bim_vl = (vl)=>{
+  const bim_vl = (vl)=>{
     let n = parseInt(vl)
     let tmp = ''
     if(n<18.5){
@@ -151,8 +151,7 @@ const bim_vl = (vl)=>{
         d_ = heatmapJson
       }
 
-
-      if(d_ && d_ !== undefined){
+      if(d_!='' && d_ !== undefined){
         d_.forEach((item, i) => {
           if(!genes.includes(item['gene_name'])){
             genes.push(item['gene_name'])
@@ -228,6 +227,7 @@ const bim_vl = (vl)=>{
       }else{
         setRenderNoContent(true)
       }
+ 
       setTimeout(function () {
         setLoader(false)
       }, (1000));
@@ -268,7 +268,7 @@ const bim_vl = (vl)=>{
 
   }, [screenCapture, watermarkCss])
 
-const changeType = (e, type) => {
+  const changeType = (e, type) => {
     e.preventDefault()
     setTableType(type)
     let c = document.getElementsByName('type')
@@ -299,7 +299,7 @@ const changeType = (e, type) => {
     }
   }
 
-const changeMainType = (e, type) => {
+  const changeMainType = (e, type) => {
     let c = document.getElementsByName('maintype')
     for (var i = 0; i < c.length; i++) {
       let classList = c[i].classList
@@ -322,26 +322,9 @@ const changeMainType = (e, type) => {
       setActiveCmp(false)
       dispatch(getHeatmapInformation('POST',dataJson))
     }
-    // setTableType(type)
-    // let dataJson = inputData
-    // if(type === 'rna'){
-    //   dataJson['genes'] = genes
-    // }else if(type === 'methylation'){
-    //   dataJson['genes'] = selectedGene
-    // }else if(type === 'proteome'){
-    //   dataJson['genes'] = genes
-    // }else if(type === 'phospo'){
-    //   dataJson['genes'] = selectedGene
-    // }
-    //
-    // if(inputData.type !==''){
-    //   dataJson['table_type'] = type
-    //   dataJson['view'] = viewType
-    //   dispatch(getHeatmapInformation('POST', dataJson))
-    // }
   }
 
-const setGene = (e)=>{
+  const setGene = (e)=>{
     let gene = e.target.value
     setSelectedGene([gene])
 
@@ -366,7 +349,7 @@ const setGene = (e)=>{
     }
   }
 
-function onSelect(selectedList, selectedItem) {
+  function onSelect(selectedList, selectedItem) {
     let cf = []
     setOption(selectedList)
     selectedList.forEach((item, i) => {
@@ -389,7 +372,7 @@ function onSelect(selectedList, selectedItem) {
     }
   }
 
-function onRemove(selectedList, removedItem) {
+  function onRemove(selectedList, removedItem) {
     let items = []
     setOption(selectedList)
     selectedList.forEach((item, i) => {
@@ -406,7 +389,7 @@ function onRemove(selectedList, removedItem) {
     }
   }
 
-const changeView = (e,view)=>{
+  const changeView = (e,view)=>{
     let c = document.getElementsByName('view')
     setActiveCmp(false)
     setLoader(true)
@@ -425,24 +408,24 @@ const changeView = (e,view)=>{
     }
   }
 
-let style = {
-  multiselectContainer:{
-    'marginTop':'5px'
-  },
-  inputField:{
-    'padding':'5px'
+  let style = {
+    multiselectContainer:{
+      'marginTop':'5px'
+    },
+    inputField:{
+      'padding':'5px'
+    }
   }
-}
 
-let selected_button = ''
-selected_button += "rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 sm:p-2 lg:px-10 md:px-10 sm:px-8 sm:w-40 md:w-80 sm:text-xl lg:text-2xl "
-selected_button += " rounded font-bold cursor-pointer hover:bg-main-blue "
-selected_button +=" bg-main-blue text-white border duration-200 ease-in-out transition xs:p-2 xs:text-sm xs:w-28"
+  let selected_button = ''
+  selected_button += "rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 sm:p-2 lg:px-10 md:px-10 sm:px-8 sm:w-40 md:w-80 sm:text-xl lg:text-2xl "
+  selected_button += " rounded font-bold cursor-pointer hover:bg-main-blue "
+  selected_button +=" bg-main-blue text-white border duration-200 ease-in-out transition xs:p-2 xs:text-sm xs:w-28"
 
-let normal_button = ''
-normal_button += "rounded-l-none  hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-2 lg:px-10 sm:px-8 sm:w-40 md:w-80 sm:text-xl lg:text-2xl "
-normal_button += " rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 "
-normal_button += " border duration-200 ease-in-out border-teal-600 transition px-10 xs:p-2 xs:text-sm xs:w-28"
+  let normal_button = ''
+  normal_button += "rounded-l-none  hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-2 lg:px-10 sm:px-8 sm:w-40 md:w-80 sm:text-xl lg:text-2xl "
+  normal_button += " rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 "
+  normal_button += " border duration-200 ease-in-out border-teal-600 transition px-10 xs:p-2 xs:text-sm xs:w-28"
 
   function rangeCall(e){
     let cf = []
@@ -476,12 +459,13 @@ normal_button += " border duration-200 ease-in-out border-teal-600 transition px
       setData('')
     }
   }, [heatmapSummaryStatusCode])
+  
 
   return (
     <div>
       <div className="grid  ">
         <div className='grid grid-cols-4'>
-          <div className="p-5 text-right col-span-4">
+          <div className="p-5 text-left col-span-4">
             <div className="flex justify-start items-baseline flex-wrap">
               <div className="flex m-2">
                 <button onClick={e => changeMainType(e, 'heatmap')} name='maintype' className="rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 rounded font-bold cursor-pointer hover:bg-main-blue
@@ -496,7 +480,7 @@ normal_button += " border duration-200 ease-in-out border-teal-600 transition px
               </div>
             </div>
           </div>
-          <div className="p-5 text-right xs:col-span-4  lg:col-span-2 sm:col-span-4">
+          <div className="p-5 text-left xs:col-span-4  lg:col-span-2 sm:col-span-4">
             <div className="flex justify-start items-baseline flex-wrap">
               <div className="flex m-2">
                 <button onClick={e => changeType(e, 'rna')} name='type' className="rounded-r-none  hover:scale-110
@@ -526,7 +510,7 @@ normal_button += " border duration-200 ease-in-out border-teal-600 transition px
             </div>
           </div>
           <div className='p-5 text-left flex col-span-2'>
-            <div className={tableType!=='methylation'?'xs:w-4/5  lg:w-7/12 xl:w-7/12 2xl:w-9/12 text-right':'w-full text-right'}>
+            <div className={tableType!=='methylation'?'xs:w-4/5  lg:w-7/12 xl:w-7/12 2xl:w-9/12 text-left':'w-full text-left'}>
               <label className="xs:text-sm"><FormattedMessage  id = "Clinical_Filters_heatmap" defaultMessage='Clinical Attribute'/>:</label>
               <Multiselect
                 style={style}
@@ -538,14 +522,21 @@ normal_button += " border duration-200 ease-in-out border-teal-600 transition px
               />
               {mainTab === 'k-mean'?
                 <div className="mt-8">
-                  <label htmlFor="points"><strong className="sm:text-xl lg:text-2xl">Cluster (between {rangeValue} and {clusterRange}):</strong></label>
-                  <input type="range" className="ml-4 border-4 border-gray-500 rounded-lg overflow-hidden appearance-none bg-white h-6 w-128"
-                  id="points" name="points" min="1" max={clusterRange} value={rangeValue} onChange={rangeCall}/>
+                  <label htmlFor="points"><strong className="">No. Of Cluster:  {rangeValue}</strong></label>
+                  <input type="range" className="border-2 border-gray-500 rounded-lg overflow-hidden appearance-none bg-white h-6 w-full opacity-100 relative"
+                  id="points" name="points" min="1"  max={clusterRange}  defaultValue={rangeValue} onChange={rangeCall} list='tickmarks'/>
+                  <ul className="flex justify-between w-full px-[1px]" id='tickmarks'>
+                    { 
+                      inputData['genes'].map((name,i)=>(
+                        <li key={name} className="flex justify-around relative"><span className="absolute">{i+1}</span></li>
+                      ))
+                    }
+                  </ul>
                 </div>:""
               }
             </div>
             { tableType!=='methylation' &&
-              <div className="mx-5 flex-wrap xs:text-sm sm:text-xl lg:text-2xl text-left lg:w-5/12 xl:w-5/12 2xl:w-3/12 text-right">
+              <div className="mx-5 flex-wrap  text-left lg:w-5/12 xl:w-5/12 2xl:w-3/12 text-left">
                 <FormattedMessage  id = "View_By_heatmap" defaultMessage='View By'/>:
                 <div className="flex m-2 w-100">
                   <button onClick={e => changeView(e, 'gene_vl')} name='view' className={viewType==="gene_vl"?selected_button:normal_button}>
@@ -558,7 +549,7 @@ normal_button += " border duration-200 ease-in-out border-teal-600 transition px
               </div>
             }
             {(tableType === 'methylation' || tableType==='phospo') &&
-              <div className='mx-5 flex-wrap text-right'>
+              <div className='mx-5 flex-wrap text-left'>
                 {inputGene &&
                   <>
                   <label><FormattedMessage  id = "Select Gene" defaultMessage='Select Gene'/></label>

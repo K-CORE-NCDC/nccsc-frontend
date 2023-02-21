@@ -1260,3 +1260,22 @@ dd {
 .my-tooltip .multi-line {
   text-align: left !important;
 }
+input[type=range] {
+  position: relative !important;
+  pointer-events: none;
+  -webkit-appearance: none;
+  height: 10px;
+  width: 100%;
+  opacity: 100 !important;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  pointer-events: all;
+  height: 10px;
+  border-radius: 0;
+  border: 0 none;
+  background-color: red;
+  -webkit-appearance: none;
+  opacity: 100 !important;
+  position: relative !important;
+}

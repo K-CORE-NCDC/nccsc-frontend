@@ -11,8 +11,8 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
     "bootstrap": "^3.4.1",
-    "canvasxpress": "^36.2.2",
-    "canvasxpress-react": "^36.2.2",
+    "canvasxpress": "^42.4",
+    "canvasxpress-react": "^42.4",
     "chart.js": "^3.5.1",
     "chartjs-chart-venn": "^3.1.0",
     "chartjs-plugin-datalabels": "^2.0.0",
@@ -64,7 +64,7 @@
   },
   "homepage": "/k-core/",
   "scripts": {
-    "start": "CHOKIDAR_USEPOLLING=true HOST=0.0.0.0 PORT=8282  react-scripts start ",
+    "start": "CHOKIDAR_USEPOLLING=true HOST=0.0.0.0 PORT=9191  react-scripts start ",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

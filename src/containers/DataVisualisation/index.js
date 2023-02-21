@@ -518,7 +518,7 @@ export default function DataVisualization() {
             <div
               className={
                 toggle
-                  ? "xs:absolute lg:relative col-start-2 col-span-3 overflow-auto"
+                  ? " lg:relative col-start-2 col-span-3 overflow-auto"
                   : ""
               }
             >
