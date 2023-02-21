@@ -277,25 +277,32 @@ const BoxPlot = React.forwardRef(({view_type, box_data,chart_type, watermarkCss 
           .style("fill", "#fff")
           .on("mouseover", (d,i)=> {
 
-            let html = 'q1'+i.q1.toFixed(2)+"<br/>"
-            html += 'q3: '+i.q3.toFixed(2)+"<br/>"
-            html += 'median: '+i.median.toFixed(2)+"<br/>"
-            html += 'interQuantile: '+i.interQuantileRange.toFixed(2)+"<br/>"
-            html += 'min: '+i.min.toFixed(2)+"<br/>"
-            html += 'max: '+i.max.toFixed(2)+"<br/>"
             tooltip.transition()
               .duration(200)
               .style('opacity', 0.9);
-
-            tooltip.html(html)
+            tooltip.html("Sample:<br/>"+BrstKeys[i.Sample]+`<br/>${view_type==="gene_vl" ? 'gene val' : 'z-score'}<br/>`+i.Sepal_Length)
               .style('left', d.pageX - 550 + 'px')
-              .style('top', d.pageY - 150 + 'px');
+              .style('top', d.pageY - 150  + 'px');
+
+            // let html = 'q1'+i.q1.toFixed(2)+"<br/>"
+            // html += 'q3: '+i.q3.toFixed(2)+"<br/>"
+            // html += 'median: '+i.median.toFixed(2)+"<br/>"
+            // html += 'interQuantile: '+i.interQuantileRange.toFixed(2)+"<br/>"
+            // html += 'min: '+i.min.toFixed(2)+"<br/>"
+            // html += 'max: '+i.max.toFixed(2)+"<br/>"
+            // tooltip.transition()
+            //   .duration(200)
+            //   .style('opacity', 0.9);
+
+            // tooltip.html(html)
+            //   .style('left', d.pageX - 550 + 'px')
+            //   .style('top', d.pageY - 150 + 'px');
           })
           .on('mouseout', () => {
-            tooltip
-              .transition()
-              .duration(500)
-              .style('opacity', 0);
+            // tooltip
+            //   .transition()
+            //   .duration(500)
+            //   .style('opacity', 0);
           });
 
 
@@ -375,8 +382,14 @@ const BoxPlot = React.forwardRef(({view_type, box_data,chart_type, watermarkCss 
               .duration(200)
               .style('opacity', 0.9);
             tooltip.html("Sample:<br/>"+BrstKeys[i.Sample]+`<br/>${view_type==="gene_vl" ? 'gene val' : 'z-score'}<br/>`+i.Sepal_Length)
-              .style('left', d.pageX - 550 + 'px')
-              .style('top', d.pageY - 150 + 'px');
+            
+            if(document.getElementById('filterBoxCmp')){
+              tooltip.style('left', d.pageX - 550 + 'px')
+              tooltip.style('top', d.pageY - 150  + 'px');
+            }else{
+              tooltip.style('left', d.pageX + 'px')
+              tooltip.style('top', d.pageY  + 'px');
+            }
           })
           .on('mouseout', () => {
             tooltip
@@ -403,12 +416,12 @@ const BoxPlot = React.forwardRef(({view_type, box_data,chart_type, watermarkCss 
     }
   },[box_data])
 
-
+  console.log(view_type,box_data,chart_type,watermarkCss)
   return (
     <>
       <div id="box3">
       </div>
-      <div ref={ref} className={watermarkCss + "w-full overflow-x-auto"} id="box2" >
+       <div ref={ref} className={watermarkCss + "w-full overflow-x-auto "} id="box2" >
       </div>
     </>
   )

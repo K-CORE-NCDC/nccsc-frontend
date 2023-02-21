@@ -616,7 +616,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
   }
 
   return (
-    <div>
+    <div id='filterBoxCmp'>
       <div className="py-3 px-2 w-full col-span-2 flex">
         <button
           className="text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md bg-white btn_input_height w-full  mb-3 text-black-500 font-bold py-2 px-4 border border-gray-900 rounded "

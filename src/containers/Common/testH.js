@@ -23,13 +23,14 @@ const HeatmapCmp = React.forwardRef(({  inputData, type, watermarkCss,width,clin
     const [data,setData] = useState({})
     const [dataLoaded,setDataLoaded] = useState(false)
     const [configVis,setConfigVis] = useState({})
-    const [spectrum,SetSpectrum] = useState({"min":0,"max":0})
+    const [spectrumMin,setSpectrumMin] = useState(0)
+    const [spectrumMax,setSpectrumMax] = useState(0)
     let target = "canvas";
     let themes = [
         {"name":"Theme 1","value":["navy","firebrick3"]},
-        {"name":"Theme 2","value":["#cc4c02","#662506"]},
-        {"name":"Theme 3","value":["#bb4c02","#772506"]},
-        {"name":"Theme 4","value":["#aa4c02","#882506"]},
+        {"name":"Theme 2","value":["#F9F9F9","#FCD200"]},
+        {"name":"Theme 3","value":["#D0D0D0","#006CE0"]},
+        {"name":"Theme 4","value":["#FFFFFF","#9900E0"]},
 
     ]
 
@@ -44,7 +45,9 @@ const HeatmapCmp = React.forwardRef(({  inputData, type, watermarkCss,width,clin
         "showVarOverlaysLegend": true,
         'events': false,
         'info': false,
+        "draw":true,
         'afterRenderInit': false,
+        "lazyLoad":true,
         'afterRender': [
             [
                 'setDimensions',
@@ -53,7 +56,7 @@ const HeatmapCmp = React.forwardRef(({  inputData, type, watermarkCss,width,clin
         ],
         'noValidate': true,
         // 'disableDataTable':true,
-        // 'disableConfigurator':true
+        'disableConfigurator':true,
         'disableToolbar':true
     }
     if(clinicalFilter.length>0){
@@ -94,12 +97,14 @@ const HeatmapCmp = React.forwardRef(({  inputData, type, watermarkCss,width,clin
               "position": "left",
               "type": "Default",
               "color": "rgb(72,126,182)",
-              "spectrum": ["rgb(255,0,255)","rgb(0,0,255)","rgb(0,0,0)","rgb(255,0,0)","rgb(255,215,0)"],
+              "spectrum": ["rgb(244,67,54)","rgb(225,101,25)","rgb(202,206,23)","rgb(4,115,49)","rgb(98,183,247)"],
               "scheme": "User",
               "showLegend": true,
               "showName": true,
               "showBox": true,
-              "rotate": false
+              "rotate": false,
+              
+              
           },
           "Dose": {
               "thickness": 50,
@@ -114,9 +119,11 @@ const HeatmapCmp = React.forwardRef(({  inputData, type, watermarkCss,width,clin
               "rotate": false
           }
       }
-      config['smpOverlays'] = ["Treatment","Cluster","Dose"]
+      config['smpOverlays'] = ["Cluster","Treatment","Dose"]
       config['samplesClustered'] = false
       config['variablesClustered'] = false
+      config["modifySort"] = [["Cluster"]]
+      config['sortDir'] = "descending"
     }
 
     useEffect(()=>{
@@ -152,14 +159,26 @@ const HeatmapCmp = React.forwardRef(({  inputData, type, watermarkCss,width,clin
                 colors = row['value']
             }
         }
-        // config['colorSpectrum'] = colors
-        setConfigVis({...config,['colorSpectrum']:colors})
+        
+        setConfigVis({...configVis,['colorSpectrum']:colors})
+        setTimeout(function(){
+            document.getElementById('canvascanvasXpressLoadingTimer').style.display='none'
+        },1000)
     }
 
         
     const changeSepctrum = (e)=>{
-        console.log(spectrum)
-        setConfigVis({...config,['colorSpectrumBreaks']:[spectrum['min'],spectrum['max']]})
+        
+        let c = configVis
+        c['colorSpectrumBreaks'] = [spectrumMin,spectrumMax]
+        setConfigVis(c)
+        setTimeout(function(){
+            setConfigVis({...configVis,['colorSpectrumBreaks']:[spectrumMin,spectrumMax]})
+            document.getElementById('canvascanvasXpressLoadingTimer').style.display='none'
+            document.getElementById("canvas-events").click()
+            document.getElementById("canvas").click()
+            ref.current.click()
+        }   ,2000)
     }
 
 
@@ -172,7 +191,7 @@ const HeatmapCmp = React.forwardRef(({  inputData, type, watermarkCss,width,clin
                         <select onChange={(e)=>changeTheme(e)} className='w-full border bg-white rounded lg:px-3 lg:py-2 xs:py-0 lg:h-14 sm:h-14 xs:h-8 lg:text-2xl xs:text-sm outline-none text-gray-700'>
                             {
                                 themes.map(row=>
-                                    <option value={row['name']}>{row['name']}</option>
+                                    <option key={row['name']} value={row['name']}>{row['name']}</option>
                                 )
                             }
                         </select>
@@ -182,7 +201,7 @@ const HeatmapCmp = React.forwardRef(({  inputData, type, watermarkCss,width,clin
                     
                         <div className="grid grid-cols-5  rounded mx-10 border border-b-color">
                             <div className="col-span-2">
-                                <input type="number" id='specturm_from' value={spectrum['min']} onChange={(e)=>SetSpectrum({...spectrum,['min']:e.target.value})}
+                                <input type="number" id='specturm_from' value={spectrumMin} onChange={(e)=>setSpectrumMin(e.target.value)}
                                     className="h-full shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight"
                                     />
                             </div>
@@ -192,7 +211,7 @@ const HeatmapCmp = React.forwardRef(({  inputData, type, watermarkCss,width,clin
                                 </div>
                             </div>
                             <div className="col-span-2">
-                                <input type="number" id='specturm_to'  value={spectrum['max']} onChange={(e)=>SetSpectrum({...spectrum,['max']:e.target.value})}
+                                <input type="number" id='specturm_to'  value={spectrumMax} onChange={(e)=>setSpectrumMax(e.target.value)}
                                     className="h-full  shadow appearance-none w-full py-2 px-3 text-gray-700 leading-tight" 
                                     />
                             </div>
@@ -207,7 +226,7 @@ const HeatmapCmp = React.forwardRef(({  inputData, type, watermarkCss,width,clin
                 </div>
             </div>
             { dataLoaded &&
-                <CanvasXpressReact  target={target} data={data} config={configVis} width={width} height={'700'} />
+                <CanvasXpressReact target={target} data={data} config={configVis} width={width} height={'700'} />
             }
             
         </div>
