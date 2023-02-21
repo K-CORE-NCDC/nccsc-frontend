@@ -25,6 +25,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const [inputGene,setInputGene] = useState([])
   const heatmapJson = useSelector((data) => data.dataVisualizationReducer.heatmapSummary);
   const heatmapSummaryStatusCode = useSelector((data) => data.dataVisualizationReducer.heatmapSummaryStatusCode);
+  const filterData = useSelector((data)=>data.dataVisualizationReducer.userDefinedFilter);
   // const didMountRef = useRef(false)
   const [watermarkCss, setWatermarkCSS] = useState("")
   const [rangeValue,setRangeValue] = useState(1)
@@ -102,21 +103,60 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     return tmp
   }
 
-  useEffect(()=>{
-    if(koreanlanguage){
+  // useEffect(()=>{
+  //   if(koreanlanguage){
 
-      if(inputJson['filterChoicesKorean']){
-        let f = inputJson['filterChoicesKorean']
-        setOptionChoices(f)
-      }
-    }else{
+  //     if(inputJson['filterChoicesKorean']){
+  //       let f = inputJson['filterChoicesKorean']
+  //       setOptionChoices(f)
+  //     }
+  //   }else{
       
-      if(inputJson['filterChoices']){
-        let f = inputJson['filterChoices']
-        setOptionChoices(f)
+  //     if(inputJson['filterChoices']){
+  //       let f = inputJson['filterChoices']
+  //       setOptionChoices(f)
+  //     }
+  //   }
+  // },[inputJson['filterChoices'],koreanlanguage])
+
+
+  useEffect(()=>{
+
+    if(inputJson['filterChoices']){
+      if (project_id !== undefined) {
+        if(filterData &&  filterData.status===200){
+          let filters = filterData['filterJson']
+          filters = filters['Clinical Information']
+          let tmp = []
+          for (const key in filters) {
+            if(filters[key].length>0){
+              if(filters[key][0]['type']!=='number'){
+                tmp.push({"name":key,"id":key})
+                
+              }
+            }
+            
+          }
+          setOptionChoices(tmp)
+          // setCustomFilterJson(tmp)
+        }
+      }else{
+        if(koreanlanguage){
+          if(inputJson['filterChoicesKorean']){
+            let f = inputJson['filterChoicesKorean']
+            setOptionChoices(f)
+          }
+        }else{
+          
+          if(inputJson['filterChoices']){
+            let f = inputJson['filterChoices']
+            setOptionChoices(f)
+          }
+        }
       }
     }
   },[inputJson['filterChoices'],koreanlanguage])
+
 
   useEffect(() => {
     if (inputData) {
@@ -480,12 +520,12 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
             <div className="flex justify-start items-baseline flex-wrap">
               <div className="flex m-2">
                 <button onClick={e => changeMainType(e, 'heatmap')} name='maintype' className="rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 rounded font-bold cursor-pointer hover:bg-main-blue
-                bg-main-blue text-white border duration-200 ease-in-out sm:p-3 sm:text-xl lg:text-2xl sm:h-14 lg:h-20 xs:p-3 md-p-4 border-gray-600 transition xs:text-sm">
+                bg-main-blue text-white border duration-200 ease-in-out sm:p-3  xs:p-3 md-p-4 border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md xs:h-14 lg:h-16 ">
                   Heatmap
                 </button>
                 <button onClick={e => changeMainType(e, 'k-mean')} name='maintype' className="rounded-l-none border-l-0
                     hover:scale-110 focus:outline-none flex justify-center lg:p-5 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 text-teal-700 border duration-200 sm:p-3
-                    sm:text-xl lg:text-2xl sm:h-14 lg:h-ease-in-out lg:h-20 xs:p-3 md-p-4 border-teal-600 transition xs:text-sm">
+                     lg:h-ease-in-out lg:h-20 xs:p-3 md-p-4 border-teal-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md xs:h-14 lg:h-16 ">
                   K-mean
                 </button>
               </div>
@@ -499,12 +539,25 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
                     hover:bg-main-blue  bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition">
                   RNA
                 </button>
-                <button onClick={e => changeType(e, 'methylation')} name='type' className="rounded-l-none border-l-0
-                    hover:scale-110 focus:outline-none flex justify-center p-5
-                    rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl xs:text-sm xs:p-3
-                    text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
-                  Methylation
-                </button>
+
+              {
+                project_id === undefined &&  <button onClick={e => changeType(e, 'methylation')} name='type' className="rounded-l-none border-l-0
+                hover:scale-110 focus:outline-none flex justify-center p-5
+                rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl xs:text-sm xs:p-3
+                text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
+                Methylation
+              </button>
+              }
+
+              {       
+                project_id !== undefined &&  alltabList['methylation'] &&  <button onClick={e => changeType(e, 'methylation')} name='type' className="rounded-l-none border-l-0
+                hover:scale-110 focus:outline-none flex justify-center p-5
+                rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl xs:text-sm xs:p-3
+                text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
+                Methylation
+              </button>
+              }
+                
 
                 {
                   project_id === undefined &&   <button onClick={e => changeType(e, 'proteome')} name='type' className="rounded-l-none border-l-0
@@ -514,6 +567,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
                   Global Proteome
                   </button> 
                 }
+
                 {project_id !== undefined &&  alltabList['proteome'] && 
                 <button onClick={e => changeType(e, 'proteome')} name='type' className="rounded-l-none border-l-0
                     hover:scale-110 focus:outline-none flex justify-center p-5
@@ -594,11 +648,10 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
             }
           </div>
         </div>
-
+          
         <div className='grid'>
-          { loader? <LoaderCmp/>: <div>
-
-            {(data_ && (inSufficientData !== true)) && <HeatmapNewCmp clinicalFilter={optionChoices} inputData={data_} type={mainTab} watermarkCss={watermarkCss} ref={reference} width={width} />
+          { loader? <LoaderCmp/>:<div>
+            {(data_ && (inSufficientData !== true)) && <HeatmapNewCmp  clinicalFilter={optionChoices} inputData={data_} type={mainTab} watermarkCss={watermarkCss} ref={reference} width={width} />
             }
             {(inSufficientData || renderNoContent) && <NoContentMessage />}
             </div>

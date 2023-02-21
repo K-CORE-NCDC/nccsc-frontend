@@ -35,6 +35,9 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
   const [option,setOption] = useState([])
   let { tab, project_id } = useParams();
   const [customFilterJson,setCustomFilterJson] = useState([])
+  const userDefinedFilter = useSelector(
+    (data) => data.dataVisualizationReducer.userDefinedFilter
+  );
 
   useEffect(() => {
     if (context["locale"] === "kr-KO") {
@@ -47,6 +50,7 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
   });
   
   useEffect(()=>{
+  
     if(inputJson['filterChoices']){
       if (project_id !== undefined) {
         if(filterData.status===200){
@@ -60,7 +64,6 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
                 
               }
             }
-            
           }
           setOptionChoices(tmp)
           setCustomFilterJson(tmp)

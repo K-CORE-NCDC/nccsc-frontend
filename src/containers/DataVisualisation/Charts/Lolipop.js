@@ -450,6 +450,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                     <div className="flex m-2">
                       <button onClick={e => changeType(e, 'Mutation')} id='Mutation' name='type' className="rounded-r-none  hover:scale-110
                       focus:outline-none flex lg:p-5 sm:p-3 rounded font-bold cursor-pointer
+                      
                       hover:bg-main-blue  bg-main-blue sm:text-xl lg:text-2xl xs:text-sm xs:p-2 text-white border duration-200 ease-in-out border-gray-600 transition">
                         <FormattedMessage  id = "Mutation" defaultMessage='Mutation'/>
                       </button>

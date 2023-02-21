@@ -77,7 +77,7 @@ export default function DataVisualization() {
       setKoreanlanguage(false);
       setEnglishlanguage(true);
     }
-  });
+  },[context]);
 
   useEffect(()=>{
     if(koreanlanguage){
@@ -88,7 +88,7 @@ export default function DataVisualization() {
       setUserDefinedList( "User-Defined List")
       setEnterGenes("Enter Genes")
     }
-  })
+  },[koreanlanguage,Englishlanguage])
 
   const setScreenCaptureFunction = (capture) => {
     // setScreenCapture(capture)
@@ -316,7 +316,7 @@ export default function DataVisualization() {
       setToggle(false);
     }
     setMenuItems(tmp);
-  }, [availableTabsForProject, chartName,toggle]);
+  }, [availableTabsForProject, chartName]);
   
   useEffect(() => {
     if (project_id !== undefined) {
