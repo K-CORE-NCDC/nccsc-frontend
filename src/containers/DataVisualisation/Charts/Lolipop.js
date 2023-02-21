@@ -10,6 +10,7 @@ import LoaderCmp from '../../Common/Loader'
 import DataTable from 'react-data-table-component';
 import NoContentMessage from '../../Common/NoContentComponent';
 import {FormattedMessage} from 'react-intl';
+import { useParams } from "react-router-dom";
 
 export default function DataLolipop({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
@@ -31,6 +32,21 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   const [showLollipop, setShowLollipop] = useState(false)
   const [noContent, setNoContent] = useState(true)
   const [percentage, setPercentage] = useState("")
+  const [alltabList, setAllTabList] = useState({}); 
+  let { tab, project_id } = useParams();
+
+  const tabList = useSelector(
+    (data) => data.dataVisualizationReducer
+  );
+
+
+  useEffect(()=>{
+    if('userProjectsDataTable' in tabList ){
+      setAllTabList(tabList.userProjectsDataTable)
+      console.log('alltabList',alltabList);
+    }
+    
+    },[tabList])
 
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
   let mutation_colors = {
@@ -437,12 +453,25 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                       hover:bg-main-blue  bg-main-blue sm:text-xl lg:text-2xl xs:text-sm xs:p-2 text-white border duration-200 ease-in-out border-gray-600 transition">
                         <FormattedMessage  id = "Mutation" defaultMessage='Mutation'/>
                       </button>
-                      <button onClick={e => changeType(e, 'Phospho')} id='Phospho' name='type' className="rounded-l-none border-l-0
+
+                      {
+                       project_id !== undefined  &&  alltabList['phospho']  && <button onClick={e => changeType(e, 'Phospho')} id='Phospho' name='type' className="rounded-l-none border-l-0
                       hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-3
                       rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100
                       text-teal-700 sm:text-xl xs:text-sm lg:text-2xl xs:p-2 border duration-200 ease-in-out border-teal-600 transition">
-                        <FormattedMessage  id = "Phospho" defaultMessage='Phospho'/>
-                      </button>
+                      <FormattedMessage  id = "Phospho" defaultMessage='Phospho'/>
+                      </button> 
+                      }
+
+                    {
+                    project_id === undefined  &&   <button onClick={e => changeType(e, 'Phospho')} id='Phospho' name='type' className="rounded-l-none border-l-0
+                      hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-3
+                      rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100
+                      text-teal-700 sm:text-xl xs:text-sm lg:text-2xl xs:p-2 border duration-200 ease-in-out border-teal-600 transition">
+                      <FormattedMessage  id = "Phospho" defaultMessage='Phospho'/>
+                      </button> 
+                      }
+                   
                     </div>
                   </div>
                 </div>

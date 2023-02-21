@@ -1,0 +1,100 @@
+##fileformat=VCFv4.1
+##FILTER=<ID=PASS,Description="All filters passed">
+##fileDate=2014-12-22
+##source=IlluminaPlatinumGenomes, version: 7.0.0-production
+##reference=GCA_000001405.1
+##Method=<ID=cgi,Description="Method=CompleteGenomics">
+##Method=<ID=bwa_gatk,Description="Aligner=bwa-mem-0.7.5, VariantCaller=gatk-1.6">
+##Method=<ID=RTG,Description="Method=RealtimeGenomics">
+##Method=<ID=cortex,Description="Method=cortex-1.0.5.11">
+##Method=<ID=isaac2,Description="Aligner=isaac_aligner-02.14.10.23;VariantCaller=isaac_variant_caller-2.1.4.1">
+##Method=<ID=bwa_freebayes,Description="Aligner=bwa-mem-0.7.5, VariantCaller=freebayes-0.9.1">
+##Method=<ID=isaac,Description="Aligner=isaac_aligner-02.14.02.06;VariantCaller=isaac_variant_caller-2.0.17">
+##Method=<ID=bwa_platypus,Description="Aligner=bwa-mem-0.7.5, VariantCaller=platypus-0.7.2">
+##Method=<ID=bwa_gatk3,Description="Aligner=bwa-mem-0.7.5, VariantCaller=gatk-3.2.2">
+##PEDIGREE=<Child=NA12877,Mother=NA12890,Father=NA12889>
+##PEDIGREE=<Child=NA12878,Mother=NA12892,Father=NA12891>
+##PEDIGREE=<Child=NA12879,Mother=NA12878,Father=NA12877>
+##PEDIGREE=<Child=NA12880,Mother=NA12878,Father=NA12877>
+##PEDIGREE=<Child=NA12881,Mother=NA12878,Father=NA12877>
+##PEDIGREE=<Child=NA12882,Mother=NA12878,Father=NA12877>
+##PEDIGREE=<Child=NA12883,Mother=NA12878,Father=NA12877>
+##PEDIGREE=<Child=NA12884,Mother=NA12878,Father=NA12877>
+##PEDIGREE=<Child=NA12885,Mother=NA12878,Father=NA12877>
+##PEDIGREE=<Child=NA12886,Mother=NA12878,Father=NA12877>
+##PEDIGREE=<Child=NA12887,Mother=NA12878,Father=NA12877>
+##PEDIGREE=<Child=NA12888,Mother=NA12878,Father=NA12877>
+##PEDIGREE=<Child=NA12893,Mother=NA12878,Father=NA12877>
+##FILTER=<ID=LowConfidence,Description="Placeholder for scoring logic; not used in this version.">
+##FILTER=<ID=OverlapConflict,Description="Overlapping discordant calls from different methods">
+##FILTER=<ID=SuspiciousHomAlt,Description="Suspiciously reported as HomAlt">
+##INFO=<ID=MTD,Number=.,Type=String,Description="Algorithms (or Method) identifying this variant site (allowed values: [cgi,bwa_gatk,RTG,cortex,isaac2,bwa_freebayes,isaac,bwa_platypus,bwa_gatk3])">
+##INFO=<ID=CS,Number=1,Type=Integer,Description="Placeholder for scoring logic; not used in this version.">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype.">
+##contig=<ID=chr1,accession=CM000663.1,length=249250621,assembly=GCA_000001405.13>
+##contig=<ID=chr2,accession=CM000664.1,length=243199373,assembly=GCA_000001405.13>
+##contig=<ID=chr3,accession=CM000665.1,length=198022430,assembly=GCA_000001405.13>
+##contig=<ID=chr4,accession=CM000666.1,length=191154276,assembly=GCA_000001405.13>
+##contig=<ID=chr5,accession=CM000667.1,length=180915260,assembly=GCA_000001405.13>
+##contig=<ID=chr6,accession=CM000668.1,length=171115067,assembly=GCA_000001405.13>
+##contig=<ID=chr7,accession=CM000669.1,length=159138663,assembly=GCA_000001405.13>
+##contig=<ID=chr8,accession=CM000670.1,length=146364022,assembly=GCA_000001405.13>
+##contig=<ID=chr9,accession=CM000671.1,length=141213431,assembly=GCA_000001405.13>
+##contig=<ID=chr10,accession=CM000672.1,length=135534747,assembly=GCA_000001405.13>
+##contig=<ID=chr11,accession=CM000673.1,length=135006516,assembly=GCA_000001405.13>
+##contig=<ID=chr12,accession=CM000674.1,length=133851895,assembly=GCA_000001405.13>
+##contig=<ID=chr13,accession=CM000675.1,length=115169878,assembly=GCA_000001405.13>
+##contig=<ID=chr14,accession=CM000676.1,length=107349540,assembly=GCA_000001405.13>
+##contig=<ID=chr15,accession=CM000677.1,length=102531392,assembly=GCA_000001405.13>
+##contig=<ID=chr16,accession=CM000678.1,length=90354753,assembly=GCA_000001405.13>
+##contig=<ID=chr17,accession=CM000679.1,length=81195210,assembly=GCA_000001405.13>
+##contig=<ID=chr18,accession=CM000680.1,length=78077248,assembly=GCA_000001405.13>
+##contig=<ID=chr19,accession=CM000681.1,length=59128983,assembly=GCA_000001405.13>
+##contig=<ID=chr20,accession=CM000682.1,length=63025520,assembly=GCA_000001405.13>
+##contig=<ID=chr21,accession=CM000683.1,length=48129895,assembly=GCA_000001405.13>
+##contig=<ID=chr22,accession=CM000684.1,length=51304566,assembly=GCA_000001405.13>
+##contig=<ID=chrX,accession=CM000685.1,length=155270560,assembly=GCA_000001405.13>
+##bcftools_viewVersion=1.1+htslib-1.1
+##bcftools_viewCommand=view --samples=NA12878 --no-update /illumina/development/pgtools/ReleaseBundles/7.0.0/internal/merged_platinum/MergedPlatinum.vcf.gz
+##bcftools_viewCommand=view '--exclude=FORMAT/GT == "0|0" || FORMAT/GT == "0/0"' --output-file=/illumina/development/pgtools/ReleaseBundles/7.0.0/external/merged_platinum/NA12878.vcf.gz --output-type=z --no-update
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	NA12878
+chr1	116549	.	C	T	.	SuspiciousHomAlt	MTD=bwa_freebayes	GT	1|1
+chr1	120458	.	T	C	.	SuspiciousHomAlt	MTD=bwa_freebayes	GT	1|1
+chr1	125271	.	C	T	.	SuspiciousHomAlt	MTD=bwa_freebayes	GT	1|1
+chr1	126113	.	C	A	.	PASS	MTD=isaac2,bwa_freebayes,bwa_platypus,bwa_gatk3	GT	1|1
+chr1	128798	.	C	T	.	SuspiciousHomAlt	MTD=bwa_freebayes	GT	1|1
+chr1	129963	.	T	A	.	SuspiciousHomAlt	MTD=bwa_freebayes	GT	1|1
+chr1	139967	.	T	C	.	SuspiciousHomAlt	MTD=bwa_platypus	GT	1|1
+chr1	172595	.	G	A	.	SuspiciousHomAlt	MTD=bwa_freebayes	GT	1|1
+chr1	173173	.	A	G	.	SuspiciousHomAlt	MTD=bwa_freebayes	GT	1|1
+chr1	229673	.	A	C	.	SuspiciousHomAlt	MTD=bwa_freebayes,bwa_platypus,bwa_gatk3	GT	1|1
+chr1	241369	.	C	T	.	SuspiciousHomAlt	MTD=bwa_freebayes,bwa_platypus,bwa_gatk3	GT	1|1
+chr1	321466	.	G	T	.	SuspiciousHomAlt	MTD=bwa_freebayes	GT	1|1
+chr1	356443	.	A	G	.	SuspiciousHomAlt	MTD=cgi	GT	1|1
+chr1	356537	.	G	A	.	SuspiciousHomAlt	MTD=cgi	GT	1|1
+chr1	523471	.	T	C	.	SuspiciousHomAlt	MTD=bwa_freebayes	GT	1|1
+chr1	527113	.	C	CAA	.	SuspiciousHomAlt	MTD=bwa_freebayes	GT	1|1
+chr1	533300	.	G	A	.	SuspiciousHomAlt	MTD=bwa_platypus	GT	1|1
+chr1	534324	.	G	T	.	PASS	MTD=bwa_freebayes	GT	0|1
+chr1	550515	.	T	C	.	PASS	MTD=bwa_freebayes	GT	0|1
+chr1	563625	.	T	C	.	SuspiciousHomAlt	MTD=bwa_freebayes,bwa_platypus,bwa_gatk3	GT	1|1
+chr1	564862	.	T	C	.	SuspiciousHomAlt	MTD=cgi	GT	1|1
+chr1	564868	.	T	C	.	SuspiciousHomAlt	MTD=cgi	GT	1|1
+chr1	565006	.	T	C	.	SuspiciousHomAlt	MTD=cgi	GT	1|1
+chr1	565066	.	G	C	.	SuspiciousHomAlt	MTD=cortex	GT	1|1
+chr1	565083	.	C	A	.	SuspiciousHomAlt	MTD=cortex	GT	1|1
+chr1	565419	.	C	G	.	PASS	MTD=bwa_freebayes	GT	1|0
+chr1	566081	.	A	T	.	SuspiciousHomAlt	MTD=cortex	GT	1|1
+chr1	566130	.	C	T	.	SuspiciousHomAlt	MTD=bwa_freebayes	GT	1|1
+chr1	566350	.	A	G	.	SuspiciousHomAlt	MTD=cortex	GT	1|1
+chr1	566849	.	G	A	.	SuspiciousHomAlt	MTD=cgi	GT	1|1
+chr1	566916	.	A	G	.	SuspiciousHomAlt	MTD=cgi	GT	1|1
+chr1	566933	.	A	G	.	SuspiciousHomAlt	MTD=cgi	GT	1|1
+chr1	566960	.	T	C	.	SuspiciousHomAlt	MTD=cgi	GT	1|1
+chr1	567002	.	T	C	.	SuspiciousHomAlt	MTD=cgi	GT	1|1
+chr1	567239	.	CG	C	.	PASS	MTD=isaac2,bwa_platypus,bwa_gatk3	GT	1|1
+chr1	567486	.	T	C	.	SuspiciousHomAlt	MTD=cgi	GT	1|1
+chr1	567489	.	T	C	.	SuspiciousHomAlt	MTD=cgi	GT	1|1
+chr1	567697	.	G	A	.	SuspiciousHomAlt	MTD=cgi	GT	1|1
+chr1	567783	.	T	C	.	SuspiciousHomAlt	MTD=cgi	GT	1|1
+chr1	567807	.	T	C	.	SuspiciousHomAlt	MTD=cgi	GT	1|1
