@@ -181,9 +181,9 @@ function Vcfmaf() {
                                 }}
                             >
                                <div className="flex flex-row-reverse ">
-                <button onClick={() => setShowModalInfo(true)} className="has-tooltip bg-red-500 hover:bg-red-700 text-white text-center py-2 px-4 rounded-full h-14 w-14 inline-flex items-center">
-                  <InforIcon />
-                </button>
+                            <button onClick={() => setShowModal(true)} className="has-tooltip bg-red-500 hover:bg-red-700 text-white text-center py-2 px-4 rounded-full h-14 w-14 inline-flex items-center">
+                          <InforIcon />
+                        </button>
               </div>
                                 <div className="">
                                     <div>
