@@ -7,7 +7,7 @@ import { exportComponentAsPNG } from 'react-component-export-image';
 import LoaderCmp from '../../Common/Loader'
 import NoContentMessage from '../../Common/NoContentComponent'
 import inputJson from '../../Common/data'
-import { ZoomInIcon } from '@heroicons/react/solid';
+import { CheckIcon, LocationMarkerIcon, ZoomInIcon } from '@heroicons/react/solid';
 import Multiselect from 'multiselect-react-dropdown';
 import KmeanCmp from '../../Common/K_mean';
 import {FormattedMessage} from 'react-intl';
@@ -28,7 +28,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const filterData = useSelector((data)=>data.dataVisualizationReducer.userDefinedFilter);
   // const didMountRef = useRef(false)
   const [watermarkCss, setWatermarkCSS] = useState("")
-  const [rangeValue,setRangeValue] = useState(1)
+  const [rangeValue,setRangeValue] = useState(5)
   const [loader, setLoader] = useState(false)
   const [genes,setGenes] = useState([])
   const [selectedGene,setSelectedGene] = useState([])
@@ -41,6 +41,9 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const [renderNoContent, setRenderNoContent] = useState(false)
   const [renderHeatmap, setRenderHeatmap] = useState(true)
   let { tab, project_id } = useParams();
+  const [configVis,setConfigVis] = useState({"colorSpectrumBreaks":[],"colorSpectrum":["navy","firebrick3"]})
+  const [spectrumMin,setSpectrumMin] = useState(0)
+  const [spectrumMax,setSpectrumMax] = useState(0)
   const [userDefienedFilter, setUserDefienedFilter] = useState(
     project_id === undefined ? "static" : "dynamic"
   );
@@ -49,7 +52,13 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const tabList = useSelector(
     (data) => data.dataVisualizationReducer
   );
+  let themes = [
+    {"name":"Theme 1","value":["navy","firebrick3"]},
+    {"name":"Theme 2","value":["#F9F9F9","#FCD200"]},
+    {"name":"Theme 3","value":["#D0D0D0","#006CE0"]},
+    {"name":"Theme 4","value":["#FFFFFF","#9900E0"]},
 
+]
 
   useEffect(() => {
     if (context["locale"] === "kr-KO") {
@@ -103,25 +112,8 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     return tmp
   }
 
-  // useEffect(()=>{
-  //   if(koreanlanguage){
-
-  //     if(inputJson['filterChoicesKorean']){
-  //       let f = inputJson['filterChoicesKorean']
-  //       setOptionChoices(f)
-  //     }
-  //   }else{
-      
-  //     if(inputJson['filterChoices']){
-  //       let f = inputJson['filterChoices']
-  //       setOptionChoices(f)
-  //     }
-  //   }
-  // },[inputJson['filterChoices'],koreanlanguage])
-
 
   useEffect(()=>{
-
     if(inputJson['filterChoices']){
       if (project_id !== undefined) {
         if(filterData &&  filterData.status===200){
@@ -469,19 +461,21 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   }
 
   let selected_button = ''
-  selected_button += "rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 sm:p-2 lg:px-10 md:px-10 sm:px-8 sm:w-40 md:w-80 sm:text-xl lg:text-2xl "
-  selected_button += " rounded font-bold cursor-pointer hover:bg-main-blue "
-  selected_button +=" bg-main-blue text-white border duration-200 ease-in-out transition xs:p-2 xs:text-sm xs:w-28"
+  selected_button += "  hover:scale-110 focus:outline-none flex lg:p-5 sm:p-2 lg:px-10 md:px-10 sm:px-8 sm:w-40 md:w-80 "
+  selected_button += " font-bold cursor-pointer hover:bg-main-blue "
+  selected_button +=" bg-main-blue text-white border border-teal-600 duration-200 ease-in-out transition xs:p-2  xs:w-28  text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md"
 
   let normal_button = ''
-  normal_button += "rounded-l-none  hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-2 lg:px-10 sm:px-8 sm:w-40 md:w-80 sm:text-xl lg:text-2xl "
-  normal_button += " rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 "
-  normal_button += " border duration-200 ease-in-out border-teal-600 transition px-10 xs:p-2 xs:text-sm xs:w-28"
+  normal_button += " hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-2 lg:px-10 sm:px-8 sm:w-40 md:w-80 "
+  normal_button += " font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 "
+  normal_button += " border duration-200 ease-in-out border-teal-600 transition px-10 xs:p-2 xs:w-28 text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md"
 
   function rangeCall(e){
-    let cf = []
     setRangeValue(e.target.value)
+  }
 
+  const changeCluster = ()=>{
+    let cf = []
     if(inputData.type !=='' && inputData['genes'].length > 0){
       setLoader(true)
       setActiveCmp(false)
@@ -490,11 +484,10 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       dataJson['view'] = viewType
       dataJson['type'] = viewType
       dataJson['heat_type'] = mainTab
-      dataJson['cluster'] = e.target.value
+      dataJson['cluster'] = rangeValue
       dispatch(getHeatmapInformation('POST',dataJson))
     }
   }
-
   useEffect(() => {
     if (heatmapSummaryStatusCode && heatmapSummaryStatusCode.status === 200) {
       setRenderNoContent(false)
@@ -511,6 +504,28 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     }
   }, [heatmapSummaryStatusCode])
   
+  const changeSepctrum = (e)=>{
+    setLoader(true)
+    setConfigVis({...configVis,['colorSpectrumBreaks']:[parseInt(spectrumMin),parseInt(spectrumMax)]})
+  }
+  const changeTheme = (e)=>{
+    setLoader(true)
+    let theme_name = e.target.value
+    let colors = []
+    for (let index = 0; index < themes.length; index++) {
+        const row = themes[index];
+        if(row['name']===theme_name){
+            colors = row['value']
+        }
+    }
+    setConfigVis({...configVis,['colorSpectrum']:colors})
+  }
+  useEffect(()=>{
+    if(configVis){
+      
+      setLoader(false)
+    }
+  },[configVis])
 
   return (
     <div>
@@ -519,13 +534,13 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
           <div className="p-5 text-left col-span-4">
             <div className="flex justify-start items-baseline flex-wrap">
               <div className="flex m-2">
-                <button onClick={e => changeMainType(e, 'heatmap')} name='maintype' className="rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 rounded font-bold cursor-pointer hover:bg-main-blue
-                bg-main-blue text-white border duration-200 ease-in-out sm:p-3  xs:p-3 md-p-4 border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md xs:h-14 lg:h-16 ">
+                <button onClick={e => changeMainType(e, 'heatmap')} name='maintype' className="rounded-l-lg hover:scale-110 focus:outline-none flex lg:p-5 font-bold cursor-pointer hover:bg-main-blue
+                bg-main-blue text-white border duration-200 ease-in-out sm:p-3  xs:p-3 md-p-4 border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md  ">
                   Heatmap
                 </button>
-                <button onClick={e => changeMainType(e, 'k-mean')} name='maintype' className="rounded-l-none border-l-0
-                    hover:scale-110 focus:outline-none flex justify-center lg:p-5 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 text-teal-700 border duration-200 sm:p-3
-                     lg:h-ease-in-out lg:h-20 xs:p-3 md-p-4 border-teal-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md xs:h-14 lg:h-16 ">
+                <button onClick={e => changeMainType(e, 'k-mean')} name='maintype' className="rounded-r-lg
+                    hover:scale-110 focus:outline-none flex justify-center lg:p-5 font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 text-teal-700 border duration-200 sm:p-3
+                     lg:h-ease-in-out xs:p-3 md-p-4 border-teal-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md  ">
                   K-mean
                 </button>
               </div>
@@ -595,9 +610,9 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
               </div>
             </div>
           </div>
-          <div className='p-5 text-left flex col-span-2'>
-            <div className={tableType!=='methylation'?'xs:w-4/5  lg:w-7/12 xl:w-7/12 2xl:w-9/12 text-left':'w-full text-left'}>
-              <label className="xs:text-sm"><FormattedMessage  id = "Clinical_Filters_heatmap" defaultMessage='Clinical Attribute'/>:</label>
+          <div className='pr-3 text-left flex col-span-2'>
+            <div className={tableType!=='methylation'?'xs:w-4/5  lg:w-7/12 xl:w-7/12 2xl:w-8/12 text-left':'w-full text-left'}>
+              <label className="text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"><FormattedMessage  id = "Clinical_Filters_heatmap" defaultMessage='Clinical Attribute'/>:</label>
               <Multiselect
                 style={style}
                 options={optionChoices} // Options to display in the dropdown
@@ -606,29 +621,16 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
                 onRemove={onRemove} // Function will trigger on remove event
                 displayValue="name" // Property name to display in the dropdown options
               />
-              {mainTab === 'k-mean'?
-                <div className="mt-8">
-                  <label htmlFor="points"><strong className="">No. Of Cluster:  {rangeValue}</strong></label>
-                  <input type="range" className="border-2 border-gray-500 rounded-lg overflow-hidden appearance-none bg-white h-6 w-full opacity-100 relative"
-                  id="points" name="points" min="1"  max={clusterRange}  defaultValue={rangeValue} onChange={rangeCall} list='tickmarks'/>
-                  <ul className="flex justify-between w-full px-[1px]" id='tickmarks'>
-                    { 
-                      inputData['genes'].map((name,i)=>(
-                        <li key={name} className="flex justify-around relative"><span className="absolute">{i+1}</span></li>
-                      ))
-                    }
-                  </ul>
-                </div>:""
-              }
+              
             </div>
-            { tableType!=='methylation' &&
-              <div className="mx-5 flex-wrap  text-left lg:w-5/12 xl:w-5/12 2xl:w-3/12 text-left">
+            { tableType!=='methylation' && 
+              <div className="ml-3 flex-wrap  text-left lg:w-5/12 xl:w-5/12 2xl:w-4/12 text-left text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md">
                 <FormattedMessage  id = "View_By_heatmap" defaultMessage='View By'/>:
                 <div className="flex m-2 w-100">
-                  <button onClick={e => changeView(e, 'gene_vl')} name='view' className={viewType==="gene_vl"?selected_button:normal_button}>
+                  <button onClick={e => changeView(e, 'gene_vl')} name='view' className={`${(viewType==="gene_vl"?selected_button:normal_button)} rounded-l-lg`}>
                     Gene-Vl
                   </button>
-                  <button onClick={e => changeView(e, 'z_score')} name='view' className={viewType==="z_score"?selected_button:normal_button}>
+                  <button onClick={e => changeView(e, 'z_score')} name='view' className={`${viewType==="z_score"?selected_button:normal_button} rounded-r-lg`}>
                     Z-Score
                   </button>
                 </div>
@@ -650,8 +652,68 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
         </div>
           
         <div className='grid'>
+          <div className='text-left grid grid-cols-5 bg-white '>
+              <div className='p-5 m-2'>
+                <label id="listbox-label" className="block text-gray-700 mb-2 text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md">Color</label>
+                <select onChange={(e)=>changeTheme(e)} className='w-full border bg-white rounded lg:px-3 lg:py-2 xs:py-0 lg:h-14 sm:h-14 xs:h-8 lg:text-2xl xs:text-sm outline-none text-gray-700'>
+                    {
+                        themes.map(row=>
+                            <option key={row['name']} value={row['name']}>{row['name']}</option>
+                        )
+                    }
+                </select>
+              </div>
+              <div className='p-5 m-2'>
+                <label className="block text-gray-700  mb-2 text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md">Spectrum</label>
+                <div className="grid grid-cols-5  rounded border border-b-color">
+                  <div className="col-span-2">
+                    <input type="number" id='specturm_from' value={spectrumMin} onChange={(e)=>setSpectrumMin(e.target.value)}
+                      className="h-full shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight"
+                      />
+                  </div>
+                  <div className="col-span-1">
+                    <div className="box-border border-r border-l border-b-color bg-gray-100 h-full w-30  px-3 mb-6 text-center">
+                      <b>-</b>
+                    </div>
+                  </div>
+                  <div className="col-span-2">
+                    <input type="number" id='specturm_to'  value={spectrumMax} onChange={(e)=>setSpectrumMax(e.target.value)}
+                      className="h-full  shadow appearance-none w-full py-2 px-3 text-gray-700 leading-tight" 
+                      />
+                  </div>
+                </div>
+              </div>
+              <div className='mt-7'>
+                  <label className="block text-gray-700 mx-10 mb-2">&nbsp;</label>
+                  <button onClick={(e)=>changeSepctrum(e)} className='bg-main-blue hover:bg-main-blue text-white font-bold pt-3 pb-3 px-8 border border-blue-700 rounded leading-7 text-xl'>Apply</button>
+              </div>
+              <div className='p-5 m-2 col-span-2'>
+                {mainTab === 'k-mean'?
+                  <div className=" flex relative border p-3 h-full">
+                    <div className='w-full py-3 px-2'>
+                      <label htmlFor="points"><strong className="">No. Of Cluster:  {rangeValue}</strong></label>
+                      <input type="range" className="custom-slider opacity-100"
+                      id="points" name="points" min="1" step={1}  max={clusterRange}  defaultValue={rangeValue} onChange={rangeCall} />
+                      <ul className="flex justify-between w-full px-[1px]" id='tickmarks'>
+                        { 
+                          inputData['genes'].map((name,i)=>(
+                            <li key={name} className="flex justify-around relative"><span className="absolute">{i+1}</span></li>
+                          ))
+                        }
+                      </ul>
+                    </div>
+                    <div className='absolute right-5 top-2'>
+                      <button onClick={(e)=>changeCluster(e)} className='bg-main-blue hover:bg-main-blue text-white rounded-2xl '>
+                        <CheckIcon className='w-8 h-8 '/>
+                        </button>    
+                    </div>
+                  </div>:""
+                }
+              </div>
+          </div>
+
           { loader? <LoaderCmp/>:<div>
-            {(data_ && (inSufficientData !== true)) && <HeatmapNewCmp  clinicalFilter={optionChoices} inputData={data_} type={mainTab} watermarkCss={watermarkCss} ref={reference} width={width} />
+            {(data_ && (inSufficientData !== true)) && <HeatmapNewCmp settings={configVis}  clinicalFilter={optionChoices} inputData={data_} type={mainTab} watermarkCss={watermarkCss} ref={reference} width={width} />
             }
             {(inSufficientData || renderNoContent) && <NoContentMessage />}
             </div>
