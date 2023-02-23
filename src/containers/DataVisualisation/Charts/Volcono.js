@@ -20,9 +20,9 @@ import { FormattedMessage } from "react-intl";
 import { useParams } from "react-router-dom";
 
 const selectedCss =
-  "w-1/2 rounded-r-none  hover:scale-110 focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 xs:text-sm sm:text-sm md:text-2xl md:text-2xl ease-in-out border-gray-600 transition";
+  "w-1/2 rounded-r-none  hover:scale-110 focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md";
 const nonSelectedCss =
-  "w-1/2 rounded-l-none  hover:scale-110 focus:outline-none flex justify-center p-5 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 text-teal-700 border xs:text-sm sm:text-sm md:text-2xl md:text-2xl duration-200 ease-in-out border-teal-600 transition";
+  "w-1/2 rounded-l-none  hover:scale-110 focus:outline-none flex justify-center p-5 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 text-teal-700 border duration-200 ease-in-out border-teal-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md";
 
 export default function DataVolcono({
   width,
@@ -230,17 +230,9 @@ export default function DataVolcono({
         <LoaderCmp />
       ) : (
         <div className="flex flex-row justify-around">
-          <div className={`lg:hidden md:hidden xs:ml-8`}>
-            <button
-              className="bg-blue-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-              onClick={() => setSmallScreen(!smallScreen)}
-              type="button"
-            >
-              <AdjustmentsIcon className="h-6 w-6 inline" />
-            </button>
-          </div>
+          
           <div
-            className={`lg:w-1/5 md:w-4/5 lg:block md:block lg:block sm:hidden ${
+            className={`lg:w-1/5 md:w-4/5 lg:block md:block lg:block sm:hidden text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md bg-white ${
               smallScreen
                 ? "xs:mr-80 xs:z-10 xs:opacity-95 xs:bg-white"
                 : "xs:hidden"
@@ -327,7 +319,7 @@ export default function DataVolcono({
                     />
                     <label
                       htmlFor="default-radio-2"
-                      className="ml-2 text-md font-medium text-gray-900 dark:text-gray-300"
+                      className="ml-2  text-gray-900 dark:text-gray-300"
                     >
                       <FormattedMessage id="Tumor" defaultMessage="Tumor" />
                     </label>
@@ -344,7 +336,7 @@ export default function DataVolcono({
                     />
                     <label
                       htmlFor="default-radio-3"
-                      className="ml-2 text-md font-medium text-gray-900 dark:text-gray-300"
+                      className="ml-2 text-gray-900 dark:text-gray-300"
                     >
                       <FormattedMessage id="TumorVsNormal" defaultMessage="Normal vs Tumor" />
                     </label>

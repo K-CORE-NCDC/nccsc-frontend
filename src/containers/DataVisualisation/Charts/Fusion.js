@@ -369,7 +369,7 @@ export default function FusionPlot({
                 </div>
               )
             }
-             {Object.keys(groupFilters).length === 0 && <p>{koreanlanguage ? "필터 정보를 선택해 주세요.":"Please Select the Filter Data"}</p>}
+             {Object.keys(groupFilters).length === 0 && <p className="text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">{koreanlanguage ? "필터 정보를 선택해 주세요.":"Please Select the Clinical Attribute Data"}</p>}
             {VennData && noData === 'false' && fusionId !== 0 &&  (
               <div className="mt-5 my-0 mx-auto h-auto w-11/12 shadow-lg">
                 <FusionCustomPlot fusionId={fusionId}  />
