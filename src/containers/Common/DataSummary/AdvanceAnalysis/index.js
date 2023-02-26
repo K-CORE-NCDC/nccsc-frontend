@@ -1,29 +1,27 @@
 import React,{useState,useEffect,useRef,useCallback,usePrevious } from "react";
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  AdjustmentsIcon
-} from '@heroicons/react/outline'
-import { useSelector, useDispatch } from "react-redux";
-import { getGenomicInformation } from '../../../actions/api_actions'
+import { GenomicInformation } from '../../../actions/api_actions'
 import chart_types from '../genomicCharyTypes';
-import inputJson from '../data'
 import Filter from './filter'
-import VennCmp from '../../Common/Venn'
 
 export default function AdvancedInfo() {
-  const dataSummary = useSelector(state => state)
-  const summaryJson = useSelector((data) => data.homeReducer.genomicData);
-  const [filterState,setFilterState] = useState({})
   const [state, setState] = useState([]);
-  const [data, setData] = useState("");
-  const [active, setActive] = useState(false);
-  const dispatch = useDispatch()
-  const prevCountRef = useRef();
+  const [summaryJson, setSummaryJson] = useState({})
+  const [summaryJsonStatus, setSummaryJsonStatus] = useState(204)
 
-  useEffect(() => {
-    dispatch(getGenomicInformation("POST",""))
-  }, [dispatch])
+ useEffect(()=>{
+    let data = GenomicInformation('POST','')
+    data.then((result)=>{
+      if(result.status === 200)
+      {
+        setSummaryJson(result.data)
+        setSummaryJsonStatus(200)
+      }
+      else{
+        setSummaryJson({})
+        setSummaryJsonStatus(204)
+      }
+    })
+  },[])
 
   let visual_type = {
     "Variant Classification":"Bar",
@@ -36,7 +34,7 @@ export default function AdvancedInfo() {
   }
 
   useEffect(()=>{
-    if(summaryJson){
+    if(summaryJsonStatus === 200 && summaryJson){
       let html = []
       Object.keys(summaryJson).forEach((item, k) => {
         let type = visual_type[item]
@@ -56,12 +54,12 @@ export default function AdvancedInfo() {
       })
       setState(html)
     }
-  },[summaryJson])
+  },[summaryJson,summaryJsonStatus])
 
   const callback = useCallback((filters) => {
     let data_ = {'filter':filters}
     setState([])
-    dispatch(getGenomicInformation("POST", data_))
+    GenomicInformation('POST',data_)
   }, []);
 
 

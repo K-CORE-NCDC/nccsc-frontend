@@ -46,10 +46,19 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   );
 
   const [alltabList, setAllTabList] = useState({});
+
   const tabList = useSelector(
     (data) => data.dataVisualizationReducer
   );
 
+
+  useEffect(()=>{
+    if('userProjectsDataTable' in tabList ){
+      setAllTabList(tabList.userProjectsDataTable)
+      console.log('alltabList',alltabList);
+    }
+    
+    },[tabList])
 
   useEffect(() => {
     if (context["locale"] === "kr-KO") {
@@ -576,13 +585,14 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
                   Global Proteome
                 </button> }
 
-                {project_id !== undefined &&  alltabList['proteome'] && 
+                {project_id !== undefined &&  alltabList['phospho'] && 
                 <button onClick={e => changeType(e, 'phospo')} name='type' className="rounded-l-none border-l-0
                 hover:scale-110 focus:outline-none flex justify-center p-5
                 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl xs:text-sm xs:p-3
                 text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
                 Phospho </button>
                 }
+
                 {project_id === undefined && 
                   <button onClick={e => changeType(e, 'phospo')} name='type' className="rounded-l-none border-l-0
                   hover:scale-110 focus:outline-none flex justify-center p-5

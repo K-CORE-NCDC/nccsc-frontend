@@ -1,21 +1,36 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import { useSelector, useDispatch } from 'react-redux';
-import { getNoticeDetail, clearNotice} from '../../actions/api_actions'
+import { NoticeDetail} from '../../actions/api_actions'
 import config from '../../config';
 
 
 function Popup({toggleModal}) {
-  const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false);
   const d = new Date();
   const day = d.getDay();
 
   const[content, setContent] = useState('')
-  const noticedetails = useSelector((data) => data.homeReducer.noticedata);
+  const [noticedetails, setNoticeDetails] = useState({})
+  const [noticeStatus, setNoticeStatus] = useState(200)
+
+  /* getting the notice detail as response */
+  
   useEffect(() => {
-    dispatch(getNoticeDetail("GET",{}));
+    let data =  NoticeDetail()
+    data.then((result) => {
+      if(result.status == 200)
+      {
+        setNoticeDetails(result.data)
+        setNoticeStatus(200)
+        // setShowModal(true)
+      }
+      else{
+        setNoticeDetails({})
+        setNoticeStatus(204)
+        // setShowModal(false)
+      }
+    })
   },[])
+
 
   useEffect(()=>{
     let currentUrl = window.location
@@ -32,12 +47,11 @@ function Popup({toggleModal}) {
     toggleModal(false)
   }
   let closeModal = ()=>{
-    // dispatch(clearNotice())
     setShowModal(false)
     toggleModal(false)
   }  
   useEffect(()=>{
-    if(noticedetails && 'data' in noticedetails && ( Object.keys(noticedetails['data']).length > 0)){
+    if(noticedetails &&  noticedetails.data && ( Object.keys(noticedetails['data']).length > 0)){
       let content = noticedetails['data']['content']
       if(content){
         content = content.replaceAll('="/media','="'+config['media']+'')
@@ -48,14 +62,14 @@ function Popup({toggleModal}) {
 
   return (
     <>
-      {showModal && (noticedetails && 'data' in noticedetails && ( Object.keys(noticedetails['data']).length > 0) ) ? (
+      {showModal && ( noticeStatus === 200 && noticedetails &&  noticedetails.data && ( Object.keys(noticedetails['data']).length > 0) ) ? (
         <>
           <div
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
           >
             <div className="relative w-auto my-6 mx-auto max-w-3xl w-6/12">
               {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none p-10">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-fit bg-white outline-none focus:outline-none p-10">
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                   <h3 className="text-3xl font-semibold">
@@ -71,19 +85,10 @@ function Popup({toggleModal}) {
                     </span>
                   </button>
                 </div>
-                {/*body*/}
-
-                {/* {noticedetails && 'data' in noticedetails &&
-                  <div className="relative p-6 flex-auto">
-                    <p>{noticedetails.data.id}</p>
-                    <p>{noticedetails.data.content}</p>
-                    <p>{noticedetails.data.title}</p>
-
-                  </div>
-                } */}
+                
 
 
-                {noticedetails && 'data' in noticedetails && ( Object.keys(noticedetails['data']).length > 0) &&<div  dangerouslySetInnerHTML={{ __html: content }}></div>}
+                {noticeStatus === 200 && noticedetails &&  noticedetails.data && ( Object.keys(noticedetails['data']).length > 0) &&<div  dangerouslySetInnerHTML={{ __html: content }}></div>}
 
 
                 {/*footer*/}

@@ -1,8 +1,5 @@
-import React,{useState,useEffect,useRef,useLayoutEffect,updateState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React,{useState,useEffect } from "react";
 import {
-  ChevronDownIcon,
-  ChevronUpIcon,
   AdjustmentsIcon,
   UserCircleIcon,
   BeakerIcon,
@@ -11,26 +8,25 @@ import {
 } from '@heroicons/react/outline'
 import Barchart from '../Common/Barchart'
 import Piechart from '../Common/Piechart'
-import { getDashboardDsummaryData } from '../../actions/api_actions'
-// import Loader from "react-loader-spinner";
+import { DashboardDsummaryData } from '../../actions/api_actions'
 import LoaderCmp from '../Common/Loader';
 import {FormattedMessage} from 'react-intl';
 
 import inputJson from './data'
 
 export default function ClinicalInformation() {
-  const summaryJson = useSelector((data) => data.homeReducer.dataSummary);
   const [leftSide, setLeftSide] = useState({"charts":[],"leftSide":[],"activeCharts":[]});
   const [activeChartsList, setActiveChartsList] = useState(["Sex","Age Of Daignosis","Body Mass Index","Diagnosis Of Bilateral Breast Cancer"]);
   const [selected, setSelected] = useState('Basic/Diagnostic Information');
   
-  const dispatch = useDispatch()
   const [firstLoad, setFirstLoad] = useState(true)
   const [loader, setLoader] = useState(true)
   const [smallScreen,setSmallScreen] = useState(false)
+  
+  const [summaryJson, setSummaryJson] = useState({})
+  const [summaryJsonStatus, setSummaryJsonStatus] = useState(204)
 
 
-  // const forceUpdate = React.useCallback(() => updateState({}), []);
   const change_visual = (e) =>{
 
     let id = e.target.dataset['id']
@@ -44,43 +40,49 @@ export default function ClinicalInformation() {
     }else if(c_type === "pie"){
       toggle_name ='bar'
     }
-    // document.getElementById(id+"_"toggle_name).remove
     let previous_class_name = "parent_chart_"+toggle_name+"_"+id
 
     document.getElementById(current_class_name).classList.remove("hidden")
     document.getElementById(previous_class_name).classList.add("hidden")
-    // e.stopPropagation()
   }
 
+
   useEffect(()=>{
-    if(firstLoad===true && summaryJson){
+    let response_data = DashboardDsummaryData()
+    response_data.then((result) => {
+      if(result.status === 200)
+      {
+        setSummaryJson(result.data)
+        setSummaryJsonStatus(200)
+      }
+      else{
+        setSummaryJson({})
+        setSummaryJsonStatus(204)
+      }
+    })
+  },[])
+
+  useEffect(()=>{
+    if(firstLoad===true && summaryJsonStatus === 200 && summaryJson){
       let tmp = activeChartsList
       for (var i = 0; i < tmp.length; i++) {
         loadChart(tmp[i],selected)
       }
       setFirstLoad(false)
     }
-  },[firstLoad,summaryJson])
+  },[firstLoad,summaryJsonStatus,summaryJson])
 
-
-
-  useEffect(() => {
-    if(!summaryJson){
-      setLoader(true)
-      dispatch(getDashboardDsummaryData())
-    }
-  }, [dispatch])
 
 
 
   useEffect(()=>{
-    if(summaryJson){
+    if(summaryJsonStatus == 200 && summaryJson){
       leftSideHtml(summaryJson)
       setTimeout(function() {
           setLoader(false)
       }, (1000));
     }
-  },[summaryJson])
+  },[summaryJson,summaryJsonStatus])
 
   useEffect(()=>{
     if(selected){
@@ -208,10 +210,12 @@ export default function ClinicalInformation() {
       }
     }
 
+    
+
 
 
     if(check ){
-      Object.keys(summaryJson[parent_name]).forEach((item, k) => {
+      summaryJsonStatus === 200 && summaryJson && Object.keys(summaryJson[parent_name]).forEach((item, k) => {
         let id = item.split(" ").join("")
         if(item===chart){
           tmp.push(
