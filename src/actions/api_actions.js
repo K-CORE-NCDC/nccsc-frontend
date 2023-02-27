@@ -325,24 +325,12 @@ export function verifyEncodeData(method, data) {
     });
   }
 }
-export function getNoticeDetail(type, data) {
 
-  return (dispatch) => {
-    let url = config.auth + `notice-api-get/`;
+export  function NoticeDetail(type, data) {
+    let url = config.auth + `notice-popup/`;
     // let url = config.auth + `notice-api-get/${data.id}?id=${data.id}`;
-    sendRequest(url, type, "")
-      .then((result) => {
-        const d = result;
-        dispatch({
-          type: homeConstants.NOTICE_DETAILS,
-          payload: d["data"],
-        });
-        dispatch({ type: homeConstants.REQUEST_DONE });
-      })
-      .catch((e) => {
-
-      });
-  }
+    return sendRequest(url, type, "")
+       
 }
 
 
@@ -361,6 +349,11 @@ export function getDashboardCount() {
 
       });
   }
+}
+
+export function DashboardCount() {
+    let url = config.auth + "data-count/";
+    return sendRequest(url, "GET", "")
 }
 
 export function getRNIDetails(type, data) {
@@ -410,41 +403,18 @@ export function getUserFiles() {
   };
 }
 
-export function getDashboardDsummaryData() {
-  return (dispatch) => {
-    //   dispatch({ type: homeConstants.DATA_SUMMARY });
-    let url = config.auth + "data-summary/";
-    sendRequest(url, "GET", "")
-      .then((result) => {
-        const d = result;
-        dispatch({
-          type: homeConstants.DATA_SUMMARY,
-          payload: d["data"],
-        });
-      })
-      .catch((e) => {
 
-      });
-  };
+export function DashboardDsummaryData() {
+  
+  let url = config.auth + "data-summary/";
+  return sendRequest(url, "GET", "")
+  
 }
 
-
-export function getGenomicInformation(method, data) {
-  return (dispatch) => {
+export function GenomicInformation(method, data) {
     //   dispatch({ type: homeConstants.DATA_SUMMARY });
     let url = config.auth + "genomic-information/";
-    sendRequest(url, method, data)
-      .then((result) => {
-        const d = result;
-        dispatch({
-          type: homeConstants.GENOMIC_INFORMATION,
-          payload: d["data"],
-        });
-      })
-      .catch((e) => {
-
-      });
-  };
+    return sendRequest(url,method,data)
 }
 
 export function getOncoInformation(type, data) {

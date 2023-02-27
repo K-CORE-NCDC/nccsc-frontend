@@ -1,29 +1,27 @@
 import React,{useState,useEffect,useRef } from "react";
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  AdjustmentsIcon
-} from '@heroicons/react/outline'
-import { useSelector, useDispatch } from "react-redux";
-
-
-import { getGenomicInformation } from '../../actions/api_actions'
-
+import { GenomicInformation } from '../../actions/api_actions'
 import chart_types from './genomicCharyTypes'
 
 
 export default function GenomicInfo() {
-  const dataSummary = useSelector(state => state)
-  const summaryJson = useSelector((data) => data.homeReducer.genomicData);
   const [state, setState] = useState({"charts":[]});
+  const [summaryJson, setSummaryJson] = useState({})
+  const [summaryJsonStatus, setSummaryJsonStatus] = useState(204)
 
-  const dispatch = useDispatch()
-
-
-  useEffect(() => {
-    dispatch(getGenomicInformation("POST",""))
-  }, [dispatch])
-
+  useEffect(()=>{
+    let data = GenomicInformation('POST','')
+    data.then((result)=>{
+      if(result.status === 200)
+      {
+        setSummaryJson(result.data)
+        setSummaryJsonStatus(200)
+      }
+      else{
+        setSummaryJson({})
+        setSummaryJsonStatus(204)
+      }
+    })
+  },[])
   let visual_type = {
     "Variant Classification":"Bar",
     "Variant Type":"Bar",
@@ -35,7 +33,7 @@ export default function GenomicInfo() {
 
 
   useEffect(()=>{
-    if(summaryJson){
+     if(summaryJsonStatus === 200 && summaryJson){
       let html = []
       Object.keys(summaryJson).forEach((item, k) => {
         let type = visual_type[item]
@@ -62,7 +60,7 @@ export default function GenomicInfo() {
         'charts':html
       }))
     }
-  },[summaryJson])
+  },[summaryJson,summaryJsonStatus])
 
   return (
     <div className="grid grid-cols-3 gap-6">

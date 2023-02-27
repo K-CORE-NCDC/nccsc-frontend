@@ -43,10 +43,9 @@ import {
   HomeIcon,
 } from "@heroicons/react/outline";
 import { useParams } from "react-router-dom";
-import { getDashboardCount, sendlogManagement } from "../../../actions/api_actions";
+import {  sendlogManagement,DashboardCount } from "../../../actions/api_actions";
 import Popup from "../../../containers/Popup/Popup";
 import { useIdleTimer } from 'react-idle-timer'
-import { json } from "d3";
 
 let  parseJwt =  (islogin1)=> {
   var base64Url = islogin1 && islogin1.split('.')[1];
@@ -133,12 +132,29 @@ export default function Web(props) {
 
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
-  const countJson = useSelector((data) => data.homeReducer.dataCount);
+  const [countJson, setCountJson] = useState({})
+  const [countStatus, setCountStatus]  = useState(200)
+  // const countJson = useSelector((data) => data.homeReducer.dataCount);
 
 
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const [Englishlanguage, setEnglishlanguage] = useState(true);
   const context = useContext(Context);
+
+
+  useEffect(()=>{
+    let data =  DashboardCount()
+    data.then((result) => {
+      if(result.status == 200)
+          setCountJson(result.data)
+      else{
+        setCountJson({})
+        setCountStatus(204)
+      }
+    })
+    
+  },[])
+
   useEffect(() => {
     if (context["locale"] === "kr-KO") {
       setKoreanlanguage(true);
@@ -147,7 +163,7 @@ export default function Web(props) {
       setKoreanlanguage(false);
       setEnglishlanguage(true);
     }
-  });
+  },[context]);
 
   var settings = {
     dots: true,
@@ -278,7 +294,18 @@ export default function Web(props) {
       let check_popup = localStorage.getItem('show_popup') 
       setCurrentTime(time);
       if (!countJson) {
-        dispatch(getDashboardCount());
+        let data =  DashboardCount()
+        data.then((result) => {
+        if(result.status == 200)
+        {
+          setCountJson(result.data)
+        }
+        else
+        {
+          setCountStatus(204)
+          setCountJson({})
+        }
+    })
       }
     }
     setCurrentDate(date);
@@ -535,35 +562,35 @@ export default function Web(props) {
                   <div className="grid grid-cols-8 border-b border-blue-color ">
                     <div className="text-right text-6xl p-5">1</div>
                     <div className="text-right text-6xl p-5">
-                      {countJson && "sample" in countJson
+                      {countStatus === 200 && countJson && "sample" in countJson
                         ? countJson["sample"]
                         : ""}
                     </div>
                     <div className="text-right text-6xl p-5">
-                      {countJson && "genes" in countJson
+                      {countStatus === 200 && countJson && "genes" in countJson
                         ? countJson["genes"]
                         : ""}
                     </div>
                     <div className="text-right text-6xl p-5">
-                      {countJson && "mutation" in countJson
+                      {countStatus === 200 && countJson && "mutation" in countJson
                         ? countJson["mutation"]
                         : ""}
                     </div>
                     <div className="text-right text-6xl p-5">
-                      {countJson && "cnv" in countJson ? countJson["cnv"] : ""}
+                      {countStatus === 200 && countJson && "cnv" in countJson ? countJson["cnv"] : ""}
                     </div>
                     <div className="text-right text-6xl p-5">
-                      {countJson && "fusion" in countJson
+                      {countStatus === 200 && countJson && "fusion" in countJson
                         ? countJson["fusion"]
                         : ""}
                     </div>
                     <div className="text-right text-6xl p-5">
-                      {countJson && "proteome" in countJson
+                      {countStatus === 200 && countJson && "proteome" in countJson
                         ? countJson["proteome"]
                         : ""}
                     </div>
                     <div className="text-right text-6xl p-5">
-                      {countJson && "phospho" in countJson
+                      {countStatus === 200 && countJson && "phospho" in countJson
                         ? countJson["phospho"]
                         : ""}
                     </div>
@@ -746,29 +773,29 @@ export default function Web(props) {
                     1
                   </div>
                   <div className="p-20  pl-24 lg:text-3xl sm:text-2xl xs:text-sm text-left">
-                    {countJson && "sample" in countJson ? countJson["sample"] : ""}
+                    {countStatus === 200 && countJson && "sample" in countJson ? countJson["sample"] : ""}
                   </div>
                   <div className="p-20  pl-24 lg:text-3xl sm:text-2xl xs:text-sm text-left">
-                    {countJson && "genes" in countJson ? countJson["genes"] : ""}
+                    {countStatus === 200 && countJson && "genes" in countJson ? countJson["genes"] : ""}
                   </div>
                   <div className="p-20  pl-24 lg:text-3xl sm:text-2xl xs:text-sm text-left">
-                    {countJson && "mutation" in countJson
+                    {countStatus === 200 && countJson && "mutation" in countJson
                       ? countJson["mutation"]
                       : ""}
                   </div>
                   <div className="p-20  pl-24 lg:text-3xl sm:text-2xl xs:text-sm text-left">
-                    {countJson && "cnv" in countJson ? countJson["cnv"] : ""}
+                    {countStatus === 200 && countJson && "cnv" in countJson ? countJson["cnv"] : ""}
                   </div>
                   <div className="p-20  pl-24 lg:text-3xl sm:text-2xl xs:text-sm text-left">
-                    {countJson && "fusion" in countJson ? countJson["fusion"] : ""}
+                    {countStatus === 200 && countJson && "fusion" in countJson ? countJson["fusion"] : ""}
                   </div>
                   <div className="p-20  pl-24 lg:text-3xl sm:text-2xl xs:text-sm text-left">
-                    {countJson && "proteome" in countJson
+                    {countStatus === 200 && countJson && "proteome" in countJson
                       ? countJson["proteome"]
                       : ""}
                   </div>
                   <div className="p-20  pl-24 lg:text-3xl sm:text-2xl xs:text-sm text-left">
-                    {countJson && "phospho" in countJson
+                    {countStatus === 200 && countJson && "phospho" in countJson
                       ? countJson["phospho"]
                       : ""}
                   </div>

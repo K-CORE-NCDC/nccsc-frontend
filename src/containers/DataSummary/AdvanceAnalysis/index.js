@@ -1,35 +1,33 @@
-import React,{useState,useEffect,useRef,useCallback,usePrevious } from "react";
+import React,{useState,useEffect,useCallback } from "react";
 import {
-  ChevronDownIcon,
-  ChevronUpIcon,
   AdjustmentsIcon
 } from '@heroicons/react/outline'
-import { useSelector, useDispatch } from "react-redux";
-import { getGenomicInformation } from '../../../actions/api_actions'
+import { GenomicInformation } from '../../../actions/api_actions'
 import chart_types from '../genomicCharyTypes';
-import inputJson from '../data'
 import Filter from './filter'
-import VennCmp from '../../Common/Venn'
-// import Loader from "react-loader-spinner";
 import LoaderCmp from '../../Common/Loader';
 
 export default function AdvancedInfo() {
-  const dataSummary = useSelector(state => state)
-  const summaryJson = useSelector((data) => data.homeReducer.genomicData);
-  const [filterState,setFilterState] = useState({})
   const [state, setState] = useState([]);
-  const [data, setData] = useState("");
-  const [active, setActive] = useState(false);
-  const dispatch = useDispatch()
-  const prevCountRef = useRef();
   const [loader, setLoader] = useState(true)
-  const [reset, setReset] = useState("")
   const [smallScreen, setSmallScreen] = useState(false)
-  // const [previousSelection,setPreviousSelection] = useState({});
+  const [summaryJson, setSummaryJson] = useState({})
+  const [summaryJsonStatus, setSummaryJsonStatus] = useState(204)
 
-  useEffect(() => {
-    dispatch(getGenomicInformation("POST",""))
-  }, [dispatch])
+  useEffect(()=>{
+    let data = GenomicInformation('POST','')
+    data.then((result)=>{
+      if(result.status === 200)
+      {
+        setSummaryJson(result.data)
+        setSummaryJsonStatus(200)
+      }
+      else{
+        setSummaryJson({})
+        setSummaryJsonStatus(204)
+      }
+    })
+  },[])
 
   let visual_type = {
     "Variant Classification":"Bar",
@@ -45,7 +43,7 @@ export default function AdvancedInfo() {
   }
 
   useEffect(()=>{
-    if(summaryJson){
+     if(summaryJsonStatus === 200 && summaryJson){
       let html = []
       Object.keys(summaryJson).forEach((item, k) => {
         let type = visual_type[item]
@@ -72,18 +70,39 @@ export default function AdvancedInfo() {
           setLoader(false)
       }, (1000));
     }
-  },[summaryJson])
+  },[summaryJson,summaryJsonStatus])
 
   const callback = useCallback((filters,selected) => {
     setState([])
-
     if(filters){
       setLoader(true)
       let data_ = {'filter':filters}
-      dispatch(getGenomicInformation("POST", data_))
+      let data = GenomicInformation('POST',data_)
+      data.then((result)=>{
+      if(result.status === 200)
+      {
+        setSummaryJson(result.data)
+        setSummaryJsonStatus(200)
+      }
+      else{
+        setSummaryJson({})
+        setSummaryJsonStatus(204)
+      }
+    })
     }else{
       setLoader(true)
-      dispatch(getGenomicInformation("POST", ""))
+      let data = GenomicInformation('POST','')
+      data.then((result)=>{
+      if(result.status === 200)
+      {
+        setSummaryJson(result.data)
+        setSummaryJsonStatus(200)
+      }
+      else{
+        setSummaryJson({})
+        setSummaryJsonStatus(204)
+      }
+    })
     }
   }, []);
 
