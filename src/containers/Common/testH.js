@@ -53,8 +53,8 @@ const HeatmapCmp = React.forwardRef(({ settings, inputData, type, watermarkCss,w
         'disableConfigurator':false,
         'disableToolbar':true
     }
-    if(settings['colorSpectrumBreaks'][0]>=0 && settings['colorSpectrumBreaks'][1]>=0){
-        config["colorSpectrumBreaks"]= settings['colorSpectrumBreaks']
+    if(settings['colorSpectrumBreaks'][0] && settings['colorSpectrumBreaks'][1]){
+        config["colorSpectrumBreaks"] = settings['colorSpectrumBreaks']
     }
     if(clinicalFilter.length>0){
         config['varOverlayProperties'] = {}
@@ -152,17 +152,10 @@ const HeatmapCmp = React.forwardRef(({ settings, inputData, type, watermarkCss,w
     },[inputData])
 
     useEffect(()=>{
-        console.log(data)
         if(Object.keys(data).length>0){
             setDataLoaded(true)
         }
     },[data])
-    
-    
-
-        
-    
-
 
     return (
         <div ref={ref} className={`heatmap ${watermarkCss}`}>

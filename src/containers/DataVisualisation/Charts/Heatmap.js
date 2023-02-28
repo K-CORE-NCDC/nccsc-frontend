@@ -64,7 +64,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   useEffect(()=>{
     if('userProjectsDataTable' in tabList ){
       setAllTabList(tabList.userProjectsDataTable)
-      console.log('alltabList',alltabList);
+      
     }
     
     },[tabList])
