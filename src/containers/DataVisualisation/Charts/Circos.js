@@ -268,7 +268,7 @@ export default function DataCircos({
 
   const ReportDataFunction = () => {
     setshowReportTable(true);
-    dispatch(getRNIDetails("POST", { rnid: sampleKey }));
+    dispatch(getRNIDetails("POST", { rnid: sampleKey, 'project_id':project_id }));
   };
 
   useEffect(() => {
