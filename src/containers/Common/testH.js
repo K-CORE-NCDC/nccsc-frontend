@@ -53,7 +53,8 @@ const HeatmapCmp = React.forwardRef(({ settings, inputData, type, watermarkCss,w
         'disableConfigurator':false,
         'disableToolbar':true
     }
-    if(settings['colorSpectrumBreaks'][0] && settings['colorSpectrumBreaks'][1]){
+    // console.log(settings['colorSpectrumBreaks'])
+    if(!isNaN(settings['colorSpectrumBreaks'][0]) && !isNaN(settings['colorSpectrumBreaks'][1])){
         config["colorSpectrumBreaks"] = settings['colorSpectrumBreaks']
     }
     if(clinicalFilter.length>0){
