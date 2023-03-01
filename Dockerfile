@@ -18,7 +18,6 @@ RUN apt-get install -y vim
 RUN npm install -g serve
 COPY . .
 RUN npm install --legacy-peer-deps
-RUN npx browserslist@latest --update-db
 COPY oncoprint.bundle.js node_modules/oncoprintjs/dist/
 
 #for production
