@@ -721,21 +721,21 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
                 </button>
               </div>
               <div className="flex">
-                <div><FormattedMessage id="ProjectName" defaultMessage="Project Name" />:</div>
+                <div className="text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md"><FormattedMessage id="ProjectName" defaultMessage="Project Name" />:</div>
                 <div className="mb-4">
-                  <input ref={projectNameRef} onChange={(e) => setProjectName(e.target.value)} value={projectName} className={` ${borderRed ? "border-red-400" : ""} ml-10 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} required={true} id="project" type="text" placeholder="Project Name" />
+                  <input ref={projectNameRef} onChange={(e) => setProjectName(e.target.value)} value={projectName} className={` ${borderRed ? "border-red-400" : ""} ml-10 shadow appearance-none border rounded w-96 h-12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} required={true} id="project" type="text" placeholder="Project Name" />
                 </div>
               </div>
               {/* <div className="pb-3">{selectedFiles ? <h2> Selected Files: <b>{selectedFiles.join(', ')}</b></h2> : ""}</div> */}
-              <h2><FormattedMessage id="Upload" defaultMessage="Upload" /></h2>
+              <h2 className="text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md"><FormattedMessage id="Upload" defaultMessage="Upload" /></h2>
             </div>
             {initialInputState}
             {state}
             <div className="relative w-full col-span-12 text-center">
-              <button onClick={resetStates} className="capitalize bg-white  w-80 h-20  mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded">
+              <button onClick={resetStates} className="text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md capitalize bg-white  w-80 h-20  mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded">
                 <FormattedMessage id="Reset" defaultMessage="Reset" />
               </button>&nbsp;&nbsp;&nbsp;&nbsp;
-              <button className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded ${disableUploadButton ? 'bg-opacity-10' : ''}`}
+              <button className={`text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded ${disableUploadButton ? 'bg-opacity-10' : ''}`}
                 onClick={formSubmitButtonActions}
               >
                 {formSbubmitButtonText}
@@ -870,13 +870,13 @@ function SampleDataTable() {
                 </tr>
                 {newdata.body.map((row, index) => (
                   <>
-                  <tr key={index} trindex={index}  >
+                  <tr key={`${Math.random()*500}`+index} trindex={index}  >
                     
                     {row.map((cellData, cellIndex) => {
                       if (cellIndex === 0) {
                         let i, current_index
                         return (
-                         <td trindex={index} key={`${index}-${cellIndex}-${cellData}`+ Math.random()*100} className="px-6 py-4 whitespace-nowrap border" >
+                         <td trindex={index} key={`${index}-${cellIndex}-${cellData}`+ Math.random()*300} className="px-6 py-4 whitespace-nowrap border" >
                             <div trindex={index} className="capitalize text-lg text-gray-900" onClick={(e)=>{
                                 for( i = 0; i<=9;i++){
                                   if(i !== index){
@@ -907,16 +907,16 @@ function SampleDataTable() {
                                   
                                   (currentIndex === index) ? 
                                   <div className="d-flex flex-row">
-                                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                  </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                    </svg>
                                    {`${cellData}`}
                                   </div> 
                                   :
                                   <div className="d-flex flex-row">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                   <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                                   </svg>
+                                      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                    </svg>
                                   {`${cellData}`}
                                   </div>
                                 } 

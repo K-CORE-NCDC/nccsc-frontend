@@ -66,7 +66,6 @@ const HeatmapCmp = React.forwardRef(({ settings, inputData, type, watermarkCss,w
                 "color": "rgb(254,41,108)",
                 "spectrum": ["rgb(255,0,255)","rgb(0,0,255)","rgb(0,0,0)","rgb(255,0,0)","rgb(255,215,0)"],
                 "scheme": "GGPlot",
-
                 "showLegend": true,
                 "showName": true,
                 "showBox": true,

@@ -76,7 +76,7 @@ const LoginComponent = () => {
         <div className="my-32">
           <div className="grid grid-cols-3 border-b-2 border-gray-600 pt-12 pb-12">
             <div className="pt-6 pl-48 col-span-1">
-              <h1 className="font-bold">User ID</h1>
+              <h1 className="font-bold text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">User ID</h1>
             </div>
             <div>
               <div className="mb-4 pr-45 col-span-2">
@@ -94,7 +94,7 @@ const LoginComponent = () => {
           </div>
           <div className="grid grid-cols-3 border-b-2 border-gray-600 pt-12 pb-12">
             <div className="pt-6 pl-48 col-span-1">
-              <h1 className="font-bold">Password</h1>
+              <h1 className="font-bold text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">Password</h1>
             </div>
             <div>
               <div className="mb-4 pr-45 col-span-2 relative">
@@ -124,7 +124,7 @@ const LoginComponent = () => {
               )}
               <button
                 onClick={formSubmitAction}
-                className="bg-blue-500 hover:bg-blue-700 text-white h-28 font-bold py-2 px-4 border border-blue-700 w-full rounded"
+                className="text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md bg-blue-500 hover:bg-blue-700 text-white h-28 font-bold py-2 px-4 border border-blue-700 w-full rounded"
 
               >
                 <UserIcon className="h-14 w-12 inline text-main-white" />{" "}
