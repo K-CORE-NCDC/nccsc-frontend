@@ -1,18 +1,13 @@
 import React, { useState,useEffect, useRef } from 'react'
-import { useSelector, useDispatch } from "react-redux";
 import Igv from '../../Common/igv';
 import LoaderCmp from '../../Common/Loader';
-import { getIgv } from '../../../actions/api_actions'
+import { IGV } from '../../../actions/api_actions'
 import NoContentMessage from '../../Common/NoContentComponent'
 import { exportComponentAsPNG } from 'react-component-export-image';
 
-// import LoaderCmp from '../../Common/Loader'
-import {FormattedMessage} from 'react-intl';
-
 export default function DataIgv({ width,inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
-  const dispatch = useDispatch()
-  const igvJson = useSelector((data) => data.dataVisualizationReducer.igvSummary);
+  const [igvJson, setigvJson] = useState([])
   const [activeCmp,setActiveCmp] = useState(false)
   const [igvLegend,setIgvLegend] = useState("")
   const [loader, setLoader] = useState(false)
@@ -24,7 +19,19 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
     if(inputData.type !=='' && inputData['genes'].length > 0){
       let dataJson = inputData
       setLoader(true)
-      dispatch(getIgv('POST',dataJson))
+      let return_data = IGV('POST',dataJson)
+        return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = d["data"]
+            setigvJson(r_)
+          } else {
+            setigvJson([])
+          }
+        })
+        .catch((e) => {
+          setigvJson([])
+        });
     }
   },[inputData])
 
@@ -47,13 +54,6 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
       setActiveCmp(true)
     }
   },[igvJson])
-
-
-  // useEffect(() => {
-  //   setTimeout(function() {
-  //       setLoader(false)
-  //   }, (10000));
-  // }, [igvJson])
 
   useEffect(() => {
     if (screenCapture) {
@@ -96,7 +96,7 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
           </div>
           {selectGenemsg && <p>Please select Gene Set Data</p>}
         {activeCmp === true && <NoContentMessage />}
-          <Igv watermarkCss={watermarkCss} ref={reference} data={igvJson}/>
+          {igvJson && <Igv watermarkCss={watermarkCss} ref={reference} data={igvJson}/>}
           </>
         }
         

@@ -1,10 +1,7 @@
 import React, { useState,useEffect, useRef, useContext } from 'react'
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import OncoCmp from '../../Common/Onco'
-import { getOncoInformation } from '../../../actions/api_actions'
-import { exportComponentAsPNG } from 'react-component-export-image';
-// import Loader from "react-loader-spinner";
-import UserFilesTable from '../../Common/Table'
+import { OncoInformation } from '../../../actions/api_actions'
 import LoaderCmp from '../../Common/Loader'
 import NoContentMessage from '../../Common/NoContentComponent'
 import Multiselect from 'multiselect-react-dropdown';
@@ -16,8 +13,7 @@ import { Context } from "../../../wrapper";
 export default function DataOnco({ width,inputData, screenCapture, setToFalseAfterScreenCapture }) {
 
   const reference = useRef()
-  const dispatch = useDispatch()
-  const oncoJson = useSelector((data) => data.dataVisualizationReducer.oncoSummary);
+  const [oncoJson, setOncoJson] = useState({'status':204})
   const context = useContext(Context);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const [Englishlanguage, setEnglishlanguage] = useState(true);
@@ -35,9 +31,6 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
   const [option,setOption] = useState([])
   let { tab, project_id } = useParams();
   const [customFilterJson,setCustomFilterJson] = useState([])
-  const userDefinedFilter = useSelector(
-    (data) => data.dataVisualizationReducer.userDefinedFilter
-  );
 
   useEffect(() => {
     if (context["locale"] === "kr-KO") {
@@ -47,7 +40,7 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
       setKoreanlanguage(false);
       setEnglishlanguage(true);
     }
-  });
+  },[context]);
   
   useEffect(()=>{
   
@@ -99,23 +92,36 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
       if(inputState.type !=='' && inputState.genes.length > 0){
         setLoader(true)
         let dataJson = inputState
-        dispatch(getOncoInformation('POST',dataJson))
+        let return_data = OncoInformation('POST',dataJson)
+        return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = d["data"]
+            r_["status"] = 200
+            setOncoJson(r_)
+          } else {
+            setOncoJson({'status':204})
+          }
+        })
+        .catch((e) => {
+          setOncoJson({'status':204})
+        });
       }
     }
   },[inputState])
 
   useEffect(()=>{
-    if(oncoJson){
+    if(oncoJson && oncoJson.status === 200){
       setChartData((prevState) => ({
         ...prevState,
         ...oncoJson
       }))
       setActiveCmp(true)
-      let gData = oncoJson['geneData']
-      let cData = oncoJson['clinicalData']
+      let gData = 'geneData' in oncoJson ?  oncoJson['geneData'] : {}
+      let cData = 'clinicalData' in oncoJson ? oncoJson['clinicalData'] : {}
       let final = {}
-      let global_ = cData["globalMutCategory"]
-      let mutant_ = cData["mutCategory"]
+      let global_ = cData && 'globalMutCategory' in cData && cData["globalMutCategory"]
+      let mutant_ = cData && 'mutCategory' in cData && cData["mutCategory"]
 
       mutant_.forEach((g, i) => {
         let sample_id = g['sample']
@@ -219,7 +225,21 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
       setLoader(true)
       let dataJson = inputState
       dataJson['clinicalFilters'] = cf
-      dispatch(getOncoInformation('POST',dataJson))
+      // dispatch(getOncoInformation('POST',dataJson))
+      let return_data = OncoInformation('POST',dataJson)
+        return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = d["data"]
+            r_["status"] = 200
+            setOncoJson(r_)
+          } else {
+            setOncoJson({'status':204})
+          }
+        })
+        .catch((e) => {
+          setOncoJson({'status':204})
+        });
     }
 
   }
@@ -236,7 +256,21 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
       setLoader(true)
       let dataJson = inputState
       dataJson['clinicalFilters'] = cf
-      dispatch(getOncoInformation('POST',dataJson))
+      // dispatch(getOncoInformation('POST',dataJson))
+      let return_data = OncoInformation('POST',dataJson)
+        return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = d["data"]
+            r_["status"] = 200
+            setOncoJson(r_)
+          } else {
+            setOncoJson({'status':204})
+          }
+        })
+        .catch((e) => {
+          setOncoJson({'status':204})
+        });
     }
   }
 

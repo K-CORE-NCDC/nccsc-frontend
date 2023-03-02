@@ -1,24 +1,19 @@
-import React, { useState, useEffect, Fragment, useRef, useContext } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect, useContext } from "react";
+import { useSelector } from "react-redux";
 import GroupFilters, {
   PreDefienedFilters,UserDefinedGroupFilters
 } from "../../Common/FusionGroupFilter";
-// import UserDefinedGroupFilters  from "../../Common/GroupFilterUserDefined";
 import { AdjustmentsIcon } from "@heroicons/react/outline";
 import FusionVennCmp from "../../Common/FusionVenn";
 import { useParams } from "react-router-dom";
 
 import {
-  getClinicalMaxMinInfo,
-  getFusionVennDaigram,
-  clearFusionVennDaigram
+  FusionVennDaigram,
 } from "../../../actions/api_actions";
-// import Loader from "react-loader-spinner";
 import LoaderCmp from "../../Common/Loader";
 import FusionCustomPlot from "../../Common/FusionCustomPlot";
 import { FormattedMessage } from "react-intl";
 import DataTable from "react-data-table-component";
-import { selector } from "d3";
 import { Context } from "../../../wrapper";
 const selectedCss =
   "w-1/2 rounded-r-none  hover:scale-110 focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 xs:text-sm sm:text-sm md:text-2xl md:text-2xl ease-in-out border-gray-600 transition";
@@ -27,11 +22,8 @@ const nonSelectedCss =
 
 export default function FusionPlot({
   width,
-  inputData,
-  screenCapture,
-  setToFalseAfterScreenCapture,
+  inputData
 }) {
-  const dispatch = useDispatch();
   const context = useContext(Context);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const [Englishlanguage, setEnglishlanguage] = useState(true);
@@ -44,6 +36,7 @@ export default function FusionPlot({
   const [groupName, setGroupName] = useState("");
   const [noData, setNoData] = useState('false')
   const [firstTime, setFirstTime] = useState(true)
+  const [VennData, setVennData] = useState({})
 
   useEffect(() => {
     if (context["locale"] === "kr-KO") {
@@ -53,18 +46,16 @@ export default function FusionPlot({
       setKoreanlanguage(false);
       setEnglishlanguage(true);
     }
-  });
+  },[context]);
 
-  let { tab, project_id } = useParams();
+  let {  project_id } = useParams();
   const [userDefienedFilter, setUserDefienedFilter] = useState(
     project_id === undefined ? "static" : "dynamic"
   );
   const clinicalMaxMinInfo = useSelector(
     (data) => data.dataVisualizationReducer.clinicalMaxMinInfo
   );
-  const VennData = useSelector(
-    (data) => data.dataVisualizationReducer.VennData
-  );
+
   const circosSanpleRnidListData = useSelector(
     (data) => data.dataVisualizationReducer.Keys
   );
@@ -178,7 +169,8 @@ export default function FusionPlot({
   };
 
   useEffect(() => {
-    dispatch(clearFusionVennDaigram())
+    // dispatch(clearFusionVennDaigram())
+    setVennData({})
     setGroupName("")
     setNoData('true')
     setTableData([])
@@ -190,12 +182,21 @@ export default function FusionPlot({
       ) {
         setLoader(true);
         inputData["filterType"] = userDefienedFilter;
-        dispatch(
-          getFusionVennDaigram("POST", {
-            ...inputData,
-            filterGroup: groupFilters,
-          })
-        );
+        let return_data = FusionVennDaigram('POST',{...inputData,filterGroup: groupFilters})
+        return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = {}
+            r_['res'] = d["data"]
+            r_['status'] = 200
+            setVennData(r_)
+          } else {
+            setVennData({'status':204})
+          }
+        })
+        .catch((e) => {
+          setVennData({'status':204})
+        });
  
       }
     }
@@ -203,7 +204,7 @@ export default function FusionPlot({
 
   useEffect(() => {
     if (!clinicalMaxMinInfo) {
-      dispatch(getClinicalMaxMinInfo("GET", {}));
+      setVennData({})
     }
   }, []);
 

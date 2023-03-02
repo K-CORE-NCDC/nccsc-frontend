@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useSelector, useDispatch } from "react-redux";
 import ScatterPlot from '../../Common/ScatterPlot'
 import LoaderCmp from '../../Common/Loader'
-import { getScatterInformation, getCircosSamplesRnidList } from '../../../actions/api_actions'
+import {ScatterInformation} from '../../../actions/api_actions'
 import '../../../assets/css/style.css'
 import { exportComponentAsPNG } from 'react-component-export-image';
 import Multiselect from 'multiselect-react-dropdown';
@@ -11,12 +10,7 @@ import {FormattedMessage} from 'react-intl';
 
 export default function Scatter({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
-  const dispatch = useDispatch()
-  const [sampleKey, setSampleKey] = useState('')
-  const scatterJson = useSelector((data) => data.dataVisualizationReducer.scatterData);
-  // const circosSanpleRnidListData = useSelector(state => state.dataVisualizationReducer.circosSanpleRnidListData)
-  // const circosSanpleRnidListData = useSelector((data) => data.dataVisualizationReducer.Keys);
-  const [sampleListElements, setSampleListElements] = useState([])
+  const [scatterJson, setScatterJson] = useState({})
   const [displaySamples, setDisplaySamples] = useState(false)
   const [watermarkCss, setWatermarkCSS] = useState("")
   const [loader, setLoader] = useState(false)
@@ -30,17 +24,6 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
   const [primaryGene, setPrimaryGene] = useState('')
   const [lastRemoveItem,setLastRemoveItem] = useState([])
   const [lastRemove,setLastRemove] = useState(false)
-  // useEffect(() => {
-  //   if (inputData) {
-  //     let editInputData = inputData
-  //     let g = editInputData['genes']
-  //     if (editInputData.type !== '') {
-  //       loadGenesDropdown(g)
-  //       setLoader(true)
-  //       dispatch(getScatterInformation('POST', editInputData))
-  //     }
-  //   }
-  // }, [inputData])
 
   useEffect(() => {
     if (inputData && 'genes' in inputData) {
@@ -57,8 +40,20 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
         let dataJson = inputState
         setLoader(true)
         dataJson['genes'] = [g[0]]
-        // dataJson['genes'] = g
-        dispatch(getScatterInformation('POST', dataJson))
+        let return_data = ScatterInformation('POST',dataJson)
+        return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = d["data"]
+            r_["status"] = 200
+            setScatterJson(r_)
+          } else {
+            setScatterJson({'status':204})
+          }
+        })
+        .catch((e) => {
+          setScatterJson({'status':204})
+        });
       }
     }
   }, [inputState])
@@ -101,17 +96,27 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
 
   function onSelect(selectedList, selectedItem) {
     let genes = []
-    // setSelectedValue(selectedList)
     selectedList.forEach((item, i) => {
       genes.push(item['name'])
     });
-    // loadGenesDropdown(genes)
     if (inputData.type !== '' && inputState['genes'].length > 0) {
       let dataJson = { ...inputData }
       dataJson['genes'] = genes
       setLoader(true)
-      // setActiveCmp(false)
-      dispatch(getScatterInformation('POST', dataJson))
+      let return_data = ScatterInformation('POST',dataJson)
+        return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = d["data"]
+            r_["status"] = 200
+            setScatterJson(r_)
+          } else {
+            setScatterJson({'status':204})
+          }
+        })
+        .catch((e) => {
+          setScatterJson({'status':204})
+        });
     }
   }
 
@@ -130,15 +135,26 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
         setLastRemove(false)
       }
       if (genes.length === 0 && selectedList.length===0) {
-        // genes = inputState['genes']
         genes = [removedItem['name']]
       }
       if (inputData.type !== '') {
         let dataJson = { ...inputData }
         dataJson['genes'] = genes
         setLoader(true)
-        // setActiveCmp(false)
-        dispatch(getScatterInformation('POST', dataJson))
+        let return_data = ScatterInformation('POST',dataJson)
+        return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = d["data"]
+            r_["status"] = 200
+            setScatterJson(r_)
+          } else {
+            setScatterJson({'status':204})
+          }
+        })
+        .catch((e) => {
+          setScatterJson({'status':204})
+        });
       }
     
   }
@@ -173,7 +189,20 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
           let dataJson = inputState
           setLoader(true)
           dataJson['genes'] = gene
-          dispatch(getScatterInformation('POST', dataJson))
+          let return_data = ScatterInformation('POST',dataJson)
+          return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = d["data"]
+            r_["status"] = 200
+            setScatterJson(r_)
+          } else {
+            setScatterJson({'status':204})
+          }
+        })
+        .catch((e) => {
+          setScatterJson({'status':204})
+        });
         }
       }
     }
@@ -185,7 +214,20 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
           let dataJson = inputState
           setLoader(true)
           dataJson['genes'] = [gene[0]]
-          dispatch(getScatterInformation('POST', dataJson))
+          let return_data = ScatterInformation('POST',dataJson)
+          return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = d["data"]
+            r_["status"] = 200
+            setScatterJson(r_)
+          } else {
+            setScatterJson({'status':204})
+          }
+        })
+        .catch((e) => {
+          setScatterJson({'status':204})
+        });
         }
       }
     }

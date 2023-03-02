@@ -417,33 +417,10 @@ export function GenomicInformation(method, data) {
     return sendRequest(url,method,data)
 }
 
-export function getOncoInformation(type, data) {
-  return (dispatch) => {
+export function OncoInformation(type, data) {
     let url = config.auth + "oncoprint/";
-    sendRequest(url, type, data)
-      .then((result) => {
-        const d = result
-        if (d.status === 200) {
-          dispatch({
-            type: dataVisualization.ONCO_REQUEST,
-            payload: { ...d["data"], status: 200 },
-          });
-        } else {
-          dispatch({
-            type: dataVisualization.ONCO_REQUEST,
-            payload: { status: 204 },
-          });
-        }
-        dispatch({ type: dataVisualization.REQUEST_DONE });
-      })
-      .catch((e) => {
-        
-        dispatch({
-          type: dataVisualization.ONCO_REQUEST,
-          payload: { status: 204 },
-        });
-      });
-  };
+    return sendRequest(url, type, data)
+      
 }
 
 
@@ -474,6 +451,11 @@ export function getLolipopInformation(type, data) {
         });
       });
   };
+}
+
+export function LolipopInformation(type, data) {
+    let url = config.auth + "lollipop/";
+    return sendRequest(url, type, data)
 }
 
 export function getFusionTable(type, data) {
@@ -510,6 +492,11 @@ export function getFusionVennDaigram(type, data) {
 
       });
   }
+}
+
+export function FusionVennDaigram(type, data) {
+    let url = config.auth + "getFusionVenn/";
+    return sendRequest(url, type, data)
 }
 
 export function clearFusionVennDaigram(type, data) {
@@ -553,10 +540,6 @@ export function getSankeyJson(type,data){
             type: dataVisualization.SANKEYJSON_REQUEST,
             payload: { "data":[...d["data"]], status: 200 },
           });
-          
-
-          
-          
         }
         dispatch({ type: dataVisualization.REQUEST_DONE });
 
@@ -567,34 +550,11 @@ export function getSankeyJson(type,data){
   }
 }
 
-export function getVolcanoPlotInfo(type, data) {
-  return (dispatch) => {
+
+export function VolcanoPlotInfo(type, data) {
     let url = config.auth + "volcano/";
 
-    sendRequest(url, type, data)
-      .then((result) => {
-        const d = result
-        if (d.status === 200) {
-          dispatch({
-            type: dataVisualization.VOLCANO_REQUEST,
-            payload: { ...d["data"], status: 200 },
-          });
-        } else {
-          dispatch({
-            type: dataVisualization.VOLCANO_REQUEST,
-            payload: { status: 204 },
-          });
-        }
-        dispatch({ type: dataVisualization.REQUEST_DONE });
-      })
-      .catch((e) => {
-
-        dispatch({
-          type: dataVisualization.VOLCANO_REQUEST,
-          payload: { status: 204 },
-        });
-      });
-  };
+    return sendRequest(url, type, data)
 }
 export function userDefinedGetVolcanoPlotInfo(type, data) {
   return (dispatch) => {
@@ -629,15 +589,6 @@ export function userDefinedGetVolcanoPlotInfo(type, data) {
 export function getHeatmapInformation(type, data) {
   return (dispatch) => {
     let url = config.auth + "heatmap/";
-    // const data = new FormData()
-    //
-    // data.set('genes', data.genes);
-    // if("filter" in data){
-    //   data.set('filters', JSON.stringify(data.filter));
-    // }
-    // if("table_type" in data){
-    //   data.set('tab_type', data.table_type);
-    // }
     dispatch({
       type: dataVisualization.HEATMAP_REQUEST_STATUS_CODE,
       payload: { status: 204, loader: true },
@@ -683,6 +634,12 @@ export function getHeatmapInformation(type, data) {
   };
 }
 
+
+export function HeatmapInformation(type, data) {
+    let url = config.auth + "heatmap/";
+    return sendRequest(url, type, data)
+     
+}
 export function file_upload(fileData, projectName) {
   return (dispatch) => {
     const data = new FormData()
@@ -815,6 +772,12 @@ export function getCircosInformation(type, data) {
   };
 }
 
+export function CircosInformation(type, data) {
+    //   dispatch({ type: homeConstants.DATA_SUMMARY });
+    let url = config.auth + "circos/";
+    return sendRequest(url, type, data)
+}
+
 export function clearCircosInfomation() {
   return (dispatch) => {
     dispatch({
@@ -852,6 +815,12 @@ export function getSurvivalInformation(type, data) {
         });
       });
   };
+}
+
+export function SurvivalInformation(type, data) {
+    //   dispatch({ type: homeConstants.DATA_SUMMARY });
+    let url = config.auth + "survival/";
+    return sendRequest(url, type, data)
 }
 
 export function clearSurvivalIMage(){
@@ -892,6 +861,11 @@ export function getIgv(type, data) {
         });
       });
   };
+}
+
+export function IGV(type, data) {
+    let url = config.auth + "igv/";
+    return sendRequest(url, type, data)
 }
 
 export function getBreastKeys(data) {
@@ -1156,6 +1130,11 @@ export function getScatterInformation(type, data) {
   };
 }
 
+export function ScatterInformation(type, data) {
+    let url = config.auth + "scatter-plot/";
+    return sendRequest(url, type, data)
+}
+
 export function getGeneFusionInformation(type, data) {
   return (dispatch) => {
     let url = config.auth + "check-fusion-genes/";
@@ -1245,6 +1224,12 @@ export function getBoxInformation(type, data) {
   };
 }
 
+
+export function BoxInformation(type, data) {
+    //   dispatch({ type: homeConstants.DATA_SUMMARY });
+    let url = config.auth + "box-plot/";
+    return sendRequest(url, type, data)
+}
 export function getOncoImages(method, data) {
   return (dispatch) => {
     let url = config.auth + "onco-sample-images/";
@@ -1270,6 +1255,10 @@ export function getOncoImages(method, data) {
   };
 }
 
+export function OncoImages(method, data) {
+    let url = config.auth + "onco-sample-images/";
+    return sendRequest(url, method, data)
+}
 
 export function getCircosTimelineTable(method, data) {
   return (dispatch) => {
@@ -1294,6 +1283,11 @@ export function getCircosTimelineTable(method, data) {
 
       });
   };
+}
+
+export function CircosTimelineTable(method, data) {
+    let url = config.auth + "onco-age-diagram/";
+    return sendRequest(url, method, data)
 }
 
 export function getPassEncodeId(type, data) {
@@ -1552,3 +1546,4 @@ export function clearProjectTableDataTableData() {
     });
   }
 }
+

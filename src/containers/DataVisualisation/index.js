@@ -3,7 +3,6 @@ import React, {
   useEffect,
   useRef,
   useCallback,
-  Fragment,
   useContext
 } from "react";
 import { MenuIcon, AdjustmentsIcon } from "@heroicons/react/outline";
@@ -23,7 +22,6 @@ import {
 } from "../../actions/api_actions";
 import { Link } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
-import { element } from "prop-types";
 
 export default function DataVisualization() {
   const context = useContext(Context);
@@ -34,12 +32,6 @@ export default function DataVisualization() {
   const elementRef = useRef(null);
 
   const [state, setState] = useState({ genes: [], filter: "", type: "" });
-
-  // const geneFilterData = useSelector(state => state.dataVisualizationReducer.geneFilterData)
-  // useEffect(()=>{
-  // })
-
-  // const [advanceFilters, setAdvanceFilters] = useState({})
   const [boolChartState, setBoolChartState] = useState(true);
   const [filterState, setFilterState] = useState({});
   const [chart, setCharts] = useState({ viz: [] });
@@ -147,10 +139,6 @@ export default function DataVisualization() {
 
   useEffect(() => {
     if (project_id !== undefined) {
-      // if(project_id_status && 'status' in project_id_status && project_id_status['status'] !== 'true'){
-      //   dispatch(projectIdStatus('get','true'))
-      //   // dispatch(clearDataVisualizationState())
-      // }
       let projectAvailableSteps = undefined;
       if (userProjectDetails) {
         projectAvailableSteps = userProjectDetails.available_steps;
@@ -162,9 +150,6 @@ export default function DataVisualization() {
       } else {
         Object.keys(projectAvailableSteps).forEach((stepName) => {
           if (projectAvailableSteps[stepName].length > 0) {
-            // if (stepName === "fusion") {
-            //   return;
-            // }
             if (stepName === "lollypop") {
               tabList.push("lollipop");
             } else if (stepName === "oncoprint") {
@@ -181,9 +166,7 @@ export default function DataVisualization() {
       }
       setavailableTabsForProject(tabList);
     }
-    // else{
-    //     dispatch(projectIdStatus('get','false'))
-    // }
+  
   }, [project_id, userProjectDetails, project_id_status]);
 
   const toggleTab = (event) => {
@@ -252,7 +235,6 @@ export default function DataVisualization() {
         project_id: project_id,
       }));
     }
-    // let l = ['circos', 'onco', 'lollipop', 'volcano', 'heatmap', 'survival']
     let l = [];
     if (project_id !== undefined) {
       l = availableTabsForProject;
@@ -333,45 +315,7 @@ export default function DataVisualization() {
 }, [tab,state]);
 
 
-  // useEffect(() => {
-  //   if (project_id !== undefined) {
-  //     if (state.genes.length > 0) {
-  //       dispatch(getBreastKeys({ project_id: project_id }));
-  //     }
-  //   } else {
-  //     if (state.genes.length > 0) {
-  //       dispatch(getBreastKeys({}));
-  //     }
-  //   }
-  // }, []);
-// useEffect(() => {
-  //   if (project_id !== undefined) {
-  //     if (state.genes.length > 0) {
-  //       dispatch(getBreastKeys({ project_id: project_id }));
-  //     }
-  //   } else {
-  //     if (state.genes.length > 0) {
-  //       dispatch(getBreastKeys({}));
-  //     }
-  //   }
-  //   // if (state.genes.length > 0) {
-  //   //   dispatch(getBreastKeys({}));
-  //   // }
-  // }, [state["genes"]]);
 
-  // useEffect(() => {
-  //   if (project_id !== undefined) {
-  //     dispatch(samplesCount("POST", { project_id: project_id }));
-  //     dispatch(getBreastKeys({ project_id: project_id }));
-  //   } else {
-  //     dispatch(samplesCount("POST", {}));
-  //     dispatch(getBreastKeys({}));
-  //   }
-  // }, [state["genes"]]);
-
-  // if (state.genes.length > 0) {
-  //   dispatch(getBreastKeys({}));
-  // }
 
   useEffect(() => {
     if (BrstKeys) {

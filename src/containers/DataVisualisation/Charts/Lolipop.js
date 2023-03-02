@@ -1,11 +1,8 @@
 import React, { useState, useEffect, Fragment, useRef } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import LollipopCmp from '../../Common/Lollipop'
-import { getLolipopInformation } from '../../../actions/api_actions'
-import { Menu, Transition } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/solid'
+import { LolipopInformation } from '../../../actions/api_actions'
 import { exportComponentAsJPEG } from 'react-component-export-image';
-// import Loader from "react-loader-spinner";
 import LoaderCmp from '../../Common/Loader'
 import DataTable from 'react-data-table-component';
 import NoContentMessage from '../../Common/NoContentComponent';
@@ -21,7 +18,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   const [tableType, setTableType] = useState('Mutation')
   const [inputState, setInputState] = useState({})
   const [watermarkCss, setWatermarkCSS] = useState("")
-  const lolipopJson = useSelector((data) => data.dataVisualizationReducer.lollipopSummary);
+  const [lolipopJson, setLolipopJson] = useState({data: [], domains: [], status: 204})
   const [loader, setLoader] = useState(false)
   const [tableData, setTableData] = useState([])
   const [state, setState] = useState({ "domains": [], "lollipop": [], "width": 0, 'height': 0 })
@@ -43,7 +40,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   useEffect(()=>{
     if('userProjectsDataTable' in tabList ){
       setAllTabList(tabList.userProjectsDataTable)
-      console.log('alltabList',alltabList);
+      // console.log('alltabList',alltabList);
     }
     
     },[tabList])
@@ -75,7 +72,20 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
       dataJson['table_type'] = tableType
       setLoader(true)
       setActiveCmp(false)
-      dispatch(getLolipopInformation('POST', dataJson))
+      let return_data = LolipopInformation('POST',dataJson)
+        return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = d["data"]
+            r_["status"] = 200
+            setLolipopJson(r_)
+          } else {
+            setLolipopJson({ data: [], domains: [], status: 204 })
+          }
+        })
+        .catch((e) => {
+          setLolipopJson({ data: [], domains: [], status: 204 })
+        });
     }
   }
 
@@ -108,7 +118,20 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
         setLoader(true)
         dataJson['genes'] = g[0]
         dataJson['table_type'] = tableType
-        dispatch(getLolipopInformation('POST', dataJson))
+        let return_data = LolipopInformation('POST',dataJson)
+        return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = d["data"]
+            r_["status"] = 200
+            setLolipopJson(r_)
+          } else {
+            setLolipopJson({ data: [], domains: [], status: 204 })
+          }
+        })
+        .catch((e) => {
+          setLolipopJson({ data: [], domains: [], status: 204 })
+        });
       }
       setTableType(tableType)
     }
@@ -127,7 +150,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   }
 
   useEffect(() => {
-    if (lolipopJson) {
+    if (lolipopJson && lolipopJson.status === 200) {
       if (Object.keys(lolipopJson).length > 0) {
         let domainsTmp = {}
         let domains = []
@@ -377,6 +400,12 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
         setActiveCmp(true)
         setLoader(false)
       }
+      setShowLollipop(true)
+      setNoContent(false)
+    }
+    else{
+      setShowLollipop(false)
+      setNoContent(true)
     }
   }, [lolipopJson])
 
@@ -421,20 +450,22 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
       let dataJson = { ...inputData }
       dataJson['genes'] = gene
       dataJson['table_type'] = type
-      dispatch(getLolipopInformation('POST', dataJson))
+      let return_data = LolipopInformation('POST',dataJson)
+      return_data.then((result) => {
+        const d = result
+        if (d.status === 200) {
+          let r_ = d["data"]
+          r_["status"] = 200
+          setLolipopJson(r_)
+        } else {
+          setLolipopJson({ data: [], domains: [], status: 204 })
+        }
+      })
+      .catch((e) => {
+        setLolipopJson({ data: [], domains: [], status: 204 })
+      });
     }
   }
-
-  useEffect(() => {
-    if (lolipopJson && lolipopJson.status === 200) {
-      setShowLollipop(true)
-      setNoContent(false)
-    } else {
-      setShowLollipop(false)
-      setNoContent(true)
-    }
-  }, [lolipopJson])
-
 
   return (
     <>{

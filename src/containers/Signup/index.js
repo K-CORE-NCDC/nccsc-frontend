@@ -21,7 +21,7 @@ const SignupComponent = () => {
       setKoreanlanguage(false);
       setEnglishlanguage(true);
     }
-  });
+  },[context]);
 
   useEffect(() => {
     if (currentStep === 0) {

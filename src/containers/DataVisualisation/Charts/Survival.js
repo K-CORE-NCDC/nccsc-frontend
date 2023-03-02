@@ -2,19 +2,16 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import SurvivalCmp from "../../Common/Survival";
 import {
-  getSurvivalInformation,
+  SurvivalInformation,
   getClinicalMaxMinInfo,
-  clearSurvivalIMage
 } from "../../../actions/api_actions";
-import { exportComponentAsPNG, exportComponentAsJPEG } from "react-component-export-image";
+import { exportComponentAsJPEG } from "react-component-export-image";
 import GroupFilters, {
   PreDefienedFiltersSurvival,
 } from "../../Common/GroupFilter";
 import UserDefinedGroupFilters  from "../../Common/GroupFilterUserDefined";
 import NoContentMessage from "../../Common/NoContentComponent";
-import { AdjustmentsIcon } from "@heroicons/react/outline";
 import { useParams } from "react-router-dom";
-
 import LoaderCmp from "../../Common/Loader";
 import { FormattedMessage } from "react-intl";
 import inputJson from "../../Common/data";
@@ -32,9 +29,7 @@ export default function DataSurvival({
 }) {
   const reference = useRef();
   const dispatch = useDispatch();
-  const survivalJson = useSelector(
-    (data) => data.dataVisualizationReducer.survivalSummary
-  );
+  const [survivalJson, setSurvivalJson] = useState({})
   const clinicalMaxMinInfo = useSelector(
     (data) => data.dataVisualizationReducer.clinicalMaxMinInfo
   );
@@ -72,7 +67,6 @@ export default function DataSurvival({
   const [survivalModel, setSurvivalModel] = useState("kaplan");
   const [pValueData, setPvalueData] = useState("");
   const [smallScreen, setSmallScreen] = useState(false);
-  const [coxClinical, setCoxClinical] = useState([]);
   const [coxTable, setCoxTable] = useState([]);
   const [coxNoData, setCoxNoData] = useState(true)
   const userDefinedFilterColumns = useSelector(
@@ -90,22 +84,9 @@ export default function DataSurvival({
       setKoreanlanguage(false);
       setEnglishlanguage(true);
     }
-  });
+  },[context]);
     
   const [coxFilter, setCoxFilter] = useState({
-    // "Body Mass Index": false,
-    // "Alcohol Consumption": false,
-    // "Family History of Breast Cancer": false,
-    // "Intake Of Contraceptive Pill": false,
-    // "Hormone Replace Therapy": false,
-    // Menopause: false,
-    // Childbirth: false,
-    // "Diagnosis of Bilateral Breast Cancer": false,
-    // "First Menstrual Age": false,
-    // "ER Test Results": false,
-    // "PR Test Results": false,
-    // "Ki67 Index": false,
-    // "Age Of Diagnosis": false,
   });
 
   useEffect(()=>{
@@ -118,14 +99,6 @@ export default function DataSurvival({
   if (survivalModel === "cox" && project_id !== undefined){
     let tmpe ={}
     if (coxUserDefinedFilter && Object.keys(coxUserDefinedFilter).length > 0) {
-      // for (const a in coxUserDefinedFilter){
-      //   if(a !== 'rlps_yn' && a!== 'rlps_cnfr_drtn')
-      //     {
-      //       tmpe[a] = false
-      //     }
-      // // setCoxFilter({ ...coxFilter, [a]: false });
-      // }
-
       for (const a in coxUserDefinedFilter){
         if(a !== 'rlps_yn' && a!== 'rlps_cnfr_drtn' )
         {
@@ -182,27 +155,64 @@ export default function DataSurvival({
       inputData["filterType"] = userDefienedFilter;
       inputData["survival_type"] = survivalModel;
       if (filterTypeButton === "clinical") {
-        dispatch(
-          getSurvivalInformation("POST", {
-            ...inputData,
-            filter_gene: fileredGene,
-            gene_database: geneDatabase,
-            group_filters: groupFilters,
-            clinical: true,
-          })
-        );
+        let return_data = SurvivalInformation("POST", {
+          ...inputData,
+          filter_gene: fileredGene,
+          gene_database: geneDatabase,
+          group_filters: groupFilters,
+          clinical: true,
+        })
+        return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = d["data"]
+            r_['status'] = 200
+            setSurvivalJson(r_)
+          } else {
+            setSurvivalJson({status : d.status})
+          }
+        })
+        .catch((e) => {
+          setSurvivalJson({status : 204})
+        });
       } else {
-        dispatch(
-          getSurvivalInformation("POST", {
-            ...inputData,
-            filter_gene: fileredGene,
-            gene_database: geneDatabase,
-          })
-        );
+        let return_data = SurvivalInformation("POST", {
+          ...inputData,
+          filter_gene: fileredGene,
+          gene_database: geneDatabase,
+          group_filters: groupFilters,
+          clinical: true,
+        })
+        return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = d["data"]
+            r_['status'] = 200
+            setSurvivalJson(r_)
+          } else {
+            setSurvivalJson({status : d.status})
+          }
+        })
+        .catch((e) => {
+          setSurvivalJson({status : 204})
+        });
       }
     } else {
       setLoader(true);
-      dispatch(getSurvivalInformation("POST", inputData));
+      let return_data = SurvivalInformation("POST", inputData)
+      return_data.then((result) => {
+        const d = result
+        if (d.status === 200) {
+          let r_ = d["data"]
+          r_['status'] = 200
+          setSurvivalJson(r_)
+        } else {
+          setSurvivalJson({status : d.status})
+        }
+      })
+      .catch((e) => {
+        setSurvivalJson({status : 204})
+      });
     }
   };
 
@@ -489,7 +499,20 @@ export default function DataSurvival({
     if (type === "cox") {
       inputData["survival_type"] = type;
       inputData["coxFilter"] = coxFilter;
-      dispatch(getSurvivalInformation("POST", inputData));
+      let return_data = SurvivalInformation("POST", inputData)
+      return_data.then((result) => {
+        const d = result
+        if (d.status === 200) {
+          let r_ = d["data"]
+          r_['status'] = 200
+          setSurvivalJson(r_)
+        } else {
+          setSurvivalJson({status : d.status})
+        }
+      })
+      .catch((e) => {
+        setSurvivalJson({status : 204})
+      });
     }
   };
 
