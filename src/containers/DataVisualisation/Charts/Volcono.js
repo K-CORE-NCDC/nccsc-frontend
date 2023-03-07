@@ -4,17 +4,13 @@ import { useSelector, useDispatch } from "react-redux";
 import VolcanoCmp from "../../Common/Volcano";
 import GroupFilters, { PreDefienedFilters } from "../../Common/GroupFilter";
 import UserDefinedGroupFilters  from "../../Common/GroupFilterUserDefined";
-import { exportComponentAsPNG } from "react-component-export-image";
 import NoContentMessage from "../../Common/NoContentComponent";
-import { AdjustmentsIcon } from "@heroicons/react/outline";
 import swal from 'sweetalert';
 
 import {
   getClinicalMaxMinInfo,
-  getVolcanoPlotInfo,
-  userDefinedGetVolcanoPlotInfo
+  VolcanoPlotInfo
 } from "../../../actions/api_actions";
-// import Loader from "react-loader-spinner";
 import LoaderCmp from "../../Common/Loader";
 import { FormattedMessage } from "react-intl";
 import { useParams } from "react-router-dom";
@@ -32,9 +28,7 @@ export default function DataVolcono({
 }) {
   const reference = useRef();
   const dispatch = useDispatch();
-  const volcanoJson = useSelector(
-    (data) => data.dataVisualizationReducer.volcanoSummary
-  );
+  const [volcanoJson, setVolcanoJson]= useState({'status':204})
   const clinicalMaxMinInfo = useSelector(
     (data) => data.dataVisualizationReducer.clinicalMaxMinInfo
   );
@@ -44,8 +38,6 @@ export default function DataVolcono({
   );
 
   const [activeCmp, setActiveCmp] = useState(false);
-  const [comp, setComp] = useState([]);
-  // const didMountRef = useRef(false)
   const [data_, setData] = useState("");
   const [watermarkCss, setWatermarkCSS] = useState("");
   const [loader, setLoader] = useState(false);
@@ -118,8 +110,20 @@ export default function DataVolcono({
         if(project_id ){
           inputData['project_id'] = parseInt(project_id)
         }
-        dispatch(getVolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters }));
-        
+        let return_data = VolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters })
+        return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = d["data"]
+            r_["status"] = 200
+            setVolcanoJson(r_)
+          } else {
+            setVolcanoJson({'status':204})
+          }
+        })
+        .catch((e) => {
+          setVolcanoJson({'status':204})
+        });
       }
     }
   }, [inputData, groupFilters]);
@@ -129,7 +133,6 @@ export default function DataVolcono({
       if (Object.keys(volcanoJson).length > 0) {
         setActiveCmp(true);
         setData(volcanoJson);
-        // console.log('Volcj',volcanoJson);
       }
       setTimeout(function () {
         setLoader(false);
@@ -216,10 +219,36 @@ export default function DataVolcono({
     inputData["volcanoProteomeType"] = proteomeValue;
     inputData["filterType"] = userDefienedFilter;
     if(project_id === undefined){
-      dispatch(getVolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters }));
+      let return_data = VolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters })
+      return_data.then((result) => {
+        const d = result
+        if (d.status === 200) {
+          let r_ = d["data"]
+          r_["status"] = 200
+          setVolcanoJson(r_)
+        } else {
+          setVolcanoJson({'status':204})
+        }
+      })
+      .catch((e) => {
+        setVolcanoJson({'status':204})
+      });
     }
     else{
-      dispatch(getVolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters }));
+      let return_data = VolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters })
+      return_data.then((result) => {
+        const d = result
+        if (d.status === 200) {
+          let r_ = d["data"]
+          r_["status"] = 200
+          setVolcanoJson(r_)
+        } else {
+          setVolcanoJson({'status':204})
+        }
+      })
+      .catch((e) => {
+        setVolcanoJson({'status':204})
+      });
       // userDefinedGetVolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters });
     }
   };

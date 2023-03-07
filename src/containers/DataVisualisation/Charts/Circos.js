@@ -5,25 +5,23 @@ import NoContentMessage from "../../Common/NoContentComponent";
 import PagenationTableComponent from "../../Common/PagenationTable";
 import GraphsModal from "../../Common/circostimelineGraph";
 import LoaderCmp from "../../Common/Loader";
-import ImageGrid from "../../Common/ImageGrid";
 import { useParams } from "react-router-dom";
 // import { useScreenshot, createFileName } from "use-react-screenshot";
 import {
-  getCircosInformation,
-  getCircosTimelineTable,
-  getOncoImages,
+  CircosInformation,
+  OncoImages,
+  CircosTimelineTable,
   getBreastKeys,
   getRNIDetails,
   clearCircosInfomation
 } from "../../../actions/api_actions";
+
 import "../../../assets/css/style.css";
-import { exportComponentAsJPEG } from "react-component-export-image";
 import { FormattedMessage } from "react-intl";
 import Report from "../../Common/Report";
-import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
-
 import PDFReport from "../../Common/PDFReport";
+// import { exportComponentAsJPEG } from "react-component-export-image";
 
 export default function DataCircos({
   width,
@@ -36,16 +34,10 @@ export default function DataCircos({
   const reference = useRef();
   const dispatch = useDispatch();
   const [sampleKey, setSampleKey] = useState("");
-  const circosJson = useSelector(
-    (data) => data.dataVisualizationReducer.circosSummary
-  );
-  // const fusionJson = useSelector((data) => data.dataVisualizationReducer.fusionData);
-  const oncoImageJson = useSelector(
-    (data) => data.dataVisualizationReducer.oncoSampleImagesData
-  );
-  const circosTimelieTableData = useSelector(
-    (state) => state.dataVisualizationReducer.circosTimelieTableData
-  );
+  const [circosJson, setCircosJson] = useState({ status: 0 })
+  const [oncoImageJson, setOncoImageJson] = useState(null)
+  const [circosTimelieTableData, setCircosTimelieTableData] = useState(null)
+  
   const reportData = useSelector(
     (state) => state.dataVisualizationReducer.rniData
   );
@@ -255,15 +247,34 @@ export default function DataCircos({
   };
 
   const oncoImagesClickFunction = () => {
-    // setLoader(true)
     setShowOncoImages(true);
-    dispatch(getOncoImages("POST", { sample_id: sampleKey }));
+    let returnData = OncoImages("POST", { sample_id: sampleKey })
+    returnData.then((result)=>{
+      let r_ = result.data
+      if(result.status === 200){
+        setOncoImageJson(r_)
+
+      }
+      else{
+        setOncoImageJson(null)
+      }
+    })
   };
 
   const timelineGraphClickFunction = () => {
     setShowOncoImages(false);
     setShowOncoTimelineTables(true);
-    dispatch(getCircosTimelineTable("POST", { sample_id: sampleKey }));
+    let returnData = CircosTimelineTable("POST", { sample_id: sampleKey })
+    returnData.then((result)=>{
+      let r_ = result.data
+      if(result.status === 200){
+        setCircosTimelieTableData(r_)
+
+      }
+      else{
+        setCircosTimelieTableData(null)
+      }
+    })
   };
 
   const ReportDataFunction = () => {
@@ -275,7 +286,6 @@ export default function DataCircos({
     if (reportData) {
       setTableData(reportData.genomic_summary);
       setBasicInformationData(reportData.basic_information);
-      // setshowReportTable(true)
     }
   }, [reportData]);
 
@@ -339,15 +349,26 @@ export default function DataCircos({
       ) {
         setLoader(true);
         setRenderCircos(false);
-        // dispatch(getBreastKeys(editInputData))
-        dispatch(getCircosInformation("POST", editInputData));
+        let returnData = CircosInformation("POST", editInputData)
+        returnData.then((result)=>{
+          let r_ = result.data
+          r_['status'] = 200
+          if(result.status === 200){
+            setCircosJson(r_)
+
+          }
+          else{
+            setCircosJson({'status':204})
+          }
+        })
       }
     }
   }, [inputData, sampleKey]);
 
   useEffect(() => {
     return () => {
-      dispatch(clearCircosInfomation())
+      // dispatch(clearCircosInfomation())
+      setCircosJson({ status: 0 })
       setSampleKey("")
     }
   }, [])
@@ -360,15 +381,12 @@ export default function DataCircos({
     }
   }, [inputData]);
   let abcd = async()=>{
-    console.log('1');
     const element = document.getElementById('circos')
-    console.log('->',element);
     let imgData 
     await html2canvas(element).then(canvas => {
        imgData = canvas.toDataURL('image/jpeg',1.0);
 
   });
-  console.log('->',imgData);
   let link = document.createElement('a');
   link.href = imgData;
   link.download = 'downloaded-image.jpg';

@@ -250,7 +250,7 @@ export const PreDefienedFilters = ({
       setKoreanlanguage(false);
       setEnglishlanguage(true);
     }
-  });
+  },[context]);
   const preDefienedGroups1 = {
     diag_age: [
       { label: "21-35", from: 21, to: 35 },

@@ -15,7 +15,7 @@ function RelatedSitesIndex() {
       setKoreanlanguage(false);
       setEnglishlanguage(true);
     }
-  });
+  },[context]);
 
   return (
     <div>

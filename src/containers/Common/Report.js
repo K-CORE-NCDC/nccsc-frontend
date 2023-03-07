@@ -13,7 +13,7 @@ function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, b
   const reportData = useSelector(state => state.dataVisualizationReducer.rniData)
   const [tableRender,setTableRender] = useState(false)
   useEffect(()=>{
-    if(tableData.length>0){
+    if(tableData && tableData.length>0){
       setTableRender(true)
     }
   },[tableData])

@@ -56,7 +56,7 @@ export default function Home() {
       setKoreanlanguage(false);
       setEnglishlanguage(true);
     }
-  });
+  },[context]);
 
   var settings = {
     dots: true,

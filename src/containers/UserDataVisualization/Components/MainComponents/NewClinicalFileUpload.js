@@ -161,7 +161,7 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
       setKoreanlanguage(false);
       setEnglishlanguage(true);
     }
-  });
+  },[context]);
 
   useEffect(()=>{
     if(formSbubmitButtonText === 'upload' || formSbubmitButtonText === '업로드 파일'){

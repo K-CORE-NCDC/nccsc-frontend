@@ -1,14 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import BoxPlot from "../../Common/BoxPlot2";
 import LoaderCmp from "../../Common/Loader";
-import { getBoxInformation } from "../../../actions/api_actions";
+import { BoxInformation } from "../../../actions/api_actions";
 import "../../../assets/css/style.css";
-import { exportComponentAsPNG } from "react-component-export-image";
 import Multiselect from "multiselect-react-dropdown";
 import NoContentMessage from "../../Common/NoContentComponent";
 import { FormattedMessage } from "react-intl";
-import saveSvgAsPng  from 'save-svg-as-png'
 import html2canvas from 'html2canvas';
 
 export default function Box({
@@ -18,10 +15,7 @@ export default function Box({
   setToFalseAfterScreenCapture,
 }) {
   const reference = useRef();
-  const dispatch = useDispatch();
-  const boxJson = useSelector((data) => data.dataVisualizationReducer.boxData);
-
-  const [displaySamples, setDisplaySamples] = useState(false);
+  
   const [watermarkCss, setWatermarkCSS] = useState("");
   const [loader, setLoader] = useState(false);
   const [inputState, setInputState] = useState({});
@@ -35,6 +29,8 @@ export default function Box({
   const [gene, setGene] = useState("");
   const [geneOption, setGeneOption] = useState("");
   const [genes, setGenes] = useState("");
+  const [boxJson, setboxJson] = useState({})
+  // const boxJson = useSelector((data) => data.dataVisualizationReducer.boxData);
   const imageOptions = {
     scale: 5,
     encoderOptions: 1,
@@ -48,13 +44,38 @@ export default function Box({
     }
   }, []);
 
-  // dispatch(getBoxInformation('POST', {...postJsonBody, genes: inputData.genes}))
 
   const dispatchActionCommon = (postJsonBody) => {
     if (postJsonBody.table_type === "proteome") {
-      dispatch(getBoxInformation("POST", postJsonBody));
+      let return_data = BoxInformation('POST',postJsonBody)
+        return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = d["data"]
+            r_["status"] = 200
+            setboxJson(r_)
+          } else {
+            setboxJson({'status':204})
+          }
+        })
+        .catch((e) => {
+          setboxJson({'status':204})
+        });
     } else {
-      dispatch(getBoxInformation("POST", postJsonBody));
+      let return_data = BoxInformation('POST',postJsonBody)
+        return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = d["data"]
+            r_["status"] = 200
+            setboxJson(r_)
+          } else {
+            setboxJson({'status':204})
+          }
+        })
+        .catch((e) => {
+          setboxJson({'status':204})
+        });
     }
   };
 

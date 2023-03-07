@@ -75,7 +75,7 @@ const MemberShip = ({ changestep }) => {
       setKoreanlanguage(false);
       setEnglishlanguage(true);
     }
-  });
+  },[context]);
   let initial_state = {
     id: "",
     password: "",

@@ -22,7 +22,7 @@ export default function Introduce() {
       setKoreanlanguage(false);
       setEnglishlanguage(true);
     }
-  });
+  },[context]);
   return (    
     <section className="intro_wrap">
       <h1><FormattedMessage id={"Project for building a healthcare big data showcase"} defaultMessage={"Project for building a healthcare big data showcase"} /></h1>

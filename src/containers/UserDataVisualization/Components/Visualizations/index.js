@@ -1,13 +1,5 @@
 import React,{useState,useEffect,useRef,useCallback} from "react";
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  AdjustmentsIcon,
-  PlusCircleIcon,
-  MinusCircleIcon,
-  RefreshIcon
-} from '@heroicons/react/outline'
-import { getCircosUserData, getOncoUserData, getVolcanoUserData } from '../../../../actions/api_actions'
+import { getCircosUserData, CircosInformation, getOncoUserData, getVolcanoUserData } from '../../../../actions/api_actions'
 import { useSelector, useDispatch } from "react-redux";
 import Filter from '../../../Common/filter';
 import CircosCmp from '../../../Common/Circos';
@@ -21,22 +13,18 @@ import SurvivalCmp from '../../../Common/Survival'
 import inputJson from '../../../Common/data';
 
 export default function Visualization() {
-  const [hideupload,setHideUpload] = useState(true)
-  const circosJson = useSelector((data) => data.dataVisualizationReducer.circosSummary);
+
+  // const circosJson = useSelector((data) => data.dataVisualizationReducer.circosSummary);
   const oncoJson = useSelector((data) => data.dataVisualizationReducer.oncoSummary);
   const volcanoJson = useSelector((data) => data.dataVisualizationReducer.volcanoSummary);
 
+  const [circosJson, setCircosJson] = useState({})
   const [width,setWidth] = useState(0)
   const [select,setSelect] = useState()
-  // const [filterForm, setfilterForm] = useState({})
   const [selectedGenes,setSelectGenes] = useState()
   const dispatch = useDispatch()
-  const [showVisualization,setShowviualization] = useState(false)
   const elementRef = useRef(null);
 
-  // const callback = (count) => {
-  //   // setCount(count);
-  // }, []);
   let filters = ''
   const callback = (filters_) => {  
     filters = JSON.stringify(filters_)
@@ -53,6 +41,16 @@ export default function Visualization() {
     dispatch(getCircosUserData({}))
     dispatch(getOncoUserData({}))
     dispatch(getVolcanoUserData({}))
+    let returnData = CircosInformation("POST", editInputData)
+    returnData.then((result)=>{
+      console.log('--------INDEX');
+      if(result.data.status === 200){
+        setCircosJson(result.data)
+      }
+      else{
+        setCircosJson({})
+      }
+    })
   },[])
 
   const toggleTab = (event)=>{

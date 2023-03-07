@@ -1,15 +1,12 @@
-import React, { useState, useEffect, Fragment, useRef, useContext } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import HeatmapNewCmp from '../../Common/testH'
-import { getHeatmapInformation } from '../../../actions/api_actions'
-import { exportComponentAsPNG } from 'react-component-export-image';
-// import Loader from "react-loader-spinner";
+import { HeatmapInformation } from '../../../actions/api_actions'
 import LoaderCmp from '../../Common/Loader'
 import NoContentMessage from '../../Common/NoContentComponent'
 import inputJson from '../../Common/data'
-import { CheckIcon, LocationMarkerIcon, ZoomInIcon } from '@heroicons/react/solid';
+import { CheckIcon} from '@heroicons/react/solid';
 import Multiselect from 'multiselect-react-dropdown';
-import KmeanCmp from '../../Common/K_mean';
 import {FormattedMessage} from 'react-intl';
 import { Context } from "../../../wrapper";
 import { useParams } from "react-router-dom";
@@ -23,10 +20,9 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const [tableType,setTableType] = useState('rna')
   const [data_,setData] = useState('')
   const [inputGene,setInputGene] = useState([])
-  const heatmapJson = useSelector((data) => data.dataVisualizationReducer.heatmapSummary);
-  const heatmapSummaryStatusCode = useSelector((data) => data.dataVisualizationReducer.heatmapSummaryStatusCode);
+  const [heatmapJson, setHeatmapJson] = useState([])
+  const [heatmapSummaryStatusCode, setHeatmapSummaryStatusCode] = useState({status : 204, loader: true})
   const filterData = useSelector((data)=>data.dataVisualizationReducer.userDefinedFilter);
-  // const didMountRef = useRef(false)
   const [watermarkCss, setWatermarkCSS] = useState("")
   const [rangeValue,setRangeValue] = useState(5)
   const [loader, setLoader] = useState(false)
@@ -40,13 +36,10 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const [inSufficientData, setInSufficientData] = useState(true)
   const [renderNoContent, setRenderNoContent] = useState(false)
   const [renderHeatmap, setRenderHeatmap] = useState(true)
-  let { tab, project_id } = useParams();
+  let   { project_id } = useParams();
   const [configVis,setConfigVis] = useState({"colorSpectrumBreaks":[],"colorSpectrum":["navy","firebrick3"]})
   const [spectrumMin,setSpectrumMin] = useState(0)
   const [spectrumMax,setSpectrumMax] = useState(0)
-  const [userDefienedFilter, setUserDefienedFilter] = useState(
-    project_id === undefined ? "static" : "dynamic"
-  );
 
   const [alltabList, setAllTabList] = useState({});
 
@@ -77,7 +70,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       setKoreanlanguage(false);
       setEnglishlanguage(true);
     }
-  });
+  },[context]);
 
   const diag_age = (vl)=>{
     let n = parseInt(vl)
@@ -131,9 +124,8 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
           let tmp = []
           for (const key in filters) {
             if(filters[key].length>0){
-              if(filters[key][0]['type']!=='number'){
+              if(filters[key][0]['type']!=='number' && filters[key][0]['name']!== 'rlps_yn' ){
                 tmp.push({"name":key,"id":key})
-                
               }
             }
             
@@ -175,7 +167,23 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
         inputData['table_type'] = tableType
         inputData['view'] = viewType
         inputData['heat_type'] = mainTab
-        dispatch(getHeatmapInformation('POST', inputData))
+        // dispatch(getHeatmapInformation('POST', inputData))
+        let return_data = HeatmapInformation('POST', inputData)
+        return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = d["data"]
+            setHeatmapJson(r_)
+            setHeatmapSummaryStatusCode({status : 200})
+          } else {
+            setHeatmapJson([])
+            setHeatmapSummaryStatusCode({status : 204})
+          }
+        })
+        .catch((e) => {
+          setHeatmapJson([])
+          setHeatmapSummaryStatusCode({status : 204})
+        });
       }
     }
   }, [inputData])
@@ -203,8 +211,8 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
         d_ = heatmapJson
       }
 
-      if(d_!='' && d_ !== undefined){
-        d_.forEach((item, i) => {
+      if(d_!= "" && d_ !== undefined){
+        d_ && d_.forEach((item, i) => {
           if(!genes.includes(item['gene_name'])){
             genes.push(item['gene_name'])
           }
@@ -224,7 +232,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
           }
         });
       }
-
 
       let y = {
         "smps":genes,
@@ -284,10 +291,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
         setLoader(false)
       }, (1000));
     }
-  }, [heatmapJson])
-
-
-  useEffect(() => {
     if(heatmapJson){
       let geneSet = new Set();
       if('data' in heatmapJson){
@@ -306,6 +309,9 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       }
     }
   }, [heatmapJson])
+
+
+
 
   useEffect(() => {
     if (screenCapture) {
@@ -347,7 +353,23 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       dataJson['table_type'] = type
       dataJson['view'] = viewType
       inputData['heat_type'] = mainTab
-      dispatch(getHeatmapInformation('POST', dataJson))
+      // dispatch(getHeatmapInformation('POST', dataJson))
+      let return_data = HeatmapInformation('POST', dataJson)
+        return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = d["data"]
+            setHeatmapJson(r_)
+            setHeatmapSummaryStatusCode({status : 200})
+          } else {
+            setHeatmapJson([])
+            setHeatmapSummaryStatusCode({status : 204})
+          }
+        })
+        .catch((e) => {
+          setHeatmapJson([])
+          setHeatmapSummaryStatusCode({status : 204})
+        });
     }
   }
 
@@ -372,7 +394,23 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       dataJson['heat_type'] = type
       setLoader(true)
       setActiveCmp(false)
-      dispatch(getHeatmapInformation('POST',dataJson))
+      // dispatch(getHeatmapInformation('POST',dataJson))
+      let return_data = HeatmapInformation('POST', dataJson)
+        return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = d["data"]
+            setHeatmapJson(r_)
+            setHeatmapSummaryStatusCode({status : 200})
+          } else {
+            setHeatmapJson([])
+            setHeatmapSummaryStatusCode({status : 204})
+          }
+        })
+        .catch((e) => {
+          setHeatmapJson([])
+          setHeatmapSummaryStatusCode({status : 204})
+        });
     }
   }
 
@@ -397,7 +435,25 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       dataJson['heat_type'] = mainTab
       setLoader(true)
       setActiveCmp(false)
-      dispatch(getHeatmapInformation('POST',dataJson))
+      console.log('dfdfdfdfd',selectedGene,tableType,mainTab);
+      // dispatch(getHeatmapInformation('POST',dataJson))
+      let return_data = HeatmapInformation('POST', dataJson)
+        return_data.then((result) => {
+          const d = result
+          console.log('->',d);
+          if (d.status === 200) {
+            let r_ = d["data"]
+            setHeatmapJson(r_)
+            setHeatmapSummaryStatusCode({status : 200})
+          } else {
+            setHeatmapJson([])
+            setHeatmapSummaryStatusCode({status : 204})
+          }
+        })
+        .catch((e) => {
+          setHeatmapJson([])
+          setHeatmapSummaryStatusCode({status : 204})
+        });
     }
   }
 
@@ -407,7 +463,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     selectedList.forEach((item, i) => {
       cf.push(item['id'])
     });
-
 
     if(inputData.type !=='' && inputData['genes'].length > 0){
       setLoader(true)
@@ -420,7 +475,23 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       }
       dataJson['heat_type'] = mainTab
       dataJson['table_type'] = tableType
-      dispatch(getHeatmapInformation('POST',dataJson))
+      // dispatch(getHeatmapInformation('POST',dataJson))
+      let return_data = HeatmapInformation('POST', dataJson)
+        return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = d["data"]
+            setHeatmapJson(r_)
+            setHeatmapSummaryStatusCode({status : 200})
+          } else {
+            setHeatmapJson([])
+            setHeatmapSummaryStatusCode({status : 204})
+          }
+        })
+        .catch((e) => {
+          setHeatmapJson([])
+          setHeatmapSummaryStatusCode({status : 204})
+        });
     }
   }
 
@@ -437,7 +508,23 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       dataJson['clinicalFilters'] = items
       dataJson['heat_type'] = mainTab
       dataJson['genes'] = selectedGene
-      dispatch(getHeatmapInformation('POST',dataJson))
+      // dispatch(getHeatmapInformation('POST',dataJson))
+      let return_data = HeatmapInformation('POST', dataJson)
+        return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = d["data"]
+            setHeatmapJson(r_)
+            setHeatmapSummaryStatusCode({status : 200})
+          } else {
+            setHeatmapJson([])
+            setHeatmapSummaryStatusCode({status : 204})
+          }
+        })
+        .catch((e) => {
+          setHeatmapJson([])
+          setHeatmapSummaryStatusCode({status : 204})
+        });
     }
   }
 
@@ -456,7 +543,23 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     dataJson['view'] = view
     dataJson['heat_type'] = mainTab
     if(inputData.type !=='' && inputData['genes'].length > 0){
-      dispatch(getHeatmapInformation('POST', dataJson))
+      // dispatch(getHeatmapInformation('POST', dataJson))
+      let return_data = HeatmapInformation('POST', dataJson)
+        return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = d["data"]
+            setHeatmapJson(r_)
+            setHeatmapSummaryStatusCode({status : 200})
+          } else {
+            setHeatmapJson([])
+            setHeatmapSummaryStatusCode({status : 204})
+          }
+        })
+        .catch((e) => {
+          setHeatmapJson([])
+          setHeatmapSummaryStatusCode({status : 204})
+        });
     }
   }
 
@@ -494,7 +597,23 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       dataJson['type'] = viewType
       dataJson['heat_type'] = mainTab
       dataJson['cluster'] = rangeValue
-      dispatch(getHeatmapInformation('POST',dataJson))
+      // dispatch(getHeatmapInformation('POST',dataJson))
+      let return_data = HeatmapInformation('POST', dataJson)
+        return_data.then((result) => {
+          const d = result
+          if (d.status === 200) {
+            let r_ = d["data"]
+            setHeatmapJson(r_)
+            setHeatmapSummaryStatusCode({status : 200})
+          } else {
+            setHeatmapJson([])
+            setHeatmapSummaryStatusCode({status : 204})
+          }
+        })
+        .catch((e) => {
+          setHeatmapJson([])
+          setHeatmapSummaryStatusCode({status : 204})
+        });
     }
   }
   useEffect(() => {
@@ -633,7 +752,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
               />
               
             </div>
-            { tableType!=='methylation' && 
+            { tableType!=='methylation' &&  tableType!=='phospo' && 
               <div className="ml-3 flex-wrap  text-left lg:w-5/12 xl:w-5/12 2xl:w-4/12 text-left text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md">
                 <FormattedMessage  id = "View_By_heatmap" defaultMessage='View By'/>:
                 <div className="flex m-2 w-100">

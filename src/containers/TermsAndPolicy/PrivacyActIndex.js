@@ -14,7 +14,7 @@ function PrivacyActIndex() {
       setKoreanlanguage(false);
       setEnglishlanguage(true);
     }
-  });
+  },[context]);
 
   return (
     <div>

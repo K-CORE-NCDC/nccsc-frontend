@@ -15,7 +15,7 @@ function KoreanTermsAndConditionsIndex() {
       setKoreanlanguage(false);
       setEnglishlanguage(true);
     }
-  });
+  },[context]);
 
   return (
     <div>

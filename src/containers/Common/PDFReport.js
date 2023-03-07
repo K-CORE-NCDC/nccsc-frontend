@@ -1,24 +1,13 @@
 
 import React, { useState, useEffect } from 'react'
-import DataTable from 'react-data-table-component';
-import SankeyIndex from '../DataVisualisation/Charts/SankeyIndex';
-import ReportSubHeader from './ReportSubHeader';
 import { useSelector, useDispatch } from "react-redux";
 import Sankey from '../DataVisualisation/Charts/NewSankey'
 import NewSankeyd3 from '../DataVisualisation/Charts/NewSankeyd3'
-// ../../assets/images/sub/pipeline.png
-// import logoNew from "../../../assets/images/Left_up.png";
-import NccLogo1 from "../../assets/images/menu-logo-2.png";
-import NccLogo2 from "../../assets/images/f_ci6.png";
-import { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas';
 
 function PDFReport() {
 
 
-  const [basicHtml, setBasicHtml] = useState([])
   const reportData = useSelector(state => state.dataVisualizationReducer.rniData)
-  const sankeyJson = useSelector(state => state.dataVisualizationReducer.SankeyJson)
   const [gene, setGene] = useState('NRAS')
   const [sankeyData, setSankeyData] = useState([])
   const [sankyGeneList, setSankyGeneList] = useState([])
