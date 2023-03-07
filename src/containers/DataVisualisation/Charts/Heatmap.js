@@ -124,9 +124,8 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
           let tmp = []
           for (const key in filters) {
             if(filters[key].length>0){
-              if(filters[key][0]['type']!=='number'){
+              if(filters[key][0]['type']!=='number' && filters[key][0]['name']!== 'rlps_yn' ){
                 tmp.push({"name":key,"id":key})
-                
               }
             }
             
@@ -177,12 +176,12 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
             setHeatmapJson(r_)
             setHeatmapSummaryStatusCode({status : 200})
           } else {
-            setHeatmapJson({})
+            setHeatmapJson([])
             setHeatmapSummaryStatusCode({status : 204})
           }
         })
         .catch((e) => {
-          setHeatmapJson({})
+          setHeatmapJson([])
           setHeatmapSummaryStatusCode({status : 204})
         });
       }
@@ -212,8 +211,8 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
         d_ = heatmapJson
       }
 
-      if(d_!='' && d_ !== undefined){
-        d_.forEach((item, i) => {
+      if(d_!= "" && d_ !== undefined){
+        d_ && d_.forEach((item, i) => {
           if(!genes.includes(item['gene_name'])){
             genes.push(item['gene_name'])
           }
@@ -233,7 +232,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
           }
         });
       }
-
 
       let y = {
         "smps":genes,
@@ -293,10 +291,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
         setLoader(false)
       }, (1000));
     }
-  }, [heatmapJson])
-
-
-  useEffect(() => {
     if(heatmapJson){
       let geneSet = new Set();
       if('data' in heatmapJson){
@@ -315,6 +309,9 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       }
     }
   }, [heatmapJson])
+
+
+
 
   useEffect(() => {
     if (screenCapture) {
@@ -365,12 +362,12 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
             setHeatmapJson(r_)
             setHeatmapSummaryStatusCode({status : 200})
           } else {
-            setHeatmapJson({})
+            setHeatmapJson([])
             setHeatmapSummaryStatusCode({status : 204})
           }
         })
         .catch((e) => {
-          setHeatmapJson({})
+          setHeatmapJson([])
           setHeatmapSummaryStatusCode({status : 204})
         });
     }
@@ -406,12 +403,12 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
             setHeatmapJson(r_)
             setHeatmapSummaryStatusCode({status : 200})
           } else {
-            setHeatmapJson({})
+            setHeatmapJson([])
             setHeatmapSummaryStatusCode({status : 204})
           }
         })
         .catch((e) => {
-          setHeatmapJson({})
+          setHeatmapJson([])
           setHeatmapSummaryStatusCode({status : 204})
         });
     }
@@ -438,21 +435,23 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       dataJson['heat_type'] = mainTab
       setLoader(true)
       setActiveCmp(false)
+      console.log('dfdfdfdfd',selectedGene,tableType,mainTab);
       // dispatch(getHeatmapInformation('POST',dataJson))
       let return_data = HeatmapInformation('POST', dataJson)
         return_data.then((result) => {
           const d = result
+          console.log('->',d);
           if (d.status === 200) {
             let r_ = d["data"]
             setHeatmapJson(r_)
             setHeatmapSummaryStatusCode({status : 200})
           } else {
-            setHeatmapJson({})
+            setHeatmapJson([])
             setHeatmapSummaryStatusCode({status : 204})
           }
         })
         .catch((e) => {
-          setHeatmapJson({})
+          setHeatmapJson([])
           setHeatmapSummaryStatusCode({status : 204})
         });
     }
@@ -464,7 +463,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     selectedList.forEach((item, i) => {
       cf.push(item['id'])
     });
-
 
     if(inputData.type !=='' && inputData['genes'].length > 0){
       setLoader(true)
@@ -486,12 +484,12 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
             setHeatmapJson(r_)
             setHeatmapSummaryStatusCode({status : 200})
           } else {
-            setHeatmapJson({})
+            setHeatmapJson([])
             setHeatmapSummaryStatusCode({status : 204})
           }
         })
         .catch((e) => {
-          setHeatmapJson({})
+          setHeatmapJson([])
           setHeatmapSummaryStatusCode({status : 204})
         });
     }
@@ -519,12 +517,12 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
             setHeatmapJson(r_)
             setHeatmapSummaryStatusCode({status : 200})
           } else {
-            setHeatmapJson({})
+            setHeatmapJson([])
             setHeatmapSummaryStatusCode({status : 204})
           }
         })
         .catch((e) => {
-          setHeatmapJson({})
+          setHeatmapJson([])
           setHeatmapSummaryStatusCode({status : 204})
         });
     }
@@ -554,12 +552,12 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
             setHeatmapJson(r_)
             setHeatmapSummaryStatusCode({status : 200})
           } else {
-            setHeatmapJson({})
+            setHeatmapJson([])
             setHeatmapSummaryStatusCode({status : 204})
           }
         })
         .catch((e) => {
-          setHeatmapJson({})
+          setHeatmapJson([])
           setHeatmapSummaryStatusCode({status : 204})
         });
     }
@@ -608,12 +606,12 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
             setHeatmapJson(r_)
             setHeatmapSummaryStatusCode({status : 200})
           } else {
-            setHeatmapJson({})
+            setHeatmapJson([])
             setHeatmapSummaryStatusCode({status : 204})
           }
         })
         .catch((e) => {
-          setHeatmapJson({})
+          setHeatmapJson([])
           setHeatmapSummaryStatusCode({status : 204})
         });
     }
@@ -754,7 +752,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
               />
               
             </div>
-            { tableType!=='methylation' && 
+            { tableType!=='methylation' &&  tableType!=='phospo' && 
               <div className="ml-3 flex-wrap  text-left lg:w-5/12 xl:w-5/12 2xl:w-4/12 text-left text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md">
                 <FormattedMessage  id = "View_By_heatmap" defaultMessage='View By'/>:
                 <div className="flex m-2 w-100">

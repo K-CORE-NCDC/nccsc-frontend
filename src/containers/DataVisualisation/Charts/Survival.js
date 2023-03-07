@@ -444,13 +444,6 @@ export default function DataSurvival({
   let tmp = []
   if (project_id !== undefined){
     if (coxUserDefinedFilter && Object.keys(coxUserDefinedFilter).length > 0) {
-      // for (const a in coxUserDefinedFilter){
-
-      //   if(a !== 'rlps_yn' && a!== 'rlps_cnfr_drtn')
-      //   {
-      //     tmp.push(a);
-      //   }
-      // }
       for (const a in coxUserDefinedFilter){
         if(a !== 'rlps_yn' && a!== 'rlps_cnfr_drtn' )
         {
@@ -486,11 +479,6 @@ export default function DataSurvival({
 }
   const survivalModelFun = (e, type) => {
     setSurvivalModel(type);
-    // if (type === "cox") {
-    //   inputData["survival_type"] = type;
-    //   inputData['coxFilter'] = coxFilter
-    //   dispatch(getSurvivalInformation("POST", inputData));
-    // }
   };
 
   const submitCox = (e, type) => {
@@ -520,7 +508,6 @@ export default function DataSurvival({
   }, [coxFilter]);
 
   const selectAllCox = (e, type) => {
-    // dispatch(clearSurvivalIMage())
     let tmp = coxFilter;
     for (const key in tmp) {
       if (type === "select") {
@@ -647,7 +634,8 @@ export default function DataSurvival({
                       />
                     </button>
                     <button
-                      onClick={() => setFilterTypeButton("omics")}
+                      onClick={() => {setFilterTypeButton("omics")
+                                      setGroupFilters({})}}
                       id="Phospho"
                       name="type"
                       className={

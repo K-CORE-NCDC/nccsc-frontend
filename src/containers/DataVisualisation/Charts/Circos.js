@@ -21,7 +21,7 @@ import { FormattedMessage } from "react-intl";
 import Report from "../../Common/Report";
 import html2canvas from 'html2canvas';
 import PDFReport from "../../Common/PDFReport";
-import { exportComponentAsJPEG } from "react-component-export-image";
+// import { exportComponentAsJPEG } from "react-component-export-image";
 
 export default function DataCircos({
   width,
