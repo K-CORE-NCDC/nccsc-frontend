@@ -146,9 +146,8 @@ export default function Box({
   const h = parseInt(svg.getAttribute('height'));
   const img_to_download = document.createElement('img');
   img_to_download.src = 'data:image/svg+xml;base64,' + base64doc;
-  console.log(w, h);
+  
   img_to_download.onload = function () {
-    console.log('img loaded');
     canvas.setAttribute('width', w);
     canvas.setAttribute('height', h);
     const context = canvas.getContext("2d");
@@ -169,9 +168,7 @@ export default function Box({
   }  
 }
 let takeScreenshot = async()=>{
-  console.log('1');
   const element = document.getElementById('box2')
-  console.log('->',element);
   let imgData 
   await html2canvas(element).then(canvas => {
      imgData = canvas.toDataURL('image/jpeg',1.0);

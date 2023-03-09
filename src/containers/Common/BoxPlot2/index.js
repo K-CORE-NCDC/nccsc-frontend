@@ -416,7 +416,6 @@ const BoxPlot = React.forwardRef(({view_type, box_data,chart_type, watermarkCss 
     }
   },[box_data])
 
-  console.log(view_type,box_data,chart_type,watermarkCss)
   return (
     <>
       <div id="box3">

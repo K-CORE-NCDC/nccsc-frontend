@@ -1294,3 +1294,6 @@ dd {
   background: #0c2f4d !important;
   cursor: pointer !important;
 }
+.CanvasXpressTooltip{
+  background-color: #fff !important;
+}
