@@ -436,6 +436,8 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
         {!clinicalfileresponse && (
           <div>
             <LoaderCmp />
+            <p className="mt-8 text-center text-lg"><FormattedMessage id = 'UploadWaitMessage' defaultMessage='Uploading data, Please wait for a moment.' /> </p>
+
           </div>
         )}
       </div>

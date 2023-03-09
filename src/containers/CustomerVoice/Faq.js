@@ -210,7 +210,7 @@ function FaqDetail({slug_id}){
         <div className="col-span-4">
             <h4 className="h-tit4_tit clear">
                 <font>
-                  <font>Notice</font>
+                  <font>FAQ</font>
                 </font>
             </h4>
         </div>

@@ -117,7 +117,7 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
   const [selectedFiles, setSelectedFiles] = useState([])
   const [uploadFile, setUploadFile] = useState({})
   const [projectName, setProjectName] = useState("")
-  const [formSbubmitButtonText, setFormSubmitButtonText] = useState("업로드 파일")
+  const [formSbubmitButtonText, setFormSubmitButtonText] = useState("upload")
   const [showModal, setShowModal] = useState(false)
   const [showModalInfo, setShowModalInfo] = useState(false)
   const [modalData, setModalData] = useState([])
@@ -574,6 +574,7 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
               </div>
             </section>}
             {(loader[selectedFileSampleType[key]] === 'loader') && <Loader />}
+            {(loader[selectedFileSampleType[key]] === 'loader') && <p className="mt-5 text-center"><FormattedMessage id = 'WaitMessage' defaultMessage='It takes 1 or 2 minutes to process data' /> </p>}
             {(loader[selectedFileSampleType[key]] === 'failed') && <strong className="text-red-700 font-bold">Failed!</strong>}
           </div>
           {/* <div className="relative w-full col-span-2">
@@ -640,10 +641,10 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
 
   const formSubmitButtonActions = () => {
     if (projectName.length > 0) {
-      if (formSbubmitButtonText === 'upload') {
+      if (formSbubmitButtonText === 'upload' || formSbubmitButtonText === '업로드 파일') {
         on_upload()
       }
-      if (formSbubmitButtonText === 'retry') {
+      if (formSbubmitButtonText === 'retry' || formSbubmitButtonText === '다시 해 보다') {
         on_upload()
       }
       if (formSbubmitButtonText === 'visualize') {
