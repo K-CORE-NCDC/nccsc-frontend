@@ -169,7 +169,10 @@ function FileProjectDataTable({ updateComponentNumber }) {
         )}
 
         {!verificationResponse  && (
+          <div>
           <LoaderCmp />
+          { <p className="mt-8 text-center text-lg"><FormattedMessage id = 'WaitMessage' defaultMessage='It takes 1 or 2 minutes to process data' /> </p>}
+          </div>
         )}
       </div>
 

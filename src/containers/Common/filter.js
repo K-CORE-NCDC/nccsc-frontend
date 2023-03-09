@@ -10,8 +10,7 @@ import inputJson from "./data";
 // import filterBoxes from './data'
 import { FormattedMessage } from "react-intl";
 import {
-  clearDataVisualizationState,
-  getUserDefinedFilter,samplesCount
+  getUserDefinedFilter
 } from "../../actions/api_actions";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -30,6 +29,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
   const[totalSamples, setTotalSamples] = useState(0)
   const [filterJson,setFilterJson] = useState({})
   const totalSamplesS = useSelector((data) => data.dataVisualizationReducer.samplesCount)
+  const [filterKeyandValues, setFilterKeyandValues] = useState({})
   
   // useEffect(()=>{
   //   if(project_id!==undefined){
@@ -39,7 +39,6 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
   //     dispatch(samplesCount("POST",{}))
   //   }
   // },[])
-
 
   useEffect(() => {
     if (Object.keys(filterState).length !== 0) {
@@ -74,8 +73,23 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
     if(project_id!==undefined){
       if(userDefinedFilter && Object.keys(userDefinedFilter).length > 0){
         setSelected('Clinical Information')
-        setFilterJson(userDefinedFilter['filterJson'])
-
+        setFilterJson(userDefinedFilter['filterJson']) 
+        if(userDefinedFilter['filterJson'] && 'Clinical Information' in userDefinedFilter['filterJson'] ){
+          let obj_dict = {}
+          let obj = userDefinedFilter['filterJson']['Clinical Information']
+          Object.keys(obj).forEach(key => {
+            obj[key].forEach((list) => {
+              if(key in obj_dict){
+                obj_dict[key].push(list['id'])
+              }
+              else{
+                obj_dict[key] = []
+                obj_dict[key].push(list['id'])
+              }
+            })
+          });
+          setFilterKeyandValues(obj_dict)
+        }
       }}
       else{
         let filterBoxes = inputJson.filterBoxes;
@@ -560,7 +574,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
   };
 
   const sendFilter = () => {
-    parentCallback(selectState);
+    parentCallback(selectState, filterKeyandValues);
     drawTags(filterJson);
   };
 

@@ -257,7 +257,7 @@ function QaDetail({slug_id}){
         <div className="col-span-4">
             <h4 className="h-tit4_tit clear">
                 <font>
-                  <font>Notice</font>
+                  <font>Q&A</font>
                 </font>
             </h4>
         </div>

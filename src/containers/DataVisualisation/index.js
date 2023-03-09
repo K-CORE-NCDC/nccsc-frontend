@@ -100,7 +100,7 @@ export default function DataVisualization() {
     // }
   };
 
-  const callback = useCallback((filters) => {
+  const callback = useCallback((filters,  filterKeyandValues) => {
     let type = document.getElementById("gene_type").value;
     let g = genes[type].data;
     document.getElementById("genes").value = g.join(" ");
@@ -109,6 +109,7 @@ export default function DataVisualization() {
       filter: filters,
       genes: g,
       type: type,
+      'filterKeyandValues': filterKeyandValues
     }));
     setfilterApplied(true);
     // dispatch(getBreastKeys({
@@ -255,7 +256,6 @@ export default function DataVisualization() {
     let tmp = [];
 
     l.forEach((element) => {
-      console.log('t',toggle);
       let classes =
         toggle ?  "lg:px-4 sm:px-2 xs:px-2 py-2 font-semibold rounded-t opacity-50 BorderDiv" : "lg:px-4 sm:px-2 xs:px-2 py-2 font-semibold rounded-t opacity-50 ";
 
