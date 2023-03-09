@@ -1,10 +1,11 @@
-import React, { useState,useEffect, useRef } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState,useEffect } from "react";
 // var venn = require("venn")
 // import {VennDiagram} from 'venn.js'
 import * as venn from "venn.js";
 import * as d3 from "d3";
 import "../../styles/survival.css";
-import { group } from "d3";
+
 
 export default function FusionVennCmp({ parentCallback,width, VennData = null }) {
   const [data, setData] = useState([])
@@ -12,7 +13,6 @@ export default function FusionVennCmp({ parentCallback,width, VennData = null })
 
   useEffect(()=>{
     if(rnid){
-      
       parentCallback(rnid)
     }
   },[rnid])

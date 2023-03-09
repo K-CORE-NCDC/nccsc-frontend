@@ -144,6 +144,7 @@ const HeatmapCmp = React.forwardRef(({ settings, inputData, type, watermarkCss,w
 
 
     useEffect(()=>{
+        
         if(Object.keys(inputData).length>0){
             setData(inputData)
             setConfigVis(config)
@@ -152,6 +153,7 @@ const HeatmapCmp = React.forwardRef(({ settings, inputData, type, watermarkCss,w
     },[inputData])
 
     useEffect(()=>{
+        
         if(Object.keys(data).length>0){
             setDataLoaded(true)
         }

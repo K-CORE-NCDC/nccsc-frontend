@@ -14,11 +14,9 @@ import { Fragment } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import logoNew from "../../../assets/images/Left_up.png";
 import footer_logo from "../../../assets/images/f_logo.png";
-import { useSelector, useDispatch } from "react-redux";
+import {  useDispatch } from "react-redux";
 import uuid from 'react-uuid';
 
-
-import banner_img from "../../../assets/img/top_banner01.png";
 import { Context } from "../../../wrapper";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -30,7 +28,6 @@ import s4 from "../../../assets/images/f_ci4.png";
 import s5 from "../../../assets/images/f_ci5.png";
 import s6 from "../../../assets/images/f_ci6.png";
 import s7 from "../../../assets/images/f_ci7.png";
-import breast from "../../../assets/images/breast_cancer.png";
 import breast_cancer_english from "../../../assets/images/breast_cancer_english.png";
 import breast_cancer_korean from "../../../assets/images/breast_cancer_korean.png";
 import s8 from "../../../assets/images/right_below_add.png";
@@ -74,57 +71,57 @@ const menu = route.map((route, index) => {
   ) : null;
 });
 
-let PageRefresh = ()=>{
-  const timeout = 10000
-  const [remaining, setRemaining] = useState(timeout)
-  const [elapsed, setElapsed] = useState(0)
-  const [lastActive, setLastActive] = useState(+new Date())
-  const [isIdle, setIsIdle] = useState(false)
+// let PageRefresh = ()=> {
+//   const timeout = 10000
+//   const [remaining, setRemaining] = useState(timeout)
+//   const [elapsed, setElapsed] = useState(0)
+//   const [lastActive, setLastActive] = useState(+new Date())
+//   const [isIdle, setIsIdle] = useState(false)
 
-  const handleOnActive = () => setIsIdle(false)
-  const handleOnIdle = () => setIsIdle(true)
-  const {
-    reset,
-    pause,
-    resume,
-    getRemainingTime,
-    getLastActiveTime,
-    getElapsedTime
-  } = useIdleTimer({
-    timeout,
-    onActive: handleOnActive,
-    onIdle: handleOnIdle
-  })
+//   const handleOnActive = () => setIsIdle(false)
+//   const handleOnIdle = () => setIsIdle(true)
+//   const {
+//     reset,
+//     pause,
+//     resume,
+//     getRemainingTime,
+//     getLastActiveTime,
+//     getElapsedTime
+//   } = useIdleTimer({
+//     timeout,
+//     onActive: handleOnActive,
+//     onIdle: handleOnIdle
+//   })
 
 
-  useEffect(() => {
-    setRemaining(getRemainingTime())
-    setLastActive(getLastActiveTime())
-    setElapsed(getElapsedTime())
+//   useEffect(() => {
+//     setRemaining(getRemainingTime())
+//     setLastActive(getLastActiveTime())
+//     setElapsed(getElapsedTime())
 
-    setInterval(() => {
-      setRemaining(getRemainingTime())
-      setLastActive(getLastActiveTime())
-      setElapsed(getElapsedTime())
-    }, 1000)
-  }, [])
- if(isIdle === true){
-       window.location.reload();
- }
-// useEffect(()=>{
-//   if(isIdle === true){
-//     window.location.reload();
-//   }
-// },[isIdle])
-}
+//     setInterval(() => {
+//       setRemaining(getRemainingTime())
+//       setLastActive(getLastActiveTime())
+//       setElapsed(getElapsedTime())
+//     }, 1000)
+//   }, [])
+//  if(isIdle === true){
+//        window.location.reload();
+//  }
+// // useEffect(()=>{
+// //   if(isIdle === true){
+// //     window.location.reload();
+// //   }
+// // },[isIdle])
+// }
 
 export default function Web(props) {
 
   const routeLocation = useLocation(); 
   const timeout = 3000
-  const [remaining, setRemaining] = useState(timeout)
-  const [elapsed, setElapsed] = useState(0)
-  const [lastActive, setLastActive] = useState(+new Date())
+  // const [remaining, setRemaining] = useState(timeout)
+  // const [elapsed, setElapsed] = useState(0)
+  // const [lastActive, setLastActive] = useState(+new Date())
   const [isIdle, setIsIdle] = useState(false)
   const [showPopup, setShowPopup] = useState(false)
   const handleOnActive = () => setIsIdle(false)
@@ -145,7 +142,7 @@ export default function Web(props) {
   useEffect(()=>{
     let data =  DashboardCount()
     data.then((result) => {
-      if(result.status == 200)
+      if(result.status === 200)
           setCountJson(result.data)
       else{
         setCountJson({})
@@ -291,12 +288,12 @@ export default function Web(props) {
       console.log(a_or_p)
       // var time = a_or_p + " " + today.getHours() + ":" + today.getMinutes();
       var time =  today.getHours() + ":" + (today.getMinutes() <=9 ? `00`: today.getMinutes());
-      let check_popup = localStorage.getItem('show_popup') 
+      // let check_popup = localStorage.getItem('show_popup') 
       setCurrentTime(time);
       if (!countJson) {
         let data =  DashboardCount()
         data.then((result) => {
-        if(result.status == 200)
+        if(result.status === 200)
         {
           setCountJson(result.data)
         }
@@ -500,7 +497,7 @@ export default function Web(props) {
                 <div className="relative pr-5 sm:flex flex">
                   <Link to="/" className="">
                     {/* <span className="sr-only">Workflow</span> */}
-                    <img className="" width="210" src={logoNew} alt="" />
+                    <img className="" width="210" src={logoNew} alt="logo" />
                   </Link>
                   <Popover.Button
                     className="xs:block sm:block md:block lg:hidden  text-white  cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block outline-none focus:outline-none"
@@ -942,28 +939,28 @@ export default function Web(props) {
             <div className="py-10 border-t ">
               <Slider {...settings}>
                 <div>
-                  <img src={s1} />
+                  <img src={s1} alt="s1" />
                 </div>
                 <div>
-                  <img src={s2} />
+                  <img src={s2} alt="s2" />
                 </div>
                 <div>
-                  <img src={s3} />
+                  <img src={s3} alt="s3" />
                 </div>
                 <div>
-                  <img src={s4} />
+                  <img src={s4} alt="s4" />
                 </div>
                 <div>
-                  <img src={s5} />
+                  <img src={s5} alt="s5" />
                 </div>
                 <div>
-                  <img src={s6} />
+                  <img src={s6} alt="s6" />
                 </div>
                 <div>
-                  <img src={s7} />
+                  <img src={s7} alt="s7" />
                 </div>
                 <div>
-                  <img src={s8} width="250" />
+                  <img src={s8} width="250" alt="s8" />
                 </div>
               </Slider>
             </div>
@@ -978,12 +975,12 @@ export default function Web(props) {
                     <div>
                       {koreanlanguage && (
                         <div className="relative p-6 flex-auto">
-                            <img src={breast_cancer_korean} />
+                            <img src={breast_cancer_korean} alt="breast-cancer" />
                         </div>
                       )}
                       {Englishlanguage && (
                         <div className="relative p-6 flex-auto">
-                          <img src={breast_cancer_english} />
+                          <img src={breast_cancer_english} alt="breast-cancer"  />
                         </div>
                       )}
                     </div>
