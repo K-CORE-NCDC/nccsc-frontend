@@ -168,7 +168,10 @@ export default function DataSurvival({
             let r_ = d["data"]
             r_['status'] = 200
             setSurvivalJson(r_)
+            setRenderNoContent(false)
+            
           } else {
+            setRenderNoContent(true)
             setSurvivalJson({status : d.status})
           }
         })
@@ -189,8 +192,10 @@ export default function DataSurvival({
             let r_ = d["data"]
             r_['status'] = 200
             setSurvivalJson(r_)
+            setRenderNoContent(false)
           } else {
             setSurvivalJson({status : d.status})
+            setRenderNoContent(true)
           }
         })
         .catch((e) => {
@@ -206,8 +211,10 @@ export default function DataSurvival({
           let r_ = d["data"]
           r_['status'] = 200
           setSurvivalJson(r_)
+          setRenderNoContent(false)
         } else {
           setSurvivalJson({status : d.status})
+          setRenderNoContent(true)
         }
       })
       .catch((e) => {
@@ -494,8 +501,10 @@ export default function DataSurvival({
           let r_ = d["data"]
           r_['status'] = 200
           setSurvivalJson(r_)
+          setRenderNoContent(false)
         } else {
           setSurvivalJson({status : d.status})
+          setRenderNoContent(true)
         }
       })
       .catch((e) => {
@@ -893,6 +902,7 @@ export default function DataSurvival({
                 <div  ref={reference}>{coxTable}</div>
               </>
             )}
+            
             {renderNoContent && <NoContentMessage />}
             {
               inputData.genes.length === 0 &&  <p><FormattedMessage  id="PleaseSelecttheGeneSetData" defaultMessage="PleaseSelect the Gene Set Data" /></p>

@@ -81,9 +81,11 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
             setLolipopJson(r_)
             setLoader(false)
             setNoContent(false)
+            setActiveCmp(true)
           } else {
             setLoader(false)
             setNoContent(true)
+            setActiveCmp(true)
             setLolipopJson({ data: [], domains: [], status: 204 })
           }
         })
@@ -131,9 +133,11 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
             setLolipopJson(r_)
             setLoader(false)
             setNoContent(false)
+            setActiveCmp(true)
           } else {
             setLoader(false)
             setNoContent(true)
+            setActiveCmp(true)
             setLolipopJson({ data: [], domains: [], status: 204 })
           }
         })
@@ -467,9 +471,11 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
             setLolipopJson(r_)
             setLoader(false)
             setNoContent(false)
+            setActiveCmp(true)
           } else {
             setNoContent(true)
             setLoader(false)
+            setActiveCmp(true)
             setLolipopJson({ data: [], domains: [], status: 204 })
           }
       })
@@ -530,8 +536,11 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                   </div>
                 </div>
               </div>
+              
               <>
-                {showLollipop && <div className='grid p-10 w-full'>
+              {noContent && <NoContentMessage /> }
+              {
+                showLollipop && <div className='grid p-10 w-full'>
                   <div className='bg-white flex xs:w-4/6 md:w-full lg:w-full'>
                     <LollipopCmp watermarkCss={watermarkCss} ref={reference} width={width} type={tableType}
                       gene={gene}
@@ -549,7 +558,6 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                         </div>
                       </div>
                     }
-
                   </div>
                   <div className='grid grid-rows bg-blue-100 p-10'>
                     <div className="lg:w-full sm:w-3/6 xs:w-1/2 p-3">
@@ -571,7 +579,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
               </>
             </Fragment>
           }
-          {noContent && <NoContentMessage />}
+         
         </div>
     }
 
