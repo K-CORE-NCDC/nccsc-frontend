@@ -149,6 +149,16 @@ export default function DataSurvival({
     }
   }, []);
 
+  let check = (d)=>{
+    let check = false
+    for(let key in d["data"]["sample_counts"]){
+      if(d["data"]["sample_counts"][key] !== 0){
+        check = true
+      }
+    } 
+    return check
+  }
+
   const submitFitersAndFetchData = () => {
     if (fileredGene !== "" || filterTypeButton === "clinical") {
       setLoader(true);
@@ -164,11 +174,13 @@ export default function DataSurvival({
         })
         return_data.then((result) => {
           const d = result
-          if (d.status === 200) {
+          if (d.status === 200 && check(d)) {
             let r_ = d["data"]
             r_['status'] = 200
             setSurvivalJson(r_)
+            setRenderNoContent(false)
           } else {
+            setRenderNoContent(true)
             setSurvivalJson({status : d.status})
           }
         })
@@ -185,11 +197,13 @@ export default function DataSurvival({
         })
         return_data.then((result) => {
           const d = result
-          if (d.status === 200) {
+          if (d.status === 200 && check(d)) {
             let r_ = d["data"]
             r_['status'] = 200
             setSurvivalJson(r_)
+            setRenderNoContent(false)
           } else {
+            setRenderNoContent(true)
             setSurvivalJson({status : d.status})
           }
         })
@@ -202,11 +216,13 @@ export default function DataSurvival({
       let return_data = SurvivalInformation("POST", inputData)
       return_data.then((result) => {
         const d = result
-        if (d.status === 200) {
+        if (d.status === 200 && check(d)) {
           let r_ = d["data"]
           r_['status'] = 200
           setSurvivalJson(r_)
+          setRenderNoContent(false)
         } else {
+          setRenderNoContent(true)
           setSurvivalJson({status : d.status})
         }
       })
@@ -490,11 +506,13 @@ export default function DataSurvival({
       let return_data = SurvivalInformation("POST", inputData)
       return_data.then((result) => {
         const d = result
-        if (d.status === 200) {
+        if (d.status === 200 && check(d)) {
           let r_ = d["data"]
           r_['status'] = 200
           setSurvivalJson(r_)
+          setRenderNoContent(false)
         } else {
+          setRenderNoContent(true)
           setSurvivalJson({status : d.status})
         }
       })
@@ -874,7 +892,7 @@ export default function DataSurvival({
               </>
             )}
           </div>
-
+          
           <div className="col-span-5">
             {renderSurvival && survivalModel === "kaplan" && (
               <SurvivalCmp
@@ -893,7 +911,7 @@ export default function DataSurvival({
                 <div  ref={reference}>{coxTable}</div>
               </>
             )}
-            {renderNoContent && <NoContentMessage />}
+          {renderNoContent && <NoContentMessage />}
             {
               inputData.genes.length === 0 &&  <p><FormattedMessage  id="PleaseSelecttheGeneSetData" defaultMessage="PleaseSelect the Gene Set Data" /></p>
             }
