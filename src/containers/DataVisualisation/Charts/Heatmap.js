@@ -40,6 +40,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const [configVis,setConfigVis] = useState({"colorSpectrumBreaks":[],"colorSpectrum":["navy","firebrick3"]})
   const [spectrumMin,setSpectrumMin] = useState(0)
   const [spectrumMax,setSpectrumMax] = useState(0)
+  const [clinincalAttributesFil, setClinicalAttributesFil] = useState([])
 
   const [alltabList, setAllTabList] = useState({});
 
@@ -376,6 +377,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   }
 
   const changeMainType = (e, type) => {
+    console.log('MT',type);
     let c = document.getElementsByName('maintype')
     for (var i = 0; i < c.length; i++) {
       let classList = c[i].classList
@@ -437,7 +439,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       dataJson['heat_type'] = mainTab
       setLoader(true)
       setActiveCmp(false)
-      
       // dispatch(getHeatmapInformation('POST',dataJson))
       let return_data = HeatmapInformation('POST', dataJson)
         return_data.then((result) => {
@@ -465,19 +466,21 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     selectedList.forEach((item, i) => {
       cf.push(item['id'])
     });
-
+    setClinicalAttributesFil(cf)
     if(inputData.type !=='' && inputData['genes'].length > 0){
       setLoader(true)
       setActiveCmp(false)
       let dataJson = { ...inputData }
       dataJson['clinicalFilters'] = cf
       dataJson['view'] = viewType
+      
       if((tableType === "methylation") || (tableType === "phospo")){
         dataJson['genes'] = selectedGene
       }
       dataJson['heat_type'] = mainTab
       dataJson['table_type'] = tableType
       // dispatch(getHeatmapInformation('POST',dataJson))
+      console.log('-------',dataJson);
       let return_data = HeatmapInformation('POST', dataJson)
         return_data.then((result) => {
           const d = result
@@ -498,11 +501,15 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   }
 
   function onRemove(selectedList, removedItem) {
+    console.log('sele',selectedList);
+    console.log('removedItem',removedItem);
     let items = []
     setOption(selectedList)
     selectedList.forEach((item, i) => {
+      console.log('>>>>',item);
       items.push(item['id'])
     });
+    setClinicalAttributesFil(items)
     if(inputData.type !=='' && inputData['genes'].length > 0){
       setLoader(true)
       setActiveCmp(false)
@@ -541,9 +548,11 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     }
     e.target.classList.add("hover:bg-main-blue","bg-main-blue","text-white")
     setViewType(view)
+    console.log('inputData',inputData);
     let dataJson = { ...inputData }
     dataJson['view'] = view
     dataJson['heat_type'] = mainTab
+    dataJson['clinicalFilters'] = clinincalAttributesFil
     if(inputData.type !=='' && inputData['genes'].length > 0){
       // dispatch(getHeatmapInformation('POST', dataJson))
       let return_data = HeatmapInformation('POST', dataJson)
