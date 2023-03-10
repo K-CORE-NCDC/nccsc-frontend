@@ -351,9 +351,9 @@ export default function DataCircos({
         setRenderCircos(false);
         let returnData = CircosInformation("POST", editInputData)
         returnData.then((result)=>{
-          let r_ = result.data
-          r_['status'] = 200
           if(result.status === 200){
+            let r_ = result.data
+            r_['status'] = 200
             setCircosJson(r_)
 
           }
