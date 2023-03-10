@@ -1,7 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useContext} from "react";
 import { useSelector } from "react-redux";
 import { FormattedMessage } from "react-intl";
-import Multiselect from "multiselect-react-dropdown";
 import { useParams } from "react-router-dom";
 import { Context } from "../../wrapper";
 const LabelCss = "block text-left text-blue-700-700 text-lg  font-bold mb-2";
@@ -620,7 +620,7 @@ const GroupFilters = ({
   );
   const context = useContext(Context);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
-  const [Englishlanguage, setEnglishlanguage] = useState(true);
+  // const [Englishlanguage, setEnglishlanguage] = useState(true);
   const [filterSelected, setFilterSelected] = useState("");
   const [selectedFilterDetails, setSelectedFilterDetails] = useState({});
   const [filterInputs, setFilterInputs] = useState([]);
@@ -638,10 +638,10 @@ const GroupFilters = ({
   useEffect(() => {
     if (context["locale"] === "kr-KO") {
       setKoreanlanguage(true);
-      setEnglishlanguage(false);
+      // setEnglishlanguage(false);
     } else {
       setKoreanlanguage(false);
-      setEnglishlanguage(true);
+      // setEnglishlanguage(true);
     }
   });
 
@@ -649,7 +649,7 @@ const GroupFilters = ({
 
   if (viz_type === "volcono" || viz_type === "survival") {
     if(koreanlanguage){
-      console.log();
+      
       filterChoices = [
         {
           type: "number",
@@ -706,60 +706,60 @@ const GroupFilters = ({
     else{
 
     
-    filterChoices = [
-      {
-        type: "number",
-        id: "bmi_vl",
-        name: "Body Mass Index",
-        input: "number",
-      },
-      {
-        type: "number",
-        name: "Age Of Diagonosis",
-        id: "diag_age",
-        input: "number",
-      },
-      { type: "dropdown", name: "Smoking Status", id: "smok_yn" },
-      {
-        type: "number",
-        name: "First Menstural Age",
-        id: "mena_age",
-        input: "number",
-      },
-      {
-        type: "number",
-        name: "Duration of Breastfeeding(month)",
-        id: "feed_drtn_mnth",
-        input: "number",
-      },
-      {
-        type: "dropdown",
-        name: "T Category",
-        id: "t_category",
-        input: "number",
-      },
-      {
-        type: "dropdown",
-        name: "N Category",
-        id: "n_category",
-        input: "number",
-      },
-      {
-        type: "dropdown",
-        name: "HER2 Score",
-        id: "her2_score",
-        input: "number",
-      },
-      { type: "dropdown", name: "ki67", id: "ki67_score", input: "number" },
-      {
-        type: "number",
-        name: "Relapse Duration(month)",
-        id: "rlps_cnfr_drtn",
-        input: "number",
-      },
-    ];
+      filterChoices = [
+        {
+          type: "number",
+          id: "bmi_vl",
+          name: "Body Mass Index",
+          input: "number",
+        },
+        {
+          type: "number",
+          name: "Age Of Diagonosis",
+          id: "diag_age",
+          input: "number",
+        },
+        { type: "dropdown", name: "Smoking Status", id: "smok_yn" },
+        {
+          type: "number",
+          name: "First Menstural Age",
+          id: "mena_age",
+          input: "number",
+        },
+        {
+          type: "number",
+          name: "Duration of Breastfeeding(month)",
+          id: "feed_drtn_mnth",
+          input: "number",
+        },
+        {
+          type: "dropdown",
+          name: "T Category",
+          id: "t_category",
+          input: "number",
+        },
+        {
+          type: "dropdown",
+          name: "N Category",
+          id: "n_category",
+          input: "number",
+        },
+        {
+          type: "dropdown",
+          name: "HER2 Score",
+          id: "her2_score",
+          input: "number",
+        },
+        { type: "dropdown", name: "ki67", id: "ki67_score", input: "number" },
+        {
+          type: "number",
+          name: "Relapse Duration(month)",
+          id: "rlps_cnfr_drtn",
+          input: "number",
+        },
+      ];
     
-  }
+    }
 
     preDefienedGroups1["smok_yn"] = [
       { label: "No Smoking", value: "smok_yn||N" },

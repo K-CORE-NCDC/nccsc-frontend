@@ -1,4 +1,4 @@
-import React, { Suspense, useState, useEffect} from 'react';
+import React, { Suspense, useState, } from 'react';
 import { Switch } from 'react-router-dom';
 import Loadable from 'react-loadable';
 import Loader from './layout/Loader/';

@@ -1,8 +1,8 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 
-const Home = React.lazy(() => import('./containers/Home/'));
+// const Home = React.lazy(() => import('./containers/Home/'));
 const DataSummary = React.lazy(() => import('./containers/DataSummary/'));
 const Login = React.lazy(() => import('./containers/Login/login'));
 const DataVisualization = React.lazy(() => import('./containers/DataVisualisation/'));

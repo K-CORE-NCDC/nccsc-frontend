@@ -90,7 +90,7 @@ export default function DataSummary() {
     <div className="header">
       <section className="relative  items-center  bg-cover bg-center bg-white border-t justify-center">
         <nav className=" px-8 pt-2 shadow-md">
-            <ul id="tabs" className="inline-flex justify-center w-full px-1 pt-2 " onClick={e => toggleTab(e)}>
+            <ul id="tabs" className="inline-flex justify-center w-full px-1 pt-2 text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md" onClick={e => toggleTab(e)}>
               {menuItems}
             </ul>
         </nav>

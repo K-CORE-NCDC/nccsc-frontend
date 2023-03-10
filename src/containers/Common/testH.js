@@ -53,7 +53,8 @@ const HeatmapCmp = React.forwardRef(({ settings, inputData, type, watermarkCss,w
         'disableConfigurator':false,
         'disableToolbar':true
     }
-    if(settings['colorSpectrumBreaks'][0] && settings['colorSpectrumBreaks'][1]){
+    // console.log(settings['colorSpectrumBreaks'])
+    if(!isNaN(settings['colorSpectrumBreaks'][0]) && !isNaN(settings['colorSpectrumBreaks'][1])){
         config["colorSpectrumBreaks"] = settings['colorSpectrumBreaks']
     }
     if(clinicalFilter.length>0){
@@ -66,7 +67,6 @@ const HeatmapCmp = React.forwardRef(({ settings, inputData, type, watermarkCss,w
                 "color": "rgb(254,41,108)",
                 "spectrum": ["rgb(255,0,255)","rgb(0,0,255)","rgb(0,0,0)","rgb(255,0,0)","rgb(255,215,0)"],
                 "scheme": "GGPlot",
-
                 "showLegend": true,
                 "showName": true,
                 "showBox": true,
@@ -144,6 +144,7 @@ const HeatmapCmp = React.forwardRef(({ settings, inputData, type, watermarkCss,w
 
 
     useEffect(()=>{
+        
         if(Object.keys(inputData).length>0){
             setData(inputData)
             setConfigVis(config)
@@ -152,6 +153,7 @@ const HeatmapCmp = React.forwardRef(({ settings, inputData, type, watermarkCss,w
     },[inputData])
 
     useEffect(()=>{
+        
         if(Object.keys(data).length>0){
             setDataLoaded(true)
         }

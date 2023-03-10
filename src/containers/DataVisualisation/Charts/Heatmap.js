@@ -118,6 +118,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
 
   useEffect(()=>{
     if(inputJson['filterChoices']){
+      console.log(inputJson)
       if (project_id !== undefined) {
         if(filterData &&  filterData.status===200){
           let filters = filterData['filterJson']
@@ -131,6 +132,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
             }
             
           }
+          console.log(tmp)
           setOptionChoices(tmp)
           // setCustomFilterJson(tmp)
         }
@@ -149,7 +151,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
         }
       }
     }
-  },[inputJson['filterChoices'],koreanlanguage])
+  },[koreanlanguage, filterData, project_id])
 
 
   useEffect(() => {
@@ -193,7 +195,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     if (heatmapJson) {
       let genes = []
       let unique_sample_values = {}
-      let heat_data = []
       let unique_cf = {}
       let z = {}
       let optn = {}
@@ -212,7 +213,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
         d_ = heatmapJson
       }
 
-      if(d_!= "" && d_ !== undefined){
+      if(d_ !== "" && d_ !== undefined){
         d_ && d_.forEach((item, i) => {
           if(!genes.includes(item['gene_name'])){
             genes.push(item['gene_name'])
@@ -273,6 +274,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       }
       // z = tmp
       let setStateTrue = false
+      
       for (const [key, value] of Object.entries(y)) {
         value.forEach(e=>{
           if(e.length > 0){
@@ -441,7 +443,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       let return_data = HeatmapInformation('POST', dataJson)
         return_data.then((result) => {
           const d = result
-          console.log('->',d);
+      
           if (d.status === 200) {
             let r_ = d["data"]
             setHeatmapJson(r_)
@@ -643,6 +645,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   
   const changeSepctrum = (e)=>{
     setLoader(true)
+    // eslint-disable-next-line no-useless-computed-key
     setConfigVis({...configVis,['colorSpectrumBreaks']:[parseInt(spectrumMin),parseInt(spectrumMax)]})
   }
   const changeTheme = (e)=>{

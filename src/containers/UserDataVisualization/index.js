@@ -1,15 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  AdjustmentsIcon,
-  PlusCircleIcon,
-  MinusCircleIcon,
-  RefreshIcon
-} from '@heroicons/react/outline'
-import { getUserDataProjectsTableData } from '../../actions/api_actions'
-import { useSelector, useDispatch } from "react-redux";
-import UserFilesTable from './Components/TableDisplay/table'
+import React, { useState, useEffect } from "react";
+// import {  useDispatch } from "react-redux";
 import FileUpload from './Components/MainComponents/NewClinicalFileUpload'
 import FileUploadDropdowncomponent from "./Components/MainComponents/FileUploadDropdowncomponent";
 import FileProjectDataTable from "./Components/MainComponents/FileProjectDataTable";
@@ -23,11 +13,11 @@ export default function DataVisualization() {
   const [hideupload, setHideUpload] = useState(false)
   // const [showVisualization, setShowviualization] = useState(false)
   const [showLoginForm, setShowLoginForm] = useState(false)
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   const fileUploadCallBack = (d_) => {
     // setTimeout(() => setHideUpload(true), 10000)
   }
-  const [uploadNewSamplesToggle, setUploadNewSamplesToggle] = useState('Upload new Samples')
+  // const [uploadNewSamplesToggle, setUploadNewSamplesToggle] = useState('Upload new Samples')
 
   
 
@@ -43,7 +33,7 @@ export default function DataVisualization() {
     }else{
       history.push("/login")
     }
-  }, [accessToken])
+  }, [accessToken,history])
 
   const updateComponentNumber = (num) =>{
     setComponentNumber(num)
