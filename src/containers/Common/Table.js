@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 const UserFilesTable = ({ userDataTableData }) => {
     // const columns = ['name', 'dna_mutation', 'dna_methylation', 'rna_zscore', 'proteome', 'clinical_information']
     const [columns, setColumns] = useState()
-    const [showTableRows, setShowTableRows] = useState(false)
     const [tableRows, setTableRows] = useState("")
 
     useEffect(() => {

@@ -6,14 +6,12 @@ import PagenationTableComponent from "../../Common/PagenationTable";
 import GraphsModal from "../../Common/circostimelineGraph";
 import LoaderCmp from "../../Common/Loader";
 import { useParams } from "react-router-dom";
-// import { useScreenshot, createFileName } from "use-react-screenshot";
 import {
   CircosInformation,
   OncoImages,
   CircosTimelineTable,
   getBreastKeys,
   getRNIDetails,
-  clearCircosInfomation
 } from "../../../actions/api_actions";
 
 import "../../../assets/css/style.css";
@@ -21,8 +19,6 @@ import { FormattedMessage } from "react-intl";
 import Report from "../../Common/Report";
 import html2canvas from 'html2canvas';
 import PDFReport from "../../Common/PDFReport";
-// import { exportComponentAsJPEG } from "react-component-export-image";
-
 export default function DataCircos({
   width,
   inputData,
@@ -46,7 +42,7 @@ export default function DataCircos({
     (data) => data.dataVisualizationReducer.Keys
   );
   const [sampleListElements, setSampleListElements] = useState([]);
-  const [displaySamples, setDisplaySamples] = useState(false);
+  // const [displaySamples, setDisplaySamples] = useState(false);
   const [watermarkCss, setWatermarkCSS] = useState("");
   const [loader, setLoader] = useState(false);
   const [showOncoImages, setShowOncoImages] = useState(false);
@@ -57,18 +53,7 @@ export default function DataCircos({
   const [samplesCount, setSamplesCount] = useState(0);
   const [tableData, setTableData] = useState([]);
   const [basicInformationData, setBasicInformationData] = useState([]);
-  let { tab, project_id } = useParams();
-
-  // const [image, takeScreenShot] = useScreenshot({
-  //   type: "image/jpeg",
-  //   quality: 1.0
-  // });
-  // const download = (image, { name = "img", extension = "jpg" } = {}) => {
-  //   const a = document.createElement("a");
-  //   a.href = image;
-  //   a.download = createFileName(extension, name);
-  //   a.click();
-  // };
+  let {  project_id } = useParams();
 
   const [isReportClicked, setIsReportClicked] = useState(false);
 
@@ -99,7 +84,7 @@ export default function DataCircos({
             variants = variants.join("-");
             return (
               <div data-bs-toggle="tooltip" title={variants}>
-                {"O " + "(" + reportData["variant_info"][row.gene].length + ")"}
+                {"O  (" + reportData["variant_info"][row.gene].length + ")"}
               </div>
             );
           } else {
@@ -373,13 +358,13 @@ export default function DataCircos({
     }
   }, [])
 
-  useEffect(() => {
-    if (inputData && inputData.genes.length > 0) {
-      setDisplaySamples(true);
-    } else {
-      setDisplaySamples(false);
-    }
-  }, [inputData]);
+  // useEffect(() => {
+  //   if (inputData && inputData.genes.length > 0) {
+  //     setDisplaySamples(true);
+  //   } else {
+  //     setDisplaySamples(false);
+  //   }
+  // }, [inputData]);
   let abcd = async()=>{
     const element = document.getElementById('circos')
     let imgData 
@@ -394,19 +379,6 @@ export default function DataCircos({
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
-
-    // const element = document.getElementById('circos'),
-    // canvas = await html2canvas(element),
-    // data = canvas.toDataURL('image/jpg'),
-    // link = document.createElement('a');
-
-
-    // link.href = data;
-    // link.download = 'downloaded-image.jpg';
-
-    // document.body.appendChild(link);
-    // link.click();
-    // document.body.removeChild(link);
   }
 
   useEffect(() => {
@@ -420,7 +392,6 @@ export default function DataCircos({
       }
       if (watermarkCss !== "" && screenCapture) {
         if (reference !== null) {
-          // exportComponentAsJPEG(reference,{fileName:'Circos'});
           abcd()
         }
         setToFalseAfterScreenCapture();

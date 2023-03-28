@@ -1,4 +1,4 @@
-import React, { useState,useEffect,Fragment } from 'react'
+import React from 'react'
 import CanvasXpressReact from 'canvasxpress-react';
 const Suvrvival = React.forwardRef(({  inputData, watermarkCss,width,clinicalFilter }, ref) => {
     let config = {

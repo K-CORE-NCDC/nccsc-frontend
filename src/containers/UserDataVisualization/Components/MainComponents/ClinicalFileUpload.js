@@ -8,7 +8,7 @@ import {
   MinusCircleIcon,
   DownloadIcon
 } from '@heroicons/react/outline'
-import { file_upload } from '../../../../actions/api_actions'
+import { fileUpload } from '../../../../actions/api_actions'
 import { useSelector, useDispatch } from "react-redux";
 import XLSX from 'xlsx';
 import Loader from '../../Widgets/loader';
@@ -343,7 +343,7 @@ export default function FileUpload({ parentCallBack }) {
   //             <option value="proteome">Porteome</option>
 
   const on_upload = () => {
-    dispatch(file_upload(uploadFile, projectName))
+    dispatch(fileUpload(uploadFile, projectName))
     for (let key in uploadFile) {
       setLoader((prevState) => ({ ...prevState, [uploadFile[key].type]: 'loader' }))
     }

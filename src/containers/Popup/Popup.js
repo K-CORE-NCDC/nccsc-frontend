@@ -4,10 +4,8 @@ import config from '../../config';
 
 
 function Popup({toggleModal}) {
+  
   const [showModal, setShowModal] = useState(false);
-  const d = new Date();
-  const day = d.getDay();
-
   const[content, setContent] = useState('')
   const [noticedetails, setNoticeDetails] = useState({})
   const [noticeStatus, setNoticeStatus] = useState(200)
@@ -15,9 +13,9 @@ function Popup({toggleModal}) {
   /* getting the notice detail as response */
   
   useEffect(() => {
-    let data =  NoticeDetail()
+    let data =  NoticeDetail('GET')
     data.then((result) => {
-      if(result.status == 200)
+      if(result.status === 200)
       {
         setNoticeDetails(result.data)
         setNoticeStatus(200)

@@ -60,7 +60,6 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
       return 0
     }
   });
-  const [totalCountS] = useState(totalCount);
   const [filterCondition, setFilterCondition] = useState("and");
 
   useEffect(()=>{

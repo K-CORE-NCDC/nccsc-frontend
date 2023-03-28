@@ -1,4 +1,4 @@
-import React,{useState,useEffect,useRef,useCallback} from "react";
+import React,{useState,useEffect,useRef} from "react";
 import { getCircosUserData, CircosInformation, getOncoUserData, getVolcanoUserData } from '../../../../actions/api_actions'
 import { useSelector, useDispatch } from "react-redux";
 import Filter from '../../../Common/filter';
@@ -43,7 +43,6 @@ export default function Visualization() {
     dispatch(getVolcanoUserData({}))
     let returnData = CircosInformation("POST", editInputData)
     returnData.then((result)=>{
-      console.log('--------INDEX');
       if(result.data.status === 200){
         setCircosJson(result.data)
       }

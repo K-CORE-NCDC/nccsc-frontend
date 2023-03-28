@@ -5,7 +5,6 @@ import $ from "jquery";
 
 const LollipopCmp = React.forwardRef(({ type,width,data,gene,watermarkCss }, ref) => {
   const [active, setActive] = useState(false)
-  const [label, setLabel] = useState([])
   const mockData = {
     vizHeight: 400, // hardcoded
     vizWidth: width-400, // hardcoded

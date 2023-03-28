@@ -1,11 +1,9 @@
 import React from "react";
 import organoid01 from "../../../assets/images/organoid_flow_chart_final_01.png";
-import organoid02 from "../../../assets/images/figure02.png";
 import organoid03 from "../../../assets/images/organoid_flow_chart_2.png";
 import organoid04 from "../../../assets/images/cbottle.png";
 import organoid05 from "../../../assets/images/petridish.png";
 import organoid06 from "../../../assets/images/flowchart_02.png";
-import organoidTable from "../../../assets/images/organoidNewTable.jpeg";
 import Attachments from "../../../assets/organoid_application_document.zip";
 
 function Organoid() {

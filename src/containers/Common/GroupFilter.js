@@ -234,7 +234,7 @@ export const PreDefienedFilters = ({
 }) => { 
   const context = useContext(Context);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
-  const [Englishlanguage, setEnglishlanguage] = useState(true);
+  // const [Englishlanguage, setEnglishlanguage] = useState(true);
   const [selectedFilterType, setSelectedFilterType] = useState({});
   const [filterGroupsHtml, setFilterGroupsHtml] = useState([]);
   const [filters, setFilters] = useState({});
@@ -245,10 +245,10 @@ export const PreDefienedFilters = ({
   useEffect(() => {
     if (context["locale"] === "kr-KO") {
       setKoreanlanguage(true);
-      setEnglishlanguage(false);
+      // setEnglishlanguage(false);
     } else {
       setKoreanlanguage(false);
-      setEnglishlanguage(true);
+      // setEnglishlanguage(true);
     }
   },[context]);
   const preDefienedGroups1 = {
@@ -438,31 +438,31 @@ export const PreDefienedFilters = ({
     }
   };
 
-  const dropDownChange = (event) => {
-    const eventObject = JSON.parse(event.target.value);
-    const filterData =
-      preDefienedGroups1[eventObject.colName][eventObject.index];
-    if ("value" in filterData) {
-      setFilters((prevState) => ({
-        ...prevState,
-        ...{
-          [eventObject.group]: filterData.value,
-          column: selectedFilterType.details.id,
-          type: "text",
-        },
-      }));
-    } else {
-      setFilters((prevState) => ({
-        ...prevState,
-        ...{
-          [`${eventObject.group}_from`]: filterData.from,
-          [`${eventObject.group}_to`]: filterData.to,
-          column: selectedFilterType.details.id,
-          type: "number",
-        },
-      }));
-    }
-  };
+  // const dropDownChange = (event) => {
+  //   const eventObject = JSON.parse(event.target.value);
+  //   const filterData =
+  //     preDefienedGroups1[eventObject.colName][eventObject.index];
+  //   if ("value" in filterData) {
+  //     setFilters((prevState) => ({
+  //       ...prevState,
+  //       ...{
+  //         [eventObject.group]: filterData.value,
+  //         column: selectedFilterType.details.id,
+  //         type: "text",
+  //       },
+  //     }));
+  //   } else {
+  //     setFilters((prevState) => ({
+  //       ...prevState,
+  //       ...{
+  //         [`${eventObject.group}_from`]: filterData.from,
+  //         [`${eventObject.group}_to`]: filterData.to,
+  //         column: selectedFilterType.details.id,
+  //         type: "number",
+  //       },
+  //     }));
+  //   }
+  // };
 
   useEffect(() => {
 
@@ -580,7 +580,7 @@ export const PreDefienedFilters = ({
         )}
         {resetClicked === false && isGroupFilterProp === true && (
           <h6 className="border p-4">
-            {filterChoicesCustom.map((e) => {
+            {filterChoicesCustom.forEach((e) => {
               if (groupFilters.column === e.id) {
                 return e.name;
               }
@@ -629,7 +629,6 @@ const GroupFilters = ({
   const [groupsCounter, setGroupsCounter] = useState(2);
   const [prevStateFilters, setPrevStateFilters] = useState([]);
   const [isFilterResetHappened, setIsFilterResetHappened] = useState(false);
-  const [filters, setFilters] = useState({});
   const [multipleInputs, setMultipleInputs] = useState({});
   const [filterType, setFilterType] = useState("transcriptome");
   const [selectDefaultValue, setSelectDefaultValue] = useState("0");
@@ -1027,10 +1026,7 @@ const GroupFilters = ({
   const onChangeFilterInput = (e) => {
     if (e.target.type === "number") {
       let id = e.target.name;
-      let ids = id.split("_");
-      let m_id = ids[0];
-
-      
+      let ids = id.split("_");      
       let one_to_0, one_to, one_max_value, one_from_0, one_from, one_min_value;
       if (ids.includes("from")) {
         one_from_0 = e.target;
@@ -1995,32 +1991,32 @@ export const PreDefienedFiltersSurvival = ({
     });
   };
 
-  const dropDownChange = (event) => {
-    const eventObject = JSON.parse(event.target.value);
+  // const dropDownChange = (event) => {
+  //   const eventObject = JSON.parse(event.target.value);
 
-    const filterData =
-      preDefienedGroups1[eventObject.colName][eventObject.index];
-    if ("value" in filterData) {
-      setFilters((prevState) => ({
-        ...prevState,
-        ...{
-          [eventObject.group]: filterData.value,
-          column: selectedFilterType.details.id,
-          type: "text",
-        },
-      }));
-    } else {
-      setFilters((prevState) => ({
-        ...prevState,
-        ...{
-          [`${eventObject.group}_from`]: filterData.from,
-          [`${eventObject.group}_to`]: filterData.to,
-          column: selectedFilterType.details.id,
-          type: "number",
-        },
-      }));
-    }
-  };
+  //   const filterData =
+  //     preDefienedGroups1[eventObject.colName][eventObject.index];
+  //   if ("value" in filterData) {
+  //     setFilters((prevState) => ({
+  //       ...prevState,
+  //       ...{
+  //         [eventObject.group]: filterData.value,
+  //         column: selectedFilterType.details.id,
+  //         type: "text",
+  //       },
+  //     }));
+  //   } else {
+  //     setFilters((prevState) => ({
+  //       ...prevState,
+  //       ...{
+  //         [`${eventObject.group}_from`]: filterData.from,
+  //         [`${eventObject.group}_to`]: filterData.to,
+  //         column: selectedFilterType.details.id,
+  //         type: "number",
+  //       },
+  //     }));
+  //   }
+  // };
 
   useEffect(() => {
     let filterGroupsHtmlTemp = [];
@@ -2076,7 +2072,7 @@ export const PreDefienedFiltersSurvival = ({
           type: selectedFilterType.details.type,
           column: colName,
         };
-        preDefienedGroups1[colName].map((e, index) => {
+        preDefienedGroups1[colName].forEach((e, index) => {
           filtersTemp = {
             ...filtersTemp,
             [`${index + 1}_from`]: e.from,
@@ -2134,12 +2130,12 @@ export const PreDefienedFiltersSurvival = ({
         )}
         {resetClicked === false && isGroupFilterProp === true && (
           <h6 className="border p-4">
-            {Englishlanguage && filterChoicesCustom.map((e) => {
+            {Englishlanguage && filterChoicesCustom.forEach((e) => {
               if (groupFilters.column === e.id) {
                 return e.name;
               }
             })}
-             { koreanlanguage && filterChoicesCustomKorean.map((e) => {
+             { koreanlanguage && filterChoicesCustomKorean.forEach((e) => {
               if (groupFilters.column === e.id) {
                 return e.name;
               }
@@ -2191,13 +2187,12 @@ export const UserDefinedGroupFilters = ({
   const [groupsCounter, setGroupsCounter] = useState(2);
   const [prevStateFilters, setPrevStateFilters] = useState([]);
   const [isFilterResetHappened, setIsFilterResetHappened] = useState(false);
-  const [filters, setFilters] = useState({});
   const [multipleInputs, setMultipleInputs] = useState({});
   const [filterType, setFilterType] = useState("transcriptome");
   const [selectDefaultValue, setSelectDefaultValue] = useState("0");
   const [preDefienedGroups1, setPreDefienedGroups1] =useState({}) ;
   const [filterChoices, setFilterChoices] = useState([]); 
-  let { tab, project_id } = useParams();
+  let { project_id } = useParams();
 
   useEffect(() => {
     let preDefienedGroups1 = {}

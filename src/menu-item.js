@@ -1,21 +1,21 @@
 import { FormattedMessage } from 'react-intl';
 import config from './config';
+
 const sessionAuth = localStorage.getItem('ncc_access_token');
 
+function parseJwt(islogin1) {
+  const base64Url = islogin1 && islogin1.split('.')[1];
+  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  const jsonPayload = decodeURIComponent(
+    window
+      .atob(base64)
+      .split('')
+      .map((c) => `%${(`00${c.charCodeAt(0).toString(16)}`).slice(-2)}`)
+      .join(''),
+  );
 
-function parseJwt (islogin1) {
-    var base64Url = islogin1 && islogin1.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-  
-    return JSON.parse(jsonPayload);
- 
-  
+  return JSON.parse(jsonPayload);
 }
-
-
 
 const login = {
   id: 'login',
@@ -24,7 +24,7 @@ const login = {
   icon: 'fa fa-dashboard',
   url: '/login/',
   children: [],
-}
+};
 
 const logout = {
   id: 'logout',
@@ -33,23 +33,20 @@ const logout = {
   icon: 'fa fa-dashboard',
   url: '/logout/',
   children: [],
-}
+};
 const superAdmin = {
   id: 'admin',
   title: 'Admin',
   type: 'admin',
   icon: 'fa fa-dashboard',
-  url: config['auth']+'/login',
+  url: `${config.auth}/login`,
   children: [],
-}
+};
 
-
-let childMenu = {
-  "social": {
+const childMenu = {
+  social: {
     items: [
-    
       {
-
         id: 'signup',
         title: <FormattedMessage id="Signup" defaultMessage="Sign Up" />,
         type: 'item',
@@ -64,12 +61,11 @@ let childMenu = {
         icon: 'fa fa-dashboard',
         url: '/API/',
         children: [],
-      }
-    ]
+      },
+    ],
   },
-  "mainmenu": {
+  mainmenu: {
     items: [
-
       {
         id: 'introduce',
         title: <FormattedMessage id="Introduce" defaultMessage="Introduction" />,
@@ -79,11 +75,13 @@ let childMenu = {
         children: [
           {
             id: 'Business',
-            title: <FormattedMessage id="BusinessIntroduce" defaultMessage="Business Introduction" />,
+            title: (
+              <FormattedMessage id="BusinessIntroduce" defaultMessage="Business Introduction" />
+            ),
             type: 'item',
             icon: 'fa fa-dashboard',
             url: '/introduce/',
-            children: []
+            children: [],
           },
           {
             id: 'pipeline',
@@ -91,13 +89,13 @@ let childMenu = {
             type: 'item',
             icon: 'fa fa-dashboard',
             url: '/pipeline/',
-            children: []
+            children: [],
           },
         ],
       },
       {
         id: 'visualization',
-        title: <FormattedMessage id="Visualization" defaultMessage='Visualization' />,
+        title: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
         type: 'group',
         icon: 'fa fa-dashboard',
         url: '/summary/',
@@ -108,7 +106,7 @@ let childMenu = {
             type: 'item',
             icon: 'fa fa-dashboard',
             url: '/summary/',
-            children: []
+            children: [],
           },
           {
             id: 'DataVisualization',
@@ -116,24 +114,22 @@ let childMenu = {
             type: 'item',
             icon: 'fa fa-dashboard',
             url: '/visualise/circos/',
-            children: []
-          }
-        ]
+            children: [],
+          },
+        ],
       },
 
       {
         id: 'MyDataVisualization',
-        title: <FormattedMessage id="MyDataVisualization" defaultMessage='Visualize MyData' />,
+        title: <FormattedMessage id="MyDataVisualization" defaultMessage="Visualize MyData" />,
         type: 'group',
         icon: 'fa fa-dashboard',
         url: '/userdata/',
-        children: [
-
-        ],
+        children: [],
       },
       {
         id: 'tools',
-        title: <FormattedMessage id="Tools" defaultMessage='Tools' />,
+        title: <FormattedMessage id="Tools" defaultMessage="Tools" />,
         type: 'group',
         icon: 'fa fa-dashboard',
         url: '/blast/',
@@ -145,7 +141,7 @@ let childMenu = {
             type: 'item',
             icon: 'fa fa-dashboard',
             url: '/blast/',
-            children: []
+            children: [],
           },
           {
             id: 'VCFMAF',
@@ -153,92 +149,92 @@ let childMenu = {
             type: 'item',
             icon: 'fa fa-dashboard',
             url: '/vcfmaf/',
-            children: []
+            children: [],
           },
           {
             id: 'Interpro',
-            title: "Interpro",
+            title: 'Interpro',
             type: 'item',
             icon: 'fa fa-dashboard',
             url: '/interpro/',
-            children: []
-          }
+            children: [],
+          },
         ],
       },
       {
         id: 'voice',
-        title: <FormattedMessage id="CustomerVoice" defaultMessage='Customer Voice' />,
+        title: <FormattedMessage id="CustomerVoice" defaultMessage="Customer Voice" />,
         type: 'group',
         icon: 'fa fa-dashboard',
         url: '/faq/',
         children: [
           {
             id: 'faq',
-            title: <FormattedMessage id="FAQ" defaultMessage='FAQ' />,
+            title: <FormattedMessage id="FAQ" defaultMessage="FAQ" />,
             type: 'item',
             icon: 'fa fa-dashboard',
             url: '/faq',
-            children: []
+            children: [],
           },
           {
             id: 'qa',
-            title: <FormattedMessage id="QA" defaultMessage='Q&A' />,
+            title: <FormattedMessage id="QA" defaultMessage="Q&A" />,
             type: 'item',
             icon: 'fa fa-dashboard',
             url: '/qa',
-            children: []
+            children: [],
           },
           {
             id: 'notice',
-            title: <FormattedMessage id="Notice" defaultMessage='Notice' />,
+            title: <FormattedMessage id="Notice" defaultMessage="Notice" />,
             type: 'item',
             icon: 'fa fa-dashboard',
             url: '/notice',
-            children: []
+            children: [],
           },
           {
             id: 'otherservice',
-            title: <FormattedMessage id="OtherServices" defaultMessage='Other Service' />,
+            title: <FormattedMessage id="OtherServices" defaultMessage="Other Service" />,
             type: 'group',
             icon: 'fa fa-dashboard',
             url: '/otherservice',
             children: [
               {
                 id: 'organoid',
-                title: <FormattedMessage id="Organoid" defaultMessage='Organoid' />,
+                title: <FormattedMessage id="Organoid" defaultMessage="Organoid" />,
                 type: 'item',
                 icon: 'fa fa-dashboard',
                 url: '/organoid',
-                children: []
+                children: [],
               },
               {
                 id: 'qa',
-                title: <FormattedMessage id="RelatedSites" defaultMessage='Related Sites' />,
+                title: <FormattedMessage id="RelatedSites" defaultMessage="Related Sites" />,
                 type: 'item',
                 icon: 'fa fa-dashboard',
                 url: '/qa',
-                children: []
-              }
-            ]
-          }
+                children: [],
+              },
+            ],
+          },
         ],
       },
-    ]
-  }
-}
+    ],
+  },
+};
 
 if (sessionAuth) {
-  let jwt = parseJwt(sessionAuth)
+  const jwt = parseJwt(sessionAuth);
   // console.log('jwt',jwt);
-  childMenu["social"]["items"].push(logout)
-  if(jwt['is_superuser']){
-    childMenu["social"]["items"].push(superAdmin)
+  childMenu.social.items.push(logout);
+  if (jwt.is_superuser) {
+    childMenu.social.items.push(superAdmin);
   }
   // childMenu["social"]["items"].splice(0, childMenu["social"]["items"],...childMenu["social"]["items"].filter(function(item){
   //   return (item.id!=='signup' ||  item.id!=='logout')
   // }))
 } else {
-  childMenu["social"]["items"].push(login)
+  childMenu.social.items.push(login);
 }
 // if(parseJwt(islogin1)){
 //   childMenu["social"]["items"].push(superAdmin)

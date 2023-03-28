@@ -1,19 +1,12 @@
-import React, { useState, useEffect, useRef, useCallback, Fragment } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import * as d3 from 'd3';
-import test_data from './test_scatter_data'
+import React, { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import {Chart, registerables} from 'chart.js';
-// import ChartDataLabels from 'chartjs-pslugin-datalabels';
 
 Chart.register(...registerables);
-// import genes from '../Common/gene.json'
-// import { getBreastKeys, getUserDataProjectsTableData } from '../../actions/api_actions'
 var myChart
 const ScatterPlot = React.forwardRef(({ scatter_data, watermarkCss }, ref) => {
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
   const scatter_plot = useRef(null);
-  const [chartV, setChartV] = useState()
   let option = {
     plugins:{
       tooltip: {

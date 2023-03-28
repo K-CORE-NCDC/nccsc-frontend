@@ -1,10 +1,4 @@
-import React, { useState, useEffect } from 'react'
-
-import {
-    vcfmaf
-} from "../../actions/api_actions";
-import { useSelector, useDispatch } from "react-redux";
-import LoaderCmp from '../Common/Loader'
+import React from 'react'
 
 function Blast(){
     return (

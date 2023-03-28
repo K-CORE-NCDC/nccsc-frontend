@@ -1,18 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react'
-import * as d3 from 'd3'
-import dataD from './data.diff'
+import React from 'react'
 import "../../styles/volcano.css"
-import UserFilesTable from './Table'
 import { Chart, registerables } from 'chart.js';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
-// import * as ChartZoomPlugin from "chartjs-plugin-zoom"
 import zoomPlugin from "chartjs-plugin-zoom";
 import DataTable from 'react-data-table-component';
 import VolcanoPlotD3 from './VolcanoD3'
 
 Chart.register(...registerables, zoomPlugin);
 
-var myChart
 const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, positive_data, tab_count, tableData }, ref) => {
   const table_cols = [
     {
@@ -31,68 +25,28 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
       sortable: true
     }
   ]
-  const volcano_plot = useRef(null);
-  let option = {
-    scales: {
-      x: {
-        type: 'linear',
-        position: 'bottom',
-        min: -25,
-        max: 25,
-        title: {
-          display: true,
-          text: 'Log2FoldChange'
-        }
-      },
-    },
-    responsive: true,
-    plugins: {
-      tooltip: {
-        callbacks: {
-          label: function(tooltipItem, data) {
-              return tooltipItem.raw.gene+': (' +  tooltipItem.raw.x + ', ' +  tooltipItem.raw.y + ')';
-          }
-        }
-    },
-      zoom: {
-        pan: {
-          enabled: true,
-          drag: true,
-          mode: 'xy',
-          // rangeMin: { y: 0},
-          // rangeMax: { y: 10 }
-        },
-        y: {
-          title: {
-            display: true,
-            text: '-Log(p-value)'
-          }
-        }
-      },
-    }
-  }
 
-  const resetChart = () => {
-    myChart.resetZoom()
-  }
+  // const resetChart = () => {
+  //   myChart.resetZoom()
+  // }
 
-  const zoomIn = () => {
-    myChart.zoom(1.1)
-  }
+  // const zoomIn = () => {
+  //   myChart.zoom(1.1)
+  // }
 
-  const zoomOut = () => {
-    myChart.resetZoom(0.9)
-  }
+  // const zoomOut = () => {
+  //   myChart.resetZoom(0.9)
+  // }
 
-  function volcanoPlot(d_) {
-    myChart = new Chart(volcano_plot.current, {
-      type: 'scatter',
-      data: {
-        'datasets': d_
-      },
-      options: option
-    })
-  }
+  // function volcanoPlot(d_) {
+  //   myChart = new Chart(volcano_plot.current, {
+  //     type: 'scatter',
+  //     data: {
+  //       'datasets': d_
+  //     },
+  //     options: option
+  //   })
+  // }
   // useEffect(() => {
   //   if (data) {
   //     volcanoPlot(data)

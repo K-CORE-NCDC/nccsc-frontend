@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import {  useDispatch } from "react-redux";
 import FileUpload from './Components/MainComponents/NewClinicalFileUpload'
 import FileUploadDropdowncomponent from "./Components/MainComponents/FileUploadDropdowncomponent";
 import FileProjectDataTable from "./Components/MainComponents/FileProjectDataTable";
@@ -8,16 +7,11 @@ import { useHistory } from "react-router-dom";
 
 export default function DataVisualization() {
   let history = useHistory();
-  // const userDataTableData = useSelector(state => state.dataVisualizationReducer.userProjectsDataTable)
   const [componentNumber, setComponentNumber] = useState(0)
-  const [hideupload, setHideUpload] = useState(false)
-  // const [showVisualization, setShowviualization] = useState(false)
-  const [showLoginForm, setShowLoginForm] = useState(false)
-  // const dispatch = useDispatch()
+  const hideupload = false
+  const showLoginForm = false
   const fileUploadCallBack = (d_) => {
-    // setTimeout(() => setHideUpload(true), 10000)
   }
-  // const [uploadNewSamplesToggle, setUploadNewSamplesToggle] = useState('Upload new Samples')
 
   
 

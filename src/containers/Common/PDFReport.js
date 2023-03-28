@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import Sankey from '../DataVisualisation/Charts/NewSankey'
 import NewSankeyd3 from '../DataVisualisation/Charts/NewSankeyd3'
 
@@ -10,9 +10,8 @@ function PDFReport() {
   const reportData = useSelector(state => state.dataVisualizationReducer.rniData)
   const [gene, setGene] = useState('NRAS')
   const [sankeyData, setSankeyData] = useState([])
-  const [sankyGeneList, setSankyGeneList] = useState([])
+  // const [sankyGeneList, setSankyGeneList] = useState([])
   const [sankyDataCharts, setSankyDataCharts] = useState([])
-  const GeneMutationData = useSelector((data) => data.dataVisualizationReducer.rniData);
 
 
   useEffect(() => {
@@ -30,7 +29,7 @@ function PDFReport() {
         GeneListSanky.push(i)
       }
       setSankeyData(listofSankey)
-      setSankyGeneList(GeneListSanky)
+      // setSankyGeneList(GeneListSanky)
 
     }
   }, [reportData])

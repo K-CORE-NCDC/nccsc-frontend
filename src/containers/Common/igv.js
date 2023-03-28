@@ -1,5 +1,6 @@
-import React, { useState,useEffect } from 'react'
+import React, { useEffect } from 'react'
 import igv from 'igv'
+// import igv from "https://cdn.jsdelivr.net/npm/igv@2.13.9/dist/igv.esm.min.js"
 
 
 

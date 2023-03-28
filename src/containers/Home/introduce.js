@@ -1,6 +1,4 @@
-import tit_bar2 from '../../assets/images/sub/tit_bar2.gif'
 import React, { useState, useContext, useEffect } from "react";
-// import s1 from '../../assets/images/business_tab3.png';
 import s1_english from '../../assets/images/ncc_introduction_data_eng.png';
 import s1_korean from '../../assets/images/ncc_introduction_data_kor.png';
 import s2 from '../../assets/images/intro_at1.png'
@@ -27,15 +25,15 @@ export default function Introduce() {
     <section className="intro_wrap">
       <h1><FormattedMessage id={"Project for building a healthcare big data showcase"} defaultMessage={"Project for building a healthcare big data showcase"} /></h1>
       <ul className="intro_tab tab_title_main">
-        <li className={tabs === 1 ? "on" : ""}><a onClick={() => setTabs(1)}>
-          <FormattedMessage id={"Project introduction"} defaultMessage={"Project introduction"} /></a>
+        <li className={tabs === 1 ? "on" : ""}><p onClick={() => setTabs(1)}>
+          <FormattedMessage id={"Project introduction"} defaultMessage={"Project introduction"} /></p>
         </li>
         <li className={tabs === 2 ? "on" : ""} style={{ width: '-webkit-fill-available' }}>
-          <a onClick={() => setTabs(2)}>
+          <p onClick={() => setTabs(2)}>
             <FormattedMessage id={"Cancer Proteogenomics Working Group"} defaultMessage={"Cancer Proteogenomics Working Group"} />
-          </a></li>
+          </p></li>
         <li className={tabs === 3 ? "on" : ""}>
-          <a onClick={() => setTabs(3)}><FormattedMessage id={"DATA introduction"} defaultMessage={"DATA introduction"} /></a>
+          <p onClick={() => setTabs(3)}><FormattedMessage id={"DATA introduction"} defaultMessage={"DATA introduction"} /></p>
         </li>
       </ul>
 

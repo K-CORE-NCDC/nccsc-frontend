@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import SurvivalCmp from "../../Common/Survival";
 import {
@@ -15,7 +15,6 @@ import { useParams } from "react-router-dom";
 import LoaderCmp from "../../Common/Loader";
 import { FormattedMessage } from "react-intl";
 import inputJson from "../../Common/data";
-import { Context } from "../../../wrapper";
 const selectedCss =
   "w-1/2 rounded-r-none  hover:scale-110 xs:h-14 xs:text-sm focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition";
 const nonSelectedCss =
@@ -39,19 +38,18 @@ export default function DataSurvival({
   const [loader, setLoader] = useState(true);
   const [groupFilters, setGroupFilters] = useState({});
   const [geneDatabase, setGeneDatabase] = useState("dna_mutation");
-  const [showClinicalFilters, setShowClinicalFilters] = useState(false);
   const [sampleCountsCard, setSampleCountsCard] = useState([]);
   const [renderSurvival, setRenderSurvival] = useState(true);
   const [renderNoContent, setRenderNoContent] = useState(false);
   const [filterTypeButton, setFilterTypeButton] = useState("clinical");
-  let { tab, project_id } = useParams();
+  let { project_id } = useParams();
   const [userDefienedFilter, setUserDefienedFilter] = useState(
     project_id === undefined ? "static" : "dynamic"
-  );
-  const [alltabList, setAllTabList] = useState({});
-  const tabList = useSelector(
-    (data) => data.dataVisualizationReducer
-  );
+    );
+    const [alltabList, setAllTabList] = useState({});
+    const tabList = useSelector(
+      (data) => data.dataVisualizationReducer
+      );
 
   useEffect(()=>{
     if('userProjectsDataTable' in tabList ){
@@ -60,31 +58,15 @@ export default function DataSurvival({
     
     },[tabList])
 
-
-
-
   const [coxUserDefinedFilter, setCoxUserDefinedFilter] = useState({})
   const [survivalModel, setSurvivalModel] = useState("kaplan");
   const [pValueData, setPvalueData] = useState("");
-  const [smallScreen, setSmallScreen] = useState(false);
+  const smallScreen = false
   const [coxTable, setCoxTable] = useState([]);
   const [coxNoData, setCoxNoData] = useState(true)
   const userDefinedFilterColumns = useSelector(
     (data) => data.dataVisualizationReducer.userDefinedFilter
   );
-  const [koreanlanguage, setKoreanlanguage] = useState(false);
-  const [Englishlanguage, setEnglishlanguage] = useState(true);
-  const context = useContext(Context);
-  
-  useEffect(() => {
-    if (context["locale"] === "kr-KO") {
-      setKoreanlanguage(true);
-      setEnglishlanguage(false);
-    } else {
-      setKoreanlanguage(false);
-      setEnglishlanguage(true);
-    }
-  },[context]);
     
   const [coxFilter, setCoxFilter] = useState({
   });
@@ -151,16 +133,16 @@ export default function DataSurvival({
 
   let check = (d)=>{
     let check = false
-    for(let key in d["data"]["sample_counts"]){
-      if(d["data"]["sample_counts"][key] !== 0){
-        check = true
-      }
-    } 
+      for(let key in d["sample_counts"]){
+        if(d["sample_counts"][key] !== 0){
+          check = true
+        }
+      } 
     return check
   }
 
   const submitFitersAndFetchData = () => {
-    if (fileredGene !== "" || filterTypeButton === "clinical") {
+    if (fileredGene !== "") {
       setLoader(true);
       inputData["filterType"] = userDefienedFilter;
       inputData["survival_type"] = survivalModel;
@@ -174,7 +156,7 @@ export default function DataSurvival({
         })
         return_data.then((result) => {
           const d = result
-          if (d.status === 200 && check(d)) {
+          if (d.status === 200 && "data" in d && check(d["data"])) {
             let r_ = d["data"]
             r_['status'] = 200
             setSurvivalJson(r_)
@@ -197,7 +179,7 @@ export default function DataSurvival({
         })
         return_data.then((result) => {
           const d = result
-          if (d.status === 200 && check(d)) {
+          if (d.status === 200 && "data" in d && check(d["data"])) {
             let r_ = d["data"]
             r_['status'] = 200
             setSurvivalJson(r_)
@@ -216,7 +198,7 @@ export default function DataSurvival({
       let return_data = SurvivalInformation("POST", inputData)
       return_data.then((result) => {
         const d = result
-        if (d.status === 200 && check(d)) {
+        if (d.status === 200 && "data" in d && check(d["data"])) {
           let r_ = d["data"]
           r_['status'] = 200
           setSurvivalJson(r_)
@@ -232,6 +214,7 @@ export default function DataSurvival({
     }
   };
 
+
   useEffect(() => {
     if (inputData) {
       if (inputData.type !== "") {
@@ -245,11 +228,6 @@ export default function DataSurvival({
       setGenesArray(inputData.genes);
     }
   }, [inputData]);
-  useEffect(() => {
-    if (fileredGene !== "") {
-      setShowClinicalFilters(true);
-    }
-  }, [fileredGene]);
 
   useEffect(() => {
     setTimeout(function () {
@@ -261,7 +239,7 @@ export default function DataSurvival({
         let totalCount = 0;
         let htmlArray = [];
         if (Object.keys(sampleCountsObject).length > 0) {
-          Object.keys(sampleCountsObject).map((e) => {
+          Object.keys(sampleCountsObject).forEach((e) => {
             totalCount += sampleCountsObject[e];
             htmlArray.push(
               <div
@@ -275,7 +253,6 @@ export default function DataSurvival({
           });
         }
         if (htmlArray.length > 1) {
-          // setPvalueData(`P-Value : ${survivalJson.pvalue.toPrecision(3)} / R-Value : ${survivalJson.rvalue.toFixed(6)}`)
           if(survivalJson.pvalue!==0){
             setPvalueData(`P-Value : ${survivalJson.pvalue.toPrecision(3)}`);
           }
@@ -330,12 +307,10 @@ export default function DataSurvival({
 
       let tmp = [];
       let columns = survivalJson && 'columns' in survivalJson &&  survivalJson["columns"];
-      let table = [];
       let thead = [<th></th>];
       let data = survivalJson && 'data' in survivalJson && JSON.parse(survivalJson["data"]);
       let cf = survivalJson && 'clinical_filter' in survivalJson &&  survivalJson["clinical_filter"];
       let image = survivalJson && 'image' in survivalJson &&  survivalJson["image"];
-      // let image = survivalJson["image"];
       let trow = [];
       if(columns){
         for (let c = 0; c < columns.length; c++) {
@@ -438,11 +413,11 @@ export default function DataSurvival({
 
   useEffect(() => {
     if (survivalJson && survivalJson.status === 200) {
-      setRenderNoContent(false);
+      // setRenderNoContent(false);
       setRenderSurvival(true);
       setCoxNoData(false)
-    } else if(survivalJson && survivalJson.status !== 200) {
-      setRenderNoContent(true);
+    } else if(survivalJson && survivalJson.status !== 200 ) {
+      // setRenderNoContent(true);
       setRenderSurvival(false);
       setCoxNoData(false)
     }
@@ -498,7 +473,6 @@ export default function DataSurvival({
   };
 
   const submitCox = (e, type) => {
-    // dispatch(clearSurvivalIMage())
     setSurvivalModel(type);
     if (type === "cox") {
       inputData["survival_type"] = type;
@@ -506,7 +480,7 @@ export default function DataSurvival({
       let return_data = SurvivalInformation("POST", inputData)
       return_data.then((result) => {
         const d = result
-        if (d.status === 200 && check(d)) {
+        if (d.status === 200) {
           let r_ = d["data"]
           r_['status'] = 200
           setSurvivalJson(r_)

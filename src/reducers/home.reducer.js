@@ -1,178 +1,188 @@
 import { homeConstants } from '../actions/Constants';
 
-const homeReducer = (state = { 'home': 'home' }, { type, payload }) => {
+const homeReducer = (state = { home: 'home' }, { type, payload } ) => {
   switch (type) {
     case homeConstants.HOME_REQUEST:
-      return { ...state }
+      return { ...state };
     case homeConstants.DATA_COUNT:
       return {
         ...state,
-        dataCount: payload
-      }
+        dataCount: payload,
+      };
     case homeConstants.DATA_SUMMARY:
       return {
         ...state,
-        dataSummary: payload
-      }
+        dataSummary: payload,
+      };
     case homeConstants.GENOMIC_INFORMATION:
       return {
         ...state,
-        genomicData: payload
-      }
+        genomicData: payload,
+      };
     case homeConstants.USERDATA_VISUALIZATION:
       return {
         ...state,
-        fileUploadData: payload
-      }
+        fileUploadData: payload,
+      };
     case homeConstants.NEWUSERDATA_VISUALIZATION:
       return {
         ...state,
-        newFileUploadData: payload
-      }
-      case homeConstants.UPLOAD_CLININCAL_COLUMNS:
-        return {
-          ...state,
-          uploadClinicalColumns: payload
-        }
+        newFileUploadData: payload,
+      };
+    case homeConstants.UPLOAD_CLININCAL_COLUMNS:
+      return {
+        ...state,
+        uploadClinicalColumns: payload,
+      };
 
     case homeConstants.CLEARNEWUSERDATA_VISUALIZATION:
-      const {newFileUploadData, ...remaining}=state 
-      state= remaining
-      return  state
-        // ...state,
-        // newFileUploadData: payload
-
+    {
+      const { newFileUploadData, ...remaining } = state;
+      /* eslint-disable no-param-reassign */
+      state = remaining;
+      return state;
+      // ...state,
+      // newFileUploadData: payload
+    }
     case homeConstants.CLEAR_UPLOAD_CLININCAL_COLUMNS:
-      const {uploadClinicalColumns, ...remaining_clinical_columns}=state 
-      state= remaining_clinical_columns
-      return  state
+    {
+      const { uploadClinicalColumns, ...remaininClinicalColumns } = state;
+      /* eslint-disable no-param-reassign */
+      state = remaininClinicalColumns;
+      return state;
+    }
 
     case homeConstants.NEWUSERDATA_VISUALIZATION_ERROR:
       return {
         ...state,
-        newFileUploadStatus: { ...state.fileUploadStatus, ...payload }
-      }
+        newFileUploadStatus: { ...state.fileUploadStatus, ...payload },
+      };
     case homeConstants.USERDATA_VISUALIZATION_ERROR:
       return {
         ...state,
-        fileUploadStatus: { ...state.fileUploadStatus, ...payload }
-      }
+        fileUploadStatus: { ...state.fileUploadStatus, ...payload },
+      };
     case homeConstants.APPLICATION_LANGUAGE:
       return {
         ...state,
-        languageReducer: payload
-      }
+        languageReducer: payload,
+      };
     case homeConstants.DATA_FAQ:
       return {
         ...state,
-        dataFaq: payload
-      }
+        dataFaq: payload,
+      };
     case homeConstants.DATA_NOTICE:
       return {
         ...state,
-        dataNotice: payload
-      }
+        dataNotice: payload,
+      };
     case homeConstants.DATA_QA:
       return {
         ...state,
-        dataQA: payload
-      }
+        dataQA: payload,
+      };
     case homeConstants.NOTICE_DETAILS:
       return {
         ...state,
-        noticedata: payload
-      }
+        noticedata: payload,
+      };
     case homeConstants.OTP_REQUEST:
       return {
         ...state,
-        emailsentstatus: payload
-      }
+        emailsentstatus: payload,
+      };
     case homeConstants.OTP_VALIDATION:
       return {
         ...state,
-        otp_validation_status: payload
-      }
+        otp_validation_status: payload,
+      };
     case homeConstants.FIND_ID:
       return {
         ...state,
-        find_id: payload
-      }
+        findID: payload,
+      };
     case homeConstants.FIND_PASSWORD:
       return {
         ...state,
-        find_password: payload
-      }
+        findPassword: payload,
+      };
     case homeConstants.REGISTRATION:
       return {
         ...state,
-        registration_status: payload
-      }
-      case homeConstants.CHANGE_PASSWORD:
-        return {
-          ...state,
-          change_password_status:payload
-        }
-      case homeConstants.REQUEST_DONE:
-        return{
-          ...state
-        }
-      case homeConstants.CHECK_EMAIL:
-        return{
-          ...state,
-          is_email_exist:payload
-        }
+        registration_status: payload,
+      };
+    case homeConstants.CHANGE_PASSWORD:
+      return {
+        ...state,
+        changePasswordStatus: payload,
+      };
+    case homeConstants.REQUEST_DONE:
+      return {
+        ...state,
+      };
+    case homeConstants.CHECK_EMAIL:
+      return {
+        ...state,
+        is_email_exist: payload,
+      };
     case homeConstants.VERIFY_ENCODE:
       return {
         ...state,
-        verifyMobile:payload
-      }
+        verifyMobile: payload,
+      };
     case homeConstants.INTERPRO:
       return {
         ...state,
-        interpro:payload
-      }
+        interpro: payload,
+      };
     case homeConstants.VCFMAF:
       return {
         ...state,
-        vcfmaf:payload
-      }
+        vcfmaf: payload,
+      };
 
     case homeConstants.LOGMANAGEMENT:
       return {
         ...state,
-        logmanagement:[ ...payload]
-      }
+        logmanagement: [...payload],
+      };
     case homeConstants.CHECK_MOBILE:
       return {
         ...state,
-        mobileVerified:payload
-      }
+        mobileVerified: payload,
+      };
     case homeConstants.SENDLOGMANAGEMENT:
       return {
         ...state,
-        sendlogmanagement:payload
-      }
+        sendlogmanagement: payload,
+      };
 
-    // case homeConstants.PROJECT_ID:
-    //   return {
-    //     ...state,
-    //     project_id_status:payload
-    //   }
+      // case homeConstants.PROJECT_ID:
+      //   return {
+      //     ...state,
+      //     project_id_status:payload
+      //   }
 
     case homeConstants.CLEAR_NOTICE_DETAILS:
-      const {noticedata, ...remains}=state
-      state = remains
-      return state
-      
-      
+    {
+      const { noticedata, ...remains } = state;
+      /* eslint-disable no-param-reassign */
+      state = remains;
+      return state;
+    }
     case homeConstants.CLEAR_ID_PASSWORD_RESET_PASSWORD:
-      const {find_id,find_password,change_password_status, ...rest}=state 
-      state= rest
-      return  state
-      
+    {
+      const {
+        findId, findPassword, changePasswordStatus, ...rest
+      } = state;
+      /* eslint-disable no-param-reassign */
+      state = rest;
+      return state;
+    }
 
     default:
-      return state
+      return state;
   }
-}
+};
 export default homeReducer;

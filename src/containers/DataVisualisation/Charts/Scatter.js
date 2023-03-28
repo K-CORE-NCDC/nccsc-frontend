@@ -11,7 +11,7 @@ import {FormattedMessage} from 'react-intl';
 export default function Scatter({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
   const [scatterJson, setScatterJson] = useState({})
-  const [displaySamples, setDisplaySamples] = useState(false)
+  // const [displaySamples, setDisplaySamples] = useState(false)
   const [watermarkCss, setWatermarkCSS] = useState("")
   const [loader, setLoader] = useState(false)
   const [gene, setGene] = useState('')
@@ -72,13 +72,13 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
     setPrimaryGene(select_)
   }
 
-  useEffect(() => {
-    if (inputData && inputData.genes.length > 0) {
-      setDisplaySamples(true)
-    } else {
-      setDisplaySamples(false)
-    }
-  }, [inputData])
+  // useEffect(() => {
+  //   if (inputData && inputData.genes.length > 0) {
+  //     setDisplaySamples(true)
+  //   } else {
+  //     setDisplaySamples(false)
+  //   }
+  // }, [inputData])
 
 
   useEffect(() => {

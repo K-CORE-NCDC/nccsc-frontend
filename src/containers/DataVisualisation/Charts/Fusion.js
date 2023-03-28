@@ -26,25 +26,24 @@ export default function FusionPlot({
 }) {
   const context = useContext(Context);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
-  const [Englishlanguage, setEnglishlanguage] = useState(true);
   const [loader, setLoader] = useState(false);
   const [smallScreen, setSmallScreen] = useState(false);
-  const [sampleCount, setSampleCount] = useState({});
+  // const [sampleCount, setSampleCount] = useState({});
+  const sampleCount = {}
   const [groupFilters, setGroupFilters] = useState({});
   const [tableData, setTableData] = useState([]);
   const [fusionId, setFusionId] = useState(0);
   const [groupName, setGroupName] = useState("");
   const [noData, setNoData] = useState('false')
-  const [firstTime, setFirstTime] = useState(true)
+  // const [firstTime, setFirstTime] = useState(true)
+  const firstTime = true
   const [VennData, setVennData] = useState({})
 
   useEffect(() => {
     if (context["locale"] === "kr-KO") {
       setKoreanlanguage(true);
-      setEnglishlanguage(false);
     } else {
       setKoreanlanguage(false);
-      setEnglishlanguage(true);
     }
   },[context]);
 
@@ -56,9 +55,6 @@ export default function FusionPlot({
     (data) => data.dataVisualizationReducer.clinicalMaxMinInfo
   );
 
-  const circosSanpleRnidListData = useSelector(
-    (data) => data.dataVisualizationReducer.Keys
-  );
 
   const tableColumnsData = [
     {

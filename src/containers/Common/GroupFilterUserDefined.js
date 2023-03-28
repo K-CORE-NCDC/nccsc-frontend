@@ -98,7 +98,7 @@ let UserDefinedGroupFilters = ({
   const [preDefienedGroups1, setPreDefienedGroups1] = useState({});
   const [filterChoices, setFilterChoices] = useState([]);
   const [booleanColumns, setBooleanColumns] = useState([]);
-  let { tab, project_id } = useParams();
+  let { project_id } = useParams();
   useEffect(() => {
     let preDefienedGroups1 = {};
     let filterChoices = [];
@@ -384,7 +384,6 @@ let UserDefinedGroupFilters = ({
     if (e.target.type === "number") {
       let id = e.target.name;
       let ids = id.split("_");
-      let m_id = ids[0];
 
       let one_to_0, one_to, one_max_value, one_from_0, one_from, one_min_value;
       if (ids.includes("from")) {

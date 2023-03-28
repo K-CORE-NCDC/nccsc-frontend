@@ -1,14 +1,11 @@
 import React, { useState,useEffect, useContext } from "react";
 import {useSelector, useDispatch} from "react-redux";
-import pipeline from '../../assets/images/sub/pipeline.png'
 import DataTable from "react-data-table-component";
 import '../../assets/interceptor/interceptor'
 import axios from "axios";
 import config from '../../config';
-import { Link, Redirect, useParams } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 import { Context } from "../../wrapper";
-// import { Route } from 'react-router-dom';
-// import DataTableExtensions from "react-data-table-component-extensions
 import { getNoticeData } from '../../actions/api_actions'
 import {FormattedMessage} from 'react-intl';
 
@@ -23,7 +20,6 @@ function NoticeList() {
     const [Dateofissue, setDateofissue] = useState("Date Of Issue")
 
     const [tableData, setTableData] = useState([])
-    const faq_data = useSelector((state)=>state.homeReducer.dataQA)
     const [totalRows, setTotalRows] = useState(0);
     const [perPage, setPerPage] = useState(10);
     const [loading, setLoading] = useState(false);
@@ -51,7 +47,7 @@ function NoticeList() {
         setOrder("번호")
         setDateofissue("일시")
       }
-      else{
+      else if(Englishlanguage){
         setTitle( 'Title')
         setContent( "Content")
         setWriter( "Writer")
@@ -244,8 +240,6 @@ function NoticeDetail({slug_id}){
 
 export default function Notice(){
   let { slug }  = useParams();
-  const [slugState, setSlugStare] = useState()
-  let render = []
 
   return (
     <>

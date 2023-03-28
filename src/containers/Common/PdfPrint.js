@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from "react";
-import LoaderCmp from "../Common/Loader";
-import ReactDOM from "react-dom";
 import {
-  logManagement,
   sankeyImageData,
   sendReportData,
   clearPdfLink,
 } from "../../actions/api_actions";
 import uuid from 'react-uuid';
-import Sankey from "../DataVisualisation/Charts/NewSankey";
-import NewSankeyd3 from "../DataVisualisation/Charts/NewSankeyd3";
 import html2canvas from "html2canvas";
 import { useSelector, useDispatch } from "react-redux";
 import config from "../../config";
-import { Link } from "react-router-dom";
 function PdfPrint({ isReportClicked }) {
   const [loader, setLoader] = useState(false);
   const [anchorTag, setAnchorTag] = useState([])
@@ -25,7 +19,7 @@ function PdfPrint({ isReportClicked }) {
     (data) => data.dataVisualizationReducer.rniData
   );
   const PDF_Report_Status = useSelector(
-    (data) => data.dataVisualizationReducer.PDF_Report
+    (data) => data.dataVisualizationReducer.PDFReport
   );
 
 
@@ -36,7 +30,6 @@ function PdfPrint({ isReportClicked }) {
       className = `sanky_chart_pdf${count}`;
       while (document.querySelector(`.${className}`) !== null) {
         className = `sanky_chart_pdf${count}`;
-        const abcd = document.querySelector(`.${className}`);
         count++;
       }
       DownloadPDF(count);

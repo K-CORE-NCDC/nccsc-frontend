@@ -1,8 +1,6 @@
 import React from 'react'
 
 import '../../styles/koreanprivacy.css'
-
-import destruction from '../../assets/images/PrivacyACTImages/destruction.png'
 import automatedcollection from '../../assets/images/PrivacyACTImages/automatedcollection.png'
 import Generalpersonaliformationcollection from '../../assets/images/PrivacyACTImages/Generalpersonaliformationcollection.png'
 import GrievanceHandlingDepartment from '../../assets/images/PrivacyACTImages/GrievanceHandlingDepartment.png'

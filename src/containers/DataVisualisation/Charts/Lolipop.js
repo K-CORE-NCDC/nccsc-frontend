@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment, useRef } from 'react'
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import LollipopCmp from '../../Common/Lollipop'
 import { LolipopInformation } from '../../../actions/api_actions'
 import { exportComponentAsJPEG } from 'react-component-export-image';
@@ -11,7 +11,6 @@ import { useParams } from "react-router-dom";
 
 export default function DataLolipop({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
-  const dispatch = useDispatch()
   const [genesHtml, setGenesHtml] = useState([])
   const [gene, setGene] = useState('')
   const [activeCmp, setActiveCmp] = useState(false)
@@ -30,7 +29,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   const [noContent, setNoContent] = useState(true)
   const [percentage, setPercentage] = useState("")
   const [alltabList, setAllTabList] = useState({}); 
-  let { tab, project_id } = useParams();
+  let { project_id } = useParams();
 
   const tabList = useSelector(
     (data) => data.dataVisualizationReducer
@@ -145,9 +144,9 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
     }
   }, [inputState])
 
-  const classNames = (...classes) => {
-    return classes.filter(Boolean).join(' ')
-  }
+  // const classNames = (...classes) => {
+  //   return classes.filter(Boolean).join(' ')
+  // }
 
   const generateColor = () => {
     var letters = "0123456789ABCDEF";
@@ -160,12 +159,10 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   useEffect(() => {
     if (lolipopJson && lolipopJson.status === 200) {
       if (Object.keys(lolipopJson).length > 0) {
-        let domainsTmp = {}
         let domains = []
         let lollipop = []
         let lollipopLegenedTmp = {}
         let lollipopTmp = {}
-        let codons = {}
         var width = []
         let data = lolipopJson['data']
 
@@ -182,7 +179,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
             if (tableType === "Mutation") {
               let vc_sample = data[i]['variant_classification']
               if (vc_sample in lollipopLegenedTmp) {
-                if (lollipopLegenedTmp[vc_sample].includes(data[i].sample) == false) {
+                if (lollipopLegenedTmp[vc_sample].includes(data[i].sample) === false) {
                   lollipopLegenedTmp[vc_sample].push(data[i].sample)
                   unique_sample.push(data[i].sample)
                 }
@@ -261,7 +258,6 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
           
           colors = mutation_colors
           for (var key in mutation_colors) {
-            let name = key
             let count = 0
             if (key in lollipopLegenedTmp) {
               count = lollipopLegenedTmp[key].length
@@ -316,7 +312,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
           )
           colors = phospo_colors
           let phospho_tmp = {}
-          for (var key in lollipopLegenedTmp) {
+          for (let key in lollipopLegenedTmp) {
             let name = key.substring(0, 1)
             if (name in phospho_tmp) {
               phospho_tmp[name] += lollipopLegenedTmp[key].length
@@ -337,7 +333,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
 
             height.push(lollipopLegenedTmp[key].length)
           }
-          for (var key in phospo_colors) {
+          for (let key in phospo_colors) {
             let name = key
             let count = 0
             if (key in phospho_tmp) {
@@ -355,7 +351,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
             )
           }
           tmp.push(<div className='p-3' key={'major'}> <FormattedMessage id="MajorSite" defaultMessage=" / Major Site :" /></div>)
-          for (var key in lollipopLegenedTmp) {
+          for (let key in lollipopLegenedTmp) {
             tmp.push(<div className='p-3' key={key}>
               <span ><strong>{key + "(" + lollipopLegenedTmp[key].length + ")"}</strong></span>
             </div>)

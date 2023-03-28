@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import config from "../../config";
-import { UserIcon, eye, EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
+import { UserIcon, EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
 import { Link } from "react-router-dom";
-import { FormattedMessage } from "react-intl";
 
 
 const LoginComponent = () => {

@@ -1,6 +1,4 @@
-import React, { useEffect, useRef } from "react";
-// var venn = require("venn")
-// import {VennDiagram} from 'venn.js'
+import React, { useEffect } from "react";
 import * as venn from "venn.js";
 import * as d3 from "d3";
 import "../../styles/survival.css";
@@ -16,10 +14,10 @@ export default function VennCmp({ width, data = null }) {
 
       div.select("svg").attr("class", "inline");
 
-      var tooltip = d3
-        .select("body")
-        .append("div")
-        .attr("class", "venntooltip");
+      // var tooltip = d3
+      //   .select("body")
+      //   .append("div")
+      //   .attr("class", "venntooltip");
 
       div.selectAll("path").style("stroke-opacity", 0).style("stroke", "#fff");
 
@@ -34,7 +32,7 @@ export default function VennCmp({ width, data = null }) {
         "Global Proteome_DNA Mutation": "#3777af",
         "Global Proteome_DNA Mutation_RNA Expression": "#fffebc",
       };
-      var div = d3.select("#venn").datum(sets).call(chart);
+      // var div = d3.select("#venn").datum(sets).call(chart);
       var tooltip = d3
         .select("body")
         .append("div")
@@ -43,7 +41,7 @@ export default function VennCmp({ width, data = null }) {
         .selectAll("path")
         .data(data)
         .style("fill", function (d, i) {
-          if (d["sets"].length == 1) {
+          if (d["sets"].length === 1) {
             return colors[d["sets"][0]];
           } else {
             let n = d["sets"].join("_");

@@ -1,4 +1,4 @@
-import React,{useState,useEffect,useRef } from "react";
+import React,{useState,useEffect } from "react";
 import { GenomicInformation} from '../../actions/api_actions'
 import chart_types from './genomicCharyTypes'
 import LoaderCmp from '../Common/Loader';

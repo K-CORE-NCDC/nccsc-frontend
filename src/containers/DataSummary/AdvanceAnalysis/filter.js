@@ -9,9 +9,8 @@ import {
   DocumentAddIcon,
 } from "@heroicons/react/outline";
 import inputJson from "../data";
-// import filterBoxes from './data'
 import { FormattedMessage } from "react-intl";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 
 
@@ -21,12 +20,12 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
   const [selectState, setSelectState] = useState({'filterCondition':'and'});
   const [selected, setSelected] = useState("Basic/Diagnostic Information");
   const [filtersUi, setFiltersUi] = useState({});
-  const [filterHtml, setFilterHtml] = useState([]);
+  // const [filterHtml, setFilterHtml] = useState([]);
   const userDefinedFilter = useSelector((data) => data.dataVisualizationReducer.userDefinedFilter);
   // const [totalSamplesS,setTotalSamplesS] = useState(useSelector((data) => data.dataVisualizationReducer.samplesCount))
-  const[totalSamples, setTotalSamples] = useState(0)
+  // const[totalSamples, setTotalSamples] = useState(0)
   const [filterJson,setFilterJson] = useState({})
-  const totalSamplesS = useSelector((data) => data.dataVisualizationReducer.samplesCount)
+  // const totalSamplesS = useSelector((data) => data.dataVisualizationReducer.samplesCount)
   
   // useEffect(()=>{
   //   if(project_id!==undefined){
@@ -38,20 +37,19 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
   // },[])
 
 
-  useEffect(()=>{
-    if  (totalSamplesS && 'no_of_samples' in totalSamplesS){
-      setTotalSamples(totalSamplesS['no_of_samples'])
-    } 
-  },[totalSamplesS])
+  // useEffect(()=>{
+  //   if  (totalSamplesS && 'no_of_samples' in totalSamplesS){
+  //     setTotalSamples(totalSamplesS['no_of_samples'])
+  //   } 
+  // },[totalSamplesS])
   
-  const totalCount = useSelector((state) => {
-    if ('Keys' in state.dataVisualizationReducer){
-      return Object.keys(state.dataVisualizationReducer.Keys).length || 0;
-    }else{
-      return 0
-    }
-  });
-  const [totalCountS] = useState(totalCount);
+  // const totalCount = useSelector((state) => {
+  //   if ('Keys' in state.dataVisualizationReducer){
+  //     return Object.keys(state.dataVisualizationReducer.Keys).length || 0;
+  //   }else{
+  //     return 0
+  //   }
+  // });
   const [filterCondition, setFilterCondition] = useState("and");
 
 
@@ -130,7 +128,7 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
       });
     }
     
-    setFilterHtml(html);
+    // setFilterHtml(html);
   }, [filtersUi]);
 
   // for rendering the filter // inputs and checkboxes all html store in state
@@ -592,7 +590,7 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
     if(document.getElementById('default-radio-2')){
       document.getElementById('default-radio-2').checked = false
     }
-    setFilterHtml([])
+    // setFilterHtml([])
     let abcd = {...filtersUi}
     abcd['Basic/Diagnostic Information'] = []
     setFiltersUi(abcd)

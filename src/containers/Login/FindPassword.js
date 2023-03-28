@@ -10,7 +10,7 @@ function FindPassword() {
   const [errorClass, setErrorClass] = useState("");
   const [status, setstatus] = useState("")
   const dispatch = useDispatch();
-  const find_password = useSelector((data) => data.homeReducer.find_password);
+  const find_password = useSelector((data) => data.homeReducer.findPassword);
 
   let findPasswordfunction = () => {
     let user_name_is = document.getElementById('FindPassword').value

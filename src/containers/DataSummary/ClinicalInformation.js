@@ -76,7 +76,7 @@ export default function ClinicalInformation() {
 
 
   useEffect(()=>{
-    if(summaryJsonStatus == 200 && summaryJson){
+    if(summaryJsonStatus === 200 && summaryJson){
       leftSideHtml(summaryJson)
       setTimeout(function() {
           setLoader(false)
@@ -278,16 +278,14 @@ export default function ClinicalInformation() {
   },[leftSide])
 
   const switchButton = (event,id,k) => {
-    let s = selected
 
-    var myRadios = document.getElementsByName('tabs2');
-    var setCheck;
-    var x = 0;
+    let myRadios = document.getElementsByName('tabs2');
+    let setCheck;
+    let x = 0;
 
-    for(x = 0; x < myRadios.length; x++){
-      var child_id = myRadios[x].id
+    for(x = 0; x < myRadios.length; x+=1){
       myRadios[x].onclick = function(e){
-        if(setCheck != this){
+        if(setCheck !== this){
           setCheck = this;
         }else{
 

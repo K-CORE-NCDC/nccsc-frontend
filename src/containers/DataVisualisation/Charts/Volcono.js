@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, Fragment, useRef } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import VolcanoCmp from "../../Common/Volcano";
 import GroupFilters, { PreDefienedFilters } from "../../Common/GroupFilter";
@@ -37,8 +37,7 @@ export default function DataVolcono({
     (data) => data.dataVisualizationReducer
   );
 
-  const [activeCmp, setActiveCmp] = useState(false);
-  const [data_, setData] = useState("");
+  // const [data_, setData] = useState("");
   const [watermarkCss, setWatermarkCSS] = useState("");
   const [loader, setLoader] = useState(false);
   const [negativeData, setNegativeData] = useState();
@@ -50,10 +49,11 @@ export default function DataVolcono({
   const [sampleCount, setSampleCount] = useState({});
   const [volcanoType, setVolcanoType] = useState("transcriptome");
   const [proteomeValue, setProteomeValue] = useState("N");
-  const [smallScreen, setSmallScreen] = useState(false);
+  const smallScreen = false
   const [alltabList, setAllTabList] = useState({});
-  let { tab, project_id } = useParams();
+  let { project_id } = useParams();
   
+  // const [smallScreen, setSmallScreen] = useState(false);
   const [userDefienedFilter, setUserDefienedFilter] = useState(
     project_id === undefined ? "static" : "dynamic"
   );
@@ -97,7 +97,6 @@ export default function DataVolcono({
 
   useEffect(() => {
     if (inputData) {
-      setActiveCmp(false);
       if (inputData.type !== "" && Object.keys(groupFilters).length > 0) {
         setLoader(true);
         if ("volcanoProteomeType" in inputData) {
@@ -130,10 +129,9 @@ export default function DataVolcono({
 
   useEffect(() => {
     if (volcanoJson) {
-      if (Object.keys(volcanoJson).length > 0) {
-        setActiveCmp(true);
-        setData(volcanoJson);
-      }
+      // if (Object.keys(volcanoJson).length > 0) {
+      //   setData(volcanoJson);
+      // }
       setTimeout(function () {
         setLoader(false);
       }, 1000);

@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import FileProjectDataTable from "./FileProjectDataTable";
 import {
-  new_file_upload,
   uploadClinincalSamples,
-  clear_upload_clinical_columns
+  clearUploadClinicalColumns
 } from "../../../../actions/api_actions";
 import swal from "sweetalert";
 import LoaderCmp from "../../../Common/Loader";
@@ -16,10 +14,6 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
   const [responseData, setResponseData] = useState({});
   const [clinincalFilterColumns, setClinincalFilterColumns] = useState([]);
   const [activeTableKey, setActiveTableKey] = useState("clinical_information");
-  const [currentFilename, setCurrentFilename] = useState("");
-  const [clinicalInformationColumns, setClinicalInformationColumns] = useState(
-    {}
-  );
   const [
     defaultClinicalInformationColumns,
     setDefaultClinicalInformationColumns,
@@ -28,9 +22,6 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
   const dispatch = useDispatch();
   const clinicalfileresponse = useSelector(
     (data) => data.homeReducer.newFileUploadData
-  );
-  const verificationResponse = useSelector(
-    (data) => data.homeReducer.uploadClinicalColumns
   );
   const [message, setMessage] = useState({});
   const [columnTypes, setColumnTypes] = useState({});
@@ -63,7 +54,7 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
     }
   }, [clinicalfileresponse]);
   useEffect(()=>{
-  dispatch(clear_upload_clinical_columns())
+  dispatch(clearUploadClinicalColumns())
   },[])
 
 
@@ -80,10 +71,10 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
     if(divName === 'sample_id' || divName === 'rlps_yn' || divName === 'rlps_cnfr_drtn'){
 
           if(defaultClinicalInformationColumns[divName] === divValue ){
-            setClinicalInformationColumns((prevState) => ({
-              ...prevState,
-              [divName]: divValue,
-            }));
+            // setClinicalInformationColumns((prevState) => ({
+            //   ...prevState,
+            //   [divName]: divValue,
+            // }));
             let tempresponseData = { ...responseData };
             if (tempresponseData[activeTableKey]) {
               tempresponseData[activeTableKey]["types"][divName] = divValue;
@@ -124,10 +115,10 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
          
     }
     else{
-      setClinicalInformationColumns((prevState) => ({
-        ...prevState,
-        [divName]: divValue,
-      }));
+      // setClinicalInformationColumns((prevState) => ({
+      //   ...prevState,
+      //   [divName]: divValue,
+      // }));
     }
     if (activeTableKey === "clinical_information") {
       let tmp = { ...clinincalFilterColumns };
@@ -187,20 +178,9 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
             }
           }
         }
-        // console.log('se',send_c, 'l',Object.keys(columnsData['clinical_information']['types']).length, 'c',total_columns );
         if(send_c && Object.keys(columnsData['clinical_information']['types']).length  === total_columns ){
           return true
         }
-        // for (let i = 0; i < clinicalfileresponse["res"].length; i++) {
-        //   if (
-        //     clinicalfileresponse["res"][i]["tab"] === "clinical_information"
-        //   ) {
-        //     total_columns = clinicalfileresponse["res"][i]["columns"].length;
-        //     return (
-        //       total_columns === Object.keys(clinicalInformationColumns).length
-        //     );
-        //   }
-        // }
       }
     };
     if (

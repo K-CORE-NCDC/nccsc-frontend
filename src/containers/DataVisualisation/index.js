@@ -33,7 +33,7 @@ export default function DataVisualization() {
 
   const [state, setState] = useState({ genes: [], filter: "", type: "" });
   const [boolChartState, setBoolChartState] = useState(true);
-  const [filterState, setFilterState] = useState({});
+  // const [filterState, setFilterState] = useState({});
   const [chart, setCharts] = useState({ viz: [] });
   const [width, setWidth] = useState(0);
   const dispatch = useDispatch();
@@ -327,7 +327,7 @@ export default function DataVisualization() {
           </option>
         );
       }
-      setFilterState(tmp);
+      // setFilterState(tmp);
     }
   }, [BrstKeys]);
 

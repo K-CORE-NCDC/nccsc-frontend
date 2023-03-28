@@ -17,7 +17,7 @@ function ResetPassword() {
   const [errorClass, setErrorClass] = useState("");
   const dispatch = useDispatch();
   const { token } = useParams();
-  const change_password_status = useSelector((data) => data.homeReducer.change_password_status);
+  const change_password_status = useSelector((data) => data.homeReducer.changePasswordStatus);
   let changePasswordfunction = () => {
     // const dateandtime = new Date().toUTCString();
     let date = new Date();
