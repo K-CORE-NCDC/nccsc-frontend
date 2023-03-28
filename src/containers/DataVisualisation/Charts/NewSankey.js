@@ -114,8 +114,7 @@ function Sankey(){
     // nodes with no outgoing links are assigned the maximum breadth.
     function computeNodeBreadths() {
       var margin = {top: 1, right: 1, bottom: 6, left: 1},
-      width = 960 - margin.left - margin.right,
-      height = 500 - margin.top - margin.bottom;
+      width = 960 - margin.left - margin.right
       var remainingNodes = nodes,
           nextNodes,
           x = 0;
@@ -138,13 +137,13 @@ function Sankey(){
       scaleNodeBreadths((width - nodeWidth) / (x - 1));
     }
   
-    function moveSourcesRight() {
-      nodes.forEach(function(node) {
-        if (!node.targetLinks.length) {
-          node.x = d3.min(node.sourceLinks, function(d) { return d.target.x; }) - 1;
-        }
-      });
-    }
+    // function moveSourcesRight() {
+    //   nodes.forEach(function(node) {
+    //     if (!node.targetLinks.length) {
+    //       node.x = d3.min(node.sourceLinks, function(d) { return d.target.x; }) - 1;
+    //     }
+    //   });
+    // }
   
     function moveSinksRight(x) {
       nodes.forEach(function(node) {

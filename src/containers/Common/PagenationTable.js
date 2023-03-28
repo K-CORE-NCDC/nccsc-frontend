@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Chart } from 'react-google-charts';
-
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid'
 import config from '../../config.js'
 import NoContentMessage from './NoContentComponent'
@@ -77,8 +75,8 @@ function PagenationTable({ imageData }) {
             {isDataFound ? <div >
                 <div className="grid max-auto grid-cols-5 gap-3 p-6 overflow-y-scroll" style={{"height":'50vh'}}>
                     {activeDisplayImagesContent.map(e => {
-                        return <a key={e} target="_blank" href={config['auth']+e}>
-                            <img className='w-full block rounded' src={config['auth']+e} />
+                        return <a key={e} target="_blank" rel='noreferrer' href={config['auth']+e}>
+                            <img alt='not' className='w-full block rounded' src={config['auth']+e} />
                             {/* <h1 className='text-3xl p-6'>{e.split('/').at(-1)}</h1> */}
                           </a>
                     })}
@@ -112,7 +110,7 @@ function PagenationTable({ imageData }) {
                                         onClick={pageClickFunction}
                                         key={`${element}-${index}`}
                                         value={element}
-                                        className={element == currentActivePageNumber ? activePageCss : nonActiveClassCss}
+                                        className={element === currentActivePageNumber ? activePageCss : nonActiveClassCss}
                                     >
                                         {element}
                                     </button>

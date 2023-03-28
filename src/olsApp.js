@@ -1,7 +1,5 @@
-import { Fragment } from 'react'
-import banner_img from './assets/img/top_banner01.png'
-import { Popover, Transition } from '@headlessui/react'
-import logo from './assets/img/main_logo2.png'
+import { Fragment } from 'react';
+import { Popover, Transition } from '@headlessui/react';
 
 import {
   BookmarkAltIcon,
@@ -16,8 +14,10 @@ import {
   SupportIcon,
   ViewGridIcon,
   XIcon,
-} from '@heroicons/react/outline'
-import { ChevronDownIcon } from '@heroicons/react/solid'
+} from '@heroicons/react/outline';
+import { ChevronDownIcon } from '@heroicons/react/solid';
+import logo from './assets/img/main_logo2.png';
+import banner_img from './assets/img/top_banner01.png';
 
 const solutions = [
   {
@@ -32,7 +32,12 @@ const solutions = [
     href: '#',
     icon: CursorClickIcon,
   },
-  { name: 'Security', description: "Your customers' data will be safe and secure.", href: '#', icon: ShieldCheckIcon },
+  {
+    name: 'Security',
+    description: "Your customers' data will be safe and secure.",
+    href: '#',
+    icon: ShieldCheckIcon,
+  },
   {
     name: 'Integrations',
     description: "Connect with third-party tools that you're already using.",
@@ -45,11 +50,11 @@ const solutions = [
     href: '#',
     icon: RefreshIcon,
   },
-]
+];
 const callsToAction = [
   { name: 'Watch Demo', href: '#', icon: PlayIcon },
   { name: 'Contact Sales', href: '#', icon: PhoneIcon },
-]
+];
 const resources = [
   {
     name: 'Help Center',
@@ -69,16 +74,21 @@ const resources = [
     href: '#',
     icon: CalendarIcon,
   },
-  { name: 'Security', description: 'Understand how we take your privacy seriously.', href: '#', icon: ShieldCheckIcon },
-]
+  {
+    name: 'Security',
+    description: 'Understand how we take your privacy seriously.',
+    href: '#',
+    icon: ShieldCheckIcon,
+  },
+];
 const recentPosts = [
   { id: 1, name: 'Boost your conversion rate', href: '#' },
   { id: 2, name: 'How to use search engine optimization to drive traffic to your site', href: '#' },
   { id: 3, name: 'Improve your customer experience', href: '#' },
-]
+];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(' ');
 }
 function App() {
   return (
@@ -90,11 +100,7 @@ function App() {
               <div className="flex justify-start lg:w-0 lg:flex-1">
                 <a href="#">
                   <span className="sr-only">Workflow</span>
-                  <img
-                    className="h-8 w-auto sm:h-10"
-                    src={logo}
-                    alt=""
-                  />
+                  <img className="h-8 w-auto sm:h-10" src={logo} alt="" />
                 </a>
               </div>
               <div className="-mr-2 -my-2 md:hidden">
@@ -104,16 +110,28 @@ function App() {
                 </Popover.Button>
               </div>
               <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-                <a href="#" className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+                <a
+                  href="#"
+                  className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
+                >
                   Data Summary
                 </a>
-                <a href="#" className="px-4 whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+                <a
+                  href="#"
+                  className="px-4 whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
+                >
                   Data Visualization
                 </a>
-                <a href="#" className="px-4 whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+                <a
+                  href="#"
+                  className="px-4 whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
+                >
                   User Data Visualization
                 </a>
-                <a href="#" className="px-4 whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">
+                <a
+                  href="#"
+                  className="px-4 whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
+                >
                   API
                 </a>
               </div>
@@ -132,7 +150,8 @@ function App() {
             <Popover.Panel
               focus
               static
-              className="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden">
+              className="absolute top-0 inset-x-0 p-2 transition transform origin-top-right md:hidden"
+            >
               <div className="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y-2 divide-gray-50">
                 <div className="pt-5 pb-6 px-5">
                   <div className="flex items-center justify-between">
@@ -158,21 +177,25 @@ function App() {
                           href={item.href}
                           className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50"
                         >
-                          <item.icon className="flex-shrink-0 h-6 w-6 text-indigo-600" aria-hidden="true" />
-                          <span className="ml-3 text-base font-medium text-gray-900">{item.name}</span>
+                          <item.icon
+                            className="flex-shrink-0 h-6 w-6 text-indigo-600"
+                            aria-hidden="true"
+                          />
+                          <span className="ml-3 text-base font-medium text-gray-900">
+                            {item.name}
+                          </span>
                         </a>
                       ))}
                     </nav>
                   </div>
                 </div>
-
               </div>
             </Popover.Panel>
           </Transition>
         </>
       )}
     </Popover>
-  )
+  );
 }
 
 export default App;

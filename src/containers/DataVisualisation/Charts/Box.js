@@ -25,17 +25,9 @@ export default function Box({
   const [noContent, setNoContent] = useState(true);
   const [viewType, setViewType] = useState("gene_vl");
   const [tableType, setTableType] = useState("proteome");
-  const [activeCmp, setActiveCmp] = useState(false);
   const [gene, setGene] = useState("");
-  const [geneOption, setGeneOption] = useState("");
   const [genes, setGenes] = useState("");
   const [boxJson, setboxJson] = useState({})
-  // const boxJson = useSelector((data) => data.dataVisualizationReducer.boxData);
-  const imageOptions = {
-    scale: 5,
-    encoderOptions: 1,
-    backgroundColor: 'white',
-  }
 
   useEffect(() => {
     if (inputData && "genes" in inputData) {
@@ -91,22 +83,6 @@ export default function Box({
       t.push({ name: genes[i], id: i });
     }
     setGenesHtml(t);
-    setGeneOption(t_);
-  };
-
-  const geneSet = (e) => {
-    let gene = e.target.value;
-    setGene(gene);
-    if (inputData.type !== "" && inputData["genes"].length > 0) {
-      let dataJson = { ...inputData };
-      dataJson["genes"] = [gene];
-      dataJson["table_type"] = tableType;
-      dataJson["view"] = viewType;
-
-      setLoader(true);
-      setActiveCmp(false);
-      dispatchActionCommon(dataJson);
-    }
   };
 
   useEffect(() => {
@@ -131,42 +107,6 @@ export default function Box({
     }
   }, [inputState]);
 
-  // useEffect(() => {
-  //   if(inputData && inputData.genes.length > 0) {
-  //     setDisplaySamples(true)
-  //   }else{
-  //     setDisplaySamples(false)
-  //   }
-  // }, [inputData])
-  function downloadSVGAsPNG(e){
-  const canvas = document.createElement("canvas");
-  const svg = document.querySelector('svg');
-  const base64doc = btoa(unescape(encodeURIComponent(svg.outerHTML)));
-  const w = parseInt(svg.getAttribute('width'));
-  const h = parseInt(svg.getAttribute('height'));
-  const img_to_download = document.createElement('img');
-  img_to_download.src = 'data:image/svg+xml;base64,' + base64doc;
-  
-  img_to_download.onload = function () {
-    canvas.setAttribute('width', w);
-    canvas.setAttribute('height', h);
-    const context = canvas.getContext("2d");
-    //context.clearRect(0, 0, w, h);
-    context.drawImage(img_to_download,0,0,w,h);
-    const dataURL = canvas.toDataURL('image/png');
-    if (window.navigator.msSaveBlob) {
-      window.navigator.msSaveBlob(canvas.msToBlob(), "download.png");
-      e.preventDefault();
-    } else {
-      const a = document.createElement('a');
-      const my_evt = new MouseEvent('click');
-      a.download = 'download.png';
-      a.href = dataURL;
-      a.dispatchEvent(my_evt);
-    }
-    //canvas.parentNode.removeChild(canvas);
-  }  
-}
 let takeScreenshot = async()=>{
   const element = document.getElementById('box2')
   let imgData 
@@ -259,7 +199,7 @@ let takeScreenshot = async()=>{
   const changeType = (e, type) => {
     let c = document.getElementsByName("type");
     setTableType(type);
-    setActiveCmp(false);
+    // setActiveCmp(false);
     setLoader(true);
     for (var i = 0; i < c.length; i++) {
       let classList = c[i].classList;
@@ -289,7 +229,6 @@ let takeScreenshot = async()=>{
         dataJson["genes"] = genes;
       }
 
-      // dataJson['genes'] = inputState['gene']
       dataJson["table_type"] = type;
       dataJson["view"] = viewType;
       dispatchActionCommon(dataJson);
@@ -298,7 +237,7 @@ let takeScreenshot = async()=>{
 
   const changeView = (e, view) => {
     let c = document.getElementsByName("view");
-    setActiveCmp(false);
+    // setActiveCmp(false);
     setLoader(true);
     for (var i = 0; i < c.length; i++) {
       let classList = c[i].classList;
@@ -314,6 +253,7 @@ let takeScreenshot = async()=>{
       dataJson["view"] = view;
       dispatchActionCommon(dataJson);
     }
+    setSelectedValue([])
   };
 
   let style = {
@@ -339,11 +279,6 @@ let takeScreenshot = async()=>{
     " rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 ";
   normal_button +=
     " border duration-200 ease-in-out border-teal-600 transition px-10 xs:p-3 xs:text-sm";
-
-  // <select value={gene} onChange={e=>geneSet(e)} className="w-full border bg-white rounded px-3 py-2 outline-none text-gray-700">
-  //   {geneOption}
-  // </select>
-  
 
   return (
     <div className="grid">

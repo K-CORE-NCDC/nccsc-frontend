@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import HeatmapNewCmp from '../../Common/testH'
 import { HeatmapInformation } from '../../../actions/api_actions'
 import LoaderCmp from '../../Common/Loader'
@@ -13,10 +13,8 @@ import { useParams } from "react-router-dom";
 export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, setToFalseAfterScreenCapture }) {
   const context = useContext(Context);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
-  const [Englishlanguage, setEnglishlanguage] = useState(true);
   const reference = useRef()
-  const dispatch = useDispatch()
-  const [activeCmp,setActiveCmp] = useState(false)
+  // const [activeCmp,setActiveCmp] = useState(false)
   const [tableType,setTableType] = useState('rna')
   const [data_,setData] = useState('')
   const [inputGene,setInputGene] = useState([])
@@ -35,7 +33,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const [clusterRange,setClusterRange] = useState("")
   const [inSufficientData, setInSufficientData] = useState(true)
   const [renderNoContent, setRenderNoContent] = useState(false)
-  const [renderHeatmap, setRenderHeatmap] = useState(true)
+  // const [renderHeatmap, setRenderHeatmap] = useState(true)
   let   { project_id } = useParams();
   const [configVis,setConfigVis] = useState({"colorSpectrumBreaks":[],"colorSpectrum":["navy","firebrick3"]})
   const [spectrumMin,setSpectrumMin] = useState(0)
@@ -58,7 +56,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   useEffect(()=>{
     if('userProjectsDataTable' in tabList ){
       setAllTabList(tabList.userProjectsDataTable)
-      
+
     }
     
     },[tabList])
@@ -66,10 +64,8 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   useEffect(() => {
     if (context["locale"] === "kr-KO") {
       setKoreanlanguage(true);
-      setEnglishlanguage(false);
     } else {
       setKoreanlanguage(false);
-      setEnglishlanguage(true);
     }
   },[context]);
 
@@ -103,22 +99,9 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     return tmp
   }
 
-  const smoking_status = (n)=>{
-    let tmp = ''
-    if((n === 'Y') || (n === true) || (n === 'Yes')){
-      tmp = 'YES'
-    }else if((n === 'N') || (n === false) || (n === 'No')) {
-      tmp = 'No'
-    }else{
-      tmp='N/A'
-    }
-    return tmp
-  }
-
-
   useEffect(()=>{
     if(inputJson['filterChoices']){
-      console.log(inputJson)
+      // console.log(inputJson)
       if (project_id !== undefined) {
         if(filterData &&  filterData.status===200){
           let filters = filterData['filterJson']
@@ -132,7 +115,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
             }
             
           }
-          console.log(tmp)
+          // console.log(tmp)
           setOptionChoices(tmp)
           // setCustomFilterJson(tmp)
         }
@@ -156,7 +139,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
 
   useEffect(() => {
     if (inputData) {
-      setActiveCmp(false)
+      // setActiveCmp(false)
       let genes = inputData['genes']
       let t = []
       for (var i = 0; i < genes.length; i++) {
@@ -276,6 +259,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       let setStateTrue = false
       
       for (const [key, value] of Object.entries(y)) {
+        // console.log('key',key);
         value.forEach(e=>{
           if(e.length > 0){
             setStateTrue = true
@@ -284,7 +268,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       }
       if(setStateTrue){
         setRenderNoContent(false)
-        setActiveCmp(true)
+        // setActiveCmp(true)
         setData({"z":tmp,"x":x,"y":y})
       }else{
         setRenderNoContent(true)
@@ -333,7 +317,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     e.preventDefault()
     setTableType(type)
     let c = document.getElementsByName('type')
-    setActiveCmp(false)
+    // setActiveCmp(false)
     setLoader(true)
     for (var i = 0; i < c.length; i++) {
       let classList = c[i].classList
@@ -377,7 +361,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   }
 
   const changeMainType = (e, type) => {
-    console.log('MT',type);
+    // console.log('MT',type);
     let c = document.getElementsByName('maintype')
     for (var i = 0; i < c.length; i++) {
       let classList = c[i].classList
@@ -391,13 +375,13 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     if(inputData.type !=='' && inputData['genes'].length > 0){
       // setClusterRange
       setClusterRange(dataJson['genes'].length)
-      setActiveCmp(false)
+      // setActiveCmp(false)
       setLoader(true)
       dataJson['table_type'] = tableType
       dataJson['view'] = viewType
       dataJson['heat_type'] = type
       setLoader(true)
-      setActiveCmp(false)
+      // setActiveCmp(false)
       // dispatch(getHeatmapInformation('POST',dataJson))
       let return_data = HeatmapInformation('POST', dataJson)
         return_data.then((result) => {
@@ -438,8 +422,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       dataJson['view'] = viewType
       dataJson['heat_type'] = mainTab
       setLoader(true)
-      setActiveCmp(false)
-      // dispatch(getHeatmapInformation('POST',dataJson))
       let return_data = HeatmapInformation('POST', dataJson)
         return_data.then((result) => {
           const d = result
@@ -469,7 +451,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     setClinicalAttributesFil(cf)
     if(inputData.type !=='' && inputData['genes'].length > 0){
       setLoader(true)
-      setActiveCmp(false)
+      // setActiveCmp(false)
       let dataJson = { ...inputData }
       dataJson['clinicalFilters'] = cf
       dataJson['view'] = viewType
@@ -480,7 +462,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       dataJson['heat_type'] = mainTab
       dataJson['table_type'] = tableType
       // dispatch(getHeatmapInformation('POST',dataJson))
-      console.log('-------',dataJson);
+      // console.log('-------',dataJson);
       let return_data = HeatmapInformation('POST', dataJson)
         return_data.then((result) => {
           const d = result
@@ -501,18 +483,18 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   }
 
   function onRemove(selectedList, removedItem) {
-    console.log('sele',selectedList);
-    console.log('removedItem',removedItem);
+    // console.log('sele',selectedList);
+    // console.log('removedItem',removedItem);
     let items = []
     setOption(selectedList)
     selectedList.forEach((item, i) => {
-      console.log('>>>>',item);
+      // console.log('>>>>',item);
       items.push(item['id'])
     });
     setClinicalAttributesFil(items)
     if(inputData.type !=='' && inputData['genes'].length > 0){
       setLoader(true)
-      setActiveCmp(false)
+      // setActiveCmp(false)
       let dataJson = { ...inputData }
       dataJson['clinicalFilters'] = items
       dataJson['heat_type'] = mainTab
@@ -539,7 +521,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
 
   const changeView = (e,view)=>{
     let c = document.getElementsByName('view')
-    setActiveCmp(false)
+    // setActiveCmp(false)
     setLoader(true)
     for (var i = 0; i < c.length; i++) {
       let classList = c[i].classList
@@ -548,7 +530,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     }
     e.target.classList.add("hover:bg-main-blue","bg-main-blue","text-white")
     setViewType(view)
-    console.log('inputData',inputData);
+    // console.log('inputData',inputData);
     let dataJson = { ...inputData }
     dataJson['view'] = view
     dataJson['heat_type'] = mainTab
@@ -601,7 +583,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     let cf = []
     if(inputData.type !=='' && inputData['genes'].length > 0){
       setLoader(true)
-      setActiveCmp(false)
+      // setActiveCmp(false)
       let dataJson = { ...inputData }
       dataJson['clinicalFilters'] = cf
       dataJson['view'] = viewType
@@ -630,7 +612,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   useEffect(() => {
     if (heatmapSummaryStatusCode && heatmapSummaryStatusCode.status === 200) {
       setRenderNoContent(false)
-      setRenderHeatmap(true)
+      // setRenderHeatmap(true)
       setLoader(false)
     } else if(heatmapSummaryStatusCode && heatmapSummaryStatusCode.loader === true){
       setLoader(true)
@@ -638,7 +620,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     }else{
       setLoader(false)
       setRenderNoContent(true)
-      setRenderHeatmap(false)
+      // setRenderHeatmap(false)
       setData('')
     }
   }, [heatmapSummaryStatusCode])
@@ -834,13 +816,16 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
                     <div className='w-full py-3 px-2'>
                       <label htmlFor="points"><strong className="">No. Of Cluster:  {rangeValue}</strong></label>
                       <input type="range" className="custom-slider opacity-100"
-                      id="points" name="points" min="1" step={1}  max={clusterRange}  defaultValue={rangeValue} onChange={rangeCall} />
+                      id="points" name="points" min="1" step={1}  max={clusterRange}  defaultValue={rangeValue}  onChange={rangeCall} />
                       <ul className="flex justify-between w-full px-[1px]" id='tickmarks'>
-                        { 
-                          inputData['genes'].map((name,i)=>(
-                            <li key={name} className="flex justify-around relative"><span className="absolute">{i+1}</span></li>
+                      <li key="min_value_range" className="flex justify-around relative"><span className="absolute">1</span></li>
+                        {/* { 
+                          inputData['genes'].map((name,i)=>
+                          (  
+                           i!== 0 && i%5 === 0 && i!== clusterRange ? <li key={name} className="flex justify-around relative"><span className="absolute">{i}</span></li>:<></>
                           ))
-                        }
+                        } */}
+                        <li key="max_value_range" className="flex justify-around relative"><span className="absolute">{clusterRange}</span></li>
                       </ul>
                     </div>
                     <div className='absolute right-5 top-2'>

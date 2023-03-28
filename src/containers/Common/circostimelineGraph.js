@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Chart } from 'react-google-charts';
 import DataTable from 'react-data-table-component';
 import TimeLineChart from './timelineCss'
 
@@ -24,7 +23,7 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
   const [ki67Chart, setKi67Chart] = useState([])
   const [ca15Chart, setCa15Chart] = useState([])
   const [ceaChart, setCeaChart] = useState([])
-  const [her2Chart, setHer2Chart] = useState([])
+  // const [her2Chart, setHer2Chart] = useState([])
   const [tab,setTab] = useState('bmi')
   const [bmiChartTable, setBmiChartTable] = useState({"columns":[],'data':[]})
   const [ki67ChartTable,setKi67ChartTable] = useState({"columns":[],'data':[]})
@@ -60,11 +59,11 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
     if(circosTimelieTableData !== null && circosTimelieTableData !== undefined){
 
       if(Object.keys(circosTimelieTableData).length > 0){
-        var bmi = circosTimelieTableData['bmi']
-        var ki67 = circosTimelieTableData['ki67']
-        var ca15 = circosTimelieTableData['ca15']
-        var cea = circosTimelieTableData['cea']
-        var her2 = circosTimelieTableData['her2']
+        let bmi = circosTimelieTableData['bmi']
+        let ki67 = circosTimelieTableData['ki67']
+        let ca15 = circosTimelieTableData['ca15']
+        let cea = circosTimelieTableData['cea']
+        let her2 = circosTimelieTableData['her2']
         if(bmi.length>0){
           let t = ChartData
           let table_cols = [
@@ -78,16 +77,16 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
               selector: row => row.bmi_vl
             },
           ]
-          for (var i = 0; i < bmi.length; i++) {
+          for (let i = 0; i < bmi.length; i++) {
             let date = bmi[i]['rgst_ymd'].split('-')
             let d = convertStrToDate(bmi[i]['rgst_ymd']);
             let bmi_vl = bmi[i]['bmi_vl']
             let tooltip = "<div>BMI Value: "+bmi_vl+"<hr/>"+bmi[i]['rgst_ymd']+"</div>"
-            if(bmi.length==1){
-              var year  = new Date(d).getFullYear();
-              var month = new Date(d).getMonth();
-              var day   = new Date(d).getDate();
-              var second_date  = new Date(year , month, day+ 1);
+            if(bmi.length === 1){
+              let year  = new Date(d).getFullYear();
+              let month = new Date(d).getMonth();
+              let day   = new Date(d).getDate();
+              let second_date  = new Date(year , month, day+ 1);
               t.push([months[date[1]],'',tooltip,d,second_date])
             }else{
               t.push([months[date[1]],'',tooltip,d,d])
@@ -104,17 +103,17 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
         if(ki67.length>0){
           let t = ki67ChartData
 
-          for (var i = 0; i < ki67.length; i++) {
+          for (let i = 0; i < ki67.length; i++) {
 
             // let d = convertStrToDate(ki67[i]['imnl_read_ymd']);
             let d = convertStrToDate(ki67[i]['imnl_acpt_ymd']);
             let score = ki67[i]['ki67_score'].replace(/[^\d]/g,'');
             let tooltip = "<div>KI67: "+ki67[i]['ki67_score']+"<hr/>"+ki67[i]['imnl_acpt_ymd']+"</div>"
             if(ki67.length===1){
-              var year  = new Date(d).getFullYear();
-              var month = new Date(d).getMonth();
-              var day   = new Date(d).getDate();
-              var date  = new Date(year , month, day+ 1);
+              let year  = new Date(d).getFullYear();
+              let month = new Date(d).getMonth();
+              let day   = new Date(d).getDate();
+              let date  = new Date(year , month, day+ 1);
               t.push([score,'',tooltip,d,date])
               console.log('---->',t);
             }else{
@@ -142,16 +141,16 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
         if(ca15.length>0){
           let t = tableData
 
-          for (var i = 0; i < ca15.length; i++) {
+          for (let i = 0; i < ca15.length; i++) {
 
             let d = convertStrToDate(ca15[i]['exam_ymd']);
             let score = ca15[i]['exam_val'].replace(/[^\d]/g,'');
             let tooltip = "<div>exam_ymd: "+ca15[i]['exam_ymd']+"<hr/>"+ca15[i]['exam_val']+"</div>"
-            if(ca15.length==1){
-              var year  = new Date(d).getFullYear();
-              var month = new Date(d).getMonth();
-              var day   = new Date(d).getDate();
-              var date  = new Date(year , month, day+ 1);
+            if(ca15.length === 1){
+              let year  = new Date(d).getFullYear();
+              let month = new Date(d).getMonth();
+              let day   = new Date(d).getDate();
+              let date  = new Date(year , month, day+ 1);
               t.push([score,'',tooltip,d,date])
             } else {
               t.push([score,'',tooltip,d,d])
@@ -179,16 +178,16 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
         if(cea.length>0){
           let t = tableData
 
-          for (var i = 0; i < cea.length; i++) {
+          for (let i = 0; i < cea.length; i++) {
 
             let d = convertStrToDate(cea[i]['exam_ymd']);
             let score = cea[i]['exam_val'].replace(/[^\d]/g,'');
             let tooltip = "<div>exam_ymd: "+cea[i]['exam_ymd']+"<hr/>"+cea[i]['exam_val']+"</div>"
-            if(cea.length==1){
-              var year  = new Date(d).getFullYear();
-              var month = new Date(d).getMonth();
-              var day   = new Date(d).getDate();
-              var date  = new Date(year , month, day+ 1);
+            if(cea.length===1){
+              let year  = new Date(d).getFullYear();
+              let month = new Date(d).getMonth();
+              let day   = new Date(d).getDate();
+              let date  = new Date(year , month, day+ 1);
               t.push([score,'',tooltip,d,date])
             } else {
               t.push([score,'',tooltip,d,d])
@@ -216,17 +215,17 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
         if(her2.length>0){
           let t = tableData
 
-          for (var i = 0; i < her2.length; i++) {
+          for (let i = 0; i < her2.length; i++) {
 
             let d = convertStrToDate(her2[i]['exam_ymd']);
             // let score = cea[i]['exam_val'].replace(/[^\d]/g,'');
             let score = her2[i]['exam_val'].replace(/[^\d]/g,'');
             let tooltip = "<div>exam_ymd: "+her2[i]['exam_ymd']+"<hr/>"+her2[i]['exam_val']+"</div>"
             if(her2.length===1){
-              var year  = new Date(d).getFullYear();
-              var month = new Date(d).getMonth();
-              var day   = new Date(d).getDate();
-              var date  = new Date(year , month, day+ 1);
+              let year  = new Date(d).getFullYear();
+              let month = new Date(d).getMonth();
+              let day   = new Date(d).getDate();
+              let date  = new Date(year , month, day+ 1);
               t.push([score,'',tooltip,d,date])
             } else {
               t.push([score,'',tooltip,d,d])
@@ -243,7 +242,7 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
               selector: row => row.exam_val
             },
           ]
-          setHer2Chart(t)
+          // setHer2Chart(t)
           setHer2ChartTable((prevState) => ({
             ...prevState,
             'columns':table_cols,
@@ -286,7 +285,8 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
               </button>
             </nav>
             <div className="grid tab-content  w-full col-span-4" id="tabs-tabContent">
-              <div className={"py-6 tab-pane fade flex-inline "+" "+((tab==='bmi')?"show active":' hidden ')} id="tabs-bmi" >
+              <div className={`py-6 tab-pane fade flex-inline`+((tab==='bmi')?"show active":' hidden ')} id="tabs-bmi" 
+              >
                 <h3>BMI Timeline</h3>
                 <hr/>
                 {circosTimelieTableData && <TimeLineChart data={circosTimelieTableData.bmi} yearKey="rgst_ymd" valueKey="bmi_vl" />}
@@ -298,7 +298,7 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
                 </div>
 
               </div>
-              <div className={"py-6 tab-pane fade flex-inline "+" "+((tab==='ki67')?"show active":' hidden ')} id="tabs-ki67" >
+              <div className={"py-6 tab-pane fade flex-inline "+((tab==='ki67')?"show active":' hidden ')} id="tabs-ki67" >
                 <h3>KI-67 % Timeline</h3>
                 <hr/>
                 {/* {circosTimelieTableData && <TimeLineChart data={circosTimelieTableData.ki67} yearKey="imnl_read_ymd" valueKey="ki67_score" />} */}
@@ -308,7 +308,7 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
                   data={ki67ChartTable['data']}
                 />}
               </div>
-              <div className={"py-6 tab-pane fade flex-inline "+" "+((tab==='ca15')?"show active":' hidden ')} id="tabs-ca15">
+              <div className={"py-6 tab-pane fade flex-inline "+((tab==='ca15')?"show active":' hidden ')} id="tabs-ca15">
                 <h3>CA15-3 Timeline</h3>
                 <hr/>
                 {circosTimelieTableData && <TimeLineChart data={circosTimelieTableData.ca15} yearKey="exam_ymd" valueKey="exam_val" />}
@@ -317,7 +317,7 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
                   data={ca15ChartTable['data']}
                 />}
               </div>
-              <div className={"py-6 tab-pane fade flex-inline "+" "+((tab==='cea')?"show active":' hidden ')} id="tabs-cea">
+              <div className={"py-6 tab-pane fade flex-inline "+((tab==='cea')?"show active":' hidden ')} id="tabs-cea">
                 <h3>CEA Timeline</h3>
                 <hr/>
                 {circosTimelieTableData && <TimeLineChart data={circosTimelieTableData.cea} yearKey="exam_ymd" valueKey="exam_val" />}
@@ -326,7 +326,7 @@ const GraphsModal = ({closeShowTimelineTables, circosTimelieTableData }) => {
                   data={ceaChartTable['data']}
                 />}
               </div>
-              <div className={"py-6 tab-pane fade flex-inline "+" "+((tab==='her2')?"show active":' hidden ')} id="tabs-her2">
+              <div className={"py-6 tab-pane fade flex-inline "+((tab==='her2')?"show active":' hidden ')} id="tabs-her2">
                 <h3>HER2 Timeline</h3>
                 <hr/>
                 {circosTimelieTableData && <TimeLineChart data={circosTimelieTableData.her2} yearKey="exam_ymd" valueKey="exam_val" />}

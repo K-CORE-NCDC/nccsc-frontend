@@ -16,12 +16,9 @@ import { Context } from "../../wrapper";
 import swal from 'sweetalert';
 
 
-const AlphaNumRegex = new RegExp("^[a-zA-Z0-9]*$");
-const AlphaNumRegexwithNoSpecialCharecters = new RegExp("(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{2,}$");
-const AlphaNumRegexwithNoSpecialCharecterss = new RegExp("[A-Za-zÀ-ȕ0-9 ]");
 const NumRegex = new RegExp("^[0-9]*$");
 const AlphaNumRegexwithSpecialCharsExceptDot = new RegExp("^[ A-Za-z0-9_/#&+-]*$");
-const KoreanRegex = new RegExp("(\S*[\u3131-\u314e|\u314f-\u3163|\uac00-\ud7a3]+\S*)")
+const KoreanRegex = new RegExp("(\\S*[\u3131-\u314e|\u314f-\u3163|\uac00-\ud7a3]+\\S*)")
 
 const MemberShip = ({ changestep }) => {
 
@@ -121,10 +118,10 @@ const MemberShip = ({ changestep }) => {
   const [instituteDropdown, setInstituteDropdown] = useState([]);
   const [encData, setEncData] = useState("");
   const [visibility, setvisibility] = useState(false);
-  const [otpStatus, setotpStatus] = useState(false);
   const [emailExist, setEmailExist] = useState("")
-  const [emailStatus, setEmailStatus] = useState(false)
   const [RegistrationClass, setRegistrationClass] = useState(false)
+  // const [emailStatus, setEmailStatus] = useState(false)
+  // const [otpStatus, setotpStatus] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -151,7 +148,6 @@ const MemberShip = ({ changestep }) => {
 
   const passKey = useSelector((data) => data.dataVisualizationReducer.passKey);
   const otp_verification_status = useSelector((data) => data.homeReducer.otp_validation_status);
-  const emailsentstatus = useSelector((data) => data.homeReducer.emailsentstatus);
 
   // !	33	exclamation mark
   // "	34	quotation mark
@@ -253,12 +249,8 @@ const MemberShip = ({ changestep }) => {
 
     const errors = form.errors;
 
-    // const isKoreanWord = (input) => {
-    //   const match = input.match(/[\u3131-\uD79D]/g);
-    //   return match ? match.length === input.length : false;
-    // }
     // ID Validation
-    let format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+    let format = /[!@#$%^&*()_+\-=\\[\]{};':"\\|,.<>\\//?]+/;
     if (name === "id" && value === "") {
       errors.id = "Please enter 6-10 characters";
       errors.koreanid = "IDLength";
@@ -482,7 +474,7 @@ const MemberShip = ({ changestep }) => {
     if (form.email === "" || form.domain_email === "") {
       // isEmailExist.status = ""
       setEmailExist("")
-      setEmailStatus(false);
+      // setEmailStatus(false);
       setForm((prevState) => ({
         ...prevState,
         errors: {
@@ -510,7 +502,7 @@ const MemberShip = ({ changestep }) => {
 
         }
       }))
-      setEmailStatus(true);
+      // setEmailStatus(true);
       setClickEmailverifyButton(true);
       setClickMobileverifyButton(false);
     }
@@ -576,7 +568,7 @@ const MemberShip = ({ changestep }) => {
     if (otp_verification_status && otp_verification_status.status === true) {
       setRegistrationClass(true)
       form.emailVerified = true
-      setotpStatus(true);
+      // setotpStatus(true);
     }
   }, [otp_verification_status]);
 
@@ -589,7 +581,7 @@ const MemberShip = ({ changestep }) => {
       swal("User Already Exists", {
         closeOnClickOutside: false
       })
-        .then((value) => {
+        .then(() => {
           setTimeout(() => {
 
             // window.location.href = '/login/'
@@ -599,8 +591,6 @@ const MemberShip = ({ changestep }) => {
   }, [registration_status]);
 
   useEffect(() => { 
-    console.log('----from usefeff')
-    console.log(form)
     setRegistrationClass(form.isVerified)
   }, [form.isVerified])
 

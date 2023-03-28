@@ -1,6 +1,5 @@
 import React, { useState,useEffect } from 'react'
 import { useSelector, } from "react-redux";
-import Oncoprint from "oncoprintjs";
 // import CanvasXpressReact from 'canvasxpress-react';
 import _ from 'lodash';
 import './rules';
@@ -72,30 +71,30 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss,customFilterJson,pr
         };
 
 
-        var clinical_bar_track_params = {
-            'rule_set_params': window.geneticrules.clinical_rule_set_bar,
-            'target_group': 1,
-            'na_z': 1.1,
-            'sort_direction_changeable': true,
-            'sortCmpFn': function (d1, d2) {
-                if (d1 == null && d2 == null) {
-                    return 0;
-                } else if (d1 == null && d2 != null) {
-                    return 2;
-                } else if (d1 != null && d2 == null) {
-                    return -2;
-                } else {
-                    return (d1['cnt'] < d2['cnt'] ? -1 : (d1['cnt'] === d2['cnt'] ? 0 : 1));
-                }
-            },
-            'init_sort_direction': 0
-        };
+        // var clinical_bar_track_params = {
+        //     'rule_set_params': window.geneticrules.clinical_rule_set_bar,
+        //     'target_group': 1,
+        //     'na_z': 1.1,
+        //     'sort_direction_changeable': true,
+        //     'sortCmpFn': function (d1, d2) {
+        //         if (d1 == null && d2 == null) {
+        //             return 0;
+        //         } else if (d1 == null && d2 != null) {
+        //             return 2;
+        //         } else if (d1 != null && d2 == null) {
+        //             return -2;
+        //         } else {
+        //             return (d1['cnt'] < d2['cnt'] ? -1 : (d1['cnt'] === d2['cnt'] ? 0 : 1));
+        //         }
+        //     },
+        //     'init_sort_direction': 0
+        // };
 
         oncoprint = new window.Oncoprint("#oncoprint-glyphmap", "80vw");
         
-        let models = {
-            vert_scroll:1
-        }
+        // let models = {
+        //     vert_scroll:1
+        // }
         // oncoprint.model();
         oncoprint.suppressRendering();
         var geneData = []
@@ -114,8 +113,8 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss,customFilterJson,pr
         function calculateMutation(genes) {
             let total = genes.length;
             var i = 0;
-            for (var key in genes) {
-                if (Object.keys(genes[key]).indexOf("variant_classification") != -1){
+            for (let key in genes) {
+                if (Object.keys(genes[key]).indexOf("variant_classification") !== -1){
                     i++;
                 }
             }
@@ -125,7 +124,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss,customFilterJson,pr
         
         
         
-        for (var i = 0; i < geneData.length; i++) {
+        for (let i = 0; i < geneData.length; i++) {
             let x = {
                 'rule_set_params': inputRule,
                 'label': geneData[i].gene,
@@ -164,12 +163,12 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss,customFilterJson,pr
         // oncoprint.hideIds([], true);
         oncoprint.keepSorted(false);
         if(geneData.length>0){
-            for (var i = 0; i < geneData.length; i++) {
+            for (let i = 0; i < geneData.length; i++) {
                 var results = [];
                 
-                for (var j = 0; j < geneData[i].data.length; j++) {
+                for (let j = 0; j < geneData[i].data.length; j++) {
                     var result = _.cloneDeep(geneData[i].data[j]);
-                    if(result.type == 'search') {
+                    if(result.type === 'search') {
                         result.sample = geneData[i].data[j].sample;
                     }else {
                         result.sample = geneData[i].data[j].sample;
@@ -210,7 +209,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss,customFilterJson,pr
 
 
         if(custom_datum.length>0){
-            for (var i = 0; i < custom_datum.length; i++) {
+            for (let i = 0; i < custom_datum.length; i++) {
                 var originDatum = custom_datum[i]
                 clinical_custom_track_params['rule_set_params']['legend_label'] = customName[originDatum.displayName];
                 clinical_custom_track_params['label'] = customName[originDatum.displayName];
@@ -305,7 +304,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss,customFilterJson,pr
                 var legends = document.getElementsByClassName('legends')
                 for (let r = 0; r < rule_types.length; r++) {
                     for (let l = 0; l < legends.length; l++) {
-                        if(legends[l].textContent in names_variant && names_variant[legends[l].textContent]==rule_types[r]){
+                        if(legends[l].textContent in names_variant && names_variant[legends[l].textContent]===rule_types[r]){
                             legends[l].classList.add('linethrough')
                         }
                         

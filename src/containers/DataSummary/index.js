@@ -1,10 +1,4 @@
 import React,{useState,useEffect,useRef } from "react";
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  AdjustmentsIcon
-} from '@heroicons/react/outline'
-import { useSelector, useDispatch } from "react-redux";
 import GenomicInfo from "./GenomicInformation";
 import ClinicalInformation from "./ClinicalInformation";
 import AdvancedInfo from './AdvanceAnalysis/'
@@ -14,11 +8,9 @@ import {
 import {FormattedMessage} from 'react-intl';
 
 export default function DataSummary() {
-  const parentRef = useRef(null);
   const elementRef = useRef(null);
   const [menuItems, setMenuItems] = useState([])
   let { tab } = useParams();
-  const [chartName, setChartName] = useState(tab)
   tab = tab?tab:"Clinical_Information";
 
   const toggleTab = (event) => {
@@ -26,7 +18,6 @@ export default function DataSummary() {
     let tabTogglers = tabsContainer.querySelectorAll("a");
     tabTogglers.forEach(function (toggler) {
       toggler.addEventListener("click", function (e) {
-        let tabName = this.getAttribute("href");
         for (var i = 0; i < tabTogglers.length; i++) {
           tabTogglers[i].parentElement.classList.remove("border-blue-400", "border-b", "-mb-px", "opacity-100");
         }

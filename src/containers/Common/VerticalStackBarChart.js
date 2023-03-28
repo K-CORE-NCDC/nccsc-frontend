@@ -1,44 +1,44 @@
-import React, { useState,useEffect,useRef } from 'react';
+import React, { useEffect,useRef } from 'react';
 import {Chart, registerables} from 'chart.js';
 
 Chart.register(...registerables);
 
 export default function VerticalStackBarChartComp({data, axis, key}){
     const chartRef_1 = useRef(null);
-    let option = {
-              plugins:{
-                legend: {
-                  display: false
-                }
-              },
-              indexAxis: 'x',
-              layout: {
-               padding: {
-                 left: 20
-               }
-              },
-              scales:{
-                x: {
-                  stacked: true,
-                },
-                y: {
-                  stacked: true
-                }
-              }
-          }
+    // let option = {
+    //           plugins:{
+    //             legend: {
+    //               display: false
+    //             }
+    //           },
+    //           indexAxis: 'x',
+    //           layout: {
+    //            padding: {
+    //              left: 20
+    //            }
+    //           },
+    //           scales:{
+    //             x: {
+    //               stacked: true,
+    //             },
+    //             y: {
+    //               stacked: true
+    //             }
+    //           }
+    //       }
 
     const drawGraph = (labels, data_) => {
-        if(chartRef_1.current){
+        // if(chartRef_1.current){
           
-          var myChart = new Chart(chartRef_1.current, {
-              type: 'bar',
-              data: {
-                  labels: labels,
-                  datasets: data_
-              },
-              options:option
-            });
-        }
+        //   var myChart = new Chart(chartRef_1.current, {
+        //       type: 'bar',
+        //       data: {
+        //           labels: labels,
+        //           datasets: data_
+        //       },
+        //       options:option
+        //     });
+        // }
       }
 
     useEffect(() => {

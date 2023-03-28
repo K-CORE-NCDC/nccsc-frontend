@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import LoaderCmp from "../../../Common/Loader";
 import {
-  clear_new_file_upload_state
+  clearNewFileUploadState
 } from "../../../../actions/api_actions";
 import { FormattedMessage } from "react-intl";
 
@@ -130,6 +130,7 @@ function FileProjectDataTable({ updateComponentNumber }) {
   return (
     <div>
       <div className="p-1 flex justify-around">
+      {projectId === 0 && (
         <button
            className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
           type="button"
@@ -139,10 +140,11 @@ function FileProjectDataTable({ updateComponentNumber }) {
           >
           <FormattedMessage id="Back" defaultMessage="Back" />
         </button>
+      )}
         {projectId !== 0 && (
           <button
             onClick={() => {
-              dispatch(clear_new_file_upload_state())
+              dispatch(clearNewFileUploadState())
               history.push(`/visualise/${navTabIs}/${projectId}`)}}
             className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
           >

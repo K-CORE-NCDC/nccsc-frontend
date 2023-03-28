@@ -4,13 +4,11 @@ import {
   MinusCircleIcon,
 
 } from '@heroicons/react/outline'
-import { new_file_upload,uploadClinincalSamples,clear_new_file_upload_state } from '../../../../actions/api_actions'
+import { newFileUpload,clearNewFileUploadState } from '../../../../actions/api_actions'
 import { useSelector, useDispatch } from "react-redux";
-import XLSX from 'xlsx';
 import Loader from '../../Widgets/loader';
 import { useHistory } from 'react-router-dom'
 import ExampleUserTable from "../TableDisplay/cellColorTable";
-import DataTable from 'react-data-table-component';
 import { Context } from "../../../../wrapper";
 import {FormattedMessage} from 'react-intl';
 
@@ -102,18 +100,14 @@ const InforIcon = () => {
 }
 
 
-export default function FileUpload({ parentCallBack, updateComponentNumber}) {
+export default function FileUpload({ updateComponentNumber}) {
   const projectNameRef = useRef(null);
   const history = useHistory()
   const response = useSelector((data) => data.homeReducer.fileUploadData);
-  const clinicalfileresponse = useSelector((data) => data.homeReducer.newFileUploadData);
   const dispatch = useDispatch()
-  const [state, setState] = useState([])
-  const [select, setSelect] = useState({})
   const [error, setError] = useState(false)
   const [error_message, setErrorMessage] = useState({ type: "", message: "" })
   const [loader, setLoader] = useState({})
-  // const [uploadFile, setUploadFile] = useState({clinical:""})
   const [selectedFiles, setSelectedFiles] = useState([])
   const [uploadFile, setUploadFile] = useState({})
   const [projectName, setProjectName] = useState("")
@@ -122,7 +116,6 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
   const [showModalInfo, setShowModalInfo] = useState(false)
   const [modalData, setModalData] = useState([])
   const [initialInputState, setInitialInputState] = useState(undefined)
-  const [componentNumber, setComponentNumber] = useState(0)
   const [selectedFileSampleType, setSelectedFileSampleType] = useState({
     1: "clinical_information",
   })
@@ -145,12 +138,8 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
   const [activeTableKey, setActiveTableKey] = useState("")
   const [disableUploadButton, setDisableUploadButton] = useState(true)
   const [borderRed, setBorderRed] = useState(false)
-
-
-
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const [Englishlanguage, setEnglishlanguage] = useState(true);
-  const [icon, setIcon] = useState(true);
   const context = useContext(Context);
   
   useEffect(() => {
@@ -174,175 +163,12 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
     }
   },[koreanlanguage,Englishlanguage])
 
-  // const tableColumnsData = [
-  //   {
-  //     name: "geneName",
-  //     selector: (row) => {
-  //       return row.gene;
-  //     },
-  //     sortable: true,
-  //     classNames: ["report_sankey"],
-  //     style: {
-  //       borderLeft: "1px solid #fff",
-  //       borderRight: "1px solid #fff",
-  //       boxSizing: "border-box",
-  //       textAlign: "center",
-  //       display: "block",
-  //       lineHeight: "3.5",
-  //     },
-  //   },
-
-  //   {
-  //     name: "Yes",
-  //     selector: (row) => {
-  //       if (row.dna === "YES") {
-  //         if (row.gene in reportData["variant_info"]) {
-  //           let variants = reportData["variant_info"][row.gene];
-  //           variants = variants.join("-");
-  //           return (
-  //             <div data-bs-toggle="tooltip" title={variants}>
-  //               {"O " + "(" + reportData["variant_info"][row.gene].length + ")"}
-  //             </div>
-  //           );
-  //         } else {
-  //           return row.dna;
-  //         }
-  //       } else return "";
-  //     },
-  //     sortable: true,
-  //     style: {
-  //       borderLeft: "1px solid #6F7378",
-  //       borderRight: "1px solid #fff",
-  //       boxSizing: "border-box",
-  //       textAlign: "center",
-  //       display: "block",
-  //       lineHeight: "3.5",
-  //     },
-  //   },
-  //   {
-  //     name: "No",
-  //     selector: (row) => {
-  //       if (row.dna === "NO") {
-  //         return "O ";
-  //       } else return "";
-  //     },
-  //     sortable: true,
-  //     style: {
-  //       borderLeft: "1px solid #ABB0B8",
-  //       borderRight: "1px solid #fff",
-  //       boxSizing: "border-box",
-  //       textAlign: "center",
-  //       display: "block",
-  //       lineHeight: "3.5",
-  //     },
-  //   },
-  //   {
-  //     name: "High",
-  //     selector: (row) => {
-  //       if (row.rna === "HIGH") {
-  //         return "O ";
-  //       } else return "";
-  //     },
-  //     sortable: true,
-  //     style: {
-  //       borderLeft: "1px solid #6F7378",
-  //       borderRight: "1px solid #fff",
-  //       boxSizing: "border-box",
-  //       textAlign: "center",
-  //       display: "block",
-  //       lineHeight: "3.5",
-  //     },
-  //   },
-  //   {
-  //     name: "Intermediate",
-  //     selector: (row) => {
-  //       if (row.rna !== "HIGH" && row.rna !== "LOW") {
-  //         return "O ";
-  //       } else return "";
-  //     },
-  //     sortable: true,
-  //     style: {
-  //       borderLeft: "1px solid #ABB0B8",
-  //       borderRight: "1px solid #fff",
-  //       boxSizing: "border-box",
-  //       textAlign: "center",
-  //       display: "block",
-  //       lineHeight: "3.5",
-  //     },
-  //   },
-  //   {
-  //     name: "Low",
-  //     selector: (row) => {
-  //       if (row.rna === "LOW") {
-  //         return "O ";
-  //       } else return "";
-  //     },
-  //     sortable: true,
-  //     style: {
-  //       borderLeft: "1px solid #ABB0B8",
-  //       borderRight: "1px solid #fff",
-  //       boxSizing: "border-box",
-  //       textAlign: "center",
-  //       display: "block",
-  //       lineHeight: "3.5",
-  //     },
-  //   },
-  //   {
-  //     name: "High",
-  //     selector: (row) => {
-  //       if (row.proteome === "HIGH") {
-  //         return "O ";
-  //       } else return "";
-  //     },
-  //     sortable: true,
-  //     style: {
-  //       borderLeft: "1px solid #6F7378",
-  //       borderRight: "1px solid #fff",
-  //       boxSizing: "border-box",
-  //       textAlign: "center",
-  //       display: "block",
-  //       lineHeight: "3.5",
-  //     },
-  //   },
-  //   {
-  //     name: "Intermediate",
-  //     selector: (row) => {
-  //       if (row.proteome !== "HIGH" && row.proteome !== "LOW") {
-  //         return "O ";
-  //       } else return "";
-  //     },
-  //     sortable: true,
-  //     style: {
-  //       borderLeft: "1px solid #ABB0B8",
-  //       borderRight: "1px solid #fff",
-  //       boxSizing: "border-box",
-  //       textAlign: "center",
-  //       display: "block",
-  //       lineHeight: "3.5",
-  //     },
-  //   },
-  //   {
-  //     name: "Low",
-  //     selector: (row) => {
-  //       if (row.proteome === "LOW") {
-  //         return "O ";
-  //       } else return "";
-  //     },
-  //     sortable: true,
-  //     style: {
-  //       borderLeft: "1px solid #ABB0B8",
-  //       borderRight: "1px solid #6F7378",
-  //       boxSizing: "border-box",
-  //       textAlign: "center",
-  //       display: "block",
-  //       lineHeight: "3.5",
-  //     },
-  //   },
-  // ];
-
+  useEffect(()=>{
+    setErrorMessage({ type: "", message: "" })
+  },[])
 
   const resetStates = () => {
-    dispatch(clear_new_file_upload_state())
+    dispatch(clearNewFileUploadState())
     setSelectedFileSampleType({
       1: "clinical_information",
     })
@@ -370,7 +196,7 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
     setShowModal(stateData)
   }
   useEffect(()=>{
-    dispatch(clear_new_file_upload_state())
+    dispatch(clearNewFileUploadState())
   },[])
 
   useEffect(() => {
@@ -611,27 +437,8 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
 
     }
   }
-
-  const renderSwitch = (param) => {
-    switch (param) {
-      case 'clinical_information':
-        return "/SAMPLE_FILES/clinical_information.csv";
-      case 'rna_zscore':
-        return "/SAMPLE_FILES/rna_zscore.csv";
-      case 'dna_mutation':
-        return "/SAMPLE_FILES/dna_mutation.csv";
-      case 'dna_methylation':
-        return "/SAMPLE_FILES/dna_methylation.csv";
-      case 'proteome':
-        return "/SAMPLE_FILES/global_proteome_rawdata.csv";
-      default:
-        return "/SAMPLE_FILES/clinical_information.csv";
-    }
-  }
-
-
   const on_upload = () => {
-    dispatch(new_file_upload(uploadFile, projectName))
+    dispatch(newFileUpload(uploadFile, projectName))
     updateComponentNumber(1)
     for (let key in uploadFile) {
       setLoader((prevState) => ({ ...prevState, [uploadFile[key].type]: 'loader' }))
@@ -684,7 +491,7 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
     if (deleteKey !== 1) {
       let activeElementKeys = {}
       Object.keys(selectedFileSampleType).forEach(key => {
-        if (key != deleteKey) {
+        if (key !== deleteKey) {
           activeElementKeys = { ...activeElementKeys, [key]: selectedFileSampleType[key] }
           selected_.splice(key, 1)
         }
@@ -731,7 +538,6 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
               <h2 className="text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md"><FormattedMessage id="Upload" defaultMessage="Upload" /></h2>
             </div>
             {initialInputState}
-            {state}
             <div className="relative w-full col-span-12 text-center">
               <button onClick={resetStates} className="text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md capitalize bg-white  w-80 h-20  mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded">
                 <FormattedMessage id="Reset" defaultMessage="Reset" />
@@ -780,20 +586,10 @@ export default function FileUpload({ parentCallBack, updateComponentNumber}) {
 
 
 function SampleDataTable() {
-  const[hideClass, setHideClass]= useState(true)
-  const[compindex, setIndex]= useState(-1)
   const[currentIndex, setCurrentIndex]= useState(-1)
-  const renderSwitch = {
-    'clinical_information': "/SAMPLE_FILES/clinical_information.csv",
-    'rna_zscore': "/SAMPLE_FILES/rna_zscore.csv",
-    'dna_mutation': "/SAMPLE_FILES/dna_mutation.csv",
-    'dna_methylation': "/SAMPLE_FILES/dna_methylation.csv",
-    'proteome': "/SAMPLE_FILES/global_proteome_rawdata.csv"
-  }
 
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const [Englishlanguage, setEnglishlanguage] = useState(true);
-  const [icon, setIcon] = useState(true);
   const context = useContext(Context);
   
   useEffect(() => {
@@ -805,19 +601,6 @@ function SampleDataTable() {
       setEnglishlanguage(true);
     }
   });
-  // const data = {
-  //   headers: ['type', 'Download', 'Circos plot', 'Oncoprinter', 'Lollipop plot', 'Volcano Plot', 'Heatmap', 'Survival Plot', 'Gene fusion', 'CNV chart', 'Box plot', 'Correlation plot'],
-  //   body: [
-  //     ['Clinical information', `${config.media}samples/clinical_information.csv`, true, true, true, true, true, true, true, true, true, true],
-  //     ['DNA mutation', `${config.media}samples/dna_mutation.csv`, true, true, true, false, true, true, false, false, false, false],
-  //     ['RNA', `${config.media}samples/rna_zscore.csv`, true, true, false, true, true, false, false, false, false, false],
-  //     ['DNA Methylation', `${config.media}samples/dna_methylation.csv`, true, false, false, false, true, false, false, false, true, false],
-  //     ['Phospo Proteome', `${config.media}samples/phospo.csv`, true, true, true, false, true, false, false, false, true, false],
-  //     ['Global Proteome', `${config.media}samples/global_proteome_rawdata.csv`, false, false, false, false, true, false, false, false, false, false],
-  //     ['Gene fusion', `${config.media}samples/fusion.csv`, true, false, false, false, false, false, true, false, false, false],
-  //     ['CNV', `${config.media}samples/cnv.csv`, true, false, false, false, false, false, false, true, false, false]
-  //   ]
-  // }
   const newdata = {
     headers: ['plots', 'Clinical information', 'DNA mutation', 'RNA', 'DNA Methylation', 'Phospo Proteome', 'Global Proteome', 'Gene fusion', 'CNV'],
     downloads:['', `${config.media}samples/clinicalinformation.tsv`,`${config.media}samples/dna_mutation.tsv`,`${config.media}samples/rna.tsv`,`${config.media}samples/methylation.tsv`,`${config.media}samples/phospho.tsv`,`${config.media}samples/proteome.tsv`,`${config.media}samples/fusion.tsv`,`${config.media}samples/cnv.tsv`],
@@ -857,7 +640,7 @@ function SampleDataTable() {
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 <tr>
-                {newdata.downloads.map((d,i) => {
+                {newdata.downloads.forEach((d,i) => {
                   if(i === 0){
                     return (<td key = {`${Math.random()*100}`} className="border"></td>)
                   }
@@ -875,7 +658,7 @@ function SampleDataTable() {
                     
                     {row.map((cellData, cellIndex) => {
                       if (cellIndex === 0) {
-                        let i, current_index
+                        let i
                         return (
                          <td trindex={index} key={`${index}-${cellIndex}-${cellData}`+ Math.random()*300} className="px-6 py-4 whitespace-nowrap border" >
                             <div trindex={index} className="capitalize text-lg text-gray-900" onClick={(e)=>{
@@ -890,13 +673,9 @@ function SampleDataTable() {
                                     let ele = document.getElementById(`hidden${i}`)
                                     if (ele.classList.contains('hidden')){
                                       ele.classList.remove('hidden');
-                                      current_index = index
                                       setCurrentIndex(index)
-                                      setIndex(i)
-                                      setIcon(true)
                                     }
                                     else if (!ele.classList.contains('hidden')){
-                                      // setIcon(false)
                                       ele.classList.add('hidden');
                                       setCurrentIndex(-1)
                                     }
@@ -973,7 +752,7 @@ function SampleDataTable() {
                       
                   }
                   {
-                      index === 9 && (Englishlanguage ? <td colSpan={9}> <CorrelationGuidelines/></td> :  <td colSpan={9}> <CorrelationGuidelinesKorean/></td>)
+                      index === 9 && (koreanlanguage === false ? <td colSpan={9}> <CorrelationGuidelines/></td> :  <td colSpan={9}> <CorrelationGuidelinesKorean/></td>)
                       
                   }
                   </tr>
@@ -988,20 +767,6 @@ function SampleDataTable() {
     </div>
   )
 }
-
-
-// let SampleDataTable =()=>{
-//   <DataTable
-
-//   sampleKey={circosSanpleRnidListData[sampleKey]}
-//   tableColumnsData={tableColumnsData}
-//   tableData={tableData}
-//   basicInformationData={basicInformationData}
-//   closeReportFunction={closeReportFunction}
-//   isReportClickedFunction={isReportClickedFunction}
-//   isReportClicked={isReportClicked}/>
-// }
-
 
 
 function ModalTest({ modalStateButton, setShowModalFunction }) {

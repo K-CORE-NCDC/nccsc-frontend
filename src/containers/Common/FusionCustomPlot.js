@@ -19,7 +19,7 @@ export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
   const [exonData,setExonData] = useState([])
   const [fromGene,setFromGene] = useState('')
   const [renderPlot,setRenderPlot] = useState(false)
-  let { tab, project_id } = useParams();
+  let { project_id } = useParams();
   useEffect(()=>{
     if(exonJson){
       setExonData(exonJson)
@@ -142,6 +142,9 @@ export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
             }
             leftSecondRow = false
             RightSecondRow = true
+            if(right_w){
+              
+            }
           }else{
             htmlExons.push(
               <div title={"exon -"+(index+1)+" "+element.startCodon} key={index} style={{width:w+'px',backgroundColor:element.color,marginRight:'5px',marginLeft:'5px',height:'20px',borderRight:'1px solid '+element.color}}>

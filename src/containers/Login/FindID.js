@@ -10,7 +10,7 @@ function FindID() {
   const [status, setstatus] = useState("")
   const [errorClass, setErrorClass] = useState("");
   const dispatch = useDispatch();
-  const find_id = useSelector((data) => data.homeReducer.find_id);
+  const find_id = useSelector((data) => data.homeReducer.findId);
 
   let findIDfunction = () => {
 
@@ -42,7 +42,7 @@ function FindID() {
   
     }
 
-  }, [find_id, status])
+  }, [[find_id], status])
 
   useEffect(() => {
     return () => {

@@ -1,4 +1,4 @@
-import React, { useState,useEffect,useRef } from 'react';
+import React, { useEffect,useRef } from 'react';
 import {Chart, registerables} from 'chart.js';
 
 Chart.register(...registerables);
@@ -29,7 +29,7 @@ export default function StackBarChartComp({data, axis, key}){
 
     const drawGraph = (labels, data_) => {
         if(chartRef.current){
-          var myChart = new Chart(chartRef.current, {
+           new Chart(chartRef.current, {
               type: 'bar',
               data: {
                   labels: labels,

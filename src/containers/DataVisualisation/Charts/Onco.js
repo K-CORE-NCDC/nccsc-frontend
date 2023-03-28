@@ -23,13 +23,15 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
   const [inputState,setInputState] = useState({})
   const [watermarkCss, setWatermarkCSS] = useState("")
   const [loader, setLoader] = useState(false)
-  const [tableData, setTableData] = useState("")
-  const [tableCount, setTableCount] = useState()
+  const tableData = ""
+  let tableCount
+  // const [tableCount, setTableCount] = useState()
+  // const [tableData, setTableData] = useState("")
   const [showOnco, setShowOnco] = useState(false)
   const [noContent, setNoContent] = useState(true)
   const [optionChoices,setOptionChoices] = useState([])
   const [option,setOption] = useState([])
-  let { tab, project_id } = useParams();
+  let { project_id } = useParams();
   const [customFilterJson,setCustomFilterJson] = useState([])
 
   useEffect(() => {
@@ -120,7 +122,7 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
       let gData = 'geneData' in oncoJson ?  oncoJson['geneData'] : {}
       let cData = 'clinicalData' in oncoJson ? oncoJson['clinicalData'] : {}
       let final = {}
-      let global_ = cData && 'globalMutCategory' in cData && cData["globalMutCategory"]
+      // let global_ = cData && 'globalMutCategory' in cData && cData["globalMutCategory"]
       let mutant_ = cData && 'mutCategory' in cData && cData["mutCategory"]
 
       mutant_.forEach((g, i) => {

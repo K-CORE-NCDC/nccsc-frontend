@@ -65,11 +65,11 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
       }
 
     }
-    var width = width-100
+    var newWidth = width-100
     var circosHighlight = new Circos({
       container: '#circos',
-      width: width,
-      height: width
+      width: newWidth,
+      height: newWidth
     })
     let data = cytobands
     let all_chr = []
@@ -82,8 +82,8 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
       })
     }
     let conf = {
-				innerRadius: width / 2 - 100,
-				outerRadius: width / 2 - 50,
+				innerRadius: newWidth / 2 - 100,
+				outerRadius: newWidth / 2 - 50,
 				labels		: {
 					position		: 'center',
 					display		: true,
@@ -245,8 +245,8 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
     }
     circosHighlight.layout(GRCh37,conf)
     .highlight('cytobands-1', data, {
-      innerRadius: width/2 -100,
-      outerRadius: width / 2 - 50,
+      innerRadius: newWidth/2 -100,
+      outerRadius: newWidth / 2 - 50,
       opacity: 0.5,
       color: function (d) {
         return gieStainColor[d.gieStain]
@@ -396,7 +396,6 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
     .scatter('snp-250-6', cnvData, {
       innerRadius: 0.36,
       outerRadius: 0.45,
-      showAxesTooltip: false,
       color:function(d){
         if(d.name in selectedGenesObject){
           return selectedGeneColor
@@ -444,7 +443,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
       radius: 0.3,
       logScale: false,
       opacity: 0.9,
-      color: '#ffce44',
+      // color: '#ffce44',
       color: function(d){
         if(d.source.svtype){
           if(d.source.svtype === "Deletion"){
@@ -566,7 +565,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
         <div ref={ref} className={`circos block ${watermarkCss}`} id='circos'></div>
       </div>
       <div className="col-span-3 pl-8">
-        <img src={placeholder} width='400' className="mt-10 object-contain h-2/5"/>
+        <img alt='placeholder' src={placeholder} width='400' className="mt-10 object-contain h-2/5"/>
       </div>
     </div>
   )

@@ -1,6 +1,5 @@
-import React, { useState,useEffect,useRef } from 'react';
+import React, {useEffect,useRef } from 'react';
 import * as d3 from 'd3'
-// import {nest} from 'd3-collection';
 import * as d3Collection from 'd3-collection';
 
 
@@ -34,12 +33,12 @@ export default function Boxplot({data}) {
       domains.push(data[i].label)
       max_d.push(...data[i].data)
     }
-    var max_vl = 10
-    var min_vl = 0
-    if(max_d.length>0){
-      max_vl = Math.max(...max_d)
-      min_vl = Math.min(...max_d)
-    }
+    // var max_vl = 10
+    // var min_vl = 0
+    // if(max_d.length>0){
+    //   max_vl = Math.max(...max_d)
+    //   min_vl = Math.min(...max_d)
+    // }
     var colors = {
       'In_Frame_Del': '#1b4879',
       'In_Frame_Ins': '#c74951',
@@ -50,10 +49,8 @@ export default function Boxplot({data}) {
       'Germline': '#000000',
       'Missense_Mutation': '#549d3e'
     }
-    var sumstat = d3Collection.nest() .key(function(d) { return d.label;})
-    .rollup(function(d) {
-      var d = d[0]
-      
+    var sumstat = d3Collection.nest().key(function(d) { return d.label;}).rollup(function(a) {
+      let d = a[0]
       var data_sorted = d['data'].sort(d3.ascending)
       var q1 = d3.quantile(data_sorted,.25)
       var median = d3.quantile(data_sorted,.5)
@@ -92,7 +89,7 @@ export default function Boxplot({data}) {
               .range([height, 0])
       svg.append("g").call(d3.axisLeft(y))
 
-    for (var i = 0; i < sumstat.length; i++) {
+    for (let i = 0; i < sumstat.length; i++) {
       var p = svg.append('g').attr('class','box').attr('id',i)
       p.selectAll("vertLines").data([sumstat[i]])
       .enter()
@@ -106,7 +103,7 @@ export default function Boxplot({data}) {
       })
       .style("width", 40)
 
-      var boxWidth = 50
+      let boxWidth = 50
       p
       .selectAll("boxes")
       .data([sumstat[i]])

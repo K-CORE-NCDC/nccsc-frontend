@@ -18,7 +18,6 @@ const ConfirmDownload = ({ screenCaptureFunction, hideModal }) => {
   const [showLoginPage, setShowLoginPage] = useState(false);
   const purposeOptions = ["business", "research", "diagonosis"];
   let { tab, project_id } = useParams();
-  const [tab_, setTab] = useState(tab);
 
   const accessToken = localStorage.getItem("ncc_access_token");
   useEffect(() => {

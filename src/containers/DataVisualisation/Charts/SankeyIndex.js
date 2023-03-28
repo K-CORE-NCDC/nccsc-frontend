@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getSankeyJson } from "../../../actions/api_actions";
 import Sankey from "./NewSankey";
@@ -53,7 +53,6 @@ function SankeyIndex({ ...props }) {
       let nodes = {};
       let node_type = {};
       let i = 1;
-      let table = []
       sankeyJson["data"].forEach((element) => {
         // detailgeneData.push(element);
         for (const key in element) {

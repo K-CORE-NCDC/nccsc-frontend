@@ -18,11 +18,9 @@ function NewSankeyd3({SankeyJson, idName, forGene}) {
                         "diseasename":'#e377c2',
                         'drugname':"#9467bd"
                       }
-    let nodesLength = energyjson.nodes
     
     var formatNumber = d3.format(",.0f"),
-        format = function(d) { return formatNumber(d) + " TWh"; },
-        color = d3.scale.category20();
+        format = function(d) { return formatNumber(d) + " TWh"; }
 
     var svg1 = d3.select(`#${idName}`).append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -131,7 +129,7 @@ function NewSankeyd3({SankeyJson, idName, forGene}) {
           nextNodes=[];
 
       var stroke_opacity = 0;
-      if( d3.select(this).attr("data-clicked") == "1" ){
+      if( d3.select(this).attr("data-clicked") === "1" ){
         d3.select(this).attr("data-clicked","0");
         stroke_opacity = 0.2;
       }else{

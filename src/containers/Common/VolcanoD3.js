@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as d3 from 'd3'
 import '../../styles/volcano.css'
-import html2canvas from 'html2canvas';
-import {saveSvgAsPng,saveSvg} from 'save-svg-as-png'
+import {saveSvg} from 'save-svg-as-png'
 
 const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
     const [volcanoData, setVolcanoData] = useState([])
@@ -108,10 +107,10 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
 
                 // this rect acts as a layer so that zooming works anywhere in the svg. otherwise, if zoom is called on
                 // just svg, zoom functionality will only work when the pointer is over a circle.
-                var zoomBox = svg.append('rect')
-                    .attr('class', 'zoom')
-                    .attr('height', innerHeight)
-                    .attr('width', innerWidth);
+                // var zoomBox = svg.append('rect')
+                //     .attr('class', 'zoom')
+                //     .attr('height', innerHeight)
+                //     .attr('width', innerWidth);
 
                 var circles = svg.append('g')
                     .attr('class', 'circlesContainer');
@@ -132,6 +131,7 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
                     if(xi.color==='black'){
                         return xi
                     }
+                    return null
                 })
                 
                 var gdots = circles.selectAll("g.dot")
@@ -199,12 +199,12 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
                         .style("left", (event.pageX + 20) + "px");
                 }
 
-                function yTickFormat(n) {
-                    return d3.format(".2r")(getBaseLog(10, n));
-                    function getBaseLog(x, y) {
-                        return Math.log(y) / Math.log(x);
-                    }
-                }
+                // function yTickFormat(n) {
+                //     return d3.format(".2r")(getBaseLog(10, n));
+                //     function getBaseLog(x, y) {
+                //         return Math.log(y) / Math.log(x);
+                //     }
+                // }
 
                 function zoomFunction(event) {
                     var transform = d3.zoomTransform(this);

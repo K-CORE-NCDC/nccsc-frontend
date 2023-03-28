@@ -76,7 +76,6 @@ function Vcfmaf() {
     const [msg, setMsg] = useState('')
     const [loop,setLoop] = useState(null)
     const [html, setHtml] = useState([])
-    const [showModalInfo, setShowModalInfo] = useState(false)
     const [showModal, setShowModal] = useState(false)
     const [isError, setIsError] = useState(false)
     const dispatch = useDispatch();

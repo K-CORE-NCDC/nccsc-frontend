@@ -1,50 +1,20 @@
-import React, { useState,useEffect, useRef,useContext} from "react";
+import React, { useState,useEffect,useContext} from "react";
 import {useSelector, useDispatch} from "react-redux";
-import pipeline from '../../assets/images/sub/pipeline.png'
 import DataTable from "react-data-table-component";
 import '../../assets/interceptor/interceptor'
 import axios from "axios";
 import config from '../../config'
-import { Link, Redirect, useParams } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 import {FormattedMessage} from 'react-intl';
 import { Context } from "../../wrapper";
-
 import { getQaData } from '../../actions/api_actions'
-// import JoditEditor from "jodit-react";
-// import "./styles.css";
-
-// import { Editor } from "react-draft-wysiwyg";
-// import { EditorState } from "draft-js";
-// import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-
-
-
-
-// import ReactSummernote from 'react-summernote';
-// import 'react-summernote/dist/react-summernote.css'; // import styles
-// import 'react-summernote/lang/summernote-ru-RU';
-// import $ from 'jquery';
-
-// var webpack = require('webpack');
-// window.jQuery = require("jquery");
-
-// new webpack.ProvidePlugin({
-//     $: "jquery",
-//     jQuery: "jquery"
-// })
-
-// import DataTableExtensions from "react-data-table-component-extensions";
-
-// import TinyMCE from 'react-tinymce';
 import ReactQuill from "react-quill"
 import 'react-quill/dist/quill.snow.css'
 
 function QAList({new_post}) {
     const context = useContext(Context);
     const [koreanlanguage, setKoreanlanguage] = useState(false);
-    const [Englishlanguage, setEnglishlanguage] = useState(true);
     const [tableData, setTableData] = useState([])
-    const faq_data = useSelector((state)=>state.homeReducer.dataQA)
     const [totalRows, setTotalRows] = useState(0);
     const [perPage, setPerPage] = useState(10);
     const [loading, setLoading] = useState(false);
@@ -55,20 +25,16 @@ function QAList({new_post}) {
     const [ title, setTitle] = useState('Title')
     const [content, setContent] = useState("Content")
     const [writer, setWriter] = useState("Writer")
-    const dispatch = useDispatch();
-    const editor = useRef(null);
     const [order, setOrder] = useState("Order")
     const [Dateofissue, setDateofissue] = useState("Date Of Issue")
 
     useEffect(() => {
       if (context["locale"] === "kr-KO") {
         setKoreanlanguage(true);
-        setEnglishlanguage(false);
       } else {
         setKoreanlanguage(false);
-        setEnglishlanguage(true);
       }
-    });
+    },[context]);
 
     useEffect(()=>{
       if(koreanlanguage){
@@ -79,19 +45,13 @@ function QAList({new_post}) {
         setDateofissue("일시")
       }
       else{
-        setTitle( 'Title')
-        setContent( "Content")
-        setWriter( "Writer")
-        setOrder("Order")
-        setDateofissue("Date Of Issue")
-      }
-    })
-
-    const handleUpdate = (event) => {
-      const editorContent = event.target.innerHTML;
-      setContent(editorContent);
-    };
-
+          setTitle( 'Title')
+          setContent( "Content")
+          setWriter( "Writer")
+          setOrder("Order")
+          setDateofissue("Date Of Issue")
+        }
+    },[koreanlanguage])
 
     const fetchUsers = async (page,method) => {
       setLoading(true);
@@ -289,7 +249,6 @@ function QaDetail({slug_id}){
 function QaCreate({new_post}){
   const notice_data = useSelector((state)=>state.homeReducer.dataQA)
   const dispatch = useDispatch();
-  const editor = useRef(null);
   const [title, setTitle] = React.useState()
   const [writer, setWriter] = React.useState()
   const [message, setMessage] = React.useState()
@@ -383,9 +342,7 @@ function QaCreate({new_post}){
 
 export default function QA(){
   let { slug }  = useParams();
-  const [slugState, setSlugStare] = useState()
   const [postCreate, setPostCreate] = useState(false)
-  let render = []
 
   const callback = (count) => {
       setPostCreate(count)

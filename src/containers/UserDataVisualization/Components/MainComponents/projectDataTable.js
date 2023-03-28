@@ -2,10 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProjectTableData, clearProjectTableDataTableData } from '../../../../actions/api_actions'
-import ExampleUserTable from '../TableDisplay/cellColorTable'
 import DataTable from 'react-data-table-component';
-import { objectOf } from 'prop-types';
-import { helpers } from 'chart.js';
 
 const dropdownOptions = {
     clinical_information: "Clinical Information",

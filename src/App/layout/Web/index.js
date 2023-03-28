@@ -57,8 +57,6 @@ let  parseJwt =  (islogin1)=> {
 }
 
 const menu = route.map((route, index) => {
-  // if(route.path === "/visualise/:tab?/:project_id?/" ){
-  // }
   return route.component ? (
     <Route
       key={index}
@@ -71,67 +69,19 @@ const menu = route.map((route, index) => {
   ) : null;
 });
 
-// let PageRefresh = ()=> {
-//   const timeout = 10000
-//   const [remaining, setRemaining] = useState(timeout)
-//   const [elapsed, setElapsed] = useState(0)
-//   const [lastActive, setLastActive] = useState(+new Date())
-//   const [isIdle, setIsIdle] = useState(false)
-
-//   const handleOnActive = () => setIsIdle(false)
-//   const handleOnIdle = () => setIsIdle(true)
-//   const {
-//     reset,
-//     pause,
-//     resume,
-//     getRemainingTime,
-//     getLastActiveTime,
-//     getElapsedTime
-//   } = useIdleTimer({
-//     timeout,
-//     onActive: handleOnActive,
-//     onIdle: handleOnIdle
-//   })
-
-
-//   useEffect(() => {
-//     setRemaining(getRemainingTime())
-//     setLastActive(getLastActiveTime())
-//     setElapsed(getElapsedTime())
-
-//     setInterval(() => {
-//       setRemaining(getRemainingTime())
-//       setLastActive(getLastActiveTime())
-//       setElapsed(getElapsedTime())
-//     }, 1000)
-//   }, [])
-//  if(isIdle === true){
-//        window.location.reload();
-//  }
-// // useEffect(()=>{
-// //   if(isIdle === true){
-// //     window.location.reload();
-// //   }
-// // },[isIdle])
-// }
 
 export default function Web(props) {
 
   const routeLocation = useLocation(); 
   const timeout = 3000
-  // const [remaining, setRemaining] = useState(timeout)
-  // const [elapsed, setElapsed] = useState(0)
-  // const [lastActive, setLastActive] = useState(+new Date())
-  const [isIdle, setIsIdle] = useState(false)
   const [showPopup, setShowPopup] = useState(false)
-  const handleOnActive = () => setIsIdle(false)
-  const handleOnIdle = () => setIsIdle(true)
+  const handleOnActive = () => {}
+  const handleOnIdle = () => {}
 
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const [countJson, setCountJson] = useState({})
   const [countStatus, setCountStatus]  = useState(200)
-  // const countJson = useSelector((data) => data.homeReducer.dataCount);
 
 
   const [koreanlanguage, setKoreanlanguage] = useState(false);
@@ -172,33 +122,12 @@ export default function Web(props) {
   };
 
   const {
-    reset,
-    pause,
-    resume,
-    getRemainingTime,
-    getLastActiveTime,
-    getElapsedTime
   } = useIdleTimer({
     timeout,
     onActive: handleOnActive,
     onIdle: handleOnIdle
   })
 
-
-  // useEffect(() => {
-  //   setRemaining(getRemainingTime())
-  //   setLastActive(getLastActiveTime())
-  //   setElapsed(getElapsedTime())
-
-  //   setInterval(() => {
-  //     setRemaining(getRemainingTime())
-  //     setLastActive(getLastActiveTime())
-  //     setElapsed(getElapsedTime())
-  //   }, 1000)
-  // }, [])
-
-  // useEffect(()=>{
-  // },[isIdle])
   let { project_id } = useParams()
   let id = useParams();
 
@@ -240,14 +169,19 @@ export default function Web(props) {
     else if (['circos', 'OncoPrint','lollipop','volcano', 'heatmap', 'survival','correlation','CNV','box','fusion'].some(r=> window.location.href.split("/").indexOf(r) >= 0)){
       category = 'DataVisualization'
     }
-    if(localStorage.getItem('ncc_access_token')){
+    if(localStorage.getItem('ncc_access_token') && localStorage.getItem('ncc_access_token') !== undefined ){
        sessionAuth = localStorage.getItem('ncc_access_token');
        if (sessionAuth) {
         let jwt = parseJwt(sessionAuth)
-        // console.log('jwt',jwt);
         if(jwt['username']){
           userid = jwt['username']
         }
+      }
+    }
+    else{
+      if(localStorage.getItem('ncc_access_token') === undefined){
+        localStorage.removeItem('ncc_access_token')
+        localStorage.removeItem('ncc_refresh_token')
       }
     }
 
@@ -423,16 +357,13 @@ export default function Web(props) {
       logDataIs[idNumber] = object
       sessionStorage.setItem('logData', JSON.stringify(logDataIs))
     }
-    // console.log('---->',typeof(window.location.href.substring(window.location.href.lastIndexOf('/')+1)));
-
-    // dispatch(reportData())
   }, [window.location.href])
+
+  
   useEffect(() => {
     let html = [];
     for (let m = 0; m < menu.length; m++) {
       let p = id[0].split("/")[1];
-      // console.log('menu',menu);
-      // if (menu[m].props.path.includes(p)) {
       if (menu[m].props.path.includes(p)) {
         let name = menu[m].props.name;
         let childname = menu[m].props.childname;
@@ -452,9 +383,6 @@ export default function Web(props) {
             <a  className="font-bold">
               {name}
             </a>
-            {/* <a href={name} className="font-bold">
-              {name}
-            </a> */}
           </li>
         );
         html.push(

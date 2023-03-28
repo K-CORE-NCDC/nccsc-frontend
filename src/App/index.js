@@ -1,23 +1,21 @@
-import React, { Suspense, useState, } from 'react';
+import React, { Suspense, useState } from 'react';
 import { Switch } from 'react-router-dom';
 import Loadable from 'react-loadable';
-import Loader from './layout/Loader/';
-import { PrivateRoute } from './PrivateRoute';
-import '../assets/css/style.css'
-import Wrapper  from '../wrapper';
-// import ReactGA from 'react-ga';
-require('dotenv').config()
+import Loader from './layout/Loader';
+import PrivateRoute from './PrivateRoute';
+import '../assets/css/style.css';
+import Wrapper from '../wrapper';
+
+require('dotenv').config();
 
 const Web = Loadable({
   loader: () => import('./layout/Web'),
   loading: Loader,
-  delay: 60
+  delay: 60,
 });
 
-
-
 export default function App() {
-  const [blurScreenCss] = useState("")
+  const [blurScreenCss] = useState('');
 
   // useEffect(()=>{
   //   const TRACKING_ID = "UA-240000755-1"; // YOUR_OWN_TRACKING_ID
@@ -33,5 +31,5 @@ export default function App() {
         </Suspense>
       </div>
     </Wrapper>
-  )
+  );
 }

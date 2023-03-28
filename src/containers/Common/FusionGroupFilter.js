@@ -353,31 +353,6 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
     });
   };
 
-  const dropDownChange = (event) => {
-    const eventObject = JSON.parse(event.target.value);
-    const filterData =
-      preDefienedGroups1[eventObject.colName][eventObject.index];
-    if ("value" in filterData) {
-      setFilters((prevState) => ({
-        ...prevState,
-        ...{
-          [eventObject.group]: filterData.value,
-          column: selectedFilterType.details.id,
-          type: "text",
-        },
-      }));
-    } else {
-      setFilters((prevState) => ({
-        ...prevState,
-        ...{
-          [`${eventObject.group}_from`]: filterData.from,
-          [`${eventObject.group}_to`]: filterData.to,
-          column: selectedFilterType.details.id,
-          type: "number",
-        },
-      }));
-    }
-  };
 
   useEffect(() => {
     let filterGroupsHtmlTemp = [];
@@ -485,7 +460,7 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters }) => {
         )}
         {resetClicked === false && isGroupFilterProp === true && (
           <h6 className="border p-4">
-            {filterChoicesCustom.map((e) => {
+            {filterChoicesCustom.forEach((e) => {
               if (groupFilters.column === e.id) {
                 return e.name;
               }
@@ -526,9 +501,8 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
   const [groupsCounter, setGroupsCounter] = useState(2);
   const [prevStateFilters, setPrevStateFilters] = useState([]);
   const [isFilterResetHappened, setIsFilterResetHappened] = useState(false);
-  const [filters, setFilters] = useState({});
+  // const [filters, setFilters] = useState({});
   const [multipleInputs, setMultipleInputs] = useState({});
-  const [filterType, setFilterType] = useState("transcriptome");
   const [selectDefaultValue, setSelectDefaultValue] = useState("0");
 
   const preDefienedGroups1 = preDefienedGroups;
@@ -796,7 +770,7 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
     setGroupsCounter(1);
     setIsFilterResetHappened(true);
     setPrevStateFilters([]);
-    setFilters({});
+    // setFilters({});
     parentCallback({});
   
   };
@@ -891,10 +865,7 @@ const GroupFilters = ({ parentCallback, groupFilters, viz_type }) => {
   const onChangeFilterInput = (e) => {
     if (e.target.type === "number") {
       let id = e.target.name;
-      let ids = id.split("_");
-      let m_id = ids[0];
-
-      
+      let ids = id.split("_");      
       let one_to_0, one_to, one_max_value, one_from_0, one_from, one_min_value;
       if (ids.includes("from")) {
         one_from_0 = e.target;
@@ -2499,7 +2470,6 @@ export const UserDefinedGroupFilters = ({
   const userDefinedFilter = useSelector(
     (data) => data.dataVisualizationReducer.userDefinedFilter
   );
-  let abc = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"];
  
   useEffect(() => {
     if (
@@ -2580,7 +2550,7 @@ export const UserDefinedGroupFilters = ({
   const [preDefienedGroups1, setPreDefienedGroups1] = useState({});
   const [filterChoices, setFilterChoices] = useState([]);
   const [booleanColumns, setBooleanColumns] = useState([]);
-  let { tab, project_id } = useParams();
+  let { project_id } = useParams();
   
   useEffect(() => {
     let preDefienedGroups1 = {};
