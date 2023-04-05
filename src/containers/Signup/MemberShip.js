@@ -25,7 +25,6 @@ const MemberShip = ({ changestep }) => {
 
   const register_user = () => {
     
-    console.log(form)
     for (let i in form['errors']) {
       if (form['errors'][i] === "") {
         form.isVerified = true

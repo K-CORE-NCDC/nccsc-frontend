@@ -9,6 +9,84 @@ import {
 } from "../../../../actions/api_actions";
 import { FormattedMessage } from "react-intl";
 
+import warningImage from '../../../../assets/images/warning.png'
+
+
+
+
+function Modal({ showModal, setShowModal}) {
+  const verificationResponse = useSelector(
+    (data) => data.homeReducer.uploadClinicalColumns
+  );
+  return (
+    <>
+      {showModal ? (
+        <>
+          <div
+            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+          >
+            <div className="relative my-6 mx-auto">
+              {/*content*/}
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col max-w-max bg-white outline-none focus:outline-none" >
+                {/*header*/}
+                <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+                  <h3 className="text-3xl font-semibold">
+                    Errors in the Columns of Uploaded Files
+                  </h3>
+                  <button
+                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                    onClick={() => setShowModal(false)}
+                  >
+                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                      ×
+                    </span>
+                  </button>
+                </div>
+                {/*body*/}
+                <div className="relative p-6 flex-auto">
+                  <div className="my-4 text-2xl leading-relaxed">
+                    {verificationResponse && "columnMessages" in verificationResponse &&
+                      Object.keys(verificationResponse["columnMessages"]).map(filename => {
+                        return (
+                          <div key={filename}>
+                            <div className="uppercase underline " key={filename}>{filename}</div>
+                            {
+                              Object.keys(verificationResponse["columnMessages"][filename]).map(item => {
+                                return(verificationResponse["columnMessages"][filename][item] !== '' ?
+                                <div className="capitalize ml-2 m-2" key={item}>
+                                <p>{item}: {verificationResponse["columnMessages"][filename][item]}</p>
+                                <p></p>
+                                </div> 
+                                : null)
+                              })
+                            }
+                          </div>
+                        )
+                      })
+                    }
+                  </div>
+                </div>
+                {/*footer*/}
+                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                  <button
+                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={() => setShowModal(false)}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+        </>
+      ) : null}
+    </>
+  );
+}
+
+
 function FileProjectDataTable({ updateComponentNumber }) {
   const dispatch = useDispatch();
   const [rowData, setRowData] = useState([]);
@@ -17,6 +95,7 @@ function FileProjectDataTable({ updateComponentNumber }) {
   const [projectId, setProjectId] = useState(0);
   const [activeTableKey, setActiveTableKey] = useState("clinical_information");
   const [navTabIs, setNavTabIs] = useState('circos')
+  const [showModal, setShowModal] = useState(false)
   let history = useHistory();
   const verificationResponse = useSelector(
     (data) => data.homeReducer.uploadClinicalColumns
@@ -127,9 +206,16 @@ function FileProjectDataTable({ updateComponentNumber }) {
       },
     },
   ];
+
+  const setShowModalFunction = (stateData) => {
+    setShowModal(stateData)
+  }
+
+
   return (
     <div>
       <div className="p-1 flex justify-around">
+      <Modal showModal={showModal} setShowModal={setShowModalFunction} />
       {projectId === 0 && (
         <button
            className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
@@ -140,7 +226,18 @@ function FileProjectDataTable({ updateComponentNumber }) {
           >
           <FormattedMessage id="Back" defaultMessage="Back" />
         </button>
-      )}
+      )
+      }
+    {
+      projectId === 0 && (
+        <div>
+            <button onClick={() => setShowModalFunction(true)} className="has-tooltip bg-red-500 hover:bg-red-700 text-white text-center py-2 px-4 rounded-full h-20 w-20 inline-flex items-center">
+                  <img src={warningImage}></img>
+            </button>
+        </div>
+      )
+    }
+
         {projectId !== 0 && (
           <button
             onClick={() => {
@@ -165,7 +262,6 @@ function FileProjectDataTable({ updateComponentNumber }) {
             data={rowData}
             defaultSortField="title"
             pagination
-            // onRowClicked={handleRowClicked}
             conditionalRowStyles={conditionalRowStyles}
           />
         )}
@@ -177,18 +273,6 @@ function FileProjectDataTable({ updateComponentNumber }) {
           </div>
         )}
       </div>
-
-      {/* <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-        <button
-          className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-          type="button"
-          onClick={() => {
-            updateComponentNumber(1);
-          }}
-        >
-          <FormattedMessage id="Back" defaultMessage="Back" />
-        </button>
-      </div> */}
     </div>
   );
 }

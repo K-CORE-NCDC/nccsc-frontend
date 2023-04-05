@@ -237,7 +237,6 @@ let takeScreenshot = async()=>{
 
   const changeView = (e, view) => {
     let c = document.getElementsByName("view");
-    // setActiveCmp(false);
     setLoader(true);
     for (var i = 0; i < c.length; i++) {
       let classList = c[i].classList;

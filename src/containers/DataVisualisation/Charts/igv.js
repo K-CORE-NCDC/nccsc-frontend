@@ -4,6 +4,7 @@ import LoaderCmp from '../../Common/Loader';
 import { IGV } from '../../../actions/api_actions'
 import NoContentMessage from '../../Common/NoContentComponent'
 import { exportComponentAsPNG } from 'react-component-export-image';
+import { useHistory } from "react-router-dom";
 
 export default function DataIgv({ width,inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
@@ -12,8 +13,7 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
   const [loader, setLoader] = useState(false)
   const [watermarkCss, setWatermarkCSS] = useState("")
   const [selectGenemsg,setSelectGenemsg] = useState(true)
-
-
+  const history = useHistory();
   useEffect(()=>{
     if(inputData.type !=='' && inputData['genes'].length > 0){
       let dataJson = inputData
@@ -30,7 +30,8 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
         })
         .catch((e) => {
           setigvJson([])
-        });
+          history.push('/notfound')
+        })
     }
   },[inputData])
 
@@ -48,7 +49,6 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
       setSelectGenemsg(true)
     }
     else{
-      console.log('no content');
       setSelectGenemsg(false)
       setActiveCmp(true)
     }

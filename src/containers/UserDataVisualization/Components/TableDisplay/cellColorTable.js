@@ -2,7 +2,6 @@
 import React from 'react';
 
 export default function ExampleUserTable({tableData}) {
-    // const tableData = data["files"]["table"]["dna_mutation"]
     return (
         <>
         {tableData && <div className="flex justify-center items-center ">

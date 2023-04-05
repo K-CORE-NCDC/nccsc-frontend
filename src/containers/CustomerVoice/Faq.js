@@ -1,7 +1,7 @@
 import React, { useState,useEffect,useContext} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import DataTable from "react-data-table-component";
-import '../../assets/interceptor/interceptor'
+import '../../interceptor/interceptor'
 import axios from "axios";
 import config from '../../config'
 import { Redirect, useParams } from "react-router-dom";

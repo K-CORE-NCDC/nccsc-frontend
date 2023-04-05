@@ -1,8 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { Suspense, useEffect, useState,useContext } from "react";
-// import { useBeforeunload } from 'react-beforeunload';
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch} from "react-router-dom";
 import { Link,useLocation } from "react-router-dom";
 import route from "../../../route";
 import Loader from "../Loader";
@@ -32,7 +31,7 @@ import breast_cancer_english from "../../../assets/images/breast_cancer_english.
 import breast_cancer_korean from "../../../assets/images/breast_cancer_korean.png";
 import s8 from "../../../assets/images/right_below_add.png";
 import { FormattedMessage } from "react-intl";
-
+import NotFound from "../../../containers/404NotFound";
 import {
   MenuIcon,
   ChevronRightIcon,
@@ -69,9 +68,7 @@ const menu = route.map((route, index) => {
   ) : null;
 });
 
-
 export default function Web(props) {
-
   const routeLocation = useLocation(); 
   const timeout = 3000
   const [showPopup, setShowPopup] = useState(false)
@@ -130,24 +127,24 @@ export default function Web(props) {
 
   let { project_id } = useParams()
   let id = useParams();
+  let pid = routeLocation.pathname
+
 
   const [breadCrumb, setBreadCrumb] = useState([]);
   const [currentDate, setCurrentDate] = useState("");
   const [currentTime, setCurrentTime] = useState("");
   const [latandLong, setLatandLog] = useState({});
 
-  // const logmanagement = useSelector((data) => data.homeReducer.logmanagement);
 
   function updateLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(handle_geolocation_query);
     } else {
-      alert("I'm sorry, but geolocation services are not supported by your browser.");
+      alert("geolocation services are not supported by your browser.");
     }
   }
 
   function handle_geolocation_query(position) {
-    // alert('Lat: ' + position.coords.latitude + ' ' + 'Lon: ' + position.coords.latitude);
     let location = { 'lat': position.coords.latitude, 'lon': position.coords.longitude }
     sessionStorage.setItem('Location', JSON.stringify(location))
     setLatandLog(location)
@@ -157,8 +154,8 @@ export default function Web(props) {
   let toggleModal = (close)=>{
     setShowPopup(close)
   }
-  useEffect(() => {
 
+  useEffect(() => {
 
     let sessionAuth = ''
     let userid = ''
@@ -217,9 +214,7 @@ export default function Web(props) {
     // let today = new Date();
     let date = today.getFullYear() +"." +(today.getMonth() + 1) +"." +today.getDate();
     if (id[0] === "/") {
-      console.log(today.toLocaleString("en-US"))
-      var a_or_p = today.toLocaleString("en-US", { hour: "numeric", hour12: true }).split(" ")[1];
-      console.log(a_or_p)
+      // var a_or_p = today.toLocaleString("en-US", { hour: "numeric", hour12: true }).split(" ")[1];
       // var time = a_or_p + " " + today.getHours() + ":" + today.getMinutes();
       var time =  today.getHours() + ":" + (today.getMinutes() <=9 ? `00`: today.getMinutes());
       // let check_popup = localStorage.getItem('show_popup') 
@@ -250,7 +245,6 @@ export default function Web(props) {
   
 
   useEffect(() => {
-    // let day = date.getDay();
     let date = new Date().toISOString().split('T')[0]
     if(localStorage.getItem('ncc_notice_popup') === null){
       localStorage.setItem('ncc_notice_popup',JSON.stringify({'date':date, 'showpopup':true}))
@@ -273,7 +267,6 @@ export default function Web(props) {
     if (!sessionStorage.getItem('location')) {
       updateLocation();
     }
-    // var url = window.location.href.split('/').filter(Boolean).pop();
     let sessionAuth = ''
     let userid = ''
     let category = 'Others'
@@ -315,7 +308,8 @@ export default function Web(props) {
 
     var currentTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
-    logDataIs[idNumber]['endTime'] = currentTime
+    if(idNumber in logDataIs)
+      logDataIs[idNumber]['endTime'] = currentTime
 
     idNumber++;
 
@@ -363,8 +357,12 @@ export default function Web(props) {
   useEffect(() => {
     let html = [];
     for (let m = 0; m < menu.length; m++) {
-      let p = id[0].split("/")[1];
-      if (menu[m].props.path.includes(p)) {
+      let p = ''
+      if(Object.keys(id).length !== 0){
+        p = id[0].split("/")[1];
+      }
+      let pp = pid.split("/")[1]
+      if (menu[m].props.path.includes(pp)) {
         let name = menu[m].props.name;
         let childname = menu[m].props.childname;
        
@@ -390,8 +388,8 @@ export default function Web(props) {
             <span className="mx-2">|</span>
           </li>
         );
-        if(p === 'visualise'){
-          if(id[0].split("/")[3] !== ''){
+        if(window.location.href.includes('visualise')){
+          if(routeLocation.pathname.split("/")[3] !== ''){
             html.push(<li key={m + "child"}>MyData Visualization</li>);
           }
           else{
@@ -404,12 +402,12 @@ export default function Web(props) {
       }
     }
     setBreadCrumb(html);
-  }, [props,project_id]);
+  }, [props,project_id, routeLocation.pathname]);
 
 
 
   let classes = "";
-  if (id[0] === "/") {
+  if (pid === "/") {
     classes = "2xl:screen-2 2xl:h-full h-full ";
   }
 
@@ -417,9 +415,13 @@ export default function Web(props) {
 
   return (
     <div className="relative">
+
+
       <Popover>
         {({ open }) => (
           <div id="header" className={classes}>
+            
+            {/* Navbar */}
             <nav className="w-full p-2 py-5 navbar-expand-lg">
               <div className="w-full grid md:grid-cols-3 xl:grid-cols-8 2xl:grid-cols-8 px-5  pt-5">
                 <div className="relative pr-5 sm:flex flex">
@@ -446,7 +448,12 @@ export default function Web(props) {
               </div>
             </nav>
 
-            {classes !== "" && (
+
+
+
+            {/* K-Core Title and data about platform */}
+
+            {classes !== "" && routeLocation.pathname === '/' && (
               <div className="grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xs:grid-cols-4 lg:px-64 xs:px-40 py-20  text-right text-main-blue">
                 <div className="text-center xs:col-span-4  lg:col-span-3 lg:text-center  2xl:col-start-3">
                   <h2 className="lg:text-8xl xs:text-4xl">
@@ -458,7 +465,6 @@ export default function Web(props) {
                   <div className="pl-6">
                     <p
                       className="lg:border-l-2 lg:text-2xl xs:text-sm sm:text-xl p-5 font-medium mt-8 border-gray-600 2xl:text-right"
-                      
                     >
                       <FormattedMessage
                         id="home_child_title"
@@ -469,7 +475,13 @@ export default function Web(props) {
                 </div>
               </div>
             )}
-            {classes !== "" && (
+
+
+
+
+            {/* Today date and API Data */}
+
+            {classes !== "" && routeLocation.pathname === '/' && (
               <div className="hidden 2xl:block 2xl:grid  grid-rows-2 grid-col-12 grid-flow-col gap-4  text-right text-main-blue px-5">
                 <div className="row-span-3 col-span-2 text-6xl py-10">
                   <div className="row-span-1">
@@ -482,7 +494,6 @@ export default function Web(props) {
                     <p> {currentTime ? currentTime : ""}</p>
                   </div>
                 </div>
-
                 <div className="col-span-10 border-bottom-blue mx-10">
                   <div className="grid grid-cols-8 border-b border-blue-color ">
                     <div className="text-right text-6xl p-5">1</div>
@@ -574,6 +585,11 @@ export default function Web(props) {
                 </div>
               </div>
             )}
+
+
+
+
+
             <Transition
               show={open}
               as={Fragment}
@@ -611,7 +627,11 @@ export default function Web(props) {
           </div>
         )}
       </Popover>
-      {classes === "" && (
+
+
+
+
+      {classes === "" && routeLocation.pathname !== '/' &&  (
         <nav className="bg-grey-light rounded w-full bg-white p-5">
           <ol className="list-reset flex text-grey-dark p-5 text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md">{breadCrumb}</ol>
         </nav>
@@ -620,7 +640,8 @@ export default function Web(props) {
       <Suspense fallback={<Loader />}>
         <Switch>
           {menu}
-          <Redirect  from="/" to="/" />
+          <Route exact path="*" component={NotFound} />
+          {/* <Redirect  from="/" to="/" /> */}
         </Switch>
       </Suspense>
       {/* fixed bottom-0 */}
@@ -628,9 +649,9 @@ export default function Web(props) {
         { showPopup  ? <Popup toggleModal = {toggleModal}/> : '' }
       </div>
       </div>
-    {/* Home COmponent */}
 
-   { routeLocation.pathname === '/' && <div>
+        {
+          routeLocation.pathname === '/' && <div>
           <div className="grid md:grid-cols-2 lg:grid-cols-2 ">
             <div className="bg-white 2xl:hidden">
               <div className="grid grid-cols-5 p-14 border-b border-blue">
@@ -861,7 +882,6 @@ export default function Web(props) {
                 </div>
               </div>
             </div>
-
           </div>
           <div className=" bg-white lg:pt-0  pt-20">
             <div className="py-10 border-t ">
@@ -928,7 +948,8 @@ export default function Web(props) {
               <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
             </>
           ) : null}
-    </div>}
+          </div>
+    }
 
       <footer className="border-gray-300 border-t w-full ">
         <div className="d-flex flex-row text-white" style={{ height: "50px", backgroundColor: "#203239" }}>
@@ -953,5 +974,3 @@ export default function Web(props) {
     </div>
   );
 }
-
-// className="border-gray-300 border-t w-full"

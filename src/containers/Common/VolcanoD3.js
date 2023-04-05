@@ -150,15 +150,6 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
                     return yScale(d[yColumn]);
                 });
 
-
-                // var textLabels = svg.append("g").attr("class", "")
-                // .data(data)
-                // .attr("x", function (d) { return xScale(d[xColumn]); })
-                // .attr("y", function (d) { return yScale(d[yColumn]); } - 10)
-                // .attr("class", "name")
-                // .style("text-anchor", "middle")
-                // .text(data.gene);
-
                 var thresholdLines = svg.append('g')
                     .attr('class', 'thresholdLines');
 
@@ -198,14 +189,6 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
                     tooltip.style("top", (event.pageY - 5) + "px")
                         .style("left", (event.pageX + 20) + "px");
                 }
-
-                // function yTickFormat(n) {
-                //     return d3.format(".2r")(getBaseLog(10, n));
-                //     function getBaseLog(x, y) {
-                //         return Math.log(y) / Math.log(x);
-                //     }
-                // }
-
                 function zoomFunction(event) {
                     var transform = d3.zoomTransform(this);
                     d3.selectAll('.dot')
@@ -356,7 +339,6 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
     useEffect(()=>{
         if(watermarkCss){
             saveSvg(document.getElementById('svgVolcano'),'volcano.svg',{scale: 0.5,background:'#FFFFFF'})
-            // saveSvgAsPng(document.getElementById('svgVolcano'),'volcano.png',{scale: 0.5,background:'#FFFFFF'})
         }
     },[watermarkCss])
     return (

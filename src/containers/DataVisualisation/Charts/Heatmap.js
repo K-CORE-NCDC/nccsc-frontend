@@ -14,7 +14,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const context = useContext(Context);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const reference = useRef()
-  // const [activeCmp,setActiveCmp] = useState(false)
   const [tableType,setTableType] = useState('rna')
   const [data_,setData] = useState('')
   const [inputGene,setInputGene] = useState([])
@@ -33,7 +32,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const [clusterRange,setClusterRange] = useState("")
   const [inSufficientData, setInSufficientData] = useState(true)
   const [renderNoContent, setRenderNoContent] = useState(false)
-  // const [renderHeatmap, setRenderHeatmap] = useState(true)
   let   { project_id } = useParams();
   const [configVis,setConfigVis] = useState({"colorSpectrumBreaks":[],"colorSpectrum":["navy","firebrick3"]})
   const [spectrumMin,setSpectrumMin] = useState(0)
@@ -101,7 +99,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
 
   useEffect(()=>{
     if(inputJson['filterChoices']){
-      // console.log(inputJson)
       if (project_id !== undefined) {
         if(filterData &&  filterData.status===200){
           let filters = filterData['filterJson']
@@ -115,9 +112,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
             }
             
           }
-          // console.log(tmp)
           setOptionChoices(tmp)
-          // setCustomFilterJson(tmp)
         }
       }else{
         if(koreanlanguage){
@@ -139,7 +134,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
 
   useEffect(() => {
     if (inputData) {
-      // setActiveCmp(false)
       let genes = inputData['genes']
       let t = []
       for (var i = 0; i < genes.length; i++) {
@@ -153,7 +147,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
         inputData['table_type'] = tableType
         inputData['view'] = viewType
         inputData['heat_type'] = mainTab
-        // dispatch(getHeatmapInformation('POST', inputData))
         let return_data = HeatmapInformation('POST', inputData)
         return_data.then((result) => {
           const d = result
@@ -255,11 +248,9 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
           tmp[optn[key]] = z[key]
         }
       }
-      // z = tmp
       let setStateTrue = false
       
       for (const [key, value] of Object.entries(y)) {
-        // console.log('key',key);
         value.forEach(e=>{
           if(e.length > 0){
             setStateTrue = true
@@ -268,7 +259,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       }
       if(setStateTrue){
         setRenderNoContent(false)
-        // setActiveCmp(true)
         setData({"z":tmp,"x":x,"y":y})
       }else{
         setRenderNoContent(true)
@@ -317,7 +307,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     e.preventDefault()
     setTableType(type)
     let c = document.getElementsByName('type')
-    // setActiveCmp(false)
     setLoader(true)
     for (var i = 0; i < c.length; i++) {
       let classList = c[i].classList
@@ -340,7 +329,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       dataJson['table_type'] = type
       dataJson['view'] = viewType
       inputData['heat_type'] = mainTab
-      // dispatch(getHeatmapInformation('POST', dataJson))
       let return_data = HeatmapInformation('POST', dataJson)
         return_data.then((result) => {
           const d = result
@@ -361,7 +349,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   }
 
   const changeMainType = (e, type) => {
-    // console.log('MT',type);
     let c = document.getElementsByName('maintype')
     for (var i = 0; i < c.length; i++) {
       let classList = c[i].classList
@@ -373,16 +360,12 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     setOption([])
     let dataJson = { ...inputData }
     if(inputData.type !=='' && inputData['genes'].length > 0){
-      // setClusterRange
       setClusterRange(dataJson['genes'].length)
-      // setActiveCmp(false)
       setLoader(true)
       dataJson['table_type'] = tableType
       dataJson['view'] = viewType
       dataJson['heat_type'] = type
       setLoader(true)
-      // setActiveCmp(false)
-      // dispatch(getHeatmapInformation('POST',dataJson))
       let return_data = HeatmapInformation('POST', dataJson)
         return_data.then((result) => {
           const d = result
@@ -451,7 +434,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     setClinicalAttributesFil(cf)
     if(inputData.type !=='' && inputData['genes'].length > 0){
       setLoader(true)
-      // setActiveCmp(false)
       let dataJson = { ...inputData }
       dataJson['clinicalFilters'] = cf
       dataJson['view'] = viewType
@@ -461,8 +443,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
       }
       dataJson['heat_type'] = mainTab
       dataJson['table_type'] = tableType
-      // dispatch(getHeatmapInformation('POST',dataJson))
-      // console.log('-------',dataJson);
       let return_data = HeatmapInformation('POST', dataJson)
         return_data.then((result) => {
           const d = result
@@ -483,23 +463,18 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   }
 
   function onRemove(selectedList, removedItem) {
-    // console.log('sele',selectedList);
-    // console.log('removedItem',removedItem);
     let items = []
     setOption(selectedList)
     selectedList.forEach((item, i) => {
-      // console.log('>>>>',item);
       items.push(item['id'])
     });
     setClinicalAttributesFil(items)
     if(inputData.type !=='' && inputData['genes'].length > 0){
       setLoader(true)
-      // setActiveCmp(false)
       let dataJson = { ...inputData }
       dataJson['clinicalFilters'] = items
       dataJson['heat_type'] = mainTab
       dataJson['genes'] = selectedGene
-      // dispatch(getHeatmapInformation('POST',dataJson))
       let return_data = HeatmapInformation('POST', dataJson)
         return_data.then((result) => {
           const d = result
@@ -521,7 +496,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
 
   const changeView = (e,view)=>{
     let c = document.getElementsByName('view')
-    // setActiveCmp(false)
     setLoader(true)
     for (var i = 0; i < c.length; i++) {
       let classList = c[i].classList
@@ -530,13 +504,11 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     }
     e.target.classList.add("hover:bg-main-blue","bg-main-blue","text-white")
     setViewType(view)
-    // console.log('inputData',inputData);
     let dataJson = { ...inputData }
     dataJson['view'] = view
     dataJson['heat_type'] = mainTab
     dataJson['clinicalFilters'] = clinincalAttributesFil
     if(inputData.type !=='' && inputData['genes'].length > 0){
-      // dispatch(getHeatmapInformation('POST', dataJson))
       let return_data = HeatmapInformation('POST', dataJson)
         return_data.then((result) => {
           const d = result
@@ -583,14 +555,12 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     let cf = []
     if(inputData.type !=='' && inputData['genes'].length > 0){
       setLoader(true)
-      // setActiveCmp(false)
       let dataJson = { ...inputData }
       dataJson['clinicalFilters'] = cf
       dataJson['view'] = viewType
       dataJson['type'] = viewType
       dataJson['heat_type'] = mainTab
       dataJson['cluster'] = rangeValue
-      // dispatch(getHeatmapInformation('POST',dataJson))
       let return_data = HeatmapInformation('POST', dataJson)
         return_data.then((result) => {
           const d = result
@@ -612,7 +582,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   useEffect(() => {
     if (heatmapSummaryStatusCode && heatmapSummaryStatusCode.status === 200) {
       setRenderNoContent(false)
-      // setRenderHeatmap(true)
       setLoader(false)
     } else if(heatmapSummaryStatusCode && heatmapSummaryStatusCode.loader === true){
       setLoader(true)
@@ -620,7 +589,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
     }else{
       setLoader(false)
       setRenderNoContent(true)
-      // setRenderHeatmap(false)
       setData('')
     }
   }, [heatmapSummaryStatusCode])
@@ -819,12 +787,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
                       id="points" name="points" min="1" step={1}  max={clusterRange}  defaultValue={rangeValue}  onChange={rangeCall} />
                       <ul className="flex justify-between w-full px-[1px]" id='tickmarks'>
                       <li key="min_value_range" className="flex justify-around relative"><span className="absolute">1</span></li>
-                        {/* { 
-                          inputData['genes'].map((name,i)=>
-                          (  
-                           i!== 0 && i%5 === 0 && i!== clusterRange ? <li key={name} className="flex justify-around relative"><span className="absolute">{i}</span></li>:<></>
-                          ))
-                        } */}
                         <li key="max_value_range" className="flex justify-around relative"><span className="absolute">{clusterRange}</span></li>
                       </ul>
                     </div>

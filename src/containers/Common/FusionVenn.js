@@ -1,7 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState,useEffect } from "react";
-// var venn = require("venn")
-// import {VennDiagram} from 'venn.js'
 import * as venn from "venn.js";
 import * as d3 from "d3";
 import "../../styles/survival.css";
@@ -50,7 +48,6 @@ export default function FusionVennCmp({ parentCallback,width, VennData = null })
 
       div1.selectAll("path").style("stroke-opacity", 0).style("stroke", "#fff");
 
-      // chart.colours = ['#d2352b','#529d3f','#f18532']
       let colors = {
         "group 1": "#f18532",
         "group 2": "#d2352b",

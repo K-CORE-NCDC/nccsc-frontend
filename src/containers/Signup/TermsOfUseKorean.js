@@ -435,21 +435,6 @@ return (
           개인정보 이용에 동의합니다.
           </span>
         </label>
-        {/* <label>
-            <input
-              type="checkbox"
-              className="form-radio"
-              checked={allCheck}
-              name="accountType"
-              value="personal"
-              onChange={() => {
-                setAllCheck(!allCheck);
-                setFirstAgree(!firstAgree);
-                setSecondAgree(!allCheck);
-              }}
-            />
-            <span className="ml-2 font-medium">Complete agreement.</span>
-          </label> */}
       </div>
       <div className="inline-flex gap-5 mb-5">
         <button

@@ -39,17 +39,9 @@ const ScatterPlot = React.forwardRef(({ scatter_data, watermarkCss }, ref) => {
 
 
   const drawChart = (data_) =>{
-
-    // var grapharea = document.getElementById("scatter").getContext("2d");
-    // grapharea.destroy();
-    // var canvas = document. getElementById("scatter");
-    // var context = canvas.getContext('2d');
-    // context.clearRect(0, 0, canvas. width, canvas. height)
     if(myChart){
       myChart.destroy()
     }
-
-
     myChart = new Chart(scatter_plot.current, {
       type: 'scatter',
       data: data_,
@@ -70,7 +62,4 @@ const ScatterPlot = React.forwardRef(({ scatter_data, watermarkCss }, ref) => {
       </div>
   )
 })
-
-// <canvas ref={scatter_plot} width="50" height="50"></canvas>
-
 export default ScatterPlot

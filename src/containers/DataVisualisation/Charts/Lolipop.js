@@ -7,10 +7,11 @@ import LoaderCmp from '../../Common/Loader'
 import DataTable from 'react-data-table-component';
 import NoContentMessage from '../../Common/NoContentComponent';
 import {FormattedMessage} from 'react-intl';
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 export default function DataLolipop({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
+  const history = useHistory();
   const [genesHtml, setGenesHtml] = useState([])
   const [gene, setGene] = useState('')
   const [activeCmp, setActiveCmp] = useState(false)
@@ -39,7 +40,6 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   useEffect(()=>{
     if('userProjectsDataTable' in tabList ){
       setAllTabList(tabList.userProjectsDataTable)
-      // console.log('alltabList',alltabList);
     }
     
     },[tabList])
@@ -90,6 +90,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
         })
         .catch((e) => {
           setLolipopJson({ data: [], domains: [], status: 204 })
+          history.push('/notfound')
         });
     }
   }
@@ -142,6 +143,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
         })
         .catch((e) => {
           setLolipopJson({ data: [], domains: [], status: 204 })
+          history.push('/notfound')
         });
       }
       setTableType(tableType)
@@ -477,6 +479,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
       })
       .catch((e) => {
         setLolipopJson({ data: [], domains: [], status: 204 })
+        history.push('/notfound')
       });
     }
   }

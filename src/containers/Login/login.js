@@ -39,8 +39,7 @@ const LoginComponent = () => {
   const loginSuccess = (data) => {
     localStorage.setItem("ncc_access_token", data.access);
     localStorage.setItem("ncc_refresh_token", data.refresh);
-    // history.push("/userdata")
-    // window.location.href = "/core/userdata";
+    
     window.location.href = window.location.origin+config['basename']+"userdata/";
   };
 
@@ -51,6 +50,7 @@ const LoginComponent = () => {
     x.then((response) => {
       const data = response.data;
       const statusCode = response.status;
+      console.log('status code',statusCode);
       if (statusCode === 200) {
         loginSuccess(data);
       } else {
@@ -72,6 +72,11 @@ const LoginComponent = () => {
             Please use the service after logging in.
           </h1>
         </div>
+        {errorMessage && (
+                <div className="font-bold text-3xl text-red-500">
+                  {errorMessage}
+                </div>
+              )}
         <div className="my-32">
           <div className="grid grid-cols-3 border-b-2 border-gray-600 pt-12 pb-12">
             <div className="pt-6 pl-48 col-span-1">
@@ -92,7 +97,7 @@ const LoginComponent = () => {
             </div>
           </div>
           <div className="grid grid-cols-3 border-b-2 border-gray-600 pt-12 pb-12">
-            <div className="pt-6 pl-48 col-span-1">
+            <div className="pt-6 pl-48 col-span-1 mr-7">
               <h1 className="font-bold text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">Password</h1>
             </div>
             <div>
@@ -109,18 +114,13 @@ const LoginComponent = () => {
 
                   >
                   </input>
-                  <span className="absolute cursor-pointer left-80 top-4" > {visibility ? <EyeIcon className="h-14 w-12 inline text-main-white" onClick={() => setvisibility(visibility => !visibility)}></EyeIcon> : <EyeOffIcon className="h-14 w-12 inline text-main-white" onClick={() => setvisibility(visibility => !visibility)}></EyeOffIcon>}</span>
+                  <span  className="absolute cursor-pointer left-72 top-4" > {visibility ? <EyeIcon className="h-14 w-12 inline text-main-white" onClick={() => setvisibility(visibility => !visibility)}></EyeIcon> : <EyeOffIcon className="h-14 w-12 inline text-main-white" onClick={() => setvisibility(visibility => !visibility)}></EyeOffIcon>}</span>
                 </div>
               </div>
             </div>
           </div>
           <div className="grid grid-cols-3 pt-12">
             <div className="w-full col-span-3">
-              {errorMessage && (
-                <div className="font-bold text-3xl text-red-500">
-                  {errorMessage}
-                </div>
-              )}
               <button
                 onClick={formSubmitAction}
                 className="text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md bg-blue-500 hover:bg-blue-700 text-white h-28 font-bold py-2 px-4 border border-blue-700 w-full rounded"

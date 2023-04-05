@@ -33,12 +33,6 @@ export default function Boxplot({data}) {
       domains.push(data[i].label)
       max_d.push(...data[i].data)
     }
-    // var max_vl = 10
-    // var min_vl = 0
-    // if(max_d.length>0){
-    //   max_vl = Math.max(...max_d)
-    //   min_vl = Math.min(...max_d)
-    // }
     var colors = {
       'In_Frame_Del': '#1b4879',
       'In_Frame_Ins': '#c74951',

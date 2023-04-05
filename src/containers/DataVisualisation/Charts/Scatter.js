@@ -11,7 +11,6 @@ import {FormattedMessage} from 'react-intl';
 export default function Scatter({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
   const [scatterJson, setScatterJson] = useState({})
-  // const [displaySamples, setDisplaySamples] = useState(false)
   const [watermarkCss, setWatermarkCSS] = useState("")
   const [loader, setLoader] = useState(false)
   const [gene, setGene] = useState('')
@@ -71,14 +70,6 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
     setSelectedValue(select_)
     setPrimaryGene(select_)
   }
-
-  // useEffect(() => {
-  //   if (inputData && inputData.genes.length > 0) {
-  //     setDisplaySamples(true)
-  //   } else {
-  //     setDisplaySamples(false)
-  //   }
-  // }, [inputData])
 
 
   useEffect(() => {
@@ -278,7 +269,3 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
     </div>
   )
 }
-
-// <select value={gene} onChange={e=>geneSet(e)} class="w-full border bg-white rounded px-3 py-2 outline-none text-gray-700" on>
-//   {genesHtml}
-// </select>

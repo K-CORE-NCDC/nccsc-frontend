@@ -19,7 +19,6 @@ function ResetPassword() {
   const { token } = useParams();
   const change_password_status = useSelector((data) => data.homeReducer.changePasswordStatus);
   let changePasswordfunction = () => {
-    // const dateandtime = new Date().toUTCString();
     let date = new Date();
     let timeanddate={
       year:date.getUTCFullYear(),
@@ -41,7 +40,6 @@ function ResetPassword() {
     else {
       dispatch(changePassword("POST", { 'new_password': new_password, 'confirm_password': confirm_password, 'token': token,  'timeanddate':timeanddate }));
     }
-    // 'year':year,'month':month, 'date': date, 'hour':hour
 
   }
 
@@ -60,12 +58,6 @@ function ResetPassword() {
     }
   }, [change_password_status, status])
 
-
-  // useEffect(() => {
-  //   return () => {
-  //     dispatch(clearIDPasswordResetPASSWORD());
-  //   };
-  // }, []);
 
   return (
     <div>

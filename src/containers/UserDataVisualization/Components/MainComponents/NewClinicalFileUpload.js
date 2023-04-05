@@ -653,7 +653,7 @@ function SampleDataTable() {
                     }})}
                 </tr>
                 {newdata.body.map((row, index) => (
-                  <>
+                  <React.Fragment key={index + Math.random()}>
                   <tr key={`${Math.random()*500}`+index} trindex={index}  >
                     
                     {row.map((cellData, cellIndex) => {
@@ -756,7 +756,7 @@ function SampleDataTable() {
                       
                   }
                   </tr>
-                  </>
+                  </React.Fragment>
                   
                 ))}
               </tbody>

@@ -12,18 +12,10 @@ export default function DataVisualization() {
   const showLoginForm = false
   const fileUploadCallBack = (d_) => {
   }
-
-  
-
-  
   const accessToken = localStorage.getItem('ncc_access_token')
-  // const viusalizationCall = (da) => {
-  //   setShowviualization(true)
-  // }
-
   useEffect(() => {
     if(accessToken){
-      // dispatch(getUserDataProjectsTableData())
+      
     }else{
       history.push("/login")
     }

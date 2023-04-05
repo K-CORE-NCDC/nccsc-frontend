@@ -58,7 +58,6 @@ function KoreanTermsAndConditions() {
       <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
       제3조 용어의 정의
       </h1>
-      {/* <h2>본 약관에서 사용하는 용어의 정의는 다음과 같습니다.</h2> */}
       <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
         <ul>
         <li> <p className="paragraphAdjust"> 

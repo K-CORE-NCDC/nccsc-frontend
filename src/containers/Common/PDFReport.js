@@ -10,7 +10,6 @@ function PDFReport() {
   const reportData = useSelector(state => state.dataVisualizationReducer.rniData)
   const [gene, setGene] = useState('NRAS')
   const [sankeyData, setSankeyData] = useState([])
-  // const [sankyGeneList, setSankyGeneList] = useState([])
   const [sankyDataCharts, setSankyDataCharts] = useState([])
 
 
@@ -29,7 +28,6 @@ function PDFReport() {
         GeneListSanky.push(i)
       }
       setSankeyData(listofSankey)
-      // setSankyGeneList(GeneListSanky)
 
     }
   }, [reportData])

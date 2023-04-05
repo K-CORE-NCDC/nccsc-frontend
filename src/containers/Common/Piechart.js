@@ -62,27 +62,6 @@ function generateColor(colorStart,colorEnd,colorCount){
   return saida;
   
 }
-// labels:{
-//   generateLabels: function(chart) {
-//     var data = chart.data;
-//     var datasets = data['datasets'][0]
-    
-//     let l = data['labels']
-//     let tmp = []
-//     for (let index = 0; index < l.length; index++) {
-//       tmp.push({
-//         text: l[index]+": ("+datasets.data[index]+")",
-//         fillStyle: datasets.backgroundColor[index],
-//         strokeStyle: datasets.backgroundColor[index],
-//         lineWidth: 1,
-//         // hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
-//         index: index
-//       })
-      
-//     }
-//     return tmp
-//   }
-// }
 
 export default function Piechart({id,data,width,color,gradeint_color, chart_type}) {
 
@@ -95,8 +74,6 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
   const drawGraph = (g_data,ct_type) => {
     let ctx = document.getElementById(id).getContext('2d');
 
-    // let segment;
-    // let selectedIndex;
     new Chart(ctx, {
         type: 'pie',
         data: g_data,
@@ -116,23 +93,8 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
                 return ctx.chart.data.labels[ctx.dataIndex];
               },
               color: '#fff',
-              // backgroundColor: '#404040'
             },
             
-            // datalabels: {
-
-              // formatter: (value, ctx) => {
-              //     // var data = chart.data;
-              //     let sum = 0;
-              //     let dataArr = ctx.chart.data;
-              //     // dataArr.map(data => {
-              //     //     sum += data;
-              //     // });
-              //     // let percentage = (value*100 / sum).toFixed(2)+"%";
-              //     return '';
-              // },
-              // color: '#fff',
-            // }
           },
           responsive: false,
           layout:{
@@ -381,14 +343,3 @@ export default function Piechart({id,data,width,color,gradeint_color, chart_type
   )
 }
 
-
-// scales: {
-//   x: {
-//    grid: {
-//      display: true,
-//      drawBorder: true,
-//      // drawOnChartArea: true,
-//      drawTicks: true,
-//    }
-//   },
-// }

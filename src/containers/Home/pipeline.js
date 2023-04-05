@@ -22,8 +22,6 @@ export default function Pipeline() {
     <div className="cont_wrap my-10">
       <div className="flex justify-center">
         <div className="pl-8 pr-8 w-3/5">
-          {/* {sysLang === "kr"?<img src={pipeline} />:""} */}
-
           {koreanlanguage && (
             <div >
               <img src={pipeline} alt="pipeline" />

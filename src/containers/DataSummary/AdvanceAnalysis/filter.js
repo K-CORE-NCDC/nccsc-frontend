@@ -22,34 +22,8 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
   const [filtersUi, setFiltersUi] = useState({});
   // const [filterHtml, setFilterHtml] = useState([]);
   const userDefinedFilter = useSelector((data) => data.dataVisualizationReducer.userDefinedFilter);
-  // const [totalSamplesS,setTotalSamplesS] = useState(useSelector((data) => data.dataVisualizationReducer.samplesCount))
-  // const[totalSamples, setTotalSamples] = useState(0)
   const [filterJson,setFilterJson] = useState({})
-  // const totalSamplesS = useSelector((data) => data.dataVisualizationReducer.samplesCount)
-  
-  // useEffect(()=>{
-  //   if(project_id!==undefined){
-  //     dispatch(samplesCount("POST",{'project_id':project_id}))
-  //   }
-  // else{
-  //     dispatch(samplesCount("POST",{}))
-  //   }
-  // },[])
 
-
-  // useEffect(()=>{
-  //   if  (totalSamplesS && 'no_of_samples' in totalSamplesS){
-  //     setTotalSamples(totalSamplesS['no_of_samples'])
-  //   } 
-  // },[totalSamplesS])
-  
-  // const totalCount = useSelector((state) => {
-  //   if ('Keys' in state.dataVisualizationReducer){
-  //     return Object.keys(state.dataVisualizationReducer.Keys).length || 0;
-  //   }else{
-  //     return 0
-  //   }
-  // });
   const [filterCondition, setFilterCondition] = useState("and");
 
 
@@ -69,12 +43,9 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
     if(project_id!==undefined){
       if(userDefinedFilter && Object.keys(userDefinedFilter).length > 0){
         leftSide(filterJson);
-        // drawTags(filterJson);
       }
     }else{
-      // let filterBoxes = inputJson.filterBoxes;
       leftSide(filterJson);
-      // drawTags(filterJson)
     }
   }, [userDefinedFilter,filterJson]);
 
@@ -82,22 +53,12 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
     if(project_id!==undefined){
       if(userDefinedFilter && Object.keys(userDefinedFilter).length > 0){
         leftSide(filterJson);
-        // drawTags(filterJson);
       }
     }else{
-      // let filterBoxes = inputJson.filterBoxes;
       leftSide(filterJson);
-      // drawTags(filterJson)
     }
-    // leftSide();
   }, [selected, selectState,filterJson]);
 
-  // useEffect(() => {
-  //   if (Object.keys(filterState).length !== 0) {
-  //     setSelectState({ ...filterState });
-  //     switchButton();
-  //   }
-  // }, [filterState]);
 
   useEffect(() => {
     let html = [];
@@ -128,12 +89,9 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
       });
     }
     
-    // setFilterHtml(html);
   }, [filtersUi]);
 
-  // for rendering the filter // inputs and checkboxes all html store in state
   const leftSide = (filterBoxes) => {
-    // let filterBoxes = inputJson.filterBoxes;
 
     let html = [];
     Object.keys(filterBoxes).forEach((item, k) => {
@@ -302,7 +260,7 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
             id={"from_" + d.id}
             className="h-full shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight"
             onKeyDown={(e) =>["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
-            value={selectState["from_" + d.id]}
+            // value={selectState["from_" + d.id]}
             onChange={(e) => selectFn(e)}
             placeholder={d.min}
             min={d.min}
@@ -320,7 +278,7 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
             id={"to_" + d.id}
             className="h-full  shadow appearance-none w-full py-2 px-3 text-gray-700 leading-tight"
             onKeyDown={(e) =>["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
-            value={selectState["to_" + d.id]}
+            // value={selectState["to_" + d.id]}
             onChange={(e) => selectFn(e)}
             placeholder={d.max}
             min={d.min}
@@ -336,9 +294,6 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
     let val = e.target.value;
     let id = e.target.id;
     let tmp = selectState;
-
-    // let ids = id.split('_')
-    // let m_id = ids[1]
 
     var index = id.indexOf("_")
     var m_id = id.substr(index + 1);
@@ -415,7 +370,6 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
       }
       e.checked = false;
     }
-    // setSelectState({...tmp});
   };
 
   const checkBoxFn = (event, id) => {
@@ -427,48 +381,10 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
      for (let e in inputElements) {
        if (inputElements[e].id) {
          checkboxselectFn(inputElements[e]);
-         // selectFn(inputElements[e])
        }
      }
     var did = document.getElementById(id);
-    // if(did.hasAttribute("id")){
-    //   let name = did.getAttribute("id")
-    //   let names = name.split("_")
-    //   let key,value
-    //   if(names[1]){
-    //      key = did.getAttribute("data-parent")
-    //   }
-    //   if(names[2]){
-    //      value = names[2];
-    //   }
-    //   let MainKey 
-
-    //   let filterBoxes = inputJson.filterBoxes;
-
-    //   Object.keys(filterBoxes).forEach((item, k) => {
-    //     let t = [];
-    //     if (filterBoxes[item]) {
-    //       let childElements = filterBoxes[item];
-    //       // let itemr = item.split(" ")
-    //       // let finalkey = itemr.join('')
-    //       Object.keys(childElements).forEach((childelm, c) => {
-    //         if(item === key &&  c.toString() === value){
-    //           MainKey = childelm
-    //         }
-    //       })
-    //     }
-    //   })
-
-    //   let temp =  {...filtersUi}
-    //   for(let i = 0; i < temp[key].length; i++){
-    //     if(temp[key][i]['key'].indexOf(MainKey)>-1){
-    //       temp[key].splice(i,1)
-    //     }
-    //   }  
-    //   setFiltersUi(temp)
-    // }
-
-    
+   
     var checkbox_elm = document.getElementById(id).checked;
     if (checkbox_elm) {
       document.getElementById(id).checked = false;
@@ -500,58 +416,9 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
     }
   };
 
-  // const drawTags = (filterBoxes) => {
-  //   // let filterBoxes = inputJson.filterBoxes;
-  //   let tx = ["aod", "bmi", "fma", "dob", "ki67", "turc",];
-  //   if (Object.keys(selectState).length > 0) {
-  //     let filterSelectedHtml = {};
-  //     Object.keys(filterBoxes).forEach((header) => {
-  //       filterSelectedHtml = {
-  //         ...filterSelectedHtml,
-  //         [header]: [],
-  //       };
-  //       Object.keys(filterBoxes[header]).forEach((field) => {
-  //         filterBoxes[header][field].forEach((subField) => {
-  //           tx.push(subField.id)
-  //         })
-  //         filterBoxes[header][field].forEach((subField) => {
-  //           if (subField.id in selectState) {
-  //             filterSelectedHtml = {
-  //               ...filterSelectedHtml,
-  //               [header]: [
-  //                 ...filterSelectedHtml[header],
-  //                 { key: [field], value: selectState[subField.id] },
-  //               ],
-  //             };
-  //           } else if (
-  //             tx.indexOf(subField.id) > -1 &&
-  //             selectState["from_" + subField.id] &&
-  //             selectState["to_" + subField.id]
-  //           ) {
-  //             filterSelectedHtml = {
-  //               ...filterSelectedHtml,
-  //               [header]: [
-  //                 ...filterSelectedHtml[header],
-  //                 {
-  //                   key: [field],
-  //                   value:
-  //                     selectState["from_" + subField.id] +
-  //                     "-" +
-  //                     selectState["to_" + subField.id],
-  //                 },
-  //               ],
-  //             };
-  //           }
-  //         });
-  //       });
-  //     });
-  //     setFiltersUi(filterSelectedHtml);
-  //   }
-  // };
-
+  
   const sendFilter = () => {
     parentCallback(selectState);
-    // drawTags(filterJson);
   };
 
   const reset = () => {
@@ -581,7 +448,6 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
       delete tmp[il.id];
       il.value = "";
     });
-    // setSelectState(tmp);
     setSelectState({'filterCondition':'and'});
     parentCallback("");
     if(document.getElementById('default-radio-1')){
@@ -590,7 +456,6 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
     if(document.getElementById('default-radio-2')){
       document.getElementById('default-radio-2').checked = false
     }
-    // setFilterHtml([])
     let abcd = {...filtersUi}
     abcd['Basic/Diagnostic Information'] = []
     setFiltersUi(abcd)
@@ -695,21 +560,6 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
       <div className="col-span-2" id="all_checkboxes">
         {state["html"]}
       </div>
-      {/* <div className="col-span-2 p-1">
-        {filterHtml.length && totalCount !== totalCountS ? (
-          <>
-            <div className="mb-5">
-              <h6>Total Number of Samples : {totalSamples}</h6>
-            </div>
-            {filterHtml}
-            <div className="mt-5">
-              <h6>Number of Filtered Samples: {totalCount}</h6>
-            </div>
-          </>
-        ) : (
-          ""
-        )}
-      </div> */}
     </div>
   );
 }

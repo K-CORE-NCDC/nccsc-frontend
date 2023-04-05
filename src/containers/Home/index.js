@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from "react";
-import banner_img from "../../assets/img/top_banner01.png";
 import { ChevronRightIcon } from "@heroicons/react/outline";
 import { Context } from "../../wrapper";
 import Slider from "react-slick";
@@ -12,7 +11,6 @@ import s4 from "../../assets/images/f_ci4.png";
 import s5 from "../../assets/images/f_ci5.png";
 import s6 from "../../assets/images/f_ci6.png";
 import s7 from "../../assets/images/f_ci7.png";
-import breast from "../../assets/images/breast_cancer.png";
 import breast_cancer_english from "../../assets/images/breast_cancer_english.png";
 import breast_cancer_korean from "../../assets/images/breast_cancer_korean.png";
 import s8 from "../../assets/images/right_below_add.png";

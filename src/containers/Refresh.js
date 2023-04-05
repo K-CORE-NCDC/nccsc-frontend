@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-// import { format } from 'date-fns'
 import { useIdleTimer } from 'react-idle-timer';
 
 export default function Refresh() {
   const timeout = 3000;
   const [remaining, setRemaining] = useState(timeout);
   const [elapsed, setElapsed] = useState(0);
-  // const [lastActive, setLastActive] = useState(+new Date());
   const [isIdle, setIsIdle] = useState(false);
 
   const handleOnActive = () => setIsIdle(false);

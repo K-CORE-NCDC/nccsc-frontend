@@ -198,7 +198,6 @@ let UserDefinedGroupFilters = ({
         const max_1_to = document.querySelectorAll('[name="1_to"]');
         const min_2_from = document.querySelectorAll('[name="2_from"]');
         const max_2_to = document.querySelectorAll('[name="2_to"]');
-        // getting min value from all
         for (let obj in min_1_from) {
           if (min_1_from[obj]) {
             if (
@@ -208,7 +207,6 @@ let UserDefinedGroupFilters = ({
               min_1_from[obj].value === ""
             ) {
               send_response = false;
-              // return 'error_in_1_from';
             } else {
               if (min_1_from[obj].value) {
                 min1Value = Math.min(min_1_from[obj].value,min1Value);
@@ -225,7 +223,6 @@ let UserDefinedGroupFilters = ({
               max_1_to[obj].value === ""
             ) {
               send_response = false;
-              // return 'error_in_1_to';
             } else {
               if (max_1_to[obj].value) {
                 max1Value = Math.max(max_1_to[obj].value,max1Value);
@@ -242,7 +239,6 @@ let UserDefinedGroupFilters = ({
               min_2_from[obj].value === ""
             ) {
               send_response = false;
-              // return 'error_in_2_from';
             } else {
               if (min_2_from[obj].value) {
                 min2Value = Math.min(min_2_from[obj].value,min2Value);
@@ -259,7 +255,6 @@ let UserDefinedGroupFilters = ({
               max_2_to[obj].value === ""
             ) {
               send_response = false;
-              // return 'error_in_2_to';
             } else {
               if (max_2_to[obj].value) {
                 max2Value = Math.max(max_2_to[obj].value,max2Value);
@@ -279,12 +274,9 @@ let UserDefinedGroupFilters = ({
       }
       if (send_response === true &&  userGivenInputValues['type'] !== 'number') {
         parentCallback(userGivenInputValues);
-        // resetFilters();
       }
     } 
     else {
-    //   resetFilters();
-      // parentCallback({ ...userGivenInputValues });
       parentCallback(userGivenInputValues );
     }
   }
@@ -324,61 +316,7 @@ let UserDefinedGroupFilters = ({
       setSelectDefaultValue("0");
       setSelectedFilterDetails({});
     }
-    // setGroupsCounter(1)
   };
-
-  // const onChangeFilterInput = (e) => {
-  //   if (e.target.type === "number") {
-  //     let id = e.target.id;
-  //     let ids = id.split("_");
-  //     let m_id = ids[0];
-
-  //     let one_from_0 = document.getElementById(`${m_id}_from`);
-  //     let one_from = one_from_0 ? +one_from_0.value : one_from_0.min;
-  //     let one_min_value = one_from_0 ? +one_from_0.min : 0;
-  //     let one_to_0 = document.getElementById(`${m_id}_to`);
-  //     let one_to = one_to_0 ? +one_to_0.value : one_from_0.max;
-  //     let one_max_value = one_from_0 ? +one_from_0.max : 0;
-
-  //     if (
-  //       one_from > one_max_value ||
-  //       one_from < one_min_value ||
-  //       one_from > one_to
-  //     ) {
-  //       one_from_0.classList.add("border-2");
-  //       one_from_0.classList.add("border-red-400");
-  //       one_to_0.classList.add("border-2");
-  //       one_to_0.classList.add("border-red-400");
-  //     } else if (
-  //       one_to > one_max_value ||
-  //       one_to < one_min_value ||
-  //       one_to < one_from
-  //     ) {
-  //       one_from_0.classList.add("border-2");
-  //       one_from_0.classList.add("border-red-400");
-  //       one_to_0.classList.add("border-2");
-  //       one_to_0.classList.add("border-red-400");
-  //     } else {
-  //       one_from_0.classList.remove("border-2");
-  //       one_from_0.classList.remove("border-red-400");
-  //       one_to_0.classList.remove("border-2");
-  //       one_to_0.classList.remove("border-red-400");
-  //       setUserGivenInputValues((prevState) => ({
-  //         ...prevState,
-  //         [one_from_0.name]: one_from_0.value,
-  //       }));
-  //       setUserGivenInputValues((prevState) => ({
-  //         ...prevState,
-  //         [one_to_0.name]: one_to_0.value,
-  //       }));
-  //     }
-  //   } else {
-  //     setUserGivenInputValues((prevState) => ({
-  //       ...prevState,
-  //       [e.target.name]: e.target.value,
-  //     }));
-  //   }
-  // };
 
   const onChangeFilterInput = (e) => {
     if (e.target.type === "number") {
@@ -425,7 +363,6 @@ let UserDefinedGroupFilters = ({
         one_from_0.classList.remove("border-red-400");
         one_to_0.classList.remove("border-2");
         one_to_0.classList.remove("border-red-400");
-        // let is_valid = validate_fusion()
         setUserGivenInputValues((prevState) => ({
           ...prevState,
           [one_from_0.name]: one_from_0.value,
@@ -526,7 +463,6 @@ let UserDefinedGroupFilters = ({
     if (clinicalMaxMinInfo) {
       let clinicalMaxMinInfoData = clinicalMaxMinInfo;
       let clinicalInfoId = selectedFilterDetails["id"];
-      // let clinicalMaxMinInfoData = clinicalMaxMinInfo["data"];
      
       if (clinicalInfoId + "_min" in clinicalMaxMinInfoData) {
         min = clinicalMaxMinInfoData[clinicalInfoId + "_min"];
@@ -555,7 +491,7 @@ let UserDefinedGroupFilters = ({
       case "number":
         if (viz_type === "volcono" ) {
           return (
-            <>
+            <React.Fragment key={`${compCase}-${Math.random()}`}>
               <div key={`${compCase}-1${Math.random()}`} className="mb-4">
                 <div>
                   <div className={LabelCss} htmlFor="username">
@@ -630,7 +566,7 @@ let UserDefinedGroupFilters = ({
                   </div>
                 </div>
               </div>
-            </>
+            </React.Fragment>
           );
         } else {
           return (
@@ -1252,7 +1188,7 @@ let UserDefinedGroupFilters = ({
           <option value="0"></option>
           {filterChoices.map((type, index) => (
             <option
-              selected={filterSelected === type.name}
+            defaultValue={filterSelected === type.name}
               className="lg:text-lg xs:text-sm"
               key={type.id}
               value={index}

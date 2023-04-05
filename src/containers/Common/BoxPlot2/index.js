@@ -142,11 +142,6 @@ const BoxPlot = React.forwardRef(({view_type, box_data,chart_type, watermarkCss 
         .attr("transform",
               "translate(" + margin.left + "," + margin.top + ")");
 
-      // svg.append("circle").attr("cx",20).attr("cy",-11).attr("r", 6).style("fill", "red")
-      // svg.append("circle").attr("cx",90).attr("cy",-11).attr("r", 6).style("fill", "blue")
-      // svg.append("text").attr("x", 30).attr("y", -3).text("Tumor").style("font-size", "15px").attr("alignment-baseline","top")
-      // svg.append("text").attr("x", 110).attr("y", -3).text("Normal").style("font-size", "15px").attr("alignment-baseline","top")
-
     var tooltip = d3.select("#box2").append("div").attr('class','boxplot_tooltip')
                .style("opacity", 0);
     // Show the X scale
@@ -181,19 +176,12 @@ const BoxPlot = React.forwardRef(({view_type, box_data,chart_type, watermarkCss 
           return "Proteome expression (z-score)"
         }
       });
-    // if(view_type==="gene_vl"){
-    // }else{
-      // svg.text("Proteome expression (z-score)");
-    // }
       
-      
-
       svg.append("text")
       .attr("transform",
             "translate(" + (width/2) + " ," +
                            (height + margin.top + 20) + ")")
       .style("text-anchor", "middle")
-      // .text("Selected Gene");
 
 
     var y = d3.scaleLinear()
@@ -237,7 +225,6 @@ const BoxPlot = React.forwardRef(({view_type, box_data,chart_type, watermarkCss 
           .attr("y", function(d){ return 0 })
           .text("P-value:"+p_value);
       }
-      // (d_['p_value'][sumstat[i]['key']]).toFixed(6)
       for (var z = 0; z < vl.length; z++) {
         p.selectAll("vertLines")
           .data(vl[z])
@@ -283,26 +270,8 @@ const BoxPlot = React.forwardRef(({view_type, box_data,chart_type, watermarkCss 
             tooltip.html("Sample:<br/>"+BrstKeys[i.Sample]+`<br/>${view_type==="gene_vl" ? 'gene val' : 'z-score'}<br/>`+i.Sepal_Length)
               .style('left', d.pageX - 550 + 'px')
               .style('top', d.pageY - 150  + 'px');
-
-            // let html = 'q1'+i.q1.toFixed(2)+"<br/>"
-            // html += 'q3: '+i.q3.toFixed(2)+"<br/>"
-            // html += 'median: '+i.median.toFixed(2)+"<br/>"
-            // html += 'interQuantile: '+i.interQuantileRange.toFixed(2)+"<br/>"
-            // html += 'min: '+i.min.toFixed(2)+"<br/>"
-            // html += 'max: '+i.max.toFixed(2)+"<br/>"
-            // tooltip.transition()
-            //   .duration(200)
-            //   .style('opacity', 0.9);
-
-            // tooltip.html(html)
-            //   .style('left', d.pageX - 550 + 'px')
-            //   .style('top', d.pageY - 150 + 'px');
           })
           .on('mouseout', () => {
-            // tooltip
-            //   .transition()
-            //   .duration(500)
-            //   .style('opacity', 0);
           });
 
 
@@ -347,7 +316,6 @@ const BoxPlot = React.forwardRef(({view_type, box_data,chart_type, watermarkCss 
               return y(d.min)
             })
             .attr("stroke", "black")
-            // .style("width", 80)
 
 
 
@@ -399,15 +367,7 @@ const BoxPlot = React.forwardRef(({view_type, box_data,chart_type, watermarkCss 
           });
         key = key+80
       }
-
-
-
     }
-
-
-
-      // Add individual points with jitter
-      //
   }
 
   useEffect(()=>{

@@ -60,7 +60,7 @@ function FindPassword() {
 
           <div className="my-10">
             <div className="grid grid-cols-3 border-b-2 border-gray-600 pt-12 pb-12">
-              <div className="pt-6 pl-48 col-span-1">
+              <div className="pt-6 pl-48 col-span-1 mr-4">
                 <h1 className="font-bold">User ID :</h1>
               </div>
               <div>

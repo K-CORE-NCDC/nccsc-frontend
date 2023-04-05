@@ -19,7 +19,7 @@ function RelatedSites() {
               <div className="col-span-2">
               </div>
               <div className="col-span-2">
-                <div class="flex float-right">
+                <div className="flex float-right">
                 </div>
               </div>
             </div>
@@ -27,27 +27,29 @@ function RelatedSites() {
         </div>
 
     <table className=' table border border-black text-center mx-auto'>
-  <tr className='border border-black text-center py-10'>
-    <th className='border border-black text-center p-12' style={{width:'5rem'}}>No.</th>
-    <th className='border border-black text-center' style={{width:'70rem'}}>Related Sites</th> 
-    <th className='border border-black text-center'style={{width:'40rem'}}>Link</th>
-  </tr>
-  <tr className='border border-black text-center'>
-    <td className='border border-black text-center p-8'>1</td>
-    <td className='border border-black text-center'>cBioPortal for cancer genomics</td>
-    <td className='border border-black text-center'>https://www.cbioportal.org/</td>
-  </tr>
-  <tr className='border border-black text-center'>
-    <td className='border border-black text-center p-8'>2</td>
-    <td className='border border-black text-center'>COSMIC the Catalogue Of Somatic Mutations In Cancer</td>
-    <td className='border border-black text-center'>https://cancer.sanger.ac.uk/cosmic</td>
-  </tr>
-  <tr className='border border-black text-center'>
-    <td className='border border-black text-center p-8'>3</td>
-    <td className='border border-black text-center'>GDC Data Portal of National Cancer Institute (US)</td>
-    <td className='border border-black text-center'>https://portal.gdc.cancer.gov/</td>
-  </tr>
-</table>
+      <tbody>
+        <tr className='border border-black text-center py-10'>
+          <th className='border border-black text-center p-12' style={{width:'5rem'}}>No.</th>
+          <th className='border border-black text-center' style={{width:'70rem'}}>Related Sites</th> 
+          <th className='border border-black text-center'style={{width:'40rem'}}>Link</th>
+        </tr>
+        <tr className='border border-black text-center'>
+          <td className='border border-black text-center p-8'>1</td>
+          <td className='border border-black text-center'>cBioPortal for cancer genomics</td>
+          <td className='border border-black text-center'>https://www.cbioportal.org/</td>
+        </tr>
+        <tr className='border border-black text-center'>
+          <td className='border border-black text-center p-8'>2</td>
+          <td className='border border-black text-center'>COSMIC the Catalogue Of Somatic Mutations In Cancer</td>
+          <td className='border border-black text-center'>https://cancer.sanger.ac.uk/cosmic</td>
+        </tr>
+        <tr className='border border-black text-center'>
+          <td className='border border-black text-center p-8'>3</td>
+          <td className='border border-black text-center'>GDC Data Portal of National Cancer Institute (US)</td>
+          <td className='border border-black text-center'>https://portal.gdc.cancer.gov/</td>
+        </tr>
+    </tbody>
+    </table>
       </div>
   )
 }

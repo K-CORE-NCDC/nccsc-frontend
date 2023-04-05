@@ -1,7 +1,7 @@
 import React, { useState,useEffect,useContext} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import DataTable from "react-data-table-component";
-import '../../assets/interceptor/interceptor'
+import '../../interceptor/interceptor'
 import axios from "axios";
 import config from '../../config'
 import { Redirect, useParams } from "react-router-dom";
@@ -133,7 +133,7 @@ function QAList({new_post}) {
           <div className="col-span-4">
               <h4 className="h-tit4_tit clear">
                   <font>
-                    <font>Q & A</font>
+                    <font>Q&A</font>
                   </font>
               </h4>
           </div>

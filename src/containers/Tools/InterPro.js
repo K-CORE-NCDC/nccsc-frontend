@@ -5,7 +5,7 @@ import { useDispatch,useSelector } from "react-redux";
 import LoaderCmp from '../Common/Loader'
 import config from "../../config";
 import {FormattedMessage} from 'react-intl';
-import Attachments from '../../assets/insulin.fasta'
+import Attachments from '../../assets/files/insulin.fasta'
 
 function Modal({ showModal, setShowModal, body }) {
     return (
@@ -130,9 +130,6 @@ function InterPro() {
                                  href={backend_url+"media/Interpro/files/"+interproResponse['container_name']+".tsv"} 
                                  download={interproResponse['container_name']+".tsv"}>{interproResponse['container_name']}</a>
                             </div>
-                            {/* <div>
-                                <p className='text-blue-400 hover:text-blue-500 transition duration-300 ease-in-out mb-4'>logs</p>
-                            </div> */}
                         </div>
                     </>
                 )

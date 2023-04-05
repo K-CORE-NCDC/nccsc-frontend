@@ -14,14 +14,8 @@ export default function VennCmp({ width, data = null }) {
 
       div.select("svg").attr("class", "inline");
 
-      // var tooltip = d3
-      //   .select("body")
-      //   .append("div")
-      //   .attr("class", "venntooltip");
-
       div.selectAll("path").style("stroke-opacity", 0).style("stroke", "#fff");
 
-      // chart.colours = ['#d2352b','#529d3f','#f18532']
       let colors = {
         "Global Proteome": "#f18532",
         "RNA Expression": "#d2352b",
@@ -32,7 +26,6 @@ export default function VennCmp({ width, data = null }) {
         "Global Proteome_DNA Mutation": "#3777af",
         "Global Proteome_DNA Mutation_RNA Expression": "#fffebc",
       };
-      // var div = d3.select("#venn").datum(sets).call(chart);
       var tooltip = d3
         .select("body")
         .append("div")
@@ -113,13 +106,6 @@ export default function VennCmp({ width, data = null }) {
           tooltip.html(ht);
           tooltip.transition().duration(40).style("opacity", 1);
         })
-        // .on("mousemove", function(d) {
-        //     tooltip.style("left", (d.pageX) + "px")
-        //            .style("top", (d.pageY - 28) + "px");
-        // })
-        // .on("mouseout", function(d, i) {
-        //   tooltip.transition().duration(2500).style("opacity", 0);
-        // });
     }
   }, [width, data]);
 

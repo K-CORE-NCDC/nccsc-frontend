@@ -153,6 +153,7 @@ const filterChoicesCustomKorean = [
   { type: "number", name: "ER 검사 결과", id: "er_score", input: "number" },
   { type: "number", name: "PR 검사 결과", id: "pr_score", input: "number" },
 ];
+
 let preDefienedGroups = {
   diag_age: [
     { label: "21-35", from: 21, to: 35 },
@@ -211,21 +212,8 @@ let preDefienedGroups = {
   smok_yn: [
     { label: "No", value: "smok_yn||N" },
     { label: "Yes", value: "smok_yn||Y" },
-    // { label: "Current Smoking", value: "smok_curr_yn||Y" }
   ],
 
-  // t_category: [
-  //     { label: "Tis", from: 'Tis', to: 'Tis',value: 'Tis' },
-  //     { label: "T1", from: 'T1', to: 'T1',value: 'T1' },
-  //     { label: "T2", from: 'T2', to: 'T2',value: 'T2' },
-  //     { label: "T3", from: 'T3', to: 'T3',value: 'T3' },
-  //     { label: "T4", from: 'T4', to: 'T4',value: 'T4' },
-  // ],
-  // n_category: [
-  //     { label: "N1", from: 'N1', to: 'N1' },
-  //     { label: "N2", from: 'N2', to: 'N2' },
-  //     { label: "N3", from: 'N3', to: 'N3' }
-  // ]
 };
 export const PreDefienedFilters = ({
   volcanoType,
@@ -245,10 +233,8 @@ export const PreDefienedFilters = ({
   useEffect(() => {
     if (context["locale"] === "kr-KO") {
       setKoreanlanguage(true);
-      // setEnglishlanguage(false);
     } else {
       setKoreanlanguage(false);
-      // setEnglishlanguage(true);
     }
   },[context]);
   const preDefienedGroups1 = {
@@ -438,32 +424,6 @@ export const PreDefienedFilters = ({
     }
   };
 
-  // const dropDownChange = (event) => {
-  //   const eventObject = JSON.parse(event.target.value);
-  //   const filterData =
-  //     preDefienedGroups1[eventObject.colName][eventObject.index];
-  //   if ("value" in filterData) {
-  //     setFilters((prevState) => ({
-  //       ...prevState,
-  //       ...{
-  //         [eventObject.group]: filterData.value,
-  //         column: selectedFilterType.details.id,
-  //         type: "text",
-  //       },
-  //     }));
-  //   } else {
-  //     setFilters((prevState) => ({
-  //       ...prevState,
-  //       ...{
-  //         [`${eventObject.group}_from`]: filterData.from,
-  //         [`${eventObject.group}_to`]: filterData.to,
-  //         column: selectedFilterType.details.id,
-  //         type: "number",
-  //       },
-  //     }));
-  //   }
-  // };
-
   useEffect(() => {
 
     let filterGroupsHtmlTemp = [];
@@ -609,6 +569,7 @@ export const PreDefienedFilters = ({
   );
 };
 
+
 const GroupFilters = ({
   volcanoType,
   parentCallback,
@@ -620,7 +581,6 @@ const GroupFilters = ({
   );
   const context = useContext(Context);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
-  // const [Englishlanguage, setEnglishlanguage] = useState(true);
   const [filterSelected, setFilterSelected] = useState("");
   const [selectedFilterDetails, setSelectedFilterDetails] = useState({});
   const [filterInputs, setFilterInputs] = useState([]);
@@ -637,12 +597,10 @@ const GroupFilters = ({
   useEffect(() => {
     if (context["locale"] === "kr-KO") {
       setKoreanlanguage(true);
-      // setEnglishlanguage(false);
     } else {
       setKoreanlanguage(false);
-      // setEnglishlanguage(true);
     }
-  });
+  },[context]);
 
  
 
@@ -759,12 +717,20 @@ const GroupFilters = ({
       ];
     
     }
-
-    preDefienedGroups1["smok_yn"] = [
-      { label: "No Smoking", value: "smok_yn||N" },
-      { label: "Past Smoking", value: "smok_yn||Y" },
-      { label: "Current Smoking", value: "smok_curr_yn||Y" },
-    ];
+    if(koreanlanguage){
+      preDefienedGroups1["smok_yn"] = [
+        { label: "비흡연자", value: "smok_yn||N" },
+        { label: "과거 흡연자", value: "smok_yn||Y" },
+        { label: "현재 흡연자", value: "smok_curr_yn||Y" },
+      ];
+    }
+    else{
+      preDefienedGroups1["smok_yn"] = [
+        { label: "No Smoking", value: "smok_yn||N" },
+        { label: "Past Smoking", value: "smok_yn||Y" },
+        { label: "Current Smoking", value: "smok_curr_yn||Y" },
+      ];
+    }
 
     preDefienedGroups1["t_category"] = [
       { label: "Tis", from: "Tis", to: "Tis", value: "Tis" },
@@ -820,12 +786,8 @@ const GroupFilters = ({
       resetFilters();
     }
   }, [volcanoType]);
+
   const submitFilters = () => {
-    // if (isFilterResetHappened) {
-    //   parentCallback(userGivenInputValues);
-    // } else {
-    //   parentCallback(userGivenInputValues);
-    // }
     if (isFilterResetHappened) {
       let send_response = true;
       if(userGivenInputValues['type'] === 'static'){
@@ -850,7 +812,6 @@ const GroupFilters = ({
         const max_1_to = document.querySelectorAll('[name="1_to"]');
         const min_2_from = document.querySelectorAll('[name="2_from"]');
         const max_2_to = document.querySelectorAll('[name="2_to"]');
-        // getting min value from all
         for (let obj in min_1_from) {
           if (min_1_from[obj]) {
             if (
@@ -860,7 +821,6 @@ const GroupFilters = ({
               min_1_from[obj].value === ""
             ) {
               send_response = false;
-              // return 'error_in_1_from';
             } else {
               if (min_1_from[obj].value) {
                 min1Value = Math.min(min_1_from[obj].value);
@@ -877,7 +837,6 @@ const GroupFilters = ({
               max_1_to[obj].value === ""
             ) {
               send_response = false;
-              // return 'error_in_1_to';
             } else {
               if (max_1_to[obj].value) {
                 max1Value = Math.max(max_1_to[obj].value);
@@ -894,7 +853,6 @@ const GroupFilters = ({
               min_2_from[obj].value === ""
             ) {
               send_response = false;
-              // return 'error_in_2_from';
             } else {
               if (min_2_from[obj].value) {
                 min2Value = Math.min(min_2_from[obj].value);
@@ -911,7 +869,6 @@ const GroupFilters = ({
               max_2_to[obj].value === ""
             ) {
               send_response = false;
-              // return 'error_in_2_to';
             } else {
               if (max_2_to[obj].value) {
                 max2Value = Math.max(max_2_to[obj].value);
@@ -930,19 +887,16 @@ const GroupFilters = ({
       }
       if (send_response === true) {
         parentCallback(userGivenInputValues);
-        // resetFilters();
       }
     } 
     else {
-    //   resetFilters();
-      // parentCallback({ ...userGivenInputValues });
       parentCallback(userGivenInputValues );
     }
   };
 
   const resetFilters = () => {
     setFilterSelected("");
-    setSelectDefaultValue("");
+    setSelectDefaultValue("0");
     setSelectedFilterDetails({});
     setFilterInputs([]);
     setUserGivenInputValues({});
@@ -957,7 +911,6 @@ const GroupFilters = ({
     setIsFilterResetHappened(true);
     setFilterInputs([]);
     const targetValue = e.target.value;
-
     if (targetValue !== "") {
       setFilterSelected(filterChoices[parseInt(targetValue)].name);
       setSelectDefaultValue(String(targetValue));
@@ -967,62 +920,8 @@ const GroupFilters = ({
       setSelectDefaultValue("0");
       setSelectedFilterDetails({});
     }
-    // setGroupsCounter(1)
   };
 
-  // const onChangeFilterInput = (e) => {
-  //   if (e.target.type === "number") {
-  //     let id = e.target.id;
-  //     let ids = id.split("_");
-  //     let m_id = ids[0];
-
-  //     let one_from_0 = document.getElementById(`${m_id}_from`);
-  //     let one_from = one_from_0 ? +one_from_0.value : one_from_0.min;
-  //     let one_min_value = one_from_0 ? +one_from_0.min : 0;
-  //     let one_to_0 = document.getElementById(`${m_id}_to`);
-  //     let one_to = one_to_0 ? +one_to_0.value : one_from_0.max;
-  //     let one_max_value = one_from_0 ? +one_from_0.max : 0;
-
-  //     if (
-  //       one_from > one_max_value ||
-  //       one_from < one_min_value ||
-  //       one_from > one_to
-  //     ) {
-  //       one_from_0.classList.add("border-2");
-  //       one_from_0.classList.add("border-red-400");
-  //       one_to_0.classList.add("border-2");
-  //       one_to_0.classList.add("border-red-400");
-  //     } else if (
-  //       one_to > one_max_value ||
-  //       one_to < one_min_value ||
-  //       one_to < one_from
-  //     ) {
-  //       one_from_0.classList.add("border-2");
-  //       one_from_0.classList.add("border-red-400");
-  //       one_to_0.classList.add("border-2");
-  //       one_to_0.classList.add("border-red-400");
-  //     } else {
-  //       one_from_0.classList.remove("border-2");
-  //       one_from_0.classList.remove("border-red-400");
-  //       one_to_0.classList.remove("border-2");
-  //       one_to_0.classList.remove("border-red-400");
-  //       setUserGivenInputValues((prevState) => ({
-  //         ...prevState,
-  //         [one_from_0.name]: one_from_0.value,
-  //       }));
-  //       setUserGivenInputValues((prevState) => ({
-  //         ...prevState,
-  //         [one_to_0.name]: one_to_0.value,
-  //       }));
-  //     }
-  //   } else {
-  //     setUserGivenInputValues((prevState) => ({
-  //       ...prevState,
-  //       [e.target.name]: e.target.value,
-  //     }));
-  //   }
-  // };
-  
   const onChangeFilterInput = (e) => {
     if (e.target.type === "number") {
       let id = e.target.name;
@@ -1178,8 +1077,8 @@ const GroupFilters = ({
         return (
           <div key={compCase} className="mb-4">
             {["A Group", "B Group"].map((e, index) => (
-              <div key={e} className="border mt-4 p-1">
-                <div className={LabelCss} htmlFor="yes">
+              <div key={index} className="border mt-4 p-1">
+                <div key={e} className={LabelCss} htmlFor="yes">
                   {e}
                 </div>
                 <h1 id="yes" className="text-left mt-2">
@@ -1193,7 +1092,7 @@ const GroupFilters = ({
       case "number":
         if (viz_type === "volcono") {
           return (
-            <>
+            <div key={`${compCase}-${Math.random()}`}>
               <div key={`${compCase}-1${Math.random()}`} className="mb-4">
                 <div>
                   <div className={LabelCss} htmlFor="username">
@@ -1268,7 +1167,7 @@ const GroupFilters = ({
                   </div>
                 </div>
               </div>
-            </>
+            </div>
           );
         } else {
           return (
@@ -1307,7 +1206,7 @@ const GroupFilters = ({
       case "text":
         if (viz_type === "volcono") {
           return (
-            <>
+            <div key={`${compCase}--${Math.random()}`}>
               <div key={`${compCase}-1-${Math.random()}`} className="mb-4">
                 <div>
                   <div className={LabelCss} htmlFor="username">
@@ -1324,6 +1223,7 @@ const GroupFilters = ({
                   </div>
                 </div>
               </div>
+              
               <div key={`${compCase}-2-${Math.random()}`} className="mb-4">
                 <div>
                   <div className={LabelCss} htmlFor="username">
@@ -1340,7 +1240,7 @@ const GroupFilters = ({
                   </div>
                 </div>
               </div>
-            </>
+            </div>
           );
         } else {
           return (
@@ -1455,20 +1355,6 @@ const GroupFilters = ({
         let tr = [];
 
         if (viz_type === "volcono") {
-          if(koreanlanguage){
-            preDefienedGroups1["smok_yn"] = [
-              { label: "비흡연자", value: "smok_yn||N" },
-              { label: "과거 흡연자", value: "smok_yn||Y" },
-              { label: "현재 흡연자", value: "smok_curr_yn||Y" },
-            ];
-          }
-          else{
-            preDefienedGroups1["smok_yn"] = [
-              { label: "No Smoking", value: "smok_yn||N" },
-              { label: "Past Smoking", value: "smok_yn||Y" },
-              { label: "Current Smoking", value: "smok_curr_yn||Y" },
-            ];
-          }
           if (
             Object.keys(userGivenInputValues).length > 0 &&
             userGivenInputValues["type"] === "static"
@@ -1524,20 +1410,6 @@ const GroupFilters = ({
               });
             }
           } else {
-            if(koreanlanguage){
-              preDefienedGroups1["smok_yn"] = [
-                { label: "비흡연자", value: "smok_yn||N" },
-                { label: "과거 흡연자", value: "smok_yn||Y" },
-                { label: "현재 흡연자", value: "smok_curr_yn||Y" },
-              ];
-            }
-            else{
-              preDefienedGroups1["smok_yn"] = [
-                { label: "No Smoking", value: "smok_yn||N" },
-                { label: "Past Smoking", value: "smok_yn||Y" },
-                { label: "Current Smoking", value: "smok_curr_yn||Y" },
-              ];
-            }
             preDefienedGroups1[colName].map((element, index) =>
               tr.push(
                 <tr key={colName + index} className="border-b">
@@ -1588,27 +1460,13 @@ const GroupFilters = ({
           );
         } 
         else if (viz_type === "survival") {
-          if(koreanlanguage){
-            preDefienedGroups1["smok_yn"] = [
-              { label: "비흡연자", value: "smok_yn||N" },
-              { label: "과거 흡연자", value: "smok_yn||Y" },
-              { label: "현재 흡연자", value: "smok_curr_yn||Y" },
-            ];
-          }
-          else{
-            preDefienedGroups1["smok_yn"] = [
-              { label: "No Smoking", value: "smok_yn||N" },
-              { label: "Past Smoking", value: "smok_yn||Y" },
-              { label: "Current Smoking", value: "smok_curr_yn||Y" },
-            ];
-          }
           let d = preDefienedGroups1[colName];
           let thead = [];
           let boxes = d.length;
           for (let sv = 0; sv < d.length; sv++) {
             const element = d[sv];
             thead.push(
-              <th className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+              <th key={sv} className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                 Group {abc[sv]}:
               </th>
             );
@@ -1616,8 +1474,7 @@ const GroupFilters = ({
             let group_i = 0;
 
             for (let index = 0; index < boxes; index++) {
-              let name = "group_" + abc[index] + "_" + element.label;
-
+              let name = "group_" + abc[index] + "_" + element.value;
               if (Object.keys(userGivenInputValues).length > 0) {
                 let group_check = false;
                 if (
@@ -1655,6 +1512,7 @@ const GroupFilters = ({
                         colName: colName,
                         group: "group_" + abc[index],
                       })}
+                      key={element.label}
                     />
                   </td>
                 );
@@ -1673,6 +1531,7 @@ const GroupFilters = ({
                         colName: colName,
                         group: "group_" + abc[index],
                       })}
+                      key={element.label}
                     />
                   </td>
                 );
@@ -1755,9 +1614,14 @@ const GroupFilters = ({
           </button>
         </div>
       )}
+
       <div className="p-1 py-3 px-2 col-span-2" style={{ overflowX: "auto" }}>
         {filterInputs}
       </div>
+
+
+
+      
       {filterSelected && (
         <div>
           <button
@@ -1949,21 +1813,6 @@ export const PreDefienedFiltersSurvival = ({
           </div>
         );
       }
-
-      // if (groupFilters.type === 'text') {
-      //     filterGroupsHtmlTemp.push(
-      //         <div key='bool'>
-      //             <div className="flex flex-row">
-      //                 <h5>Group 1 : </h5>
-      //                 <h5 className="text-bold text-blue-700">{groupFilters[1]}</h5>
-      //             </div>
-      //             <div className="flex flex-row">
-      //                 <h5>Group 2 : </h5>
-      //                 <h5 className="text-bold text-blue-700">{groupFilters[2]}</h5>
-      //             </div>
-      //         </div>
-      //     )
-      // }
       if (groupFilters.type === "number" || groupFilters.type === "text") {
         filterGroupsHtmlTemp.push(
           <div key="drop-user">
@@ -1991,32 +1840,6 @@ export const PreDefienedFiltersSurvival = ({
     });
   };
 
-  // const dropDownChange = (event) => {
-  //   const eventObject = JSON.parse(event.target.value);
-
-  //   const filterData =
-  //     preDefienedGroups1[eventObject.colName][eventObject.index];
-  //   if ("value" in filterData) {
-  //     setFilters((prevState) => ({
-  //       ...prevState,
-  //       ...{
-  //         [eventObject.group]: filterData.value,
-  //         column: selectedFilterType.details.id,
-  //         type: "text",
-  //       },
-  //     }));
-  //   } else {
-  //     setFilters((prevState) => ({
-  //       ...prevState,
-  //       ...{
-  //         [`${eventObject.group}_from`]: filterData.from,
-  //         [`${eventObject.group}_to`]: filterData.to,
-  //         column: selectedFilterType.details.id,
-  //         type: "number",
-  //       },
-  //     }));
-  //   }
-  // };
 
   useEffect(() => {
     let filterGroupsHtmlTemp = [];
@@ -2291,7 +2114,6 @@ export const UserDefinedGroupFilters = ({
       setSelectDefaultValue("0");
       setSelectedFilterDetails({});
     }
-    // setGroupsCounter(1)
   };
 
   const onChangeFilterInput = (e) => {
@@ -3007,4 +2829,3 @@ export const UserDefinedGroupFilters = ({
   );
 };
 
-// export default UserDefinedGroupFilters;

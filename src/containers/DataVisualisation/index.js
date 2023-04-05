@@ -13,12 +13,13 @@ import ConfirmDownload from "../Common/downloadConfirmation";
 import { Charts } from "./Charts/";
 import genes from "../Common/gene.json";
 import { Context } from "../../wrapper";
+import { useHistory } from "react-router-dom";
 import {
   getBreastKeys,
   getUserDataProjectsTableData,
   clearDataVisualizationState,
   samplesCount,
-  // projectIdStatus
+  UserDataProjectsTableData
 } from "../../actions/api_actions";
 import { Link } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
@@ -33,16 +34,19 @@ export default function DataVisualization() {
 
   const [state, setState] = useState({ genes: [], filter: "", type: "" });
   const [boolChartState, setBoolChartState] = useState(true);
-  // const [filterState, setFilterState] = useState({});
   const [chart, setCharts] = useState({ viz: [] });
   const [width, setWidth] = useState(0);
+  // const [userProjectDetails, setUserProjectDetails] = useState({})
   const dispatch = useDispatch();
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
-  const userProjectDetails = useSelector(
-    (data) => data.dataVisualizationReducer.userProjectsDataTable
-  );
+
+  const history = useHistory();
+
   const project_id_status = useSelector(
     (data) => data.homeReducer.project_id_status
+  );
+  const userProjectDetails = useSelector(
+    (data) => data.dataVisualizationReducer.userProjectsDataTable
   );
   let { tab, project_id } = useParams();
   const [chartName, setChartName] = useState(tab);
@@ -83,13 +87,10 @@ export default function DataVisualization() {
   },[koreanlanguage,Englishlanguage])
 
   const setScreenCaptureFunction = (capture) => {
-    // setScreenCapture(capture)
     setScreenCaptureConfirmation(true);
   };
   const submitFilter = (e) => {
-    // e.preventDefault()
 
-    // if (state.genes.length > 0) {
     setBoolChartState(false);
     setChartName(tab);
     let chartx = LoadChart(width, tab);
@@ -97,7 +98,6 @@ export default function DataVisualization() {
       ...prevState,
       viz: chartx,
     }));
-    // }
   };
 
   const callback = useCallback((filters,  filterKeyandValues) => {
@@ -112,11 +112,6 @@ export default function DataVisualization() {
       'filterKeyandValues': filterKeyandValues
     }));
     setfilterApplied(true);
-    // dispatch(getBreastKeys({
-    //   filter: filters,
-    //   genes: g,
-    //   type: type,
-    // }))
   }, []);
 
   useEffect(() => {
@@ -141,7 +136,12 @@ export default function DataVisualization() {
   useEffect(() => {
     if (project_id !== undefined) {
       let projectAvailableSteps = undefined;
-      if (userProjectDetails) {
+      
+      if(userProjectDetails && 'key' in  userProjectDetails &&  userProjectDetails.key === 'NotFound'){
+        console.log('userProjectDetails',userProjectDetails);
+        history.push('/notfound')
+      }
+      if (userProjectDetails &&  'available_steps' in userProjectDetails) {
         projectAvailableSteps = userProjectDetails.available_steps;
       }
 

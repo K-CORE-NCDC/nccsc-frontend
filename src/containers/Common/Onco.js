@@ -1,9 +1,8 @@
 import React, { useState,useEffect } from 'react'
 import { useSelector, } from "react-redux";
-// import CanvasXpressReact from 'canvasxpress-react';
 import _ from 'lodash';
 import './rules';
-
+import Oncoprint from "oncoprintjs";
 import $ from 'jquery'
 import inputJson from '../Common/data'
 import {
@@ -70,32 +69,8 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss,customFilterJson,pr
             'init_sort_direction': 0
         };
 
-
-        // var clinical_bar_track_params = {
-        //     'rule_set_params': window.geneticrules.clinical_rule_set_bar,
-        //     'target_group': 1,
-        //     'na_z': 1.1,
-        //     'sort_direction_changeable': true,
-        //     'sortCmpFn': function (d1, d2) {
-        //         if (d1 == null && d2 == null) {
-        //             return 0;
-        //         } else if (d1 == null && d2 != null) {
-        //             return 2;
-        //         } else if (d1 != null && d2 == null) {
-        //             return -2;
-        //         } else {
-        //             return (d1['cnt'] < d2['cnt'] ? -1 : (d1['cnt'] === d2['cnt'] ? 0 : 1));
-        //         }
-        //     },
-        //     'init_sort_direction': 0
-        // };
-
         oncoprint = new window.Oncoprint("#oncoprint-glyphmap", "80vw");
         
-        // let models = {
-        //     vert_scroll:1
-        // }
-        // oncoprint.model();
         oncoprint.suppressRendering();
         var geneData = []
 
@@ -160,7 +135,6 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss,customFilterJson,pr
             }
         }
 
-        // oncoprint.hideIds([], true);
         oncoprint.keepSorted(false);
         if(geneData.length>0){
             for (let i = 0; i < geneData.length; i++) {
@@ -192,7 +166,6 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss,customFilterJson,pr
                 });
             }
         }
-        // },300)
         var clinicalData =  {}
         if(cData){
             clinicalData = cData

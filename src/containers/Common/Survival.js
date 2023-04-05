@@ -41,7 +41,6 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
           if(e.x > maxXvalue){
             maxXvalue = e.x
           }
-          // tableData[key].push([e.sample,e.x,e.y])
           if(e.y < minValue){
             minValue = e.y
           }

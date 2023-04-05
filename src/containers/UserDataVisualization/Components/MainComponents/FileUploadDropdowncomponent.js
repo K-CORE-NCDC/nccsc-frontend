@@ -71,10 +71,6 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
     if(divName === 'sample_id' || divName === 'rlps_yn' || divName === 'rlps_cnfr_drtn'){
 
           if(defaultClinicalInformationColumns[divName] === divValue ){
-            // setClinicalInformationColumns((prevState) => ({
-            //   ...prevState,
-            //   [divName]: divValue,
-            // }));
             let tempresponseData = { ...responseData };
             if (tempresponseData[activeTableKey]) {
               tempresponseData[activeTableKey]["types"][divName] = divValue;
@@ -114,12 +110,7 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
           }
          
     }
-    else{
-      // setClinicalInformationColumns((prevState) => ({
-      //   ...prevState,
-      //   [divName]: divValue,
-      // }));
-    }
+
     if (activeTableKey === "clinical_information") {
       let tmp = { ...clinincalFilterColumns };
       Object.keys(tmp).forEach((obj) => {
@@ -248,12 +239,10 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
         tempresponseData[tab]["types"] = types;
         tempresponseData[tab]["tab"] = tab;
       }
-      // setResponseData(tempresponseData);
       setResponseData((prevState) => ({
         ...prevState,
         [tab]: tempresponseData[tab],
       }));
-      // tempRP.assign(tempresponseData)
 
     } else {
       for (let i = 0; i < columns.length; i++) {
@@ -343,7 +332,6 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
                     <select
                       onChange={clinicalUpdateFileTypeOnChange}
                       name={obj.title}
-                      // defaultChecked="false"
                       defaultValue={(obj.id === 'rlps_yn') ? 'yesorno': (obj.id === 'rlps_cnfr_drtn') ? 'decimal': (obj.id === 'sample_id') ? 'character' : '' }
                       className="select-color w-48 p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3"
                     >
