@@ -42,7 +42,6 @@ export default function DataCircos({
     (data) => data.dataVisualizationReducer.Keys
   );
   const [sampleListElements, setSampleListElements] = useState([]);
-  // const [displaySamples, setDisplaySamples] = useState(false);
   const [watermarkCss, setWatermarkCSS] = useState("");
   const [loader, setLoader] = useState(false);
   const [showOncoImages, setShowOncoImages] = useState(false);
@@ -352,19 +351,11 @@ export default function DataCircos({
 
   useEffect(() => {
     return () => {
-      // dispatch(clearCircosInfomation())
       setCircosJson({ status: 0 })
       setSampleKey("")
     }
   }, [])
 
-  // useEffect(() => {
-  //   if (inputData && inputData.genes.length > 0) {
-  //     setDisplaySamples(true);
-  //   } else {
-  //     setDisplaySamples(false);
-  //   }
-  // }, [inputData]);
   let abcd = async()=>{
     const element = document.getElementById('circos')
     let imgData 
@@ -432,11 +423,19 @@ export default function DataCircos({
       if (circosJson && circosJson.status !== 0) {
         setLoader(false);
         if (sampleKey !== "all") {
-          document.getElementById("images").classList.remove("opacity-50");
-          document.getElementById("tables").classList.remove("opacity-50");
+          if(document.getElementById("images")){
+            document.getElementById("images").classList.remove("opacity-50");
+          }
+          if( document.getElementById("tables")){
+            document.getElementById("tables").classList.remove("opacity-50");
+          }
         } else {
-          document.getElementById("images").classList.add("opacity-50");
-          document.getElementById("tables").classList.add("opacity-50");
+          if(document.getElementById("images")){
+            document.getElementById("images").classList.add("opacity-50");
+          }
+          if( document.getElementById("tables")){
+            document.getElementById("tables").classList.add("opacity-50");
+          }
         }
       }
     }, 1000);
@@ -504,9 +503,9 @@ export default function DataCircos({
               <div className="p-3 mt-6">
                 <button
                   id="images"
-                  className={`opacity-50 ${project_id!== undefined ? 'bg-main-blue-op5':'bg-main-blue hover:bg-blue-700'} xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40`}
+                  className={`${project_id !== undefined ? 'bg-main-blue-op5':'bg-main-blue hover:bg-blue-700'} xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40`}
                   onClick={oncoImagesClickFunction}
-                  disabled = {project_id!== undefined ? true:false}
+                  disabled = {project_id !== undefined ? true:false}
                 >
                   <FormattedMessage
                       id="Pathological images"
@@ -517,7 +516,7 @@ export default function DataCircos({
               <div className="p-3 mt-6">
                 <button
                   id="tables"
-                  className={`opacity-50  ${project_id!== undefined ? 'bg-main-blue-op5':'bg-main-blue hover:bg-blue-700'} xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40`}
+                  className={`${project_id!== undefined ? 'bg-main-blue-op5':'bg-main-blue hover:bg-blue-700'} xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40`}
                   onClick={timelineGraphClickFunction}
                   disabled= {project_id!== undefined ? true:false}
                 >

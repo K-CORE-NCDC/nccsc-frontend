@@ -54,7 +54,6 @@ function SankeyIndex({ ...props }) {
       let node_type = {};
       let i = 1;
       sankeyJson["data"].forEach((element) => {
-        // detailgeneData.push(element);
         for (const key in element) {
           if (key !== "sourceurl") {
             if (!nodes.hasOwnProperty(element[key]) && element[key]) {
@@ -153,7 +152,6 @@ function SankeyIndex({ ...props }) {
       }
       setDetailGeneData(detailgeneData);
       setSankeyJsonData({ nodes: final_nodes, links: final_links });
-      // dispatch(generatereport({ nodes: final_nodes, links: final_links }))
     }
   }, [sankeyJson]);
 

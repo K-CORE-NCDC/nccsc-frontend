@@ -2,7 +2,7 @@
 import React, { useState, useEffect,useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import VolcanoCmp from "../../Common/Volcano";
-import GroupFilters, { PreDefienedFilters } from "../../Common/GroupFilter";
+import GroupFilters,{PreDefienedFilters} from "../../Common/GroupFilter";
 import UserDefinedGroupFilters  from "../../Common/GroupFilterUserDefined";
 import NoContentMessage from "../../Common/NoContentComponent";
 import swal from 'sweetalert';
@@ -13,7 +13,7 @@ import {
 } from "../../../actions/api_actions";
 import LoaderCmp from "../../Common/Loader";
 import { FormattedMessage } from "react-intl";
-import { useParams } from "react-router-dom";
+import { useHistory,useParams } from "react-router-dom";
 
 const selectedCss =
   "w-1/2 rounded-r-none  hover:scale-110 focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md";
@@ -37,7 +37,8 @@ export default function DataVolcono({
     (data) => data.dataVisualizationReducer
   );
 
-  // const [data_, setData] = useState("");
+
+  const history = useHistory();
   const [watermarkCss, setWatermarkCSS] = useState("");
   const [loader, setLoader] = useState(false);
   const [negativeData, setNegativeData] = useState();
@@ -53,7 +54,6 @@ export default function DataVolcono({
   const [alltabList, setAllTabList] = useState({});
   let { project_id } = useParams();
   
-  // const [smallScreen, setSmallScreen] = useState(false);
   const [userDefienedFilter, setUserDefienedFilter] = useState(
     project_id === undefined ? "static" : "dynamic"
   );
@@ -87,9 +87,7 @@ export default function DataVolcono({
   };
   useEffect(() => {
     if (!clinicalMaxMinInfo) {
-      if (project_id) {
-        return false
-      } else {
+      if (project_id === undefined ) {
         dispatch(getClinicalMaxMinInfo("GET", {}));
       }
     }
@@ -122,6 +120,7 @@ export default function DataVolcono({
         })
         .catch((e) => {
           setVolcanoJson({'status':204})
+          history.push('/notfound')
         });
       }
     }
@@ -129,9 +128,6 @@ export default function DataVolcono({
 
   useEffect(() => {
     if (volcanoJson) {
-      // if (Object.keys(volcanoJson).length > 0) {
-      //   setData(volcanoJson);
-      // }
       setTimeout(function () {
         setLoader(false);
       }, 1000);
@@ -150,7 +146,6 @@ export default function DataVolcono({
               Log2FC: parseFloat(item["log2(fold_change)"]),
               "-Log(Pvalue)": item["q_value"],
             });
-            // console.log('item["q_value"]',item["q_value"]);
           } else {
             positiveCount += 1;
             positive.push({
@@ -180,7 +175,6 @@ export default function DataVolcono({
     }
 
     if (watermarkCss !== "" && screenCapture) {
-      // exportComponentAsPNG(reference)
       setToFalseAfterScreenCapture();
     }
   }, [screenCapture, watermarkCss]);
@@ -230,6 +224,7 @@ export default function DataVolcono({
       })
       .catch((e) => {
         setVolcanoJson({'status':204})
+        history.push('/notfound')
       });
     }
     else{
@@ -246,8 +241,8 @@ export default function DataVolcono({
       })
       .catch((e) => {
         setVolcanoJson({'status':204})
+        history.push('/notfound')
       });
-      // userDefinedGetVolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters });
     }
   };
 
@@ -280,6 +275,7 @@ export default function DataVolcono({
               )}
             </div>
             <div className="m-1 flex flex-row justify-around">
+            
               <button
                 onClick={() => changeVolcanoType("transcriptome")}
                 className={
@@ -288,10 +284,12 @@ export default function DataVolcono({
               >
                 <FormattedMessage id="Transcriptome" defaultMessage="Transcriptome" />
               </button>
+            
+
               {project_id !== undefined &&  alltabList['proteome'] && <button
                 onClick={() => changeVolcanoType("proteome")}
                 className={
-                  volcanoType === "proteome" ? `${ alltabList['proteome'] ? `${selectedCss} hidden` : selectedCss}` : `${nonSelectedCss}`
+                  volcanoType === "proteome" ? selectedCss  : nonSelectedCss
                 }
               >
                 <FormattedMessage id="Proteome" defaultMessage="Proteome" />
@@ -323,7 +321,7 @@ export default function DataVolcono({
                       checked={proteomeValue === "N" ? true : false}
                       id="default-radio-1"
                       type="radio"
-                      value="normal"
+                      defaultValue="normal"
                       name="proteome"
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />
@@ -340,7 +338,7 @@ export default function DataVolcono({
                       checked={proteomeValue === "T" ? true : false}
                       id="default-radio-2"
                       type="radio"
-                      value="tumor"
+                      defaultValue="tumor"
                       name="proteome"
                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />
@@ -455,7 +453,6 @@ export default function DataVolcono({
                           />
               </button>
             )}
-            {/* <GroupFilters parentCallback={updateGroupFilters} groupFilters={groupFilters} /> */}
             <div className="m-1 p-1 border border-black border-dashed">
               <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left"><FormattedMessage id="Blue" defaultMessage = "Blue :" />{`Blue: Log2FC <= -1.5 & pvalue <= 0.05`}</p>
               <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left"><FormattedMessage id="Red" defaultMessage = "Red :" />{`Log2FC >= 1.5 & pvalue <= 0.05`}</p>

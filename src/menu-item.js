@@ -194,10 +194,10 @@ const childMenu = {
           },
           {
             id: 'otherservice',
-            title: <FormattedMessage id="OtherServices" defaultMessage="Other Service" />,
+            title: <FormattedMessage id="OtherServices" defaultMessage="Other Services" />,
             type: 'group',
             icon: 'fa fa-dashboard',
-            url: '/otherservice',
+            url: '/organoid',
             children: [
               {
                 id: 'organoid',

@@ -14,7 +14,7 @@ import Purposeofpersonalinformationprocessing from '../../assets/images/PrivacyA
 import RemediesforInfringementofRights from '../../assets/images/PrivacyACTImages/RemediesforInfringementofRights.png'
 import requestforreading from '../../assets/images/PrivacyACTImages/requestforreading.png'
 import RightsandObligationsofDataSubjects from '../../assets/images/PrivacyACTImages/RightsandObligationsofDataSubjects.png'
-import Attachments from '../../assets/Attachment.hwp'
+import Attachments from '../../assets/files/Attachment.hwp'
 
 
 function OldKoreanprivacyact() {
@@ -28,60 +28,6 @@ function OldKoreanprivacyact() {
                     <p id="P_63" >
                         국립암센터 국가암데이터센터 내에서 운영하고 있는 K-CORE 포털은 ｢개인정보 보호법｣ 제30조에 따라 정보주체의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리방침을 수립·공개합니다.
                     </p>
-                    {/* <div id="DIV_64">
-                        <div className='text-center'>
-                            [주요 개인정보 처리 표시(라벨링)]
-
-                        </div>
-
-                        <table id="TABLE_66">
-                            <caption id="CAPTION_67">
-                                개인정보보유기간, 개인정보보호책임자, 개인정보의 제공, 개인정보처리, 개인정보처리목적 ,고충처리부서, 권익침해구제, 안전성확보조치,열람청구,일반개인정보 수집,자동화 수집,정보주체의권리의무,처리위탁,처리항목,파기
-                            </caption>
-                            <colgroup id="COLGROUP_68">
-                                <col id="COL_69" />
-                                <col id="COL_70" />
-                                <col id="COL_71" />
-                            </colgroup>
-                            <tbody id="TBODY_72">
-                                <tr id="TR_73" className='flex-row'>
-                                    <td id="TD_74">
-                                        <img src="https://www.cancerdata.re.kr/datalink/images/personInfo7.png"
-                                            alt="개인정보보호책임자" id="IMG_75" className='ml-5' />
-                                        <span id="SPAN_76">일반 개인정보<br id="BR_77" />*
-                                            개인정보보호책임자수집</span>
-                                    </td>
-                                    <td id="TD_78">
-                                        <img src="https://www.cancerdata.re.kr/datalink/images/personInfo7.png"
-                                            alt="개인정보의 제공" id="IMG_79" /> <span id="SPAN_80">개인정보의 제공</span>
-                                    </td>
-                                    <td id="TD_81">
-                                        <img src="https://www.cancerdata.re.kr/datalink/images/personInfo3.png"
-                                            alt="개인정보처리" id="IMG_82" /> <span id="SPAN_83">개인정보처리</span>
-                                    </td>
-                                </tr>
-                                <tr id="TR_73" className='flex-row'>
-                                    <td id="TD_74" className='flex-col place-items-center'>
-                                        <img src="https://www.cancerdata.re.kr/datalink/images/personInfo7.png" className='ms-5'
-                                            alt="개인정보보호책임자" id="IMG_75" /> <span id="SPAN_76">일반 개인정보<br id="BR_77" />*
-                                                개인정보보호책임자수집</span>
-                                    </td>
-                                    <td id="TD_78">
-                                        <img src="https://www.cancerdata.re.kr/datalink/images/personInfo7.png"
-                                            alt="개인정보의 제공" id="IMG_79" /> <span id="SPAN_80">개인정보의 제공</span>
-                                    </td>
-                                    <td id="TD_81">
-                                        <img src="https://www.cancerdata.re.kr/datalink/images/personInfo3.png"
-                                            alt="개인정보처리" id="IMG_82" /> <span id="SPAN_83">개인정보처리</span>
-                                    </td>
-                                </tr>
-
-
-                            </tbody>
-                        </table>
-
-                    </div> */}
-
                     <div id='DIV_64'>
 
                         <div className='text-center mb-5'>

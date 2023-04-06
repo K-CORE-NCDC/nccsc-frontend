@@ -6,9 +6,7 @@ import {
   getClinicalMaxMinInfo,
 } from "../../../actions/api_actions";
 import { exportComponentAsJPEG } from "react-component-export-image";
-import GroupFilters, {
-  PreDefienedFiltersSurvival,
-} from "../../Common/GroupFilter";
+import GroupFilters,{PreDefienedFiltersSurvival} from "../../Common/GroupFilter";
 import UserDefinedGroupFilters  from "../../Common/GroupFilterUserDefined";
 import NoContentMessage from "../../Common/NoContentComponent";
 import { useParams } from "react-router-dom";
@@ -142,7 +140,7 @@ export default function DataSurvival({
   }
 
   const submitFitersAndFetchData = () => {
-    if (fileredGene !== "") {
+    if (fileredGene !== "" || filterTypeButton === "clinical") {
       setLoader(true);
       inputData["filterType"] = userDefienedFilter;
       inputData["survival_type"] = survivalModel;
@@ -309,7 +307,7 @@ export default function DataSurvival({
 
       let tmp = [];
       let columns = survivalJson && 'columns' in survivalJson &&  survivalJson["columns"];
-      let thead = [<th></th>];
+      let thead = [<th key={'rows'}></th>];
       let data = survivalJson && 'data' in survivalJson && JSON.parse(survivalJson["data"]);
       let cf = survivalJson && 'clinical_filter' in survivalJson &&  survivalJson["clinical_filter"];
       let image = survivalJson && 'image' in survivalJson &&  survivalJson["image"];
@@ -415,11 +413,9 @@ export default function DataSurvival({
 
   useEffect(() => {
     if (survivalJson && survivalJson.status === 200) {
-      // setRenderNoContent(false);
       setRenderSurvival(true);
       setCoxNoData(false)
     } else if(survivalJson && survivalJson.status !== 200 ) {
-      // setRenderNoContent(true);
       setRenderSurvival(false);
       setCoxNoData(false)
     }
@@ -659,10 +655,10 @@ export default function DataSurvival({
                         defaultValue={fileredGene}
                         className="w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3"
                       >
-                        <option selected={fileredGene === ""} value=""></option>
+                        <option defaultValue={fileredGene === ""} value=""></option>
                         {genesArray.map((gene, index) => (
                           <option
-                            selected={fileredGene === gene}
+                            defaultValue={fileredGene === gene}
                             key={`${gene}-${index}`}
                             value={gene}
                           >
@@ -688,34 +684,34 @@ export default function DataSurvival({
                       >
 
                       {project_id !== undefined &&  alltabList['dna_mutation'] && <option
-                          selected={geneDatabase === "dna_mutation"}
+                          defaultValue={geneDatabase === "dna_mutation"}
                           value="dna_mutation"
                         >
                          DNA Mutation
                         </option>
                         }
                         {project_id === undefined && <option
-                          selected={geneDatabase === "dna_mutation"}
+                          defaultValue={geneDatabase === "dna_mutation"}
                           value="dna_mutation"
                         >
                          DNA Mutation
                         </option>}
 
                         {project_id !== undefined &&  alltabList['rna'] && 
-                        <option selected={geneDatabase === "rna"} value="rna">
+                        <option defaultValue={geneDatabase === "rna"} value="rna">
                         RNA Expression
                         </option>
                         }
 
                         {
-                          project_id === undefined &&  <option selected={geneDatabase === "rna"} value="rna">
+                          project_id === undefined &&  <option defaultValue={geneDatabase === "rna"} value="rna">
                           RNA Expression
                           </option>
                         }
 
                         {project_id !== undefined &&  alltabList['proteome'] && 
                         <option
-                          selected={geneDatabase === "proteome"}
+                          defaultValue={geneDatabase === "proteome"}
                           value="proteome"
                         >
                           Global Proteome
@@ -723,7 +719,7 @@ export default function DataSurvival({
                         }
 
                         {project_id === undefined &&  <option
-                          selected={geneDatabase === "proteome"}
+                          defaultValue={geneDatabase === "proteome"}
                           value="proteome"
                         >
                           Global Proteome
@@ -731,6 +727,7 @@ export default function DataSurvival({
                       </select>
                     </div>
                   )}
+                  
                   {filterTypeButton === "clinical" &&
                     userDefienedFilter === "static" &&
                     project_id === undefined && (

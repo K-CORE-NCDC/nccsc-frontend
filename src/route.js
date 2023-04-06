@@ -36,6 +36,7 @@ const Organoid = React.lazy(() => import('./containers/CustomerVoice/OtherServic
 const RelatedSites = React.lazy(() => import('./containers/CustomerVoice/OtherServices/RelatedSitesIndex'));
 const Refresh = React.lazy(() => import('./containers/Refresh'));
 
+const NotFound = React.lazy(()=> import('./containers/404NotFound/index'))
 const route = [
   {
     path: '/mobile_verify/', exact: true, type: 'unauth', name: '', component: MobileSuccess,
@@ -238,7 +239,7 @@ const route = [
     exact: true,
     type: 'unauth',
     name: <FormattedMessage id="OtherServices" defaultMessage="Other Services" />,
-    childname: <FormattedMessage id="Organoid" defaultMessage="organoid" />,
+    childname: <FormattedMessage id="Organoid" defaultMessage="Organoid" />,
     component: Organoid,
   },
   {
@@ -254,7 +255,7 @@ const route = [
     exact: true,
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
-    childname: <FormattedMessage id="Organoid" defaultMessage="organoid" />,
+    childname: <FormattedMessage id="Organoid" defaultMessage="Organoid" />,
     component: FileProjectDataTable,
   },
   {
@@ -262,8 +263,16 @@ const route = [
     exact: true,
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
-    childname: <FormattedMessage id="Organoid" defaultMessage="organoid" />,
+    childname: <FormattedMessage id="Organoid" defaultMessage="Organoid" />,
     component: Refresh,
+  },
+  {
+    path: '/notfound/',
+    exact: true,
+    type: 'unauth',
+    name: <FormattedMessage id="Home" defaultMessage="Home" />,
+    childname: <FormattedMessage id="notfound" defaultMessage="notfound" />,
+    component: NotFound,
   },
 ];
 

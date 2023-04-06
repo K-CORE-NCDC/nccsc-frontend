@@ -19,12 +19,10 @@ function Popup({toggleModal}) {
       {
         setNoticeDetails(result.data)
         setNoticeStatus(200)
-        // setShowModal(true)
       }
       else{
         setNoticeDetails({})
         setNoticeStatus(204)
-        // setShowModal(false)
       }
     })
   },[])

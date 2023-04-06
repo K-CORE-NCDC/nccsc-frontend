@@ -1,7 +1,6 @@
 import BarChartComp from "../Common/HorizontalBarChart"
 import StackBarChartComp from "../Common/StackedBarChart"
 import Boxplot from "../Common/boxplot"
-// import BoxPlot from "../Common/BoxPlot"
 import VerticalStackBarChartComp from "../Common/VerticalStackBarChart"
 import VennCmp from "../Common/Venn"
 

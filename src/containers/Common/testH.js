@@ -49,11 +49,9 @@ const HeatmapCmp = React.forwardRef(({ settings, inputData, type, watermarkCss,w
             ]
         ],
         'noValidate': true,
-        // 'disableDataTable':true,
         'disableConfigurator':false,
         'disableToolbar':true
     }
-    // console.log(settings['colorSpectrumBreaks'])
     if(!isNaN(settings['colorSpectrumBreaks'][0]) && !isNaN(settings['colorSpectrumBreaks'][1])){
         config["colorSpectrumBreaks"] = settings['colorSpectrumBreaks']
     }
@@ -77,14 +75,6 @@ const HeatmapCmp = React.forwardRef(({ settings, inputData, type, watermarkCss,w
         config["variablesClustered"] =  true
     }
 
-    // useEffect(()=>{
-    //     if(settings){
-    //         console.log(settings)
-    //         let c = configVis
-    //         c['colorSpectrumBreaks'] = settings['colorSpectrumBreaks']
-    //         setConfigVis(c)
-    //     }
-    // },[settings])
     if(type === "k-mean"){
       config['smpOverlayProperties'] = {
         "Treatment": {
@@ -175,4 +165,3 @@ const HeatmapCmp = React.forwardRef(({ settings, inputData, type, watermarkCss,w
     )
 })
 export default HeatmapCmp
-// <canvas id="heatmap" width="613" height="613"></canvas>

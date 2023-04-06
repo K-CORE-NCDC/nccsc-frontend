@@ -28,14 +28,12 @@ export default function FusionPlot({
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const [loader, setLoader] = useState(false);
   const [smallScreen, setSmallScreen] = useState(false);
-  // const [sampleCount, setSampleCount] = useState({});
   const sampleCount = {}
   const [groupFilters, setGroupFilters] = useState({});
   const [tableData, setTableData] = useState([]);
   const [fusionId, setFusionId] = useState(0);
   const [groupName, setGroupName] = useState("");
   const [noData, setNoData] = useState('false')
-  // const [firstTime, setFirstTime] = useState(true)
   const firstTime = true
   const [VennData, setVennData] = useState({})
 
@@ -165,7 +163,6 @@ export default function FusionPlot({
   };
 
   useEffect(() => {
-    // dispatch(clearFusionVennDaigram())
     setVennData({})
     setGroupName("")
     setNoData('true')

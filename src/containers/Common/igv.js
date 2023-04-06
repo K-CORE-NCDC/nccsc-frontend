@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react'
 import igv from 'igv'
-// import igv from "https://cdn.jsdelivr.net/npm/igv@2.13.9/dist/igv.esm.min.js"
-
 
 
 const Igv = React.forwardRef(({width,data, watermarkCss}, ref) => {
@@ -36,12 +34,9 @@ const Igv = React.forwardRef(({width,data, watermarkCss}, ref) => {
 
   }
   useEffect(()=>{
-    // if(file_name){
-    if(data){
+    if(data && data.length !== 0){
       loadIgv(data)
     }
-    // }
-    // loadIgv('s')
   },[data])
 
   return (

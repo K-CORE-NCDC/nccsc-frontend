@@ -6,8 +6,7 @@ import {
   CLEAR_ALL_STATES,
 } from './Constants';
 import config from '../config';
-import '../assets/interceptor/interceptor';
-
+import '../interceptor/interceptor';
 function sendRequest(url, method, data) {
   const x = axios({
     method, url, data, withCredentials: true,
@@ -505,7 +504,6 @@ export function getSankeyJson(type, data) {
 
 export function VolcanoPlotInfo(type, data) {
   const url = `${config.auth}volcano/`;
-
   return sendRequest(url, type, data);
 }
 export function userDefinedGetVolcanoPlotInfo(type, data) {
@@ -960,9 +958,27 @@ export function getUserDataProjectsTableData(project = false) {
           payload: d.data,
         });
       })
-      .catch(() => {});
+      .catch(() => {
+        dispatch({
+          type: userdataVisualization.USER_DATA_PROJECT_TABLE,
+          payload: {'key':'NotFound'},
+        });
+      });
   };
 }
+
+export function UserDataProjectsTableData(project = false) {
+  let url = '';
+  if (project !== false) {
+    url = `${config.auth}user-data-projects/${project}/`;
+    console.log('->p1',url);
+  } else {
+    console.log('->p2',url);
+    url = `${config.auth}user-data-projects/`;
+  }
+  return sendRequest(url, 'GET', '')
+    
+};
 
 export function sankeyImageData(data) {
   return () => {

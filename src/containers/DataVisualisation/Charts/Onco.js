@@ -25,8 +25,6 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
   const [loader, setLoader] = useState(false)
   const tableData = ""
   let tableCount
-  // const [tableCount, setTableCount] = useState()
-  // const [tableData, setTableData] = useState("")
   const [showOnco, setShowOnco] = useState(false)
   const [noContent, setNoContent] = useState(true)
   const [optionChoices,setOptionChoices] = useState([])
@@ -122,7 +120,6 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
       let gData = 'geneData' in oncoJson ?  oncoJson['geneData'] : {}
       let cData = 'clinicalData' in oncoJson ? oncoJson['clinicalData'] : {}
       let final = {}
-      // let global_ = cData && 'globalMutCategory' in cData && cData["globalMutCategory"]
       let mutant_ = cData && 'mutCategory' in cData && cData["mutCategory"]
 
       mutant_.forEach((g, i) => {
@@ -227,7 +224,6 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
       setLoader(true)
       let dataJson = inputState
       dataJson['clinicalFilters'] = cf
-      // dispatch(getOncoInformation('POST',dataJson))
       let return_data = OncoInformation('POST',dataJson)
         return_data.then((result) => {
           const d = result
@@ -258,7 +254,6 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
       setLoader(true)
       let dataJson = inputState
       dataJson['clinicalFilters'] = cf
-      // dispatch(getOncoInformation('POST',dataJson))
       let return_data = OncoInformation('POST',dataJson)
         return_data.then((result) => {
           const d = result
@@ -350,11 +345,3 @@ export default function DataOnco({ width,inputData, screenCapture, setToFalseAft
     </>
   )
 }
-
-
-// <div className="ml-20 col-span-2 max-w-screen-xl">
-//   {
-//     tableData &&
-//     <UserFilesTable userDataTableData={tableData} />
-//   }
-// </div>

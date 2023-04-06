@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react'
 import * as d3 from 'd3';
 import * as Circos from 'circos';
 import cytobands from './cytobands.csv'
-import placeholder from '../../assets/img/circosImage.png'
+import placeholder from '../../assets/images/circosImage.png'
 
 
 const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, selectedGenes }, ref) => {
@@ -106,10 +106,8 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
       let iter = 1
       let dna_mutation_data = api_data['dna_mutation']
       for (let i = 0; i < dna_mutation_data.length; i++) {
-        // let position = (parseInt(dna_mutation_data[i].start) + parseInt(dna_mutation_data[i].end)) / 2
         const startPos = staticPositionValues[dna_mutation_data[i].chromosome]
         let position = Math.floor((Math.random() * startPos))
-        // position < 150000000 ? position += 150000000 : position = position
         snp250.push({
           block_id: dna_mutation_data[i].chromosome,
           position: position,
@@ -132,8 +130,6 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
       let iter = 1
       let dna_methylation_data = api_data['dna_methylation']
       for (let i = 0; i < dna_methylation_data.length; i++) {
-        // let position = (parseInt(dna_methylation_data[i].start) + parseInt(dna_methylation_data[i].end)) / 2
-        // position < 150000000 ? position += 150000000 : position = position
         const startPos = staticPositionValues[dna_methylation_data[i].chromosome]
         let position = Math.floor((Math.random() * startPos))
         dna_methylation.push({
@@ -155,8 +151,6 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
     if ('rna_expression' in api_data){
       let rna_expression_data = api_data['rna_expression']
       for (let i = 0; i < rna_expression_data.length; i++) {
-        // let position = (parseInt(rna_expression_data[i].start) + parseInt(rna_expression_data[i].end)) / 2
-        // position < 150000000 ? position += 150000000 : position = position
         const startPos = staticPositionValues[rna_expression_data[i].chromosome]
         let position = Math.floor((Math.random() * startPos))
         rna_expression_up.push({
@@ -173,8 +167,6 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
     if ('global_proteome' in api_data){
       let global_proteome_data = api_data['global_proteome']
       for (let i = 0; i < global_proteome_data.length; i++) {
-        // let position = (parseInt(global_proteome_data[i].start) + parseInt(global_proteome_data[i].end)) / 2
-        // position < 150000000 ? position += 150000000 : position = position
         const startPos = staticPositionValues[global_proteome_data[i].chromosome]
         let position = Math.floor((Math.random() * startPos))
           global_proteome_up.push({
@@ -187,30 +179,9 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
     }
 
     var cnvData = [...all_chr];
-    // d3.select('#circos svg')
-    // .call(d3.zoom().scaleExtent([-5, 50])
-    //               .translateExtent([[0,0], [width+100, (width-150)+100]])
-    //               .extent([[0,0], [width+100, (width-150)+100]])
-    //               .on("zoom", function () {
-    //   var translation = (event) => {
-    //     return event.transform;
-    //   }
-    //   var newViewBox = [
-    //   -translation["x"]/translation["k"],
-    //   -translation["y"]/translation["k"],
-    //   width/translation["k"],
-    //   width-150/translation["k"]
-    // ].join(" ");
-    // d3.select(this).attr('viewBox', newViewBox);
-    // d3.select(this).attr("transform", (event) => {
-    //   return event.transform
-    // })
-    // }))
     if('cnv' in api_data){
       let cnv_data = api_data['cnv']
       for (let i = 0; i < cnv_data.length; i++) {
-        // let position = (parseInt(global_proteome_data[i].start) + parseInt(global_proteome_data[i].end)) / 2
-        // position < 150000000 ? position += 150000000 : position = position
         const startPos = staticPositionValues[cnv_data[i].chromosome]
         let position = Math.floor((Math.random() * startPos))
         cnvData.push({
@@ -492,13 +463,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
           }
       }
     })
-    // .call(d3.drag().subject(dragsubject).on("drag", dragged))
     .render()
-    // setLoader(false)
-    // setTimeout(function() {
-    //   if(circosJson && fusionJson){
-    //   }
-    // }, (1000));
   }
 
   useEffect(()=>{

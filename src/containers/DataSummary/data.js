@@ -10,122 +10,12 @@ let clinical_info_title = {
   "Body Mass Index":"kg/m2",
   "Duration of Breastfeeding":"month",
   "First Menstrual Age":'Year',
-  // 'Lactation period (1-24 M)':'Month',
   'T Category':'Category',
   'N Category':'Category',
   'Time until relapse is confirmed':'Year'
 }
 
 
-// let filterBoxes = {
-//   "Basic/Diagnostic Information":{
-//     "Sex":[
-//       {'type':'checkbox','name':'sex','id':'sex_male','value':'Male'},
-//       {'type':'checkbox','name':'sex','id':'sex_female','value':'Female'}
-//     ],
-//     "Age Of Daignosis":[
-//       {'type':'number','id':'aod','value':''},
-
-//     ],
-//     "Body Mass Index":[
-//       {'type':'number','id':'bmi','value':''},
-
-//     ],
-
-//     "Diagnosis Of Bilateral Breast Cancer":[
-//       {'type':'checkbox','id':'dbbc_from','value':'Yes'},
-//       {'type':'checkbox','id':'dbbc_to','value':'No'}
-//     ],
-
-//   },
-//   "Patient Health Information":{
-//     "Smoking Status":[
-//       {'type':'checkbox','name':'smoking_status','id':'current_smoker','value':'Current Smoker'},
-//       {'type':'checkbox','name':'smoking_status','id':'former_smoker','value':'Former Smoker'},
-//       {'type':'checkbox','name':'smoking_status','id':'non_smoker','value':'Nonsmoker'},
-//     ],
-//     "Alcohol Consumption":[
-//       {'type':'checkbox','name':'alcohol_consuption','id':'ac_yes','value':'Yes'},
-//       {'type':'checkbox','name':'alcohol_consuption','id':'ac_no','value':'No'},
-//     ],
-//     "Family History of Breast Cancer":[
-//       {'type':'checkbox','name':'fhbc','id':'fhbc_yes','value':'Yes'},
-//       {'type':'checkbox','name':'fhbc','id':'fhbc_no','value':'No'},
-//     ],
-//     "First Menstrual Age":[
-//       {'type':'number','name':'fma','id':'fma','value':''},
-//     ],
-//     "Menopause":[
-//       {'type':'checkbox','name':'menopause','id':'menopause_yes','value':'Yes'},
-//       {'type':'checkbox','name':'menopause','id':'menopause_no','value':'No'},
-//     ],
-//     "Childbirth":[
-//       {'type':'checkbox','name':'childbirth','id':'childbirth_yes','value':'Yes'},
-//       {'type':'checkbox','name':'childbirth','id':'childbirth_no','value':'No'},
-//     ],
-//     "Experience of Breastfeeding":[
-//       {'type':'checkbox','name':'eob','id':'eob_yes','value':'Yes'},
-//       {'type':'checkbox','name':'eob','id':'eob_no','value':'No'},
-//     ],
-//     "Duration of Breastfeeding":[
-//       {'type':'number','name':'dob','id':'dob','value':''},
-//     ],
-//     "Intake of Oral Contraceptive Pill":[
-//       {'type':'checkbox','name':'iocp','id':'iocp_yes','value':'Yes'},
-//       {'type':'checkbox','name':'iocp','id':'iocp_no','value':'No'},
-//     ],
-//     "Hormone Replacement Therapy":[
-//       {'type':'checkbox','name':'hrt','id':'hrt_yes','value':'Yes'},
-//       {'type':'checkbox','name':'hrt','id':'hrt_no','value':'No'},
-//     ],
-//   },
-//   "Clinical Information":{
-//     "T Stage":[
-//       {'type':'checkbox','name':'tstage','id':'tstage_1','value':'Stage I'},
-//       {'type':'checkbox','name':'tstage','id':'tstage_2','value':'Stage II'},
-//       {'type':'checkbox','name':'tstage','id':'tstage_3','value':'Stage III'},
-//       {'type':'checkbox','name':'tstage','id':'tstage_4','value':'Stage IV'},
-//     ],
-//     "N Stage":[
-//       {'type':'checkbox','name':'nstage','id':'nstage_na','value':'Not evaluated'},
-//       {'type':'checkbox','name':'nstage','id':'nstage_o','value':'Stage O'},
-//       {'type':'checkbox','name':'nstage','id':'nstage_i','value':'Stage I'},
-//       {'type':'checkbox','name':'nstage','id':'nstage_ii','value':'Stage II'},
-//       {'type':'checkbox','name':'nstage','id':'nstage_iii','value':'Stage III'},
-//     ],
-//     "ER Test Results":[
-//       {'type':'checkbox','name':'etr','id':'etr_yes','value':'Positive'},
-//       {'type':'checkbox','name':'etr','id':'etr_no','value':'Negative'},
-//       {'type':'checkbox','name':'etr','id':'etr_na','value':'Not evaluated'},
-
-//     ],
-//     "PR Test Results":[
-//       {'type':'checkbox','name':'ptr','id':'ptr_yes','value':'Positive'},
-//       {'type':'checkbox','name':'ptr','id':'ptr_no','value':'Negative'},
-//       {'type':'checkbox','name':'ptr','id':'ptr_na','value':'Not evaluated'},
-//     ],
-//     "HER2 Score":[
-//       {'type':'checkbox','name':'herscore','id':'herscore_o','value':"O"},
-//       {'type':'checkbox','name':'herscore','id':'herscore_o1','value':'O~1+'},
-//       {'type':'checkbox','name':'herscore','id':'herscore_1','value':'1+'},
-//       {'type':'checkbox','name':'herscore','id':'herscore_2','value':'2'},
-//       {'type':'checkbox','name':'herscore','id':'herscore_2+','value':'2+'},
-//       {'type':'checkbox','name':'herscore','id':'herscore_3+','value':'3+'},
-//     ],
-//     "Ki-67 Index":[
-//       {'type':'number','name':'ki67','id':'ki67','value':''},
-//     ]
-//   },
-//   "Follow-up Observation":{
-//     "Cancer Recurrence":[
-//       {'type':'checkbox','name':'cr','id':'cr_yes','value':'Yes'},
-//       {'type':'checkbox','name':'cr','id':'cr_no','value':'No'},
-//     ],
-//     "Time until relapse is confirmed":[
-//       {'type':'number','name':'turc','id':'turc','value':''},
-//     ]
-//   },
-// }
 let filterBoxes = {
   "Basic/Diagnostic Information":{
     "Sex":[

@@ -89,16 +89,8 @@ function PdfPrint({ isReportClicked }) {
     if (PDF_Report_Status && "res" in PDF_Report_Status) {
       let link = PDF_Report_Status["res"];
       let navlink = config.auth + link;
-      // console.log("navLink",navlink);
       dispatch(clearPdfLink());
       setLoader(false);
-      // setAnchorTag([<a to={navlink} target='_blank' download={navlink}  id="downloadPDF"></a>])
-      // let a= React.createElement('a');
-      // console.log("download");
-      // a.target= '__blank';
-      // a.href= navlink;
-      // a.download = 'report.pdf'
-      // a.click();
       window.location.href = navlink;
       
     }
@@ -111,17 +103,6 @@ function PdfPrint({ isReportClicked }) {
   },[anchorTag])
   return (
     <div>
-      {/* <a className='hover:bg-blue-700 text-white font-bold py-6 px-6 float-left rounded bg-NccBlue-700' rel='noreferrer' target="_blank" href='http://3.137.187.168:8009/media/sohel.pdf'>
-                Download Report
-            </a> */}
-      {/* <button
-                className='hover:bg-blue-700 text-white font-bold py-6 px-6 float-left rounded bg-NccBlue-700'
-                // onClick={(e)=>printpdf(e)}
-                onClick={(e) => DownloadPDF(e)}
-            >
-              
-                Download Report
-            </button> */}
       <div className="flex items-center justify-center">
         <button
           type="button"

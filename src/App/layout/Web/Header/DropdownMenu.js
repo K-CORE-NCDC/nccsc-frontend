@@ -53,40 +53,6 @@ export default function DropdownMenu() {
 
           </li >
         )
-        // tmp[j].append()
-
-        // let innertmp = []
-        // for (var k = 0; k < innerchild.length; k++) {
-        //   innertmp.push(
-        //     <li key={i + "_" + j} className='px-3 py-5'>
-        //       <Link key={i + "link_" + j}
-        //         className="text-3xl py-2 px-4 block whitespace-no-wrap"
-        //         to={children[j].url}
-        //       >{children[j].title}
-        //       </Link>
-        //       <></>
-        //     </li>
-        //   )
-        // }
-
-        // if(innertmp.length>0){
-        //   tmp.push(
-        //     <li className="group h-full table-cell relative " key={'li_'+i}>
-        //       <ul className="absolute hidden list-none text-center h-auto" key={'ul_'+i}>
-        //         {innertmp}
-        //       </ul>
-        //     </li>
-        //   )
-        // }
-
-        // if (innertmp.length > 0) {
-        //   tmp.push(
-        //     <li className="group h-full table-cell relative " key={'li_' + i}>
-        //       {innertmp}
-        //     </li>
-        //   )
-        // }
-
       }
       if (tmp.length > 0) {
         html.push(

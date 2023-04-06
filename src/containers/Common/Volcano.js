@@ -26,38 +26,7 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
     }
   ]
 
-  // const resetChart = () => {
-  //   myChart.resetZoom()
-  // }
-
-  // const zoomIn = () => {
-  //   myChart.zoom(1.1)
-  // }
-
-  // const zoomOut = () => {
-  //   myChart.resetZoom(0.9)
-  // }
-
-  // function volcanoPlot(d_) {
-  //   myChart = new Chart(volcano_plot.current, {
-  //     type: 'scatter',
-  //     data: {
-  //       'datasets': d_
-  //     },
-  //     options: option
-  //   })
-  // }
-  // useEffect(() => {
-  //   if (data) {
-  //     volcanoPlot(data)
-  //   }
-  // }, [data])
-
-  // <div ref={ref} id='volcano' className={`p-3 ${watermarkCss}`}>
-  // </div>
-  // <button id="resetBtn">Reset</button>
   const downloadTableAsCsv = (tableType) => {
-    console.log('--->',tableData);
     let rows = [
       ["GENE NAME", "LOG2FC", "LOG(PVALUE) negative"],
     ];
@@ -93,14 +62,10 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
       <div id='scatter_parent'  >
         <VolcanoPlotD3 watermarkCss={watermarkCss} dataProps={data}/>
       </div>
-      {/* <button type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-8" onClick={resetChart}>reset</button>
-      <button type="button" onClick={zoomIn} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 ml-8 rounded" >zoom in</button>
-      <button type="button" onClick={zoomOut} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4  ml-8 rounded">zoom out</button> */}
       <div className="grid grid-cols-2 gap-4">
         <div>
           <h2 className="text-left text-blue-800 mb-12 mt-12"><strong>{"Expression Down Level"}</strong></h2>
           <div>
-            {/* <UserFilesTable userDataTableData={negative_data} /> */}
             <DataTable pagination
               columns={table_cols}
               data={negative_data}
@@ -116,7 +81,6 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
         </div>
         <div>
           <h2 className="text-left text-blue-800 mb-12 mt-12"><strong>{"Expression Up Level"}</strong></h2>
-          {/* <UserFilesTable userDataTableData={positive_data} /> */}
           <DataTable pagination
             columns={table_cols}
             data={positive_data}
@@ -128,10 +92,6 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
               <span>Download</span>
             </button>
           </div>
-          {/* <DataTable pagination
-                      columns={table_cols}
-                      data={tableData}
-                    /> */}
         </div>
         <div className="mt-8 ml-4 text-left flex flex-row justify-between">
           <h2><strong>Download Entire Data</strong></h2>

@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 
 export default function DropdownMenuMobile() {
   const [state, setState] = useState({"menu":[]});
-  // const [openClass,setOpenClass] = useState(false);
   useEffect(()=>{
     let items = childMenu.mainmenu.items
 

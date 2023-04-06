@@ -16,7 +16,7 @@ import Purposeofpersonalinformationprocessing from '../../assets/images/PrivacyA
 import RemediesforInfringementofRights from '../../assets/images/PrivacyACTImages/RemediesforInfringementofRights.png'
 import requestforreading from '../../assets/images/PrivacyACTImages/requestforreading.png'
 import RightsandObligationsofDataSubjects from '../../assets/images/PrivacyACTImages/RightsandObligationsofDataSubjects.png'
-import Attachments from '../../assets/Attachment.hwp'
+import Attachments from '../../assets/files/Attachment.hwp'
 
 
 function EnglishPrivacyAct() {
@@ -30,60 +30,6 @@ function EnglishPrivacyAct() {
           <p id="P_63" >
             In order to protect the personal information of information subjects in accordance with Article 30 of the “Personal Information Protection Act” of the K-CORE portal operated within the National Cancer Center National Cancer Data Center, and to promptly and smoothly handle related grievances, as follows: Establishes and discloses a personal information processing policy.
           </p>
-          {/* <div id="DIV_64">
-                        <div className='text-center'>
-                            [주요 개인정보 처리 표시(라벨링)]
-
-                        </div>
-
-                        <table id="TABLE_66">
-                            <caption id="CAPTION_67">
-                                개인정보보유기간, 개인정보보호책임자, 개인정보의 제공, 개인정보처리, 개인정보처리목적 ,고충처리부서, 권익침해구제, 안전성확보조치,열람청구,일반개인정보 수집,자동화 수집,정보주체의권리의무,처리위탁,처리항목,파기
-                            </caption>
-                            <colgroup id="COLGROUP_68">
-                                <col id="COL_69" />
-                                <col id="COL_70" />
-                                <col id="COL_71" />
-                            </colgroup>
-                            <tbody id="TBODY_72">
-                                <tr id="TR_73" className='flex-row'>
-                                    <td id="TD_74">
-                                        <img src="https://www.cancerdata.re.kr/datalink/images/personInfo7.png"
-                                            alt="개인정보보호책임자" id="IMG_75" className='ml-5' />
-                                        <span id="SPAN_76">일반 개인정보<br id="BR_77" />*
-                                            개인정보보호책임자수집</span>
-                                    </td>
-                                    <td id="TD_78">
-                                        <img src="https://www.cancerdata.re.kr/datalink/images/personInfo7.png"
-                                            alt="개인정보의 제공" id="IMG_79" /> <span id="SPAN_80">개인정보의 제공</span>
-                                    </td>
-                                    <td id="TD_81">
-                                        <img src="https://www.cancerdata.re.kr/datalink/images/personInfo3.png"
-                                            alt="개인정보처리" id="IMG_82" /> <span id="SPAN_83">개인정보처리</span>
-                                    </td>
-                                </tr>
-                                <tr id="TR_73" className='flex-row'>
-                                    <td id="TD_74" className='flex-col place-items-center'>
-                                        <img src="https://www.cancerdata.re.kr/datalink/images/personInfo7.png" className='ms-5'
-                                            alt="개인정보보호책임자" id="IMG_75" /> <span id="SPAN_76">일반 개인정보<br id="BR_77" />*
-                                                개인정보보호책임자수집</span>
-                                    </td>
-                                    <td id="TD_78">
-                                        <img src="https://www.cancerdata.re.kr/datalink/images/personInfo7.png"
-                                            alt="개인정보의 제공" id="IMG_79" /> <span id="SPAN_80">개인정보의 제공</span>
-                                    </td>
-                                    <td id="TD_81">
-                                        <img src="https://www.cancerdata.re.kr/datalink/images/personInfo3.png"
-                                            alt="개인정보처리" id="IMG_82" /> <span id="SPAN_83">개인정보처리</span>
-                                    </td>
-                                </tr>
-
-
-                            </tbody>
-                        </table>
-
-                    </div> */}
-
           <div id='DIV_64'>
 
           <div className='text-center mb-5'>[Primary personal information processing indication (labeling)]</div>
@@ -219,66 +165,6 @@ Measures to ensure the safety of personal information</td>
             </div>
 
           </div>
-
-
-          {/* <div id="DIV_94">
-                        <p id="P_95">
-                            목 차
-                        </p>
-                        <div id="DIV_96" >
-                            <div id="" className='m-auto' >
-                                <ul id="UL_98" >
-                                    <li style={{ borderBottom: "1px solid black" }}>
-                                        <p
-                                            id="A_100">제1 조(개인정보의 처리 목적, 처리 항목, 보유기간)</p>
-                                    </li>
-                                    <li style={{ borderBottom: "1px solid black" }}>
-                                        <p
-                                            id="A_102">제2 조(인터넷 접속정보파일 등 개인정보를 자동으로 수집 <span className='m-8'>  하는 장치의 설치·운영 및 그 거부에 관한 사항)</span></p>
-                                    </li>
-                                    <li style={{ borderBottom: "1px solid black" }}>
-                                        <p
-                                            id="A_104">제3 조 (개인정보의 파기 절차 및 방법)</p>
-                                    </li>
-                                    <li style={{ borderBottom: "1px solid black" }}>
-                                        <p
-                                            id="A_106">제4 조 (개인정보처리의 위탁에 관한 사항)</p>
-                                    </li>
-                                    <li style={{ borderBottom: "1px solid black" }}>
-                                        <p
-                                            id="A_108">제5 조 (개인정보 안정성 확보조치)</p>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div id="DIV_112">
-                                <ul id="UL_113" className=''>
-                                    <li style={{ borderBottom: "1px solid black" }} >
-                                        <p
-                                            id="A_110">제6 조 (정보주체와 법정대리인의 권리·의무 및 그 행사법)</p>
-                                    </li>
-                                    <li style={{ borderBottom: "1px solid black" }}>
-                                        <p
-                                            id="A_115">제7 조 (개인정보의 열람청구를 접수·처리하는 부서)</p>
-                                    </li>
-                                    <li style={{ borderBottom: "1px solid black" }}>
-                                        <p
-                                            id="A_117">제8 조 (권익침해 구제방법)</p>
-                                    </li>
-                                    <li style={{ borderBottom: "1px solid black" }}>
-                                        <p
-                                            id="A_119">제9 조 (개인정보보호 책임자 및 담당자 연락처)</p>
-                                    </li>
-                                    <li style={{ borderBottom: "1px solid black" }} >
-                                        <p
-                                            id="A_121">제10 조 (개인정보 처리방침의 변경)</p>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div> */}
-
-
           <h5 className='flex m-5'>
             <span id="SPAN_128">Article 1 Purpose of personal information processing, processing items, retention period  </span>
             <img
@@ -295,11 +181,6 @@ Measures to ensure the safety of personal information</td>
           <div id="DIV_134" className='m-5'>
             ①	Personal information processed by the National Cancer Center (National Cancer Data Center) K-CORE is processed in accordance with Article 15 (collection and use of personal information) of the 「Personal Information Protection Act」 in compliance with the personal information protection regulations of the relevant laws.<br id="BR_135" />
             <table id="TABLE_136">
-
-              {/* <caption id="CAPTION_137">
-              Status of application for export, 테이블이며, 순서, KISA신청번호, 반출신청번호, 신청일자 ,신청자, 진행상태, 비고 항목으로 구성
-              </caption> */}
-
               <colgroup id="COLGROUP_138">
                 <col id="COL_139" />
                 <col id="COL_141" />

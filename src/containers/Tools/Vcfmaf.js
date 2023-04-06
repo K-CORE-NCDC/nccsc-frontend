@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import LoaderCmp from '../Common/Loader'
 import config from '../../config';
 import {FormattedMessage} from 'react-intl';
-import Attachments from '../../assets/TkExMjg3OC5FVkEuMTAwLnZjZg.vcf'
+import Attachments from '../../assets/files/TkExMjg3OC5FVkEuMTAwLnZjZg.vcf'
 import AttachmentsImage from "../../assets/images/vcftomafexample_File.png";
 
 function Modal({ showModal, setShowModal, body }) {

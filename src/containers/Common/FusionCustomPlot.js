@@ -150,10 +150,6 @@ export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
               <div title={"exon -"+(index+1)+" "+element.startCodon} key={index} style={{width:w+'px',backgroundColor:element.color,marginRight:'5px',marginLeft:'5px',height:'20px',borderRight:'1px solid '+element.color}}>
               </div>
             )
-            // htmlExons1.push(
-            //   <div title={element.startCodon} key={index} style={{width:w+'px',backgroundColor:element.color,marginRight:'5px',marginLeft:'5px',height:'20px',borderRight:'1px solid '+element.color}}>
-            //   </div>
-            // )
             
           }
           

@@ -19,7 +19,7 @@ function RelatedSites() {
               <div className="col-span-2">
               </div>
               <div className="col-span-2">
-                <div class="flex float-right">
+                <div className="flex float-right">
                 </div>
               </div>
             </div>
@@ -27,26 +27,28 @@ function RelatedSites() {
         </div>
 
     <table className=' table border border-black text-center mx-auto' >
-  <tr className='border border-black text-center'>
-    <th className='border border-black text-center py-10' style={{width:'5rem'}}>번호.</th>
-    <th className='border border-black text-center' style={{width:'70rem'}}>관련 사이트</th> 
-    <th className='border border-black text-center'style={{width:'40rem'}}>링크</th>
-  </tr>
-  <tr className='border border-black text-center'>
-    <td className='border border-black text-center p-8'>1</td>
-    <td className='border border-black text-center'>cBioPortal (암유전체학 포털)</td>
-    <td className='border border-black text-center'>https://www.cbioportal.org/</td>
-  </tr>
-  <tr className='border border-black text-center'>
-    <td className='border border-black text-center p-8'>2</td>
-    <td className='border border-black text-center'>COSMIC (체세포 돌연변이 카탈로그)</td>
-    <td className='border border-black text-center'>https://cancer.sanger.ac.uk/cosmic</td>
-  </tr>
-  <tr className='border border-black text-center'>
-    <td className='border border-black text-center p-8'>3</td>
-    <td className='border border-black text-center'>GDC Data Portal (미국 국립암연구소)</td>
-    <td className='border border-black text-center'>https://portal.gdc.cancer.gov/</td>
-  </tr>
+      <tbody>
+        <tr className='border border-black text-center'>
+          <th className='border border-black text-center py-10' style={{width:'5rem'}}>번호.</th>
+          <th className='border border-black text-center' style={{width:'70rem'}}>관련 사이트</th> 
+          <th className='border border-black text-center'style={{width:'40rem'}}>링크</th>
+        </tr>
+        <tr className='border border-black text-center'>
+          <td className='border border-black text-center p-8'>1</td>
+          <td className='border border-black text-center'>cBioPortal (암유전체학 포털)</td>
+          <td className='border border-black text-center'>https://www.cbioportal.org/</td>
+        </tr>
+        <tr className='border border-black text-center'>
+          <td className='border border-black text-center p-8'>2</td>
+          <td className='border border-black text-center'>COSMIC (체세포 돌연변이 카탈로그)</td>
+          <td className='border border-black text-center'>https://cancer.sanger.ac.uk/cosmic</td>
+        </tr>
+        <tr className='border border-black text-center'>
+          <td className='border border-black text-center p-8'>3</td>
+          <td className='border border-black text-center'>GDC Data Portal (미국 국립암연구소)</td>
+          <td className='border border-black text-center'>https://portal.gdc.cancer.gov/</td>
+        </tr>
+      </tbody>
 </table>
       </div>
   )

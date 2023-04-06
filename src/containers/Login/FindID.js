@@ -10,8 +10,7 @@ function FindID() {
   const [status, setstatus] = useState("")
   const [errorClass, setErrorClass] = useState("");
   const dispatch = useDispatch();
-  const find_id = useSelector((data) => data.homeReducer.findId);
-
+  const find_id = useSelector((data) => data.homeReducer.findID);
   let findIDfunction = () => {
 
     let email_id_is = document.getElementById('FindID').value
@@ -20,6 +19,7 @@ function FindID() {
       setstatus('Please Enter Your Email');
     }
     else {
+      setstatus("")
       dispatch(findID("POST", { 'email_id': email_id_is }));
     }
   
@@ -28,21 +28,19 @@ function FindID() {
 
 
   useEffect(() => {
-    find_id && setstatus(find_id.status)
-    if (status === "ID Sent to Your Email") {
+    if (find_id && find_id.status === "ID Sent to Your Email") {
       swal("ID is sent to your Email ID.",{
         closeOnClickOutside: false
       })
         .then((value) => {
           setTimeout(()=>{
-  
             window.location.href = '/login/'
           },2000)
         });
   
     }
 
-  }, [[find_id], status])
+  }, [find_id, status])
 
   useEffect(() => {
     return () => {
@@ -67,7 +65,7 @@ function FindID() {
 
         <div className="my-10">
           <div className="grid grid-cols-3 border-b-2 border-gray-600 pt-12 pb-12">
-            <div className="pt-6 pl-48 col-span-1">
+            <div className="pt-6 pl-48 col-span-1 mr-8">
               <h1 className="font-bold">Email ID</h1>
             </div>
             <div>
