@@ -193,22 +193,24 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                 lollipopLegenedTmp[vc_sample] = [data[i].sample]
                 unique_sample.push(data[i].sample)
               }
-              if (data[i]['protien']) {
-                let protein = data[i]['protien'].replace(/[^\d]/g, '');
+              if (data[i]['protein']) {
+                console.log(data[i]['protein']);
+                let protein = data[i]['protein'].replace(/[^\d]/g, '');
+                console.log(protein);
                 let p_vc = protein + "||" + data[i]['variant_classification']
-
+                console.log(p_vc);
                 if (p_vc in lollipopTmp) {
-                  lollipopTmp[p_vc].push(data[i]['sample'] + "||" + data[i]['protien'])
+                  lollipopTmp[p_vc].push(data[i]['sample'] + "||" + data[i]['protein'])
                 } else {
-                  lollipopTmp[p_vc] = [data[i]['sample'] + "||" + data[i]['protien']]
+                  lollipopTmp[p_vc] = [data[i]['sample'] + "||" + data[i]['protein']]
                 }
               }
               table_data.push({
                 "sample": BrstKeys[data[i]['sample']],
-                "protein": data[i]['protien'],
+                "protein": data[i]['protein'],
                 "variant_classification": data[i]['variant_classification']
               })
-
+              console.log(table_data);
               refseq_id.push(data[i]['refseq_mrna_id'])
               enst_id.push(data[i]['annotation_transcript'])
 
@@ -365,6 +367,8 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
         }
 
         let domains_data = lolipopJson['domains']
+        // if (domains_data) {
+
         for (let i = 0; i < domains_data.length; i++) {
           let l = (domains_data[i].end - domains_data[i].start) / domains_data[i]['domain'].length
           let name = domains_data[i]['domain'].substring(0, l)
@@ -387,6 +391,10 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
             
           })
         }
+
+      // }
+
+
         let w = 300
         let h = 10
         if (width.length > 0) w = Math.max(...width)
