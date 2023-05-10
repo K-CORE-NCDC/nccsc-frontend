@@ -32,7 +32,7 @@ export default function DataVisualization() {
   const [enterGenes, setEnterGenes] = useState("Enter Genes")
   const elementRef = useRef(null);
 
-  const [state, setState] = useState({ genes: [], filter: "", type: "" });
+  const [state, setState] = useState({ genes: [], filter: {}, type: "" });
   const [boolChartState, setBoolChartState] = useState(true);
   const [chart, setCharts] = useState({ viz: [] });
   const [width, setWidth] = useState(0);

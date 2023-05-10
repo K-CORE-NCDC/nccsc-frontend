@@ -305,20 +305,6 @@ export function NoticeDetail(type) {
   return sendRequest(url, type, '');
 }
 
-export function getDashboardCount() {
-  return (dispatch) => {
-    const url = `${config.auth}data-count/`;
-    sendRequest(url, 'GET', '')
-      .then((result) => {
-        const d = result;
-        dispatch({
-          type: homeConstants.DATA_COUNT,
-          payload: d.data,
-        });
-      })
-      .catch(() => {});
-  };
-}
 
 export function DashboardCount() {
   const url = `${config.auth}data-count/`;
@@ -464,6 +450,7 @@ export function clearFusionVennDaigram() {
     });
   };
 }
+
 export function getClinicalMaxMinInfo(type, data) {
   return (dispatch) => {
     let url = `${config.auth}getClinicalMaxMinInfo/`;
@@ -585,37 +572,7 @@ export function HeatmapInformation(type, data) {
   const url = `${config.auth}heatmap/`;
   return sendRequest(url, type, data);
 }
-export function fileUpload(fileData, projectName) {
-  return (dispatch) => {
-    const data = new FormData();
-    // dispatch({ type: homeConstants.DATA_SUMMARY });
-    // fileData.forEach(file=>{
-    //   formData.append("arrayOfFilesName", file);
-    // });
-    Object.keys(fileData).forEach((element) => {
-      if (fileData[element].type !== undefined) {
-        data.append(fileData[element].type, fileData[element].file);
-      }
-    });
-    data.set('project_name', projectName);
 
-    const url = `${config.auth}user-data-visualization/`;
-    sendRequest(url, 'POST', data)
-      .then((result) => {
-        const d = result;
-        dispatch({
-          type: homeConstants.USERDATA_VISUALIZATION,
-          payload: d.data,
-        });
-      })
-      .catch(() => {
-        dispatch({
-          type: homeConstants.USERDATA_VISUALIZATION_ERROR,
-          payload: { [fileData.type]: 'failed' },
-        });
-      });
-  };
-}
 
 export function newFileUpload(fileData, projectName) {
   return (dispatch) => {
@@ -828,20 +785,6 @@ export function getBreastKeys(data_) {
   };
 }
 
-export function getHeadersFiles() {
-  return (dispatch) => {
-    const url = `${config.auth}user-data-visualization/`;
-    sendRequest(url, 'GET', '')
-      .then((result) => {
-        const d = result;
-        dispatch({
-          type: homeConstants.USERDATA_VISUALIZATION,
-          payload: d.data,
-        });
-      })
-      .catch(() => {});
-  };
-}
 
 export function getCircosUserData(data_) {
   return (dispatch) => {
@@ -971,9 +914,7 @@ export function UserDataProjectsTableData(project = false) {
   let url = '';
   if (project !== false) {
     url = `${config.auth}user-data-projects/${project}/`;
-    console.log('->p1',url);
   } else {
-    console.log('->p2',url);
     url = `${config.auth}user-data-projects/`;
   }
   return sendRequest(url, 'GET', '')
@@ -1258,49 +1199,6 @@ export function userRegister(type, data) {
   };
 }
 
-// export function getKMeanformation(type, data) {
-//   return (dispatch) => {
-//     let url = config.auth + "k-mean/";
-//     // const data = new FormData()
-//
-//     // data.set('genes', data.genes);
-//     // if("filter" in data){
-//     //   data.set('filters', JSON.stringify(data.filter));
-//     // }
-//     // if("table_type" in data){
-//     //   data.set('tab_type', data.table_type);
-//     // }
-//
-//     sendRequest(url, type, data)
-//       .then((result) => {
-//         const d = result
-//         // if (d.status === 200) {
-//           dispatch({
-//             type: dataVisualization.KMEAN_REQUEST,
-//             // payload: {...JSON.parse(d["data"]), status:200},
-//             payload: d["data"],
-//           });
-//         // } else {
-//         //   dispatch({
-//         //     type: dataVisualization.HEATMAP_REQUEST,
-//         //     payload: {status:204}
-//         //   });
-//         // }
-//         // dispatch({
-//         //   type: dataVisualization.HEATMAP_REQUEST,
-//         //   payload: JSON.parse(d["data"]),
-//         // });
-//         dispatch({ type: dataVisualization.REQUEST_DONE });
-//       })
-//       .catch(() => {
-//         dispatch({
-//           type: dataVisualization.KMEAN_REQUEST,
-//           payload: {status:204}
-//         });
-//
-//       });
-//   };
-// }
 
 export function clearDataVisualizationState() {
   return (dispatch) => {
