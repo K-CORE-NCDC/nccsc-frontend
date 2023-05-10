@@ -18,11 +18,11 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const [data_,setData] = useState('')
   const [inputGene,setInputGene] = useState([])
   const [heatmapJson, setHeatmapJson] = useState([])
-  const [heatmapSummaryStatusCode, setHeatmapSummaryStatusCode] = useState({status : 204, loader: true})
+  const [heatmapSummaryStatusCode, setHeatmapSummaryStatusCode] = useState({status : 0, loader: true})
   const filterData = useSelector((data)=>data.dataVisualizationReducer.userDefinedFilter);
   const [watermarkCss, setWatermarkCSS] = useState("")
   const [rangeValue,setRangeValue] = useState(5)
-  const [loader, setLoader] = useState(false)
+  const [loader, setLoader] = useState(true)
   const [genes,setGenes] = useState([])
   const [selectedGene,setSelectedGene] = useState([])
   const [optionChoices,setOptionChoices] = useState([])
@@ -30,7 +30,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   const [viewType, setViewType] = useState('gene_vl')
   const [mainTab,setMainTab] = useState('heatmap')
   const [clusterRange,setClusterRange] = useState("")
-  const [inSufficientData, setInSufficientData] = useState(true)
+  const [inSufficientData, setInSufficientData] = useState(false)
   const [renderNoContent, setRenderNoContent] = useState(false)
   let   { project_id } = useParams();
   const [configVis,setConfigVis] = useState({"colorSpectrumBreaks":[],"colorSpectrum":["navy","firebrick3"]})
@@ -152,8 +152,11 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
           const d = result
           if (d.status === 200) {
             let r_ = d["data"]
-            setHeatmapJson(r_)
-            setHeatmapSummaryStatusCode({status : 200})
+            if(r_){
+              setHeatmapJson(r_)
+              setHeatmapSummaryStatusCode({status : 200})
+            }
+        
           } else {
             setHeatmapJson([])
             setHeatmapSummaryStatusCode({status : 204})
@@ -168,7 +171,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   }, [inputData])
 
   useEffect(() => {
-    if (heatmapJson) {
+    if (heatmapJson?.length > 0) {
       let genes = []
       let unique_sample_values = {}
       let unique_cf = {}
@@ -249,7 +252,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
         }
       }
       let setStateTrue = false
-      
       for (const [key, value] of Object.entries(y)) {
         value.forEach(e=>{
           if(e.length > 0){
@@ -268,7 +270,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
         setLoader(false)
       }, (1000));
     }
-    if(heatmapJson){
+    if(heatmapJson?.length > 0){
       let geneSet = new Set();
       if('data' in heatmapJson){
         heatmapJson.data.forEach(e=>{
@@ -579,18 +581,26 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
         });
     }
   }
+
   useEffect(() => {
-    if (heatmapSummaryStatusCode && heatmapSummaryStatusCode.status === 200) {
-      setRenderNoContent(false)
-      setLoader(false)
-    } else if(heatmapSummaryStatusCode && heatmapSummaryStatusCode.loader === true){
+    if(heatmapSummaryStatusCode && heatmapSummaryStatusCode?.loader && heatmapSummaryStatusCode?.status === 0){
       setLoader(true)
-      setData('')
     }else{
-      setLoader(false)
-      setRenderNoContent(true)
-      setData('')
+      // if (heatmapSummaryStatusCode && heatmapSummaryStatusCode.status === 200) {
+      //   setRenderNoContent(false)
+      //   setLoader(false)
+      // } else{
+      //   setLoader(false)
+      //   setRenderNoContent(true)
+      //   setData('')
+      // }
+      // else if(heatmapSummaryStatusCode && heatmapSummaryStatusCode.loader === true){
+      //   setLoader(true)
+      //   setData('')
+      // }
     }
+    
+    
   }, [heatmapSummaryStatusCode])
   
   const changeSepctrum = (e)=>{
@@ -613,7 +623,7 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
   useEffect(()=>{
     if(configVis){
       
-      setLoader(false)
+      // setLoader(false)
     }
   },[configVis])
 
@@ -799,7 +809,6 @@ export default function DataHeatmap({ width,inputData, screenCapture, brstKeys, 
                 }
               </div>
           </div>
-
           { loader? <LoaderCmp/>:<div>
             {(data_ && (inSufficientData !== true)) && <HeatmapNewCmp settings={configVis}  clinicalFilter={optionChoices} inputData={data_} type={mainTab} watermarkCss={watermarkCss} ref={reference} width={width} />
             }

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useSelector } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import { useParams } from "react-router-dom";
@@ -219,7 +219,7 @@ export const PreDefienedFilters = ({
   volcanoType,
   parentCallback,
   groupFilters,
-}) => { 
+}) => {
   const context = useContext(Context);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   // const [Englishlanguage, setEnglishlanguage] = useState(true);
@@ -236,7 +236,7 @@ export const PreDefienedFilters = ({
     } else {
       setKoreanlanguage(false);
     }
-  },[context]);
+  }, [context]);
   const preDefienedGroups1 = {
     diag_age: [
       { label: "21-35", from: 21, to: 35 },
@@ -410,15 +410,15 @@ export const PreDefienedFilters = ({
 
   const filterTypeDropdownSelection = (event) => {
     let key = event.target.value;
-    if(koreanlanguage){
+    if (koreanlanguage) {
       setSelectedFilterType({
         details: filterChoicesCustomKorean[parseInt(key)],
         index: key,
       });
     }
-    else{
+    else {
       setSelectedFilterType({
-        details:  filterChoicesCustom[parseInt(key)],
+        details: filterChoicesCustom[parseInt(key)],
         index: key,
       });
     }
@@ -518,7 +518,7 @@ export const PreDefienedFilters = ({
             className="w-full lg:p-4 xs:p-2 border xs:text-sm lg:text-lg focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3"
           >
             <option value=""></option>
-            
+
             {koreanlanguage ? filterChoicesCustomKorean.map((type, index) => (
               <option
                 className="lg:text-lg xs:text-sm"
@@ -535,7 +535,7 @@ export const PreDefienedFilters = ({
               >
                 {type.name}
               </option>
-            )) }
+            ))}
           </select>
         )}
         {resetClicked === false && isGroupFilterProp === true && (
@@ -552,7 +552,7 @@ export const PreDefienedFilters = ({
       <div>
         <button
           onClick={submitFilters}
-          className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 xs:w-28 h-20 xs:text-sm text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
+          className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
         >
           <FormattedMessage id="Submit_volcano" defaultMessage="Submit" />
         </button>
@@ -560,7 +560,7 @@ export const PreDefienedFilters = ({
       <div>
         <button
           onClick={resetFilters}
-          className="bg-white hover:bg-gray-700 mb-3 lg:w-80 h-20 xs:w-28 xs:text-sm text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
+          className="bg-white hover:bg-gray-700 mb-3 lg:w-80 sm:w-42 lg:h-20 sm:h-14 xs:text-sm text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
         >
           <FormattedMessage id="Reset_volcano" defaultMessage="Reset" />
         </button>
@@ -600,13 +600,13 @@ const GroupFilters = ({
     } else {
       setKoreanlanguage(false);
     }
-  },[context]);
+  }, [context]);
 
- 
+
 
   if (viz_type === "volcono" || viz_type === "survival") {
-    if(koreanlanguage){
-      
+    if (koreanlanguage) {
+
       filterChoices = [
         {
           type: "number",
@@ -660,9 +660,9 @@ const GroupFilters = ({
         },
       ];
     }
-    else{
+    else {
 
-    
+
       filterChoices = [
         {
           type: "number",
@@ -715,16 +715,16 @@ const GroupFilters = ({
           input: "number",
         },
       ];
-    
+
     }
-    if(koreanlanguage){
+    if (koreanlanguage) {
       preDefienedGroups1["smok_yn"] = [
         { label: "비흡연자", value: "smok_yn||N" },
         { label: "과거 흡연자", value: "smok_yn||Y" },
         { label: "현재 흡연자", value: "smok_curr_yn||Y" },
       ];
     }
-    else{
+    else {
       preDefienedGroups1["smok_yn"] = [
         { label: "No Smoking", value: "smok_yn||N" },
         { label: "Past Smoking", value: "smok_yn||Y" },
@@ -790,20 +790,20 @@ const GroupFilters = ({
   const submitFilters = () => {
     if (isFilterResetHappened) {
       let send_response = true;
-      if(userGivenInputValues['type'] === 'static'){
+      if (userGivenInputValues['type'] === 'static') {
         let final_payload = { ...userGivenInputValues };
-        let total_groups=0;
-        if('group_a' in final_payload){
-            total_groups++;
+        let total_groups = 0;
+        if ('group_a' in final_payload) {
+          total_groups++;
         }
-        if('group_b' in final_payload){
-            total_groups++;
-          }
-          if(total_groups <2){
-            send_response = false;
-          }
+        if ('group_b' in final_payload) {
+          total_groups++;
+        }
+        if (total_groups < 2) {
+          send_response = false;
+        }
       }
-      else{
+      else {
         let min1Value = Number.MAX_VALUE;
         let min2Value = Number.MAX_VALUE;
         let max1Value = Number.MIN_VALUE;
@@ -888,9 +888,9 @@ const GroupFilters = ({
       if (send_response === true) {
         parentCallback(userGivenInputValues);
       }
-    } 
+    }
     else {
-      parentCallback(userGivenInputValues );
+      parentCallback(userGivenInputValues);
     }
   };
 
@@ -925,7 +925,7 @@ const GroupFilters = ({
   const onChangeFilterInput = (e) => {
     if (e.target.type === "number") {
       let id = e.target.name;
-      let ids = id.split("_");      
+      let ids = id.split("_");
       let one_to_0, one_to, one_max_value, one_from_0, one_from, one_min_value;
       if (ids.includes("from")) {
         one_from_0 = e.target;
@@ -983,7 +983,7 @@ const GroupFilters = ({
       }));
     }
   };
- 
+
   useEffect(() => {
     if (groupFilters && Object.keys(groupFilters).length > 0) {
       let filterType = groupFilters.type;
@@ -1223,7 +1223,7 @@ const GroupFilters = ({
                   </div>
                 </div>
               </div>
-              
+
               <div key={`${compCase}-2-${Math.random()}`} className="mb-4">
                 <div>
                   <div className={LabelCss} htmlFor="username">
@@ -1458,7 +1458,7 @@ const GroupFilters = ({
               <tbody key={"group_tbody"}>{tr}</tbody>
             </table>
           );
-        } 
+        }
         else if (viz_type === "survival") {
           let d = preDefienedGroups1[colName];
           let thead = [];
@@ -1567,7 +1567,7 @@ const GroupFilters = ({
         setGroupsCounter((prevState) => prevState + 1);
       }
     }
-  }, [selectedFilterDetails,koreanlanguage]);
+  }, [selectedFilterDetails, koreanlanguage]);
 
   const AppendNewGroup = () => {
     const filterType = selectedFilterDetails.type;
@@ -1605,7 +1605,7 @@ const GroupFilters = ({
         </select>
       </div>
       {userGivenInputValues['type'] === 'number' &&
-      <p className="text-left text-base ml-6">Max and Min Values are based on Clinincal Information File</p>
+        <p className="text-left text-base ml-6">Max and Min Values are based on Clinincal Information File</p>
       }
       {showAddGroupButton && (
         <div onClick={AppendNewGroup} className="p-1 py-3 px-2 col-span-2">
@@ -1621,14 +1621,14 @@ const GroupFilters = ({
 
 
 
-      
+
       {filterSelected && (
         <div>
           <button
             onClick={submitFilters}
-            className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
+            className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
           >
-             <FormattedMessage id="Submit_volcano" defaultMessage="Submit" />
+            <FormattedMessage id="Submit_volcano" defaultMessage="Submit" />
           </button>
         </div>
       )}
@@ -1636,12 +1636,12 @@ const GroupFilters = ({
         <div>
           <button
             onClick={resetFilters}
-            className="bg-white hover:bg-gray-700 mb-3 lg:w-80 sm:w-40 h-20 text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
+            className="bg-white hover:bg-gray-700 mb-3 lg:w-80 sm:w-42 lg:h-20 sm:h-14 xs:text-sm text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
           >
-          <FormattedMessage
-                            id="Reset_volcano"
-                            defaultMessage="Reset"
-                          />
+            <FormattedMessage
+              id="Reset_volcano"
+              defaultMessage="Reset"
+            />
           </button>
         </div>
       )}
@@ -1656,7 +1656,7 @@ export const PreDefienedFiltersSurvival = ({
   groupFilters,
   from,
 }) => {
-  
+
   const [selectedFilterType, setSelectedFilterType] = useState({});
   const [filterGroupsHtml, setFilterGroupsHtml] = useState([]);
   const [filters, setFilters] = useState({});
@@ -1835,7 +1835,7 @@ export const PreDefienedFiltersSurvival = ({
   const filterTypeDropdownSelection = (event) => {
     let key = event.target.value;
     setSelectedFilterType({
-      details: koreanlanguage ? filterChoicesCustomKorean[parseInt(key)]  : filterChoicesCustom[parseInt(key)],
+      details: koreanlanguage ? filterChoicesCustomKorean[parseInt(key)] : filterChoicesCustom[parseInt(key)],
       index: key,
     });
   };
@@ -1944,7 +1944,7 @@ export const PreDefienedFiltersSurvival = ({
                 {type.name}
               </option>
             ))}
-             {koreanlanguage && filterChoicesCustomKorean.map((type, index) => (
+            {koreanlanguage && filterChoicesCustomKorean.map((type, index) => (
               <option className="text-lg" key={type.name} value={index}>
                 {type.name}
               </option>
@@ -1958,7 +1958,7 @@ export const PreDefienedFiltersSurvival = ({
                 return e.name;
               }
             })}
-             { koreanlanguage && filterChoicesCustomKorean.forEach((e) => {
+            {koreanlanguage && filterChoicesCustomKorean.forEach((e) => {
               if (groupFilters.column === e.id) {
                 return e.name;
               }
@@ -1969,16 +1969,19 @@ export const PreDefienedFiltersSurvival = ({
       <div className="p-1 py-3 px-2 col-span-2">{filterGroupsHtml}</div>
       <div>
         <button
-          onClick={submitFilters}
-          className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 lg:h-20 sm:h-14 xs:text-sm text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
+          onClick={() => submitFilters}
+          className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
         >
-          <FormattedMessage id="Submit_volcano" defaultMessage="Submit" />
+          <FormattedMessage
+            id="Submit_volcano"
+            defaultMessage="Submit"
+          />
         </button>
       </div>
       <div>
         <button
           onClick={resetFilters}
-          className="bg-white hover:bg-gray-700 mb-3 lg:w-80 sm:w-42 lg:h-20 sm:h-14 xs:text-sm text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
+          className="bg-white hover:bg-gray-700 mb-3 lg:w-80 sm:w-42 lg:h-20 sm:h-14 xs:text-sm text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
         >
           <FormattedMessage id="Reset_volcano" defaultMessage="Reset" />
         </button>
@@ -2013,8 +2016,8 @@ export const UserDefinedGroupFilters = ({
   const [multipleInputs, setMultipleInputs] = useState({});
   const [filterType, setFilterType] = useState("transcriptome");
   const [selectDefaultValue, setSelectDefaultValue] = useState("0");
-  const [preDefienedGroups1, setPreDefienedGroups1] =useState({}) ;
-  const [filterChoices, setFilterChoices] = useState([]); 
+  const [preDefienedGroups1, setPreDefienedGroups1] = useState({});
+  const [filterChoices, setFilterChoices] = useState([]);
   let { project_id } = useParams();
 
   useEffect(() => {
@@ -2034,8 +2037,7 @@ export const UserDefinedGroupFilters = ({
               };
               let group_a = { label: `${colsobj[i][j]['min']}-${colsobj[i][j]['max']}`, from: colsobj[i][j]['min'], to: colsobj[i][j]['max'] }
               let group_b = { label: `${colsobj[i][j]['min']}-${colsobj[i][j]['max']}`, from: colsobj[i][j]['min'], to: colsobj[i][j]['max'] }
-              if(!preDefienedGroups1[colsobj[i][j]["name"]])
-              {
+              if (!preDefienedGroups1[colsobj[i][j]["name"]]) {
                 preDefienedGroups1[colsobj[i][j]["name"]] = [];
               }
               preDefienedGroups1[colsobj[i][j]["name"]].push(group_a)
@@ -2049,15 +2051,14 @@ export const UserDefinedGroupFilters = ({
                 input: "number",
               };
               let labelIndex = colsobj[i][j]["id"].lastIndexOf('_')
-              let label_ = colsobj[i][j]["id"].substring(labelIndex+1)
+              let label_ = colsobj[i][j]["id"].substring(labelIndex + 1)
               let group = {
                 label: label_,
                 from: colsobj[i][j]["value"],
                 to: colsobj[i][j]["value"],
                 value: colsobj[i][j]["value"],
               };
-              if(!preDefienedGroups1[colsobj[i][j]["name"]])
-              {
+              if (!preDefienedGroups1[colsobj[i][j]["name"]]) {
                 preDefienedGroups1[colsobj[i][j]["name"]] = [];
               }
               preDefienedGroups1[colsobj[i][j]["name"]].push(group)
@@ -2066,11 +2067,11 @@ export const UserDefinedGroupFilters = ({
           }
         }
         const uniqueFilterChoices = [...new Map(filterChoices.map(v => [v.id, v])).values()]
-       setFilterChoices(uniqueFilterChoices) 
-       setPreDefienedGroups1(preDefienedGroups1)
+        setFilterChoices(uniqueFilterChoices)
+        setPreDefienedGroups1(preDefienedGroups1)
       }
     }
-  },[userDefinedFilter]);
+  }, [userDefinedFilter]);
 
   useEffect(() => {
     if (volcanoType !== filterType) {
@@ -2787,7 +2788,7 @@ export const UserDefinedGroupFilters = ({
         </select>
       </div>
       {userGivenInputValues['type'] === 'number' &&
-      <p className="text-left text-base ml-6">Max and Min Values are based on Clinincal Information File</p>
+        <p className="text-left text-base ml-6">Max and Min Values are based on Clinincal Information File</p>
       }
       {showAddGroupButton && (
         <div onClick={AppendNewGroup} className="p-1 py-3 px-2 col-span-2">
@@ -2803,12 +2804,12 @@ export const UserDefinedGroupFilters = ({
         <div>
           <button
             onClick={submitFilters}
-            className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
+            className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
           >
-             <FormattedMessage
-                            id="Submit_volcano"
-                            defaultMessage="Submit"
-                          />
+            <FormattedMessage
+              id="Submit_volcano"
+              defaultMessage="Submit"
+            />
           </button>
         </div>
       )}
@@ -2816,12 +2817,12 @@ export const UserDefinedGroupFilters = ({
         <div>
           <button
             onClick={resetFilters}
-            className="bg-white hover:bg-gray-700 mb-3 lg:w-80 sm:w-40 h-20 text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
+            className="bg-white hover:bg-gray-700 mb-3 lg:w-80 sm:w-42 lg:h-20 sm:h-14 xs:text-sm text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
           >
             <FormattedMessage
-                            id="Reset_volcano"
-                            defaultMessage="Reset"
-                          />
+              id="Reset_volcano"
+              defaultMessage="Reset"
+            />
           </button>
         </div>
       )}

@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import * as Circos from 'circos';
 import cytobands from './cytobands.csv'
 import placeholder from '../../assets/images/circosImage.png'
+import { XCircleIcon } from '@heroicons/react/solid';
 
 
 const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, selectedGenes }, ref) => {
@@ -12,6 +13,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
   })
   const selectedGeneColor = "#000"
   const [state, setState] = useState({"cytobands":[],'genes':[],'GRCh37':[]});
+  const [openModal , setOpenModal] = useState(false)
   // const [loader, setLoader] = useState(false)
 
   const staticPositionValues =  {
@@ -526,14 +528,39 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
 
   return (
     <div className="grid grid-cols-12">
-      <div className="col-span-9 p-5">
+      <div className="col-span-10 p-5">
         <div ref={ref} className={`circos block ${watermarkCss}`} id='circos'></div>
       </div>
-      <div className="col-span-3 pl-8">
-        <img alt='placeholder' src={placeholder} width='400' className="mt-10 object-contain h-2/5"/>
+      <div className="col-span-2 pl-8">
+        <span onClick = {() =>{
+          setOpenModal(true)
+        }}>
+             <img alt='placeholder' src={placeholder} width='150' className="mt-10 object-contain h-2/5"/>
+        </span>
       </div>
+       {openModal && <ModalComponent setOpenModal = {(data) => setOpenModal(data) }/>}
     </div>
+    
   )
 })
 
 export default CircosCmp
+
+
+export const ModalComponent = ({setOpenModal}) =>{
+  return(
+    <div className='overflow-y-scroll fixed inset-0 bg-gray-600 bg-opacity-50 h-full  z-50'>
+        <div className = 'flex items-center justify-center h-screen'> 
+             <div className = 'border shadow-lg rounded-md bg-white text-left flex flex-col'>
+              <div className='flex justify-end'>
+                  <XCircleIcon className='h-10 w-10' onClick={() => setOpenModal(false)}/>
+              </div>
+              <div>
+                  <img alt='placeholder' src={placeholder}  className="mt-10 object-contain h-2/5"/>
+              </div>
+             </div>
+          </div>
+      </div>
+  )
+}
+
