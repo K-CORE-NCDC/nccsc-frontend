@@ -14,9 +14,9 @@ import LoaderCmp from "../../Common/Loader";
 import { FormattedMessage } from "react-intl";
 import inputJson from "../../Common/data";
 const selectedCss =
-  "w-1/2 rounded-r-none  hover:scale-110 xs:h-14 xs:text-sm focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition";
+  "w-1/2 rounded-r-none  hover:scale-110 focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md";
 const nonSelectedCss =
-  "w-1/2 rounded-l-none border-l-0 xs:h-14 xs:text-sm hover:scale-110 focus:outline-none flex justify-center p-5 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 text-teal-700 border duration-200 ease-in-out border-teal-600 transition";
+  "w-1/2 rounded-l-none  hover:scale-110 focus:outline-none flex justify-center p-5 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 text-teal-700 border duration-200 ease-in-out border-teal-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md";
 
 export default function DataSurvival({
   width,
@@ -759,7 +759,7 @@ export default function DataSurvival({
                       <div>
                         <button
                           onClick={submitFitersAndFetchData}
-                          className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 xs:w-32 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
+                          className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
                         >
                           <FormattedMessage
                             id="Submit_volcano"
@@ -768,7 +768,7 @@ export default function DataSurvival({
                         </button>
                       </div>
                       <div>
-                        <button className="bg-white hover:bg-gray-700 mb-3 w-80 h-20 xs:w-20 lg:w-80 xs:w-32 text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded">
+                        <button className="bg-white hover:bg-gray-700 mb-3 lg:w-80 sm:w-42 lg:h-20 sm:h-14 xs:text-sm text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md">
                           <FormattedMessage
                             id="Reset_volcano"
                             defaultMessage="Reset"
@@ -848,10 +848,10 @@ export default function DataSurvival({
                           />
                           </button>
                         </div>
-                        <div className="flex flex-row gap-5">
+                        <div className="flex flex-row gap-5 py-2">
                           <button
                             onClick={(e) => submitCox(e, "cox")}
-                            className="w-full mt-5 rounded-r-none  hover:scale-110 xs:h-14 xs:text-sm focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition"
+                            className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
                           >
                             <FormattedMessage
                             id="Submit_volcano"
