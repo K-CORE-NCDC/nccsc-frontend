@@ -36,7 +36,7 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
   },[inputData])
 
   useEffect(()=>{
-    if(igvJson){
+    if(igvJson && loader){
       setTimeout(function() {
           setLoader(false)
       }, (1000));
