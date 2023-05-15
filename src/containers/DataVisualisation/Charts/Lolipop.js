@@ -28,6 +28,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   const [refSeqId, setRefSeqId] = useState([])
   const [showLollipop, setShowLollipop] = useState(false)
   const [noContent, setNoContent] = useState(true)
+  const [noGeneData , setNoGeneData] = useState(true)
   const [percentage, setPercentage] = useState("")
   const [alltabList, setAllTabList] = useState({}); 
   let { project_id } = useParams();
@@ -145,8 +146,11 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
           setLolipopJson({ data: [], domains: [], status: 204 })
           history.push('/notfound')
         });
+        setNoGeneData(false)
       }
       setTableType(tableType)
+    }else{
+      setNoGeneData(true)
     }
   }, [inputState])
 
@@ -194,11 +198,8 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                 unique_sample.push(data[i].sample)
               }
               if (data[i]['protein']) {
-                console.log(data[i]['protein']);
                 let protein = data[i]['protein'].replace(/[^\d]/g, '');
-                console.log(protein);
                 let p_vc = protein + "||" + data[i]['variant_classification']
-                console.log(p_vc);
                 if (p_vc in lollipopTmp) {
                   lollipopTmp[p_vc].push(data[i]['sample'] + "||" + data[i]['protein'])
                 } else {
@@ -210,7 +211,6 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                 "protein": data[i]['protein'],
                 "variant_classification": data[i]['variant_classification']
               })
-              console.log(table_data);
               refseq_id.push(data[i]['refseq_mrna_id'])
               enst_id.push(data[i]['annotation_transcript'])
 
@@ -586,6 +586,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
               </>
             </Fragment>
           }
+              {noGeneData && <p><FormattedMessage id="PleaseSelecttheGeneSetData" defaultMessage="Please Select the Gene Set Data" /></p>}
          
         </div>
     }
