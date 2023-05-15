@@ -23,6 +23,7 @@ import {
 } from "../../actions/api_actions";
 import { Link } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
+import { set } from "d3-collection";
 
 export default function DataVisualization() {
   const context = useContext(Context);
@@ -55,6 +56,18 @@ export default function DataVisualization() {
   const [availableTabsForProject, setavailableTabsForProject] = useState([]);
   const [toggle, setToggle] = useState(true);
   const [filterApplied, setfilterApplied] = useState(false);
+  const mandatory_fields = {
+    "circos":['dna_mutation','rna_expression','methylation','proteome','fusion'],
+    "oncoprint":['dna_mutation','rna'],
+    "survival":['normal','dna_mutation','proteome','rna','clinical_information'],
+    "lollypop":['mutation','phospo'],
+    "volcano":['all','clinical_information'],
+    "heatmap":['rna','methylation','proteome','phospo'],
+    "igv":['all'],
+    "scatter":['scatter'],
+    "box":['proteome','all'],
+    "fusion":['fusion','clinical_information']
+}
   const [screenCaptureConfirmation, setScreenCaptureConfirmation] =
     useState(false);  
   const setToFalseAfterScreenCapture = (param = false) => {
@@ -132,11 +145,10 @@ export default function DataVisualization() {
       type: val_,
     }));
   };
-
+ 
   useEffect(() => {
     if (project_id !== undefined) {
       let projectAvailableSteps = undefined;
-      
       if(userProjectDetails && 'key' in  userProjectDetails &&  userProjectDetails.key === 'NotFound'){
         console.log('userProjectDetails',userProjectDetails);
         history.push('/notfound')
@@ -149,8 +161,12 @@ export default function DataVisualization() {
       if (projectAvailableSteps === undefined) {
         dispatch(getUserDataProjectsTableData(project_id));
       } else {
+        console.log('->',projectAvailableSteps);
         Object.keys(projectAvailableSteps).forEach((stepName) => {
-          if (projectAvailableSteps[stepName].length > 0) {
+          console.log('+',projectAvailableSteps[stepName]);
+          console.log('=',projectAvailableSteps[stepName].length,(JSON.stringify(projectAvailableSteps[stepName].sort()) === JSON.stringify(mandatory_fields[stepName].sort())) );
+          if (projectAvailableSteps[stepName].length > 0 && 
+            JSON.stringify(projectAvailableSteps[stepName].sort()) === JSON.stringify(mandatory_fields[stepName].sort())) {
             if (stepName === "lollypop") {
               tabList.push("lollipop");
             } else if (stepName === "oncoprint") {
@@ -165,6 +181,7 @@ export default function DataVisualization() {
           }
         });
       }
+      console.log('->',tabList);
       setavailableTabsForProject(tabList);
     }
   

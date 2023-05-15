@@ -575,6 +575,7 @@ const GroupFilters = ({
   parentCallback,
   groupFilters,
   viz_type,
+  survivalModel
 }) => {
   const clinicalMaxMinInfo = useSelector(
     (data) => data.dataVisualizationReducer.clinicalMaxMinInfo
@@ -603,6 +604,9 @@ const GroupFilters = ({
   }, [context]);
 
 
+  useEffect(()=>{
+    resetFilters()
+  },[survivalModel])
 
   if (viz_type === "volcono" || viz_type === "survival") {
     if (koreanlanguage) {
@@ -1655,6 +1659,7 @@ export const PreDefienedFiltersSurvival = ({
   parentCallback,
   groupFilters,
   from,
+  survivalModel
 }) => {
 
   const [selectedFilterType, setSelectedFilterType] = useState({});
@@ -1676,6 +1681,10 @@ export const PreDefienedFiltersSurvival = ({
       setEnglishlanguage(true);
     }
   });
+
+  useEffect(()=>{
+    resetFilters()
+  },[survivalModel])
 
   let preDefienedGroups1 = {
     diag_age: [
@@ -1969,7 +1978,7 @@ export const PreDefienedFiltersSurvival = ({
       <div className="p-1 py-3 px-2 col-span-2">{filterGroupsHtml}</div>
       <div>
         <button
-          onClick={() => submitFilters}
+          onClick={() => submitFilters()}
           className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
         >
           <FormattedMessage
@@ -1980,7 +1989,7 @@ export const PreDefienedFiltersSurvival = ({
       </div>
       <div>
         <button
-          onClick={resetFilters}
+          onClick={() => resetFilters()}
           className="bg-white hover:bg-gray-700 mb-3 lg:w-80 sm:w-42 lg:h-20 sm:h-14 xs:text-sm text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
         >
           <FormattedMessage id="Reset_volcano" defaultMessage="Reset" />

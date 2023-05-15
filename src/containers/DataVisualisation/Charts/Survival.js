@@ -57,7 +57,7 @@ export default function DataSurvival({
     },[tabList])
 
   const [coxUserDefinedFilter, setCoxUserDefinedFilter] = useState({})
-  const [survivalModel, setSurvivalModel] = useState("kaplan");
+  const [survivalModel, setSurvivalModel] = useState("recurrence");
   const [pValueData, setPvalueData] = useState("");
   const smallScreen = false
   const [coxTable, setCoxTable] = useState([]);
@@ -76,7 +76,7 @@ export default function DataSurvival({
   },[userDefinedFilterColumns])
 
   useEffect(()=>{
-  if (survivalModel === "cox" && project_id !== undefined){
+    if (survivalModel === "cox" && project_id !== undefined){
     let tmpe ={}
     if (coxUserDefinedFilter && Object.keys(coxUserDefinedFilter).length > 0) {
       for (const a in coxUserDefinedFilter){
@@ -233,7 +233,7 @@ export default function DataSurvival({
     setTimeout(function () {
       setLoader(false);
     }, 1000);
-    if (survivalModel === "kaplan") {
+    if (survivalModel === "recurrence") {
       if (survivalJson && survivalJson.sample_counts) {
         const sampleCountsObject = survivalJson.sample_counts;
         let totalCount = 0;
@@ -281,7 +281,8 @@ export default function DataSurvival({
           ]);
         }
       }
-    } else if (survivalModel === "cox") {
+    }
+     else if (survivalModel === "cox") {
       let inputDataJson = {};
       if (project_id){
         if (coxUserDefinedFilter && Object.keys(coxUserDefinedFilter).length > 0) {
@@ -528,13 +529,24 @@ export default function DataSurvival({
             <div className="flex flex-row">
               <button
                 onClick={(e) => {
-                  survivalModelFun(e, "kaplan");
+                  survivalModelFun(e, "recurrence");
                 }}
                 className={
-                  survivalModel === "kaplan" ? selectedCss : nonSelectedCss
+                  survivalModel === "recurrence" ? selectedCss : nonSelectedCss
                 }
               >
-                Kaplan-Meier
+                Recurrence
+              </button>
+
+              <button
+                onClick={(e) => {
+                  survivalModelFun(e, "survival");
+                }}
+                className={
+                  survivalModel === "survival" ? selectedCss : nonSelectedCss
+                }
+              >
+                Survival
               </button>
               <button
                 onClick={(e) => {
@@ -547,7 +559,10 @@ export default function DataSurvival({
                 Cox Regression
               </button>
             </div>
-            {survivalModel === "kaplan" && (
+
+
+
+            {(survivalModel === "recurrence" || survivalModel === "survival" ) && (
               <>
                 <div
                   className={`flex flex-col border bg-white  ${
@@ -668,6 +683,8 @@ export default function DataSurvival({
                       </select>
                     </div>
                   )}
+
+
                   {filterTypeButton === "omics" && (
                     <div className="m-1 p-1">
                       <h6
@@ -735,6 +752,7 @@ export default function DataSurvival({
                         type="survival"
                         parentCallback={updateGroupFilters}
                         groupFilters={groupFilters}
+                        survivalModel = {survivalModel}
                       />
                     )}
                   {filterTypeButton === "clinical" &&
@@ -744,6 +762,7 @@ export default function DataSurvival({
                         viz_type="survival"
                         parentCallback={updateGroupFilters}
                         groupFilters={groupFilters}
+                        survivalModel = {survivalModel}
                       />
                     )}
                   {filterTypeButton === "clinical" &&
@@ -752,6 +771,7 @@ export default function DataSurvival({
                         viz_type="survival"
                         parentCallback={updateGroupFilters}
                         groupFilters={groupFilters}
+                        survivalModel = {survivalModel}
                       />
                     )}
                   {filterTypeButton === "omics" && (
@@ -780,6 +800,7 @@ export default function DataSurvival({
                 </div>
               </>
             )}
+
             {survivalModel === "cox" && (
               <>
                 <div
@@ -868,7 +889,7 @@ export default function DataSurvival({
           </div>
           
           <div className="col-span-5">
-            {renderSurvival && survivalModel === "kaplan" && (
+            {renderSurvival && (survivalModel === "recurrence" || survivalModel === "survival")  && (
               <SurvivalCmp
                 watermarkCss={watermarkCss}
                 ref={reference}

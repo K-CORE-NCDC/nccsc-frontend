@@ -61,14 +61,19 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
   const clinicalUpdateFileTypeOnChange = (e) => {
     let divName = e.target.name;
     let divValue = e.target.value;
-    if(responseData && 'clinical_information' in responseData && 'types' in responseData['clinical_information'] && ('sample_id' in responseData['clinical_information']['types'] === false || 'rlps_yn' in  responseData['clinical_information']['types'] === false  || 'rlps_cnfr_drtn' in  responseData['clinical_information']['types'] === false)){
+    if(responseData && 'clinical_information' in responseData && 'types' in responseData['clinical_information'] && 
+      ('sample_id' in responseData['clinical_information']['types'] === false || 'rlps_yn' in  responseData['clinical_information']['types'] === false || 
+      'rlps_cnfr_drtn' in  responseData['clinical_information']['types'] === false || 'death_yn' in  responseData['clinical_information']['types'] === false ||
+      'death_cnfr_drtn' in  responseData['clinical_information']['types'] === false )){
       let tempresponseData = { ...responseData };
           tempresponseData[activeTableKey]["types"]["sample_id"] = 'character';
           tempresponseData[activeTableKey]["types"]["rlps_yn"] = 'yesorno';
           tempresponseData[activeTableKey]["types"]["rlps_cnfr_drtn"] = 'decimal';
+          tempresponseData[activeTableKey]["types"]["death_yn"] = 'yesorno';
+          tempresponseData[activeTableKey]["types"]["death_cnfr_drtn"] = 'decimal';
           setResponseData(tempresponseData);
     }
-    if(divName === 'sample_id' || divName === 'rlps_yn' || divName === 'rlps_cnfr_drtn'){
+    if(divName === 'sample_id' || divName === 'rlps_yn' || divName === 'rlps_cnfr_drtn' || divName === 'death_yn' || divName === 'death_cnfr_drtn'){
 
           if(defaultClinicalInformationColumns[divName] === divValue ){
             let tempresponseData = { ...responseData };
@@ -121,7 +126,7 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
       setClinincalFilterColumns(tmp);
       let tempresponseData = { ...responseData };
 
-      if(divName !== 'sample_id' && divName !== 'rlps_yn' && divName !== 'rlps_cnfr_drtn'){
+      if(divName !== 'sample_id' && divName !== 'rlps_yn' && divName !== 'rlps_cnfr_drtn' && divName !== 'death_yn' && divName !== 'death_cnfr_drtn'){
         if (tempresponseData[activeTableKey]) {
           tempresponseData[activeTableKey]["types"][divName] = divValue;
       } else {
@@ -140,6 +145,7 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
   };
 
   const sendColumnsData = (columnsData, totalFiles) => {
+
     let verifyClinincalInformationColumns = () => {
       if (
         clinicalfileresponse &&
@@ -149,13 +155,15 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
         let total_columns;
         let send_c = true
         total_columns = 0
+        if (columnsData && 'clinical_information' in columnsData){
+
           for (let i = 0; i < clinicalfileresponse["res"].length; i++) {
-          if (
+            if (
             clinicalfileresponse["res"][i]["tab"] === "clinical_information"
-          ) {
-            total_columns = clinicalfileresponse["res"][i]["columns"].length;
+            ) {
+              total_columns = clinicalfileresponse["res"][i]["columns"].length;
+            }
           }
-        }
         for (let i = 0; i < clinicalfileresponse["res"].length; i++) {
           if (clinicalfileresponse["res"][i]["tab"] === "clinical_information") 
           {
@@ -169,9 +177,17 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
             }
           }
         }
+        
         if(send_c && Object.keys(columnsData['clinical_information']['types']).length  === total_columns ){
           return true
         }
+        else{
+          return false
+        }
+      }
+      else{
+        return true
+      }
       }
     };
     if (
@@ -332,7 +348,8 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
                     <select
                       onChange={clinicalUpdateFileTypeOnChange}
                       name={obj.title}
-                      defaultValue={(obj.id === 'rlps_yn') ? 'yesorno': (obj.id === 'rlps_cnfr_drtn') ? 'decimal': (obj.id === 'sample_id') ? 'character' : '' }
+                      defaultValue={(obj.id === 'rlps_yn') ? 'yesorno': (obj.id === 'rlps_cnfr_drtn') ? 'decimal': (obj.id === 'sample_id') ? 'character' :
+                      (obj.id === 'death_yn') ? 'yesorno': (obj.id === 'death_cnfr_drtn') ? 'decimal': ''}
                       className="select-color w-48 p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3"
                     >
                       {Object.keys(obj.options).map((type) => (

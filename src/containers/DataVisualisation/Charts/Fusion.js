@@ -137,6 +137,21 @@ export default function FusionPlot({
       sortable: true,
     },
     {
+      name:<FormattedMessage id="JunctionReadCount" defaultMessage = "Junction Read Count" />,
+      selector: (row) => row.junction_read_count ? row.junction_read_count : 0,
+      sortable: true,
+    },
+    {
+      name:<FormattedMessage id="SpanningFragCount" defaultMessage = "Spanning Frag Count" />,
+      selector: (row) => row.spanning_frag_count ? row.spanning_frag_count : 0,
+      sortable: true,
+    },
+    {
+      name:<FormattedMessage id="SpliceType" defaultMessage = "Splice Type" />,
+      selector: (row) => row.splice_type ? row.splice_type : 'None',
+      sortable: true,
+    },
+    {
       button: true,
       cell: (row, index, column, id) => {
         return (
