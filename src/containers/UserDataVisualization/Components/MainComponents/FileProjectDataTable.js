@@ -93,7 +93,7 @@ function FileProjectDataTable({ updateComponentNumber }) {
   const [colData, setColData] = useState([]);
   const [tableNavTabs, setTableNavTabs] = useState([]);
   const [projectId, setProjectId] = useState(0);
-  const [activeTableKey, setActiveTableKey] = useState("clinical_information");
+  const [activeTableKey, setActiveTableKey] = useState("");
   const [navTabIs, setNavTabIs] = useState('circos')
   const [showModal, setShowModal] = useState(false)
   let history = useHistory();

@@ -575,6 +575,7 @@ const GroupFilters = ({
   parentCallback,
   groupFilters,
   viz_type,
+  survivalModel
 }) => {
   const clinicalMaxMinInfo = useSelector(
     (data) => data.dataVisualizationReducer.clinicalMaxMinInfo
@@ -603,6 +604,9 @@ const GroupFilters = ({
   }, [context]);
 
 
+  useEffect(()=>{
+    resetFilters()
+  },[survivalModel])
 
   if (viz_type === "volcono" || viz_type === "survival") {
     if (koreanlanguage) {
@@ -1655,6 +1659,7 @@ export const PreDefienedFiltersSurvival = ({
   parentCallback,
   groupFilters,
   from,
+  survivalModel
 }) => {
 
   const [selectedFilterType, setSelectedFilterType] = useState({});
@@ -1676,6 +1681,10 @@ export const PreDefienedFiltersSurvival = ({
       setEnglishlanguage(true);
     }
   });
+
+  useEffect(()=>{
+    resetFilters()
+  },[survivalModel])
 
   let preDefienedGroups1 = {
     diag_age: [
