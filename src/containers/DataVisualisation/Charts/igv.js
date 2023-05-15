@@ -5,6 +5,7 @@ import { IGV } from '../../../actions/api_actions'
 import NoContentMessage from '../../Common/NoContentComponent'
 import { exportComponentAsPNG } from 'react-component-export-image';
 import { useHistory } from "react-router-dom";
+import { FormattedMessage } from 'react-intl';
 
 export default function DataIgv({ width,inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
@@ -93,7 +94,7 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
               <h3><strong className="xs:text-sm sm:text-xl lg:text-2xl">Loss (&lt;=1)</strong></h3>
             </div>
           </div>
-          {selectGenemsg && <p>Please select Gene Set Data</p>}
+          {selectGenemsg && <p className='py-3'><FormattedMessage id="PleaseSelecttheGeneSetData" defaultMessage="Please Select the Gene Set Data" /></p>}
         {activeCmp === true && <NoContentMessage />}
           {igvJson && <Igv watermarkCss={watermarkCss} ref={reference} data={igvJson}/>}
           </>

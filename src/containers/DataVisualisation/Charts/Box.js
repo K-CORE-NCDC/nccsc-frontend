@@ -28,6 +28,7 @@ export default function Box({
   const [gene, setGene] = useState("");
   const [genes, setGenes] = useState("");
   const [boxJson, setboxJson] = useState(null)
+  const [noGeneData, setNoGeneData] = useState(true)
 
   useEffect(() => {
     if (inputData && "genes" in inputData) {
@@ -104,6 +105,9 @@ export default function Box({
         dataJson["table_type"] = tableType;
         dataJson["view"] = viewType;
         dispatchActionCommon(dataJson);
+        setNoGeneData(false)
+      } else {
+        setNoGeneData(true)
       }
     }
   }, [inputState]);
@@ -153,8 +157,8 @@ export default function Box({
         setNoContent(true);
         setLoader(false)
       }
-     
-    } 
+
+    }
 
   }, [boxJson]);
 
@@ -395,6 +399,8 @@ export default function Box({
           </>
         )
       )}
+      {noGeneData && <p className='py-3'><FormattedMessage id="PleaseSelecttheGeneSetData" defaultMessage="Please Select the Gene Set Data" /></p>}
+
     </div>
   );
 }
