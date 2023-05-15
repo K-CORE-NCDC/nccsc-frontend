@@ -15,19 +15,20 @@ export default function Box({
   setToFalseAfterScreenCapture,
 }) {
   const reference = useRef();
-  
+
   const [watermarkCss, setWatermarkCSS] = useState("");
   const [loader, setLoader] = useState(false);
   const [inputState, setInputState] = useState({});
   const [genesHtml, setGenesHtml] = useState([]);
   const [selectedValue, setSelectedValue] = useState([]);
   const [showBoxPlot, setShowBoxPlot] = useState(false);
-  const [noContent, setNoContent] = useState(true);
+  const [noContent, setNoContent] = useState(false);
   const [viewType, setViewType] = useState("gene_vl");
   const [tableType, setTableType] = useState("proteome");
   const [gene, setGene] = useState("");
   const [genes, setGenes] = useState("");
-  const [boxJson, setboxJson] = useState({})
+  const [boxJson, setboxJson] = useState(null)
+  const [noGeneData, setNoGeneData] = useState(true)
 
   useEffect(() => {
     if (inputData && "genes" in inputData) {
@@ -39,34 +40,35 @@ export default function Box({
 
   const dispatchActionCommon = (postJsonBody) => {
     if (postJsonBody.table_type === "proteome") {
-      let return_data = BoxInformation('POST',postJsonBody)
-        return_data.then((result) => {
-          const d = result
-          if (d.status === 200) {
-            let r_ = d["data"]
-            r_["status"] = 200
-            setboxJson(r_)
-          } else {
-            setboxJson({'status':204})
-          }
-        })
+      setLoader(true)
+      let return_data = BoxInformation('POST', postJsonBody)
+      return_data.then((result) => {
+        const d = result
+        if (d.status === 200) {
+          let r_ = d["data"]
+          r_["status"] = 200
+          setboxJson(r_)
+        } else {
+          setboxJson({ 'status': 204 })
+        }
+      })
         .catch((e) => {
-          setboxJson({'status':204})
+          setboxJson({ 'status': 204 })
         });
     } else {
-      let return_data = BoxInformation('POST',postJsonBody)
-        return_data.then((result) => {
-          const d = result
-          if (d.status === 200) {
-            let r_ = d["data"]
-            r_["status"] = 200
-            setboxJson(r_)
-          } else {
-            setboxJson({'status':204})
-          }
-        })
+      let return_data = BoxInformation('POST', postJsonBody)
+      return_data.then((result) => {
+        const d = result
+        if (d.status === 200) {
+          let r_ = d["data"]
+          r_["status"] = 200
+          setboxJson(r_)
+        } else {
+          setboxJson({ 'status': 204 })
+        }
+      })
         .catch((e) => {
-          setboxJson({'status':204})
+          setboxJson({ 'status': 204 })
         });
     }
   };
@@ -103,25 +105,28 @@ export default function Box({
         dataJson["table_type"] = tableType;
         dataJson["view"] = viewType;
         dispatchActionCommon(dataJson);
+        setNoGeneData(false)
+      } else {
+        setNoGeneData(true)
       }
     }
   }, [inputState]);
 
-let takeScreenshot = async()=>{
-  const element = document.getElementById('box2')
-  let imgData 
-  await html2canvas(element).then(canvas => {
-     imgData = canvas.toDataURL('image/jpeg',1.0);
+  let takeScreenshot = async () => {
+    const element = document.getElementById('box2')
+    let imgData
+    await html2canvas(element).then(canvas => {
+      imgData = canvas.toDataURL('image/jpeg', 1.0);
 
-});
-  let link = document.createElement('a');
-  link.href = imgData;
-  link.download = 'downloaded-image.jpg';
+    });
+    let link = document.createElement('a');
+    link.href = imgData;
+    link.download = 'downloaded-image.jpg';
 
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 
   useEffect(() => {
     if (screenCapture) {
@@ -135,20 +140,26 @@ let takeScreenshot = async()=>{
     }
   }, [screenCapture, watermarkCss]);
 
-  useEffect(() => {
-    setTimeout(function () {
-      setLoader(false);
-    }, 1000);
-  }, [boxJson]);
+  // useEffect(() => {
+  //   setTimeout(function () {
+  //     setLoader(false);
+  //   }, 1000);
+  // }, [boxJson]);
 
   useEffect(() => {
-    if (boxJson && boxJson.status === 200) {
-      setShowBoxPlot(true);
-      setNoContent(false);
-    } else {
-      setShowBoxPlot(false);
-      setNoContent(true);
+    if (boxJson) {
+      if (boxJson.status === 200) {
+        setShowBoxPlot(true);
+        setNoContent(false);
+        setLoader(false)
+      } else {
+        setShowBoxPlot(false);
+        setNoContent(true);
+        setLoader(false)
+      }
+
     }
+
   }, [boxJson]);
 
   const loadGenesDropdown = (genes) => {
@@ -287,18 +298,18 @@ let takeScreenshot = async()=>{
             <button
               onClick={(e) => changeType(e, "proteome")}
               name="type"
-              className="rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 sm:p-2 lg:px-10 md:px-10 sm:px-8 sm:w-48 md:w-56  lg:w-56 sm:text-xl lg:text-2xl sm:h-20 lg:h-24 rounded
+              className="rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 sm:p-2 xl:py-7 lg:px-10 md:px-10 sm:px-8 sm:w-48 md:w-56  lg:w-56 xl:w-80 sm:text-xl lg:text-2xl sm:h-20 lg:h-24 rounded
               font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 ease-in-out transition xs:p-3 xs:text-sm"
             >
-             <FormattedMessage id="TumorVsNormal" defaultMessage = "Tumor Vs Normal" />
+              <FormattedMessage id="TumorVsNormal" defaultMessage="Tumor Vs Normal" />
             </button>
             <button
               onClick={(e) => changeType(e, "mutation")}
               name="type"
-              className="rounded-l-none  hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-2 sm:w-40 md:w-48 lg:w-56 sm:text-xl lg:text-2xl sm:h-20 lg:h-24 rounded font-bold cursor-pointer hover:bg-teal-200
+              className="rounded-l-none  hover:scale-110 focus:outline-none flex justify-center xl:py-7  lg:p-5 sm:p-2 sm:w-40 md:w-48 lg:w-56 sm:text-xl lg:text-2xl sm:h-20 lg:h-24 rounded font-bold cursor-pointer hover:bg-teal-200
               bg-teal-100 border duration-200 ease-in-out border-teal-600 transition px-10 xs:p-3 xs:text-sm"
             >
-              <FormattedMessage id="VariantType" defaultMessage = "Variant Type" />
+              <FormattedMessage id="VariantType" defaultMessage="Variant Type" />
             </button>
           </div>
         </div>
@@ -372,7 +383,7 @@ let takeScreenshot = async()=>{
       ) : (
         boxJson && (
           <>
-          {tableType && <p className="text-left ml-8 my-8">{tableType === 'proteome' ? <FormattedMessage id="BoxTvNDesc" defaultMessage="Proteome expression of Tumor samples vs Normal samples" />:<FormattedMessage id="BoxVariantDesc" defaultMessage="Proteome expression by variant type number (Missense mutation, Nonsense mutation, Splice site, Frame-shift insertion, Frame-shift deletion, In-frame insertion, In-frame deletion" /> }</p> }
+            {tableType && <p className="text-left ml-8 my-8">{tableType === 'proteome' ? <FormattedMessage id="BoxTvNDesc" defaultMessage="Proteome expression of Tumor samples vs Normal samples" /> : <FormattedMessage id="BoxVariantDesc" defaultMessage="Proteome expression by variant type number (Missense mutation, Nonsense mutation, Splice site, Frame-shift insertion, Frame-shift deletion, In-frame insertion, In-frame deletion" />}</p>}
             {showBoxPlot && (
               <BoxPlot
                 view_type={viewType}
@@ -388,6 +399,8 @@ let takeScreenshot = async()=>{
           </>
         )
       )}
+      {noGeneData && <p className='py-3'><FormattedMessage id="PleaseSelecttheGeneSetData" defaultMessage="Please Select the Gene Set Data" /></p>}
+
     </div>
   );
 }

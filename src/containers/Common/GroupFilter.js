@@ -1777,6 +1777,7 @@ export const PreDefienedFiltersSurvival = ({
     } else {
       parentCallback(groupFilters);
     }
+    console.log('filters' , filters)
   };
 
   const resetFilters = () => {

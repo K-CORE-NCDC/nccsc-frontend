@@ -3,7 +3,7 @@ import Loader from "react-loader-spinner";
 
 export default function LoaderComp() {
   return (
-      <div className="flex justify-center mt-12">
+      <div className="flex justify-center mt-36">
         <div className="bg-white shadow-md rounded-full">
           <Loader
             type="TailSpin"
