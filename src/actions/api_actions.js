@@ -471,22 +471,11 @@ export function getClinicalMaxMinInfo(type, data) {
       .catch(() => {});
   };
 }
-export function getSankeyJson(type, data) {
-  return (dispatch) => {
-    const url = `${config.auth}getSankeyJson/`;
-    sendRequest(url, type, data)
-      .then((result) => {
-        const d = result;
-        if (d.status === 200) {
-          dispatch({
-            type: dataVisualization.SANKEYJSON_REQUEST,
-            payload: { data: [...d.data], status: 200 },
-          });
-        }
-        dispatch({ type: dataVisualization.REQUEST_DONE });
-      })
-      .catch(() => {});
-  };
+
+
+export function SankeyJson(type, data){
+  const url = `${config.auth}getSankeyJson/`;
+  return sendRequest(url, type, data);
 }
 
 export function VolcanoPlotInfo(type, data) {

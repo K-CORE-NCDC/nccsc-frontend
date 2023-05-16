@@ -161,11 +161,6 @@ const dataVisualizationReducer = (state = { data: 'data' },{ type, payload }) =>
         ...state,
         VennRnid: payload,
       };
-    case dataVisualization.SANKEYJSON_REQUEST:
-      return {
-        ...state,
-        SankeyJson: payload,
-      };
     case dataVisualization.FUSIONTABLE_REQUEST:
       return {
         ...state,
