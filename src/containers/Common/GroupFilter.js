@@ -105,7 +105,7 @@ const filterChoicesCustom = [
   { type: "number", name: "N Category", id: "n_category", input: "number" },
   { type: "text", name: "HER2 Score", id: "her2_score", input: "text" },
   { type: "number", name: "ki67", id: "ki67_score", input: "text" },
-  { type: "boolean", name: "Recurance Yes or No", id: "rlps_yn" },
+  // { type: "boolean", name: "Recurance Yes or No", id: "rlps_yn" },
   { type: "number", name: "ER Test", id: "er_score", input: "number" },
   { type: "number", name: "PR Test", id: "pr_score", input: "number" },
 ];
@@ -655,13 +655,13 @@ const GroupFilters = ({
           id: "her2_score",
           input: "number",
         },
-        { type: "dropdown", name: "세포증식지수(Ki-67)", id: "ki67_score", input: "number" },
-        {
-          type: "number",
-          name: "재발이 확인되기까지의 시간",
-          id: "rlps_cnfr_drtn",
-          input: "number",
-        },
+        { type: "dropdown", name: "세포증식지수(Ki-67)", id: "ki67_score", input: "number" }
+        // {
+        //   type: "number",
+        //   name: "재발이 확인되기까지의 시간",
+        //   id: "rlps_cnfr_drtn",
+        //   input: "number",
+        // },
       ];
     }
     else {
@@ -711,13 +711,13 @@ const GroupFilters = ({
           id: "her2_score",
           input: "number",
         },
-        { type: "dropdown", name: "ki67", id: "ki67_score", input: "number" },
-        {
-          type: "number",
-          name: "Relapse Duration(month)",
-          id: "rlps_cnfr_drtn",
-          input: "number",
-        },
+        { type: "dropdown", name: "ki67", id: "ki67_score", input: "number" }
+        // {
+        //   type: "number",
+        //   name: "Relapse Duration(month)",
+        //   id: "rlps_cnfr_drtn",
+        //   input: "number",
+        // },
       ];
 
     }

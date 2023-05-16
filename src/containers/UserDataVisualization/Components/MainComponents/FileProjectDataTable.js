@@ -107,12 +107,17 @@ function FileProjectDataTable({ updateComponentNumber }) {
 
   useEffect(()=>{
     if (verificationResponse && verificationResponse["project_details"]) {
-      
+
       for(const available_step in verificationResponse["project_details"]["available_steps"]){
         if(verificationResponse["project_details"]["available_steps"][available_step].length > 0){
           setNavTabIs(available_step)
         }
       }
+      if ('result' in verificationResponse){
+          let first = Object.values(verificationResponse['result'])[0]; 
+        setActiveTableKey(first[0]['tab']);
+      }
+      
     }
   },[verificationResponse])
   useEffect(() => {
@@ -269,7 +274,7 @@ function FileProjectDataTable({ updateComponentNumber }) {
         {!verificationResponse  && (
           <div>
           <LoaderCmp />
-          { <p className="mt-8 text-center text-lg"><FormattedMessage id = 'WaitMessage' defaultMessage='It takes 1 or 2 minutes to process data' /> </p>}
+          { <p className="mt-8 text-center text-lg"><FormattedMessage id = 'WaitMessage' defaultMessage=' It takes some time to process the data. Please wait ! (2 minutes per 100 samples)' /> </p>}
           </div>
         )}
       </div>

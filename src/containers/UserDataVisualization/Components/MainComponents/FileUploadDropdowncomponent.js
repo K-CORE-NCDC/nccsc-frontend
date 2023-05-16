@@ -13,7 +13,7 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
     useState([]);
   const [responseData, setResponseData] = useState({});
   const [clinincalFilterColumns, setClinincalFilterColumns] = useState([]);
-  const [activeTableKey, setActiveTableKey] = useState("clinical_information");
+  const [activeTableKey, setActiveTableKey] = useState("");
   const [
     defaultClinicalInformationColumns,
     setDefaultClinicalInformationColumns,
@@ -46,6 +46,7 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
       clinicalfileresponse["res"] &&
       clinicalfileresponse["res"].length > 0
     ) {
+      setActiveTableKey(clinicalfileresponse["res"][0]["tab"])
       for (let i = 0; i < clinicalfileresponse["res"].length; i++) {
         if (clinicalfileresponse["res"][i]["tab"] === "clinical_information") {
           setDefaultClinicalInformationColumns(clinicalfileresponse["res"][i]["types"]);
@@ -53,6 +54,7 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
       }
     }
   }, [clinicalfileresponse]);
+  
   useEffect(()=>{
   dispatch(clearUploadClinicalColumns())
   },[])
@@ -295,6 +297,7 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
         let row = clinicalfileresponse["res"][i];
         let tab = row["tab"];
         let css = "px-4 py-2 font-semibold rounded-t opacity-50";
+
         if (activeTableKey === tab) {
           css += " border-blue-400 border-b-4 -mb-px opacity-100";
         }

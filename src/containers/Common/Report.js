@@ -12,6 +12,7 @@ function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, b
   const basicTable = useRef()
   const reportData = useSelector(state => state.dataVisualizationReducer.rniData)
   const [tableRender,setTableRender] = useState(false)
+  const [currentRow, setCurrentRow] = useState(null);
   useEffect(()=>{
     if(tableData && tableData.length>0){
       setTableRender(true)
@@ -70,29 +71,27 @@ function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, b
       // return row
     } else {
       return row
-    }
+    } 
   }
 
   const rowExpandFunc = (expanded, row) => {
-    
     if(expanded){
       let gene = row['gene']
       if(document.getElementById('chart_'+gene)){
         document.getElementById('chart_'+gene).innerHTML=''
       }
+      setCurrentRow(row)
     }
 
   }
-  const expandableRowExpanded = (row) => {
-  }
-
+ 
 
   return (
     <>
       <div className='overflow-y-scroll fixed inset-0 bg-gray-600 bg-opacity-50 h-full w-full z-50'>
         <div className="relative top-20 m-10 p-5 border shadow-lg rounded-md bg-white text-left">
           <div className='float-right m-5'>
-            <PdfPrint/>
+            {/* <PdfPrint/> */}
           </div>
           <div className="border-0  relative flex flex-col w-full bg-white outline-none focus:outline-none">
             <h3 className='py-4 px-3'>Sample Name : {sampleKey}</h3>
@@ -126,7 +125,7 @@ function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, b
                     expandableRows
                     expandableRowDisabled={rowPreDisabled}
                     expandableRowsComponent={SankeyIndex}
-                    expandableRowExpanded={expandableRowExpanded}
+                    expandableRowExpanded={(row)=>(row === currentRow)}
                     onRowExpandToggled={rowExpandFunc}
                   />
                 </div>}
