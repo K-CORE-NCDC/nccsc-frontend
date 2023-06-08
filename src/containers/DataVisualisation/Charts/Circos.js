@@ -464,7 +464,7 @@ export default function DataCircos({
       {loader ? (
         <LoaderCmp />
       ) : (
-        <div className="grid ">
+        <div className="grid overflow-hidden">
           <div
             className={`p-1 grid xs:grid-cols-3 ${
               toggle ? "lg:grid-cols-4" : "lg:grid-cols-4"
@@ -580,7 +580,7 @@ export default function DataCircos({
 
       }        
 
-       {
+       {/* {
        showReportTable
         && <PDFReport
           sampleKey={circosSanpleRnidListData[sampleKey]}
@@ -588,7 +588,7 @@ export default function DataCircos({
           tableData={tableData}
           basicInformationData={basicInformationData}
         />
-        }  
+        }   */}
 
     </>
   );
