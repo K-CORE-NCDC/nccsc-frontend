@@ -150,7 +150,6 @@ export default function DataVisualization() {
     if (project_id !== undefined) {
       let projectAvailableSteps = undefined;
       if(userProjectDetails && 'key' in  userProjectDetails &&  userProjectDetails.key === 'NotFound'){
-        console.log('userProjectDetails',userProjectDetails);
         history.push('/notfound')
       }
       if (userProjectDetails &&  'available_steps' in userProjectDetails) {
@@ -161,10 +160,7 @@ export default function DataVisualization() {
       if (projectAvailableSteps === undefined) {
         dispatch(getUserDataProjectsTableData(project_id));
       } else {
-        console.log('->',projectAvailableSteps);
         Object.keys(projectAvailableSteps).forEach((stepName) => {
-          console.log('+',projectAvailableSteps[stepName]);
-          console.log('=',projectAvailableSteps[stepName].length,(JSON.stringify(projectAvailableSteps[stepName].sort()) === JSON.stringify(mandatory_fields[stepName].sort())) );
           if (projectAvailableSteps[stepName].length > 0 && 
             JSON.stringify(projectAvailableSteps[stepName].sort()) === JSON.stringify(mandatory_fields[stepName].sort())) {
             if (stepName === "lollypop") {
@@ -181,7 +177,6 @@ export default function DataVisualization() {
           }
         });
       }
-      console.log('->',tabList);
       setavailableTabsForProject(tabList);
     }
   

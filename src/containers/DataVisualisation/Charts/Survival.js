@@ -145,7 +145,6 @@ export default function DataSurvival({
       inputData["filterType"] = userDefienedFilter;
       inputData["survival_type"] = survivalModel;
       if (groupFilters) {
-        console.log('groupFilters' , groupFilters)
         setReqstMsg(false)
         if (filterTypeButton === "clinical") {
           let return_data = SurvivalInformation("POST", {
@@ -196,7 +195,6 @@ export default function DataSurvival({
             });
         }
       } else {
-        console.log('else' , groupFilters)
         setReqstMsg(true)
       }
 
@@ -226,7 +224,6 @@ export default function DataSurvival({
   useEffect(() => {
     if (inputData) {
       if (inputData.type !== "") {
-        console.log('condition')
         submitFitersAndFetchData();
       }
     }

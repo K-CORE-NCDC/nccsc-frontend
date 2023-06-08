@@ -150,6 +150,8 @@ function SankeyIndex({ ...props }) {
         detailgeneData.push(row)
 
       }
+      // console.log("final_nodes",final_nodes);
+      // console.log("final_links",final_links);
       setDetailGeneData(detailgeneData);
       setSankeyJsonData({ nodes: final_nodes, links: final_links });
     }

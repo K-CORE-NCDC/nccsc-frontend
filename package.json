@@ -45,6 +45,7 @@
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.1",
     "sweetalert": "^2.1.2",
+    "swiper": "^9.3.2",
     "venn.js": "^0.2.20"
   },
   "resolutions": {
@@ -52,7 +53,7 @@
   },
   "homepage": "/k-core/",
   "scripts": {
-    "start": "CHOKIDAR_USEPOLLING=true HOST=0.0.0.0 PORT=8282  react-scripts start ",
+    "start": "CHOKIDAR_USEPOLLING=true HOST=0.0.0.0 PORT=9191  react-scripts start ",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
