@@ -16,7 +16,7 @@ let filterChoices = [
   { type: "static", name: "sex", id: "sex_cd", options: ["Male", "Female"] },
   {
     type: "number",
-    name: "Age Of Diaganosis",
+    name: "Age Of Diagnosis",
     id: "diag_age",
     input: "number",
   },
@@ -71,7 +71,7 @@ const filterChoicesCustom = [
   { type: "static", name: "Sex", id: "sex_cd", options: ["Male", "Female"] },
   {
     type: "number",
-    name: "Age Of Diagonosis",
+    name: "Age Of Diagnosis",
     id: "diag_age",
     input: "number",
   },
@@ -676,7 +676,7 @@ const GroupFilters = ({
         },
         {
           type: "number",
-          name: "Age Of Diagonosis",
+          name: "Age Of Diagnosis",
           id: "diag_age",
           input: "number",
         },

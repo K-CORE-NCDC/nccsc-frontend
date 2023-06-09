@@ -162,8 +162,6 @@ export default function DataVisualization() {
         dispatch(getUserDataProjectsTableData(project_id));
       } else {
         Object.keys(projectAvailableSteps).forEach((stepName) => {
-          console.log('+',projectAvailableSteps[stepName]);
-          console.log('=',projectAvailableSteps[stepName].length,(JSON.stringify(projectAvailableSteps[stepName].sort()) === JSON.stringify(mandatory_fields[stepName].sort())) );
           if (projectAvailableSteps[stepName].length > 0 && 
             JSON.stringify(projectAvailableSteps[stepName].sort()) === JSON.stringify(mandatory_fields[stepName].sort())) {
             if (stepName === "lollypop") {
@@ -180,7 +178,6 @@ export default function DataVisualization() {
           }
         });
       }
-      console.log('->',tabList);
       setavailableTabsForProject(tabList);
     }
   

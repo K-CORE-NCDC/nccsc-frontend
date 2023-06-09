@@ -177,7 +177,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
   }, [inputData])
 
   useEffect(() => {
-
+    
     if (heatmapJson?.length > 0) {
       let genes = []
       let unique_sample_values = {}
@@ -495,8 +495,12 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
       setLoader(true)
       let dataJson = { ...inputData }
       dataJson['clinicalFilters'] = items
+      dataJson['view'] = viewType
       dataJson['heat_type'] = mainTab
-      dataJson['genes'] = selectedGene
+      // dataJson['genes'] = selectedGene
+      if ((tableType === "methylation") || (tableType === "phospo")) {
+        dataJson['genes'] = selectedGene
+      }
       let return_data = HeatmapInformation('POST', dataJson)
       return_data.then((result) => {
         const d = result

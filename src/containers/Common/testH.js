@@ -23,7 +23,6 @@ const HeatmapCmp = React.forwardRef(({ settings, inputData, type, watermarkCss,w
     const [data,setData] = useState({})
     const [dataLoaded,setDataLoaded] = useState(false)
     const [configVis,setConfigVis] = useState({})
-    
     let target = "canvas";
     
     

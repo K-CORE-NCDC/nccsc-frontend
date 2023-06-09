@@ -2,6 +2,6 @@
 export default {
   defaultPath: '/k-core/',
   basename: '/k-core/',
-  auth: 'http://3bigs.co.kr/k-corev/',
-  media: 'http://3bigs.co.kr/k-corev/media/',
+  auth: 'http://3bigs.co.kr:9798/',
+  media: 'http://3.137.187.168:9798/media/',
 };
