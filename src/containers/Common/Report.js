@@ -67,7 +67,7 @@ function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, b
   const rowPreDisabled = (row) => {
     let variant = reportData.variant_info
     let gene = row.gene
-    if (gene in variant) {
+    if (variant && gene in variant) {
       // return row
     } else {
       return row
@@ -91,7 +91,7 @@ function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, b
       <div className='overflow-y-scroll fixed inset-0 bg-gray-600 bg-opacity-50 h-full w-full z-50'>
         <div className="relative top-20 m-10 p-5 border shadow-lg rounded-md bg-white text-left">
           <div className='float-right m-5'>
-            {/* <PdfPrint/> */}
+            <PdfPrint/>
           </div>
           <div className="border-0  relative flex flex-col w-full bg-white outline-none focus:outline-none">
             <h3 className='py-4 px-3'>Sample Name : {sampleKey}</h3>

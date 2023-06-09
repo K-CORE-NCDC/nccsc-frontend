@@ -255,6 +255,19 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
       let tmp = {}
       for (const key in z) {
         if (key in optn) {
+            if (key.slice(-3) === '_yn'){
+              for (let i=0;i<z[key].length;i++){
+                if (z[key][i]===1 || z[key][i]=== true){
+                  z[key][i] = 'True'
+                }
+                else if(z[key][i]===0 || z[key][i]=== false){
+                  z[key][i] = 'False'
+                }
+                else{
+                  z[key][i] = 'Null'
+                }
+              }
+            }
           tmp[optn[key]] = z[key]
         }
       }

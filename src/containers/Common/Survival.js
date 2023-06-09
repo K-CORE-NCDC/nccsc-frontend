@@ -56,7 +56,7 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
         counter += 1
       }
       setXmaxValue(maxXvalue+20)
-      setYMinValue(minValue) //previously it was minvalue-3 
+      setYMinValue(minValue-1) //previously it was minvalue-3 
       setLineChartData(lineChartDataTemp)
       setChartTable(tableHtmlData)
 

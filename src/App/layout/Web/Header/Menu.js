@@ -2,9 +2,7 @@ import React,{useContext} from 'react'
 import { Link } from 'react-router-dom';
 import {Context} from '../../../../wrapper'
 import config from '../../../../config';
-
-var islogin1=localStorage.getItem('ncc_access_token') 
-var islogin2=localStorage.getItem('ncc_refresh_token')
+import { useSelector } from "react-redux";
 
 const SingleElem = ({elem}) =>{
   if (elem.url){
@@ -65,10 +63,11 @@ const MultipleElem = ({elem,ind}) =>{
 
 const Menu = ({items}) => {
 
+  const loginResponse = useSelector((data) => data.homeReducer.login_data); 
   const item = items
   const m = item.map((ele,index)=>{
     if(ele.type==='item'){
-      if(ele.type === 'item' && ele.id === 'signup' &&  (islogin1) && (islogin2) ){
+      if(ele.type === 'item' && ele.id === 'signup' &&  loginResponse && 'is_login' in loginResponse && loginResponse['is_response'] === true ){
         return null;
       }
       return <SingleElem key={"single"+index} elem={ele}/>

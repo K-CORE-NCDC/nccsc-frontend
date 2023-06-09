@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import config from "../../config";
-import { useDispatch } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import { updateDownloadVisualizationPurpose } from "../../actions/api_actions";
 import { useParams } from "react-router-dom";
 
@@ -19,14 +19,14 @@ const ConfirmDownload = ({ screenCaptureFunction, hideModal }) => {
   const purposeOptions = ["business", "research", "diagonosis"];
   let { tab, project_id } = useParams();
 
-  const accessToken = localStorage.getItem("ncc_access_token");
+  const loginResponse = useSelector((data) => data.homeReducer.login_data)
   useEffect(() => {
-    if ((accessToken === null) | (accessToken === undefined)) {
+    if (loginResponse && 'is_login' in loginResponse &&  loginResponse['is_login'] === true) {
       setShowLoginPage(true);
     } else {
       setShowLoginPage(false);
     }
-  }, [accessToken]);
+  }, [loginResponse]);
 
   const updateUserNamePassword = (e) => {
     setErrorClass("");
@@ -43,8 +43,6 @@ const ConfirmDownload = ({ screenCaptureFunction, hideModal }) => {
   };
 
   const loginSuccess = (data) => {
-    localStorage.setItem("ncc_access_token", data.access);
-    localStorage.setItem("ncc_refresh_token", data.refresh);
     setShowLoginPage(false);
   };
 
