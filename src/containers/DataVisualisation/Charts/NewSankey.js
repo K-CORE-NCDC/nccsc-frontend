@@ -88,12 +88,15 @@ function Sankey(){
         node.targetLinks = [];
       });
       links.forEach(function(link) {
-        var source = link.source,
-            target = link.target;
+        var source = link.source;
+        var target = link.target;
         if (typeof source === "number") source = link.source = nodes[link.source];
         if (typeof target === "number") target = link.target = nodes[link.target];
         source.sourceLinks.push(link);
         target.targetLinks.push(link);
+        // if(source && 'sourceLinks' in source)
+        
+        // if(target && 'targetLinks' in target)
       });
     }
   

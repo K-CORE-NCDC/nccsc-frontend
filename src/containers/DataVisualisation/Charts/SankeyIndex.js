@@ -6,7 +6,7 @@ import LoaderCmp from "../../Common/Loader";
 import { useHistory } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { SankeyJson } from "../../../actions/api_actions";
-import NoContentMessage from "../../Common/NoContentComponent";
+import NoContentGene from "../../Common/NoContentGene";
 
 
 function SankeyIndex({ ...props }) {
@@ -86,8 +86,18 @@ function SankeyIndex({ ...props }) {
       });
 
       let final_nodes = [];
+      let drugNodeCount = 0
+      let drugToDisease = 0 
       for (const key in nodes) {
-        final_nodes.push({ name: key, type: node_type[nodes[key]] });
+       
+        // if(node_type[nodes[key]] === 'drugname' && drugNodeCount<=15){
+        //   console.log(node_type[nodes[key]],key);
+        //   final_nodes.push({ name: key, type: node_type[nodes[key]] });
+        //   drugNodeCount+=1
+        // }
+        // else{
+          final_nodes.push({ name: key, type: node_type[nodes[key]] });
+        // }
       }
       let fn = {};
       let final_links = [];
@@ -151,14 +161,18 @@ function SankeyIndex({ ...props }) {
         if (element["diseasename"] && element["drugname"]) {
           let k =
             nodes[element["diseasename"]] + "_" + nodes[element["drugname"]];
-          if (!(k in fn)) {
-            fn[k] = "";
-            final_links.push({
-              source: element["diseasename"],
-              target: element["drugname"],
-              value: 10,
-            });
+          if(drugToDisease <= 15){
+            if (!(k in fn)) {
+              fn[k] = "";
+              final_links.push({
+                source: element["diseasename"],
+                target: element["drugname"],
+                value: 10,
+              });
+              drugToDisease +=1
+            }
           }
+         
         }
       });
       for (const key in tmpTable) {
@@ -178,8 +192,10 @@ function SankeyIndex({ ...props }) {
       // console.log("final_links",final_links);
       setDetailGeneData(detailgeneData);
       setSankeyJsonData({ nodes: final_nodes, links: final_links });
+      console.log('final_nodes',final_nodes,final_nodes.length);
+      console.log('final_links',final_links,final_links.length);
       setLoader(false)
-      console.log('uniqiue_values',uniqiue_values);
+      // console.log('uniqiue_values',uniqiue_values);
     }
   }, [sankeyJson]);
 
@@ -303,7 +319,7 @@ function SankeyIndex({ ...props }) {
 
   return (
     <>
-      {showNoContent && <div className="mt-20 mb-20"><NoContentMessage /></div>}
+      {showNoContent && <div className="mt-20 mb-20"><NoContentGene /></div>}
       {loader ? (<div className="mb-28"><LoaderCmp /></div>) : 
       (
         <div id="main_chart_cont">

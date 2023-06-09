@@ -11,7 +11,7 @@ import {
 import swal from 'sweetalert';
 import { useSelector, useDispatch } from "react-redux";
 
-function ResetPassword() {
+function SetPassword() {
   const [status, setstatus] = useState("")
   const [visibility, setvisibility] = useState(false);
   const [errorClass, setErrorClass] = useState("");
@@ -19,6 +19,7 @@ function ResetPassword() {
   const { token } = useParams();
   const change_password_status = useSelector((data) => data.homeReducer.changePasswordStatus);
   let changePasswordfunction = () => {
+    
     let new_password = document.getElementById('NewPassword').value
     let confirm_password = document.getElementById('ConfirmNewPassword').value
     if (new_password === "" || confirm_password === "") {
@@ -55,7 +56,7 @@ function ResetPassword() {
     <div>
       <section className="mt-10 flex flex-col items-center justify-center">
         <div>
-          <span className="text-7xl font-bold text-gray-800">Reset Password</span>
+          <span className="text-7xl font-bold text-gray-800">Set Password</span>
         </div>
         <div className="my-32">
 
@@ -113,7 +114,7 @@ function ResetPassword() {
                 className="bg-blue-500 hover:bg-blue-700 text-white h-28 font-bold py-2 px-4 border border-blue-700 w-full rounded"
 
               >
-                <span>Reset Password</span>
+                <span>Set Password</span>
               </button>
             </div>
           </div>
@@ -123,6 +124,6 @@ function ResetPassword() {
   )
 }
 
-export default ResetPassword
+export default SetPassword
 
 

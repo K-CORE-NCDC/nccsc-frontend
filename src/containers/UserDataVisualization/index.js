@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import FileUpload from './Components/MainComponents/NewClinicalFileUpload'
 import FileUploadDropdowncomponent from "./Components/MainComponents/FileUploadDropdowncomponent";
 import FileProjectDataTable from "./Components/MainComponents/FileProjectDataTable";
-
 import { useHistory } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 export default function DataVisualization() {
   let history = useHistory();
   const [componentNumber, setComponentNumber] = useState(0)
@@ -12,14 +11,17 @@ export default function DataVisualization() {
   const showLoginForm = false
   const fileUploadCallBack = (d_) => {
   }
-  const accessToken = localStorage.getItem('ncc_access_token')
+  const loginResponse = useSelector((data) => data.homeReducer.login_data);    
+
   useEffect(() => {
-    if(accessToken){
-      
-    }else{
-      history.push("/login")
+    if(loginResponse && 'is_login' in loginResponse &&  loginResponse['is_login'] === true){
+    
     }
-  }, [accessToken,history])
+    else{
+      history.push("/login"  )
+    }
+  }, [history])
+
 
   const updateComponentNumber = (num) =>{
     setComponentNumber(num)

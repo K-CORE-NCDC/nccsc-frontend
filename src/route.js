@@ -7,14 +7,14 @@ const UserDataVisualization = React.lazy(() => import('./containers/UserDataVisu
 const Logout = React.lazy(() => import('./containers/Login/logout'));
 const Terms = React.lazy(() => import('./containers/Signup/TermsandConditions'));
 const Join = React.lazy(() => import('./containers/Signup/MemberShip'));
-const Signup = React.lazy(() => import('./containers/Signup'));
+const Signup = React.lazy(() => import('./containers/Signup/Signup'));
 const TermsandConditions = React.lazy(() => import('./containers/TermsAndPolicy/TermsAndConditionsIndex'));
 const PrivacyPolicy = React.lazy(() => import('./containers/TermsAndPolicy/PrivacyActIndex'));
 const OldKoreanprivacyact = React.lazy(() => import('./containers/TermsAndPolicy/OldKoreanPrivacyAct'));
 const FindID = React.lazy(() => import('./containers/Login/FindID'));
 const FindPassword = React.lazy(() => import('./containers/Login/FindPassword'));
 const ResetPassword = React.lazy(() => import('./containers/Login/ResetPassword'));
-
+const SetPassword = React.lazy(()=> import('./containers/Signup/SetPassword'));
 const FileProjectDataTable = React.lazy(() => import('./containers/UserDataVisualization/Components/MainComponents/FileProjectDataTable'));
 
 const Introduce = React.lazy(() => import('./containers/Home/introduce'));
@@ -118,7 +118,7 @@ const route = [
     exact: true,
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
-    childname: <FormattedMessage id="Signup" defaultMessage="Signup" />,
+    childname: <FormattedMessage id="Signup" defaultMessage="Sign Up" />,
     component: Signup,
   },
   {
@@ -199,7 +199,7 @@ const route = [
     exact: true,
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
-    childname: <FormattedMessage id="ResetPassword" defaultMessage="Reset Password" />,
+    childname: <FormattedMessage id="ResetPassword" defaultMessage="ResetPassword" />,
     component: FindPassword,
   },
   {
@@ -209,6 +209,14 @@ const route = [
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
     childname: <FormattedMessage id="ChangePassword" defaultMessage="ChangePassword" />,
     component: ResetPassword,
+  },
+  {
+    path: '/set-password/:token',
+    exact: true,
+    type: 'unauth',
+    name: <FormattedMessage id="Home" defaultMessage="Home" />,
+    childname: <FormattedMessage id="SetPassword" defaultMessage="Set Password" />,
+    component: SetPassword,
   },
   {
     path: '/blast/',

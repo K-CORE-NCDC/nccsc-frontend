@@ -15,6 +15,7 @@ import logoNew from "../../../assets/images/Left_up.png";
 import footer_logo from "../../../assets/images/f_logo.png";
 import {  useDispatch } from "react-redux";
 import uuid from 'react-uuid';
+import { getCookie } from "../../../containers/getCookie";
 
 import { Context } from "../../../wrapper";
 import Slider from "react-slick";
@@ -39,7 +40,7 @@ import {
   HomeIcon,
 } from "@heroicons/react/outline";
 import { useParams } from "react-router-dom";
-import {  sendlogManagement,DashboardCount } from "../../../actions/api_actions";
+import {  sendlogManagement,DashboardCount,SetCookie } from "../../../actions/api_actions";
 import Popup from "../../../containers/Popup/Popup";
 import { useIdleTimer } from 'react-idle-timer'
 
@@ -87,15 +88,22 @@ export default function Web(props) {
 
 
   useEffect(()=>{
-    let data =  DashboardCount()
-    data.then((result) => {
-      if(result.status === 200)
-          setCountJson(result.data)
-      else{
-        setCountJson({})
-        setCountStatus(204)
+    let cookiedata = SetCookie()
+    cookiedata && cookiedata.then((result) => {
+      if(result.status === 200){
+        let data =  DashboardCount()
+        data.then((result) => {
+          if(result.status === 200)
+              setCountJson(result.data)
+          else{
+            setCountJson({})
+            setCountStatus(204)
+          }
+        })
       }
     })
+
+
     
   },[])
 
@@ -166,17 +174,16 @@ export default function Web(props) {
     else if (['circos', 'OncoPrint','lollipop','volcano', 'heatmap', 'survival','correlation','CNV','box','fusion'].some(r=> window.location.href.split("/").indexOf(r) >= 0)){
       category = 'DataVisualization'
     }
-    if(localStorage.getItem('ncc_access_token') && localStorage.getItem('ncc_access_token') !== undefined ){
-       sessionAuth = localStorage.getItem('ncc_access_token');
+    if(getCookie('sessionId') && getCookie('sessionId') !== undefined ){
+       sessionAuth = getCookie('sessionId');
        if (sessionAuth) {
-        let jwt = parseJwt(sessionAuth)
-        if(jwt['username']){
-          userid = jwt['username']
+        if(getCookie('username')){
+          userid = getCookie('username')
         }
       }
     }
     else{
-      if(localStorage.getItem('ncc_access_token') === undefined){
+      if(getCookie('sessionId') === undefined){
         localStorage.removeItem('ncc_access_token')
         localStorage.removeItem('ncc_refresh_token')
       }
@@ -277,12 +284,11 @@ export default function Web(props) {
       category = 'DataVisualization'
     }
 
-    if(localStorage.getItem('ncc_access_token')){
-       sessionAuth = localStorage.getItem('ncc_access_token');
+    if(getCookie('sessionId')){
+       sessionAuth = getCookie('sessionId');
        if (sessionAuth) {
-        let jwt = parseJwt(sessionAuth)
-        if(jwt['username']){
-          userid = jwt['username']
+        if(getCookie('username')){
+          userid = getCookie('username')
         }
       }
     }

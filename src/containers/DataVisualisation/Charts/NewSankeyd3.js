@@ -25,7 +25,7 @@ function NewSankeyd3({SankeyJson, idName, forGene}) {
 
     var svg1 = d3.select(`#${idName}`).append("svg")
         .attr("width", width + margin.left + margin.right)
-        .attr("height", '500')
+        .attr("height", height)
         .attr('class',"inline mt-5");
     var svg = svg1.append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -180,7 +180,7 @@ function NewSankeyd3({SankeyJson, idName, forGene}) {
   },[SankeyJson])
 
   return (
-    <div>
+    <div className='randomclass'>
         <div id={idName} name={forGene} className='relative w-full text-center'  style={{'padding':"50px"}}></div>
     </div>
   )

@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import config from "../../config";
+import { useSelector, useDispatch } from "react-redux";
 import { UserIcon, EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
 import { Link } from "react-router-dom";
-
+import { getCookie } from "../getCookie";
+import { useHistory } from "react-router-dom";
+import { login } from "../../actions/api_actions";
 
 const LoginComponent = () => {
   const [userFormData, setUserFormData] = useState({
@@ -11,10 +14,11 @@ const LoginComponent = () => {
     password: "",
   });
   const [visibility, setvisibility] = useState(false);
-
+  let history = useHistory();
+  const dispatch = useDispatch();
+  const loginResponse = useSelector((data) => data.homeReducer.login_data);    
   const [errorClass, setErrorClass] = useState("");
   const [errorMessage, setErrorMessage] = useState([]);
-
   const updateUserNamePassword = (e) => {
     setUserFormData((previousState) => ({
       ...previousState,
@@ -29,37 +33,28 @@ const LoginComponent = () => {
       </p>,
       <h1 className="p-1 font-bold text-3xl text-red-500 italic" key="CountToEnterCredentials">
         {" "}
-        If an error in consecutive password input (5 times) occurs, the account
-        is locked.
+        If an error in consecutive password input (5 times) occurs, the account is locked.
       </h1>,
     ]);
-    // setUserFormData({ username: "", password: "" });
   };
 
-  const loginSuccess = (data) => {
-    localStorage.setItem("ncc_access_token", data.access);
-    localStorage.setItem("ncc_refresh_token", data.refresh);
-    
-    window.location.href = window.location.origin+config['basename']+"userdata/";
-  };
+
+  useEffect(()=>{
+    if (loginResponse && 'is_login' in loginResponse &&  loginResponse['is_login'] === true){
+      history.push('/userdata')
+    }
+    else if(loginResponse === undefined){
+    }
+    else{
+      loginFailure();
+    }
+  },[loginResponse])
 
   const formSubmitAction = (e) => {
-    // e.preventDefault();
-    const url = `${config.auth}api/token/`;
-    let x = axios({ method: "POST", url: url, data: userFormData });
-    x.then((response) => {
-      const data = response.data;
-      const statusCode = response.status;
-      console.log('status code',statusCode);
-      if (statusCode === 200) {
-        loginSuccess(data);
-      } else {
-        loginFailure();
-      }
-    }).catch((error) => {
-      loginFailure();
-    });
+    dispatch(login("POST",  userFormData ));
   };
+
+
 
   return (
     <div>

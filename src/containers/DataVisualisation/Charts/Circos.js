@@ -580,7 +580,7 @@ export default function DataCircos({
 
       }        
 
-       {/* {
+       {
        showReportTable
         && <PDFReport
           sampleKey={circosSanpleRnidListData[sampleKey]}
@@ -588,7 +588,7 @@ export default function DataCircos({
           tableData={tableData}
           basicInformationData={basicInformationData}
         />
-        }   */}
+        }  
 
     </>
   );

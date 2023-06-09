@@ -1,22 +1,12 @@
 import { FormattedMessage } from 'react-intl';
+import React from 'react';
 import config from './config';
+import { getCookie } from './containers/getCookie';
+import { useSelector } from "react-redux";
 
-const sessionAuth = localStorage.getItem('ncc_access_token');
 
-function parseJwt(islogin1) {
-  const base64Url = islogin1 && islogin1.split('.')[1];
-  const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-  const jsonPayload = decodeURIComponent(
-    window
-      .atob(base64)
-      .split('')
-      .map((c) => `%${(`00${c.charCodeAt(0).toString(16)}`).slice(-2)}`)
-      .join(''),
-  );
-
-  return JSON.parse(jsonPayload);
-}
-
+const sessionAuth = getCookie('sessionId')
+// console.log('menu',loginResponse)
 const login = {
   id: 'login',
   title: <FormattedMessage id="Login" defaultMessage="Login" />,
@@ -222,23 +212,26 @@ const childMenu = {
     ],
   },
 };
-
-if (sessionAuth) {
-  const jwt = parseJwt(sessionAuth);
-  // console.log('jwt',jwt);
-  childMenu.social.items.push(logout);
-  if (jwt.is_superuser) {
-    childMenu.social.items.push(superAdmin);
-  }
-  // childMenu["social"]["items"].splice(0, childMenu["social"]["items"],...childMenu["social"]["items"].filter(function(item){
-  //   return (item.id!=='signup' ||  item.id!=='logout')
-  // }))
-} else {
-  childMenu.social.items.push(login);
-}
-// if(parseJwt(islogin1)){
-//   childMenu["social"]["items"].push(superAdmin)
-
-// }
+childMenu.social.items.push(logout);
+childMenu.social.items.push(login);
+// if (sessionAuth)
+//  {
+//   // const jwt = parseJwt(sessionAuth);
+//   childMenu.social.items.push(logout);
+//   if (getCookie('superuser'))
+//   {
+//     childMenu.social.items.push(superAdmin);
+//   }
+//   }
+//   else
+//   {
+//   childMenu.social.items.push(login);
+//   }
 
 export default childMenu;
+
+
+
+
+
+// GetData()
