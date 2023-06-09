@@ -157,13 +157,20 @@ const homeReducer = (state = { home: 'home' }, { type, payload } ) => {
         ...state,
         sendlogmanagement: payload,
       };
-
-      // case homeConstants.PROJECT_ID:
-      //   return {
-      //     ...state,
-      //     project_id_status:payload
-      //   }
-
+    case homeConstants.LOGIN_DATA:
+      return {
+        ...state,
+        login_data: payload,
+      };
+      case homeConstants.CLEAR_LOGIN_DATA:
+        {
+          const {
+            login_data, ...withoutlogindata
+          } = state;
+          /* eslint-disable no-param-reassign */
+          state = withoutlogindata;
+          return state;
+        }
     case homeConstants.CLEAR_NOTICE_DETAILS:
     {
       const { noticedata, ...remains } = state;

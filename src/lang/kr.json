@@ -24,6 +24,7 @@
     "QA": "Q&A",
     "Notice": "공지사항",
     "Signup": "회원 가입",
+    "Registration":"등록",
     "Login": "로그인",
     "Api": "API",
     "Logout": "로그 아웃",
@@ -187,6 +188,7 @@
     "OldPrivacyPolicy": "이전 개인 정보 보호 정책",
     "FindID": "아이디 찾기",
     "ResetPassword": "암호를 재설정",
+    "SetPassword": "암호를 설정하세요",
     "ChangePassword": "비밀번호 변경",
     "IDIncludeCapitalAndLower": "영문(대문자, 소문자) 포함하여 입력해주세요",
     "IDIncludeNumber": "숫자를 포함하여 입력해주세요 ",
@@ -288,6 +290,7 @@
     "GlobalProteome":"글로벌 프로테옴",
     "PleaseSelecttheGeneSetData":"유전자 세트 데이터를 선택하십시오",
     "TryAgain":" 선택한 조건에 매치되는 결과가 없습니다. 조건을 바꿔 다시 시도해주세요.",
+    "NoGene":"선택된 유전자에 대한 약물 연계 정보가 없습니다.",
     "WaitMessage":"조금만 기다려주세요! (100개 샘플 업로드 기준으로 2분 소요)",
     "UploadWaitMessage":"데이터를 업로드 중입니다. 잠시만 기다려주세요.",
     "notfound": "찾을 수 없음"

@@ -7,11 +7,23 @@ import {
 } from './Constants';
 import config from '../config';
 import '../interceptor/interceptor';
+
+import {getCookie} from '../containers/getCookie'
+
 function sendRequest(url, method, data) {
+
+  const headers = {}
+  headers['X-CSRFToken'] = getCookie('csrftoken')
   const x = axios({
-    method, url, data, withCredentials: true,
+    method, url, data, withCredentials: true, headers:headers
   });
   return x;
+}
+
+
+export  const isSessionAndSessionData = async(type, data) => {
+    const url = `${config.auth}session-check/`;
+    return sendRequest(url, type, data);
 }
 
 export function clearIDPasswordResetPASSWORD() {
@@ -32,13 +44,45 @@ export function clearNotice() {
   };
 }
 
-export function logManagement(method, data) {
+export function signin(method, data) {
+    const url = `${config.auth}new-registration/`;
+    return sendRequest(url, method, data)
+}
+
+export function login(method, data) {
   return (dispatch) => {
-    dispatch({
-      type: homeConstants.CLEAR_ID_PASSWORD_RESET_PASSWORD,
-      payload: data,
-    });
-  };
+    const url = `${config.auth}api/token/`;
+    sendRequest(url, method, data)
+    .then((result) => {
+      const d = result;
+      console.log('d.data',d.data)
+      dispatch({
+        type: homeConstants.LOGIN_DATA,
+        payload: d.data,
+      });
+      dispatch({ type: homeConstants.REQUEST_DONE });
+    })
+
+    .catch(() => {});
+};
+}
+
+
+export function logout(method, data) {
+  return (dispatch) => {
+    const url = `${config.auth}logout/`;
+    sendRequest(url, method, data)
+    .then((result) => {
+      const d = result;
+      dispatch({
+        type: homeConstants.CLEAR_LOGIN_DATA,
+        payload: d.data,
+      });
+      dispatch({ type: homeConstants.REQUEST_DONE });
+    })
+
+    .catch(() => {});
+};
 }
 
 export function sendlogManagement(method, data) {
@@ -311,6 +355,11 @@ export function DashboardCount() {
   return sendRequest(url, 'GET', '');
 }
 
+export function SetCookie() {
+  const url = `${config.auth}csrf-token/`;
+  return sendRequest(url, 'GET', '');
+}
+
 export function getRNIDetails(type, data) {
   return (dispatch) => {
     const url = `${config.auth}report/`;
@@ -566,17 +615,13 @@ export function HeatmapInformation(type, data) {
 export function newFileUpload(fileData, projectName) {
   return (dispatch) => {
     const data = new FormData();
-    // dispatch({ type: homeConstants.DATA_SUMMARY });
-    // fileData.forEach(file=>{
-    //   formData.append("arrayOfFilesName", file);
-    // });
     Object.keys(fileData).forEach((element) => {
       if (fileData[element].type !== undefined) {
         data.append(fileData[element].type, fileData[element].file);
       }
     });
     data.set('project_name', projectName);
-
+    data.set('csrftoken',getCookie('csrftoken'))
     const url = `${config.auth}new-user-data-visualization/`;
     sendRequest(url, 'POST', data)
       .then((result) => {
