@@ -18,13 +18,13 @@ const Introduction = ({ height, innerHeight }) => {
             <p className="h6">
               <FormattedMessage
                 id="home_child_title"
-                defaultMessage="A cancer data platform that provides a variety of visualized analysis results by {br} combining high quality clinical and proteogenomic information of domestic cancer patients."
+                defaultMessage="A cancer data platform that provides a variety of visualized analysis results by combining high quality clinical and proteogenomic information of domestic cancer patients."
               />
             </p>
           </div>
           <div className="mainDataStatusWrap">
             <div className="mainDataStatus" >
-              <dl style={{'background':'transparent', columnGap: '100px',justifyContent:'center'}}>
+              <dl style={{'background':'transparent', columnGap: '100px',justifyContent:'center' , fontSize:'18px'}}>
                 <dt>
                   User Guide
                 </dt>

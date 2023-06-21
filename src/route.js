@@ -71,7 +71,7 @@ const route = [
     component: DataSummary,
   },
   {
-    path: '/visualizeMyExampleData/',
+    path: '/home/visualizeMyExampleData/',
     exact: true,
     type: 'unauth',
     category:'visualize',
@@ -142,7 +142,7 @@ const route = [
     component: MultiDataVisualizationUploadIndex,
   },
   {
-    path: '/introduction/',
+    path: '/home/introduction/',
     exact: true,
     type: 'unauth',
     category:'introduce',
@@ -161,7 +161,7 @@ const route = [
     component: Pipeline,
   },
   {
-    path: '/visualizeMyData/',
+    path: '/home/visualizeMyData/',
     exact: true,
     type: 'unauth',
     category:'visualizeData',

@@ -10,7 +10,7 @@ import menu_black from "../../../assets/images/right_below_add.png";
 import logoNew from "../../../assets/images/Left_up.png";
 // import logoNew from '../../../assets/images/KoreanImageNcc.png'
 import { useIdleTimer } from 'react-idle-timer';
-import { useParams } from "react-router-dom";
+import { useParams,withRouter } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
@@ -57,40 +57,12 @@ let parseJwt = (islogin1) => {
 }
 
 
-const introduce = route.map((route, index) => {
-  if (route?.category === 'introduce') {
-    return route.component ? (
-      <Route
-        key={index}
-        path={route.path}
-        exact={route.exact}
-        name={route.name}
-        childname={route.childname}
-        render={(props) => <route.component {...props} />}
-      />
-    ) : null;
-  }
 
-});
 
-const visualize = route.map((route, index) => {
-  if (route?.category === 'visualize') {
-    return route.component ? (
-      <Route
-        key={index}
-        path={route.path}
-        exact={route.exact}
-        name={route.name}
-        childname={route.childname}
-        render={(props) => <route.component {...props} />}
-      />
-    ) : null;
-  }
 
-});
 const home = route.map((route, index) => {
 
-  if (route?.category === 'home') {
+  
     return route.component ? (
       <Route
         key={index}
@@ -101,26 +73,11 @@ const home = route.map((route, index) => {
         render={(props) => <route.component {...props} />}
       />
     ) : null;
-  }
+  
 
 });
 
 
-const visualizeMyData = route.map((route, index) => {
-  if (route?.category === 'visualizeData') {
-    return route.component ? (
-      <Route
-        key={index}
-        path={route.path}
-        exact={route.exact}
-        name={route.name}
-        childname={route.childname}
-        render={(props) => <route.component {...props} />}
-      />
-    ) : null;
-  }
-
-});
 
 
 
@@ -149,7 +106,7 @@ export default function Web(props) {
   const [showLangMenu, setShowLangMenu] = useState(false)
   const [mouseEnterFlag, setMouseEnterFlag] = useState(false)
   const [menuTabOpen, setMenuTabOpen] = useState(false)
-
+  const [swiperOn,setSwiperOn] = useState(true)
 
   useEffect(() => {
     let cookiedata = SetCookie()
@@ -171,6 +128,8 @@ export default function Web(props) {
 
   }, [])
 
+
+  
 
   const toSlide = (num) => {
     swiperRef.current?.swiper.slideTo(num);
@@ -221,6 +180,7 @@ export default function Web(props) {
   let id = useParams();
   let pid = routeLocation.pathname
 
+  
 
   const [breadCrumb, setBreadCrumb] = useState([]);
   const [currentDate, setCurrentDate] = useState("");
@@ -246,17 +206,19 @@ export default function Web(props) {
   let toggleModal = (close) => {
     setShowPopup(close)
   }
-
+  
   useEffect(() => {
-
+    
     let userid = ''
     let category = 'Others'
     if (window.location.href.substring(window.location.href.lastIndexOf('/') + 1)) {
       category = 'User DataVisualization'
     }
+    
     else if (['circos', 'OncoPrint', 'lollipop', 'volcano', 'heatmap', 'survival', 'correlation', 'CNV', 'box', 'fusion'].some(r => window.location.href.split("/").indexOf(r) >= 0)) {
       category = 'DataVisualization'
     }
+    
     if(getCookie('is_login') && getCookie('is_login') !== null ){
         userid = getCookie('username')
     }
@@ -318,6 +280,10 @@ export default function Web(props) {
       }
     }
     setCurrentDate(date);
+    let path = window.location.pathname
+    if( !path.includes('home')){
+      setSwiperOn(false)
+    }
   }, [])
 
   useEffect(() => {
@@ -352,6 +318,7 @@ export default function Web(props) {
     let sessionAuth = ''
     let userid = ''
     let category = 'Others'
+    
     if (window.location.href.substring(window.location.href.lastIndexOf('/') + 1)) {
       category = 'User DataVisualization'
     }
@@ -592,6 +559,7 @@ export default function Web(props) {
       <div className={`mainContents ${routeLocation.pathname === '/' ? '' : 'min-h-70'} `} >
         <Suspense fallback={<Loader />}>
           <Switch>
+            {swiperOn && 
             <Swiper
               ref={swiperRef}
               loop={false}
@@ -639,8 +607,8 @@ export default function Web(props) {
               </SwiperSlide>
 
               <SwiperSlide className="section section02">
-                {/* <SingleDataVisualization height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} /> */}
-                {visualize}
+                <SingleDataVisualization height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
+                {/* {visualize} */}
               </SwiperSlide >
 
               <SwiperSlide className="section section03">
@@ -650,8 +618,8 @@ export default function Web(props) {
               <SwiperSlide >
 
               </SwiperSlide>
-
-            </Swiper>
+            </Swiper>}
+            {/* {home} */}
             <Route exact path="*" component={NotFound} />
           </Switch>
         </Suspense>
