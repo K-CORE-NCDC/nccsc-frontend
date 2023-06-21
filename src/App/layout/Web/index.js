@@ -639,8 +639,8 @@ export default function Web(props) {
               </SwiperSlide>
 
               <SwiperSlide className="section section02">
-                <SingleDataVisualization height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
-                {/* {visualize} */}
+                {/* <SingleDataVisualization height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} /> */}
+                {visualize}
               </SwiperSlide >
 
               <SwiperSlide className="section section03">

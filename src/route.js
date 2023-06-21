@@ -93,6 +93,7 @@ const route = [
     path: '/visualise-singledata/:tab?/:project_id?/',
     exact: true,
     type: 'unauth',
+    category:'visualize',
     name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
     childname: <FormattedMessage id="SingleDataVisualization" defaultMessage="Single Data Visualization" />,
     component: SingleDataAnalysis,

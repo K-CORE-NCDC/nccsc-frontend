@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { SingleDataVisualization } from "./SingleDataVisualization";
 import { FormattedMessage } from "react-intl";
 import arrow_icon from '../../assets/images/btnDetail-arrow-white.svg'
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 export const VisualizeMyData = () => {
   const history = useHistory()
@@ -26,9 +27,10 @@ export const VisualizeMyData = () => {
                 <dl>
                   <dt className="h3">Single Data Visualization</dt>
                 </dl>
-                <a className="btn btnDetail" href="/">Analyze
+                <a className="btn btnDetail" href="/visualise-singledata/home/">Analyze
                   <img src={arrow_icon} alt="" />
                 </a>
+                {/* <Link className="btn btnDetail" to="/visualise-singledata/home/"><img src={arrow_icon} alt="" />Analyze</Link> */}
               </div>
 
             </li>
