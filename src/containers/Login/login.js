@@ -40,15 +40,15 @@ const LoginComponent = () => {
 
 
   useEffect(()=>{
-    if (loginResponse && 'is_login' in loginResponse &&  loginResponse['is_login'] === true){
+    if (getCookie('is_login')){
       history.push('/userdata')
     }
-    else if(loginResponse === undefined){
+    else if(getCookie('is_login') === null){
     }
     else{
       loginFailure();
     }
-  },[loginResponse])
+  },[getCookie('is_login')])
 
   const formSubmitAction = (e) => {
     dispatch(login("POST",  userFormData ));

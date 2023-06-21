@@ -611,7 +611,6 @@ export function HeatmapInformation(type, data) {
   return sendRequest(url, type, data);
 }
 
-
 export function newFileUpload(fileData, projectName) {
   return (dispatch) => {
     const data = new FormData();
@@ -639,12 +638,87 @@ export function newFileUpload(fileData, projectName) {
       });
   };
 }
+
+
+export function SingleFileUpload(fileData, projectName) {
+  return (dispatch) => {
+    const data = new FormData();
+    Object.keys(fileData).forEach((element) => {
+      if (fileData[element].type !== undefined) {
+        data.append(fileData[element].type, fileData[element].file);
+      }
+    });
+    data.set('project_name', projectName);
+    data.set('csrftoken',getCookie('csrftoken'))
+    const url = `${config.auth}multi-new-user-data-visualization/`;
+    sendRequest(url, 'POST', data)
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: homeConstants.SINGLE_USERDATA_VISUALIZATION,
+          payload: d.data,
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: homeConstants.USERDATA_VISUALIZATION_ERROR,
+          payload: { 'status': 'failed' },
+        });
+      });
+  };
+}
+
+export function multiFileUpload(fileData, projectName) {
+  return (dispatch) => {
+    const data = new FormData();
+    Object.keys(fileData).forEach((element) => {
+      if (fileData[element].type !== undefined) {
+        data.append(fileData[element].type, fileData[element].file);
+      }
+    });
+    data.set('project_name', projectName);
+    data.set('csrftoken',getCookie('csrftoken'))
+    const url = `${config.auth}multi-new-user-data-visualization/`;
+    sendRequest(url, 'POST', data)
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: homeConstants.MULTI_USERDATA_VISUALIZATION,
+          payload: d.data,
+        });
+      })
+      .catch(() => {
+        dispatch({
+          type: homeConstants.USERDATA_VISUALIZATION_ERROR,
+          payload: { 'status': 'failed' },
+        });
+      });
+  };
+}
+
+
+
 export function clearNewFileUploadState() {
   return (dispatch) => dispatch({
     type: homeConstants.CLEARNEWUSERDATA_VISUALIZATION,
     payload: {},
   });
 }
+
+export function clearSingleFIleUploadState() {
+  return (dispatch) => dispatch({
+    type: homeConstants.CLEAR_MULTI_USER_DATA_VISUALIZATION,
+    payload: {},
+  });
+}
+
+export function clearMultiFIleUploadState() {
+  return (dispatch) => dispatch({
+    type: homeConstants.CLEAR_MULTI_USER_DATA_VISUALIZATION,
+    payload: {},
+  });
+}
+
 export function clearUploadClinicalColumns() {
   return (dispatch) => dispatch({
     type: homeConstants.CLEAR_UPLOAD_CLININCAL_COLUMNS,

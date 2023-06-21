@@ -249,7 +249,6 @@ export default function Web(props) {
 
   useEffect(() => {
 
-    let sessionAuth = ''
     let userid = ''
     let category = 'Others'
     if (window.location.href.substring(window.location.href.lastIndexOf('/') + 1)) {
@@ -258,13 +257,8 @@ export default function Web(props) {
     else if (['circos', 'OncoPrint', 'lollipop', 'volcano', 'heatmap', 'survival', 'correlation', 'CNV', 'box', 'fusion'].some(r => window.location.href.split("/").indexOf(r) >= 0)) {
       category = 'DataVisualization'
     }
-    if (getCookie('sessionId') && getCookie('sessionId') !== undefined) {
-      sessionAuth = getCookie('sessionId');
-      if (sessionAuth) {
-        if (getCookie('username')) {
-          userid = getCookie('username')
-        }
-      }
+    if(getCookie('is_login') && getCookie('is_login') !== null ){
+        userid = getCookie('username')
     }
     else {
       if (getCookie('sessionId') === undefined) {
@@ -645,8 +639,8 @@ export default function Web(props) {
               </SwiperSlide>
 
               <SwiperSlide className="section section02">
-                <SingleDataVisualization height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
-                {/* {visualize} */}
+                {/* <SingleDataVisualization height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} /> */}
+                {visualize}
               </SwiperSlide >
 
               <SwiperSlide className="section section03">

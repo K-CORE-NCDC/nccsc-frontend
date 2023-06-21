@@ -24,26 +24,56 @@ const homeReducer = (state = { home: 'home' }, { type, payload } ) => {
         ...state,
         fileUploadData: payload,
       };
+
     case homeConstants.NEWUSERDATA_VISUALIZATION:
       return {
         ...state,
         newFileUploadData: payload,
       };
+
+    case homeConstants.SINGLE_USERDATA_VISUALIZATION:
+      return {
+        ...state,
+        singleFileUploadData: payload,
+      };
+      
+    case homeConstants.MULTI_USERDATA_VISUALIZATION:
+      return {
+        ...state,
+        multiFileUploadData: payload,
+      };
+
     case homeConstants.UPLOAD_CLININCAL_COLUMNS:
       return {
         ...state,
         uploadClinicalColumns: payload,
       };
 
+    case homeConstants.CLEAR_MULTI_USER_DATA_VISUALIZATION:
+      {
+        const { multiFileUploadData, ...remainingmulti } = state;
+        /* eslint-disable no-param-reassign */
+        state = remainingmulti;
+        return state;
+      }
+
+    case homeConstants.CLEAR_SINGLE_USER_DATA_VISUALIZATION:
+      {
+        const { singleFileUploadData, ...remainingsingle } = state;
+        /* eslint-disable no-param-reassign */
+        state = remainingsingle;
+        return state;
+      }
+
     case homeConstants.CLEARNEWUSERDATA_VISUALIZATION:
-    {
-      const { newFileUploadData, ...remaining } = state;
-      /* eslint-disable no-param-reassign */
-      state = remaining;
-      return state;
-      // ...state,
-      // newFileUploadData: payload
-    }
+      {
+        const { newFileUploadData, ...remaining } = state;
+        /* eslint-disable no-param-reassign */
+        state = remaining;
+        return state;
+        // ...state,
+        // newFileUploadData: payload
+      }
     case homeConstants.CLEAR_UPLOAD_CLININCAL_COLUMNS:
     {
       const { uploadClinicalColumns, ...remaininClinicalColumns } = state;

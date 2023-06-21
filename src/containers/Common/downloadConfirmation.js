@@ -4,7 +4,7 @@ import config from "../../config";
 import { useSelector,useDispatch } from "react-redux";
 import { updateDownloadVisualizationPurpose } from "../../actions/api_actions";
 import { useParams } from "react-router-dom";
-
+import { getCookie } from "../../containers/getCookie";
 const ConfirmDownload = ({ screenCaptureFunction, hideModal }) => {
   const dispatch = useDispatch();
   const [userFormData, setUserFormData] = useState({
@@ -19,14 +19,13 @@ const ConfirmDownload = ({ screenCaptureFunction, hideModal }) => {
   const purposeOptions = ["business", "research", "diagonosis"];
   let { tab, project_id } = useParams();
 
-  const loginResponse = useSelector((data) => data.homeReducer.login_data)
   useEffect(() => {
-    if (loginResponse && 'is_login' in loginResponse &&  loginResponse['is_login'] === true) {
+    if (getCookie('is_login')) {
       setShowLoginPage(true);
     } else {
       setShowLoginPage(false);
     }
-  }, [loginResponse]);
+  }, [getCookie('is_login')]);
 
   const updateUserNamePassword = (e) => {
     setErrorClass("");

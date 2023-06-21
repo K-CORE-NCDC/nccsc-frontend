@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Link } from 'react-router-dom';
 import { Context } from '../../../../wrapper'
 import { useSelector } from "react-redux";
-
+import { getCookie } from "../../../../containers/getCookie";
 const SingleElem = ({ elem }) => {
   if (elem.url) {
     return (
@@ -61,11 +61,10 @@ const MultipleElem = ({ elem, ind }) => {
 }
 
 const Menu = ({ items }) => {
-  const loginResponse = useSelector((data) => data.homeReducer.login_data)
   const item = items
   const m = item.map((ele, index) => {
     if (ele.type === 'item') {
-      if (ele.type === 'item' && ele.id === 'signup' && (loginResponse && 'is_login' in loginResponse && loginResponse['is_response'] === true ) ) {
+      if (ele.type === 'item' && ele.id === 'signup' && (getCookie('is_login') ) ) {
         return null;
       }
       return <SingleElem key={"single" + index} elem={ele} />

@@ -47,7 +47,7 @@ export default function DataOnco({ width, inputData, screenCapture, setToFalseAf
 
     if (inputJson['filterChoices']) {
       if (project_id !== undefined) {
-        if (filterData.status === 200) {
+        if (filterData && filterData.status === 200) {
           let filters = filterData['filterJson']
           filters = filters['Clinical Information']
           let tmp = []
@@ -77,7 +77,7 @@ export default function DataOnco({ width, inputData, screenCapture, setToFalseAf
         }
       }
     }
-  }, [inputJson['filterChoices'], koreanlanguage])
+  }, [koreanlanguage,filterData, project_id])
 
   useEffect(() => {
     if (inputData && 'genes' in inputData) {
