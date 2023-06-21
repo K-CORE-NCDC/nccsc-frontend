@@ -4,6 +4,7 @@ import Introduction from './containers/Home/Introduction';
 import { SiteIntro } from './containers/Introduction/SiteIntro';
 import { SingleDataVisualization } from './containers/VisualizeMyExampleData/SingleDataVisualization';
 import { VisualizeMyData } from './containers/VisualizeMyData/VisualizeMyData';
+import Home from './containers/Home';
 const DataSummary = React.lazy(() => import('./containers/DataSummary'));
 const Login = React.lazy(() => import('./containers/Login/login'));
 const DataVisualization = React.lazy(() => import('./containers/DataVisualisation'));
@@ -131,7 +132,7 @@ const route = [
     category:'home',
     name: <FormattedMessage id="Introduce" defaultMessage="Introduction" />,
     childname: <FormattedMessage id="BusinessIntroduce" defaultMessage="Business Introduction" />,
-    component: Introduction,
+    component: Home,
   },
   {
     path: '/newmultidataproject/',
