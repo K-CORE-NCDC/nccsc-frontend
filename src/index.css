@@ -29,6 +29,14 @@ header{
   z-index: 3;
 }
 
+.ncc-black {
+    color : 'black' !important
+}
+
+.ncc-white {
+  color : 'white' !important
+}
+
 
 
 

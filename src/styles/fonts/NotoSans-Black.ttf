@@ -1,0 +1,327 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko"> 
+ <head>
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="format-detection" content="telephone=no, address=no, email=no">	
+<meta name="viewport" content="width=device-width, user-scalable=no">
+ <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+<meta name="_csrf_parameter" content="_csrf" /><meta name="_csrf_header" content="X-CSRF-TOKEN" /><meta name="_csrf" content="ddd7491b-7dab-4d05-b060-7c4ac2fa5bee" />
+
+<title>국가암데이터센터</title>
+<script>
+if (window.NodeList && !NodeList.prototype.forEach) {
+	NodeList.prototype.forEach = Array.prototype.forEach;
+}
+</script>
+<!-- CSS -->
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/earlyaccess/notosanskr.css">
+<link rel="stylesheet" href="/css/ncdc/fonts.css">
+<link rel="stylesheet" href="/css/ncdc/layout.css">
+<link rel="stylesheet" href="/css/ncdc/layout_responsive.css">
+<link rel="stylesheet" type="text/css" href="/css/main/main.css?0331">
+<link rel="stylesheet" type="text/css" href="/css/main/contents.css?0331">
+<link rel="stylesheet" type="text/css" href="/css/main/contents_responsive.css?0331">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+
+
+<!-- JS -->
+<script type="text/javascript" src="/js/jquery/jquery-3.6.0.js"></script>
+<script type="text/javascript" src="/js/common/common.js"></script>
+<script type="text/javascript" src="/js/common/member_common.js"></script>
+<script type="text/javascript" src="/js/ncdc/slick.min.js"></script>
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script> -->
+<!-- <script type="text/javascript" src="/js/crypto/aes.js"></script>-->
+
+
+<script src="/js/common/paging.js"></script>
+<script src="/js/web/main/board/board.js"></script>
+<!-- JS 다국어 -->
+<script src="/js/i18n/jquery.i18n.js"></script>
+<script src="/js/i18n/jquery.i18n.messagestore.js"></script>
+
+<script>
+
+//url 파라미터 숨김
+var param = new URLSearchParams(window.location.search);
+param.delete("lang");
+param = param.toString();
+if (param != '') {
+ param = '?'+param;
+}
+history.replaceState({}, null, location.pathname+param);
+
+//F12 버튼 방지 
+	
+/*  	$(document).ready(function() {
+		$(document).bind('keydown', function(e) {
+			if (e.keyCode == 123 ) {
+				e.preventDefault();
+				e.returnValue = false;
+			}
+		});
+	}); 
+	 */
+	
+	//마우스 우클릭 방지
+/* 	document.oncontextmenu = function(e){
+		return false;
+		} */
+	//블록 선택 방지
+/* 	document.onselectstart = function(e){
+		return false;
+		} */
+	// 드래그 제한
+/* 	document.ondragstart = function(e){
+		return false;
+		} */
+
+		
+</script>
+
+
+</head>
+<!-- oncontextmenu='return false' onselectstart='return false' ondragstart='return false' -->
+<script type="text/javascript">
+
+</script>
+<body>
+
+    <div class="wrap loadEvent" id="fullSlide">
+		<!-- S: Top & Left Navigation -->
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+	$(function() {
+
+		let lang = "ko";
+
+		/*
+		if (lang == "ko") {
+			document.getElementById("lang-kr").parentNode.previousElementSibling.innerHTML = document.getElementById("lang-kr").innerHTML
+		} else {
+			document.getElementById("lang-en").parentNode.previousElementSibling.innerHTML = document.getElementById("lang-en").innerHTML
+		}
+		*/
+		
+		if(lang == "en") {
+			$("#siteLang option:eq(1)").prop("selected", true);
+		} else {
+			$("#siteLang option:eq(0)").prop("selected", true);
+		}
+
+		$.i18n().locale = lang;
+
+		$.i18n().load({
+			'ko' : '/js/i18n/messages-ko.json',
+			'en' : '/js/i18n/messages-en.json'
+		});
+		
+		checkActiveUrl();
+	});
+
+</script>
+
+
+
+
+
+
+
+
+
+
+<!-- <div id="header">
+
+</div> -->
+
+		<!-- // E: Top & Left Navigation -->
+		<!--/d_header-->
+		<!-- S: body -->
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/error.css" />
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog">
+      	<!-- Modal content-->
+      	<div class="modal-content">
+        	<div class="modal-header">
+        		<button type="button" class="close" onclick="javascript:location.href='/';">
+        			<img src="/images/icon-popup-close.png" alt="팝업닫기" />
+        		</button>
+        	</div>
+        	<div class="modal-body">
+          		<p>페이지를 찾을 수 없습니다.</p>
+        	</div>
+        	<div class="modal-footer">
+          		<button type="button" onclick="javascript:location.href='/';">확인</button>
+        	</div>
+    	</div>
+	</div>
+</div>
+		<!-- S: footer -->
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="popup-cover"></div>
+<div id="popup-cover2"></div>
+
+
+
+
+
+
+<div id="popup">
+    <button type="button" onClick="popupClose();" title="팝업창을 닫습니다." class="btn-close"><img src="/images/icon-popup-close.png" alt="팝업닫기"></button>
+    <div class="txt"></div>
+    <button type="button" onClick="popupClose();" title="팝업창을 닫습니다." class="btn-ok">확인</button>
+</div>
+<div id="popup-2" class="popup textPopup">
+
+    <button type="button" onClick="closePopup('textPopup');" title="팝업창을 닫습니다." class="btn-close"><img src="/images/icon-popup-close.png" alt="팝업닫기"></button>
+    <div class="txt"></div>
+    <button type="button" onClick="closePopup('textPopup');" title="팝업창을 닫습니다." class="btn-ok">확인</button>
+</div>
+<div id="popup-confirm" class="popup confirmPopup">
+	<div class="inner">
+		<p class="txt"></p>
+		<div class="bottom-btns">
+			<a href="javascript:;" class="btn btn01 btn-w" id="cancelBtn">question.list.cancelBtn.msg</a>
+			<a href="javascript:;" class="btn btn02" id="okBtn">question.list.okBtn.msg</a>
+		</div>
+		<a href="javascript:closePopup('confirmPopup');" class="btn-close">
+			<span class="material-icons">close</span>
+		</a>
+	</div>
+</div>
+
+
+
+
+
+
+<form name="frm1">
+<input type="hidden" name="wrkr_no" type="text" value="1248100998"/>
+</form>
+<script>
+
+function localeChange(element) {
+	let path = '/error/404';	
+	
+	if(element.value == 'en') {
+		if(!path.startsWith("/en/")) {
+			path = "/en" + path;
+		}
+		
+		path += "?lang=en";
+	} else {
+		if(path.startsWith("/en/")) {
+			path = path.substring(3);
+		}
+		path += "?lang=ko"
+	}
+	location.href=path;
+}
+function localeChangeMobile(element) {
+	let path = '/error/404';	
+	
+	if(element == 'en') {
+		if(!path.startsWith("/en/")) {
+			path = "/en" + path;
+		}
+		
+		path += "?lang=en";
+	} else {
+		if(path.startsWith("/en/")) {
+			path = path.substring(3);
+		}
+		path += "?lang=ko"
+	}
+	location.href=path;
+}
+</script>
+ 
+		<!-- // E: footer -->
+	</div>
+</body>
+	<!-- // E: body -->
+<!--/d_main-->
+
+
+</body>
+
+
+</html>

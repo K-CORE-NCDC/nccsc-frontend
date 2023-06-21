@@ -13,18 +13,18 @@ function Popup({toggleModal}) {
   /* getting the notice detail as response */
   
   useEffect(() => {
-    let data =  NoticeDetail('GET')
-    data.then((result) => {
-      if(result.status === 200)
-      {
-        setNoticeDetails(result.data)
-        setNoticeStatus(200)
-      }
-      else{
-        setNoticeDetails({})
-        setNoticeStatus(204)
-      }
-    })
+    // let data =  NoticeDetail('GET')
+    // data.then((result) => {
+    //   if(result.status === 200)
+    //   {
+    //     setNoticeDetails(result.data)
+    //     setNoticeStatus(200)
+    //   }
+    //   else{
+    //     setNoticeDetails({})
+    //     setNoticeStatus(204)
+    //   }
+    // })
   },[])
 
 

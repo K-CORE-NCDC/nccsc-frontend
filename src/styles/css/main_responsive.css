@@ -1,0 +1,984 @@
+.ellipsis01 {
+  max-height: 1.4em;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ellipsis02 {
+  max-height: 2.8em;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ellipsis03 {
+  max-height: 4.2em;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ellipsis04 {
+  max-height: 5.6em;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media all and (max-width: 1600px) {
+  #fullSlide .pagination div.swiper-pagination-bullet-active span {
+    display: none;
+  }
+}
+@media all and (max-width: 1280px) {
+  .mainContents .auto {
+    width: 996px;
+    max-width: 100%;
+  }
+  #footer .auto {
+    width: 100%;
+  }
+  .mainVisual .visual {
+    padding: 160px 40px 0;
+  }
+  .mainVisual .visual .txtBox {
+    padding: 48px 160px 0;
+  }
+  .mainVisual .visual .txtBox .btn {
+    margin-top: 32px;
+  }
+  .dataSearchWrap {
+    flex-direction: column;
+  }
+  .dataSearchWrap .popularBox {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 8px 40px;
+  }
+  .dataSearchWrap .popularBox .tit {
+    width: 191px;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: 0;
+    margin-right: 24px;
+  }
+  .dataSearchWrap .popularBox ul {
+    width: calc(100% - 215px);
+    padding: 0 45px;
+    position: relative;
+  }
+  .dataSearchWrap .popularBox ul::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 45px;
+    bottom: 0;
+    width: 12px;
+    background: linear-gradient(270deg, #fff 0%, rgba(255, 255, 255, 0) 100%);
+  }
+  .dataSearchWrap .popularBox ul .slick-slide {
+    border-bottom: 0;
+    margin-right: 16px;
+  }
+  .dataSearchWrap .popularBox ul .slick-slide::after {
+    display: none;
+  }
+  .dataSearchWrap .popularBox ul .slick-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #d6d6d6;
+    text-indent: -999px;
+    overflow: hidden;
+  }
+  .dataSearchWrap .popularBox ul .slick-arrow.slick-prev {
+    left: 0;
+    /* background-image: url("/images/ncdc/slick-prev-black.svg"); */
+  }
+  .dataSearchWrap .popularBox ul .slick-arrow.slick-next {
+    right: 0;
+    /* background-image: url("/images/ncdc/slick-next-black.svg"); */
+  }
+  .dataSearchWrap .popularBox ul li a {
+    width: calc(100% - 62px);
+  }
+  .dataSearchWrap .dataSearchBox {
+    width: 100%;
+  }
+  .dataSearchWrap .dataSearchBox .tit {
+    padding-top: 0;
+  }
+  .dataSearchWrap .dataSearchBox .dataRecommend {
+    display: none;
+  }
+  .dataSearchWrap .dataSearchBox .dataRecommend .recommend {
+    white-space: nowrap;
+    overflow-x: auto;
+    display: flex;
+    flex-wrap: nowrap;
+  }
+  .dataSearchWrap .dataSearchBox .dataRecommend .recommend::-webkit-scrollbar {
+    display: none;
+  }
+  .dataSearchWrap .dataSearchBox .dataRecommend .recommend a {
+    display: block;
+    overflow: visible;
+  }
+  .dataSearchWrap .dataSearchBox .dataRecommend .recommend a::before {
+    display: none !important;
+  }
+  .mainContents .sectionTitle .en {
+    font-size: 16px;
+  }
+  .mainContents .sectionTitle .kr {
+    font-size: 35px;
+  }
+  .mainContents .section04 .dataTypeWrap .checkbox {
+    display: none;
+  }
+  .mainContents .section04 .dataTypeWrap .dataType01 {
+    width: 40%;
+  }
+  .mainContents .section04 .dataTypeWrap .dataType01 ul li a {
+    flex-direction: row;
+    height: 76px;
+  }
+  .mainContents .section04 .dataTypeWrap .dataType01 ul li a .iconBox {
+    width: 40px;
+    height: 40px;
+    margin-right: 8px;
+  }
+  .mainContents .section04 .dataTypeWrap .dataType01 ul li a .checkbox label:before {
+    margin-right: 0;
+  }
+  .mainContents .section04 .dataTypeWrap .dataType02 {
+    width: 60%;
+  }
+  .mainContents .section04 .dataTypeWrap .dataType02 ul li a .icon {
+    display: none;
+  }
+  .mainContents .section04 .bottomBtns {
+    margin-top: 24px;
+  }
+  .mainContents .section03 .sectionTitle {
+    top: 210px;
+  }
+  .mainContents .section03 .fullBox ul li .inner {
+    width: 250px;
+    max-width: 100%;
+    padding-top: 50px;
+  }
+  .mainContents .section03 .fullBox ul li .inner > img {
+    width: 96px;
+  }
+  .mainContents .section03 .fullBox ul li .inner br {
+    display: none;
+  }
+  .mainContents .section02 .flex .calendar {
+    margin-right: 24px;
+  }
+  .mainContents .section02 .flex .calendar .calendarBody {
+    padding-top: 0;
+    margin-top: 12px;
+  }
+  .mainContents .section02 .flex .calendar .calendarBody div {
+    height: 40px;
+  }
+  .mainContents .section02 .flex .contentsTable td {
+    padding: 16px;
+  }
+  .mainContents .section05 .galleryList {
+    width: 834px;
+    max-width: 100%;
+    margin: auto;
+  }
+  .mainContents .section05 .galleryList ul li a .icon {
+    top: 8px;
+    right: 8px;
+  }
+  .mainContents .section05 .galleryList ul li a .txtBox {
+    padding: 28px 24px;
+  }
+  .mainContents .section05 .galleryList ul li a .txtBox dl dt {
+    font-size: 18px;
+  }
+  .mainContents .section05 .galleryList ul li a .txtBox dl dd {
+    font-size: 14px;
+    margin-top: 8px;
+    max-height: 5.6em;
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 6.4em;
+  }
+  .mainContents .section05 .slickProgressbar {
+    width: 834px;
+    max-width: 100%;
+    margin: 32px auto 0 auto;
+  }
+  .mainContents .section06 .sectionTitle {
+    margin-top: 12px;
+    margin-bottom: 0;
+  }
+  .btnDetail img {
+    margin-left: 0;
+    opacity: 1;
+  }
+  .beforeRespon {
+    display: none;
+  }
+}
+@media all and (max-width: 1199px) {
+  #fullSlide .pagination,
+#fullSlide .scrollDown,
+#fullSlide .navigation {
+    display: none;
+  }
+  .mainContents .auto {
+    width: 100%;
+  }
+  .mainContents .section {
+    padding-top: 85px;
+  }
+  .mainVisual .visual {
+    padding: 85px 40px 0;
+  }
+  .mainVisual .visual .txtBox {
+    padding: 48px 0 0;
+  }
+  .mainVisual .mainVisualUtils {
+    bottom: 374px;
+  }
+  .mainDataStatusWrap .mainDataStatus dl {
+    flex-wrap: nowrap;
+    flex-direction: column;
+    height: auto;
+    white-space: nowrap;
+  }
+  .mainDataStatusWrap .mainDataStatus dl dt {
+    width: 100%;
+    padding: 16px 32px;
+  }
+  .mainDataStatusWrap .mainDataStatus dl dd {
+    width: 100%;
+    padding: 28px 32px;
+  }
+  .dataSearchWrap .dataSearchBox .dataRecommend {
+    display: block;
+  }
+}
+@media all and (max-width: 1024px) {
+  html, body {
+    height: auto;
+  }
+  #fullSlide,
+#fullSlide .mainContents > .mask,
+#fullSlide .mainContents .section {
+    height: auto;
+    display: block;
+  }
+  .section {
+    padding: 64px 0;
+  }
+  #fullSlide .mainContents .section01 {
+    padding: 0;
+  }
+  .sectionTitle {
+    margin-top: 0;
+    top: 0;
+    margin-bottom: 32px;
+  }
+  .mainContentsBox,
+.btnDetail {
+    transition: 0.3s;
+  }
+  .mainVisual .visual {
+    padding-bottom: 330px;
+  }
+  .mainVisual .visual .txtBox {
+    padding-bottom: 200px;
+  }
+  .mainVisual .visual01 {
+    /* background-image: url("/images/ncdc/mainVisual-img01-m.jpg"); */
+  }
+  .mainVisual .visual02 {
+    /* background-image: url("/images/ncdc/mainVisual-img02-m.jpg"); */
+  }
+  .mainVisual .visual03 {
+    /* background-image: url("/images/ncdc/mainVisual-img03-m.jpg"); */
+  }
+  .mainVisual .mainVisualUtils {
+    bottom: 410px;
+  }
+  .mainDataStatusWrap .mainDataStatus:not(.service) dl dd ul {
+    flex-wrap: wrap;
+    margin-top: -16px;
+  }
+  .mainDataStatusWrap .mainDataStatus:not(.service) dl dd ul li {
+    width: calc(50% - 40px);
+    position: relative;
+    padding: 0;
+    margin-top: 16px;
+  }
+  .mainDataStatusWrap .mainDataStatus:not(.service) dl dd ul li::after {
+    right: -40px;
+  }
+  .mainDataStatusWrap .mainDataStatus:not(.service) dl dd ul li:nth-child(1), .mainDataStatusWrap .mainDataStatus:not(.service) dl dd ul li:nth-child(3) {
+    margin-right: 80px;
+  }
+  .mainDataStatusWrap .mainDataStatus.service dl dd li {
+    padding: 0 20px;
+  }
+  .mainContents .section02 .flex {
+    flex-direction: column;
+  }
+  .mainContents .section02 .flex .calendar {
+    margin-right: 0;
+    margin-bottom: 24px;
+  }
+  .mainContents .section03 .sectionTitle {
+    position: static;
+    transform: translateX(0);
+  }
+  .mainContents .section03 .fullBox ul {
+    flex-direction: column;
+  }
+  .mainContents .section03 .fullBox ul li {
+    padding: 64px 0;
+    color: rgb(255, 255, 255);
+  }
+  .mainContents .section03 .fullBox ul li.box01 .icon {
+    /* background-image: url("/images/ncdc/mainSection03-icon01.svg"); */
+  }
+  .mainContents .section03 .fullBox ul li.box02 .icon {
+    /* background-image: url("/images/ncdc/mainSection03-icon02.svg"); */
+  }
+  .mainContents .section03 .fullBox ul li.box03 .icon {
+    /* background-image: url("/images/ncdc/mainSection03-icon03.svg"); */
+  }
+  .mainContents .section04 .sectionTitle {
+    margin-bottom: 32px;
+  }
+  .mainContents .section04 .dataTypeWrap {
+    flex-direction: column;
+  }
+  .mainContents .section04 .dataTypeWrap .dataType01 {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 24px;
+  }
+  .mainContents .section04 .dataTypeWrap .dataType02 {
+    width: 100%;
+  }
+  .mainContents .section04 .dataTypeWrap .dataType02 ul li a {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .mainContents .section04 .dataTypeWrap .dataType02 ul li a p {
+    width: 100%;
+  }
+  .mainContents .section04 .dataTypeWrap .dataType02 ul li a .icon {
+    position: static;
+    float: right;
+    margin-top: 34px;
+  }
+  .mainContents .section05 .bgIcon {
+    width: 50%;
+  }
+  .mainContents .section05 .galleryList ul {
+    display: block;
+    overflow: visible;
+  }
+  .mainContents .section05 .galleryList .slick-list {
+    padding-right: 25%;
+    overflow: visible;
+  }
+  .mainContents .section06 .sectionTitle {
+    margin-bottom: 32px;
+  }
+  .mainContents .section06 .h3 {
+    margin-top: 68px;
+  }
+  .mainContents .section06 .galleryList {
+    margin: 0;
+    overflow: visible;
+  }
+  .mainContents .section06 .galleryList ul {
+    margin: -12px;
+  }
+  .mainContents .section06 .galleryList ul li {
+    width: 200px;
+  }
+  .mainContents .section06 .swiper-pagination {
+    display: block;
+    position: relative;
+    margin-top: 24px;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  .mainContents .section06 .swiper-pagination .swiper-pagination-progressbar-fill {
+    background-color: rgb(255, 255, 255);
+  }
+  .beforeRespon {
+    display: block;
+  }
+}
+@media all and (max-width: 767px) {
+  #fullSlide .mainContents .section01 {
+    height: auto;
+  }
+  .mainVisual .visual {
+    padding: 61px 20px 319px;
+    height: auto;
+  }
+  .mainVisual .visual .txtBox {
+    padding-top: 24px;
+    word-break: keep-all;
+  }
+  .mainVisual .visual .txtBox .d2 {
+    font-size: 30px;
+  }
+  .mainVisual .visual .txtBox .btn {
+    margin-top: 16px;
+    width: 123px;
+    height: 40px;
+    padding: 0 10px;
+  }
+  .mainVisual .visual .txtBox br {
+    display: none;
+  }
+  .mainVisual .visual02 .txtBox {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .mainVisual .mainVisualUtils {
+    bottom: 385px;
+    left: 20px;
+    transform: translateX(0);
+  }
+  .mainVisual .mainVisualUtils .btns {
+    display: none;
+  }
+  .mainVisual .mainVisualUtils .mainVisualPagination .slickProgressbar {
+    width: 36px;
+  }
+  .mainDataStatusWrap {
+    padding: 0 20px;
+  }
+  .mainDataStatusWrap .mainDataStatus dl dt {
+    padding: 12px 16px;
+    justify-content: flex-start;
+  }
+  .mainDataStatusWrap .mainDataStatus:not(.service) dl dd {
+    padding: 16px;
+    flex-direction: column;
+  }
+  .mainDataStatusWrap .mainDataStatus:not(.service) dl dd ul {
+    margin-top: -8px;
+  }
+  .mainDataStatusWrap .mainDataStatus:not(.service) dl dd ul li {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+  .mainDataStatusWrap .mainDataStatus:not(.service) dl dd ul li::after {
+    display: none;
+  }
+  .mainDataStatusWrap .mainDataStatus:not(.service) dl dd ul li:nth-child(1), .mainDataStatusWrap .mainDataStatus:not(.service) dl dd ul li:nth-child(3) {
+    margin-right: 0;
+  }
+  .mainDataStatusWrap .mainDataStatus:not(.service) dl dd ul li span {
+    display: flex;
+    justify-content: space-between;
+  }
+  .mainDataStatusWrap .mainDataStatus:not(.service) dl dd ul li span strong, .mainDataStatusWrap .mainDataStatus:not(.service) dl dd ul li span a {
+    margin-right: 8px;
+  }
+  .mainDataStatusWrap .mainDataStatus.service dl dd {
+    padding: 0;
+    position: relative;
+  }
+  .mainDataStatusWrap .mainDataStatus.service dl dd ul {
+    justify-content: flex-start;
+    overflow: auto;
+  }
+  .mainDataStatusWrap .mainDataStatus.service dl dd ul::-webkit-scrollbar {
+    display: none;
+  }
+  .mainDataStatusWrap .mainDataStatus.service dl dd ul::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 16px;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.1) 30%, rgb(255, 255, 255) 80%);
+  }
+  .mainDataStatusWrap .mainDataStatus.service dl dd ul li {
+    padding: 16px;
+    margin-right: 8px;
+  }
+  .mainDataStatusWrap .mainDataStatus.service dl dd ul li:last-child {
+    margin-right: 0;
+  }
+  .mainDataStatusWrap .mainDataStatus.service dl dd ul li::after {
+    top: 50%;
+    right: -4px;
+    transform: translateY(-50%);
+    height: 20px;
+  }
+  .mainDataStatusWrap .mainDataStatus.service dl dd ul li a {
+    display: flex;
+    flex-direction: column;
+  }
+  .mainDataStatusWrap .mainDataStatus.service dl dd ul li a .icon {
+    width: 24px;
+    margin: auto;
+    margin-bottom: 4px;
+  }
+  .dataSearchWrap .popularBox {
+    padding: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .dataSearchWrap .popularBox .tit {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 16px;
+  }
+  .dataSearchWrap .popularBox .tit img {
+    width: 20px;
+  }
+  .dataSearchWrap .popularBox ul {
+    width: 100%;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    height: 36px;
+    overflow: hidden;
+    margin-top: -8px;
+  }
+  .dataSearchWrap .popularBox ul::after {
+    display: none;
+  }
+  .dataSearchWrap .popularBox ul li {
+    padding: 0;
+    border-bottom: 0;
+    margin-top: 8px;
+    margin-right: 16px;
+  }
+  .dataSearchWrap .popularBox ul li:last-child {
+    margin-right: 0;
+  }
+  .dataSearchWrap .popularBox ul li::after {
+    display: none;
+  }
+  .dataSearchWrap .popularBox ul li a {
+    width: auto;
+  }
+  .dataSearchWrap .popularBox ul li span {
+    width: 38px;
+    height: 20px;
+    font-size: 12px;
+    background-color: #e5e9f2;
+    margin-right: 8px;
+  }
+  .dataSearchWrap .popularBox.on ul {
+    height: auto;
+  }
+  .dataSearchWrap .popularBox.on .mobileBtn .material-icons {
+    transform: rotateX(180deg);
+  }
+  .dataSearchWrap .mobileBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 22px;
+    height: 22px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
+    border: 1px solid #d6d6d6;
+  }
+  .dataSearchWrap .mobileBtn .material-icons {
+    transition: 0.3s;
+  }
+  .dataSearchWrap .dataSearchBox {
+    padding: 28px 20px;
+  }
+  .dataSearchWrap .dataSearchBox .tit {
+    margin-bottom: 16px;
+  }
+  .dataSearchWrap .dataSearchBox .tit img {
+    width: 20px;
+  }
+  .dataSearchWrap .dataSearchBox .searchBox {
+    flex-direction: column;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    border-radius: 0;
+  }
+  .dataSearchWrap .dataSearchBox .searchBox .inputText {
+    width: 100%;
+    height: 57px;
+  }
+  .dataSearchWrap .dataSearchBox .searchBox .btn {
+    width: 100%;
+    height: 48px;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 12px;
+  }
+  .dataSearchWrap .dataSearchBox .searchBox .btn img {
+    width: 20px;
+  }
+  .dataSearchWrap .dataSearchBox .dataRecommend {
+    position: relative;
+  }
+  .dataSearchWrap .dataSearchBox .dataRecommend .mobileBtn {
+    top: 0;
+    right: 0;
+    color: rgb(255, 255, 255);
+  }
+  .dataSearchWrap .dataSearchBox .dataRecommend .recommend a {
+    font-size: 14px;
+  }
+  .dataSearchWrap .dataSearchBox .dataRecommend.on .recommend {
+    white-space: none;
+    flex-wrap: wrap;
+  }
+  .dataSearchWrap .dataSearchBox .dataRecommend.on .mobileBtn .material-icons {
+    transform: rotateX(180deg);
+  }
+  .mainContents .section {
+    padding-top: 56px;
+    z-index: 0;
+  }
+  .mainContents .section02 .flex .calendar {
+    margin-right: 0;
+    margin-bottom: 24px;
+  }
+  .mainContents .section02 .flex .contentsTable th {
+    padding: 16px 8px;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  .mainContents .section02 .flex .contentsTable th:first-child {
+    width: 50px;
+  }
+  .mainContents .section02 .flex .contentsTable th:last-child {
+    width: 80px;
+  }
+  .mainContents .section02 .flex .contentsTable td {
+    padding: 16px 8px;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  .mainContents .section03 .fullBox {
+    padding: 0 20px;
+    overflow: hidden;
+  }
+  .mainContents .section03 .fullBox ul li {
+    padding: 64px 40px;
+  }
+  .mainContents .section03 .fullBox .slick-list {
+    padding-right: 32px;
+    overflow: visible;
+  }
+  .mainContents .section03 .fullBox .slick-slide {
+    margin-right: 8px;
+  }
+  .mainContents .section03 .fullBox .slick-slide .cover {
+    opacity: 1;
+  }
+  .mainContents .section03 .fullBox .slick-slide img {
+    display: inline;
+  }
+  .mainContents .section03 .fullBox .slick-slide .inner > img {
+    width: 120px;
+  }
+  .mainContents .section03 .fullBox .slick-dots {
+    position: relative;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+  }
+  .mainContents .section03 .fullBox .slick-dots li {
+    width: 10px;
+    height: 10px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
+    border: 1px solid rgb(255, 255, 255);
+    cursor: pointer;
+    padding: 0;
+    margin: 0 6px;
+  }
+  .mainContents .section03 .fullBox .slick-dots li button {
+    display: none;
+  }
+  .mainContents .section04 .tab ul li {
+    width: 100%;
+  }
+  .mainContents .section04 .mainContentsBox .btnDetail {
+    position: relative;
+    display: block;
+    margin-top: 32px;
+    width: 100%;
+  }
+  .mainContents .section04 .dataTypeWrap .checkbox {
+    opacity: 0;
+    z-index: -1;
+  }
+  .mainContents .section04 .dataTypeWrap .dataType01 ul li a {
+    flex-direction: column;
+  }
+  .mainContents .section04 .dataTypeWrap .dataType01 ul li a .iconBox {
+    margin-right: 0;
+  }
+  .mainContents .section04 .dataTypeWrap .dataType02 ul li {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .mainContents .section04 .dataTypeWrap .dataType02 ul li a {
+    padding: 16px 10px;
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: center;
+    background-image: none !important;
+  }
+  .mainContents .section04 .dataTypeWrap .dataType02 ul li a .tit {
+    font-size: 14px;
+    margin-top: 4px;
+  }
+  .mainContents .section04 .dataTypeWrap .dataType02 ul li a .sub {
+    display: none;
+  }
+  .mainContents .section04 .dataTypeWrap .dataType02 ul li a .icon {
+    display: block;
+    float: none;
+    margin-top: 0;
+    width: 40px;
+    height: 40px;
+  }
+  .mainContents .section04 .dataTypeWrap .dataType02 ul li.on a {
+    background-color: #003177;
+  }
+  .mainContents .section04 .dataTypeWrap dt > span img {
+    width: 18px;
+    margin-top: -1px;
+    margin-right: 6px;
+  }
+  .mainContents .section05 .galleryList .slick-list {
+    padding-right: 38px;
+  }
+  .mainContents .section06 .tab ul li {
+    width: 100%;
+  }
+  .mainContents .section06 .btnMore {
+    margin-top: 32px;
+    position: relative;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 56px;
+    text-align: center;
+    color: #003177;
+  }
+  .mainContents .section06 .btnMore > img {
+    display: none;
+  }
+  .mainContents .section06 .btnMore span {
+    display: flex;
+    align-items: center;
+  }
+  .mainContents .section06 .btnMore span img {
+    width: auto;
+  }
+  .mainContents .section06 .btnMore span path {
+    stroke: #003177;
+  }
+  .mainContents .section06 .galleryWrap .btnMore {
+    top: 0;
+  }
+  .mainContents .section06 .galleryList.mask01 ul {
+    flex-wrap: wrap;
+    margin: 0;
+  }
+  .mainContents .section06 .galleryList.mask01 ul li {
+    width: 100%;
+    margin-top: 16px;
+    padding: 0;
+    display: none;
+  }
+  .mainContents .section06 .galleryList.mask01 ul li:nth-child(1), .mainContents .section06 .galleryList.mask01 ul li:nth-child(2), .mainContents .section06 .galleryList.mask01 ul li:nth-child(3) {
+    display: block;
+  }
+  .mainContents .section06 .galleryList.mask01 ul li:first-child {
+    margin-top: 0;
+  }
+  .mainContents .section06 .galleryList.mask01 ul li a {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .mainContents .section06 .galleryList.mask01 ul li a .thumb {
+    width: 40%;
+    padding-top: 0;
+  }
+  /* 변경 */
+  .mainContents .section06 .galleryList.mask01 ul li a .thumb img {
+    height: 100%;
+    min-height: 100px;
+  }
+  .mainContents .section06 .galleryList.mask01 ul li a .txtBox {
+    width: 60%;
+  }
+  .mainContents .section06 .galleryList02 ul li {
+    width: 90%;
+  }
+  .mainContents .section06 .galleryList02 .btnMore > span {
+    display: flex;
+    align-items: center;
+  }
+  .mainContents .section06 .mainBoardList ul li {
+    position: relative;
+    flex-direction: column;
+    background-color: rgb(255, 255, 255);
+    margin-top: 16px;
+    padding: 16px;
+    color: #2e2e2e;
+    display: none;
+  }
+  .mainContents .section06 .mainBoardList ul li:nth-child(1), .mainContents .section06 .mainBoardList ul li:nth-child(2), .mainContents .section06 .mainBoardList ul li:nth-child(3) {
+    display: flex;
+  }
+  .mainContents .section06 .mainBoardList ul li:first-child {
+    margin-top: 0;
+  }
+  .mainContents .section06 .mainBoardList ul li a {
+    display: block;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.04rem;
+    line-height: 130%;
+    max-height: 2.8em;
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+@media all and (max-width: 767px) and (max-width: 767px) {
+  .mainContents .section06 .mainBoardList ul li a {
+    font-size: 14px;
+  }
+}
+@media all and (max-width: 767px) {
+  .mainContents .section06 .mainBoardList ul li a .labels {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+  }
+  .mainContents .section06 .mainBoardList ul li a .labels .announce {
+    line-height: 24px;
+    margin-right: -2px;
+  }
+  .mainContents .section06 .mainBoardList ul li a .labels img {
+    width: 24px;
+    margin-top: 0;
+  }
+}
+@media all and (max-width: 767px) {
+  .mainContents .section06 .mainBoardList ul li .date {
+    margin-top: 11px;
+    text-align: right;
+  }
+}
+@media all and (max-width: 767px) {
+  .sectionTitle .en {
+    margin-bottom: 4px;
+  }
+}
+@media all and (min-width: 1024px) and (max-height: 700px) {
+  #fullSlide {
+    overflow: visible;
+    height: auto;
+  }
+  #fullSlide .pagination {
+    display: none;
+  }
+  #fullSlide .section {
+    height: auto;
+    padding: 160px 0;
+  }
+  #fullSlide .sectionTitle {
+    margin-top: 0;
+  }
+  #fullSlide .mainContents > .mask {
+    display: block;
+  }
+  #fullSlide .mainContents .section01 {
+    padding: 0;
+  }
+  #fullSlide .mainContents .section01 .mask .visual {
+    padding-bottom: 290px;
+    height: auto;
+  }
+  #fullSlide .mainContents .section01 .mask .visual .txtBox {
+    padding-bottom: 200px;
+  }
+  #fullSlide .mainContents .section03 {
+    padding: 0;
+  }
+  #fullSlide .mainContents .section03 .fullBox {
+    height: 750px;
+  }
+  #fullSlide .mainContents .section03 .sectionTitle {
+    top: 160px;
+  }
+}
+
+/*# sourceMappingURL=main_responsive.css.map */

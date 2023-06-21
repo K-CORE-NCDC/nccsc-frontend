@@ -1,0 +1,240 @@
+$primary10: #f8f9fb
+$primary25: #f0f2f6
+$primary50: #e5e9f2
+$primary100: #bec7df
+$primary200: #93a3c9
+$primary300: #6980b4
+$primary400: #4865a5
+$primary500: #204c97
+$primary600: #19448e
+$primary700: #0c3b83
+$primary800: #003177
+$primary900: #002161
+$primary: $primary800
+
+$secondary10: #f6fbfd
+$secondary25: #eef8fc
+$secondary50: #e1f5fd
+$secondary100: #b3e6fa
+$secondary200: #82d6f7
+$secondary300: #52c5f4
+$secondary400: #2db9f3
+$secondary500: #05acf1
+$secondary600: #009fe2
+$secondary700: #008bce
+$secondary800: #007abb
+$secondary900: #005a99
+$secondary: $secondary600
+
+$success: #26a212
+$success-hover: #1b850a
+$info: #007aff
+$info-hover: #0062cc
+$warning: #ff8c00
+$error: #ff3b30
+$error-hover: #cc2f26
+$tertiary: #006fd2
+
+$gray00: #fafafa
+$gray01: #f0f0f0
+$gray02: #e5e5e5
+$gray03: #d6d6d6
+$gray04: #b8b8b8
+$gray05: #8f8f8f
+$gray06: #757575
+$gray07: #616161
+$gray08: #4e4e4e
+$gray09: #2e2e2e
+
+$black01: rgba(0,0,0,0.1)
+$black02: rgba(0,0,0,0.2)
+$black03: rgba(0,0,0,0.3)
+$black04: rgba(0,0,0,0.4)
+$black05: rgba(0,0,0,0.5)
+$black06: rgba(0,0,0,0.6)
+$black07: rgba(0,0,0,0.7)
+$black08: rgba(0,0,0,0.8)
+$black09: rgba(0,0,0,0.9)
+$black: rgba(0,0,0,1)
+
+$white01: rgba(255, 255, 255, 0.1)
+$white02: rgba(255, 255, 255, 0.2)
+$white03: rgba(255, 255, 255, 0.3)
+$white04: rgba(255, 255, 255, 0.4)
+$white05: rgba(255, 255, 255, 0.5)
+$white06: rgba(255, 255, 255, 0.6)
+$white07: rgba(255, 255, 255, 0.7)
+$white08: rgba(255, 255, 255, 0.8)
+$white09: rgba(255, 255, 255, 0.9)
+$white: rgba(255, 255, 255, 1)
+
+$dataA50: #f5f5f5
+$dataA100: #e9e9e9
+$dataA200: #d9d9d9
+$dataA300: #c4c4c4
+$dataA400: #9d9d9d
+$dataA500: #7b7b7b
+$dataA600: #555555
+$dataA700: #434343
+$dataA800: #262626
+$dataA900: #000000
+
+$dataB50: #dff3ed
+$dataB100: #b0e1d1
+$dataB200: #7cceb3
+$dataB300: #59c099
+$dataB400: #00ab80
+$dataB500: #009b6d
+$dataB600: #008e61
+$dataB700: #007e52
+$dataB800: #006e45
+$dataB900: #00522a
+
+$dataC50: #e9eaf5
+$dataC100: #c8cae6
+$dataC200: #a5a8d5
+$dataC300: #8286c3
+$dataC400: #696bb6
+$dataC500: #5251aa
+$dataC600: #4c49a0
+$dataC700: #433f94
+$dataC800: #3c3588
+$dataC900: #2f2372
+
+$dataD50: #ffebef
+$dataD100: #ffced3
+$dataD200: #f39b9c
+$dataD300: #eb7475
+$dataD400: #f65352
+$dataD500: #fb4137
+$dataD600: #ed3837
+$dataD700: #db2d30
+$dataD800: #ce2529
+$dataD900: #bf171d
+
+$dataE50: #fcfae5
+$dataE100: #f8f3bf
+$dataE200: #f2ea95
+$dataE300: #ede26b
+$dataE400: #ebdd4b
+$dataE500: #e8d82a
+$dataE600: #e6c624
+$dataE700: #e6ad18
+$dataE800: #e19712
+$dataE900: #dc7000
+
+//border-radius
+=radius($radius)
+  -webkit-border-radius: $radius
+  -moz-border-radius: $radius
+  -ms-border-radius: $radius
+  border-radius: $radius
+//ellipsis
+=ellipsis($line)
+  max-height: (1.4em * $line)
+  word-wrap: break-word
+  display: -webkit-box
+  -webkit-line-clamp: $line
+  -webkit-box-orient: vertical
+  overflow: hidden
+  text-overflow: ellipsis
+  
+@for $i from 1 to 5
+  .ellipsis0#{$i}
+    max-height: (1.4em * $i)
+    word-wrap: break-word
+    display: -webkit-box
+    -webkit-line-clamp: $i
+    -webkit-box-orient: vertical
+    overflow: hidden
+    text-overflow: ellipsis
+
+
+//border
+=border($width: 1px, $color: $gray03)
+  border: $width solid $color
+=borderTop($width: 1px, $color: $gray03)
+  border-top: $width solid $color
+=borderBottom($width: 1px, $color: $gray03)
+  border-bottom: $width solid $color
+=borderLeft($width: 1px, $color: $gray03)
+  border-left: $width solid $color
+=borderRight($width: 1px, $color: $gray03)
+  border-right: $width solid $color
+//circle
+=circle($size)
+  width: $size
+  height: $size
+  +radius(50%)
+//shadow
+=boxShadow
+  box-shadow: 0 5px 10px rgba(0,0,0,0.05)
+//font-style
+=headline01
+  font-size: 44px
+  font-weight: 700
+  letter-spacing: -0.02rem
+  line-height: 120%
+  @media all and (max-width: 767px)
+    font-size: 28px
+=headline02
+  font-size: 35px
+  font-weight: 700
+  letter-spacing: -0.02rem
+  line-height: 130%
+  @media all and (max-width: 767px)
+    font-size: 24px
+=headline03
+  font-size: 28px
+  font-weight: 700
+  letter-spacing: -0.04rem
+  line-height: 130%
+  @media all and (max-width: 767px)
+    font-size: 20px
+=headline04
+  font-size: 24px
+  font-weight: 700
+  letter-spacing: -0.04rem
+  line-height: 130%
+  @media all and (max-width: 767px)
+    font-size: 18px
+=headline05
+  font-size: 21px
+  font-weight: 700
+  letter-spacing: -0.04rem
+  line-height: 130%
+  @media all and (max-width: 767px)
+    font-size: 16px
+=headline06
+  font-size: 18px
+  font-weight: 700
+  letter-spacing: -0.04rem
+  line-height: 130%
+  @media all and (max-width: 767px)
+    font-size: 14px
+=subtitle01
+  font-size: 16px
+  font-weight: 500
+  line-height: 150%
+  @media all and (max-width: 767px)
+    font-size: 14px
+=subtitle02
+  font-size: 14px
+  font-weight: 500
+  line-height: 140%
+=subtitle03
+  font-size: 12px
+  font-weight: 500
+  line-height: 140%
+=subtitleBold01
+  font-size: 16px
+  font-weight: 700
+  line-height: 150%
+=subtitleBold02
+  font-size: 14px
+  font-weight: 700
+  line-height: 140%
+=subtitleBold03
+  font-size: 12px
+  font-weight: 700
+  line-height: 140%

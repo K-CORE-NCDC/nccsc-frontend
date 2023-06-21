@@ -1,0 +1,879 @@
+@import "common.sass"
+.mainVisual,
+.mainVisual .mask
+  width: 100%
+  height: 100%
+
+.mainVisual
+  .visual
+    height: 100vh
+    background:
+      size: cover
+      position: 50% 50%
+      repeat: no-repeat
+    display: flex
+    justify-content: center
+    position: relative
+    padding-top: 160px
+    &::after
+      content: ""
+      position: absolute
+      top: 0
+      left: 0
+      right: 0
+      bottom: 0
+      z-index: 0
+      background-color: $black01
+    .txtBox
+      position: relative
+      z-index: 1
+      padding-top: 140px
+      width: 1200px
+      display: flex
+      flex-direction: column
+      color: $white
+      .h6
+        margin-top: 16px
+      .btn
+        width: 134px
+        height: 48px
+        margin-top: 64px
+  .visual01
+    background-image: url("/images/ncdc/mainVisual-img01.jpg")
+  .visual02
+    background-image: url("/images/ncdc/mainVisual-img02.jpg")
+    .txtBox
+      align-items: flex-end
+      text-align: right
+  .visual03
+    background-image: url("/images/ncdc/mainVisual-img03-min.jpg")
+  .mainVisualUtils
+    position: absolute
+    bottom: 244px
+    left: 50%
+    transform: translateX(-50%)
+    z-index: 1
+    color: $white
+    display: flex
+    align-items: center
+    .mainVisualPagination
+      position: relative
+      font-size: 16px
+      display: flex
+      align-items: center
+      margin-right: 16px
+      .slickProgressbar
+        display: inline-block
+        width: 132px
+        margin: 0 16px
+    .btns
+      button
+        width: 24px
+        height: 24px
+.mainDataStatusWrap
+  position: absolute
+  left: 0
+  right: 0
+  z-index: 1
+  bottom: 56px
+  padding: 0 40px
+  display: flex
+  flex-direction: column
+  .mainDataStatus
+    dl
+      display: flex
+      flex-wrap: wrap
+      background-color: $white
+      height: 75px
+      width: 1295px
+      max-width: 100%
+      margin: auto
+      dt
+        width: 215px
+        height: 100%
+        background-color: $primary800
+        display: flex
+        align-items: center
+        justify-content: center
+        color: $white
+      dd
+        width: calc(100% - 215px)
+        height: 100%
+        ul
+          height: 100%
+          display: flex
+          justify-content: center
+          align-items: center
+          li
+            display: flex
+            align-items: center
+            padding: 0 24px
+            position: relative
+            &::after
+              content: ""
+              position: absolute
+              top: 5px
+              bottom: 0
+              right: 0
+              width: 1px
+              height: 16px
+              background-color: $black01
+            &:last-child::after
+              display: none
+            span
+              color: $gray05
+              margin-left: 6px
+              .count
+                color: $secondary600
+              a
+                text-decoration: underline
+    &.service
+      margin-top: 12px
+      dl
+        dt
+          background-color: $secondary
+        dd
+          li
+            &:hover
+              color: $secondary
+              text-decoration: underline
+            .icon
+              display: inline-block
+              width: 20px
+              height: 20px
+              position: relative
+              top: 1px
+              vertical-align: top
+              background:
+                repeat: no-repeat
+                size: cover
+                position: 50% 50%
+            &:nth-child(1) .icon
+              background-image: url("/images/ncdc/icon-cross.svg")
+            &:nth-child(2) .icon
+              background-image: url("/images/ncdc/icon-connect.svg")
+            &:nth-child(3) .icon
+              background-image: url("/images/ncdc/icon-polygon.svg")
+            &:nth-child(4) .icon
+              background-image: url("/images/ncdc/icon-heartbeat.svg")
+            &:nth-child(5) .icon
+              background-image: url("/images/ncdc/icon-monitoring.svg")
+            &:hover:nth-child(1) .icon
+              background-image: url("/images/ncdc/icon-cross-on.svg")
+            &:hover:nth-child(2) .icon
+              background-image: url("/images/ncdc/icon-connect-on.svg")
+            &:hover:nth-child(3) .icon
+              background-image: url("/images/ncdc/icon-polygon-on.svg")
+            &:hover:nth-child(4) .icon
+              background-image: url("/images/ncdc/icon-heartbeat-on.svg")
+            &:hover:nth-child(5) .icon
+              background-image: url("/images/ncdc/icon-monitoring-on.svg")  
+.sectionTitle
+  margin-top: 56px
+  margin-bottom: 32px
+  position: relative
+  .en
+    color: $primary800
+    text-decoration: underline
+    margin-bottom: 12px
+  &.white
+    .en
+      color: $white06
+    .kr
+      color: $white
+.mainContents
+  .btnTop
+    display: none
+  .section
+    background:
+      repeat: no-repeat
+      size: cover
+      position: 50% 50%
+    padding-top: 160px
+    &.section01
+      padding-top: 0 !important
+      &::after
+        display: none
+    &.section02
+      background-image: url("/images/ncdc/mainSection02-bg.jpg")
+      &::after
+        display: none
+    &.section03
+      transition: .5s
+      background-image: url("/images/ncdc/mainSection03-bg.jpg")
+    &.section04
+      transition: .5s
+      background-image: url("/images/ncdc/mainSection02-bg.jpg")
+      &::after
+        display: none
+    &.section05
+      background-color: $primary25
+      &::after
+        display: none
+    &.section06
+      background-image: url("/images/ncdc/mainSection02-bg.jpg")
+    &.section07
+      background-image: url("/images/ncdc/mainSection07-bg.jpg")
+      > img
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        z-index: -1
+  .section02 .flex
+    justify-content: center
+    .calendar
+      width: 100%
+      margin-right: 80px
+    .tableBox
+      width: 100%
+      .contentsTable
+        height: 100%
+        border-color: $gray09
+        tr
+          +borderBottom(1px,$black02)
+        th,td
+          border: 0
+          background: none
+  .section03
+    padding-top: 0
+    .sectionTitle
+      position: absolute
+      top: 230px
+      left: 50%
+      transform: translateX(-50%)
+      margin-top: 0
+      z-index: 1
+    .fullBox
+      width: 100%
+      height: 100%
+      ul
+        display: flex
+        height: 100%
+        li
+          position: relative
+          width: 100%
+          display: flex
+          align-items: center
+          justify-content: center
+          text-align: center
+          padding-top: 160px
+          color: $primary
+          &::after
+            content: ""
+            position: absolute
+            top: 0
+            right: 0
+            bottom: 0
+            width: 1px
+            background-color: rgba(0,0,0,0.08)
+            &:last-child::after
+              display: none
+          .cover
+            position: absolute
+            top: 0
+            left: 0
+            right: 0
+            bottom: 0
+            background-color: $primary
+            opacity: 0
+            z-index: 0
+            transition: .5s
+
+          .inner
+            position: relative
+            z-index: 1
+          .icon
+            width: 140px
+            height: 140px
+            margin: auto
+            background:
+              size: cover
+              position: 50% 50%
+              repeat: no-repeat
+            transition: 0.4s
+          &.box01 .icon
+            background-image: url("../images/ncdc/mainSection03-icon01-on.svg")
+          &.box02 .icon
+            background-image: url("../images/ncdc/mainSection03-icon02-on.svg")
+          &.box03 .icon
+            background-image: url("../images/ncdc/mainSection03-icon03-on.svg")
+          &.box01:hover .icon,
+          &.box01.on .icon
+            background-image: url("../../assets/images/mainSection03-icon01.svg")
+          &.box02:hover .icon,
+          &.box02.on .icon
+            background-image: url("../../assets/images/mainSection03-icon02.svg")
+          &.box03:hover .icon,
+          &.box03.on .icon
+            background-image: url("../../assets/images/mainSection03-icon03.svg")
+          dl
+            margin-top: 12px
+            dd
+              margin-top: 32px
+          .btn
+            width: 134px
+            margin: 32px auto 0 auto
+            background-color: $primary
+          &:hover,
+          &.on
+            .cover
+              opacity: 0.9
+            .btn
+              background-color: transparent
+            dt
+              color: $white
+  .section04
+    .sectionTitle
+      margin-bottom: 0
+    .tab
+      ul
+        justify-content: flex-start
+        li
+          width: 141px
+          button
+            width: 100%
+            color: $primary
+            border-color: $primary
+          &.on
+            button 
+              color: $white
+    .mainContentsBox
+      position: relative
+      .btnDetail
+        position: absolute
+        top: 0
+        right: 0
+        .btn
+          color: $gray09
+          border-color: $gray03
+    .dataTypeWrap
+      display: flex
+      dl
+        position: relative
+        padding-top: 32px
+      dt
+        position: absolute
+        top: 0
+        left: 0
+        right: 0
+        +headline06
+        color: $gray09
+        margin-bottom: 8px
+        display: flex
+        justify-content: space-between
+        > span img
+          margin-top: -2px
+        .switcher
+          display: flex
+          align-items: center
+          +subtitle02
+          color: $gray09
+          input[type="checkbox"]:checked + label
+            background-color: $primary
+      dd
+        height: 100%
+      .checkbox
+        position: absolute
+        top: 12px
+        right: 12px
+        input:checked + label:before
+          background-color: $white02
+          border: none
+      .dataType01
+        width: 47%
+        margin-right: 24px
+        ul
+          display: flex
+          flex-wrap: wrap
+          margin: -6px
+          li
+            width: 33.33%
+            padding: 6px
+            &:nth-child(4),
+            &:nth-child(5)
+              width: 50%
+            a
+              display: flex
+              flex-direction: column
+              justify-content: center
+              align-items: center
+              background-color: #fff
+              height: 138px
+              position: relative
+              +subtitleBold01
+              +border(1px,$gray02)
+              box-shadow: 16px 20px 32px -2px rgba(0, 0, 0, 0.06)
+              .iconBox
+                width: 56px
+                height: 56px
+                background:
+                  repeat: no-repeat
+                  size: cover
+                  position: 50% 50%
+            &:nth-child(1) .iconBox
+              background-image: url("/images/ncdc/dataType-icon01.svg")
+            &:nth-child(2) .iconBox
+              background-image: url("/images/ncdc/dataType-icon02.svg")
+            &:nth-child(3) .iconBox
+              background-image: url("/images/ncdc/dataType-icon03.svg")
+            &:nth-child(4) .iconBox
+              background-image: url("/images/ncdc/dataType-icon08.svg")
+            &:nth-child(5) .iconBox
+              background-image: url("/images/ncdc/dataType-icon04.svg")
+            &.on
+              a
+                background-color: $primary
+                p
+                  color: $white
+            &:nth-child(1).on .iconBox
+              background-image: url("/images/ncdc/dataType-icon01-on.svg")
+            &:nth-child(2).on .iconBox
+              background-image: url("/images/ncdc/dataType-icon02-on.svg")
+            &:nth-child(3).on .iconBox
+              background-image: url("/images/ncdc/dataType-icon03-on.svg")
+            &:nth-child(4).on .iconBox
+              background-image: url("/images/ncdc/dataType-icon08-on.svg")
+            &:nth-child(5).on .iconBox
+              background-image: url("/images/ncdc/dataType-icon04-on.svg")
+      .dataType02
+        ul
+          display: flex
+          height: 100%
+          li
+            width: 100%
+            margin-right: 12px
+            &:last-child
+              margin-right: 0
+            a
+              position: relative
+              display: block
+              padding: 24px
+              height: 100%
+              +border(1px, $gray02)
+              background:
+                repeat: no-repeat
+                size: cover
+                position: 100% 100%
+                color: $white
+              box-shadow: 16px 20px 32px -2px rgba(0, 0, 0, 0.06)
+              .tit
+                +headline04
+                color: $primary
+              .sub
+                +subtitle02
+                color: $gray05
+                word-break: keep-all
+              .icon
+                position: absolute
+                bottom: 12px
+                right: 12px
+                width: 88px
+                height: 88px
+                background:
+                  repeat: no-repeat
+                  position: 50%
+                  size: cover
+            &:nth-child(1) a
+              background-image: url("/images/ncdc/dataType02-bg01.jpg")
+              .icon
+                background-image: url("/images/ncdc/dataType-icon05.svg")
+            &:nth-child(2) a
+              background-image: url("/images/ncdc/dataType02-bg02.jpg")
+              .icon
+                background-image: url("/images/ncdc/dataType-icon06.svg")
+            &:nth-child(3) a
+              background-image: url("/images/ncdc/dataType02-bg03.jpg")
+              .icon
+                background-image: url("/images/ncdc/dataType-icon07.svg")
+            &.on
+              .tit
+                color: $white
+              .sub
+                color: $white08
+            &:nth-child(1).on a
+              background-image: url("/images/ncdc/dataType02-bg01-on.jpg")
+              .icon
+                background-image: url("/images/ncdc/dataType-icon05-on.svg")
+            &:nth-child(2).on a
+              background-image: url("/images/ncdc/dataType02-bg02-on.jpg")
+              .icon
+                background-image: url("/images/ncdc/dataType-icon06-on.svg")
+            &:nth-child(3).on a
+              background-image: url("/images/ncdc/dataType02-bg03-on.jpg")
+              .icon
+                background-image: url("/images/ncdc/dataType-icon07-on.svg")
+  .section05
+    .bgIcon
+      position: absolute
+      top: 0
+      left: 0
+      z-index: 0
+    .galleryList
+      ul 
+        margin: 0 -12px
+        li
+          padding: 0 12px
+          a
+            box-shadow: 6px 16px 22px -2px rgba(0, 0, 0, 0.04)
+            background-color: $white
+            .thumb
+              .hvBox
+                position: absolute
+                top: 0
+                left: 0
+                right: 0
+                bottom: 0
+                background-color: $black04
+                opacity: 0
+                z-index: 2
+                span
+                  position: absolute
+                  top: 50%
+                  left: 50%
+                  transform: translate(-50%,-50%)
+                  font-size: 18px
+                  font-weight: 700
+                  color: $white
+                  img
+                    display: inline
+                    margin-top: -2px
+                    margin-left: 6px
+            .txtBox
+              position: relative
+              padding: 48px 32px
+            .icon
+              position: absolute
+              top: 12px
+              right: 12px
+              width: 28px
+              height: 28px
+              background:
+                repeat: no-repeat
+                size: cover
+                position: 50% 50%
+                image: url("/images/ncdc/icon-link.svg")
+              margin-top: 0
+            &:hover
+              background-color: $primary
+              .thumb .hvBox
+                opacity: 1
+              .icon
+                background-image: url("/images/ncdc/icon-link02.svg")
+    .slickProgressbar
+      margin-top: 48px
+      background-color: $black01
+      span
+        background-color: $primary
+    .slick-arrow
+      position: absolute
+      top: 50%
+      transform: translateY(-50%)
+      box-shadow: 16px 20px 32px -2px rgba(0,0,0,0.06)
+      background-color: $white
+      &.slickPrev
+        left: -80px
+      &.slickNext
+        right: -80px
+  .section06
+    padding-top: 160px
+    .tabContentsWrap
+      position: relative
+    .tab
+      position: relative
+      ul
+        justify-content: flex-start
+        li
+          width: 141px
+          button
+            width: 100%
+            background: none
+            color: $primary
+            +border(1px, $primary)
+          &.on button
+            background-color: $primary
+            color: $white
+    .btnDetail
+      position: absolute
+      top: 0
+      right: 0
+      span
+        display: none
+    .galleryList
+      position: relative
+      overflow: hidden
+      margin: -12px
+      ul
+        flex-wrap: nowrap
+        overflow: visible
+        li
+          width: 16.66%
+          padding: 12px
+          a
+            border: 0
+            background-color: $white
+            .txtBox
+              span
+                display: block
+                color: $gray05
+                margin-top: 8px
+    .btnMore
+      position: absolute
+      top: 0
+      right: 0
+      +border(1px, $primary)
+      width: 48px
+      height: 48px
+      padding: 12px
+      img
+        width: 100%
+      & > span
+        display: none
+    .h3
+      color: $primary
+      margin-bottom: 12px
+      margin-top: 68px
+    .galleryList02
+      ul li a
+        background: none
+        .txtBox
+          background-color: $white
+          p
+            color: $gray09
+            +ellipsis(1)
+          span
+            color: $gray06
+            margin-top: 0
+      .btnMore
+        top: auto
+        bottom: 100%
+        margin-bottom: 12px
+        & > span
+          display: none
+    .mainBoardList
+      +borderTop(1px,$gray09)
+      ul li
+        display: flex
+        justify-content: space-between
+        padding: 14px 24px
+        color: $gray09
+        +borderBottom(1px,$black02)
+        a
+          width: calc(100% - 100px)
+          +ellipsis(1)
+          .labels
+            display: inline-block
+            margin-right: 16px
+            .announce
+              height: 24px
+              padding: 0 8px
+              margin-right: 8px
+            img
+              margin-top: 3px
+        .date
+          opacity: 0.6
+  .section07
+    .btns
+      display: flex
+      justify-content: space-between
+      align-items: center
+      max-width: 967px
+      margin: auto
+      text-align: center
+      margin-bottom: 28px
+      > a
+        display: flex
+        align-items: center
+        //gap: 16px
+        color: $white
+    .mediaSlide
+      ul.slider
+        padding-bottom: 42px
+        .slide
+          width: 638px
+          margin: 0 40px
+        .thumb
+          position: relative
+          &::after
+            content: ""
+            position: absolute
+            top: 0
+            left: 0
+            right: 0
+            bottom: 0
+            background-color: $black01
+            z-index: 0
+          .labels
+            position: absolute
+            top: 0
+            left: 0
+            z-index: 1
+        .txtBox
+          display: flex
+          justify-content: space-between
+          color: $white
+          margin-top: 16px
+          .tit
+            width: calc(100% - 118px)
+            +ellipsis(1)
+          .date
+            opacity: 0.5
+        
+.dataSearchWrap
+  display: flex
+  flex-wrap: wrap
+  background-color: $white
+  position: relative
+  .tit
+    display: flex
+    align-items: center
+    img
+      margin-right: 8px
+  .mobileBtn
+    display: none
+  .popularBox
+    width: 282px
+    padding: 32px 40px
+    +border(1px,$gray03)
+    .h5
+      color: $primary
+      +borderBottom(1px, $black04)
+      padding-bottom: 12px
+    ul
+      li
+        display: flex
+        align-items: center
+        padding: 12px 0
+        +borderBottom(1px, $gray02)
+        overflow: hidden
+        position: relative
+        &::after
+          content: ""
+          position: absolute
+          top: 0
+          bottom: 0
+          right: 0
+          width: 12px
+          background: linear-gradient(270deg, #fff 0%, rgba(255,255,255,0) 100%)
+        &:last-child
+          border-bottom: 0
+        span
+          display: flex
+          justify-content: center
+          align-items: center
+          width: 56px
+          height: 34px
+          +subtitle01
+          +radius(20px)
+          margin-right: 12px
+          &.rank
+            color: $white
+            &.rank01
+              background-color: $secondary600
+            &.rank02
+              background-color: $primary
+            &.rank03
+              background-color: $primary400
+        a
+          width: calc(100% - 72px)
+          +headline06
+          color: $gray07
+          white-space: nowrap
+          transition: .3s
+          overflow: hidden
+          &:hover
+            color: $secondary
+            text-decoration: underline
+          em
+            font-style: normal
+            position: relative
+            left: 0
+  .dataSearchBox
+    width: calc(100% - 282px)
+    padding: 32px 40px
+    background-color: $primary
+    .h5
+      color: $white
+      +borderBottom(1px, $white04)
+      padding-bottom: 12px
+      margin-bottom: 32px
+    .searchBox
+      position: relative
+      +radius(5px)
+      overflow: hidden
+      position: relative
+      display: flex
+      .inputText
+        width: calc(100% - 140px)
+        height: 74px
+        +headline04
+      .btn
+        width: 140px
+        height: auto
+        +headline04
+        img
+          width: 24px
+  .dataRecommend
+    margin-top: 48px
+    .h6
+      color: $white06
+      margin-bottom: 16px
+    .recommend
+      display: flex
+      flex-wrap: wrap
+      margin: -6px
+      a
+        padding: 8px 14px
+        +border(1px,$white)
+        font-size: 16px
+        color: $white
+        +radius(20px)
+        position: relative
+        z-index: 1
+        overflow: hidden
+        opacity: .6
+        margin: 6px
+        &::before
+          content: ""
+          position: absolute
+          top: 0
+          left: 0
+          bottom: 0
+          z-index: -1
+          width: 0
+          background-color: $secondary
+        &:hover
+          opacity: 1
+          color: $white
+          border-color: $secondary
+          &::before
+            transition: .3s ease-out
+            width: 100%
+  .btnDetail
+    position: absolute
+    top: -68px
+    right: 0
+.footer.swiper-slide
+  .footerBanner
+    display: block
+.boardEmpty
+  padding: 90px 20px
+  background-color: rgba(0,0,0,0.02)
+  text-align: center
+  p
+    font-size: 16px
+    font-weight: 500
+    color: $gray07
+  &.boardEmpty02
+    padding: 64px 20px
+.mainContents
+  .section06
+    .btnMore
+      top: -60px
+    .galleryWrap
+      position: relative
+      .btnMore
+        top: -48px
+    .tabContents > ol > li
+      position: relative
