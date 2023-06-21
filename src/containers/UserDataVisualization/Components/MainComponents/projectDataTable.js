@@ -104,7 +104,7 @@ const ProjectDataTable = () => {
                     >
                         back
                     </button>
-                    <button onClick={() => history.push(`/visualise/circos/${params.id}`)} className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
+                    <button onClick={() => history.push(`/visualise-singledata/circos/${params.id}`)} className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
                     >
                         visualize
                     </button>

@@ -3,20 +3,20 @@ import DataTable from "react-data-table-component";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import LoaderCmp from "../../../Common/Loader";
+import LoaderCmp from "../../Common/Loader";
 import {
-  clearNewFileUploadState
-} from "../../../../actions/api_actions";
+    clearMultiFIleUploadState
+} from "../../../actions/api_actions";
 import { FormattedMessage } from "react-intl";
 
-import warningImage from '../../../../assets/images/warning.png'
+import warningImage from '../../../assets/images/warning.png'
 
 
 
 
 function Modal({ showModal, setShowModal}) {
   const verificationResponse = useSelector(
-    (data) => data.homeReducer.uploadClinicalColumns
+    (data) => data.homeReducer.multiFileUploadData
   );
   return (
     <>
@@ -43,8 +43,45 @@ function Modal({ showModal, setShowModal}) {
                   </button>
                 </div>
                 {/*body*/}
-                <div className="relative p-6 flex-auto">
+                {
+                    verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'allFileColumns' && 
+                    verificationResponse['res'].map((item,index)=>{
+                        return (
+                        <div key={index}>
+                            <div className="uppercase m-auto" key={Math.random()*102323}>{`Error in File ${item['tab']}: ${item['message']}`}</div>
+                        </div>)
+                    })
+                }
+                {verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'clinicalInforamtionFile' && 
+                  <div className="relative p-6 flex-auto">
                   <div className="my-4 text-2xl leading-relaxed">
+                    
+                    {
+                      Object.keys(verificationResponse["clinicalRows"]).map(filename => {
+                        return (
+                          <div key={Math.random}>
+                            <div className="uppercase underline" >{filename}</div>
+                            {
+                              Object.keys(verificationResponse["clinicalRows"][filename]).map((item,index) => {
+                                return(
+                                <div className="capitalize ml-2 m-2" key={Math.random}>
+                                <p>{verificationResponse["clinicalRows"][filename][index]}</p>
+                                <p></p>
+                                </div> 
+                                )
+                              })
+                            }
+                          </div>
+                        )
+                      })
+                    }
+                  </div>
+                </div>
+                }
+                {verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'clinicalInforamtionFile' && 
+                  <div className="relative p-6 flex-auto">
+                  <div className="my-4 text-2xl leading-relaxed">
+                    
                     {verificationResponse && "columnMessages" in verificationResponse &&
                       Object.keys(verificationResponse["columnMessages"]).map(filename => {
                         return (
@@ -66,6 +103,34 @@ function Modal({ showModal, setShowModal}) {
                     }
                   </div>
                 </div>
+                }
+
+                <div className="relative p-6 flex-auto">
+                  <div className="my-4 text-2xl leading-relaxed">
+                    
+                    {verificationResponse && "columnMessages" in verificationResponse &&
+                      Object.keys(verificationResponse["columnMessages"]).map(filename => {
+                        return (
+                          <div key={filename}>
+                            <div className="uppercase underline " key={filename}>{filename}</div>
+                            {
+                              Object.keys(verificationResponse["columnMessages"][filename]).map(item => {
+                                return(verificationResponse["columnMessages"][filename][item] !== '' ?
+                                <div className="capitalize ml-2 m-2" key={item}>
+                                <p>{item}: {verificationResponse["columnMessages"][filename][item]}</p>
+                                <p></p>
+                                </div> 
+                                : null)
+                              })
+                            }
+                          </div>
+                        )
+                      })
+                    }
+                  </div>
+                </div>
+
+
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
                   <button
@@ -87,7 +152,7 @@ function Modal({ showModal, setShowModal}) {
 }
 
 
-function FileProjectDataTable({ updateComponentNumber }) {
+function MultiDataTable({updateComponentNumber}) {
   const dispatch = useDispatch();
   const [rowData, setRowData] = useState([]);
   const [colData, setColData] = useState([]);
@@ -98,7 +163,10 @@ function FileProjectDataTable({ updateComponentNumber }) {
   const [showModal, setShowModal] = useState(false)
   let history = useHistory();
   const verificationResponse = useSelector(
-    (data) => data.homeReducer.uploadClinicalColumns
+    (data) => data.homeReducer.multiFileUploadData
+  );
+  const fileUploadStatus = useSelector(
+    (data) => data.homeReducer.fileUploadStatus
   );
 
   const tabDropdownTable = (tab) => {
@@ -193,7 +261,7 @@ function FileProjectDataTable({ updateComponentNumber }) {
           setRowData(rowdata);
         }
       }
-      let projectResponse = verificationResponse["project_details"];
+      let projectResponse = 'project_details' in verificationResponse ?verificationResponse["project_details"]:{};
       if ("id" in projectResponse) {
         setProjectId(projectResponse["id"]);
       } else {
@@ -226,7 +294,7 @@ function FileProjectDataTable({ updateComponentNumber }) {
            className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
           type="button"
           onClick={() => {
-            updateComponentNumber(1);
+            updateComponentNumber(0)
           }}
           >
           <FormattedMessage id="Back" defaultMessage="Back" />
@@ -246,8 +314,8 @@ function FileProjectDataTable({ updateComponentNumber }) {
         {projectId !== 0 && (
           <button
             onClick={() => {
-              dispatch(clearNewFileUploadState())
-              history.push(`/visualise-singledata/${navTabIs}/${projectId}`)}}
+              dispatch(clearMultiFIleUploadState())
+              history.push(`/visualise-multidata/home/${projectId}`)}}
             className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
           >
             <FormattedMessage id="Visualize" defaultMessage="Visualize" />
@@ -278,8 +346,16 @@ function FileProjectDataTable({ updateComponentNumber }) {
           </div>
         )}
       </div>
+      <div>
+        {fileUploadStatus && fileUploadStatus['failed'] && 
+        <div>
+            <p>Error</p>
+            </div>
+            }
+    </div>
+ 
     </div>
   );
 }
 
-export default FileProjectDataTable;
+export default MultiDataTable;

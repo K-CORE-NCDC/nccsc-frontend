@@ -7,6 +7,8 @@ import Multiselect from "multiselect-react-dropdown";
 import NoContentMessage from "../../Common/NoContentComponent";
 import { FormattedMessage } from "react-intl";
 import html2canvas from 'html2canvas';
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 export default function Box({
   width,
@@ -15,7 +17,6 @@ export default function Box({
   setToFalseAfterScreenCapture,
 }) {
   const reference = useRef();
-
   const [watermarkCss, setWatermarkCSS] = useState("");
   const [loader, setLoader] = useState(false);
   const [inputState, setInputState] = useState({});
@@ -24,11 +25,29 @@ export default function Box({
   const [showBoxPlot, setShowBoxPlot] = useState(false);
   const [noContent, setNoContent] = useState(false);
   const [viewType, setViewType] = useState("gene_vl");
-  const [tableType, setTableType] = useState("proteome");
+  const [tableType, setTableType] = useState("");
   const [gene, setGene] = useState("");
   const [genes, setGenes] = useState("");
   const [boxJson, setboxJson] = useState(null)
   const [noGeneData, setNoGeneData] = useState(true)
+  const [alltabList, setAllTabList] = useState({}); 
+
+  let { project_id } = useParams();
+  const tabList = useSelector(
+    (data) => data.dataVisualizationReducer
+  );
+
+  useEffect(()=>{
+    if('userProjectsDataTable' in tabList ){
+      setAllTabList(tabList.userProjectsDataTable)
+      if(tabList.userProjectsDataTable['proteome']){
+        setTableType('proteome')
+      }
+      else{
+        setTableType('mutation')
+      }
+    }
+    },[tabList])
 
   useEffect(() => {
     if (inputData && "genes" in inputData) {
@@ -294,8 +313,9 @@ export default function Box({
     <div className="grid">
       <div className="grid grid-cols-2">
         <div className="mx-5 sm:col-span-2 xs:col-span-2 lg:col-span-1">
+          
           <div className="flex m-2 w-100">
-            <button
+            { project_id === undefined && <button
               onClick={(e) => changeType(e, "proteome")}
               name="type"
               className="rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 sm:p-2 xl:py-7 lg:px-10 md:px-10 sm:px-8 sm:w-48 md:w-56  lg:w-56 xl:w-80 sm:text-xl lg:text-2xl sm:h-20 lg:h-24 rounded
@@ -303,7 +323,19 @@ export default function Box({
             >
               <FormattedMessage id="TumorVsNormal" defaultMessage="Tumor Vs Normal" />
             </button>
-            <button
+            }
+            
+            {project_id !== undefined && alltabList['proteome']&& <button
+              onClick={(e) => changeType(e, "proteome")}
+              name="type"
+              className="rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 sm:p-2 xl:py-7 lg:px-10 md:px-10 sm:px-8 sm:w-48 md:w-56  lg:w-56 xl:w-80 sm:text-xl lg:text-2xl sm:h-20 lg:h-24 rounded
+              font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 ease-in-out transition xs:p-3 xs:text-sm"
+            >
+              <FormattedMessage id="TumorVsNormal" defaultMessage="Tumor Vs Normal" />
+            </button>
+            }
+
+            { project_id === undefined && <button
               onClick={(e) => changeType(e, "mutation")}
               name="type"
               className="rounded-l-none  hover:scale-110 focus:outline-none flex justify-center xl:py-7  lg:p-5 sm:p-2 sm:w-40 md:w-48 lg:w-56 sm:text-xl lg:text-2xl sm:h-20 lg:h-24 rounded font-bold cursor-pointer hover:bg-teal-200
@@ -311,7 +343,19 @@ export default function Box({
             >
               <FormattedMessage id="VariantType" defaultMessage="Variant Type" />
             </button>
+            }
+
+            {project_id !== undefined && alltabList['dna_mutation']&& <button
+              onClick={(e) => changeType(e, "mutation")}
+              name="type"
+              className="rounded-l-none  hover:scale-110 focus:outline-none flex justify-center xl:py-7  lg:p-5 sm:p-2 sm:w-40 md:w-48 lg:w-56 sm:text-xl lg:text-2xl sm:h-20 lg:h-24 rounded font-bold cursor-pointer hover:bg-teal-200
+              bg-teal-100 border duration-200 ease-in-out border-teal-600 transition px-10 xs:p-3 xs:text-sm"
+            >
+              <FormattedMessage id="VariantType" defaultMessage="Variant Type" />
+            </button>}
+
           </div>
+
         </div>
 
         <div className="flex  text-left">

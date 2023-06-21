@@ -3,22 +3,21 @@ import FileUpload from './Components/MainComponents/NewClinicalFileUpload'
 import FileUploadDropdowncomponent from "./Components/MainComponents/FileUploadDropdowncomponent";
 import FileProjectDataTable from "./Components/MainComponents/FileProjectDataTable";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { getCookie } from "../../containers/getCookie";
 export default function DataVisualization() {
   let history = useHistory();
-  const [componentNumber, setComponentNumber] = useState(0)
+  const [componentNumber, setComponentNumber] = useState()
   const hideupload = false
   const showLoginForm = false
   const fileUploadCallBack = (d_) => {
   }
-  const loginResponse = useSelector((data) => data.homeReducer.login_data);    
-
+  
   useEffect(() => {
-    if(loginResponse && 'is_login' in loginResponse &&  loginResponse['is_login'] === true){
-    
+    if(getCookie('is_login')){
+      setComponentNumber(0)
     }
     else{
-      history.push("/login"  )
+      history.push("/login")
     }
   }, [history])
 

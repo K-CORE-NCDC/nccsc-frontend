@@ -2,11 +2,7 @@ import { FormattedMessage } from 'react-intl';
 import React from 'react';
 import config from './config';
 import { getCookie } from './containers/getCookie';
-import { useSelector } from "react-redux";
 
-
-const sessionAuth = getCookie('sessionId')
-// console.log('menu',loginResponse)
 const login = {
   id: 'login',
   title: <FormattedMessage id="Login" defaultMessage="Login" />,
@@ -103,7 +99,7 @@ const childMenu = {
             title: <FormattedMessage id="DataVisualization" defaultMessage="Data Visualization" />,
             type: 'item',
             icon: 'fa fa-dashboard',
-            url: '/visualise/circos/',
+            url: '/visualise/home/',
             children: [],
           },
         ],
@@ -212,26 +208,19 @@ const childMenu = {
     ],
   },
 };
-childMenu.social.items.push(logout);
-childMenu.social.items.push(login);
-// if (sessionAuth)
-//  {
-//   // const jwt = parseJwt(sessionAuth);
-//   childMenu.social.items.push(logout);
-//   if (getCookie('superuser'))
-//   {
-//     childMenu.social.items.push(superAdmin);
-//   }
-//   }
-//   else
-//   {
-//   childMenu.social.items.push(login);
-//   }
+// childMenu.social.items.push(logout);
+// childMenu.social.items.push(login);
+if (getCookie('is_login') && getCookie('is_login') === 'True' )
+ {
+  childMenu.social.items.push(logout);
+  if (getCookie('superuser'))
+  {
+    childMenu.social.items.push(superAdmin);
+  }
+  }
+  else
+  {
+  childMenu.social.items.push(login);
+  }
 
 export default childMenu;
-
-
-
-
-
-// GetData()

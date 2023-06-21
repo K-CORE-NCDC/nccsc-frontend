@@ -165,7 +165,6 @@ export default function Web(props) {
 
   useEffect(() => {
 
-    let sessionAuth = ''
     let userid = ''
     let category = 'Others'
     if(window.location.href.substring(window.location.href.lastIndexOf('/')+1)){
@@ -174,13 +173,8 @@ export default function Web(props) {
     else if (['circos', 'OncoPrint','lollipop','volcano', 'heatmap', 'survival','correlation','CNV','box','fusion'].some(r=> window.location.href.split("/").indexOf(r) >= 0)){
       category = 'DataVisualization'
     }
-    if(getCookie('sessionId') && getCookie('sessionId') !== undefined ){
-       sessionAuth = getCookie('sessionId');
-       if (sessionAuth) {
-        if(getCookie('username')){
-          userid = getCookie('username')
-        }
-      }
+    if(getCookie('is_login') && getCookie('is_login') !== null ){
+        userid = getCookie('username')
     }
     else{
       if(getCookie('sessionId') === undefined){
@@ -368,7 +362,7 @@ export default function Web(props) {
         p = id[0].split("/")[1];
       }
       let pp = pid.split("/")[1]
-      if (menu[m].props.path.includes(pp)) {
+      if (menu[m].props.path.split("/").includes(pp)) {
         let name = menu[m].props.name;
         let childname = menu[m].props.childname;
        
@@ -394,6 +388,7 @@ export default function Web(props) {
             <span className="mx-2">|</span>
           </li>
         );
+
         if(window.location.href.includes('visualise')){
           if(routeLocation.pathname.split("/")[3] !== ''){
             html.push(<li key={m + "child"}>MyData Visualization</li>);

@@ -3,7 +3,23 @@ import { FormattedMessage } from 'react-intl';
 const DataSummary = React.lazy(() => import('./containers/DataSummary'));
 const Login = React.lazy(() => import('./containers/Login/login'));
 const DataVisualization = React.lazy(() => import('./containers/DataVisualisation'));
-const UserDataVisualization = React.lazy(() => import('./containers/UserDataVisualization'));
+
+
+// User Datavisualisation
+// const UserDataVisualization = React.lazy(() => import('./containers/UserDataVisualization'));
+const UserDataVisualization = React.lazy(() => import('./containers/UserDataVisualization/mainindex'));
+
+//Single Data User Visulaization
+const SingleDataUploadIndex = React.lazy(() => import('./containers/UserDataVisualization/SingleDataVisualization/SingleDataUploadIndex'));
+const SingleDataAnalysis = React.lazy(() => import('./containers/UserDataVisualization/SingleDataVisualization/SingleDataAnalysis'));
+
+// Multi Data User Visulaization
+const MultiDataVisualizationHome = React.lazy(() => import('./containers/UserDataVisualization/MultiDataVisualization/HomeComponent'));
+const MultiDataVisualizationUploadIndex = React.lazy(() => import('./containers/UserDataVisualization/MultiDataVisualization/MultiDataUploadIndex'));
+const MultiDataAnalysis = React.lazy(() => import('./containers/UserDataVisualization/MultiDataVisualization/MultiDataAnalysis'));
+
+
+
 const Logout = React.lazy(() => import('./containers/Login/logout'));
 const Terms = React.lazy(() => import('./containers/Signup/TermsandConditions'));
 const Join = React.lazy(() => import('./containers/Signup/MemberShip'));
@@ -50,14 +66,6 @@ const route = [
     component: DataSummary,
   },
   {
-    path: '/visualise/:tab?/:project_id?/',
-    exact: true,
-    type: 'unauth',
-    name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
-    childname: <FormattedMessage id="DataVisualization" defaultMessage="DataVisualization" />,
-    component: DataVisualization,
-  },
-  {
     path: '/userdata/',
     exact: true,
     type: 'unauth',
@@ -66,13 +74,57 @@ const route = [
     component: UserDataVisualization,
   },
   {
-    path: '/introduce/',
+    path: '/visualise/:tab?/:project_id?/',
     exact: true,
     type: 'unauth',
-    name: <FormattedMessage id="Introduce" defaultMessage="Introduction" />,
-    childname: <FormattedMessage id="BusinessIntroduce" defaultMessage="Business Introduction" />,
-    component: Introduce,
+    name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
+    childname: <FormattedMessage id="DataVisualization" defaultMessage="DataVisualization" />,
+    component: DataVisualization,
   },
+
+  {
+    path: '/visualise-singledata/:tab?/:project_id?/',
+    exact: true,
+    type: 'unauth',
+    name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
+    childname: <FormattedMessage id="SingleDataVisualization" defaultMessage="Single Data Visualization" />,
+    component: SingleDataAnalysis,
+  },
+  {
+    path: '/singledata-upload/:tab?/',
+    exact: true,
+    type: 'unauth',
+    name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
+    childname: <FormattedMessage id="SingleDataVisualization" defaultMessage="Single Data Visualization" />,
+    component: SingleDataUploadIndex,
+  },
+  {
+    path: '/visualise-multidata/:tab?/:project_id?/',
+    exact: true,
+    type: 'unauth',
+    name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
+    childname: <FormattedMessage id="MultiDataVisualization" defaultMessage="Multi Data Visualization" />,
+    component: MultiDataAnalysis,
+  },
+
+  {
+    path: '/multidatavisualization/',
+    exact: true,
+    type: 'unauth',
+    name: <FormattedMessage id="Home" defaultMessage="Home" />,
+    childname: <FormattedMessage id="MultiDataVisualization" defaultMessage="Multi Data Visualization" />,
+    component: MultiDataVisualizationHome,
+  },
+
+  {
+    path: '/newmultidataproject/',
+    exact: true,
+    type: 'unauth',
+    name: <FormattedMessage id="Home" defaultMessage="Home" />,
+    childname: <FormattedMessage id="MultiDataVisualization" defaultMessage="Multi Data Visualization" />,
+    component: MultiDataVisualizationUploadIndex,
+  },
+
   {
     path: '/pipeline/',
     exact: true,

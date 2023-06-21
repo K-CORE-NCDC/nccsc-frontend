@@ -438,6 +438,8 @@ export default function FileUpload({ updateComponentNumber}) {
     }
   }
   const on_upload = () => {
+    console.log(uploadFile);
+    console.log(projectName);
     dispatch(newFileUpload(uploadFile, projectName))
     updateComponentNumber(1)
     for (let key in uploadFile) {
@@ -455,7 +457,7 @@ export default function FileUpload({ updateComponentNumber}) {
         on_upload()
       }
       if (formSbubmitButtonText === 'visualize') {
-        history.push(`/visualise/circos/${response['serializer'].id}`)
+        history.push(`/visualise-singledata/circos/${response['serializer'].id}`)
       }
     } else {
       projectNameRef.current.focus()
@@ -558,7 +560,7 @@ export default function FileUpload({ updateComponentNumber}) {
           >
             back to upload
           </button>
-          <button onClick={() => history.push(`/visualise/circos/${response['serializer'].id}`)} className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
+          <button onClick={() => history.push(`/visualise-singledata/circos/${response['serializer'].id}`)} className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
           >
             visualize
           </button>

@@ -343,7 +343,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
       dataJson['genes'] = selectedGene
     } else if (type === 'proteome') {
       dataJson['genes'] = genes
-    } else if (type === 'phospo') {
+    } else if (type === 'phospho') {
       dataJson['genes'] = selectedGene
     }
     setOption([])
@@ -418,7 +418,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
       dataJson['genes'] = [gene]
     } else if (tableType === 'proteome') {
       dataJson['genes'] = genes
-    } else if (tableType === 'phospo') {
+    } else if (tableType === 'phospho') {
       dataJson['genes'] = [gene]
     }
 
@@ -460,7 +460,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
       dataJson['clinicalFilters'] = cf
       dataJson['view'] = viewType
 
-      if ((tableType === "methylation") || (tableType === "phospo")) {
+      if ((tableType === "methylation") || (tableType === "phospho")) {
         dataJson['genes'] = selectedGene
       }
       dataJson['heat_type'] = mainTab
@@ -498,7 +498,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
       dataJson['view'] = viewType
       dataJson['heat_type'] = mainTab
       // dataJson['genes'] = selectedGene
-      if ((tableType === "methylation") || (tableType === "phospo")) {
+      if ((tableType === "methylation") || (tableType === "phospho")) {
         dataJson['genes'] = selectedGene
       }
       let return_data = HeatmapInformation('POST', dataJson)
@@ -716,7 +716,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
                   </button>}
 
                 {project_id !== undefined && alltabList['phospho'] &&
-                  <button onClick={e => changeType(e, 'phospo')} name='type' className="rounded-l-none border-l-0
+                  <button onClick={e => changeType(e, 'phospho')} name='type' className="rounded-l-none border-l-0
                 hover:scale-110 focus:outline-none flex justify-center p-5
                 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl xs:text-sm xs:p-3
                 text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
@@ -724,7 +724,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
                 }
 
                 {project_id === undefined &&
-                  <button onClick={e => changeType(e, 'phospo')} name='type' className="rounded-l-none border-l-0
+                  <button onClick={e => changeType(e, 'phospho')} name='type' className="rounded-l-none border-l-0
                   hover:scale-110 focus:outline-none flex justify-center p-5
                   rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl xs:text-sm xs:p-3
                   text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
@@ -748,7 +748,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
               />
 
             </div>
-            {tableType !== 'methylation' && tableType !== 'phospo' &&
+            {tableType !== 'methylation' && tableType !== 'phospho' &&
               <div className="ml-3 flex-wrap  text-left lg:w-5/12 xl:w-5/12 2xl:w-4/12 text-left text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md">
                 <FormattedMessage id="View_By_heatmap" defaultMessage='View By' />:
                 <div className="flex m-2 w-100">
@@ -761,7 +761,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
                 </div>
               </div>
             }
-            {(tableType === 'methylation' || tableType === 'phospo') &&
+            {(tableType === 'methylation' || tableType === 'phospho') &&
               <div className='mx-5 flex-wrap text-left'>
                 {inputGene &&
                   <>
