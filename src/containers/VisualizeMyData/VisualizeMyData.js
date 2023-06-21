@@ -30,7 +30,6 @@ export const VisualizeMyData = () => {
                 <a className="btn btnDetail" href="/visualise-singledata/home/">Analyze
                   <img src={arrow_icon} alt="" />
                 </a>
-                {/* <Link className="btn btnDetail" to="/visualise-singledata/home/"><img src={arrow_icon} alt="" />Analyze</Link> */}
               </div>
 
             </li>

@@ -90,7 +90,7 @@ const visualize = route.map((route, index) => {
 });
 const home = route.map((route, index) => {
 
-  if (route?.category === 'home') {
+  // if (route?.category === 'home') {
     return route.component ? (
       <Route
         key={index}
@@ -101,7 +101,7 @@ const home = route.map((route, index) => {
         render={(props) => <route.component {...props} />}
       />
     ) : null;
-  }
+  // }
 
 });
 
@@ -592,7 +592,7 @@ export default function Web(props) {
       <div className={`mainContents ${routeLocation.pathname === '/' ? '' : 'min-h-70'} `} >
         <Suspense fallback={<Loader />}>
           <Switch>
-            <Swiper
+            {/* <Swiper
               ref={swiperRef}
               loop={false}
               speed={800}
@@ -639,19 +639,20 @@ export default function Web(props) {
               </SwiperSlide>
 
               <SwiperSlide className="section section02">
-                {/* <SingleDataVisualization height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} /> */}
+                <SingleDataVisualization height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
                 {visualize}
               </SwiperSlide >
 
               <SwiperSlide className="section section03">
                 <VisualizeMyData height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
-                {/* {visualizeMyData} */}
+                {visualizeMyData}
               </SwiperSlide>
               <SwiperSlide >
 
               </SwiperSlide>
 
-            </Swiper>
+            </Swiper> */}
+            {home}
             <Route exact path="*" component={NotFound} />
           </Switch>
         </Suspense>
