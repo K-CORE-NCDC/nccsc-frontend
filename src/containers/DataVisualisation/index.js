@@ -152,6 +152,7 @@ export default function DataVisualization() {
   };
  
   useEffect(() => {
+    console.log('--------------------userProjectDetails',userProjectDetails);
     if (project_id !== undefined) {
       let projectAvailableSteps = undefined;
       if(userProjectDetails && 'key' in  userProjectDetails &&  userProjectDetails.key === 'NotFound'){

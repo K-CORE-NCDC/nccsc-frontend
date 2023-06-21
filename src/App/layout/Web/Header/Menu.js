@@ -6,7 +6,7 @@ import { getCookie } from "../../../../containers/getCookie";
 const SingleElem = ({elem}) =>{
   if (elem.url){
     return (
-      <li className="flex mx-3 text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md">
+      <li className="flex mx-3 text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md ">
         <Link to={elem.url}  className="px-3 py-4 lg:py-2 flex  ">
           {elem.icon && <i  className={elem.icon}></i>}
           <span>{elem.title}</span>
@@ -39,7 +39,7 @@ const MultipleElem = ({elem,ind}) =>{
         <i className={elem.icon}></i>
         <span>{elem.title}</span>
       </a>
-      <div className="text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1 abc" id={"multisubmenu_"+ind}>
+      <div className="text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1 abc " id={"multisubmenu_"+ind}>
 
           {
             elem['children'].map((e,i)=>{
@@ -60,7 +60,7 @@ const MultipleElem = ({elem,ind}) =>{
   );
 }
 
-const Menu = ({items}) => {
+const Menu = ({items , activeClassIndex}) => {
 
   const item = items
   const m = item.map((ele,index)=>{
@@ -73,7 +73,7 @@ const Menu = ({items}) => {
       return <MultipleElem key={"multiple"+index} elem={ele} ind={index} />
     }
     else if(ele.type === 'admin'){
-      return <a key='admin_button' className="px-3 py-4 lg:py-2 flex text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md " href={config['auth']+'login'} target='__blank'>Admin</a>
+      return <a key='admin_button' className="px-3 py-4 lg:py-2 flex text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md" href={config['auth']+'login'} target='__blank'>Admin</a>
     }
 
     return ""
@@ -82,15 +82,6 @@ const Menu = ({items}) => {
   
   return <>
     {m}
-    <div className="relative inline-flex">
-      <svg className="w-5 h-5 absolute top-0 right-0 m-4 pointer-events-none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 412 232">
-        <path d="M206 171.144L42.678 7.822c-9.763-9.763-25.592-9.763-35.355 0-9.763 9.764-9.763 25.592 0 35.355l181 181c4.88 4.882 11.279 7.323 17.677 7.323s12.796-2.441 17.678-7.322l181-181c9.763-9.764 9.763-25.592 0-35.355-9.763-9.763-25.592-9.763-35.355 0L206 171.144z" fill="#fff" fillRule="nonzero"/>
-      </svg>
-      <select defaultValue = {context.locale} onChange={context.selectLanguage} className="leading-8 text-white-color border border-white rounded bg-transparent text-white h-15 pl-5 pr-10 focus:tex-black active:tex-black hover:border-gray-400 focus:outline-none appearance-none">
-        <option className='text-black' value='kr-KO'>한국어</option>
-        <option className='text-black' value='en-US'>English</option>
-      </select>
-    </div>
   </>
 }
 

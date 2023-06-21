@@ -140,7 +140,7 @@ input:checked ~ .dot {
 }
 
 #header{
-  background-image:url('../assets/images/bg.png');
+  /* background-image:url('../assets/images/bg.png'); */
   background-size:  cover;
 
 }

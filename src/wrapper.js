@@ -23,10 +23,10 @@ function Wrapper(props) {
   const dispatch = useDispatch();
 
   function selectLanguage(e) {
-    const newLocale = e.target.value;
-    setLocale(newLocale);
+    // const newLocale = e.target.value;
+    setLocale(e);
 
-    if (newLocale === 'kr-KO') {
+    if (e === 'kr-KO') {
       // dispatch(languageChange("en"));
       dispatch(languageChange('kr-KO'));
       setMessages(Korea);

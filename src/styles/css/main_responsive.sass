@@ -1,0 +1,736 @@
+@import "common.sass"  
+@media all and (max-width: 1600px)
+  #fullSlide .pagination div.swiper-pagination-bullet-active span
+    display: none
+
+@media all and (max-width: 1280px)
+  .mainContents .auto
+    width: 996px
+    max-width: 100%
+  #footer .auto
+    width: 100%
+  .mainVisual
+    .visual
+      padding: 160px 40px 0
+      .txtBox
+        padding: 48px 160px 0
+        .btn
+          margin-top: 32px
+  .dataSearchWrap
+    flex-direction: column
+    .popularBox
+      width: 100%
+      display: flex
+      align-items: center
+      padding: 8px 40px
+      .tit
+        width: 191px
+        padding-top: 0
+        padding-bottom: 0
+        margin-bottom: 0
+        border-bottom: 0
+        margin-right: 24px
+      ul
+        width: calc(100% - 215px)
+        padding: 0 45px
+        position: relative
+        &::after
+          content: ""
+          position: absolute
+          top: 0
+          right: 45px
+          bottom: 0
+          width: 12px
+          background: linear-gradient(270deg, #fff 0%, rgba(255,255,255,0) 100%)
+        .slick-slide
+          border-bottom: 0
+          margin-right: 16px
+          &::after
+            display: none
+        .slick-arrow
+          position: absolute
+          top: 50%
+          transform: translateY(-50%)
+          +circle(32px)
+          background:
+            repeat: no-repeat
+            position: 50% 50%
+            color: $white
+          +border(1px, $gray03)
+          text-indent: -999px
+          overflow: hidden
+          &.slick-prev
+            left: 0
+            background-image: url("/images/ncdc/slick-prev-black.svg")
+          &.slick-next
+            right: 0
+            background-image: url("/images/ncdc/slick-next-black.svg")
+        li
+          a
+            width: calc(100% - 62px)
+    .dataSearchBox
+      width: 100%
+      .tit
+        padding-top: 0
+      .dataRecommend
+        display: none
+        .recommend
+          white-space: nowrap
+          overflow-x: auto
+          display: flex
+          flex-wrap: nowrap
+          &::-webkit-scrollbar
+            display: none
+          a
+            display: block
+            overflow: visible
+            &::before
+              display: none !important
+  .mainContents
+    .sectionTitle
+      .en
+        font-size: 16px
+      .kr
+        font-size: 35px
+    .section04
+      .dataTypeWrap
+        .checkbox
+          display: none
+        .dataType01
+          width: 40%
+          ul li a
+            flex-direction: row
+            height: 76px
+            .iconBox
+              width: 40px
+              height: 40px
+              margin-right: 8px
+            .checkbox label:before
+              margin-right: 0
+        .dataType02
+          width: 60%
+          ul li a .icon
+            display: none
+      .bottomBtns
+        margin-top: 24px
+    .section03
+      .sectionTitle
+        top: 210px
+      .fullBox ul li .inner
+        width: 250px
+        max-width: 100%
+        padding-top: 50px
+        > img
+          width: 96px
+        br
+          display: none
+    .section02
+      .flex
+        .calendar
+          margin-right: 24px
+          .calendarBody
+            padding-top: 0
+            margin-top: 12px
+            div
+              height: 40px
+        .contentsTable td
+          padding: 16px
+    .section05
+      .galleryList
+        width: 834px
+        max-width: 100%
+        margin: auto
+        ul li a
+          .icon
+            top: 8px
+            right: 8px
+          .txtBox
+            padding: 28px 24px
+            dl
+              dt
+                font-size: 18px
+              dd
+                font-size: 14px
+                margin-top: 8px
+                +ellipsis(4)
+                max-height: 6.4em
+      .slickProgressbar
+        width: 834px
+        max-width: 100%
+        margin: 32px auto 0 auto
+    .section06
+      .sectionTitle
+        margin-top: 12px
+        margin-bottom: 0
+  .btnDetail
+    img
+      margin-left: 0
+      opacity: 1
+  .beforeRespon
+    display: none
+@media all and (max-width: 1199px)
+  #fullSlide
+    .pagination,
+    .scrollDown,
+    .navigation
+      display: none
+  .mainContents
+    .auto
+      width: 100%
+    .section
+      padding-top: 85px
+  .mainVisual
+    .visual
+      padding: 85px 40px 0
+      .txtBox
+        padding: 48px 0 0
+    .mainVisualUtils
+      bottom: 374px
+  .mainDataStatusWrap .mainDataStatus dl
+    flex-wrap: nowrap
+    flex-direction: column
+    height: auto
+    white-space: nowrap
+    dt
+      width: 100%
+      padding: 16px 32px
+    dd
+      width: 100%
+      padding: 28px 32px
+  .dataSearchWrap .dataSearchBox .dataRecommend
+    display: block
+@media all and (max-width: 1024px)
+  html,body
+    height: auto
+  #fullSlide,
+  #fullSlide .mainContents > .mask,
+  #fullSlide .mainContents .section
+    height: auto
+    display: block
+  .section
+    padding: 64px 0
+  #fullSlide .mainContents .section01
+    padding: 0
+  .sectionTitle
+    margin-top: 0
+    top: 0
+    margin-bottom: 32px
+  .mainContentsBox,
+  .btnDetail
+    transition: .3s
+  .mainVisual
+    .visual
+      padding-bottom: 330px
+      .txtBox
+        padding-bottom: 200px
+    .visual01
+      background-image: url("/images/ncdc/mainVisual-img01-m.jpg")
+    .visual02
+      background-image: url("/images/ncdc/mainVisual-img02-m.jpg")
+    .visual03
+      background-image: url("/images/ncdc/mainVisual-img03-m.jpg")
+    
+    .mainVisualUtils
+      bottom: 410px
+  .mainDataStatusWrap
+    .mainDataStatus:not(.service) dl
+      dd ul
+        flex-wrap: wrap
+        margin-top: -16px
+        li
+          width: calc(50% - 40px)
+          position: relative
+          padding: 0
+          margin-top: 16px
+          &::after
+            right: -40px
+          &:nth-child(1),
+          &:nth-child(3)
+            margin-right: 80px
+  .mainDataStatusWrap .mainDataStatus.service
+    dl dd li
+      padding: 0 20px
+  
+  .mainContents
+    .section02
+      .flex
+        flex-direction: column
+        .calendar
+          margin-right: 0
+          margin-bottom: 24px
+    .section03
+      .sectionTitle
+        position: static
+        transform: translateX(0)
+      .fullBox ul
+        flex-direction: column
+        li
+          padding: 64px 0
+          color: $white
+          &.box01 .icon
+            background-image: url("/images/ncdc/mainSection03-icon01.svg")
+          &.box02 .icon
+            background-image: url("/images/ncdc/mainSection03-icon02.svg")
+          &.box03 .icon
+            background-image: url("/images/ncdc/mainSection03-icon03.svg")
+    .section04
+      .sectionTitle
+        margin-bottom: 32px
+      .dataTypeWrap
+        flex-direction: column
+        .dataType01
+          width: 100%
+          margin-right: 0
+          margin-bottom: 24px
+        .dataType02
+          width: 100%
+          ul li
+            a
+              display: flex
+              flex-direction: column
+              justify-content: space-between
+              align-items: flex-end
+              p
+                width: 100%
+              .icon
+                position: static
+                float: right
+                margin-top: 34px
+    .section05
+      .bgIcon
+        width: 50%
+      .galleryList
+        ul
+          display: block
+          overflow: visible
+        .slick-list
+          padding-right: 25%
+          overflow: visible
+    .section06
+      .sectionTitle
+        margin-bottom: 32px
+      .h3
+        margin-top: 68px
+      .galleryList
+        margin: 0
+        overflow: visible
+        ul
+          margin: -12px
+          li 
+            width: 200px
+      .swiper-pagination
+        display: block
+        position: relative
+        margin-top: 24px
+        background-color: $white02
+        .swiper-pagination-progressbar-fill
+          background-color: $white
+  .beforeRespon
+    display: block
+@media all and (max-width: 767px)
+  #fullSlide .mainContents .section01
+    height: auto
+  .mainVisual
+    .visual
+      padding: 61px 20px 319px
+      height: auto
+      .txtBox
+        padding-top: 24px
+        word-break: keep-all
+        .d2
+          font-size: 30px
+
+        .btn
+          margin-top: 16px
+          width: 123px
+          height: 40px
+          padding: 0 10px
+        br
+          display: none
+    .visual02 .txtBox
+      align-items: flex-start
+      text-align: left
+    .mainVisualUtils
+      bottom: 385px
+      left: 20px
+      transform: translateX(0)
+      .btns
+        display: none
+      .mainVisualPagination .slickProgressbar
+        width: 36px
+  .mainDataStatusWrap
+    padding: 0 20px
+    .mainDataStatus
+      dl dt
+        padding: 12px 16px
+        justify-content: flex-start
+      &:not(.service) dl
+        dd
+          padding: 16px
+          flex-direction: column
+          ul
+            margin-top: -8px
+            li
+              width: 100%
+              display: flex
+              justify-content: space-between
+              margin-top: 8px
+              &::after
+                display: none
+              &:nth-child(1),
+              &:nth-child(3)
+                margin-right: 0
+              span
+                display: flex
+                justify-content: space-between
+                strong,a
+                  margin-right: 8px
+      &.service
+        dl dd
+          padding: 0
+          position: relative
+          ul
+            justify-content: flex-start
+            overflow: auto
+            &::-webkit-scrollbar
+              display: none
+            &::after
+              content: ""
+              position: absolute
+              top: 0
+              bottom: 0
+              right: 0
+              width: 16px
+              background: linear-gradient(to right, $white01 30%, $white 80%) 
+            li
+              padding: 16px
+              margin-right: 8px
+              &:last-child
+                margin-right: 0
+              &::after
+                top: 50%
+                right: -4px
+                transform: translateY(-50%)
+                height: 20px
+              a
+                display: flex
+                flex-direction: column
+                .icon
+                  width: 24px
+                  margin: auto
+                  margin-bottom: 4px
+  .dataSearchWrap
+    .popularBox
+      padding: 20px
+      flex-direction: column
+      align-items: flex-start
+      .tit
+        width: 100%
+        margin-right: 0
+        margin-bottom: 16px
+        img
+          width: 20px
+      ul
+        width: 100%
+        padding: 0
+        display: flex
+        flex-wrap: wrap
+        height: 36px
+        overflow: hidden
+        margin-top: -8px
+        &::after
+          display: none
+        li
+          padding: 0
+          border-bottom: 0
+          margin-top: 8px
+          margin-right: 16px
+          &:last-child
+            margin-right: 0
+          &::after
+            display: none
+          a
+            width: auto
+          span
+            width: 38px
+            height: 20px
+            font-size: 12px
+            background-color: $primary50
+            margin-right: 8px
+      &.on
+        ul
+          height: auto
+        .mobileBtn
+          .material-icons
+            transform: rotateX(180deg)
+    .mobileBtn
+      display: flex
+      justify-content: center
+      align-items: center
+      position: absolute
+      top: 20px
+      right: 20px
+      +circle(22px)
+      +border(1px, $gray03)
+      .material-icons
+        transition: .3s
+    .dataSearchBox
+      padding: 28px 20px
+      .tit
+        margin-bottom: 16px
+        img
+          width: 20px
+      .searchBox
+        flex-direction: column
+        +radius(0)
+        .inputText
+          width: 100%
+          height: 57px
+        .btn
+          width: 100%
+          height: 48px
+          font-size: 16px
+          font-weight: 500
+          margin-top: 12px
+          img
+            width: 20px
+  .dataSearchWrap
+    .dataSearchBox
+      .dataRecommend
+        position: relative
+        .mobileBtn
+          top: 0
+          right: 0
+          color: $white
+        .recommend
+          a
+            font-size: 14px
+        &.on
+          .recommend
+            white-space: none
+            flex-wrap: wrap
+          .mobileBtn
+            .material-icons
+              transform: rotateX(180deg)
+  .mainContents
+    .section
+      padding-top: 56px
+      z-index: 0
+    .section02
+      .flex
+        .calendar
+          margin-right: 0
+          margin-bottom: 24px
+        .contentsTable
+          th
+            padding: 16px 8px
+            font-size: 14px
+            white-space: nowrap
+            &:first-child
+              width: 50px
+            &:last-child
+              width: 80px
+          td
+            padding: 16px 8px
+            font-size: 14px
+            white-space: nowrap
+    .section03
+      .fullBox
+        padding: 0 20px
+        overflow: hidden
+        ul li
+          padding: 64px 40px
+        .slick-list
+          padding-right: 32px
+          overflow: visible
+        .slick-slide
+          margin-right: 8px
+          .cover
+            opacity: 1
+          img 
+            display: inline
+          .inner > img
+            width: 120px
+        .slick-dots
+          position: relative
+          margin-top: 24px
+          display: flex
+          flex-direction: row
+          justify-content: center
+          width: 100%
+          height: auto
+          li
+            +circle(10px)
+            +border(1px, $white)
+            cursor: pointer
+            padding: 0
+            margin: 0 6px
+            button
+              display: none
+          
+    .section04
+      .tab ul li
+        width: 100%
+      .mainContentsBox .btnDetail
+        position: relative
+        display: block
+        margin-top: 32px
+        width: 100%
+      .dataTypeWrap
+        .checkbox
+          opacity: 0
+          z-index: -1
+        .dataType01 ul li a
+          flex-direction: column
+          .iconBox
+            margin-right: 0
+        .dataType02 ul li
+          display: flex
+          flex-direction: column-reverse
+          a
+            padding: 16px 10px
+            flex-direction: column-reverse
+            align-items: center
+            text-align: center
+            background-image: none !important
+            .tit
+              font-size: 14px
+              margin-top: 4px
+            .sub
+              display: none
+            .icon
+              display: block
+              float: none
+              margin-top: 0
+              width: 40px
+              height: 40px
+          &.on a
+            background-color: $primary
+        dt > span img
+          width: 18px
+          margin-top: -1px
+          margin-right: 6px
+    .section05
+      .galleryList .slick-list
+        padding-right: 38px
+    .section06
+      .tab ul li
+        width: 100%
+      .btnMore
+        margin-top: 32px
+        position: relative
+        top: 0
+        display: flex
+        justify-content: center
+        align-items: center
+        width: 100%
+        height: 56px
+        text-align: center
+        color: $primary
+        & > img
+          display: none
+        span
+          display: flex
+          align-items: center
+          img
+            width: auto
+          path
+            stroke: $primary
+      .galleryWrap
+        .btnMore
+          top: 0
+      .galleryList.mask01
+        ul
+          flex-wrap: wrap
+          margin: 0
+          li
+            width: 100%
+            margin-top: 16px
+            padding: 0
+            display: none
+            &:nth-child(1),
+            &:nth-child(2),
+            &:nth-child(3) 
+              display: block
+            &:first-child
+              margin-top: 0
+            a
+              display: flex
+              flex-wrap: wrap
+              .thumb
+                width: 40%
+                padding-top: 0
+                img
+                  height: 100%
+              .txtBox
+                width: 60%
+      .galleryList02
+        ul li
+          width: 90%
+        .btnMore > span
+          display: flex
+          align-items: center
+      .mainBoardList
+        ul li
+          position: relative
+          flex-direction: column
+          background-color: $white
+          margin-top: 16px
+          padding: 16px
+          color: $gray09
+          display: none
+          &:nth-child(1),
+          &:nth-child(2),
+          &:nth-child(3)
+            display: flex
+          &:first-child
+            margin-top: 0
+          a
+            display: block
+            width: 100%
+            +headline06
+            +ellipsis(2)
+            .labels
+              position: absolute
+              bottom: 16px
+              left: 16px
+              .announce
+                line-height: 24px
+                margin-right: -2px
+              img
+                width: 24px
+                margin-top: 0
+          .date
+            margin-top: 11px
+            text-align: right
+  .sectionTitle .en
+    margin-bottom: 4px
+@media all and (min-width: 1024px)
+  @media all and (max-height: 700px)
+    #fullSlide
+      overflow: visible
+      height: auto
+      .pagination
+        display: none
+      .section
+        height: auto
+        padding: 160px 0
+      .sectionTitle
+        margin-top: 0
+      .mainContents
+        & > .mask
+          display: block
+        .section01
+          padding: 0
+          .mask
+            .visual
+              padding-bottom: 290px
+              height: auto
+              .txtBox
+                padding-bottom: 200px
+        .section03
+          padding: 0
+          .fullBox
+            height: 750px
+          .sectionTitle
+            top: 160px
