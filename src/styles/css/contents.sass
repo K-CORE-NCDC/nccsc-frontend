@@ -1,0 +1,3934 @@
+@import "common.sass"
+.colorGray09
+  color: $gray09
+.fw500
+  font-weight: 500
+img.m
+  display: none
+.subVisual
+  position: relative
+  height: 277px
+  +borderBottom(1px, $black02)
+  margin-bottom: -53px
+  display: flex
+  align-items: center
+  justify-content: center
+  overflow: hidden
+  .imgBox
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    background:
+      repeat: no-repeat
+      position: 50% 50%
+      size: cover
+    z-index: -1
+    transform: scale(1.2)
+    transition: 8s
+  .txtBox
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    padding-top: 120px
+    display: flex
+    justify-content: center
+    align-items: center
+    .main
+      +headline02
+      color: $white
+      text-align: center
+      padding-bottom: 24px
+.breadCrumbs
+  margin-bottom: 8px
+  +subtitle02
+  ul
+    display: flex
+    font-weight: 500      
+    color: $white
+    li
+      position: relative
+      margin-right: 32px
+      &::after
+        content: ""
+        position: absolute
+        top: 1px
+        right: -23px
+        width: 16px
+        height: 17px
+        background: url("/images/ncdc/breadCrumbs-arrow.svg") no-repeat
+      &:last-child
+        margin-right: 0
+        &::after
+          display: none
+.lnb
+  position: sticky
+  top: 121px
+  z-index: 9
+  transition: 0.24s
+  &::after
+    content: ""
+    position: absolute
+    top: 0
+    left: 50%
+    bottom: 0
+    background-color: $gray09
+    transition: 0.24s
+    z-index: -1
+    width: 1200px
+    max-width: 100%
+    transform: translateX(-50%)
+  .btn
+    display: none
+  ul
+    display: flex
+    justify-content: center
+    min-height: 33px
+    background-color: $white
+    li
+      width: 100%
+      position: relative
+      &:after
+        content: ""
+        position: absolute
+        top: 50%
+        right: 0
+        transform: translateY(-50%)
+        width: 1px
+        height: 16px
+        background-color: $white
+        opacity: .2
+      &:last-child::after
+        display: none
+      a
+        position: relative
+        display: flex
+        justify-content: center
+        align-items: center
+        height: 48px
+        font-size: 16px
+        font-weight: 500
+        text-align: center
+        color: $white
+        background-color: $gray09
+        word-break: keep-all
+      &.on a 
+        background-color: $secondary600
+.subContents
+  padding: 72px 0
+  .section
+    padding: 40px 0
+    position: relative
+.lnb.notFix + .subContents
+  padding: 39px 0 72px
+.contentsTitle
+  margin-bottom: 56px
+  position: relative
+  padding-bottom: 16px
+  &::after
+    content: ""
+    position: absolute
+    bottom: 0
+    left: 50%
+    transform: translateX(-50%)
+    width: 48px
+    height: 4px
+    background: linear-gradient(to right, $primary 66%, $secondary 33%)
+  h3
+    +headline02
+    color: $gray09
+    text-align: center
+.sourceWarning
+  display: flex
+  align-items: center
+  padding: 34px 32px
+  background-color: $gray00
+  margin: 64px 0
+  color: $gray07
+  img
+    margin-right: 24px
+.contentsTab
+  margin-bottom: 48px
+  ul
+    display: flex
+    li
+      width: 100%
+      position: relative
+      &::after
+        content: ""
+        position: absolute
+        top: 50%
+        right: 0
+        transform: translateY(-50%)
+        width: 1px
+        height: 16px
+        background-color: $gray02
+      &:last-child::after
+        display: none
+      a
+        display: flex
+        justify-content: center
+        align-items: center
+        text-align: center
+        height: 56px
+        +subtitle01
+        color: $gray06
+        position: relative
+        background-color: $gray00
+        border-left: 1px solid transparent
+        border-right: 1px solid transparent
+        word-break: keep-all
+      &.on a
+        background-color: $white
+        border-color: $gray02
+        &::after
+          content: ""
+          position: absolute
+          top: -3px
+          left: 0
+          right: 0
+          height: 3px
+          background-color: $secondary
+.loginWrap
+  text-align: center
+  width: 588px
+  max-width: 100%
+  margin: auto
+  & > img
+    width: 240px
+  .main
+    +headline01
+    margin: 32px 0 12px 0
+    word-break: keep-all
+  .sub
+    +headline06
+    color: $gray07
+.loginForm
+  display: flex
+  flex-direction: column
+  justify-content: flex-start
+  text-align: left
+  margin-top: 48px
+  > div
+    margin-top: 16px
+  .btn
+    height: 56px
+    margin-top: 40px
+  .idPwSearch
+    display: flex
+    justify-content: center
+    margin-top: 10px
+    a
+      display: block
+      padding: 0 26px
+      font-size: 16px
+      color: $gray05
+      font-weight: 500
+      text-align: center
+      position: relative
+      &::after
+        content: ""
+        position: absolute
+        top: 50%
+        right: 0
+        transform: translateY(-50%)
+        width: 1px
+        height: 16px
+        background-color: $gray02
+      &:last-child::after
+        display: none
+      img
+        position: relative
+        top: 3px
+        margin-right: 6px
+  .joinInfo
+    margin-top: 40px
+    display: flex
+    justify-content: space-between
+    p
+      padding-left: 52px
+      position: relative
+      color: $gray05
+      img
+        position: absolute
+        top: -3px
+        left: 0
+    .btn 
+      width: 150px
+      height: 40px
+      margin-top: 0
+.memberCertification
+  padding: 80px 20px
+  text-align: center
+  background-color: $gray00
+  dt
+    +headline03
+    color: $secondary
+  dd
+    +headline06
+    color: $gray09
+    margin-top: 32px
+.idSearchResult
+  .resultBox
+    width: 792px
+    max-width: 100%
+    padding: 56px 20px
+    background-color: $gray00
+    margin: 16px auto
+  .subtitle01
+    color: $gray05
+.formBox
+  padding: 80px 20px
+  background-color: $gray00
+  display: flex
+  flex-direction: column
+  align-items: center
+  dl
+    display: flex
+    align-items: center
+    text-align: left
+    width: 588px
+    max-width: 100%
+    margin-top: 16px
+    &:first-child
+      margin-top: 0
+    dt
+      width: 110px
+      +subtitle01
+      color: $gray07
+      margin-right: 24px
+      img
+        margin-right: 8px
+    dd
+      width: calc(100% - 134px)
+.pwSearch
+  .formBox
+    margin-top: 16px
+.pwSearch02
+  .formBox
+    dt
+      width: 162px
+    dd
+      width: calc(100% - 162px)
+.alertPopup
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  z-index: 10
+  display: none
+  .cover
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    background-color: rgba(0,0,0,0.7)
+    z-index: 0
+  .inner
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%,-50%)
+    z-index: 1
+    background-color: $white
+    width: 390px
+    max-width: 100%
+    .contentBox
+      padding: 40px
+      text-align: center
+      .txtBox
+        margin-top: 8px
+        .main
+          +headline05
+        .sub
+          margin-top: 24px
+          color: $gray07
+          word-break: keep-all
+    .bottomBtns
+      margin-top: 0
+      .btn
+        width: 100%
+        height: 56px
+        margin-right: 0
+        &.btn01
+          color: $primary
+        &.btn02
+          background-color: $primary
+          border-color: $primary
+          color: $white
+.joinProcess
+  margin-bottom: 56px
+  ul
+    display: flex
+    justify-content: center
+    width: 900px
+    max-width: 100%
+    margin: auto
+    li
+      width: 100%
+      padding: 0 20px
+      text-align: center
+      position: relative
+      .icon
+        width: 80px
+        height: 80px
+        background-color: $gray04
+        display: flex
+        justify-content: center
+        align-items: center
+        margin: auto
+      .step
+        +subtitle01
+        color: $gray04
+        margin-top: 16px
+      .tit
+        +headline04
+        color: $gray04
+      &.on
+        .icon
+          background-color: $secondary
+        .step
+          color: $secondary
+        .tit
+          color: $primary
+      &::after
+        content: ""
+        position: absolute
+        top: 16px
+        right: -24px
+        width: 48px
+        height: 48px
+        background: url("/images/ncdc/joinProcess-arrow.svg") no-repeat 50% 50%
+      &:last-child::after
+        display: none
+.joinTermsWrap
+  position: relative
+  .joinInfo
+    color: $gray07
+    margin-bottom: 12px
+    padding-right: 132px
+  .agreeAll
+    position: absolute
+    top: 0
+    right: 0
+    label
+      display: flex
+      flex-direction: row-reverse
+      align-items: center
+      +subtitle01
+      color: $secondary
+      &::before
+        margin-left: 8px
+.joinTerms
+  +borderTop(2px,$gray09)
+  dl
+    margin-top: 40px
+    dt
+      +headline04
+    dd
+      margin-top: 12px
+  .agreeLabel
+    margin-top: 16px
+.termsTxt
+  padding: 32px
+  background-color: $gray00
+  +border(1px,$gray02)
+  height: 242px
+  overflow-y: auto
+  font-size: 16px
+  color: $gray07
+  font-weight: 400
+  strong
+    display: block
+    +headline05
+    color: $gray09
+    margin: 8px 0
+  
+.joinForm
+  +borderTop(2px, $gray07)
+  +borderBottom(2px, $gray07)
+  position: relative
+  dl
+    padding: 16px 0
+    display: flex
+    +borderBottom(1px,$gray02)
+    dt
+      width: 240px
+      +subtitle01
+      line-height: 48px
+      padding-left: 16px
+    dd
+      width: calc(100% - 240px)
+      padding-right: 16px
+      >.flex
+        .inner
+          margin-right: 8px
+      .btn
+        width: 160px
+  .inputText
+    width: 384px
+    max-width: 100%
+  select
+    width: 384px
+    max-width: 100%
+  .inlineLabels
+    display: flex
+    height: 48px
+    align-items: center
+  .comment
+    margin-top: 8px
+    color: $gray06
+    &+.codeCertification
+      margin-top: 16px
+  .certificationComment
+    line-height: 48px
+    margin-top: 16px
+    &:nth-child(2)
+      margin-top: 0
+    .material-icons
+      position: relative
+      top: -1px
+      margin-right: 8px
+  .btnWithdrawal
+    position: absolute
+    bottom: 100%
+    right: 0
+    margin-bottom: 12px
+    +subtitle01
+    color: $secondary
+    text-decoration: underline
+.emailForm
+  display: flex
+  .inputText,
+  select
+    width: 216px
+  .at
+    margin: 0 8px
+  .emailForm01
+    display: flex
+    align-items: center
+    margin-right: 8px
+  .emailForm02
+    display: flex
+    select
+      margin-right: 8px
+.codeCertification
+  .flex
+    position: relative
+  .inputText
+    width: 297px
+    margin-right: 8px
+    span
+      position: absolute
+      top: 0
+      bottom: 0
+      right: 0
+      display: flex
+      align-items: center
+      padding: 0 20px
+      color: $warning
+  .btn
+    width: 160px
+.starComment
+  position: absolute
+  bottom: 100%
+  right: 0
+  text-align: right
+  margin-bottom: 12px 
+  +subtitle02
+  color: $secondary
+.joinSuccess
+  text-align: center
+  background-color: $gray00
+  padding: 80px 20px
+  margin-top: 56px
+  >p
+    margin-bottom: 4px
+  .resultBox
+    display: flex
+    flex-direction: column
+    align-items: center
+    text-align: left
+    width: 454px
+    max-width: 100%
+    margin: auto
+    margin-top: 24px
+    padding: 40px 20px
+    background-color: $white
+    +boxShadow
+    div
+      display: flex
+      flex-direction: column
+    p
+      +headline05
+      display: flex
+      margin-top: 12px
+      &:first-child
+        margin-top: 0
+      .tit
+        position: relative
+        margin-right: 8px
+        &::after
+          content: ":"
+          margin-left: 4px
+  .comment
+    margin-top: 24px
+.visualContents
+  position: relative
+  color: $white
+  padding-top: 64px
+  margin-bottom: 90px
+  .imgBox
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    height: 480px
+    background:
+      repeat: no-repeat
+      size: cover
+      position: 50% 50%
+      image: url("/images/ncdc/introduce-visualContents.jpg")
+  .main
+    >span
+      display: block
+      &.kr
+        margin-top: 16px
+    img
+      width: 193px
+  .flex
+    margin-top: 56px
+    justify-content: space-between
+    .sub
+      width: calc(50% - 108px)
+    .imgWrap
+      width: 50%
+      ul
+        display: flex
+        flex-wrap: wrap
+        margin: -6px
+        li
+          width: 50%
+          padding: 6px
+          img
+            width: 100%
+h4.conTitle
+  +headline03
+  position: relative
+  padding-top: 10px
+  margin-bottom: 24px
+  display: flex
+  align-items: flex-start
+  &::before
+    content: ""
+    position: absolute
+    top: 0
+    left: 0
+    width: 36px
+    height: 4px
+    background: linear-gradient(to right, #009fe2 12px, #003177 0)
+  img
+    margin-right: 8px
+h4.conTitle02
+  +headline04
+  color: $gray09
+  margin-bottom: 12px
+h5
+  margin-top: 32px
+  margin-bottom: 12px
+  +headline04
+  color: $gray09
+.serviceIntro
+  ul
+    display: flex
+    li
+      +border
+      padding: 40px 48px
+      width: 100%
+      +boxShadow
+      margin-right: 24px
+      &:last-child
+        margin-right: 0
+      dl
+        dt
+          +headline04
+          color: $secondary
+        dd
+          margin-top: 24px
+          display: flex
+          align-items: center
+          > img
+            margin-right: 40px
+          p
+            position: relative
+            padding-left: 10px
+            font-size: 16px
+            color: $gray07
+            word-break: keep-all
+            margin-top: 12px
+            &:first-child
+              margin-top: 0
+            &::before
+              content: ""
+              position: absolute
+              top: 10px
+              left: 0
+              width: 4px
+              height: 4px
+              +radius(50%)
+              background-color: $gray07    
+.contentsImg
+  position: relative
+  left: 50%
+  max-width: unset
+  transform: translateX(-50%)
+  margin-top: 80px
+  width: 70%
+  cursor: pointer
+.introduce.faqList
+  dt
+    padding: 28px 72px 28px 76px
+    background:
+      repeat: no-repeat
+      position: 20px 21px
+      image: url("/images/ncdc/icon-books.svg")
+    +headline05
+    color: $gray09
+    border-color: $gray09
+  dd
+    padding: 40px 0 40px 78px
+    font-size: 16px
+    color: $gray07
+    background-color: $white
+    +borderBottom(2px, $gray09)
+    strong
+      display: block
+      color: $gray09
+      margin-bottom: 16px
+.numberingList
+  >li
+    margin-top: 16px
+  li
+    position: relative
+    padding-left: 20px
+    &::before
+      content: attr(data-num)
+      position: absolute
+      top: 0
+      left: 0
+.publicDataInfo
+  padding: 48px 54px
+  padding-bottom: 0
+  margin-bottom: 80px
+  .imgBox
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    z-index: -1
+    height: 232px
+    background:
+      repeat: no-repeat
+      position: 50% 50%
+      size: cover
+      image: url("/images/ncdc/publicDataInfo-bg.jpg")
+  > p
+    color: $white
+  .h3
+    span
+      color: $secondary200
+  .subtitle02
+    margin-top: 8px
+    opacity: 0.7
+  ul
+    display: flex
+    margin-top: 41px
+    li
+      width: 100%
+      background-color: $white
+      padding: 40px 48px
+      text-align: center
+      +border(1px,$gray03)
+      +boxShadow
+      margin-right: 24px
+      &:last-child
+        margin-right: 0
+      dl
+        dt
+          +headline04
+        dd
+          margin-top: 32px
+          font-size: 16px
+          color: $gray07
+          line-height: 160%
+          text-align: center
+          word-break: keep-all
+      &:nth-child(1) dt
+        color: $primary
+      &:nth-child(2) dt
+        color: #006fd2
+      &:nth-child(3) dt
+        color: $secondary
+  
+.centerImg
+  position: relative
+  left: 50%
+  margin-left: -631px
+  max-width: unset
+.organization-t,
+.organization-m
+  display: none
+.organization
+  position: relative
+  &::after
+    content: ""
+    position: absolute
+    top: 0
+    bottom: 0
+    left: 50%
+    transform: translateX(-50%)
+    z-index: -1
+    width: 1px
+    background-color: $gray03
+  .conBox
+    display: flex
+    justify-content: center
+  .cellBox
+    display: flex
+    justify-content: center
+    align-items: center
+    background-color: $white
+    +radius(100px)
+    padding: 24px 44px
+    +border(1px, $gray03)
+    +boxShadow
+  .conBox02
+    margin-top: 32px
+    padding-right: 50%
+    position: relative
+    &::after
+      content: ""
+      position: absolute
+      top: 50%
+      transform: translateY(-50%)
+      left: 25%
+      right: 50%
+      height: 1px
+      background-color: $gray03
+      z-index: -1
+    .cellBox
+      padding: 16px 28px
+      background-color: $dataB400
+      +headline06
+      color: $white
+      img
+        margin-right: 12px
+  .conBox03
+    margin-top: 38px
+    .cellBox
+      border-color: $secondary
+    .division
+      margin: 0 44px
+      height: 24px
+      background-color: $gray02
+  .conBox04
+    margin-top: 48px
+    position: relative
+    &::after
+      content: ""
+      position: absolute
+      top: 0
+      left: calc(12.5% - 9px)
+      right: calc(12.5% - 9px)
+      height: 1px
+      background-color: $gray03
+    ul
+      display: flex
+      width: 100%
+      background-color: $white
+      padding-top: 48px
+      li
+        width: 100%
+        position: relative
+        padding-top: 151px
+        +boxShadow
+        margin-right: 24px
+        &:last-child
+          margin-right: 0
+        &::after
+          content: ""
+          position: absolute
+          bottom: 100%
+          left: 50%
+          width: 1px
+          height: 48px
+          background-color: $gray03
+        dl
+          height: 100%
+        dt
+          position: absolute
+          top: 0
+          left: 0
+          right: 0
+          height: 151px
+          display: flex
+          flex-direction: column
+          justify-content: center
+          align-items: center
+          +headline06
+          color: $white
+          img
+            margin-bottom: 4px
+          .dots
+            position: absolute
+            top: 8px
+            left: 8px
+            display: flex
+            span
+              width: 8px
+              height: 8px
+              margin-right: 4px
+              &:last-child
+                margin-right: 0
+            .dot01
+              background-color: $white
+            .dot02
+              background-color: $white07
+            .dot03
+              background-color: $white04
+            .dot04
+              background-color: $white01
+        dd
+          height: 100%
+          padding: 24px 19px
+          +border(1px, $gray03)
+          display: flex
+          flex-direction: column
+          p
+            position: relative
+            padding-left: 12px
+            font-size: 16px
+            color: $gray07
+            margin-top: 8px
+            &:first-child
+              margin-top: 0
+            &::before
+              content: ""
+              position: absolute
+              top: 7px
+              left: 0
+              width: 4px
+              height: 4px
+              +radius(50%)
+              background-color: $gray07
+      li:nth-child(1)
+        dt
+          background-color: $primary
+      li:nth-child(2)
+        dt
+          background-color: $primary500
+      li:nth-child(3)
+        dt
+          background-color: $tertiary
+      li:nth-child(4)
+        dt
+          background-color: $secondary
+.historyWrap
+  overflow: hidden
+.historyTitleBox
+  position: relative
+  height: 232px
+  .imgBox
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    z-index: -1
+    background:
+      repeat: no-repeat
+      position: 50% 50%
+      size: cover
+      image: url("/images/ncdc/historyTitleBox-bg.jpg")
+  dl
+    padding: 48px 54px
+    color: $white
+    dt
+      +headline02
+    dd
+      +subtitle02
+      opacity: 0.7
+      margin-top: 10px
+.historyBg
+  position: absolute
+  top: 0
+  bottom: -100px
+  left: 0
+  right: 0
+  z-index: -1
+  background:
+    repeat: no-repeat
+    position: 50% 100%
+    size: cover
+    image: url("/images/ncdc/history-bg.png")
+  opacity: 0.06
+.historyList
+  margin-top: 100px
+  > ul
+    display: flex
+    flex-wrap: wrap
+    margin-top: -80px
+    > li
+        width: 33.33%
+        position: relative
+        margin-top: 80px
+        &::before
+          content: ""
+          position: absolute
+          top: 106px
+          left: 0
+          z-index: -1
+          width: 100vw
+          height: 1px
+          background-color: $gray02
+        &::after
+          content: ""
+          position: absolute
+          top: 106px
+          right: 0
+          z-index: -1
+          width: 100vw
+          height: 1px
+          background-color: $gray02
+        .year
+          display: inline-block
+          +headline01
+          margin-bottom: 53px
+          position: relative
+          &::after
+            content: ""
+            position: absolute
+            top: 100%
+            left: 50%
+            width: 1px
+            height: 50px
+        .list
+          margin-top: 37px
+          margin-left: 39px
+          position: relative
+          &::before
+            content: ""
+            position: absolute
+            top: -50px
+            left: 0
+            +circle(26px)
+            background-color: $white
+          &::after
+            content: ""
+            position: absolute
+            top: -41px
+            left: 9px
+            +circle(10px)
+          ul
+            display: flex
+            flex-direction: column
+            li
+              display: flex
+              margin-top: 20px
+              &:first-child
+                margin-top: 0
+              .date
+                +headline05
+                color: $gray09
+                margin-right: 16px
+              p
+                padding-top: 2px
+                +subtitle01
+                color: $gray07
+                word-break: keep-all
+        &:nth-child(odd)
+          .year
+            color: $secondary
+            &::after
+              background-color: $secondary
+          .list
+            &::before
+              +border(1px, $secondary)
+            &::after
+              background-color: $secondary
+        &:nth-child(even)
+          .year
+            color: $primary
+            &::after
+              background-color: $primary
+          .list
+            &::before
+              +border(1px, $primary)
+            &::after
+              background-color: $primary
+.boardList.api
+  .boardCell
+    &:nth-child(1)
+      width: 88px
+    &:nth-child(2)
+      width: 100px
+    &:nth-child(5)
+      width: 100px
+    &:nth-child(6)
+      width: 145px
+    &:nth-child(7),
+    &:nth-child(8)
+      width: 104px
+    a
+      text-decoration: underline
+  .dataFormat
+    display: flex
+    span
+      +border(1px, $gray07)
+      font-size: 14px
+      color: $gray07
+      padding: 5px 10px
+      margin-right: 8px
+      &:last-child
+        margin-right: 0
+.visualContents.cancer
+  padding: 48px 54px
+  .sub
+    margin-top: 8px
+  .imgBox
+    height: 266px
+    background-image: url("/images/ncdc/cancerStatistics-visualContents.jpg")
+    z-index: -1
+  ul
+    display: flex
+    margin-top: 48px
+    text-align: center
+    li
+      width: 100%
+      background-color: $white
+      margin-right: 24px
+      +border(1px,$gray03)
+      &:last-child
+        margin-right: 0
+      dl
+        display: flex
+        flex-direction: column
+        padding: 40px 32px 32px
+        height: 100%
+        dt
+          height: 100%
+          +headline03
+          color: $primary
+          img
+            padding: 24px 0 32px 0
+        dd
+          height: 100%
+          background-color: $gray00
+          padding: 24px
+          text-align: left
+          font-size: 16px
+          color: $gray07
+          line-height: 25px
+          p.dot
+            position: relative
+            padding-left: 12px
+            &::before
+              content: ""
+              position: absolute
+              top: 10px
+              left: 0
+              width: 4px
+              height: 4px
+              +radius(50%)
+              background-color: $gray07
+// .introduce.faqList dl:nth-child(1) dt
+//   background-image: url("/images/ncdc/icon-news.svg")
+// .introduce.faqList dl:nth-child(2) dt
+//   background-image: url("/images/ncdc/icon-flask.svg")
+// .introduce.faqList dl:nth-child(3) dt
+//   background-image: url("/images/ncdc/icon-global.svg")
+.introduce.faqList.cancer
+  dd
+    padding: 24px 0 24px 78px
+.linkList
+  > ul
+    > li
+        p
+          padding: 16px 0
+          +borderBottom(1px, $gray03)
+          +headline06
+          color: $gray09
+          position: relative
+          padding-left: 10px
+          &::before
+            content: ""
+            position: absolute
+            top: 24px
+            left: 0
+            width: 5px
+            height: 5px
+            +radius(50%)
+            background-color: $gray09
+        ul
+          padding: 20px 28px
+          +borderBottom(1px, $gray03)
+          display: flex
+          flex-direction: column
+          > li
+            margin-top: 8px
+            &:first-child
+              margin-top: 0
+        a
+          color: $secondary
+          text-decoration: underline
+          p
+            color: inherit
+            &::before
+              background-color: $secondary
+.thesisList
+  ul
+    display: flex
+    flex-wrap: wrap
+    li
+      width: calc(50% - 12px)
+      padding: 32px 16px
+      +borderBottom(1px, $gray09)
+      &:nth-child(1),
+      &:nth-child(2)
+        +borderTop(2px, $gray09)
+      &:nth-child(2n-1)
+        margin-right: 24px
+    dl
+      dt
+        padding-bottom: 8px
+        margin-bottom: 12px
+        +borderBottom(1px, $gray03)
+        +subtitle01
+        color: $gray09
+        display: flex
+        img
+          margin-right: 6px
+      dd
+        color: $gray07
+    .imgBox
+      width: 186px
+      margin-right: 24px
+      img
+        width: 186px
+        height: 262px
+    .itemBox01
+      display: flex
+      .itemInfo
+        width: calc(100% - 210px)
+        .dot
+          padding-left: 10px
+          position: relative
+          &::before
+            content: ""
+            position: absolute
+            top: 8px
+            left: 0
+            width: 3px
+            height: 3px
+            +radius(50%)
+            background-color: $gray07
+        dl
+          margin-top: 20px
+          &:first-child
+            margin-top: 0
+    .itemBox02
+      margin-top: 24px
+      dt
+        +subtitle01
+        color: $secondary
+      dd
+        text-decoration: underline
+        cursor: pointer
+        &:hover
+          color: $secondary
+  &.type02
+    ul
+      li
+        width: 100%
+        min-height: 326px
+        position: relative
+        padding-left: 226px
+        &:nth-child(2)
+          border-top: 0
+        &:nth-child(2n-1)
+          margin-right: 0
+    .imgBox
+      position: absolute
+      left: 16px
+    .itemBox01
+      display: block
+      .itemInfo
+        display: flex
+        width: 100%
+        dl
+          width: 100%
+          margin-top: 0
+          margin-right: 24px
+          &:last-child
+            margin-right: 0
+.popup.results
+  .inner
+    width: 1024px
+    max-width: 100%
+    text-align: left
+    .contentsTable col
+      &:nth-child(1),
+      &:nth-child(3)
+        width: 148px
+.boardList.results .boardHeader 
+  .boardCell
+    &:nth-child(1)
+      width: 88px
+    &:nth-child(2),
+    &:nth-child(3),
+    &:nth-child(4),
+    &:nth-child(7)
+      width: 130px
+.myInfo
+  position: relative
+  display: flex
+  .btn
+    position: absolute
+    bottom: 100%
+    right: 0
+    margin-bottom: 24px
+  li
+    padding: 14px 16px
+    +borderTop(1px, $white02)
+    +headline06
+    &:first-child
+      border-top: 0
+  .infoListTit
+    width: 282px
+    padding: 40px
+    background-color: $tertiary
+    li
+      color: $white
+      img
+        margin-right: 8px
+  .infoListContent
+    width: calc(100% - 282px)
+    padding: 40px
+    +border(1px, $gray03)
+    li
+      color: $gray07
+      border-color: $gray03
+      a
+        color: $secondary
+        text-decoration: underline
+  .bgPattern01
+    top: 8px
+    left: 8px
+  .bgPattern02
+    bottom: 20px
+    right: 8px
+.bgPattern
+  position: absolute
+  display: flex
+  span
+    width: 10px
+    height: 10px
+    margin-right: 4px
+    &:last-child
+      margin-right: 0
+    &:nth-child(1)
+      background-color: $white
+    &:nth-child(2)
+      background-color: $white07
+    &:nth-child(3)
+      background-color: $white04
+    &:nth-child(4)
+      background-color: $white01
+  &.bgPattern02
+    span
+      background-color: $gray04
+      &:nth-child(1)
+        opacity: 0.1
+      &:nth-child(2)
+        opacity: 0.4
+      &:nth-child(3)
+        opacity: 0.7
+      &:nth-child(4)
+        opacity: 1
+.myInfoInquiry
+  position: relative
+  .btns
+    position: absolute
+    bottom: 100%
+    right: 0
+    margin-bottom: 24px
+    display: flex
+    .btn
+      height: 40px
+      margin-right: 12px
+      &:last-child
+        margin-right: 0
+  ul
+    display: flex
+    li
+      width: 100%
+      +border(1px, $gray03)
+      padding: 56px 20px
+      text-align: center
+      margin-right: 24px
+      &:last-child
+        margin-right: 0
+      dl
+        margin-top: 24px
+        dt
+          +headline04
+        dd
+          margin-top: 16px
+          span
+            display: inline-block
+            padding: 8px 24px
+            +radius(30px)
+            +headline05
+            color: $white
+      &:nth-child(1)
+        dt
+          color: $primary
+        dd span
+          background-color: $primary
+      &:nth-child(2)
+        dt
+          color: $gray09
+        dd span
+          background-color: $gray06
+      &:nth-child(3)
+        dt
+          color: $secondary
+        dd span
+          background-color: $secondary
+.dataSubContents01
+  position: relative
+  h3
+    color: $primary
+  .contentsTab
+    margin-bottom: 0
+.dataSubContents02
+  margin-top: 56px
+  .conBox
+    margin-top: 80px
+    &:first-child
+      margin-top: 0
+.textSearch
+  display: flex
+  padding-right: 140px
+  position: relative
+  .inputText
+    width: 100%
+  .btn
+    position: absolute
+    top: 0
+    right: 0
+    width: 140px
+.searchKeyword
+  padding: 20px 0
+  color: $gray09
+  +borderBottom(1px, $gray02)
+  dl
+    display: flex
+    align-items: center
+    dt
+      width: 148px
+      +headline06
+      padding: 4px 0
+      img
+        margin-right: 8px
+        margin-top: -3px
+    dd
+      width: calc(100% - 148px)
+      display: flex
+      flex-wrap: wrap
+      button
+        +border(1px, $gray02)
+        +radius(30px)
+        padding: 8px 14px
+        height: 36px
+        margin-right: 12px
+        &:last-child
+          margin-right: 0
+.searchFilter
+  display: flex
+  flex-wrap: wrap
+  margin-top: 32px
+  dl
+    display: flex
+    flex-wrap: wrap
+    align-items: center
+    width: calc(50% - 21px)
+    margin-right: 42px
+    &:last-child
+      margin-right: 0
+    dt
+      width: 148px
+      padding: 10px 0
+      +headline06
+      color: $gray09
+      img
+        margin-top: -3px
+        margin-right: 8px
+    dd
+      width: calc(100% - 148px)
+      display: flex
+      button
+        display: block
+        padding: 14px 10px
+        width: 100%
+        background-color: $white
+        font-size: 16px
+        color: $gray09
+        font-weight: 500
+        +border(1px,$gray03)
+        white-space: nowrap
+        margin-left: 12px
+        &:first-child
+          margin-left: 0
+        &.on
+          background-color: $secondary
+          border-color: $secondary
+          color: $white
+.searchResultAmount
+  padding: 56px 0 8px
+  text-align: center
+  +headline03
+  margin-bottom: 24px
+.contentsTab
+  li
+    .count
+      padding: 2px 7px
+      +radius(30px)
+      background-color: $gray04
+      +subtitle03
+      color: $white
+      margin-left: 8px
+    &.on
+      .count
+        background-color: $primary
+  .tabUtil
+    display: flex
+    justify-content: space-between
+    color: $gray09
+    margin-bottom: 12px
+    button
+      +headline06
+      display: flex
+      align-items: center
+      img
+        transition: .3s
+        transform: rotateX(180deg)
+        margin-left: 10px
+.dataListArray
+  display: flex
+  justify-content: space-between
+  align-items: flex-end
+  padding-bottom: 12px
+  margin-bottom: 32px
+  +borderBottom(2px, $gray07)
+  .btns
+    display: flex
+    button
+      +border(1px, $gray03)
+      padding: 9px 12px
+      color: $gray09
+      font-weight: 500
+      margin-right: 8px
+      &:last-child
+        margin-right: 0
+      &.on
+        border-color: $secondary
+        color: $secondary
+  .array
+    display: flex
+    select
+      width: 124px
+      height: 36px
+      padding: 0 14px
+      font-size: 14px
+      background-position: right 10px center
+      margin-right: 8px
+.labelBox
+  display: flex
+  justify-content: space-between
+  margin-bottom: 16px
+.labels01
+  display: flex
+  span
+    display: flex
+    justify-content: center
+    align-items: center
+    height: 28px
+    padding: 0 4px
+    position: relative
+    margin-right: 6px
+    &:last-child
+      margin-right: 0
+    &:hover
+      .tooltip
+        display: block
+    img
+      width: 20px
+  .labelText
+    background-color: $gray07
+  .labelImage
+    background-color: #5251aa
+  .labelSpeaker
+    background-color: #e6ad18
+  .labelCancer
+    background-color: #00ab80
+.labels02
+  display: flex
+  span
+    padding: 5px 10px
+    height: 28px
+    display: flex
+    justify-content: center
+    align-items: center
+    color: $white
+    font-weight: 500
+    &.label01
+      background-color: $primary
+    &.label02
+      background-color: $tertiary
+    &.label03
+      background-color: $secondary
+.tooltip
+  position: absolute
+  bottom: 100%
+  left: 50%
+  transform: translateX(-50%)
+  background-color: $gray09
+  padding: 4px 8px
+  margin-bottom: 10px
+  +radius(5px)
+  +subtitle03
+  color: $white
+  font-style: normal
+  white-space: nowrap
+  display: none
+  &::after
+    content: ""
+    position: absolute
+    top: 100%
+    left: 50%
+    transform: translateX(-50%)
+    width: 0
+    height: 0
+    border-top: 6px solid $gray09
+    border-left: 6px solid transparent
+    border-right: 6px solid transparent
+  em
+    font-style: normal
+.hashtag
+  position: relative
+  .scrollBox
+    white-space: nowrap
+    overflow-x: auto
+    display: flex
+    &::-webkit-scrollbar
+      display: none
+  &::after
+    content: ""
+    position: absolute
+    right: 0
+    top: 0
+    bottom: 0
+    width: 30px
+    background: linear-gradient(to right, rgba(255,255,255,0) 0%, #fff 100%)
+  a
+    display: block
+    padding: 6px 12px
+    +border(1px, $gray03)
+    color: $gray06
+    +radius(30px)
+    margin-right: 4px
+    &:last-child
+      margin-right: 0
+    &:hover
+      color: $secondary
+      border-color: $secondary
+.dataList
+  ul
+    display: flex
+    flex-wrap: wrap
+    margin-top: -24px
+    li
+      width: calc(33.33% - 16px)
+      +border(1px, $gray03)
+      padding: 24px
+      transition: 0.3s
+      margin-right: 24px
+      margin-top: 24px
+      &:nth-child(3n)
+        margin-right: 0
+      dl
+        margin-bottom: 12px
+        dt
+          +headline05
+          color: $gray09
+          +ellipsis(1)
+        dd
+          font-size: 16px
+          color: $gray07
+          margin-top: 4px
+          height: 42px
+          a
+            display: block
+            max-height: 42px
+            +ellipsis(2)
+      .itemInfo
+        color: $gray07
+        display: flex
+        span
+          margin-right: 20px
+        img
+          margin-right: 8px
+      .hashtag
+        margin-top: 20px
+      .date
+        margin-top: 16px
+        text-align: right
+        dl
+          display: flex
+          justify-content: flex-end
+          margin-bottom: 0
+          dt
+            +subtitle02
+            color: $gray04
+            margin-right: 4px
+          dd
+            margin-top: 0
+            height: auto
+            +subtitle02
+            color: $gray06
+      &:hover
+        border-color: $secondary
+        +boxShadow
+  &.type02
+    ul
+      flex-direction: column
+      li
+        width: 100%
+        margin-right: 0
+.dataTypes
+  display: flex
+  .type
+    padding: 5px 8px
+    margin-right: 4px
+    &:last-child
+      margin-right: 0
+    &.type01
+      background-color: $gray01
+      color: $gray07
+    &.type02
+      background-color: $dataC50
+      color: $dataC700
+    &.type03
+      background-color: $dataE100
+      color: $dataE900
+    &.type04
+      background-color: $dataB50
+      color: $dataB600
+.dataSubContents01.simplify
+  .dataSearchBox
+    .flexBox
+      display: flex
+      justify-content: space-between
+  .searchKeyword
+    display: none
+  .textSearch
+    width: 574px
+    padding-right: 100px
+    margin-right: 40px
+    .btn
+      width: 100px
+  .searchFilter
+    flex-wrap: nowrap
+    margin-top: 0
+    dl
+      flex-wrap: nowrap
+      white-space: nowrap
+      width: auto
+      margin-top: 0
+      margin-right: 40px
+      &:last-child
+        margin-right: 0
+      dt
+        width: 116px
+        margin-right: 24px
+      dd
+        width: auto
+        button
+          padding: 12px 10px
+          min-width: 80px
+          &:not(.on)
+            display: none
+          &.on
+            background-color: $secondary
+            color: $white
+            +border(1px, $secondary)
+  .contentsTab .tabUtil button img
+    transform: rotateX(0)
+.contentsTable.dataView
+  margin-bottom: 56px
+  &.dataView01
+    col:nth-child(1),
+    col:nth-child(3)
+      width: 156px
+  thead
+    height: auto
+  .flex
+    &.center
+      justify-content: center
+  .btn
+    height: 36px
+    .icon
+      margin-left: 8px
+      position: relative
+      top: -1px
+.popup.downloadAgree
+  .inner 
+    width: 1024px
+  .popupHeader
+    background-image: url("/images/ncdc/popupHeader-bg02.jpg")
+  .popupBody
+    textarea
+      height: 100px
+      background-color: $gray00
+.termsSlide
+  dt
+    position: relative
+    padding-bottom: 8px
+    margin-bottom: 16px
+    +borderBottom(1px, $gray09)
+    cursor: pointer
+    h5
+      margin-bottom: 0
+    .arrow
+      position: absolute
+      top: 50%
+      right: 0
+      transform: translateY(-70%)
+      img
+        transition: .3s
+  dd
+    display: none
+  dl.on
+    dt img
+      transform: rotateX(180deg)
+  .inlineLabels
+    margin-top: 16px
+.dataInquiryProcess
+  margin-bottom: 80px
+  ul
+    display: flex
+    li
+      +border(1px, $gray03)
+      padding: 32px 20px
+      width: 100%
+      text-align: center
+      +boxShadow
+      position: relative
+      color: $primary
+      margin-right: 100px
+      &:last-child
+        margin-right: 0
+      &:nth-child(1) .icon
+        background-image: url("/images/ncdc/dataInquiry-process-icon01.svg")
+      &:nth-child(2) .icon
+        background-image: url("/images/ncdc/dataInquiry-process-icon02.svg")
+      &:nth-child(3) .icon
+        background-image: url("/images/ncdc/dataInquiry-process-icon03.svg")
+      &:nth-child(4) .icon
+        background-image: url("/images/ncdc/dataInquiry-process-icon04.svg")
+      &::after
+        content: ""
+        position: absolute
+        top: 50%
+        left: 100%
+        margin-left: 26px
+        transform: translateY(-50%)
+        width: 48px
+        height: 48px
+        background:
+          repeat: no-repeat
+          position: 50% 50%
+          image: url("/images/ncdc/analyticProcess-arrow.svg")
+      &:last-child::after
+        display: none
+      .icon
+        height: 80px
+        background:
+          repeat: no-repeat
+          position: 50% 50%
+        margin-bottom: 16px
+      p
+        height: 54px
+        display: flex
+        justify-content: center
+        align-items: center
+        +headline06
+        
+      &.on
+        color: $white
+        background-color: $primary
+        &:nth-child(1) .icon
+          background-image: url("/images/ncdc/dataInquiry-process-icon01-on.svg")
+        &:nth-child(2) .icon
+          background-image: url("/images/ncdc/dataInquiry-process-icon02-on.svg")
+        &:nth-child(3) .icon
+          background-image: url("/images/ncdc/dataInquiry-process-icon03-on.svg")
+        &:nth-child(4) .icon
+          background-image: url("/images/ncdc/dataInquiry-process-icon04-on.svg")
+.inquiryBefore
+  padding: 24px
+  +border(1px, $secondary100)
+  background-color: $secondary25
+  margin-bottom: 40px
+  dl
+    display: flex
+    align-items: center
+    dt
+      width: 180px
+      +headline05
+      color: $secondary
+      position: relative
+      display: flex
+      align-items: center
+      margin-right: 64px
+      img
+        margin-right: 8px
+      &::after
+        content: ""
+        position: absolute
+        top: 0
+        right: -32px
+        width: 1px
+        height: 100%
+        background-color: $secondary200
+    dd
+      width: calc(100% - 244px)
+      color: $secondary
+.inlineLabels.respons
+  .radioBox
+    width: 89px
+  .titleInputText
+    width: calc(50% - 76px)
+    .inputText
+      width: calc(100% - 69px)
+.contentsTable.collaborator
+  col:nth-child(1),
+  col:nth-child(2)
+    width: 120px
+  col:nth-child(4)
+    width: 156px
+  col:nth-child(7)
+    width: 64px
+  th
+    width: auto
+    padding: 16px 10px
+  td
+    padding: 16px
+    font-weight: 400
+  .btn
+    min-width: unset
+    width: 18px
+    height: 18px
+    padding: 0
+    +radius(3px)
+    display: inline-block
+    vertical-align: middle
+    .material-icons
+      font-size: 14px
+      line-height: 17px
+.popup.addResearcher
+  .innerWrap
+    .inner
+      width: 1024px
+  .btnSearch
+    width: 120px
+    height: 48px
+    margin: 24px auto 0
+  .btnAdd,
+  .btnDelete
+    min-width: unset
+    width: 18px
+    height: 18px
+    padding: 0
+    +radius(3px)
+    display: inline-block
+    vertical-align: middle
+    .material-icons
+      font-size: 14px
+      line-height: 17px
+  .contentsTable.tac
+    col:last-child
+      width: 80px
+.errorBox
+  padding: 140px 0
+  text-align: center
+  .h2
+    margin-top: 40px
+  .p1
+    margin-top: 8px
+    color: $gray07
+  .bottomBtns
+    margin-top: 32px
+    .btn
+      font-weight: 400
+.dataInquiryProcess02
+  ul
+    display: flex
+    li
+      width: 100%
+      padding: 32px 20px
+      text-align: center
+      +border(1px, $gray03)
+      +boxShadow
+      position: relative
+      margin-right: 100px
+      &:last-child
+        margin-right: 0
+      &::after
+        content: ""
+        position: absolute
+        top: 50%
+        left: 100%
+        transform: translateY(-50%)
+        width: 100px
+        height: 48px
+        background:
+          repeat: no-repeat
+          position: 50% 50%
+          size: auto 100%
+          image: url("/images/ncdc/analyticProcess-arrow.svg")
+      &:last-child::after
+        display: none
+      .tit
+        margin-top: 16px
+        +headline06
+        color: $primary
+      .sub
+        +subtitle01
+        color: $gray07
+  .comment
+    margin-top: 24px
+    color: $gray07
+    letter-spacing: -0.04em
+  .period
+    position: absolute
+    top: 50%
+    left: 100%
+    transform: translateY(-60px)
+    width: 100px
+    text-align: center
+    z-index: 1
+    span
+      display: inline-block
+      +radius(30px)
+      background-color: $secondary
+      +subtitle02
+      color: $white
+      padding: 4px 12px
+      white-space: nowrap
+.contentsScrollTab
+  ol > li
+    position: relative
+    margin-top: 140px
+    &:first-child
+      margin-top: 0
+    .contentsTab
+      margin-bottom: 64px
+      ul li a br
+        display: none
+    img.m
+      display: none
+.detailProcess01
+  text-align: center
+  .infoBox
+    display: flex
+    justify-content: center
+    align-items: center
+    margin-bottom: 40px
+    .arrows
+      margin: 0 24px
+      img
+        display: block
+    .circle
+      width: 212px
+      height: 212px
+      display: flex
+      flex-direction: column
+      justify-content: center
+      align-items: center
+      +border
+      +radius(50%)
+      p
+        +headline05
+        color: $primary
+        margin-top: 4px
+  .sub
+    display: inline-block
+    +subtitle01
+    color: $white
+    padding: 6px 20px
+    +radius(30px)
+    background-color: $secondary
+    margin-top: 12px
+.needDoc
+  ul
+    display: grid
+    grid-template-columns: 1fr 1fr 1fr
+    gap: 20px
+    li
+      min-height: 197px
+      padding: 32px 40px
+      +border
+      +boxShadow
+      background:
+        image: url("/images/ncdc/needDoc-icon01.svg")
+        repeat: no-repeat
+        position: bottom 16px right 12px
+      &:nth-child(2)
+        grid-column: 2 / span 2
+      a
+        position: relative
+        display: block
+        height: 100%
+        padding-left: 52px
+      &:hover
+        border-color: $secondary
+  .num
+    position: absolute
+    top: 0
+    left: 0
+    +headline01
+    color: $secondary
+  .tit
+    padding-top: 15px
+    +headline04
+    color: $gray07
+  .sub
+    margin-top: 8px
+    +subtitle01
+    color: $gray07
+    &.colorSecondary
+      font-size: 14px
+      font-weight: 400
+.txtListBox
+  +border
+  padding: 36px 28px
+  display: flex
+  flex-direction: column
+  transition: .3s
+  &:hover
+    border-color: $secondary
+    +boxShadow
+  p
+    color: $gray07
+    margin-top: 8px
+    &:first-child
+      margin-top: 0
+    &.dot
+      position: relative
+      padding-left: 12px
+      &::before
+        content: ""
+        position: absolute
+        top: 7px
+        left: 0
+        width: 4px
+        height: 4px
+        +radius(50%)
+        background-color: $gray07
+.committeeBox
+  position: relative
+  padding: 48px 54px
+  .imgBox
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    z-index: -1
+    height: 232px
+    background: url("/images/ncdc/committeeBox-bg.jpg") no-repeat 50% 50% /cover
+  .titleBox
+    color: $white
+    dt
+      +headline03
+      .colorSecondary
+        color: $secondary200 !important
+    dd
+      +subtitle01
+      opacity: .7
+      margin-top: 8px
+      word-break: keep-all
+  ul
+    display: flex
+    margin-top: 66px
+    li
+      width: 100%
+      padding: 32px
+      +border
+      text-align: center
+      background-color: $white
+      transition: .3s
+      margin-right: 24px
+      &:first-child
+        margin-top: 0
+      &:last-child
+        margin-right: 0
+      &:hover
+        border-color: $secondary
+        +boxShadow
+      dl
+        position: relative
+        height: 100%
+        padding-top: 230px
+        dt
+          position: absolute
+          top: 0
+          left: 0
+          right: 0
+          height: 198px
+          display: flex
+          flex-direction: column
+          justify-content: center
+          align-items: center
+          span
+            position: relative
+            +headline02
+            color: $primary
+            z-index: 1
+            margin-bottom: 32px
+            &::after
+              content: ""
+              position: absolute
+              bottom: 0
+              left: -8px
+              right: -8px
+              top: 70%
+              background-color: $secondary100
+              z-index: -1
+          img
+            width: 100px
+        dd
+          display: flex
+          align-items: center
+          height: 100%
+          padding: 24px
+          background-color: $gray00
+          color: $gray07
+          word-break: keep-all
+.analyticGuideBox01
+  display: flex
+  flex-wrap: wrap
+  > div
+    width: calc(50% - 12px)
+  .map
+    position: relative
+    width: 100%
+    height: 320px
+    margin-bottom: 24px
+  .mapBox
+    width: 100%
+    margin-bottom: 24px
+    img.t,
+    img.m
+      display: none
+  .slideBox
+    +border
+    position: relative
+    margin-right: 24px
+    .slick-slide
+      position: relative
+      &::after
+        content: ""
+        position: absolute
+        top: 0
+        left: 0
+        right: 0
+        bottom: 0
+        background-color: $black01
+    .slick-dots
+      position: absolute
+      bottom: 0
+      left: 0
+      right: 0
+      display: flex
+      justify-content: center
+      padding: 20px
+      li
+        width: 8px
+        height: 8px
+        margin: 0 4px
+        +radius(50%)
+        overflow: hidden
+        text-indent: -999px
+        background-color: $gray07
+        cursor: pointer
+        border: 0
+        &.slick-active
+          background-color: $secondary
+    .arrow
+      position: absolute
+      top: 50%
+      transform: translateY(-50%)
+      width: 40px
+      height: 40px
+      display: flex
+      justify-content: center
+      align-items: center
+      background-color: $gray09
+      background-image: none
+      .material-icons
+        color: $white06
+      &.slick-prev
+        left: 0
+      &.slick-next
+        right: 0
+  .infoBox
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    +border
+    padding: 24px
+    dl
+      display: flex
+      justify-content: space-between
+      padding: 12px
+      dt
+        width: 168px
+        +headline06
+        color: $gray09
+        img
+          position: relative
+          top: -3px
+          margin-right: 8px
+      dd
+        width: calc(100% - 192px)
+        color: $gray07
+        word-break: keep-all
+        .btnMap
+          margin-top: 12px
+          display: flex
+          a
+            display: flex
+            align-items: center
+            width: 100%
+            height: 36px
+            padding: 0 12px
+            text-align: center
+            font-size: 16px
+            font-weight: 500
+            line-height: 36px
+            &.naverMap
+              background-color: #19ce60
+              color: $white
+              margin-right: 12px
+            &.kakaoMap
+              background-color: #fee500
+              color: $gray09
+            span
+              width: 100% 
+    hr
+      +borderTop(0,$gray02)
+    .btn
+      width: 100%
+      height: 48px
+.analyticGuideBox02
+  ul
+    display: flex
+    li
+      display: flex
+      flex-direction: column
+      width: 100%
+      margin-right: 24px
+      &:last-child
+        margin-right: 0
+      p img
+        position: relative
+        top: -3px
+        margin-right: 8px
+    .txtListBox
+      height: 100%
+      margin-top: 12px
+.researchStatus01
+  & + *
+    margin-top: 80px
+  ul
+    display: flex
+    align-items: flex-start
+    li
+      width: 100%
+      +border(1px, $gray03)
+      +boxShadow
+      margin-right: 24px
+      &:last-child
+        margin-right: 0
+      a
+        display: block
+        width: 100%
+        height: 100%
+        text-align: center
+        padding: 28px 20px
+        transition: .3s
+      &:hover
+        border-color: $primary
+  .txtBox
+    margin-top: 8px
+    display: flex
+    flex-direction: column
+  .amount
+    display: flex
+    justify-content: center
+    margin-top: 8px
+    span
+      padding: 2px 14px
+      +radius(30px)
+      +subtitle01
+      color: $white
+      background-color: $primary
+  .subTxt
+    +subtitle01
+    color: $primary
+    span
+      color: $secondary
+  .status
+    padding: 24px 16px
+    background-color: $primary10
+    display: flex
+    flex-direction: column
+    height: 138px
+    dl
+      display: flex
+      justify-content: space-between
+      align-items: center
+      +subtitle02
+      margin-top: 4px
+      &:first-child
+        margin-top: 0
+      dt
+        color: $primary
+        padding-left: 14px
+        position: relative
+        &::before
+          content: ""
+          position: absolute
+          top: 7px
+          left: 0
+          width: 4px
+          height: 4px
+          +radius(50%)
+          background-color: $primary
+      dd
+        color: $secondary
+  li:nth-child(4)
+    .txtBox
+      color: $tertiary
+      .amount span
+        background-color: $tertiary
+  li:nth-child(5)
+    .txtBox
+      color: $secondary
+      .amount span
+        background-color: $secondary
+  &+.comment
+    margin-top: 24px
+  li.on
+    a
+      background-color: $primary
+      color: $white
+      .txtBox
+        color: $white
+      .amount
+        span
+          background-color: $white !important
+          color: $primary !important
+.researchStatus02
+  margin-bottom: 80px
+  ul
+    display: flex
+    margin: -12px
+    li
+      width: 100%
+      padding: 12px
+      a
+        display: flex
+        justify-content: center
+        align-items: center
+        width: 100%
+        height: 100%
+        +border(1px, $gray03)
+        text-align: center
+        +boxShadow
+        padding: 28px 10px
+        transition: .3s
+        &:hover
+          border-color: $secondary
+  .icon
+    width: 64px
+    height: 64px
+    margin-right: 8px
+    background:
+      repeat: no-repeat
+      size: 100%
+      position: 50% 50%
+  li:nth-child(1) .icon
+    background-image: url("/images/ncdc/researchStatus02-icon01.svg")
+  li:nth-child(2) .icon
+    background-image: url("/images/ncdc/researchStatus02-icon02.svg")
+  li:nth-child(3) .icon
+    background-image: url("/images/ncdc/researchStatus02-icon03.svg")
+  li:nth-child(4) .icon
+    background-image: url("/images/ncdc/researchStatus02-icon05.svg")
+  li:nth-child(5) .icon
+    background-image: url("/images/ncdc/researchStatus02-icon06.svg")
+  .txtBox
+    text-align: left
+  .amount
+    display: flex
+    justify-content: flex-start
+    span
+      padding: 2px 14px
+      +radius(30px)
+      +subtitle01
+      color: $white
+      background-color: $primary
+  li:hover
+    .txtBox
+      color: $secondary
+    .amount span
+      background-color: $secondary
+  li:nth-child(1):hover .icon
+    background-image: url("/images/ncdc/researchStatus02-icon01-on.svg")
+  li:nth-child(2):hover .icon
+    background-image: url("/images/ncdc/researchStatus02-icon02-on.svg")
+  li:nth-child(3):hover .icon
+    background-image: url("/images/ncdc/researchStatus02-icon03-on.svg")
+  li:nth-child(4):hover .icon
+    background-image: url("/images/ncdc/researchStatus02-icon05-on.svg")
+  li:nth-child(5):hover .icon
+    background-image: url("/images/ncdc/researchStatus02-icon06-on.svg")
+  & + .comment
+    margin-top: 24px
+  li.on
+    a
+      background-color: $primary
+      .txtBox
+        color: $white
+      .amount span
+        background-color: $white
+        color: $primary
+    &:nth-child(1) .icon
+      background-image: url("/images/ncdc/researchStatus02-icon01-on-white.svg")
+    &:nth-child(2) .icon
+      background-image: url("/images/ncdc/researchStatus02-icon02-on-white.svg")
+    &:nth-child(3) .icon
+      background-image: url("/images/ncdc/researchStatus02-icon03-on-white.svg")
+    &:nth-child(4) .icon
+      background-image: url("/images/ncdc/researchStatus02-icon04-on-white.svg")
+    &:nth-child(5) .icon
+      background-image: url("/images/ncdc/researchStatus02-icon05-on-white.svg")
+    
+.flex > .conTitle + .btn
+  margin-bottom: 24px
+  
+.contentsTable.research
+  th, td
+    padding: 16px 10px
+  .btn
+    display: inline-block
+    width: auto
+    min-width: unset
+    max-width: 100%
+    height: 28px
+    margin: auto
+    padding: 0 10px
+    font-size: 12px
+    line-height: 28px
+  &.research01
+    th:nth-child(1)
+      width: 62px
+    th:nth-child(2)
+      width: 70px
+    th:nth-child(3)
+      width: 180px
+    th:nth-child(5)
+      width: 124px
+    th:nth-child(6)
+      width: 108px
+    th:nth-child(7)
+      width: 164px
+    td:nth-child(4)
+      text-align: left
+  &.research02
+    th:nth-child(1)
+      width: 62px
+    th:nth-child(2)
+      width: 180px
+    th:nth-child(4),
+    th:nth-child(5),
+    th:nth-child(6),
+    th:nth-child(7)
+      width: 108px
+  &.research03
+    th:nth-child(1)
+      width: 62px
+    th:nth-child(2),
+    th:nth-child(3)
+      width: 180px
+    th:nth-child(5),
+    th:nth-child(6)
+      width: 148px
+  &.research04
+    th:nth-child(1)
+      width: 62px
+    th:nth-child(2),
+    th:nth-child(3)
+      width: 180px
+    th:nth-child(5),
+    th:nth-child(7)
+      width: 110px
+    th:nth-child(6)
+      width: 240px
+    th:nth-child(8)
+      width: 92px
+    .researchTableBtns
+      display: grid
+      justify-content: center
+      grid-template-columns: repeat(2,1fr)
+      gap: 8px
+      .btn
+        width: 100%
+        margin: 0
+  &.research05
+    th:nth-child(1)
+      width: 62px
+    th:nth-child(2),
+    th:nth-child(3)
+      width: 180px
+    th:nth-child(5),
+    th:nth-child(6)
+      width: 140px
+  .type
+    display: inline-block
+    width: 58px
+    height: 28px
+    text-align: center
+    font-size: 14px
+    color: $white
+    line-height: 28px
+    &.type01
+      background-color: $tertiary
+    &.type02
+      background-color: $secondary
+  .status01
+    color: $gray04
+  .status02
+    display: inline-block
+    padding: 2px 8px
+    +radius(30px)
+    font-size: 12px
+    color: $white
+    background-color: $gray09
+.bottomComment
+  margin-top: 12px
+  display: flex
+  flex-direction: column
+  color: $gray07
+  strong
+    font-weight: 500
+  p
+    margin-top: 4px
+    &:first-child
+      margin-top: 0
+  .p2
+    padding-left: 15px
+    margin-top: 4px
+    &:first-child
+      margin-top: 0
+.tableTopUtil
+  margin-bottom: 12px
+.popup.research
+  .inner
+    width: 1024px
+    max-width: 100%
+    text-align: left
+  .popupHeader
+    background-image: url("/images/ncdc/popupHeaderBg02.jpg")
+  .contentsTable
+    tbody th
+      width: 180px
+    col:nth-child(1)
+      width: 72px
+    col:nth-child(3),
+    col:nth-child(4)
+      width: 112px
+  .contentsTable02
+    col:nth-child(1)
+      width: 120px
+    col:nth-child(2)
+      width: 132px
+    col:nth-child(3)
+      width: 156px
+    col:nth-child(4)
+      width: auto
+    col:nth-child(5),
+    col:nth-child(6)
+      width: 180px
+    th,
+    td
+      padding: 16px
+    .inlineLabels
+      .radioBox
+        margin-right: 12px
+  .faqList
+    border-top: 0
+    dl
+      margin-top: 32px
+    dt
+      padding: 0 0 8px
+      .arrow
+        top: -1px
+        right: 0
+    dd
+      padding: 32px
+    .radioBox label:before
+      position: relative
+      top: -1px
+  .checkAgree
+    margin-top: 16px
+    display: flex
+    +subtitle01
+    color: $gray07
+    .radioBox
+      margin-right: 32px
+      label:before
+        position: relative
+        top: -2pxg
+.linkTxt
+  color: $secondary
+  text-decoration: underline
+.researchView
+  padding: 80px 40px
+  +border(1px,$gray03)
+  h5
+    margin-top: 80px
+  .contentsTable
+    th
+      width: 194px
+    td
+      padding: 16px 10px
+    &.list
+      th
+        width: auto
+        padding: 16px 8px
+        &:nth-child(1)
+          width: 120px
+        &:nth-child(2),
+        &:nth-child(3)
+          width: 170px
+        &:nth-child(5),
+        &:nth-child(6)
+          width: 184px
+        &:nth-child(7)
+          width: 64px
+      .inlineLabels
+        display: block
+        .radioBox
+          margin-right: 12px
+          &:last-child
+            margin-right: 0
+      .btn
+        min-width: unset
+        width: 18px
+        height: 18px
+        padding: 0
+        margin: auto
+        .material-icons
+          font-size: 14px
+.paymentTable
+  .contentsTable
+    margin-top: 32px
+    th:nth-child(1)
+      width: 180px
+    th:nth-child(2)
+      width: 112px
+  .discount
+    font-size: 18px
+    color: $gray09
+    font-weight: 700
+    text-decoration: line-through
+  .price
+    +headline03
+    color: $secondary
+  h5:nth-last-child(2)
+    margin-top: 80px
+.paymentList
+  ul
+    display: flex
+    li
+      width: 100%
+      margin-right: 24px
+      transition: .3s
+      &:last-child
+        margin-right: 0
+      a
+        display: block
+        +border(1px, $gray03)
+        padding: 24px 10px
+        text-align: center
+        transition: .3s
+        .icon
+          height: 56px
+          background:
+            repeat: no-repeat
+            position: 50% 50%
+          transition: .3s
+        p
+          +headline06
+          color: $primary
+          transition: .3s
+      &:nth-child(1) .icon
+        background-image: url("/images/ncdc/payment-icon01.svg")
+      &:nth-child(2) .icon
+        background-image: url("/images/ncdc/payment-icon02.svg")
+      &:nth-child(3) .icon
+        background-image: url("/images/ncdc/payment-icon05.svg")
+      &:hover
+        a
+          border-color: $primary
+      &.on
+        background-color: $primary
+        p
+          color: $white
+        &:nth-child(1) .icon
+          background-image: url("/images/ncdc/payment-icon01-on.svg")
+        &:nth-child(2) .icon
+          background-image: url("/images/ncdc/payment-icon02-on.svg")
+        &:nth-child(3) .icon
+          background-image: url("/images/ncdc/payment-icon05-on.svg")
+.paymentResult
+  padding: 80px 0 96px
+  background-color: $gray00
+  .inner
+    width: 688px
+    margin: auto
+  .contentsTable
+    +boxShadow
+    background-color: $white
+    th
+      width: 180px
+.serviceType
+  display: inline-block
+  width: 58px
+  height: 28px
+  text-align: center
+  font-size: 14px
+  color: $white
+  line-height: 28px
+  &.type01
+    background-color: $tertiary
+  &.type02
+    background-color: $secondary
+  &.type03
+    background-color: $primary
+.contentsBanner
+  position: relative
+  display: flex
+  justify-content: space-between
+  padding: 28px 40px 28px 204px
+  background: url("/images/ncdc/contentsBanner-img01.png") no-repeat 40px 0 $primary500
+  color: $white
+  margin-bottom: 48px
+  min-height: 104px
+  .tit
+    +headline06
+    span
+      color: $secondary300
+  .sub
+    +subtitle02
+  &.contentsBanner02
+    background: url("/images/ncdc/contentsBanner-img02.png") no-repeat 40px 0 $primary500
+  &.contentsBanner03
+    background: url("/images/ncdc/contentsBanner-img03.png") no-repeat 40px 0 $primary500
+  &.contentsBanner04
+    background: url("/images/ncdc/contentsBanner-img04.png") no-repeat 40px 0 $primary500
+  &.contentsBanner05
+    background: url("/images/ncdc/contentsBanner-img05.png") no-repeat 40px 0 $primary500
+.contentsTable.data
+  th:nth-child(1)
+    width: 62px
+  th:nth-child(2),
+  th:nth-child(3)
+    width: 180px
+  th:nth-child(5),
+  th:nth-child(6),
+  th:nth-child(7),
+  th:nth-child(8)
+    width: 120px
+  th,
+  td
+    padding: 16px 10px
+  .btn
+    display: inline-block
+    width: auto
+    height: 28px
+    min-width: unset
+    max-width: 100%
+    margin: auto
+    padding: 0 10px
+    font-size: 12px
+    line-height: 28px
+.contentsTable.data02
+  th:nth-child(1)
+    width: 62px
+  th:nth-child(2)
+    width: 180px
+  th:nth-child(4),
+  th:nth-child(5),
+  th:nth-child(6),
+  th:nth-child(7),
+  th:nth-child(8)
+    width: 120px
+  th,
+  td
+    padding: 16px 10px
+.contentsTable.data03
+  th:nth-child(1)
+    width: 62px
+  th:nth-child(2)
+    width: 180px
+  th:nth-child(4),
+  th:nth-child(5),
+  th:nth-child(7)
+    width: 130px
+  th:nth-child(6)
+    width: 218px
+  th,
+  td
+    padding: 16px 10px
+.contentsTable.data04
+  th:nth-child(1)
+    width: 62px
+  th:nth-child(2)
+    width: 180px
+  th:nth-child(4),
+  th:nth-child(5),
+  th:nth-child(7)
+    width: 120px
+  th:nth-child(6)
+    width: 288px
+  th,
+  td
+    padding: 16px 10px
+.contentsTable.dataInquiry
+  th
+    width: 180px
+  &.dataInquiry02
+    +borderTop(1px, $gray03)
+    margin-top: 32px
+  .fileUpload
+    .flex
+      justify-content: space-between
+      align-items: center
+    .btns
+      display: flex
+      flex-direction: row-reverse
+    .btnDelete
+      display: none
+  .fileuploadBtn
+    display: flex
+    .textInput
+      width: calc(100% - 193px)
+    & > .btn
+      height: 36px
+      font-size: 14px
+.fileUpload
+  .flex .btn
+    height: 36px
+    padding: 0 10px
+    font-size: 14px
+    line-height: 34px
+    img
+      margin-right: 0
+      margin-left: 6px
+    &.btnSecondary
+      border-color: $secondary
+    &.btnGray
+      color: $gray04
+      border-color: $gray04
+    &.btnDelete
+      width: 70px
+      .material-icons
+        font-size: 20px
+.imgTitleBox
+  padding: 48px 54px
+  height: 203px
+  background:
+    repeat: no-repeat
+    size: cover
+    position: 50% 50%
+  color: $white
+  & + *
+    margin-top: 48px
+  dt
+    +headline05
+    word-break: keep-all
+  dd
+    +headline06
+    color: $white07
+    margin-top: 4px
+  &.remote
+    background-image: url("/images/ncdc/remote-bg.jpg")
+  &.reference01
+    background-image: url("/images/ncdc/reference-bg01.jpg")
+  &.reference02
+    background-image: url("/images/ncdc/reference-bg02.jpg")
+.remoteList
+  ul
+    display: flex
+    li
+      width: 100%
+      margin-right: 24px
+      &:last-child
+        margin-right: 0
+      dl
+        height: 100%
+        position: relative
+        padding-top: 67px
+        dt
+          position: absolute
+          top: 0
+          left: 0
+          right: 0
+          height: 51px
+          display: flex
+          justify-content: center
+          align-items: center
+          +headline06
+          color: $white
+          background-color: $primary
+        dd
+          height: 100%
+          display: flex
+          flex-direction: column
+          .box
+            height: 100%
+            +border(1px, $gray03)
+            padding: 32px 20px
+            display: flex
+            justify-content: center
+            align-items: center
+            margin-top: 12px
+            &:first-child
+              margin-top: 0
+            .icon
+              margin-right: 16px
+            p
+              +headline06
+              color: $primary
+            span
+              +subtitle01
+              color: $gray07
+      &:nth-child(2)
+        dl dd .box
+          flex-direction: column
+.remoteProcess
+  ul
+    display: flex
+    li
+      width: 100%
+      +border(1px, $gray03)
+      text-align: center
+      padding: 24px 20px
+      +boxShadow
+      position: relative
+      margin-right: 48px
+      &:last-child
+        margin-right: 0
+      &::after
+        content: ""
+        position: absolute
+        top: 50%
+        left: 100%
+        transform: translateY(-50%)
+        width: 48px
+        height: 32px
+        background:
+          repeat: no-repeat
+          size: auto 100%
+          position: 50% 50%
+          image: url("/images/ncdc/remoteProcess-arrow.svg")
+      &:last-child::after
+        display: none
+      p
+        margin-top: 8px
+        +headline06
+        color: $primary
+        word-break: keep-all
+      span
+        +subtitle01
+        color: $gray07
+.popup.addResults
+  .inner
+    width: 1024px
+    max-width: 100%
+    .popupHeader
+      background-image: url("/images/ncdc/popupHeaderBg02.jpg")
+  .contentsTable
+    col:nth-child(1),
+    col:nth-child(3)
+      width: 144px
+    th
+      +subtitle01
+      padding: 16px 12px
+    .comment
+      margin-top: 8px
+      color: $gray06
+.statusInfo
+  padding: 16px
+  margin-top: 12px
+  background-color: $primary10
+  dl
+    display: flex
+    align-items: center
+    dt
+      width: 90px
+      height: 86px
+      background-color: $white
+      display: flex
+      flex-direction: column
+      align-items: center
+      justify-content: center
+      +subtitle01
+      color: $gray07
+      margin-right: 16px
+      img
+        margin-right: 4px
+    dd
+      color: $gray07
+      .btn
+        height: 28px
+        width: 77px
+        font-size: 12px
+        padding: 6px 10px
+        display: inline-block
+        text-align: center
+        margin-right: 4px
+      p
+        margin-top: 6px
+        &:first-child
+          margin-top: 0
+        strong
+          padding-left: 12px
+          position: relative
+          font-weight: 500
+          &::before
+            content: ""
+            position: absolute
+            top: 7px
+            left: 0
+            width: 4px
+            height: 4px
+            +radius(50%)
+            background-color: $gray07
+          &.colorSecondary::before
+            background-color: $secondary
+.withdrawal
+  padding: 64px 102px 80px
+  background-color: $gray00
+  text-align: center
+  dl
+    margin-top: 49px
+    dt
+      +headline03
+      color: $primary
+    dd
+      display: flex
+      flex-direction: column
+      padding: 36px 40px 44px
+      text-align: left
+      background-color: $white
+      +border(1px, $gray03)
+      margin-top: 20px
+      p
+        margin-top: 8px
+        &:first-child
+          margin-top: 0
+.dataProcess
+  display: flex
+  flex-direction: column
+  overflow: hidden
+  > div
+    margin-top: 16px
+  .titleBox
+    display: flex
+    flex-wrap: wrap
+    .con
+      display: flex
+      span
+        display: flex
+        justify-content: center
+        align-items: center
+        width: 100%
+        +headline06
+        color: $white
+    .con01
+      width: calc(60.4% - 20px)
+      margin-right: 40px
+      span
+        margin-right: 24px
+        &:last-child
+          margin-right: 0
+    .con02
+      width: calc(39.6% - 20px)
+    &.titleBox01
+      span
+        height: 51px
+      .colorSecondary
+        span
+          background-color: $secondary
+      .colorPrimary
+        span
+          background-color: $primary
+    &.titleBox02
+      span
+        height: 91px
+      .colorSecondary
+        span
+          background-color: $secondary300
+      .colorPrimary
+        span
+          background-color: $primary300
+  .process
+    ul
+      display: flex
+      li
+        width: 100%
+        padding: 38px 10px
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        +headline06
+        +border(1px, $gray03)
+        position: relative
+        text-align: center
+        margin-right: 40px
+        &:last-child
+          margin-right: 0
+        &::after
+          content: ""
+          position: absolute
+          top: 50%
+          transform: translateY(-50%)
+          left: 100%
+          width: 40px
+          height: 40px
+          background: url("/images/ncdc/remoteProcess-arrow.svg") no-repeat 50% 50%
+        p
+          margin-top: 4px
+          white-space: nowrap
+  .arrowBox
+    width: calc(80% - 7px)
+    padding: 0 calc(10% - 20px)
+    img.m
+      display: none
+.btnDownload
+  .icon
+    display: inline-block
+    width: 16px
+    height: 16px
+    background: url("/images/ncdc/icon-disk.svg") no-repeat
+  &:not(.disabled):hover
+    background-color: $secondary !important
+    color: $white !important
+    .icon
+      background: url("/images/ncdc/icon-disk02.svg") no-repeat
+.btnInquiry
+  .icon
+    display: inline-block
+    width: 16px
+    height: 16px
+    background: url("/images/ncdc/icon-writing.svg") no-repeat
+  &:not(.disabled):hover
+    background-color: $secondary !important
+    color: $white !important
+    .icon
+      background: url("/images/ncdc/icon-writing02.svg") no-repeat
+.contentsTable.dataSele
+  col:first-child
+    width: 260px
+  td
+    position: relative
+    .cover
+      position: absolute
+      top: 0
+      left: 0
+      right: 0
+      bottom: 0
+      background-color: $white06
+  .checkbox
+    label
+      &::before
+        float: left
+        width: 18px
+        height: 18px
+        margin-top: -2px
+      span
+        padding-left: 25px
+        color: $gray07
+  .btn
+    width: 92px
+    height: 40px
+    img
+      width: 16px
+  .selectBox
+    width: 120px
+    .btn
+      width: 100%
+      height: 40px
+      padding: 9px 10px
+      .material-icons
+        top: 8px
+.dataSeleSearch
+  display: flex
+  .btn
+    margin-right: 12px
+  .dataSeleSearchResult
+    width: calc(100% - 104px)
+    display: none
+    .inner
+      display: flex
+      flex-wrap: wrap
+      margin: -4px
+      div
+        display: inline-block
+        padding: 8px 10px
+        height: 40px
+        +radius(20px)
+        +border(1px, $gray03)
+        font-size: 16px
+        color: $gray07
+        font-weight: 500
+        margin: 4px
+        &:last-child
+          margin-right: 0
+        button
+          margin-left: 4px
+          .material-icons
+            font-size: 20px
+            color: $gray04
+.popup.dataSele
+  .popupHeader
+    background-image: url("/images/ncdc/popupHeader-bg03.jpg")
+  .inner
+    width: 1024px
+  .codeSearch
+    display: flex
+    .selectBox
+      width: 160px
+      .btn
+        width: 100%
+    .textBox
+      width: calc(100% - 271px)
+      margin: 0 8px
+    .btn
+      width: 103px
+  .contentsTable
+    margin-top: 32px
+    col:nth-child(1),
+    col:nth-child(3)
+      width: 140px
+    thead
+      .checkbox
+        vertical-align: top
+        label
+          display: flex
+          flex-direction: row-reverse
+          align-items: center
+          &::before
+            width: 18px
+            height: 18px
+            margin-left: 8px
+    .codeSearchTr
+      cursor: pointer
+    .codeBox
+      position: relative
+      display: inline-block
+      color: $gray09
+      .tooltip
+        left: 0
+        transform: translateX(0)
+        &::after
+          left: 20px
+.dataSeleTable02
+  col:nth-child(1),
+  col:nth-child(3)
+    width: 188px
+  col:nth-child(4)
+    width: 298px
+  td
+    position: relative
+  .selectDate
+    display: flex
+    .inputText
+      width: 187px
+      height: 48px
+      margin-right: 12px
+    .btn
+      width: 120px
+      height: 48px
+  .periodSele
+    margin: -16px -24px
+    dl
+      display: flex
+      +borderBottom(1px, $gray03)
+      &:last-child
+        border-bottom: 0
+      dt
+        width: 63px
+        height: 68px
+        display: flex
+        justify-content: center
+        align-items: center
+        text-align: center
+        background-color: $primary10
+      dd
+        width: calc(100% - 63px)
+        padding: 16px 24px
+        display: flex
+        justify-content: space-between
+        align-items: center
+        .selectBox
+          width: 124px
+          .btn
+            height: 36px
+            padding: 8px 10px
+            .material-icons
+              top: 6px
+          a
+            font-size: 14px
+        .selectWrap
+          display: flex
+          align-items: center
+          > *
+            margin-right: 12px
+  .btn
+    height: 40px
+  .cover
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    background-color: $white06
+  .price
+    font-size: 18px
+  .allPrice
+    font-size: 28px
+  .btnPeriodSelect
+    position: relative
+    .popCalendar
+      position: absolute
+      top: 100%
+      left: 0
+      z-index: 1
+      margin-top: 4px
+      width: 504px
+      padding: 16px
+      background-color: $white
+      display: none
+      +border(1px,$gray03)
+      .calendarWrap
+        display: flex
+        .calendarBox
+          width: 100%
+          &:first-child
+            margin-right: 16px
+          .yearBox
+            display: flex
+            justify-content: center
+            align-items: center
+            text-align: center
+            +headline06
+            color: $gray09
+            em
+              font-style: normal
+            .year
+              margin: 0 8px
+          .monthTable
+            border-top: 0
+            text-align: center
+            margin-top: 16px
+            width: 100%
+            td
+              width: 33.33%
+              height: 48px
+              +headline06
+              +border(1px, $gray03)
+              cursor: pointer
+              color: $gray09
+              .tooltip
+                font-size: 14px
+                color: $gray04
+                strong
+                  color: $white
+              &.disabled
+                color: $gray04
+              &.on
+                background-color: $secondary
+                color: $white
+              &:hover
+                .tooltip
+                  display: block
+      .bottomBtns
+        margin-top: 16px
+        .btn
+          min-width: unset
+          width: 120px
+  .selectBox .btn
+    height: auto
+  .seat
+    display: inline-block
+    padding: 6px 12px
+    +border(1px, $gray02)
+    +radius(30px)
+    font-size: 14px
+    margin-left: 8px
+  .comment
+    margin-top: 8px
+.dataSeleTable03
+  .btnPeriodSelect .popCalendar
+    top: 0
+    left: 121px
+    margin-top: 0
+.monthList
+  display: flex
+  flex-wrap: wrap
+  margin: -4px
+  div
+    display: inline-block
+    padding: 6px 12px
+    +radius(20px)
+    +border(1px, $gray03)
+    font-size: 14px
+    color: $gray07
+    font-weight: 500
+    margin: 4px
+    button
+      margin-left: 4px
+      .material-icons
+        font-size: 20px
+        color: $gray04
+.ui-datepicker .ui-datepicker-title select.ui-datepicker-month,
+.ui-datepicker .ui-datepicker-title select.ui-datepicker-year
+  width: auto !important
+  height: 36px
+  padding: 0 28px 0 16px
+  margin: 0
+  border: 1px solid $gray03
+  background-position: right 10px center
+  font-size: 16px
+.ui-datepicker .ui-datepicker-title select.ui-datepicker-month
+  margin-left: 16px
+.division
+  position: relative
+  display: inline-block
+  width: 1px
+  height: 20px
+  background-color: $gray03
+  vertical-align: top
+  margin: 0 16px
+.popup.export
+  .inner
+    width: 1024px
+  .popupHeader
+    background-image: url("/images/ncdc/popupHeaderBg02.jpg")
+  .flex .btn
+    margin-top: 32px
+  .contentsTable.export02
+    margin-top: 12px
+    col:nth-child(1)
+      width: 62px
+    col:nth-child(3),
+    col:nth-child(4)
+      width: 82px
+    th,
+    td
+      padding: 16px 8px
+    .btn
+      margin: auto
+      height: 28px
+      font-size: 12px
+      padding: 6px 10px
+.analyticProcess
+  ul
+    display: flex
+    li
+      width: 100%
+      display: flex
+      flex-direction: column
+      justify-content: center
+      align-items: center
+      padding: 40px 24px
+      +border(1px, $gray03)
+      +boxShadow
+      position: relative
+      text-align: center
+      margin-right: 80px
+      &:last-child
+        margin-right: 0
+      .tit
+        +headline06
+        color: $primary
+      .icon
+        margin-bottom: 8px
+      .sub
+        +subtitle01
+        color: $gray07
+      &::after
+        content: ""
+        position: absolute
+        top: 50%
+        transform: translateY(-50%)
+        left: 100%
+        width: 80px
+        height: 48px
+        background: url("/images/ncdc/analyticProcess-arrow.svg") no-repeat 50% 50%
+      &:last-child::after
+        display: none
+.seatSelect
+  .flex
+    flex-wrap: wrap
+    position: relative
+    .contentsTable
+      width: calc(33.33% - 16px)
+      margin-left: 24px
+      &:nth-child(2)
+        margin-left: 0
+      th
+        padding: 16px 10px
+      & + .btn
+        position: absolute
+        bottom: 100%
+        right: 0
+        margin-bottom: 12px
+        height: 40px
+      &.basic02
+        margin-bottom: 36px
+        margin-left: 0
+.popup.seat
+  .inner
+    width: 1024px
+  .popupHeader
+    background-image: url("/images/ncdc/popupHeader-bg04.jpg")
+.popup.research
+  .dataSeleTable02
+    col:first-child
+      width: 180px
+.imgTitleBox02
+  height: 208px
+  padding: 48px 54px
+  background:
+    repeat: no-repeat
+    size: cover
+    position: 50% 50%
+    image: url("/images/ncdc/imgTitleBox02-bg01.jpg")
+  display: flex
+  flex-direction: column
+  margin-bottom: 80px
+  p
+    position: relative
+    padding-left: 14px
+    +headline05
+    color: $white
+    margin-top: 4px
+    &:first-child
+      margin-top: 0
+    &::before
+      content: ""
+      position: absolute
+      top: 8px
+      left: 0
+      +circle(5px)
+      background-color: $white
+    span
+      color: $secondary200
+.paymentSort
+  ul
+    display: flex
+    justify-content: center
+    li
+      width: 238px
+      padding: 48px 10px
+      +border(1px,$gray03)
+      display: flex
+      flex-direction: column
+      justify-content: center
+      align-items: center
+      margin-right: 80px
+      &:last-child
+        margin-right: 0
+      .tit
+        +headline05
+        color: $primary
+      .sub
+        +subtitle01
+        color: $gray05
+  .comment
+    font-size: 16px
+    color: $secondary
+    margin-top: 24px
+    text-align: center
+.contentsTable.commission01
+  col:nth-child(1)
+    width: 140px
+.contentsTable 
+  .multiple
+    color: $black
+    font-size: 20px
+    margin: 0 5px
+  .plus
+    color: $gray04
+    font-size: 20px
+    margin: 0 10px
+.topComment
+  margin-bottom: 13px
+  p
+    position: relative
+    padding-left: 12px
+    color: $gray07
+    &::before
+      content: ""
+      position: absolute
+      top: 7px
+      left: 0
+      +circle(4px)
+      background-color: $gray07
+.termsWrap
+  padding: 56px 32px
+  +borderTop(2px, $gray09)
+  +borderBottom(1px, $gray09)
+  .tit01
+    +headline03
+    color: $gray09
+    margin-top: 80px
+  .tit02
+    +headline05
+    color: $gray09
+    margin: 56px 0 24px
+  .txt
+    font-size: 16px
+    color: $gray07
+    line-height: 25.6px
+.txtDatepicker
+  > span
+    margin: 0 16px
+  .inputText
+    width: 256px
+.pwPopup
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  z-index: 10
+  padding: 20px
+  .cover
+    position: absolute
+    top: 0
+    left: 0
+    bottom: 0
+    right: 0
+    background-color: $black07
+  .innerWrap
+    display: flex
+    justify-content: center
+    align-items: center
+    height: 100%
+    .inner
+      position: relative
+      z-index: 1
+      width: 480px
+      max-width: 100%
+      background-color: $white
+      .contentBox
+        padding: 32px 32px 48px
+        .tit
+          font-size: 21px
+          color: $gray09
+          font-weight: 700
+          +borderBottom(1px, $gray03)
+          padding-bottom: 12px
+          margin-bottom: 32px
+          img
+            margin-right: 8px
+  .pwForm
+    display: flex
+    flex-direction: column
+    dl
+      display: flex
+      margin-top: 8px
+      &:first-child
+        margin-top: 0
+      dt
+        width: 124px
+        padding: 12px 0
+        font-size: 16px
+        color: $gray09
+        font-weight: 500
+      dd
+        width: calc(100% - 124px)
+  .bottomBtns
+    margin-top: 0
+    .btn
+      width: 100%
+      margin-right: 0
+.popup.pwChange
+  .inner
+    width: 1024px
+    max-width: 100%
+  .popupHeader
+    background-image: url("/images/ncdc/popupHeader-bg05.jpg")
+  .contentsTitle
+    margin-bottom: 32px
+    h3
+      +headline03
+  .sub01
+    +headline06
+    color: $gray09
+    text-align: center
+  .sub02
+    +subtitle01
+    color: $gray07
+    text-align: center
+  .formBox
+    padding: 40px 20px
+    dl
+      dt
+        width: 162px
+      dd
+        width: calc(100% - 162px)
+.txtGrayBoxWrap
+  margin-top: 32px
+  .tit
+    +headline06
+    color: $primary
+    margin-bottom: 8px
+    img
+      margin-right: 4px
+      position: relative
+      top: -2px
+.txtGrayBox
+  padding: 32px
+  background-color: $gray00
+  font-size: 16px
+  line-height: 160%
+  color: $gray07
+.scroll-down
+  .header
+    top: -160px
+  .lnb.fix
+    top: 0
+.scroll-up
+  .lnb.fix
+    top: 120px
+.lnb.fix
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  &::after
+    width: 100%
+.lnb.notFix
+  position: relative
+  top: 0
+  z-index: 1
+  transition: 0s
+.mobileCertification
+  display: flex
+  .inputText
+    max-width: 297px
+    margin-left: 8px
+.serviceComment
+  +headline04
+  text-align: center
+  margin-bottom: 24px
+  span
+    color: $secondary
+.introduceWrap
+  display: flex
+  flex-wrap: wrap
+  .introduceBox01
+    padding: 48px
+    background-color: $secondary10
+    display: flex
+    align-items: center
+    margin-bottom: 24px
+    .logoBox
+      width: 218px
+      margin-right: 48px
+    .txtBox
+      width: calc(100% - 296px)
+      p
+        +headline05
+        color: $gray09
+        span
+          color: $secondary
+  .introduceBox02
+    width: calc(50% - 12px)
+    margin-right: 24px
+    ul 
+      display: flex
+      flex-wrap: wrap
+      margin: -8px
+      li 
+        width: calc(50% - 12px)
+        margin: 6px
+        img
+          width: 100%
+  .introduceBox03
+    width: calc(50% - 12px)
+    padding: 0 40px
+    background-color: $gray00
+    ul
+      display: flex
+      flex-direction: column
+      flex-wrap: wrap
+      justify-content: center
+      height: 100%
+      li
+        &:last-child
+          padding-top: 40px
+          margin-top: 40px
+          +borderTop(1px,$gray03)
+        p
+          position: relative
+          padding-left: 32px
+          +headline06
+          color: $gray07
+          &::after
+            content: ""
+            position: absolute
+            top: 8px
+            left: 14px
+            width: 6px
+            height: 6px
+            background-color: $gray06
+            +radius(50%)
+          span
+            color: $secondary

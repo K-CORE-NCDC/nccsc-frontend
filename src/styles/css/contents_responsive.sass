@@ -1,0 +1,1467 @@
+@import "common.sass"
+
+@media all and (max-width: 1199px)
+  .onlyPc
+    display: none
+  .centerImg
+    max-width: 100%
+    left: 0
+    margin-left: 0
+  .joinForm
+    .inputText
+      width: 100%
+  .emailForm
+    flex-wrap: wrap
+    .emailForm01
+      width: 100%
+      margin-right: 0
+      margin-bottom: 8px
+      .inputText
+        width: 100%
+    .emailForm02
+      width: 100%
+      select
+        width: calc(100% - 168px)
+  .codeCertification
+    .inputText
+      width: calc(100% - 168px)
+  .boardList.api
+    .boardCell
+      &:nth-child(7),
+      &:nth-child(8)
+        display: none
+  .visualContents
+    .flex
+      flex-direction: column
+      .sub
+        width: 100%
+      .imgWrap
+        width: 100%
+        margin-top: 39px
+        img
+          width: 100%
+  .contentsImg
+    width: 100% !important
+    max-width: 100%
+  .serviceIntro
+    ul
+      flex-direction: column
+      li
+        margin-right: 0
+        margin-bottom: 24px
+  .visualContents.cancer
+    padding: 32px 20px
+    ul
+      flex-direction: column
+      li
+        margin-right: 0
+        margin-top: 24px
+        &:first-child
+          margin-top: 0
+        dl
+          padding: 56px 40px 48px
+  .publicDataInfo
+    position: relative
+    overflow: hidden
+    padding: 48px 40px
+  .needDoc ul
+    display: flex
+    flex-direction: column
+    li
+      min-height: 141px
+  .analyticGuideBox01
+    & > div
+      width: 100%
+    .map
+      margin-bottom: 16px
+    .mapBox
+      img.pc
+        display: none
+      img.t
+        display: block
+        width: 100%
+    .slideBox
+      margin-right: 0
+      margin-bottom: 24px
+    .infoBox dl dd .btnMap a
+      max-width: 206px
+  .analyticGuideBox02
+    ul
+      flex-direction: column
+      li
+        margin-right: 0
+        margin-top: 24px
+        &:first-child
+          margin-top: 0
+  .organization-pc
+    display: none
+  .organization-t
+    display: block
+    width: 100%
+@media all and (max-width: 1024px)
+  .publicDataInfo
+    ul
+      flex-direction: column
+      li
+        padding: 40px
+        margin-right: 0
+        margin-top: 24px
+        &:first-child
+          margin-top: 0
+  .thesisList
+    ul
+      flex-direction: column
+      li
+        width: 100%
+        &:nth-child(2n-1)
+          margin-right: 0
+  .boardList
+    &.qna
+      .boardCell
+        &:nth-child(6)
+          position: static
+          padding-right: 0
+          margin-right: 0
+          &::after
+            display: none
+        &:nth-child(7)
+          &::after
+            display: none
+        &:nth-child(8)
+          position: static
+          padding-right: 0
+          margin-right: 0
+          &::after
+            display: none
+    &.results
+      .boardTr
+        display: flex
+        flex-wrap: wrap
+      .boardCell
+        margin-top: 8px
+        &:nth-child(5)
+          width: 100% !important
+          order: 1
+          margin-top: 0
+        &:nth-child(6)
+          width: 100% !important
+          order: 2
+          font-size: 14px
+        &:nth-child(2),
+        &:nth-child(3),
+        &:nth-child(4),
+        &:nth-child(7)
+          order: 3
+  .imgTitleBox
+    &.remote
+      background:
+        image: url("/images/ncdc/remote-bg-m.jpg")
+  .remoteProcess
+    ul
+      flex-wrap: wrap
+      li
+        width: calc(33.33% - 48px)
+        margin-top: 32px
+        &:nth-child(1),
+        &:nth-child(2),
+        &:nth-child(3) 
+          margin-top: 0
+          margin-right: 48px
+        &:nth-child(4),
+        &:nth-child(5),
+        &:nth-child(6)
+          margin-left: 48px
+          margin-right: 0
+        &:nth-child(4)::before
+          content: ""
+          position: absolute
+          top: 50%
+          right: 100%
+          transform: translateY(-50%)
+          width: 48px
+          height: 32px
+          background:
+            repeat: no-repeat
+            size: auto 100%
+            position: 50% 50%
+            image: url("/images/ncdc/remoteProcess-arrow.svg")
+  .researchStatus01
+    ul
+      flex-wrap: wrap
+      li
+        width: calc(33.33% - 16px)
+        &:nth-child(3)
+          margin-right: 0
+        &:nth-child(4),
+        &:nth-child(5)
+          width: calc(50% - 12px)
+          margin-top: 24px
+  .researchStatus02
+    ul
+      flex-wrap: wrap
+      margin: -6px
+      li
+        width: calc(50% - 6px)
+        padding: 6px
+  .withdrawal
+    padding: 64px 64px 80px
+  .dataProcess
+    .titleBox
+      .con
+        &.con01
+          width: calc(59.4% - 9px)
+          margin-right: 32px
+        &.con02
+          width: calc(38.4% - 9px)
+    .process
+      ul
+        li
+          padding: 26px 10px
+          +subtitleBold02
+          &::after
+            width: 32px
+            height: 32px
+  .searchFilter
+    flex-direction: column
+    dl
+      width: 100%
+      margin-right: 0
+      margin-top: 20px
+      &:first-child
+        margin-top: 0
+  .searchKeyword dl dd
+    flex-wrap: nowrap
+    white-space: nowrap
+    overflow: auto
+    &::-webkit-scrollbar
+      display: none
+  .dataSubContents01.simplify
+    .dataSearchBox .flexBox
+      flex-direction: column
+      .textSearch
+        width: 100%
+        margin-right: 0
+        margin-bottom: 40px
+      .searchFilter
+        flex-direction: row
+        width: 100%
+  .dataList ul li
+    width: calc(50% - 12px)
+    margin-right: 0
+    &:nth-child(2n - 1)
+      margin-right: 24px
+  .dataView01,
+  .dataView01 tbody,
+  .dataView01 tr,
+  .dataView01 th,
+  .dataView01 td
+      display: block
+  .dataView01
+    +border(1px,$gray03)
+    +borderTop(2px,$primary)
+    colgroup
+      display: none
+    tr
+      display: flex
+      flex-wrap: wrap
+    th
+      width: 144px
+      border: 0
+      +borderBottom(1px,$gray03)
+      display: flex
+      align-items: center
+    td
+      width: calc(100% - 144px)
+      border: 0
+      +borderBottom(1px,$gray03)
+    tr:last-child
+      th,
+      td
+        border-bottom: 0
+  .dataInquiryProcess02
+    ul
+      li
+        margin-right: 32px
+        &::after
+          width: 32px
+          height: 32px
+        .period
+          width: 32px
+          margin-left: -7px
+  .contentsScrollTab
+    ol > li
+      .contentsTab
+        margin-bottom: 62px
+      img.pc
+        display: none
+      img.m
+        display: block
+        width: 100%
+  .committeeBox
+    .titleBox
+      dd br
+        display: none
+    ul
+      flex-direction: column
+      margin-top: 48px
+      li
+        margin-right: 0
+        margin-top: 24px
+        &:first-child
+          margin-top: 0
+  .historyList
+    margin-top: 48px
+    overflow: hidden
+    > ul
+      flex-direction: column
+      padding: 50px 0
+      margin-top: 0
+      > li
+        display: flex
+        flex-wrap: wrap
+        width: 100%
+        padding: 24px 0
+        margin-top: 0
+        &::before
+          top: 0
+          left: 157px
+          width: 1px
+          height: 100vh
+        &::after
+          top: auto
+          bottom: 0
+          left: 157px
+          width: 1px
+          height: 100vh
+        .year
+          width: 100px
+          margin-bottom: 0
+          margin-right: 111px
+          &::after
+            top: 23px
+            left: 100%
+            width: 40px
+            height: 1px
+            margin-left: 16px
+        .list
+          margin-top: 12px
+          margin-left: 0
+          width: calc(100% - 211px)
+          &::before
+            top: -1px
+            left: -68px
+          &::after
+            top: 8px
+            left: -59px
+  .organization
+    .conBox04
+      &::after
+          display: none
+      ul
+        flex-direction: column
+        padding-top: 0
+        li
+          padding-top: 0
+          margin-top: 24px
+          &:first-child
+            margin-top: 0
+          &::after
+            display: none
+          dl
+            display: flex
+            flex-wrap: wrap
+          dt
+            position: relative
+            width: 164px
+            height: auto
+          dd
+            width: calc(100% - 164px)
+  .paymentSort ul li
+    margin-right: 24px
+  .introduceWrap
+    flex-direction: column
+    .introduceBox02
+      width: 100%
+    .introduceBox03
+      width: 100%
+      padding: 40px
+      margin-top: 24px
+@media all and (max-width: 767px)
+  img.pc
+      display: none
+  img.m
+    display: block
+    width: 100%
+  h4.conTitle img
+    width: 28px
+  .subVisual
+    height: 215px
+    margin-bottom: 0
+    .txtBox
+      padding-top: 0
+      display: flex
+      height: 100%
+      justify-content: center
+      align-items: center
+      .main
+        font-size: 28px
+        padding-bottom: 20px
+  .lnb
+    position: relative
+    margin-top: -1px
+    .auto
+      padding: 0
+      position: absolute
+      top: 100%
+      left: 0
+      right: 0
+      z-index: 1
+      display: none
+    .btn
+      display: block
+      position: relative
+      text-align: left
+      padding: 0 20px
+      overflow: hidden
+      .txt
+        display: block
+      .arrow
+        position: absolute
+        top: 10px
+        right: 10px
+        transition: .3s
+      &.on
+        .arrow
+          transform: rotateX(180deg)
+    ul
+      flex-direction: column
+      li
+        &::after
+          display: none
+        a
+          text-align: left
+          padding: 12px 20px
+          font-size: 16px
+          background-color: transparent
+          color: $gray07
+          +borderBottom
+        &.on a
+          color: $white
+  .breadCrumbs
+    position: absolute
+    top: 146px
+    left: 0
+    right: 0
+    ul
+      justify-content: center
+  .subContents
+    padding: 48px 0
+    .section
+      padding: 28px 0
+  .lnb.notFix + .subContents
+    padding: 48px 0
+  .contentsTitle
+    margin-bottom: 32px
+    padding-bottom: 12px
+    h3
+      font-size: 24px
+      word-break: keep-all
+  h4.conTitle
+    margin-bottom: 12px
+    &::before
+      width: 28px
+  .boardTopUtil
+    margin-bottom: 12px
+    .boardSearchBox
+      flex-direction: column
+      .selectBox
+        width: 100%
+        margin-bottom: 8px
+        margin-right: 0
+      .searchBox
+        .inputText
+          width: calc(100%  - 88px)
+  .sourceWarning
+    flex-direction: column
+    align-items: flex-start
+    padding: 20px 16px
+    img
+      margin-right: 0
+      margin-bottom: 16px
+  .loginWrap
+    .idPwSearch
+      a
+        width: 50%
+        padding: 0
+        text-align: center
+        img
+          top: 2px
+    .joinInfo
+      flex-direction: column
+      .btn
+        width: 100%
+        margin-top: 16px
+      p 
+        padding-left: 24px
+        img
+          width: 18px
+          top: 0px
+  .memberCertification
+    padding: 48px 35px
+  .idSearchResult .resultBox
+    padding: 32px 20px
+    margin: 12px auto
+  .formBox
+    padding: 32px 20px
+    dl
+      flex-direction: column
+      align-items: flex-start
+      dt
+        width: 100% !important
+        img
+          width: 20px
+          margin-right: 8px
+      dd
+        width: 100% !important
+        margin-top: 4px
+  .alertPopup
+    .inner
+      left: 20px
+      right: 20px
+      width: auto
+      transform: translateY(-50%)
+      .contentBox .txtBox .main
+        font-size: 21px
+    br
+      display: none
+  .joinProcess
+    ul li
+      &::after
+        width: 32px
+        height: 32px
+        background-size: cover
+        top: 10px
+        right: -16px
+      .icon
+        width: 56px
+        height: 56px
+      .tit
+        white-space: nowrap
+        span
+          display: none
+  .termsTxt
+    padding: 24px
+    font-size: 14px
+  .joinTermsWrap
+    .joinInfo
+      padding-right: 0
+    .agreeAll
+      position: relative
+      text-align: right
+      margin-bottom: 12px
+  .joinForm
+    dl
+      flex-direction: column
+      dt
+        width: 100%
+        padding-left: 0
+      dd
+        width: 100%
+        padding-right: 0
+        >.flex
+          flex-direction: column
+          .inner
+            margin-right: 0
+            margin-bottom: 8px
+        .btn
+          width: 100%
+    .emailForm02
+      flex-wrap: wrap
+      select
+        width: 100%
+        margin-right: 0
+        margin-bottom: 8px
+    .codeCertification
+      .flex
+        flex-wrap: wrap
+      .inputText
+        width: 100%
+        margin-right: 0
+        margin-bottom: 8px
+        span
+          padding: 0 16px
+          font-size: 14px
+    .inlineLabels
+      height: 24px
+  .joinSuccess
+    padding: 40px 20px
+    > img
+      width: 158px
+    .resultBox
+      align-items: flex-start
+      padding: 32px 20px
+      p
+        display: flex
+        flex-direction: column
+        margin-top: 16px
+        &:first-child
+          margin-top: 0
+        .tit
+          color: $gray05
+          &::after
+            display: none
+    .comment
+      text-align: left
+  .boardList.api
+    .boardCell
+      &:nth-child(4)
+        display: block
+        margin-right: 0
+      &:nth-child(7),
+      &:nth-child(8)
+        display: inline-block
+  .introduce.faqList.cancer
+    dt
+      padding: 16px 48px 16px 40px
+      background-size: 20px
+      background:
+        size: 20px
+        position: 12px 15px
+      .arrow
+        width: 20px
+        top: 14px
+    dd
+      padding: 24px 12px
+      font-size: 14px
+      p
+        padding: 0
+        padding-bottom: 16px
+        padding-left: 12px
+        &::before
+          top: 6px
+  .linkList
+    > ul > li
+      margin-top: 16px
+      &:first-child
+        margin-top: 0
+      ul
+        padding: 16px 22px
+  .visualContents
+    padding-top: 32px
+    .imgBox
+      height: 360px
+    .main img
+      width: 129px
+    .flex
+      margin-top: 16px
+    &.cancer
+      ul
+        margin-top: 16px
+        li dl
+          padding: 32px 24px
+  .thesisList
+    ul
+      li
+        padding: 20px 12px
+      .imgBox
+        width: 98px
+        margin-right: 0
+        img
+          width: 98px
+          height: 138px
+      .itemBox01
+        .itemInfo
+          width: calc(100% - 110px)
+          margin-left: 12px
+          dl
+            margin-top: 6px
+            dt
+              padding-bottom: 0
+              margin-bottom: 2px
+              border-bottom: 0
+              font-size: 12px
+            dd
+              font-size: 12px
+              .dot::before
+                top: 5px
+            img
+              display: none
+      .itemBox02
+        margin-top: 12px
+        dt
+          padding-bottom: 0
+          margin-bottom: 2px
+          border-bottom: 0
+    &.type02
+      ul li
+        padding-left: 134px
+  .popup.results
+    .contentsTable,
+      tbody,
+      tr,
+      th,
+      td
+        display: block
+    .contentsTable
+      tr
+        display: flex
+        flex-wrap: wrap
+      th
+        width: 100px
+        padding: 16px 12px
+        font-size: 12px
+        border: 0
+        +borderBottom(1px, $gray03)
+      td
+        width: calc(100% - 100px)
+        padding: 16px 12px
+        font-size: 14px
+        border: 0
+        +borderBottom(1px, $gray03)
+  .boardList
+    &.results
+      .boardTr
+        display: flex
+        flex-wrap: wrap
+        padding-top: 12px
+      .boardCell
+        margin-top: 8px
+      .boardCell:nth-child(2),
+      .boardCell:nth-child(3),
+      .boardCell:nth-child(4),
+      .boardCell:nth-child(7)
+        display: inline-block
+        order: 3
+      .boardCell:nth-child(5)
+        width: 100% !important
+        order: 1
+      .boardCell:nth-child(6)
+        width: 100% !important
+        order: 2
+        font-size: 14px
+  .errorBox
+    padding: 66px 0 0
+    img
+      width: 212px
+  .imgTitleBox
+    padding: 24px 32px
+    & + *
+      margin-top: 24px
+    &.remote
+      background:
+        image: url("/images/ncdc/remote-bg-m.jpg")
+  .remoteList
+    ul
+      li
+        margin-right: 8px
+        dl
+          padding-top: 52px
+          dt
+            height: 36px
+          dd
+            .box
+              padding: 16px 12px
+              flex-direction: column
+              margin-top: 8px
+              .icon
+                width: 32px
+                margin-right: 0
+                margin-bottom: 4px
+              p
+                white-space: nowrap
+              span
+                +subtitle03
+  .remoteProcess
+    ul
+      flex-direction: column
+      li
+        width: 100% !important
+        margin-top: 32px !important
+        margin-right: 0 !important
+        margin-left: 0 !important
+        display: flex
+        justify-content: center
+        align-items: center
+        &:first-child
+          margin-top: 0 !important
+        &::after
+          left: 0
+          right: 0
+          top: 100%
+          transform: translateY(0) rotate(90deg)
+          width: auto
+          height: 24px
+          margin: 5px 0
+        &::before
+          display: none
+        .icon
+          width: 40px
+          margin-right: 8px
+        p
+          margin-top: 0
+        span
+          +subtitle03
+  .researchStatus01
+    ul
+      margin-top: -16px
+      li
+        width: 100%
+        display: flex
+        margin-right: 0
+        margin-top: 16px
+        a
+          width: 30%
+          .icon
+            width: 48px
+            margin: auto
+          .amount
+            span
+              padding: 2px 10px
+              white-space: nowrap
+        .status
+          width: 70%
+          height: auto
+          justify-content: center
+        &:nth-child(4)
+          margin-right: 16px
+        &:nth-child(4),
+        &:nth-child(5)
+          display: block
+          width: calc(50% - 8px)
+          margin-top: 16px
+          a
+            width: 100%
+  .researchStatus02
+    ul li
+      a
+        flex-direction: column
+        .icon
+          width: 48px
+          height: 48px
+          margin: auto
+          margin-right: auto
+          margin-bottom: 4px
+        .txtBox
+          text-align: center
+          .amount
+            display: block
+  .withdrawal
+    padding: 28px 24px
+    .icon img
+      width: 120px
+    dl
+      margin-top: 8px
+      dt img
+        width: 28px
+        margin-top: -2px
+        margin-right: 4px
+      dd
+        margin-top: 12px
+        padding: 24px
+  .dataProcess
+    flex-direction: row
+    > div
+      margin-right: 16px
+    .titleBox
+      flex-direction: column
+      span
+        height: 100% !important
+      .con
+        width: 100% !important
+        flex-direction: column
+        &.con01
+          height: calc(60.4% - 16px)
+          margin-right: 0
+          margin-bottom: 32px
+          span
+            margin-right: 0
+            margin-top: 16px
+            &:first-child
+              margin-top: 0
+        &.con02
+          height: calc(39.6% - 16px)
+      &.titleBox01
+        width: 51px
+        white-space: nowrap
+        text
+          transform: rotate(-90deg)
+      &.titleBox02
+        width: 25%
+    .process
+      width: calc(75% - 117px)
+      ul
+        flex-direction: column
+        li
+          padding: 16px 10px
+          margin-right: 0
+          margin-top: 40px
+          &:first-child
+            margin-top: 0
+          &::after
+            left: 50%
+            transform: translateX(-50%) rotate(90deg)
+            top: 100%
+    .arrowBox
+      width: 34px
+      padding: 53px 0 0 0
+      margin-left: -16px
+      img.pc
+        display: none
+      img.m
+        display: block
+        height: 510px
+  .dataSubContents01
+    margin-top: -56px
+    padding-top: 56px
+    .contentsTab ul li a
+      flex-direction: column
+      .count
+        margin-left: 0
+        padding: 0 7px
+  .searchFilter
+    margin-top: 24px
+    dl
+      flex-direction: column
+      dt
+        width: 100%
+        img
+          width: 20px
+      dd
+        width: 100%
+        flex-wrap: wrap
+        margin: -4px
+        button
+          min-width: unset
+          width: 55px
+          padding: 7px 10px
+          font-size: 12px
+          margin: 4px
+          &:first-child
+            margin-left: 4px
+  .textSearch
+    padding-right: 100px
+    .btn
+      width: 100px
+  .searchKeyword
+    padding: 16px 0
+    dl
+      dt
+        width: 108px
+        img
+          width: 20px
+      dd
+        width: calc(100% - 108px)
+        button
+          height: 26px
+          padding: 0 8px
+          font-size: 12px
+  .searchResultAmount
+    padding: 0
+    margin: 32px 0
+  .dataSubContents01.simplify
+    .dataSearchBox .flexBox
+      .textSearch
+        margin-bottom: 24px
+      .searchFilter
+        flex-direction: column
+        dl
+          flex-direction: row
+          align-items: flex-start
+          margin-right: 0
+          margin-top: 12px
+          dt
+            padding: 0
+            padding-top: 5px
+            width: 96px
+            margin-right: 12px
+          dd
+            width: calc(100%  - 108px)
+            margin: -4px
+            button
+              margin: 4px
+              &:last-child
+                margin-right: 0
+    .searchFilter
+      dl dd button
+        padding: 5px 10px
+        min-width: 55px
+  .dataSubContents02
+    margin-top: 32px
+  .dataList
+    ul
+      li
+        width: 100%
+        padding: 16px
+        margin-top: 16px
+        margin-right: 0 !important
+        .itemInfo img
+          margin-top: -1px
+          margin-right: 4px
+        .hashtag
+          margin-top: 12px
+          a
+            padding: 5px 8px
+            font-size: 12px
+        .date
+          margin-top: 12px
+        dl
+          dt
+            font-size: 12px
+          dd
+            font-size: 12px
+  .dataListArray
+    .btns button
+      padding: 4px 8px
+      font-size: 12px
+    .array
+      display: none
+  .labels01
+    span
+      height: 24px
+      img
+        width: 16px
+  .labels02
+    span
+      height: 24px
+      font-size: 12px
+      padding: 0 8px
+  .dataView01
+    th
+      width: 92px
+    td
+      width: calc(100% - 92px)
+  .contentsTable.dataView
+    .btn
+      height: 28px
+      padding: 0 10px
+      font-size: 12px
+  .dataView02
+    col:nth-child(1)
+      width: 42px
+    col:nth-child(2)
+      width: 79px
+    .btn
+      white-space: nowrap
+  .dataInquiryProcess02
+    ul
+      flex-direction: column
+      li
+        margin-right: 0
+        margin-top: 44px
+        &:first-child
+          margin-top: 0
+        &::after
+          left: 50%
+          top: 100%
+          transform: translate(-50%, 0) rotate(90deg)
+          height: 44px
+          background-size: 40px auto
+        .period
+          top: 100%
+          left: 50%
+          transform: translateX(60px)
+          padding: 9px 0
+  .detailProcess01 .infoBox
+    .arrows
+      width: 20%
+      margin: 0 12px
+    .circle
+      width: 98px
+      height: 98px
+      .icon
+        width: 32px
+  .contentsScrollTab
+    ol > li
+      margin-top: 72px
+      .contentsTab
+        margin-bottom: 32px
+        ul li a
+          font-size: 12px
+          br
+            display: block
+  .needDoc ul li
+    padding: 24px 28px
+    min-height: 100px
+    background-size: 64px
+    a
+      padding-left: 24px
+      .tit
+        padding-top: 8px
+      .sub.colorSecondary
+        font-size: 12px
+  .txtListBox
+    padding: 24px
+  .committeeBox
+    padding: 24px
+    ul
+      padding: 0
+      margin-top: 24px
+      word-break: keep-all
+      li
+        padding: 24px
+        margin-top: 12px
+        dl
+          padding-top: 0
+          dt
+            position: relative
+            height: auto
+            display: flex
+            flex-direction: row
+            justify-content: space-between
+            align-items: flex-start
+            img
+              width: 64px
+          dd
+            margin-top: 12px
+  .analyticGuideBox01
+    .mapBox
+      img.pc,
+      img.t
+        display: none
+      img.m
+        display: block
+        width: 100%
+    .infoBox
+      padding: 0
+      border: 0
+      hr
+        margin: 24px 0
+      dl
+        flex-direction: column
+        padding: 0
+        dt
+          width: 100%
+          img
+            width: 20px
+            top: -2px
+        dd
+          width: 100%
+          margin-top: 12px
+          .btnMap a
+            max-width: unset
+            height: 40px
+        &:nth-child(3)
+          dd
+            padding-left: 30px
+      .btn
+        margin-top: 24px
+  .analyticGuideBox02 ul li p img
+    width: 24px
+    top: -2px
+  .organization-t
+    display: none
+  .organization-m
+    display: block
+    width: 100%
+  .historyTitleBox
+    height: auto
+    .imgBox
+      background-image: url("/images/ncdc/historyTitleBox-bg-m.jpg")
+    dl
+      padding: 24px 32px 48px
+  .historyList
+    > ul
+        padding: 0
+        > li
+          flex-direction: column
+          padding: 0
+          margin-top: 41px
+          &:first-child
+            margin-top: 0
+          &::before,
+          &::after
+            display: none
+          .year
+            width: 65px
+            margin-right: 0
+            margin-bottom: 12px
+            &::after
+              top: 15px
+              margin-left: 8px
+          .list
+            width: 100%
+            margin-top: 0
+            &::before
+              top: -44px
+              left: 100px
+            &::after
+              top: -35px
+              left: 109px
+            ul
+              li
+                .date
+                  margin-right: 8px
+                p
+                  padding-top: 0
+  .organization
+    .conBox01
+      .cellBox
+        padding: 20px 24px
+        img
+          width: 106px
+    .conBox02
+      justify-content: flex-start
+      .cellBox
+        padding: 0
+        +circle(117px)
+        flex-direction: column
+        text-align: center
+        img
+          margin-right: 4px
+    .conBox03
+      .cellBox
+        width: 100%
+        flex-direction: column
+        text-align: center
+        img:last-child
+          margin-top: 16px
+        .division
+          display: none
+    .conBox04
+      margin-top: 56px
+      ul
+        li
+          margin-right: 0
+          margin-top: 16px
+          dt
+            width: 64px
+            word-break: keep-all
+            text-align: center
+            img
+              width: 40px
+          dd
+            width: calc(100% - 64px)
+            padding: 20px 8px
+            p
+              font-size: 14px
+  .imgTitleBox02
+    padding: 32px
+    height: 202px
+    background-image: url("/images/ncdc/imgTitleBox02-bg01-m.jpg")
+    margin-bottom: 40px
+    p::before
+      top: 5px
+  .paymentSort
+    ul
+      li
+        width: 100%
+        padding: 24px 10px
+        margin-right: 16px
+        white-space: nowrap
+        .icon
+          width: 48px
+    .comment
+      font-size: 14px
+      text-align: left
+  .contentsTable.commission01
+    col:nth-child(1)
+      width: 64px
+    th
+      word-break: keep-all
+  .contentsTable.commission02
+    col:nth-child(1)
+      width: 70%
+  .contentsTable .multiple,
+  .contentsTable .plus
+    font-size: 15px
+  .serviceIntro
+    ul
+      li
+          padding: 40px 32px
+          dl
+            dt
+              text-align: center
+            dd
+              flex-direction: column
+              > img
+                margin-right: 0
+              p
+                font-size: 14px
+                &::before
+                  top: 7px
+  .introduce.faqList
+    dt
+      background-size: 20px
+      background-position: 10px 14px
+      padding: 16px 68px 16px 40px
+      .arrow
+        top: 14px
+        bottom: auto
+    dd
+      padding: 20px 12px
+      font-size: 14px
+      line-height: 150%
+  .publicDataInfo
+    padding: 24px 32px
+    margin-bottom: 72px
+    .imgBox
+      height: 212px
+    ul
+      margin: 0 -12px
+      margin-top: 24px
+  .myInfo
+    flex-direction: row-reverse
+    flex-wrap: wrap
+    .infoListTit
+      width: 100px
+      padding: 4px 16px
+      order: 1
+      li
+        padding: 16px 0
+        img
+          width: 18px
+    .infoListContent
+      width: calc(100% - 100px)
+      padding: 4px 16px
+      li
+        padding: 16px 0
+    .bgPattern
+      display: none
+    .btn
+      order: 3
+      width: 100%
+      position: static
+      margin-top: 16px
+      margin-bottom: 0
+  .myInfoInquiry
+    display: flex
+    flex-direction: column-reverse
+    ul
+      flex-direction: column
+      li
+        display: flex
+        justify-content: center
+        padding: 24px
+        margin-right: 0
+        margin-top: 12px
+        &:first-child
+          margin-top: 0
+        .icon
+          width: 60%
+          text-align: right
+          margin-right: 24px
+          img
+            width: 56px
+        dl
+          width: 100%
+          margin-top: 0
+          text-align: left
+          dd
+            margin-top: 4px
+            span
+              padding: 4px 14px
+    .btns
+      position: static
+      flex-direction: column
+      margin-top: 16px
+      .btn
+        margin-right: 0
+        margin-top: 12px
+        &:first-child
+          margin-top: 0
+  .pwPopup
+    .pwForm
+      dl
+        flex-direction: column
+        dt
+          width: 100%
+          padding: 0
+        dd
+          width: 100%
+          margin-top: 8px
+  .popup.pwChange
+    .popupHeader
+      height: 120px
+    .sub02
+      font-size: 12px
+    .pwSearch
+      .formBox
+        padding: 32px 24px
+        dl dt img
+          width: 16px
+          margin-top: 2px
+          margin-right: 4px
+    .bottomBtns
+      .flex
+        flex-wrap: wrap
+        .btn
+          margin-right: 0
+          margin-top: 16px
+          &:first-child
+            margin-top: 0
+  .txtGrayBoxWrap
+    .tit
+      +subtitle01
+      img
+        width: 20px
+  .txtGrayBox
+    padding: 16px
+    font-size: 14px
+    line-height: 150%
+@media all and (max-width: 320px)
+  .boardList
+    .boardCell
+      &.mobileBlock::after
+        right: -4px
+      &.mobileBlock
+        margin-right: 1px
+  .dataView .btn
+    max-width: 100%
+    min-width: unset
+    .icon
+      display: none
+
+@media all and (max-width: 1199px)
+  .lnb
+    top: 81px
+    &::after
+      width: auto
+      left: 40px
+      right: 40px
+      transform: translateX(0)
+    &.fix
+      &::after
+        left: 0
+        right: 0
+  .scroll-down
+    .header
+      top: -85px
+  .scroll-up
+    .lnb.fix
+      top: 65px
+  .subVisual .txtBox
+    padding-top: 64px
+  .imgTitleBox.reference01 dt br
+    display: none
+@media all and (max-width: 767px)
+  .lnb
+    position: sticky
+    top: 61px
+  .scroll-down
+    .header
+      top: -61px
+  .scroll-up
+    .lnb.fix
+      top: 61px
+  .mobileCertification
+    flex-direction: column
+    .inputText
+      max-width: 100%
+      margin-left: 0
+      margin-top: 8px
+  .serviceComment
+    margin-bottom: 16px
+  .introduceWrap
+    .introduceBox01
+      flex-direction: column
+      padding: 24px
+      .txtBox
+        width: 100%
+        margin-top: 16px
+    .introduceBox03
+      padding: 24px
+      ul li:last-child
+        margin-top: 24px
+        padding-top: 24px
+  .subVisual .txtBox
+    padding-top: 60px

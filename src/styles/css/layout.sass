@@ -1,0 +1,2413 @@
+@import "common.sass"
+*
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+  font-family: inherit
+ol,ul,li,dl,dt,dd
+  list-style: none
+address
+  font: inherit
+img
+  max-width: 100%
+  vertical-align: top
+button
+  background: none
+  border: none
+  cursor: pointer
+  font-size: inherit
+  color: inherit
+  font-family: inherit
+a
+  color: inherit
+  text-decoration: none
+body
+  margin: auto
+  font:
+    size: 14px
+    weight: 400
+    family: "Spoqa Han Sans Neo", "Noto Sans KR", sans-serif
+  color: #000
+  letter-spacing: -0.04em
+  text-size-adjust: 100%
+br.m
+  display: none
+  @media all and (max-width: 767px)
+    display: block
+.skipMenu 
+  height: 0
+  overflow: hidden
+  li a 
+    display: block
+    font-size: 16px
+    width: 100%
+    position: absolute
+    top: -9999px
+    left: 0
+    text-align: center
+    z-index: 999999
+    &:focus,
+    &.on 
+      position: absolute
+      top: 0
+      left: 0
+      font-weight: bold
+      color: #fff
+      background: #272727
+      padding: 20px 0
+      color: $white
+.flex
+  display: flex
+.justify-content-between
+  justify-content: space-between
+.justify-content-center
+  justify-content: center
+.justify-content-end
+  justify-content: flex-end
+.align-items-center
+  align-items: center
+.underline
+  text-decoration: underline
+.mtn
+  margin-top: 0 !important
+.mt10
+  margin-top: 10px !important
+.ptn
+  padding-top: 0 !important
+.tal
+  text-align: left !important
+.tar
+  text-align: right !important
+.tac
+  text-align: center !important
+.w100
+  width: 100% !important
+.dotTxt
+  position: relative
+  padding-left: 12px
+  &::before
+    content: ""
+    position: absolute
+    top: 0.6em
+    left: 0
+    +circle(0.3em)
+    background-color: $gray05
+.h1
+  font-size: 44px
+  font-weight: 700
+  line-height: 120%
+  word-break: keep-all
+  @media all and (max-width: 767px)
+    font-size: 28px
+.h2
+  font-size: 35px
+  font-weight: 700
+  line-height: 120%
+  word-break: keep-all
+  @media all and (max-width: 767px)
+    font-size: 24px
+.h3
+  font-size: 28px
+  font-weight: 700
+  line-height: 130%
+  word-break: keep-all
+  @media all and (max-width: 767px)
+    font-size: 20px
+.h4
+  font-size: 24px
+  font-weight: 700
+  line-height: 140%
+  word-break: keep-all
+  @media all and (max-width: 767px)
+    font-size: 18px
+.h5
+  font-size: 21px
+  font-weight: 700
+  line-height: 150%
+  word-break: keep-all
+  @media all and (max-width: 767px)
+    font-size: 14px
+.h6
+  font-size: 18px
+  font-weight: 700
+  line-height: 150%
+  word-break: keep-all
+  @media all and (max-width: 767px)
+    font-size: 14px
+.d1
+  font-size: 72px
+  font-weight: 700
+  line-height: 130%
+  @media all and (max-width: 767px)
+    font-size: 48px
+.d2
+  font-size: 64px
+  font-weight: 700
+  line-height: 130%
+  @media all and (max-width: 767px)
+    font-size: 40px
+.d3
+  font-size: 56px
+  font-weight: 700
+  line-height: 130%
+  @media all and (max-width: 767px)
+    font-size: 34px
+.subtitle01
+  font-size: 16px
+  font-weight: 500
+  line-height: 160%
+  @media all and (max-width: 767px)
+    font-size: 14px
+.subtitle02
+  font-size: 14px
+  font-weight: 500
+  line-height: 150%
+.subtitle03
+  font-size: 12px
+  font-weight: 500
+  line-height: 140%
+.p1
+  font-size: 16px
+  line-height: 160%
+  letter-spacing: -0.03em
+  @media all and (max-width: 767px)
+    font-size: 14px
+.p2
+  font-size: 14px
+  line-height: 150%
+.p3
+  font-size: 12px
+  line-height: 140%
+.colorPrimary
+  color: $primary !important
+.colorSecondary
+  color: $secondary !important
+  &200
+    color: $secondary200 !important
+  &400
+    color: $secondary400 !important
+.colorGray04
+  color: $gray04
+.colorError
+  color: $error
+.ellipsis01
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
+.material-icons
+  vertical-align: top
+  line-height: inherit
+.blind
+  display: none !important
+
+/* input */
+input[type="text"],
+input[type="password"],
+input[type="tel"],
+input[type="email"]
+  width: auto
+  height: 100%
+  font-size: inherit
+  color: inherit
+  border: none
+  outline: none
+
+input::-ms-reveal,
+input::-ms-clear
+  display: none
+
+input::placeholder
+  color: inherit
+  opacity: 0.7
+.inputComment
+  display: none
+  margin-top: 8px
+.inputText
+  height: 48px
+  font-size: 16px
+  color: $gray09
+  position: relative
+  +border
+  &:after
+    content: attr(data-title)
+    position: absolute
+    top: 0
+    left: 0
+    height: 100%
+    padding: 0 16px
+    font-size: 12px
+    color: $gray04
+    display: flex
+    align-items: center
+  &.error
+    border-color: $error
+    color: $error
+    + .inputComment
+      display: block
+      color: $error
+
+  &.success
+    border-color: $success
+    .util
+      color: $success
+    & + .inputComment
+      display: block
+      color: $success
+
+  &.warning
+    border-color: $warning
+    color: $warning
+    & + .inputComment
+      display: block
+      color: $warning
+  input
+    width: 100%
+    height: 100%
+    padding: 0 16px
+    font-weight: 400
+    &::placeholder
+      color: $gray04
+      opacity: 1
+  .flex
+    display: flex
+    height: 100%
+    padding-right: 69px
+  .inputUtils
+    display: flex
+    align-items: center
+    padding-right: 16px
+    position: absolute
+    top: 0
+    right: 0
+    height: 100%
+    button
+      max-width: 21px
+      line-height: 1
+      margin-left: 16px
+      &:first-child
+        margin-left: 0
+        position: relative
+        top: -1px
+      .material-icons
+        font-size: 21px
+        color: $gray09
+.titleInputText
+  display: flex
+  align-items: center
+  .inputTitle
+    margin-right: 12px
+    min-width: 57px
+    +subtitle01
+    color: $gray07
+  
+.checkbox,
+.radioBox
+  display: inline-block
+  position: relative
+  line-height: 20px
+
+.checkbox
+  input[type="checkbox"]
+    display: none
+    &:checked
+      & + label:before
+        border-color: $secondary600
+        background:
+          color: $secondary600
+          image: url("/images/ncdc/icon-check.svg")
+          position: 50% 50%
+          repeat: no-repeat
+    &:disabled
+      & + label
+        color: $gray03
+      & + label:before
+        background-color: $gray01
+        border-color: $gray01
+      &:checked
+        & + label
+          color: $gray07
+        & + label:before
+          background-image: url("/images/ncdc/icon-check02.svg")
+  label
+    cursor: pointer
+    display: inline-block
+    &:before
+      content: ""
+      display: inline-block
+      width: 20px
+      height: 20px
+      +border
+      background-color: #fff
+      vertical-align: top
+      margin-right: 5px
+.radioBox
+  > input[type="radio"]
+    display: none
+    &:checked + label::before
+      +border(6px, $secondary600)
+    &:disabled + label
+      color: $gray03
+      &::before
+        border-color: $gray01
+        background-color: $gray01
+    &:disabled:checked + label
+      color: $gray07
+    &:disabled:checked + label::before
+      background-color: $gray04
+  label
+    cursor: pointer
+    &:before
+      content: ""
+      display: inline-block
+      +circle(20px)
+      +border
+      background-color: #fff
+      vertical-align: top
+      box-sizing: border-box
+      margin-right: 5px
+
+.switcher
+  display: inline-block
+  line-height: 21px
+  color: $gray07
+  input[type="checkbox"]
+    display: none
+
+    &:checked + label
+      background-color: $secondary600
+
+      span
+        &:after
+          transform: translateX(140%)
+
+  label
+    display: inline-block
+    width: 40px
+    height: 20px
+    +radius(20px)
+    background-color: $gray02
+    cursor: pointer
+    text-align: left
+    position: relative
+    vertical-align: top
+    margin-right: 5px
+    span
+      position: absolute
+      top: 3px
+      left: 3px
+      right: 3px
+      bottom: 3px
+
+      &:after
+        content: ""
+        position: absolute
+        left: 0
+        +circle(14px)
+        background-color: $white
+        transition: .2s
+
+select
+  height: 48px
+  +border
+  padding: 0 16px
+  font-size: 16px
+  color: #5a5e61
+  background:
+    image: url("/images/ncdc/select-arrow.svg")
+    position: right 20px center
+    repeat: no-repeat
+    color: $white
+  -webkit-appearance: none
+  -moz-appearance: none
+  appearance: none
+  @media all and (max-width: 767px)
+    background-position: right 10px center
+.selectBox
+  position: relative
+  display: inline-block
+  vertical-align: top
+  color: $gray07
+  a
+    display: block
+    padding: 11px 18px
+  .btn
+    +border(1px, $gray03)
+    text-align: left
+    color: inherit
+    .txt
+      display: block
+      overflow: hidden
+      white-space: nowrap
+      text-overflow: ellipsis
+    .material-icons
+      position: absolute
+      top: 11px
+      right: 10px
+      transition: .3s
+  ul
+    display: none
+    position: absolute
+    top: 100%
+    left: 0
+    right: 0
+    margin-top: 4px
+    background-color: $white
+    +border(1px, $gray03)
+    +boxShadow
+    z-index: 1
+    max-height: 200px
+    overflow: auto
+    li a:hover
+      background-color: $secondary
+      color: $white
+  &.on .material-icons
+    transform: rotateX(180deg)
+  &.rev ul
+    top: auto
+    bottom: 100%
+textarea
+  padding: 16px
+  font-size: 16px
+  color: $gray07
+  height: 240px
+  resize: none
+  +border(1px, $gray03)
+  vertical-align: top
+#ui-datepicker-div
+  padding: 16px
+  font-family: "Spoqa Han Sans Neo"
+  width: 256px
+  margin-top: 4px
+  thead
+    height: auto
+    border-bottom: 0
+  tr
+    border-bottom: 0
+  th
+    padding: 3px
+    +subtitle01
+    color: $gray07
+    width: 30px
+    span[title="일"]
+      color: $error
+    span[title="토"]
+      color: $info
+  td
+    padding: 3px
+    +subtitle01
+    a
+      background: none
+      border: 0
+      padding: 0
+      text-align: center
+      color: $gray09
+      font-weight: 500
+      &.ui-state-highlight
+        color: $white
+        background-color: $secondary
+  .ui-datepicker-header
+    border: 0
+    padding: 0
+    background-color: $white
+    margin-bottom: 16px
+  .ui-datepicker-title
+    +headline06
+    color: $gray09
+    margin: 0
+    display: flex
+    justify-content: space-between
+  .ui-datepicker-calendar
+    border-top: 0
+  .ui-datepicker-prev,
+  .ui-datepicker-next
+    width: 21px
+    height: 20px
+    display: none !important
+  .ui-datepicker-prev span
+    background-image: url("/images/ncdc/datepicker-prev.svg")
+    background-position: 50% 50%
+  .ui-datepicker-next span
+    background-image: url("/images/ncdc/datepicker-next.svg")
+    background-position: 50% 50%
+// 버튼
+.btn
+  display: flex
+  align-items: center
+  justify-content: center
+  min-width: 80px
+  height: 48px
+  padding: 0 14px
+  color: $white
+  font:
+    size: 16px
+    weight: 500
+  border:
+    width: 1px
+    style: solid
+  > img
+    margin-right: 8px
+  &.btnPrimary
+    border-color: $primary800
+    background-color: $primary800
+    &.bdBtn
+      background-color: $white
+      color: $primary
+  &.btnSecondary
+    border-color: $secondary600
+    background-color: $secondary600
+    &.bdBtn
+      color: $secondary600
+      background-color: $white
+  &.btnGray
+    border-color: $gray03
+    background-color: $gray00
+    color: $gray09
+    &.bdBtn
+      background-color: $white
+  &.disabled
+    opacity: 0.2
+
+.bottomBtns
+  margin-top: 64px
+  @media all and (max-width: 767px)
+    margin-top: 40px
+  .flex
+    justify-content: center
+    &.tar
+      justify-content: flex-end
+  .btn
+    min-width: 180px
+    height: 56px
+    font-weight: 700
+    margin-right: 20px
+    &:last-child
+      margin-right: 0
+    @media all and (max-width: 767px)
+      min-width: unset
+      width: 100%
+  &.boardBtns
+    margin-top: 12px
+    .btn 
+      min-width: 104px
+      height: 40px
+      font-size: 16px
+.btnDetail
+  width: 134px
+  transition: .5s
+  img
+    margin-left: -20px
+    transition: .5s
+    opacity: 0
+    margin-top: -1px
+    margin-right: 0
+  &:hover
+    img
+      margin-left: 6px
+      opacity: 1
+.btnTop
+  position: sticky
+  bottom: 50px
+  right: 50px
+  width: 56px
+  height: 56px
+  margin-top: 45px
+  float: right
+  display: flex
+  justify-content: center
+  align-items: center
+  background-color: $primary
+  color: $white
+  transition: .3s
+  z-index: 9
+  @media all and (max-width: 767px)
+    width: 45px
+    height: 45px
+    right: 20px
+    margin-top: -5px
+//table
+table
+  width: 100%
+  table-layout: fixed
+  +borderTop(2px, $gray09)
+  font-size: 16px
+  font-weight: 500
+  border-collapse: collapse
+  word-break: break-all
+  thead
+    font-size: 18px
+    font-weight: 700
+    +borderBottom(1px,$gray09)
+  tbody
+    color: $gray07
+    tr
+      +borderBottom(1px,$black02)
+.contentsTable
+  +borderTop(2px, $primary)
+  tr
+    border-bottom: 0
+  th,
+  td
+    padding: 16px 24px
+    +border(1px, $gray03)
+  th
+    +subtitle01
+    color: $gray09
+    background-color: #f0f2f6
+    @media all and (max-width: 767px)
+      padding: 10px
+      +subtitle03
+    .subtitle02
+      color: $gray07
+  td
+    font-size: 16px
+    color: $gray07
+    font-weight: 400
+    @media all and (max-width: 767px)
+      padding: 10px
+      font-size: 12px
+  tbody th
+    text-align: left
+  .inputText
+    height: 48px
+  .bgColor
+    background-color: $secondary25
+  &.basic
+    col:first-child
+      width: 180px
+  &.basic
+    th
+      width: 180px
+  &.basic02
+    th
+      width: 204px
+.auto
+  width: 1200px
+  margin: 0 auto
+  position: relative
+  @media all and (max-width: 1199px)
+    width: 100%
+    padding: 0 40px
+  @media all and (max-width: 767px)
+    padding: 0 20px
+  &.fullsize
+    width: 100%
+    padding: 0 56px
+  
+//게시판 기본
+.boardList
+  display: table
+  width: 100%
+  table-layout: fixed
+  +borderTop(2px, $gray09)
+  border-collapse: collapse
+  font-size: 16px
+  color: $gray05
+  font-weight: 500
+  .boardHeader
+    display: table-header-group
+    font-weight: 500
+    .boardTr
+      +borderBottom(1px, $gray09)
+      .boardCell
+        color: $gray09
+  .boardBody
+    display: table-row-group
+  .boardTr
+    display: table-row
+    +borderBottom
+  .boardCell
+    display: table-cell
+    vertical-align: middle
+    padding: 20px 16px
+    position: relative
+  .boardTitle 
+    div
+      position: relative
+      display: inline-block
+      word-break: break-all
+    a
+      text-align: left
+      vertical-align: top
+      color: $gray07
+      //+ellipsis(1)
+    img
+      margin-right: 8px      
+      &.icon-file
+        margin-right: 0
+  .announce
+    background-color: $secondary600
+    font-size: 12px
+    color: $white
+    padding: 6px
+  .status
+    display: flex
+    justify-content: center
+    align-items: center
+    height: 28px
+    text-align: center
+    &.statusReady
+      background-color: $gray05
+      color: $white
+    &.statusEnd
+      background-color: $secondary
+      color: $white
+    &.statusPublic
+      +border(1px, $gray09)
+      color: $gray09
+    &.statusPrivate
+      +border(1px, $gray03)
+      color: $gray05
+  &.qna,
+  &.api
+    .boardCell
+      @media all and (max-width: 1024px)
+        &:nth-child(2)
+          margin-bottom: 12px
+          span
+            display: inline-block
+            padding: 5px 8px
+            background-color: $gray01
+            font-size: 12px
+        .status
+          position: absolute
+          top: 20px
+          width: 49px
+          height: 25px
+  &.qna .boardCell      
+    &:last-child
+      .status
+        right: 12px
+    &:nth-last-child(3)
+      .status
+        right: 69px
+  &.api
+    .boardCell
+      @media all and (max-width: 1024px)
+        position: static
+        .status  
+          width: auto
+          span
+            width: 50px
+            height: 25px
+            font-size: 12px
+        &:nth-child(5)
+          display: block
+          margin-right: 0
+          .status
+            +border(1px,$gray03)
+            padding: 5px 10px
+        &:nth-child(6)
+          display: block
+          margin-right: 0
+          .status
+            right: 12px
+
+  &.notice .boardCell
+    &:nth-child(1)
+      width: 88px
+      color: $gray09
+    // 변경
+    &:nth-child(3)
+      width: 120px
+    &:nth-child(4)
+      width: 118px
+    &:nth-child(5)
+      width: 104px
+  &.results
+    .boardCell a
+      color: $gray07
+  @media all and (max-width: 1024px)
+    text-align: left !important
+    .boardHeader
+      display: none
+    .boardBody
+      display: block
+    .boardTr
+      display: block
+      padding: 20px 12px
+      position: relative
+    .boardCell
+      display: block
+      width: auto !important
+      padding: 0
+      &.mobileBlock
+        display: inline-block
+        color: $gray06
+        font-size: 12px
+        margin-right: 5px
+        padding-right: 5px
+        &::before
+          //content: attr(data-mobile-title) ":"
+          display: inline-block
+        &::after
+          content: ""
+          position: absolute
+          top: 2px
+          right: -1px
+          width: 1px
+          height: 12px
+          background-color: $gray02
+        &:last-child::after
+          display: none
+          
+      &.mobileNone
+        display: none
+    &.notice .boardCell
+      &:nth-child(3),
+      &:nth-child(4),
+      &:nth-child(5)
+        width: auto
+      &:nth-child(4)::after
+        display: none
+    .boardTitle
+      margin-bottom: 5px
+      img
+        margin-top: 0
+        width: 16px
+      a
+        font-size: 14px
+  .announce
+    margin-bottom: 8px
+.paging
+  display: flex
+  justify-content: center
+  align-items: center
+  margin-top: 72px
+  button
+    width: 48px
+    height: 48px
+    margin: 0 5px
+    +border
+    img
+      @media all and (max-width: 1024px)
+        width: 16px
+  ul
+    display: flex
+    align-items: center
+    margin: 0 10px
+    li
+      a
+        display: flex
+        justify-content: center
+        align-items: center
+        width: 48px
+        height: 48px
+        font-size: 16px
+        color: $gray06
+        font-weight: 500
+        +border(1px, transparent)
+      &.on a
+        color: #fff
+        background-color: $primary800
+        border-color: $primary800
+  @media all and (max-width: 1024px)
+    margin-top: 45px
+    button
+      width: 27px
+      height: 27px
+      margin: 0 2px
+    ul
+      margin: 0 2px
+      li a
+        width: 27px
+        height: 27px
+        font-size: 12px
+.boardTopUtil
+  margin-bottom: 16px
+  .boardTotal
+    font-size: 16px
+    span
+      color: $secondary600
+      font-weight: 500
+      margin-left: 4px
+  .boardSearchBox
+    display: flex
+    justify-content: center
+    margin-bottom: 48px
+    .selectBox
+      width: 160px
+      margin-right: 8px
+    .searchBox
+      display: flex
+      .inputText
+        width: 299px
+        margin-right: 8px
+      .btn img
+        position: relative
+        top: 1px
+  .flex
+    justify-content: space-between
+    align-items: flex-end
+  .listArray
+    display: flex
+    a
+      display: flex
+      justify-content: center
+      align-items: center
+      width: 36px
+      height: 36px
+      +border(1px, $gray03)
+      background:
+        repeat: no-repeat
+        position: 50% 50%
+      margin-right: 8px
+      &:last-child
+        margin-right: 0
+      &.btnList01
+        background-image: url("/images/ncdc/icon-list01.svg")
+      &.btnList02
+        background-image: url("/images/ncdc/icon-list02.svg")
+      &.on.btnList01
+        background-image: url("/images/ncdc/icon-list01-on.svg")
+      &.on.btnList02
+        background-image: url("/images/ncdc/icon-list02-on.svg")
+
+.boardView
+  +borderTop(2px, $gray09)
+  .boardViewHeader
+    padding: 32px
+    +borderBottom
+    .boardViewTitle
+      margin-bottom: 16px
+      p
+        font-size: 21px
+        color: $gray09
+        font-weight: 700
+        img
+          margin-top: 6px
+          margin-right: 12px
+        .status
+          display: inline-block
+          width: 56px
+          height: 28px
+          margin-right: 16px
+          font-size: 14px
+          color: $white
+          font-weight: 500
+          line-height: 28px
+          vertical-align: top
+          text-align: center
+          &.statusInquiry
+            background-color: $primary
+          &.statusReply
+            background-color: $secondary
+        @media all and (max-width: 767px)
+          line-height: 24px
+          .status
+            width: 38px
+            height: 24px
+            font-size: 12px
+    dl
+      display: flex
+      align-items: center
+      font-size: 16px
+      margin-right: 32px
+      @media all and (max-width: 767px)
+        margin-right: 20px
+      &:last-child
+        margin-right: 0
+      dt
+        color: $gray09
+        font-weight: 500
+        margin-right: 12px
+        @media all and (max-width: 767px)
+          display: none
+      dd
+        color: $gray05
+  .boardViewBody
+    padding: 40px 32px
+    font-size: 18px
+    color: $gray07
+    img
+      display: block
+      margin: auto
+    .fileDownload
+      margin-top: 40px
+      .list
+        padding: 24px 0
+        +borderTop(1px, $gray02)
+      ul
+        li
+          font-size: 16px
+          color: $secondary600
+          text-decoration: underline
+          display: flex
+          align-items: flex-start
+          margin-top: 12px
+          &:first-child
+            margin-top: 0
+          img
+            margin-right: 8px
+      .bottomBtns
+        margin-top: 0
+        padding: 24px 0
+        +borderTop(1px, $gray02)
+        .btn
+          width: 122px
+          min-width: unset
+          height: 36px
+          padding: 0
+          font-size: 14px
+  &.qna
+    .boardViewHeader
+      .boardViewTitle
+        position: relative
+        p
+          padding-left: 72px
+          line-height: 28px
+          @media all and (max-width: 767px)
+            padding-left: 42px
+          .status
+            position: absolute
+            top: 0
+            left: 0
+  &.qnaAnswer
+    padding: 34px 32px
+    background-color: $gray00
+    .boardViewHeader
+      padding: 0
+      padding-bottom: 32px
+    .boardViewBody
+      padding: 40px 0 0
+    @media all and (max-width: 767px)
+      padding: 20px 12px
+      .boardViewHeader
+        padding-bottom: 20px
+        
+.boardView
+  @media all and (max-width: 767px)
+    .boardViewHeader
+      padding: 20px 12px
+      dl
+        font-size: 14px
+      .boardViewTitle
+        margin-bottom: 12px
+        p
+          font-size: 14px
+    .boardViewBody
+      padding: 24px 12px
+      .fileDownload .bottomBtns .btn
+        width: 100%
+      &.qnaAnswer
+        border-top: 0
+        background-color: $gray00
+        padding: 40px 32px
+        .boardViewHeader
+          padding: 0 0 32px 0
+        .boardViewBody
+          padding: 40px 0 0 0
+.prevNext
+  +borderTop
+  dl
+    display: flex
+    align-items: center
+    padding: 20px 0
+    +borderBottom
+    dt
+      width: 100px
+      padding: 0 20px
+      font-size: 18px
+      font-weight: 500
+    dd
+      display: flex
+      justify-content: space-between
+      width: calc(100% - 100px)
+      padding: 0 20px
+      font-size: 16px
+      a
+        +ellipsis(1)
+        color: $gray07
+      span
+        color: $gray05
+  @media all and (max-width: 767px)
+    dl
+      padding: 20px 12px
+      dt
+        width: 60px
+        padding: 0 10px
+        font-size: 14px
+      dd
+        width: calc(100% - 60px)
+        padding: 0 10px
+        font-size: 14px
+        span
+          display: none
+.tab
+  margin-bottom: 24px
+  ul
+    display: flex
+    justify-content: center
+    li
+      width: 100%
+      button
+        display: flex
+        justify-content: center
+        align-items: center
+        height: 48px
+        font-size: 16px
+        font-weight: 500
+        text-align: center
+        background-color: $white
+        padding: 0 20px
+        +border(1px,$white)
+      &.on
+        button
+          background-color: $primary
+          +border(1px,$primary)
+          color: $white
+.tabContents
+  > ol
+    > li
+      display: none
+      &:first-child
+        display: block
+.header
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  z-index: 10
+  color: $white
+  transition: .24s
+  .gnbSubCover
+    position: absolute
+    top: 121px
+    left: 0
+    right: 0
+    height: 0
+    background-color: $gray00
+    z-index: -1
+    transition: .24s
+  .headerTop
+    +borderBottom(1px,$white02)
+    .auto
+      display: flex
+      justify-content: space-between
+      align-items: center
+      height: 64px
+    .logo01
+      width: 168px
+      display: block
+    .logo02
+      width: 168px
+      display: none
+    .headerUtils
+      display: flex
+      align-items: center
+      padding-right: 56px
+      > a
+        margin-right: 24px
+      .headerSearchBox
+        width: 288px
+        height: 36px
+        position: relative
+        padding: 4px 16px
+        +radius(22px)
+        background-color: $white02
+        padding-right: 50px
+        border: 2px solid transparent
+        margin-right: 24px
+        &.on
+          border-color: $secondary
+        input
+          height: 100%
+          background: none
+          text-align: right
+          font-size: 16px
+        > button
+          position: absolute
+          top: 4px
+          right: 12px
+          svg
+            stroke: inherit
+        .searchKeyword
+          position: absolute
+          top: 52px
+          left: 0
+          right: 0
+          background-color: $white
+          padding: 16px 20px 28px 16px
+          padding-bottom: 52px
+          z-index: 1
+          +radius(10px)
+          +boxShadow
+          display: none
+          .tab ul li
+            button
+              color: $gray05
+              border: 0
+              background: none
+              position: relative
+            &.on button
+              color: $primary
+              &::after
+                content: ""
+                position: absolute
+                left: 0
+                right: 0
+                bottom: 0
+                height: 2px
+                background-color: $primary
+          .tabContents
+            padding: 20px 12px
+            color: $gray07
+          .keywordList ol li
+            margin-top: 12px
+            +subtitle01
+            &:first-child
+              margin-top: 0
+            .num
+              margin-right: 16px
+            &:nth-child(1) .num,
+            &:nth-child(2) .num,
+            &:nth-child(3) .num
+              color: $secondary
+            .keyword:hover
+              color: $secondary
+              text-decoration: underline
+          .utils
+            position: absolute
+            bottom: 0
+            left: 0
+            right: 0
+            display: flex
+            color: $gray09
+            font-weight: 500
+            a
+              display: flex
+              justify-content: center
+              align-items: center
+              width: 100%
+              height: 52px
+              text-align: center
+              background-color: $gray01
+              position: relative
+              &:first-child
+                color: $gray03
+                &::after
+                  content: ""
+                  position: absolute
+                  top: 18px
+                  bottom: 18px
+                  right: 0
+                  width: 1px
+                  background-color: $gray04
+              img
+                margin-left: 6px
+                margin-top: 2px
+      .language
+        position: relative
+        > a
+          display: block
+          width: 20px
+          height: 20px
+          background-repeat: no-repeat
+          background-image: url("/images/ncdc/icon-language.svg")
+        ul
+          position: absolute
+          top: 100%
+          left: 50%
+          transform: translateX(-50%)
+          z-index: 1
+          padding: 14px 0
+          margin-top: 8px
+          background-color: $white
+          display: none
+          li
+            &:last-child
+              margin-top: 8px
+            a
+              display: block
+              padding: 0 16px
+              +subtitle02
+              color: $gray09
+            &.on a
+              color: $secondary
+  .headerBottom
+    height: 56px
+    +borderBottom(1px,$white02)
+  .btnAllMenu
+    position: absolute
+    top: 22px
+    right: 56px
+    width: 30px
+    height: 20px
+    span
+      position: absolute
+      left: 0
+      width: 100%
+      height: 3px
+      background-color: $white
+      transition: .3s
+      &:nth-child(1)
+        top: 0
+      &:nth-child(2)
+        top: 8px
+      &:nth-child(3)
+        top: 16px
+    &.on
+      span
+        &:nth-child(1)
+          top: 9px
+          transform: rotate(45deg)
+        &:nth-child(2)
+          left: 100%
+          opacity: 0
+        &:nth-child(3)
+          top: 9px
+          transform: rotate(-45deg)
+.headerSearchBoxMobile
+  display: none
+.divider
+  position: relative
+  display: inline-block
+  width: 10px
+  height: 19px
+  vertical-align: top
+  line-height: 100%
+  &::after
+    content: ""
+    position: absolute
+    top: 8px
+    left: 3px
+    width: 3px
+    height: 3px
+    +radius(50%)
+    background-color: $white
+.gnb
+  display: flex
+  justify-content: center
+  width: 100%
+  position: relative
+  @media all and (max-width: 1199px)
+    display: none
+  > ul
+    display: flex
+    justify-content: center
+    position: relative
+    > li
+      position: relative
+      margin-right: 50px
+      &:last-child
+        margin-right: 0
+      &:nth-child(6)
+        .sub
+          left: auto
+          right: -212px
+      &:nth-child(7)
+        .sub
+          left: auto
+          right: 0
+      > a
+        position: relative
+        display: block
+        font:
+          size: 18px
+          weight: 700
+        line-height: 56px
+        &::after
+          content: ""
+          position: absolute
+          bottom: 0
+          left: 0
+          right: 0
+          height: 4px
+          background-color: $secondary
+          transform: scaleX(0)
+          transition: .3s
+      &:hover
+        > a
+          color: $secondary !important
+          &:after
+            transform: scaleX(1)
+      &.on
+        > a
+          color: $secondary !important
+          &:after
+            transform: scaleX(1)
+        .sub > li.on > a
+          color: $secondary
+  .sub
+    position: absolute
+    top: 56px
+    left: 0
+    right: auto
+    color: $gray09
+    white-space: nowrap
+    margin: 0 -23px
+    display: none
+    li
+      display: inline-block
+      &:last-child
+        margin-right: 0
+      &:hover
+        color: $secondary
+      > a 
+        display: block
+        padding: 0 23px
+        +subtitle01
+        line-height: 56px
+.allMenuWrap
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  background-color: #fff
+  z-index: 11
+  +borderBottom(1px,$gray03)
+  display: none
+  .bg
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    z-index: 1
+  .logo
+    position: absolute
+    top: 56px
+    left: 56px
+    z-index: 2
+  .imgBox
+    height: 100%
+    background-repeat: no-repeat
+    background-size: cover
+    background-position: 50% 50%
+    background-color: $primary
+    background-image: url("/images/ncdc/sitemapBg.png")
+    position: absolute
+    top: 0
+    left: 0
+    width: 526px
+    padding: 164px 56px 56px
+    color: $white
+    z-index: 1
+    dl 
+      dt
+        +headline01
+        color: $white
+      dd
+        +subtitle01
+        color: $white08
+        margin-top: 62px
+    .members,
+    .btnsMember
+      display: none
+    .utils
+      position: absolute
+      bottom: 0
+      left: 0
+      padding: 56px
+      z-index: 2
+      display: flex
+      align-items: center
+      +subtitle02
+      > a
+        margin-right: 18px
+        &:last-child
+          margin-right: 0
+        &:nth-child(5)
+          display: none
+      .language
+        position: relative
+        margin-right: 18px
+        ul
+          position: absolute
+          bottom: 100%
+          left: 50%
+          transform: translateX(-50%)
+          z-index: 1
+          padding: 14px 0
+          margin-bottom: 8px
+          background-color: $white
+          display: none
+          li
+            &:last-child
+              margin-top: 8px
+            a
+              display: block
+              padding: 0 16px
+              +subtitle02
+              color: $gray09
+            &.on a
+              color: $secondary
+    .btns
+      display: none
+  .allMenu
+    display: flex
+    align-items: center
+    height: 100%
+    position: relative
+    left: 526px
+    z-index: 2
+    > ul
+      width: 100%
+      padding-right: 51px
+      padding-left: 68px
+      > li
+        display: flex
+        align-items: center
+        width: 100%
+        margin-top: 42px
+        &:first-child
+          margin-top: 0
+        > a
+          display: block
+          position: relative
+          width: 320px
+          +headline03
+          color: $primary
+        &:hover > a
+            color: $secondary
+    .sub
+      display: flex
+      justify-content: flex-start
+      align-items: center
+      text-align: center
+      margin-top: 2px
+      li
+        margin-right: 40px
+        &:last-child
+          margin-right: 0
+        a
+          +subtitle01
+          color: $gray07
+          &:hover
+            color: $secondary
+    .depth03 li
+      position: relative
+      padding-left: 10px
+      &:after
+        content: ""
+        position: absolute
+        top: 12px
+        left: 0
+        width: 8px
+        height: 1px
+        background-color: $gray03
+      a
+        color: $gray07
+.btnClose
+  position: absolute
+  top: 42px
+  right: 56px
+  width: 37px
+  height: 37px
+  z-index: 2
+  span
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 2px
+    background-color: $primary
+    &:nth-child(1)
+      transform: rotate(45deg)
+    &:nth-child(2)
+      transform: rotate(-45deg)
+//header 반전
+.header.on,
+.header.rev
+  color: $gray09
+  background-color: $white
+  .headerTop
+    +borderBottom(1px, $black02)
+    .logo01
+      display: none
+    .logo02
+      display: block
+    .gnb > ul > li > a
+      color: $gray09
+    .gnb > ul > li.on > a,
+    .gnb > ul > li:hover > a
+      color: $secondary
+  .headerTop .headerUtils
+    .headerSearchBox
+      background-color: $gray00
+      button svg path
+        stroke: $gray09
+    .language > a
+      background-image: url("/images/ncdc/icon-language-on.svg")
+  .gnb > ul > li > a
+    color: $gray09
+  .btnAllMenu span
+    background-color: $gray09
+  .headerBottom
+    +borderBottom(1px, $black02)
+.header.rev
+  background-color: $white
+.footer
+  position: relative
+  background-color: $gray09
+  color: $white06
+  .footerBanner
+    background-color: $white
+    padding: 48px 0
+    display: none
+    .auto
+      display: flex
+      justify-content: space-between
+      align-items: center
+  .footerMiddle
+    padding: 56px 0 25px
+    +subtitle02
+    +borderBottom(1px, $white02)
+    .footerLogo
+      display: flex
+      a
+        margin-right: 32px
+        &:last-child
+          margin-right: 0
+    .familySiteBox
+      display: flex
+      .selectBox
+        width: 220px
+        color: $gray05
+        &:first-child
+          margin-right: 16px
+        .btn
+          +border(1px, $gray08)
+          height: auto
+        ul
+          background-color: $gray09
+          +border(1px, $gray08)
+          margin-bottom: 4px
+          height: 200px
+          overflow-y: scroll
+    address
+      margin-top: 24px
+      p:first-child
+        margin-bottom: 4px
+    .certLogo
+      margin-top: 18px
+      text-align: right
+  .footerBottom
+    padding: 24px 0 38px
+    +subtitle02
+    .footerMenu
+      display: flex
+      +subtitle03
+      a
+        margin-right: 32px
+        &:last-child
+          margin-right: 0
+        &:nth-child(2)
+          color: $secondary600
+  .flex
+    justify-content: space-between
+.mobileGnbWrap
+  position: fixed
+  top: 100px
+  right: -100%
+  bottom: 0
+  width: 100%
+  max-width: 500px
+  background-color: $white
+  z-index: 10
+  +boxShadow
+  @media all and (max-width: 767px)
+    top: 60px
+  .mobileGnb
+    max-height: 100%
+    overflow-y: auto
+    overscroll-behavior: contain
+    >ul > li > a
+      display: block
+      height: 60px
+      line-height: 60px
+      padding: 0 20px
+      font-size: 20px
+      +borderBottom
+    .sub
+      display: none
+      padding: 20px
+      +borderBottom
+      li
+        margin-top: 20px
+        &:first-child
+          margin-top: 0
+        a
+          display: block
+          font-size: 16px
+.mainContents
+  position: relative
+  padding: 160px 0
+  @media all and (max-width: 767px)
+    padding: 50px 0
+  .section
+    position: relative
+    &.section01
+      padding-top: 0
+    
+.mainPopup
+  position: absolute
+  z-index: 12
+  +boxShadow
+  @media all and (max-width: 767px)
+    top: 20px !important
+    left: 20px !important
+    max-width: calc(100% - 40px)
+  .popupBody
+    @media all and (max-width: 640px)
+      max-height: 600px
+      overflow-y: auto
+      overscroll-behavior: contain
+  .popupFooter
+    display: flex
+    justify-content: space-between
+    align-items: center
+    height: 52px
+    background-color: $white
+    padding: 0 20px
+    font-size: 14px
+.popup
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  background-color: $black07
+  z-index: 10
+  padding: 20px
+  display: none
+  .innerWrap
+    display: flex
+    height: 100%
+    justify-content: center
+    align-items: center
+  .inner
+    position: relative
+    max-height: 100%
+    overflow: auto
+    background-color: $white
+    .popupHeader
+      position: sticky
+      top: 0
+      left: 0
+      right: 0
+      z-index: 1
+      height: 132px
+      padding: 32px 40px
+      background: url("/images/ncdc/popupHeader-bg.jpg") no-repeat 50% 50% / cover
+      color: $white
+      .titSub
+        opacity: 0.7
+        margin-top: 8px
+    .popupBody
+      padding: 40px
+    .popupFooter
+      position: sticky
+      bottom: 0
+      left: 0
+      right: 0
+      z-index: 1
+      padding: 24px 24px 56px
+      background-color: $white
+      .bottomBtns
+        margin-top: 0
+.grid 
+  display: grid
+  grid-template-columns: repeat(3, 1fr)
+  height: 20rem
+  gap: 20px
+  .item
+    background-color: $primary
+    &.item01
+      grid-column: 1 / span 2
+      grid-row: 1 / span 3
+    &.item02
+      grid-row: 2 / span 2
+    &.item05
+      grid-column: 2 / span 2
+    &.item09
+      grid-column: 1 / span 3
+/* 달력 */
+.calendar
+  width: 100%
+  height: calc(100% - 116px)
+  background-color: $gray00
+  padding-top: 52px
+  position: relative
+  border-bottom: 1px solid $gray01
+  .calendarHeader
+    display: flex
+    justify-content: space-between
+    align-items: flex-end
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    .arrow
+      width: 52px
+      height: 52px
+      background-color: #000
+      color: #fff
+      display: flex
+      justify-content: center
+      align-items: center
+    .month
+      font-size: 24px
+      font-weight: 500
+  .calendarBody
+    display: grid
+    font-weight: 500
+    padding: 24px 46px
+    height: 100%
+    width: 100%
+    grid-template: "a b c d e f g" 1fr "1 2 3 4 5 6 7" 1fr "8 9 10 11 12 13 14" 1fr "15 16 17 18 19 20 21" 1fr "22 23 24 25 26 27 28" 1fr "29 30 31 32 33 34 35" 1fr "36 37 38 39 40 41 42" 1fr / 1fr 1fr 1fr 1fr 1fr 1fr 1fr
+    grid-auto-flow: row
+    div
+      font-size: 16px
+      position: relative
+      display: flex
+      justify-content: center
+      align-items: center
+      height: 53px
+    .sat
+      color: #1877f2
+    .sun
+      color: #ff3b30
+    .blur
+      opacity: 0.45
+    .marker
+      position: absolute
+      bottom: 3px
+      left: 50%
+      transform: translateX(-50%)
+      width: 4px
+      height: 4px
+      border-radius: 50%
+      background-color: $secondary
+    .on
+      color: #fff
+      background-color: $primary
+      .marker
+        background-color: #fff
+    .off
+      opacity: 0.45
+    .comment
+      display: block
+      position: absolute
+      top: 110%
+      left: 0
+      z-index: 1
+      max-width: unset
+      width: 240px
+      height: auto
+      background-color: #fff
+      border-radius: 10px
+      font-size: 14px
+      color: $gray07
+      font-weight: 400
+      padding: 10px
+      border: 1px solid $gray02
+//fullSlide
+html,body
+  height: 100%
+#fullSlide
+  overflow: hidden
+  height: 100%
+  .header
+    position: absolute
+  .footer
+    height: auto !important
+  .mainContents
+    height: 100%
+    padding: 0
+  .section
+    height: 100vh
+    display: flex
+    align-items: flex-start
+    overflow: hidden
+  .pagination
+    position: fixed
+    z-index: 9
+    top: 50%
+    right: 50px
+    transform: translateY(-50%)
+    div
+      display: block
+      position: relative
+      width: 40px
+      height: 40px
+      border-radius: 50%
+      margin: 0
+      opacity: 1
+      background: transparent
+      &::after
+        content: ""
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate(-50%,-50%)
+        background-color: $white
+        +circle(8px)
+      &:last-child
+        display: none
+      &:hover
+        span
+          display: block
+      span
+        display: none
+        position: absolute
+        top: 50%
+        right: calc(100% + 28px)
+        transform: translateY(-50%)
+        margin-right: 5px
+        text-transform: uppercase
+        white-space: nowrap
+        +subtitle02
+        color: $white
+      
+      &.swiper-pagination-bullet-active
+        &::before
+          content: ""
+          position: absolute
+          top: 0
+          left: 0
+          right: 0
+          bottom: 0
+          +radius(50%)
+          +border(1px,$white)
+        &::before
+          //animation: fadeCircle infinite 1.3s linear reverse
+        span
+          display: block
+#fullSlide .pagination.on
+  div
+    &::after
+      background-color: $gray09
+    span
+      color: $gray09
+    &.swiper-pagination-bullet-active::before
+      border-color: $gray09
+.navigation
+  position: fixed
+  top: 50%
+  transform: translateY(-50%)
+  left: 50px
+  z-index: 10
+  writing-mode: vertical-lr
+  color: $white
+  &.on
+    color: $gray09
+    ul li::after
+      background-color: $gray09
+  ul
+    display: flex
+    align-items: center
+    li
+      margin-top: 16px
+      display: flex
+      opacity: 0.4
+      &:first-child
+        margin-top: 0
+      span
+        //height: 0
+        overflow: hidden
+        white-space: nowrap
+        display: none
+      &::after
+        content: ""
+        width: 1px
+        height: 0
+        background-color: $white
+        transition: 1.5s ease-out-quart
+        margin: 8px 8px 0
+      &.on
+        opacity: 1
+        &::after
+          height: 48px
+        span
+          //height: auto
+.scrollDown
+  position: fixed
+  bottom: 88px
+  right: 56px
+  z-index: 9
+  writing-mode: vertical-lr
+  color: $white04
+  span
+    animation: scrollDown infinite 1s ease alternate-reverse
+    svg
+      margin-top: 12px
+  &.on
+    color: $black04
+    svg path
+      stroke: $black
+.slickProgressbar
+  background-color: $white02
+  height: 2px
+  position: relative
+  overflow: hidden
+  span
+    position: absolute
+    top: 0
+    left: 0
+    height: 100%
+    background-color: $white
+    transition: .3s
+.slick-arrow
+  width: 56px
+  height: 56px
+  &.slick-prev
+    background-image: url("/images/ncdc/slick-prev.svg")
+  &.slick-next
+    background-image: url("/images/ncdc/slick-next.svg")
+.galleryList
+  position: relative
+  ul
+    display: flex
+    flex-wrap: wrap
+    margin: -20px -11px
+    overflow: hidden
+    li
+      width: 33.33%
+      padding: 20px 11px
+      a
+        display: block
+        height: 100%
+        +boxShadow
+  .thumb
+    position: relative
+    overflow: hidden
+    padding-top: 51.5%
+    &::after
+      content: ""
+      position: absolute
+      top: 0
+      left: 0
+      right: 0
+      bottom: 0
+      background-color: $black01
+      z-index: 1
+    > img
+      position: absolute
+      top: 0
+      left: 0
+      width: 100%
+      transition: 1s
+      transform: rotate(0.01deg)
+    .labels
+      position: absolute
+      top: 0
+      left: 0
+      z-index: 2
+      display: flex
+      img
+        width: 27px
+        
+  .txtBox
+    padding: 16px
+    dl
+      dt
+        color: $primary
+      dd
+        margin-top: 16px
+    p
+      height: 2.8em
+      +ellipsis(2)
+    .itemInfo
+      margin-top: 24px
+      text-align: right
+      color: $gray05
+      span
+        display: inline-block
+        margin-left: 24px
+        +subtitle01
+        img
+          margin-right: 6px
+  ul li
+    a:hover
+      .thumb > img
+        transform: scale(1.1)
+      .txtBox
+        dt
+          color: $white
+        dd
+          color: $white08
+.announce
+  display: inline-block
+  vertical-align: top
+  height: 27px
+  background-color: $primary800
+  font-size: 12px
+  color: $white
+  padding: 6px 8px
+  &.poster
+    background-color: $tertiary
+.slick-dots
+  position: absolute
+  bottom: 0
+  left: 0
+  right: 0
+  text-align: center
+  li
+    display: inline-block
+    width: 10px
+    height: 10px
+    margin: 0 16px
+    +radius(50%)
+    background: none
+    +border(2px,$white)
+    text-indent: -999px
+    overflow: hidden
+    cursor: pointer
+    &.slick-active
+      background-color: $white
+    button
+      display: none
+.slick-disabled
+  opacity: 0.1
+[data-animation]
+  transition-duration: 1s
+  transition-timing-function: ease-out
+  opacity: 0
+
+[data-animation="fadeRight"]
+  transform: translateX(-50px)
+
+[data-animation-delay="500"]
+  transition-delay: .5s
+
+.swiper-slide-active
+  [data-animation]
+    opacity: 1
+  [data-animation="fadeRight"]
+    transform: translateX(0)
+
+.char
+  animation: an .5s ease-out
+  position: relative
+.boardList.qna
+  .boardCell
+    width: 90px
+    &:nth-child(3)
+      width: auto
+    &:nth-child(2)
+      width: 120px
+    &:nth-child(7)
+      width: 125px
+.inlineLabels
+  display: flex
+  align-items: center
+  & > *
+    margin-right: 32px
+    &:last-child
+      margin-right: 0
+  &.center
+    justify-content: center
+.star
+  color: $secondary
+.writeForm
+  .inputText,
+  select
+    width: 384px
+    max-width: 100%
+  .flex
+    justify-content: space-between
+    align-items: flex-end
+    margin-bottom: 12px
+    .tit
+      +headline04
+      color: $gray09
+    .topComment
+      +subtitle01
+      color: $secondary
+    .btns
+      display: flex
+    .btn
+      height: 40px
+      margin-right: 12px
+      &:last-child
+        margin-right: 0
+  table
+    tr:last-child
+      border-bottom: 0
+    th
+      width: 200px
+      padding: 16px 10px
+      text-align: left
+      +subtitle01
+      color: $gray09
+    td
+      padding: 16px 10px
+.writeForm
+  @media all and (max-width: 767px)
+    table,tbody,tr,th,td
+      display: block
+    table 
+      padding-top: 24px
+      tbody
+        display: flex
+        flex-direction: column
+      tr
+        border-bottom: 0
+        margin-top: 24px
+        &:first-child
+          margin-top: 0
+      th
+        padding: 0
+      td
+        padding: 0
+        margin-top: 8px
+.fileUpload
+  display: flex
+  flex-direction: column
+  p
+    color: $warning
+    font-weight: 400
+  .flex
+    justify-content: flex-start
+    .inputText
+      margin-right: 8px
+    label
+      width: 111px
+      height: 48px
+      line-height: 46px
+      +border(1px, $primary)
+      font-size: 16px
+      color: $primary
+      font-weight: 500
+      text-align: center
+      cursor: pointer
+      margin-right: 8px
+    button
+      width: 48px
+      height: 48px
+      +border(1px, $primary)
+      span
+        font-size: 0
+        position: absolute
+      &.remove span::after
+        content: ""
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate(-50%,-50%)
+        width: 16px
+        height: 2px
+        background-color: $primary
+      &.add
+        background-color: $primary
+        span::before
+          content: ""
+          position: absolute
+          top: 50%
+          left: 50%
+          transform: translate(-50%,-50%)
+          width: 2px
+          height: 16px
+          background-color: $white
+        span::after
+          content: ""
+          position: absolute
+          top: 50%
+          left: 50%
+          transform: translate(-50%,-50%)
+          width: 16px
+          height: 2px
+          background-color: $white
+  @media all and (max-width: 767px)
+    .flex
+      flex-wrap: wrap
+      label
+        width: calc(100% - 56px)
+      .inputText
+        width: 100%
+        margin-right: 0
+        margin-bottom: 8px
+    p
+      font-size: 14px
+      font-weight: 400
+.fileUpload02
+  display: flex
+  justify-content: space-between
+  .inputText
+    height: 36px
+    border: 0
+    width: calc(100% - 214px)
+  .btn
+    width: 110px
+    height: 36px
+    font-size: 14px
+    padding: 0 10px
+    img
+      margin-left: 6px
+      margin-right: 0
+  .btnDelete
+    width: 70px
+    color: $gray04
+  label
+    cursor: pointer
+.tableComment
+  margin-top: 12px
+  display: flex
+  flex-direction: column
+  margin-bottom: 32px
+  p
+    color: $gray07
+    padding-left: 11px
+    position: relative
+    margin-top: 4px
+    &:first-child
+      margin-top: 0
+    &::before
+      content: "*"
+      position: absolute
+      top: 0
+      left: 0
+.faqList
+  +borderTop(2px,$gray09)
+  dl
+    font-size: 16px
+    color: $gray07
+    overflow: hidden
+    .marker
+      position: absolute
+      left: 32px
+      font-size: 28px
+      font-weight: 700
+      line-height: 24px
+    dt
+      position: relative
+      font-size: 18px
+      color: $gray07
+      font-weight: 700
+      padding: 24px 80px
+      +borderBottom(1px, $gray02)
+      display: flex
+      cursor: pointer
+      .marker
+        top: 22px
+        color: $primary
+      .cate
+        width: 120px
+        font-size: 16px
+        color: $gray05
+        line-height: 26px
+        text-align: center
+      .arrow
+        position: absolute
+        top: 30px
+        right: 36px
+        height: 12px
+        img
+          transition: 0.3s
+      &.on .arrow img
+        transform: rotateX(180deg)
+      p
+        width: calc(100% - 160px)
+        margin-left: 24px
+    dd
+      position: relative
+      padding: 32px 32px 32px 80px
+      +borderBottom(1px,$gray02)
+      background-color: $gray00
+      display: none
+      .marker
+        top: 32px
+        color: $secondary
+big
+  font-size: inherit
