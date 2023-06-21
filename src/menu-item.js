@@ -70,7 +70,7 @@ const childMenu = {
         title: <FormattedMessage id="Introduce" defaultMessage="Introduction" />,
         type: 'group',
         icon: 'fa fa-dashboard',
-        url: '/introduction/',
+        url: '/home/introduction/',
         index:1,
         children: [
           {
@@ -98,7 +98,7 @@ const childMenu = {
         title: <FormattedMessage id="Visualization" defaultMessage="Visualize Example Data" />,
         type: 'group',
         icon: 'fa fa-dashboard',
-        url: '/visualizeMyExampleData/',
+        url: '/home/visualizeMyExampleData/',
         index:2,
         children: [
           {
@@ -125,7 +125,7 @@ const childMenu = {
         title: <FormattedMessage id="MyDataVisualization" defaultMessage="Visualize MyData" />,
         type: 'group',
         icon: 'fa fa-dashboard',
-        url: '/visualizeMyData/',
+        url: '/home/visualizeMyData/',
         index:3,
         children: [],
       },
