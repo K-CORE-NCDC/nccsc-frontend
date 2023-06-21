@@ -559,67 +559,8 @@ export default function Web(props) {
       <div className={`mainContents ${routeLocation.pathname === '/' ? '' : 'min-h-70'} `} >
         <Suspense fallback={<Loader />}>
           <Switch>
-            {swiperOn && 
-            <Swiper
-              ref={swiperRef}
-              loop={false}
-              speed={800}
-              direction="vertical"
-              slidesPerView="auto"
-              mousewheel={
-                {
-                  sensitivity: 3,
-                  thresholdDelta: 1,
-                }
-              }
-              simulateTouch={false}
-              watchSlidesProgress={true}
-
-              pagination={{
-                el: '.pagination',
-                clickable: true,
-                renderBullet: function (index, className) {
-                  console.log(index)
-                  return "<div class='" + className + "'><span>" + sections[index] + "</span></div>";
-                },
-              }}
-
-              height={window.innerHeight}
-              modules={[Pagination, Mousewheel]}
-
-              onSnapIndexChange={activeClassIndex}
-              onSlideChange={(e) => {
-                let _activeURl = childMenu?.mainmenu?.items?.find(event => event?.index === e?.activeIndex)
-                history.push(_activeURl?.url || '/')
-                setActiveClassIndex(e?.activeIndex)
-                setActiveclassPath(_activeURl?.title)
-              }}
-              onSwiper={(swiper) => console.log("swiperoo", swiper)}
-
-              className=" h-screen ">
-              <div className="pagination"></div>
-              <SwiperSlide className="section section01">
-                <Introduction height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
-              </SwiperSlide>
-
-              <SwiperSlide className="section section04">
-                <SiteIntro height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
-              </SwiperSlide>
-
-              <SwiperSlide className="section section02">
-                <SingleDataVisualization height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
-                {/* {visualize} */}
-              </SwiperSlide >
-
-              <SwiperSlide className="section section03">
-                <VisualizeMyData height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
-                {/* {visualizeMyData} */}
-              </SwiperSlide>
-              <SwiperSlide >
-
-              </SwiperSlide>
-            </Swiper>}
-            {/* {home} */}
+          
+            {home}
             <Route exact path="*" component={NotFound} />
           </Switch>
         </Suspense>
