@@ -39,12 +39,15 @@ const ServiceIntro = () => {
           </li>
           <li>
             <img src={icon3} alt="" />
+            <br />
+            <br />
             <dl>
-              <dt><FormattedMessage
+              <dt ><FormattedMessage
                 id="serviceIntro_h3"
                 defaultMessage="Other Tools"
               /></dt>
-              <dd><FormattedMessage
+              <br />
+              <dd ><FormattedMessage
                 id="serviceIntro_txt3"
                 defaultMessage="This service visualizes multiple(more than 2) user input data. Up to 5 projects can be created."
               /></dd>

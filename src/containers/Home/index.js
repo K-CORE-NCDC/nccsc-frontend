@@ -26,9 +26,10 @@ import Introduction from "./Introduction";
 import { SiteIntro } from "../Introduction/SiteIntro";
 import { SingleDataVisualization } from "../VisualizeMyExampleData/SingleDataVisualization";
 import { VisualizeMyData } from "../VisualizeMyData/VisualizeMyData";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 
-export default function Home() {
+export default function Home(parentProps) {
+  const params = useParams()
   const [showModal, setShowModal] = useState(false);
   const [currentDate, setCurrentDate] = useState("");
   const [currentTime, setCurrentTime] = useState("");
@@ -39,9 +40,10 @@ export default function Home() {
   const [activeClassPath, setActiveclassPath] = useState('')
   const [activeClassIndex, setActiveClassIndex] = useState(0)
   const countJson = useSelector((data) => data.homeReducer.dataCount);
-  const sections = ["MAIN", "DATA RETRIEVAL", "APPLICATION"];
+  const sections = ["MAIN", "INTRODUCTION", "VISUALIZEDATA" , "VISUALIZEMYDATA", "CUSTOMERSERVICE"];
 
   useEffect(() => {
+    
     let today = new Date();
     var date =
       today.getFullYear() +
@@ -57,6 +59,7 @@ export default function Home() {
 
     setCurrentDate(date);
     setCurrentTime(time);
+    toSlide(parentProps?.parentProps?.activeClassIndex)
   }, []);
 
   const toSlide = (num) => {
@@ -66,6 +69,7 @@ export default function Home() {
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const [Englishlanguage, setEnglishlanguage] = useState(true);
   const context = useContext(Context);
+  
   useEffect(() => {
     if (context["locale"] === "kr-KO") {
       setKoreanlanguage(true);
@@ -76,6 +80,7 @@ export default function Home() {
     }
   }, [context]);
 
+  
   var settings = {
     dots: true,
     infinite: false,
@@ -92,9 +97,10 @@ export default function Home() {
         speed={800}
         direction="vertical"
         slidesPerView="auto"
+        slidesToShow={5}
         mousewheel={
           {
-            sensitivity: 3,
+            sensitivity: 5,
             thresholdDelta: 1,
           }
         }
@@ -105,7 +111,6 @@ export default function Home() {
           el: '.pagination',
           clickable: true,
           renderBullet: function (index, className) {
-            console.log(index)
             return "<div class='" + className + "'><span>" + sections[index] + "</span></div>";
           },
         }}
@@ -115,34 +120,35 @@ export default function Home() {
 
         onSnapIndexChange={activeClassIndex}
         onSlideChange={(e) => {
+          
           // let _activeURl = childMenu?.mainmenu?.items?.find(event => event?.index === e?.activeIndex)
           // history.push(_activeURl?.url || '/')
-          // setActiveClassIndex(e?.activeIndex)
+          parentProps?.parentProps?.setActiveClassIndex(e?.activeIndex)
           // setActiveclassPath(_activeURl?.title)
         }}
-        onSwiper={(swiper) => console.log("swiperoo", swiper)}
 
         className=" h-screen ">
-        <div className="pagination"></div>
-        <SwiperSlide className="section section01">
+        <div className={`${parentProps?.parentProps?.activeClassIndex !== 0 ? 'on' :''} pagination ` }></div>
+        
+        <SwiperSlide id="introduce" className="section section01">
           <Introduction height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
         </SwiperSlide>
 
-        <SwiperSlide className="section section04">
+        <SwiperSlide id="visualization" className="section section04">
           <SiteIntro height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
         </SwiperSlide>
 
         <SwiperSlide className="section section02">
           <SingleDataVisualization height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
-          {/* {visualize} */}
+          
         </SwiperSlide >
 
         <SwiperSlide className="section section03">
           <VisualizeMyData />
-          {/* {visualizeMyData} */}
+        
         </SwiperSlide>
-        <SwiperSlide >
-
+        <SwiperSlide className="section section03">
+              <h3>gygy</h3>
         </SwiperSlide>
       </SwiperComponent>
     </>

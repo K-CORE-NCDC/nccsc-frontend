@@ -965,7 +965,7 @@ table tbody tr {
 }
 .contentsTable th,
 .contentsTable td {
-  padding: 5px 15px;
+  padding: 5px 5px;
   border: 1px solid #d6d6d6;
   text-align: center;
 }
