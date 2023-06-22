@@ -1,37 +1,38 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import config from "../../config";
-import { useSelector, useDispatch } from "react-redux";
-import { UserIcon, EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { getCookie } from "../getCookie";
 import { useHistory } from "react-router-dom";
-import { login } from "../../actions/api_actions";
+import { login, SetCookie } from "../../actions/api_actions";
+import HeaderComponent from "../Common/HeaderComponent/HeaderComponent";
+import NCCLogo from "../../styles/images/logo02.svg"
+import loginIcon1 from "../../styles/images/loginForm-icon01.svg"
+import loginIcon2 from "../../styles/images/loginForm-icon02.svg"
 
 const LoginComponent = () => {
   const [userFormData, setUserFormData] = useState({
-    username: "",
+    userId: "",
     password: "",
   });
-  const [visibility, setvisibility] = useState(false);
   let history = useHistory();
   const dispatch = useDispatch();
-  const loginResponse = useSelector((data) => data.homeReducer.login_data);    
-  const [errorClass, setErrorClass] = useState("");
+  const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState([]);
+
   const updateUserNamePassword = (e) => {
     setUserFormData((previousState) => ({
       ...previousState,
       [e.target.name]: e.target.value,
     }));
   };
+
   const loginFailure = () => {
-    setErrorClass("border-red-500");
+    setHasError(true);
     setErrorMessage([
-      <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
+      <p key="error" className="LoginErrorText">
         Invalid username/Password
       </p>,
-      <h1 className="p-1 font-bold text-3xl text-red-500 italic" key="CountToEnterCredentials">
+      <h1 className="LoginErrorText" key="CountToEnterCredentials">
         {" "}
         If an error in consecutive password input (5 times) occurs, the account is locked.
       </h1>,
@@ -39,115 +40,162 @@ const LoginComponent = () => {
   };
 
 
-  useEffect(()=>{
-    if (getCookie('is_login')){
+  useEffect(() => {
+
+    setHasError(false);
+    if (getCookie('is_login')) {
       history.push('/userdata')
     }
-    else if(getCookie('is_login') === null){
+    else if (getCookie('is_login') === null) {
     }
-    else{
+    else {
       loginFailure();
     }
-  },[getCookie('is_login')])
+  }, [getCookie('is_login')])
 
   const formSubmitAction = (e) => {
-    dispatch(login("POST",  userFormData ));
+    if (userFormData && userFormData.userId === '') {
+      setHasError(true);
+      setErrorMessage([
+        <p key="error" className="LoginErrorText">
+          User ID cant be Empty
+        </p>,
+        <h1 className="LoginErrorText" key="CountToEnterCredentials">
+          {" "}
+          If an error in consecutive password input (5 times) occurs, the account is locked.
+        </h1>,
+      ]);
+    }
+    else if (userFormData && userFormData.password === '') {
+      setHasError(true);
+      setErrorMessage([
+        <p key="error" className="LoginErrorText">
+          Password cant be Empty
+        </p>,
+        <h1 className="LoginErrorText" key="CountToEnterCredentials">
+          {" "}
+          If an error in consecutive password input (5 times) occurs, the account is locked.
+        </h1>,
+      ]);
+    }
+    else {
+      dispatch(login("POST", userFormData));
+      setHasError(false);
+    }
   };
-
-
 
   return (
     <div>
-      <section className="mt-10 flex flex-col items-center justify-center">
-        <div>
-          <span className="text-7xl font-bold text-gray-800">Login</span>
-        </div>
-        <div className="my-14">
-          <h1 className="font-bold text-3xl text-gray-800">
-            Please use the service after logging in.
-          </h1>
-        </div>
-        {errorMessage && (
-                <div className="font-bold text-3xl text-red-500">
-                  {errorMessage}
+      <HeaderComponent
+        title="회원가입"
+        breadCrumbs={{
+          key1: 'value1',
+          key2: 'value2',
+          key3: 'value3'
+        }}
+        type="single"
+      />
+      <article id="subContents" className="subContents">
+        <div className="section ptn">
+          <div className="auto">
+            <div className="loginWrap">
+              <img src={NCCLogo} alt="" />
+              <p className="main">
+                <span className="colorSecondary">
+                  <font style={{ verticalAlign: 'inherit' }}></font>
+                </span>
+                <font style={{ verticalAlign: 'inherit' }}>
+                  <span className="colorPrimary">
+                    <font style={{ verticalAlign: 'inherit' }}>Welcome</font>
+                  </span>
+                  <font style={{ verticalAlign: 'inherit' }}> to </font>
+                  <span className="colorSecondary">
+                    <font style={{ verticalAlign: 'inherit' }}>NCDC .</font>
+                  </span>
+                </font>
+                <span className="colorPrimary">
+                  <font style={{ verticalAlign: 'inherit' }}></font>
+                </span>
+              </p>
+              <p className="sub">
+                <font style={{ verticalAlign: 'inherit' }}>
+                  <font style={{ verticalAlign: 'inherit' }}>
+                    Welcome to the National Cancer Data Center website.{' '}
+                  </font>
+                </font>
+                <br />
+                <font style={{ verticalAlign: 'inherit' }}>
+                  <font style={{ verticalAlign: 'inherit' }}>
+                    Please enter the information below to log in.
+                  </font>
+                </font>
+              </p>
+
+
+              <form className="loginForm" id="frm" method="post">
+
+                {/*  error messages */}
+                {errorMessage && (
+                  <div className="LoginErrorText">
+                    {errorMessage}
+                  </div>
+                )}
+                {/* Input Username */}
+                <div className="inputText">
+                  <input className={hasError == true ? 'LoginErrorInput' : ""} type="text" value={userFormData.userId} onChange={updateUserNamePassword} id="userId" name="userId" placeholder="Please enter your ID." autoComplete="off" />
                 </div>
-              )}
-        <div className="my-32">
-          <div className="grid grid-cols-3 border-b-2 border-gray-600 pt-12 pb-12">
-            <div className="pt-6 pl-48 col-span-1">
-              <h1 className="font-bold text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">User ID</h1>
-            </div>
-            <div>
-              <div className="mb-4 pr-45 col-span-2">
-                <input
-                  value={userFormData.username}
-                  onChange={updateUserNamePassword}
-                  name="username"
-                  className={`shadow appearance-none border rounded-lg w-full py-8 px-5 text-gray-700 leading-tight focus:border-blue-500  w-28 ${errorClass}`}
-                  id="username"
-                  type="text"
-                  placeholder="Please Enter your id"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="grid grid-cols-3 border-b-2 border-gray-600 pt-12 pb-12">
-            <div className="pt-6 pl-48 col-span-1 mr-7">
-              <h1 className="font-bold text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">Password</h1>
-            </div>
-            <div>
-              <div className="mb-4 pr-45 col-span-2 relative">
-                <div>
-                  <input
-                    value={userFormData.password}
-                    onChange={updateUserNamePassword}
-                    name="password"
-                    className={`shadow appearance-none border rounded-lg w-full py-8 px-5 text-gray-700 leading-tight focus:border-blue-500  w-28 ${errorClass}`}
-                    id="password"
-                    type={visibility ? "input" : "password"}
-                    placeholder="Please Enter a password "
 
-                  >
-                  </input>
-                  <span  className="absolute cursor-pointer left-72 top-4" > {visibility ? <EyeIcon className="h-14 w-12 inline text-main-white" onClick={() => setvisibility(visibility => !visibility)}></EyeIcon> : <EyeOffIcon className="h-14 w-12 inline text-main-white" onClick={() => setvisibility(visibility => !visibility)}></EyeOffIcon>}</span>
+                {/* Input Password */}
+                <div className="inputText">
+                  <input className={hasError ? 'LoginErrorInput' : ""} type="password" id="password" name="password" placeholder="Please enter a password." value={userFormData.password} onChange={updateUserNamePassword} />
                 </div>
-              </div>
-            </div>
-          </div>
-          <div className="grid grid-cols-3 pt-12">
-            <div className="w-full col-span-3">
-              <button
-                onClick={formSubmitAction}
-                className="text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md bg-blue-500 hover:bg-blue-700 text-white h-28 font-bold py-2 px-4 border border-blue-700 w-full rounded"
-
-              >
-                <UserIcon className="h-14 w-12 inline text-main-white" />{" "}
-
-                <span>Login</span>
-              </button>
-            </div>
-          </div>
-          <div className="grid grid-cols-3 pt-12">
-            <div className="w-full col-span-3">
-              <div className="d-flex flex-row float-right">
-                <Link to="/findid/" className=" pr-5">
-                  <p className="border-r-2 border-gray-600 pr-5">
-                    Find ID
-                  </p>
-                </Link>
-                <Link to="/findpassword/" className=" pr-5">
-                  <p className=" pr-5">
-                    Find Password
-                  </p>
-                </Link>
 
 
-              </div>
+                {/* Remember Id */}
+                <div className="idSave">
+                  <div className="switcher">
+                    <input type="checkbox" id="id_save" name="saveIdYn" value="1" />
+                    <label htmlFor="id_save">
+                      <span></span>
+                    </label>
+                    <font style={{ verticalAlign: 'inherit' }}>
+                      <font style={{ verticalAlign: 'inherit' }}>Remember ID</font>
+                    </font>
+                  </div>
+                </div>
+
+                {/* Login Button  */}
+                <button type="button" className="btn btnPrimary" id="loginBtn" onClick={formSubmitAction}>
+                  <font style={{ verticalAlign: 'inherit' }}>
+                    <font style={{ verticalAlign: 'inherit' }}>Log In</font>
+                  </font>
+                </button>
+
+                {/* Find ID Button */}
+                <div className="idPwSearch">
+                  <Link to="/findid/" >
+                    <img src={loginIcon1} alt="" />
+                    <font style={{ verticalAlign: 'inherit' }}>
+                      <font style={{ verticalAlign: 'inherit' }}>Find ID</font>
+                    </font>
+                  </Link>
+
+                  {/* Find Password Button */}
+                  <Link to="/findpassword/">
+                    <img src={loginIcon2} alt="" />
+                    <font style={{ verticalAlign: 'inherit' }}>
+                      <font style={{ verticalAlign: 'inherit' }}>Find Password</font>
+                    </font>
+                  </Link>
+                </div>
+
+              </form>
             </div>
           </div>
         </div>
-      </section>
+      </article>
     </div>
+
   );
 };
 

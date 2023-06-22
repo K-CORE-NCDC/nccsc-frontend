@@ -5,17 +5,7 @@ import { getCookie } from './containers/getCookie';
 
 
 const sessionAuth = getCookie('sessionId')
-// console.log('menu',loginResponse)
 
-
-// const logout = {
-//   id: 'logout',
-//   title: 'Logout',
-//   type: 'item',
-//   icon: 'fa fa-dashboard',
-//   url: '/logout/',
-//   children: [],
-// };
 const logout = {
   id: 'logout',
   title: 'Find Password',
