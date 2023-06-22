@@ -7,7 +7,7 @@ const SingleElem = ({elem}) =>{
   if (elem.url){
     return (
       <li className="flex mx-3 text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md ">
-        <Link to={elem.url}  className="px-3 py-4 lg:py-2 flex  ">
+        <Link to={"#"+elem.id}  className="px-3 py-4 lg:py-2 flex  ">
           {elem.icon && <i  className={elem.icon}></i>}
           <span>{elem.title}</span>
         </Link>

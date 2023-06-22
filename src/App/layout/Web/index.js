@@ -60,27 +60,22 @@ let parseJwt = (islogin1) => {
 
 
 
-const home = route.map((route, index) => {
-
+export const  Home =(parentProps)=>{
+  return route.map((route, index) => {
+      return route.component ? (
+        <Route
+          key={index}
+          path={route.path}
+          exact={route.exact}
+          name={route.name}
+          childname={route.childname}
+          render={(props) => <route.component parentProps ={parentProps}  {...props} />}
+        />
+      ) : null;
+    
+    });
   
-    return route.component ? (
-      <Route
-        key={index}
-        path={route.path}
-        exact={route.exact}
-        name={route.name}
-        childname={route.childname}
-        render={(props) => <route.component {...props} />}
-      />
-    ) : null;
-  
-
-});
-
-
-
-
-
+} 
 
 
 export default function Web(props) {
@@ -123,9 +118,6 @@ export default function Web(props) {
         })
       }
     })
-
-
-
   }, [])
 
 
@@ -467,7 +459,7 @@ export default function Web(props) {
 
 
 
-  const sections = ["MAIN", "DATA RETRIEVAL", "APPLICATION"];
+ 
   return (
     <div className="relative" id='fullSlide' >
       <Popover>
@@ -516,7 +508,8 @@ export default function Web(props) {
                         ref={buttonRef} onClick={() => {
                           setActiveclassPath(item?.title)
                           setActiveClassIndex(item?.index)
-                          history.push(item?.url)
+                          history.push(`/home${item?.url}`)
+                         
                           toSlide(item?.index)
                         }} onMouseEnter={() => {
                           setMouseEnterFlag(true)
@@ -560,7 +553,7 @@ export default function Web(props) {
         <Suspense fallback={<Loader />}>
           <Switch>
           
-            {home}
+            <Home setActiveClassIndex = {(data) => setActiveClassIndex(data)} activeClassIndex={activeClassIndex}/>
             <Route exact path="*" component={NotFound} />
           </Switch>
         </Suspense>

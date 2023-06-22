@@ -38,6 +38,19 @@
   text-overflow: ellipsis;
 }
 
+.visual .txtBox .txtBox_child1{
+  width: 75%;
+}
+.visual .txtBox .txtBox_child2{
+  width: 25%;
+}
+.mainVisual .visual .main_box{
+  flex-direction: row;
+}
+.clearfix{
+  clear:both;
+}
+
 @media all and (max-width: 1199px) {
   .onlyPc {
     display: none;
@@ -334,10 +347,10 @@
     margin-right: 24px;
   }
   .dataView01,
-.dataView01 tbody,
-.dataView01 tr,
-.dataView01 th,
-.dataView01 td {
+  .dataView01 tbody,
+  .dataView01 tr,
+  .dataView01 th,
+  .dataView01 td {
     display: block;
   }
   .dataView01 {
@@ -364,7 +377,7 @@
     border-bottom: 1px solid #d6d6d6;
   }
   .dataView01 tr:last-child th,
-.dataView01 tr:last-child td {
+  .dataView01 tr:last-child td {
     border-bottom: 0;
   }
   .dataInquiryProcess02 ul li {
@@ -1418,7 +1431,7 @@
     margin-top: 12px;
   }
   .analyticGuideBox01 .mapBox img.pc,
-.analyticGuideBox01 .mapBox img.t {
+  .analyticGuideBox01 .mapBox img.t {
     display: none;
   }
   .analyticGuideBox01 .mapBox img.m {
@@ -1606,7 +1619,7 @@
     width: 70%;
   }
   .contentsTable .multiple,
-.contentsTable .plus {
+  .contentsTable .plus {
     font-size: 15px;
   }
   .serviceIntro ul li {
@@ -1791,6 +1804,18 @@
   }
 }
 @media all and (max-width: 320px) {
+  .visual .txtBox .txtBox_child1{
+    display: none;
+  }
+  .visual .txtBox .txtBox_child2{
+    display: none;
+  }
+  .visual .txtBox .main_child{
+    display: block;
+  }
+  .mainDataStatusWrap{
+    display: none;
+  }
   .contentsTable{
     display: none;
   }
@@ -1815,6 +1840,9 @@
   }
 }
 @media all and (max-width: 1199px) {
+  .visual .txtBox .main_child{
+    display: none;
+  }
   .lnb {
     top: 81px;
   }
@@ -1842,6 +1870,20 @@
   }
 }
 @media all and (max-width: 767px) {
+  .visual .txtBox .txtBox_child1{
+    width: 100%;
+  }
+  .visual .txtBox .txtBox_child2{
+    width: 100%;
+    padding-top: 100px;
+  }
+  .mainVisual .visual .main_box{
+    flex-direction: column;
+    padding-top: 100px !important;
+  } 
+  .mainDataStatusWrap{
+    display: none;
+  }
   .contentsTable{
     display: none;
   }

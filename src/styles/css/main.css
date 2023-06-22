@@ -81,6 +81,7 @@
   width: 134px;
   height: 48px;
   margin-top: 64px;
+  font-size: 20px;
 }
 .mainVisual .visual01 {
   /* background-image: url("/images/ncdc/mainVisual-img01.jpg"); */
@@ -136,13 +137,14 @@
   display: flex;
   flex-wrap: wrap;
   background-color: rgb(255, 255, 255);
-  height: 75px;
-  width: 1295px;
+  height: 55px;
+  width: 100%;
   max-width: 100%;
   margin: auto;
+  font-size: 20px;
 }
 .mainDataStatusWrap .mainDataStatus dl dt {
-  width: 215px;
+  width: 30%;
   height: 100%;
   background-color: #003177;
   display: flex;

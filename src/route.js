@@ -35,7 +35,7 @@ const OldKoreanprivacyact = React.lazy(() => import('./containers/TermsAndPolicy
 const FindID = React.lazy(() => import('./containers/Login/FindID'));
 const FindPassword = React.lazy(() => import('./containers/Login/FindPassword'));
 const ResetPassword = React.lazy(() => import('./containers/Login/ResetPassword'));
-const SetPassword = React.lazy(()=> import('./containers/Signup/SetPassword'));
+const SetPassword = React.lazy(() => import('./containers/Signup/SetPassword'));
 const FileProjectDataTable = React.lazy(() => import('./containers/UserDataVisualization/Components/MainComponents/FileProjectDataTable'));
 
 const Introduce = React.lazy(() => import('./containers/Home/introduce'));
@@ -57,34 +57,26 @@ const Organoid = React.lazy(() => import('./containers/CustomerVoice/OtherServic
 const RelatedSites = React.lazy(() => import('./containers/CustomerVoice/OtherServices/RelatedSitesIndex'));
 const Refresh = React.lazy(() => import('./containers/Refresh'));
 
-const NotFound = React.lazy(()=> import('./containers/404NotFound/index'))
+const NotFound = React.lazy(() => import('./containers/404NotFound/index'))
 const route = [
   {
-    path: '/mobile_verify/',  exact: true, type: 'unauth', name: '', component: MobileSuccess,
+    path: '/mobile_verify/', exact: true, type: 'unauth', name: '', component: MobileSuccess,
   },
   {
     path: '/summary/:tab?/',
     exact: true,
     type: 'unauth',
-    category:'visualize',
+    category: 'visualize',
     name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
     childname: <FormattedMessage id="DataSummary" defaultMessage="Data Summary" />,
     component: DataSummary,
   },
-  {
-    path: '/home/visualizeMyExampleData/',
-    exact: true,
-    type: 'unauth',
-    category:'visualize',
-    name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
-    childname: <FormattedMessage id="DataSummary" defaultMessage="Data Summary" />,
-    component: SingleDataVisualization,
-  },
+
   {
     path: '/visualise/:tab?/:project_id?/',
     exact: true,
     type: 'unauth',
-    category:'visualize',
+    category: 'visualize',
     name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
     childname: <FormattedMessage id="DataVisualization" defaultMessage="DataVisualization" />,
     component: DataVisualization,
@@ -94,7 +86,7 @@ const route = [
     path: '/visualise-singledata/:tab?/:project_id?/',
     exact: true,
     type: 'unauth',
-    category:'visualize',
+    category: 'visualize',
     name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
     childname: <FormattedMessage id="SingleDataVisualization" defaultMessage="Single Data Visualization" />,
     component: SingleDataAnalysis,
@@ -129,11 +121,39 @@ const route = [
     path: '/',
     exact: true,
     type: 'unauth',
-    category:'home',
+    category: 'home',
     name: <FormattedMessage id="Introduce" defaultMessage="Introduction" />,
     childname: <FormattedMessage id="BusinessIntroduce" defaultMessage="Business Introduction" />,
     component: Home,
   },
+  {
+    path: '/home/introduction/',
+    exact: true,
+    type: 'unauth',
+    category: 'introduce',
+    name: <FormattedMessage id="Introduce" defaultMessage="Introduction" />,
+    childname: <FormattedMessage id="SiteIntro" defaultMessage="Business Introduction" />,
+    component: Home,
+  },
+  {
+    path: '/home/visualizeMyExampleData/',
+    exact: true,
+    type: 'unauth',
+    category: 'visualize',
+    name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
+    childname: <FormattedMessage id="DataSummary" defaultMessage="Data Summary" />,
+    component: Home,
+  },
+  {
+    path: '/home/visualizeMyData/',
+    exact: true,
+    type: 'unauth',
+    category: 'visualizeData',
+    name: <FormattedMessage id="VisualizeMyData" defaultMessage="VisualizeMyData" />,
+    childname: <FormattedMessage id="VisualizeMyData" defaultMessage="VisualizeMyData" />,
+    component: Home,
+  },
+
   {
     path: '/newmultidataproject/',
     exact: true,
@@ -142,34 +162,18 @@ const route = [
     childname: <FormattedMessage id="MultiDataVisualization" defaultMessage="Multi Data Visualization" />,
     component: MultiDataVisualizationUploadIndex,
   },
-  {
-    path: '/home/introduction/',
-    exact: true,
-    type: 'unauth',
-    category:'introduce',
-    name: <FormattedMessage id="Introduce" defaultMessage="Introduction" />,
-    childname: <FormattedMessage id="SiteIntro" defaultMessage="Business Introduction" />,
-    component: SiteIntro,
-  },
+
 
   {
     path: '/pipeline/',
     exact: true,
     type: 'unauth',
-    category:'introduce',
+    category: 'introduce',
     name: <FormattedMessage id="Introduce" defaultMessage="Introduction" />,
     childname: <FormattedMessage id="Pipeline" defaultMessage="Pipeline" />,
     component: Pipeline,
   },
-  {
-    path: '/home/visualizeMyData/',
-    exact: true,
-    type: 'unauth',
-    category:'visualizeData',
-    name: <FormattedMessage id="VisualizeMyData" defaultMessage="VisualizeMyData" />,
-    childname: <FormattedMessage id="VisualizeMyData" defaultMessage="VisualizeMyData" />,
-    component: VisualizeMyData,
-  },
+
   {
     path: '/login/',
     exact: true,
