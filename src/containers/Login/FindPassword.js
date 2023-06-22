@@ -1,28 +1,60 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import {
   findPassword,
   clearIDPasswordResetPASSWORD
 } from "../../actions/api_actions";
 import swal from 'sweetalert';
 import { useSelector, useDispatch } from "react-redux";
+import HeaderComponent from "../Common/HeaderComponent/HeaderComponent";
+import nameIcon from "../../styles/images/icon-text.svg"
+import idIcon from "../../styles/images/icon-user.svg"
 function FindPassword() {
 
-  const [errorClass, setErrorClass] = useState("");
+  const UserId = useRef(null);
+  const RegistrationPin = useRef(null);
+  const [isError, setIsError] = useState(false)
   const [status, setstatus] = useState("")
+  const [errorMessage, setErrorMessage] = useState([]);
   const dispatch = useDispatch();
+
   const find_password = useSelector((data) => data.homeReducer.findPassword);
 
   let findPasswordfunction = () => {
-    let user_name_is = document.getElementById('FindPassword').value
-    if (user_name_is === "") {
-      setErrorClass("border-red-500");
+
+    let user_id = UserId.current.value
+    let registration_pin = RegistrationPin.current.value
+
+    setIsError(false)
+
+    if (user_id === "") {
       setstatus('Please Enter Your User ID');
+      setErrorMessage([
+        <p key="error" className="LoginErrorText">
+          User ID cant be Empty
+        </p>
+      ]);
+      setIsError(true)
     }
+
+    else if (registration_pin === "") {
+      setstatus('Please Enter Your User ID');
+      setErrorMessage([
+        <p className="LoginErrorText">
+          Registration Pin cant be Empty
+        </p>
+      ]);
+      setIsError(true)
+    }
+
     else {
-      dispatch(findPassword("POST", { 'username': user_name_is }));
+      dispatch(findPassword("POST", { 'username': user_id, 'registration_pin': registration_pin }));
+      setIsError(false)
     }
   }
 
+  let cancelfunction = () => {
+    setIsError(false)
+  }
 
   useEffect(() => {
     find_password && setstatus(find_password.status)
@@ -32,10 +64,16 @@ function FindPassword() {
       })
         .then((value) => {
           setTimeout(() => {
-
             window.location.href = '/login/'
           }, 2000)
         });
+    }
+    else {
+      setErrorMessage([
+        <p key="error" className="LoginErrorText">
+          Invalid UserName or Registration Pin
+        </p>
+      ]);
     }
   }, [find_password, status])
 
@@ -47,55 +85,74 @@ function FindPassword() {
 
   return (
     <div>
-      <div>
-        <section className="mt-10 flex flex-col items-center justify-center">
-          <div>
-            <span className="text-7xl font-bold text-gray-800">Reset Password</span>
+      <HeaderComponent
+        title="회원가입"
+        breadCrumbs={{
+          key1: 'value1'
+        }}
+        type="multi"
+      />
+      <article id="subContents" className="subContents">
+        <div className="contentsTitle">
+          <div className="auto">
+            <h3 className="colorSecondary">
+              <span className="colorPrimary">find</span>
+              password
+            </h3>
           </div>
-          <div className="my-14">
-            <h1 className="font-bold text-3xl text-gray-800">
-              Please Enter your User ID.
-            </h1>
-          </div>
-
-          <div className="my-10">
-            <div className="grid grid-cols-3 border-b-2 border-gray-600 pt-12 pb-12">
-              <div className="pt-6 pl-48 col-span-1 mr-4">
-                <h1 className="font-bold">User ID :</h1>
-              </div>
-              <div>
-                <div className="mb-4 pr-45 col-span-2">
-                  <input
-                    type="text"
-                    id="FindPassword"
-                    name="findpassword"
-                    className={`shadow appearance-none border rounded-lg w-full py-8 px-5 text-gray-700 leading-tight focus:border-blue-500  w-28 ${errorClass}`}
-                    placeholder="Please Enter your User ID"
-                  />
-                </div>
-              </div>
+        </div>
+        <div className="section ptn">
+          <div className="auto">
+            <div className="pwSearch tac">
+              <p className="h5">
+                Reset your password through Registration Pin authentication.<br />
+                Please enter the information below.
+              </p>
+              <form className="formBox" id="frm" method="post" name="frm">
+                {isError && errorMessage && (
+                  <div className="LoginErrorText">
+                    {errorMessage}
+                  </div>
+                )}
+                <dl>
+                  <dt>
+                    <img src={nameIcon} alt="" />
+                    User Id
+                  </dt>
+                  <dd>
+                    <div className="inputText">
+                      <input ref={UserId} type="text" className="w100" id="userName" name="userName" placeholder="Please enter your name." autoComplete="off" />
+                    </div>
+                  </dd>
+                </dl>
+                <dl>
+                  <dt>
+                    <img src={idIcon} alt="" />
+                    Register Id
+                  </dt>
+                  <dd>
+                    <div className="inputText">
+                      <input ref={RegistrationPin} type="text" className="w100" id="userId" name="userId" placeholder="Please enter your ID." autoComplete="off" />
+                    </div>
+                  </dd>
+                </dl>
+              </form>
             </div>
-            <div className="grid grid-cols-3 pt-12">
-              <div className="w-full col-span-3">
-
-                {/* Error Message */}
-                {status && <div className='font-bold text-3xl text-red-500 py-4 text-center'>{status}</div>}
-                <button
-                  onClick={findPasswordfunction}
-                  className="bg-blue-500 hover:bg-blue-700 text-white h-28 font-bold py-2 px-4 border border-blue-700 w-full rounded"
-
-                >
-
-                  <span>Submit</span>
+            <div className="bottomBtns">
+              <div className="flex">
+                <button onClick={cancelfunction} className="btn btnGray bdBtn">
+                  cancellation
+                </button>
+                <button onClick={findPasswordfunction} className="btn btnPrimary" >
+                  submit
                 </button>
               </div>
             </div>
           </div>
-        </section>
-
-
-      </div>
+        </div>
+      </article>
     </div>
+
   )
 }
 
