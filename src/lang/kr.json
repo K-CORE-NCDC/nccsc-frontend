@@ -310,7 +310,36 @@
     "serviceIntro_h3":"기타 분석 도구",
     "serviceIntro_txt1":"하나의 사용자 입력데이터에 대해 시각화 가능한 서비스를 제공합니다. 해당 서비스는 저장되지 않는 일회성 분석 서비스입니다.",
     "serviceIntro_txt2":"두 가지 이상의 사용자 입력데이터에 대해 시각화 가능한 서비스를 제공합니다. 프로젝트 생성은 최대 5개까지 생성 가능합니다.",
-    "serviceIntro_txt3":"시각화 서비스 이외의 기타 분석 서비스를 제공합니다. 유전체 데이터에 대한 전처리, 생명 정보 주석 추가 등 다양한 기능을 제공합니다."
+    "serviceIntro_txt3":"시각화 서비스 이외의 기타 분석 서비스를 제공합니다. 유전체 데이터에 대한 전처리, 생명 정보 주석 추가 등 다양한 기능을 제공합니다.",
+    "Example_signle_variantSummary":"주요 변이에 대한 요약 정보를 시각화",
+    "Example_signle_Lollipop":"특정 유전자의 돌연변이 혹은 인산화를 아미노산 서열 위에서 시각화",
+    "Example_signle_CNV":"복제 수 변이 데이터를 유전체 뷰어에서 시각화",
+    "Example_signle_heatMap":" 단백/유전체 정보 등을 일정 이미지 위에 열(Heat) 분포 형태로 시각화",
+    "Example_signle_circos":"원형의 염색체 지도에 7가지 오믹스 데이터 중 하나를 원형의 레이어로 시각화",
+    "Example_signle_box":"선택된 유전자(들)의 유전정보 통계를 Box 형태로 시각화",
+    "Example_signle_sirvival":"임상변수 조건에 따라 환자의 재발/생존 확률을 시각화",
+    "Example_multi_circos":"원형의 염색체 지도에 7가지 오믹스 데이터를 다수의 레이어로 시각화",
+    "Example_mutli_heatmap":"단백/유전체 정보 등을 일정 이미지 위에 열(Heat) 분포 형태로 시각화",
+    "Example_multi_correlation":"선택된 유전자에 대해 RNA 발현 값과 Proteome 풍부도 값의 상관관계를 시각화",
+    "Example_multi_onco":"각 환자의 유전자 내 DNA 변이와 여러 오믹스 정보를 칸, 색상, 기호 등으로 시각화",
+    "Example_multi_survival":" 임상변수 또는 유전체 정보 조건에 따라 환자의 재발/생존 확률을 시각화",
+    "Example_multi_valcano":"임상조건에 따라 나눈 두 그룹 간 유의한 발현 차이를 보이는 유전자(DEG)를 시각화",
+    "Example_multi_fusion":"선택된 샘플 그룹에 대한 Fusion gene(s) 개수 및 개별 Fusion gene을 시각화",
+    "Example_multi_sankey":"변이에 대한 약물 연계 정보를 시각화",
+    "Example_tools_vcftomaf":"VCF를 MAF 파일로 자동 변환 하는 도구 (VCF 파일 필요)",
+    "Example_tools_interPro":"단백질 서열정보를 통해 단백질을 분류하고, 도메인과 주요 사이트를 예측하여 기능 분석을 제공하는 도구 (Protein FASTA 파일 필요)",
+    "Example_tools_blast":"단백질의 아미노산 서열 또는 DNA/RNA 서열 정보를 통해 1차 생물학적 서열 정보를 비교하는 도구 (DNA, RNA, Protein 서열 정보 또는 해당 FASTA 파일 필요)",
+    "visualizeMyData_single":" 단일 데이터 시각화",
+    "visualizeMyData_multi":"다중 데이터 시각화",
+    "visualize_otherTools":"기타 분석 도구",
+    "DownloadManual":"매뉴얼 다운로드",
+    "Analyze":"바로가기",
+    "CustomerService_tab1":"공지사항",
+    "CustomerService_tab2":"자료실",
+    "CustomerService_tab3":"자주 묻는 질문",
+    "CustomerService_tab4":"기타 서비스"
     
+    
+
 
 }

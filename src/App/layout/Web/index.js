@@ -35,7 +35,7 @@ import AOS from 'aos';
 import "aos/dist/aos.css"
 import { VisualizeMyData } from "../../../containers/VisualizeMyData/VisualizeMyData";
 import { SingleDataVisualization } from "../../../containers/VisualizeMyExampleData/SingleDataVisualization";
-
+import {Link} from 'react-router-dom'
 AOS.init({
   offset: 200,
   duration: 600,
@@ -474,7 +474,7 @@ export default function Web(props) {
                   </a>
                 </h1>
                 <div className="headerUtils">
-                  <a><FormattedMessage id="Login" defaultMessage='Login' /></a>
+                  <Link to='/login/'><FormattedMessage id="Login" defaultMessage='Login' /></Link>
                   <a href="">Find Password</a>
                   <div className="language">
                     <a className="on" onClick={() => { setShowLangMenu(!showLangMenu) }}>&nbsp;</a>

@@ -217,6 +217,7 @@ const childMenu = {
         type: 'group',
         icon: 'fa fa-dashboard',
         url: '/faq/',
+        index:4,
         children: [
           // {
           //   id: 'faq',

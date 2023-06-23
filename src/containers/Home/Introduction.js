@@ -24,17 +24,13 @@ const Introduction = ({ height, innerHeight }) => {
               </p>
             </div>
             <div className="txtBox_child2">
-              <a href='#test' className="btn btnPrimary btnSearch" style={{ width: '100%' }}>Login</a>
+              <a href='#test' className="btn btnPrimary btnSearch" style={{ width: '100%' }}>
+              <FormattedMessage id="Login" defaultMessage='Login' />
+              </a>
               <span style={{ justifyContent: 'center', display: 'flex', color: '#003177', paddingTop:'8px' }}>
                 <a href="#" >Create registration number</a>&nbsp;&nbsp;|&nbsp;&nbsp;
                 <a href="#">Find Password</a>
               </span>
-              {/* <div className="titleBox titleBox02">
-                <div className="con con01 colorSecondary">
-                  <span>Login</span>
-                </div> */}
-
-              {/* </div> */}
             </div>
             <div className="mainDataStatusWrap">
               <div className="mainDataStatus" >

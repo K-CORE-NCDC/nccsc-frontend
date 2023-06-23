@@ -24,7 +24,7 @@ import React, {
   
   import { Popover, Transition } from "@headlessui/react"
   import { FormattedMessage } from "react-intl";
-  
+  import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
   
   
   export default function DataVisualization() {
@@ -55,166 +55,33 @@ import React, {
     const buttonStyles = "bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full capitalize";
   
   
-    const history = useHistory();
-  
-    const project_id_status = useSelector(
-      (data) => data.homeReducer.project_id_status
-    );
-    const userProjectDetails = useSelector(
-      (data) => data.dataVisualizationReducer.userProjectsDataTable
-    );
+   
     let { tab, project_id } = useParams();
     const [chartName, setChartName] = useState(tab === 'home' ? undefined : tab);
     const [tabName, setTabName] = useState(tab === 'home' ? undefined : tab)
-    const [screenCapture, setScreenCapture] = useState(false);
-    const [availableTabsForProject, setavailableTabsForProject] = useState([]);
     const [toggle, setToggle] = useState(true);
-    const [filterApplied, setfilterApplied] = useState(false);
-    const [screenCaptureConfirmation, setScreenCaptureConfirmation] =
-      useState(false);  
-    const setToFalseAfterScreenCapture = (param = false) => {
-      if (param === false) {
-        setScreenCapture(false);
-      } else {
-        setScreenCapture(true);
-      }
-    };
   
-    useEffect(() => {
-      if (context["locale"] === "kr-KO") {
-        setKoreanlanguage(true);
-        setEnglishlanguage(false);
-      } else {
-        setKoreanlanguage(false);
-        setEnglishlanguage(true);
-      }
-    },[context]);
   
-    useEffect(()=>{
-      if(koreanlanguage){
-        setUserDefinedList( "사용자 정의")
-        setEnterGenes("유전자 입력")
-      }
-      else{
-        setUserDefinedList( "User-Defined List")
-        setEnterGenes("Enter Genes")
-      }
-    },[koreanlanguage,Englishlanguage])
-  
-    const setScreenCaptureFunction = (capture) => {
-      setScreenCaptureConfirmation(true);
-    };
 
-
-  const callback = useCallback((filters,  filterKeyandValues) => {
-    let type, g = ""
-    if (document.getElementById("gene_type") && document.getElementById("gene_type") !== null){
-      type = document.getElementById("gene_type").value;
-      g = genes[type].data;
-    }
-
-    if (document.getElementById("genes") && document.getElementById("genes") !== null)
-      document.getElementById("genes").value = g.join(" ");
-
-    setState((prevState) => ({
-      ...prevState,
-      filter: filters,
-      genes: g,
-      type: type,
-      'filterKeyandValues': filterKeyandValues
-    }));
-    setfilterApplied(true);
-    }, []);
+ 
   
-    const submitFilter = (e) => {
-        setBoolChartState(false);
-        setChartName(tabName);
-        let chartx = LoadChart(width, tabName);
-        setCharts((prevState) => ({
-          ...prevState,
-          viz: chartx,
-        }));
-     
-    };
-  
-    useEffect(() => {
-      if (filterApplied) {
-        setfilterApplied(false);
-        submitFilter();
-      }
-    }, [filterApplied]);
-  
-    const selectGene = (event) => {
-      let val_ = event.target.value;
-      let g = genes[val_].data;
-      g = g.sort();
-      if(document.getElementById("genes") && document.getElementById("genes") !== null)
-        document.getElementById("genes").value = g.join(" ");
-      setState((prevState) => ({
-        ...prevState,
-        genes: g,
-        type: val_,
-      }));
-    };
    
-    useEffect(() => {
-      if (project_id !== undefined) {
-        let projectAvailableSteps = undefined;
-        if(userProjectDetails && 'key' in  userProjectDetails &&  userProjectDetails.key === 'NotFound'){
-          history.push('/login')
-        }
-        if (userProjectDetails &&  'available_steps' in userProjectDetails) {
-          projectAvailableSteps = userProjectDetails.available_steps;
-        }
   
-        let tabList = [];
-        if (projectAvailableSteps === undefined) {
-          dispatch(getUserDataProjectsTableData(project_id));
-        } else {
-          Object.keys(projectAvailableSteps).forEach((stepName) => {
-              if (stepName === "lollypop") {
-                tabList.push("lollipop");
-              } else if (stepName === "oncoprint") {
-                tabList.push("onco");
-              } else if (stepName === "igv") {
-                tabList.push("CNV");
-              } else if (stepName === "scatter") {
-                tabList.push("correlation");
-              } else {
-                tabList.push(stepName);
-              }
-          });
-        }
-        setavailableTabsForProject(tabList);
-      }
+
+  
     
-    }, [project_id, userProjectDetails, project_id_status]);
+
   
   
     useEffect(() => {
       setTabName(tab==='home'?undefined:tab)
-        setChartName(tabName)
-        if (chartName) {
-          submitFilter();
-      }
-      let t = ["volcano", "survival", "fusion"];
-       if (t.indexOf(tabName) !== -1) {
-        setToggle(false);
-      }
-      else{
-        setToggle(true);
-      }
+      setChartName(tabName)
+      
     }, [tab,tabName, chartName]);
   
-    useEffect(()=>{
-      dispatch(getUserDefinedFilter({
-        "project_id":project_id
-      })); 
-    },[project_id])
-    
     useEffect(() => {
-      let w = elementRef.current.getBoundingClientRect().width;
-      setWidth(w);
+      // let w = elementRef.current.getBoundingClientRect().width;
+      // setWidth(w);
       setBoolChartState(false);
       if (project_id !== undefined) {
         setState((prevState) => ({
@@ -230,27 +97,17 @@ import React, {
         "box",
       ];
       let gridData = []
-      if (project_id !== undefined) {
-        let steps = availableTabsForProject;
-        l = steps.filter((element) => l.includes(element));
-      } 
-  
+ 
       l.forEach((element) => {
         
-        let classes =
-          toggle ?  "lg:px-4 sm:px-2 xs:px-2 py-2 font-semibold rounded-t opacity-50 BorderDiv" : "lg:px-4 sm:px-2 xs:px-2 py-2 font-semibold rounded-t opacity-50 ";
-  
-        if (chartName === element) {
-          classes = classes + " border-blue-400 border-b-4 -mb-px opacity-100";
-        }
         let name = " Plot";
         if (element === "heatmap") {
           name = "";
         } else if (element === "cnv") {
           element = "CNV";
         } else if (element === "onco") {
-          element = "OncoPrint";
           name = "";
+          element = "OncoPrint";
         }
   
         let gridobj = {title:element,image:require(`../../../assets/images/Visualizations/${element}.png`).default,link: `/singledata-upload/${element}/`}
@@ -258,453 +115,78 @@ import React, {
        
       });
       setGridData(gridData)
-    }, [availableTabsForProject, chartName]);
+    }, []);
     
-    useEffect(() => {
-        if (project_id !== undefined) {
-          if (state.genes.length > 0) {
-            dispatch(samplesCount("POST", { project_id: project_id }));
-            dispatch(getBreastKeys(state));
-          }
-        } else {
-          if (state.genes.length > 0) {
-            dispatch(samplesCount("POST", {}));
-            dispatch(getBreastKeys(state));
-          }
-      }
-  }, [tabName,state]);
-  
-  
-  
-  
-    useEffect(() => {
-      if (BrstKeys) {
-        let tmp = [];
-        for (const [key, value] of Object.entries(BrstKeys)) {
-          tmp.push(
-            <option key={key} value={key + "_" + value}>
-              {value}
-            </option>
-          );
-        }
-      }
-    }, [BrstKeys]);
-  
-    useEffect(() => {
-      if (chart) {
-        setBoolChartState(true);
-      }
-    }, [chart]);
-  
-    useEffect(() => {
-        let chartx = LoadChart(width, tabName);
-        setCharts((prevState) => ({
-          ...prevState,
-          viz: chartx,
-        }));
-      }, [screenCapture]);
-  
-    const LoadChart = (w, type) => {
-      switch (type) {
-        case "circos":
-          return Charts.circos(
-            w,
-            state,
-            screenCapture,
-            setToFalseAfterScreenCapture,
-            toggle,
-            state
-          );
-        case "lollipop":
-          return Charts.lollipop(
-            w,
-            state,
-            screenCapture,
-            setToFalseAfterScreenCapture
-          );
-        case "heatmap":
-          return Charts.heatmap(
-            w,
-            state,
-            screenCapture,
-            BrstKeys,
-            setToFalseAfterScreenCapture
-          );
-        case "CNV":
-          return Charts.igv(
-            w,
-            state,
-            screenCapture,
-            setToFalseAfterScreenCapture
-          );
-        case "box":
-          return Charts.box(
-            w,
-            state,
-            screenCapture,
-            setToFalseAfterScreenCapture
-          );
-        default:
-          return false;
-      }
-    };
-  
-    const screen_call = useCallback((bool) => {
-      setToggle(false);
-    }, []);
-  
-    const leftFilterClose = (e) => {
-      let t = ["volcano", "survival", "fusion"];
-      if (t.indexOf(tabName) !== -1) {
-        return false;
-      } else {
-        setToggle(!toggle);
-      }
-    };
-  
-    useEffect(() => {
-      return () => {
-        dispatch(clearDataVisualizationState());
-      };
-    }, []);
+    gridData.map((item, index)=>{
+      console.log(item,index)
+    })
   
     return (
-      <div className="header">
-        <div className="mx-auto border-t rounded overflow-hidden ">
-          <div id="main_div">
-  
-          {/* Filter and Gene Filter */}
-          <div className="flex">
-          <div className="flex items-center justify-center space-x-4 md:justify-start md:space-x-0 md:mr-4 mx-auto gap-40">
-          <div></div>
-          <Popover className="relative" style={{margin:'auto'}}>
-            {({ open }) => {
-              return (
-                <>
-                  <div>
-                    <Popover.Button>
-                    <div className="flex bg-white text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md btn_input_height  mb-3 lg:w-full   font-bold py-2 px-4 border  rounded xs:h-14 lg:h-16">
-                    
-                      <div className="flex-1 flex items-center justify-center px-4">Gene set Re-filtering</div>
-                      <div className="w-20 h-full bg-gray-200 flex items-center justify-center">
-                        <FilterIcon className="h-8 w-8" />
-                      </div>
-                      </div>
-                    </Popover.Button>
-                    <Transition
-                      as={Fragment}
-                      enter="transition ease-out duration-200"
-                      enterFrom="opacity-0 translate-y-1"
-                      enterTo="opacity-100 translate-y-0"
-                      leave="transition ease-in duration-150"
-                      leaveFrom="opacity-100 translate-y-0"
-                      leaveTo="opacity-0 translate-y-1"
-                    >
-                      <Popover.Panel className="absolute z-10 w-screen max-w-sm px-4 mt-0 transform -translate-x-1/2 left-1/2 sm:px-0 lg:max-w-3xl">
-                      <div className={toggle? " lg:relative col-start-2 col-span-3 overflow-auto": ""}>
-                      <div className="grid lg:grid-cols-3 lg:gap-1 lg:p-5 bg-white  md:grid-cols-2 md:gap-1 md:p-5">
-                        <div className="flex xs:col-span-3 lg:col-span-3 sm:col-span-3 xs:gap-2 lg:gap-6 md:gap-6 sm:gap-6">
-                          <div className="inline-flex w-2/5">
-                            <select
-                              id="gene_type"
-                              value={state["type"]}
-                              onChange={(e) => selectGene(e)}
-                              placeholder="Enter your Genes"
-                              className="btn_input_height w-full p-3 border bg-white focus:outline-none border-blue-300 focus:ring focus:border-blue-300 xs:h-14 lg:h-16 xs:text-sm lg:text-xl"
-                            >
-                              <option
-                                className="xs:text-sm lg:text-xl"
-                                value="user-defined"
-                                placeholder="Enter your Genes"
-                              >
-                                
-                                {userDefinedList}
-                              </option>
-                              <option
-                                className="xs:text-sm lg:text-xl"
-                                value="major-genes"
-                              >
-                                Cancer major genes (28 genes)
-                              </option>
-                              <option
-                                className="xs:text-sm lg:text-xl"
-                                value="brst-major-genes"
-                              >
-                                Breast cancer major genes (20 genes)
-                              </option>
-                              <option
-                                className="xs:text-sm lg:text-xl"
-                                value="hrd-genes"
-                              >
-                                HRD genes (15 genes)
-                              </option>
-                              <option
-                                className="xs:text-sm lg:text-xl"
-                                value="hrd-asso-brst"
-                              >
-                                HRD association breast (26 genes)
-                              </option>
-                              <option
-                                className="xs:text-sm lg:text-xl"
-                                value="tcell-exha-genes"
-                              >
-                                Tcell exhausted genes (8 genes)
-                              </option>
-                              <option
-                                className="xs:text-sm lg:text-xl"
-                                value="cdc-brst-genes"
-                              >
-                                CDC Phenopedia breast cancer associated genes (18 genes)
-                              </option>
-                              <option
-                                className="xs:text-sm lg:text-xl"
-                                value="cell-cycle-ctrl"
-                              >
-                                General: Cell Cycle Control (34 genes)
-                              </option>
-                              <option
-                                className="xs:text-sm lg:text-xl"
-                                value="p53-signal"
-                              >
-                                General: p53 signaling (6 genes)
-                              </option>
-                              <option
-                                className="xs:text-sm lg:text-xl"
-                                value="notch-signal"
-                              >
-                                General: Notch signaling (55 genes)
-                              </option>
-                              <option
-                                className="xs:text-sm lg:text-xl"
-                                value="dna-damage-resp"
-                              >
-                                General: DNA Damage Response (12 genes)
-                              </option>
-                              <option
-                                className="xs:text-sm lg:text-xl"
-                                value="other-grow-prol-signal"
-                              >
-                                General: Other growth/proliferation signaling (11 genes)
-                              </option>
-                              <option
-                                className="xs:text-sm lg:text-xl"
-                                value="survival-cell-signal"
-                              >
-                                General: Survival/cell death regulation signaling (23
-                                genes)
-                              </option>
-                              <option
-                                className="xs:text-sm lg:text-xl"
-                                value="telo-mere-main"
-                              >
-                                General: Telomere maintenance (2 genes)
-                              </option>
-                              <option
-                                className="xs:text-sm lg:text-xl"
-                                value="rtk-signal-family"
-                              >
-                                General: RTK signaling family (16 genes)
-                              </option>
-                              <option
-                                className="xs:text-sm lg:text-xl"
-                                value="pi3k-akt-mtor-signal"
-                              >
-                                General: PI3K-AKT-mTOR signaling (17 genes)
-                              </option>
-                              <option
-                                className="xs:text-sm lg:text-xl"
-                                value="ras-raf-signal"
-                              >
-                                General: Ras-Raf-MEK-Erk/JNK signaling (26 genes)
-                              </option>
-                              <option
-                                className="xs:text-sm lg:text-xl"
-                                value="regu-ribo-cell"
-                              >
-                                General: Regulation of ribosomal protein synthesis and
-                                cell growth (9 genes)
-                              </option>
-                              <option
-                                className="xs:text-sm lg:text-xl"
-                                value="angi-gene"
-                              >
-                                General: Angiogenesis (6 genes)
-                              </option>
-                              <option
-                                className="xs:text-sm lg:text-xl"
-                                value="fola-trans"
-                              >
-                                General: Folate transport (5 genes)
-                              </option>
-                              <option
-                                className="xs:text-sm lg:text-xl"
-                                value="inva-meta"
-                              >
-                                General: Invasion and metastasis (27 genes)
-                              </option>
-                              <option
-                                className="xs:text-sm lg:text-xl"
-                                value="tgf-beta-path"
-                              >
-                                General: TGF-β Pathway (43 genes)
-                              </option>
-                            </select>
+      <div>
+        <HeaderComponent
+          title="회원가입"
+          breadCrumbs={{
+            key1: 'Home',
+            key2: 'Visualise My Data',
+            key3: 'Single Data Visulisation'
+          }}
+          type="single"
+        />
+        <article id="subContents" className="subContents">
+          <div className="contentsTitle">
+            <h3>
+              <font>
+                <font >Single Data </font>
+                <span className="colorSecondary">
+                  <font >Visualization</font>
+                </span>
+              </font>
+            </h3>
+          </div>
+          <div className="section ptn">
+            <div className="auto">
+              {
+                gridData && !tabName  && 
+                <div className='dataList singleDataViz'>
+                  <ul >
+                    {gridData.map((item, index) => (
+                      
+                      <li key={index} >
+                        <div className="labelBox">
+                          <div className="labels01">
+                            <h3 style={{textTransform:'capitalize'}}>
+                              {item.title}
+                            </h3>
                           </div>
-                          <div className="inline-flex w-2/5">
-                            <input
-                              type="text"
-                              id="genes"
-                              className="btn_input_height w-full p-3 xs:text-sm lg:text-xl border focus:outline-none border-blue-300 focus:ring focus:border-blue-300 xs:h-14 lg:h-16"
-                              name="genes"
-                              placeholder={enterGenes}
-                              value = {state['genes']}
-                              onChange={(e) => {
-                                let abc = document.getElementById("gene_type").value;
-                                if (abc === "user-defined") {
-                                  let usergenes = document
-                                    .getElementById("genes")
-                                    .value.split(" ")
-                                    .filter((element) => element);
-                                  let UserGenes = [];
-                                  usergenes.forEach((element) => {
-                                    UserGenes.push(element.toUpperCase());
-                                  });
-                                  setState((prevState) => ({
-                                    ...prevState,
-                                    genes: UserGenes,
-                                    type: "user-defined",
-                                  }));
-                                }
-                              }}
-                            />
+                          <div className="labels02" style={{columnGap:"10px"}}>
+                            <Link  to={item.link}>
+                              <span class="label01">
+                                <font>
+                                  <font>Download</font>
+                                </font>
+                              </span>
+                            </Link>
+                            <Link  to={item.link}>
+                              <span class="label01">
+                                <font>
+                                  <font>Run Analysis</font>
+                                </font>
+                              </span>
+                            </Link>
                           </div>
-                          <div className="inline-flex w-1/5">
-                            <button
-                              className="w-full text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md btn_input_height bg-main-blue hover:bg-main-blue mb-3 lg:w-full text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded xs:h-14 lg:h-16"
-                              onClick={submitFilter}
-                            >
-                              <FormattedMessage id="Filter" defaultMessage="Filter" />
-                            </button>
-                          </div>
+                          
                         </div>
-                      </div>
-                    </div>
-  
-                      </Popover.Panel>
-                    </Transition>
-                  </div>
-                </>
-              )
-            }}
-          </Popover>
-          </div>
-          <div className="ml-auto md:ml-auto">
-            <div className="flex justify-end p-5 ">
-                    <div className=" inline-flex  ">
-                      {screenCapture === false && (
-                        <button
-                          className="text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md btn_input_height bg-main-blue hover:bg-main-blue mb-3 lg:w-full text-white  font-bold py-2 px-10 border border-blue-700 rounded xs:h-14 lg:h-16"
-                          onClick={() => setScreenCaptureFunction(true)}
-                        >
-                          <FormattedMessage
-                            id="Capture_screen"
-                            defaultMessage="capture screenshot"
-                          />
-                        </button>
-                      )}
-                      {screenCapture === true && (
-                        <button
-                          className="text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md btn_input_height bg-main-blue hover:bg-main-blue mb-3 lg:w-full text-white  font-bold py-2 px-4 border border-blue-700 rounded xs:h-14 lg:h-16"
-                          disabled={true}
-                        >
-                          Loading...
-                        </button>
-                      )}
-                      {screenCapture === true && (
-                        <>
-                          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none m-auto">
-                            <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                              <div
-                                className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none h-56"
-                                style={{ width: "400px" }}
-                              >
-                                <div
-                                  className="relative p-6 flex-auto my-auto"
-                                  style={{ height: "100%" }}
-                                >
-                                  <p className="my-4 text-slate-500 text-lg leading-relaxed py-12">
-                                    Image is downloading.....
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-                        </>
-                      )}
-                      {screenCaptureConfirmation && (
-                        <ConfirmDownload
-                          screenCaptureFunction={setToFalseAfterScreenCapture}
-                          hideModal={() =>
-                            setScreenCaptureConfirmation(false)
-                          }
-                        />
-                      )}
-                    </div>
-            </div>
-          </div> 
-          </div>
-            
-            {/* List of Tabs and Chart */}
-            {/* style={{height:"60vh"}} */}
-            <div className="gap-6">
-                
-                <section>
-                {
-                  gridData && !tabName  && <div className={containerStyles}>
-                    <div className={`${gridStyles} grid-rows-${numRows}`} style={{ gridTemplateRows }}>
-                      {gridData.map((item, index) => (
-                        <div key={index} className={cardStyles}>
-                          <div className="flex justify-between">
-                            <h6 className={titleStyles}>{item.title}</h6>
-                            <div className="pt-2 pr-2 flex gap-4 m-4">
-                              <div className={buttonStyles}>
-                                <Link  to={item.link}>Download</Link>
-                              </div>
-                              <div className={buttonStyles}>
-                                <Link  to={item.link}>Run Analysis</Link>
-                              </div>
-                            </div>
-                          </div>
-                          <div>
-                            <img src={item.image} alt="img" className={imageStyles} />
-                          </div>
+                        <div>
+                          <img src={item.image} alt="img" className={imageStyles} />
                         </div>
-                      ))}
-                    </div>
-                  </div>
-                }
-                </section> 
-                
-  
-                {/* Chart */}
-                <section>
-                  <div
-                    id="tab-contents"
-                    className="block text-center"
-                    ref={elementRef}>
-                    {  tabName && tabName!=='home' && boolChartState && <div>{chart["viz"]}</div>}
-                    {  tabName && tabName!=='home' && !boolChartState &&  (
-                      <div className="p-1 text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">Please select Genes</div>
-                    )}
-                  </div>
-                </section>
-                
-  
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              }
             </div>
-  
           </div>
-        </div>
+        </article>
       </div>
       
     );

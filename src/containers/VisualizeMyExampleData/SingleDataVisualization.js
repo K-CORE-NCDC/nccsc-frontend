@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import MultiDataVisualization from "./MultiDataVisualization";
 import { FormattedMessage } from "react-intl";
 import correct_icon from '../../assets/images/icons8-correct-48.png'
+import { OtherTools } from "./OtherTools";
 
 
 export const SingleDataVisualization = () => {
@@ -29,48 +30,70 @@ export const SingleDataVisualization = () => {
                 defaultMessage="Multi Data Visualization Guidelines"
               /></button>
             </li>
-            <li className={activeTab === '4' ? 'on' : ''}>
-              <button type="button" onClick={() => setActiveTab('4')}><FormattedMessage
+            <li className={activeTab === '3' ? 'on' : ''}>
+              <button type="button" onClick={() => setActiveTab('3')}><FormattedMessage
                 id="introduction_p4"
                 defaultMessage="Other Tools Guidelines"
               /></button>
             </li>
           </ul>
         </div>
-        {activeTab === '1' && 
+        {activeTab === '1' &&
           <>
             <div className="tabContents " >
               <div className="dataSearchWrap">
                 <div className="popularBox">
-                  <p className="tit h5">Contents</p>
-                  <div style={{ width: '100%', display: 'flex' }}>
-                    <ul className="" style={{ width: '50%', borderRight: '1px solid #ddd', paddingRight: '10px' }}>
-                      <li className="" tabIndex="0" style={{}}>
+                  <div className="subHeader">
+                    <p className="tit h5">Contents</p>
+                    <div className="tit contentBtns">
+                      <button className="btn">
+                        Example Page
+                      </button>
+                      <button className="btn">
+                        <FormattedMessage id="DownloadManual" defaultMessage='Download Manual' />
+
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="contentBox">
+                    <ul className="contentBox_left" >
+                      <li className="" tabIndex="0" >
                         <p> <b>Variant Summary : </b> &nbsp;
-                          visualize summary information of major variant types</p>
+                          <FormattedMessage id="Example_signle_variantSummary" defaultMessage='visualize summary information of major variant types' />
+                        </p>
                       </li>
-                      <li className="" tabIndex="-1" style={{}}>
-                        <p> <b>Lollipop Plot :</b> &nbsp; visualize mutation or phosphorylation of certain gene on a sequence</p>
+                      <li tabIndex="-1" >
+                        <p> <b>Lollipop Plot :</b> &nbsp;
+                          <FormattedMessage id="Example_signle_Lollipop" defaultMessage=' visualize mutation or phosphorylation of certain gene on a sequence' />
+                        </p>
                       </li>
-                      <li className="" tabIndex="-1" style={{}}>
-                        <p><b>CNV Plot :</b>  &nbsp; visualize copy number variation data on integrated genome viewer</p>
+                      <li className="" tabIndex="-1" >
+                        <p><b>CNV Plot :</b>  &nbsp;
+                          <FormattedMessage id="Example_signle_CNV" defaultMessage='visualize copy number variation data on integrated genome viewer' />
+                        </p>
                       </li>
-                      <li className="" tabIndex="-1" style={{}}>
-                        <p> <b>Heatmap :</b> &nbsp; represent genomic/proteomic data in the form of a map or diagram in which data values are represented as colors(heats)</p>
+                      <li className="" tabIndex="-1" >
+                        <p> <b>Heatmap :</b> &nbsp;
+                          <FormattedMessage id="Example_signle_heatMap" defaultMessage='represent genomic/proteomic data in the form of a map or diagram in which data values are represented as colors(heats)' />
+                        </p>
                       </li>
                     </ul>
-                    <ul style={{ width: '50%', paddingLeft: '10px' }}>
+                    <ul className="contentBox_right">
                       <li className="" tabIndex="-1" style={{}}>
-
-                        <p> <b>Circos plot :</b> &nbsp; visualize one of the seven omics data as a circular layer on a circular chromosome map</p>
+                        <p> <b>Circos plot :</b> &nbsp;
+                          <FormattedMessage id="Example_signle_circos" defaultMessage=' visualize one of the seven omics data as a circular layer on a circular chromosome map' />
+                        </p>
                       </li>
                       <li className="" tabIndex="-1" style={{}}>
-
-                        <p><b>Box Plot (Tumor vs Normal):</b> &nbsp; visualize the genetic information statistics of the selected gene(s) in the form of boxes</p>
+                        <p><b>Box Plot (Tumor vs Normal):</b> &nbsp;
+                          <FormattedMessage id="Example_signle_box" defaultMessage='visualize the genetic information statistics of the selected gene(s) in the form of boxes' />
+                        </p>
                       </li>
                       <li className="" tabIndex="-1" style={{}}>
-
-                        <p> <b>Survival Plot :</b> &nbsp; visualize the recurrence/survival probability of patients according to clinical variable conditions</p>
+                        <p> <b>Survival Plot :</b> &nbsp;
+                          <FormattedMessage id="Example_signle_sirvival" defaultMessage='visualize the recurrence/survival probability of patients according to clinical variable conditions' />
+                        </p>
                       </li>
                     </ul>
                   </div>
@@ -90,7 +113,7 @@ export const SingleDataVisualization = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr >
                     <td>Clinical Information</td>
                     <td></td>
                     <td ></td>
@@ -176,12 +199,12 @@ export const SingleDataVisualization = () => {
             </div>
           </>
         }
-        {activeTab === '2' && 
-          <>
-            <div className="tabContents " >
-              
-            </div>
-          </>
+        {activeTab === '2' &&
+          <MultiDataVisualization />
+        }
+
+        {activeTab === '3' &&
+          <OtherTools />
         }
       </div>
     </div>

@@ -3374,3 +3374,36 @@ big {
   border-top: none !important;
 
 }
+
+.popularBox .contentBox{
+  display: flex;
+}
+
+.popularBox .contentBox .contentBox_left{
+ width: 50%;
+ border-right: '1px solid #ddd';
+ padding-right :'10px';
+}
+
+.popularBox .contentBox .contentBox_right{
+ width: 50%;
+ padding-left :'10px';
+}
+
+.popularBox .contentBox ul li p ::after{   
+  content: "";
+ position: absolute;
+ top: 8px;
+ left: 14px;
+ width: 6px;
+ height: 6px;
+ background-color: #757575;
+ border-radius: 50%;
+}
+.popularBox .contentBox ul li p{   
+  position: relative;
+  padding-left: 32px;
+  letter-spacing: -0.04rem;
+  line-height: 130%;
+  color: #616161;
+}

@@ -12,14 +12,14 @@ export default function DataVisualization() {
   const fileUploadCallBack = (d_) => {
   }
   
-  useEffect(() => {
-    if(getCookie('is_login')){
-      setComponentNumber(0)
-    }
-    else{
-      history.push("/login")
-    }
-  }, [history])
+  // useEffect(() => {
+  //   if(getCookie('is_login')){
+  //     setComponentNumber(0)
+  //   }
+  //   else{
+  //     history.push("/login")
+  //   }
+  // }, [history])
 
 
   const updateComponentNumber = (num) =>{
