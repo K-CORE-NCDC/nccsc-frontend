@@ -13,7 +13,13 @@ export default function Index() {
   const updateComponentNumber = (num) =>{
     setComponentNumber(num)
   }
-  
+  const breadCrumbs = {
+    '/singledata-upload/': [
+        { id: 'FindID', defaultMessage: 'Home', to: '/findid/' },
+        { id: 'SubPage1', defaultMessage: 'Visualise My Data', to: '/findid/' },
+        { id: 'SubPage2', defaultMessage: 'Single Data Visualisation', to: '/findid/' },
+    ],
+  };
   return (
     <div>
       

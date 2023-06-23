@@ -37,9 +37,10 @@ function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
   const renderBreadcrumbs = () => {
     if (breadCrumbs) {
       const items = breadCrumbs;
+
       return (
         <ul>
-          {items.map((item, index) => (
+          {items.length>0 && items.map((item, index) => (
             <li key={index} className={routeName === item.to ? 'on' : ''}>
               <Link to={item.to}>
                 <FormattedMessage id={item.id} defaultMessage={item.defaultMessage} />

@@ -94,7 +94,7 @@ const LoginComponent = () => {
           loginSuccess();
         }
         else if('data' in result && 'status' in result.data) {
-          findIdFailure(result.data.status);
+          loginFailure(result.data.status);
         }
       }).catch((error) => {
         loginFailure('Login Failed, check Credentials');
