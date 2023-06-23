@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, {  useState } from "react";
 import { Link } from "react-router-dom";
-import { getCookie } from "../getCookie";
 import { useHistory } from "react-router-dom";
-import { login, SetCookie } from "../../actions/api_actions";
+import { login } from "../../actions/api_actions";
 import HeaderComponent from "../Common/HeaderComponent/HeaderComponent";
 import NCCLogo from "../../styles/images/logo02.svg"
 import loginIcon1 from "../../styles/images/loginForm-icon01.svg"
 import loginIcon2 from "../../styles/images/loginForm-icon02.svg"
+import Swal from 'sweetalert2'
 
 const LoginComponent = () => {
   const [userFormData, setUserFormData] = useState({
@@ -15,9 +14,9 @@ const LoginComponent = () => {
     password: "",
   });
   let history = useHistory();
-  const dispatch = useDispatch();
-  const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState([]);
+  const [isError, setIsError] = useState(false)
+  const title = { id: "Login", defaultMessage: "Login" }
 
   const updateUserNamePassword = (e) => {
     setUserFormData((previousState) => ({
@@ -26,13 +25,30 @@ const LoginComponent = () => {
     }));
   };
 
+  const loginSuccess = () => {
+
+    Swal.fire({
+      title: 'Success',
+      text: "Login Success",
+      icon: 'success',
+      confirmButtonColor: '#003177',
+      confirmButtonText: 'Ok',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.value) {
+        history.push('/userdata')
+      }
+    })
+
+  }
+
   const loginFailure = () => {
-    setHasError(true);
+    setIsError(true)
     setErrorMessage([
-      <p key="error" className="LoginErrorText">
+      <p key="error" className="ErrorText">
         Invalid username/Password
       </p>,
-      <h1 className="LoginErrorText" key="CountToEnterCredentials">
+      <h1 className="ErrorText" key="CountToEnterCredentials">
         {" "}
         If an error in consecutive password input (5 times) occurs, the account is locked.
       </h1>,
@@ -40,59 +56,63 @@ const LoginComponent = () => {
   };
 
 
-  useEffect(() => {
-
-    setHasError(false);
-    if (getCookie('is_login')) {
-      history.push('/userdata')
-    }
-    else if (getCookie('is_login') === null) {
-    }
-    else {
-      loginFailure();
-    }
-  }, [getCookie('is_login')])
+ 
 
   const formSubmitAction = (e) => {
+    setIsError(false)
+
     if (userFormData && userFormData.userId === '') {
-      setHasError(true);
+      setIsError(true)
       setErrorMessage([
-        <p key="error" className="LoginErrorText">
+        <p key="error" className="ErrorText">
           User ID cant be Empty
         </p>,
-        <h1 className="LoginErrorText" key="CountToEnterCredentials">
+        <h1 className="ErrorText" key="CountToEnterCredentials">
           {" "}
           If an error in consecutive password input (5 times) occurs, the account is locked.
         </h1>,
       ]);
     }
     else if (userFormData && userFormData.password === '') {
-      setHasError(true);
+      setIsError(true)
       setErrorMessage([
-        <p key="error" className="LoginErrorText">
+        <p key="error" className="ErrorText">
           Password cant be Empty
         </p>,
-        <h1 className="LoginErrorText" key="CountToEnterCredentials">
+        <h1 className="ErrorText" key="CountToEnterCredentials">
           {" "}
           If an error in consecutive password input (5 times) occurs, the account is locked.
         </h1>,
       ]);
     }
     else {
-      dispatch(login("POST", userFormData));
-      setHasError(false);
+      setIsError(false)
+      let data = login("POST", userFormData)
+      data.then((result) => {
+        console.log(result);
+        if ('data' in result && 'status' in result.data && result.data.status === "Login Successfull") {
+          loginSuccess();
+        }
+        else if('data' in result && 'status' in result.data) {
+          findIdFailure(result.data.status);
+        }
+      }).catch((error) => {
+        loginFailure('Login Failed, check Credentials');
+      });
     }
   };
+
+  const breadCrumbs = {
+    '/login/': [
+        { id: 'Login', defaultMessage: 'Login', to: '/login/' }
+    ],
+};
 
   return (
     <div>
       <HeaderComponent
-        title="회원가입"
-        breadCrumbs={{
-          key1: 'value1',
-          key2: 'value2',
-          key3: 'value3'
-        }}
+        title={title}
+        breadCrumbs={breadCrumbs['/login/']}
         type="single"
       />
       <article id="subContents" className="subContents">
@@ -135,19 +155,19 @@ const LoginComponent = () => {
               <form className="loginForm" id="frm" method="post">
 
                 {/*  error messages */}
-                {errorMessage && (
-                  <div className="LoginErrorText">
+                {isError && errorMessage && (
+                  <div className="ErrorText">
                     {errorMessage}
                   </div>
                 )}
                 {/* Input Username */}
                 <div className="inputText">
-                  <input className={hasError == true ? 'LoginErrorInput' : ""} type="text" value={userFormData.userId} onChange={updateUserNamePassword} id="userId" name="userId" placeholder="Please enter your ID." autoComplete="off" />
+                  <input className={isError == true ? 'ErrorInput' : ""} type="text" value={userFormData.userId} onChange={updateUserNamePassword} id="userId" name="userId" placeholder="Please enter your ID." autoComplete="off" />
                 </div>
 
                 {/* Input Password */}
                 <div className="inputText">
-                  <input className={hasError ? 'LoginErrorInput' : ""} type="password" id="password" name="password" placeholder="Please enter a password." value={userFormData.password} onChange={updateUserNamePassword} />
+                  <input className={isError ? 'ErrorInput' : ""} type="password" id="password" name="password" placeholder="Please enter a password." value={userFormData.password} onChange={updateUserNamePassword} />
                 </div>
 
 

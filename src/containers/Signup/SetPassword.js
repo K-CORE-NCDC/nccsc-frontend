@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
 import {
-  useParams
+  useParams,
+  useHistory
 } from "react-router-dom";
 
 import {
   changePassword,
   clearIDPasswordResetPASSWORD
 } from "../../actions/api_actions";
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 import { useSelector, useDispatch } from "react-redux";
 
 function SetPassword() {
@@ -16,6 +17,7 @@ function SetPassword() {
   const [visibility, setvisibility] = useState(false);
   const [errorClass, setErrorClass] = useState("");
   const dispatch = useDispatch();
+  let history = useHistory();
   const { token } = useParams();
   const change_password_status = useSelector((data) => data.homeReducer.changePasswordStatus);
   let changePasswordfunction = () => {
@@ -39,15 +41,19 @@ function SetPassword() {
   useEffect(() => {
     change_password_status && setstatus(change_password_status.status)
     if (status === "Password Updated Successfully") {
-      swal("Password Updated Successfully.", {
-        closeOnClickOutside: false
-      })
-        .then((value) => {
-          setTimeout(() => {
+        Swal.fire({
+          title: 'Success',
+          text: "Password Updated Successfully.",
+          icon: 'success',
+          confirmButtonColor: '#003177',
+          confirmButtonText: 'Ok',
+          allowOutsideClick: false
+        }).then((result) => {
+          if (result.value) {
             dispatch(clearIDPasswordResetPASSWORD());
-            window.location.href = '/login/'
-          }, 2000)
-        });
+            history.push('/login')
+          }
+        })
     }
   }, [change_password_status, status])
 

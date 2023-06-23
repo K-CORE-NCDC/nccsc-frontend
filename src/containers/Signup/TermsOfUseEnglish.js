@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import swal from 'sweetalert';
-
+import Swal from 'sweetalert2';
+import {
+    useHistory
+  } from "react-router-dom";
 const TermsOfUseEnglish = ({ changestep }) => {
     const [firstAgree, setFirstAgree] = useState(false);
     const [secondAgree, setSecondAgree] = useState(false);
@@ -9,15 +11,16 @@ const TermsOfUseEnglish = ({ changestep }) => {
         if (firstAgree && secondAgree) {
           changestep(1);
         } else {
-          swal("Please Accept Both Membership terms and Privacy Act",{
-            closeOnClickOutside: false,
-            buttons:{
-          ok:{
-            text: "Ok",
-            className:"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 w-full rounded",
-          }
+          Swal.fire({
+            title: 'Warning',
+            text: "Please Accept Both Membership terms and Privacy Act",
+            icon: 'warning',
+            confirmButtonColor: '#003177',
+            confirmButtonText: 'Ok',
+            allowOutsideClick: false
+          }).then((result) => {
+            if (result.value) {
             }
-            
           })
       }
     }

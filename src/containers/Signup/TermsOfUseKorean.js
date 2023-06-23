@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import swal from 'sweetalert';
-
+import Swal from 'sweetalert2';
 const TermsOfUseKorean = ({ changestep }) => {
   const [firstAgree, setFirstAgree] = useState(false);
   const [secondAgree, setSecondAgree] = useState(false);
@@ -8,15 +7,16 @@ const TermsOfUseKorean = ({ changestep }) => {
     if (firstAgree && secondAgree) {
       changestep(1);
     } else {
-      swal("회원 약관과 개인 정보 보호법에 모두 동의하십시오.",{
-        closeOnClickOutside: false,
-        buttons:{
-      ok:{
-        text: "Ok",
-        className:"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 w-full rounded",
-      }
+      Swal.fire({
+        title: 'Warning',
+        text: "회원 약관과 개인 정보 보호법에 모두 동의하십시오.",
+        icon: 'warning',
+        confirmButtonColor: '#003177',
+        confirmButtonText: 'Ok',
+        allowOutsideClick: false
+      }).then((result) => {
+        if (result.value) {
         }
-        
       })
   }
 }

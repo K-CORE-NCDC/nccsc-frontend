@@ -13,8 +13,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
 import { Context } from "../../wrapper";
-import swal from 'sweetalert';
-
+import Swal from 'sweetalert2';
 
 const NumRegex = new RegExp("^[0-9]*$");
 const AlphaNumRegexwithSpecialCharsExceptDot = new RegExp("^[ A-Za-z0-9_/#&+-]*$");
@@ -577,15 +576,17 @@ const MemberShip = ({ changestep }) => {
     }
     else if (registration_status && otp_verification_status.message === 'User already exists') {
 
-      swal("User Already Exists", {
-        closeOnClickOutside: false
+      Swal.fire({
+        title: 'Error',
+        text: "User Already Exist",
+        icon: 'error',
+        confirmButtonColor: '#003177',
+        confirmButtonText: 'Ok',
+        allowOutsideClick: false
+      }).then((result) => {
+        if (result.value) {
+        }
       })
-        .then(() => {
-          setTimeout(() => {
-
-            // window.location.href = '/login/'
-          }, 2000)
-        });
     }
   }, [registration_status]);
 

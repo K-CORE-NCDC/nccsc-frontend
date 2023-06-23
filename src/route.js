@@ -32,8 +32,8 @@ const Signup = React.lazy(() => import('./containers/Signup/Signup'));
 const TermsandConditions = React.lazy(() => import('./containers/TermsAndPolicy/TermsAndConditionsIndex'));
 const PrivacyPolicy = React.lazy(() => import('./containers/TermsAndPolicy/PrivacyActIndex'));
 const OldKoreanprivacyact = React.lazy(() => import('./containers/TermsAndPolicy/OldKoreanPrivacyAct'));
-const FindID = React.lazy(() => import('./containers/Login/FindID'));
-const FindPassword = React.lazy(() => import('./containers/Login/FindPassword'));
+
+const FindIndex = React.lazy(() => import('./containers/Login/FindIndex'));
 const ResetPassword = React.lazy(() => import('./containers/Login/ResetPassword'));
 const SetPassword = React.lazy(() => import('./containers/Signup/SetPassword'));
 const FileProjectDataTable = React.lazy(() => import('./containers/UserDataVisualization/Components/MainComponents/FileProjectDataTable'));
@@ -285,15 +285,15 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
     childname: <FormattedMessage id="FindID" defaultMessage="Find ID" />,
-    component: FindID,
+    component: FindIndex,
   },
   {
     path: '/findpassword/',
     exact: true,
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
-    childname: <FormattedMessage id="ResetPassword" defaultMessage="ResetPassword" />,
-    component: FindPassword,
+    childname: <FormattedMessage id="FindPassword" defaultMessage="Find Password" />,
+    component: FindIndex,
   },
   {
     path: '/resetpassword/:token',

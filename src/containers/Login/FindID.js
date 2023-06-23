@@ -1,104 +1,131 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import {
   findID,
-  clearIDPasswordResetPASSWORD
 } from "../../actions/api_actions";
-import { useSelector, useDispatch } from "react-redux";
-import swal from 'sweetalert';
-
+import nameIcon from "../../styles/images/icon-text.svg"
+import { useHistory } from "react-router-dom";
+import Swal from 'sweetalert2'
 function FindID() {
-  const [status, setstatus] = useState("")
-  const [errorClass, setErrorClass] = useState("");
-  const dispatch = useDispatch();
-  const find_id = useSelector((data) => data.homeReducer.findID);
-  let findIDfunction = () => {
 
-    let email_id_is = document.getElementById('FindID').value
-    if (email_id_is === "") {
-      setErrorClass("border-red-500");
-      setstatus('Please Enter Your Email');
+  const EmailId = useRef(null);
+  const [isError, setIsError] = useState(false)
+  const [errorMessage, setErrorMessage] = useState([]);
+  let history = useHistory();
+
+
+  const findIdSuccess = () => {
+
+    Swal.fire({
+      title: 'Success',
+      text: "ID Sent to Your Email",
+      icon: 'success',
+      confirmButtonColor: '#003177',
+      confirmButtonText: 'Ok',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.value) {
+        history.push('/login')
+      }
+    })
+
+  }
+
+  const findIdFailure = (status) => {
+    setErrorMessage([
+      <p key="error" className="ErrorText">
+        {status}
+      </p>
+    ]);
+    setIsError(true)
+  }
+
+  let findIdfunction = () => {
+    let email_id = EmailId.current.value
+    setIsError(false)
+
+    if (email_id === "") {
+      setErrorMessage([
+        <p key="error" className="ErrorText">
+          Email ID cant be Empty
+        </p>
+      ]);
+      setIsError(true)
     }
     else {
-      setstatus("")
-      dispatch(findID("POST", { 'email_id': email_id_is }));
-    }
-  
+      setIsError(false)
+      let data = findID("POST", { 'email_id': email_id })
+      data.then((result) => {
+        console.log(result);
+        if ('data' in result && 'status' in result.data && result.data.status === "ID Sent to Your Email") {
+          findIdSuccess();
+        }
+        else if('data' in result && 'status' in result.data) {
+          findIdFailure(result.data.status);
+        }
+      }).catch((error) => {
+        findIdFailure('Something went wrong');
+      });
+    };
+
   }
 
 
-
-  useEffect(() => {
-    if (find_id && find_id.status === "ID Sent to Your Email") {
-      swal("ID is sent to your Email ID.",{
-        closeOnClickOutside: false
-      })
-        .then((value) => {
-          setTimeout(()=>{
-            window.location.href = '/login/'
-          },2000)
-        });
-  
-    }
-
-  }, [find_id, status])
-
-  useEffect(() => {
-    return () => {
-      dispatch(clearIDPasswordResetPASSWORD());
-    };
-  }, []);
-
-
-
+  let cancelfunction = () => {
+    setIsError(false)
+    EmailId.current.value = ""
+  }
 
   return (
     <div>
-      <section className="mt-10 flex flex-col items-center justify-center">
-        <div>
-          <span className="text-7xl font-bold text-gray-800">Find ID</span>
+        <div className="contentsTitle">
+          <div className="auto">
+            <h3 className="colorSecondary">
+              <span className="colorPrimary">Find</span>
+              ID
+            </h3>
+          </div>
         </div>
-        <div className="my-14">
-          <h1 className="font-bold text-3xl text-gray-800">
-            Please Enter your Email ID to Find your ID.
-          </h1>
-        </div>
+        <div className="section ptn">
+          <div className="auto">
+            <div className="pwSearch tac">
+              <p className="h5">
+                Find your ID.<br />
+                Please enter the information below.
+              </p>
+              <form className="formBox" id="frm" method="post" name="frm">
+                {isError && errorMessage && (
+                  <div className="ErrorText">
+                    {errorMessage}
+                  </div>
+                )}
 
-        <div className="my-10">
-          <div className="grid grid-cols-3 border-b-2 border-gray-600 pt-12 pb-12">
-            <div className="pt-6 pl-48 col-span-1 mr-8">
-              <h1 className="font-bold">Email ID</h1>
+                <dl>
+                  <dt>
+                    <img src={nameIcon} alt="" />
+                    Email Id
+                  </dt>
+                  <dd>
+                    <div className="inputText">
+                      <input ref={EmailId} type="text" className="w100" id="Email" name="Email" placeholder="Please enter your Email Id." autoComplete="off" />
+                    </div>
+                  </dd>
+                </dl>
+              </form>
             </div>
-            <div>
-              <div className="mb-4 pr-45 col-span-2">
-                <input
-                  type="text"
-                  id="FindID"
-                  name="findid"
-                  className={`shadow appearance-none border rounded-lg w-full py-8 px-5 text-gray-700 leading-tight focus:border-blue-500  w-28 ${errorClass}`}
-                  placeholder="Please Enter your email id"
-                />
+            <div className="bottomBtns">
+              <div className="flex">
+                <button onClick={cancelfunction} className="btn btnGray bdBtn">
+                  cancellation
+                </button>
+                <button onClick={findIdfunction} className="btn btnPrimary" >
+                  submit
+                </button>
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-3 pt-12">
-            <div className="w-full col-span-3">
-              {/* error */}
-              {status && <div className='font-bold text-3xl text-red-500 text-center py-4 text-center'>{status}</div>}
-              <button
-                onClick={findIDfunction}
-                className="bg-blue-500 hover:bg-blue-700 text-white h-28 font-bold py-2 px-4 border border-blue-700 w-full rounded"
-
-              >
-
-                <span>Submit</span>
-              </button>
-            </div>
-          </div>
         </div>
-      </section>
-
-
     </div>
+
   )
 }
 

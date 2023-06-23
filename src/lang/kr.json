@@ -189,6 +189,7 @@
     "ResetPassword": "암호를 재설정",
     "SetPassword": "암호를 설정하세요",
     "ChangePassword": "비밀번호 변경",
+    "FindPassword":"비밀번호 찾기",
     "IDIncludeCapitalAndLower": "영문(대문자, 소문자) 포함하여 입력해주세요",
     "IDIncludeNumber": "숫자를 포함하여 입력해주세요 ",
     "IDLength": "6~10자로 입력해주세요",
