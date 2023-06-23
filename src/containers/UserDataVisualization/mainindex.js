@@ -6,11 +6,11 @@ import { useHistory } from "react-router-dom";
 
 const MainIndex = () => {
   let history = useHistory();
-  useEffect(() => {
-    if(getCookie('is_login')=== null || getCookie('is_login') !== 'True'){
-      history.push("/login")
-    }
-  }, [history])
+  // useEffect(() => {
+  //   if(getCookie('is_login')=== null || getCookie('is_login') !== 'True'){
+  //     history.push("/login")
+  //   }
+  // }, [history])
   return (
     <div>
       { getCookie('is_login') &&

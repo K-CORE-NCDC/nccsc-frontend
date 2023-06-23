@@ -63,23 +63,23 @@
   .dataSearchWrap {
     flex-direction: column;
   }
-  .dataSearchWrap .popularBox {
+  /* .dataSearchWrap .popularBox {
     width: 100%;
     display: flex;
     align-items: center;
     padding: 8px 40px;
-  }
-  .dataSearchWrap .popularBox .tit {
+  } */
+  /* .dataSearchWrap .popularBox .tit {
     width: 191px;
     padding-top: 0;
     padding-bottom: 0;
     margin-bottom: 0;
     border-bottom: 0;
     margin-right: 24px;
-  }
+  } */
   .dataSearchWrap .popularBox ul {
     width: calc(100% - 215px);
-    padding: 0 45px;
+    /* padding: 0 45px; */
     position: relative;
   }
   .dataSearchWrap .popularBox ul::after {
@@ -565,16 +565,16 @@
     margin: auto;
     margin-bottom: 4px;
   }
-  .dataSearchWrap .popularBox {
+  /* .dataSearchWrap .popularBox {
     padding: 20px;
     flex-direction: column;
     align-items: flex-start;
-  }
-  .dataSearchWrap .popularBox .tit {
+  } */
+  /* .dataSearchWrap .popularBox .tit {
     width: 100%;
     margin-right: 0;
     margin-bottom: 16px;
-  }
+  } */
   .dataSearchWrap .popularBox .tit img {
     width: 20px;
   }

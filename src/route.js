@@ -153,6 +153,15 @@ const route = [
     childname: <FormattedMessage id="VisualizeMyData" defaultMessage="VisualizeMyData" />,
     component: Home,
   },
+  {
+    path: '/home/faq/',
+    exact: true,
+    type: 'unauth',
+    category: 'visualizeData',
+    name: <FormattedMessage id="CustomerService" defaultMessage="CustomerService" />,
+    childname: <FormattedMessage id="CustomerService" defaultMessage="CustomerService" />,
+    component: Home,
+  },
 
   {
     path: '/newmultidataproject/',

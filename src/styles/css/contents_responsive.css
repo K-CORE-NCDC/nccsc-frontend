@@ -51,6 +51,10 @@
   clear:both;
 }
 
+.tab .btn{
+  display: none;
+}
+
 @media all and (max-width: 1199px) {
   .onlyPc {
     display: none;
@@ -563,6 +567,12 @@
     display: block;
   }
   .lnb .btn .arrow {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    transition: 0.3s;
+  }
+  .tab .btn .arrow {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -1816,6 +1826,19 @@
   .mainDataStatusWrap{
     display: none;
   }
+
+  .dataSearchWrap .popularBox .contentBtns {
+    display: none;
+  }
+
+  .mainContents .section04 .tab ul{
+    flex-direction: column;
+  }
+
+  .tab ul {
+    flex-direction: column;
+  }
+
   .contentsTable{
     display: none;
   }
@@ -1837,6 +1860,9 @@
   }
   .dataView .btn .icon {
     display: none;
+  }
+  .tab ul {
+    flex-direction: column;
   }
 }
 @media all and (max-width: 1199px) {
@@ -1881,6 +1907,19 @@
     flex-direction: column;
     padding-top: 100px !important;
   } 
+
+  .mainContents .section04 .tab ul{
+    flex-direction: column;
+  }
+
+  .dataSearchWrap .popularBox .contentBtns {
+    display: none;
+  }
+
+  .tab ul {
+    flex-direction: column;
+  }
+  
   .mainDataStatusWrap{
     display: none;
   }
@@ -1889,6 +1928,18 @@
   }
   .popularBox{
     height: 100vh;
+  }
+
+  .popularBox .contentBox{
+    display: block;
+  }
+  
+  .popularBox .contentBox .contentBox_left{
+   width: 100%;
+  }
+  
+  .popularBox .contentBox .contentBox_right{
+   width: 100%;
   }
   .dataSearchWrap .popularBox ul{
     height: 100%;

@@ -3,8 +3,8 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { SingleDataVisualization } from "./SingleDataVisualization";
 import { FormattedMessage } from "react-intl";
 import arrow_icon from '../../assets/images/btnDetail-arrow-white.svg'
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
-
+// import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link } from "react-router-dom";
 export const VisualizeMyData = () => {
   const history = useHistory()
   const [analyzeButton, setAnalyzeButton] = useState({
@@ -25,11 +25,14 @@ export const VisualizeMyData = () => {
               <div className="inner">
                 <div className="icon"></div>
                 <dl>
-                  <dt className="h3">Single Data Visualization</dt>
+                  <dt className="h3">
+                    <FormattedMessage id="visualizeMyData_single" defaultMessage='Single Data Visualization' />
+                  </dt>
                 </dl>
-                <a className="btn btnDetail" href="/visualise-singledata/home/">Analyze
+                <Link className="btn btnDetail" to="/visualise-singledata/home/">
+                <FormattedMessage id="Analyze" defaultMessage='Analyze' />
                   <img src={arrow_icon} alt="" />
-                </a>
+                </Link>
               </div>
 
             </li>
@@ -40,9 +43,13 @@ export const VisualizeMyData = () => {
               <div className="inner">
                 <div className="icon"></div>
                 <dl>
-                  <dt className="h3">Multi Data Visualization</dt>
+                  <dt className="h3">
+                    <FormattedMessage id="visualizeMyData_multi" defaultMessage='Multi Data Visualization' />
+                  </dt>
                 </dl>
-                <a className="btn btnDetail" href="/">Analyze
+                <a className="btn btnDetail" href="/">
+                <FormattedMessage id="Analyze" defaultMessage='Analyze' />
+                
                   <img src={arrow_icon} alt="" />
                 </a>
               </div>
@@ -55,21 +62,18 @@ export const VisualizeMyData = () => {
               <div className="inner">
                 <div className="icon"></div>
                 <dl>
-                  <dt className="h3">Other Tools</dt>
+                  <dt className="h3">
+                    <FormattedMessage id="visualize_otherTools" defaultMessage='Other Tools' />
+                  </dt>
                 </dl>
-                <a className="btn btnDetail" href="/">Analyze
+                <a className="btn btnDetail" href="/">
+                <FormattedMessage id="Analyze" defaultMessage='Analyze' />
                   <img src={arrow_icon} alt="" />
                 </a>
               </div>
-
             </li>
-
           </ul>
-
         </div>
-
-
-
       }
 
       {analyzeButton?.singleData && !analyzeButton?.multiData && !analyzeButton?.otherTools &&

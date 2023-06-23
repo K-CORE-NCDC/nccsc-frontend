@@ -27,6 +27,7 @@ import { SiteIntro } from "../Introduction/SiteIntro";
 import { SingleDataVisualization } from "../VisualizeMyExampleData/SingleDataVisualization";
 import { VisualizeMyData } from "../VisualizeMyData/VisualizeMyData";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { Notice } from "../CustomerService/Notice";
 
 export default function Home(parentProps) {
   const params = useParams()
@@ -147,8 +148,8 @@ export default function Home(parentProps) {
           <VisualizeMyData />
         
         </SwiperSlide>
-        <SwiperSlide className="section section03">
-              <h3>gygy</h3>
+        <SwiperSlide className="section section04">
+            <Notice/>
         </SwiperSlide>
       </SwiperComponent>
     </>

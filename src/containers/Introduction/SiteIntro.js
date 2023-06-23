@@ -14,44 +14,65 @@ import "aos/dist/aos.css"
 export const SiteIntro = ({ height, innerHeight }) => {
   const [activeTab, setActiveTab] = useState('1')
   const _height = innerHeight - height
+  const [addingStyle, setAddingStyle] = useState(false)
+  const [selectedOption, setSelectedOption] = useState('')
 
 
   return (
     <div className="auto">
       <div className="mainContentsBox">
-        <div className="tab " >
-          {/* <button type="button" class="btn btnPrimary w100 on">
-            <span class="txt">사이트소개</span>
-            <div class="arrow">
-              <span class="material-icons">keyboard_arrow_down</span>
+        <div className="tab">
+          <button className={` btn btnPrimary w100 ${addingStyle ? 'on' : ''}`} type="button" onClick={() => {
+            setAddingStyle(!addingStyle)
+          }}>
+            <span className="txt" >{selectedOption}</span>
+            <div className="arrow" >
+              <span style={addingStyle ? { display: 'block' } : { display: 'none' }} className="material-icons">keyboard_arrow_down</span>
+              <span style={!addingStyle ? { display: 'block' } : { display: 'none' }} className="material-icons">keyboard_arrow_up</span>
             </div>
-          </button> */}
-          <ul>
-            <li className={activeTab === '1' ? 'on' : ''}>
-              <button type="button" onClick={() => setActiveTab('1')}><FormattedMessage
-                id="introduction_p1"
-                defaultMessage="Site Intro"
-              /></button>
-            </li>
-            <li className={activeTab === '2' ? 'on' : ''}>
-              <button type="button" onClick={() => setActiveTab('2')}><FormattedMessage
-                id="introduction_p2"
-                defaultMessage="Service Intro"
-              /></button>
-            </li>
-            <li className={activeTab === '3' ? 'on' : ''}>
-              <button type="button" onClick={() => setActiveTab('3')}><FormattedMessage
-                id="introduction_p3"
-                defaultMessage="Organization"
-              /></button>
-            </li>
-            <li className={activeTab === '4' ? 'on' : ''}>
-              <button type="button" onClick={() => setActiveTab('4')}><FormattedMessage
-                id="introduction_p4"
-                defaultMessage="Related Sites"
-              /></button>
-            </li>
-          </ul>
+          </button>
+          <div className="tab_main" >
+            <ul>
+              <li className={activeTab === '1' ? 'on' : ''}>
+                <button type="button" onClick={() => {
+                  setSelectedOption('Site Intro')
+                  setActiveTab('1')
+                }}><FormattedMessage
+                    id="introduction_p1"
+                    defaultMessage="Site Intro"
+                  /></button>
+              </li>
+              <li className={activeTab === '2' ? 'on' : ''}>
+                <button type="button" onClick={() => {
+                  setSelectedOption('Service Intro')
+                  setActiveTab('2')
+                }}><FormattedMessage
+                    id="introduction_p2"
+                    defaultMessage="Service Intro"
+                  /></button>
+              </li>
+              <li className={activeTab === '3' ? 'on' : ''} >
+                <button type="button" onClick={() => {
+                  setSelectedOption('Organization')
+                  setActiveTab('3')
+                }}><FormattedMessage
+                    id="introduction_p3"
+                    defaultMessage="Organization"
+                  /></button>
+              </li>
+              <li className={activeTab === '4' ? 'on' : ''}>
+                <button type="button" onClick={() => {
+                  setSelectedOption('Related Sites')
+                  setActiveTab('4')
+                }}><FormattedMessage
+                    id="introduction_p4"
+                    defaultMessage="Related Sites"
+                  /></button>
+              </li>
+            </ul>
+          </div>
+
+
         </div>
         {activeTab === '1' &&
           <div className="tabContents " >
