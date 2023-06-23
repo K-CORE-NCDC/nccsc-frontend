@@ -120,17 +120,22 @@ import React, {
     gridData.map((item, index)=>{
       console.log(item,index)
     })
-  
+    const breadCrumbs = {
+        '/singledata-upload/': [
+            { id: 'FindID', defaultMessage: 'Home', to: '/' },
+            { id: 'SubPage1', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
+            { id: 'SubPage2', defaultMessage: 'Single Data Visualisation', to: '' },
+        ],
+        
+    };
     return (
       <div>
         <HeaderComponent
           title="회원가입"
-          breadCrumbs={{
-            key1: 'Home',
-            key2: 'Visualise My Data',
-            key3: 'Single Data Visulisation'
-          }}
+          routeName="/singledata-upload/"
+          breadCrumbs={breadCrumbs['/singledata-upload/']}
           type="single"
+
         />
         <article id="subContents" className="subContents">
           <div className="contentsTitle">
