@@ -1,35 +1,58 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import {
   findPassword,
-  clearIDPasswordResetPASSWORD
 } from "../../actions/api_actions";
-import swal from 'sweetalert';
-import { useSelector, useDispatch } from "react-redux";
-import HeaderComponent from "../Common/HeaderComponent/HeaderComponent";
 import nameIcon from "../../styles/images/icon-text.svg"
 import idIcon from "../../styles/images/icon-user.svg"
+import { useHistory } from "react-router-dom";
+import Swal from 'sweetalert2'
+
 function FindPassword() {
 
   const UserId = useRef(null);
   const RegistrationPin = useRef(null);
   const [isError, setIsError] = useState(false)
-  const [status, setstatus] = useState("")
   const [errorMessage, setErrorMessage] = useState([]);
-  const dispatch = useDispatch();
+  let history = useHistory();
 
-  const find_password = useSelector((data) => data.homeReducer.findPassword);
+
+  const findPasswordSuccess = () => {
+
+    Swal.fire({
+      title: 'Success',
+      text: "Password Reset Link is sent to your Email",
+      icon: 'success',
+      confirmButtonColor: '#003177',
+      confirmButtonText: 'Ok',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.value) {
+        history.push('/login')
+      }
+    })
+
+  }
+
+
+
+  const findPasswordFailure = (status) => {
+    setErrorMessage([
+      <p key="error" className="ErrorText">
+        {status}
+      </p>
+    ]);
+    setIsError(true)
+  }
 
   let findPasswordfunction = () => {
-
     let user_id = UserId.current.value
     let registration_pin = RegistrationPin.current.value
 
     setIsError(false)
 
     if (user_id === "") {
-      setstatus('Please Enter Your User ID');
       setErrorMessage([
-        <p key="error" className="LoginErrorText">
+        <p key="error" className="ErrorText">
           User ID cant be Empty
         </p>
       ]);
@@ -37,9 +60,8 @@ function FindPassword() {
     }
 
     else if (registration_pin === "") {
-      setstatus('Please Enter Your User ID');
       setErrorMessage([
-        <p className="LoginErrorText">
+        <p className="ErrorText">
           Registration Pin cant be Empty
         </p>
       ]);
@@ -47,56 +69,35 @@ function FindPassword() {
     }
 
     else {
-      dispatch(findPassword("POST", { 'username': user_id, 'registration_pin': registration_pin }));
       setIsError(false)
-    }
+      let data = findPassword("POST", { 'username': user_id, 'registration_pin': registration_pin })
+      data.then((result) => {
+        if ('data' in result && 'status' in result.data && result.data.status === "Password Reset Link is sent to your Email") {
+          findPasswordSuccess();
+        }
+        else if('data' in result && 'status' in result.data) {
+          findPasswordFailure(result.data.status);
+        }
+      }).catch((error) => {
+        findPasswordFailure('Something went wrong');
+      });
+    };
+
   }
+
 
   let cancelfunction = () => {
     setIsError(false)
+    UserId.current.value = ""
+    RegistrationPin.current.value = ""
   }
-
-  useEffect(() => {
-    find_password && setstatus(find_password.status)
-    if (status === "Password Reset Link is sent to your Email") {
-      swal("Password Reset Link is sent to your Email", {
-        closeOnClickOutside: false
-      })
-        .then((value) => {
-          setTimeout(() => {
-            window.location.href = '/login/'
-          }, 2000)
-        });
-    }
-    else {
-      setErrorMessage([
-        <p key="error" className="LoginErrorText">
-          Invalid UserName or Registration Pin
-        </p>
-      ]);
-    }
-  }, [find_password, status])
-
-  useEffect(() => {
-    return () => {
-      dispatch(clearIDPasswordResetPASSWORD());
-    };
-  }, []);
 
   return (
     <div>
-      <HeaderComponent
-        title="회원가입"
-        breadCrumbs={{
-          key1: 'value1'
-        }}
-        type="multi"
-      />
-      <article id="subContents" className="subContents">
         <div className="contentsTitle">
           <div className="auto">
             <h3 className="colorSecondary">
-              <span className="colorPrimary">find</span>
+              <span className="colorPrimary">Find</span>
               password
             </h3>
           </div>
@@ -110,10 +111,11 @@ function FindPassword() {
               </p>
               <form className="formBox" id="frm" method="post" name="frm">
                 {isError && errorMessage && (
-                  <div className="LoginErrorText">
+                  <div className="ErrorText">
                     {errorMessage}
                   </div>
                 )}
+
                 <dl>
                   <dt>
                     <img src={nameIcon} alt="" />
@@ -128,14 +130,15 @@ function FindPassword() {
                 <dl>
                   <dt>
                     <img src={idIcon} alt="" />
-                    Register Id
+                    Unique Pin
                   </dt>
                   <dd>
                     <div className="inputText">
-                      <input ref={RegistrationPin} type="text" className="w100" id="userId" name="userId" placeholder="Please enter your ID." autoComplete="off" />
+                      <input ref={RegistrationPin} type="text" className="w100" id="userId" name="userId" placeholder="Please enter your Registration ID." autoComplete="off" />
                     </div>
                   </dd>
                 </dl>
+
               </form>
             </div>
             <div className="bottomBtns">
@@ -150,7 +153,6 @@ function FindPassword() {
             </div>
           </div>
         </div>
-      </article>
     </div>
 
   )

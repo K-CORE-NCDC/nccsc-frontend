@@ -2,7 +2,8 @@ import React from 'react';
 import { FormattedMessage } from "react-intl";
 import background from "../../../styles/images/subVisual-img06.jpg"
 import homeIcon from "../../../styles/images/icon-home.svg"
-function HeaderComponent({ title, breadCrumbs, type }) {
+import { Link } from "react-router-dom";
+function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
 
   const renderLnbContent = () => {
     if (type && type === 'single') {
@@ -13,26 +14,42 @@ function HeaderComponent({ title, breadCrumbs, type }) {
           </div>
         </div>
       );
-    } else {
+    } else if (listItems && listItems.length > 0) {
       return (
         <div id="lnb" className="lnb">
-          <button type="button" className="btn btnPrimary w100">
-            <span className="txt">Site introduction</span>
-            <div className="arrow">
-              <span className="material-icons">keyboard_arrow_down</span>
-            </div>
-          </button>
           <div className="auto">
             <ul>
-              <li className="on"><a href="/main/intro/siteIntro">Site introduction</a></li>
-              <li><a href="/main/intro/dataIntro">Description of provided data</a></li>
-              <li><a href="/main/intro/centerIntro">Operating organization and history</a></li>
-              <li><a href="/main/intro/action/mediaIntro">media publicity</a></li>
+              {listItems.map((item, index) => (
+                <li key={index} className={routeName === item.to ? 'on' : ''}>
+                  <Link to={item.to}>
+                    <FormattedMessage id={item.id} defaultMessage={item.defaultMessage} />
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
       );
     }
+    return null;
+  };
+
+  const renderBreadcrumbs = () => {
+    if (breadCrumbs) {
+      const items = breadCrumbs;
+      return (
+        <ul>
+          {items.map((item, index) => (
+            <li key={index} className={routeName === item.to ? 'on' : ''}>
+              <Link to={item.to}>
+                <FormattedMessage id={item.id} defaultMessage={item.defaultMessage} />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      );
+    }
+    return null;
   };
 
   return (
@@ -42,7 +59,11 @@ function HeaderComponent({ title, breadCrumbs, type }) {
           <div className="imgBox" style={{ backgroundImage: `url(${background})` }}></div>
           <div className="txtBox">
             <div className="auto">
-              <h2 className="main">{title}</h2>
+              <h2 className="main">
+                {title && title.id && title.defaultMessage && (
+                  <FormattedMessage id={title.id} defaultMessage={title.defaultMessage} />
+                )}
+              </h2>
             </div>
           </div>
         </div>
@@ -52,11 +73,7 @@ function HeaderComponent({ title, breadCrumbs, type }) {
           <div className="auto">
             <ul>
               <li key="key0"><img src={homeIcon} alt="" /></li>
-              {breadCrumbs && Object.entries(breadCrumbs).map(([key, value]) => (
-                <li key={key}>
-                  <FormattedMessage id={key} defaultMessage={value} />
-                </li>
-              ))}
+              {renderBreadcrumbs()}
             </ul>
           </div>
         </div>

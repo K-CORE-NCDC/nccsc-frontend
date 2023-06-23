@@ -127,16 +127,6 @@ const homeReducer = (state = { home: 'home' }, { type, payload } ) => {
         ...state,
         otp_validation_status: payload,
       };
-    case homeConstants.FIND_ID:
-      return {
-        ...state,
-        findID: payload,
-      };
-    case homeConstants.FIND_PASSWORD:
-      return {
-        ...state,
-        findPassword: payload,
-      };
     case homeConstants.REGISTRATION:
       return {
         ...state,
@@ -187,20 +177,6 @@ const homeReducer = (state = { home: 'home' }, { type, payload } ) => {
         ...state,
         sendlogmanagement: payload,
       };
-    case homeConstants.LOGIN_DATA:
-      return {
-        ...state,
-        login_data: payload,
-      };
-      case homeConstants.CLEAR_LOGIN_DATA:
-        {
-          const {
-            login_data, ...withoutlogindata
-          } = state;
-          /* eslint-disable no-param-reassign */
-          state = withoutlogindata;
-          return state;
-        }
     case homeConstants.CLEAR_NOTICE_DETAILS:
     {
       const { noticedata, ...remains } = state;

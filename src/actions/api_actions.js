@@ -50,39 +50,37 @@ export function signin(method, data) {
 }
 
 export function login(method, data) {
-  return (dispatch) => {
-    const url = `${config.auth}api/token/`;
-    sendRequest(url, method, data)
-    .then((result) => {
-      const d = result;
-      console.log('d.data',d.data)
-      dispatch({
-        type: homeConstants.LOGIN_DATA,
-        payload: d.data,
-      });
-      dispatch({ type: homeConstants.REQUEST_DONE });
-    })
-
-    .catch(() => {});
-};
+  const url = `${config.auth}api/token/`;
+  return sendRequest(url, method, data)
 }
 
 
-export function logout(method, data) {
-  return (dispatch) => {
-    const url = `${config.auth}logout/`;
-    sendRequest(url, method, data)
-    .then((result) => {
-      const d = result;
-      dispatch({
-        type: homeConstants.CLEAR_LOGIN_DATA,
-        payload: d.data,
-      });
-      dispatch({ type: homeConstants.REQUEST_DONE });
-    })
+// export function logout(method, data) {
+//   return (dispatch) => {
+//     const url = `${config.auth}logout/`;
+//     sendRequest(url, method, data)
+//     .then((result) => {
+//       const d = result;
+//       dispatch({
+//         type: homeConstants.CLEAR_LOGIN_DATA,
+//         payload: d.data,
+//       });
+//       dispatch({ type: homeConstants.REQUEST_DONE });
+//     })
 
-    .catch(() => {});
-};
+//     .catch(() => {});
+// };
+// }
+
+export function findID(method, data) {
+  const url = `${config.auth}findid/`;
+  return sendRequest(url, method, data)
+}
+
+
+export function findPassword(method, data) {
+  const url = `${config.auth}findpassword/`;
+  return sendRequest(url, method, data)
 }
 
 export function sendlogManagement(method, data) {
@@ -173,22 +171,6 @@ export function verifyOTP(method, data) {
   };
 }
 
-export function findID(method, data) {
-  return (dispatch) => {
-    const url = `${config.auth}findid/`;
-    sendRequest(url, method, data)
-      .then((result) => {
-        const d = result;
-        dispatch({
-          type: homeConstants.FIND_ID,
-          payload: d.data,
-        });
-        dispatch({ type: homeConstants.REQUEST_DONE });
-      })
-
-      .catch(() => {});
-  };
-}
 
 export function interPro(method, data) {
   return (dispatch) => {
@@ -261,22 +243,6 @@ export function vcfmaf(method, data) {
   };
 }
 
-export function findPassword(method, data) {
-  return (dispatch) => {
-    const url = `${config.auth}findpassword/`;
-    sendRequest(url, method, data)
-      .then((result) => {
-        const d = result;
-        dispatch({
-          type: homeConstants.FIND_PASSWORD,
-          payload: d.data,
-        });
-        dispatch({ type: homeConstants.REQUEST_DONE });
-      })
-
-      .catch(() => {});
-  };
-}
 export function checkEmail(method, data) {
   return (dispatch) => {
     const url = `${config.auth}checkemail/`;

@@ -4,7 +4,7 @@ import {
   uploadClinincalSamples,
   clearUploadClinicalColumns
 } from "../../../../actions/api_actions";
-import swal from "sweetalert";
+import Swal from "sweetalert2";
 import LoaderCmp from "../../../Common/Loader";
 import { FormattedMessage } from "react-intl";
 
@@ -204,9 +204,17 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
       dispatch(uploadClinincalSamples(d));
       updateComponentNumber(2);
     } else {
-      swal("Please Select All Columns in Clinical Information.", {
-        closeOnClickOutside: false,
-      });
+      Swal.fire({
+        title: 'Warning',
+        text: "Please Select All Columns in Clinical Information.",
+        icon: 'warning',
+        confirmButtonColor: '#003177',
+        confirmButtonText: 'Ok',
+        allowOutsideClick: false
+      }).then((result) => {
+        if (result.value) {
+        }
+      })
     }
   };
 

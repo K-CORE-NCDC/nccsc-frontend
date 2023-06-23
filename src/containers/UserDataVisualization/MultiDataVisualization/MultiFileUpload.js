@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { multiFileUpload,clearMultiFIleUploadState } from "../../../actions/api_actions";
 import { useDispatch } from "react-redux";
 import { FormattedMessage } from "react-intl";
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 
 const Table = ({ updateComponentNumber}) => {
   const [filesData, setFilesData] = useState({});
@@ -42,27 +42,29 @@ const Table = ({ updateComponentNumber}) => {
       dispatch(multiFileUpload(filesData, projectName));
       updateComponentNumber(1);
     } else if(projectName === '') {
-      swal("Enter Project ID",{
-        closeOnClickOutside: false,
-        icon: "error",  
-        button: {
-          text: "Back",
-          backgroundColor: '#4962B3'
-        },
-      
-        className:"text-center"
+      Swal.fire({
+        title: 'Warning',
+        text: "Enter Project ID",
+        icon: 'warning',
+        confirmButtonColor: '#003177',
+        confirmButtonText: 'Ok',
+        allowOutsideClick: false
+      }).then((result) => {
+        if (result.value) {
+        }
       })
     }
     else if(filesData["clinical_information"] === null){
-        swal("Upload Clinical Information",{
-          closeOnClickOutside: false,
-          icon: "error",  
-          button: {
-            text: "Back",
-            backgroundColor: '#4962B3'
-          },
-        
-          className:"text-center"
+        Swal.fire({
+          title: 'Warning',
+          text: "Upload Clinical Information.",
+          icon: 'warning',
+          confirmButtonColor: '#003177',
+          confirmButtonText: 'Ok',
+          allowOutsideClick: false
+        }).then((result) => {
+          if (result.value) {
+          }
         })
       }
   };

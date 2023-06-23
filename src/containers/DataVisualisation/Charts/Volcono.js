@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import VolcanoCmp from "../../Common/Volcano";
-import GroupFilters,{PreDefienedFilters} from "../../Common/GroupFilter";
-import UserDefinedGroupFilters  from "../../Common/GroupFilterUserDefined";
+import GroupFilters, { PreDefienedFilters } from "../../Common/GroupFilter";
+import UserDefinedGroupFilters from "../../Common/GroupFilterUserDefined";
 import NoContentMessage from "../../Common/NoContentComponent";
-import swal from 'sweetalert';
+import Swal from 'sweetalert2'
 
 import {
   getClinicalMaxMinInfo,
@@ -13,7 +13,7 @@ import {
 } from "../../../actions/api_actions";
 import LoaderCmp from "../../Common/Loader";
 import { FormattedMessage } from "react-intl";
-import { useHistory,useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 const selectedCss =
   "w-1/2 rounded-r-none  hover:scale-110 focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md";
@@ -28,7 +28,7 @@ export default function DataVolcono({
 }) {
   const reference = useRef();
   const dispatch = useDispatch();
-  const [volcanoJson, setVolcanoJson]= useState({'status':204})
+  const [volcanoJson, setVolcanoJson] = useState({ 'status': 204 })
   const clinicalMaxMinInfo = useSelector(
     (data) => data.dataVisualizationReducer.clinicalMaxMinInfo
   );
@@ -53,41 +53,42 @@ export default function DataVolcono({
   const smallScreen = false
   const [alltabList, setAllTabList] = useState({});
   let { project_id } = useParams();
-  
+
   const [userDefienedFilter, setUserDefienedFilter] = useState(
     project_id === undefined ? "static" : "dynamic"
   );
-  
 
-  useEffect(()=>{
-    if('userProjectsDataTable' in tabList ){
+
+  useEffect(() => {
+    if ('userProjectsDataTable' in tabList) {
       setAllTabList(tabList.userProjectsDataTable)
     }
-    
-    },[tabList])
+
+  }, [tabList])
 
   const updateGroupFilters = (filtersObject) => {
 
     if (filtersObject) {
-     
-        swal("If processed information is big, it takes time to Load",{
-          closeOnClickOutside: false,
-          buttons: ["Cancel", "Continue"],
-          className:"text-center"
-        })
-          .then((value) => {
-            setTimeout(()=>{
-            if(value)
+      Swal.fire({
+        title: 'Info',
+        text: "If processed information is big, it takes time to Load",
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#003177',
+        confirmButtonText: 'Ok',
+        allowOutsideClick: false,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setTimeout(() => {
             setGroupFilters(filtersObject);
-            },1000)
-          });
-    
-      
+          }, 1000)
+        }
+      })
     }
   };
   useEffect(() => {
     if (!clinicalMaxMinInfo) {
-      if (project_id === undefined ) {
+      if (project_id === undefined) {
         dispatch(getClinicalMaxMinInfo("GET", {}));
       }
     }
@@ -104,7 +105,7 @@ export default function DataVolcono({
           inputData["volcanoProteomeType"] = proteomeValue;
         }
         inputData["filterType"] = userDefienedFilter;
-        if(project_id ){
+        if (project_id) {
           inputData['project_id'] = parseInt(project_id)
         }
         let return_data = VolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters })
@@ -115,13 +116,13 @@ export default function DataVolcono({
             r_["status"] = 200
             setVolcanoJson(r_)
           } else {
-            setVolcanoJson({'status':204})
+            setVolcanoJson({ 'status': 204 })
           }
         })
-        .catch((e) => {
-          setVolcanoJson({'status':204})
-          history.push('/notfound')
-        });
+          .catch((e) => {
+            setVolcanoJson({ 'status': 204 })
+            history.push('/notfound')
+          });
       }
     }
   }, [inputData, groupFilters]);
@@ -210,7 +211,7 @@ export default function DataVolcono({
     setLoader(true);
     inputData["volcanoProteomeType"] = proteomeValue;
     inputData["filterType"] = userDefienedFilter;
-    if(project_id === undefined){
+    if (project_id === undefined) {
       let return_data = VolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters })
       return_data.then((result) => {
         const d = result
@@ -219,15 +220,15 @@ export default function DataVolcono({
           r_["status"] = 200
           setVolcanoJson(r_)
         } else {
-          setVolcanoJson({'status':204})
+          setVolcanoJson({ 'status': 204 })
         }
       })
-      .catch((e) => {
-        setVolcanoJson({'status':204})
-        history.push('/notfound')
-      });
+        .catch((e) => {
+          setVolcanoJson({ 'status': 204 })
+          history.push('/notfound')
+        });
     }
-    else{
+    else {
       let return_data = VolcanoPlotInfo("POST", { ...inputData, filterGroup: groupFilters })
       return_data.then((result) => {
         const d = result
@@ -236,13 +237,13 @@ export default function DataVolcono({
           r_["status"] = 200
           setVolcanoJson(r_)
         } else {
-          setVolcanoJson({'status':204})
+          setVolcanoJson({ 'status': 204 })
         }
       })
-      .catch((e) => {
-        setVolcanoJson({'status':204})
-        history.push('/notfound')
-      });
+        .catch((e) => {
+          setVolcanoJson({ 'status': 204 })
+          history.push('/notfound')
+        });
     }
   };
 
@@ -252,13 +253,12 @@ export default function DataVolcono({
         <LoaderCmp />
       ) : (
         <div className="flex flex-row justify-around">
-          
+
           <div
-            className={`lg:w-1/5 md:w-4/5 lg:block md:block lg:block sm:hidden text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md bg-white ${
-              smallScreen
+            className={`lg:w-1/5 md:w-4/5 lg:block md:block lg:block sm:hidden text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md bg-white ${smallScreen
                 ? "xs:mr-80 xs:z-10 xs:opacity-95 xs:bg-white"
                 : "xs:hidden"
-            } `}
+              } `}
           >
             <div>
               {sampleCount && Object.keys(sampleCount).length > 0 && (
@@ -275,7 +275,7 @@ export default function DataVolcono({
               )}
             </div>
             <div className="m-1 flex flex-row justify-around">
-            
+
               <button
                 onClick={() => changeVolcanoType("transcriptome")}
                 className={
@@ -284,26 +284,26 @@ export default function DataVolcono({
               >
                 <FormattedMessage id="Transcriptome" defaultMessage="Transcriptome" />
               </button>
-            
 
-              {project_id !== undefined &&  alltabList['proteome'] && <button
+
+              {project_id !== undefined && alltabList['proteome'] && <button
                 onClick={() => changeVolcanoType("proteome")}
                 className={
-                  volcanoType === "proteome" ? selectedCss  : nonSelectedCss
+                  volcanoType === "proteome" ? selectedCss : nonSelectedCss
                 }
               >
                 <FormattedMessage id="Proteome" defaultMessage="Proteome" />
-              </button> }
+              </button>}
 
-            { project_id === undefined &&
-              <button
-              onClick={() => changeVolcanoType("proteome")}
-              className={
-                volcanoType === "proteome" ? selectedCss: nonSelectedCss
-              }
-              >
-                <FormattedMessage id="Proteome" defaultMessage="Proteome" />
-              </button>
+              {project_id === undefined &&
+                <button
+                  onClick={() => changeVolcanoType("proteome")}
+                  className={
+                    volcanoType === "proteome" ? selectedCss : nonSelectedCss
+                  }
+                >
+                  <FormattedMessage id="Proteome" defaultMessage="Proteome" />
+                </button>
               }
             </div>
             {volcanoType === "proteome" && (
@@ -351,13 +351,13 @@ export default function DataVolcono({
                   </div>
                   <div className="flex-row items-center mb-4">
                     <input
-                      onChange = {() => setProteomeValue("NT")}
-                      checked = {proteomeValue === "NT" ? true : false}
-                      id = "default-radio-3"
-                      type = "radio"
-                      value = "normal_tumor"
-                      name = "proteome"
-                      className = "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      onChange={() => setProteomeValue("NT")}
+                      checked={proteomeValue === "NT" ? true : false}
+                      id="default-radio-3"
+                      type="radio"
+                      value="normal_tumor"
+                      name="proteome"
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     />
                     <label
                       htmlFor="default-radio-3"
@@ -372,13 +372,13 @@ export default function DataVolcono({
             {proteomeValue !== "NT" && (
               <>
                 {project_id === undefined && (
-                    <h6 className="p-4 ml-1 text-left text-bold sm:text-xl lg:text-2xl text-blue-700">
-                      <FormattedMessage
-                        id="Choose Filter group"
-                        defaultMessage="Choose Filter group"
-                      />
-                    </h6>
-                  ) && (
+                  <h6 className="p-4 ml-1 text-left text-bold sm:text-xl lg:text-2xl text-blue-700">
+                    <FormattedMessage
+                      id="Choose Filter group"
+                      defaultMessage="Choose Filter group"
+                    />
+                  </h6>
+                ) && (
                     <div className="m-1 flex flex-row justify-around">
                       {
                         <button
@@ -416,7 +416,7 @@ export default function DataVolcono({
                       </button>
                     </div>
                   )}
-                {userDefienedFilter === "static" &&  project_id === undefined && (
+                {userDefienedFilter === "static" && project_id === undefined && (
                   <PreDefienedFilters
                     volcanoType={volcanoType}
                     viz_type="volcono"
@@ -432,7 +432,7 @@ export default function DataVolcono({
                     groupFilters={groupFilters}
                   />
                 )}
-                {project_id !== undefined  && (
+                {project_id !== undefined && (
                   <UserDefinedGroupFilters
                     volcanoType={volcanoType}
                     viz_type="volcono"
@@ -447,27 +447,26 @@ export default function DataVolcono({
                 onClick={() => submitProteomeNT()}
                 className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
               >
-               <FormattedMessage
-                            id="Submit_volcano"
-                            defaultMessage="Submit"
-                          />
+                <FormattedMessage
+                  id="Submit_volcano"
+                  defaultMessage="Submit"
+                />
               </button>
             )}
             <div className="m-1 p-1 border border-black border-dashed">
-              <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left"><FormattedMessage id="Blue" defaultMessage = "Blue :" />{`Blue: Log2FC <= -1.5 & pvalue <= 0.05`}</p>
-              <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left"><FormattedMessage id="Red" defaultMessage = "Red :" />{`Log2FC >= 1.5 & pvalue <= 0.05`}</p>
+              <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left"><FormattedMessage id="Blue" defaultMessage="Blue :" />{`Blue: Log2FC <= -1.5 & pvalue <= 0.05`}</p>
+              <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left"><FormattedMessage id="Red" defaultMessage="Red :" />{`Log2FC >= 1.5 & pvalue <= 0.05`}</p>
               <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left">
-              <FormattedMessage id="Grey" defaultMessage = "Grey :" /> Not significant gene
+                <FormattedMessage id="Grey" defaultMessage="Grey :" /> Not significant gene
               </p>
               <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left">
-              <FormattedMessage id="Black" defaultMessage = "Black :" /> Selected genes
+                <FormattedMessage id="Black" defaultMessage="Black :" /> Selected genes
               </p>
             </div>
           </div>
           <div
-            className={`lg:w-4/5 md:w-4/5 sm:w-full lg:block ${
-              smallScreen ? "xs:absolute" : "xs:w-full"
-            }`}
+            className={`lg:w-4/5 md:w-4/5 sm:w-full lg:block ${smallScreen ? "xs:absolute" : "xs:w-full"
+              }`}
             style={{ overflowX: "scroll" }}
           >
             {showVolcano && (
@@ -483,7 +482,7 @@ export default function DataVolcono({
               />
             )}
             {noContent && <NoContentMessage />}
-            {Object.keys(groupFilters).length === 0 && <p><FormattedMessage id="PleaseSelectFilterData" defaultMessage = "Please Select the Filter Data" /></p>}
+            {Object.keys(groupFilters).length === 0 && <p><FormattedMessage id="PleaseSelectFilterData" defaultMessage="Please Select the Filter Data" /></p>}
           </div>
         </div>
       )}
