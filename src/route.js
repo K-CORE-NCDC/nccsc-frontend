@@ -22,6 +22,7 @@ const SingleDataAnalysis = React.lazy(() => import('./containers/UserDataVisuali
 const MultiDataVisualizationHome = React.lazy(() => import('./containers/UserDataVisualization/MultiDataVisualization/HomeComponent'));
 const MultiDataVisualizationUploadIndex = React.lazy(() => import('./containers/UserDataVisualization/MultiDataVisualization/MultiDataUploadIndex'));
 const MultiDataAnalysis = React.lazy(() => import('./containers/UserDataVisualization/MultiDataVisualization/MultiDataAnalysis'));
+const GeneSet = React.lazy(() => import('./containers/UserDataVisualization/Components/MainComponents/GeneSet'));
 
 
 
@@ -90,6 +91,15 @@ const route = [
     name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
     childname: <FormattedMessage id="SingleDataVisualization" defaultMessage="Single Data Visualization" />,
     component: SingleDataAnalysis,
+  },
+  {
+    path: '/gene-set/',
+    exact: true,
+    type: 'unauth',
+    category: 'visualize',
+    name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
+    childname: <FormattedMessage id="SingleDataVisualization" defaultMessage="Single Data Visualization" />,
+    component: GeneSet,
   },
   {
     path: '/singledata-upload/:tab?/',
