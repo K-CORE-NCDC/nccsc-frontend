@@ -464,14 +464,10 @@ export default function DataCircos({
       {loader ? (
         <LoaderCmp />
       ) : (
-        <div className="grid overflow-hidden">
-          <div
-            className={`p-1 grid xs:grid-cols-3 ${
-              toggle ? "lg:grid-cols-4" : "lg:grid-cols-4"
-            }`}
-          >
-            <div className="flex xs:col-span-3 sm:col-span-12 md:col-span-6 lg:col-span-6 xl:col-span-6 2xl:col-span-3 justify-content-between">
-              <div className="flex-col text-left sm:w-2/6 xs:w-2/6">
+        <div className="">
+          
+            <div className="flex visualGrid">
+              <div >
                 {circosSanpleRnidListData && (
                   <div
                     htmlFor="samples"
@@ -485,7 +481,7 @@ export default function DataCircos({
                   </div>
                 )}
                 <select
-                  className="w-full  border bg-white rounded px-3 py-4 outline-none lg:text-xl sm:text-xl xs:text-sm"
+                  className="selectBox"
                   value={sampleKey}
                   onChange={(e) => setSampleKey(e.target.value)}
                   name="samples"
@@ -500,10 +496,10 @@ export default function DataCircos({
                   </option>
                 </select>
               </div>
-              <div className="p-3 mt-6">
+              <div className="element">
                 <button
                   id="images"
-                  className={`${project_id !== undefined ? 'bg-main-blue-op5':'bg-main-blue hover:bg-blue-700'} xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40`}
+                  className='btn btnPrimary'
                   onClick={oncoImagesClickFunction}
                   disabled = {project_id !== undefined ? true:false}
                 >
@@ -513,20 +509,20 @@ export default function DataCircos({
                     />
                 </button>
               </div>
-              <div className="p-3 mt-6">
+              <div className="element">
                 <button
                   id="tables"
-                  className={`${project_id!== undefined ? 'bg-main-blue-op5':'bg-main-blue hover:bg-blue-700'} xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40`}
+                  className="btn btnPrimary"
                   onClick={timelineGraphClickFunction}
                   disabled= {project_id!== undefined ? true:false}
                 >
                    <FormattedMessage id="F/U Timeline" defaultMessage="F/U Timeline" />
                 </button>
               </div>
-              <div className="p-3 mt-6">
+              <div className="element">
                 <button
                   id="reportData"
-                  className="bg-main-blue hover:bg-blue-700  xs:text-sm xs:h-14 sm:text-xl lg:text-2xl text-white font-bold lg:p-4 md:p-4 sm:p-4 xs:p-1 rounded lg:w-80 sm:w-13 xs:mt-1 xs:w-40"
+                  className="btn btnPrimary"
                   onClick={ReportDataFunction}
                 >
                   <FormattedMessage
@@ -536,7 +532,7 @@ export default function DataCircos({
                 </button>
               </div>
             </div>
-          </div>
+          
           <div>
             <div>
               {renderCircos && (
@@ -591,5 +587,6 @@ export default function DataCircos({
         }  
 
     </>
+    
   );
 }

@@ -9,6 +9,7 @@ import AOS from 'aos';
 import introduce_img from '../../assets/images/introduce_logo.svg'
 import introduce_VisualContents from '../../assets/images/introduce-visualContents.jpg'
 import "aos/dist/aos.css"
+import { CBioPortal } from "./RelatedSites/CBioPortal";
 
 
 export const SiteIntro = ({ height, innerHeight }) => {
@@ -133,6 +134,9 @@ export const SiteIntro = ({ height, innerHeight }) => {
         }
         {activeTab === '3' &&
           <Organization />
+        }
+         {activeTab === '4' &&
+          <CBioPortal />
         }
       </div>
     </div>

@@ -14,7 +14,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   const history = useHistory();
   const [genesHtml, setGenesHtml] = useState([])
   const [gene, setGene] = useState('')
-  const [activeCmp, setActiveCmp] = useState(false)
+  const [activeCmp, setActiveCmp] = useState(true)
   const [tableType, setTableType] = useState('Mutation')
   const [inputState, setInputState] = useState({})
   const [watermarkCss, setWatermarkCSS] = useState("")
@@ -28,7 +28,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   const [refSeqId, setRefSeqId] = useState([])
   const [showLollipop, setShowLollipop] = useState(false)
   const [noContent, setNoContent] = useState(true)
-  const [noGeneData , setNoGeneData] = useState(true)
+  const [noGeneData , setNoGeneData] = useState(false)
   const [percentage, setPercentage] = useState("")
   const [alltabList, setAllTabList] = useState({}); 
   let { project_id } = useParams();
@@ -36,7 +36,6 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   const tabList = useSelector(
     (data) => data.dataVisualizationReducer
   );
-
 
   useEffect(()=>{
     if('userProjectsDataTable' in tabList ){
@@ -154,6 +153,8 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
     }
   }, [inputState])
 
+  // {"genes":"ATRX","filter":"","type":"major-genes","table_type":"Mutation"}
+
   // const classNames = (...classes) => {
   //   return classes.filter(Boolean).join(' ')
   // }
@@ -206,13 +207,14 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                   lollipopTmp[p_vc] = [data[i]['sample'] + "||" + data[i]['protein']]
                 }
               }
-              table_data.push({
+              console.log('BrstKeys' , BrstKeys)
+              table_data?.push({
                 "sample": BrstKeys[data[i]['sample']],
                 "protein": data[i]['protein'],
                 "variant_classification": data[i]['variant_classification']
               })
-              refseq_id.push(data[i]['refseq_mrna_id'])
-              enst_id.push(data[i]['annotation_transcript'])
+              refseq_id?.push(data[i]['refseq_mrna_id'])
+              enst_id?.push(data[i]['annotation_transcript'])
 
             } else if (tableType === "Phospho") {
               let site_sample = data[i]['site'].split(' ')
@@ -231,7 +233,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                   unique_sample.push(data[i].sample)
                 }
               }
-              table_data.push({
+              table_data?.push({
                 "sample": BrstKeys[data[i]['sample']],
                 "site": data[i]['site'],
                 "gene": gene
@@ -432,10 +434,10 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
       let c = document.getElementsByName('type')
       for (var i = 0; i < c.length; i++) {
         let classList = c[i].classList
-        classList.remove("hover:bg-main-blue", "bg-main-blue", "text-white");
-        classList.add("text-teal-700", "hover:bg-teal-200", "bg-teal-100")
+        classList?.remove("hover:bg-main-blue", "bg-main-blue", "text-white");
+        classList?.add("text-teal-700", "hover:bg-teal-200", "bg-teal-100")
       }
-      document.getElementById(tableType).classList.add("hover:bg-main-blue", "bg-main-blue", "text-white")
+      document?.getElementById(tableType)?.classList?.add("hover:bg-main-blue", "bg-main-blue", "text-white")
     }
   }, [activeCmp])
 
@@ -500,14 +502,12 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
         <div>
           {activeCmp &&
             <Fragment>
-              <div className="grid grid-cols-2  ">
+              {/* <div className="grid grid-cols-2  ">
                 <div className="p-5 text-right">
-                  <div className="flex justify-start items-baseline flex-wrap">
-                    <div className="flex m-2">
-                      <button onClick={e => changeType(e, 'Mutation')} id='Mutation' name='type' className="rounded-r-none  hover:scale-110
-                      focus:outline-none flex lg:p-5 sm:p-3 rounded font-bold cursor-pointer
-                      
-                      hover:bg-main-blue  bg-main-blue sm:text-xl lg:text-2xl xs:text-sm xs:p-2 text-white border duration-200 ease-in-out border-gray-600 transition">
+                  <div className="flex justify-start items-baseline flex-wrap"> */}
+                    {/* <div className="flex m-2"> */}
+                    <div>
+                      <button onClick={e => changeType(e, 'Mutation')} id='Mutation' name='type' className="btn btnPrimary">
                         <FormattedMessage  id = "Mutation" defaultMessage='Mutation'/>
                       </button>
 
@@ -530,10 +530,10 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                       }
                    
                     </div>
-                  </div>
+                  {/* </div>
                 </div>
-              </div>
-              <div className='p-5 text-right m-5'>
+              </div> */}
+              {/* <div className='p-5 text-right m-5'>
                 <div className='flex lg:float-right md:float-right sm:float-left xs:float-left'>
                   <div className='p-3 lg:text-2xl sm:text-xl xs:text-sm'><FormattedMessage  id = "Selected Gene" defaultMessage='Selected Gene Is'/></div>
                   <div>
@@ -542,41 +542,41 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                     </select>
                   </div>
                 </div>
-              </div>
+              </div> */}
               
               <>
               {noContent && <NoContentMessage /> }
               {
-                showLollipop && <div className='grid p-10 w-full'>
-                  <div className='bg-white flex xs:w-4/6 md:w-full lg:w-full'>
+                showLollipop && <div className=''>
+                  <div className=''>
                     <LollipopCmp watermarkCss={watermarkCss} ref={reference} width={width} type={tableType}
                       gene={gene}
                       data={state}
                     />
-                    {tableType === "Mutation" &&
-                      <div className='absolute lg:right-10 flex'>
-                        <div className='m-3 text-left'>
-                          <label className="sm:text-xl lg:text-2xl xs:text-sm">Enst Id List</label>
-                          <textarea defaultValue={enstId.join("\n")} className="w-full px-3 py-2 sm:text-xl lg:text-2xl md:text-xl xs:w-5/6 text-gray-700 border rounded-lg focus:outline-none xs:text-sm" rows="4"></textarea>
+                    {/* {tableType === "Mutation" &&
+                      <div className=''>
+                        <div className=''>
+                          <label className="">Enst Id List</label>
+                          <textarea defaultValue={enstId.join("\n")} className="" rows="4"></textarea>
                         </div>
-                        <div className='m-3 text-left'>
-                          <label className="sm:text-xl lg:text-2xl xs:text-sm">Refseq MRNA Id List</label>
-                          <textarea defaultValue={refSeqId.join("\n")} className="w-full px-3 py-2 sm:text-xl lg:text-2xl md:text-xl xs:w-5/6 text-gray-700 border rounded-lg focus:outline-none xs:text-sm" rows="4"></textarea>
+                        <div className=''>
+                          <label className="">Refseq MRNA Id List</label>
+                          <textarea defaultValue={refSeqId.join("\n")} className="" rows="4"></textarea>
                         </div>
                       </div>
-                    }
+                    } */}
                   </div>
-                  <div className='grid grid-rows bg-blue-100 p-10'>
-                    <div className="lg:w-full sm:w-3/6 xs:w-1/2 p-3">
-                    {tableType === "Mutation" &&  <h5 className="float-left sm:text-xl lg:text-2xl xs:text-xl mb-5"> <FormattedMessage  id="SomanticMutationFrequency" defaultMessage="Somatic Mutation Frequency: "/>{percentage?percentage:""}<FormattedMessage  id="SomanticMutationmutationsamplenumber/totalselectedsamplenumber(%)Frequency" defaultMessage="%(mutation sample number/total selected sample number(%))"/></h5>}
-                    {tableType !== "Mutation" &&  <h5 className="float-left sm:text-xl lg:text-2xl xs:text-xl mb-5"> <FormattedMessage  id="PhosphorylationFrequency" defaultMessage="Phosphorylation Frequency: "/>{percentage?percentage:""}<FormattedMessage  id="Phosphorylationsamplenumber/totalselectedsamplenumber(%)" defaultMessage="%(Phosphorylation sample number/total selected sample number(%))"/></h5>}
+                  <div className='chart_dataBox'>
+                    <div className="">
+                    {tableType === "Mutation" &&  <h5 className=""> <FormattedMessage  id="SomanticMutationFrequency" defaultMessage="Somatic Mutation Frequency: "/>{percentage?percentage:""}<FormattedMessage  id="SomanticMutationmutationsamplenumber/totalselectedsamplenumber(%)Frequency" defaultMessage="%(mutation sample number/total selected sample number(%))"/></h5>}
+                    {tableType !== "Mutation" &&  <h5 className=""> <FormattedMessage  id="PhosphorylationFrequency" defaultMessage="Phosphorylation Frequency: "/>{percentage?percentage:""}<FormattedMessage  id="Phosphorylationsamplenumber/totalselectedsamplenumber(%)" defaultMessage="%(Phosphorylation sample number/total selected sample number(%))"/></h5>}
                     </div>
-                    <div className='flex sm:flex-wrap xs:flex-wrap xs:w-1/2'>
+                    <div className='mutation_labels'>
                       {mutationLabel}
                     </div>
                   </div>
 
-                  {tableData.length > 0 && <div className='mt-5 xs:w-2/3 lg:w-full'>
+                  {tableData.length > 0 && <div className="contentsTable" style={{ marginTop: '30px' }}>
                     <DataTable pagination
                       columns={tableColumnsData}
                       data={tableData}
@@ -585,8 +585,10 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                 </div>}
               </>
             </Fragment>
-          }
-              {noGeneData && <p><FormattedMessage id="PleaseSelecttheGeneSetData" defaultMessage="Please Select the Gene Set Data" /></p>}
+
+            
+           } 
+              {/* {noGeneData && <p><FormattedMessage id="PleaseSelecttheGeneSetData" defaultMessage="Please Select the Gene Set Data" /></p>} */}
          
         </div>
     }

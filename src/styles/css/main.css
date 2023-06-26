@@ -53,7 +53,8 @@
   display: flex;
   justify-content: center;
   position: relative;
-  padding-top: 160px;
+  /* padding-top: 160px; */
+  align-items: center;
 }
 .mainVisual .visual::after {
   content: "";
@@ -68,11 +69,12 @@
 .mainVisual .visual .txtBox {
   position: relative;
   z-index: 1;
-  padding-top: 140px;
+  /* padding-top: 140px; */
   width: 1200px;
   display: flex;
   flex-direction: column;
   color: rgb(255, 255, 255);
+
 }
 .mainVisual .visual .txtBox .h6 {
   margin-top: 16px;
@@ -128,7 +130,7 @@
   left: 0;
   right: 0;
   z-index: 1;
-  bottom: 56px;
+  bottom: -50%;
   padding: 0 40px;
   display: flex;
   flex-direction: column;
@@ -267,7 +269,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
-  padding-top: 160px;
+  padding-top: 140px;
 }
 .mainContents .section.section01 {
   padding-top: 0 !important;
@@ -388,6 +390,7 @@
 .mainContents .section03 .fullBox ul li .inner {
   position: relative;
   z-index: 1;
+  margin-bottom: 50px;
 }
 .mainContents .section03 .fullBox ul li .icon {
   width: 140px;
@@ -1225,10 +1228,22 @@
 
 /*# sourceMappingURL=main.css.map */
 
-/* My css */
+/* My css sushma*/
 .mainContents .section02 .tab ul li button {
   width: 100%;
   border-color: #003177;
+}
+
+.mutation_labels{
+  display: flex;
+  justify-content: center;
+  gap:3%
+}
+
+.chart_dataBox{
+  background-color: lavender;
+  padding: 3%;
+  margin-top: 3%;
 }
 
 /* Sohel New Classes */
@@ -1243,4 +1258,7 @@
   font-size: 16px;
   color: #f56565;
   font-style: italic;
+}
+.text-center{
+  text-align: center;
 }

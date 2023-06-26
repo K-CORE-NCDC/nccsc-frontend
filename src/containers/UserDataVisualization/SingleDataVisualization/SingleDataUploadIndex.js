@@ -15,24 +15,22 @@ export default function Index() {
   }
   const breadCrumbs = {
     '/singledata-upload/': [
-        { id: 'FindID', defaultMessage: 'Home', to: '/findid/' },
-        { id: 'SubPage1', defaultMessage: 'Visualise My Data', to: '/findid/' },
-        { id: 'SubPage2', defaultMessage: 'Single Data Visualisation', to: '/findid/' },
+        { id: 'FindID', defaultMessage: 'Home', to: '/' },
+        { id: 'SubPage1', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
+        { id: 'SubPage2', defaultMessage: 'Single Data Visualisation', to: '/visualise-singledata/home/' },
+        { id: 'SubPage2', defaultMessage: `Upload ${tab}`, to: `/singledata-upload/${tab}` },
+        
     ],
-  };
+    
+};
   return (
     <div>
       
         <HeaderComponent
           title="회원가입"
-          breadCrumbs={{
-            key1: 'Home',
-            key2: 'Visualise My Data',
-            key3: 'Single Data Visulisation',
-            key4: tab,
-            key5:'Upload'
+          routeName="/singledata-upload/"
+          breadCrumbs={breadCrumbs['/singledata-upload/']}
 
-          }}
           type="single"
         />
         <article id="subContents" className="subContents">
@@ -46,7 +44,7 @@ export default function Index() {
               </font>
             </h3>
           </div>
-          <div className="section ptn">
+          <div className="ptn">
             { 
               componentNumber === 0 && 
               <FileUpload updateComponentNumber ={updateComponentNumber} componentNumber={componentNumber} />

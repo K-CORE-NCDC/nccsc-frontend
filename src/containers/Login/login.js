@@ -116,7 +116,7 @@ const LoginComponent = () => {
         type="single"
       />
       <article id="subContents" className="subContents">
-        <div className="section ptn">
+        <div className=" ptn">
           <div className="auto">
             <div className="loginWrap">
               <img src={NCCLogo} alt="" />

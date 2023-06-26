@@ -129,16 +129,16 @@ function QAList({new_post}) {
     let redirecting = redirState ? (<Redirect push to={`/qa/${shortName}/`}/>) : '';
     return (
       <div className="container mx-auto p-4">
-        <div className="grid grid-col-4">
-          <div className="col-span-4">
+        {/* <div className="grid grid-col-4"> */}
+          {/* <div className="col-span-4">
               <h4 className="h-tit4_tit clear">
                   <font>
                     <font>Q&A</font>
                   </font>
               </h4>
-          </div>
-          <div className="col-span-4 h-8">
-            <div className="grid grid-col-4">
+          </div> */}
+          {/* <div className="col-span-4 h-8"> */}
+            {/* <div className="grid grid-col-4">
               <div className="col-span-2">
               </div>
               <div className="col-span-2">
@@ -160,9 +160,9 @@ function QAList({new_post}) {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="col-span-4 mt-8">
+            </div> */}
+          {/* </div> */}
+          <div className="contentsTable">
             {
               tableData&&
               <DataTable
@@ -184,8 +184,8 @@ function QAList({new_post}) {
               />
             }
             {redirecting}
-          </div>
-          <div className="col-span-4 mt-8">
+          {/* </div> */}
+          {/* <div className="col-span-4 mt-8">
             <div className="float-right">
               <button
                   className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -196,7 +196,7 @@ function QAList({new_post}) {
                   <FormattedMessage id="CreatePosts" defaultMessage="Create Posts"/>
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     )
@@ -214,13 +214,13 @@ function QaDetail({slug_id}){
   return (
     <div className="container mx-auto p-4">
       {notice_data && <div className="grid grid-col-2">
-        <div className="col-span-4">
+        {/* <div className="col-span-4">
             <h4 className="h-tit4_tit clear">
                 <font>
                   <font>Q&A</font>
                 </font>
             </h4>
-        </div>
+        </div> */}
         <div className="shadow-sm">
           <table className="border-slate-300 table-auto">
             <tbody>

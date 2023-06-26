@@ -38,6 +38,15 @@
   text-overflow: ellipsis;
 }
 
+.visualGrid {
+  gap:20px;
+}
+.visualGrid .element{
+  margin-top: 15px;
+}
+
+
+
 @media all and (max-width: 1600px) {
   #fullSlide .pagination div.swiper-pagination-bullet-active span {
     display: none;
@@ -585,7 +594,7 @@
     flex-wrap: wrap;
     height: 36px;
     overflow: hidden;
-    margin-top: -8px;
+    margin-top: 5px;
   }
   .dataSearchWrap .popularBox ul::after {
     display: none;
@@ -964,9 +973,16 @@
     padding: 0;
   }
   #fullSlide .mainContents .section01 .mask .visual {
-    padding-bottom: 290px;
-    height: auto;
+    /* padding-bottom: 290px;
+    height: auto; */
+    align-items: center;
+    padding-top: 160px;
   }
+
+  .mainDataStatusWrap {
+    bottom: 5%;
+  }
+
   #fullSlide .mainContents .section01 .mask .visual .txtBox {
     padding-bottom: 200px;
   }
@@ -979,6 +995,35 @@
   #fullSlide .mainContents .section03 .sectionTitle {
     top: 160px;
   }
+}
+@media all and (min-width:1025px) and (min-height:870px){
+  /* .mainVisual .visual .main_box{
+    margin-top: 50px;
+  } */
+
+  .mainDataStatusWrap {
+    bottom: -100%;
+  }
+
+  /* .mainContents .section{
+    margin-top: 50px;
+  }
+
+  .introduceWrap .introduceBox01{
+    margin-top: 60px;
+  }
+
+  .publicDataInfo{
+    margin-top: 100px;
+  }
+
+  .tabContents {
+    margin-top: 80px;
+  }
+
+  .container{
+    margin-top: 100px;;
+  } */
 }
 
 /*# sourceMappingURL=main_responsive.css.map */
