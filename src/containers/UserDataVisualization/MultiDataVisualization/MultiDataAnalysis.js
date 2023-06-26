@@ -461,38 +461,9 @@ export default function DataVisualization() {
             {({ open }) => {
               return (
                 <>
-                  {/* <div>
-                    <Popover.Button>
-                      <div className="flex bg-white text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md btn_input_height  mb-3 lg:w-full   font-bold py-2 px-4 border  rounded xs:h-14 lg:h-16">
-
-                        <div className="flex-1 flex items-center justify-center px-4">Gene set Re-filtering</div>
-                        <div className="w-20 h-full bg-gray-200 flex items-center justify-center">
-                          <FilterIcon className="h-8 w-8" />
-                        </div>
-                      </div>
-                    </Popover.Button>
-                    <Transition
-                      as={Fragment}
-                      enter="transition ease-out duration-200"
-                      enterFrom="opacity-0 translate-y-1"
-                      enterTo="opacity-100 translate-y-0"
-                      leave="transition ease-in duration-150"
-                      leaveFrom="opacity-100 translate-y-0"
-                      leaveTo="opacity-0 translate-y-1"
-                    >
-                      <Popover.Panel className="absolute z-10 w-screen max-w-sm px-4 mt-0 transform -translate-x-1/2 left-1/2 sm:px-0 lg:max-w-3xl">
-                        <GeneSet
-                          parentCallback={callback}
-                          filterState={state}
-                        />
-
-                      </Popover.Panel>
-                    </Transition>
-                  </div> */}
-
                 <div>
                   <Popover.Button>
-                    <div className="gene-set-button">
+                    <div className="GeneSetgeneSetButton">
                       <div className="flex-1">Gene set Re-filtering</div>
                       <div className="w-20">
                         <FilterIcon className="filter-icon" />
@@ -508,7 +479,7 @@ export default function DataVisualization() {
                     leaveFrom="opacity-100 translate-y-0"
                     leaveTo="opacity-0 translate-y-1"
                   >
-                    <Popover.Panel className="popover-panel">
+                    <Popover.Panel className="GeneSetPopoverPanel">
                       <GeneSet parentCallback={callback} filterState={state} />
                     </Popover.Panel>
                   </Transition>
@@ -523,9 +494,7 @@ export default function DataVisualization() {
         
         <div className="ml-auto md:ml-auto">
           <div className="flex justify-end p-5 ">
-          <div className="popup">
-          sdsdsd
-         </div>
+         
             <div className=" inline-flex  ">
               {screenCapture === false && (
                 <button

@@ -19,7 +19,13 @@ const GeneSet = ({ parentCallback, filterState }) => {
 
     const submitGeneSet = () => {
         console.log(value, geneData);
-        parentCallback({ value: value, genes: geneData });
+        if (value === "user-defined"){
+            let genevalue = geneData.split(' ')
+            parentCallback({ value: value, genes: genevalue });
+        } 
+        else{
+            parentCallback({ value: value, genes: geneData });
+        }
     }
 
     return (
@@ -63,11 +69,9 @@ const GeneSet = ({ parentCallback, filterState }) => {
                                 if (abc === 'user-defined') {
                                     let userGenes = document
                                         .getElementById('genes')
-                                        .value.split(' ')
-                                        .filter((element) => element);
-                                    const userGenesUpperCase = userGenes.map((element) => element.toUpperCase());
-                                    console.log('userGenesUpperCase', userGenesUpperCase);
-                                    setGeneData(userGenesUpperCase)
+                                        .value
+                                    userGenes = userGenes.toUpperCase() 
+                                    setGeneData(userGenes)
                                 }
                             }}
                         />
