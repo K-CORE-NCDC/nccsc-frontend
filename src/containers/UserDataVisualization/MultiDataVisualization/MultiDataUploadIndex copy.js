@@ -5,20 +5,20 @@ import { useHistory } from "react-router-dom";
 import { getCookie } from "../../getCookie";
 export default function Index() {
   let history = useHistory();
-  const [componentNumber, setComponentNumber] = useState(0)
+  const [componentNumber, setComponentNumber] = useState()
 
   const updateComponentNumber = (num) =>{
     setComponentNumber(num)
   }
   
-  // useEffect(() => {
-  //   if(getCookie('is_login') && getCookie('is_login') === 'True'){
-  //     updateComponentNumber(0)
-  //   }
-  //   else{
-  //     history.push("/login")
-  //     }
-  // }, [history])
+  useEffect(() => {
+    if(getCookie('is_login') && getCookie('is_login') === 'True'){
+      updateComponentNumber(0)
+    }
+    else{
+      history.push("/login")
+      }
+  }, [history])
 
 
  

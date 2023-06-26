@@ -1,40 +1,82 @@
 import React from "react";
-import ChildCard from "../../CardComponent/ChildCard";
+import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
 import { Link } from "react-router-dom/cjs/react-router-dom";
+import { FormattedMessage } from "react-intl";
 
 const HomeComponent = () => {
+
+  const title = { id: "MultiDataVisualization", defaultMessage: "Multi Data Visualization" }
+  let gridData = [
+    { title: 'Create Project', image: require(`../../../assets/images/Visualizations/circos.png`).default, link: `/newmultidataproject/` },
+    { title: 'View Project', image: require(`../../../assets/images/Visualizations/circos.png`).default, link: `/newmultidataproject/` },
+  ]
+
+  
+  const breadCrumbs = {
+    '/multidatavisualization/': [
+      { id: 'FindID', defaultMessage: 'Home', to: '/' },
+      { id: 'MultiDataVisualization', defaultMessage: 'Multi Data Visualization', to: '/home/visualizeMyData/' },
+    ]
+  }
+
   return (
-    <div className="flex flex-wrap justify-center">
-      <ChildCard
-        background="bg-red-200"
-        color="text-red-800"
-        width="sm:w-1/4"
-        padding="p-4"
-        margin="m-4"
-      >
-        <div>
-          <Link to='/newmultidataproject'  className="px-3 py-4 lg:py-2 flex  ">
-          <span>Create Project</span>
-        </Link>
-        <p>
-        Provides a visualization analysis service that can be implemented according to the uploaded user data.
-        </p>
-        </div>
-      </ChildCard>
+    <div>
+      <HeaderComponent
+        title={title}
+        routeName="/multidatavisualization/"
+        breadCrumbs={breadCrumbs['/multidatavisualization/']}
+        type="single"
 
-      <ChildCard
-        background="bg-blue-200"
-        color="text-blue-800"
-        width="sm:w-1/4"
-        padding="p-4"
-        margin="m-4"
-      >
-        <div>
-        <h1>View Projects</h1>
-        <p>View the List of analysis projects and navigate to the desired project.</p>
+      />
+      <article id="subContents" className="subContents">
+        <div className="contentsTitle">
+          <h3>
+            <font>
+              <font><FormattedMessage id="MultiData" defaultMessage="Multi Data"/></font>
+              <span className="colorSecondary">
+                <font ><FormattedMessage id="Upload" defaultMessage="Upload"/></font>
+              </span>
+            </font>
+          </h3>
         </div>
-      </ChildCard>
+        <div className="section ptn">
+          <div className="auto">
+            {
+              gridData &&
+              <div className='dataList multiDataViz'>
+                <ul >
+                  {gridData.map((item, index) => (
 
+                    <li key={index} >
+                      <div className="labelBox">
+                        <div className="labels01">
+                          <h3 style={{ textTransform: 'capitalize' }}>
+                            {item.title}
+                          </h3>
+                        </div>
+                        <div className="labels02" style={{ columnGap: "10px" }}>
+                          <Link to={item.link}>
+                            <span class="label01">
+                              <font>
+                                <font>Run Analysis</font>
+                              </font>
+                            </span>
+                          </Link>
+                        </div>
+
+                      </div>
+                      <div>
+                      <p className="multiDataVizHomeGridP">Provides a visualization analysis service that can be implemented according to the uploaded user data.</p>
+                        <img src={item.image} alt="img" className="DataVizGridImage" />
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            }
+          </div>
+        </div>
+      </article>
     </div>
   );
 };
