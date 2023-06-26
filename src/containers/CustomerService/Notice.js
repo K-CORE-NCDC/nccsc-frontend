@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
+import FaqList from '../../containers/CustomerVoice/Faq'
+import QA from "../CustomerVoice/QA";
+import { Others } from "./Others";
 
 export const Notice = () => {
   const [activeTab, setActiveTab] = useState('1')
@@ -47,10 +50,19 @@ export const Notice = () => {
               </li>
             </ul>
           </div>
-
-
         </div>
-      
+        {activeTab === '1' &&
+          <QA />
+        }
+
+        {activeTab === '3' &&
+          <FaqList />
+
+        }
+        {activeTab === '4' &&
+          <Others />
+
+        }
       </div>
     </div>
   )

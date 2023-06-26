@@ -226,6 +226,7 @@ export default function DataVisualization() {
 
   useEffect(() => {
     let w = elementRef.current.getBoundingClientRect().width;
+  
     setWidth(w);
     setBoolChartState(false);
     if (project_id !== undefined) {
@@ -327,6 +328,7 @@ export default function DataVisualization() {
     }, [screenCapture]);
 
   const LoadChart = (w, type) => {
+    console.log('width', width)
     switch (type) {
       case "circos":
         return Charts.circos(

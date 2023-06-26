@@ -9,7 +9,7 @@ import { FormattedMessage } from "react-intl";
 const Introduction = ({ height, innerHeight }) => {
   const _height = innerHeight - height
   return (
-    <div style={{ height: `${innerHeight}px`, backgroundImage: `url(${bgimg})`, backgroundSize: "cover", backgroundPosition: "50% 50%" }} className="mainVisual">
+    <div style={{ backgroundImage: `url(${bgimg})`, backgroundSize: "cover", backgroundPosition: "50% 50%" }} className="mainVisual">
       <div className="mask">
         <div className="visual">
           <div className="txtBox main_box" data-aos="fade-in" >

@@ -54,6 +54,7 @@ const LollipopCmp = React.forwardRef(({ type,width,data,gene,watermarkCss }, ref
 
     <div ref={ref} id='lolipop' className={`lollipop ${watermarkCss}`}>
       {active &&
+      
         <LollipopPlot
           domains={mockData.domains}
           lollipops={mockData.lollipops}
