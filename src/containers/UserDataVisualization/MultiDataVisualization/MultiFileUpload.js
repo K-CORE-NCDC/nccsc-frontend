@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { multiFileUpload,clearMultiFIleUploadState } from "../../../actions/api_actions";
+import { multiFileUpload, clearMultiFIleUploadState } from "../../../actions/api_actions";
 import { useDispatch } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import Swal from 'sweetalert2';
-
-const Table = ({ updateComponentNumber}) => {
+import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
+const Table = ({ updateComponentNumber }) => {
   const [filesData, setFilesData] = useState({});
   const [projectName, setProjectName] = useState({});
   const dispatch = useDispatch()
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(clearMultiFIleUploadState())
-  },[])
+  }, [])
 
   const handleFileChange = (event, type) => {
     const selectedFile = event.target.files[0];
@@ -23,8 +23,8 @@ const Table = ({ updateComponentNumber}) => {
       },
     }));
   };
-  
-  
+
+
   const handleInputChange = (event) => {
     setProjectName(event.target.value)
   };
@@ -41,7 +41,7 @@ const Table = ({ updateComponentNumber}) => {
     if (filesData["clinical_information"] && projectName !== '') {
       dispatch(multiFileUpload(filesData, projectName));
       updateComponentNumber(1);
-    } else if(projectName === '') {
+    } else if (projectName === '') {
       Swal.fire({
         title: 'Warning',
         text: "Enter Project ID",
@@ -54,19 +54,19 @@ const Table = ({ updateComponentNumber}) => {
         }
       })
     }
-    else if(filesData["clinical_information"] === null){
-        Swal.fire({
-          title: 'Warning',
-          text: "Upload Clinical Information.",
-          icon: 'warning',
-          confirmButtonColor: '#003177',
-          confirmButtonText: 'Ok',
-          allowOutsideClick: false
-        }).then((result) => {
-          if (result.value) {
-          }
-        })
-      }
+    else if (filesData["clinical_information"] === null) {
+      Swal.fire({
+        title: 'Warning',
+        text: "Upload Clinical Information.",
+        icon: 'warning',
+        confirmButtonColor: '#003177',
+        confirmButtonText: 'Ok',
+        allowOutsideClick: false
+      }).then((result) => {
+        if (result.value) {
+        }
+      })
+    }
   };
 
   const handleReset = () => {
@@ -74,301 +74,325 @@ const Table = ({ updateComponentNumber}) => {
     setProjectName('');
   };
 
+  const title = { id: "MultiDataVisualization", defaultMessage: "Multi Data Visualization" }
+
+  const breadCrumbs = {
+    '/newmultidataproject/': [
+      { id: 'FindID', defaultMessage: 'Home', to: '/' },
+      { id: 'MultiDataUpload', defaultMessage: 'Multi Data Upload', to: '/home/visualizeMyData/' },
+    ]
+  }
+
   return (
-    <div className="flex items-center justify-center">
-      <div className="h-auto bg-white my-4 p-6 rounded-lg shadow-lg" style={{width:'31vw'}}>
 
-      <div className="flex mb-4">
-    <label htmlFor="projectName" className="font-bold mr-2 my-1">
-        Project Name: 
-    </label>
-    <input
-        type="text"
-        id="projectName"
-        name="project_name"
-        value={filesData.project_name}
-        onChange={handleInputChange}
-        className="border border-gray-300 px-2 py-1 w-40"
-    />
-    </div>
+    <div>
+      <HeaderComponent
+        title={title}
+        routeName="/newmultidataproject/"
+        breadCrumbs={breadCrumbs['/newmultidataproject/']}
+        type="single"
 
-
-      <table className="w-full border-collapse border border-gray-300 my-8">
-          <tbody>
-            <tr className="bg-gray-200">
-            <td className="border border-gray-300 px-4 py-2 text-center" colSpan="2">
-            Clinical Information file (Required)
-            </td>
-            </tr>
-            <tr>
-              <td className="border border-gray-300 px-4 py-2 w-52">Clinical Information</td>
-              <td className="border border-gray-300 px-4 py-2 flex justify-between items-center">
-                {filesData["clinical_information"] ? (
-                  <>
-                    <span>{filesData["clinical_information"] && filesData["clinical_information"].file.name}</span>
-                    <button
-                      className="bg-gray-200 px-2 py-1 rounded"
-                      type="button"
-                      onClick={() => handleClearFile("clinical_information")}
-                    >
-                      No file
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <input
-                      type="file"
-                      onChange={(event) => handleFileChange(event, "clinical_information")}
-                    />
-                    <button className="bg-gray-200 px-2 py-1 rounded" disabled>
-                      No file
-                    </button>
-                  </>
-                )}
-              </td>
-            </tr>
-          </tbody>
-      </table>
-
-        <table className="w-full border-collapse border border-gray-300 my-8">
-          <tbody>
-            <tr className="bg-yellow-100">
-            <td className="border border-gray-300 px-4 py-2 text-center" colSpan="2">
-                DNA File
-            </td>
-            </tr>
-            <tr>
-              <td className="border border-gray-300 px-4 py-2 w-52">DNA Mutation</td>
-              <td className="border border-gray-300 px-4 py-2 flex justify-between items-center">
-                {filesData["dna_mutation"] ? (
-                  <>
-                    <span>{filesData["dna_mutation"] && filesData["dna_mutation"].file.name}</span>
-                    <button
-                      className="bg-gray-200 px-2 py-1 rounded"
-                      type="button"
-                      onClick={() => handleClearFile("dna_mutation")}
-                    >
-                      No file
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <input
-                      type="file"
-                      onChange={(event) => handleFileChange(event, "dna_mutation")}
-                    />
-                    <button className="bg-gray-200 px-2 py-1 rounded" disabled>
-                      No file
-                    </button>
-                  </>
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td className="border border-gray-300 px-4 py-2">CNV</td>
-              <td className="border border-gray-300 px-4 py-2 flex justify-between items-center">
-                {filesData["cnv"] ? (
-                  <>
-                    <span>{filesData["cnv"] && filesData["cnv"].file.name}</span>
-                    <button
-                      className="bg-gray-200 px-2 py-1 rounded"
-                      type="button"
-                      onClick={() => handleClearFile("cnv")}
-                    >
-                      No file
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <input
-                      type="file"
-                      onChange={(event) => handleFileChange(event, "cnv")}
-                    />
-                    <button className="bg-gray-200 px-2 py-1 rounded" disabled>
-                      No file
-                    </button>
-                  </>
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td className="border border-gray-300 px-4 py-2">Methylation</td>
-              <td className="border border-gray-300 px-4 py-2 flex justify-between items-center">
-                {filesData["methylation"] ? (
-                  <>
-                    <span>{filesData["methylation"] && filesData["methylation"].file.name}</span>
-                    <button
-                      className="bg-gray-200 px-2 py-1 rounded"
-                      type="button"
-                      onClick={() => handleClearFile("methylation")}
-                    >
-                      No file
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <input
-                      type="file"
-                      onChange={(event) => handleFileChange(event, "methylation")}
-                    />
-                    <button className="bg-gray-200 px-2 py-1 rounded" disabled>
-                      No file
-                    </button>
-                  </>
-                )}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        
-
-        <table className="w-full border-collapse border border-gray-300 my-8">
-          <tbody>
-            <tr className="bg-orange-100">
-            <td className="border border-gray-300 px-4 py-2 text-center" colSpan="2">
-                RNA File
-            </td>
-            </tr>
-            <tr>
-              <td className="border border-gray-300 px-4 py-2 w-52">RNA </td>
-              <td className="border border-gray-300 px-4 py-2 flex justify-between items-center">
-                {filesData["rna"] ? (
-                  <>
-                    <span>{filesData["rna"] && filesData["rna"].file.name}</span>
-                    <button
-                      className="bg-gray-200 px-2 py-1 rounded"
-                      type="button"
-                      onClick={() => handleClearFile("rna")}
-                    >
-                      No file
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <input
-                      type="file"
-                      onChange={(event) => handleFileChange(event, "rna")}
-                    />
-                    <button className="bg-gray-200 px-2 py-1 rounded" disabled>
-                      No file
-                    </button>
-                  </>
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td className="border border-gray-300 px-4 py-2">Fusion</td>
-              <td className="border border-gray-300 px-4 py-2 flex justify-between items-center">
-                {filesData["fusion"] ? (
-                  <>
-                    <span>{filesData["fusion"] && filesData["fusion"].file.name}</span>
-                    <button
-                      className="bg-gray-200 px-2 py-1 rounded"
-                      type="button"
-                      onClick={() => handleClearFile("fusion")}
-                    >
-                      No file
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <input
-                      type="file"
-                      onChange={(event) => handleFileChange(event, "fusion")}
-                    />
-                    <button className="bg-gray-200 px-2 py-1 rounded" disabled>
-                      No file
-                    </button>
-                  </>
-                )}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        
-
-        <table className="w-full border-collapse border border-gray-300 my-8">
-          <tbody>
-            <tr className="bg-blue-100">
-            <td className="border border-gray-300 px-4 py-2 text-center" colSpan="2">
-                Protein File
-            </td>
-            </tr>
-            <tr>
-              <td className="border border-gray-300 px-4 py-2 w-52">Proteome</td>
-              <td className="border border-gray-300 px-4 py-2 flex justify-between items-center">
-                {filesData["proteome"] ? (
-                  <>
-                   <span>{filesData["proteome"] && filesData["proteome"].file.name}</span>
-                    <button
-                      className="bg-gray-200 px-2 py-1 rounded"
-                      type="button"
-                      onClick={() => handleClearFile("proteome")}
-                    >
-                      No file
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <input
-                      type="file"
-                      onChange={(event) => handleFileChange(event, "proteome")}
-                    />
-                    <button className="bg-gray-200 px-2 py-1 rounded" disabled>
-                      No file
-                    </button>
-                  </>
-                )}
-              </td>
-            </tr>
-            <tr>
-              <td className="border border-gray-300 px-4 py-2">Phosphorylation</td>
-              <td className="border border-gray-300 px-4 py-2 flex justify-between items-center">
-                {filesData["phospho"] ? (
-                  <>
-                    <span>{filesData["phospho"] && filesData["phospho"].file.name}</span>
-                    <button
-                      className="bg-gray-200 px-2 py-1 rounded"
-                      type="button"
-                      onClick={() => handleClearFile("phospho")}
-                    >
-                      No file
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <input
-                      type="file"
-                      onChange={(event) => handleFileChange(event, "phospho")}
-                    />
-                    <button className="bg-gray-200 px-2 py-1 rounded" disabled>
-                      No file
-                    </button>
-                  </>
-                )}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div className="flex justify-end mt-4">
-          <button
-           className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-40 h-16 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
-          type="button"
-          onClick={handleUpload}
-          >
-          <FormattedMessage id="Upload" defaultMessage="Upload" />
-        </button>
-
-        <button
-           className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-40 h-16 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
-          type="button"
-          onClick={handleReset}
-          >
-          <FormattedMessage id="Reset" defaultMessage="Reset" />
-        </button>
+      />
+      <article id="subContents" className="subContents">
+      <div className="contentsTitle" style={{margin:"0px"}}>
+          <h3>
+            <font>
+              <font><FormattedMessage id="MultiData" defaultMessage="Multi Data"/></font>
+              <span className="colorSecondary">
+                <font><FormattedMessage id="Upload" defaultMessage="Upload"/> </font>
+              </span>
+            </font>
+          </h3>
         </div>
-      </div>
+        <div className="MultiUploadFlex">
+          <div className="MultiUploadContainer">
+            <div className="MultiUploadFlex1">
+              <label htmlFor="projectName" className="MultiUploadProjectNameLabel">
+                Project Name:
+              </label>
+              <div className="MultiUploadProjectName">
+                <input
+                  type="text"
+                  id="projectName"
+                  name="project_name"
+                  value={filesData.project_name}
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div>
+
+            <table className="MultiUploadTableHead">
+              <tbody>
+                <tr className="MultiUploadBGGray">
+                  <td className="MultiUploadTDHeader MultiUploadTextCenter" colSpan="2">
+                    Clinical Information file <span style={{color:"red"}}> (Required) </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="MultiUploadTDHeader MultiUploadW208" style={{ width: '31vw' }}>Clinical Information</td>
+                  <td className="MultiUploadTDHeader MultiUploadTD">
+                    {filesData["clinical_information"] ? (
+                      <>
+                        <span>{filesData["clinical_information"] && filesData["clinical_information"].file.name}</span>
+                        <button
+                          className="MultiUploadBgGrayButton"
+                          type="button"
+                          onClick={() => handleClearFile("clinical_information")}
+                        >
+                          No file
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <input
+                          type="file"
+                          onChange={(event) => handleFileChange(event, "clinical_information")}
+                        />
+                        <button className="MultiUploadBgGrayButton" disabled>
+                          No file
+                        </button>
+                      </>
+                    )}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+             <table className="MultiUploadTableHead">
+              <tbody>
+                <tr className="MultiUploadBGYellow">
+                  <td className="MultiUploadTDHeader MultiUploadTextCenter" colSpan="2">
+                    DNA File
+                  </td>
+                </tr>
+                <tr>
+                  <td className="MultiUploadTDHeader MultiUploadW208">DNA Mutation</td>
+                  <td className="MultiUploadTDHeader MultiUploadTD">
+                    {filesData["dna_mutation"] ? (
+                      <>
+                        <span>{filesData["dna_mutation"] && filesData["dna_mutation"].file.name}</span>
+                        <button
+                          className="MultiUploadBgGrayButton"
+                          type="button"
+                          onClick={() => handleClearFile("dna_mutation")}
+                        >
+                          No file
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <input
+                          type="file"
+                          onChange={(event) => handleFileChange(event, "dna_mutation")}
+                        />
+                        <button className="MultiUploadBgGrayButton" disabled>
+                          No file
+                        </button>
+                      </>
+                    )}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="MultiUploadTDHeader">CNV</td>
+                  <td className="MultiUploadTDHeader MultiUploadTD">
+                    {filesData["cnv"] ? (
+                      <>
+                        <span>{filesData["cnv"] && filesData["cnv"].file.name}</span>
+                        <button
+                          className="MultiUploadBgGrayButton"
+                          type="button"
+                          onClick={() => handleClearFile("cnv")}
+                        >
+                          No file
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <input
+                          type="file"
+                          onChange={(event) => handleFileChange(event, "cnv")}
+                        />
+                        <button className="MultiUploadBgGrayButton" disabled>
+                          No file
+                        </button>
+                      </>
+                    )}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="MultiUploadTDHeader">Methylation</td>
+                  <td className="MultiUploadTDHeader MultiUploadTD">
+                    {filesData["methylation"] ? (
+                      <>
+                        <span>{filesData["methylation"] && filesData["methylation"].file.name}</span>
+                        <button
+                          className="MultiUploadBgGrayButton"
+                          type="button"
+                          onClick={() => handleClearFile("methylation")}
+                        >
+                          No file
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <input
+                          type="file"
+                          onChange={(event) => handleFileChange(event, "methylation")}
+                        />
+                        <button className="MultiUploadBgGrayButton" disabled>
+                          No file
+                        </button>
+                      </>
+                    )}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+
+            <table className="MultiUploadTableHead">
+              <tbody>
+                <tr className="MultiUploadBGOrange">
+                  <td className="MultiUploadTDHeader MultiUploadTextCenter" colSpan="2">
+                    RNA File
+                  </td>
+                </tr>
+                <tr>
+                  <td className="MultiUploadTDHeader MultiUploadW208">RNA </td>
+                  <td className="MultiUploadTDHeader MultiUploadTD">
+                    {filesData["rna"] ? (
+                      <>
+                        <span>{filesData["rna"] && filesData["rna"].file.name}</span>
+                        <button
+                          className="MultiUploadBgGrayButton"
+                          type="button"
+                          onClick={() => handleClearFile("rna")}
+                        >
+                          No file
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <input
+                          type="file"
+                          onChange={(event) => handleFileChange(event, "rna")}
+                        />
+                        <button className="MultiUploadBgGrayButton" disabled>
+                          No file
+                        </button>
+                      </>
+                    )}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="MultiUploadTDHeader">Fusion</td>
+                  <td className="MultiUploadTDHeader MultiUploadTD">
+                    {filesData["fusion"] ? (
+                      <>
+                        <span>{filesData["fusion"] && filesData["fusion"].file.name}</span>
+                        <button
+                          className="MultiUploadBgGrayButton"
+                          type="button"
+                          onClick={() => handleClearFile("fusion")}
+                        >
+                          No file
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <input
+                          type="file"
+                          onChange={(event) => handleFileChange(event, "fusion")}
+                        />
+                        <button className="MultiUploadBgGrayButton" disabled>
+                          No file
+                        </button>
+                      </>
+                    )}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+
+            <table className="MultiUploadTableHead">
+              <tbody>
+                <tr className="MultiUploadBGBlue">
+                  <td className="MultiUploadTDHeader MultiUploadTextCenter" colSpan="2">
+                    Protein File
+                  </td>
+                </tr>
+                <tr>
+                  <td className="MultiUploadTDHeader MultiUploadW208">Proteome</td>
+                  <td className="MultiUploadTDHeader MultiUploadTD">
+                    {filesData["proteome"] ? (
+                      <>
+                        <span>{filesData["proteome"] && filesData["proteome"].file.name}</span>
+                        <button
+                          className="MultiUploadBgGrayButton"
+                          type="button"
+                          onClick={() => handleClearFile("proteome")}
+                        >
+                          No file
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <input
+                          type="file"
+                          onChange={(event) => handleFileChange(event, "proteome")}
+                        />
+                        <button className="MultiUploadBgGrayButton" disabled>
+                          No file
+                        </button>
+                      </>
+                    )}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="MultiUploadTDHeader">Phosphorylation</td>
+                  <td className="MultiUploadTDHeader MultiUploadTD">
+                    {filesData["phospho"] ? (
+                      <>
+                        <span>{filesData["phospho"] && filesData["phospho"].file.name}</span>
+                        <button
+                          className="MultiUploadBgGrayButton"
+                          type="button"
+                          onClick={() => handleClearFile("phospho")}
+                        >
+                          No file
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <input
+                          type="file"
+                          onChange={(event) => handleFileChange(event, "phospho")}
+                        />
+                        <button className="MultiUploadBgGrayButton" disabled>
+                          No file
+                        </button>
+                      </>
+                    )}
+                  </td>
+                </tr>
+              </tbody>
+            </table> 
+
+            <div className="bottomBtns">
+              <div className="flex">
+                <button className="btn btnGray bdBtn"  onClick={handleReset}>
+                <FormattedMessage id="Reset" defaultMessage="Reset" />
+                </button>
+                <button className="btn btnPrimary" onClick={handleUpload}>
+                <FormattedMessage id="Upload" defaultMessage="Upload" />
+                </button>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </article>
     </div>
   );
 };

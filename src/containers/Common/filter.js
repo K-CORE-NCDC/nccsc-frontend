@@ -517,7 +517,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
   };
 
   const sendFilter = () => {
-    parentCallback(selectState, filterKeyandValues);
+    parentCallback({filter:selectState, filterKeyandValues:filterKeyandValues});
     drawTags(filterJson);
   };
 
@@ -549,7 +549,8 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
       il.value = "";
     });
     setSelectState({'filterCondition':'and'});
-    parentCallback("");
+    // parentCallback("");
+    parentCallback({filter:"", filterKeyandValues:""});
     if(document.getElementById('default-radio-1')){
       document.getElementById('default-radio-1').checked = true
     }
