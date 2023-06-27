@@ -123,12 +123,11 @@ export default function DataVisualization() {
 
   };
 
-  const callback = useCallback(({ filters, filterKeyandValues, value, genes }) => {
-
-    if (filters && filterKeyandValues) {
+  const callback = useCallback(({ filters, value, genes }) => {
+    if (filters) {
       setState((prevState) => ({
         ...prevState,
-        'filterKeyandValues': filterKeyandValues
+        filter: filters,
       }));
       setfilterApplied(true);
     }
@@ -413,142 +412,7 @@ export default function DataVisualization() {
 
       />
 
-      {/* Filter and Gene Filter */}
-      <div className="flex">
-        <div className="flex items-center justify-center space-x-4 md:justify-start md:space-x-0 md:mr-4 mx-auto gap-40">
-          {/* {toggle && (
-            <Popover className="relative" style={{ margin: 'auto' }}>
-              {({ open }) => {
-                return (
-                  <>
-                    <div>
-                      <Popover.Button>
-                        <div className="flex bg-white bg-white text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md btn_input_height  mb-3 lg:w-full   font-bold py-2 px-4 border  rounded xs:h-14 lg:h-16">
-                          <div className="flex-1 flex items-center justify-center px-4">Clinical info. Re-filtering</div>
-                          <div className="w-20 h-full bg-gray-200 flex items-center justify-center">
-                            <CogIcon className="h-8 w-8" />
-                          </div>
-                        </div>
-                      </Popover.Button>
 
-                      <Transition
-                        as={Fragment}
-                        enter="transition ease-out duration-200"
-                        enterFrom="opacity-0 translate-y-1"
-                        enterTo="opacity-100 translate-y-0"
-                        leave="transition ease-in duration-150"
-                        leaveFrom="opacity-100 translate-y-0"
-                        leaveTo="opacity-0 translate-y-1"
-                      >
-                        <Popover.Panel className="absolute z-10 w-screen max-w-sm px-4 mt-0 transform -translate-x-1/2 left-1/2 sm:px-0 lg:max-w-3xl">
-                          <div className="hidden md:block lg:block xl:block 2xl:block  xs:z-10 xs:opacity-95 bg-white border border-gray-200 transition duration-150 ease-in-out overflow-y-scroll" style={{ height: "60vh" }} >
-                            <Filter
-                              parentCallback={callback}
-                              filterState={state["filter"]}
-                              set_screen={screen_call}
-                              project_id={project_id}
-                            />
-                          </div>
-                        </Popover.Panel>
-                      </Transition>
-                    </div>
-                  </>
-                )
-              }}
-            </Popover>
-          )} */}
-         <Popover className="relative" style={{ margin: 'auto' }}>
-            {({ open }) => {
-              return (
-                <>
-                <div>
-                  <Popover.Button>
-                    <div className="GeneSetgeneSetButton">
-                      <div className="flex-1">Gene set Re-filtering</div>
-                      <div className="w-20">
-                        <FilterIcon className="filter-icon" />
-                      </div>
-                    </div>
-                  </Popover.Button> 
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-200"
-                    enterFrom="opacity-0 translate-y-1"
-                    enterTo="opacity-100 translate-y-0"
-                    leave="transition ease-in duration-150"
-                    leaveFrom="opacity-100 translate-y-0"
-                    leaveTo="opacity-0 translate-y-1"
-                  >
-                    <Popover.Panel className="GeneSetPopoverPanel">
-                      <GeneSet parentCallback={callback} filterState={state} />
-                    </Popover.Panel>
-                  </Transition>
-                </div>
-                </>
-              )
-            }}
-          </Popover> 
-        </div>
-
-   
-        
-        <div className="ml-auto md:ml-auto">
-          <div className="flex justify-end p-5 ">
-         
-            <div className=" inline-flex  ">
-              {screenCapture === false && (
-                <button
-                  className="text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md btn_input_height bg-main-blue hover:bg-main-blue mb-3 lg:w-full text-white  font-bold py-2 px-10 border border-blue-700 rounded xs:h-14 lg:h-16"
-                  onClick={() => setScreenCaptureFunction(true)}
-                >
-                  <FormattedMessage
-                    id="Capture_screen"
-                    defaultMessage="capture screenshot"
-                  />
-                </button>
-              )}
-              {screenCapture === true && (
-                <button
-                  className="text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md btn_input_height bg-main-blue hover:bg-main-blue mb-3 lg:w-full text-white  font-bold py-2 px-4 border border-blue-700 rounded xs:h-14 lg:h-16"
-                  disabled={true}
-                >
-                  Loading...
-                </button>
-              )}
-              {screenCapture === true && (
-                <>
-                  <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none m-auto">
-                    <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                      <div
-                        className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none h-56"
-                        style={{ width: "400px" }}
-                      >
-                        <div
-                          className="relative p-6 flex-auto my-auto"
-                          style={{ height: "100%" }}
-                        >
-                          <p className="my-4 text-slate-500 text-lg leading-relaxed py-12">
-                            Image is downloading.....
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-                </>
-              )}
-              {screenCaptureConfirmation && (
-                <ConfirmDownload
-                  screenCaptureFunction={setToFalseAfterScreenCapture}
-                  hideModal={() =>
-                    setScreenCaptureConfirmation(false)
-                  }
-                />
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* List of Tabs and Chart */}
       {/* style={{height:"60vh"}} */}
@@ -607,6 +471,93 @@ export default function DataVisualization() {
         </div>
         <div className="section ptn">
           <div className="auto">
+
+
+
+
+            {/* Filter and Gene Filter */}
+            <div className="Flex">
+
+              <div className="FilterGeneSet">
+                {/* {toggle && filter popover
+  
+                {/* // JSX in your component file */}
+
+                <Popover className="relative">
+                  {({ open }) => {
+                    return (
+                      <>
+                        <div>
+                          <Popover.Button>
+                            <div className="GeneSetgeneSetButton">
+                              <div className="flex-1">Clinical info. Re-filtering</div>
+                              <div className="w-20">
+                                <CogIcon className="filter-icon" />
+                              </div>
+                            </div>
+                          </Popover.Button>
+
+                          <Transition
+                            as={Fragment}
+                            enter="transition ease-out duration-200"
+                            enterFrom="opacity-0 translate-y-1"
+                            enterTo="opacity-100 translate-y-0"
+                            leave="transition ease-in duration-150"
+                            leaveFrom="opacity-100 translate-y-0"
+                            leaveTo="opacity-0 translate-y-1"
+                          >
+                            <Popover.Panel className="GeneSetPopoverPanel">
+                              <div className="FilterDiv" >
+                                <Filter
+                                  parentCallback={callback}
+                                  filterState={state["filter"]}
+                                  set_screen={screen_call}
+                                  project_id={project_id}
+                                />
+                              </div>
+                              {/* </div> */}
+                            </Popover.Panel>
+                          </Transition>
+                        </div>
+                      </>
+                    );
+                  }}
+                </Popover>
+
+                <Popover className="relative" style={{ margin: 'auto' }}>
+                  {({ open }) => {
+                    return (
+                      <>
+                        <div>
+                          <Popover.Button>
+                            <div className="GeneSetgeneSetButton">
+                              <div className="flex-1">Gene set Re-filtering</div>
+                              <div className="w-20">
+                                <FilterIcon className="filter-icon" />
+                              </div>
+                            </div>
+                          </Popover.Button>
+                          <Transition
+                            as={Fragment}
+                            enter="transition ease-out duration-200"
+                            enterFrom="opacity-0 translate-y-1"
+                            enterTo="opacity-100 translate-y-0"
+                            leave="transition ease-in duration-150"
+                            leaveFrom="opacity-100 translate-y-0"
+                            leaveTo="opacity-0 translate-y-1"
+                          >
+                            <Popover.Panel className="GeneSetPopoverPanel">
+                              <GeneSet parentCallback={callback} filterState={state} />
+                            </Popover.Panel>
+                          </Transition>
+                        </div>
+                      </>
+                    )
+                  }}
+                </Popover>
+
+              </div>
+            </div>
             {
               gridData && !tabName &&
               <div className='dataList'>
@@ -642,7 +593,7 @@ export default function DataVisualization() {
           </div>
 
           <section>
-            <div id="tab-contents" style={{display:"block",textAlign:"center"}} ref={elementRef}>
+            <div id="tab-contents" style={{ display: "block", textAlign: "center" }} ref={elementRef}>
               {tabName && tabName !== 'home' && boolChartState && (
                 <div className="MultiDataVizChartViz">{chart["viz"]}</div>
               )}
