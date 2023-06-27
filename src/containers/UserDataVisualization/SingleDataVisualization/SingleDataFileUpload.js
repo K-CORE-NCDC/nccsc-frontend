@@ -319,7 +319,7 @@ const SingleDataFileUpload = ({ updateComponentNumber})=> {
             return acc;
         }, {});
         setUploadFile(abcd)
-        
+        console.log('abcd', abcd)
         dispatch(SingleFileUpload(abcd, projectName))
         updateComponentNumber(1)
         for (let key in uploadFile) {

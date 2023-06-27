@@ -16,7 +16,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
   const context = useContext(Context);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const reference = useRef()
-  const [tableType, setTableType] = useState('rna')
+  const [tableType, setTableType] = useState('phospho')
   const [data_, setData] = useState('')
   const [inputGene, setInputGene] = useState([])
   const [heatmapJson, setHeatmapJson] = useState([])
@@ -52,6 +52,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
     { "name": "Theme 4", "value": ["#FFFFFF", "#9900E0"] },
 
   ]
+
 
   useEffect(() => {
     if ('userProjectsDataTable' in tabList) {
@@ -177,8 +178,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
   }, [inputData])
 
   useEffect(() => {
-    
-    if (heatmapJson?.length > 0) {
+    if (heatmapJson?.length > 0 && brstKeys?.length > 0) {
       let genes = []
       let unique_sample_values = {}
       let unique_cf = {}
@@ -204,6 +204,8 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
           if (!genes.includes(item['gene_name'])) {
             genes.push(item['gene_name'])
           }
+
+        
           let breast_key = brstKeys[item['pt_sbst_no']]
           if (breast_key in unique_sample_values) {
             unique_sample_values[breast_key].push(item["gene_vl"])
@@ -307,7 +309,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
         setInSufficientData(true)
       }
     }
-  }, [heatmapJson])
+  }, [heatmapJson , brstKeys])
 
 
 
@@ -653,26 +655,23 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
 
   return (
     <div>
-      <div className="grid  ">
-        <div className='grid grid-cols-4'>
-          <div className="p-5 text-left col-span-4">
-            <div className="flex justify-start items-baseline flex-wrap">
-              <div className="flex m-2">
-                <button onClick={e => changeMainType(e, 'heatmap')} name='maintype' className="rounded-l-lg hover:scale-110 focus:outline-none flex lg:p-5 font-bold cursor-pointer hover:bg-main-blue
-                bg-main-blue text-white border duration-200 ease-in-out sm:p-3  xs:p-3 md-p-4 border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md  ">
+      <div className="">
+        <div className=''>
+          <div className="">
+            <div className="">
+              <div className="">
+                <button onClick={e => changeMainType(e, 'heatmap')} name='maintype' className="btn btnPrimary ">
                   Heatmap
                 </button>
-                <button onClick={e => changeMainType(e, 'k-mean')} name='maintype' className="rounded-r-lg
-                    hover:scale-110 focus:outline-none flex justify-center lg:p-5 font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 text-teal-700 border duration-200 sm:p-3
-                     lg:h-ease-in-out xs:p-3 md-p-4 border-teal-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md  ">
+                <button onClick={e => changeMainType(e, 'k-mean')} name='maintype' className="btn btnPrimary ">
                   K-mean
                 </button>
               </div>
             </div>
           </div>
-          <div className="p-5 text-left xs:col-span-4  lg:col-span-2 sm:col-span-4">
-            <div className="flex justify-start items-baseline flex-wrap">
-              <div className="flex m-2">
+          <div className="">
+            <div className="">
+              <div className="">
                 <button onClick={e => changeType(e, 'rna')} name='type' className="rounded-r-none  hover:scale-110
                     focus:outline-none flex p-5 rounded font-bold cursor-pointer sm:text-xl md:text-2xl lg:text-2xl xs:text-sm xs:p-3
                     hover:bg-main-blue  bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition">

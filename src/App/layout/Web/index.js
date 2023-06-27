@@ -97,15 +97,15 @@ export default function Web(props) {
     let cookiedata = SetCookie()
     cookiedata && cookiedata.then((result) => {
       if (result.status === 200) {
-        let data = DashboardCount()
-        data.then((result) => {
-          if (result.status === 200)
-            setCountJson(result.data)
-          else {
-            setCountJson({})
-            setCountStatus(204)
-          }
-        })
+        // let data = DashboardCount()
+        // data.then((result) => {
+        //   if (result.status === 200)
+        //     setCountJson(result.data)
+        //   else {
+        //     setCountJson({})
+        //     setCountStatus(204)
+        //   }
+        // })
       }
     })
   }, [])
@@ -248,18 +248,18 @@ export default function Web(props) {
       var time = today.getHours() + ":" + (today.getMinutes() <= 9 ? `00` : today.getMinutes());
       // let check_popup = localStorage.getItem('show_popup') 
       setCurrentTime(time);
-      if (!countJson) {
-        let data = DashboardCount()
-        data.then((result) => {
-          if (result.status === 200) {
-            setCountJson(result.data)
-          }
-          else {
-            setCountStatus(204)
-            setCountJson({})
-          }
-        })
-      }
+      // if (!countJson) {
+      //   let data = DashboardCount()
+      //   data.then((result) => {
+      //     if (result.status === 200) {
+      //       setCountJson(result.data)
+      //     }
+      //     else {
+      //       setCountStatus(204)
+      //       setCountJson({})
+      //     }
+      //   })
+      // }
     }
     setCurrentDate(date);
     let path = window.location.pathname
