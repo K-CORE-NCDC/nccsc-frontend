@@ -38,7 +38,9 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   );
 
   useEffect(()=>{
+    console.log('tablist' , tabList)
     if('userProjectsDataTable' in tabList ){
+      console.log('tablist' , tabList)
       setAllTabList(tabList.userProjectsDataTable)
     }
     
@@ -274,7 +276,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
             }
             tmp.push(
               <div className='p-3' key={key} >
-                <span style={{ 'backgroundColor': colors[key] }} className="inline-flex items-center justify-center px-3 mr-3 pb-1 text-md font-bold leading-none text-white rounded-full">
+                <span style={{ 'backgroundColor': colors[key] }} className="data_bubbles">
                   {count}
                 </span>
                 <span style={{ 'color': colors[key] }}><strong className="xs:text-sm sm:text-xl">{key}</strong></span>
@@ -506,16 +508,13 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                 <div className="p-5 text-right">
                   <div className="flex justify-start items-baseline flex-wrap"> */}
                     {/* <div className="flex m-2"> */}
-                    <div>
+                    <div style={{display:'flex' , gap:'1%'}}>
                       <button onClick={e => changeType(e, 'Mutation')} id='Mutation' name='type' className="btn btnPrimary">
                         <FormattedMessage  id = "Mutation" defaultMessage='Mutation'/>
                       </button>
 
                       {
-                       project_id !== undefined  &&  alltabList['phospho']  && <button onClick={e => changeType(e, 'Phospho')} id='Phospho' name='type' className="rounded-l-none border-l-0
-                      hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-3
-                      rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100
-                      text-teal-700 sm:text-xl xs:text-sm lg:text-2xl xs:p-2 border duration-200 ease-in-out border-teal-600 transition">
+                       project_id !== undefined  &&  alltabList['phospho']  && <button onClick={e => changeType(e, 'Phospho')} id='Phospho' name='type' className="btn btnPrimary">
                       <FormattedMessage  id = "Phospho" defaultMessage='Phospho'/>
                       </button> 
                       }
@@ -547,24 +546,24 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
               <>
               {noContent && <NoContentMessage /> }
               {
-                showLollipop && <div className=''>
-                  <div className=''>
+                showLollipop && <div className='' style={{position:'relative'}}>
+                  <div className='chart_box'>
                     <LollipopCmp watermarkCss={watermarkCss} ref={reference} width={width} type={tableType}
                       gene={gene}
                       data={state}
                     />
-                    {/* {tableType === "Mutation" &&
-                      <div className=''>
-                        <div className=''>
-                          <label className="">Enst Id List</label>
-                          <textarea defaultValue={enstId.join("\n")} className="" rows="4"></textarea>
+                    {tableType === "Mutation" &&
+                      <div className='id_lists' style={{display:'flex'}}>
+                        <div className='box' >
+                          <label >Enst Id List</label>
+                          <textarea defaultValue={enstId.join("\n")} className="" rows="4" ></textarea>
                         </div>
-                        <div className=''>
-                          <label className="">Refseq MRNA Id List</label>
-                          <textarea defaultValue={refSeqId.join("\n")} className="" rows="4"></textarea>
+                        <div className='box' >
+                          <label >Refseq MRNA Id List</label>
+                          <textarea defaultValue={refSeqId.join("\n")} className="" rows="4" ></textarea>
                         </div>
                       </div>
-                    } */}
+                    }
                   </div>
                   <div className='chart_dataBox'>
                     <div className="">

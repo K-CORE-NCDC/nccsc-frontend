@@ -17,7 +17,6 @@ function sendRequest(url, method, data) {
   const x = axios({
     method, url, data, withCredentials: true, headers:headers
   });
-  console.log('xx' , x)
   return x;
 }
 

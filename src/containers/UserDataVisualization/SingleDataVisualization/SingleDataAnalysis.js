@@ -25,7 +25,7 @@ import {
 import { Popover, Transition } from "@headlessui/react"
 import { FormattedMessage } from "react-intl";
 import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
-
+import GeneSet from "../Components/MainComponents/GeneSet";
 
 export default function DataVisualization() {
   const context = useContext(Context);
@@ -33,12 +33,18 @@ export default function DataVisualization() {
   const dispatch = useDispatch();
   const [chart, setCharts] = useState({ viz: [] });
   const [boolChartState, setBoolChartState] = useState(true);
-  const [state, setState] = useState({ genes: ["NPC1"], filter: {}, type: "major-genes" });
+  const [state, setState] = useState({ genes: ["CFL1"], filter: {}, type: "major-genes" });
   const [gridData, setGridData] = useState([])
   const [width, setWidth] = useState(0);
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
-
-
+  const userProjectDetails = useSelector(
+    (data) => data.dataVisualizationReducer.userProjectsDataTable
+  );
+  const project_id_status = useSelector(
+    (data) => data.homeReducer.project_id_status
+  );
+  const [availableTabsForProject, setavailableTabsForProject] = useState([]);
+  const history = useHistory()
   let { tab, project_id } = useParams();
   const [chartName, setChartName] = useState(tab === 'home' ? undefined : tab);
   const [tabName, setTabName] = useState(tab === 'home' ? undefined : tab)
@@ -136,7 +142,24 @@ export default function DataVisualization() {
   }, [BrstKeys]);
 
 
+  const callback = useCallback(({ filters, filterKeyandValues, value, genes }) => {
 
+    if (filters && filterKeyandValues) {
+      setState((prevState) => ({
+        ...prevState,
+        'filterKeyandValues': filterKeyandValues
+      }));
+      // setfilterApplied(true);
+    }
+    else if (value && genes) {
+      setState((prevState) => ({
+        ...prevState,
+        genes: genes,
+        type: value,
+      }));
+    }
+
+  }, []);
   useEffect(() => {
     let chartx = LoadChart(width, tabName);
     setCharts((prevState) => ({
@@ -197,6 +220,40 @@ export default function DataVisualization() {
     });
     setGridData(gridData)
   }, []);
+
+  
+  useEffect(() => {
+    if (project_id !== undefined) {
+      let projectAvailableSteps = undefined;
+      if(userProjectDetails && 'key' in  userProjectDetails &&  userProjectDetails.key === 'NotFound'){
+        history.push('/login')
+      }
+      if (userProjectDetails &&  'available_steps' in userProjectDetails) {
+        projectAvailableSteps = userProjectDetails.available_steps;
+      }
+
+      let tabList = [];
+      if (projectAvailableSteps === undefined) {
+        dispatch(getUserDataProjectsTableData(project_id));
+      } else {
+        Object.keys(projectAvailableSteps).forEach((stepName) => {
+            if (stepName === "lollypop") {
+              tabList.push("lollipop");
+            } else if (stepName === "oncoprint") {
+              tabList.push("onco");
+            } else if (stepName === "igv") {
+              tabList.push("CNV");
+            } else if (stepName === "scatter") {
+              tabList.push("correlation");
+            } else {
+              tabList.push(stepName);
+            }
+        });
+      }
+      setavailableTabsForProject(tabList);
+    }
+  
+  }, [project_id, userProjectDetails, project_id_status]);
 
   useEffect(() => {
     if (project_id) {
@@ -282,6 +339,41 @@ export default function DataVisualization() {
                 </ul>
               </div>
             }
+            <section>
+              <div
+                className="block text-center">
+              <Popover className="relative" style={{ margin: 'auto' }}>
+                {({ open }) => {
+                  return (
+                    <>
+                    <div className="">
+                      <Popover.Button className={'selectBox'}>
+                        <div className="GeneSetgeneSetButton">
+                          <div className="flex-1">Gene set Re-filtering</div>
+                          <div className="w-20">
+                            <FilterIcon className="filter-icon" />
+                          </div>
+                        </div>
+                      </Popover.Button>
+                      <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-200"
+                        enterFrom="opacity-0 translate-y-1"
+                        enterTo="opacity-100 translate-y-0"
+                        leave="transition ease-in duration-150"
+                        leaveFrom="opacity-100 translate-y-0"
+                        leaveTo="opacity-0 translate-y-1"
+                      >
+                        <Popover.Panel className="GeneSetPopoverPanel">
+                          <GeneSet parentCallback={callback} filterState={state} />
+                        </Popover.Panel>
+                      </Transition>
+                    </div>
+                  </>
+                  )}}
+              </Popover>
+              </div>
+            </section>
             <section>
               <div
                 id="tab-contents"

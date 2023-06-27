@@ -29,61 +29,59 @@ const GeneSet = ({ parentCallback, filterState }) => {
     }
 
     return (
-        <div>
-            <div className="GeneSetcontainer">
-                <div className="GeneSetcontainer">
-                    <div className="GeneSetgeneItem">
-                        <select
-                            id="gene_type"
-                            value={value}
-                            onChange={(e) => selectGene(e)}
-                            placeholder="Enter your Genes"
-                            className="GeneSetgeneSelect"
-                        >
-                            <option
-                                className="GeneSetGeneOption"
-                                value="user-defined"
-                                placeholder="Enter your Genes"
-                            >
-                                <FormattedMessage id='UserDefinedList' defaultMessage="User-Defined List" />
-                            </option>
-                            <option
-                                className="GeneSetGeneOption"
-                                value="major-genes"
-                            >
-                                Cancer major genes (28 genes)
-                            </option>
-                        </select>
-                    </div>
-                    <div className="GeneSetgeneItem">
-                        <input
-                            type="text"
-                            id="genes"
-                            ref={geneValue}
-                            className="GeneSetgeneInput"
-                            name="genes"
-                            placeholder="Enter your Genes"
-                            value={geneData}
-                            onChange={(e) => {
-                                const abc = document.getElementById('gene_type').value;
-                                if (abc === 'user-defined') {
-                                    let userGenes = document
-                                        .getElementById('genes')
-                                        .value
-                                    userGenes = userGenes.toUpperCase() 
-                                    setGeneData(userGenes)
-                                }
-                            }}
-                        />
-                    </div>
-                    <div className="GeneSetgeneItem">
-                        <button className="GeneSetgeneButton" onClick={submitGeneSet}>
-                            Filter
-                        </button>
-                    </div>
-                </div>
+        <div className="GeneSetcontainer">
+            <div className="GeneSetgeneItem">
+                <select
+                    id="gene_type"
+                    value={value}
+                    
+                    onChange={(e) => selectGene(e)}
+                    placeholder="Enter your Genes"
+                    className="selectBox"
+                >
+                    <option
+                        className="GeneSetGeneOption"
+                        value="user-defined"
+                        placeholder="Enter your Genes"
+                    >
+                        <FormattedMessage id='UserDefinedList' defaultMessage="User-Defined List" />
+                    </option>
+                    <option
+                        className="GeneSetGeneOption"
+                        value="major-genes"
+                    >
+                        Cancer major genes (28 genes)
+                    </option>
+                </select>
+            </div>
+            <div className="GeneSetgeneItem inputText">
+                <input
+                    type="text"
+                    id="genes"
+                    ref={geneValue}
+                    className="GeneSetgeneInput"
+                    name="genes"
+                    placeholder="Enter your Genes"
+                    value={geneData}
+                    onChange={(e) => {
+                        const abc = document.getElementById('gene_type').value;
+                        if (abc === 'user-defined') {
+                            let userGenes = document
+                                .getElementById('genes')
+                                .value
+                            userGenes = userGenes.toUpperCase() 
+                            setGeneData(userGenes)
+                        }
+                    }}
+                />
+            </div>
+            <div className="GeneSetgeneItem">
+                <button className="GeneSetgeneButton" onClick={submitGeneSet}>
+                    Filter
+                </button>
             </div>
         </div>
+        
     );
 };
 
