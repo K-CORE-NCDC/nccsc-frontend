@@ -196,12 +196,8 @@ function SingleDataTable({updateComponentNumber}) {
 
       for (const tabrow in verificationResponse["result"]) {
         let tab = verificationResponse["result"][tabrow][0]["tab"];
-        let css = "px-4 py-2 font-semibold rounded-t opacity-50";
-        if (activeTableKey === tab) {
-          css += " border-blue-400 border-b-4 -mb-px opacity-100";
-        }
         temptabs.push(
-          <li key={tab} className={css}>
+          <li key={tab} className={(activeTableKey === tab)?'on':''}>
             <button
               value={tab}
               onClick={() => tabDropdownTable(tab)}
@@ -231,11 +227,13 @@ function SingleDataTable({updateComponentNumber}) {
                 let rdata = String(row[columns[i]]);
                 let v = rdata.split("||");
                 if (v.length > 1) {
-                  return <div className="text-red-700">{v[1]}</div>;
+                  return <div className="boardCell text-red-700">{v[1]}</div>;
                 } else {
-                  return <div className="">{String(row[columns[i]])}</div>;
+                  return <div className="boardCell">{String(row[columns[i]])}</div>;
                 }
+                
               },
+              className:'boardCell',
               sortable: true,
             });
           }
@@ -288,48 +286,49 @@ function SingleDataTable({updateComponentNumber}) {
 
 
   return (
-    <div>
-      <div className="p-1 flex justify-around">
-      <Modal showModal={showModal} setShowModal={setShowModalFunction} />
-      {projectId === 0 && (
-        <button
-           className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
-          type="button"
-          onClick={() => {
-            updateComponentNumber(0)
-          }}
-          >
-          <FormattedMessage id="Back" defaultMessage="Back" />
-        </button>
-      )
-      }
-    {
-      projectId === 0 && (
-        <div>
-            <button onClick={() => setShowModalFunction(true)} className="has-tooltip bg-red-500 hover:bg-red-700 text-white text-center py-2 px-4 rounded-full h-20 w-20 inline-flex items-center">
-                  <img src={warningImage}></img>
+    <div className="auto">
+      <div  className="flex">
+        <Modal showModal={showModal} setShowModal={setShowModalFunction} />
+        { projectId === 0 && 
+          (
+            <button
+              className='btn btnGray bdBtn'
+              type="button"
+              onClick={() => {
+                updateComponentNumber(0)
+              }}
+              >
+              <FormattedMessage id="Back" defaultMessage="Back" />
             </button>
-        </div>
-      )
-    }
+          )
+        }
+        {
+          projectId === 0 && (
+            <div>
+                <button onClick={() => setShowModalFunction(true)} className="">
+                  <img width='50' src={warningImage}></img>
+                </button>
+            </div>
+          )
+        }
 
         {projectId !== 0 && (
           <button
             onClick={() => {
               dispatch(clearSingleFIleUploadState())
               history.push(`/visualise-singledata/${tab}/${projectId}`)}}
-            className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
+            className='btn btnPrimary'
           >
             <FormattedMessage id="Visualize" defaultMessage="Visualize" />
           </button>
         )}
       </div>
-      <nav className=" px-8 pt-2 shadow-md">
-        <ul id="tabs" className="inline-flex justify-center w-full px-1 pt-2 ">
+      <div className=" tab">
+        <ul >
           {tableNavTabs}
         </ul>
-      </nav>
-      <div className="App">
+      </div>
+      <div className="boardList">
         {verificationResponse  && (
           <DataTable
             title=""
@@ -340,21 +339,24 @@ function SingleDataTable({updateComponentNumber}) {
             conditionalRowStyles={conditionalRowStyles}
           />
         )}
-
         {!verificationResponse  && (
           <div>
-          <LoaderCmp />
-          { <p className="mt-8 text-center text-lg"><FormattedMessage id = 'WaitMessage' defaultMessage=' It takes some time to process the data. Please wait ! (2 minutes per 100 samples)' /> </p>}
+            <LoaderCmp />
+            { <p className="text-center">
+              <FormattedMessage id = 'WaitMessage' defaultMessage=' It takes some time to process the data. Please wait ! (2 minutes per 100 samples)' /> 
+            </p>
+            }
           </div>
         )}
       </div>
       <div>
-        {fileUploadStatus && fileUploadStatus['failed'] && 
-        <div>
-            <p>Error</p>
-            </div>
-            }
-    </div>
+        {
+          fileUploadStatus && fileUploadStatus['failed'] && 
+          <div>
+           <p>Error</p>
+          </div>
+        }
+      </div>
  
     </div>
   );

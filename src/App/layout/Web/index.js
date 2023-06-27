@@ -1,41 +1,31 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Popover, Transition } from "@headlessui/react";
-import React, { Fragment, Suspense, useContext, useEffect, useRef, useState } from "react";
+import { Popover } from "@headlessui/react";
+import React, { Suspense, useContext, useEffect, useRef, useState } from "react";
 import { FormattedMessage } from 'react-intl';
 import { useDispatch } from "react-redux";
 import { Route, Switch, useLocation } from "react-router-dom";
 import uuid from 'react-uuid';
-import menu_black from "../../../assets/images/right_below_add.png";
 import logoNew from "../../../assets/images/Left_up.png";
+import menu_black from "../../../assets/images/right_below_add.png";
 // import logoNew from '../../../assets/images/KoreanImageNcc.png'
+import AOS from 'aos';
+import "aos/dist/aos.css";
 import { useIdleTimer } from 'react-idle-timer';
-import { useParams,withRouter } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import { Mousewheel, Pagination, Navigation } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.css";
 import { DashboardCount, SetCookie, sendlogManagement } from "../../../actions/api_actions";
 import NotFound from "../../../containers/404NotFound";
-import Introduction from "../../../containers/Home/Introduction";
 import Popup from "../../../containers/Popup/Popup";
 import { getCookie } from "../../../containers/getCookie";
 import childMenu from "../../../menu-item";
 import route from "../../../route";
 import { Context } from "../../../wrapper";
 import Loader from "../Loader";
-import MobileHeader from '../../layout/Web/Mobile/Menu'
-import DropdownMenuMobile from '../../layout/Web/Mobile/DropdownMenu'
-import { SiteIntro } from "../../../containers/Introduction/SiteIntro";
-import { XIcon } from "@heroicons/react/outline";
-import AOS from 'aos';
-import "aos/dist/aos.css"
-import { VisualizeMyData } from "../../../containers/VisualizeMyData/VisualizeMyData";
-import { SingleDataVisualization } from "../../../containers/VisualizeMyExampleData/SingleDataVisualization";
-import {Link} from 'react-router-dom'
 AOS.init({
   offset: 200,
   duration: 600,
@@ -60,22 +50,22 @@ let parseJwt = (islogin1) => {
 
 
 
-export const  Home =(parentProps)=>{
+export const Home = (parentProps) => {
   return route.map((route, index) => {
-      return route.component ? (
-        <Route
-          key={index}
-          path={route.path}
-          exact={route.exact}
-          name={route.name}
-          childname={route.childname}
-          render={(props) => <route.component parentProps ={parentProps}  {...props} />}
-        />
-      ) : null;
-    
-    });
-  
-} 
+    return route.component ? (
+      <Route
+        key={index}
+        path={route.path}
+        exact={route.exact}
+        name={route.name}
+        childname={route.childname}
+        render={(props) => <route.component parentProps={parentProps}  {...props} />}
+      />
+    ) : null;
+
+  });
+
+}
 
 
 export default function Web(props) {
@@ -101,27 +91,27 @@ export default function Web(props) {
   const [showLangMenu, setShowLangMenu] = useState(false)
   const [mouseEnterFlag, setMouseEnterFlag] = useState(false)
   const [menuTabOpen, setMenuTabOpen] = useState(false)
-  const [swiperOn,setSwiperOn] = useState(true)
+  const [swiperOn, setSwiperOn] = useState(true)
 
   useEffect(() => {
     let cookiedata = SetCookie()
     cookiedata && cookiedata.then((result) => {
       if (result.status === 200) {
-        let data = DashboardCount()
-        data.then((result) => {
-          if (result.status === 200)
-            setCountJson(result.data)
-          else {
-            setCountJson({})
-            setCountStatus(204)
-          }
-        })
+        // let data = DashboardCount()
+        // data.then((result) => {
+        //   if (result.status === 200)
+        //     setCountJson(result.data)
+        //   else {
+        //     setCountJson({})
+        //     setCountStatus(204)
+        //   }
+        // })
       }
     })
   }, [])
 
 
-  
+
 
   const toSlide = (num) => {
     swiperRef.current?.swiper.slideTo(num);
@@ -172,7 +162,7 @@ export default function Web(props) {
   let id = useParams();
   let pid = routeLocation.pathname
 
-  
+
 
   const [breadCrumb, setBreadCrumb] = useState([]);
   const [currentDate, setCurrentDate] = useState("");
@@ -198,21 +188,21 @@ export default function Web(props) {
   let toggleModal = (close) => {
     setShowPopup(close)
   }
-  
+
   useEffect(() => {
-    
+
     let userid = ''
     let category = 'Others'
     if (window.location.href.substring(window.location.href.lastIndexOf('/') + 1)) {
       category = 'User DataVisualization'
     }
-    
+
     else if (['circos', 'OncoPrint', 'lollipop', 'volcano', 'heatmap', 'survival', 'correlation', 'CNV', 'box', 'fusion'].some(r => window.location.href.split("/").indexOf(r) >= 0)) {
       category = 'DataVisualization'
     }
-    
-    if(getCookie('is_login') && getCookie('is_login') !== null ){
-        userid = getCookie('username')
+
+    if (getCookie('is_login') && getCookie('is_login') !== null) {
+      userid = getCookie('username')
     }
     else {
       if (getCookie('sessionId') === undefined) {
@@ -258,22 +248,22 @@ export default function Web(props) {
       var time = today.getHours() + ":" + (today.getMinutes() <= 9 ? `00` : today.getMinutes());
       // let check_popup = localStorage.getItem('show_popup') 
       setCurrentTime(time);
-      if (!countJson) {
-        let data = DashboardCount()
-        data.then((result) => {
-          if (result.status === 200) {
-            setCountJson(result.data)
-          }
-          else {
-            setCountStatus(204)
-            setCountJson({})
-          }
-        })
-      }
+      // if (!countJson) {
+      //   let data = DashboardCount()
+      //   data.then((result) => {
+      //     if (result.status === 200) {
+      //       setCountJson(result.data)
+      //     }
+      //     else {
+      //       setCountStatus(204)
+      //       setCountJson({})
+      //     }
+      //   })
+      // }
     }
     setCurrentDate(date);
     let path = window.location.pathname
-    if( !path.includes('home')){
+    if (!path.includes('home')) {
       setSwiperOn(false)
     }
   }, [])
@@ -310,7 +300,7 @@ export default function Web(props) {
     let sessionAuth = ''
     let userid = ''
     let category = 'Others'
-    
+
     if (window.location.href.substring(window.location.href.lastIndexOf('/') + 1)) {
       category = 'User DataVisualization'
     }
@@ -447,19 +437,28 @@ export default function Web(props) {
 
 
   let classes = "";
-  if (activeClassIndex === 0 && mouseEnterFlag) {
-    classes = "header rev";
-  } else if (activeClassIndex === 0 && !mouseEnterFlag) {
-    classes = "header";
-  } else if (activeClassIndex !== 0 && mouseEnterFlag) {
-    classes = "header on rev";
+  if (window.innerWidth > 1025 && window.innerHeight > 870) {
+    if (activeClassIndex === 0 && mouseEnterFlag) {
+      classes = "header rev";
+    } else if (activeClassIndex === 0 && !mouseEnterFlag) {
+      classes = "header";
+    } else if (activeClassIndex !== 0 && mouseEnterFlag) {
+      classes = "header on rev";
+    } else {
+      classes = "header on"
+    }
   } else {
-    classes = "header on"
+    if (mouseEnterFlag) {
+      classes = "header on"
+    } else {
+      classes = "header";
+    }
   }
 
 
 
- 
+
+
   return (
     <div className="relative" id='fullSlide' >
       <Popover>
@@ -506,10 +505,9 @@ export default function Web(props) {
                     {childMenu?.mainmenu?.items?.map((item, i) => (
                       <li
                         ref={buttonRef} onClick={() => {
-                          setActiveclassPath(item?.title)
+                          setActiveclassPath(item?.id)
                           setActiveClassIndex(item?.index)
                           history.push(`/home${item?.url}`)
-                         
                           toSlide(item?.index)
                         }} onMouseEnter={() => {
                           setMouseEnterFlag(true)
@@ -517,7 +515,7 @@ export default function Web(props) {
                         onMouseLeave={() => {
                           setMouseEnterFlag(false)
                         }}
-                      ><a className="menu_li">{item?.title}</a></li>
+                      ><a className={`${activeClassIndex === item?.index ? 'active_menu' : ''} menu_li`} style={activeClassIndex === item?.index ? { color: '#009fe2' } : { color: '' }}>{item?.title}</a></li>
                     ))}
                   </ul>
                 </nav>
@@ -552,8 +550,8 @@ export default function Web(props) {
       <div className={`mainContents ${routeLocation.pathname === '/' ? '' : 'min-h-70'} `} >
         <Suspense fallback={<Loader />}>
           <Switch>
-          
-            <Home setActiveClassIndex = {(data) => setActiveClassIndex(data)} activeClassIndex={activeClassIndex}/>
+
+            <Home setActiveClassIndex={(data) => setActiveClassIndex(data)} activeClassIndex={activeClassIndex} setActiveclassPath={(data) => setActiveclassPath(data)} />
             <Route exact path="*" component={NotFound} />
           </Switch>
         </Suspense>

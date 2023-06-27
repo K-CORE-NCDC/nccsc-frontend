@@ -56,7 +56,7 @@ const childMenu = {
   mainmenu: {
     items: [
       {
-        id: 'introduce',
+        id: 'Introduction',
         title: <FormattedMessage id="Introduce" defaultMessage="Introduction" />,
         type: 'group',
         icon: 'fa fa-dashboard',
@@ -84,7 +84,7 @@ const childMenu = {
         ],
       },
       {
-        id: 'visualization',
+        id: 'Visualize Example Data',
         title: <FormattedMessage id="Visualization" defaultMessage="Visualize Example Data" />,
         type: 'group',
         icon: 'fa fa-dashboard',
@@ -111,7 +111,7 @@ const childMenu = {
       },
 
       {
-        id: 'MyDataVisualization',
+        id: 'Visualize MyData',
         title: <FormattedMessage id="MyDataVisualization" defaultMessage="Visualize MyData" />,
         type: 'group',
         icon: 'fa fa-dashboard',
@@ -212,7 +212,7 @@ const childMenu = {
       //   ],
       // },
       {
-        id: 'voice',
+        id: 'Customer Service',
         title: <FormattedMessage id="CustomerVoice" defaultMessage="Customer Service" />,
         type: 'group',
         icon: 'fa fa-dashboard',

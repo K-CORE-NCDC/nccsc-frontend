@@ -127,8 +127,8 @@ function FaqList() {
 
     return (
       <div className="container mx-auto p-4">
-        <div className="grid grid-col-4">
-          <div className="col-span-4">
+        {/* <div className="grid grid-col-4"> */}
+          {/* <div className="col-span-4">
               <h4 className="h-tit4_tit clear">
                   <font>
                     <font>FAQ</font>
@@ -159,8 +159,8 @@ function FaqList() {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="col-span-4 mt-8">
+          </div> */}
+          <div className="">
             {
               tableData&&
               <DataTable
@@ -184,7 +184,7 @@ function FaqList() {
             {redirecting}
           </div>
         </div>
-      </div>
+      // </div>
     )
 }
 

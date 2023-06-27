@@ -1,199 +1,394 @@
 import React, {
-    useState,
-    useEffect,
-    useRef,
-    useCallback,
-    useContext,
-    Fragment
-  } from "react";
-  import {FilterIcon} from "@heroicons/react/outline";
-  import { useSelector, useDispatch } from "react-redux";
-  import { useParams } from "react-router-dom";
-  import ConfirmDownload from "../../Common/downloadConfirmation";
-  import { Charts } from "../../DataVisualisation/Charts";
-  import genes from "../../Common/gene.json";
-  import { Context } from "../../../wrapper";
-  import { useHistory,Link } from "react-router-dom";
-  import {
-    getBreastKeys,
-    getUserDataProjectsTableData,
-    clearDataVisualizationState,
-    samplesCount,
-    getUserDefinedFilter
-  } from "../../../actions/api_actions";
-  
-  import { Popover, Transition } from "@headlessui/react"
-  import { FormattedMessage } from "react-intl";
-  import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
-  
-  
-  export default function DataVisualization() {
-    const context = useContext(Context);
-    const [koreanlanguage, setKoreanlanguage] = useState(false);
-    const [Englishlanguage, setEnglishlanguage] = useState(true);
-    const [userDefinedList, setUserDefinedList] = useState("User-Defined List")
-    const [enterGenes, setEnterGenes] = useState("Enter Genes")
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  useContext,
+  Fragment
+} from "react";
+import { FilterIcon } from "@heroicons/react/outline";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import ConfirmDownload from "../../Common/downloadConfirmation";
+import { Charts } from "../../DataVisualisation/Charts";
+import genes from "../../Common/gene.json";
+import { Context } from "../../../wrapper";
+import { useHistory, Link } from "react-router-dom";
+import {
+  getBreastKeys,
+  getUserDataProjectsTableData,
+  clearDataVisualizationState,
+  samplesCount,
+  getUserDefinedFilter
+} from "../../../actions/api_actions";
 
-    const elementRef = useRef(null);
-    const dispatch = useDispatch();
-  
-    const [width, setWidth] = useState(0);
-    const [chart, setCharts] = useState({ viz: [] });
-    const [boolChartState, setBoolChartState] = useState(true);
-    const [state, setState] = useState({ genes: [], filter: {}, type: "" });
-    const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
-  
-    const [gridData, setGridData] = useState([])
-    const numRows = Math.ceil(gridData.length / 3);
-    const gridTemplateRows = `repeat(${numRows}, 1fr)`;
-  
-    const containerStyles = "flex justify-center items-center my-8 bg-gray-100";
-    const gridStyles = "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 h-full w-full mx-4 md:mx-10";
-    const cardStyles = "bg-white rounded-lg shadow-lg overflow-hidden";
-    const imageStyles = "object-cover object-center w-full h-full mt-8";
-    const titleStyles = "text-lg font-semibold p-4 capitalize";
-    const buttonStyles = "bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full capitalize";
-  
-  
-   
-    let { tab, project_id } = useParams();
-    const [chartName, setChartName] = useState(tab === 'home' ? undefined : tab);
-    const [tabName, setTabName] = useState(tab === 'home' ? undefined : tab)
-    const [toggle, setToggle] = useState(true);
-  
-  
+import { Popover, Transition } from "@headlessui/react"
+import { FormattedMessage } from "react-intl";
+import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
+import GeneSet from "../Components/MainComponents/GeneSet";
 
- 
-  
-   
-  
+export default function DataVisualization() {
+  const context = useContext(Context);
+  const elementRef = useRef(null);
+  const dispatch = useDispatch();
+  const [chart, setCharts] = useState({ viz: [] });
+  const [boolChartState, setBoolChartState] = useState(true);
+  const [state, setState] = useState({ genes: ["CFL1"], filter: {}, type: "major-genes" });
+  const [gridData, setGridData] = useState([])
+  const [width, setWidth] = useState(0);
+  const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
+  const userProjectDetails = useSelector(
+    (data) => data.dataVisualizationReducer.userProjectsDataTable
+  );
+  const project_id_status = useSelector(
+    (data) => data.homeReducer.project_id_status
+  );
+  const [availableTabsForProject, setavailableTabsForProject] = useState([]);
+  const history = useHistory()
+  let { tab, project_id } = useParams();
+  const [chartName, setChartName] = useState(tab === 'home' ? undefined : tab);
+  const [tabName, setTabName] = useState(tab === 'home' ? undefined : tab)
+  const [toggle, setToggle] = useState(true);
 
-  
-    
+  const [screenCapture, setScreenCapture] = useState(false);
+  const setToFalseAfterScreenCapture = (param = false) => {
+    if (param === false) {
+      setScreenCapture(false);
+    } else {
+      setScreenCapture(true);
+    }
+  };
 
-  
-  
-    useEffect(() => {
-      setTabName(tab==='home'?undefined:tab)
-      setChartName(tabName)
-      
-    }, [tab,tabName, chartName]);
-  
-    useEffect(() => {
-      // let w = elementRef.current.getBoundingClientRect().width;
-      // setWidth(w);
-      setBoolChartState(false);
-      if (project_id !== undefined) {
-        setState((prevState) => ({
-          ...prevState,
-          project_id: project_id,
-        }));
+  const submitFilter = (e) => {
+    setBoolChartState(false);
+    setChartName(tabName);
+    let chartx = LoadChart(width, tabName);
+    setCharts((prevState) => ({
+      ...prevState,
+      viz: chartx,
+    }));
+
+  };
+
+  const LoadChart = (w, type) => {
+    switch (type) {
+      case "circos":
+        return Charts.circos(
+          w,
+          state,
+          screenCapture,
+          setToFalseAfterScreenCapture,
+          toggle,
+          state
+        );
+      case "lollipop":
+        return Charts.lollipop(
+          elementRef.current.getBoundingClientRect().width,
+          state,
+          screenCapture,
+          setToFalseAfterScreenCapture
+        );
+      case "heatmap":
+        return Charts.heatmap(
+          w,
+          state,
+          screenCapture,
+          BrstKeys,
+          setToFalseAfterScreenCapture
+        );
+      case "CNV":
+        return Charts.igv(
+          w,
+          state,
+          screenCapture,
+          setToFalseAfterScreenCapture
+        );
+      case "box":
+        return Charts.box(
+          w,
+          state,
+          screenCapture,
+          setToFalseAfterScreenCapture
+        );
+      default:
+        return false;
+    }
+  };
+
+  useEffect(() => {
+    let w = elementRef.current.getBoundingClientRect().width;
+    console.log('width' , w)
+    setWidth(w)
+  }, [])
+
+  useEffect(() => {
+    if (chart) {
+
+      setBoolChartState(true);
+    }
+  }, [chart]);
+
+  useEffect(() => {
+    if (BrstKeys) {
+      let tmp = [];
+      for (const [key, value] of Object.entries(BrstKeys)) {
+        tmp.push(
+          <option key={key} value={key + "_" + value}>
+            {value}
+          </option>
+        );
       }
-      let l = [
-        "circos",
-        "lollipop",
-        "cnv",
-        "heatmap",
-        "box",
-      ];
-      let gridData = []
- 
-      l.forEach((element) => {
-        
-        let name = " Plot";
-        if (element === "heatmap") {
-          name = "";
-        } else if (element === "cnv") {
-          element = "CNV";
-        } else if (element === "onco") {
-          name = "";
-          element = "OncoPrint";
-        }
-  
-        let gridobj = {title:element,image:require(`../../../assets/images/Visualizations/${element}.png`).default,link: `/singledata-upload/${element}/`}
-        gridData.push(gridobj)
-       
-      });
-      setGridData(gridData)
-    }, []);
-    
-    gridData.map((item, index)=>{
-      console.log(item,index)
-    })
-    const breadCrumbs = {
-        '/singledata-upload/': [
-            { id: 'FindID', defaultMessage: 'Home', to: '/' },
-            { id: 'SubPage1', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
-            { id: 'SubPage2', defaultMessage: 'Single Data Visualisation', to: '' },
-        ],
-        
-    };
-    return (
-      <div>
-        <HeaderComponent
-          title="회원가입"
-          routeName="/singledata-upload/"
-          breadCrumbs={breadCrumbs['/singledata-upload/']}
-          type="single"
+    }
+  }, [BrstKeys]);
 
-        />
-        <article id="subContents" className="subContents">
-          <div className="contentsTitle">
-            <h3>
-              <font>
-                <font >Single Data </font>
-                <span className="colorSecondary">
-                  <font >Visualization</font>
-                </span>
-              </font>
-            </h3>
-          </div>
-          <div className="section ptn">
-            <div className="auto">
-              {
-                gridData && !tabName  && 
-                <div className='dataList singleDataViz'>
-                  <ul >
-                    {gridData.map((item, index) => (
-                      
-                      <li key={index} >
-                        <div className="labelBox">
-                          <div className="labels01">
-                            <h3 style={{textTransform:'capitalize'}}>
-                              {item.title}
-                            </h3>
-                          </div>
-                          <div className="labels02" style={{columnGap:"10px"}}>
-                            <Link  to={item.link}>
-                              <span class="label01">
-                                <font>
-                                  <font>Download</font>
-                                </font>
-                              </span>
-                            </Link>
-                            <Link  to={item.link}>
-                              <span class="label01">
-                                <font>
-                                  <font>Run Analysis</font>
-                                </font>
-                              </span>
-                            </Link>
-                          </div>
-                          
-                        </div>
-                        <div>
-                          <img src={item.image} alt="img" className={imageStyles} />
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              }
-            </div>
-          </div>
-        </article>
-      </div>
-      
-    );
-  }
+
+  const callback = useCallback(({ filters, filterKeyandValues, value, genes }) => {
+
+    if (filters && filterKeyandValues) {
+      setState((prevState) => ({
+        ...prevState,
+        'filterKeyandValues': filterKeyandValues
+      }));
+      // setfilterApplied(true);
+    }
+    else if (value && genes) {
+      setState((prevState) => ({
+        ...prevState,
+        genes: genes,
+        type: value,
+      }));
+    }
+
+  }, []);
+  useEffect(() => {
+    let chartx = LoadChart(width, tabName);
+    setCharts((prevState) => ({
+      ...prevState,
+      viz: chartx,
+    }));
+  }, [screenCapture]);
+
+  useEffect(() => {
+    setTabName(tab === 'home' ? undefined : tab)
+    setChartName(tabName)
+    if (chartName) {
+      submitFilter();
+    }
+    let t = ["volcano", "survival", "fusion"];
+    if (t.indexOf(tabName) !== -1) {
+      setToggle(false);
+    }
+    else {
+      setToggle(true);
+    }
+
+  }, [tab, tabName, chartName]);
+
+  useEffect(() => {
+    // let w = elementRef.current.getBoundingClientRect().width;
+    // setWidth(w);
+    setBoolChartState(false);
+    if (project_id !== undefined) {
+      let state_ = state
+      state_['project_id'] = project_id
+      setState(state_)
+    }
+    let l = [
+      "circos",
+      "lollipop",
+      "cnv",
+      "heatmap",
+      "box",
+    ];
+    let gridData = []
+
+    l.forEach((element) => {
+
+      let name = " Plot";
+      if (element === "heatmap") {
+        name = "";
+      } else if (element === "cnv") {
+        element = "CNV";
+      } else if (element === "onco") {
+        name = "";
+        element = "OncoPrint";
+      }
+
+      let gridobj = { title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/singledata-upload/${element}/` }
+      gridData.push(gridobj)
+
+    });
+    setGridData(gridData)
+  }, []);
+
   
+  useEffect(() => {
+    if (project_id !== undefined) {
+      let projectAvailableSteps = undefined;
+      if(userProjectDetails && 'key' in  userProjectDetails &&  userProjectDetails.key === 'NotFound'){
+        history.push('/login')
+      }
+      if (userProjectDetails &&  'available_steps' in userProjectDetails) {
+        projectAvailableSteps = userProjectDetails.available_steps;
+      }
+
+      let tabList = [];
+      if (projectAvailableSteps === undefined) {
+        dispatch(getUserDataProjectsTableData(project_id));
+      } else {
+        Object.keys(projectAvailableSteps).forEach((stepName) => {
+            if (stepName === "lollypop") {
+              tabList.push("lollipop");
+            } else if (stepName === "oncoprint") {
+              tabList.push("onco");
+            } else if (stepName === "igv") {
+              tabList.push("CNV");
+            } else if (stepName === "scatter") {
+              tabList.push("correlation");
+            } else {
+              tabList.push(stepName);
+            }
+        });
+      }
+      setavailableTabsForProject(tabList);
+    }
+  
+  }, [project_id, userProjectDetails, project_id_status]);
+
+  useEffect(() => {
+    if (project_id) {
+      dispatch(getUserDefinedFilter({
+        "project_id": project_id
+      }));
+      console.log(state, 'form porjectid-----------')
+      // dispatch(samplesCount("POST", {}));
+      dispatch(getBreastKeys(state));
+
+    }
+  }, [project_id])
+
+
+  const breadCrumbs = {
+    '/visualise-singledata/': [
+      { id: 'FindID', defaultMessage: 'Home', to: '/' },
+      { id: 'SubPage1', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
+      { id: 'SubPage2', defaultMessage: 'Single Data Visualisation', to: '' },
+    ],
+
+  };
+  return (
+
+    <div>
+      {console.log('gridData', gridData)}
+      <HeaderComponent
+        title="회원가입"
+        routeName="/visualise-singledata/"
+        breadCrumbs={breadCrumbs['/visualise-singledata/']}
+        type="single"
+
+      />
+      <article id="subContents" className="subContents">
+        <div className="contentsTitle">
+          <h3>
+            <font>
+              <font >Single Data </font>
+              <span className="colorSecondary">
+                <font >Visualization</font>
+              </span>
+            </font>
+          </h3>
+        </div>
+        <div className="ptn">
+          <div className="auto">
+            {
+              gridData && !tabName &&
+              <div className='dataList singleDataViz'>
+                <ul >
+                  {gridData.map((item, index) => (
+
+                    <li key={index} >
+                      <div className="labelBox">
+                        <div className="labels01">
+                          <h3 style={{ textTransform: 'capitalize' }}>
+                            {item.title}
+                          </h3>
+                        </div>
+                        <div className="labels02" style={{ columnGap: "10px" }}>
+                          <Link to={item.link}>
+                            <span className="label01">
+                              <font>
+                                <font>Download</font>
+                              </font>
+                            </span>
+                          </Link>
+                          <Link to={item.link}>
+                            <span className="label01">
+                              <font>
+                                <font>Run Analysis</font>
+                              </font>
+                            </span>
+                          </Link>
+                        </div>
+
+                      </div>
+                      <div>
+                        <img src={item.image} alt="img" />
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            }
+            <section>
+              <div
+                className="block text-center">
+              <Popover className="relative" style={{ margin: 'auto' }}>
+                {({ open }) => {
+                  return (
+                    <>
+                    <div className="">
+                      <Popover.Button className={'selectBox'}>
+                        <div className="GeneSetgeneSetButton">
+                          <div className="flex-1">Gene set Re-filtering</div>
+                          <div className="w-20">
+                            <FilterIcon className="filter-icon" />
+                          </div>
+                        </div>
+                      </Popover.Button>
+                      <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-200"
+                        enterFrom="opacity-0 translate-y-1"
+                        enterTo="opacity-100 translate-y-0"
+                        leave="transition ease-in duration-150"
+                        leaveFrom="opacity-100 translate-y-0"
+                        leaveTo="opacity-0 translate-y-1"
+                      >
+                        <Popover.Panel className="GeneSetPopoverPanel">
+                          <GeneSet parentCallback={callback} filterState={state} />
+                        </Popover.Panel>
+                      </Transition>
+                    </div>
+                  </>
+                  )}}
+              </Popover>
+              </div>
+            </section>
+            <section>
+              <div
+                id="tab-contents"
+                className="block text-center"
+                ref={elementRef}>
+                {tabName && tabName !== 'home' && boolChartState && <div>{chart["viz"]}</div>}
+                {tabName && tabName !== 'home' && !boolChartState && (
+                  <div className="p-1 text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">Please select Genes</div>
+                )}
+              </div>
+            </section>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  );
+}
