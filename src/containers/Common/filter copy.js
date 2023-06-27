@@ -8,23 +8,27 @@ import {
 } from "@heroicons/react/outline";
 import inputJson from "./data";
 import { FormattedMessage } from "react-intl";
-import { useSelector } from "react-redux";
+import {
+  getUserDefinedFilter
+} from "../../actions/api_actions";
+import { useSelector, useDispatch } from "react-redux";
 
 
 
 
 export default function Filter({ parentCallback, filterState, set_screen, project_id }) {
+  const dispatch = useDispatch();
   const [state, setState] = useState({ html: [] });
-  const [selectState, setSelectState] = useState({ 'filterCondition': 'and' });
+  const [selectState, setSelectState] = useState({'filterCondition':'and'});
   const [selected, setSelected] = useState("Basic/Diagnostic Information");
   const [filtersUi, setFiltersUi] = useState({});
   const [filterHtml, setFilterHtml] = useState([]);
   const userDefinedFilter = useSelector((data) => data.dataVisualizationReducer.userDefinedFilter);
-  const [totalSamples, setTotalSamples] = useState(0)
-  const [filterJson, setFilterJson] = useState({})
+  const[totalSamples, setTotalSamples] = useState(0)
+  const [filterJson,setFilterJson] = useState({})
   const totalSamplesS = useSelector((data) => data.dataVisualizationReducer.samplesCount)
-  const [filterCondition, setFilterCondition] = useState("and");
-
+  const [filterKeyandValues, setFilterKeyandValues] = useState({})
+  
   useEffect(() => {
     if (Object.keys(filterState).length !== 0) {
       setSelectState({ ...filterState });
@@ -32,73 +36,79 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
     }
   }, [filterState]);
 
-  useEffect(() => {
-    if (totalSamplesS && 'no_of_samples' in totalSamplesS) {
+  useEffect(()=>{
+    if  (totalSamplesS && 'no_of_samples' in totalSamplesS){
       setTotalSamples(totalSamplesS['no_of_samples'])
-    }
-  }, [totalSamplesS])
-
+    } 
+  },[totalSamplesS])
+  
   const totalCount = useSelector((state) => {
-    if ('Keys' in state.dataVisualizationReducer) {
+    if ('Keys' in state.dataVisualizationReducer){
       return Object.keys(state.dataVisualizationReducer.Keys).length || 0;
-    } else {
+    }else{
       return 0
     }
   });
+  const [totalCountS] = useState(totalCount);
+  const [filterCondition, setFilterCondition] = useState("and");
 
-  
-  useEffect(() => {
-    if (project_id !== undefined) {
-      if (userDefinedFilter && Object.keys(userDefinedFilter).length > 0) {
+  // useEffect(()=>{
+  //   dispatch(getUserDefinedFilter({
+  //     "project_id":project_id
+  //   })); 
+  // },[project_id])
+
+  useEffect(()=>{
+    if(project_id!==undefined){
+      if(userDefinedFilter && Object.keys(userDefinedFilter).length > 0){
         setSelected('Clinical Information')
-        setFilterJson(userDefinedFilter['filterJson'])
-        if (userDefinedFilter['filterJson'] && 'Clinical Information' in userDefinedFilter['filterJson']) {
+        setFilterJson(userDefinedFilter['filterJson']) 
+        if(userDefinedFilter['filterJson'] && 'Clinical Information' in userDefinedFilter['filterJson'] ){
           let obj_dict = {}
           let obj = userDefinedFilter['filterJson']['Clinical Information']
           Object.keys(obj).forEach(key => {
             obj[key].forEach((list) => {
-              if (key in obj_dict) {
+              if(key in obj_dict){
                 obj_dict[key].push(list['id'])
               }
-              else {
+              else{
                 obj_dict[key] = []
                 obj_dict[key].push(list['id'])
               }
             })
           });
-          // setFilterKeyandValues(obj_dict)
+          setFilterKeyandValues(obj_dict)
         }
+      }}
+      else{
+        let filterBoxes = inputJson.filterBoxes;
+        setFilterJson(filterBoxes)
       }
-    }
-    else {
-      let filterBoxes = inputJson.filterBoxes;
-      setFilterJson(filterBoxes)
-    }
-  }, [project_id, userDefinedFilter])
-
+  },[project_id,userDefinedFilter])
+  
   useEffect(() => {
-    if (project_id !== undefined) {
-      if (userDefinedFilter && Object.keys(userDefinedFilter).length > 0) {
+    if(project_id!==undefined){
+      if(userDefinedFilter && Object.keys(userDefinedFilter).length > 0){
         leftSide(filterJson);
         drawTags(filterJson);
       }
-    } else {
+    }else{
       leftSide(filterJson);
       drawTags(filterJson)
     }
-  }, [userDefinedFilter, filterJson]);
+  }, [userDefinedFilter,filterJson]);
 
   useEffect(() => {
-    if (project_id !== undefined) {
-      if (userDefinedFilter && Object.keys(userDefinedFilter).length > 0) {
+    if(project_id!==undefined){
+      if(userDefinedFilter && Object.keys(userDefinedFilter).length > 0){
         leftSide(filterJson);
         drawTags(filterJson);
       }
-    } else {
+    }else{
       leftSide(filterJson);
       drawTags(filterJson)
     }
-  }, [selected, selectState, filterJson]);
+  }, [selected, selectState,filterJson]);
 
 
   useEffect(() => {
@@ -111,7 +121,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
             tmp.push(
               <span
                 key={`${sub.key}-${Math.random()}`}
-                className="FilterSpan"
+                className="inline-flex items-center justify-center p-3 px-5  mr-2 text-md font-bold leading-none text-white bg-gray-600 rounded-full mb-4"
               >
                 {sub.key}:&nbsp;{sub.value}
               </span>
@@ -120,15 +130,15 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
         }
         if (tmp.length > 0) {
           html.push(
-            <div className="MarginBottom5" key={e + "_filter"}>
-              <h4 className="MarginBottom5">{e}</h4>
+            <div className="mb-5" key={e + "_filter"}>
+              <h4 className="mb-5">{e}</h4>
               {tmp}
             </div>
           );
         }
       });
     }
-
+    
     setFilterHtml(html);
   }, [filtersUi]);
 
@@ -158,12 +168,12 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
           let color = inputJson["clinicalColor"][item];
           let id = item.split(" ").join("");
           t.push(
-            <div className=" PaddingT10 PaddingB10 Relative ZIndex10" key={"div_mb_" + c}>
+            <div className=" py-3 relative z-10" key={"div_mb_" + c}>
               <label
                 htmlFor="toogleA"
-                className="Flex ItemsCenter CursorPointer"
+                className="flex items-center cursor-pointer"
               >
-                <div className="Toggle FilterLabelText">
+                <div className="ml-3 text-gray-700 w-10/12 tracking-wide text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">
                   {childelm in chart_names ? (
                     <FormattedMessage
                       id={childelm}
@@ -174,7 +184,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
                   )}
                 </div>
                 <div
-                  className="Relative"
+                  className="relative"
                   onClick={(e) => checkBoxFn(e, "md_" + id + "_" + c)}
                 >
                   <input
@@ -182,16 +192,16 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
                     id={"md_" + id + "_" + c}
                     checked="checked"
                     data-parent={item}
-                    className="CheckBoxSROnly"
+                    className="checkbox sr-only "
                     onChange={(e) => checkBoxFn(e, "md_" + id + "_" + c)}
                   />
                   <div
-                    className="Block InputCheckBox"
+                    className="block bg-gray-600 w-14 h-6 rounded-full"
                     id={"md_" + id + "_" + c + "_toggle"}
                     style={{ backgroundColor: color }}
                   ></div>
                   <div
-                    className="Absolute FilterDot"
+                    className="dot absolute left-1 top-1 bg-white w-6 h-4 rounded-full transition bg-white"
                     style={{ backgroundColor: "#fff" }}
                   ></div>
                 </div>
@@ -206,26 +216,26 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
       html.push(
         <div
           key={item + "_" + k}
-          className="tab WFull OverFlowHidden BorderTop1"
+          className="tab w-full overflow-hidden border-t"
           onClick={(e) => switchButton(e, item, k)}
         >
           <input
-            className="Absolute Opacity0"
+            className="absolute opacity-0"
             id={"tab-single-" + k}
             type="radio"
             name="tabs2"
           />
           <label
-            className="Block P5 LeadingNormal CursorPointer"
+            className="block p-5 leading-normal cursor-pointer"
             htmlFor={"tab-single-" + k}
           >
             {icon_type[item]}
-            <span className="IconType Text2XL ">
+            <span className="no-underline  ml-2 text-2xl tracking-wide">
               <FormattedMessage id={item} defaultMessage={item} />
             </span>
           </label>
           {selected === item ? (
-            <div className="tab-content OverFlowHidden LeadingNormal Relative SelectedItem">
+            <div className="tab-content overflow-hidden border-l-2 bg-gray-100  leading-normal relative py-3">
               {t}
             </div>
           ) : (
@@ -242,16 +252,16 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
 
   let icon_type = {
     "Basic/Diagnostic Information": (
-      <UserCircleIcon className="IconClass" />
+      <UserCircleIcon className="h-8 w-8 inline text-main-blue" />
     ),
     "Patient Health Information": (
-      <DocumentAddIcon className="IconClass" />
+      <DocumentAddIcon className="h-8 w-8 inline text-main-blue" />
     ),
     "Clinical Information": (
-      <BeakerIcon className="IconClass" />
+      <BeakerIcon className="h-8 w-8 inline text-main-blue" />
     ),
     "Follow-up Observation": (
-      <SearchIcon className="IconClass" />
+      <SearchIcon className="h-8 w-8 inline text-main-blue" />
     ),
   };
 
@@ -271,8 +281,8 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
       check = true;
     }
     return (
-      <div key={d.id} className="PX10">
-        <label className="InlineFlex ItemsCenter">
+      <div key={d.id} className="px-10">
+        <label className="inline-flex items-center">
           <input
             type="checkbox"
             id={d.id}
@@ -282,7 +292,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
             defaultChecked={check}
             onChange={(e) => selectFn(e)}
           />
-          <span className="MarginLeft2 LabelText">
+          <span className="ml-2 lg:text-2xl sm:text-xl md:text-xl">
             <FormattedMessage id={d.value} defaultMessage={d.value} />
           </span>
         </label>
@@ -294,14 +304,14 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
     return (
       <div
         key={d.id}
-        className="FilterInputGrid"
+        className="grid grid-cols-5  rounded mx-10 border border-b-color"
       >
-        <div className="ColSpan2">
+        <div className="col-span-2">
           <input
             type="number"
             id={"from_" + d.id}
-            className="HFull FilterNumberStyle Rounded"
-            onKeyDown={(e) => ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
+            className="h-full shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight"
+            onKeyDown={(e) =>["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
             value={selectState["from_" + d.id]}
             onChange={(e) => selectFn(e)}
             placeholder={d.min}
@@ -309,17 +319,17 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
             max={d.max}
           />
         </div>
-        <div className="ColSpan1">
-          <div className="FilterNumberLineBreak HFull">
+        <div className="col-span-1">
+          <div className="box-border border-r border-l border-b-color bg-gray-100 h-full w-30  px-3 mb-6 text-center">
             <b>-</b>
           </div>
         </div>
-        <div className="ColSpan2">
+        <div className="col-span-2">
           <input
             type="number"
             id={"to_" + d.id}
-            className="HFull FilterNumberStyle"
-            onKeyDown={(e) => ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
+            className="h-full  shadow appearance-none w-full py-2 px-3 text-gray-700 leading-tight"
+            onKeyDown={(e) =>["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
             value={selectState["to_" + d.id]}
             onChange={(e) => selectFn(e)}
             placeholder={d.max}
@@ -344,42 +354,42 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
       let from_ = from_0 ? +(from_0.value) : from_0.min;
       let min_value = from_0 ? +(from_0.min) : 0
       let to_0 = document.getElementById(`to_${m_id}`);
-      let to_ = to_0 ? +(to_0.value) : from_0.max;
+      let to_ = to_0 ? +(to_0.value) : from_0.max ;
       let max_value = from_0 ? +(from_0.max) : 0
 
       let checked = true
 
-      if (from_ > max_value || from_ < min_value || from_ > to_) {
+      if(from_ > max_value || from_ < min_value ||  from_ > to_ ){
         delete tmp[`from_${m_id}`];
         delete tmp[`to_${m_id}`];
         setSelectState(tmp)
         checked = false
 
       }
-      else if (to_ > max_value || to_ < min_value || to_ < from_) {
+      else if(to_ >max_value || to_ < min_value || to_ < from_){
         delete tmp[`from_${m_id}`];
         delete tmp[`to_${m_id}`];
         setSelectState(tmp)
         checked = false
       }
-      else {
+      else{
         tmp[`from_${m_id}`] = from_;
         tmp[`to_${m_id}`] = to_;
         setSelectState(tmp)
       }
 
       if (checked) {
-        from_0.classList.remove('Border2')
-        from_0.classList.remove('BorderRed400')
-        to_0.classList.remove('Border2')
-        to_0.classList.remove('BorderRed400')
-
-      }
+        from_0.classList.remove('border-2')
+        from_0.classList.remove('border-red-400')
+        to_0.classList.remove('border-2')
+        to_0.classList.remove('border-red-400')
+       
+      } 
       else {
-        from_0.classList.add('Border2')
-        from_0.classList.add('BorderRed400')
-        to_0.classList.add('Border2')
-        to_0.classList.add('BorderRed400')
+        from_0.classList.add('border-2')
+        from_0.classList.add('border-red-400')
+        to_0.classList.add('border-2')
+        to_0.classList.add('border-red-400')
         delete tmp[`from_${m_id}`];
         delete tmp[`to_${m_id}`];
         setSelectState(tmp)
@@ -400,8 +410,8 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
     let id = e.id;
     let tmp = selectState;
     if (e.type === "number") {
-      e.classList.remove('Border2')
-      e.classList.remove('BorderRed400')
+      e.classList.remove('border-2')
+      e.classList.remove('border-red-400')
       if (id in tmp) {
         delete tmp[id];
       }
@@ -415,28 +425,28 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
   };
 
   const checkBoxFn = (event, id) => {
-    let child_id = "child_" + id;
-    let child_did = document.getElementById(child_id);
-    const inputElements = child_did.querySelectorAll(
-      "input, select, checkbox, textarea"
-    );
-    for (let e in inputElements) {
-      if (inputElements[e].id) {
-        checkboxselectFn(inputElements[e]);
-      }
-    }
+     let child_id = "child_" + id; 
+     let child_did = document.getElementById(child_id);
+     const inputElements = child_did.querySelectorAll(
+       "input, select, checkbox, textarea"
+     );
+     for (let e in inputElements) {
+       if (inputElements[e].id) {
+         checkboxselectFn(inputElements[e]);
+       }
+     }
     var did = document.getElementById(id);
-
+    
     var checkbox_elm = document.getElementById(id).checked;
     if (checkbox_elm) {
       document.getElementById(id).checked = false;
       document.getElementById(id + "_toggle").style.background = "#ccc";
-      document.getElementById("child_" + id).classList.add("Hidden");
+      document.getElementById("child_" + id).classList.add("hidden");
     } else {
       document.getElementById(id).checked = true;
       document.getElementById(id + "_toggle").style.background =
         inputJson["clinicalColor"][did.getAttribute("data-parent")];
-      document.getElementById("child_" + id).classList.remove("Hidden");
+      document.getElementById("child_" + id).classList.remove("hidden");
     }
   };
 
@@ -507,7 +517,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
   };
 
   const sendFilter = () => {
-    parentCallback({ filters: selectState });
+    parentCallback({filter:selectState, filterKeyandValues:filterKeyandValues});
     drawTags(filterJson);
   };
 
@@ -533,28 +543,28 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
       "#all_checkboxes input[type=number]"
     );
     [...input_boxes].forEach((il) => {
-      il.classList.remove('Border2')
-      il.classList.remove('BorderRed400')
+      il.classList.remove('border-2')
+      il.classList.remove('border-red-400')
       delete tmp[il.id];
       il.value = "";
     });
-    setSelectState({ 'filterCondition': 'and' });
+    setSelectState({'filterCondition':'and'});
     // parentCallback("");
-    parentCallback({ filter: ""});
-    if (document.getElementById('default-radio-1')) {
+    parentCallback({filter:"", filterKeyandValues:""});
+    if(document.getElementById('default-radio-1')){
       document.getElementById('default-radio-1').checked = true
     }
-    if (document.getElementById('default-radio-2')) {
+    if(document.getElementById('default-radio-2')){
       document.getElementById('default-radio-2').checked = false
     }
     setFilterHtml([])
-    let filtervalues = { ...filtersUi }
-    filtervalues['Basic/Diagnostic Information'] = []
-    setFiltersUi(filtervalues)
+    let abcd = {...filtersUi}
+    abcd['Basic/Diagnostic Information'] = []
+    setFiltersUi(abcd)
   };
 
-  const changeFilterCondition = (e) => {
-
+  const changeFilterCondition = (e)=>{
+    
     let tmp = selectState
     let val = e.target.value
     setFilterCondition(val)
@@ -564,100 +574,100 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
 
   return (
     <div id='filterBoxCmp'>
-      <div className="FilterMainDiv">
+      <div className="py-3 px-2 w-full col-span-2 flex">
         <button
-          className="FilterLabelText FilterButton"
+          className="text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md bg-white btn_input_height w-full  mb-3 text-black-500 font-bold py-2 px-4 border border-gray-900 rounded "
           onClick={reset}
-
+          
         >
-          <FormattedMessage id='Reset' defaultMessage={' Reset '} />
+          <FormattedMessage id='Reset' defaultMessage={' Reset '}/>
         </button>
         &nbsp;&nbsp;&nbsp;&nbsp;
         <button
-          className="FilterLabelText FilterButton" style={{backgroundColor:"#009fe2"}}
+          className="text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md btn_input_height bg-main-blue hover:bg-main-blue mb-3 w-full text-white font-bold py-2 px-4 border border-blue-700 rounded xs:h-14 lg:h-16"
           onClick={sendFilter}
         >
-          <FormattedMessage id='Search' defaultMessage={' Search '} />
+          <FormattedMessage id='Search' defaultMessage={' Search '}/>
         </button>
       </div>
       <div className="m-2">
-        <button
-          className="FilterButtonClose"
+      <button
+          className="float-right lg:hidden md:hidden bg-blue-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 my-4 mr-4 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
           onClick={() => set_screen(false)}
           type="button"
         >
           close
         </button>
-      </div>
-      <div className="Flex FlexDirRow MarginBottom4 MarginLeft4">
-        <label className="Text2XL TextBold">
-          <FormattedMessage id='filterCondition' defaultMessage={'Sample filter condition'} />:
-        </label>
-        <div className="Flex ItemsCenter MarginLeft4">
-          {filterCondition === "and" ? (
-            <input
-              id="default-radio-1"
-              type="radio"
-              value="and"
-              name="condition"
-              checked
-              onChange={e => changeFilterCondition(e)}
-              className="FilterCondition"
-            />
-          ) : (
-            <input
-              id="default-radio-1"
-              type="radio"
-              value="and"
-              name="condition"
-              onChange={e => changeFilterCondition(e)}
-              className="FilterCondition"
-            />
-          )}
-
-          <label
-            htmlFor="default-radio-1"
-            className="MarginLeft2 ConditionLabel"
-          >
-            And
-          </label>
         </div>
-        <div className="Flex ItemsCenter MarginLeft4">
-          {filterCondition === "or" ? (
-            <input
-              id="default-radio-2"
-              type="radio"
-              value="or"
-              name="condition"
-              onChange={e => changeFilterCondition(e)}
-              className="FilterCondition"
-            />
-          ) : (
-            <input
-              id="default-radio-2"
-              type="radio"
-              value="or"
-              name="condition"
-              onChange={e => changeFilterCondition(e)}
-              className="FilterCondition"
-            />
-          )}
-          <label
-            htmlFor="default-radio-2"
-            className="MarginLeft2 ConditionLabel"
-          >
-            Or
+      <div className="flex flex-row mb-4 ml-4">
+          <label className="text-2xl font-bold">
+            <FormattedMessage id='filterCondition' defaultMessage={'Sample filter condition'}/>:
           </label>
-        </div>
+          <div className="flex items-center ml-4">
+            {filterCondition === "and" ? (
+              <input
+                id="default-radio-1"
+                type="radio"
+                value="and"
+                name="condition"
+                checked
+                onChange={e=>changeFilterCondition(e)}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+            ) : (
+              <input
+                id="default-radio-1"
+                type="radio"
+                value="and"
+                name="condition"
+                onChange={e=>changeFilterCondition(e)}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+            )}
 
+            <label
+              htmlFor="default-radio-1"
+              className="ml-2 text-gray-900 dark:text-gray-300 text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
+            >
+              And
+            </label>
+          </div>
+          <div className="flex items-center ml-4">
+            {filterCondition === "or" ? (
+              <input
+                id="default-radio-2"
+                type="radio"
+                value="or"
+                name="condition"
+                onChange={e=>changeFilterCondition(e)}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+            ) : (
+              <input
+                id="default-radio-2"
+                type="radio"
+                value="or"
+                name="condition"
+                onChange={e=>changeFilterCondition(e)}
+                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+            )}
+            <label
+              htmlFor="default-radio-2"
+              className="ml-2 text-gray-900 dark:text-gray-300 text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
+            >
+              Or
+            </label>
+          </div>
+        
       </div>
-      <div className="ColSpan2" id="all_checkboxes">
+      <div className="col-span-2" id="all_checkboxes">
         {state["html"]}
       </div>
-      <div className="ColSpan2 p-1">
-        {filterHtml && filterHtml.length ? (
+      <div className="col-span-2 p-1">
+        {filterHtml && filterHtml.length  ? (
           <>
-            <div className="MarginBottom5">
+            <div className="mb-5">
               <h6>Total Number of Samples : {totalSamples}</h6>
             </div>
             {filterHtml}
