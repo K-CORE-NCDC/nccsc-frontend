@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import introduce_img from '../../../assets/images/introduce_logo.svg'
-import introduce_VisualContents from '../../../assets/images/introduce-visualContents.jpg'
+import introduce_VisualContents from '../../../assets/images/cBioPortal_sub.jpg'
 import cBioPortal from '../../../styles/images/cBioPortal.png'
 import { Cosmic } from "./Cosmic";
 import { TCGA } from "./TCGA";
@@ -74,7 +74,7 @@ export const CBioPortal = () => {
         {activeTab === '1' &&
           <>
             <div className="tabContents " >
-              <div className="section introduceWrap" style={{ 'paddingTop': '0px', height: '100%' }}>
+              <div className=" introduceWrap" style={{ 'paddingTop': '0px', height: '100%' }}>
                 <div className="introduceBox01">
                   <div className="logoBox">
                     <img src={cBioPortal} alt="img" />
@@ -94,7 +94,7 @@ export const CBioPortal = () => {
                   <div className="imgBox">
                     <img className="w100" src={introduce_VisualContents} alt="img" />
                   </div>
-
+                  <span style={{paddingLeft:'30%'}}><a href="http://www.cbioportal.org/">http://www.cbioportal.org/</a></span>
                 </div>
                 <div className="introduceBox03">
                   <ul>

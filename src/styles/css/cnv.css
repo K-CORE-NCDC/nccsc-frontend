@@ -1,0 +1,20 @@
+.sub_head{
+  display: flex;
+  gap:10%;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+.cnvBtn {
+  display: flex;
+  /* align-items: center; */
+  /* justify-content: center; */
+  min-width: 80px;
+  height: 30px;
+  padding: 0 14px;
+  color: rgb(255, 255, 255);
+  /* font-size: 16px; */
+  /* font-weight: 500; */
+  border-width: 1px;
+  border-style: solid;
+}

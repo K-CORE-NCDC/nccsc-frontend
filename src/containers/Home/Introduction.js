@@ -14,7 +14,7 @@ const Introduction = ({ height, innerHeight }) => {
         <div className="visual">
           <div className="txtBox main_box" data-aos="fade-in" >
             <div className="txtBox_child1">
-              <p className="d2" >KCore Cancer Omics<br /> Research Portal</p>
+              <p className="d2" >KCore Cancer Omics Research Portal</p>
               <br />
               <p className="h6">
                 <FormattedMessage
@@ -23,7 +23,7 @@ const Introduction = ({ height, innerHeight }) => {
                 />
               </p>
             </div>
-            <div className="txtBox_child2">
+            {/* <div className="txtBox_child2">
               <a href='#test' className="btn btnPrimary btnSearch" style={{ width: '100%' }}>
               <FormattedMessage id="Login" defaultMessage='Login' />
               </a>
@@ -31,25 +31,35 @@ const Introduction = ({ height, innerHeight }) => {
                 <a href="#" >Create registration number</a>&nbsp;&nbsp;|&nbsp;&nbsp;
                 <a href="#">Find Password</a>
               </span>
-            </div>
+            </div> */}
+            {/* <div className="txtBox " data-aos="fade-in">
+              <p className="d2" >KCore Cancer Omics Research Portal</p>
+              <br />
+              <p className="h6">
+                <FormattedMessage
+                  id="home_child_title"
+                  defaultMessage="A cancer data platform that provides a variety of visualized analysis results by  combining high quality clinical and proteogenomic information of domestic cancer patients."
+                />
+              </p>
+            </div> */}
             <div className="mainDataStatusWrap">
               <div className="mainDataStatus" >
                 <dl style={{ 'background': 'transparent', columnGap: '50px', }}>
                   <dt>
-                    User Guide
+                  <FormattedMessage id="UserGuide" defaultMessage='User Guide' />
                   </dt>
                   <dt >
-                    Visualize Example Data
+                  <FormattedMessage id="Visualization" defaultMessage='Visualize Example Data' />
                   </dt>
                   <dt>
-                    Visualize My Data
+                  <FormattedMessage id="MyDataVisualization" defaultMessage=' Visualize My Data'/>
                   </dt>
                 </dl>
               </div>
             </div>
           </div>
-          
-          
+
+
         </div>
       </div>
     </div>

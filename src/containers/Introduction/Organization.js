@@ -13,7 +13,7 @@ import fig_08 from '../../assets/images/organization-img08.svg'
 const Organization = () => {
   return (
     <div className="contentsTitle">
-      <div className="section ptn">
+      <div className=" ptn">
         <div className="auto">
           <div className="organization" style={{overflowY:'scroll',height:'70vh'}}>
             <div className="conBox conBox01">

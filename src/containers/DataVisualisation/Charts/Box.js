@@ -9,6 +9,7 @@ import { FormattedMessage } from "react-intl";
 import html2canvas from 'html2canvas';
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import '../../../styles/css/box.css'
 
 export default function Box({
   width,
@@ -30,24 +31,26 @@ export default function Box({
   const [genes, setGenes] = useState("");
   const [boxJson, setboxJson] = useState(null)
   const [noGeneData, setNoGeneData] = useState(true)
-  const [alltabList, setAllTabList] = useState({}); 
+  const [alltabList, setAllTabList] = useState({});
+  const [activeTab, setActiveTab] = useState('1')
+  const [selectedType, setSelectedType] = useState('1')
 
   let { project_id } = useParams();
   const tabList = useSelector(
     (data) => data.dataVisualizationReducer
   );
 
-  useEffect(()=>{
-    if('userProjectsDataTable' in tabList ){
+  useEffect(() => {
+    if ('userProjectsDataTable' in tabList) {
       setAllTabList(tabList.userProjectsDataTable)
-      if(tabList.userProjectsDataTable['proteome']){
+      if (tabList.userProjectsDataTable['proteome']) {
         setTableType('proteome')
       }
-      else{
+      else {
         setTableType('mutation')
       }
     }
-    },[tabList])
+  }, [tabList])
 
   useEffect(() => {
     if (inputData && "genes" in inputData) {
@@ -58,7 +61,9 @@ export default function Box({
 
 
   const dispatchActionCommon = (postJsonBody) => {
-    if (postJsonBody.table_type === "proteome") {
+    console.log('tableType', tableType)
+    if (tableType && postJsonBody.table_type === "proteome") {
+      console.log('postJsonBody', postJsonBody)
       setLoader(true)
       let return_data = BoxInformation('POST', postJsonBody)
       return_data.then((result) => {
@@ -107,7 +112,7 @@ export default function Box({
   };
 
   useEffect(() => {
-    if (inputState && "genes" in inputState) {
+    if (inputState && "genes" in inputState && tableType) {
       let g = inputState["genes"];
       let dataJson = inputState;
       loadGenesDropdown(g);
@@ -129,7 +134,7 @@ export default function Box({
         setNoGeneData(true)
       }
     }
-  }, [inputState]);
+  }, [inputState, tableType]);
 
   let takeScreenshot = async () => {
     const element = document.getElementById('box2')
@@ -310,16 +315,15 @@ export default function Box({
     " border duration-200 ease-in-out border-teal-600 transition px-10 xs:p-3 xs:text-sm";
 
   return (
-    <div className="grid">
-      <div className="grid grid-cols-2">
-        <div className="mx-5 sm:col-span-2 xs:col-span-2 lg:col-span-1">
-          
-          <div className="flex m-2 w-100">
+    <div className="main_div">
+      <div className="cnv_sub_head">
+
+
+        {/* <div className="">
             { project_id === undefined && <button
               onClick={(e) => changeType(e, "proteome")}
               name="type"
-              className="rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 sm:p-2 xl:py-7 lg:px-10 md:px-10 sm:px-8 sm:w-48 md:w-56  lg:w-56 xl:w-80 sm:text-xl lg:text-2xl sm:h-20 lg:h-24 rounded
-              font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 ease-in-out transition xs:p-3 xs:text-sm"
+              className=""
             >
               <FormattedMessage id="TumorVsNormal" defaultMessage="Tumor Vs Normal" />
             </button>
@@ -328,8 +332,7 @@ export default function Box({
             {project_id !== undefined && alltabList['proteome']&& <button
               onClick={(e) => changeType(e, "proteome")}
               name="type"
-              className="rounded-r-none  hover:scale-110 focus:outline-none flex lg:p-5 sm:p-2 xl:py-7 lg:px-10 md:px-10 sm:px-8 sm:w-48 md:w-56  lg:w-56 xl:w-80 sm:text-xl lg:text-2xl sm:h-20 lg:h-24 rounded
-              font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 ease-in-out transition xs:p-3 xs:text-sm"
+              className=""
             >
               <FormattedMessage id="TumorVsNormal" defaultMessage="Tumor Vs Normal" />
             </button>
@@ -338,8 +341,7 @@ export default function Box({
             { project_id === undefined && <button
               onClick={(e) => changeType(e, "mutation")}
               name="type"
-              className="rounded-l-none  hover:scale-110 focus:outline-none flex justify-center xl:py-7  lg:p-5 sm:p-2 sm:w-40 md:w-48 lg:w-56 sm:text-xl lg:text-2xl sm:h-20 lg:h-24 rounded font-bold cursor-pointer hover:bg-teal-200
-              bg-teal-100 border duration-200 ease-in-out border-teal-600 transition px-10 xs:p-3 xs:text-sm"
+              className=""
             >
               <FormattedMessage id="VariantType" defaultMessage="Variant Type" />
             </button>
@@ -348,21 +350,48 @@ export default function Box({
             {project_id !== undefined && alltabList['dna_mutation']&& <button
               onClick={(e) => changeType(e, "mutation")}
               name="type"
-              className="rounded-l-none  hover:scale-110 focus:outline-none flex justify-center xl:py-7  lg:p-5 sm:p-2 sm:w-40 md:w-48 lg:w-56 sm:text-xl lg:text-2xl sm:h-20 lg:h-24 rounded font-bold cursor-pointer hover:bg-teal-200
-              bg-teal-100 border duration-200 ease-in-out border-teal-600 transition px-10 xs:p-3 xs:text-sm"
+              className=""
             >
               <FormattedMessage id="VariantType" defaultMessage="Variant Type" />
             </button>}
 
-          </div>
+          </div> */}
 
+        <div className="tabs_box">
+          <div className="tab">
+            <div className="tab_main">
+              <ul>
+                {
+                  project_id === undefined &&
+                  <li className={activeTab === '1' ? 'on' : ''}> <button onClick={e => { changeType(e, 'proteome'); setActiveTab('1') }} name='type' >
+                    <FormattedMessage id="TumorVsNormal" defaultMessage="Tumor Vs Normal" /> </button> </li>
+                }
+                {
+                  project_id !== undefined && alltabList['proteome'] && <li className={activeTab === '1' ? 'on' : ''}> <button onClick={e => {
+                    changeType(e, 'proteome')
+                    setActiveTab('1')
+                  }} name='type' > <FormattedMessage id="TumorVsNormal" defaultMessage="Tumor Vs Normal" /> </button></li>}
+                {
+                  project_id === undefined &&
+                  <li className={activeTab === '2' ? 'on' : ''}> <button onClick={e => { changeType(e, 'mutation'); setActiveTab('2') }} name='type' >
+                    <FormattedMessage id="VariantType" defaultMessage="Variant Type" /> </button> </li>
+                }
+                {
+                  project_id !== undefined && alltabList['dna_mutation'] && <li className={activeTab === '2' ? 'on' : ''}> <button onClick={e => {
+                    changeType(e, 'mutation')
+                    setActiveTab('2')
+                  }} name='type' >  <FormattedMessage id="VariantType" defaultMessage="Variant Type" /> </button></li>}
+              </ul>
+            </div>
+          </div>
         </div>
 
-        <div className="flex  text-left">
-          <div className="flex-1 text-right sm:pl-8 xs:pl-8">
+
+        <div className=" tabs_box box_gap">
+          <div className="">
             {tableType === "proteome" && (
               <>
-                <label className="xs:text-xl">
+                <label className="">
                   <FormattedMessage
                     id="Selected Gene Is"
                     defaultMessage="Selected Gene Is"
@@ -380,7 +409,7 @@ export default function Box({
             )}
             {tableType === "mutation" && (
               <div>
-                <label className="xs:text-xl">
+                <label className="">
                   <FormattedMessage
                     id="Selected Gene Is"
                     defaultMessage="Selected Gene Is"
@@ -397,9 +426,9 @@ export default function Box({
               </div>
             )}
           </div>
-          <div className="mx-5 text-left xs:text-xl text-right">
+          <div className="">
             <FormattedMessage id="View_By_heatmap" defaultMessage="View By" />:
-            <div className="flex m-2 w-100 ">
+            {/* <div className="">
               <button
                 onClick={(e) => changeView(e, "gene_vl")}
                 name="view"
@@ -418,6 +447,40 @@ export default function Box({
               >
                 Z-Score
               </button>
+            </div> */}
+            <div className="tab">
+              <div className="tab_main">
+                <ul>
+                  <li className={selectedType === '1' ? 'on' : ''}>  <button
+                    onClick={(e) => {
+                      changeView(e, "gene_vl")
+                      setSelectedType('1')
+                    }}
+                    name="view"
+                    className={
+                      viewType === "gene_vl" ? selected_button : normal_button
+                    }
+                  >
+                    Gene-vl
+                  </button>
+                  </li>
+                  <li className={selectedType === '2' ? 'on' : ''}>
+                    <button
+                      onClick={(e) => {
+                        changeView(e, "z_score")
+                        setSelectedType('2')
+                      }}
+                      name="view"
+                      className={
+                        viewType === "z_score" ? selected_button : normal_button
+                      }
+                    >
+                      Z-Score
+                    </button>
+                  </li>
+
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -427,7 +490,7 @@ export default function Box({
       ) : (
         boxJson && (
           <>
-            {tableType && <p className="text-left ml-8 my-8">{tableType === 'proteome' ? <FormattedMessage id="BoxTvNDesc" defaultMessage="Proteome expression of Tumor samples vs Normal samples" /> : <FormattedMessage id="BoxVariantDesc" defaultMessage="Proteome expression by variant type number (Missense mutation, Nonsense mutation, Splice site, Frame-shift insertion, Frame-shift deletion, In-frame insertion, In-frame deletion" />}</p>}
+            {tableType && <p className="" style={{ marginBottom: '30px' }}>{tableType === 'proteome' ? <FormattedMessage id="BoxTvNDesc" defaultMessage="Proteome expression of Tumor samples vs Normal samples" /> : <FormattedMessage id="BoxVariantDesc" defaultMessage="Proteome expression by variant type number (Missense mutation, Nonsense mutation, Splice site, Frame-shift insertion, Frame-shift deletion, In-frame insertion, In-frame deletion" />}</p>}
             {showBoxPlot && (
               <BoxPlot
                 view_type={viewType}

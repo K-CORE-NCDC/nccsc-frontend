@@ -6,14 +6,14 @@ import { FormattedMessage } from "react-intl";
 const MultiDataVisualization = () => {
   const history = useHistory()
   return (
-    <div className="tabContents " >
+    <div className="tabContents " style={{height:'85vh'}}>
     <div className="dataSearchWrap">
       <div className="popularBox">
         <div className="subHeader">
           <p className="tit h5">Contents</p>
           <div className="tit contentBtns">
             <button className="btn">
-              Example Page
+            <FormattedMessage id="ExamplePage" defaultMessage='Example Page' />
             </button>
             <button  className="btn">
             <FormattedMessage id="DownloadManual" defaultMessage='Download Manual' />

@@ -10,13 +10,13 @@ import Multiselect from 'multiselect-react-dropdown';
 import { FormattedMessage } from 'react-intl';
 import { Context } from "../../../wrapper";
 import { useParams } from "react-router-dom";
-
+import '../../../styles/css/heatmap.css'
 
 export default function DataHeatmap({ width, inputData, screenCapture, brstKeys, setToFalseAfterScreenCapture }) {
   const context = useContext(Context);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const reference = useRef()
-  const [tableType, setTableType] = useState('phospho')
+  const [tableType, setTableType] = useState('rna')
   const [data_, setData] = useState('')
   const [inputGene, setInputGene] = useState([])
   const [heatmapJson, setHeatmapJson] = useState([])
@@ -41,6 +41,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
   const [clinincalAttributesFil, setClinicalAttributesFil] = useState([])
   const [noGeneData, setNoGeneData] = useState(true)
   const [alltabList, setAllTabList] = useState({});
+  const [activeTab, setActiveTab] = useState('1')
 
   const tabList = useSelector(
     (data) => data.dataVisualizationReducer
@@ -57,7 +58,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
   useEffect(() => {
     if ('userProjectsDataTable' in tabList) {
       setAllTabList(tabList.userProjectsDataTable)
-
+      console.log('ddd', tabList.userProjectsDataTable)
     }
 
   }, [tabList])
@@ -178,7 +179,8 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
   }, [inputData])
 
   useEffect(() => {
-    if (heatmapJson?.length > 0 && brstKeys?.length > 0) {
+    if (heatmapJson?.length > 0 && brstKeys) {
+
       let genes = []
       let unique_sample_values = {}
       let unique_cf = {}
@@ -204,8 +206,6 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
           if (!genes.includes(item['gene_name'])) {
             genes.push(item['gene_name'])
           }
-
-        
           let breast_key = brstKeys[item['pt_sbst_no']]
           if (breast_key in unique_sample_values) {
             unique_sample_values[breast_key].push(item["gene_vl"])
@@ -257,19 +257,19 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
       let tmp = {}
       for (const key in z) {
         if (key in optn) {
-            if (key.slice(-3) === '_yn'){
-              for (let i=0;i<z[key].length;i++){
-                if (z[key][i]===1 || z[key][i]=== true){
-                  z[key][i] = 'True'
-                }
-                else if(z[key][i]===0 || z[key][i]=== false){
-                  z[key][i] = 'False'
-                }
-                else{
-                  z[key][i] = 'Null'
-                }
+          if (key.slice(-3) === '_yn') {
+            for (let i = 0; i < z[key].length; i++) {
+              if (z[key][i] === 1 || z[key][i] === true) {
+                z[key][i] = 'True'
+              }
+              else if (z[key][i] === 0 || z[key][i] === false) {
+                z[key][i] = 'False'
+              }
+              else {
+                z[key][i] = 'Null'
               }
             }
+          }
           tmp[optn[key]] = z[key]
         }
       }
@@ -303,13 +303,14 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
           geneSet.add(e.gene_name)
         })
       }
-      if (geneSet.size > 2) {
-        setInSufficientData(false)
-      } else {
-        setInSufficientData(true)
-      }
+      // if (geneSet.size > 2) {
+      //   setInSufficientData(false)
+      // } else {
+
+      //   setInSufficientData(true)
+      // }
     }
-  }, [heatmapJson , brstKeys])
+  }, [heatmapJson, brstKeys])
 
 
 
@@ -612,25 +613,25 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
     // if (heatmapSummaryStatusCode && heatmapSummaryStatusCode?.loader && heatmapSummaryStatusCode?.status === 0) {
     //   setLoader(true)
     // } else {
-      // if (heatmapSummaryStatusCode && heatmapSummaryStatusCode.status === 200) {
-      //   setRenderNoContent(false)
-      //   setLoader(false)
-      // } else{
-      //   setLoader(false)
-      //   setRenderNoContent(true)
-      //   setData('')
-      // }
-      // else if(heatmapSummaryStatusCode && heatmapSummaryStatusCode.loader === true){
-      //   setLoader(true)
-      //   setData('')
-      // }
+    // if (heatmapSummaryStatusCode && heatmapSummaryStatusCode.status === 200) {
+    //   setRenderNoContent(false)
+    //   setLoader(false)
+    // } else{
+    //   setLoader(false)
+    //   setRenderNoContent(true)
+    //   setData('')
+    // }
+    // else if(heatmapSummaryStatusCode && heatmapSummaryStatusCode.loader === true){
+    //   setLoader(true)
+    //   setData('')
+    // }
     // }
 
 
   }, [heatmapSummaryStatusCode])
 
   const changeSepctrum = (e) => {
-    setLoader(true)
+    // setLoader(true)
     // eslint-disable-next-line no-useless-computed-key
     setConfigVis({ ...configVis, ['colorSpectrumBreaks']: [parseInt(spectrumMin), parseInt(spectrumMax)] })
   }
@@ -657,129 +658,129 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
     <div>
       <div className="">
         <div className=''>
-          <div className="">
-            <div className="">
-              <div className="">
-                <button onClick={e => changeMainType(e, 'heatmap')} name='maintype' className="btn btnPrimary ">
+
+
+          {/* <div className="">
+                <button onClick={e => changeMainType(e, 'heatmap')} name='maintype' className="btn">
                   Heatmap
                 </button>
                 <button onClick={e => changeMainType(e, 'k-mean')} name='maintype' className="btn btnPrimary ">
                   K-mean
                 </button>
-              </div>
+              </div> */}
+          <div className="tab">
+            <div className="tab_main" >
+              <ul>
+                <li className={activeTab === '1' ? 'on' : ''}>
+                  <button type="button" onClick={() => {
+                    setActiveTab('1')
+                  }}>Heatmap</button>
+                </li>
+                <li className={activeTab === '2' ? 'on' : ''}>
+                  <button type="button" onClick={() => {
+                    setActiveTab('2')
+                  }}>K-mean</button>
+                </li>
+              </ul>
             </div>
+
+
+
           </div>
-          <div className="">
-            <div className="">
-              <div className="">
-                <button onClick={e => changeType(e, 'rna')} name='type' className="rounded-r-none  hover:scale-110
-                    focus:outline-none flex p-5 rounded font-bold cursor-pointer sm:text-xl md:text-2xl lg:text-2xl xs:text-sm xs:p-3
-                    hover:bg-main-blue  bg-main-blue text-white border duration-200 ease-in-out border-gray-600 transition">
-                  RNA
-                </button>
+          <div className='sub_head'>
+            <div className="tabs_box">
+              <div className="tab">
+                <div className="tab_main">
+                  <ul>
+                    {
+                      project_id === undefined &&
+                      <li className={activeTab === '1' ? 'on' : ''}> <button onClick={e => { changeType(e, 'rna'); setActiveTab('1') }} name='type' >RNA </button> </li>
+                    }
+                    {
+                      project_id !== undefined && alltabList['rna'] && <li className={activeTab === '1' ? 'on' : ''}> <button onClick={e => {
+                        changeType(e, 'rna')
+                        setActiveTab('1')
+                      }} name='type' > RNA </button></li>}
+                    {
+                      project_id === undefined &&
+                      <li className={activeTab === '2' ? 'on' : ''}> <button onClick={e => { changeType(e, 'methylation'); setActiveTab('2') }} name='type' >Methylation </button> </li>
+                    }
+                    {
+                      project_id !== undefined && alltabList['methylation'] && <li className={activeTab === '2' ? 'on' : ''}> <button onClick={e => {
+                        changeType(e, 'methylation')
+                        setActiveTab('2')
+                      }} name='type' > Methylation </button></li>}
+                    {
+                      project_id === undefined &&
+                      <li className={activeTab === '3' ? 'on' : ''}> <button onClick={e => { changeType(e, 'proteome'); setActiveTab('3') }} name='type' >Global Proteome </button> </li>
+                    }
+                    {
+                      project_id !== undefined && alltabList['proteome'] && <li className={activeTab === '3' ? 'on' : ''}> <button onClick={e => {
+                        changeType(e, 'proteome')
+                        setActiveTab('3')
+                      }} name='type' > Global Proteome </button></li>}
+                    {
+                      project_id === undefined &&
+                      <li className={activeTab === '4' ? 'on' : ''}> <button onClick={e => { changeType(e, 'phospho'); setActiveTab('4') }} name='type' >Phospho </button> </li>
+                    }
+                    {
+                      project_id !== undefined && alltabList['phospho'] && <li className={activeTab === '4' ? 'on' : ''}> <button onClick={e => {
+                        changeType(e, 'phospho')
+                        setActiveTab('4')
+                      }} name='type' > Phospho </button></li>}
 
-                {
-                  project_id === undefined && <button onClick={e => changeType(e, 'methylation')} name='type' className="rounded-l-none border-l-0
-                hover:scale-110 focus:outline-none flex justify-center p-5
-                rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl xs:text-sm xs:p-3
-                text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
-                    Methylation
-                  </button>
-                }
-
-                {
-                  project_id !== undefined && alltabList['methylation'] && <button onClick={e => changeType(e, 'methylation')} name='type' className="rounded-l-none border-l-0
-                hover:scale-110 focus:outline-none flex justify-center p-5
-                rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl xs:text-sm xs:p-3
-                text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
-                    Methylation
-                  </button>
-                }
-
-
-                {
-                  project_id === undefined && <button onClick={e => changeType(e, 'proteome')} name='type' className="rounded-l-none border-l-0
-                  hover:scale-110 focus:outline-none flex justify-center p-5
-                  rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl xs:text-sm xs:p-3
-                  text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
-                    Global Proteome
-                  </button>
-                }
-
-                {project_id !== undefined && alltabList['proteome'] &&
-                  <button onClick={e => changeType(e, 'proteome')} name='type' className="rounded-l-none border-l-0
-                    hover:scale-110 focus:outline-none flex justify-center p-5
-                    rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl xs:text-sm xs:p-3
-                    text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
-                    Global Proteome
-                  </button>}
-
-                {project_id !== undefined && alltabList['phospho'] &&
-                  <button onClick={e => changeType(e, 'phospho')} name='type' className="rounded-l-none border-l-0
-                hover:scale-110 focus:outline-none flex justify-center p-5
-                rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl xs:text-sm xs:p-3
-                text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
-                    Phospho </button>
-                }
-
-                {project_id === undefined &&
-                  <button onClick={e => changeType(e, 'phospho')} name='type' className="rounded-l-none border-l-0
-                  hover:scale-110 focus:outline-none flex justify-center p-5
-                  rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 sm:text-xl md:text-2xl lg:text-2xl xs:text-sm xs:p-3
-                  text-teal-700 border duration-200 ease-in-out border-teal-600 transition">
-                    Phospho
-                  </button>
-                }
-
-              </div>
-            </div>
-          </div>
-          <div className='pr-3 text-left flex col-span-2'>
-            <div className={tableType !== 'methylation' ? 'xs:w-4/5  lg:w-7/12 xl:w-7/12 2xl:w-8/12 text-left' : 'w-full text-left'}>
-              <label className="text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"><FormattedMessage id="Clinical_Filters_heatmap" defaultMessage='Clinical Attribute' />:</label>
-              <Multiselect
-                style={style}
-                options={optionChoices} // Options to display in the dropdown
-                selectedValues={option} // Preselected value to persist in dropdown
-                onSelect={onSelect} // Function will trigger on select event
-                onRemove={onRemove} // Function will trigger on remove event
-                displayValue="name" // Property name to display in the dropdown options
-              />
-
-            </div>
-            {tableType !== 'methylation' && tableType !== 'phospho' &&
-              <div className="ml-3 flex-wrap  text-left lg:w-5/12 xl:w-5/12 2xl:w-4/12 text-left text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md">
-                <FormattedMessage id="View_By_heatmap" defaultMessage='View By' />:
-                <div className="flex m-2 w-100">
-                  <button onClick={e => changeView(e, 'gene_vl')} name='view' className={`${(viewType === "gene_vl" ? selected_button : normal_button)} rounded-l-lg`}>
-                    Gene-Vl
-                  </button>
-                  <button onClick={e => changeView(e, 'z_score')} name='view' className={`${viewType === "z_score" ? selected_button : normal_button} rounded-r-lg`}>
-                    Z-Score
-                  </button>
+                  </ul>
                 </div>
               </div>
-            }
-            {(tableType === 'methylation' || tableType === 'phospho') &&
-              <div className='mx-5 flex-wrap text-left'>
-                {inputGene &&
-                  <>
-                    <label><FormattedMessage id="Select Gene" defaultMessage='Select Gene' /></label>
-                    <select value={selectedGene[0]} onChange={e => setGene(e)} className="w-full border bg-white rounded px-3 py-2 outline-none text-gray-700" >
-                      {inputGene}
-                    </select>
-                  </>
-                }
+            </div>
+            <div className='sub_head tabs_box box_space'>
+              <div className='tabs_box ' >
+               {/* className={tableType !== 'methylation' ? 'xs:w-4/5  lg:w-7/12 xl:w-7/12 2xl:w-8/12 text-left' : 'w-full text-left'} */}
+                <label className="text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"><FormattedMessage id="Clinical_Filters_heatmap" defaultMessage='Clinical Attribute' />:</label>
+                <Multiselect
+                  style={style}
+                  options={optionChoices} // Options to display in the dropdown
+                  selectedValues={option} // Preselected value to persist in dropdown
+                  onSelect={onSelect} // Function will trigger on select event
+                  onRemove={onRemove} // Function will trigger on remove event
+                  displayValue="name" // Property name to display in the dropdown options
+                />
+
               </div>
-            }
+              {tableType !== 'methylation' && tableType !== 'phospho' &&
+                <div className=" tabs_box">
+                  <FormattedMessage id="View_By_heatmap" defaultMessage='View By' />:
+                  <div className="sub_head box_space">
+                    <button onClick={e => changeView(e, 'gene_vl')} name='view' className={`${(viewType === "gene_vl" ? selected_button : normal_button)} btn btnPrimary`} >
+                      Gene-Vl
+                    </button>
+                    <button onClick={e => changeView(e, 'z_score')} name='view' className={`${viewType === "z_score" ? selected_button : normal_button} rounded-r-lg`}>
+                      Z-Score
+                    </button>
+                  </div>
+                </div>
+              }
+              {(tableType === 'methylation' || tableType === 'phospho') &&
+                <div className='tabs_box sub_tabs' style={{flexDirection:'column' , display:'flex'}}>
+                  {inputGene &&
+                    <>
+                      <label><FormattedMessage id="Select Gene" defaultMessage='Select Gene' /></label>
+                      <select value={selectedGene[0]} onChange={e => setGene(e)} className="w-full border bg-white rounded px-3 py-2 outline-none text-gray-700" >
+                        {inputGene}
+                      </select>
+                    </>
+                  }
+                </div>
+              }
+            </div>
           </div>
         </div>
 
-        <div className='grid'>
-          <div className='text-left grid grid-cols-5 bg-white '>
-            <div className='p-5 m-2'>
-              <label id="listbox-label" className="block text-gray-700 mb-2 text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md">Color</label>
-              <select onChange={(e) => changeTheme(e)} className='w-full border bg-white rounded lg:px-3 lg:py-2 xs:py-0 lg:h-14 sm:h-14 xs:h-8 lg:text-2xl xs:text-sm outline-none text-gray-700'>
+       
+          <div className='sub_head sub_sec_head '>
+            <div className='sub_tabs' style={{flexDirection:'column' , display:'flex'}}>
+              <label id="listbox-label" className="">Color</label>
+              <select onChange={(e) => changeTheme(e)} className=''>
                 {
                   themes.map(row =>
                     <option key={row['name']} value={row['name']}>{row['name']}</option>
@@ -787,44 +788,44 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
                 }
               </select>
             </div>
-            <div className='p-5 m-2'>
-              <label className="block text-gray-700  mb-2 text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md">Spectrum</label>
-              <div className="grid grid-cols-5  rounded border border-b-color">
-                <div className="col-span-2">
+            <div className='sub_tabs' style={{flexDirection:'column' , display:'flex'}}>
+              <label className="">Spectrum</label>
+              <div className="sub_head box_space">
+                <div className="">
                   <input type="number" id='specturm_from' value={spectrumMin} onChange={(e) => setSpectrumMin(e.target.value)}
-                    className="h-full shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight"
+                    className=""
                   />
                 </div>
-                <div className="col-span-1">
-                  <div className="box-border border-r border-l border-b-color bg-gray-100 h-full w-30  px-3 mb-6 text-center">
+                <div className="">
+                  <div className="">
                     <b>-</b>
                   </div>
                 </div>
-                <div className="col-span-2">
+                <div className="">
                   <input type="number" id='specturm_to' value={spectrumMax} onChange={(e) => setSpectrumMax(e.target.value)}
-                    className="h-full  shadow appearance-none w-full py-2 px-3 text-gray-700 leading-tight"
+                    className=""
                   />
                 </div>
               </div>
             </div>
-            <div className='mt-7'>
-              <label className="block text-gray-700 mx-10 mb-2">&nbsp;</label>
-              <button onClick={(e) => changeSepctrum(e)} className='bg-main-blue hover:bg-main-blue text-white font-bold pt-3 pb-3 px-8 border border-blue-700 rounded leading-7 text-xl'>Apply</button>
-            </div>
-            <div className='p-5 m-2 col-span-2'>
+            {/* <div className=''> */}
+              {/* <label className="">&nbsp;</label> */}
+              <button onClick={(e) => changeSepctrum(e)} className='btn btnPrimary'>Apply</button>
+            {/* </div> */}
+            <div className=''>
               {mainTab === 'k-mean' ?
-                <div className=" flex relative border p-3 h-full">
+                <div className="">
                   <div className='w-full py-3 px-2'>
                     <label htmlFor="points"><strong className="">No. Of Cluster:  {rangeValue}</strong></label>
                     <input type="range" className="custom-slider opacity-100"
                       id="points" name="points" min="1" step={1} max={clusterRange} defaultValue={rangeValue} onChange={rangeCall} />
-                    <ul className="flex justify-between w-full px-[1px]" id='tickmarks'>
-                      <li key="min_value_range" className="flex justify-around relative"><span className="absolute">1</span></li>
-                      <li key="max_value_range" className="flex justify-around relative"><span className="absolute">{clusterRange}</span></li>
+                    <ul className="" id='tickmarks'>
+                      <li key="min_value_range" className=""><span className="absolute">1</span></li>
+                      <li key="max_value_range" className=""><span className="absolute">{clusterRange}</span></li>
                     </ul>
                   </div>
                   <div className='absolute right-5 top-2'>
-                    <button onClick={(e) => changeCluster(e)} className='bg-main-blue hover:bg-main-blue text-white rounded-2xl '>
+                    <button onClick={(e) => changeCluster(e)} className=''>
                       <CheckIcon className='w-8 h-8 ' />
                     </button>
                   </div>
@@ -832,7 +833,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
               }
             </div>
           </div>
-          {loader ? <LoaderCmp /> : <div>
+          {loader ? <LoaderCmp /> : <div className='sub_head sub_sec_head '>
             {(data_ && (inSufficientData !== true)) && <HeatmapNewCmp settings={configVis} clinicalFilter={optionChoices} inputData={data_} type={mainTab} watermarkCss={watermarkCss} ref={reference} width={width} />
             }
             {(inSufficientData || renderNoContent) && <NoContentMessage />}
@@ -840,7 +841,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
           </div>
           }
         </div>
-      </div>
+      
     </div>
   )
 }
