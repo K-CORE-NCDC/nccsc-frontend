@@ -94,7 +94,18 @@ export const CBioPortal = () => {
                   <div className="imgBox">
                     <img className="w100" src={introduce_VisualContents} alt="img" />
                   </div>
-                  <span style={{paddingLeft:'30%'}}><a href="http://www.cbioportal.org/">http://www.cbioportal.org/</a></span>
+                  <div style={{display:'flex'}}>
+                    <div style={{ paddingTop: '5%' }}>
+                      <span class="material-icons" style={{ color: 'rosybrown' }}>
+                        output
+                      </span>
+                      <span style={{ paddingLeft: '1%', color: 'dodgerblue' }}><a href="http://www.cbioportal.org/">http://www.cbioportal.org/</a></span>
+                    </div>
+                    <div style={{ justifyContent: 'flex-end' }}>
+                      suhshma
+                    </div>
+                  </div>
+
                 </div>
                 <div className="introduceBox03">
                   <ul>
@@ -111,7 +122,7 @@ export const CBioPortal = () => {
                         defaultMessage="cBioPortal is to significantly lower the barriers between complex genomic data and cancer researchers, therefore to empower researchers to translate these rich data sets into biologic insights and clinical applications."
                       /></p>
                     </li>
-                 
+
                   </ul>
 
                 </div>
