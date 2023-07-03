@@ -673,7 +673,7 @@ export function clearNewFileUploadState() {
 
 export function clearSingleFIleUploadState() {
   return (dispatch) => dispatch({
-    type: homeConstants.CLEAR_MULTI_USER_DATA_VISUALIZATION,
+    type: homeConstants.CLEAR_SINGLE_USER_DATA_VISUALIZATION,
     payload: {},
   });
 }

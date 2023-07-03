@@ -1,8 +1,4 @@
 import React, { useState, useEffect,useContext, useRef } from "react";
-import {
-  PlusCircleIcon,
-  MinusCircleIcon,
-} from '@heroicons/react/outline'
 import { SingleFileUpload,clearSingleFIleUploadState } from '../../../actions/api_actions'
 import { useSelector, useDispatch } from "react-redux";
 import Loader from '../Widgets/loader';

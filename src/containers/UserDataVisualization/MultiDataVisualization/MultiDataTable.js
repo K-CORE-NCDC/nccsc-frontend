@@ -8,8 +8,9 @@ import {
     clearMultiFIleUploadState
 } from "../../../actions/api_actions";
 import { FormattedMessage } from "react-intl";
-
+import { useParams } from "react-router-dom";
 import warningImage from '../../../assets/images/warning.png'
+
 
 
 
@@ -152,6 +153,220 @@ function Modal({ showModal, setShowModal}) {
 }
 
 
+// function MultiDataTable({updateComponentNumber}) {
+//   const dispatch = useDispatch();
+//   const [rowData, setRowData] = useState([]);
+//   const [colData, setColData] = useState([]);
+//   const [tableNavTabs, setTableNavTabs] = useState([]);
+//   const [projectId, setProjectId] = useState(0);
+//   const [activeTableKey, setActiveTableKey] = useState("");
+//   const [navTabIs, setNavTabIs] = useState('circos')
+//   const [showModal, setShowModal] = useState(false)
+//   let history = useHistory();
+//   const verificationResponse = useSelector(
+//     (data) => data.homeReducer.multiFileUploadData
+//   );
+//   const fileUploadStatus = useSelector(
+//     (data) => data.homeReducer.fileUploadStatus
+//   );
+
+//   const tabDropdownTable = (tab) => {
+//     setActiveTableKey(tab);
+//   };
+
+//   useEffect(()=>{
+//     if (verificationResponse && verificationResponse["project_details"]) {
+
+//       for(const available_step in verificationResponse["project_details"]["available_steps"]){
+//         if(verificationResponse["project_details"]["available_steps"][available_step].length > 0){
+//           setNavTabIs(available_step)
+//         }
+//       }
+//       if ('result' in verificationResponse){
+//           let first = Object.values(verificationResponse['result'])[0]; 
+//         setActiveTableKey(first[0]['tab']);
+//       }
+      
+//     }
+//   },[verificationResponse])
+//   useEffect(() => {
+//     if (verificationResponse && verificationResponse["result"]) {
+//       let temptabs = [];
+
+//       for (const tabrow in verificationResponse["result"]) {
+//         let tab = verificationResponse["result"][tabrow][0]["tab"];
+//         let css = "px-4 py-2 font-semibold rounded-t opacity-50";
+//         if (activeTableKey === tab) {
+//           css += " border-blue-400 border-b-4 -mb-px opacity-100";
+//         }
+//         temptabs.push(
+//           <li key={tab} className={css}>
+//             <button
+//               value={tab}
+//               onClick={() => tabDropdownTable(tab)}
+//               className="capitalize"
+//             >
+//               {tab}
+//             </button>
+//           </li>
+//         );
+//       }
+//       setTableNavTabs(temptabs);
+//     }
+
+//     let Tablecolumns = [];
+//     let rowdata = [];
+//     if (verificationResponse) {
+//       for (const key in verificationResponse["result"]) {
+//         if (activeTableKey === verificationResponse["result"][key][0]["tab"]) {
+//           // setting the columns data
+//           let columns = verificationResponse["result"][key][0]["columns"];
+//           let rowObject = {};
+//           for (let i = 0; i < columns.length; i++) {
+//             rowObject[columns[i]] = "";
+//             Tablecolumns.push({
+//               name: columns[i],
+//               selector: (row) => {
+//                 let rdata = String(row[columns[i]]);
+//                 let v = rdata.split("||");
+//                 if (v.length > 1) {
+//                   return <div className="text-red-700">{v[1]}</div>;
+//                 } else {
+//                   return <div className="">{String(row[columns[i]])}</div>;
+//                 }
+//               },
+//               sortable: true,
+//             });
+//           }
+
+//           let tempRow = { ...rowObject };
+//           setColData(Tablecolumns);
+//           // setting the row data
+//           let rawRowData = verificationResponse["result"][key];
+//           let noOfRows = rawRowData.length;
+//           for (let i = 1; i < noOfRows; i++) {
+//             if (rawRowData[i]) {
+//               let row = rawRowData[i][i];
+//               for (const colname in row) {
+//                 if (rowObject[colname] === "") {
+//                   rowObject[colname] =
+//                     row[colname]["success"] === "True"
+//                       ? row[colname]["value"]
+//                       : "False||" + row[colname]["value"];
+//                 }
+//               }
+//               rowdata.push(rowObject);
+//               rowObject = { ...tempRow };
+//             }
+//           }
+//           setRowData(rowdata);
+//         }
+//       }
+//       let projectResponse = 'project_details' in verificationResponse ?verificationResponse["project_details"]:{};
+//       if ("id" in projectResponse) {
+//         setProjectId(projectResponse["id"]);
+//       } else {
+//         setProjectId(0);
+//       }
+//     }
+//   }, [verificationResponse, activeTableKey]);
+
+//   const conditionalRowStyles = [
+//     {
+//       when: (row) => row.toggleSelected,
+//       style: {
+//         backgroundColor: "green",
+//         userSelect: "none",
+//       },
+//     },
+//   ];
+
+//   const setShowModalFunction = (stateData) => {
+//     setShowModal(stateData)
+//   }
+
+//   useEffect(()=>{
+//     return () => {
+//       dispatch(clearMultiFIleUploadState())
+//     };
+//   },[])
+
+//   return (
+//     <div>
+//       <div className="p-1 flex justify-around">
+//       <Modal showModal={showModal} setShowModal={setShowModalFunction} />
+//       {projectId === 0 && (
+//         <button
+//            className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
+//           type="button"
+//           onClick={() => {
+//             updateComponentNumber(0)
+//           }}
+//           >
+//           <FormattedMessage id="Back" defaultMessage="Back" />
+//         </button>
+//       )
+//       }
+//     {
+//       projectId === 0 && (
+//         <div>
+//             <button onClick={() => setShowModalFunction(true)} className="has-tooltip bg-red-500 hover:bg-red-700 text-white text-center py-2 px-4 rounded-full h-20 w-20 inline-flex items-center">
+//                   <img src={warningImage}></img>
+//             </button>
+//         </div>
+//       )
+//     }
+
+//         {projectId !== 0 && (
+//           <button
+//             onClick={() => {
+//               dispatch(clearMultiFIleUploadState())
+//               history.push(`/visualise-multidata/home/${projectId}`)}}
+//             className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
+//           >
+//             <FormattedMessage id="Visualize" defaultMessage="Visualize" />
+//           </button>
+//         )}
+//       </div>
+//       <nav className=" px-8 pt-2 shadow-md">
+//         <ul id="tabs" className="inline-flex justify-center w-full px-1 pt-2 ">
+//           {tableNavTabs}
+//         </ul>
+//       </nav>
+//       <div className="App">
+//         {verificationResponse  && (
+//           <DataTable
+//             title=""
+//             columns={colData}
+//             data={rowData}
+//             defaultSortField="title"
+//             pagination
+//             conditionalRowStyles={conditionalRowStyles}
+//           />
+//         )}
+
+//         {!verificationResponse  && (
+//           <div>
+//           <LoaderCmp />
+//           { <p className="mt-8 text-center text-lg"><FormattedMessage id = 'WaitMessage' defaultMessage=' It takes some time to process the data. Please wait ! (2 minutes per 100 samples)' /> </p>}
+//           </div>
+//         )}
+//       </div>
+//       <div>
+//         {fileUploadStatus && fileUploadStatus['failed'] && 
+//         <div>
+//             <p>Error</p>
+//             </div>
+//             }
+//     </div>
+ 
+//     </div>
+//   );
+// }
+
+// export default MultiDataTable;
+
+
 function MultiDataTable({updateComponentNumber}) {
   const dispatch = useDispatch();
   const [rowData, setRowData] = useState([]);
@@ -162,6 +377,7 @@ function MultiDataTable({updateComponentNumber}) {
   const [navTabIs, setNavTabIs] = useState('circos')
   const [showModal, setShowModal] = useState(false)
   let history = useHistory();
+  let { tab } = useParams();
   const verificationResponse = useSelector(
     (data) => data.homeReducer.multiFileUploadData
   );
@@ -194,12 +410,8 @@ function MultiDataTable({updateComponentNumber}) {
 
       for (const tabrow in verificationResponse["result"]) {
         let tab = verificationResponse["result"][tabrow][0]["tab"];
-        let css = "px-4 py-2 font-semibold rounded-t opacity-50";
-        if (activeTableKey === tab) {
-          css += " border-blue-400 border-b-4 -mb-px opacity-100";
-        }
         temptabs.push(
-          <li key={tab} className={css}>
+          <li key={tab} className={(activeTableKey === tab)?'on':''}>
             <button
               value={tab}
               onClick={() => tabDropdownTable(tab)}
@@ -229,11 +441,13 @@ function MultiDataTable({updateComponentNumber}) {
                 let rdata = String(row[columns[i]]);
                 let v = rdata.split("||");
                 if (v.length > 1) {
-                  return <div className="text-red-700">{v[1]}</div>;
+                  return <div className="boardCell text-red-700">{v[1]}</div>;
                 } else {
-                  return <div className="">{String(row[columns[i]])}</div>;
+                  return <div className="boardCell">{String(row[columns[i]])}</div>;
                 }
+                
               },
+              className:'boardCell',
               sortable: true,
             });
           }
@@ -284,50 +498,56 @@ function MultiDataTable({updateComponentNumber}) {
     setShowModal(stateData)
   }
 
+  useEffect(()=>{
+    return () => {
+      dispatch(clearMultiFIleUploadState())
+    };
+  },[])
 
   return (
-    <div>
-      <div className="p-1 flex justify-around">
-      <Modal showModal={showModal} setShowModal={setShowModalFunction} />
-      {projectId === 0 && (
-        <button
-           className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
-          type="button"
-          onClick={() => {
-            updateComponentNumber(0)
-          }}
-          >
-          <FormattedMessage id="Back" defaultMessage="Back" />
-        </button>
-      )
-      }
-    {
-      projectId === 0 && (
-        <div>
-            <button onClick={() => setShowModalFunction(true)} className="has-tooltip bg-red-500 hover:bg-red-700 text-white text-center py-2 px-4 rounded-full h-20 w-20 inline-flex items-center">
-                  <img src={warningImage}></img>
+    <div className="auto">
+      <div  className="flex">
+        <Modal showModal={showModal} setShowModal={setShowModalFunction} />
+        { projectId === 0 && 
+          (
+            <button
+              className='btn btnGray bdBtn'
+              type="button"
+              onClick={() => {
+                updateComponentNumber(0)
+              }}
+              >
+              <FormattedMessage id="Back" defaultMessage="Back" />
             </button>
-        </div>
-      )
-    }
+          )
+        }
+        {
+          projectId === 0 && (
+            <div>
+                <button onClick={() => setShowModalFunction(true)} className="">
+                  <img width='50' src={warningImage}></img>
+                </button>
+            </div>
+          )
+        }
 
         {projectId !== 0 && (
           <button
             onClick={() => {
               dispatch(clearMultiFIleUploadState())
-              history.push(`/visualise-multidata/home/${projectId}`)}}
-            className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
+              history.push(`/visualise-singledata/${tab}/${projectId}`)}}
+            className='btn btnPrimary'
           >
             <FormattedMessage id="Visualize" defaultMessage="Visualize" />
           </button>
         )}
       </div>
-      <nav className=" px-8 pt-2 shadow-md">
-        <ul id="tabs" className="inline-flex justify-center w-full px-1 pt-2 ">
+      <div className=" tab">
+        <ul >
           {tableNavTabs}
         </ul>
-      </nav>
-      <div className="App">
+      </div>
+      <div className="boardList">
         {verificationResponse  && (
           <DataTable
             title=""
@@ -338,21 +558,24 @@ function MultiDataTable({updateComponentNumber}) {
             conditionalRowStyles={conditionalRowStyles}
           />
         )}
-
         {!verificationResponse  && (
           <div>
-          <LoaderCmp />
-          { <p className="mt-8 text-center text-lg"><FormattedMessage id = 'WaitMessage' defaultMessage=' It takes some time to process the data. Please wait ! (2 minutes per 100 samples)' /> </p>}
+            <LoaderCmp />
+            { <p className="text-center">
+              <FormattedMessage id = 'WaitMessage' defaultMessage=' It takes some time to process the data. Please wait ! (2 minutes per 100 samples)' /> 
+            </p>
+            }
           </div>
         )}
       </div>
       <div>
-        {fileUploadStatus && fileUploadStatus['failed'] && 
-        <div>
-            <p>Error</p>
-            </div>
-            }
-    </div>
+        {
+          fileUploadStatus && fileUploadStatus['failed'] && 
+          <div>
+           <p>Error</p>
+          </div>
+        }
+      </div>
  
     </div>
   );
