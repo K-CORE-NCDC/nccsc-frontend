@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
 const Table = ({ updateComponentNumber }) => {
   const [filesData, setFilesData] = useState({});
-  const [projectName, setProjectName] = useState({});
+  const [projectName, setProjectName] = useState("");
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -38,13 +38,14 @@ const Table = ({ updateComponentNumber }) => {
   };
 
   const handleUpload = () => {
+    console.log(projectName);
     if (filesData["clinical_information"] && projectName !== '') {
       dispatch(multiFileUpload(filesData, projectName));
       updateComponentNumber(1);
     } else if (projectName === '') {
       Swal.fire({
         title: 'Warning',
-        text: "Enter Project ID",
+        text: "Enter Project Name",
         icon: 'warning',
         confirmButtonColor: '#003177',
         confirmButtonText: 'Ok',
@@ -54,7 +55,7 @@ const Table = ({ updateComponentNumber }) => {
         }
       })
     }
-    else if (filesData["clinical_information"] === null) {
+    else if (!filesData["clinical_information"]) {
       Swal.fire({
         title: 'Warning',
         text: "Upload Clinical Information.",
@@ -72,6 +73,8 @@ const Table = ({ updateComponentNumber }) => {
   const handleReset = () => {
     setFilesData({});
     setProjectName('');
+    dispatch(clearMultiFIleUploadState())
+    
   };
 
   const title = { id: "MultiDataVisualization", defaultMessage: "Multi Data Visualization" }

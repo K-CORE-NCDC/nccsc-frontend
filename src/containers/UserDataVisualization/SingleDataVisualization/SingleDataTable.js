@@ -284,6 +284,11 @@ function SingleDataTable({updateComponentNumber}) {
     setShowModal(stateData)
   }
 
+  useEffect(()=>{
+    return () => {
+      dispatch(clearSingleFIleUploadState())
+    };
+  },[])
 
   return (
     <div className="auto">
