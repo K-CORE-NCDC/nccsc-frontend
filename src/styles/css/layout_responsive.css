@@ -39,39 +39,46 @@
 }
 
 @media all and (max-width: 1600px) {
-  .allMenuWrap .allMenu > ul > li {
+  .allMenuWrap .allMenu>ul>li {
     flex-direction: column;
     align-items: flex-start;
   }
 }
+
 @media all and (max-width: 1280px) {
   .allMenuWrap .allMenu {
     width: calc(100% - 526px);
   }
-  .allMenuWrap .allMenu > ul > li {
+
+  .allMenuWrap .allMenu>ul>li {
     margin-top: 20px;
   }
-  .allMenuWrap .allMenu > ul > li > a {
+
+  .allMenuWrap .allMenu>ul>li>a {
     font-size: 21px;
     font-weight: 700;
     letter-spacing: -0.04rem;
     line-height: 130%;
   }
 }
+
 @media all and (max-width: 1280px) and (max-width: 767px) {
-  .allMenuWrap .allMenu > ul > li > a {
+  .allMenuWrap .allMenu>ul>li>a {
     font-size: 16px;
   }
 }
+
 @media all and (max-width: 1280px) {
-  .allMenuWrap .allMenu > ul > li .sub {
+  .allMenuWrap .allMenu>ul>li .sub {
     flex-wrap: wrap;
   }
-  .allMenuWrap .allMenu > ul > li .sub li {
+
+  .allMenuWrap .allMenu>ul>li .sub li {
     margin-right: 16px;
     margin-bottom: 8px;
   }
 }
+
 @media all and (max-width: 1280px) {
   .allMenuWrap .imgBox dl dt {
     font-size: 35px;
@@ -80,11 +87,13 @@
     line-height: 130%;
   }
 }
+
 @media all and (max-width: 1280px) and (max-width: 767px) {
   .allMenuWrap .imgBox dl dt {
     font-size: 24px;
   }
 }
+
 @media all and (max-width: 1280px) {
   .allMenuWrap .imgBox dl dd {
     font-size: 14px;
@@ -93,10 +102,12 @@
     margin-top: 32px;
   }
 }
+
 @media all and (max-width: 1199px) {
   .auto.fullsize {
     padding: 0 40px;
   }
+
   .header .headerTop .headerUtils .headerSearchBox {
     width: auto;
     height: auto;
@@ -108,35 +119,45 @@
     border-radius: 0;
     border: 0;
   }
+
   .header .headerTop .headerUtils .headerSearchBox input {
     display: none;
   }
+
   .header .headerTop .headerUtils .headerSearchBox button {
     position: static;
   }
+
   .header .btnAllMenu {
     right: 40px;
   }
-  .header .headerUtils > a {
+
+  .header .headerUtils>a {
     display: none;
   }
+
   .header .headerBottom {
     display: none;
   }
+
   .allMenuWrap {
     padding-top: 320px;
   }
+
   .allMenuWrap .logo {
     top: 88px;
     left: 40px;
   }
+
   .allMenuWrap .btnClose {
     top: 40px;
     left: 40px;
   }
+
   .allMenuWrap .btnClose span {
     background-color: rgb(255, 255, 255);
   }
+
   .allMenuWrap .imgBox {
     display: block;
     top: 0;
@@ -145,6 +166,7 @@
     height: 320px;
     padding: 164px 40px 48px;
   }
+
   .allMenuWrap .imgBox dl dt {
     font-size: 28px;
     font-weight: 700;
@@ -152,31 +174,37 @@
     line-height: 130%;
   }
 }
+
 @media all and (max-width: 1199px) and (max-width: 767px) {
   .allMenuWrap .imgBox dl dt {
     font-size: 20px;
   }
 }
+
 @media all and (max-width: 1199px) {
   .allMenuWrap .imgBox dl dt br {
     display: none;
   }
 }
+
 @media all and (max-width: 1199px) {
   .allMenuWrap .imgBox dl dd {
     display: none;
   }
 }
+
 @media all and (max-width: 1199px) {
   .allMenuWrap .imgBox .members {
     display: none;
   }
 }
+
 @media all and (max-width: 1199px) {
   .allMenuWrap .imgBox .btnsMember {
     display: flex;
     margin-top: 24px;
   }
+
   .allMenuWrap .imgBox .btnsMember a {
     display: flex;
     justify-content: center;
@@ -188,11 +216,13 @@
     border: 1px solid rgba(255, 255, 255, 0.4);
     margin-right: 12px;
   }
+
   .allMenuWrap .imgBox .btnsMember a img {
     width: 16px;
     margin-left: 6px;
   }
 }
+
 @media all and (max-width: 1199px) {
   .allMenuWrap .imgBox .utils {
     top: 24px;
@@ -201,13 +231,16 @@
     right: 40px;
     padding: 0;
   }
-  .allMenuWrap .imgBox .utils > a:nth-child(2),
-.allMenuWrap .imgBox .utils > a:nth-child(3) {
+
+  .allMenuWrap .imgBox .utils>a:nth-child(2),
+  .allMenuWrap .imgBox .utils>a:nth-child(3) {
     display: none;
   }
-  .allMenuWrap .imgBox .utils > a:nth-child(5) {
+
+  .allMenuWrap .imgBox .utils>a:nth-child(5) {
     display: block;
   }
+
   .allMenuWrap .imgBox .utils .language ul {
     bottom: auto;
     margin-bottom: 0;
@@ -215,11 +248,13 @@
     margin-top: 8px;
   }
 }
+
 @media all and (max-width: 1199px) {
   .allMenuWrap .imgBox .btns {
     margin-top: 24px;
     display: flex;
   }
+
   .allMenuWrap .imgBox .btns a {
     display: flex;
     justify-content: center;
@@ -232,53 +267,65 @@
     padding: 14px 18px;
   }
 }
+
 @media all and (max-width: 1199px) {
   .allMenuWrap .allMenu {
     display: block;
-    width: 100%;
+    /* width: 100%; */
     left: 0;
     height: 100%;
     position: relative;
   }
+
   .allMenuWrap .allMenu::after {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
     z-index: -1;
-    width: 266px;
+    /* width: 266px; */
     height: 100%;
     background-color: #e5e9f2;
   }
-  .allMenuWrap .allMenu > ul {
+
+  .allMenuWrap .allMenu>ul {
     height: 100%;
     overflow-y: auto;
-    padding: 32px 40px;
+    /* padding: 32px 40px; */
+    padding-left: 27px;
+    padding-top: 117px;
+    padding-bottom: 117px;
+    padding-right: 117px;
   }
-  .allMenuWrap .allMenu > ul > li {
+
+  .allMenuWrap .allMenu>ul>li {
     flex-direction: row;
     margin-top: 24px;
   }
-  .allMenuWrap .allMenu > ul > li > a {
+
+  .allMenuWrap .allMenu>ul>li>a {
     width: 266px;
     font-size: 21px;
     font-weight: 700;
     letter-spacing: -0.04rem;
-    line-height: 130%;
+    line-height: 145%;
     margin-right: 0;
   }
 }
+
 @media all and (max-width: 1199px) and (max-width: 767px) {
-  .allMenuWrap .allMenu > ul > li > a {
+  .allMenuWrap .allMenu>ul>li>a {
     font-size: 16px;
   }
 }
+
 @media all and (max-width: 1199px) {
-  .allMenuWrap .allMenu > ul > li .sub {
+  .allMenuWrap .allMenu>ul>li .sub {
     width: calc(100% - 306px);
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
   }
 }
+
 @media all and (max-width: 1199px) {
   .headerSearchBoxMobile {
     display: none;
@@ -290,6 +337,7 @@
     height: 85px;
     background-color: rgb(255, 255, 255);
   }
+
   .headerSearchBoxMobile .inner {
     display: flex;
     align-items: center;
@@ -297,114 +345,148 @@
     height: 100%;
     padding: 0 40px;
   }
+
   .headerSearchBoxMobile .inner input {
     width: calc(100% - 88px);
     color: #2e2e2e;
   }
+
   .headerSearchBoxMobile .inner button {
     color: #2e2e2e;
   }
 }
+
 @media all and (max-width: 1024px) {
   .header {
     position: fixed !important;
   }
+
   .footer .footerMiddle .flex {
     flex-direction: column;
   }
+
   .footer .footerMiddleRight {
     margin-top: 40px;
   }
+
   .footer .footerMiddleRight .familySiteBox .selectBox {
     width: 100%;
   }
+
   .footer .footerMiddleRight .certLogo {
     text-align: left;
   }
+
   .footer .footerBottom .flex {
     flex-direction: column-reverse;
   }
+
   .footer .footerBottom .flex .copyright {
     margin-top: 20px;
   }
+
   .galleryList ul li {
     width: 50%;
   }
 }
+
 @media all and (max-width: 767px) {
   .header .headerTop .auto {
     height: 60px;
   }
+
   .header .headerTop .logo {
     width: 105px;
     height: 20px;
   }
+
   .header .btnAllMenu {
     top: 20px;
   }
+
   .auto.fullsize {
     padding: 0 20px;
   }
+
   .header .btnAllMenu {
     right: 20px;
   }
+
   .header .headerTop .headerUtils {
     padding-right: 47px;
   }
+
   .header .headerTop .headerUtils .headerSearchBox {
     margin-right: 0;
   }
+
   .header .headerTop .headerUtils .language {
     display: none;
   }
+
   .headerSearchBoxMobile {
     height: 60px;
   }
+
   .headerSearchBoxMobile .inner {
     padding: 0 20px;
   }
+
   .footer .footerBanner {
     padding: 32px 0;
   }
+
   .footer .footerBanner .auto {
     white-space: nowrap;
     overflow-x: auto;
   }
+
   .footer .footerBanner .auto::-webkit-scrollbar {
     display: none;
   }
+
   .footer .footerBanner .auto a {
     margin-right: 32px;
   }
+
   .footer .footerBanner .auto a:last-child {
     margin-right: 0;
   }
+
   .footer .footerBanner .auto a img {
     min-width: 104px;
     max-width: unset;
   }
+
   .footer .footerMiddle {
     padding: 32px 0 16px;
   }
+
   .footer .footerMiddle .footerLogo {
     padding-right: 20%;
   }
+
   .footer .footerMiddle .footerMiddleRight .familySiteBox {
     flex-direction: column;
   }
+
   .footer .footerMiddle .footerMiddleRight .familySiteBox a:first-child {
     margin-right: 0;
     margin-bottom: 16px;
   }
+
   .footer .footerMiddle .footerMiddleRight .certLogo img {
     width: 56px;
   }
+
   .footer .footerBottom .footerMenu a {
     margin-right: 12px;
   }
+
   .allMenuWrap {
     padding-top: 248px;
   }
+
   .allMenuWrap::after {
     content: "";
     position: absolute;
@@ -415,20 +497,25 @@
     background-color: rgba(255, 255, 255, 0.2);
     z-index: 1;
   }
+
   .allMenuWrap .btnClose {
     top: 18px;
     left: 20px;
   }
+
   .allMenuWrap .btnClose span {
     top: 13px;
   }
+
   .allMenuWrap .logo {
     display: none;
   }
+
   .allMenuWrap .imgBox {
     height: 248px;
     padding: 84px 20px 32px;
   }
+
   .allMenuWrap .imgBox dl dt {
     font-size: 16px;
     font-weight: 500;
@@ -436,49 +523,70 @@
     color: #93a3c9;
   }
 }
+
 @media all and (max-width: 767px) and (max-width: 767px) {
   .allMenuWrap .imgBox dl dt {
     font-size: 14px;
   }
 }
+
 @media all and (max-width: 767px) {
   .allMenuWrap .imgBox .utils {
     top: 18px;
     right: 20px;
   }
 }
+
 @media all and (max-width: 767px) {
   .allMenuWrap .imgBox .members {
     display: block;
     margin-top: 8px;
   }
+
   .allMenuWrap .imgBox .members p {
     font-size: 24px;
     color: rgb(255, 255, 255);
     font-weight: 700;
   }
+
   .allMenuWrap .imgBox .members p span {
     color: #52c5f4;
   }
 }
+
 @media all and (max-width: 767px) {
   .allMenuWrap .allMenu::after {
     width: 50%;
   }
-  .allMenuWrap .allMenu > ul {
-    padding: 24px 0;
+
+  .allMenuWrap .allMenu>ul {
+    /* padding: 24px 0; */
     display: flex;
     flex-direction: column;
-    position: relative;
+    position: fixed;
   }
-  .allMenuWrap .allMenu > ul > li {
+
+  .allMenuWrap .allMenu>ul>li {
     margin-top: 24px;
   }
-  .allMenuWrap .allMenu > ul > li > a {
-    width: 50%;
-    padding: 0 20px;
+
+  .font1 {
+    vertical-align: inherit;
   }
-  .allMenuWrap .allMenu > ul > li .sub {
+
+  /* .hello {
+    background-color: #2e2e2e;
+  } */
+
+  .allMenuWrap .allMenu>ul>li>a {
+    /* width: 50%; */
+    padding-left: 4px;
+    padding-right: 0px;
+    padding-top: 25px;
+    padding-bottom: 18px;
+  }
+
+  .allMenuWrap .allMenu>ul>li .sub {
     display: none;
     position: absolute;
     top: 0;
@@ -489,46 +597,57 @@
     align-items: flex-start;
     text-align: left;
   }
-  .allMenuWrap .allMenu > ul > li .sub li {
+
+  .allMenuWrap .allMenu>ul>li .sub li {
     margin-top: 16px;
     margin-bottom: 0;
     margin-right: 0;
   }
-  .allMenuWrap .allMenu > ul > li .sub li:first-child {
+
+  .allMenuWrap .allMenu>ul>li .sub li:first-child {
     margin-top: 0;
   }
-  .allMenuWrap .allMenu > ul > li .sub li a {
+
+  .allMenuWrap .allMenu>ul>li .sub li a {
     font-size: 14px;
     font-weight: 500;
     line-height: 140%;
   }
-  .allMenuWrap .allMenu > ul > li:first-child .sub {
+
+  .allMenuWrap .allMenu>ul>li:first-child .sub {
     display: flex;
   }
 }
+
 @media all and (max-width: 767px) {
   .btnTop {
     position: fixed;
   }
 }
+
 @media all and (max-width: 767px) {
   .galleryList ul {
     margin: -12px;
   }
+
   .galleryList ul li {
     width: 100%;
     padding: 12px;
   }
+
   .galleryList .txtBox .itemInfo {
     margin-top: 12px;
   }
+
   .galleryList .txtBox .itemInfo span {
     font-size: 14px;
   }
+
   .galleryList .txtBox .itemInfo img {
     margin-top: -1px;
   }
 }
+
 @media all and (max-width: 767px) {
   .faqList dl dt {
     padding: 20px 12px;
@@ -537,10 +656,12 @@
     font-size: 16px;
     font-weight: 500;
   }
+
   .faqList dl dt .marker {
     top: 20px;
     left: 12px;
   }
+
   .faqList dl dt .cate {
     position: absolute;
     bottom: 20px;
@@ -552,80 +673,99 @@
     line-height: 24px;
     background-color: #f0f0f0;
   }
+
   .faqList dl dt .arrow {
     top: auto;
     bottom: 32px;
     right: 12px;
   }
+
   .faqList dl dt p {
     width: 100%;
     margin-left: 0;
   }
+
   .faqList dl dd {
     padding: 20px 12px 20px 44px;
     font-size: 14px;
   }
+
   .faqList dl dd .marker {
     top: 20px;
     left: 12px;
   }
 }
+
 @media all and (max-width: 767px) {
   .boardView .boardViewBody {
     font-size: 14px;
   }
+
   .boardView .boardViewBody .fileDownload ul li {
     font-size: 14px;
   }
+
   .boardView .boardViewBody .fileDownload ul li img {
     position: relative;
     top: -2px;
   }
 }
+
 @media all and (max-width: 767px) {
   .popup .inner .popupHeader {
     padding: 16px 20px;
     height: 80px;
   }
+
   .popup .inner .popupHeader .titSub {
     margin-top: 2px;
     font-size: 12px;
   }
+
   .popup .inner .popupBody {
     padding: 16px 20px;
   }
+
   .popup .inner .popupFooter {
     padding: 8px 20px 24px;
   }
 }
+
 @media all and (max-width: 767px) {
   .calendar {
     padding-top: 36px;
   }
+
   .calendar .calendarHeader .arrow {
     width: 36px;
     height: 36px;
   }
+
   .calendar .calendarBody {
     padding: 20px;
   }
+
   .calendar .calendarBody div {
     height: 40px;
   }
 }
+
 @media all and (max-width: 767px) {
-  .inlineLabels > * {
+  .inlineLabels>* {
     margin-right: 16px;
   }
-  .inlineLabels > *:last-child {
+
+  .inlineLabels>*:last-child {
     margin-right: 0;
   }
 }
+
 @media all and (max-width: 767px) {
   .writeForm .flex .topComment {
     margin-bottom: 0;
   }
 }
+
 @media all and (max-width: 320px) {
   .h2 {
     font-size: 20px;
