@@ -148,16 +148,20 @@ const HeatmapCmp = React.forwardRef(({ settings, inputData, type, watermarkCss,w
         }
     },[data])
 
+    console.log('heatmap Inside')
+
     return (
-        <div ref={ref} className={`heatmap ${watermarkCss}`}>
-            <div className='grid grid-cols-2 bg-white  px-5 py-5'>
-                <div className='text-left grid grid-cols-3 gap-4'>
+
+      
+        <div ref={ref} className={`heatmap ${watermarkCss}` }>
+            <div className=''>
+                <div className=''>
                     
                     
                 </div>
             </div>
             { dataLoaded &&
-                <CanvasXpressReact target={target} data={data} config={configVis} width={width} height={'700'} />
+                <CanvasXpressReact target={target} data={data} config={configVis} width={width} height={'700px'} />
             }
             
         </div>

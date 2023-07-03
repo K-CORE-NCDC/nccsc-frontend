@@ -764,11 +764,17 @@
   .writeForm .flex .topComment {
     margin-bottom: 0;
   }
+  .tab ul li {
+    width: 100%;
+  }
 }
 
 @media all and (max-width: 320px) {
   .h2 {
     font-size: 20px;
+  }
+  .tab ul li {
+    /* width: 100%; */
   }
 }
 

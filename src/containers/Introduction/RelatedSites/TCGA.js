@@ -1,13 +1,13 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import introduce_img from '../../../assets/images/introduce_logo.svg'
-import introduce_VisualContents from '../../../assets/images/introduce-visualContents.jpg'
+import introduce_img from '../../../assets/images/tcga2.jpg'
+import introduce_VisualContents from '../../../assets/images/TCGA_sub.jpg'
 
 export const TCGA = () =>{
   return(
     <>
     <div className="tabContents " >
-      <div className="section introduceWrap" style={{ 'paddingTop': '0px', height: '100%' }}>
+      <div className="introduceWrap" style={{ 'paddingTop': '0px', height: '100%' }}>
         <div className="introduceBox01">
           <div className="logoBox">
             <img src={introduce_img} alt="img" />
@@ -27,7 +27,7 @@ export const TCGA = () =>{
           <div className="imgBox">
             <img className="w100" src={introduce_VisualContents} alt="img" />
           </div>
-
+          <span style={{paddingLeft:'15%'}}><a href="https://www.cancer.gov/ccg/research/genome-sequencing/tcga">https://www.cancer.gov/ccg/research/genome-sequencing/tcga</a></span>
         </div>
         <div className="introduceBox03">
           <ul>

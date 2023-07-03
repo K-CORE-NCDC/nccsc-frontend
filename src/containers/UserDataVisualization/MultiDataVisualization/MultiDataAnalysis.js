@@ -206,8 +206,8 @@ export default function DataVisualization() {
   }, [project_id])
 
   useEffect(() => {
-    // let w = elementRef.current.getBoundingClientRect().width;
-    // setWidth(w);
+    let w = elementRef.current.getBoundingClientRect().width;
+    setWidth(w);
     // setBoolChartState(false);
     if (project_id !== undefined) {
       setState((prevState) => ({
@@ -469,7 +469,7 @@ export default function DataVisualization() {
             </font>
           </h3>
         </div>
-        <div className="section ptn">
+        <div className="ptn">
           <div className="auto">
 
 
@@ -592,10 +592,10 @@ export default function DataVisualization() {
             }
           </div>
 
-          <section>
+          <section className="auto">
             <div id="tab-contents" style={{ display: "block", textAlign: "center" }} ref={elementRef}>
               {tabName && tabName !== 'home' && boolChartState && (
-                <div className="MultiDataVizChartViz">{chart["viz"]}</div>
+                <div className="">{chart["viz"]}</div>
               )}
               {tabName && tabName !== 'home' && !boolChartState && (
                 <div className="MultiDataVizErrorMessage">Please select Genes</div>

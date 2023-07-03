@@ -36,7 +36,7 @@ const LoginComponent = () => {
       allowOutsideClick: false
     }).then((result) => {
       if (result.value) {
-        history.push('/userdata')
+        history.push('/visualise-singledata/home/')
       }
     })
 

@@ -33,7 +33,7 @@ export default function DataVisualization() {
   const dispatch = useDispatch();
   const [chart, setCharts] = useState({ viz: [] });
   const [boolChartState, setBoolChartState] = useState(true);
-  const [state, setState] = useState({ genes: ["CFL1"], filter: {}, type: "major-genes" });
+  const [state, setState] = useState({ genes: [ "CD84" ], filter: {}, type: "major-genes" });
   const [gridData, setGridData] = useState([])
   const [width, setWidth] = useState(0);
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
@@ -43,6 +43,7 @@ export default function DataVisualization() {
   const project_id_status = useSelector(
     (data) => data.homeReducer.project_id_status
   );
+  // "NBPF1", NOTCH2
   const [availableTabsForProject, setavailableTabsForProject] = useState([]);
   const history = useHistory()
   let { tab, project_id } = useParams();
@@ -90,13 +91,13 @@ export default function DataVisualization() {
         );
       case "heatmap":
         return Charts.heatmap(
-          w,
+          elementRef.current.getBoundingClientRect().width,
           state,
           screenCapture,
           BrstKeys,
           setToFalseAfterScreenCapture
         );
-      case "CNV":
+      case "cnv":
         return Charts.igv(
           w,
           state,
@@ -115,11 +116,11 @@ export default function DataVisualization() {
     }
   };
 
-  useEffect(() => {
-    let w = elementRef.current.getBoundingClientRect().width;
-    console.log('width' , w)
-    setWidth(w)
-  }, [])
+  // useEffect(() => {
+  //   let w = elementRef.current.getBoundingClientRect().width;
+  //   console.log('----------------uswidth',w);
+  //   setWidth(1200)
+  // }, [])
 
   useEffect(() => {
     if (chart) {
@@ -158,7 +159,13 @@ export default function DataVisualization() {
         type: value,
       }));
     }
-
+    setBoolChartState(false);
+    setChartName(tabName);
+    let chartx = LoadChart(width, tabName);
+    setCharts((prevState) => ({
+      ...prevState,
+      viz: chartx,
+    }));
   }, []);
   useEffect(() => {
     let chartx = LoadChart(width, tabName);
@@ -182,11 +189,12 @@ export default function DataVisualization() {
       setToggle(true);
     }
 
-  }, [tab, tabName, chartName]);
+  }, [tab, tabName, chartName, BrstKeys]);
 
   useEffect(() => {
-    // let w = elementRef.current.getBoundingClientRect().width;
-    // setWidth(w);
+    let w = elementRef.current.getBoundingClientRect().width;
+    console.log('----------------uswidth',w);
+    setWidth(w);
     setBoolChartState(false);
     if (project_id !== undefined) {
       let state_ = state
@@ -260,7 +268,6 @@ export default function DataVisualization() {
       dispatch(getUserDefinedFilter({
         "project_id": project_id
       }));
-      console.log(state, 'form porjectid-----------')
       // dispatch(samplesCount("POST", {}));
       dispatch(getBreastKeys(state));
 
@@ -279,7 +286,6 @@ export default function DataVisualization() {
   return (
 
     <div>
-      {console.log('gridData', gridData)}
       <HeaderComponent
         title="회원가입"
         routeName="/visualise-singledata/"
@@ -342,11 +348,11 @@ export default function DataVisualization() {
             <section>
               <div
                 className="block text-center">
-              <Popover className="relative" style={{ margin: 'auto' }}>
+              <Popover className="relative gene_main_box" style={{ margin: 'auto' }}>
                 {({ open }) => {
                   return (
                     <>
-                    <div className="">
+                    <div className="w-full">
                       <Popover.Button className={'selectBox'}>
                         <div className="GeneSetgeneSetButton">
                           <div className="flex-1">Gene set Re-filtering</div>
@@ -374,17 +380,19 @@ export default function DataVisualization() {
               </Popover>
               </div>
             </section>
-            <section>
-              <div
-                id="tab-contents"
-                className="block text-center"
-                ref={elementRef}>
-                {tabName && tabName !== 'home' && boolChartState && <div>{chart["viz"]}</div>}
-                {tabName && tabName !== 'home' && !boolChartState && (
-                  <div className="p-1 text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">Please select Genes</div>
-                )}
-              </div>
-            </section>
+            
+              <section>
+                <div
+                  id="tab-contents"
+                  className="block text-center"
+                  ref={elementRef}>
+                  {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div>{chart["viz"]}</div>}
+                  {tabName && tabName !== 'home' && !boolChartState && (
+                    <div className="p-1 text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">Please select Genes</div>
+                  )}
+                </div>
+              </section>
+            
           </div>
         </div>
       </article>

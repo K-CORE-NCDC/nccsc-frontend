@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import introduce_img from '../../../assets/images/introduce_logo.svg'
-import introduce_VisualContents from '../../../assets/images/introduce-visualContents.jpg'
+import introduce_VisualContents from '../../../assets/images/cBioPortal_sub.jpg'
 import cBioPortal from '../../../styles/images/cBioPortal.png'
 import { Cosmic } from "./Cosmic";
 import { TCGA } from "./TCGA";
@@ -74,7 +74,7 @@ export const CBioPortal = () => {
         {activeTab === '1' &&
           <>
             <div className="tabContents " >
-              <div className="section introduceWrap" style={{ 'paddingTop': '0px', height: '100%' }}>
+              <div className=" introduceWrap" style={{ 'paddingTop': '0px', height: '100%' }}>
                 <div className="introduceBox01">
                   <div className="logoBox">
                     <img src={cBioPortal} alt="img" />
@@ -94,6 +94,17 @@ export const CBioPortal = () => {
                   <div className="imgBox">
                     <img className="w100" src={introduce_VisualContents} alt="img" />
                   </div>
+                  <div style={{display:'flex'}}>
+                    <div style={{ paddingTop: '5%' }}>
+                      <span class="material-icons" style={{ color: 'rosybrown' }}>
+                        output
+                      </span>
+                      <span style={{ paddingLeft: '1%', color: 'dodgerblue' }}><a href="http://www.cbioportal.org/">http://www.cbioportal.org/</a></span>
+                    </div>
+                    <div style={{ justifyContent: 'flex-end' }}>
+                      suhshma
+                    </div>
+                  </div>
 
                 </div>
                 <div className="introduceBox03">
@@ -111,7 +122,7 @@ export const CBioPortal = () => {
                         defaultMessage="cBioPortal is to significantly lower the barriers between complex genomic data and cancer researchers, therefore to empower researchers to translate these rich data sets into biologic insights and clinical applications."
                       /></p>
                     </li>
-                 
+
                   </ul>
 
                 </div>

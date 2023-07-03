@@ -1,14 +1,13 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import introduce_img from '../../../assets/images/introduce_logo.svg'
-import introduce_VisualContents from '../../../assets/images/introduce-visualContents.jpg'
-import cosmic_img from '../../../styles/images/cosmic_img.png';
+import introduce_VisualContents from '../../../assets/images/COSMIC_sub.jpg'
+import cosmic_img from '../../../assets/images/COSMIC.png';
 
 export const Cosmic = () => {
   return (
     <>
       <div className="tabContents " >
-        <div className="section introduceWrap" style={{ 'paddingTop': '0px', height: '100%' }}>
+        <div className="introduceWrap" style={{ 'paddingTop': '0px', height: '100%' }}>
           <div className="introduceBox01">
             <div className="logoBox">
               <img src={cosmic_img} alt="img" />
@@ -26,9 +25,9 @@ export const Cosmic = () => {
           </div>
           <div className="introduceBox02">
             <div className="imgBox">
-              <img className="w100" src={introduce_VisualContents} alt="img" />
+              <img className="w100" src={introduce_VisualContents} alt="img" style={{height:'300px'}}/>
             </div>
-
+            <span style={{paddingLeft:'30%'}}><a href="https://cancer.sanger.ac.uk/cosmic">https://cancer.sanger.ac.uk/cosmic</a></span>
           </div>
           <div className="introduceBox03">
             <ul>

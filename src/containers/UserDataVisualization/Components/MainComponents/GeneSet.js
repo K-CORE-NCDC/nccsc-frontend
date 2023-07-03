@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import genes from '../../../Common/gene.json';
 import { FormattedMessage } from "react-intl";
 
@@ -7,18 +7,20 @@ const GeneSet = ({ parentCallback, filterState }) => {
 
     const [value, setValue] = useState(filterState['type'] ? filterState['type'] : "user-defined")
     const [geneData, setGeneData] = useState(filterState['genes'] ? filterState['genes'] : [])
+   
 
     const selectGene = (event) => {
         let value = event.target.value;
         let g = genes[value].data;
-        let genesString = g.sort().join(' ');
+        g = g.sort();
+        let genesString = g.join(" ");
+        console.log(genesString)
         geneValue.current.value = genesString;
         setValue(value)
-        setGeneData(g)
+        setGeneData(genesString)
     };
 
     const submitGeneSet = () => {
-        console.log(value, geneData);
         if (value === "user-defined"){
             let genevalue = geneData.split(' ')
             parentCallback({ value: value, genes: genevalue });
@@ -46,12 +48,27 @@ const GeneSet = ({ parentCallback, filterState }) => {
                     >
                         <FormattedMessage id='UserDefinedList' defaultMessage="User-Defined List" />
                     </option>
-                    <option
-                        className="GeneSetGeneOption"
-                        value="major-genes"
-                    >
-                        Cancer major genes (28 genes)
-                    </option>
+                    <option value="major-genes"> Cancer major genes (28 genes) </option>
+                    <option value="brst-major-genes">Breast cancer major genes (20 genes)</option>
+                    <option value="hrd-genes">HRD genes (15 genes)</option>
+                    <option value="hrd-asso-brst">HRD association breast (26 genes)</option>
+                    <option value="tcell-exha-genes">Tcell exhausted genes (8 genes)</option>
+                    <option value="cdc-brst-genes">CDC Phenopedia breast cancer associated genes (18 genes)</option>
+                    <option value="cell-cycle-ctrl">General: Cell Cycle Control (34 genes)</option>
+                    <option value="p53-signal">General: p53 signaling (6 genes)</option>
+                    <option value="notch-signal">General: Notch signaling (55 genes)</option>
+                    <option value="dna-damage-resp">General: DNA Damage Response (12 genes)</option>
+                    <option value="other-grow-prol-signal">General: Other growth/proliferation signaling (11 genes)</option>
+                    <option value="survival-cell-signal">General: Survival/cell death regulation signaling (23genes)</option>
+                    <option value="telo-mere-main">General: Telomere maintenance (2 genes)</option>
+                    <option value="rtk-signal-family">General: RTK signaling family (16 genes)</option>
+                    <option value="pi3k-akt-mtor-signal">General: PI3K-AKT-mTOR signaling (17 genes)</option>
+                    <option value="ras-raf-signal">General: Ras-Raf-MEK-Erk/JNK signaling (26 genes)</option>
+                    <option value="regu-ribo-cell">General: Regulation of ribosomal protein synthesis and cell growth (9 genes)</option>
+                    <option value="angi-gene">General: Angiogenesis (6 genes)</option>
+                    <option value="fola-trans">General: Folate transport (5 genes)</option>
+                    <option value="inva-meta">General: Invasion and metastasis (27 genes)</option>
+                    <option value="tgf-beta-path">General: TGF-β Pathway (43 genes)</option>
                 </select>
             </div>
             <div className="GeneSetgeneItem inputText">
@@ -76,7 +93,7 @@ const GeneSet = ({ parentCallback, filterState }) => {
                 />
             </div>
             <div className="GeneSetgeneItem">
-                <button className="GeneSetgeneButton" onClick={submitGeneSet}>
+                <button className="btn btnPrimary" onClick={submitGeneSet}>
                     Filter
                 </button>
             </div>

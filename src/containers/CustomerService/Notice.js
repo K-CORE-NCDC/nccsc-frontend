@@ -9,7 +9,7 @@ export const Notice = () => {
   return (
     <div className="auto">
       <div className="mainContentsBox">
-        <div className="tab">
+        <div className="tab" style={{ height: '20vh', display: 'flex', alignItems: 'end' }}>
           <div className="tab_main" >
             <ul>
               <li className={activeTab === '1' ? 'on' : ''}>
@@ -52,16 +52,26 @@ export const Notice = () => {
           </div>
         </div>
         {activeTab === '1' &&
-          <QA />
+          <div style={{ height: '85vh' , paddingTop:'5%' }}>
+            <QA />
+          </div>
+        }
+        {activeTab === '2' &&
+          <div style={{ height: '85vh' , paddingTop:'5%' }}>
+            <QA />
+          </div>
         }
 
         {activeTab === '3' &&
-          <FaqList />
+          <div style={{ height: '85vh' , paddingTop:'5%' }}>
+            <FaqList />
+          </div>
 
         }
         {activeTab === '4' &&
-          <Others />
-
+          <div style={{ height: '85vh' }}>
+            <Others />
+          </div>
         }
       </div>
     </div>

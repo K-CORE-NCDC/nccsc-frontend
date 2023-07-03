@@ -1,0 +1,21 @@
+.sub_head{
+  display: flex;
+}
+
+.tabs_box{
+  width: 50%;
+}
+
+.box_space{
+  gap:5%
+}
+
+.sub_sec_head{
+  gap:10%;
+  margin-top: 3%;
+}
+
+.sub_tabs{
+ 
+  flex-direction: 'column';
+}

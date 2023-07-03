@@ -26,11 +26,13 @@ import "swiper/swiper.css";
 import { DashboardCount, SetCookie, sendlogManagement } from "../../../actions/api_actions";
 import NotFound from "../../../containers/404NotFound";
 import Popup from "../../../containers/Popup/Popup";
-import { getCookie } from "../../../containers/getCookie";
+import { getCookie, getCookieExpiry } from "../../../containers/getCookie";
 import childMenu from "../../../menu-item";
 import route from "../../../route";
 import { Context } from "../../../wrapper";
 import Loader from "../Loader";
+import Swal from 'sweetalert2'
+
 AOS.init({
   offset: 200,
   duration: 600,
@@ -87,7 +89,6 @@ export default function Web(props) {
   const [mouseEnterFlag, setMouseEnterFlag] = useState(false)
   const [menuTabOpen, setMenuTabOpen] = useState(false)
   const [swiperOn, setSwiperOn] = useState(true)
-
   useEffect(() => {
     let cookiedata = SetCookie()
     cookiedata && cookiedata.then((result) => {
@@ -104,6 +105,34 @@ export default function Web(props) {
       }
     })
   }, [])
+
+
+  useEffect(() => {
+    const cookieExpiry = getCookie('expiry');
+    const targetDateTime = new Date(cookieExpiry).getTime();
+    if (cookieExpiry) {
+      // Calculates the delay in milliseconds until the target date and time
+      const delay = targetDateTime - Date.now();
+      console.log('delay', delay);
+      // Start a timeout to redirect to logout URL after the delay
+      const timeoutId = setTimeout(() => {
+        Swal.fire({
+          title: 'Session Expired',
+          icon: 'info',
+          confirmButtonColor: '#003177',
+          confirmButtonText: 'Ok',
+          allowOutsideClick: false
+        }).then((result) => {
+          if (result.value) {
+            history.push('/logout/')
+          }
+        })
+      }, delay);
+
+      // Clean up the timeout when the component unmounts
+      return () => clearTimeout(timeoutId);
+    }
+  });
 
   const toSlide = (num) => {
     swiperRef.current?.swiper.slideTo(num);
@@ -447,8 +476,9 @@ export default function Web(props) {
                   </a>
                 </h1>
                 <div className="headerUtils">
+                  <a href=""><FormattedMessage id="GenerateRegistrationNumber" defaultMessage='Generate registration number' /></a>
                   <Link to='/login/'><FormattedMessage id="Login" defaultMessage='Login' /></Link>
-                  <a href="">Find Password</a>
+                  <a href=""><FormattedMessage id="FindPassword" defaultMessage='Find Password' /></a>
                   <div className="language">
                     <a className="on" onClick={() => { setShowLangMenu(!showLangMenu) }}>&nbsp;</a>
                     <ul style={showLangMenu ? { display: "block" } : { display: 'none' }}>
@@ -474,8 +504,6 @@ export default function Web(props) {
               <div className="auto fullsize">
                 <nav id="gnb" className="gnb">
                   <ul>
-                    {/* <li><a>Introduction</a></li>
-                    <li><a>Visualize Example Data</a></li> */}
                     {childMenu?.mainmenu?.items?.map((item, i) => (
                       <li
                         ref={buttonRef} onClick={() => {
