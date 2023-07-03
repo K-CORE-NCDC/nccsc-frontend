@@ -487,7 +487,7 @@ export default function Web(props) {
 
   return (
     <div className="relative" id='fullSlide' >
-      {/* <Popover>
+      <Popover>
         {({ open }) => (
           <header id="header" className={classes}>
             <div className="headerTop">
@@ -568,7 +568,7 @@ export default function Web(props) {
 
           </header>
         )}
-      </Popover> */}
+      </Popover>
 
 
 
