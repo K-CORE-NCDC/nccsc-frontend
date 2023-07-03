@@ -190,22 +190,26 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
             block_id: cnv_data[i].chromosome,
             position: position,
             value: parseInt(cnv_data[i].genome_change),
-            name: cnv_data[i].hugo_symbol
+            name: cnv_data[i].hugo_symbol 
           })
       }
     }
     let chord_data = api_data['fusion_genes_data']
+    console.log('api_data',api_data);
+
+    
     if ('sv_data' in api_data){
       let svData = api_data['sv_data']
-      svData.forEach(element => {
-        chord_data.push({
-          source: {
-            id: element.left_gene_chr,
-            start: element.left_gene_pos - 3000000,
-            end: element.left_gene_pos + 3000000,
-            name: element.left_gene_name,
-            color: '#ffce44',
-            svtype: element.svtype
+      if(Object.keys(svData).length){
+        svData.forEach(element => {
+          chord_data.push({
+            source: {
+              id: element.left_gene_chr,
+              start: element.left_gene_pos - 3000000,
+              end: element.left_gene_pos + 3000000,
+              name: element.left_gene_name,
+              color: '#ffce44',
+              svtype: element.svtype
           },
           target: {
             id: element.right_gene_chr,
@@ -214,8 +218,10 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
             name: element.right_gene_name,
           }
         })
-      });
+      }); 
     }
+    }
+
     circosHighlight.layout(GRCh37,conf)
     .highlight('cytobands-1', data, {
       innerRadius: newWidth/2 -100,
@@ -418,6 +424,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
       opacity: 0.9,
       // color: '#ffce44',
       color: function(d){
+        console.log('----------------------d',d);
         if(d.source.svtype){
           if(d.source.svtype === "Deletion"){
             return "red"

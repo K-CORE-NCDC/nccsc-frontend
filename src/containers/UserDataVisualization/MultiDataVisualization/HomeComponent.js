@@ -34,12 +34,12 @@ const HomeComponent = () => {
             <font>
               <font><FormattedMessage id="MultiData" defaultMessage="Multi Data"/></font>
               <span className="colorSecondary">
-                <font ><FormattedMessage id="Upload" defaultMessage="Upload"/></font>
+                <font ><FormattedMessage id="Visualization" defaultMessage="Visualization"/></font>
               </span>
             </font>
           </h3>
         </div>
-        <div className="section ptn">
+        <div className="ptn">
           <div className="auto">
             {
               gridData &&
