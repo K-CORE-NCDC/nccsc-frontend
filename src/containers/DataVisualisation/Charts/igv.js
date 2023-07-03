@@ -6,6 +6,7 @@ import NoContentMessage from '../../Common/NoContentComponent'
 import { exportComponentAsPNG } from 'react-component-export-image';
 import { useHistory } from "react-router-dom";
 import { FormattedMessage } from 'react-intl';
+import '../../../styles/css/cnv.css'
 
 export default function DataIgv({ width,inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
@@ -15,6 +16,8 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
   const [watermarkCss, setWatermarkCSS] = useState("")
   const [selectGenemsg,setSelectGenemsg] = useState(true)
   const history = useHistory();
+
+  console.log('insideeee')
   useEffect(()=>{
     if(inputData.type !=='' && inputData['genes'].length > 0){
       let dataJson = inputData
@@ -80,18 +83,18 @@ export default function DataIgv({ width,inputData, screenCapture, setToFalseAfte
         {
           
           <>
-          <div className="flex flex-row justify-start pl-12 gap-6">
+          <div className="sub_head">
             <div>
-              <button className="box-border lg:h-8 xs:h-6 w-20 bg-red-600 border-2 line-through"></button>
-              <h3><strong className="xs:text-sm sm:text-xl lg:text-2xl">Gain (&gt;=3) </strong></h3>
+              <button className="cnvBtn" style={{backgroundColor:'red' , border:'3px solid gray'}}></button>
+              <h3><strong className="">Gain (&gt;=3) </strong></h3>
             </div>
             <div>
-              <button className="box-border h-8 xs:h-6 w-20 bg-white border-4"></button>
-              <h3><strong className="xs:text-sm sm:text-xl lg:text-2xl">Normal (=2)</strong></h3>
+              <button className="cnvBtn" style={{backgroundColor:'white' , border:'3px solid gray'}}></button>
+              <h3><strong className="">Normal (=2)</strong></h3>
             </div>
             <div>
-              <button className="box-border h-8 xs:h-6 w-20 bg-blue-500 border-4"></button>
-              <h3><strong className="xs:text-sm sm:text-xl lg:text-2xl">Loss (&lt;=1)</strong></h3>
+              <button className="cnvBtn" style={{backgroundColor:'cornflowerblue' , border:'3px solid gray'}}></button>
+              <h3><strong className="">Loss (&lt;=1)</strong></h3>
             </div>
           </div>
           {selectGenemsg && <p className='py-3'><FormattedMessage id="PleaseSelecttheGeneSetData" defaultMessage="Please Select the Gene Set Data" /></p>}

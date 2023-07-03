@@ -228,69 +228,19 @@
   }
   
   
-  
-  
-  
-  /* .GeneSetcontainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .gene_main_box{
+    width: 320px;
+    text-align: center;
   }
   
-  .GeneSetcontainer {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    grid-gap: 10px;
+  .gene_main_box .selectBox{
+    width:100%
   }
   
   .GeneSetgeneItem {
     display: flex;
     align-items: center;
-  }
-  
-  .GeneSetgeneSelect {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #a0aec0;
-    background-color: #fff;
-    outline: none;
-    font-size: 14px;
-  }
-  
-  .GeneSetgeneInput {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #a0aec0;
-    outline: none;
-    font-size: 14px;
-  }
-  
-  .GeneSetgeneButton {
-    padding: 10px;
-    background-color: #3182ce;
-    color: #fff;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    font-weight: bold;
-  } */
-  
-  
-  .GeneSetcontainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .GeneSetcontainer {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    grid-gap: 10px;
-  }
-  
-  .GeneSetgeneItem {
-    display: flex;
-    align-items: center;
+    margin-bottom: 20px;
   }
   
   .GeneSetgeneSelect {
@@ -404,12 +354,16 @@
   .GeneSetPopoverPanel {
     position: absolute;
     z-index: 10;
-    width: 100vw;
-    max-width: 20rem;
+    width: inherit;
+    border:1px solid #ddd;
+    background-color: #fff;
     padding: 1rem;
     margin-top: 0;
     transform: translateX(-50%);
-    left: 50%;
+    top:55px;
+    display:inline-block;
+    left:50%;
+    width:320px;
   }
   
   .GeneSetPopoverPanel.sm {

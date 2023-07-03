@@ -1002,7 +1002,7 @@
   } */
 
   .mainDataStatusWrap {
-    bottom: -100%;
+    bottom: -150%;
   }
 
   /* .mainContents .section{
@@ -1019,10 +1019,10 @@
 
   .tabContents {
     margin-top: 80px;
-  }
+  } */
 
-  .container{
-    margin-top: 100px;;
+  /* .container{
+    margin-top: 50px;;
   } */
 }
 

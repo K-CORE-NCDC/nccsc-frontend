@@ -30,7 +30,7 @@ export const VisualizeMyData = () => {
                   </dt>
                 </dl>
                 <Link className="btn btnDetail" to="/visualise-singledata/home/">
-                <FormattedMessage id="Analyze" defaultMessage='Analyze' />
+                  <FormattedMessage id="Analyze" defaultMessage='Analyze' />
                   <img src={arrow_icon} alt="" />
                 </Link>
               </div>
@@ -47,11 +47,11 @@ export const VisualizeMyData = () => {
                     <FormattedMessage id="visualizeMyData_multi" defaultMessage='Multi Data Visualization' />
                   </dt>
                 </dl>
-                <a className="btn btnDetail" href="/">
-                <FormattedMessage id="Analyze" defaultMessage='Analyze' />
-                
+                <Link className="btn btnDetail" to="/multidatavisualization/">
+                  <FormattedMessage id="Analyze" defaultMessage='Analyze' />
+
                   <img src={arrow_icon} alt="" />
-                </a>
+                </Link>
               </div>
 
             </li>
@@ -67,7 +67,7 @@ export const VisualizeMyData = () => {
                   </dt>
                 </dl>
                 <a className="btn btnDetail" href="/">
-                <FormattedMessage id="Analyze" defaultMessage='Analyze' />
+                  <FormattedMessage id="Analyze" defaultMessage='Analyze' />
                   <img src={arrow_icon} alt="" />
                 </a>
               </div>

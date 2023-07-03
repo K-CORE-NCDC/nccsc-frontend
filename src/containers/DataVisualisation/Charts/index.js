@@ -9,7 +9,6 @@ import DataIgv from "./igv";
 import FusionPlot from "./Fusion";
 import Box from "./Box";
 
-
 function circos(
   width,
   inputData,

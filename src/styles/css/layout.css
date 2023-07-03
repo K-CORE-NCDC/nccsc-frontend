@@ -1626,11 +1626,9 @@ table tbody tr {
 }
 .tab ul {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
 }
-.tab ul li {
-  width: 100%;
-}
+
 .tab ul li button {
   display: flex;
   justify-content: center;
@@ -1641,7 +1639,7 @@ table tbody tr {
   text-align: center;
   background-color: rgb(255, 255, 255);
   padding: 0 20px;
-  border: 1px solid rgb(255, 255, 255);
+  border: 1px solid gray;
 }
 .tab ul li.on button {
   background-color: #003177;

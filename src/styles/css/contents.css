@@ -5743,7 +5743,7 @@ h5 {
   flex-wrap: wrap;
 }
 .introduceWrap .introduceBox01 {
-  padding: 48px;
+  padding: 48px 48px 48px 0px ;
   background-color: #f6fbfd;
   display: flex;
   align-items: center;

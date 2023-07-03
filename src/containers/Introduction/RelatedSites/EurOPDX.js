@@ -1,14 +1,14 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import introduce_img from '../../../assets/images/introduce_logo.svg'
-import introduce_VisualContents from '../../../assets/images/introduce-visualContents.jpg'
+import introduce_VisualContents from '../../../assets/images/EuroPDX_sub.jpg'
 import src_img from '../../../styles/images/europdx-ri_logo_colours.png'
 
 export const EurOPDX = () =>{
   return(
     <>
     <div className="tabContents " >
-      <div className="section introduceWrap" style={{ 'paddingTop': '0px', height: '100%' }}>
+      <div className="introduceWrap" style={{ 'paddingTop': '0px', height: '100%' }}>
         <div className="introduceBox01">
           <div className="logoBox">
             <img src={src_img} alt="img" />
@@ -28,7 +28,7 @@ export const EurOPDX = () =>{
           <div className="imgBox">
             <img className="w100" src={introduce_VisualContents} alt="img" />
           </div>
-
+          <span style={{paddingLeft:'30%'}}><a href="https://dataportal.europdx.eu/">https://dataportal.europdx.eu/</a></span>
         </div>
         <div className="introduceBox03">
           <ul>

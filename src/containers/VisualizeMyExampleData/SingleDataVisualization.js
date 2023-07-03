@@ -16,23 +16,23 @@ export const SingleDataVisualization = () => {
   return (
     <div className="auto">
       <div className="mainContentsBox">
-        <div className="tab " >
+        <div className="tab " style={{ height: '20vh', display: 'flex', alignItems: 'end' }} >
           <ul>
             <li className={activeTab === '1' ? 'on' : ''}>
               <button type="button" onClick={() => setActiveTab('1')}><FormattedMessage
-                id="introduction_p1"
+                id="Example_tab_01"
                 defaultMessage="Single Data Visualization Guidelines"
               /></button>
             </li>
             <li className={activeTab === '2' ? 'on' : ''}>
               <button type="button" onClick={() => setActiveTab('2')}><FormattedMessage
-                id="introduction_p2"
+                id="Example_tab_02"
                 defaultMessage="Multi Data Visualization Guidelines"
               /></button>
             </li>
             <li className={activeTab === '3' ? 'on' : ''}>
               <button type="button" onClick={() => setActiveTab('3')}><FormattedMessage
-                id="introduction_p4"
+                id="Example_tab_03"
                 defaultMessage="Other Tools Guidelines"
               /></button>
             </li>
@@ -40,14 +40,14 @@ export const SingleDataVisualization = () => {
         </div>
         {activeTab === '1' &&
           <>
-            <div className="tabContents " >
+            <div className="tabContents " style={{ height: '85vh' }} >
               <div className="dataSearchWrap">
                 <div className="popularBox">
                   <div className="subHeader">
                     <p className="tit h5">Contents</p>
                     <div className="tit contentBtns">
                       <button className="btn">
-                        Example Page
+                        <FormattedMessage id="ExamplePage" defaultMessage='Example Page' />
                       </button>
                       <button className="btn">
                         <FormattedMessage id="DownloadManual" defaultMessage='Download Manual' />

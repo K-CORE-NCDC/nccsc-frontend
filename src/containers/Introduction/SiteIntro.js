@@ -23,15 +23,6 @@ export const SiteIntro = ({ height, innerHeight }) => {
     <div className="auto">
       <div className="mainContentsBox">
         <div className="tab">
-          <button className={` btn btnPrimary w100 ${addingStyle ? 'on' : ''}`} type="button" onClick={() => {
-            setAddingStyle(!addingStyle)
-          }}>
-            <span className="txt" >{selectedOption}</span>
-            <div className="arrow" >
-              <span style={addingStyle ? { display: 'block' } : { display: 'none' }} className="material-icons">keyboard_arrow_down</span>
-              <span style={!addingStyle ? { display: 'block' } : { display: 'none' }} className="material-icons">keyboard_arrow_up</span>
-            </div>
-          </button>
           <div className="tab_main" >
             <ul>
               <li className={activeTab === '1' ? 'on' : ''}>
@@ -77,7 +68,7 @@ export const SiteIntro = ({ height, innerHeight }) => {
         </div>
         {activeTab === '1' &&
           <div className="tabContents " >
-            <div className="section introduceWrap" style={{ 'paddingTop': '0px', height: '100%' }}>
+            <div className=" introduceWrap" style={{ 'paddingTop': '0px', height: '100%' }}>
               <div className="introduceBox01">
                 <div className="logoBox">
                   <img src={introduce_img} alt="img" />
