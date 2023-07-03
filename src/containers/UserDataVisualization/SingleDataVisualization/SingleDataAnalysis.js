@@ -72,7 +72,6 @@ export default function DataVisualization() {
   };
 
   const LoadChart = (w, type) => {
-    console.log('type' , type)
     switch (type) {
       case "circos":
         return Charts.circos(
@@ -119,8 +118,8 @@ export default function DataVisualization() {
 
   // useEffect(() => {
   //   let w = elementRef.current.getBoundingClientRect().width;
-  //   console.log('width' , w)
-  //   setWidth(w)
+  //   console.log('----------------uswidth',w);
+  //   setWidth(1200)
   // }, [])
 
   useEffect(() => {
@@ -146,7 +145,6 @@ export default function DataVisualization() {
 
   const callback = useCallback(({ filters, filterKeyandValues, value, genes }) => {
 
-    console.log(filters,filterKeyandValues, value, genes)
     if (filters && filterKeyandValues) {
       setState((prevState) => ({
         ...prevState,
@@ -168,8 +166,6 @@ export default function DataVisualization() {
       ...prevState,
       viz: chartx,
     }));
-    console.log('----')
-
   }, []);
   useEffect(() => {
     let chartx = LoadChart(width, tabName);
@@ -196,8 +192,9 @@ export default function DataVisualization() {
   }, [tab, tabName, chartName, BrstKeys]);
 
   useEffect(() => {
-    // let w = elementRef.current.getBoundingClientRect().width;
-    // setWidth(w);
+    let w = elementRef.current.getBoundingClientRect().width;
+    console.log('----------------uswidth',w);
+    setWidth(w);
     setBoolChartState(false);
     if (project_id !== undefined) {
       let state_ = state

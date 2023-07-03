@@ -325,7 +325,7 @@ export default function DataCircos({
 
       let editInputData = inputData;
       editInputData = { ...editInputData, sampleKey: sampleKey };
-      dispatch(getBreastKeys(editInputData));
+      // dispatch(getBreastKeys(editInputData));
       if (
         editInputData.type !== "" &&
         sampleKey !== "" &&
@@ -458,7 +458,6 @@ export default function DataCircos({
   }, [circosJson]);
 
   var w = Math.floor((width / 100) * 75);
-
   return (
     <>
       {loader ? (
