@@ -683,9 +683,6 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
                 </li>
               </ul>
             </div>
-
-
-
           </div>
           <div className='sub_head'>
             <div className="tabs_box">

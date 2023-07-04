@@ -145,6 +145,7 @@ export default function DataVisualization() {
     if (project_id !== undefined) {
       let projectAvailableSteps = undefined;
       if (userProjectDetails && 'key' in userProjectDetails && userProjectDetails.key === 'NotFound') {
+      //   console.log('--------');
         history.push('/login')
       }
       if (userProjectDetails && 'available_steps' in userProjectDetails) {
@@ -294,6 +295,7 @@ export default function DataVisualization() {
   }, [screenCapture]);
 
   const LoadChart = (w, type) => {
+    console.log('genes_initial' , state)
     switch (type) {
       case "circos":
         return Charts.circos(
@@ -503,7 +505,7 @@ export default function DataVisualization() {
 
             {
               gridData && !tabName &&
-              <div className='dataList' style={{ marginTop: '5%' }}>
+              <div className='dataList' style={{marginTop:'5%'}}>
                 <ul >
                   {gridData.map((item, index) => (
 
