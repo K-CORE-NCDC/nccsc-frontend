@@ -10,6 +10,7 @@ import {FormattedMessage} from 'react-intl';
 import { useParams, useHistory } from "react-router-dom";
 
 export default function DataLolipop({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
+  console.log('load chart called-----')
   const reference = useRef()
   const history = useHistory();
   const [genesHtml, setGenesHtml] = useState([])

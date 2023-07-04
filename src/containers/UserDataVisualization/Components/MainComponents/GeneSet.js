@@ -14,10 +14,9 @@ const GeneSet = ({ parentCallback, filterState }) => {
         let g = genes[value].data;
         g = g.sort();
         let genesString = g.join(" ");
-        console.log(genesString)
         geneValue.current.value = genesString;
         setValue(value)
-        setGeneData(genesString)
+        setGeneData(genesString.split(" "))
     };
 
     const submitGeneSet = () => {
