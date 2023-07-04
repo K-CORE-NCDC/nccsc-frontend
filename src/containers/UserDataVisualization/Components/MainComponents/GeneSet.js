@@ -22,8 +22,8 @@ const GeneSet = ({ parentCallback, filterState }) => {
 
     const submitGeneSet = () => {
         if (value === "user-defined"){
-            let genevalue = geneData.split(' ')
-            parentCallback({ value: value, genes: genevalue });
+            // let genevalue = geneData.split(' ')
+            parentCallback({ value: value, genes: geneData });
         } 
         else{
             parentCallback({ value: value, genes: geneData });

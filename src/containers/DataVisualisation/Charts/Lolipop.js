@@ -6,7 +6,7 @@ import { exportComponentAsJPEG } from 'react-component-export-image';
 import LoaderCmp from '../../Common/Loader'
 import DataTable from 'react-data-table-component';
 import NoContentMessage from '../../Common/NoContentComponent';
-import {FormattedMessage} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { useParams, useHistory } from "react-router-dom";
 
 export default function DataLolipop({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
@@ -18,7 +18,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   const [tableType, setTableType] = useState('Mutation')
   const [inputState, setInputState] = useState({})
   const [watermarkCss, setWatermarkCSS] = useState("")
-  const [lolipopJson, setLolipopJson] = useState({data: [], domains: [], status: 204})
+  const [lolipopJson, setLolipopJson] = useState({ data: [], domains: [], status: 204 })
   const [loader, setLoader] = useState(false)
   const [tableData, setTableData] = useState([])
   const [state, setState] = useState({ "domains": [], "lollipop": [], "width": 0, 'height': 0 })
@@ -28,23 +28,22 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   const [refSeqId, setRefSeqId] = useState([])
   const [showLollipop, setShowLollipop] = useState(false)
   const [noContent, setNoContent] = useState(true)
-  const [noGeneData , setNoGeneData] = useState(false)
+  const [noGeneData, setNoGeneData] = useState(false)
   const [percentage, setPercentage] = useState("")
-  const [alltabList, setAllTabList] = useState({}); 
+  const [alltabList, setAllTabList] = useState({});
   let { project_id } = useParams();
+  const [activeTab, setActiveTab] = useState('1')
 
   const tabList = useSelector(
     (data) => data.dataVisualizationReducer
   );
 
-  useEffect(()=>{
-    console.log('tablist' , tabList)
-    if('userProjectsDataTable' in tabList ){
-      console.log('tablist' , tabList)
+  useEffect(() => {
+    if ('userProjectsDataTable' in tabList) {
       setAllTabList(tabList.userProjectsDataTable)
     }
-    
-    },[tabList])
+
+  }, [tabList])
 
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
   let mutation_colors = {
@@ -73,23 +72,23 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
       dataJson['table_type'] = tableType
       setLoader(true)
       setActiveCmp(false)
-      let return_data = LolipopInformation('POST',dataJson)
-        return_data.then((result) => {
-          const d = result
-          if (d.status === 200) {
-            let r_ = d["data"]
-            r_["status"] = 200
-            setLolipopJson(r_)
-            setLoader(false)
-            setNoContent(false)
-            setActiveCmp(true)
-          } else {
-            setLoader(false)
-            setNoContent(true)
-            setActiveCmp(true)
-            setLolipopJson({ data: [], domains: [], status: 204 })
-          }
-        })
+      let return_data = LolipopInformation('POST', dataJson)
+      return_data.then((result) => {
+        const d = result
+        if (d.status === 200) {
+          let r_ = d["data"]
+          r_["status"] = 200
+          setLolipopJson(r_)
+          setLoader(false)
+          setNoContent(false)
+          setActiveCmp(true)
+        } else {
+          setLoader(false)
+          setNoContent(true)
+          setActiveCmp(true)
+          setLolipopJson({ data: [], domains: [], status: 204 })
+        }
+      })
         .catch((e) => {
           setLolipopJson({ data: [], domains: [], status: 204 })
           history.push('/notfound')
@@ -118,7 +117,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
 
   useEffect(() => {
     if (inputState && 'genes' in inputState) {
-      let g = inputState['genes']
+      let g =  inputState['genes']
       loadGenesDropdown(g)
       setGene(g[0])
       if (inputState.type !== '') {
@@ -126,7 +125,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
         setLoader(true)
         dataJson['genes'] = g[0]
         dataJson['table_type'] = tableType
-        let return_data = LolipopInformation('POST',dataJson)
+        let return_data = LolipopInformation('POST', dataJson)
         return_data.then((result) => {
           const d = result
           if (d.status === 200) {
@@ -143,14 +142,14 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
             setLolipopJson({ data: [], domains: [], status: 204 })
           }
         })
-        .catch((e) => {
-          setLolipopJson({ data: [], domains: [], status: 204 })
-          history.push('/notfound')
-        });
+          .catch((e) => {
+            setLolipopJson({ data: [], domains: [], status: 204 })
+            history.push('/notfound')
+          });
         setNoGeneData(false)
       }
       setTableType(tableType)
-    }else{
+    } else {
       setNoGeneData(true)
     }
   }, [inputState])
@@ -209,7 +208,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                   lollipopTmp[p_vc] = [data[i]['sample'] + "||" + data[i]['protein']]
                 }
               }
-              console.log('BrstKeys' , BrstKeys)
+              console.log('BrstKeys', BrstKeys)
               table_data?.push({
                 "sample": BrstKeys[data[i]['sample']],
                 "protein": data[i]['protein'],
@@ -244,30 +243,30 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
           }
         }
 
-        setRefSeqId( [...new Set(refseq_id )])
-        setEnstId( [...new Set(enst_id )])
+        setRefSeqId([...new Set(refseq_id)])
+        setEnstId([...new Set(enst_id)])
         let tmp = []
         let height = []
         let colors
         if (tableType === "Mutation") {
           table_cols = [
             {
-              name: <FormattedMessage id="sampleid" defaultMessage="Sample Id"/>,
+              name: <FormattedMessage id="sampleid" defaultMessage="Sample Id" />,
               selector: row => row.sample,
               sortable: true
             },
             {
-              name: <FormattedMessage id="ProtienChange" defaultMessage="Protein Change"/>,
+              name: <FormattedMessage id="ProtienChange" defaultMessage="Protein Change" />,
               selector: row => row.protein,
               sortable: true
             },
             {
-              name: <FormattedMessage id="MutationType" defaultMessage="Mutation Type"/>,
+              name: <FormattedMessage id="MutationType" defaultMessage="Mutation Type" />,
               selector: row => row.variant_classification,
               sortable: true
             }
           ]
-          
+
           colors = mutation_colors
           for (var key in mutation_colors) {
             let count = 0
@@ -291,9 +290,9 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                   'color': colors[key],
                   'tooltip': {
                     'header': 'Protein Change',
-                    'body': lollipopTmp[vc][0].split('||')[1]+"\n Samples Count : "+lollipopTmp[vc].length
+                    'body': lollipopTmp[vc][0].split('||')[1] + "\n Samples Count : " + lollipopTmp[vc].length
                   },
-                  
+
                 })
                 height.push(lollipopTmp[vc].length)
               }
@@ -302,24 +301,24 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
         } else {
           table_cols = [
             {
-              name: <FormattedMessage id="sampleid" defaultMessage="Sample Id"/>,
+              name: <FormattedMessage id="sampleid" defaultMessage="Sample Id" />,
               selector: row => row.sample,
               sortable: true
             },
             {
-              name: <FormattedMessage id="Site" defaultMessage="Site"/>,
+              name: <FormattedMessage id="Site" defaultMessage="Site" />,
               selector: row => row.site,
               sortable: true
             },
             {
-              name:  <FormattedMessage id="Gene" defaultMessage="Gene"/>,
+              name: <FormattedMessage id="Gene" defaultMessage="Gene" />,
               selector: row => row.gene,
               sortable: true
             }
           ]
           tmp.push(
             <div className='p-3' key='total_site'>
-              <FormattedMessage id='TotalSite' defaultMessage="Total Site :"  />
+              <FormattedMessage id='TotalSite' defaultMessage="Total Site :" />
             </div>
           )
           colors = phospo_colors
@@ -340,7 +339,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                 'header': key + ' Site',
                 'body': lollipopLegenedTmp[key].length + ' : Phosphorylation'
               }
-              
+
             })
 
             height.push(lollipopLegenedTmp[key].length)
@@ -352,7 +351,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
               count = phospho_tmp[key]
             }
             tmp.push(
-              <div className='p-3' key={key}> 
+              <div className='p-3' key={key}>
                 <span style={{ 'backgroundColor': colors[name] }} className="inline-flex items-center justify-center px-3 mr-3 pb-1 lg:text-md sm:text-xl font-bold leading-none text-white rounded-full">
                   {count}
                 </span>
@@ -392,11 +391,11 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
             'tooltip': {
               "body": domains_data[i]['domain'] + " (" + domains_data[i]['start'] + " - " + domains_data[i]['end'] + ")"
             }
-            
+
           })
         }
 
-      // }
+        // }
 
 
         let w = 300
@@ -404,9 +403,9 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
         if (width.length > 0) w = Math.max(...width)
         if (height.length > 0) h = Math.max(...height)
 
-        let u_sample =  [...new Set(unique_sample)]
+        let u_sample = [...new Set(unique_sample)]
         let total_smaples = Object.keys(BrstKeys).length
-        let sm_frequency = (u_sample.length/total_smaples)*100
+        let sm_frequency = (u_sample.length / total_smaples) * 100
         setPercentage(sm_frequency.toFixed(3))
         setMutationLabel(tmp)
         setTableData(table_data)
@@ -425,7 +424,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
       setShowLollipop(true)
       setNoContent(false)
     }
-    else{
+    else {
       setShowLollipop(false)
       setNoContent(true)
     }
@@ -451,7 +450,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
       setWatermarkCSS("")
     }
     if (watermarkCss !== "" && screenCapture) {
-      exportComponentAsJPEG(reference,{fileName:'Lollipop'})
+      exportComponentAsJPEG(reference, { fileName: 'Lollipop' })
       setToFalseAfterScreenCapture()
     }
   }, [screenCapture, watermarkCss])
@@ -472,27 +471,27 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
       let dataJson = { ...inputData }
       dataJson['genes'] = gene
       dataJson['table_type'] = type
-      let return_data = LolipopInformation('POST',dataJson)
+      let return_data = LolipopInformation('POST', dataJson)
       return_data.then((result) => {
         const d = result
-       if (d.status === 200) {
-            let r_ = d["data"]
-            r_["status"] = 200
-            setLolipopJson(r_)
-            setLoader(false)
-            setNoContent(false)
-            setActiveCmp(true)
-          } else {
-            setNoContent(true)
-            setLoader(false)
-            setActiveCmp(true)
-            setLolipopJson({ data: [], domains: [], status: 204 })
-          }
+        if (d.status === 200) {
+          let r_ = d["data"]
+          r_["status"] = 200
+          setLolipopJson(r_)
+          setLoader(false)
+          setNoContent(false)
+          setActiveCmp(true)
+        } else {
+          setNoContent(true)
+          setLoader(false)
+          setActiveCmp(true)
+          setLolipopJson({ data: [], domains: [], status: 204 })
+        }
       })
-      .catch((e) => {
-        setLolipopJson({ data: [], domains: [], status: 204 })
-        history.push('/notfound')
-      });
+        .catch((e) => {
+          setLolipopJson({ data: [], domains: [], status: 204 })
+          history.push('/notfound')
+        });
     }
   }
 
@@ -504,91 +503,90 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
         <div>
           {activeCmp &&
             <Fragment>
-              {/* <div className="grid grid-cols-2  ">
-                <div className="p-5 text-right">
-                  <div className="flex justify-start items-baseline flex-wrap"> */}
-                    {/* <div className="flex m-2"> */}
-                    <div style={{display:'flex' , gap:'1%'}}>
-                      <button onClick={e => changeType(e, 'Mutation')} id='Mutation' name='type' className="btn btnPrimary">
-                        <FormattedMessage  id = "Mutation" defaultMessage='Mutation'/>
-                      </button>
-
-                      {
-                       project_id !== undefined  &&  alltabList['phospho']  && <button onClick={e => changeType(e, 'Phospho')} id='Phospho' name='type' className="btn btnPrimary">
-                      <FormattedMessage  id = "Phospho" defaultMessage='Phospho'/>
-                      </button> 
-                      }
-
+              <div className="tabs_box">
+              <div className="tab">
+                <div className="tab_main">
+                  <ul>
                     {
-                    project_id === undefined  &&   <button onClick={e => changeType(e, 'Phospho')} id='Phospho' name='type' className="rounded-l-none border-l-0
-                      hover:scale-110 focus:outline-none flex justify-center lg:p-5 sm:p-3
-                      rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100
-                      text-teal-700 sm:text-xl xs:text-sm lg:text-2xl xs:p-2 border duration-200 ease-in-out border-teal-600 transition">
-                      <FormattedMessage  id = "Phospho" defaultMessage='Phospho'/>
-                      </button> 
-                      }
-                   
-                    </div>
-                  {/* </div>
+                      project_id === undefined &&
+                      <li className={activeTab === '1' ? 'on' : ''}> <button id='Mutation' onClick={e => { changeType(e, 'Mutation'); setActiveTab('1') }} name='type' >
+                         <FormattedMessage id="Mutation" defaultMessage='Mutation' /> </button> </li>
+                    }
+                    {
+                      project_id !== undefined && alltabList['dna_mutation'] && <li className={activeTab === '1' ? 'on' : ''}> <button onClick={e => {
+                        changeType(e, 'Mutation')
+                        setActiveTab('1')
+                      }} name='type' >  <FormattedMessage id="Mutation" defaultMessage='Mutation' /> </button></li>}
+                    {
+                      project_id === undefined &&
+                      <li className={activeTab === '2' ? 'on' : ''}> <button id="Phospho" onClick={e => { changeType(e, 'Phospho'); setActiveTab('2') }} name='type' >
+                         <FormattedMessage id="Phospho" defaultMessage='Phospho' />  </button> </li>
+                    }
+                    {
+                      project_id !== undefined && alltabList['phospho'] && <li className={activeTab === '2' ? 'on' : ''}> <button id='Phospho' onClick={e => {
+                        changeType(e, 'Phospho')
+                        setActiveTab('2')
+                      }} name='type' >  <FormattedMessage id="Phospho" defaultMessage='Phospho' /> </button></li>}
+                  </ul>
                 </div>
-              </div> */}
-              {/* <div className='p-5 text-right m-5'>
-                <div className='flex lg:float-right md:float-right sm:float-left xs:float-left'>
-                  <div className='p-3 lg:text-2xl sm:text-xl xs:text-sm'><FormattedMessage  id = "Selected Gene" defaultMessage='Selected Gene Is'/></div>
+              </div>
+            </div>
+              <div style={{display:'flex' , justifyContent:'flex-end'}}>
+                <div >
+                  <div><FormattedMessage id="Selected Gene" defaultMessage='Selected Gene Is' /></div>
                   <div>
-                    <select defaultValue={gene} onChange={e=>geneSet(e)} className="w-full border bg-white rounded lg:px-3 lg:py-2 xs:py-0 lg:h-14 sm:h-14 xs:h-8 lg:text-2xl xs:text-sm outline-none text-gray-700">
+                    <select defaultValue={gene} onChange={e => geneSet(e)}>
                       {genesHtml}
                     </select>
                   </div>
                 </div>
-              </div> */}
-              
+              </div>
               <>
-              {noContent && <NoContentMessage /> }
-              {
-                showLollipop && <div className='' style={{position:'relative'}}>
-                  <div className='chart_box'>
-                    <LollipopCmp watermarkCss={watermarkCss} ref={reference} width={width} type={tableType}
-                      gene={gene}
-                      data={state}
-                    />
-                    {tableType === "Mutation" &&
-                      <div className='id_lists' style={{display:'flex'}}>
-                        <div className='box' >
-                          <label >Enst Id List</label>
-                          <textarea defaultValue={enstId.join("\n")} className="" rows="4" ></textarea>
+                {noContent && <NoContentMessage />}
+                {
+                  showLollipop && <div className='' style={{ position: 'relative' }}>
+                    <div className='chart_box'>
+                      <LollipopCmp watermarkCss={watermarkCss} ref={reference} width={width} type={tableType}
+                        gene={gene}
+                        data={state}
+                      />
+                      {tableType === "Mutation" &&
+                        <div className='id_lists' style={{ display: 'flex' }}>
+                          <div className='box' >
+                            <label >Enst Id List</label>
+                            <textarea defaultValue={enstId.join("\n")} className="" rows="4" ></textarea>
+                          </div>
+                          <div className='box' >
+                            <label >Refseq MRNA Id List</label>
+                            <textarea defaultValue={refSeqId.join("\n")} className="" rows="4" ></textarea>
+                          </div>
                         </div>
-                        <div className='box' >
-                          <label >Refseq MRNA Id List</label>
-                          <textarea defaultValue={refSeqId.join("\n")} className="" rows="4" ></textarea>
-                        </div>
+                      }
+                    </div>
+                    <div className='chart_dataBox'>
+                      <div className="">
+                        {tableType === "Mutation" && <h5 className=""> <FormattedMessage id="SomanticMutationFrequency" defaultMessage="Somatic Mutation Frequency: " />{percentage ? percentage : ""}<FormattedMessage id="SomanticMutationmutationsamplenumber/totalselectedsamplenumber(%)Frequency" defaultMessage="%(mutation sample number/total selected sample number(%))" /></h5>}
+                        {tableType !== "Mutation" && <h5 className=""> <FormattedMessage id="PhosphorylationFrequency" defaultMessage="Phosphorylation Frequency: " />{percentage ? percentage : ""}<FormattedMessage id="Phosphorylationsamplenumber/totalselectedsamplenumber(%)" defaultMessage="%(Phosphorylation sample number/total selected sample number(%))" /></h5>}
                       </div>
-                    }
-                  </div>
-                  <div className='chart_dataBox'>
-                    <div className="">
-                    {tableType === "Mutation" &&  <h5 className=""> <FormattedMessage  id="SomanticMutationFrequency" defaultMessage="Somatic Mutation Frequency: "/>{percentage?percentage:""}<FormattedMessage  id="SomanticMutationmutationsamplenumber/totalselectedsamplenumber(%)Frequency" defaultMessage="%(mutation sample number/total selected sample number(%))"/></h5>}
-                    {tableType !== "Mutation" &&  <h5 className=""> <FormattedMessage  id="PhosphorylationFrequency" defaultMessage="Phosphorylation Frequency: "/>{percentage?percentage:""}<FormattedMessage  id="Phosphorylationsamplenumber/totalselectedsamplenumber(%)" defaultMessage="%(Phosphorylation sample number/total selected sample number(%))"/></h5>}
+                      <div className='mutation_labels'>
+                        {mutationLabel}
+                      </div>
                     </div>
-                    <div className='mutation_labels'>
-                      {mutationLabel}
-                    </div>
-                  </div>
 
-                  {tableData.length > 0 && <div className="contentsTable" style={{ marginTop: '30px' }}>
-                    <DataTable pagination
-                      columns={tableColumnsData}
-                      data={tableData}
-                    />
+                    {tableData.length > 0 && <div className="contentsTable" style={{ marginTop: '30px' }}>
+                      <DataTable pagination
+                        columns={tableColumnsData}
+                        data={tableData}
+                      />
+                    </div>}
                   </div>}
-                </div>}
               </>
             </Fragment>
 
-            
-           } 
-              {/* {noGeneData && <p><FormattedMessage id="PleaseSelecttheGeneSetData" defaultMessage="Please Select the Gene Set Data" /></p>} */}
-         
+
+          }
+          {/* {noGeneData && <p><FormattedMessage id="PleaseSelecttheGeneSetData" defaultMessage="Please Select the Gene Set Data" /></p>} */}
+
         </div>
     }
 

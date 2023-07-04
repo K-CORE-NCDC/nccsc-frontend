@@ -236,9 +236,9 @@ export default function DataVisualization() {
   useEffect(() => {
     if (project_id !== undefined) {
       let projectAvailableSteps = undefined;
-      if(userProjectDetails && 'key' in  userProjectDetails &&  userProjectDetails.key === 'NotFound'){
-        history.push('/login')
-      }
+      // if(userProjectDetails && 'key' in  userProjectDetails &&  userProjectDetails.key === 'NotFound'){
+      //   history.push('/login')
+      // }
       if (userProjectDetails &&  'available_steps' in userProjectDetails) {
         projectAvailableSteps = userProjectDetails.available_steps;
       }
