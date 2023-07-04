@@ -150,25 +150,18 @@ export default function DataVisualization() {
       }));
       // setfilterApplied(true);
     }
-    else if (value && genes) {
+    
+    if (value && genes) {
+    
       setState((prevState) => ({
         ...prevState,
         genes: g,
         type: value,
       }));
     }
-    setBoolChartState(false);
-    setChartName(tabName);
-  
+    
   }, []);
 
-  useEffect(() => {
-    let chartx = LoadChart(width, tabName);
-    setCharts((prevState) => ({
-      ...prevState,
-      viz: chartx,
-    }));
-  }, [state])
 
   useEffect(() => {
     let chartx = LoadChart(width, tabName);
@@ -195,6 +188,7 @@ export default function DataVisualization() {
   }, [tab, tabName, chartName, BrstKeys]);
 
   useEffect(() => {
+    console.log('from initial use effect component did moutn-----')
     let w = elementRef.current.getBoundingClientRect().width;
     setWidth(w);
     setBoolChartState(false);
@@ -277,6 +271,27 @@ export default function DataVisualization() {
     }
   }, [project_id])
 
+    
+  useEffect(() => {
+    console.log('-----from use')
+    if (project_id !== undefined) {
+      if (state.genes.length > 0) {
+        dispatch(samplesCount("POST", { project_id: project_id }));
+        dispatch(getBreastKeys(state));
+        setBoolChartState(false);
+        let chartx = LoadChart(width, tabName);
+        setCharts((prevState) => ({
+          ...prevState,
+          viz: chartx,
+        }));  
+      }
+    } else {
+      // if (state.genes.length > 0) {
+      //   dispatch(samplesCount("POST", {}));
+      //   dispatch(getBreastKeys(state));
+      // }
+    }
+  }, [ state]);
 
   const breadCrumbs = {
     '/visualise-singledata/': [
