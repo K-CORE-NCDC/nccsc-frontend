@@ -119,38 +119,41 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   useEffect(() => {
     if (inputState && 'genes' in inputState) {
       let g =  inputState['genes']
+      console.log('ggg' , g[0] , typeof(g))
+      console.log('input' , inputState)
       loadGenesDropdown(g)
       setGene(g[0])
-      if (inputState.type !== '') {
-        let dataJson = inputState
-        setLoader(true)
-        dataJson['genes'] = g[0]
-        dataJson['table_type'] = tableType
-        let return_data = LolipopInformation('POST', dataJson)
-        return_data.then((result) => {
-          const d = result
-          if (d.status === 200) {
-            let r_ = d["data"]
-            r_["status"] = 200
-            setLolipopJson(r_)
-            setLoader(false)
-            setNoContent(false)
-            setActiveCmp(true)
-          } else {
-            setLoader(false)
-            setNoContent(true)
-            setActiveCmp(true)
-            setLolipopJson({ data: [], domains: [], status: 204 })
-          }
-        })
-          .catch((e) => {
-            setLolipopJson({ data: [], domains: [], status: 204 })
-            history.push('/notfound')
-          });
-        setNoGeneData(false)
-      }
-      setTableType(tableType)
-    } else {
+      // if (inputState.type !== '') {
+      //   let dataJson = inputState
+      //   setLoader(true)
+      //   dataJson['genes'] = g[0]
+      //   dataJson['table_type'] = tableType
+      //   let return_data = LolipopInformation('POST', dataJson)
+      //   return_data.then((result) => {
+      //     const d = result
+      //     if (d.status === 200) {
+      //       let r_ = d["data"]
+      //       r_["status"] = 200
+      //       setLolipopJson(r_)
+      //       setLoader(false)
+      //       setNoContent(false)
+      //       setActiveCmp(true)
+      //     } else {
+      //       setLoader(false)
+      //       setNoContent(true)
+      //       setActiveCmp(true)
+      //       setLolipopJson({ data: [], domains: [], status: 204 })
+      //     }
+      //   })
+      //     .catch((e) => {
+      //       setLolipopJson({ data: [], domains: [], status: 204 })
+      //       history.push('/notfound')
+      //     });
+      //   setNoGeneData(false)
+      // }
+      // setTableType(tableType)
+    }
+     else {
       setNoGeneData(true)
     }
   }, [inputState])

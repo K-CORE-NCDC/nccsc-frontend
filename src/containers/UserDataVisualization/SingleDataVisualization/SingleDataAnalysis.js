@@ -136,13 +136,13 @@ export default function DataVisualization() {
 
 
   const callback = useCallback(({ filters, filterKeyandValues, value, genes }) => {
-    let g = []
-    if(genes.includes(' ')){
-      g = genes.split(' ')
-    }
-    else{
-      g.push(genes)
-    }
+    // let g = []
+    // if(genes.includes(' ')){
+    //   g = genes.split(' ')
+    // }
+    // else{
+    //   g.push(genes)
+    // }
     if (filters && filterKeyandValues) {
       setState((prevState) => ({
         ...prevState,
@@ -155,7 +155,7 @@ export default function DataVisualization() {
     
       setState((prevState) => ({
         ...prevState,
-        genes: g,
+        genes: genes,
         type: value,
       }));
     }
@@ -163,13 +163,13 @@ export default function DataVisualization() {
   }, []);
 
 
-  useEffect(() => {
-    let chartx = LoadChart(width, tabName);
-    setCharts((prevState) => ({
-      ...prevState,
-      viz: chartx,
-    }));
-  }, [screenCapture]);
+  // useEffect(() => {
+  //   let chartx = LoadChart(width, tabName);
+  //   setCharts((prevState) => ({
+  //     ...prevState,
+  //     viz: chartx,
+  //   }));
+  // }, [screenCapture]);
 
   useEffect(() => {
     setTabName(tab === 'home' ? undefined : tab)
@@ -188,7 +188,7 @@ export default function DataVisualization() {
   }, [tab, tabName, chartName, BrstKeys]);
 
   useEffect(() => {
-    console.log('from initial use effect component did moutn-----')
+    
     let w = elementRef.current.getBoundingClientRect().width;
     setWidth(w);
     setBoolChartState(false);
@@ -260,20 +260,20 @@ export default function DataVisualization() {
 
   }, [project_id, userProjectDetails, project_id_status]);
 
-  useEffect(() => {
-    if (project_id) {
-      dispatch(getUserDefinedFilter({
-        "project_id": project_id
-      }));
-      // dispatch(samplesCount("POST", {}));
-      dispatch(getBreastKeys(state));
+  // useEffect(() => {
+  //   if (project_id) {
+  //     dispatch(getUserDefinedFilter({
+  //       "project_id": project_id
+  //     }));
+  //     // dispatch(samplesCount("POST", {}));
+  //     dispatch(getBreastKeys(state));
 
-    }
-  }, [project_id])
+  //   }
+  // }, [project_id])
 
     
   useEffect(() => {
-    console.log('-----from use')
+   
     if (project_id !== undefined) {
       if (state.genes.length > 0) {
         dispatch(samplesCount("POST", { project_id: project_id }));
@@ -286,10 +286,10 @@ export default function DataVisualization() {
         }));  
       }
     } else {
-      // if (state.genes.length > 0) {
-      //   dispatch(samplesCount("POST", {}));
-      //   dispatch(getBreastKeys(state));
-      // }
+      if (state.genes.length > 0) {
+        dispatch(samplesCount("POST", {}));
+        dispatch(getBreastKeys(state));
+      }
     }
   }, [ state]);
 
