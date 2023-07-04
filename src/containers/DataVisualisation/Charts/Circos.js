@@ -356,7 +356,7 @@ export default function DataCircos({
     }
   }, [])
 
-  let abcd = async()=>{
+  let takeScreenshot = async()=>{
     const element = document.getElementById('circos')
     let imgData 
     await html2canvas(element).then(canvas => {
@@ -383,7 +383,7 @@ export default function DataCircos({
       }
       if (watermarkCss !== "" && screenCapture) {
         if (reference !== null) {
-          abcd()
+          takeScreenshot()
         }
         setToFalseAfterScreenCapture();
       }

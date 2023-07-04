@@ -127,7 +127,6 @@ export function samplesCount(type, data) {
             payload: { status: d.status },
           });
         }
-        // dispatch({ type: dataVisualization.REQUEST_DONE });
       })
       .catch(() => {
         dispatch({
@@ -616,7 +615,7 @@ export function SingleFileUpload(fileData, projectName) {
     });
     data.set('project_name', projectName);
     data.set('csrftoken',getCookie('csrftoken'))
-    const url = `${config.auth}multi-new-user-data-visualization/`;
+    const url = `${config.auth}single-new-user-data-visualization/`;
     sendRequest(url, 'POST', data)
       .then((result) => {
         const d = result;
