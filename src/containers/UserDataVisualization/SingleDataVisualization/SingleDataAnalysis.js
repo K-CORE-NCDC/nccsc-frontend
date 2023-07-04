@@ -33,7 +33,7 @@ export default function DataVisualization() {
   const dispatch = useDispatch();
   const [chart, setCharts] = useState({ viz: [] });
   const [boolChartState, setBoolChartState] = useState(true);
-  const [state, setState] = useState({ genes: [ "CD84" ], filter: {}, type: "major-genes" });
+  const [state, setState] = useState({ genes: [], filter: {}, type: "user-defined" });
   const [gridData, setGridData] = useState([])
   const [width, setWidth] = useState(0);
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
@@ -43,7 +43,6 @@ export default function DataVisualization() {
   const project_id_status = useSelector(
     (data) => data.homeReducer.project_id_status
   );
-  // "NBPF1", NOTCH2
   const [availableTabsForProject, setavailableTabsForProject] = useState([]);
   const history = useHistory()
   let { tab, project_id } = useParams();
@@ -72,7 +71,6 @@ export default function DataVisualization() {
   };
 
   const LoadChart = (w, type) => {
-    console.log('type' , type)
     switch (type) {
       case "circos":
         return Charts.circos(
@@ -81,7 +79,6 @@ export default function DataVisualization() {
           screenCapture,
           setToFalseAfterScreenCapture,
           toggle,
-          state
         );
       case "lollipop":
         return Charts.lollipop(
@@ -117,12 +114,6 @@ export default function DataVisualization() {
     }
   };
 
-  // useEffect(() => {
-  //   let w = elementRef.current.getBoundingClientRect().width;
-  //   console.log('width' , w)
-  //   setWidth(w)
-  // }, [])
-
   useEffect(() => {
     if (chart) {
 
@@ -145,8 +136,13 @@ export default function DataVisualization() {
 
 
   const callback = useCallback(({ filters, filterKeyandValues, value, genes }) => {
-
-    console.log(filters,filterKeyandValues, value, genes)
+    let g = []
+    if(genes.includes(' ')){
+      g = genes.split(' ')
+    }
+    else{
+      g.push(genes)
+    }
     if (filters && filterKeyandValues) {
       setState((prevState) => ({
         ...prevState,
@@ -157,20 +153,23 @@ export default function DataVisualization() {
     else if (value && genes) {
       setState((prevState) => ({
         ...prevState,
-        genes: genes,
+        genes: g,
         type: value,
       }));
     }
     setBoolChartState(false);
     setChartName(tabName);
+  
+  }, []);
+
+  useEffect(() => {
     let chartx = LoadChart(width, tabName);
     setCharts((prevState) => ({
       ...prevState,
       viz: chartx,
     }));
-    console.log('----')
+  }, [state])
 
-  }, []);
   useEffect(() => {
     let chartx = LoadChart(width, tabName);
     setCharts((prevState) => ({
@@ -196,13 +195,14 @@ export default function DataVisualization() {
   }, [tab, tabName, chartName, BrstKeys]);
 
   useEffect(() => {
-    // let w = elementRef.current.getBoundingClientRect().width;
-    // setWidth(w);
+    let w = elementRef.current.getBoundingClientRect().width;
+    setWidth(w);
     setBoolChartState(false);
     if (project_id !== undefined) {
-      let state_ = state
-      state_['project_id'] = project_id
-      setState(state_)
+      setState((prevState) => ({
+        ...prevState,
+        project_id: project_id
+      }));
     }
     let l = [
       "circos",
@@ -232,7 +232,7 @@ export default function DataVisualization() {
     setGridData(gridData)
   }, []);
 
-  
+
   useEffect(() => {
     if (project_id !== undefined) {
       let projectAvailableSteps = undefined;
@@ -248,22 +248,22 @@ export default function DataVisualization() {
         dispatch(getUserDataProjectsTableData(project_id));
       } else {
         Object.keys(projectAvailableSteps).forEach((stepName) => {
-            if (stepName === "lollypop") {
-              tabList.push("lollipop");
-            } else if (stepName === "oncoprint") {
-              tabList.push("onco");
-            } else if (stepName === "igv") {
-              tabList.push("CNV");
-            } else if (stepName === "scatter") {
-              tabList.push("correlation");
-            } else {
-              tabList.push(stepName);
-            }
+          if (stepName === "lollypop") {
+            tabList.push("lollipop");
+          } else if (stepName === "oncoprint") {
+            tabList.push("onco");
+          } else if (stepName === "igv") {
+            tabList.push("CNV");
+          } else if (stepName === "scatter") {
+            tabList.push("correlation");
+          } else {
+            tabList.push(stepName);
+          }
         });
       }
       setavailableTabsForProject(tabList);
     }
-  
+
   }, [project_id, userProjectDetails, project_id_status]);
 
   useEffect(() => {
@@ -351,51 +351,52 @@ export default function DataVisualization() {
             <section>
               <div
                 className="block text-center">
-              <Popover className="relative gene_main_box" style={{ margin: 'auto' }}>
-                {({ open }) => {
-                  return (
-                    <>
-                    <div className="w-full">
-                      <Popover.Button className={'selectBox'}>
-                        <div className="GeneSetgeneSetButton">
-                          <div className="flex-1">Gene set Re-filtering</div>
-                          <div className="w-20">
-                            <FilterIcon className="filter-icon" />
-                          </div>
+                <Popover className="relative gene_main_box" style={{ margin: 'auto' }}>
+                  {({ open }) => {
+                    return (
+                      <>
+                        <div className="w-full">
+                          <Popover.Button className={'selectBox'}>
+                            <div className="GeneSetgeneSetButton">
+                              <div className="flex-1">Gene set Re-filtering</div>
+                              <div className="w-20">
+                                <FilterIcon className="filter-icon" />
+                              </div>
+                            </div>
+                          </Popover.Button>
+                          <Transition
+                            as={Fragment}
+                            enter="transition ease-out duration-200"
+                            enterFrom="opacity-0 translate-y-1"
+                            enterTo="opacity-100 translate-y-0"
+                            leave="transition ease-in duration-150"
+                            leaveFrom="opacity-100 translate-y-0"
+                            leaveTo="opacity-0 translate-y-1"
+                          >
+                            <Popover.Panel className="GeneSetPopoverPanel">
+                              <GeneSet parentCallback={callback} filterState={state} />
+                            </Popover.Panel>
+                          </Transition>
                         </div>
-                      </Popover.Button>
-                      <Transition
-                        as={Fragment}
-                        enter="transition ease-out duration-200"
-                        enterFrom="opacity-0 translate-y-1"
-                        enterTo="opacity-100 translate-y-0"
-                        leave="transition ease-in duration-150"
-                        leaveFrom="opacity-100 translate-y-0"
-                        leaveTo="opacity-0 translate-y-1"
-                      >
-                        <Popover.Panel className="GeneSetPopoverPanel">
-                          <GeneSet parentCallback={callback} filterState={state} />
-                        </Popover.Panel>
-                      </Transition>
-                    </div>
-                  </>
-                  )}}
-              </Popover>
+                      </>
+                    )
+                  }}
+                </Popover>
               </div>
             </section>
-            
-              <section>
-                <div
-                  id="tab-contents"
-                  className="block text-center"
-                  ref={elementRef}>
-                  {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div>{chart["viz"]}</div>}
-                  {tabName && tabName !== 'home' && !boolChartState && (
-                    <div className="p-1 text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">Please select Genes</div>
-                  )}
-                </div>
-              </section>
-            
+
+            <section>
+              <div
+                id="tab-contents"
+                className="block text-center"
+                ref={elementRef}>
+                {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div>{chart["viz"]}</div>}
+                {tabName && tabName !== 'home' && !boolChartState && (
+                  <div className="p-1 text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">Please select Genes</div>
+                )}
+              </div>
+            </section>
+
           </div>
         </div>
       </article>

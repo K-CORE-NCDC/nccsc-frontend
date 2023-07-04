@@ -14,7 +14,6 @@ const GeneSet = ({ parentCallback, filterState }) => {
         let g = genes[value].data;
         g = g.sort();
         let genesString = g.join(" ");
-        console.log(genesString)
         geneValue.current.value = genesString;
         setValue(value)
         setGeneData(genesString)
@@ -26,6 +25,7 @@ const GeneSet = ({ parentCallback, filterState }) => {
             parentCallback({ value: value, genes: geneData });
         } 
         else{
+
             parentCallback({ value: value, genes: geneData });
         }
     }

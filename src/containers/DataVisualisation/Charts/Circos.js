@@ -325,7 +325,7 @@ export default function DataCircos({
 
       let editInputData = inputData;
       editInputData = { ...editInputData, sampleKey: sampleKey };
-      dispatch(getBreastKeys(editInputData));
+      // dispatch(getBreastKeys(editInputData));
       if (
         editInputData.type !== "" &&
         sampleKey !== "" &&
@@ -356,7 +356,7 @@ export default function DataCircos({
     }
   }, [])
 
-  let abcd = async()=>{
+  let takeScreenshot = async()=>{
     const element = document.getElementById('circos')
     let imgData 
     await html2canvas(element).then(canvas => {
@@ -383,7 +383,7 @@ export default function DataCircos({
       }
       if (watermarkCss !== "" && screenCapture) {
         if (reference !== null) {
-          abcd()
+          takeScreenshot()
         }
         setToFalseAfterScreenCapture();
       }
@@ -458,7 +458,6 @@ export default function DataCircos({
   }, [circosJson]);
 
   var w = Math.floor((width / 100) * 75);
-
   return (
     <>
       {loader ? (

@@ -101,7 +101,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
 				}
 			}
 
-    var snp250 = [...all_chr];
+    var mutationData = [...all_chr];
 
     if('dna_mutation' in api_data){
       let strchr = 0
@@ -110,7 +110,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
       for (let i = 0; i < dna_mutation_data.length; i++) {
         const startPos = staticPositionValues[dna_mutation_data[i].chromosome]
         let position = Math.floor((Math.random() * startPos))
-        snp250.push({
+        mutationData.push({
           block_id: dna_mutation_data[i].chromosome,
           position: position,
           value: dna_mutation_data[i].value,
@@ -194,10 +194,9 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
           })
       }
     }
-    let chord_data = api_data['fusion_genes_data']
-    console.log('api_data',api_data);
 
-    
+    let chord_data = api_data['fusion_genes_data']
+
     if ('sv_data' in api_data){
       let svData = api_data['sv_data']
       if(Object.keys(svData).length){
@@ -222,7 +221,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
     }
     }
 
-    circosHighlight.layout(GRCh37,conf)
+    let circosPlot = circosHighlight.layout(GRCh37,conf)
     .highlight('cytobands-1', data, {
       innerRadius: newWidth/2 -100,
       outerRadius: newWidth / 2 - 50,
@@ -231,16 +230,20 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
         return gieStainColor[d.gieStain]
       }
     })
-    .scatter('dna-mutation', snp250, {
+    if(mutationData.length > 24){
+      console.log('mutationData',mutationData);
+      circosPlot.scatter('dna-mutation', mutationData, {
       color:function(d){
-        if(d.name) {
-          if(d.name in selectedGenesObject){
-            return selectedGeneColor
+        if(mutationData){
+          if(d.name) {
+            if(d.name in selectedGenesObject){
+              return selectedGeneColor
+            }else{
+              return 'grey'
+            }
           }else{
-            return 'grey'
+            return 'rgba(0,0,0,0)'
           }
-        }else{
-          return 'rgba(0,0,0,0)'
         }
       },
       strokeColor: function(d){
@@ -267,7 +270,9 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
         return `${d.block_id}:${Math.round(d.position)} ➤ ${d.name} dna_mutation`
       }
     })
-    .scatter('rna-up', rna_expression_up, {
+    }
+    if(rna_expression_up.length > 24){
+      circosPlot.scatter('rna-up', rna_expression_up, {
       innerRadius: 0.74,
       outerRadius: 0.84,
       color:function(d){
@@ -301,11 +306,14 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
         return `RNA gene: ${d.name} chromosome: ${d.block_id} | z score: ${d.value}`;
       },
     })
-    .scatter('snp-250-4', dna_methylation, {
+    }
+    if(dna_methylation.length > 24){
+      circosPlot.scatter('snp-250-4', dna_methylation, {
       innerRadius: 0.59,
       outerRadius: 0.69,
       showAxesTooltip: false,
       color:function(d){
+        if(dna_methylation){
         if(d.name) {
           if(d.name in selectedGenesObject){
             return selectedGeneColor
@@ -315,13 +323,16 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
         }else{
           return 'rgba(0,0,0,0)'
         }
+      }
       },
       strokeColor: function(d){
+        if(dna_methylation){
         if(d.name in selectedGenesObject) {
           return selectedGeneColor
         }else{
           return '#eee'
         }
+      }
       },
       strokeWidth: 2.0,
       shape: 'circle',
@@ -335,10 +346,17 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
       ],
 
       tooltipContent	: function(d) {
+        if(dna_methylation){
         return `Methylation gene: ${d.name} chromosome: ${d.block_id} | value: ${d.value}`
+        }
+        else{
+          return null
+        }
       },
     })
-    .scatter('snp-250-5', global_proteome_up, {
+    }
+    if(global_proteome_up.length > 24){
+      circosPlot.scatter('snp-250-5', global_proteome_up, {
       innerRadius: 0.47,
       outerRadius: 0.57,
       showAxesTooltip: false,
@@ -372,7 +390,9 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
         return `proteome gene: ${d.name} chromosome: ${d.block_id} | value: ${d.value}`
       },
     })
-    .scatter('snp-250-6', cnvData, {
+    }
+    if(cnvData.length > 24){
+      circosPlot.scatter('snp-250-6', cnvData, {
       innerRadius: 0.36,
       outerRadius: 0.45,
       color:function(d){
@@ -410,7 +430,8 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
         return `CNV gene: ${d.name} chromosome: ${d.block_id} | CN value: ${d.value}`
       },
     })
-    .highlight('cytobands', data, {
+    }
+    circosPlot.highlight('cytobands', data, {
       innerRadius: .3,
       outerRadius: .35,
       opacity: 0.5,
@@ -418,13 +439,13 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
         return gieStainColor[d.gieStain]
       }
     })
-    .chords('l1',chord_data,{
+    if(chord_data){
+      circosPlot.chords('l1',chord_data,{
       radius: 0.3,
       logScale: false,
       opacity: 0.9,
-      // color: '#ffce44',
+      color: '#ffce44',
       color: function(d){
-        console.log('----------------------d',d);
         if(d.source.svtype){
           if(d.source.svtype === "Deletion"){
             return "red"
@@ -472,7 +493,8 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
           }
       }
     })
-    .render()
+    }
+    circosPlot.render()
   }
 
   useEffect(()=>{

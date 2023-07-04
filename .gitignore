@@ -52,3 +52,5 @@ package-lock.json
 Dockerfile
 build/
 src/config.js
+/package-lock.json
+/package.json

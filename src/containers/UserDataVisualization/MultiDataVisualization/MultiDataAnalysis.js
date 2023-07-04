@@ -10,9 +10,7 @@ import { CogIcon, FilterIcon } from "@heroicons/react/outline";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import Filter from "../../Common/filter";
-import ConfirmDownload from "../../Common/downloadConfirmation";
 import { Charts } from "../../DataVisualisation/Charts";
-import genes from "../../Common/gene.json";
 import { Context } from "../../../wrapper";
 import { useHistory, Link } from "react-router-dom";
 import {
@@ -35,9 +33,7 @@ export default function DataVisualization() {
   const context = useContext(Context);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const [Englishlanguage, setEnglishlanguage] = useState(true);
-  const [userDefinedList, setUserDefinedList] = useState("User-Defined List")
-  const [enterGenes, setEnterGenes] = useState("Enter Genes")
-
+ 
   const elementRef = useRef(null);
   const dispatch = useDispatch();
 
@@ -49,15 +45,8 @@ export default function DataVisualization() {
 
   const [gridData, setGridData] = useState([])
   const numRows = Math.ceil(gridData.length / 3);
-  const gridTemplateRows = `repeat(${numRows}, 1fr)`;
 
-  const containerStyles = "flex justify-center items-center my-8 bg-gray-100";
-  const gridStyles = "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 h-full w-full mx-4 md:mx-10";
-  const cardStyles = "bg-white rounded-lg shadow-lg overflow-hidden";
   const imageStyles = "object-cover object-center w-full h-full mt-8";
-  const titleStyles = "text-lg font-semibold p-4 capitalize";
-  const buttonStyles = "bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full capitalize";
-
 
   const history = useHistory();
 
@@ -77,8 +66,7 @@ export default function DataVisualization() {
   const [availableTabsForProject, setavailableTabsForProject] = useState([]);
   const [toggle, setToggle] = useState(true);
   const [filterApplied, setfilterApplied] = useState(false);
-  const [screenCaptureConfirmation, setScreenCaptureConfirmation] =
-    useState(false);
+
   const setToFalseAfterScreenCapture = (param = false) => {
     if (param === false) {
       setScreenCapture(false);
@@ -97,20 +85,6 @@ export default function DataVisualization() {
     }
   }, [context]);
 
-  useEffect(() => {
-    if (koreanlanguage) {
-      setUserDefinedList("사용자 정의")
-      setEnterGenes("유전자 입력")
-    }
-    else {
-      setUserDefinedList("User-Defined List")
-      setEnterGenes("Enter Genes")
-    }
-  }, [koreanlanguage, Englishlanguage])
-
-  const setScreenCaptureFunction = (capture) => {
-    setScreenCaptureConfirmation(true);
-  };
 
   const submitFilter = (e) => {
     setBoolChartState(false);
@@ -123,23 +97,40 @@ export default function DataVisualization() {
 
   };
 
-  const callback = useCallback(({ filters, value, genes }) => {
-    if (filters) {
+  const callback = useCallback(({ filters, filterKeyandValues, value, genes }) => {
+    let g = []
+    if(genes.includes(' ')){
+      g = genes.split(' ')
+    }
+    else{
+      g.push(genes)
+    }
+    if (filters && filterKeyandValues) {
       setState((prevState) => ({
         ...prevState,
-        filter: filters,
+        'filterKeyandValues': filterKeyandValues
       }));
-      setfilterApplied(true);
+      // setfilterApplied(true);
     }
     else if (value && genes) {
       setState((prevState) => ({
         ...prevState,
-        genes: genes,
+        genes: g,
         type: value,
       }));
     }
-
+    setBoolChartState(false);
+    setChartName(tabName);
+  
   }, []);
+
+  useEffect(() => {
+    let chartx = LoadChart(width, tabName);
+    setCharts((prevState) => ({
+      ...prevState,
+      viz: chartx,
+    }));
+  }, [state])
 
 
   useEffect(() => {
@@ -413,51 +404,7 @@ export default function DataVisualization() {
 
       />
 
-
-
       {/* List of Tabs and Chart */}
-      {/* style={{height:"60vh"}} */}
-      {/* <div className="gap-6" >
-
-            <section>
-              {
-                gridData && !tabName && <div className={containerStyles}>
-                  <div className={`${gridStyles} grid-rows-${numRows}`} style={{ gridTemplateRows }}>
-                    {gridData.map((item, index) => (
-                      <div key={index} className={cardStyles}>
-                        <div className="flex justify-between">
-                          <h6 className={titleStyles}>{item.title}</h6>
-                          <div className="pt-2 pr-2">
-                            <div className={buttonStyles}>
-                              <Link to={item.link}>Run Analysis</Link>
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <img src={item.image} alt="img" className={imageStyles} />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              }
-            </section>
-
-
-            <section>
-              <div
-                id="tab-contents"
-                className="block text-center"
-                ref={elementRef}>
-                {tabName && tabName !== 'home' && boolChartState && <div>{chart["viz"]}</div>}
-                {tabName && tabName !== 'home' && !boolChartState && (
-                  <div className="p-1 text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">Please select Genes</div>
-                )}
-              </div>
-            </section>
-
-
-        </div> */}
 
       <article id="subContents" className="subContents">
         <div className="contentsTitle">
@@ -470,19 +417,14 @@ export default function DataVisualization() {
             </font>
           </h3>
         </div>
+
         <div className="ptn">
           <div className="auto">
-
-
-
-
             {/* Filter and Gene Filter */}
             <div className="Flex">
 
               <div className="FilterGeneSet">
-                {/* {toggle && filter popover
-  
-                {/* // JSX in your component file */}
+                {/* Toggle and Filter */}
 
                 <Popover className="relative">
                   {({ open }) => {
@@ -558,10 +500,16 @@ export default function DataVisualization() {
                 </Popover>
 
               </div>
+
             </div>
+
             {
               gridData && !tabName &&
+<<<<<<< HEAD
               <div className='dataList' style={{marginTop:'5%'}}>
+=======
+              <div className='dataList' style={{ marginTop: '5%' }}>
+>>>>>>> f5ebd7029313f8efeb1f90ba2e9106920be1297a
                 <ul >
                   {gridData.map((item, index) => (
 
@@ -591,6 +539,7 @@ export default function DataVisualization() {
                 </ul>
               </div>
             }
+
           </div>
 
           <section className="auto">
