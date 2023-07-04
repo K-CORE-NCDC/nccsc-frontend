@@ -8,6 +8,11 @@ import { Route, Switch, useLocation } from "react-router-dom";
 import uuid from 'react-uuid';
 import logoNew from "../../../assets/images/Left_up.png";
 import menu_black from "../../../assets/images/right_below_add.png";
+import login_icon from "../../../styles/images/icon-login.svg";
+import icon_user04 from "../../../styles/images/icon-user04.svg";
+import icon_lang from "../../../styles/images/icon-language.svg";
+import icon_home from "../../../styles/images/icon-home02.svg";
+// /images/ncdc/icon-home02.svg
 // import logoNew from '../../../assets/images/KoreanImageNcc.png'
 import AOS from 'aos';
 import "aos/dist/aos.css";
@@ -35,22 +40,14 @@ AOS.init({
   delay: 100
 });
 
-
 let parseJwt = (islogin1) => {
   var base64Url = islogin1 && islogin1.split('.')[1];
   var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
   var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
   }).join(''));
-
   return JSON.parse(jsonPayload);
-
-
 }
-
-
-
-
 
 export const Home = (parentProps) => {
   return route.map((route, index) => {
@@ -69,14 +66,12 @@ export const Home = (parentProps) => {
 
 }
 
-
 export default function Web(props) {
   const routeLocation = useLocation();
   const timeout = 3000
   const [showPopup, setShowPopup] = useState(false)
   const handleOnActive = () => { }
   const handleOnIdle = () => { }
-
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
   const [countJson, setCountJson] = useState({})
@@ -115,10 +110,10 @@ export default function Web(props) {
   useEffect(() => {
     const cookieExpiry = getCookie('expiry');
     const targetDateTime = new Date(cookieExpiry).getTime();
-    if (cookieExpiry) {
+    if (cookieExpiry && targetDateTime) {
       // Calculates the delay in milliseconds until the target date and time
       const delay = targetDateTime - Date.now();
-      console.log('delay',delay);
+      console.log('delay', delay);
       // Start a timeout to redirect to logout URL after the delay
       const timeoutId = setTimeout(() => {
         Swal.fire({
@@ -188,13 +183,10 @@ export default function Web(props) {
   let id = useParams();
   let pid = routeLocation.pathname
 
-
-
   const [breadCrumb, setBreadCrumb] = useState([]);
   const [currentDate, setCurrentDate] = useState("");
   const [currentTime, setCurrentTime] = useState("");
   const [latandLong, setLatandLog] = useState({});
-
 
   function updateLocation() {
     if (navigator.geolocation) {
@@ -298,8 +290,6 @@ export default function Web(props) {
     // updateLocation()
   }, [latandLong])
 
-
-
   useEffect(() => {
     let date = new Date().toISOString().split('T')[0]
     if (localStorage.getItem('ncc_notice_popup') === null) {
@@ -351,22 +341,16 @@ export default function Web(props) {
     let latitude = latandLong['lat']
     let longitude = latandLong['lon']
     var today = new Date();
-
     const todays = new Date();
     const yyyy = todays.getFullYear();
     let mm = todays.getMonth() + 1; // Months start at 0!
     let dd = todays.getDate();
-
     if (dd < 10) dd = '0' + dd;
     if (mm < 10) mm = '0' + mm;
-
     const formattedToday = dd + '/' + mm + '/' + yyyy;
-
     var currentTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-
     if (idNumber in logDataIs)
       logDataIs[idNumber]['endTime'] = currentTime
-
     idNumber++;
 
     let object = {
@@ -408,7 +392,6 @@ export default function Web(props) {
       sessionStorage.setItem('logData', JSON.stringify(logDataIs))
     }
   }, [window.location.href])
-
 
   useEffect(() => {
     //   let html = [];
@@ -460,8 +443,6 @@ export default function Web(props) {
     //   setBreadCrumb(html);
   }, [props, project_id, routeLocation.pathname]);
 
-
-
   let classes = "";
   if (window.innerWidth > 1025 && window.innerHeight > 870) {
     if (activeClassIndex === 0 && mouseEnterFlag) {
@@ -480,10 +461,6 @@ export default function Web(props) {
       classes = "header";
     }
   }
-
-
-
-
 
   return (
     <div className="relative" id='fullSlide' >
@@ -544,19 +521,46 @@ export default function Web(props) {
                     ))}
                   </ul>
                 </nav>
-
               </div>
             </div>
             <div id="allMenuWrap" className="allMenuWrap" style={menuTabOpen ? { display: 'block' } : { display: 'none' }}>
+              <div class="imgBox">
+                <dl>
+                  <dt><font class="font1"></font><br /><font class="font1"><font class="font1"><FormattedMessage id="Welcome" defaultMessage='Welcome to the National Cancer Data Center .' /></font></font></dt>
+                  <dd><font class="font1"><font class="font1"><FormattedMessage id="Designated" defaultMessage='The National Cancer Center was designated as the National Cancer Data Center (NCDC) by the Ministry of Health and Welfare in September 2021 under the Cancer Control Act. ' /></font><font class="font1"><FormattedMessage id="Motive" defaultMessage='The National Cancer Data Center will carry out the business of collecting, processing, analyzing, and providing cancer data for research and development for cancer management.' /></font></font></dd>
+                </dl>
+                <div class="members">
+                  <p>
+                    <span><font class="font1"><font class="font1"><FormattedMessage id="PleaseLogIn" defaultMessage='Please log in' /></font></font></span><font class="font1"><font class="font1"> .
+                    </font></font></p>
+                </div>
+                <div class="btnsMember">
+                  <Link to='/login/'><font class="font1"><font class="font1"><FormattedMessage id="Login" defaultMessage='Login' /></font></font><img src={login_icon} alt="login_icon" /></Link>
+                  <Link to='#'><font class="font1"><font class="font1"><FormattedMessage id="Join" defaultMessage='Register' /></font></font><img src={icon_user04} alt="user" /></Link>
+                </div>
+                <div class="utils">
+                  <Link to='/login/'><font class="font1"><font class="font1"><FormattedMessage id="Login" defaultMessage='Log in' /></font></font></Link>
+                  <Link to='#'><font class="font1"><font class="font1"><FormattedMessage id="Join" defaultMessage='Register' /></font></font></Link>
+                  <div className="language">
+                    <a className="on" onClick={() => { setShowLangMenu(!showLangMenu) }}><img src={icon_lang} alt="lang" /></a>
+                    <ul style={showLangMenu ? { display: "block" } : { display: 'none' }}>
+                      <li className={((context.locale === 'kr-KO') ? ' on ' : '')}>
+                        <a onClick={() => { changeLang('kr-KO') }}>KOR</a>
+                      </li>
+                      <li className={((context.locale === 'en-US') ? ' on ' : '')}>
+                        <a onClick={() => { changeLang('en-US') }}>ENG</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <Link to='/'><img src={icon_home} alt="home" /></Link>
+                </div>
+              </div>
               <div className="allMenu">
                 <ul>
                   {childMenu?.mainmenu?.items?.map((item, i) => (
-                    <li
-
-                    ><a className="menu_li">{item?.title}</a></li>
+                    <li><a className="menu_li">{item?.title}</a></li>
                   ))}
                 </ul>
-
               </div>
               <a className="btnClose" onClick={() => {
                 setMenuTabOpen(false)
@@ -565,17 +569,12 @@ export default function Web(props) {
                 <span></span>
               </a>
             </div>
-
           </header>
         )}
       </Popover>
-
-
-
       <div className={`mainContents ${routeLocation.pathname === '/' ? '' : 'min-h-70'} `} >
         <Suspense fallback={<Loader />}>
           <Switch>
-
             <Home setActiveClassIndex={(data) => setActiveClassIndex(data)} activeClassIndex={activeClassIndex} setActiveclassPath={(data) => setActiveclassPath(data)} />
             <Route exact path="*" component={NotFound} />
           </Switch>
@@ -584,9 +583,6 @@ export default function Web(props) {
           {showPopup ? <Popup toggleModal={toggleModal} /> : ''}
         </div>
       </div>
-
-
-
     </div>
   );
 }
