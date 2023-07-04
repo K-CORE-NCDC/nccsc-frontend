@@ -6,7 +6,7 @@ const GeneSet = ({ parentCallback, filterState }) => {
     const geneValue = useRef(null);
 
     const [value, setValue] = useState(filterState['type'] ? filterState['type'] : "user-defined")
-    const [geneData, setGeneData] = useState(filterState['genes'] ? filterState['genes'] : [])
+    const [geneData, setGeneData] = useState(filterState['genes'] ? filterState['genes'].join(" ") : [])
    
 
     const selectGene = (event) => {
@@ -15,18 +15,20 @@ const GeneSet = ({ parentCallback, filterState }) => {
         g = g.sort();
         let genesString = g.join(" ");
         geneValue.current.value = genesString;
+        console.log('g geneset' , genesString)
+
         setValue(value)
-        setGeneData(genesString.split(" "))
+        setGeneData(genesString)
     };
 
     const submitGeneSet = () => {
+      let genevalue = geneData.split(' ')
         if (value === "user-defined"){
-            // let genevalue = geneData.split(' ')
-            parentCallback({ value: value, genes: geneData });
+            parentCallback({ value: value, genes: genevalue });
         } 
         else{
 
-            parentCallback({ value: value, genes: geneData });
+            parentCallback({ value: value, genes: genevalue });
         }
     }
 
