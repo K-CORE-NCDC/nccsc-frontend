@@ -505,11 +505,7 @@ export default function DataVisualization() {
 
             {
               gridData && !tabName &&
-<<<<<<< HEAD
               <div className='dataList' style={{marginTop:'5%'}}>
-=======
-              <div className='dataList' style={{ marginTop: '5%' }}>
->>>>>>> f5ebd7029313f8efeb1f90ba2e9106920be1297a
                 <ul >
                   {gridData.map((item, index) => (
 
