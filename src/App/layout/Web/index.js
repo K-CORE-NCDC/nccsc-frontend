@@ -110,7 +110,7 @@ export default function Web(props) {
   useEffect(() => {
     const cookieExpiry = getCookie('expiry');
     const targetDateTime = new Date(cookieExpiry).getTime();
-    if (cookieExpiry) {
+    if (cookieExpiry && targetDateTime) {
       // Calculates the delay in milliseconds until the target date and time
       const delay = targetDateTime - Date.now();
       console.log('delay', delay);

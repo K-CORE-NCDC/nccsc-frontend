@@ -14,7 +14,6 @@ const GeneSet = ({ parentCallback, filterState }) => {
         let g = genes[value].data;
         g = g.sort();
         let genesString = g.join(" ");
-        console.log(genesString)
         geneValue.current.value = genesString;
         setValue(value)
         setGeneData(genesString)
@@ -22,10 +21,11 @@ const GeneSet = ({ parentCallback, filterState }) => {
 
     const submitGeneSet = () => {
         if (value === "user-defined"){
-            let genevalue = geneData.split(' ')
-            parentCallback({ value: value, genes: genevalue });
+            // let genevalue = geneData.split(' ')
+            parentCallback({ value: value, genes: geneData });
         } 
         else{
+
             parentCallback({ value: value, genes: geneData });
         }
     }
