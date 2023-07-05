@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useLocation } from 'react-router-dom';
 import SurvivalCmp from "../../Common/Survival";
 import {
   SurvivalInformation,
@@ -13,10 +14,6 @@ import { useParams } from "react-router-dom";
 import LoaderCmp from "../../Common/Loader";
 import { FormattedMessage } from "react-intl";
 import inputJson from "../../Common/data";
-const selectedCss =
-  "w-1/2 rounded-r-none  hover:scale-110 focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md";
-const nonSelectedCss =
-  "w-1/2 rounded-l-none  hover:scale-110 focus:outline-none flex justify-center p-5 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 text-teal-700 border duration-200 ease-in-out border-teal-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md";
 
 export default function DataSurvival({
   width,
@@ -25,6 +22,7 @@ export default function DataSurvival({
   setToFalseAfterScreenCapture,
 }) {
   const reference = useRef();
+  const route = useLocation();
   const dispatch = useDispatch();
   const [survivalJson, setSurvivalJson] = useState({})
   const clinicalMaxMinInfo = useSelector(
@@ -41,6 +39,8 @@ export default function DataSurvival({
   const [renderSurvival, setRenderSurvival] = useState(true);
   const [renderNoContent, setRenderNoContent] = useState(false);
   const [filterTypeButton, setFilterTypeButton] = useState("clinical");
+  const [vizType, setVizType] = useState("single")
+
   let { project_id } = useParams();
   const [userDefienedFilter, setUserDefienedFilter] = useState(
     project_id === undefined ? "static" : "dynamic"
@@ -57,6 +57,14 @@ export default function DataSurvival({
 
   }, [tabList])
 
+  useEffect(() => {
+    if (route.pathname.includes('visualise-singledata')) {
+      setVizType("single")
+    }
+    else {
+      setVizType("multi")
+    }
+  }, [route.pathname])
   const [coxUserDefinedFilter, setCoxUserDefinedFilter] = useState({})
   const [survivalModel, setSurvivalModel] = useState("recurrence");
   const [pValueData, setPvalueData] = useState("");
@@ -210,13 +218,13 @@ export default function DataSurvival({
           setRenderNoContent(false)
         } else {
           setRenderNoContent(true)
-          setSurvivalJson({status : d.status})
+          setSurvivalJson({ status: d.status })
           setRenderNoContent(true)
         }
       })
-      .catch((e) => {
-        setSurvivalJson({status : 204})
-      });
+        .catch((e) => {
+          setSurvivalJson({ status: 204 })
+        });
     }
   };
 
@@ -250,7 +258,7 @@ export default function DataSurvival({
             htmlArray.push(
               <div
                 key={e}
-                className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue"
+                className="SurvivalSampleCount"
               >
                 <FormattedMessage id={e} defaultMessage={e} />{" "}
                 {`: ${sampleCountsObject[e]}`}
@@ -265,7 +273,7 @@ export default function DataSurvival({
           setSampleCountsCard([
             <div
               key="total"
-              className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue"
+              className="SurvivalSampleCount"
             >
               <FormattedMessage id="Total" defaultMessage="Total" /> :{" "}
               {totalCount}
@@ -279,7 +287,7 @@ export default function DataSurvival({
           setSampleCountsCard([
             <div
               key="total"
-              className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue"
+              className="SurvivalSampleCount"
             >
               <FormattedMessage id="Total" defaultMessage="Total" /> :{" "}
               {totalCount}
@@ -288,7 +296,7 @@ export default function DataSurvival({
         }
       }
     }
-     else if (survivalModel === "cox") {
+    else if (survivalModel === "cox") {
       let inputDataJson = {};
       if (project_id) {
         if (coxUserDefinedFilter && Object.keys(coxUserDefinedFilter).length > 0) {
@@ -322,7 +330,7 @@ export default function DataSurvival({
         for (let c = 0; c < columns.length; c++) {
           thead.push(
             <th
-              className="font-medium text-gray-900 px-6 py-4 text-left"
+              className="FontMedium TextGray900 P0625"
               key={`${c}'_'${columns[c]}`}
             >
               {columns[c]}
@@ -335,7 +343,7 @@ export default function DataSurvival({
           let col = cf[c];
           let td = [];
           td.push(
-            <td key={col} className=" text-gray-900  text-left px-5 py-6">
+            <td key={col} className="TextGray900 P0625">
               {col}
             </td>
           );
@@ -346,7 +354,7 @@ export default function DataSurvival({
             td.push(
               <td
                 key={`${col}"_"${key}"_"${v}`}
-                className=" text-gray-900 text-left px-5 py-6"
+                className="TextGray900 P0625"
               >
                 {v}
               </td>
@@ -354,7 +362,7 @@ export default function DataSurvival({
           }
 
           trow.push(
-            <tr className="border-b py-4" key={`coxtr_${c}`}>
+            <tr className="BorderBottom1 PY1" key={`coxtr_${c}`}>
               {td}
             </tr>
           );
@@ -362,26 +370,30 @@ export default function DataSurvival({
       }
 
       tmp.push(
-        <div className="flex flex-col p-12" key={"cox"}>
-          <div className="bg-white  text-left  shadow-lg" key={"co"}>
-            <h3 className="border-b border-gray-200 p-8 ">
+        <div className="Flex FlexDirCol" key={"cox"}>
+
+          {/* Coefficient Table */}
+          <div className="Backgroundwhite  TextLeft  ShadowLarge" key={"co"}>
+            <h3 className="BorderBottom1 BorderGray200 P4">
               <FormattedMessage id="Co-efficientTable" defaultMessage="Co-efficient Table" />
             </h3>
-            <table className="table w-full">
-              <thead className="border-b">
+            <table className="Table WFull">
+              <thead className="BorderBottom1">
                 <tr>{thead}</tr>
               </thead>
               <tbody>{trow}</tbody>
             </table>
           </div>
+
+          {/* Confidence Intreval Plot */}
           <div
             key={"ci"}
-            className="flex flex-col mt-20 bg-white  text-left  shadow-lg w-full"
+            className="Flex FlexDirCol MarginTop20 Backgroundwhite  TextLeft  ShadowLarge WFull"
           >
-            <h3 className="border-b border-gray-200 p-8">
+            <h3 className="BorderBottom1 BorderGray200 P8">
               <FormattedMessage id="ConfidenceIntervalPlot" defaultMessage="Confidence Interval Plot" />
             </h3>
-            <div className="w-full">
+            <div className="WFull">
               <img
                 alt="box-plot"
                 width="960"
@@ -525,20 +537,22 @@ export default function DataSurvival({
       {loader ? (
         <LoaderCmp />
       ) : (
-        <div className="grid grid-cols-6 p-5">
-          <div className="flex flex-col">
-            <div className="flex flex-row">
-              <h3 className="p-4 ml-1 text-left text-bold xs:text-xl text-blue-700">
+        <div className="Grid GridCols12 P5 GridGap20">
+          <div className="Flex FlexDirCol ColSpan3">
+
+            <div className="Flex FlexDirRow">
+              <h3 className="SurvivalChooseModel" style={{ margin: 'auto' }}>
                 <FormattedMessage id="ChooseModel" defaultMessage="Choose Model" />
               </h3>
             </div>
-            <div className="flex flex-row">
+
+            <div className="Flex FlexDirRowSurvivalFilter Gap2">
               <button
                 onClick={(e) => {
                   survivalModelFun(e, "recurrence");
                 }}
                 className={
-                  survivalModel === "recurrence" ? selectedCss : nonSelectedCss
+                  survivalModel === "recurrence" ? "SurvivalSelectedCss btn btnPrimary MAuto" : "SurvivalNonSelectedCss btn MAuto"
                 }
               >
                 Recurrence
@@ -549,57 +563,56 @@ export default function DataSurvival({
                   survivalModelFun(e, "survival");
                 }}
                 className={
-                  survivalModel === "survival" ? selectedCss : nonSelectedCss
+                  survivalModel === "survival" ? "SurvivalSelectedCss btn btnPrimary MAuto" : "SurvivalNonSelectedCss btn MAuto"
                 }
               >
                 Survival
               </button>
-              <button
-                onClick={(e) => {
-                  survivalModelFun(e, "cox");
-                }}
-                className={
-                  survivalModel === "cox" ? selectedCss : nonSelectedCss
-                }
-              >
-                Cox Regression
-              </button>
+
+              {
+                vizType && vizType === 'multi' && <button
+                  onClick={(e) => {
+                    survivalModelFun(e, "cox");
+                  }}
+                  className={
+                    survivalModel === "cox" ? "SurvivalSelectedCss btn btnPrimary MAuto" : "SurvivalNonSelectedCss btn MAuto"
+                  }
+                >
+                  Cox Regression
+                </button>
+              }
+
             </div>
 
 
 
-            {(survivalModel === "recurrence" || survivalModel === "survival" ) && (
+            {(survivalModel === "recurrence" || survivalModel === "survival") && (
               <>
                 <div
-                  className={`flex flex-col border bg-white  ${smallScreen
-                      ? " flex flex-row xs:z-10 xs:opacity-95 xs:bg-white"
-                      : "xs:hidden"
+                  className={`Flex FlexDirCol Border Backgroundwhite  ${smallScreen
+                    ? " Flex FlexDirRow SurvivalSmallScreen"
+                    : "SurvivalSmallScreenHidden"
                     }`}
                 >
                   {sampleCountsCard.length > 0 && (
-                    <div className="m-1 p-1 border border-black border-dashed">
+                    <div className="SurvivalSampleCountCard">
                       {sampleCountsCard}
                     </div>
                   )}
 
                   {project_id === undefined && (
-                    <h6 className="p-4 ml-1 text-left text-bold xs:text-xl text-blue-700">
-                      <FormattedMessage
-                        id="Choose Filter group"
-                        defaultMessage="Choose Filter group"
-                      />
-                    </h6>
+                    <h3 className="SurvivalChooseModel">
+                      <FormattedMessage id="Choose Filter group" defaultMessage="Choose Filter group" />
+                    </h3>
                   ) && (
-                      <div className="m-1 flex flex-row justify-around">
+                      <div className="M1 Flex FlexDirRow JustifyContent Gap2">
                         <button
                           onClick={() => {
                             setUserDefienedFilter("static");
                             setGroupFilters({});
                           }}
                           className={
-                            userDefienedFilter === "static"
-                              ? selectedCss
-                              : nonSelectedCss
+                            userDefienedFilter === "static" ? "SurvivalSelectedCss btn btnPrimary" : "SurvivalNonSelectedCss btn"
                           }
                         >
                           <FormattedMessage
@@ -613,9 +626,7 @@ export default function DataSurvival({
                             setGroupFilters({});
                           }}
                           className={
-                            userDefienedFilter === "dynamic"
-                              ? selectedCss
-                              : nonSelectedCss
+                            userDefienedFilter === "dynamic" ? "SurvivalSelectedCss btn btnPrimary" : "SurvivalNonSelectedCss btn"
                           }
                         >
                           <FormattedMessage
@@ -625,18 +636,16 @@ export default function DataSurvival({
                         </button>
                       </div>
                     )}
-                  <h6 className="ml-1 mt-1 p-4 text-left text-bold xs:text-xl text-blue-700">
-                    <FormattedMessage id="ChooseFilterType" defaultMessage="Choose Filter Type" />
-                  </h6>
-                  <div className="m-1 flex flex-row justify-around">
+                  {vizType && vizType === 'multi' &&
+                    <h3 className="SurvivalChooseModel"><FormattedMessage id="ChooseFilterType" defaultMessage="Choose Filter Type" /></h3>
+                  }
+                  {vizType && vizType === 'multi' && <div className="M1 Flex FlexDirRow JustifyContent Gap2">
                     <button
                       onClick={() => setFilterTypeButton("clinical")}
                       id="Mutation"
                       name="type"
                       className={
-                        filterTypeButton === "clinical"
-                          ? selectedCss
-                          : nonSelectedCss
+                        filterTypeButton === "clinical" ? "SurvivalSelectedCss btn btnPrimary" : "SurvivalNonSelectedCss btn"
                       }
                     >
                       <FormattedMessage
@@ -644,6 +653,7 @@ export default function DataSurvival({
                         defaultMessage="Clinical"
                       />
                     </button>
+
                     <button
                       onClick={() => {
                         setFilterTypeButton("omics")
@@ -652,18 +662,17 @@ export default function DataSurvival({
                       id="Phospho"
                       name="type"
                       className={
-                        filterTypeButton === "omics"
-                          ? selectedCss
-                          : nonSelectedCss
+                        filterTypeButton === "omics" ? "SurvivalSelectedCss btn btnPrimary" : "SurvivalNonSelectedCss btn"
                       }
                     >
                       <FormattedMessage id="Omics" defaultMessage="Omics" />
                     </button>
-                  </div>
+                  </div>}
+
                   {filterTypeButton === "omics" && (
-                    <div className="m-1 p-1">
+                    <div className="M1 P1">
                       <h6
-                        className="text-blue-700 text-lg  font-bold mb-2 text-left"
+                        className="SurvivalSelectDatabase MB2 TextLeft"
                         htmlFor="dropdown-gene"
                       >
                         <FormattedMessage
@@ -675,7 +684,7 @@ export default function DataSurvival({
                         id="dropdown-gene"
                         onChange={(e) => setFilteredGene(e.target.value)}
                         defaultValue={fileredGene}
-                        className="w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3"
+                        className="SurvivalSelectDatabase"
                       >
                         <option defaultValue={fileredGene === ""} value=""></option>
                         {genesArray.map((gene, index) => (
@@ -693,9 +702,9 @@ export default function DataSurvival({
 
 
                   {filterTypeButton === "omics" && (
-                    <div className="m-1 p-1">
+                    <div className="M1 P1">
                       <h6
-                        className="text-blue-700 text-lg  font-bold mb-1 text-left"
+                        className="SurvivalSelectDatabase MB1 TextLeft"
                         htmlFor="dropdown-database"
                       >
                         Select Database
@@ -704,7 +713,7 @@ export default function DataSurvival({
                         id="dropdown-database"
                         onChange={(e) => setGeneDatabase(e.target.value)}
                         defaultValue={geneDatabase}
-                        className="w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3"
+                        className="SurvivalSelectDatabase"
                       >
 
                         {project_id !== undefined && alltabList['dna_mutation'] && <option
@@ -759,9 +768,10 @@ export default function DataSurvival({
                         type="survival"
                         parentCallback={updateGroupFilters}
                         groupFilters={groupFilters}
-                        survivalModel = {survivalModel}
+                        survivalModel={survivalModel}
                       />
                     )}
+
                   {filterTypeButton === "clinical" &&
                     userDefienedFilter === "dynamic" &&
                     project_id === undefined && (
@@ -769,24 +779,27 @@ export default function DataSurvival({
                         viz_type="survival"
                         parentCallback={updateGroupFilters}
                         groupFilters={groupFilters}
-                        survivalModel = {survivalModel}
+                        survivalModel={survivalModel}
                       />
                     )}
+
                   {filterTypeButton === "clinical" &&
                     project_id !== undefined && (
                       <UserDefinedGroupFilters
                         viz_type="survival"
                         parentCallback={updateGroupFilters}
                         groupFilters={groupFilters}
-                        survivalModel = {survivalModel}
+                        survivalModel={survivalModel}
+                        vizType={vizType}
                       />
                     )}
+
                   {filterTypeButton === "omics" && (
                     <div>
                       <div>
                         <button
                           onClick={submitFitersAndFetchData}
-                          className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
+                          className="SubmitButtonFilter"
                         >
                           <FormattedMessage
                             id="Submit_volcano"
@@ -795,7 +808,7 @@ export default function DataSurvival({
                         </button>
                       </div>
                       <div>
-                        <button className="bg-white hover:bg-gray-700 mb-3 lg:w-80 sm:w-42 lg:h-20 sm:h-14 xs:text-sm text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md">
+                        <button className="ResetButtonFilter">
                           <FormattedMessage
                             id="Reset_volcano"
                             defaultMessage="Reset"
@@ -808,38 +821,39 @@ export default function DataSurvival({
               </>
             )}
 
+
+
+
+
+
             {survivalModel === "cox" && (
               <>
                 <div
-                  className={`flex flex-col border bg-white  ${smallScreen
-                      ? " flex flex-row xs:z-10 xs:opacity-95 xs:bg-white"
-                      : "xs:hidden"
+                  className={`Flex FlexDirCol border Backgroundwhite  ${smallScreen
+                    ? " Flex FlexDirRow SurvivalSmallScreen"
+                    : "SurvivalSmallScreenHidden"
                     }`}
                 >
-                  <h6 className="p-4 ml-1 text-left text-bold xs:text-xl text-blue-700">
-                    <FormattedMessage
-                      id="Choose Filter group"
-                      defaultMessage="Choose Filter group"
-                    />
-                  </h6>
-                  <div className="m-1 flex flex-row justify-around w-max">
-                    <div className="flex justify-center">
+                  <h3 className="SurvivalChooseModel">
+                    <FormattedMessage id="Choose Filter group" defaultMessage="Choose Filter group" />
+                  </h3>
+
+
+                  <div className="M1 Flex FlexDirRow JustifyContent WMax">
+                    <div className="Flex JustifyCenter">
                       <div>
                         {tmp.map((element, index) => (
                           <div
-                            className="form-check flex mb-4"
+                            className="form-check Flex MB4"
                             key={"cox" + index}
                           >
                             <label
-                              className="form-check-label inline text-left text-gray-800"
+                              className="form-check-label TextLeft Inline TextGray800"
                               htmlFor={"flexCheckChecked_" + index}
                             >
                               <input
                                 onChange={(e) => selectCoxFiler(e)}
-                                className="form-check-input 
-                                h-6 w-6 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 
-                                checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat 
-                                bg-center bg-contain float-left mr-2 cursor-pointer"
+                                className="form-check-input SurvivalInput Backgroundwhite"
                                 type="checkbox"
                                 name={element}
                                 id={"flexCheckChecked_" + index}
@@ -850,24 +864,19 @@ export default function DataSurvival({
                             </label>
                           </div>
                         ))}
-                        <div className="flex flex-row gap-5">
+                        <div className="Flex FlexDirRow Gap5">
                           <button
                             onClick={(e) => selectAllCox(e, "select")}
                             className={
-                              survivalModel === "cox"
-                                ? selectedCss
-                                : nonSelectedCss
+                              survivalModel === "cox" ? "SurvivalSelectedCss btn btnPrimary" : "SurvivalNonSelectedCss btn"
                             }
                           >
                             <FormattedMessage id="SelectAll" defaultMessage="Select All" />
                           </button>
                           <button
                             onClick={(e) => selectAllCox(e, "reset")}
-                            className={
-                              survivalModel === "cox"
-                                ? selectedCss
-                                : nonSelectedCss
-                            }
+                            className="SurvivalSelectedCss btn"
+                            style={{ color: 'black' }}
                           >
                             <FormattedMessage
                               id="Reset_volcano"
@@ -875,10 +884,10 @@ export default function DataSurvival({
                             />
                           </button>
                         </div>
-                        <div className="flex flex-row gap-5 py-2">
+                        <div className="Flex FlexDirRow Gap5 PY2">
                           <button
                             onClick={(e) => submitCox(e, "cox")}
-                            className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
+                            className="SubmitButtonFilter"
                           >
                             <FormattedMessage
                               id="Submit_volcano"
@@ -894,8 +903,8 @@ export default function DataSurvival({
             )}
           </div>
 
-          <div className="col-span-5">
-            {renderSurvival && (survivalModel === "recurrence" || survivalModel === "survival")  && (
+          <div className="ColSpan8">
+            {renderSurvival && (survivalModel === "recurrence" || survivalModel === "survival") && (
               <SurvivalCmp
                 watermarkCss={watermarkCss}
                 ref={reference}
@@ -914,10 +923,10 @@ export default function DataSurvival({
             )}
             {renderNoContent && <NoContentMessage />}
             {
-              (inputData.genes.length === 0 ) &&  <p><FormattedMessage id="PleaseSelecttheGeneSetData" defaultMessage="Please Select the Gene Set Data" /></p>
+              (inputData.genes.length === 0) && <p><FormattedMessage id="PleaseSelecttheGeneSetData" defaultMessage="Please Select the Gene Set Data" /></p>
             }
             {
-             ( coxNoData && survivalModel === "cox"  || (reqstMsg && inputData.genes.length > 0)) && <p><FormattedMessage id="PleaseSelectFilterData" defaultMessage="Please Select Filter Data" /> </p>
+              (coxNoData && survivalModel === "cox" || (reqstMsg && inputData.genes.length > 0)) && <p><FormattedMessage id="PleaseSelectFilterData" defaultMessage="Please Select Filter Data" /> </p>
             }
           </div>
         </div>

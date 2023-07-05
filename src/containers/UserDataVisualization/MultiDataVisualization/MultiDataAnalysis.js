@@ -427,7 +427,7 @@ export default function DataVisualization() {
               <div className="FilterGeneSet">
                 {/* Toggle and Filter */}
 
-                <Popover className="relative">
+               { toggle && <Popover className="relative">
                   {({ open }) => {
                     return (
                       <>
@@ -467,6 +467,7 @@ export default function DataVisualization() {
                     );
                   }}
                 </Popover>
+                }
 
                 <Popover className="relative" style={{ margin: 'auto' }}>
                   {({ open }) => {

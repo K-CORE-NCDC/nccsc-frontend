@@ -4,11 +4,6 @@ import { useSelector } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import { useParams } from "react-router-dom";
 import { Context } from "../../wrapper";
-const LabelCss = "block text-left text-blue-700-700 text-lg  font-bold mb-2";
-const checkBoxCss =
-  "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline";
-const numberInputBoxCss =
-  "shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline";
 
 let abc = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"];
 
@@ -215,6 +210,8 @@ let preDefienedGroups = {
   ],
 
 };
+
+
 export const PreDefienedFilters = ({
   volcanoType,
   parentCallback,
@@ -342,12 +339,12 @@ export const PreDefienedFilters = ({
         filterGroupsHtmlTemp.push(
           <div key="bool">
             <div className="flex flex-row justify-around">
-              <h5 className="p-4 xs:text-xl">Group 1 : </h5>
-              <h5 className="p-4 text-bold xs:text-xl text-blue-700">Yes</h5>
+              <h5 className="P4 xs:text-xl">Group 1 : </h5>
+              <h5 className="P4 text-bold xs:text-xl text-blue-700">Yes</h5>
             </div>
             <div className="flex flex-row justify-around">
-              <h5 className="p-4 xs:text-xl">Group 2 : </h5>
-              <h5 className="p-4 text-bold xs:text-xl text-blue-700">No</h5>
+              <h5 className="P4 xs:text-xl">Group 2 : </h5>
+              <h5 className="P4 text-bold xs:text-xl text-blue-700">No</h5>
             </div>
           </div>
         );
@@ -357,12 +354,12 @@ export const PreDefienedFilters = ({
         filterGroupsHtmlTemp.push(
           <div key="bool">
             <div className="flex flex-row justify-around">
-              <h5 className="p-4 xs:text-xl">Group 1 : </h5>
-              <h5 className="p-4 text-bold xs:text-xl text-blue-700">Male</h5>
+              <h5 className="P4 xs:text-xl">Group 1 : </h5>
+              <h5 className="P4 text-bold xs:text-xl text-blue-700">Male</h5>
             </div>
             <div className="flex flex-row justify-around">
-              <h5 className="p-4 xs:text-xl">Group 2 : </h5>
-              <h5 className="p-4 text-bold xs:text-xl text-blue-700">Female</h5>
+              <h5 className="P4 xs:text-xl">Group 2 : </h5>
+              <h5 className="P4 text-bold xs:text-xl text-blue-700">Female</h5>
             </div>
           </div>
         );
@@ -372,14 +369,14 @@ export const PreDefienedFilters = ({
         filterGroupsHtmlTemp.push(
           <div key="bool">
             <div className="flex flex-row justify-around">
-              <h5 className="p-4 xs:text-xl">Group 1 : </h5>
-              <h5 className="p-4 text-bold xs:text-xl text-blue-700">
+              <h5 className="P4 xs:text-xl">Group 1 : </h5>
+              <h5 className="P4 text-bold xs:text-xl text-blue-700">
                 {preDefienedGroups1[colName][0]["label"]}
               </h5>
             </div>
             <div className="flex flex-row justify-around">
-              <h5 className="p-4 xs:text-xl">Group 2 : </h5>
-              <h5 className="p-4 text-bold xs:text-xl text-blue-700">
+              <h5 className="P4 xs:text-xl">Group 2 : </h5>
+              <h5 className="P4 text-bold xs:text-xl text-blue-700">
                 {preDefienedGroups1[colName][1]["label"]}
               </h5>
             </div>
@@ -390,14 +387,14 @@ export const PreDefienedFilters = ({
         filterGroupsHtmlTemp.push(
           <div key="bool">
             <div className="flex flex-row justify-around">
-              <h5 className="p-4 xs:text-xl">Group 1 : </h5>
-              <h5 className="p-4 text-bold xs:text-xl text-blue-700">
+              <h5 className="P4 xs:text-xl">Group 1 : </h5>
+              <h5 className="P4 text-bold xs:text-xl text-blue-700">
                 {preDefienedGroups1[colName][0]["label"]}
               </h5>
             </div>
             <div className="flex flex-row justify-around">
-              <h5 className="p-4 xs:text-xl">Group 2 : </h5>
-              <h5 className="p-4 text-bold xs:text-xl text-blue-700">
+              <h5 className="P4 xs:text-xl">Group 2 : </h5>
+              <h5 className="P4 text-bold xs:text-xl text-blue-700">
                 {preDefienedGroups1[colName][1]["label"]}
               </h5>
             </div>
@@ -438,12 +435,12 @@ export const PreDefienedFilters = ({
         filterGroupsHtmlTemp.push(
           <div key="bool">
             <div className="flex flex-row">
-              <h5 className="p-4 xs:text-xl">Group 1 : </h5>
-              <h5 className="p-4 text-bold xs:text-xl text-blue-700">Yes</h5>
+              <h5 className="P4 xs:text-xl">Group 1 : </h5>
+              <h5 className="P4 text-bold xs:text-xl text-blue-700">Yes</h5>
             </div>
             <div className="flex flex-row">
-              <h5 className="p-4 xs:text-xl">Group 2 : </h5>
-              <h5 className="p-4 text-bold xs:text-xl text-blue-700">No</h5>
+              <h5 className="P4 xs:text-xl">Group 2 : </h5>
+              <h5 className="P4 text-bold xs:text-xl text-blue-700">No</h5>
             </div>
           </div>
         );
@@ -458,13 +455,13 @@ export const PreDefienedFilters = ({
         });
         filterGroupsHtmlTemp.push(
           <div key="gender">
-            <div className="flex border mb-1 flex-row justify-around">
-              <h5 className="p-4 xs:text-xl">Group 1 : </h5>
-              <h5 className="p-4 text-bold xs:text-xl text-blue-700">Male</h5>
+            <div className="flex Border mb-1 flex-row justify-around">
+              <h5 className="P4 xs:text-xl">Group 1 : </h5>
+              <h5 className="P4 text-bold xs:text-xl text-blue-700">Male</h5>
             </div>
-            <div className="flex border mb-1 flex-row justify-around">
-              <h5 className="p-4 xs:text-xl">Group 2 : </h5>
-              <h5 className="p-4 text-bold xs:text-xl text-blue-700">Female</h5>
+            <div className="flex Border mb-1 flex-row justify-around">
+              <h5 className="P4 xs:text-xl">Group 2 : </h5>
+              <h5 className="P4 text-bold xs:text-xl text-blue-700">Female</h5>
             </div>
           </div>
         );
@@ -485,8 +482,8 @@ export const PreDefienedFilters = ({
           filterGroupsHtmlTemp.push(
             <div key={"drop-user-" + index}>
               <div className="flex flex-row justify-around">
-                <h5 className="p-4 xs:text-xl">Group {indx}: </h5>
-                <h5 className="p-4 text-bold xs:text-xl text-blue-700">
+                <h5 className="P4 xs:text-xl">Group {indx}: </h5>
+                <h5 className="P4 text-bold xs:text-xl text-blue-700">
                   {element.label}
                 </h5>
               </div>
@@ -503,9 +500,9 @@ export const PreDefienedFilters = ({
     }
   }, [selectedFilterType]);
   return (
-    <div className="m-1 bg-gray-100">
-      <div className="p-1 py-3 px-2 col-span-2">
-        <div className="block text-left text-blue-700-700 text-lg  font-bold mb-2">
+    <div className="M1 BGGray100">
+      <div className="P1 PY3 PX2 ColSpan2">
+        <div className="Block  TextBlue700 TextLG  FontBold MB2">
           <FormattedMessage
             id="Clinical Filters"
             defaultMessage="Clinical Attribute"
@@ -515,13 +512,13 @@ export const PreDefienedFilters = ({
           <select
             onChange={filterTypeDropdownSelection}
             defaultValue=""
-            className="w-full lg:p-4 xs:p-2 border xs:text-sm lg:text-lg focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3"
+            className="WFull lg:P4 xs:p-2 Border xs:text-sm lg:TextLG focus:outline-none Border-b-color focus:ring focus:Border-b-color active:Border-b-color mt-3"
           >
             <option value=""></option>
 
             {koreanlanguage ? filterChoicesCustomKorean.map((type, index) => (
               <option
-                className="lg:text-lg xs:text-sm"
+                className="FilterOptionText"
                 key={type.name}
                 value={index}
               >
@@ -529,7 +526,7 @@ export const PreDefienedFilters = ({
               </option>
             )) : filterChoicesCustom.map((type, index) => (
               <option
-                className="lg:text-lg xs:text-sm"
+                className="FilterOptionText"
                 key={type.name}
                 value={index}
               >
@@ -539,7 +536,7 @@ export const PreDefienedFilters = ({
           </select>
         )}
         {resetClicked === false && isGroupFilterProp === true && (
-          <h6 className="border p-4">
+          <h6 className="Border P4">
             {filterChoicesCustom.forEach((e) => {
               if (groupFilters.column === e.id) {
                 return e.name;
@@ -548,11 +545,11 @@ export const PreDefienedFilters = ({
           </h6>
         )}
       </div>
-      <div className="p-1 py-3 px-2 col-span-2">{filterGroupsHtml}</div>
+      <div className="P1 PY3 PX2 ColSpan2">{filterGroupsHtml}</div>
       <div>
         <button
           onClick={submitFilters}
-          className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
+          className="SubmitButtonFilter"
         >
           <FormattedMessage id="Submit_volcano" defaultMessage="Submit" />
         </button>
@@ -560,7 +557,7 @@ export const PreDefienedFilters = ({
       <div>
         <button
           onClick={resetFilters}
-          className="bg-white hover:bg-gray-700 mb-3 lg:w-80 sm:w-42 lg:h-20 sm:h-14 xs:text-sm text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
+          className="ResetButtonFilter"
         >
           <FormattedMessage id="Reset_volcano" defaultMessage="Reset" />
         </button>
@@ -568,6 +565,395 @@ export const PreDefienedFilters = ({
     </div>
   );
 };
+
+
+export const PreDefienedFiltersSurvival = ({
+  parentCallback,
+  groupFilters,
+  from,
+  survivalModel
+}) => {
+
+  const [selectedFilterType, setSelectedFilterType] = useState({});
+  const [filterGroupsHtml, setFilterGroupsHtml] = useState([]);
+  const [filters, setFilters] = useState({});
+  const [resetClicked, setResetClicked] = useState(false);
+  const [isGroupFilterProp, setIsGroupFilterProp] = useState(false);
+
+  const context = useContext(Context);
+  const [koreanlanguage, setKoreanlanguage] = useState(false);
+  const [Englishlanguage, setEnglishlanguage] = useState(true);
+
+  useEffect(() => {
+    if (context["locale"] === "kr-KO") {
+      setKoreanlanguage(true);
+      setEnglishlanguage(false);
+    } else {
+      setKoreanlanguage(false);
+      setEnglishlanguage(true);
+    }
+  });
+
+  useEffect(()=>{
+    resetFilters()
+  },[survivalModel])
+
+  let preDefienedGroups1 = {
+    diag_age: [
+      { label: "21-25", from: 21, to: 25 },
+      { label: "26-30", from: 26, to: 30 },
+      { label: "31-35", from: 31, to: 35 },
+      { label: "36-40", from: 36, to: 40 },
+    ],
+    bmi_vl: [
+      { label: "<18.5", from: 0, to: 18.5 },
+      { label: "18.6-24.9", from: 18.6, to: 25 },
+      { label: "25.0-29.9", from: 25.1, to: 30 },
+      { label: "30.0≤", from: 30.1, to: 100 },
+    ],
+    mena_age: [
+      { label: "10-13", from: 10, to: 13 },
+      { label: "14-17", from: 14, to: 17 },
+    ],
+    feed_drtn_mnth: [
+      { label: "< 1year", from: 1, to: 11 },
+      { label: "1year ≤", from: 12, to: 24 },
+    ],
+    t_category: [
+      { label: "Tis", from: "Tis", to: "Tis" },
+      { label: "T1", from: "T1", to: "T1" },
+      { label: "T2", from: "T2", to: "T2" },
+      { label: "T3", from: "T3", to: "T3" },
+      { label: "T4", from: "T4", to: "T4" },
+    ],
+    n_category: [
+      { label: "Nx", from: "Nx", to: "Nx" },
+      { label: "N0", from: "N0", to: "N0" },
+      { label: "N1", from: "N1", to: "N1" },
+      { label: "N2", from: "N2", to: "N2" },
+      { label: "N3", from: "N3", to: "N3" },
+    ],
+    her2_score: [
+      {
+        from: "negative (0-1+)",
+        to: "negative (0-1+)",
+        label: "negative (0-1+)",
+        value: "negative (0-1+)",
+      },
+      {
+        from: "equivocal (2+)",
+        to: "equivocal (2+)",
+        label: "equivocal (2+)",
+        value: "equivocal (2+)",
+      },
+      {
+        from: "positive (3+)",
+        to: "positive (3+)",
+        label: "positive (3+)",
+        value: "positive (3+)",
+      },
+    ],
+    pr_score: [
+      { label: "Positive", from: 1, to: 1 },
+      { label: "Negative", from: 2, to: 2 },
+    ],
+    er_score: [
+      { label: "Positive", from: 1, to: 1 },
+      { label: "Negative", from: 2, to: 2 },
+    ],
+    ki67_score: [
+      { label: "low(≤15%)", value: "low(≤15%)", from: "low", to: "low(≤15%)" },
+      {
+        label: "intermediate(<15-30%≤)",
+        value: "intermediate(<15-30%≤)",
+        from: "intermediate",
+        to: "intermediate(<15-30%≤)",
+      },
+      {
+        label: "high(30%<)",
+        value: "high(30%<)",
+        from: "high",
+        to: "high 30%<",
+      },
+    ],
+    smok_yn: [
+      { label: "No Smoking", value: "no" },
+      { label: "Past Smoking", value: "past" },
+      { label: "Current Smoking", value: "current" },
+    ],
+  };
+
+  const submitFilters = () => {
+    if (Object.keys(filters).length > 0) {
+      parentCallback(filters);
+    } else {
+      parentCallback(groupFilters);
+    }
+  };
+
+  const resetFilters = () => {
+    setSelectedFilterType({});
+    setFilterGroupsHtml([]);
+    setFilters({});
+    setResetClicked(true);
+    setIsGroupFilterProp(false);
+  };
+
+  useEffect(() => {
+    if (groupFilters && groupFilters.type) {
+      if (resetClicked === false) {
+        setIsGroupFilterProp(true);
+      }
+      let filterGroupsHtmlTemp = [];
+      if (groupFilters.type === "boolean") {
+        filterGroupsHtmlTemp.push(
+          <div key="bool">
+            <div className="flex flex-row">
+              <h5 className="xs:text-xl">Group 1 : </h5>
+              <h5 className="text-bold xs:text-xl text-blue-700">Yes</h5>
+            </div>
+            <div className="flex flex-row">
+              <h5 className="xs:text-xl">Group 2 : </h5>
+              <h5 className="text-bold xs:text-xl text-blue-700">No</h5>
+            </div>
+          </div>
+        );
+      }
+
+      if (groupFilters.type === "static") {
+        filterGroupsHtmlTemp.push(
+          <div key="bool">
+            <div className="flex flex-row">
+              <h5 className="xs:text-xl">Group 1 : </h5>
+              <h5 className="text-bold xs:text-xl text-blue-700">Male</h5>
+            </div>
+            <div className="flex flex-row">
+              <h5 className="xs:text-xl">Group 2 : </h5>
+              <h5 className="text-bold xs:text-xl text-blue-700">Female</h5>
+            </div>
+          </div>
+        );
+      }
+      if (groupFilters.type === "number" || groupFilters.type === "text") {
+        filterGroupsHtmlTemp.push(
+          <div key="drop-user">
+            {preDefienedGroups1[groupFilters.column].map((element, index) => (
+              <div className="TextLG" key={`${element.label}-${index}-grp-a`}>
+                <div className="flex flex-row justify-around">
+                  <h5 className="P4 xs:text-xl">
+                    Group {index + 1} : {element.label}
+                  </h5>
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+      }
+      setFilterGroupsHtml(filterGroupsHtmlTemp);
+    }
+  }, [groupFilters]);
+
+  const filterTypeDropdownSelection = (event) => {
+    let key = event.target.value;
+    setSelectedFilterType({
+      details: koreanlanguage ? filterChoicesCustomKorean[parseInt(key)] : filterChoicesCustom[parseInt(key)],
+      index: key,
+    });
+  };
+
+
+  useEffect(() => {
+    let filterGroupsHtmlTemp = [];
+    if (selectedFilterType && selectedFilterType.details) {
+      if (selectedFilterType.details.type === "boolean") {
+        setFilters({
+          group_a: true,
+          group_b: false,
+          column: selectedFilterType.details.id,
+          type: "boolean",
+        });
+        filterGroupsHtmlTemp.push(
+          <div key="bool">
+            <div className="flex flex-row">
+              <h5 className="P4 xs:text-xl">Group 1 : </h5>
+              <h5 className="P4 text-bold xs:text-xl text-blue-700">Yes</h5>
+            </div>
+            <div className="flex flex-row">
+              <h5 className="P4 xs:text-xl">Group 2 : </h5>
+              <h5 className="P4 text-bold xs:text-xl text-blue-700">No</h5>
+            </div>
+          </div>
+        );
+      }
+
+      if (selectedFilterType.details.type === "static") {
+        setFilters({
+          group_a: "F",
+          group_b: "M",
+          column: selectedFilterType.details.id,
+          type: "static",
+        });
+        filterGroupsHtmlTemp.push(
+          <div key="gender">
+            <div className="flex Border mb-1 flex-row justify-around">
+              <h5 className="P4 xs:text-xl">Group 1 : </h5>
+              <h5 className="P4 text-bold xs:text-xl text-blue-700">Male</h5>
+            </div>
+            <div className="flex Border mb-1 flex-row justify-around">
+              <h5 className="P4 xs:text-xl">Group 2 : </h5>
+              <h5 className="P4 text-bold xs:text-xl text-blue-700">Female</h5>
+            </div>
+          </div>
+        );
+      }
+
+      if (
+        selectedFilterType.details.type === "number" ||
+        selectedFilterType.details.type === "text"
+      ) {
+        const colName = selectedFilterType.details.id;
+        let filtersTemp = {
+          type: selectedFilterType.details.type,
+          column: colName,
+        };
+        preDefienedGroups1[colName].forEach((e, index) => {
+          filtersTemp = {
+            ...filtersTemp,
+            [`${index + 1}_from`]: e.from,
+            [`${index + 1}_to`]: e.to,
+          };
+        });
+        setFilters(filtersTemp);
+        filterGroupsHtmlTemp.push(
+          <div key="drop-user">
+            {preDefienedGroups1[colName].map((element, index) => (
+              <div className="TextLG" key={`${element.label}-${index}-grp-a`}>
+                <div className="flex flex-row justify-around">
+                  <h5 className="P4 xs:text-xl">
+                    Group {index + 1} : {element.label}
+                  </h5>
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+      }
+
+      setFilterGroupsHtml(filterGroupsHtmlTemp);
+    }
+  }, [selectedFilterType]);
+
+  return (
+    <div className="M1 BGGray100">
+      <div className="P1 PY3 PX2 ColSpan2">
+        <div className="Block  TextBlue700 TextLG  FontBold MB2">
+          <FormattedMessage
+            id="Clinical Filters"
+            defaultMessage="Clinical Attribute"
+          />
+        </div>
+        {(resetClicked === true || isGroupFilterProp === false) && (
+          <select
+            onChange={filterTypeDropdownSelection}
+            defaultValue={""}
+            className="WFull lg:P4 xs:p-2 Border lg:text-xl xs:text-sm focus:outline-none Border-b-color focus:ring focus:Border-b-color active:Border-b-color mt-3"
+          >
+            <option value=""></option>
+
+            {Englishlanguage && filterChoicesCustom.map((type, index) => (
+              <option className="TextLG" key={type.name} value={index}>
+                {type.name}
+              </option>
+            ))}
+            {koreanlanguage && filterChoicesCustomKorean.map((type, index) => (
+              <option className="TextLG" key={type.name} value={index}>
+                {type.name}
+              </option>
+            ))}
+          </select>
+        )}
+        {resetClicked === false && isGroupFilterProp === true && (
+          <h6 className="Border P4">
+            {Englishlanguage && filterChoicesCustom.forEach((e) => {
+              if (groupFilters.column === e.id) {
+                return e.name;
+              }
+            })}
+            {koreanlanguage && filterChoicesCustomKorean.forEach((e) => {
+              if (groupFilters.column === e.id) {
+                return e.name;
+              }
+            })}
+          </h6>
+        )}
+      </div>
+      <div className="P1 PY3 PX2 ColSpan2">{filterGroupsHtml}</div>
+      <div>
+        <button
+          onClick={() => submitFilters()}
+          className="SubmitButtonFilter"
+        >
+          <FormattedMessage
+            id="Submit_volcano"
+            defaultMessage="Submit"
+          />
+        </button>
+      </div>
+      <div>
+        <button
+          onClick={() => resetFilters()}
+          className="ResetButtonFilter"
+        >
+          <FormattedMessage id="Reset_volcano" defaultMessage="Reset" />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 const GroupFilters = ({
@@ -721,6 +1107,7 @@ const GroupFilters = ({
       ];
 
     }
+
     if (koreanlanguage) {
       preDefienedGroups1["smok_yn"] = [
         { label: "비흡연자", value: "smok_yn||N" },
@@ -820,8 +1207,8 @@ const GroupFilters = ({
           if (min_1_from[obj]) {
             if (
               (min_1_from[obj].classList &&
-                (min_1_from[obj].classList.contains("border-2") ||
-                  min_1_from[obj].classList.contains("border-red-400"))) ||
+                (min_1_from[obj].classList.contains("Border2") ||
+                  min_1_from[obj].classList.contains("BorderRed400"))) ||
               min_1_from[obj].value === ""
             ) {
               send_response = false;
@@ -836,8 +1223,8 @@ const GroupFilters = ({
           if (max_1_to[obj]) {
             if (
               (max_1_to[obj].classList &&
-                (max_1_to[obj].classList.contains("border-2") ||
-                  max_1_to[obj].classList.contains("border-red-400"))) ||
+                (max_1_to[obj].classList.contains("Border2") ||
+                  max_1_to[obj].classList.contains("BorderRed400"))) ||
               max_1_to[obj].value === ""
             ) {
               send_response = false;
@@ -852,8 +1239,8 @@ const GroupFilters = ({
           if (min_2_from[obj]) {
             if (
               (min_2_from[obj].classList &&
-                (min_2_from[obj].classList.contains("border-2") ||
-                  min_2_from[obj].classList.contains("border-red-400"))) ||
+                (min_2_from[obj].classList.contains("Border2") ||
+                  min_2_from[obj].classList.contains("BorderRed400"))) ||
               min_2_from[obj].value === ""
             ) {
               send_response = false;
@@ -868,8 +1255,8 @@ const GroupFilters = ({
           if (max_2_to[obj]) {
             if (
               (max_2_to[obj].classList &&
-                (max_2_to[obj].classList.contains("border-2") ||
-                  max_2_to[obj].classList.contains("border-red-400"))) ||
+                (max_2_to[obj].classList.contains("Border2") ||
+                  max_2_to[obj].classList.contains("BorderRed400"))) ||
               max_2_to[obj].value === ""
             ) {
               send_response = false;
@@ -952,24 +1339,24 @@ const GroupFilters = ({
         one_from < one_min_value ||
         one_from > one_to
       ) {
-        one_from_0.classList.add("border-2");
-        one_from_0.classList.add("border-red-400");
-        one_to_0.classList.add("border-2");
-        one_to_0.classList.add("border-red-400");
+        one_from_0.classList.add("Border2");
+        one_from_0.classList.add("BorderRed400");
+        one_to_0.classList.add("Border2");
+        one_to_0.classList.add("BorderRed400");
       } else if (
         one_to > one_max_value ||
         one_to < one_min_value ||
         one_to < one_from
       ) {
-        one_from_0.classList.add("border-2");
-        one_from_0.classList.add("border-red-400");
-        one_to_0.classList.add("border-2");
-        one_to_0.classList.add("border-red-400");
+        one_from_0.classList.add("Border2");
+        one_from_0.classList.add("BorderRed400");
+        one_to_0.classList.add("Border2");
+        one_to_0.classList.add("BorderRed400");
       } else {
-        one_from_0.classList.remove("border-2");
-        one_from_0.classList.remove("border-red-400");
-        one_to_0.classList.remove("border-2");
-        one_to_0.classList.remove("border-red-400");
+        one_from_0.classList.remove("Border2");
+        one_from_0.classList.remove("BorderRed400");
+        one_to_0.classList.remove("Border2");
+        one_to_0.classList.remove("BorderRed400");
         // let is_valid = validate_fusion()
         setUserGivenInputValues((prevState) => ({
           ...prevState,
@@ -1007,16 +1394,16 @@ const GroupFilters = ({
         if (i in groupFilters || `${i}` in groupFilters) {
           counter += 1;
           valsArray.push(
-            <div key={`${i}-text-${Math.random()}`} className="mb-4">
+            <div key={`${i}-text-${Math.random()}`} className="MarginBottom4">
               <div>
-                <div className={LabelCss} htmlFor="username">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                   {`Group ${i}`}
                 </div>
                 <div>
                   <input
                     value={groupFilters[i]}
                     onChange={onChangeFilterInput}
-                    className={checkBoxCss}
+                    className="CheckBoxCss"
                     name={`${i}`}
                     type="text"
                     placeholder="Enter Text"
@@ -1028,16 +1415,16 @@ const GroupFilters = ({
         } else if (`${i}_from` in groupFilters) {
           counter += 1;
           valsArray.push(
-            <div key={`number-${i}${Math.random()}`} className="mb-4">
+            <div key={`number-${i}${Math.random()}`} className="MarginBottom4">
               <div>
-                <div className={LabelCss} htmlFor="username">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                   {`Group ${i}`}
                 </div>
                 <div>
                   <input
                     defaultValue={groupFilters[`${i}_from`]}
                     onChange={onChangeFilterInput}
-                    className={numberInputBoxCss}
+                    className="NumberInputCss"
                     name={`${i}_from`}
                     type="number"
                     placeholder="from"
@@ -1045,7 +1432,7 @@ const GroupFilters = ({
                   <input
                     defaultValue={groupFilters[`${i}_to`]}
                     onChange={onChangeFilterInput}
-                    className={numberInputBoxCss}
+                    className="NumberInputCss"
                     name={`${i}_to`}
                     type="number"
                     placeholder="to"
@@ -1079,13 +1466,13 @@ const GroupFilters = ({
     switch (compCase) {
       case "static":
         return (
-          <div key={compCase} className="mb-4">
+          <div key={compCase} className="MarginBottom4">
             {["A Group", "B Group"].map((e, index) => (
-              <div key={index} className="border mt-4 p-1">
-                <div key={e} className={LabelCss} htmlFor="yes">
+              <div key={index} className="Border MarginTop4 P1">
+                <div key={e} className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="yes">
                   {e}
                 </div>
-                <h1 id="yes" className="text-left mt-2">
+                <h1 id="yes" className=" MarginTop2">
                   {groupLabels[index]}
                 </h1>
               </div>
@@ -1097,15 +1484,15 @@ const GroupFilters = ({
         if (viz_type === "volcono") {
           return (
             <div key={`${compCase}-${Math.random()}`}>
-              <div key={`${compCase}-1${Math.random()}`} className="mb-4">
+              <div key={`${compCase}-1${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className={LabelCss} htmlFor="username">
+                  <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                     Group 1
                   </div>
                   <div>
                     <input
                       onChange={onChangeFilterInput}
-                      className={numberInputBoxCss}
+                      className="NumberInputCss"
                       name="1_from"
                       type="number"
                       id="1_from"
@@ -1119,7 +1506,7 @@ const GroupFilters = ({
                     ></input>
                     <input
                       onChange={onChangeFilterInput}
-                      className={numberInputBoxCss}
+                      className="NumberInputCss"
                       name="1_to"
                       id="1_to"
                       type="number"
@@ -1134,15 +1521,15 @@ const GroupFilters = ({
                   </div>
                 </div>
               </div>
-              <div key={`${compCase}-2${Math.random()}`} className="mb-4">
+              <div key={`${compCase}-2${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className={LabelCss} htmlFor="username">
+                  <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                     Group 2
                   </div>
                   <div>
                     <input
                       onChange={onChangeFilterInput}
-                      className={numberInputBoxCss}
+                      className="NumberInputCss"
                       name={`2_from`}
                       id={`2_from`}
                       type="number"
@@ -1156,7 +1543,7 @@ const GroupFilters = ({
                     ></input>
                     <input
                       onChange={onChangeFilterInput}
-                      className={numberInputBoxCss}
+                      className="NumberInputCss"
                       name={`2_to`}
                       id={`2_to`}
                       type="number"
@@ -1177,16 +1564,16 @@ const GroupFilters = ({
           return (
             <div
               key={`${compCase}-${groupsCounter}${Math.random()}`}
-              className="mb-4"
+              className="MarginBottom4"
             >
               <div>
-                <div className={LabelCss} htmlFor="username">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                   {`Group ${groupsCounter}`}
                 </div>
                 <div>
                   <input
                     onChange={onChangeFilterInput}
-                    className={numberInputBoxCss}
+                    className="NumberInputCss"
                     name={`${groupsCounter}_from`}
                     type="number"
                     placeholder={min}
@@ -1195,7 +1582,7 @@ const GroupFilters = ({
                   ></input>
                   <input
                     onChange={onChangeFilterInput}
-                    className={numberInputBoxCss}
+                    className="NumberInputCss"
                     name={`${groupsCounter}_to`}
                     type="number"
                     placeholder={max}
@@ -1211,15 +1598,15 @@ const GroupFilters = ({
         if (viz_type === "volcono") {
           return (
             <div key={`${compCase}--${Math.random()}`}>
-              <div key={`${compCase}-1-${Math.random()}`} className="mb-4">
+              <div key={`${compCase}-1-${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className={LabelCss} htmlFor="username">
+                  <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                     Group 1
                   </div>
                   <div>
                     <input
                       onChange={onChangeFilterInput}
-                      className={checkBoxCss}
+                      className="CheckBoxCss"
                       name="1"
                       type="text"
                       placeholder="Enter Text"
@@ -1228,15 +1615,15 @@ const GroupFilters = ({
                 </div>
               </div>
 
-              <div key={`${compCase}-2-${Math.random()}`} className="mb-4">
+              <div key={`${compCase}-2-${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className={LabelCss} htmlFor="username">
+                  <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                     Group 2
                   </div>
                   <div>
                     <input
                       onChange={onChangeFilterInput}
-                      className={checkBoxCss}
+                      className="CheckBoxCss"
                       name="2"
                       type="text"
                       placeholder="Enter Text"
@@ -1250,16 +1637,16 @@ const GroupFilters = ({
           return (
             <div
               key={`${compCase}-${groupsCounter}-${Math.random()}`}
-              className="mb-4"
+              className="MarginBottom4"
             >
               <div>
-                <div className={LabelCss} htmlFor="username">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                   {`Group ${groupsCounter}`}
                 </div>
                 <div>
                   <input
                     onChange={onChangeFilterInput}
-                    className={checkBoxCss}
+                    className="CheckBoxCss"
                     name={`${groupsCounter}`}
                     type="text"
                     placeholder="Enter Text"
@@ -1381,11 +1768,11 @@ const GroupFilters = ({
                   group_b = true;
                 }
                 tr.push(
-                  <tr key={colName + index} className="border-b">
-                    <td className="text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                  <tr key={colName + index} className="Border-b">
+                    <td className=" PX6Y4 CheckBoxRow">
                       {element.label}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="PX6Y4">
                       <input
                         type="checkbox"
                         defaultChecked={group_a}
@@ -1397,7 +1784,7 @@ const GroupFilters = ({
                         })}
                       />
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="PX6Y4">
                       <input
                         type="checkbox"
                         defaultChecked={group_b}
@@ -1416,11 +1803,11 @@ const GroupFilters = ({
           } else {
             preDefienedGroups1[colName].map((element, index) =>
               tr.push(
-                <tr key={colName + index} className="border-b">
-                  <td className="text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                <tr key={colName + index} className="Border-b">
+                  <td className=" PX6Y4 CheckBoxRow">
                     {element.label}
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="PX6Y4">
                     <input
                       type="checkbox"
                       onChange={dropDownChange}
@@ -1431,7 +1818,7 @@ const GroupFilters = ({
                       })}
                     />
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="PX6Y4">
                     <input
                       type="checkbox"
                       onChange={dropDownChange}
@@ -1448,13 +1835,13 @@ const GroupFilters = ({
           }
           componentData.push(
             <table className="table" key={"group_table"}>
-              <thead className="border-b w-full" key={"group_thead"}>
+              <thead className="Border-b WFull" key={"group_thead"}>
                 <tr>
                   <th></th>
-                  <th className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                  <th className="GroupNamesFilter PX6Y4">
                     Group A
                   </th>
-                  <th className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                  <th className="GroupNamesFilter PX6Y4">
                     Group B
                   </th>
                 </tr>
@@ -1470,7 +1857,7 @@ const GroupFilters = ({
           for (let sv = 0; sv < d.length; sv++) {
             const element = d[sv];
             thead.push(
-              <th key={sv} className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+              <th key={sv} className="GroupNamesFilter PX6Y4 ">
                 Group {abc[sv]}:
               </th>
             );
@@ -1502,7 +1889,7 @@ const GroupFilters = ({
                 }
                 checkbox.push(
                   <td
-                    className="px-6 py-4"
+                    className="PX6Y4"
                     key={index + "_" + sv + abc[sv] + "_" + element.label}
                   >
                     <input
@@ -1524,7 +1911,7 @@ const GroupFilters = ({
               } else {
                 checkbox.push(
                   <td
-                    className="px-6 py-4"
+                    className="PX6Y4"
                     key={index + "_" + sv + abc[sv] + "_" + element.label}
                   >
                     <input
@@ -1542,8 +1929,8 @@ const GroupFilters = ({
               }
             }
             tr.push(
-              <tr key={colName + sv} className="border-b">
-                <td className="text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+              <tr key={colName + sv} className="Border-b">
+                <td className=" PX6Y4 CheckBoxRow">
                   {element.label}
                 </td>
                 {checkbox}
@@ -1552,7 +1939,7 @@ const GroupFilters = ({
           }
           componentData.push(
             <table className="table" key={"group_table"}>
-              <thead className="border-b w-full" key={"group_thead"}>
+              <thead className="Border-b WFull" key={"group_thead"}>
                 <tr>
                   <th></th>
                   {thead}
@@ -1581,9 +1968,9 @@ const GroupFilters = ({
   };
 
   return (
-    <div className="m-1 bg-gray-100">
-      <div className="p-1 py-3 px-2 col-span-2">
-        <div className="block text-left text-blue-700-700 text-lg  font-bold mb-2">
+    <div className="M1 BGGray100">
+      <div className="P1 PY3 PX2 ColSpan2">
+        <div className="Block  TextBlue700 TextLG  FontBold MB2">
           <FormattedMessage
             id="Clinical Filters"
             defaultMessage="Clinical Attribute"
@@ -1593,13 +1980,13 @@ const GroupFilters = ({
           defaultValue={selectDefaultValue}
           onChange={updateSelectedFilter}
           name="selectOptions"
-          className="w-full lg:p-4 xs:p-2 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3"
+          className="SelectDiv"
         >
           <option value="0"></option>
           {filterChoices.map((type, index) => (
             <option
               defaultValue={filterSelected === type.name}
-              className="lg:text-lg xs:text-sm"
+              className="FilterOptionText"
               key={type.id}
               value={index}
             >
@@ -1609,28 +1996,25 @@ const GroupFilters = ({
         </select>
       </div>
       {userGivenInputValues['type'] === 'number' &&
-        <p className="text-left text-base ml-6">Max and Min Values are based on Clinincal Information File</p>
+        <p className=" TextBase MarginLeft6">Max and Min Values are based on Clinincal Information File</p>
       }
       {showAddGroupButton && (
-        <div onClick={AppendNewGroup} className="p-1 py-3 px-2 col-span-2">
-          <button className="bg-main-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+        <div onClick={AppendNewGroup} className="P1 PY3 PX2 ColSpan2">
+          <button className="AddGroupButton">
             Add Group
           </button>
         </div>
       )}
 
-      <div className="p-1 py-3 px-2 col-span-2" style={{ overflowX: "auto" }}>
+      <div className="P1 PY3 PX2 ColSpan2" style={{ overflowX: "auto" }}>
         {filterInputs}
       </div>
-
-
-
 
       {filterSelected && (
         <div>
           <button
             onClick={submitFilters}
-            className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
+            className="SubmitButtonFilter"
           >
             <FormattedMessage id="Submit_volcano" defaultMessage="Submit" />
           </button>
@@ -1640,7 +2024,7 @@ const GroupFilters = ({
         <div>
           <button
             onClick={resetFilters}
-            className="bg-white hover:bg-gray-700 mb-3 lg:w-80 sm:w-42 lg:h-20 sm:h-14 xs:text-sm text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
+            className="ResetButtonFilter"
           >
             <FormattedMessage
               id="Reset_volcano"
@@ -1653,352 +2037,53 @@ const GroupFilters = ({
   );
 };
 
+
+
 export default GroupFilters;
 
-export const PreDefienedFiltersSurvival = ({
-  parentCallback,
-  groupFilters,
-  from,
-  survivalModel
-}) => {
-
-  const [selectedFilterType, setSelectedFilterType] = useState({});
-  const [filterGroupsHtml, setFilterGroupsHtml] = useState([]);
-  const [filters, setFilters] = useState({});
-  const [resetClicked, setResetClicked] = useState(false);
-  const [isGroupFilterProp, setIsGroupFilterProp] = useState(false);
-
-  const context = useContext(Context);
-  const [koreanlanguage, setKoreanlanguage] = useState(false);
-  const [Englishlanguage, setEnglishlanguage] = useState(true);
-
-  useEffect(() => {
-    if (context["locale"] === "kr-KO") {
-      setKoreanlanguage(true);
-      setEnglishlanguage(false);
-    } else {
-      setKoreanlanguage(false);
-      setEnglishlanguage(true);
-    }
-  });
-
-  useEffect(()=>{
-    resetFilters()
-  },[survivalModel])
-
-  let preDefienedGroups1 = {
-    diag_age: [
-      { label: "21-25", from: 21, to: 25 },
-      { label: "26-30", from: 26, to: 30 },
-      { label: "31-35", from: 31, to: 35 },
-      { label: "36-40", from: 36, to: 40 },
-    ],
-    bmi_vl: [
-      { label: "<18.5", from: 0, to: 18.5 },
-      { label: "18.6-24.9", from: 18.6, to: 25 },
-      { label: "25.0-29.9", from: 25.1, to: 30 },
-      { label: "30.0≤", from: 30.1, to: 100 },
-    ],
-    mena_age: [
-      { label: "10-13", from: 10, to: 13 },
-      { label: "14-17", from: 14, to: 17 },
-    ],
-    feed_drtn_mnth: [
-      { label: "< 1year", from: 1, to: 11 },
-      { label: "1year ≤", from: 12, to: 24 },
-    ],
-    t_category: [
-      { label: "Tis", from: "Tis", to: "Tis" },
-      { label: "T1", from: "T1", to: "T1" },
-      { label: "T2", from: "T2", to: "T2" },
-      { label: "T3", from: "T3", to: "T3" },
-      { label: "T4", from: "T4", to: "T4" },
-    ],
-    n_category: [
-      { label: "Nx", from: "Nx", to: "Nx" },
-      { label: "N0", from: "N0", to: "N0" },
-      { label: "N1", from: "N1", to: "N1" },
-      { label: "N2", from: "N2", to: "N2" },
-      { label: "N3", from: "N3", to: "N3" },
-    ],
-    her2_score: [
-      {
-        from: "negative (0-1+)",
-        to: "negative (0-1+)",
-        label: "negative (0-1+)",
-        value: "negative (0-1+)",
-      },
-      {
-        from: "equivocal (2+)",
-        to: "equivocal (2+)",
-        label: "equivocal (2+)",
-        value: "equivocal (2+)",
-      },
-      {
-        from: "positive (3+)",
-        to: "positive (3+)",
-        label: "positive (3+)",
-        value: "positive (3+)",
-      },
-    ],
-    pr_score: [
-      { label: "Positive", from: 1, to: 1 },
-      { label: "Negative", from: 2, to: 2 },
-    ],
-    er_score: [
-      { label: "Positive", from: 1, to: 1 },
-      { label: "Negative", from: 2, to: 2 },
-    ],
-    ki67_score: [
-      { label: "low(≤15%)", value: "low(≤15%)", from: "low", to: "low(≤15%)" },
-      {
-        label: "intermediate(<15-30%≤)",
-        value: "intermediate(<15-30%≤)",
-        from: "intermediate",
-        to: "intermediate(<15-30%≤)",
-      },
-      {
-        label: "high(30%<)",
-        value: "high(30%<)",
-        from: "high",
-        to: "high 30%<",
-      },
-    ],
-    smok_yn: [
-      { label: "No Smoking", value: "no" },
-      { label: "Past Smoking", value: "past" },
-      { label: "Current Smoking", value: "current" },
-    ],
-  };
-
-  const submitFilters = () => {
-    if (Object.keys(filters).length > 0) {
-      parentCallback(filters);
-    } else {
-      parentCallback(groupFilters);
-    }
-    console.log('filters' , filters)
-  };
-
-  const resetFilters = () => {
-    setSelectedFilterType({});
-    setFilterGroupsHtml([]);
-    setFilters({});
-    setResetClicked(true);
-    setIsGroupFilterProp(false);
-  };
-
-  useEffect(() => {
-    if (groupFilters && groupFilters.type) {
-      if (resetClicked === false) {
-        setIsGroupFilterProp(true);
-      }
-      let filterGroupsHtmlTemp = [];
-      if (groupFilters.type === "boolean") {
-        filterGroupsHtmlTemp.push(
-          <div key="bool">
-            <div className="flex flex-row">
-              <h5 className="xs:text-xl">Group 1 : </h5>
-              <h5 className="text-bold xs:text-xl text-blue-700">Yes</h5>
-            </div>
-            <div className="flex flex-row">
-              <h5 className="xs:text-xl">Group 2 : </h5>
-              <h5 className="text-bold xs:text-xl text-blue-700">No</h5>
-            </div>
-          </div>
-        );
-      }
-
-      if (groupFilters.type === "static") {
-        filterGroupsHtmlTemp.push(
-          <div key="bool">
-            <div className="flex flex-row">
-              <h5 className="xs:text-xl">Group 1 : </h5>
-              <h5 className="text-bold xs:text-xl text-blue-700">Male</h5>
-            </div>
-            <div className="flex flex-row">
-              <h5 className="xs:text-xl">Group 2 : </h5>
-              <h5 className="text-bold xs:text-xl text-blue-700">Female</h5>
-            </div>
-          </div>
-        );
-      }
-      if (groupFilters.type === "number" || groupFilters.type === "text") {
-        filterGroupsHtmlTemp.push(
-          <div key="drop-user">
-            {preDefienedGroups1[groupFilters.column].map((element, index) => (
-              <div className="text-lg" key={`${element.label}-${index}-grp-a`}>
-                <div className="flex flex-row justify-around">
-                  <h5 className="p-4 xs:text-xl">
-                    Group {index + 1} : {element.label}
-                  </h5>
-                </div>
-              </div>
-            ))}
-          </div>
-        );
-      }
-      setFilterGroupsHtml(filterGroupsHtmlTemp);
-    }
-  }, [groupFilters]);
-
-  const filterTypeDropdownSelection = (event) => {
-    let key = event.target.value;
-    setSelectedFilterType({
-      details: koreanlanguage ? filterChoicesCustomKorean[parseInt(key)] : filterChoicesCustom[parseInt(key)],
-      index: key,
-    });
-  };
 
 
-  useEffect(() => {
-    let filterGroupsHtmlTemp = [];
-    if (selectedFilterType && selectedFilterType.details) {
-      if (selectedFilterType.details.type === "boolean") {
-        setFilters({
-          group_a: true,
-          group_b: false,
-          column: selectedFilterType.details.id,
-          type: "boolean",
-        });
-        filterGroupsHtmlTemp.push(
-          <div key="bool">
-            <div className="flex flex-row">
-              <h5 className="p-4 xs:text-xl">Group 1 : </h5>
-              <h5 className="p-4 text-bold xs:text-xl text-blue-700">Yes</h5>
-            </div>
-            <div className="flex flex-row">
-              <h5 className="p-4 xs:text-xl">Group 2 : </h5>
-              <h5 className="p-4 text-bold xs:text-xl text-blue-700">No</h5>
-            </div>
-          </div>
-        );
-      }
 
-      if (selectedFilterType.details.type === "static") {
-        setFilters({
-          group_a: "F",
-          group_b: "M",
-          column: selectedFilterType.details.id,
-          type: "static",
-        });
-        filterGroupsHtmlTemp.push(
-          <div key="gender">
-            <div className="flex border mb-1 flex-row justify-around">
-              <h5 className="p-4 xs:text-xl">Group 1 : </h5>
-              <h5 className="p-4 text-bold xs:text-xl text-blue-700">Male</h5>
-            </div>
-            <div className="flex border mb-1 flex-row justify-around">
-              <h5 className="p-4 xs:text-xl">Group 2 : </h5>
-              <h5 className="p-4 text-bold xs:text-xl text-blue-700">Female</h5>
-            </div>
-          </div>
-        );
-      }
 
-      if (
-        selectedFilterType.details.type === "number" ||
-        selectedFilterType.details.type === "text"
-      ) {
-        const colName = selectedFilterType.details.id;
-        let filtersTemp = {
-          type: selectedFilterType.details.type,
-          column: colName,
-        };
-        preDefienedGroups1[colName].forEach((e, index) => {
-          filtersTemp = {
-            ...filtersTemp,
-            [`${index + 1}_from`]: e.from,
-            [`${index + 1}_to`]: e.to,
-          };
-        });
-        setFilters(filtersTemp);
-        filterGroupsHtmlTemp.push(
-          <div key="drop-user">
-            {preDefienedGroups1[colName].map((element, index) => (
-              <div className="text-lg" key={`${element.label}-${index}-grp-a`}>
-                <div className="flex flex-row justify-around">
-                  <h5 className="p-4 xs:text-xl">
-                    Group {index + 1} : {element.label}
-                  </h5>
-                </div>
-              </div>
-            ))}
-          </div>
-        );
-      }
 
-      setFilterGroupsHtml(filterGroupsHtmlTemp);
-    }
-  }, [selectedFilterType]);
 
-  return (
-    <div className="m-1 bg-gray-100">
-      <div className="p-1 py-3 px-2 col-span-2">
-        <div className="block text-left text-blue-700-700 text-lg  font-bold mb-2">
-          <FormattedMessage
-            id="Clinical Filters"
-            defaultMessage="Clinical Attribute"
-          />
-        </div>
-        {(resetClicked === true || isGroupFilterProp === false) && (
-          <select
-            onChange={filterTypeDropdownSelection}
-            defaultValue={""}
-            className="w-full lg:p-4 xs:p-2 border lg:text-xl xs:text-sm focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3"
-          >
-            <option value=""></option>
 
-            {Englishlanguage && filterChoicesCustom.map((type, index) => (
-              <option className="text-lg" key={type.name} value={index}>
-                {type.name}
-              </option>
-            ))}
-            {koreanlanguage && filterChoicesCustomKorean.map((type, index) => (
-              <option className="text-lg" key={type.name} value={index}>
-                {type.name}
-              </option>
-            ))}
-          </select>
-        )}
-        {resetClicked === false && isGroupFilterProp === true && (
-          <h6 className="border p-4">
-            {Englishlanguage && filterChoicesCustom.forEach((e) => {
-              if (groupFilters.column === e.id) {
-                return e.name;
-              }
-            })}
-            {koreanlanguage && filterChoicesCustomKorean.forEach((e) => {
-              if (groupFilters.column === e.id) {
-                return e.name;
-              }
-            })}
-          </h6>
-        )}
-      </div>
-      <div className="p-1 py-3 px-2 col-span-2">{filterGroupsHtml}</div>
-      <div>
-        <button
-          onClick={() => submitFilters()}
-          className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
-        >
-          <FormattedMessage
-            id="Submit_volcano"
-            defaultMessage="Submit"
-          />
-        </button>
-      </div>
-      <div>
-        <button
-          onClick={() => resetFilters()}
-          className="bg-white hover:bg-gray-700 mb-3 lg:w-80 sm:w-42 lg:h-20 sm:h-14 xs:text-sm text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
-        >
-          <FormattedMessage id="Reset_volcano" defaultMessage="Reset" />
-        </button>
-      </div>
-    </div>
-  );
-};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2145,24 +2230,24 @@ export const UserDefinedGroupFilters = ({
         one_from < one_min_value ||
         one_from > one_to
       ) {
-        one_from_0.classList.add("border-2");
-        one_from_0.classList.add("border-red-400");
-        one_to_0.classList.add("border-2");
-        one_to_0.classList.add("border-red-400");
+        one_from_0.classList.add("Border2");
+        one_from_0.classList.add("BorderRed400");
+        one_to_0.classList.add("Border2");
+        one_to_0.classList.add("BorderRed400");
       } else if (
         one_to > one_max_value ||
         one_to < one_min_value ||
         one_to < one_from
       ) {
-        one_from_0.classList.add("border-2");
-        one_from_0.classList.add("border-red-400");
-        one_to_0.classList.add("border-2");
-        one_to_0.classList.add("border-red-400");
+        one_from_0.classList.add("Border2");
+        one_from_0.classList.add("BorderRed400");
+        one_to_0.classList.add("Border2");
+        one_to_0.classList.add("BorderRed400");
       } else {
-        one_from_0.classList.remove("border-2");
-        one_from_0.classList.remove("border-red-400");
-        one_to_0.classList.remove("border-2");
-        one_to_0.classList.remove("border-red-400");
+        one_from_0.classList.remove("Border2");
+        one_from_0.classList.remove("BorderRed400");
+        one_to_0.classList.remove("Border2");
+        one_to_0.classList.remove("BorderRed400");
         setUserGivenInputValues((prevState) => ({
           ...prevState,
           [one_from_0.name]: one_from_0.value,
@@ -2199,16 +2284,16 @@ export const UserDefinedGroupFilters = ({
         if (i in groupFilters || `${i}` in groupFilters) {
           counter += 1;
           valsArray.push(
-            <div key={`${i}-text-${Math.random()}`} className="mb-4">
+            <div key={`${i}-text-${Math.random()}`} className="MarginBottom4">
               <div>
-                <div className={LabelCss} htmlFor="username">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                   {`Group ${i}`}
                 </div>
                 <div>
                   <input
                     value={groupFilters[i]}
                     onChange={onChangeFilterInput}
-                    className={checkBoxCss}
+                    className="CheckBoxCss"
                     name={`${i}`}
                     type="text"
                     placeholder="Enter Text"
@@ -2220,16 +2305,16 @@ export const UserDefinedGroupFilters = ({
         } else if (`${i}_from` in groupFilters) {
           counter += 1;
           valsArray.push(
-            <div key={`number-${i}${Math.random()}`} className="mb-4">
+            <div key={`number-${i}${Math.random()}`} className="MarginBottom4">
               <div>
-                <div className={LabelCss} htmlFor="username">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                   {`Group ${i}`}
                 </div>
                 <div>
                   <input
                     defaultValue={groupFilters[`${i}_from`]}
                     onChange={onChangeFilterInput}
-                    className={numberInputBoxCss}
+                    className="NumberInputCss"
                     name={`${i}_from`}
                     type="number"
                     placeholder="from"
@@ -2237,7 +2322,7 @@ export const UserDefinedGroupFilters = ({
                   <input
                     defaultValue={groupFilters[`${i}_to`]}
                     onChange={onChangeFilterInput}
-                    className={numberInputBoxCss}
+                    className="NumberInputCss"
                     name={`${i}_to`}
                     type="number"
                     placeholder="to"
@@ -2271,13 +2356,13 @@ export const UserDefinedGroupFilters = ({
     switch (compCase) {
       case "static":
         return (
-          <div key={compCase} className="mb-4">
+          <div key={compCase} className="MarginBottom4">
             {["A Group", "B Group"].map((e, index) => (
-              <div key={e} className="border mt-4 p-1">
-                <div className={LabelCss} htmlFor="yes">
+              <div key={e} className="Border MarginTop4 P1">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="yes">
                   {e}
                 </div>
-                <h1 id="yes" className="text-left mt-2">
+                <h1 id="yes" className=" MarginTop2">
                   {groupLabels[index]}
                 </h1>
               </div>
@@ -2289,15 +2374,15 @@ export const UserDefinedGroupFilters = ({
         if (viz_type === "volcono") {
           return (
             <>
-              <div key={`${compCase}-1${Math.random()}`} className="mb-4">
+              <div key={`${compCase}-1${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className={LabelCss} htmlFor="username">
+                  <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                     Group 1
                   </div>
                   <div>
                     <input
                       onChange={onChangeFilterInput}
-                      className={numberInputBoxCss}
+                      className="NumberInputCss"
                       name="1_from"
                       type="number"
                       id="1_from"
@@ -2311,7 +2396,7 @@ export const UserDefinedGroupFilters = ({
                     ></input>
                     <input
                       onChange={onChangeFilterInput}
-                      className={numberInputBoxCss}
+                      className="NumberInputCss"
                       name="1_to"
                       id="1_to"
                       type="number"
@@ -2326,15 +2411,15 @@ export const UserDefinedGroupFilters = ({
                   </div>
                 </div>
               </div>
-              <div key={`${compCase}-2${Math.random()}`} className="mb-4">
+              <div key={`${compCase}-2${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className={LabelCss} htmlFor="username">
+                  <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                     Group 2
                   </div>
                   <div>
                     <input
                       onChange={onChangeFilterInput}
-                      className={numberInputBoxCss}
+                      className="NumberInputCss"
                       name={`2_from`}
                       id={`2_from`}
                       type="number"
@@ -2348,7 +2433,7 @@ export const UserDefinedGroupFilters = ({
                     ></input>
                     <input
                       onChange={onChangeFilterInput}
-                      className={numberInputBoxCss}
+                      className="NumberInputCss"
                       name={`2_to`}
                       id={`2_to`}
                       type="number"
@@ -2369,16 +2454,16 @@ export const UserDefinedGroupFilters = ({
           return (
             <div
               key={`${compCase}-${groupsCounter}${Math.random()}`}
-              className="mb-4"
+              className="MarginBottom4"
             >
               <div>
-                <div className={LabelCss} htmlFor="username">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                   {`Group ${groupsCounter}`}
                 </div>
                 <div>
                   <input
                     onChange={onChangeFilterInput}
-                    className={numberInputBoxCss}
+                    className="NumberInputCss"
                     name={`${groupsCounter}_from`}
                     type="number"
                     placeholder={min}
@@ -2387,7 +2472,7 @@ export const UserDefinedGroupFilters = ({
                   ></input>
                   <input
                     onChange={onChangeFilterInput}
-                    className={numberInputBoxCss}
+                    className="NumberInputCss"
                     name={`${groupsCounter}_to`}
                     type="number"
                     placeholder={max}
@@ -2403,15 +2488,15 @@ export const UserDefinedGroupFilters = ({
         if (viz_type === "volcono") {
           return (
             <>
-              <div key={`${compCase}-1-${Math.random()}`} className="mb-4">
+              <div key={`${compCase}-1-${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className={LabelCss} htmlFor="username">
+                  <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                     Group 1
                   </div>
                   <div>
                     <input
                       onChange={onChangeFilterInput}
-                      className={checkBoxCss}
+                      className="CheckBoxCss"
                       name="1"
                       type="text"
                       placeholder="Enter Text"
@@ -2419,15 +2504,15 @@ export const UserDefinedGroupFilters = ({
                   </div>
                 </div>
               </div>
-              <div key={`${compCase}-2-${Math.random()}`} className="mb-4">
+              <div key={`${compCase}-2-${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className={LabelCss} htmlFor="username">
+                  <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                     Group 2
                   </div>
                   <div>
                     <input
                       onChange={onChangeFilterInput}
-                      className={checkBoxCss}
+                      className="CheckBoxCss"
                       name="2"
                       type="text"
                       placeholder="Enter Text"
@@ -2441,16 +2526,16 @@ export const UserDefinedGroupFilters = ({
           return (
             <div
               key={`${compCase}-${groupsCounter}-${Math.random()}`}
-              className="mb-4"
+              className="MarginBottom4"
             >
               <div>
-                <div className={LabelCss} htmlFor="username">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                   {`Group ${groupsCounter}`}
                 </div>
                 <div>
                   <input
                     onChange={onChangeFilterInput}
-                    className={checkBoxCss}
+                    className="CheckBoxCss"
                     name={`${groupsCounter}`}
                     type="text"
                     placeholder="Enter Text"
@@ -2572,11 +2657,11 @@ export const UserDefinedGroupFilters = ({
                   group_b = true;
                 }
                 tr.push(
-                  <tr key={colName + index} className="border-b">
-                    <td className="text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                  <tr key={colName + index} className="Border-b">
+                    <td className=" PX6Y4 CheckBoxRow">
                       {element.label}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="PX6Y4">
                       <input
                         type="checkbox"
                         defaultChecked={group_a}
@@ -2588,7 +2673,7 @@ export const UserDefinedGroupFilters = ({
                         })}
                       />
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="PX6Y4">
                       <input
                         type="checkbox"
                         defaultChecked={group_b}
@@ -2607,11 +2692,11 @@ export const UserDefinedGroupFilters = ({
           } else {
             preDefienedGroups1[colName].map((element, index) =>
               tr.push(
-                <tr key={colName + index} className="border-b">
-                  <td className="text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                <tr key={colName + index} className="Border-b">
+                  <td className=" PX6Y4 CheckBoxRow">
                     {element.label}
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="PX6Y4">
                     <input
                       type="checkbox"
                       onChange={dropDownChange}
@@ -2622,7 +2707,7 @@ export const UserDefinedGroupFilters = ({
                       })}
                     />
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="PX6Y4">
                     <input
                       type="checkbox"
                       onChange={dropDownChange}
@@ -2639,13 +2724,13 @@ export const UserDefinedGroupFilters = ({
           }
           componentData.push(
             <table className="table" key={"group_table"}>
-              <thead className="border-b w-full" key={"group_thead"}>
+              <thead className="Border-b WFull" key={"group_thead"}>
                 <tr>
                   <th></th>
-                  <th className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                  <th className="GroupNamesFilter PX6Y4">
                     Group A
                   </th>
-                  <th className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                  <th className="GroupNamesFilter PX6Y4">
                     Group B
                   </th>
                 </tr>
@@ -2660,7 +2745,7 @@ export const UserDefinedGroupFilters = ({
           for (let sv = 0; sv < d.length; sv++) {
             const element = d[sv];
             thead.push(
-              <th className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+              <th className="GroupNamesFilter PX6Y4 ">
                 Group {abc[sv]}:
               </th>
             );
@@ -2693,7 +2778,7 @@ export const UserDefinedGroupFilters = ({
                 }
                 checkbox.push(
                   <td
-                    className="px-6 py-4"
+                    className="PX6Y4"
                     key={index + "_" + sv + abc[sv] + "_" + element.label}
                   >
                     <input
@@ -2714,7 +2799,7 @@ export const UserDefinedGroupFilters = ({
               } else {
                 checkbox.push(
                   <td
-                    className="px-6 py-4"
+                    className="PX6Y4"
                     key={index + "_" + sv + abc[sv] + "_" + element.label}
                   >
                     <input
@@ -2731,8 +2816,8 @@ export const UserDefinedGroupFilters = ({
               }
             }
             tr.push(
-              <tr key={colName + sv} className="border-b">
-                <td className="text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+              <tr key={colName + sv} className="Border-b">
+                <td className=" PX6Y4 CheckBoxRow">
                   {element.label}
                 </td>
                 {checkbox}
@@ -2741,7 +2826,7 @@ export const UserDefinedGroupFilters = ({
           }
           componentData.push(
             <table className="table" key={"group_table"}>
-              <thead className="border-b w-full" key={"group_thead"}>
+              <thead className="Border-b WFull" key={"group_thead"}>
                 <tr>
                   <th></th>
                   {thead}
@@ -2770,9 +2855,9 @@ export const UserDefinedGroupFilters = ({
   };
 
   return (
-    <div className="m-1 bg-gray-100">
-      <div className="p-1 py-3 px-2 col-span-2">
-        <div className="block text-left text-blue-700-700 text-lg  font-bold mb-2">
+    <div className="M1 BGGray100">
+      <div className="P1 PY3 PX2 ColSpan2">
+        <div className="Block  TextBlue700 TextLG  FontBold MB2">
           <FormattedMessage
             id="Clinical Filters"
             defaultMessage="Clinical Attribute"
@@ -2782,13 +2867,13 @@ export const UserDefinedGroupFilters = ({
           defaultValue={selectDefaultValue}
           onChange={updateSelectedFilter}
           name="selectOptions"
-          className="w-full lg:p-4 xs:p-2 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3"
+          className="SelectDiv"
         >
           <option value="0"></option>
           {filterChoices.map((type, index) => (
             <option
               defaultValue={filterSelected === type.name}
-              className="lg:text-lg xs:text-sm"
+              className="FilterOptionText"
               key={type.id}
               value={index}
             >
@@ -2798,23 +2883,23 @@ export const UserDefinedGroupFilters = ({
         </select>
       </div>
       {userGivenInputValues['type'] === 'number' &&
-        <p className="text-left text-base ml-6">Max and Min Values are based on Clinincal Information File</p>
+        <p className=" TextBase MarginLeft6">Max and Min Values are based on Clinincal Information File</p>
       }
       {showAddGroupButton && (
-        <div onClick={AppendNewGroup} className="p-1 py-3 px-2 col-span-2">
-          <button className="bg-main-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+        <div onClick={AppendNewGroup} className="P1 PY3 PX2 ColSpan2">
+          <button className="AddGroupButton">
             Add Group
           </button>
         </div>
       )}
-      <div className="p-1 py-3 px-2 col-span-2" style={{ overflowX: "auto" }}>
+      <div className="P1 PY3 PX2 ColSpan2" style={{ overflowX: "auto" }}>
         {filterInputs}
       </div>
       {filterSelected && (
         <div>
           <button
             onClick={submitFilters}
-            className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
+            className="SubmitButtonFilter"
           >
             <FormattedMessage
               id="Submit_volcano"
@@ -2827,7 +2912,7 @@ export const UserDefinedGroupFilters = ({
         <div>
           <button
             onClick={resetFilters}
-            className="bg-white hover:bg-gray-700 mb-3 lg:w-80 sm:w-42 lg:h-20 sm:h-14 xs:text-sm text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded font-bold cursor-pointer border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md"
+            className="ResetButtonFilter"
           >
             <FormattedMessage
               id="Reset_volcano"

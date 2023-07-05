@@ -556,7 +556,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
   },[state, data, fusionJson])
 
   return (
-    <div className="grid grid-cols-12">
+    <div className="grid grid-cols-12" style={{overflowY:'auto',height:'auto'}}>
       <div className="col-span-10 p-5">
         <div ref={ref} className={`circos block ${watermarkCss}`} id='circos'></div>
       </div>

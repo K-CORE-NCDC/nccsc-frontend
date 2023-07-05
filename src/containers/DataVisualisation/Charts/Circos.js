@@ -51,6 +51,7 @@ export default function DataCircos({
   const [renderCircos, setRenderCircos] = useState(false);
   const [samplesCount, setSamplesCount] = useState(0);
   const [tableData, setTableData] = useState([]);
+  const [noGeneData, setNoGeneData] = useState(true)
   const [basicInformationData, setBasicInformationData] = useState([]);
   let {  project_id } = useParams();
 
@@ -326,6 +327,12 @@ export default function DataCircos({
       let editInputData = inputData;
       editInputData = { ...editInputData, sampleKey: sampleKey };
       // dispatch(getBreastKeys(editInputData));
+      if(editInputData["genes"].length < 0){
+        setNoGeneData(true)
+      }
+      else{
+        setNoGeneData(false)
+      }
       if (
         editInputData.type !== "" &&
         sampleKey !== "" &&
@@ -466,8 +473,8 @@ export default function DataCircos({
         <div className="">
           
             <div className="flex visualGrid">
-              <div >
-                {circosSanpleRnidListData && (
+              <div>
+                {(
                   <div
                     htmlFor="samples"
                     className="lg:text-2xl sm:text-xl xs:text-sm"
@@ -548,6 +555,9 @@ export default function DataCircos({
           </div>
         </div>
       )}
+      <div>
+      {noGeneData && <p><FormattedMessage id="PleaseSelecttheGeneSetData" defaultMessage="Please Select the Gene Set Data" /></p>}
+      </div>
       {showOncoImages && (
         <PagenationTableComponent
           closeShowOncoImages={closeShowOncoImages}
