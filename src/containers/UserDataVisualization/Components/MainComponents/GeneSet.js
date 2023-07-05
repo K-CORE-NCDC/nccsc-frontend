@@ -7,16 +7,14 @@ const GeneSet = ({ parentCallback, filterState }) => {
 
     const [value, setValue] = useState(filterState['type'] ? filterState['type'] : "user-defined")
     const [geneData, setGeneData] = useState(filterState['genes'] ? filterState['genes'].join(" ") : [])
-   
 
+   
     const selectGene = (event) => {
         let value = event.target.value;
         let g = genes[value].data;
         g = g.sort();
         let genesString = g.join(" ");
         geneValue.current.value = genesString;
-        console.log('g geneset' , genesString)
-
         setValue(value)
         setGeneData(genesString)
     };

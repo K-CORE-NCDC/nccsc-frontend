@@ -49,7 +49,7 @@ export default function DataVisualization() {
   const [chartName, setChartName] = useState(tab === 'home' ? undefined : tab);
   const [tabName, setTabName] = useState(tab === 'home' ? undefined : tab)
   const [toggle, setToggle] = useState(true);
-
+  
   const [screenCapture, setScreenCapture] = useState(false);
   const setToFalseAfterScreenCapture = (param = false) => {
     if (param === false) {
@@ -71,6 +71,7 @@ export default function DataVisualization() {
   };
 
   const LoadChart = (w, type) => {
+    console.log('type' , type)
     switch (type) {
       case "circos":
         return Charts.circos(
@@ -85,7 +86,7 @@ export default function DataVisualization() {
           elementRef.current.getBoundingClientRect().width,
           state,
           screenCapture,
-          setToFalseAfterScreenCapture
+          setToFalseAfterScreenCapture,
         );
       case "heatmap":
         return Charts.heatmap(
@@ -95,7 +96,7 @@ export default function DataVisualization() {
           BrstKeys,
           setToFalseAfterScreenCapture
         );
-      case "cnv":
+      case "CNV":
         return Charts.igv(
           w,
           state,

@@ -507,6 +507,8 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
   };
 
   const sendFilter = () => {
+    console.log('selectState', selectState )
+    console.log('filterJson', filterJson )
     parentCallback({ filters: selectState });
     drawTags(filterJson);
   };
