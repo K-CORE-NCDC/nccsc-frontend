@@ -100,7 +100,7 @@ function OldKoreanprivacyact() {
                     </div>
                     <div id='DIV_94'>
                         <div id='' style={{ marginLeft: "200px" }}>
-                            <table class="ktable" style={{ width: "70rem" }}>
+                            <table className="ktable" style={{ width: "70rem" }}>
                                 <thead className='kth'>
                                     <tr>
                                         <th className='kth'>목 차</th>

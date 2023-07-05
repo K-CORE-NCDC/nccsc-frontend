@@ -105,7 +105,7 @@ function Koreanprivacyact() {
                     </div>
                     <div id='DIV_94'>
                         <div id='' style={{ marginLeft: "200px" }}>
-                        <table class="ktable" style={{ width: "141rem" ,marginLeft: '-200px'}} >
+                        <table className="ktable" style={{ width: "141rem" ,marginLeft: '-200px'}} >
                                 <thead className='kth'>
                                     <tr>
                                         <th className='kth'>목 차</th>

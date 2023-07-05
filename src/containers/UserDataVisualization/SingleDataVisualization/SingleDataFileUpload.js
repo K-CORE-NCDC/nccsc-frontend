@@ -21,7 +21,7 @@ const SingleDataFileUpload = ({ updateComponentNumber})=> {
     const [formSbubmitButtonText, setFormSubmitButtonText] = useState("upload")
     const [initialInputState, setInitialInputState] = useState(undefined)
     let { tab } = useParams();
-    const allowedTabs = ["circos","lollipop","CNV","heatmap","box"]    
+    const allowedTabs = ["circos","lollipop","CNV","heatmap","box","survival"]    
     const charts = {
         "circos":{
             rna: "RNA",
@@ -47,6 +47,9 @@ const SingleDataFileUpload = ({ updateComponentNumber})=> {
         "box":{
             proteome: "proteome",
             dna_mutation: "DNA Mutation",
+        },
+        "survival":{
+          clinical_information:"clinical_information"
         }
     }
 

@@ -204,6 +204,7 @@ export default function DataVisualization() {
       "cnv",
       "heatmap",
       "box",
+      "survival"
     ];
     let gridData = []
 
@@ -214,10 +215,7 @@ export default function DataVisualization() {
         name = "";
       } else if (element === "cnv") {
         element = "CNV";
-      } else if (element === "onco") {
-        name = "";
-        element = "OncoPrint";
-      }
+      } 
 
       let gridobj = { title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/singledata-upload/${element}/` }
       gridData.push(gridobj)

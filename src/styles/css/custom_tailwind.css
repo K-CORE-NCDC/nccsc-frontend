@@ -352,18 +352,18 @@
   }
   
   .GeneSetPopoverPanel {
-    position: absolute;
+    position: static;
     z-index: 10;
     width: inherit;
     border:1px solid #ddd;
     background-color: #fff;
     padding: 1rem;
     margin-top: 0;
-    transform: translateX(-50%);
+    transform: translateX(0%);
     top:55px;
     display:inline-block;
     left:50%;
-    width:50%;
+    width:100%;
   }
   
   .GeneSetPopoverPanel.sm {

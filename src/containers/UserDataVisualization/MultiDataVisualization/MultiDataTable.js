@@ -10,8 +10,7 @@ import {
 import { FormattedMessage } from "react-intl";
 import { useParams } from "react-router-dom";
 import warningImage from '../../../assets/images/warning.png'
-
-
+import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
 
 
 
@@ -504,79 +503,112 @@ function MultiDataTable({updateComponentNumber}) {
     };
   },[])
 
-  return (
-    <div className="auto">
-      <div  className="flex">
-        <Modal showModal={showModal} setShowModal={setShowModalFunction} />
-        { projectId === 0 && 
-          (
-            <button
-              className='btn btnGray bdBtn'
-              type="button"
-              onClick={() => {
-                updateComponentNumber(0)
-              }}
-              >
-              <FormattedMessage id="Back" defaultMessage="Back" />
-            </button>
-          )
-        }
-        {
-          projectId === 0 && (
-            <div>
-                <button onClick={() => setShowModalFunction(true)} className="">
-                  <img width='50' src={warningImage}></img>
-                </button>
-            </div>
-          )
-        }
+  const title = { id: "MultiDataVisualization", defaultMessage: "Multi Data Visualization" }
 
-        {projectId !== 0 && (
-          <button
-            onClick={() => {
-              dispatch(clearMultiFIleUploadState())
-              history.push(`/visualise-singledata/${tab}/${projectId}`)}}
-            className='btn btnPrimary'
-          >
-            <FormattedMessage id="Visualize" defaultMessage="Visualize" />
-          </button>
-        )}
-      </div>
-      <div className=" tab">
-        <ul >
-          {tableNavTabs}
-        </ul>
-      </div>
-      <div className="boardList">
-        {verificationResponse  && (
-          <DataTable
-            title=""
-            columns={colData}
-            data={rowData}
-            defaultSortField="title"
-            pagination
-            conditionalRowStyles={conditionalRowStyles}
-          />
-        )}
-        {!verificationResponse  && (
+  const breadCrumbs = {
+    '/newmultidataproject/': [
+      { id: 'FindID', defaultMessage: 'Home', to: '/' },
+      { id: 'MultiDataUpload', defaultMessage: 'Multi Data Upload', to: '/home/visualizeMyData/' },
+    ]
+  }
+  return (
+    <div>
+      <HeaderComponent
+        title={title}
+        routeName="/newmultidataproject/"
+        breadCrumbs={breadCrumbs['/newmultidataproject/']}
+        type="single"
+
+      />
+      <article id="subContents" className="subContents">
+        <div className="contentsTitle">
+          <h3>
+            <font>
+              <font >Multi Data </font>
+              <span className="colorSecondary">
+                <font >Upload</font>
+              </span>
+            </font>
+          </h3>
+        </div>
+        <div className="auto">
+          <Modal showModal={showModal} setShowModal={setShowModalFunction} />
+          <div  className="flex" style={{justifyContent:'space-between'}}>
+            { projectId === 0 && 
+              (
+                <div>
+                <button
+                  className='btn btnGray bdBtn'
+                  type="button"
+                  onClick={() => {
+                    updateComponentNumber(0)
+                  }}
+                  >
+                  <FormattedMessage id="Back" defaultMessage="Back" />
+                </button>
+                </div>
+              )
+            }
+            {
+              projectId === 0 && (
+                <div>
+                    <button onClick={() => setShowModalFunction(true)} className="">
+                      <img width='50' src={warningImage}></img>
+                    </button>
+                </div>
+              )
+            }
+
+            {projectId !== 0 && (
+              <div>
+              <button
+                onClick={() => {
+                  dispatch(clearMultiFIleUploadState())
+                  history.push(`/visualise-singledata/${tab}/${projectId}`)}}
+                className='btn btnPrimary'
+              >
+                <FormattedMessage id="Visualize" defaultMessage="Visualize" />
+              </button>
+              </div>
+            )}
+          </div>
+          <div className=" tab">
+            <ul >
+              {tableNavTabs}
+            </ul>
+          </div>
+          <div className="boardList">
+            {verificationResponse  && (
+              <DataTable
+                title=""
+                columns={colData}
+                data={rowData}
+                defaultSortField="title"
+                pagination
+                conditionalRowStyles={conditionalRowStyles}
+              />
+            )}
+            {!verificationResponse  && (
+              <div className="MultiUploadTextCenter">
+                <LoaderCmp />
+                { <p className="MultiUploadTextCenter">
+                  <FormattedMessage id = 'WaitMessage' defaultMessage=' It takes some time to process the data. Please wait ! (2 minutes per 100 samples)' /> 
+                </p>
+                }
+              </div>
+            )}
+          </div>
           <div>
-            <LoaderCmp />
-            { <p className="text-center">
-              <FormattedMessage id = 'WaitMessage' defaultMessage=' It takes some time to process the data. Please wait ! (2 minutes per 100 samples)' /> 
-            </p>
+            {
+              fileUploadStatus && fileUploadStatus['failed'] && 
+              <div>
+              <p>Error</p>
+              </div>
             }
           </div>
-        )}
-      </div>
-      <div>
-        {
-          fileUploadStatus && fileUploadStatus['failed'] && 
-          <div>
-           <p>Error</p>
-          </div>
-        }
-      </div>
- 
+    
+        </div>
+      </article>
     </div>
   );
 }
