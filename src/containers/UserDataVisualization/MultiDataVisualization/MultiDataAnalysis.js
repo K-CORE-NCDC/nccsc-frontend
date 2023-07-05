@@ -98,12 +98,12 @@ export default function DataVisualization() {
   };
 
   const callback = useCallback(({ filters, filterKeyandValues, value, genes }) => {
-    let g = []
-    if(genes.includes(' ')){
-      g = genes.split(' ')
+   let g = []
+    if(genes?.includes(' ')){
+      g = genes?.split(' ')
     }
     else{
-      g.push(genes)
+      g?.push(genes)
     }
     if (filters && filterKeyandValues) {
       setState((prevState) => ({
@@ -115,7 +115,7 @@ export default function DataVisualization() {
     else if (value && genes) {
       setState((prevState) => ({
         ...prevState,
-        genes: g,
+        genes: genes,
         type: value,
       }));
     }
@@ -125,12 +125,14 @@ export default function DataVisualization() {
   }, []);
 
   useEffect(() => {
-    let chartx = LoadChart(width, tabName);
-    setCharts((prevState) => ({
-      ...prevState,
-      viz: chartx,
-    }));
-  }, [state])
+    if(BrstKeys){
+      let chartx = LoadChart(width, tabName);
+      setCharts((prevState) => ({
+        ...prevState,
+        viz: chartx,
+      }));
+    }
+  }, [state,BrstKeys])
 
 
   useEffect(() => {
@@ -145,7 +147,6 @@ export default function DataVisualization() {
     if (project_id !== undefined) {
       let projectAvailableSteps = undefined;
       if (userProjectDetails && 'key' in userProjectDetails && userProjectDetails.key === 'NotFound') {
-      //   console.log('--------');
         history.push('/login')
       }
       if (userProjectDetails && 'available_steps' in userProjectDetails) {
@@ -188,7 +189,7 @@ export default function DataVisualization() {
     else {
       setToggle(true);
     }
-  }, [tab, tabName, chartName]);
+  }, [tab, tabName, chartName, boolChartState]);
 
   useEffect(() => {
     dispatch(getUserDefinedFilter({
@@ -295,7 +296,6 @@ export default function DataVisualization() {
   }, [screenCapture]);
 
   const LoadChart = (w, type) => {
-    console.log('genes_initial' , state)
     switch (type) {
       case "circos":
         return Charts.circos(
@@ -395,6 +395,7 @@ export default function DataVisualization() {
   };
 
   return (
+
     <div>
       <HeaderComponent
         title="회원가입"

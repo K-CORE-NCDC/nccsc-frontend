@@ -26,7 +26,7 @@ export default function Box({
   const [showBoxPlot, setShowBoxPlot] = useState(false);
   const [noContent, setNoContent] = useState(false);
   const [viewType, setViewType] = useState("gene_vl");
-  const [tableType, setTableType] = useState("");
+  const [tableType, setTableType] = useState("proteome");
   const [gene, setGene] = useState("");
   const [genes, setGenes] = useState("");
   const [boxJson, setboxJson] = useState(null)
@@ -34,6 +34,7 @@ export default function Box({
   const [alltabList, setAllTabList] = useState({});
   const [activeTab, setActiveTab] = useState('1')
   const [selectedType, setSelectedType] = useState('1')
+  const [btnClickNote , setBtnClickNote] = useState(false)
 
   let { project_id } = useParams();
   const tabList = useSelector(
@@ -42,13 +43,18 @@ export default function Box({
 
   useEffect(() => {
     if ('userProjectsDataTable' in tabList) {
+      let _data = tabList?.userProjectsDataTable
+      if(_data?.viz_type === 'single'){
+        if(_data['proteome'] !== null){
+          setActiveTab('1')
+        }else if(_data["dna_mutation"] !== null){
+          setActiveTab('2')
+          setTableType('mutation')
+        }
+      }else{
+        setActiveTab('1')
+      }
       setAllTabList(tabList.userProjectsDataTable)
-      if (tabList.userProjectsDataTable['proteome']) {
-        setTableType('proteome')
-      }
-      else {
-        setTableType('mutation')
-      }
     }
   }, [tabList])
 
@@ -61,9 +67,7 @@ export default function Box({
 
 
   const dispatchActionCommon = (postJsonBody) => {
-    console.log('tableType', tableType)
     if (tableType && postJsonBody.table_type === "proteome") {
-      console.log('postJsonBody', postJsonBody)
       setLoader(true)
       let return_data = BoxInformation('POST', postJsonBody)
       return_data.then((result) => {
@@ -317,70 +321,44 @@ export default function Box({
   return (
     <div className="main_div">
       <div className="cnv_sub_head">
-
-
-        {/* <div className="">
-            { project_id === undefined && <button
-              onClick={(e) => changeType(e, "proteome")}
-              name="type"
-              className=""
-            >
-              <FormattedMessage id="TumorVsNormal" defaultMessage="Tumor Vs Normal" />
-            </button>
-            }
-            
-            {project_id !== undefined && alltabList['proteome']&& <button
-              onClick={(e) => changeType(e, "proteome")}
-              name="type"
-              className=""
-            >
-              <FormattedMessage id="TumorVsNormal" defaultMessage="Tumor Vs Normal" />
-            </button>
-            }
-
-            { project_id === undefined && <button
-              onClick={(e) => changeType(e, "mutation")}
-              name="type"
-              className=""
-            >
-              <FormattedMessage id="VariantType" defaultMessage="Variant Type" />
-            </button>
-            }
-
-            {project_id !== undefined && alltabList['dna_mutation']&& <button
-              onClick={(e) => changeType(e, "mutation")}
-              name="type"
-              className=""
-            >
-              <FormattedMessage id="VariantType" defaultMessage="Variant Type" />
-            </button>}
-
-          </div> */}
-
         <div className="tabs_box">
           <div className="tab">
+          {btnClickNote ? <> <p style={{color:'red'}}>No {activeTab !== '1' ? 'mutation' : 'proteome'} file</p> </> : ''}
             <div className="tab_main">
               <ul>
-                {
+                {/* {
                   project_id === undefined &&
-                  <li className={activeTab === '1' ? 'on' : ''}> <button onClick={e => { changeType(e, 'proteome'); setActiveTab('1') }} name='type' >
+                  <li className={activeTab === '1' ? 'on' : ''}> <button onClick={e => {
+                     changeType(e, 'proteome'); setActiveTab('1')
+                    
+                      }} name='type' >
                     <FormattedMessage id="TumorVsNormal" defaultMessage="Tumor Vs Normal" /> </button> </li>
-                }
-                {
-                  project_id !== undefined && alltabList['proteome'] && <li className={activeTab === '1' ? 'on' : ''}> <button onClick={e => {
+                } */}
+                <li className={activeTab === '1' ? 'on' : ''}> <button onClick={e => {
+                  if (alltabList['proteome'] === null) {
+                    setBtnClickNote(true)
+                  } else {
                     changeType(e, 'proteome')
                     setActiveTab('1')
-                  }} name='type' > <FormattedMessage id="TumorVsNormal" defaultMessage="Tumor Vs Normal" /> </button></li>}
-                {
+                    setBtnClickNote(false)
+                  }
+                }} name='type' > <FormattedMessage id="TumorVsNormal" defaultMessage="Tumor Vs Normal" /> </button></li>
+                {/* {
                   project_id === undefined &&
                   <li className={activeTab === '2' ? 'on' : ''}> <button onClick={e => { changeType(e, 'mutation'); setActiveTab('2') }} name='type' >
                     <FormattedMessage id="VariantType" defaultMessage="Variant Type" /> </button> </li>
-                }
-                {
-                  project_id !== undefined && alltabList['dna_mutation'] && <li className={activeTab === '2' ? 'on' : ''}> <button onClick={e => {
+                } */}
+               
+                {/* <li className={activeTab === '2' ? 'on' : ''}> <button onClick={e => {
+                  if (alltabList['dna_mutation'] === null) {
+                    setBtnClickNote(true)
+                  } else {
                     changeType(e, 'mutation')
                     setActiveTab('2')
-                  }} name='type' >  <FormattedMessage id="VariantType" defaultMessage="Variant Type" /> </button></li>}
+                    setBtnClickNote(false)
+                  }
+                }} name='type' >  <FormattedMessage id="VariantType" defaultMessage="Variant Type" /> </button></li> */}
+               
               </ul>
             </div>
           </div>

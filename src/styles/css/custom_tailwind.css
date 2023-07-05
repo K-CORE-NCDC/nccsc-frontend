@@ -199,6 +199,10 @@
     font-size: 16px;
     /* Add any other styles specific to the chart visualization */
   }
+
+  #oncoprint-glyphmap span div:first-child{
+    display: block !important;
+  }
   
   .MultiDataVizErrorMessage {
     padding: 0.5rem;

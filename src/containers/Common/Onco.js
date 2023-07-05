@@ -69,7 +69,7 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss,customFilterJson,pr
             'init_sort_direction': 0
         };
 
-        oncoprint = new window.Oncoprint("#oncoprint-glyphmap", "80vw");
+        oncoprint = new window.Oncoprint("#oncoprint-glyphmap", "1280");
         
         oncoprint.suppressRendering();
         var geneData = []
@@ -384,9 +384,9 @@ const OncoCmp = React.forwardRef(({ width,data, watermarkCss,customFilterJson,pr
 
   return (
     <div>
-        <div className='text-right mx-12'>
-            <button className='h-10' onClick={e=>makezoom(e,'fa-plus')}><ZoomInIcon className='h-7 w-7'/></button> &nbsp;&nbsp;
-            <button className='h-10' onClick={e=>makezoom(e,'fa-minus')}><ZoomOutIcon className='h-7 w-7'/></button>
+        <div className=''>
+            <button className='' onClick={e=>makezoom(e,'fa-plus')}><ZoomInIcon className='h-7 w-7'/></button> &nbsp;&nbsp;
+            <button className='' onClick={e=>makezoom(e,'fa-minus')}><ZoomOutIcon className='h-7 w-7'/></button>
         </div>
         <div ref={ref}  className={`onco ${watermarkCss}`} id='oncoprint-glyphmap'>
         </div>
