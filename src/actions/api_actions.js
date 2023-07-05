@@ -8,22 +8,22 @@ import {
 import config from '../config';
 import '../interceptor/interceptor';
 
-import {getCookie} from '../containers/getCookie'
+import { getCookie } from '../containers/getCookie'
 
 function sendRequest(url, method, data) {
 
   const headers = {}
   headers['X-CSRFToken'] = getCookie('csrftoken')
   const x = axios({
-    method, url, data, withCredentials: true, headers:headers
+    method, url, data, withCredentials: true, headers: headers
   });
   return x;
 }
 
 
-export  const isSessionAndSessionData = async(type, data) => {
-    const url = `${config.auth}session-check/`;
-    return sendRequest(url, type, data);
+export const isSessionAndSessionData = async (type, data) => {
+  const url = `${config.auth}session-check/`;
+  return sendRequest(url, type, data);
 }
 
 export function clearIDPasswordResetPASSWORD() {
@@ -45,8 +45,8 @@ export function clearNotice() {
 }
 
 export function signin(method, data) {
-    const url = `${config.auth}new-registration/`;
-    return sendRequest(url, method, data)
+  const url = `${config.auth}new-registration/`;
+  return sendRequest(url, method, data)
 }
 
 export function login(method, data) {
@@ -96,7 +96,7 @@ export function sendlogManagement(method, data) {
         dispatch({ type: homeConstants.REQUEST_DONE });
       })
 
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -150,7 +150,7 @@ export function sendEmail(method, data) {
         dispatch({ type: homeConstants.REQUEST_DONE });
       })
 
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 export function verifyOTP(method, data) {
@@ -166,7 +166,7 @@ export function verifyOTP(method, data) {
         dispatch({ type: homeConstants.REQUEST_DONE });
       })
 
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -188,7 +188,7 @@ export function interPro(method, data) {
           dispatch({ type: homeConstants.REQUEST_DONE });
         })
 
-        .catch(() => {});
+        .catch(() => { });
     } else {
       // formData.append('container_name',data['container_name'])
       url += `?container_name=${data.container_name}`;
@@ -202,7 +202,7 @@ export function interPro(method, data) {
           dispatch({ type: homeConstants.REQUEST_DONE });
         })
 
-        .catch(() => {});
+        .catch(() => { });
     }
   };
 }
@@ -223,7 +223,7 @@ export function vcfmaf(method, data) {
           dispatch({ type: homeConstants.REQUEST_DONE });
         })
 
-        .catch(() => {});
+        .catch(() => { });
     } else {
       // formData.append('container_name',data['container_name'])
       url += `?container_name=${data.container_name}`;
@@ -237,7 +237,7 @@ export function vcfmaf(method, data) {
           dispatch({ type: homeConstants.REQUEST_DONE });
         })
 
-        .catch(() => {});
+        .catch(() => { });
     }
   };
 }
@@ -255,7 +255,7 @@ export function checkEmail(method, data) {
         dispatch({ type: homeConstants.REQUEST_DONE });
       })
 
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -272,7 +272,7 @@ export function checkMobile(method, data) {
         dispatch({ type: homeConstants.REQUEST_DONE });
       })
 
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -289,7 +289,7 @@ export function changePassword(method, data) {
         dispatch({ type: homeConstants.REQUEST_DONE });
       })
 
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 export function verifyEncodeData(method, data) {
@@ -304,7 +304,7 @@ export function verifyEncodeData(method, data) {
           payload: d.data,
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -364,7 +364,7 @@ export function getUserFiles() {
           payload: d.data,
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -373,12 +373,16 @@ export function DashboardDsummaryData() {
   return sendRequest(url, 'GET', '');
 }
 
-export function GenomicInformation(method, data) {
+export function GenomicInformation(type, data) {
   //   dispatch({ type: homeConstants.DATA_SUMMARY });
-  const url = `${config.auth}genomic-information/`;
-  return sendRequest(url, method, data);
+  const url = `${config.auth}gene-info/`;
+  return sendRequest(url, type, data);
 }
-
+export function GeneInfo(method, data) {
+  //   dispatch({ type: homeConstants.DATA_SUMMARY });
+  const url = `${config.auth}gene-info/`;
+  return sendRequest(url, 'POST', data);
+}
 export function OncoInformation(type, data) {
   const url = `${config.auth}oncoprint/`;
   return sendRequest(url, type, data);
@@ -430,7 +434,7 @@ export function getFusionTable(type, data) {
           });
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -447,7 +451,7 @@ export function getFusionVennDaigram(type, data) {
           });
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -482,12 +486,12 @@ export function getClinicalMaxMinInfo(type, data) {
           });
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
 
-export function SankeyJson(type, data){
+export function SankeyJson(type, data) {
   const url = `${config.auth}getSankeyJson/`;
   return sendRequest(url, type, data);
 }
@@ -585,7 +589,7 @@ export function newFileUpload(fileData, projectName) {
       }
     });
     data.set('project_name', projectName);
-    data.set('csrftoken',getCookie('csrftoken'))
+    data.set('csrftoken', getCookie('csrftoken'))
     const url = `${config.auth}new-user-data-visualization/`;
     sendRequest(url, 'POST', data)
       .then((result) => {
@@ -614,7 +618,7 @@ export function SingleFileUpload(fileData, projectName) {
       }
     });
     data.set('project_name', projectName);
-    data.set('csrftoken',getCookie('csrftoken'))
+    data.set('csrftoken', getCookie('csrftoken'))
     const url = `${config.auth}single-new-user-data-visualization/`;
     sendRequest(url, 'POST', data)
       .then((result) => {
@@ -642,7 +646,7 @@ export function multiFileUpload(fileData, projectName) {
       }
     });
     data.set('project_name', projectName);
-    data.set('csrftoken',getCookie('csrftoken'))
+    data.set('csrftoken', getCookie('csrftoken'))
     const url = `${config.auth}multi-new-user-data-visualization/`;
     sendRequest(url, 'POST', data)
       .then((result) => {
@@ -854,7 +858,7 @@ export function getBreastKeys(data_) {
         });
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -880,7 +884,7 @@ export function getCircosUserData(data_) {
           payload: d.data,
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -905,7 +909,7 @@ export function getOncoUserData(data_) {
           payload: d.data,
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -927,7 +931,7 @@ export function getVolcanoUserData(data_) {
           payload: d.data,
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -977,7 +981,7 @@ export function getUserDataProjectsTableData(project = false) {
       .catch(() => {
         dispatch({
           type: userdataVisualization.USER_DATA_PROJECT_TABLE,
-          payload: {'key':'NotFound'},
+          payload: { 'key': 'NotFound' },
         });
       });
   };
@@ -991,7 +995,7 @@ export function UserDataProjectsTableData(project = false) {
     url = `${config.auth}user-data-projects/`;
   }
   return sendRequest(url, 'GET', '')
-    
+
 };
 
 export function sankeyImageData(data) {
@@ -1012,7 +1016,7 @@ export function sendReportData(type, data) {
           payload: d.data,
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 export function clearPdfLink() {
@@ -1035,7 +1039,7 @@ export function getCircosSamplesRnidList() {
           payload: d.data,
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -1088,7 +1092,7 @@ export function getGeneFusionInformation(type, data) {
         });
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -1105,7 +1109,7 @@ export function getFusionExons(type, data) {
         });
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -1122,7 +1126,7 @@ export function getFusionInformation(type, data) {
         });
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -1181,7 +1185,7 @@ export function getOncoImages(method, data) {
           payload,
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -1209,7 +1213,7 @@ export function getCircosTimelineTable(method, data) {
           payload,
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -1232,7 +1236,7 @@ export function getPassEncodeId(type, data) {
           });
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -1250,7 +1254,7 @@ export function checkUserName(type, data) {
           });
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -1268,7 +1272,7 @@ export function userRegister(type, data) {
         });
         dispatch({ type: homeConstants.REQUEST_DONE });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -1344,7 +1348,7 @@ export function updateDownloadVisualizationPurpose(data) {
         });
         return result;
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -1369,7 +1373,7 @@ export function getFaqData(id) {
           payload: d.data,
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -1384,7 +1388,7 @@ export function getNoticeData(id) {
           payload: d.data,
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -1406,7 +1410,7 @@ export function getQaData(id, data) {
           payload: d.data,
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 

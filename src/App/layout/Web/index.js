@@ -524,23 +524,23 @@ export default function Web(props) {
               </div>
             </div>
             <div id="allMenuWrap" className="allMenuWrap" style={menuTabOpen ? { display: 'block' } : { display: 'none' }}>
-              <div class="imgBox">
+              <div className="imgBox">
                 <dl>
-                  <dt><font class="font1"></font><br /><font class="font1"><font class="font1"><FormattedMessage id="Welcome" defaultMessage='Welcome to the National Cancer Data Center .' /></font></font></dt>
-                  <dd><font class="font1"><font class="font1"><FormattedMessage id="Designated" defaultMessage='The National Cancer Center was designated as the National Cancer Data Center (NCDC) by the Ministry of Health and Welfare in September 2021 under the Cancer Control Act. ' /></font><font class="font1"><FormattedMessage id="Motive" defaultMessage='The National Cancer Data Center will carry out the business of collecting, processing, analyzing, and providing cancer data for research and development for cancer management.' /></font></font></dd>
+                  <dt><font className="font1"></font><br /><font className="font1"><font className="font1"><FormattedMessage id="Welcome" defaultMessage='Welcome to the National Cancer Data Center .' /></font></font></dt>
+                  <dd><font className="font1"><font className="font1"><FormattedMessage id="Designated" defaultMessage='The National Cancer Center was designated as the National Cancer Data Center (NCDC) by the Ministry of Health and Welfare in September 2021 under the Cancer Control Act. ' /></font><font className="font1"><FormattedMessage id="Motive" defaultMessage='The National Cancer Data Center will carry out the business of collecting, processing, analyzing, and providing cancer data for research and development for cancer management.' /></font></font></dd>
                 </dl>
-                <div class="members">
+                <div className="members">
                   <p>
-                    <span><font class="font1"><font class="font1"><FormattedMessage id="PleaseLogIn" defaultMessage='Please log in' /></font></font></span><font class="font1"><font class="font1"> .
+                    <span><font className="font1"><font className="font1"><FormattedMessage id="PleaseLogIn" defaultMessage='Please log in' /></font></font></span><font className="font1"><font className="font1"> .
                     </font></font></p>
                 </div>
-                <div class="btnsMember">
-                  <Link to='/login/'><font class="font1"><font class="font1"><FormattedMessage id="Login" defaultMessage='Login' /></font></font><img src={login_icon} alt="login_icon" /></Link>
-                  <Link to='#'><font class="font1"><font class="font1"><FormattedMessage id="Join" defaultMessage='Register' /></font></font><img src={icon_user04} alt="user" /></Link>
+                <div className="btnsMember">
+                  <Link to='/login/'><font className="font1"><font className="font1"><FormattedMessage id="Login" defaultMessage='Login' /></font></font><img src={login_icon} alt="login_icon" /></Link>
+                  <Link to='#'><font className="font1"><font className="font1"><FormattedMessage id="Join" defaultMessage='Register' /></font></font><img src={icon_user04} alt="user" /></Link>
                 </div>
-                <div class="utils">
-                  <Link to='/login/'><font class="font1"><font class="font1"><FormattedMessage id="Login" defaultMessage='Log in' /></font></font></Link>
-                  <Link to='#'><font class="font1"><font class="font1"><FormattedMessage id="Join" defaultMessage='Register' /></font></font></Link>
+                <div className="utils">
+                  <Link to='/login/'><font className="font1"><font className="font1"><FormattedMessage id="Login" defaultMessage='Log in' /></font></font></Link>
+                  <Link to='#'><font className="font1"><font className="font1"><FormattedMessage id="Join" defaultMessage='Register' /></font></font></Link>
                   <div className="language">
                     <a className="on" onClick={() => { setShowLangMenu(!showLangMenu) }}><img src={icon_lang} alt="lang" /></a>
                     <ul style={showLangMenu ? { display: "block" } : { display: 'none' }}>

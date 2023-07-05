@@ -109,6 +109,13 @@ export default function DataVisualization() {
           screenCapture,
           setToFalseAfterScreenCapture
         );
+      case "genomic-data":
+        return Charts.genomic(
+          w,
+          state,
+          screenCapture,
+          setToFalseAfterScreenCapture
+        );
       default:
         return false;
     }
@@ -137,10 +144,10 @@ export default function DataVisualization() {
 
   const callback = useCallback(({ filters, filterKeyandValues, value, genes }) => {
     let g = []
-    if(genes.includes(' ')){
+    if (genes.includes(' ')) {
       g = genes.split(' ')
     }
-    else{
+    else {
       g.push(genes)
     }
     if (filters && filterKeyandValues) {
@@ -150,16 +157,16 @@ export default function DataVisualization() {
       }));
       // setfilterApplied(true);
     }
-    
+
     if (value && genes) {
-    
+
       setState((prevState) => ({
         ...prevState,
         genes: g,
         type: value,
       }));
     }
-    
+
   }, []);
 
 
@@ -188,7 +195,7 @@ export default function DataVisualization() {
   }, [tab, tabName, chartName, BrstKeys]);
 
   useEffect(() => {
-    console.log('from initial use effect component did moutn-----')
+    console.log('from initial use effect component did mount-----')
     let w = elementRef.current.getBoundingClientRect().width;
     setWidth(w);
     setBoolChartState(false);
@@ -204,6 +211,7 @@ export default function DataVisualization() {
       "cnv",
       "heatmap",
       "box",
+      "genomic-data"
     ];
     let gridData = []
 
@@ -217,6 +225,9 @@ export default function DataVisualization() {
       } else if (element === "onco") {
         name = "";
         element = "OncoPrint";
+      } else if (element === "genomic-data") {
+        name = "";
+        element = "genomic-data";
       }
 
       let gridobj = { title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/singledata-upload/${element}/` }
@@ -233,7 +244,7 @@ export default function DataVisualization() {
       // if(userProjectDetails && 'key' in  userProjectDetails &&  userProjectDetails.key === 'NotFound'){
       //   history.push('/login')
       // }
-      if (userProjectDetails &&  'available_steps' in userProjectDetails) {
+      if (userProjectDetails && 'available_steps' in userProjectDetails) {
         projectAvailableSteps = userProjectDetails.available_steps;
       }
 
@@ -250,6 +261,8 @@ export default function DataVisualization() {
             tabList.push("CNV");
           } else if (stepName === "scatter") {
             tabList.push("correlation");
+          } else if (stepName === "genomic-data") {
+            tabList.push("genomic-data");
           } else {
             tabList.push(stepName);
           }
@@ -271,7 +284,7 @@ export default function DataVisualization() {
     }
   }, [project_id])
 
-    
+
   useEffect(() => {
     console.log('-----from use')
     if (project_id !== undefined) {
@@ -283,7 +296,7 @@ export default function DataVisualization() {
         setCharts((prevState) => ({
           ...prevState,
           viz: chartx,
-        }));  
+        }));
       }
     } else {
       // if (state.genes.length > 0) {
@@ -291,7 +304,7 @@ export default function DataVisualization() {
       //   dispatch(getBreastKeys(state));
       // }
     }
-  }, [ state]);
+  }, [state]);
 
   const breadCrumbs = {
     '/visualise-singledata/': [
