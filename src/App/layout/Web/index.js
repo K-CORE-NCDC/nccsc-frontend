@@ -40,14 +40,7 @@ AOS.init({
   delay: 100
 });
 
-let parseJwt = (islogin1) => {
-  var base64Url = islogin1 && islogin1.split('.')[1];
-  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-  var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
-    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-  }).join(''));
-  return JSON.parse(jsonPayload);
-}
+
 
 export const Home = (parentProps) => {
   return route.map((route, index) => {
@@ -113,7 +106,6 @@ export default function Web(props) {
     if (cookieExpiry && targetDateTime) {
       // Calculates the delay in milliseconds until the target date and time
       const delay = targetDateTime - Date.now();
-      console.log('delay', delay);
       // Start a timeout to redirect to logout URL after the delay
       const timeoutId = setTimeout(() => {
         Swal.fire({
@@ -266,18 +258,7 @@ export default function Web(props) {
       var time = today.getHours() + ":" + (today.getMinutes() <= 9 ? `00` : today.getMinutes());
       // let check_popup = localStorage.getItem('show_popup') 
       setCurrentTime(time);
-      // if (!countJson) {
-      //   let data = DashboardCount()
-      //   data.then((result) => {
-      //     if (result.status === 200) {
-      //       setCountJson(result.data)
-      //     }
-      //     else {
-      //       setCountStatus(204)
-      //       setCountJson({})
-      //     }
-      //   })
-      // }
+      
     }
     setCurrentDate(date);
     let path = window.location.pathname
@@ -505,7 +486,7 @@ export default function Web(props) {
                 <nav id="gnb" className="gnb">
                   <ul>
                     {childMenu?.mainmenu?.items?.map((item, i) => (
-                      <li
+                      <li key={'menuli_'+i}
                         ref={buttonRef} onClick={() => {
                           setActiveclassPath(item?.id)
                           setActiveClassIndex(item?.index)
@@ -558,7 +539,7 @@ export default function Web(props) {
               <div className="allMenu">
                 <ul>
                   {childMenu?.mainmenu?.items?.map((item, i) => (
-                    <li><a className="menu_li">{item?.title}</a></li>
+                    <li key={'allMenu_li_'+i}><a className="menu_li">{item?.title}</a></li>
                   ))}
                 </ul>
               </div>

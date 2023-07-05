@@ -88,62 +88,62 @@ const MultiDataVisualization = () => {
         <tr >
           <td style={{fontSize:'14px'}}>Clinical Information</td>
           <td></td>
-          <td><span class="material-icons">radio_button_unchecked</span></td>
+          <td><span className="material-icons">radio_button_unchecked</span></td>
           <td></td>
-          <td><span class="material-icons">radio_button_unchecked</span></td>
-          <td><span class="material-icons">radio_button_unchecked</span></td>
-          <td><span class="material-icons">radio_button_unchecked</span></td>
-          <td><span class="material-icons">radio_button_unchecked</span> </td>
-          <td><span class="material-icons">radio_button_unchecked</span> </td>
+          <td><span className="material-icons">radio_button_unchecked</span></td>
+          <td><span className="material-icons">radio_button_unchecked</span></td>
+          <td><span className="material-icons">radio_button_unchecked</span></td>
+          <td><span className="material-icons">radio_button_unchecked</span> </td>
+          <td><span className="material-icons">radio_button_unchecked</span> </td>
         </tr>
         <tr>
           <td>Dna Mutation</td>
-          <td><span class="material-icons">radio_button_unchecked</span></td>
+          <td><span className="material-icons">radio_button_unchecked</span></td>
           <td></td>
           <td></td>
-          <td><span class="material-icons">radio_button_unchecked</span></td>
-          <td><span class="material-icons">radio_button_unchecked</span></td>
+          <td><span className="material-icons">radio_button_unchecked</span></td>
+          <td><span className="material-icons">radio_button_unchecked</span></td>
           <td></td>
           <td></td>
           <td></td>
         </tr>
         <tr>
           <td>RNA</td>
-          <td><span class="material-icons">radio_button_unchecked</span></td>
-          <td><span class="material-icons">radio_button_unchecked</span></td>
-          <td><span class="material-icons">radio_button_unchecked</span></td> 
+          <td><span className="material-icons">radio_button_unchecked</span></td>
+          <td><span className="material-icons">radio_button_unchecked</span></td>
+          <td><span className="material-icons">radio_button_unchecked</span></td> 
           <td></td>
-          <td><span class="material-icons">radio_button_unchecked</span></td>
-          <td><span class="material-icons">radio_button_unchecked</span></td> 
+          <td><span className="material-icons">radio_button_unchecked</span></td>
+          <td><span className="material-icons">radio_button_unchecked</span></td> 
           <td></td>
           <td></td>
         </tr>
         <tr>
           <td>Proteome</td>
-          <td><span class="material-icons">radio_button_unchecked</span></td>
-          <td><span class="material-icons">radio_button_unchecked</span></td>
-          <td><span class="material-icons">radio_button_unchecked</span></td> 
+          <td><span className="material-icons">radio_button_unchecked</span></td>
+          <td><span className="material-icons">radio_button_unchecked</span></td>
+          <td><span className="material-icons">radio_button_unchecked</span></td> 
           <td></td>
-          <td><span class="material-icons">radio_button_unchecked</span></td>
-          <td><span class="material-icons">radio_button_unchecked</span></td> 
+          <td><span className="material-icons">radio_button_unchecked</span></td>
+          <td><span className="material-icons">radio_button_unchecked</span></td> 
           <td></td>
           <td></td>
         </tr>
         <tr>
           <td>CNV</td>
-          <td><span class="material-icons">radio_button_unchecked</span></td>
+          <td><span className="material-icons">radio_button_unchecked</span></td>
           <td></td>
           <td></td>
           <td></td>
           <td></td>
           <td></td>
           <td></td>
-          <td><span class="material-icons">radio_button_unchecked</span></td>
+          <td><span className="material-icons">radio_button_unchecked</span></td>
         </tr>
         <tr>
           <td>Methylation</td>
-          <td><span class="material-icons">radio_button_unchecked</span></td>
-          <td><span class="material-icons">radio_button_unchecked</span></td>
+          <td><span className="material-icons">radio_button_unchecked</span></td>
+          <td><span className="material-icons">radio_button_unchecked</span></td>
           <td></td>
           <td></td>
           <td></td>
@@ -154,7 +154,7 @@ const MultiDataVisualization = () => {
         <tr>
           <td>Phosphorylation</td>
           <td></td>
-          <td><span class="material-icons">radio_button_unchecked</span></td>
+          <td><span className="material-icons">radio_button_unchecked</span></td>
           <td></td>
           <td></td>
           <td></td>
@@ -164,13 +164,13 @@ const MultiDataVisualization = () => {
         </tr>
         <tr>
           <td>Fusion</td>
-          <td><span class="material-icons">radio_button_unchecked</span></td>
+          <td><span className="material-icons">radio_button_unchecked</span></td>
           <td></td>
           <td></td>
           <td></td>
           <td></td>
           <td></td>
-          <td><span class="material-icons">radio_button_unchecked</span></td>
+          <td><span className="material-icons">radio_button_unchecked</span></td>
           <td></td>
         </tr>
       </tbody>

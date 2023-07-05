@@ -31,8 +31,6 @@ import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
 
 export default function DataVisualization() {
   const context = useContext(Context);
-  const [koreanlanguage, setKoreanlanguage] = useState(false);
-  const [Englishlanguage, setEnglishlanguage] = useState(true);
  
   const elementRef = useRef(null);
   const dispatch = useDispatch();
@@ -75,15 +73,6 @@ export default function DataVisualization() {
     }
   };
 
-  useEffect(() => {
-    if (context["locale"] === "kr-KO") {
-      setKoreanlanguage(true);
-      setEnglishlanguage(false);
-    } else {
-      setKoreanlanguage(false);
-      setEnglishlanguage(true);
-    }
-  }, [context]);
 
 
   const submitFilter = (e) => {
@@ -422,17 +411,17 @@ export default function DataVisualization() {
         <div className="ptn">
           <div className="auto">
             {/* Filter and Gene Filter */}
-            <div className="Flex">
+            <section >
 
-              <div className="FilterGeneSet">
+              <div className="block text-center">
                 {/* Toggle and Filter */}
 
                { toggle && <Popover className="relative">
                   {({ open }) => {
                     return (
                       <>
-                        <div>
-                          <Popover.Button>
+                        <div className="w-full">
+                          <Popover.Button className={'selectBox'}>
                             <div className="GeneSetgeneSetButton">
                               <div className="flex-1">Clinical info. Re-filtering</div>
                               <div className="w-20">
@@ -451,14 +440,14 @@ export default function DataVisualization() {
                             leaveTo="opacity-0 translate-y-1"
                           >
                             <Popover.Panel className="GeneSetPopoverPanel">
-                              <div className="FilterDiv" >
+                              {/* <div className="FilterDiv" > */}
                                 <Filter
                                   parentCallback={callback}
                                   filterState={state["filter"]}
                                   set_screen={screen_call}
                                   project_id={project_id}
                                 />
-                              </div>
+                              {/* </div> */}
                               {/* </div> */}
                             </Popover.Panel>
                           </Transition>
@@ -469,12 +458,12 @@ export default function DataVisualization() {
                 </Popover>
                 }
 
-                <Popover className="relative" style={{ margin: 'auto' }}>
+                <Popover className="relative gene_main_box" style={{ margin: 'auto' }}>
                   {({ open }) => {
                     return (
                       <>
-                        <div>
-                          <Popover.Button>
+                        <div className='w-full'>
+                          <Popover.Button className={'selectBox'}>
                             <div className="GeneSetgeneSetButton">
                               <div className="flex-1">Gene set Re-filtering</div>
                               <div className="w-20">
@@ -503,7 +492,7 @@ export default function DataVisualization() {
 
               </div>
 
-            </div>
+            </section>
 
             {
               gridData && !tabName &&
