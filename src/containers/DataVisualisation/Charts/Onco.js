@@ -279,10 +279,11 @@ export default function DataOnco({ width, inputData, screenCapture, setToFalseAf
   return (
 
     <>
+    {console.log('width', width)}
       {optionChoices &&
-        <div className='grid'>
-          <div className='p-5 text-right m-5'>
-            <div className='flex flex-wrap float-left'>
+        <div className=''>
+          <div className=''>
+            <div className=''>
               {!noGeneData && <>
                 <label><FormattedMessage id="Clinical_Filters_heatmap" defaultMessage='Clinical Attribute annotation' /></label>
                 <Multiselect
@@ -302,10 +303,10 @@ export default function DataOnco({ width, inputData, screenCapture, setToFalseAf
           :
           <div>
             {activeCmp &&
-              <div className="grid ">
-                <div className="col-span-2">
-                  {showOnco && <div className='text-left'>
-                    <div className="pl-10">
+              <div className="">
+                <div className="">
+                  {showOnco && <div className=''>
+                    <div className="">
                       <h3>
                         <FormattedMessage id="GlobalMutationDistribution" defaultMessage="Global Mutation Distribution :distribution of total mutation" />
                       </h3>

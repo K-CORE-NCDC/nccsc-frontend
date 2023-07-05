@@ -49,7 +49,7 @@ export default function DataVisualization() {
   const [chartName, setChartName] = useState(tab === 'home' ? undefined : tab);
   const [tabName, setTabName] = useState(tab === 'home' ? undefined : tab)
   const [toggle, setToggle] = useState(true);
-
+  
   const [screenCapture, setScreenCapture] = useState(false);
   const setToFalseAfterScreenCapture = (param = false) => {
     if (param === false) {
@@ -71,6 +71,7 @@ export default function DataVisualization() {
   };
 
   const LoadChart = (w, type) => {
+    console.log('type' , type)
     switch (type) {
       case "circos":
         return Charts.circos(
@@ -85,7 +86,7 @@ export default function DataVisualization() {
           elementRef.current.getBoundingClientRect().width,
           state,
           screenCapture,
-          setToFalseAfterScreenCapture
+          setToFalseAfterScreenCapture,
         );
       case "heatmap":
         return Charts.heatmap(
@@ -95,7 +96,7 @@ export default function DataVisualization() {
           BrstKeys,
           setToFalseAfterScreenCapture
         );
-      case "cnv":
+      case "CNV":
         return Charts.igv(
           w,
           state,
@@ -143,13 +144,13 @@ export default function DataVisualization() {
 
 
   const callback = useCallback(({ filters, filterKeyandValues, value, genes }) => {
-    let g = []
-    if(genes.includes(' ')){
-      g = genes.split(' ')
-    }
-    else{
-      g.push(genes)
-    }
+    // let g = []
+    // if(genes.includes(' ')){
+    //   g = genes.split(' ')
+    // }
+    // else{
+    //   g.push(genes)
+    // }
     if (filters && filterKeyandValues) {
       setState((prevState) => ({
         ...prevState,
@@ -157,33 +158,26 @@ export default function DataVisualization() {
       }));
       // setfilterApplied(true);
     }
-    else if (value && genes) {
+    
+    if (value && genes) {
+    
       setState((prevState) => ({
         ...prevState,
-        genes: g,
+        genes: genes,
         type: value,
       }));
     }
-    setBoolChartState(false);
-    setChartName(tabName);
-  
+    
   }, []);
 
-  useEffect(() => {
-    let chartx = LoadChart(width, tabName);
-    setCharts((prevState) => ({
-      ...prevState,
-      viz: chartx,
-    }));
-  }, [state])
 
-  useEffect(() => {
-    let chartx = LoadChart(width, tabName);
-    setCharts((prevState) => ({
-      ...prevState,
-      viz: chartx,
-    }));
-  }, [screenCapture]);
+  // useEffect(() => {
+  //   let chartx = LoadChart(width, tabName);
+  //   setCharts((prevState) => ({
+  //     ...prevState,
+  //     viz: chartx,
+  //   }));
+  // }, [screenCapture]);
 
   useEffect(() => {
     setTabName(tab === 'home' ? undefined : tab)
@@ -202,6 +196,7 @@ export default function DataVisualization() {
   }, [tab, tabName, chartName, BrstKeys]);
 
   useEffect(() => {
+    
     let w = elementRef.current.getBoundingClientRect().width;
     setWidth(w);
     setBoolChartState(false);
@@ -274,17 +269,38 @@ export default function DataVisualization() {
 
   }, [project_id, userProjectDetails, project_id_status]);
 
+  // useEffect(() => {
+  //   if (project_id) {
+  //     dispatch(getUserDefinedFilter({
+  //       "project_id": project_id
+  //     }));
+  //     // dispatch(samplesCount("POST", {}));
+  //     dispatch(getBreastKeys(state));
+
+  //   }
+  // }, [project_id])
+
+    
   useEffect(() => {
-    if (project_id) {
-      dispatch(getUserDefinedFilter({
-        "project_id": project_id
-      }));
-      // dispatch(samplesCount("POST", {}));
-      dispatch(getBreastKeys(state));
-
+   
+    if (project_id !== undefined) {
+      if (state.genes.length > 0) {
+        dispatch(samplesCount("POST", { project_id: project_id }));
+        dispatch(getBreastKeys(state));
+        setBoolChartState(false);
+        let chartx = LoadChart(width, tabName);
+        setCharts((prevState) => ({
+          ...prevState,
+          viz: chartx,
+        }));  
+      }
+    } else {
+      if (state.genes.length > 0) {
+        dispatch(samplesCount("POST", {}));
+        dispatch(getBreastKeys(state));
+      }
     }
-  }, [project_id])
-
+  }, [ state]);
 
   const breadCrumbs = {
     '/visualise-singledata/': [

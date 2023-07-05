@@ -54,8 +54,8 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
           .catch((e) => {
             setScatterJson({ 'status': 204 })
           });
-          setNoGeneData(false)
-      }else{
+        setNoGeneData(false)
+      } else {
         setNoGeneData(true)
       }
     }
@@ -112,8 +112,8 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
         .catch((e) => {
           setScatterJson({ 'status': 204 })
         });
-      
-    } 
+
+    }
   }
 
   function onRemove(selectedList, removedItem) {
@@ -177,7 +177,7 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
       }
     }
 
-  }, [scatterJson , noGeneData])
+  }, [scatterJson, noGeneData])
 
   function selectAll() {
     if (selectall === false) {
@@ -235,31 +235,29 @@ export default function Scatter({ width, inputData, screenCapture, setToFalseAft
 
 
   return (
-    <div>
-      <div className='p-5 text-right m-5'>
-        <div className='grid grid-rows-3'>
-          <div className="flex float-left xs:flex-wrap">
-            <div className='p-3 ml-6 xs:text-sm lg:text-xl md:text-xl'><FormattedMessage id="Selected Gene Is" defaultMessage="Selected Gene Is" /></div>
-            <div>
-              <Multiselect
-                options={genesHtml} // Options to display in the dropdown
-                selectedValues={selectedValue} // Preselected value to persist in dropdown
-                onSelect={onSelect} // Function will trigger on select event
-                onRemove={onRemove} // Function will trigger on remove event
-                displayValue="name" // Property name to display in the dropdown options
-              />
-            </div>
-            <div className="mt-3 lg:ml-4 xs:ml-10">
-              <label className="inline-flex items-center">
-                <input type="checkbox" className="form-checkbox" checked={selectall} onChange={selectAll} />
-                <span className="ml-2"><strong className="lg:text-xl xs:text-sm"><FormattedMessage id="Select all" defaultMessage="Select all" /></strong></span>
-              </label>
-            </div>
+    <div style={{ marginTop: '5%', border: '1px solid #d6d6d6', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.05)', padding: '5%' }}>
+      <div>
+        <div style={{display:'flex'}}>
+          <div style={{paddingTop:'1%'}}><FormattedMessage id="Selected Gene Is" defaultMessage="Selected Gene Is" /></div>
+          <div style={{paddingLeft:'1%'}}>
+            <Multiselect
+              options={genesHtml} // Options to display in the dropdown
+              selectedValues={selectedValue} // Preselected value to persist in dropdown
+              onSelect={onSelect} // Function will trigger on select event
+              onRemove={onRemove} // Function will trigger on remove event
+              displayValue="name" // Property name to display in the dropdown options
+            />
           </div>
-          <div className="flex float-left pt-6 pl-3 ml-6">
-            {showScatter && scatterJson['r_value'] ? <h4 className="xs:text-sm sm:text-xl lg:text-2xl"><strong>r:</strong> {scatterJson['r_value']}</h4> : ""}
-            {showScatter && scatterJson['p_value'] ? <h4 className="ml-8 xs:text-sm sm:text-xl lg:text-2xl"><strong>P-value:</strong> {scatterJson['p_value']}</h4> : ""}
+          <div style={{paddingLeft:'15%' , paddingTop:'1%'}}>
+            <label className="">
+              <input type="checkbox" className="" checked={selectall} onChange={selectAll} />
+              <span className="ml-2"><strong className=""><FormattedMessage id="Select all" defaultMessage="Select all" /></strong></span>
+            </label>
           </div>
+        </div>
+        <div style={{paddingTop:'3%', justifyContent:'flex-start', display:'flex', gap:'5%'}}>
+          {showScatter && scatterJson['r_value'] ? <h4 className=""><strong>r:</strong> {scatterJson['r_value']}</h4> : ""}
+          {showScatter && scatterJson['p_value'] ? <h4 className=""><strong>P-value:</strong> {scatterJson['p_value']}</h4> : ""}
         </div>
       </div>
       {

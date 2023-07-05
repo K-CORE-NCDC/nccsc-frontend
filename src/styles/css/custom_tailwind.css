@@ -208,7 +208,12 @@
     font-size: 12px;
   }
 
-  @media (min-width: 768px) {
+  #oncoprint-glyphmap span div:first-child{
+    display: block !important;
+  }
+  
+  .MultiDataVizErrorMessage {
+    padding: 0.5rem;
     font-size: 14px;
   }
 

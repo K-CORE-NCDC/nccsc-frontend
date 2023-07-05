@@ -10,6 +10,7 @@ import { FormattedMessage } from 'react-intl';
 import { useParams, useHistory } from "react-router-dom";
 
 export default function DataLolipop({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
+  console.log('load chart called-----')
   const reference = useRef()
   const history = useHistory();
   const [genesHtml, setGenesHtml] = useState([])
@@ -33,6 +34,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   const [alltabList, setAllTabList] = useState({});
   let { project_id } = useParams();
   const [activeTab, setActiveTab] = useState('1')
+  const [btnClickNote, setBtnClickNote] = useState(false)
 
   const tabList = useSelector(
     (data) => data.dataVisualizationReducer
@@ -40,6 +42,17 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
 
   useEffect(() => {
     if ('userProjectsDataTable' in tabList) {
+      let _data = tabList.userProjectsDataTable
+      if (_data?.viz_type === 'single') {
+        if (_data["phospho"] !== null) {
+          setActiveTab('2')
+          setTableType('phospho')
+        } else if (_data["dna_mutation"]) {
+          setActiveTab('1')
+        }
+      } else {
+        setActiveTab('1')
+      }
       setAllTabList(tabList.userProjectsDataTable)
     }
 
@@ -117,7 +130,9 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
 
   useEffect(() => {
     if (inputState && 'genes' in inputState) {
-      let g =  inputState['genes']
+      let g = inputState['genes']
+      console.log('ggg', g[0], typeof (g))
+      console.log('input', inputState)
       loadGenesDropdown(g)
       setGene(g[0])
       if (inputState.type !== '') {
@@ -149,16 +164,13 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
         setNoGeneData(false)
       }
       setTableType(tableType)
-    } else {
+    }
+    else {
       setNoGeneData(true)
     }
   }, [inputState])
 
-  // {"genes":"ATRX","filter":"","type":"major-genes","table_type":"Mutation"}
-
-  // const classNames = (...classes) => {
-  //   return classes.filter(Boolean).join(' ')
-  // }
+ 
 
   const generateColor = () => {
     var letters = "0123456789ABCDEF";
@@ -370,7 +382,6 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
         }
 
         let domains_data = lolipopJson['domains']
-        // if (domains_data) {
 
         for (let i = 0; i < domains_data.length; i++) {
           let l = (domains_data[i].end - domains_data[i].start) / domains_data[i]['domain'].length
@@ -504,34 +515,44 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
           {activeCmp &&
             <Fragment>
               <div className="tabs_box">
-              <div className="tab">
-                <div className="tab_main">
-                  <ul>
-                    {
-                      project_id === undefined &&
-                      <li className={activeTab === '1' ? 'on' : ''}> <button id='Mutation' onClick={e => { changeType(e, 'Mutation'); setActiveTab('1') }} name='type' >
-                         <FormattedMessage id="Mutation" defaultMessage='Mutation' /> </button> </li>
-                    }
-                    {
-                      project_id !== undefined && alltabList['dna_mutation'] && <li className={activeTab === '1' ? 'on' : ''}> <button onClick={e => {
-                        changeType(e, 'Mutation')
-                        setActiveTab('1')
-                      }} name='type' >  <FormattedMessage id="Mutation" defaultMessage='Mutation' /> </button></li>}
-                    {
-                      project_id === undefined &&
-                      <li className={activeTab === '2' ? 'on' : ''}> <button id="Phospho" onClick={e => { changeType(e, 'Phospho'); setActiveTab('2') }} name='type' >
-                         <FormattedMessage id="Phospho" defaultMessage='Phospho' />  </button> </li>
-                    }
-                    {
-                      project_id !== undefined && alltabList['phospho'] && <li className={activeTab === '2' ? 'on' : ''}> <button id='Phospho' onClick={e => {
-                        changeType(e, 'Phospho')
-                        setActiveTab('2')
-                      }} name='type' >  <FormattedMessage id="Phospho" defaultMessage='Phospho' /> </button></li>}
-                  </ul>
+                <div className="tab">
+                  {btnClickNote ? <> <p style={{color:'red'}}>No {activeTab !== '1' ? 'mutation' : 'phospho'} file</p> </> : ''}
+                  <div className="tab_main">
+                    <ul>
+                      {
+                        project_id === undefined &&
+                        <li className={activeTab === '1' ? 'on' : ''}> <button disabled={alltabList['dna_mutation'] === null} id='Mutation' onClick={e => { changeType(e, 'Mutation'); setActiveTab('1') }} name='type' >
+                          <FormattedMessage id="Mutation" defaultMessage='Mutation' /> </button> </li>
+                      }
+                      <li className={activeTab === '1' ? 'on' : ''}> <button  onClick={(e) => {
+                        if (alltabList['dna_mutation'] === null) {
+                          setBtnClickNote(true)
+                        } else {
+                          changeType(e, 'Mutation')
+                          setActiveTab('1')
+                          setBtnClickNote(false)
+                        }
+                      }} name='type' >  <FormattedMessage id="Mutation" defaultMessage='Mutation' /> </button></li>
+                      {
+                        project_id === undefined &&
+                        <li className={activeTab === '2' ? 'on' : ''}> <button disabled={alltabList['phospho'] === null} id="Phospho" onClick={e => { changeType(e, 'Phospho'); setActiveTab('2') }} name='type' >
+                          <FormattedMessage id="Phospho" defaultMessage='Phospho' />  </button> </li>
+                      }
+                      <li className={activeTab === '2' ? 'on' : ''}> <button id='Phospho'
+                        onClick={(e) => {
+                          if (alltabList['phospho'] === null) {
+                            setBtnClickNote(true)
+                          } else {
+                            changeType(e, 'Phospho')
+                            setActiveTab('2')
+                            setBtnClickNote(false)
+                          }
+                        }} name='type' >  <FormattedMessage id="Phospho" defaultMessage='Phospho' /> </button></li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
-              <div style={{display:'flex' , justifyContent:'flex-end'}}>
+              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                 <div >
                   <div><FormattedMessage id="Selected Gene" defaultMessage='Selected Gene Is' /></div>
                   <div>
