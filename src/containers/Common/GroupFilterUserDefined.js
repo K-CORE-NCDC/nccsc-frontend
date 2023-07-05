@@ -2,17 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import { useParams } from "react-router-dom";
-const LabelCss = "block text-left text-blue-700-700 text-lg  font-bold mb-2";
-const checkBoxCss =
-  "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline";
-const numberInputBoxCss =
-  "shadow appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline";
+
 let abc = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"];
+
 let UserDefinedGroupFilters = ({
   volcanoType,
   parentCallback,
   groupFilters,
   viz_type,
+  vizType
 }) => {
   const  [clinicalMaxMinInfo, setClinicalMaxMinInfo] = useState({})
   const userDefinedFilter = useSelector(
@@ -202,8 +200,8 @@ let UserDefinedGroupFilters = ({
           if (min_1_from[obj]) {
             if (
               (min_1_from[obj].classList &&
-                (min_1_from[obj].classList.contains("border-2") ||
-                  min_1_from[obj].classList.contains("border-red-400"))) ||
+                (min_1_from[obj].classList.contains("Border2") ||
+                  min_1_from[obj].classList.contains("BorderRed400"))) ||
               min_1_from[obj].value === ""
             ) {
               send_response = false;
@@ -218,8 +216,8 @@ let UserDefinedGroupFilters = ({
           if (max_1_to[obj]) {
             if (
               (max_1_to[obj].classList &&
-                (max_1_to[obj].classList.contains("border-2") ||
-                  max_1_to[obj].classList.contains("border-red-400"))) ||
+                (max_1_to[obj].classList.contains("Border2") ||
+                  max_1_to[obj].classList.contains("BorderRed400"))) ||
               max_1_to[obj].value === ""
             ) {
               send_response = false;
@@ -234,8 +232,8 @@ let UserDefinedGroupFilters = ({
           if (min_2_from[obj]) {
             if (
               (min_2_from[obj].classList &&
-                (min_2_from[obj].classList.contains("border-2") ||
-                  min_2_from[obj].classList.contains("border-red-400"))) ||
+                (min_2_from[obj].classList.contains("Border2") ||
+                  min_2_from[obj].classList.contains("BorderRed400"))) ||
               min_2_from[obj].value === ""
             ) {
               send_response = false;
@@ -250,8 +248,8 @@ let UserDefinedGroupFilters = ({
           if (max_2_to[obj]) {
             if (
               (max_2_to[obj].classList &&
-                (max_2_to[obj].classList.contains("border-2") ||
-                  max_2_to[obj].classList.contains("border-red-400"))) ||
+                (max_2_to[obj].classList.contains("Border2") ||
+                  max_2_to[obj].classList.contains("BorderRed400"))) ||
               max_2_to[obj].value === ""
             ) {
               send_response = false;
@@ -345,24 +343,24 @@ let UserDefinedGroupFilters = ({
         one_from < one_min_value ||
         one_from > one_to
       ) {
-        one_from_0.classList.add("border-2");
-        one_from_0.classList.add("border-red-400");
-        one_to_0.classList.add("border-2");
-        one_to_0.classList.add("border-red-400");
+        one_from_0.classList.add("Border2");
+        one_from_0.classList.add("BorderRed400");
+        one_to_0.classList.add("Border2");
+        one_to_0.classList.add("BorderRed400");
       } else if (
         one_to > one_max_value ||
         one_to < one_min_value ||
         one_to < one_from
       ) {
-        one_from_0.classList.add("border-2");
-        one_from_0.classList.add("border-red-400");
-        one_to_0.classList.add("border-2");
-        one_to_0.classList.add("border-red-400");
+        one_from_0.classList.add("Border2");
+        one_from_0.classList.add("BorderRed400");
+        one_to_0.classList.add("Border2");
+        one_to_0.classList.add("BorderRed400");
       } else {
-        one_from_0.classList.remove("border-2");
-        one_from_0.classList.remove("border-red-400");
-        one_to_0.classList.remove("border-2");
-        one_to_0.classList.remove("border-red-400");
+        one_from_0.classList.remove("Border2");
+        one_from_0.classList.remove("BorderRed400");
+        one_to_0.classList.remove("Border2");
+        one_to_0.classList.remove("BorderRed400");
         setUserGivenInputValues((prevState) => ({
           ...prevState,
           [one_from_0.name]: one_from_0.value,
@@ -380,6 +378,7 @@ let UserDefinedGroupFilters = ({
     }
   };
  
+  // Chnage
   useEffect(() => {
     if (groupFilters && Object.keys(groupFilters).length > 0) {
       let filterType = groupFilters.type;
@@ -401,16 +400,16 @@ let UserDefinedGroupFilters = ({
         if (i in groupFilters || `${i}` in groupFilters) {
           counter += 1;
           valsArray.push(
-            <div key={`${i}-text-${Math.random()}`} className="mb-4">
+            <div key={`${i}-text-${Math.random()}`} className="MarginBottom4">
               <div>
-                <div className={LabelCss} htmlFor="username">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                   {`Group ${i}`}
                 </div>
                 <div>
                   <input
                     value={groupFilters[i]}
                     onChange={onChangeFilterInput}
-                    className={checkBoxCss}
+                    className="CheckBoxCss"
                     name={`${i}`}
                     type="text"
                     placeholder="Enter Text"
@@ -422,16 +421,16 @@ let UserDefinedGroupFilters = ({
         } else if (`${i}_from` in groupFilters) {
           counter += 1;
           valsArray.push(
-            <div key={`number-${i}${Math.random()}`} className="mb-4">
+            <div key={`number-${i}${Math.random()}`} className="MarginBottom4">
               <div>
-                <div className={LabelCss} htmlFor="username">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                   {`Group ${i}`}
                 </div>
                 <div>
                   <input
                     defaultValue={groupFilters[`${i}_from`]}
                     onChange={onChangeFilterInput}
-                    className={numberInputBoxCss}
+                    className="NumberInputCss"
                     name={`${i}_from`}
                     type="number"
                     placeholder="from"
@@ -439,7 +438,7 @@ let UserDefinedGroupFilters = ({
                   <input
                     defaultValue={groupFilters[`${i}_to`]}
                     onChange={onChangeFilterInput}
-                    className={numberInputBoxCss}
+                    className="NumberInputCss"
                     name={`${i}_to`}
                     type="number"
                     placeholder="to"
@@ -474,13 +473,13 @@ let UserDefinedGroupFilters = ({
     switch (compCase) {
       case "static":
         return (
-          <div key={compCase} className="mb-4">
+          <div key={compCase} className="MarginBottom4">
             {["A Group", "B Group"].map((e, index) => (
-              <div key={e} className="border mt-4 p-1">
-                <div className={LabelCss} htmlFor="yes">
+              <div key={e} className="Border MarginTop4 P1">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="yes">
                   {e}
                 </div>
-                <h1 id="yes" className="text-left mt-2">
+                <h1 id="yes" className=" MarginTop2">
                   {groupLabels[index]}
                 </h1>
               </div>
@@ -492,15 +491,15 @@ let UserDefinedGroupFilters = ({
         if (viz_type === "volcono" ) {
           return (
             <React.Fragment key={`${compCase}-${Math.random()}`}>
-              <div key={`${compCase}-1${Math.random()}`} className="mb-4">
+              <div key={`${compCase}-1${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className={LabelCss} htmlFor="username">
+                  <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                     Group 1
                   </div>
                   <div>
                     <input
                       onChange={onChangeFilterInput}
-                      className={numberInputBoxCss}
+                      className="NumberInputCss"
                       name="1_from"
                       type="number"
                       id="1_from"
@@ -514,7 +513,7 @@ let UserDefinedGroupFilters = ({
                     ></input>
                     <input
                       onChange={onChangeFilterInput}
-                      className={numberInputBoxCss}
+                      className="NumberInputCss"
                       name="1_to"
                       id="1_to"
                       type="number"
@@ -529,15 +528,15 @@ let UserDefinedGroupFilters = ({
                   </div>
                 </div>
               </div>
-              <div key={`${compCase}-2${Math.random()}`} className="mb-4">
+              <div key={`${compCase}-2${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className={LabelCss} htmlFor="username">
+                  <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                     Group 2
                   </div>
                   <div>
                     <input
                       onChange={onChangeFilterInput}
-                      className={numberInputBoxCss}
+                      className="NumberInputCss"
                       name={`2_from`}
                       id={`2_from`}
                       type="number"
@@ -551,7 +550,7 @@ let UserDefinedGroupFilters = ({
                     ></input>
                     <input
                       onChange={onChangeFilterInput}
-                      className={numberInputBoxCss}
+                      className="NumberInputCss"
                       name={`2_to`}
                       id={`2_to`}
                       type="number"
@@ -572,16 +571,16 @@ let UserDefinedGroupFilters = ({
           return (
             <div
               key={`${compCase}-${groupsCounter}${Math.random()}`}
-              className="mb-4"
+              className="MarginBottom4"
             >
               <div>
-                <div className={LabelCss} htmlFor="username">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                   {`Group ${groupsCounter}`}
                 </div>
                 <div>
                   <input
                     onChange={onChangeFilterInput}
-                    className={numberInputBoxCss}
+                    className="NumberInputCss"
                     name={`${groupsCounter}_from`}
                     type="number"
                     placeholder={min}
@@ -590,7 +589,7 @@ let UserDefinedGroupFilters = ({
                   ></input>
                   <input
                     onChange={onChangeFilterInput}
-                    className={numberInputBoxCss}
+                    className="NumberInputCss"
                     name={`${groupsCounter}_to`}
                     type="number"
                     placeholder={max}
@@ -606,15 +605,15 @@ let UserDefinedGroupFilters = ({
         if (viz_type === "volcono") {
           return (
             <>
-              <div key={`${compCase}-1-${Math.random()}`} className="mb-4">
+              <div key={`${compCase}-1-${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className={LabelCss} htmlFor="username">
+                  <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                     Group 1
                   </div>
                   <div>
                     <input
                       onChange={onChangeFilterInput}
-                      className={checkBoxCss}
+                      className="CheckBoxCss"
                       name="1"
                       type="text"
                       placeholder="Enter Text"
@@ -622,15 +621,15 @@ let UserDefinedGroupFilters = ({
                   </div>
                 </div>
               </div>
-              <div key={`${compCase}-2-${Math.random()}`} className="mb-4">
+              <div key={`${compCase}-2-${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className={LabelCss} htmlFor="username">
+                  <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                     Group 2
                   </div>
                   <div>
                     <input
                       onChange={onChangeFilterInput}
-                      className={checkBoxCss}
+                      className="CheckBoxCss"
                       name="2"
                       type="text"
                       placeholder="Enter Text"
@@ -644,16 +643,16 @@ let UserDefinedGroupFilters = ({
           return (
             <div
               key={`${compCase}-${groupsCounter}-${Math.random()}`}
-              className="mb-4"
+              className="MarginBottom4"
             >
               <div>
-                <div className={LabelCss} htmlFor="username">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
                   {`Group ${groupsCounter}`}
                 </div>
                 <div>
                   <input
                     onChange={onChangeFilterInput}
-                    className={checkBoxCss}
+                    className="CheckBoxCss"
                     name={`${groupsCounter}`}
                     type="text"
                     placeholder="Enter Text"
@@ -781,11 +780,11 @@ let UserDefinedGroupFilters = ({
                     group_b = true;
                   }
                   tr.push(
-                    <tr key={colName + index} className="border-b">
-                      <td className="text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                    <tr key={colName + index} className="BorderBottom1">
+                      <td className=" PX6Y4 CheckBoxRow">
                         {element.label}
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="PX6Y4">
                         <input
                           type="checkbox"
                           defaultChecked={group_a}
@@ -797,7 +796,7 @@ let UserDefinedGroupFilters = ({
                           })}
                         />
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="PX6Y4">
                         <input
                           type="checkbox"
                           defaultChecked={group_b}
@@ -816,11 +815,11 @@ let UserDefinedGroupFilters = ({
             } else {
               preDefienedGroups1[colName].map((element, index) =>
                 tr.push(
-                  <tr key={colName + index} className="border-b">
-                    <td className="text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                  <tr key={colName + index} className="BorderBottom1">
+                    <td className=" PX6Y4 CheckBoxRow">
                       {element.label}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="PX6Y4">
                       <input
                         type="checkbox"
                         onChange={dropDownChange}
@@ -831,7 +830,7 @@ let UserDefinedGroupFilters = ({
                         })}
                       />
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="PX6Y4">
                       <input
                         type="checkbox"
                         onChange={dropDownChange}
@@ -848,13 +847,13 @@ let UserDefinedGroupFilters = ({
             }
             componentData.push(
               <table className="table" key={"group_table"}>
-                <thead className="border-b w-full" key={"group_thead"}>
+                <thead className="BorderBottom1 WFull" key={"group_thead"}>
                   <tr>
                     <th></th>
-                    <th className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                    <th className="GroupNamesFilter PX6Y4">
                       Group A
                     </th>
-                    <th className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                    <th className="GroupNamesFilter PX6Y4">
                       Group B
                     </th>
                   </tr>
@@ -870,7 +869,7 @@ let UserDefinedGroupFilters = ({
             for (let sv = 0; sv < d.length; sv++) {
               const element = d[sv];
               thead.push(
-                <th className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                <th className="GroupNamesFilter PX6Y4 ">
                   Group {abc[sv]}:
                 </th>
               );
@@ -903,7 +902,7 @@ let UserDefinedGroupFilters = ({
                   }
                   checkbox.push(
                     <td
-                      className="px-6 py-4"
+                      className="PX6Y4"
                       key={index + "_" + sv + abc[sv] + "_" + element.label}
                     >
                       <input
@@ -924,7 +923,7 @@ let UserDefinedGroupFilters = ({
                 } else {
                   checkbox.push(
                     <td
-                      className="px-6 py-4"
+                      className="PX6Y4"
                       key={index + "_" + sv + abc[sv] + "_" + element.label}
                     >
                       <input
@@ -941,8 +940,8 @@ let UserDefinedGroupFilters = ({
                 }
               }
               tr.push(
-                <tr key={colName + sv} className="border-b">
-                  <td className="text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
+                <tr key={colName + sv} className="BorderBottom1">
+                  <td className=" PX6Y4 CheckBoxRow">
                     {element.label}
                   </td>
                   {checkbox}
@@ -951,190 +950,10 @@ let UserDefinedGroupFilters = ({
             }
             componentData.push(
               <table className="table" key={"group_table"}>
-                <thead className="border-b w-full" key={"group_thead"}>
+                <thead className="BorderBottom1 WFull" key={"group_thead"}>
                   <tr>
                     <th></th>
                     {thead}
-                  </tr>
-                </thead>
-                <tbody key={"group_tbody"}>{tr}</tbody>
-              </table>
-            );
-          }
-          else if(viz_type === 'fusion'){
-            if (Object.keys(groupFilters).length > 0 && groupFilters["type"] === "static") {
-              if (
-                groupFilters &&
-                groupFilters["column"] === colName &&
-                "group_1" in groupFilters  && groupFilters["group_1"].length > 0 &&
-                "group_2" in groupFilters && groupFilters["group_2"].length > 0 && 
-                "group_3" in groupFilters &&groupFilters["group_3"].length > 0
-              ) {
-                preDefienedGroups1[colName].forEach((element, index) => {
-                  let group_a = false;
-                  let group_b = false;
-                  let group_c = false;
-                  if (groupFilters["group_1"].indexOf(element.value) > -1) {
-                    group_a = true;
-                  }
-                  if (groupFilters["group_2"].indexOf(element.value) > -1) {
-                    group_b = true;
-                  }
-                  if (groupFilters["group_3"].indexOf(element.value) > -1) {
-                    group_c = true;
-                  }
-                  tr.push(
-                    <tr key={colName + index} className="border-b">
-                      <td className="text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
-                        {element.label}
-                      </td>
-                      <td className="px-6 py-4">
-                        <input
-                          type="checkbox"
-                          checked={group_a}
-                          onChange={dropDownChange}
-                          value={JSON.stringify({
-                            index: index,
-                            colName: colName,
-                            group: "group_1",
-                          })}
-                        />
-                      </td>
-                      <td className="px-6 py-4">
-                        <input
-                          type="checkbox"
-                          checked={group_b}
-                          onChange={dropDownChange}
-                          value={JSON.stringify({
-                            index: index,
-                            colName: colName,
-                            group: "group_2",
-                          })}
-                        />
-                      </td>
-                      <td className="px-6 py-4">
-                        <input
-                          type="checkbox"
-                          checked={group_c}
-                          onChange={dropDownChange}
-                          value={JSON.stringify({
-                            index: index,
-                            colName: colName,
-                            group: "group_3",
-                          })}
-                        />
-                      </td>
-                    </tr>
-                  );
-                });
-              } else {
-                preDefienedGroups1[colName].map((element, index) =>
-                  tr.push(
-                    <tr key={colName + index} className="border-b">
-                      <td className="text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
-                        {element.label}
-                      </td>
-                      <td className="px-6 py-4">
-                        <input
-                          type="checkbox"
-                          onChange={dropDownChange}
-                          value={JSON.stringify({
-                            index: index,
-                            colName: colName,
-                            group: "group_1",
-                          })}
-                          defaultChecked = {false}
-                        />
-                      </td>
-                      <td className="px-6 py-4">
-                        <input
-                          type="checkbox"
-                          onChange={dropDownChange}
-                          value={JSON.stringify({
-                            index: index,
-                            colName: colName,
-                            group: "group_2",
-                          })}
-                          defaultChecked = {false}
-                        />
-                      </td>
-                      <td className="px-6 py-4">
-                        <input
-                          type="checkbox"
-                          onChange={dropDownChange}
-                          value={JSON.stringify({
-                            index: index,
-                            colName: colName,
-                            group: "group_3",
-                          })}
-                          defaultChecked = {false}
-                        />
-                      </td>
-                    </tr>
-                  )
-                );
-              }
-            } else {
-              preDefienedGroups1[colName].map((element, index) =>
-                tr.push(
-                  <tr key={colName + index} className="border-b">
-                    <td className="text-left px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900">
-                      {element.label}
-                    </td>
-                    <td className="px-6 py-4">
-                      <input
-                        type="checkbox"
-                        onChange={dropDownChange}
-                        value={JSON.stringify({
-                          index: index,
-                          colName: colName,
-                          group: "group_1",
-                        })}
-                        defaultChecked = {false}
-                      />
-                    </td>
-                    <td className="px-6 py-4">
-                      <input
-                        type="checkbox"
-                        onChange={dropDownChange}
-                        value={JSON.stringify({
-                          index: index,
-                          colName: colName,
-                          group: "group_2",
-                        })}
-                        defaultChecked = {false}
-                      />
-                    </td>
-                    <td className="px-6 py-4">
-                      <input
-                        type="checkbox"
-                        onChange={dropDownChange}
-                        value={JSON.stringify({
-                          index: index,
-                          colName: colName,
-                          group: "group_3",
-                        })}
-                        defaultChecked = {false}
-                      />
-                    </td>
-                  </tr>
-                )
-              );
-            }
-            componentData.push(
-              <table className="table" key={"group_table"}>
-                <thead className="border-b w-full" key={"group_thead"}>
-                  <tr>
-                    <th></th>
-                    <th className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                      Group A
-                    </th>
-                    <th className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                      Group B
-                    </th>
-                    <th className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                      Group C
-                    </th>
                   </tr>
                 </thead>
                 <tbody key={"group_tbody"}>{tr}</tbody>
@@ -1154,26 +973,16 @@ let UserDefinedGroupFilters = ({
   }, [selectedFilterDetails]);
 
   const AppendNewGroup = () => {
-    if(viz_type === 'fusion'){
-      if (groupsCounter <= 3) {
-        const filterType = selectedFilterDetails.type;
-        const componentData = componetSwitch(filterType);
-        setFilterInputs((prevState) => [...prevState, componentData]);
-        setGroupsCounter((prevState) => prevState + 1);
-      }
-    }
-    else{
       const filterType = selectedFilterDetails.type;
       const componentData = componetSwitch(filterType);
       setFilterInputs((prevState) => [...prevState, componentData]);
       setGroupsCounter((prevState) => prevState + 1);
-    }
   };
 
   return (
-    <div className="m-1 bg-gray-100">
-      <div className="p-1 py-3 px-2 col-span-2">
-        <div className="block text-left text-blue-700-700 text-lg  font-bold mb-2">
+    <div className="M1 BGGray100">
+      <div className="P1 PY3 PX2 ColSpan2">
+        <div className="Block  TextBlue700 TextLG  FontBold MB2">
           <FormattedMessage
             id="Clinical Filters"
             defaultMessage="Clinical Attribute"
@@ -1183,13 +992,13 @@ let UserDefinedGroupFilters = ({
           defaultValue={selectDefaultValue}
           onChange={updateSelectedFilter}
           name="selectOptions"
-          className="w-full lg:p-4 xs:p-2 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3"
+          className="SelectDiv"
         >
           <option value="0"></option>
           {filterChoices.map((type, index) => (
             <option
             defaultValue={filterSelected === type.name}
-              className="lg:text-lg xs:text-sm"
+              className="FilterOptionText"
               key={type.id}
               value={index}
             >
@@ -1199,24 +1008,24 @@ let UserDefinedGroupFilters = ({
         </select>
       </div>
       {userGivenInputValues['type'] === 'number' &&
-      <p className="text-left text-base ml-6">Max and Min Values are based on Clinincal Information File</p>
+      <p className=" TextBase MarginLeft6">Max and Min Values are based on Clinincal Information File</p>
       }
       
       {showAddGroupButton && (
-        <div onClick={AppendNewGroup} className="p-1 py-3 px-2 col-span-2">
-          <button className="bg-main-blue hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+        <div onClick={AppendNewGroup} className="P1 PY3 PX2 ColSpan2">
+          <button className="AddGroupButton">
             Add Group
           </button>
         </div>
       )}
-      <div className="p-1 py-3 px-2 col-span-2" style={{ overflowX: "auto" }}>
+      <div className="P1 PY3 PX2 ColSpan2" style={{ overflowX: "auto" }}>
         {filterInputs}
       </div>
       {filterSelected && (
         <div>
           <button
             onClick={submitFilters}
-            className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 sm:w-40 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
+            className="SubmitButtonFilter"
           >
           <FormattedMessage
                             id="Submit_volcano"
@@ -1229,7 +1038,7 @@ let UserDefinedGroupFilters = ({
         <div>
           <button
             onClick={resetFilters}
-            className="bg-white hover:bg-gray-700 mb-3 lg:w-80 sm:w-40 h-20 text-black hover:text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
+            className="ResetButtonFilter"
           >
          <FormattedMessage
                             id="Reset_volcano"

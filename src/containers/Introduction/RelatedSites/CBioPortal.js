@@ -96,7 +96,7 @@ export const CBioPortal = () => {
                   </div>
                   <div style={{display:'flex'}}>
                     <div style={{ paddingTop: '5%' }}>
-                      <span class="material-icons" style={{ color: 'rosybrown' }}>
+                      <span className="material-icons" style={{ color: 'rosybrown' }}>
                         output
                       </span>
                       <span style={{ paddingLeft: '1%', color: 'dodgerblue' }}><a href="http://www.cbioportal.org/">http://www.cbioportal.org/</a></span>

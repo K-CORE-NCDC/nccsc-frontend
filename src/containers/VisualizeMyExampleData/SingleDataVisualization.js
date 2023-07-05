@@ -121,16 +121,16 @@ export const SingleDataVisualization = () => {
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><span class="material-icons">radio_button_unchecked</span>
+                    <td><span className="material-icons">radio_button_unchecked</span>
                     </td>
                   </tr>
                   <tr>
                     <td>Dna Mutation</td>
-                    <td><span class="material-icons">radio_button_unchecked</span></td>
-                    <td><span class="material-icons">radio_button_unchecked</span></td>
+                    <td><span className="material-icons">radio_button_unchecked</span></td>
+                    <td><span className="material-icons">radio_button_unchecked</span></td>
                     <td></td>
                     <td></td>
-                    <td><span class="material-icons">radio_button_unchecked</span></td>
+                    <td><span className="material-icons">radio_button_unchecked</span></td>
                     <td></td>
                     <td></td>
                   </tr>
@@ -139,9 +139,9 @@ export const SingleDataVisualization = () => {
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><span class="material-icons">radio_button_unchecked</span></td>
-                    <td><span class="material-icons">radio_button_unchecked</span></td>
-                    <td><span class="material-icons">radio_button_unchecked</span></td>
+                    <td><span className="material-icons">radio_button_unchecked</span></td>
+                    <td><span className="material-icons">radio_button_unchecked</span></td>
+                    <td><span className="material-icons">radio_button_unchecked</span></td>
                     <td></td>
                   </tr>
                   <tr>
@@ -149,18 +149,18 @@ export const SingleDataVisualization = () => {
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><span class="material-icons">radio_button_unchecked</span></td>
-                    <td><span class="material-icons">radio_button_unchecked</span></td>
-                    <td><span class="material-icons">radio_button_unchecked</span></td>
+                    <td><span className="material-icons">radio_button_unchecked</span></td>
+                    <td><span className="material-icons">radio_button_unchecked</span></td>
+                    <td><span className="material-icons">radio_button_unchecked</span></td>
                     <td></td>
                   </tr>
                   <tr>
                     <td>CNV</td>
                     <td></td>
                     <td></td>
-                    <td><span class="material-icons">radio_button_unchecked</span></td>
+                    <td><span className="material-icons">radio_button_unchecked</span></td>
                     <td></td>
-                    <td><span class="material-icons">radio_button_unchecked</span></td>
+                    <td><span className="material-icons">radio_button_unchecked</span></td>
                     <td></td>
                     <td></td>
                   </tr>
@@ -169,17 +169,17 @@ export const SingleDataVisualization = () => {
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><span class="material-icons">radio_button_unchecked</span></td>
-                    <td><span class="material-icons">radio_button_unchecked</span></td>
+                    <td><span className="material-icons">radio_button_unchecked</span></td>
+                    <td><span className="material-icons">radio_button_unchecked</span></td>
                     <td></td>
                     <td></td>
                   </tr>
                   <tr>
                     <td>Phosphorylation</td>
                     <td></td>
-                    <td><span class="material-icons">radio_button_unchecked</span></td>
+                    <td><span className="material-icons">radio_button_unchecked</span></td>
                     <td></td>
-                    <td><span class="material-icons">radio_button_unchecked</span></td>
+                    <td><span className="material-icons">radio_button_unchecked</span></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -190,7 +190,7 @@ export const SingleDataVisualization = () => {
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><span class="material-icons">radio_button_unchecked</span></td>
+                    <td><span className="material-icons">radio_button_unchecked</span></td>
                     <td></td>
                     <td></td>
                   </tr>

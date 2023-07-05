@@ -67,8 +67,8 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
   
 
   return (
-    <div id="survival" ref={ref} className={`${watermarkCss} p-1`}>
-      <div className="text-left">{pValue}</div>
+    <div id="survival" ref={ref} className={`${watermarkCss} P1`}>
+      <div className="TextLeft">{pValue}</div>
       {survivalData.length > 1 && <LineChart
         name={pValue}
         xLabel='Time (in month)'
@@ -88,7 +88,7 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
         data={lineChartData}
         tooltipClass="svg-line-chart-tooltip-custom"
       />}
-      {chartTable.length>0 && <div className={'mt-20 hidden grid grid-cols-'+chartTable.length}>{chartTable}</div>}
+      {chartTable.length>0 && <div style={{gap:'100px'}} className={'MarginTop20 Grid GridCols'+chartTable.length}>{chartTable}</div>}
     </div>
   );
 })

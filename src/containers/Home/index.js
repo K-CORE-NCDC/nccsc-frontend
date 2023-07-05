@@ -115,7 +115,7 @@ export default function Home(parentProps) {
             el: '.pagination',
             clickable: true,
             renderBullet: function (index, className) {
-              return "<div class='" + className + "'><span>" + sections[index] + "</span></div>";
+              return "<div className='" + className + "'><span>" + sections[index] + "</span></div>";
             },
           }}
 

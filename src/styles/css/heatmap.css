@@ -1,4 +1,4 @@
-.sub_head{
+.sub_head_heat{
   display: flex;
 }
 
@@ -13,6 +13,8 @@
 .sub_sec_head{
   gap:10%;
   margin-top: 3%;
+      background-color: aliceblue;
+    padding: 2%;
 }
 
 .sub_tabs{

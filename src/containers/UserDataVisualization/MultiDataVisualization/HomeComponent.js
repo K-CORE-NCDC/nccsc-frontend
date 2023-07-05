@@ -56,7 +56,7 @@ const HomeComponent = () => {
                         </div>
                         <div className="labels02" style={{ columnGap: "10px" }}>
                           <Link to={item.link}>
-                            <span class="label01">
+                            <span className="label01">
                               <font>
                                 <font>Run Analysis</font>
                               </font>

@@ -71,6 +71,7 @@ export default function DataVisualization() {
   };
 
   const LoadChart = (w, type) => {
+    console.log('type', type)
     switch (type) {
       case "circos":
         return Charts.circos(
@@ -85,7 +86,7 @@ export default function DataVisualization() {
           elementRef.current.getBoundingClientRect().width,
           state,
           screenCapture,
-          setToFalseAfterScreenCapture
+          setToFalseAfterScreenCapture,
         );
       case "heatmap":
         return Charts.heatmap(
@@ -95,7 +96,7 @@ export default function DataVisualization() {
           BrstKeys,
           setToFalseAfterScreenCapture
         );
-      case "cnv":
+      case "CNV":
         return Charts.igv(
           w,
           state,
@@ -111,6 +112,13 @@ export default function DataVisualization() {
         );
       case "genomic-data":
         return Charts.genomic(
+          w,
+          state,
+          screenCapture,
+          setToFalseAfterScreenCapture
+        );
+      case "survival":
+        return Charts.survival(
           w,
           state,
           screenCapture,
@@ -143,13 +151,13 @@ export default function DataVisualization() {
 
 
   const callback = useCallback(({ filters, filterKeyandValues, value, genes }) => {
-    let g = []
-    if (genes.includes(' ')) {
-      g = genes.split(' ')
-    }
-    else {
-      g.push(genes)
-    }
+    // let g = []
+    // if(genes.includes(' ')){
+    //   g = genes.split(' ')
+    // }
+    // else{
+    //   g.push(genes)
+    // }
     if (filters && filterKeyandValues) {
       setState((prevState) => ({
         ...prevState,
@@ -162,7 +170,7 @@ export default function DataVisualization() {
 
       setState((prevState) => ({
         ...prevState,
-        genes: g,
+        genes: genes,
         type: value,
       }));
     }
@@ -170,13 +178,13 @@ export default function DataVisualization() {
   }, []);
 
 
-  useEffect(() => {
-    let chartx = LoadChart(width, tabName);
-    setCharts((prevState) => ({
-      ...prevState,
-      viz: chartx,
-    }));
-  }, [screenCapture]);
+  // useEffect(() => {
+  //   let chartx = LoadChart(width, tabName);
+  //   setCharts((prevState) => ({
+  //     ...prevState,
+  //     viz: chartx,
+  //   }));
+  // }, [screenCapture]);
 
   useEffect(() => {
     setTabName(tab === 'home' ? undefined : tab)
@@ -195,7 +203,7 @@ export default function DataVisualization() {
   }, [tab, tabName, chartName, BrstKeys]);
 
   useEffect(() => {
-    console.log('from initial use effect component did mount-----')
+
     let w = elementRef.current.getBoundingClientRect().width;
     setWidth(w);
     setBoolChartState(false);
@@ -211,7 +219,8 @@ export default function DataVisualization() {
       "cnv",
       "heatmap",
       "box",
-      "genomic-data"
+      "genomic-data",
+      "survival",
     ];
     let gridData = []
 
@@ -273,20 +282,20 @@ export default function DataVisualization() {
 
   }, [project_id, userProjectDetails, project_id_status]);
 
+  // useEffect(() => {
+  //   if (project_id) {
+  //     dispatch(getUserDefinedFilter({
+  //       "project_id": project_id
+  //     }));
+  //     // dispatch(samplesCount("POST", {}));
+  //     dispatch(getBreastKeys(state));
+
+  //   }
+  // }, [project_id])
+
+
   useEffect(() => {
-    if (project_id) {
-      dispatch(getUserDefinedFilter({
-        "project_id": project_id
-      }));
-      // dispatch(samplesCount("POST", {}));
-      dispatch(getBreastKeys(state));
 
-    }
-  }, [project_id])
-
-
-  useEffect(() => {
-    console.log('-----from use')
     if (project_id !== undefined) {
       if (state.genes.length > 0) {
         dispatch(samplesCount("POST", { project_id: project_id }));
@@ -299,10 +308,10 @@ export default function DataVisualization() {
         }));
       }
     } else {
-      // if (state.genes.length > 0) {
-      //   dispatch(samplesCount("POST", {}));
-      //   dispatch(getBreastKeys(state));
-      // }
+      if (state.genes.length > 0) {
+        dispatch(samplesCount("POST", {}));
+        dispatch(getBreastKeys(state));
+      }
     }
   }, [state]);
 

@@ -25,7 +25,6 @@ const HeatmapCmp = React.forwardRef(({ settings, inputData, type, watermarkCss,w
     const [configVis,setConfigVis] = useState({})
     let target = "canvas";
     
-    
     let config = {
         "colorSpectrum": settings['colorSpectrum'],
         "graphType": "Heatmap",
