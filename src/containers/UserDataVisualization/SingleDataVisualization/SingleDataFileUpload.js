@@ -49,8 +49,8 @@ const SingleDataFileUpload = ({ updateComponentNumber})=> {
             dna_mutation: "DNA Mutation",
         },
         "survival":{
-          clinical_information:"clinical_information"
-        }
+          clinical_information: "Clinical Information",
+      }
     }
 
     const [selectedFileSampleType, setSelectedFileSampleType] = useState( ()=>{

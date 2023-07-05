@@ -507,14 +507,7 @@ export default function Web(props) {
             <div id="allMenuWrap" className="allMenuWrap" style={menuTabOpen ? { display: 'block' } : { display: 'none' }}>
               <div className="imgBox">
                 <dl>
-                  <dt>
-                    <font className="font1"></font><br />
-                    <font className="font1">
-                      <font className="font1">
-                        <FormattedMessage id="Welcome" defaultMessage='Welcome to the National Cancer Data Center .' />
-                      </font>
-                    </font>
-                  </dt>
+                  <dt><font className="font1"></font><br /><font className="font1"><font className="font1"><FormattedMessage id="Welcome" defaultMessage='Welcome to the National Cancer Data Center .' /></font></font></dt>
                   <dd><font className="font1"><font className="font1"><FormattedMessage id="Designated" defaultMessage='The National Cancer Center was designated as the National Cancer Data Center (NCDC) by the Ministry of Health and Welfare in September 2021 under the Cancer Control Act. ' /></font><font className="font1"><FormattedMessage id="Motive" defaultMessage='The National Cancer Data Center will carry out the business of collecting, processing, analyzing, and providing cancer data for research and development for cancer management.' /></font></font></dd>
                 </dl>
                 <div className="members">

@@ -57,7 +57,7 @@ const ScatterPlot = React.forwardRef(({ scatter_data, watermarkCss }, ref) => {
 
 
   return (
-      <div ref={ref} id='scatter_parent' className={`p-5 lg:w-full sm:w-5/6 ${watermarkCss}`}>
+      <div ref={ref} id='scatter_parent' className={`p-5 lg:w-full sm:w-5/6 ${watermarkCss}`} style={{marginTop:'5%'}}>
         <canvas id="scatter" ref={scatter_plot} height="14vh" width="40vw"></canvas>
       </div>
   )
