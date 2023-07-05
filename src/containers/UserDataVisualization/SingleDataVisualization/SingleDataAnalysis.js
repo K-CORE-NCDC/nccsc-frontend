@@ -109,6 +109,13 @@ export default function DataVisualization() {
           screenCapture,
           setToFalseAfterScreenCapture
         );
+      case "survival":
+        return Charts.survival(
+          w,
+          state,
+          screenCapture,
+          setToFalseAfterScreenCapture
+        );
       default:
         return false;
     }
@@ -210,6 +217,7 @@ export default function DataVisualization() {
       "cnv",
       "heatmap",
       "box",
+      "survival",
     ];
     let gridData = []
 

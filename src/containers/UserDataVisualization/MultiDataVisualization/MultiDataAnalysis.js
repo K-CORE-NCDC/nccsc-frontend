@@ -295,7 +295,6 @@ export default function DataVisualization() {
   }, [screenCapture]);
 
   const LoadChart = (w, type) => {
-    console.log('genes_initial' , state)
     switch (type) {
       case "circos":
         return Charts.circos(
@@ -426,7 +425,7 @@ export default function DataVisualization() {
               <div className="FilterGeneSet">
                 {/* Toggle and Filter */}
 
-                <Popover className="relative">
+               { toggle && <Popover className="relative">
                   {({ open }) => {
                     return (
                       <>
@@ -466,6 +465,7 @@ export default function DataVisualization() {
                     );
                   }}
                 </Popover>
+                }
 
                 <Popover className="relative" style={{ margin: 'auto' }}>
                   {({ open }) => {
