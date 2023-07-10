@@ -13,6 +13,7 @@ import './styles/css/contents.css'
 import './styles/css/contents_responsive.css'
 import './styles/css/custom_tailwind.css'
 import './styles/css/survival.css'
+import './styles/css/volcano.css'
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App/index';

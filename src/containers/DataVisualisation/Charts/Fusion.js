@@ -1,12 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useSelector } from "react-redux";
-import GroupFilters, {
-  PreDefienedFilters,UserDefinedGroupFilters
-} from "../../Common/FusionGroupFilter";
-import { AdjustmentsIcon } from "@heroicons/react/outline";
 import FusionVennCmp from "../../Common/FusionVenn";
 import { useParams } from "react-router-dom";
-
+import NoContentMessage from "../../Common/NoContentComponent";
 import {
   FusionVennDaigram,
 } from "../../../actions/api_actions";
@@ -15,27 +11,23 @@ import FusionCustomPlot from "../../Common/FusionCustomPlot";
 import { FormattedMessage } from "react-intl";
 import DataTable from "react-data-table-component";
 import { Context } from "../../../wrapper";
-const selectedCss =
-  "w-1/2 rounded-r-none  hover:scale-110 focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200 xs:text-sm sm:text-sm md:text-2xl md:text-2xl ease-in-out border-gray-600 transition";
-const nonSelectedCss =
-  "w-1/2 rounded-l-none  hover:scale-110 focus:outline-none flex justify-center p-5 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 text-teal-700 border xs:text-sm sm:text-sm md:text-2xl md:text-2xl duration-200 ease-in-out border-teal-600 transition";
 
 export default function FusionPlot({
   width,
-  inputData
+  inputData,
+  VFData
 }) {
   const context = useContext(Context);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const [loader, setLoader] = useState(false);
-  const [smallScreen, setSmallScreen] = useState(false);
-  const sampleCount = {}
   const [groupFilters, setGroupFilters] = useState({});
   const [tableData, setTableData] = useState([]);
   const [fusionId, setFusionId] = useState(0);
   const [groupName, setGroupName] = useState("");
-  const [noData, setNoData] = useState('false')
-  const firstTime = true
+  const [noData, setNoData] = useState(false)
+  const [showFusion, setShowFusion] = useState(false)
   const [VennData, setVennData] = useState({})
+  const [inputState, setInputState] = useState({})
 
   useEffect(() => {
     if (context["locale"] === "kr-KO") {
@@ -43,9 +35,10 @@ export default function FusionPlot({
     } else {
       setKoreanlanguage(false);
     }
-  },[context]);
+  }, [context]);
 
-  let {  project_id } = useParams();
+  let { project_id } = useParams();
+
   const [userDefienedFilter, setUserDefienedFilter] = useState(
     project_id === undefined ? "static" : "dynamic"
   );
@@ -56,13 +49,13 @@ export default function FusionPlot({
 
   const tableColumnsData = [
     {
-      name: <FormattedMessage id="SampleName" defaultMessage = "Sample Name" />,
+      name: <FormattedMessage id="SampleName" defaultMessage="Sample Name" />,
       cell: (row, index) => {
         let html = [];
         let check = false;
         if ("group 1" in row) {
           let s = row["group 1"];
-          
+
           html.push(
             <p>
               <strong>Group 1:</strong> {s.join(",")}
@@ -103,51 +96,51 @@ export default function FusionPlot({
       sortable: true,
     },
     {
-      name:<FormattedMessage id="LeftGeneName" defaultMessage = "Left Gene Name" />,
+      name: <FormattedMessage id="LeftGeneName" defaultMessage="Left Gene Name" />,
       selector: (row) => row.left_gene_name,
       sortable: true,
     },
     {
-      name: <FormattedMessage id="LeftEnsemblId" defaultMessage = "Left Ensembl Id" />,
+      name: <FormattedMessage id="LeftEnsemblId" defaultMessage="Left Ensembl Id" />,
       selector: (row) => row.left_gene_ensmbl_id,
       sortable: true,
     },
     {
-      name: <FormattedMessage id="LeftBreakpoint" defaultMessage = "Left Breakpoint" />,
+      name: <FormattedMessage id="LeftBreakpoint" defaultMessage="Left Breakpoint" />,
       cell: (row, index) => {
         return row.left_gene_chr + ":" + row.left_hg38_pos;
       },
       sortable: true,
     },
     {
-      name: <FormattedMessage id="RightGeneName" defaultMessage = "Right Gene Name" />,
+      name: <FormattedMessage id="RightGeneName" defaultMessage="Right Gene Name" />,
       selector: (row) => row.right_gene_name,
       sortable: true,
     },
     {
-      name: <FormattedMessage id="RightEnsemblId" defaultMessage = "Right Ensembl Id" />,
+      name: <FormattedMessage id="RightEnsemblId" defaultMessage="Right Ensembl Id" />,
       selector: (row) => row.right_gene_ensmbl_id,
       sortable: true,
     },
     {
-      name: <FormattedMessage id="RightBreakpoint" defaultMessage = "Right Breakpoint" />,
+      name: <FormattedMessage id="RightBreakpoint" defaultMessage="Right Breakpoint" />,
       cell: (row, index) => {
         return row.right_gene_chr + ":" + row.right_hg38_pos;
       },
       sortable: true,
     },
     {
-      name:<FormattedMessage id="JunctionReadCount" defaultMessage = "Junction Read Count" />,
+      name: <FormattedMessage id="JunctionReadCount" defaultMessage="Junction Read Count" />,
       selector: (row) => row.junction_read_count ? row.junction_read_count : 0,
       sortable: true,
     },
     {
-      name:<FormattedMessage id="SpanningFragCount" defaultMessage = "Spanning Frag Count" />,
+      name: <FormattedMessage id="SpanningFragCount" defaultMessage="Spanning Frag Count" />,
       selector: (row) => row.spanning_frag_count ? row.spanning_frag_count : 0,
       sortable: true,
     },
     {
-      name:<FormattedMessage id="SpliceType" defaultMessage = "Splice Type" />,
+      name: <FormattedMessage id="SpliceType" defaultMessage="Splice Type" />,
       selector: (row) => row.splice_type ? row.splice_type : 'None',
       sortable: true,
     },
@@ -171,44 +164,61 @@ export default function FusionPlot({
     setFusionId(id);
   };
 
-  const updateGroupFilters = (filtersObject) => {
-    if (filtersObject) {
-      setGroupFilters(filtersObject);
+  useEffect(() => {
+    if (inputData && 'genes' in inputData) {
+      setInputState((prevState) => ({ ...prevState, ...inputData, ...VFData }));
     }
-  };
+    if ('groupFilters' in VFData) {
+      setGroupFilters(VFData['groupFilters'])
+    }
+  }, [inputData, VFData, userDefienedFilter])
 
   useEffect(() => {
     setVennData({})
     setGroupName("")
-    setNoData('true')
     setTableData([])
-    if (inputData) {
+    if (inputState) {
       if (
-        inputData.type !== "" &&
+        inputState.type !== "" &&
         Object.keys(groupFilters).length > 0 &&
-        inputData["genes"].length > 0
+        inputState["genes"].length > 0
       ) {
+        console.log('a');
         setLoader(true);
-        inputData["filterType"] = userDefienedFilter;
-        let return_data = FusionVennDaigram('POST',{...inputData,filterGroup: groupFilters})
+        inputState["filterType"] = userDefienedFilter;
+        let return_data = FusionVennDaigram('POST', { ...inputState, filterGroup: groupFilters })
         return_data.then((result) => {
+          console.log('b');
           const d = result
           if (d.status === 200) {
             let r_ = {}
             r_['res'] = d["data"]
             r_['status'] = 200
             setVennData(r_)
+            setShowFusion(true)
+            setLoader(false);
+            setNoData(false)
           } else {
-            setVennData({'status':204})
+            console.log('c');
+            setNoData(true)
+            setShowFusion(false)
+            setVennData({})
+            setLoader(false);
           }
         })
-        .catch((e) => {
-          setVennData({'status':204})
-        });
- 
+          .catch((e) => {
+            console.log('d');
+            setLoader(false);
+            setShowFusion(false)
+            setNoData(true)
+            setVennData({})
+          });
+      
+        
+
       }
     }
-  }, [inputData, groupFilters,userDefienedFilter]);
+  }, [inputState]);
 
   useEffect(() => {
     if (!clinicalMaxMinInfo) {
@@ -216,23 +226,6 @@ export default function FusionPlot({
     }
   }, []);
 
-  useEffect(() => {
-    setNoData('true')
-    setTableData([])
-    if (VennData) {
-      
-      if (VennData.status === 200 && Object.keys(VennData['res']).length !== 0) {
-        setLoader(false);
-        setNoData('false')
-      }
-      else if(VennData.status !== 200){
-        setLoader(false);
-        setNoData('true')
-      }
-    }
-
-
-  }, [VennData]);
 
   const getVennIds = (key) => {
     if (key.length > 0) {
@@ -258,168 +251,81 @@ export default function FusionPlot({
   return (
     <>
       {loader ? (
-        <LoaderCmp />
+        <div className="MarginTop4">
+          <LoaderCmp />
+        </div>
       ) : (
-        <div className="flex flex-row justify-around">
-          <div className={`lg:hidden md:hidden xs:ml-8`}>
-            <button
-              className="bg-blue-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-              onClick={() => setSmallScreen(!smallScreen)}
-              type="button"
-            >
-              <AdjustmentsIcon className="h-6 w-6 inline" />
-            </button>
-          </div>
-          <div
-            id="filterBox"
-            className={`lg:w-1/5 md:w-4/5 lg:block md:block lg:block sm:hidden ${
-              smallScreen
-                ? "xs:mr-80 xs:z-10 xs:opacity-95 xs:bg-white"
-                : "xs:hidden"
-            } `}
-          >
-            <div>
-              {sampleCount && Object.keys(sampleCount).length > 0 && (
-                <div className="m-1 p-1 border border-black border-dashed">
-                  {Object.keys(sampleCount).map((e) => (
-                    <div
-                      key={e}
-                      className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue"
-                    >
-                      Group {e} : {sampleCount[e]}
+        <>
+          {
+            noData && (
+              <div className="MarginTop4"><NoContentMessage /></div>
+            )
+          }
+
+          {
+            (inputData && inputData.genes.length === 0) &&
+            <p className="MarginTop4"> <FormattedMessage id="PleaseSelecttheGeneSetData" defaultMessage="Please Select the Gene Set Data" /> </p>
+          }
+
+          {groupFilters && Object.keys(groupFilters).length === 0 &&
+            <p className="MarginTop4">
+              <FormattedMessage id="PleaseSelectFilterData" defaultMessage="Please Select the Filter Data" />
+            </p>}
+
+          {showFusion &&
+            <div className="MarginTop4 BorderstyleViz OverFlowXHide">
+              {VennData && !noData && (
+                <FusionVennCmp
+                  parentCallback={getVennIds}
+                  VennData={VennData}
+                  width={width}
+                />
+              )}
+
+
+              {VennData && !noData && fusionId !== 0 && (
+                <div className="mt-5 my-0 mx-auto h-auto w-11/12 shadow-lg">
+                  <FusionCustomPlot fusionId={fusionId} />
+                </div>
+              )}
+
+              {VennData && !noData && tableData.length > 0 && (
+                <div>
+                  <div
+                    className="MarginBottom5 MarginLeft4"
+                    style={{
+                      textAlign: "start",
+                      lineHeight: "1.4",
+                      fontSize: "12px",
+                    }}
+                  >
+                    <p>
+                      {koreanlanguage ? "환자군에서 적어도 1명의 환자에게 검출된 융합 유전자의 수를 센다." : "Fusion gene detected in at least 1 patient in a paitent group is counted"}
+                    </p>
+                    <p>
+                      {koreanlanguage ? "Core: Group1과 Group2 모두에서 발견되는 융합 유전자" : "Core : Fusion genes found in both Group 1 and Group 2"}
+                    </p>
+                    <p>
+                      {koreanlanguage ? "Unique: 특정 환자군에서 발견된 융합 유전자" : "Unique : Fusion genes found in certain patient group."}
+                    </p>
+                  </div>
+
+                  <div className="mt-20 my-0 mx-auto  w-11/12 shadow-lg">
+                    <div className="bg-white border-b border-gray-200 py-5 text-left px-5">
+                      {groupName}
                     </div>
-                  ))}
+                    {VennData && !noData && <DataTable
+                      pagination
+                      columns={tableColumnsData}
+                      data={tableData}
+                    />
+                    }
+                  </div>
                 </div>
               )}
             </div>
-            {project_id === undefined && (
-              <div className="m-1 flex flex-row justify-around">
-                <button
-                  onClick={() => {
-                    setUserDefienedFilter("static");
-                    setGroupFilters({});
-                  }}
-                  className={
-                    userDefienedFilter === "static"
-                      ? selectedCss
-                      : nonSelectedCss
-                  }
-                >
-                  <FormattedMessage
-                    id="Static_volcano"
-                    defaultMessage="Static"
-                  />
-                </button>
-                <button
-                  onClick={() => {
-                    setUserDefienedFilter("dynamic");
-                    setGroupFilters({});
-                  }}
-                  className={
-                    userDefienedFilter === "dynamic"
-                      ? selectedCss
-                      : nonSelectedCss
-                  }
-                >
-                  <FormattedMessage
-                    id="Dynamic_volcano"
-                    defaultMessage="Dynamic"
-                  />
-                </button>
-              </div>
-            )}
-
-            {userDefienedFilter === "static" && project_id === undefined && (
-              <PreDefienedFilters
-                viz_type="fusion"
-                parentCallback={updateGroupFilters}
-                groupFilters={groupFilters}
-              />
-            )}
-            {userDefienedFilter === "dynamic" && project_id === undefined && (
-              <GroupFilters
-                viz_type="fusion"
-                parentCallback={updateGroupFilters}
-                groupFilters={groupFilters}
-              />
-            )}
-            { project_id !== undefined && (
-              <UserDefinedGroupFilters
-                viz_type="fusion"
-                parentCallback={updateGroupFilters}
-                groupFilters={groupFilters}
-              />
-            )}
-          </div>
-          <div
-            className={`lg:w-4/5 md:w-4/5 sm:w-full lg:block ${
-              smallScreen ? " xs:absolute" : "xs:w-full"
-            }`}
-          >
-            {VennData && noData === 'false' && (
-              <FusionVennCmp
-                parentCallback={getVennIds}
-                VennData={VennData}
-                width={width}
-              />
-            )}
-            {
-              noData === 'true' && firstTime === false && (
-                <div
-                className="mt-20  w-11/12 mx-auto"
-                style={{
-                  textAlign: "center",
-                  marginBottom: "-42px",
-                  lineHeight: "1.4",
-                  fontSize: "25px",
-                }}
-                >
-                <h1>  No Data Found</h1>
-                </div>
-              )
-            }
-             {Object.keys(groupFilters).length === 0 && <p className="text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">{koreanlanguage ? "필터 정보를 선택해 주세요.":"Please Select the Clinical Attribute Data"}</p>}
-            {VennData && noData === 'false' && fusionId !== 0 &&  (
-              <div className="mt-5 my-0 mx-auto h-auto w-11/12 shadow-lg">
-                <FusionCustomPlot fusionId={fusionId}  />
-              </div>
-            )}
-            {VennData && noData === 'false' && tableData.length > 0 && (
-              <div>
-                <div
-                  className="mt-20  w-11/12 mx-auto"
-                  style={{
-                    textAlign: "start",
-                    marginBottom: "-42px",
-                    lineHeight: "1.4",
-                    fontSize: "12px",
-                  }}
-                >
-                  <p>
-                    {koreanlanguage ? "환자군에서 적어도 1명의 환자에게 검출된 융합 유전자의 수를 센다." : "Fusion gene detected in at least 1 patient in a paitent group is counted"}
-                  </p>
-                  <p>
-                    {koreanlanguage ? "Core: Group1과 Group2 모두에서 발견되는 융합 유전자" : "Core : Fusion genes found in both Group 1 and Group 2"}
-                  </p>
-                  <p>
-                    {koreanlanguage ? "Unique: 특정 환자군에서 발견된 융합 유전자" : "Unique : Fusion genes found in certain patient group."}
-                  </p>
-                </div>
-                <div className="mt-20 my-0 mx-auto  w-11/12 shadow-lg">
-                  <div className="bg-white border-b border-gray-200 py-5 text-left px-5">
-                    {groupName}
-                  </div>
-                 { VennData && noData === 'false' && <DataTable
-                    pagination
-                    columns={tableColumnsData}
-                    data={tableData}
-                  />
-                }
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
+          }
+        </>
       )}
     </>
   );

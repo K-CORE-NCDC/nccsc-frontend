@@ -63,7 +63,8 @@ function volcano(
   width,
   inputData,
   screenCapture,
-  setToFalseAfterScreenCapture
+  setToFalseAfterScreenCapture,
+  VFData
 ) {
   return (
     <DataVolcono
@@ -72,6 +73,7 @@ function volcano(
       inputData={inputData}
       screenCapture={screenCapture}
       setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+      VFData={VFData}
     />
   );
 }
@@ -99,7 +101,9 @@ function survival(
   width,
   inputData,
   screenCapture,
-  setToFalseAfterScreenCapture
+  setToFalseAfterScreenCapture,
+  survialData,
+  trasnferSurvivalData
 ) {
   return (
     <DataSurvival
@@ -108,7 +112,9 @@ function survival(
       inputData={inputData}
       screenCapture={screenCapture}
       setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
-    />
+      survialData={survialData}
+      trasnferSurvivalData={trasnferSurvivalData}
+      />
   );
 }
 
@@ -141,7 +147,7 @@ function igv(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
   );
 }
 
-function fusion(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
+function fusion(width, inputData, screenCapture, setToFalseAfterScreenCapture, VFData) {
   return (
     <FusionPlot
       key="fusion"
@@ -149,6 +155,7 @@ function fusion(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
       inputData={inputData}
       screenCapture={screenCapture}
       setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+      VFData = {VFData}
     />
   );
 }

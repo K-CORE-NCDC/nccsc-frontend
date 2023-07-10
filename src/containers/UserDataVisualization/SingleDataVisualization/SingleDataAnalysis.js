@@ -6,7 +6,7 @@ import React, {
   useContext,
   Fragment
 } from "react";
-import { FilterIcon } from "@heroicons/react/outline";
+import { CogIcon, FilterIcon } from "@heroicons/react/outline";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import ConfirmDownload from "../../Common/downloadConfirmation";
@@ -26,6 +26,7 @@ import { Popover, Transition } from "@headlessui/react"
 import { FormattedMessage } from "react-intl";
 import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
 import GeneSet from "../Components/MainComponents/GeneSet";
+import SurvivalFilterComponent from "../Components/MainComponents/SurvivalFilterComponent";
 
 export default function DataVisualization() {
   const context = useContext(Context);
@@ -171,6 +172,7 @@ export default function DataVisualization() {
   }, []);
 
 
+
   // useEffect(() => {
   //   let chartx = LoadChart(width, tabName);
   //   setCharts((prevState) => ({
@@ -297,7 +299,7 @@ export default function DataVisualization() {
         dispatch(getBreastKeys(state));
       }
     }
-  }, [ state]);
+  }, [state]);
 
   const breadCrumbs = {
     '/visualise-singledata/': [
@@ -369,9 +371,11 @@ export default function DataVisualization() {
                 </ul>
               </div>
             }
+
             <section>
               <div
-                className="block text-center">
+                className="block text-center Flex">
+
                 <Popover className="relative gene_main_box" style={{ margin: 'auto' }}>
                   {({ open }) => {
                     return (
@@ -403,6 +407,7 @@ export default function DataVisualization() {
                     )
                   }}
                 </Popover>
+
               </div>
             </section>
 

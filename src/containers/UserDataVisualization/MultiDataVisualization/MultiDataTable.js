@@ -564,7 +564,7 @@ function MultiDataTable({updateComponentNumber}) {
               <button
                 onClick={() => {
                   dispatch(clearMultiFIleUploadState())
-                  history.push(`/visualise-singledata/${tab}/${projectId}`)}}
+                  history.push(`/visualise-multidata/home/${projectId}`)}}
                 className='btn btnPrimary'
               >
                 <FormattedMessage id="Visualize" defaultMessage="Visualize" />

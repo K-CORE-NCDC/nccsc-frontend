@@ -25,13 +25,13 @@ import { Popover, Transition } from "@headlessui/react"
 import { FormattedMessage } from "react-intl";
 import GeneSet from "../Components/MainComponents/GeneSet";
 import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
-
-
+import SurvivalFilterComponent from "../Components/MainComponents/SurvivalFilterComponent";
+import VolcanoFusionFilterComponent from "../Components/MainComponents/VolcanoFusionFilterComponent";
 
 
 export default function DataVisualization() {
   const context = useContext(Context);
- 
+
   const elementRef = useRef(null);
   const dispatch = useDispatch();
 
@@ -39,6 +39,9 @@ export default function DataVisualization() {
   const [chart, setCharts] = useState({ viz: [] });
   const [boolChartState, setBoolChartState] = useState(true);
   const [state, setState] = useState({ genes: [], filter: {}, type: "" });
+  const [survialData, setSurvivalData] = useState({})
+  const [survivalCardData, setSurvivalCardData] = useState({})
+  const [VFData, setVFData] = useState({})
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
 
   const [gridData, setGridData] = useState([])
@@ -87,11 +90,11 @@ export default function DataVisualization() {
   };
 
   const callback = useCallback(({ filters, filterKeyandValues, value, genes }) => {
-   let g = []
-    if(genes?.includes(' ')){
+    let g = []
+    if (genes?.includes(' ')) {
       g = genes?.split(' ')
     }
-    else{
+    else {
       g?.push(genes)
     }
     if (filters && filterKeyandValues) {
@@ -110,18 +113,38 @@ export default function DataVisualization() {
     }
     setBoolChartState(false);
     setChartName(tabName);
-  
+
   }, []);
 
+  const volcanoFusionFilterCallback = useCallback(({ volcanoFusionFilterData }) => {
+    setVFData(volcanoFusionFilterData)
+    setBoolChartState(false);
+    setChartName(tabName);
+
+  }, []);
+
+
+
+  const survivalCallback = useCallback(({ updatedState }) => {
+    setSurvivalData(updatedState)
+    setBoolChartState(false);
+    setChartName(tabName);
+  }, []);
+
+  let trasnferSurvivalData = (cardData) => {
+    setSurvivalCardData(cardData)
+  }
+
+
   useEffect(() => {
-    if(BrstKeys){
+    if (BrstKeys) {
       let chartx = LoadChart(width, tabName);
       setCharts((prevState) => ({
         ...prevState,
         viz: chartx,
       }));
     }
-  }, [state,BrstKeys])
+  }, [state, BrstKeys, survialData, VFData])
 
 
   useEffect(() => {
@@ -276,13 +299,13 @@ export default function DataVisualization() {
     }
   }, [chart]);
 
-  useEffect(() => {
-    let chartx = LoadChart(width, tabName);
-    setCharts((prevState) => ({
-      ...prevState,
-      viz: chartx,
-    }));
-  }, [screenCapture]);
+  // useEffect(() => {
+  //   let chartx = LoadChart(width, tabName);
+  //   setCharts((prevState) => ({
+  //     ...prevState,
+  //     viz: chartx,
+  //   }));
+  // }, [screenCapture]);
 
   const LoadChart = (w, type) => {
     switch (type) {
@@ -314,7 +337,8 @@ export default function DataVisualization() {
           w,
           state,
           screenCapture,
-          setToFalseAfterScreenCapture
+          setToFalseAfterScreenCapture,
+          VFData
         );
       case "heatmap":
         return Charts.heatmap(
@@ -329,7 +353,9 @@ export default function DataVisualization() {
           w,
           state,
           screenCapture,
-          setToFalseAfterScreenCapture
+          setToFalseAfterScreenCapture,
+          survialData,
+          trasnferSurvivalData
         );
       case "correlation":
         return Charts.scatter(
@@ -350,7 +376,8 @@ export default function DataVisualization() {
           w,
           state,
           screenCapture,
-          setToFalseAfterScreenCapture
+          setToFalseAfterScreenCapture,
+          VFData
         );
       case "box":
         return Charts.box(
@@ -410,55 +437,127 @@ export default function DataVisualization() {
 
         <div className="ptn">
           <div className="auto">
+
             {/* Filter and Gene Filter */}
+
             <section >
+              <div className="PopoverStyles">
 
-              <div className="block text-center">
-                {/* Toggle and Filter */}
 
-               { toggle && <Popover className="relative">
-                  {({ open }) => {
-                    return (
-                      <>
-                        <div className="w-full">
-                          <Popover.Button className={'selectBox'}>
-                            <div className="GeneSetgeneSetButton">
-                              <div className="flex-1">Clinical info. Re-filtering</div>
-                              <div className="w-20">
-                                <CogIcon className="filter-icon" />
+                {toggle &&
+                  <Popover className="relative">
+                    {({ open }) => {
+                      return (
+                        <>
+                          <div className="w-full">
+                            <Popover.Button className={'selectBox'}>
+                              <div className="GeneSetgeneSetButton">
+                                <div className="flex-1">Clinical info. Re-filtering</div>
+                                <div className="w-20">
+                                  <CogIcon className="filter-icon" />
+                                </div>
                               </div>
-                            </div>
-                          </Popover.Button>
+                            </Popover.Button>
 
-                          <Transition
-                            as={Fragment}
-                            enter="transition ease-out duration-200"
-                            enterFrom="opacity-0 translate-y-1"
-                            enterTo="opacity-100 translate-y-0"
-                            leave="transition ease-in duration-150"
-                            leaveFrom="opacity-100 translate-y-0"
-                            leaveTo="opacity-0 translate-y-1"
-                          >
-                            <Popover.Panel className="GeneSetPopoverPanel">
-                              {/* <div className="FilterDiv" > */}
+                            <Transition
+                              as={Fragment}
+                              enter="transition ease-out duration-200"
+                              enterFrom="opacity-0 translate-y-1"
+                              enterTo="opacity-100 translate-y-0"
+                              leave="transition ease-in duration-150"
+                              leaveFrom="opacity-100 translate-y-0"
+                              leaveTo="opacity-0 translate-y-1"
+                            >
+                              <Popover.Panel className="GeneSetPopoverPanel">
                                 <Filter
                                   parentCallback={callback}
                                   filterState={state["filter"]}
                                   set_screen={screen_call}
                                   project_id={project_id}
                                 />
-                              {/* </div> */}
-                              {/* </div> */}
-                            </Popover.Panel>
-                          </Transition>
-                        </div>
-                      </>
-                    );
-                  }}
-                </Popover>
+                              </Popover.Panel>
+                            </Transition>
+                          </div>
+                        </>
+                      );
+                    }}
+                  </Popover>
                 }
 
-                <Popover className="relative gene_main_box" style={{ margin: 'auto' }}>
+                {!toggle && tabName === 'survival' &&
+                  <Popover className="relative gene_main_box">
+                    {({ open }) => {
+                      return (
+                        <>
+                          <div className='w-full'>
+                            <Popover.Button className={'selectBox'}>
+                              <div className="GeneSetgeneSetButton">
+                                <div className="flex-1">Filter</div>
+                                <div className="w-20">
+                                <CogIcon className="filter-icon" />
+                                </div>
+                              </div>
+                            </Popover.Button>
+                            <Transition
+                              as={Fragment}
+                              enter="transition ease-out duration-200"
+                              enterFrom="opacity-0 translate-y-1"
+                              enterTo="opacity-100 translate-y-0"
+                              leave="transition ease-in duration-150"
+                              leaveFrom="opacity-100 translate-y-0"
+                              leaveTo="opacity-0 translate-y-1"
+                            >
+                              <Popover.Panel className="SurvivalFilter W100 BorderstyleViz">
+                                <SurvivalFilterComponent
+                                  parentCallback={survivalCallback}
+                                  filterState={state}
+                                  setSurvivalCardData={survivalCardData}
+                                />
+                              </Popover.Panel>
+                            </Transition>
+                          </div>
+                        </>
+                      )
+                    }}
+                  </Popover>
+                }
+
+
+                {!toggle && (tabName === 'fusion' || tabName === 'volcano') &&
+                  <Popover className="relative gene_main_box">
+                    {({ open }) => {
+                      return (
+                        <>
+                          <div className='w-full'>
+                            <Popover.Button className={'selectBox'}>
+                              <div className="GeneSetgeneSetButton">
+                                <div className="flex-1">Gene set Re-filtering</div>
+                                <div className="w-20">
+                                <CogIcon className="filter-icon" />
+                                </div>
+                              </div>
+                            </Popover.Button>
+                            <Transition
+                              as={Fragment}
+                              enter="transition ease-out duration-200"
+                              enterFrom="opacity-0 translate-y-1"
+                              enterTo="opacity-100 translate-y-0"
+                              leave="transition ease-in duration-150"
+                              leaveFrom="opacity-100 translate-y-0"
+                              leaveTo="opacity-0 translate-y-1"
+                            >
+                              <Popover.Panel className="VFFilter W100 BorderstyleViz">
+                                <VolcanoFusionFilterComponent parentCallback={volcanoFusionFilterCallback} tab={tabName} />
+                              </Popover.Panel>
+                            </Transition>
+                          </div>
+                        </>
+                      )
+                    }}
+                  </Popover>
+                }
+
+                <Popover className="relative gene_main_box">
                   {({ open }) => {
                     return (
                       <>
@@ -491,12 +590,11 @@ export default function DataVisualization() {
                 </Popover>
 
               </div>
-
             </section>
 
             {
               gridData && !tabName &&
-              <div className='dataList' style={{marginTop:'5%'}}>
+              <div className='dataList' style={{ marginTop: '5%' }}>
                 <ul >
                   {gridData.map((item, index) => (
 
@@ -541,6 +639,8 @@ export default function DataVisualization() {
           </section>
 
         </div>
+
+
       </article>
     </div>
   );

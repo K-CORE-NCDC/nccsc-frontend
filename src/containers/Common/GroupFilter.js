@@ -100,7 +100,7 @@ const filterChoicesCustom = [
   { type: "number", name: "N Category", id: "n_category", input: "number" },
   { type: "text", name: "HER2 Score", id: "her2_score", input: "text" },
   { type: "number", name: "ki67", id: "ki67_score", input: "text" },
-  // { type: "boolean", name: "Recurance Yes or No", id: "rlps_yn" },
+  { type: "boolean", name: "Recurance Yes or No", id: "rlps_yn" },
   { type: "number", name: "ER Test", id: "er_score", input: "number" },
   { type: "number", name: "PR Test", id: "pr_score", input: "number" },
 ];
@@ -214,12 +214,12 @@ let preDefienedGroups = {
 
 export const PreDefienedFilters = ({
   volcanoType,
-  parentCallback,
+  filterParentCallback,
   groupFilters,
+  survivalModel,
 }) => {
   const context = useContext(Context);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
-  // const [Englishlanguage, setEnglishlanguage] = useState(true);
   const [selectedFilterType, setSelectedFilterType] = useState({});
   const [filterGroupsHtml, setFilterGroupsHtml] = useState([]);
   const [filters, setFilters] = useState({});
@@ -234,6 +234,7 @@ export const PreDefienedFilters = ({
       setKoreanlanguage(false);
     }
   }, [context]);
+  
   const preDefienedGroups1 = {
     diag_age: [
       { label: "21-35", from: 21, to: 35 },
@@ -288,7 +289,6 @@ export const PreDefienedFilters = ({
     smok_yn: [
       { label: "No", value: "smok_yn||N" },
       { label: "Yes", value: "smok_yn||Y" },
-      // { label: "Current Smoking", value: "smok_curr_yn||Y" }
     ],
 
     // t_category: [
@@ -304,6 +304,7 @@ export const PreDefienedFilters = ({
     //     { label: "N3", from: 'N3', to: 'N3' }
     // ]
   };
+
   useEffect(() => {
     if (volcanoType !== filterType) {
       setFilterType(volcanoType);
@@ -311,11 +312,17 @@ export const PreDefienedFilters = ({
       setResetClicked(false);
     }
   }, [volcanoType]);
+
+   useEffect(()=>{
+    resetFilters()
+  },[survivalModel])
+
+
   const submitFilters = () => {
     if (Object.keys(filters).length > 0) {
-      parentCallback(filters);
+      filterParentCallback(filters);
     } else {
-      parentCallback(groupFilters);
+      filterParentCallback(groupFilters);
     }
   };
 
@@ -567,395 +574,6 @@ export const PreDefienedFilters = ({
 };
 
 
-export const PreDefienedFiltersSurvival = ({
-  parentCallback,
-  groupFilters,
-  from,
-  survivalModel
-}) => {
-
-  const [selectedFilterType, setSelectedFilterType] = useState({});
-  const [filterGroupsHtml, setFilterGroupsHtml] = useState([]);
-  const [filters, setFilters] = useState({});
-  const [resetClicked, setResetClicked] = useState(false);
-  const [isGroupFilterProp, setIsGroupFilterProp] = useState(false);
-
-  const context = useContext(Context);
-  const [koreanlanguage, setKoreanlanguage] = useState(false);
-  const [Englishlanguage, setEnglishlanguage] = useState(true);
-
-  useEffect(() => {
-    if (context["locale"] === "kr-KO") {
-      setKoreanlanguage(true);
-      setEnglishlanguage(false);
-    } else {
-      setKoreanlanguage(false);
-      setEnglishlanguage(true);
-    }
-  });
-
-  useEffect(()=>{
-    resetFilters()
-  },[survivalModel])
-
-  let preDefienedGroups1 = {
-    diag_age: [
-      { label: "21-25", from: 21, to: 25 },
-      { label: "26-30", from: 26, to: 30 },
-      { label: "31-35", from: 31, to: 35 },
-      { label: "36-40", from: 36, to: 40 },
-    ],
-    bmi_vl: [
-      { label: "<18.5", from: 0, to: 18.5 },
-      { label: "18.6-24.9", from: 18.6, to: 25 },
-      { label: "25.0-29.9", from: 25.1, to: 30 },
-      { label: "30.0≤", from: 30.1, to: 100 },
-    ],
-    mena_age: [
-      { label: "10-13", from: 10, to: 13 },
-      { label: "14-17", from: 14, to: 17 },
-    ],
-    feed_drtn_mnth: [
-      { label: "< 1year", from: 1, to: 11 },
-      { label: "1year ≤", from: 12, to: 24 },
-    ],
-    t_category: [
-      { label: "Tis", from: "Tis", to: "Tis" },
-      { label: "T1", from: "T1", to: "T1" },
-      { label: "T2", from: "T2", to: "T2" },
-      { label: "T3", from: "T3", to: "T3" },
-      { label: "T4", from: "T4", to: "T4" },
-    ],
-    n_category: [
-      { label: "Nx", from: "Nx", to: "Nx" },
-      { label: "N0", from: "N0", to: "N0" },
-      { label: "N1", from: "N1", to: "N1" },
-      { label: "N2", from: "N2", to: "N2" },
-      { label: "N3", from: "N3", to: "N3" },
-    ],
-    her2_score: [
-      {
-        from: "negative (0-1+)",
-        to: "negative (0-1+)",
-        label: "negative (0-1+)",
-        value: "negative (0-1+)",
-      },
-      {
-        from: "equivocal (2+)",
-        to: "equivocal (2+)",
-        label: "equivocal (2+)",
-        value: "equivocal (2+)",
-      },
-      {
-        from: "positive (3+)",
-        to: "positive (3+)",
-        label: "positive (3+)",
-        value: "positive (3+)",
-      },
-    ],
-    pr_score: [
-      { label: "Positive", from: 1, to: 1 },
-      { label: "Negative", from: 2, to: 2 },
-    ],
-    er_score: [
-      { label: "Positive", from: 1, to: 1 },
-      { label: "Negative", from: 2, to: 2 },
-    ],
-    ki67_score: [
-      { label: "low(≤15%)", value: "low(≤15%)", from: "low", to: "low(≤15%)" },
-      {
-        label: "intermediate(<15-30%≤)",
-        value: "intermediate(<15-30%≤)",
-        from: "intermediate",
-        to: "intermediate(<15-30%≤)",
-      },
-      {
-        label: "high(30%<)",
-        value: "high(30%<)",
-        from: "high",
-        to: "high 30%<",
-      },
-    ],
-    smok_yn: [
-      { label: "No Smoking", value: "no" },
-      { label: "Past Smoking", value: "past" },
-      { label: "Current Smoking", value: "current" },
-    ],
-  };
-
-  const submitFilters = () => {
-    if (Object.keys(filters).length > 0) {
-      parentCallback(filters);
-    } else {
-      parentCallback(groupFilters);
-    }
-  };
-
-  const resetFilters = () => {
-    setSelectedFilterType({});
-    setFilterGroupsHtml([]);
-    setFilters({});
-    setResetClicked(true);
-    setIsGroupFilterProp(false);
-  };
-
-  useEffect(() => {
-    if (groupFilters && groupFilters.type) {
-      if (resetClicked === false) {
-        setIsGroupFilterProp(true);
-      }
-      let filterGroupsHtmlTemp = [];
-      if (groupFilters.type === "boolean") {
-        filterGroupsHtmlTemp.push(
-          <div key="bool">
-            <div className="flex flex-row">
-              <h5 className="xs:text-xl">Group 1 : </h5>
-              <h5 className="text-bold xs:text-xl text-blue-700">Yes</h5>
-            </div>
-            <div className="flex flex-row">
-              <h5 className="xs:text-xl">Group 2 : </h5>
-              <h5 className="text-bold xs:text-xl text-blue-700">No</h5>
-            </div>
-          </div>
-        );
-      }
-
-      if (groupFilters.type === "static") {
-        filterGroupsHtmlTemp.push(
-          <div key="bool">
-            <div className="flex flex-row">
-              <h5 className="xs:text-xl">Group 1 : </h5>
-              <h5 className="text-bold xs:text-xl text-blue-700">Male</h5>
-            </div>
-            <div className="flex flex-row">
-              <h5 className="xs:text-xl">Group 2 : </h5>
-              <h5 className="text-bold xs:text-xl text-blue-700">Female</h5>
-            </div>
-          </div>
-        );
-      }
-      if (groupFilters.type === "number" || groupFilters.type === "text") {
-        filterGroupsHtmlTemp.push(
-          <div key="drop-user">
-            {preDefienedGroups1[groupFilters.column].map((element, index) => (
-              <div className="TextLG" key={`${element.label}-${index}-grp-a`}>
-                <div className="flex flex-row justify-around">
-                  <h5 className="P4 xs:text-xl">
-                    Group {index + 1} : {element.label}
-                  </h5>
-                </div>
-              </div>
-            ))}
-          </div>
-        );
-      }
-      setFilterGroupsHtml(filterGroupsHtmlTemp);
-    }
-  }, [groupFilters]);
-
-  const filterTypeDropdownSelection = (event) => {
-    let key = event.target.value;
-    setSelectedFilterType({
-      details: koreanlanguage ? filterChoicesCustomKorean[parseInt(key)] : filterChoicesCustom[parseInt(key)],
-      index: key,
-    });
-  };
-
-
-  useEffect(() => {
-    let filterGroupsHtmlTemp = [];
-    if (selectedFilterType && selectedFilterType.details) {
-      if (selectedFilterType.details.type === "boolean") {
-        setFilters({
-          group_a: true,
-          group_b: false,
-          column: selectedFilterType.details.id,
-          type: "boolean",
-        });
-        filterGroupsHtmlTemp.push(
-          <div key="bool">
-            <div className="flex flex-row">
-              <h5 className="P4 xs:text-xl">Group 1 : </h5>
-              <h5 className="P4 text-bold xs:text-xl text-blue-700">Yes</h5>
-            </div>
-            <div className="flex flex-row">
-              <h5 className="P4 xs:text-xl">Group 2 : </h5>
-              <h5 className="P4 text-bold xs:text-xl text-blue-700">No</h5>
-            </div>
-          </div>
-        );
-      }
-
-      if (selectedFilterType.details.type === "static") {
-        setFilters({
-          group_a: "F",
-          group_b: "M",
-          column: selectedFilterType.details.id,
-          type: "static",
-        });
-        filterGroupsHtmlTemp.push(
-          <div key="gender">
-            <div className="flex Border mb-1 flex-row justify-around">
-              <h5 className="P4 xs:text-xl">Group 1 : </h5>
-              <h5 className="P4 text-bold xs:text-xl text-blue-700">Male</h5>
-            </div>
-            <div className="flex Border mb-1 flex-row justify-around">
-              <h5 className="P4 xs:text-xl">Group 2 : </h5>
-              <h5 className="P4 text-bold xs:text-xl text-blue-700">Female</h5>
-            </div>
-          </div>
-        );
-      }
-
-      if (
-        selectedFilterType.details.type === "number" ||
-        selectedFilterType.details.type === "text"
-      ) {
-        const colName = selectedFilterType.details.id;
-        let filtersTemp = {
-          type: selectedFilterType.details.type,
-          column: colName,
-        };
-        preDefienedGroups1[colName].forEach((e, index) => {
-          filtersTemp = {
-            ...filtersTemp,
-            [`${index + 1}_from`]: e.from,
-            [`${index + 1}_to`]: e.to,
-          };
-        });
-        setFilters(filtersTemp);
-        filterGroupsHtmlTemp.push(
-          <div key="drop-user">
-            {preDefienedGroups1[colName].map((element, index) => (
-              <div className="TextLG" key={`${element.label}-${index}-grp-a`}>
-                <div className="flex flex-row justify-around">
-                  <h5 className="P4 xs:text-xl">
-                    Group {index + 1} : {element.label}
-                  </h5>
-                </div>
-              </div>
-            ))}
-          </div>
-        );
-      }
-
-      setFilterGroupsHtml(filterGroupsHtmlTemp);
-    }
-  }, [selectedFilterType]);
-
-  return (
-    <div className="M1 BGGray100">
-      <div className="P1 PY3 PX2 ColSpan2">
-        <div className="Block  TextBlue700 TextLG  FontBold MB2">
-          <FormattedMessage
-            id="Clinical Filters"
-            defaultMessage="Clinical Attribute"
-          />
-        </div>
-        {(resetClicked === true || isGroupFilterProp === false) && (
-          <select
-            onChange={filterTypeDropdownSelection}
-            defaultValue={""}
-            className="WFull lg:P4 xs:p-2 Border lg:text-xl xs:text-sm focus:outline-none Border-b-color focus:ring focus:Border-b-color active:Border-b-color mt-3"
-          >
-            <option value=""></option>
-
-            {Englishlanguage && filterChoicesCustom.map((type, index) => (
-              <option className="TextLG" key={type.name} value={index}>
-                {type.name}
-              </option>
-            ))}
-            {koreanlanguage && filterChoicesCustomKorean.map((type, index) => (
-              <option className="TextLG" key={type.name} value={index}>
-                {type.name}
-              </option>
-            ))}
-          </select>
-        )}
-        {resetClicked === false && isGroupFilterProp === true && (
-          <h6 className="Border P4">
-            {Englishlanguage && filterChoicesCustom.forEach((e) => {
-              if (groupFilters.column === e.id) {
-                return e.name;
-              }
-            })}
-            {koreanlanguage && filterChoicesCustomKorean.forEach((e) => {
-              if (groupFilters.column === e.id) {
-                return e.name;
-              }
-            })}
-          </h6>
-        )}
-      </div>
-      <div className="P1 PY3 PX2 ColSpan2">{filterGroupsHtml}</div>
-      <div>
-        <button
-          onClick={() => submitFilters()}
-          className="SubmitButtonFilter"
-        >
-          <FormattedMessage
-            id="Submit_volcano"
-            defaultMessage="Submit"
-          />
-        </button>
-      </div>
-      <div>
-        <button
-          onClick={() => resetFilters()}
-          className="ResetButtonFilter"
-        >
-          <FormattedMessage id="Reset_volcano" defaultMessage="Reset" />
-        </button>
-      </div>
-    </div>
-  );
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const GroupFilters = ({
   volcanoType,
   parentCallback,
@@ -1157,6 +775,7 @@ const GroupFilters = ({
         to: "(3+)",
       },
     ];
+
     if (viz_type === "volcono") {
       preDefienedGroups1["ki67_score"] = [
         { label: "low(≤15%)", value: "low", from: "0", to: "15" },
@@ -1178,7 +797,52 @@ const GroupFilters = ({
     }
   }, [volcanoType]);
 
+  preDefienedGroups1["smok_yn"] = [
+    { label: "No Smoking", value: "smok_yn||N" },
+    { label: "Past Smoking", value: "smok_yn||Y" },
+    { label: "Current Smoking", value: "smok_curr_yn||Y" },
+  ];
+
+  preDefienedGroups1["t_category"] = [
+    { label: "Tis", from: "Tis", to: "Tis", value: "Tis" },
+    { label: "T1", from: "T1", to: "T1", value: "T1" },
+    { label: "T2", from: "T2", to: "T2", value: "T2" },
+    { label: "T3", from: "T3", to: "T3", value: "T3" },
+    { label: "T4", from: "T4", to: "T4", value: "T4" },
+  ];
+
+  preDefienedGroups1["n_category"] = [
+    { label: "Nx", from: "Nx", to: "Nx", value: "Nx" },
+    { label: "N0", from: "N0", to: "N0", value: "N0" },
+    { label: "N1", from: "N1", to: "N1", value: "N1" },
+    { label: "N2", from: "N2", to: "N2", value: "N2" },
+    { label: "N3", from: "N3", to: "N3", value: "N3" },
+  ];
+
+  preDefienedGroups1["her2_score"] = [
+    {
+      value: "negative (0-1+)",
+      label: "negative (0-1+)",
+      from: "0",
+      to: "(0-1+)",
+    },
+    { value: "equivocal (2+)", label: "equivocal (2+)", from: "2", to: "(2+)" },
+    { value: "positive (3+)", label: "positive (3+)", from: "2+", to: "(3+)" },
+  ];
+
+  preDefienedGroups1["ki67_score"] = [
+    { label: "low(≤15%)", value: "low", from: "0", to: "15" },
+    {
+      label: "intermediate(<15-30%≤)",
+      value: "intermediate",
+      from: "15",
+      to: "30",
+    },
+    { label: "high(30%<)", value: "high", from: "30", to: "100" },
+  ];
+
   const submitFilters = () => {
+    if(viz_type === 'volcano'){
     if (isFilterResetHappened) {
       let send_response = true;
       if (userGivenInputValues['type'] === 'static') {
@@ -1283,6 +947,85 @@ const GroupFilters = ({
     else {
       parentCallback(userGivenInputValues);
     }
+  }
+  else {
+    if (isFilterResetHappened) {
+      let send_response = true;
+      if(userGivenInputValues['type'] === 'static'){
+        let final_payload = { ...userGivenInputValues };
+        let total_groups=0;
+        for(let i=1;i<=3;i++){
+            if(`group_${i}` in final_payload){
+                total_groups++;
+            }
+        }
+        if(total_groups === 1 ){
+          send_response = true; 
+      }
+      }
+      else{
+        let min1Value = Number.MAX_VALUE;
+        let max1Value = Number.MIN_VALUE;
+        let final_payload = { ...userGivenInputValues };
+        for(let i = 1; i <groupsCounter; i++){
+          const min_1_from = document.querySelectorAll(`[name="${i}_from"]`);
+          const max_1_to = document.querySelectorAll(`[name="${i}_to"]`);
+          let min_1_num,max_1_num
+          for (let obj in min_1_from) {
+            if (min_1_from[obj]) {
+              if (
+                (min_1_from[obj].classList &&
+                  (min_1_from[obj].classList.contains("Border-2") ||
+                    min_1_from[obj].classList.contains("Border-red-400"))) ||
+                min_1_from[obj].value === ""
+              ) {
+                send_response = false;
+              } else {
+                if (min_1_from[obj].value) {
+                  min1Value = Math.min(min_1_from[obj].value,min1Value);
+                  min_1_num = +(min_1_from[obj].value)
+                }
+              }
+            }
+          }
+          for (let obj in max_1_to) {
+            if (max_1_to[obj]) {
+              if (
+                (max_1_to[obj].classList &&
+                  (max_1_to[obj].classList.contains("Border-2") ||
+                    max_1_to[obj].classList.contains("Border-red-400"))) ||
+                max_1_to[obj].value === ""
+              ) {
+                send_response = false;
+              } else {
+                if (max_1_to[obj].value) {
+                  max1Value = Math.max(max_1_to[obj].value,max1Value);
+                  max_1_num = +(max_1_to[obj].value)
+                }
+              }
+            }
+          }
+              let one_from = `${i}_from`
+              let one_to = `${i}_to`
+              final_payload[one_from] = min_1_num;
+              final_payload[one_to] = max_1_num ;
+        }
+
+        if (send_response === true) {
+          setGroupsCounter(1)
+          setUserGivenInputValues(final_payload);
+          parentCallback(final_payload);
+        }
+      }
+      if (send_response === true &&  userGivenInputValues['type'] !== 'number') {
+        parentCallback(userGivenInputValues);
+        setGroupsCounter(1)
+      }
+    } 
+    else {
+      parentCallback(userGivenInputValues );
+    }
+  }
   };
 
   const resetFilters = () => {
@@ -1560,7 +1303,8 @@ const GroupFilters = ({
               </div>
             </div>
           );
-        } else {
+        } 
+        else {
           return (
             <div
               key={`${compCase}-${groupsCounter}${Math.random()}`}
@@ -1699,6 +1443,269 @@ const GroupFilters = ({
   };
 
   useEffect(() => {
+    if(viz_type === 'survival' || viz_type === 'fusion'){
+      
+      let filterType = selectedFilterDetails.type;
+      let colName = selectedFilterDetails.id;
+    if (filterType) {
+      let componentData = [];
+      
+      if (filterType === "boolean" || filterType === "static") {
+        let options = ["Yes", "No"];
+        if (filterType === "static") {
+          options = [
+            selectedFilterDetails.options[0],
+            selectedFilterDetails.options[1],
+          ];
+          setUserGivenInputValues({
+            group_a: "M",
+            group_b: "F",
+            column: selectedFilterDetails.id,
+            type: filterType,
+          });
+        } else {
+          setUserGivenInputValues({
+            group_a: true,
+            group_b: false,
+            column: selectedFilterDetails.id,
+            type: filterType,
+          });
+        }
+        componentData = [componetSwitch("static", options)];
+      } else if (filterType === "number") {
+        if (viz_type !== "volcono") {
+          setShowAddGroupButton(true);
+        }
+        setUserGivenInputValues({
+          column: selectedFilterDetails.id,
+          type: filterType,
+        });
+        componentData.push(componetSwitch("number"));
+      } else if (filterType === "text") {
+        setShowAddGroupButton(true);
+        setUserGivenInputValues({
+          column: selectedFilterDetails.id,
+          type: selectedFilterDetails.type,
+        });
+        componentData.push(componetSwitch("text"));
+      } else if (filterType === "dropdown") {
+        let tr = [];
+        
+        if (viz_type === "volcono") {
+          if (
+            Object.keys(userGivenInputValues).length > 0 &&
+            userGivenInputValues["type"] === "static"
+            ) {
+              if (
+                userGivenInputValues["group_a"].length > 0 &&
+                userGivenInputValues["group_b"].length > 0
+                ) {
+              preDefienedGroups1[colName].forEach((element, index) => {
+                let group_a = false;
+                let group_b = false;
+                if (
+                  userGivenInputValues["group_a"].indexOf(element.value) > -1
+                ) {
+                  group_a = true;
+                }
+                if (
+                  userGivenInputValues["group_b"].indexOf(element.value) > -1
+                  ) {
+                    group_b = true;
+                  }
+                  tr.push(
+                  <tr key={colName + index} className="Border-b">
+                    <td className=" PX6Y4 CheckBoxRow">
+                      {element.label}
+                    </td>
+                    <td className="PX6Y4">
+                      <input
+                        type="checkbox"
+                        defaultChecked={group_a}
+                        onChange={dropDownChange}
+                        value={JSON.stringify({
+                          index: index,
+                          colName: colName,
+                          group: "group_a",
+                        })}
+                      />
+                    </td>
+                    <td className="PX6Y4">
+                      <input
+                        type="checkbox"
+                        defaultChecked={group_b}
+                        onChange={dropDownChange}
+                        value={JSON.stringify({
+                          index: index,
+                          colName: colName,
+                          group: "group_b",
+                        })}
+                        />
+                    </td>
+                  </tr>
+                );
+              });
+            }
+          } else {
+            preDefienedGroups1[colName].map((element, index) =>
+            tr.push(
+              <tr key={colName + index} className="Border-b">
+                  <td className=" PX6Y4 CheckBoxRow">
+                    {element.label}
+                  </td>
+                  <td className="PX6Y4">
+                    <input
+                      type="checkbox"
+                      onChange={dropDownChange}
+                      value={JSON.stringify({
+                        index: index,
+                        colName: colName,
+                        group: "group_a",
+                      })}
+                      />
+                  </td>
+                  <td className="PX6Y4">
+                    <input
+                      type="checkbox"
+                      onChange={dropDownChange}
+                      value={JSON.stringify({
+                        index: index,
+                        colName: colName,
+                        group: "group_b",
+                      })}
+                    />
+                  </td>
+                </tr>
+              )
+              );
+          }
+          componentData.push(
+            <table className="table" key={"group_table"}>
+              <thead className="Border-b WFull" key={"group_thead"}>
+                <tr>
+                  <th></th>
+                  <th className="GroupNamesFilter PX6Y4">
+                    Group A
+                  </th>
+                  <th className="GroupNamesFilter PX6Y4">
+                    Group B
+                  </th>
+                </tr>
+              </thead>
+              <tbody key={"group_tbody"}>{tr}</tbody>
+            </table>
+          );
+        }
+        else if (viz_type === "survival") {
+          let d = preDefienedGroups1[colName];
+          let thead = [];
+          let boxes = d.length;
+          for (let sv = 0; sv < d.length; sv++) {
+            const element = d[sv];
+            thead.push(
+              <th key={sv} className="GroupNamesFilter PX6Y4 ">
+                Group {abc[sv]}:
+              </th>
+            );
+            let checkbox = [];
+            let group_i = 0;
+            
+            for (let index = 0; index < boxes; index++) {
+              let name = "group_" + abc[index] + "_" + element.value;
+              if (Object.keys(userGivenInputValues).length > 0) {
+                let group_check = false;
+                if (
+                  "group_" + abc[index] in userGivenInputValues &&
+                  userGivenInputValues["group_" + abc[index]].length > 0
+                ) {
+                  if (
+                    userGivenInputValues["group_" + abc[index]].indexOf(
+                      element.value
+                      ) > -1
+                      ) {
+                        let gi_val = userGivenInputValues["group_" + abc[index]];
+                        for (let gi = 0; gi < gi_val.length; gi++) {
+                          let n = gi_val[gi];
+                          if ("group_" + abc[index] + "_" + n === name) {
+                            group_check = true;
+                            break;
+                          }
+                        }
+                      }
+                    }
+                    checkbox.push(
+                      <td
+                      className="PX6Y4"
+                    key={index + "_" + sv + abc[sv] + "_" + element.label}
+                  >
+                    <input
+                      data-type={element.label}
+                      data-name={abc[index]}
+                      type="checkbox"
+                      defaultChecked={group_check}
+                      onChange={dropDownChange}
+                      value={JSON.stringify({
+                        index: sv,
+                        colName: colName,
+                        group: "group_" + abc[index],
+                      })}
+                      key={element.label}
+                      />
+                  </td>
+                );
+                group_i = group_i + 1;
+              } else {
+                checkbox.push(
+                  <td
+                    className="PX6Y4"
+                    key={index + "_" + sv + abc[sv] + "_" + element.label}
+                    >
+                    <input
+                      type="checkbox"
+                      onChange={dropDownChange}
+                      value={JSON.stringify({
+                        index: sv,
+                        colName: colName,
+                        group: "group_" + abc[index],
+                      })}
+                      key={element.label}
+                      />
+                  </td>
+                );
+              }
+            }
+            tr.push(
+              <tr key={colName + sv} className="Border-b">
+                <td className=" PX6Y4 CheckBoxRow">
+                  {element.label}
+                </td>
+                {checkbox}
+              </tr>
+            );
+          }
+          componentData.push(
+            <table className="table" key={"group_table"}>
+              <thead className="Border-b WFull" key={"group_thead"}>
+                <tr>
+                  <th></th>
+                  {thead}
+                </tr>
+              </thead>
+              <tbody key={"group_tbody"}>{tr}</tbody>
+            </table>
+          );
+        }
+      }
+
+      if (prevStateFilters.length > 0) {
+        setFilterInputs([...prevStateFilters]);
+      } else {
+        setFilterInputs([...componentData]);
+        setGroupsCounter((prevState) => prevState + 1);
+      }
+    }
+    }
+  else{
     let filterType = selectedFilterDetails.type;
     let colName = selectedFilterDetails.id;
     if (filterType) {
@@ -1744,62 +1751,74 @@ const GroupFilters = ({
         componentData.push(componetSwitch("text"));
       } else if (filterType === "dropdown") {
         let tr = [];
-
-        if (viz_type === "volcono") {
+        if (
+          Object.keys(groupFilters).length > 0 &&
+          groupFilters["type"] === "static"
+        ) {
           if (
-            Object.keys(userGivenInputValues).length > 0 &&
-            userGivenInputValues["type"] === "static"
+            groupFilters &&
+            groupFilters["column"] === colName &&
+            "group_1" in groupFilters  && groupFilters["group_1"].length > 0 &&
+            "group_2" in groupFilters && groupFilters["group_2"].length > 0 && 
+            "group_3" in groupFilters &&groupFilters["group_3"].length > 0
           ) {
-            if (
-              userGivenInputValues["group_a"].length > 0 &&
-              userGivenInputValues["group_b"].length > 0
-            ) {
-              preDefienedGroups1[colName].forEach((element, index) => {
-                let group_a = false;
-                let group_b = false;
-                if (
-                  userGivenInputValues["group_a"].indexOf(element.value) > -1
-                ) {
-                  group_a = true;
-                }
-                if (
-                  userGivenInputValues["group_b"].indexOf(element.value) > -1
-                ) {
-                  group_b = true;
-                }
-                tr.push(
-                  <tr key={colName + index} className="Border-b">
-                    <td className=" PX6Y4 CheckBoxRow">
-                      {element.label}
-                    </td>
-                    <td className="PX6Y4">
-                      <input
-                        type="checkbox"
-                        defaultChecked={group_a}
-                        onChange={dropDownChange}
-                        value={JSON.stringify({
-                          index: index,
-                          colName: colName,
-                          group: "group_a",
-                        })}
-                      />
-                    </td>
-                    <td className="PX6Y4">
-                      <input
-                        type="checkbox"
-                        defaultChecked={group_b}
-                        onChange={dropDownChange}
-                        value={JSON.stringify({
-                          index: index,
-                          colName: colName,
-                          group: "group_b",
-                        })}
-                      />
-                    </td>
-                  </tr>
-                );
-              });
-            }
+            preDefienedGroups1[colName].forEach((element, index) => {
+              let group_a = false;
+              let group_b = false;
+              let group_c = false;
+              if (groupFilters["group_1"].indexOf(element.value) > -1) {
+                group_a = true;
+              }
+              if (groupFilters["group_2"].indexOf(element.value) > -1) {
+                group_b = true;
+              }
+              if (groupFilters["group_3"].indexOf(element.value) > -1) {
+                group_c = true;
+              }
+              tr.push(
+                <tr key={colName + index} className="Border-b">
+                  <td className=" PX6Y4 CheckBoxRow">
+                    {element.label}
+                  </td>
+                  <td className="PX6Y4">
+                    <input
+                      type="checkbox"
+                      checked={group_a}
+                      onChange={dropDownChange}
+                      value={JSON.stringify({
+                        index: index,
+                        colName: colName,
+                        group: "group_1",
+                      })}
+                    />
+                  </td>
+                  <td className="PX6Y4">
+                    <input
+                      type="checkbox"
+                      checked={group_b}
+                      onChange={dropDownChange}
+                      value={JSON.stringify({
+                        index: index,
+                        colName: colName,
+                        group: "group_2",
+                      })}
+                    />
+                  </td>
+                  <td className="PX6Y4">
+                    <input
+                      type="checkbox"
+                      checked={group_c}
+                      onChange={dropDownChange}
+                      value={JSON.stringify({
+                        index: index,
+                        colName: colName,
+                        group: "group_3",
+                      })}
+                    />
+                  </td>
+                </tr>
+              );
+            });
           } else {
             preDefienedGroups1[colName].map((element, index) =>
               tr.push(
@@ -1814,7 +1833,7 @@ const GroupFilters = ({
                       value={JSON.stringify({
                         index: index,
                         colName: colName,
-                        group: "group_a",
+                        group: "group_1",
                       })}
                     />
                   </td>
@@ -1825,7 +1844,18 @@ const GroupFilters = ({
                       value={JSON.stringify({
                         index: index,
                         colName: colName,
-                        group: "group_b",
+                        group: "group_2",
+                      })}
+                    />
+                  </td>
+                  <td className="PX6Y4">
+                    <input
+                      type="checkbox"
+                      onChange={dropDownChange}
+                      value={JSON.stringify({
+                        index: index,
+                        colName: colName,
+                        group: "group_3",
                       })}
                     />
                   </td>
@@ -1833,122 +1863,69 @@ const GroupFilters = ({
               )
             );
           }
-          componentData.push(
-            <table className="table" key={"group_table"}>
-              <thead className="Border-b WFull" key={"group_thead"}>
-                <tr>
-                  <th></th>
-                  <th className="GroupNamesFilter PX6Y4">
-                    Group A
-                  </th>
-                  <th className="GroupNamesFilter PX6Y4">
-                    Group B
-                  </th>
-                </tr>
-              </thead>
-              <tbody key={"group_tbody"}>{tr}</tbody>
-            </table>
-          );
-        }
-        else if (viz_type === "survival") {
-          let d = preDefienedGroups1[colName];
-          let thead = [];
-          let boxes = d.length;
-          for (let sv = 0; sv < d.length; sv++) {
-            const element = d[sv];
-            thead.push(
-              <th key={sv} className="GroupNamesFilter PX6Y4 ">
-                Group {abc[sv]}:
-              </th>
-            );
-            let checkbox = [];
-            let group_i = 0;
-
-            for (let index = 0; index < boxes; index++) {
-              let name = "group_" + abc[index] + "_" + element.value;
-              if (Object.keys(userGivenInputValues).length > 0) {
-                let group_check = false;
-                if (
-                  "group_" + abc[index] in userGivenInputValues &&
-                  userGivenInputValues["group_" + abc[index]].length > 0
-                ) {
-                  if (
-                    userGivenInputValues["group_" + abc[index]].indexOf(
-                      element.value
-                    ) > -1
-                  ) {
-                    let gi_val = userGivenInputValues["group_" + abc[index]];
-                    for (let gi = 0; gi < gi_val.length; gi++) {
-                      let n = gi_val[gi];
-                      if ("group_" + abc[index] + "_" + n === name) {
-                        group_check = true;
-                        break;
-                      }
-                    }
-                  }
-                }
-                checkbox.push(
-                  <td
-                    className="PX6Y4"
-                    key={index + "_" + sv + abc[sv] + "_" + element.label}
-                  >
-                    <input
-                      data-type={element.label}
-                      data-name={abc[index]}
-                      type="checkbox"
-                      defaultChecked={group_check}
-                      onChange={dropDownChange}
-                      value={JSON.stringify({
-                        index: sv,
-                        colName: colName,
-                        group: "group_" + abc[index],
-                      })}
-                      key={element.label}
-                    />
-                  </td>
-                );
-                group_i = group_i + 1;
-              } else {
-                checkbox.push(
-                  <td
-                    className="PX6Y4"
-                    key={index + "_" + sv + abc[sv] + "_" + element.label}
-                  >
-                    <input
-                      type="checkbox"
-                      onChange={dropDownChange}
-                      value={JSON.stringify({
-                        index: sv,
-                        colName: colName,
-                        group: "group_" + abc[index],
-                      })}
-                      key={element.label}
-                    />
-                  </td>
-                );
-              }
-            }
+        } else {
+          preDefienedGroups1[colName].map((element, index) =>
             tr.push(
-              <tr key={colName + sv} className="Border-b">
+              <tr key={colName + index} className="Border-b">
                 <td className=" PX6Y4 CheckBoxRow">
                   {element.label}
                 </td>
-                {checkbox}
+                <td className="PX6Y4">
+                  <input
+                    type="checkbox"
+                    onChange={dropDownChange}
+                    value={JSON.stringify({
+                      index: index,
+                      colName: colName,
+                      group: "group_1",
+                    })}
+                  />
+                </td>
+                <td className="PX6Y4">
+                  <input
+                    type="checkbox"
+                    onChange={dropDownChange}
+                    value={JSON.stringify({
+                      index: index,
+                      colName: colName,
+                      group: "group_2",
+                    })}
+                  />
+                </td>
+                <td className="PX6Y4">
+                  <input
+                    type="checkbox"
+                    onChange={dropDownChange}
+                    value={JSON.stringify({
+                      index: index,
+                      colName: colName,
+                      group: "group_3",
+                    })}
+                  />
+                </td>
               </tr>
-            );
-          }
-          componentData.push(
-            <table className="table" key={"group_table"}>
-              <thead className="Border-b WFull" key={"group_thead"}>
-                <tr>
-                  <th></th>
-                  {thead}
-                </tr>
-              </thead>
-              <tbody key={"group_tbody"}>{tr}</tbody>
-            </table>
+            )
           );
         }
+        componentData.push(
+          <table className="table" key={"group_table"}>
+            <thead className="Border-b WFull" key={"group_thead"}>
+              <tr>
+                <th></th>
+                <th className="GroupNamesFilter PX6Y4">
+                  Group A
+                </th>
+                <th className="GroupNamesFilter PX6Y4">
+                  Group B
+                </th>
+                <th className="GroupNamesFilter PX6Y4">
+                  Group C
+                </th>
+              </tr>
+            </thead>
+            <tbody key={"group_tbody"}>{tr}</tbody>
+          </table>
+        );
       }
 
       if (prevStateFilters.length > 0) {
@@ -1958,6 +1935,7 @@ const GroupFilters = ({
         setGroupsCounter((prevState) => prevState + 1);
       }
     }
+  }
   }, [selectedFilterDetails, koreanlanguage]);
 
   const AppendNewGroup = () => {

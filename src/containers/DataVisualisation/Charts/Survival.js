@@ -1,141 +1,84 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from 'react-router-dom';
 import SurvivalCmp from "../../Common/Survival";
-import {
-  SurvivalInformation,
-  getClinicalMaxMinInfo,
-} from "../../../actions/api_actions";
 import { exportComponentAsJPEG } from "react-component-export-image";
-import GroupFilters, { PreDefienedFiltersSurvival } from "../../Common/GroupFilter";
-import UserDefinedGroupFilters from "../../Common/GroupFilterUserDefined";
 import NoContentMessage from "../../Common/NoContentComponent";
-import { useParams } from "react-router-dom";
 import LoaderCmp from "../../Common/Loader";
 import { FormattedMessage } from "react-intl";
+import {
+  SurvivalInformation,
+} from "../../../actions/api_actions";
+import { useParams } from "react-router-dom";
 import inputJson from "../../Common/data";
+import { useLocation } from 'react-router-dom';
+
 
 export default function DataSurvival({
   width,
   inputData,
   screenCapture,
   setToFalseAfterScreenCapture,
+  survialData,
+  trasnferSurvivalData
+
 }) {
-  const reference = useRef();
   const route = useLocation();
-  const dispatch = useDispatch();
+  const reference = useRef();
+  const [inputState, setInputState] = useState({})
   const [survivalJson, setSurvivalJson] = useState({})
-  const clinicalMaxMinInfo = useSelector(
-    (data) => data.dataVisualizationReducer.clinicalMaxMinInfo
-  );
-  const [watermarkCss, setWatermarkCSS] = useState("");
-  const [genesArray, setGenesArray] = useState([]);
-  const [fileredGene, setFilteredGene] = useState("");
-  const [reqstMsg, setReqstMsg] = useState(true)
+  const [pValueData, setPvalueData] = useState("");
   const [loader, setLoader] = useState(true);
-  const [groupFilters, setGroupFilters] = useState(null);
-  const [geneDatabase, setGeneDatabase] = useState("dna_mutation");
-  const [sampleCountsCard, setSampleCountsCard] = useState([]);
-  const [renderSurvival, setRenderSurvival] = useState(true);
+  const [renderSurvival, setRenderSurvival] = useState(false);
+  const [coxNoData, setCoxNoData] = useState(true)
   const [renderNoContent, setRenderNoContent] = useState(false);
-  const [filterTypeButton, setFilterTypeButton] = useState("clinical");
-  const [vizType, setVizType] = useState("single")
+  const [sampleCountsCard, setSampleCountsCard] = useState([]);
+  const [coxTable, setCoxTable] = useState([]);
+  const [watermarkCss, setWatermarkCSS] = useState("");
+  const [vizType, setVizType] = useState('')
+  const [singelSurvialType, setSingelSurvialType] = useState('recurrence')
 
   let { project_id } = useParams();
-  const [userDefienedFilter, setUserDefienedFilter] = useState(
-    project_id === undefined ? "static" : "dynamic"
-  );
-  const [alltabList, setAllTabList] = useState({});
-  const tabList = useSelector(
-    (data) => data.dataVisualizationReducer
-  );
 
   useEffect(() => {
-    if ('userProjectsDataTable' in tabList) {
-      setAllTabList(tabList.userProjectsDataTable)
+    if (screenCapture) {
+      setWatermarkCSS("watermark");
+    } else {
+      setWatermarkCSS("");
     }
 
-  }, [tabList])
+    if (watermarkCss !== "" && screenCapture) {
+      if (reference !== null) {
+        exportComponentAsJPEG(reference, {
+          'fileName': 'Survival', html2CanvasOptions: {
+          }
+        });
+      }
+      setToFalseAfterScreenCapture();
+    }
+  }, [screenCapture, watermarkCss]);
 
   useEffect(() => {
     if (route.pathname.includes('visualise-singledata')) {
       setVizType("single")
+      callSingleSurvial('recurrence')
     }
     else {
       setVizType("multi")
     }
   }, [route.pathname])
-  const [coxUserDefinedFilter, setCoxUserDefinedFilter] = useState({})
-  const [survivalModel, setSurvivalModel] = useState("recurrence");
-  const [pValueData, setPvalueData] = useState("");
-  const smallScreen = false
-  const [coxTable, setCoxTable] = useState([]);
-  const [coxNoData, setCoxNoData] = useState(true)
-  const userDefinedFilterColumns = useSelector(
-    (data) => data.dataVisualizationReducer.userDefinedFilter
-  );
-
-  const [coxFilter, setCoxFilter] = useState({
-  });
-
-  useEffect(() => {
-    if (userDefinedFilterColumns && userDefinedFilterColumns["filterJson"] && userDefinedFilterColumns["filterJson"]["Clinical Information"] && Object.keys(userDefinedFilterColumns).length > 0) {
-      setCoxUserDefinedFilter(userDefinedFilterColumns["filterJson"]["Clinical Information"])
-    }
-  }, [userDefinedFilterColumns])
-
-  useEffect(() => {
-    if (survivalModel === "cox" && project_id !== undefined) {
-      let tmpe = {}
-      if (coxUserDefinedFilter && Object.keys(coxUserDefinedFilter).length > 0) {
-        for (const a in coxUserDefinedFilter) {
-          if (a !== 'rlps_yn' && a !== 'rlps_cnfr_drtn') {
-            if ('value' in coxUserDefinedFilter[a][0] && coxUserDefinedFilter[a][0]['value'] !== 'yes' && 'value' in coxUserDefinedFilter[a][0] && coxUserDefinedFilter[a][0]['value'] !== 'no') {
-              continue
-            }
-            else {
-              tmpe[a] = false
-            }
-
-          }
-        }
-        setCoxFilter(tmpe)
-      }
-    }
-    else {
-
-      let tmp = [
-        "BodyMassIndex",
-        "AlcoholConsumption",
-        "FamilyHistoryofBreastCancer",
-        "IntakeOfContraceptivePill",
-        "HormoneReplaceTherapy",
-        "Menopause",
-        "Childbirth",
-        "DiagnosisofBilateralBreastCancer",
-        "FirstMenstrualAge",
-        "ERTestResults",
-        "PRTestResults",
-        "Ki67Index",
-        "AgeOfDiagnosis",
-      ];
-      let tmpe = {}
-      for (let i = 0; i < tmp.length; i++) {
-
-        tmpe[tmp[i]] = false
-      }
-      setCoxFilter(tmpe)
-    }
-  }, [survivalModel])
 
 
-  useEffect(() => {
-    if (!clinicalMaxMinInfo) {
-      if (project_id === undefined) {
-        dispatch(getClinicalMaxMinInfo("GET", {}));
-      }
-    }
-  }, []);
+  let callSingleSurvial = (survivalType) => {
+
+    setSingelSurvialType(survivalType)
+    let staticSurvivalData = {}
+    staticSurvivalData['filterType'] = "dynamic"
+    staticSurvivalData['survival_type'] = survivalType
+    staticSurvivalData['filter_gene'] = ""
+    staticSurvivalData['gene_database'] = "dna_mutation"
+    staticSurvivalData['group_filters'] = {}
+    staticSurvivalData['clinical'] = true
+    setInputState((prevState) => ({ ...prevState, ...inputData, ...staticSurvivalData }))
+  }
 
   let check = (d) => {
     let check = false
@@ -147,111 +90,67 @@ export default function DataSurvival({
     return check
   }
 
-  const submitFitersAndFetchData = () => {
-    if (fileredGene !== "" || filterTypeButton === "clinical") {
-      setLoader(true);
-      inputData["filterType"] = userDefienedFilter;
-      inputData["survival_type"] = survivalModel;
-      if (groupFilters) {
-        setReqstMsg(false)
-        if (filterTypeButton === "clinical") {
-          let return_data = SurvivalInformation("POST", {
-            ...inputData,
-            filter_gene: fileredGene,
-            gene_database: geneDatabase,
-            group_filters: groupFilters,
-            clinical: true,
-          })
-          return_data.then((result) => {
-            const d = result
-            if (d.status === 200 && "data" in d && check(d["data"])) {
-              let r_ = d["data"]
-              r_['status'] = 200
-              setSurvivalJson(r_)
-              setRenderNoContent(false)
-            } else {
-              setRenderNoContent(true)
-              setSurvivalJson({ status: d.status })
-            }
-          })
-            .catch((e) => {
-              setSurvivalJson({ status: 204 })
-            });
-        } else {
-          let return_data = SurvivalInformation("POST", {
-            ...inputData,
-            filter_gene: fileredGene,
-            gene_database: geneDatabase,
-            group_filters: groupFilters,
-            clinical: true,
-          })
-          return_data.then((result) => {
-            const d = result
-            if (d.status === 200 && "data" in d && check(d["data"])) {
-              let r_ = d["data"]
-              r_['status'] = 200
-              setSurvivalJson(r_)
-              setRenderNoContent(false)
-            } else {
-              setRenderNoContent(true)
-              setSurvivalJson({ status: d.status })
-              setRenderNoContent(true)
-            }
-          })
-            .catch((e) => {
-              setSurvivalJson({ status: 204 })
-            });
-        }
-      } else {
-        setReqstMsg(true)
-      }
+  useEffect(() => {
+    if (inputData && 'genes' in inputData) {
+      setInputState((prevState) => ({ ...prevState, ...inputData, ...survialData }));
+    }
+  }, [inputData, survialData])
 
-    } else {
-      setLoader(true);
-      let return_data = SurvivalInformation("POST", inputData)
+
+  useEffect(() => {
+    if (inputState && 'genes' in inputState && inputState['genes'].length > 0 && 'survival_type' in inputState) {
+      let return_data = SurvivalInformation("POST", inputState)
       return_data.then((result) => {
         const d = result
-        if (d.status === 200 && "data" in d && check(d["data"])) {
+        if (d.status === 200 && "data" in d && 'survival_type' in inputState && (inputState['survival_type'] === 'survival' || inputState['survival_type'] === 'recurrence') && check(d["data"])) {
           let r_ = d["data"]
           r_['status'] = 200
           setSurvivalJson(r_)
           setRenderNoContent(false)
-        } else {
+          setRenderSurvival(true);
+          setCoxNoData(false)
+
+        } else if (d.status === 200 && "data" in d && 'survival_type' in inputState && inputState['survival_type'] === 'cox') {
+          let r_ = d["data"]
+          r_['status'] = 200
+          setSurvivalJson(r_)
+          setRenderNoContent(false)
+          setRenderSurvival(true);
+          setCoxNoData(false)
+        }
+        else {
           setRenderNoContent(true)
           setSurvivalJson({ status: d.status })
-          setRenderNoContent(true)
+          setRenderSurvival(false);
+          setCoxNoData(false)
         }
       })
         .catch((e) => {
           setSurvivalJson({ status: 204 })
         });
     }
-  };
-
-
-  useEffect(() => {
-    if (inputData) {
-      if (inputData.type !== "") {
-        submitFitersAndFetchData();
-      }
+    if (renderNoContent || (inputData && inputData.genes.length === 0) ||
+      (vizType !== 'single' && inputState && ('group_filters' in inputState === false ||
+        (inputState['survival_type'] === 'cox' && 'coxFilter' in inputState === false)))) {
+      setRenderSurvival(false)
     }
-  }, [inputData, groupFilters]);
-
-  useEffect(() => {
-    if (inputData && inputData.genes) {
-      setGenesArray(inputData.genes);
+    else if (vizType === 'single' && (renderNoContent || (inputData && inputData.genes.length === 0))) {
+      setRenderSurvival(false)
     }
-  }, [inputData]);
+  }, [inputState])
+
 
   useEffect(() => {
     setTimeout(function () {
       setLoader(false);
     }, 1000);
-    if (survivalModel === "recurrence") {
+
+    if (inputState['survival_type'] === "recurrence" || inputState['survival_type'] === "survival") {
       if (survivalJson && survivalJson.sample_counts) {
         const sampleCountsObject = survivalJson.sample_counts;
         let totalCount = 0;
         let htmlArray = [];
+        let sampleCountsCard_ = []
         if (Object.keys(sampleCountsObject).length > 0) {
           Object.keys(sampleCountsObject).forEach((e) => {
             totalCount += sampleCountsObject[e];
@@ -270,39 +169,39 @@ export default function DataSurvival({
           if (survivalJson.pvalue !== 0) {
             setPvalueData(`P-Value : ${survivalJson.pvalue.toPrecision(3)}`);
           }
-          setSampleCountsCard([
-            <div
-              key="total"
-              className="SurvivalSampleCount"
-            >
-              <FormattedMessage id="Total" defaultMessage="Total" /> :{" "}
-              {totalCount}
-            </div>,
-            ...htmlArray,
-          ]);
+          sampleCountsCard_ = [<div
+            key="total"
+            className="SurvivalSampleCount"
+          >
+            <FormattedMessage id="Total" defaultMessage="Total" /> :{" "}
+            {totalCount}
+          </div>,
+          ...htmlArray,
+          ]
+          setSampleCountsCard(sampleCountsCard_);
         } else {
           if (survivalJson.pvalue !== 0) {
             setPvalueData(`P-Value : ${survivalJson.pvalue.toPrecision(3)}`);
           }
-          setSampleCountsCard([
-            <div
-              key="total"
-              className="SurvivalSampleCount"
-            >
-              <FormattedMessage id="Total" defaultMessage="Total" /> :{" "}
-              {totalCount}
-            </div>,
-          ]);
+          sampleCountsCard_ = [<div
+            key="total"
+            className="SurvivalSampleCount"
+          >
+            <FormattedMessage id="Total" defaultMessage="Total" /> :{" "}
+            {totalCount}
+          </div>,]
+          setSampleCountsCard(sampleCountsCard_);
         }
+        // trasnferSurvivalData(sampleCountsCard_)
       }
     }
-    else if (survivalModel === "cox") {
+    else if (inputState['survival_type'] === "cox") {
       let inputDataJson = {};
       if (project_id) {
-        if (coxUserDefinedFilter && Object.keys(coxUserDefinedFilter).length > 0) {
-          for (const a in coxUserDefinedFilter) {
+        if (inputState['coxUserDefinedFilter'] && Object.keys(inputState['coxUserDefinedFilter']).length > 0) {
+          for (const a in inputState['coxUserDefinedFilter']) {
             if (a !== 'rlps_yn' && a !== 'rlps_cnfr_drtn') {
-              if ('value' in coxUserDefinedFilter[a][0] && coxUserDefinedFilter[a][0]['value'] !== 'yes' && 'value' in coxUserDefinedFilter[a][0] && coxUserDefinedFilter[a][0]['value'] !== 'no') {
+              if ('value' in inputState['coxUserDefinedFilter'][a][0] && inputState['coxUserDefinedFilter'][a][0]['value'] !== 'yes' && 'value' in inputState['coxUserDefinedFilter'][a][0] && inputState['coxUserDefinedFilter'][a][0]['value'] !== 'no') {
                 continue
               }
               else {
@@ -407,152 +306,46 @@ export default function DataSurvival({
     }
   }, [survivalJson]);
 
-  useEffect(() => {
-    if (screenCapture) {
-      setWatermarkCSS("watermark");
-    } else {
-      setWatermarkCSS("");
-    }
-
-    if (watermarkCss !== "" && screenCapture) {
-      if (reference !== null) {
-        exportComponentAsJPEG(reference, {
-          'fileName': 'Survival', html2CanvasOptions: {
-          }
-        });
-      }
-      setToFalseAfterScreenCapture();
-    }
-  }, [screenCapture, watermarkCss]);
-
-  const updateGroupFilters = (filtersObject) => {
-    if (filtersObject) {
-      setGroupFilters(filtersObject);
-    }
-  };
-
-  useEffect(() => {
-    if (survivalJson && survivalJson.status === 200) {
-      setRenderSurvival(true);
-      setCoxNoData(false)
-    } else if (survivalJson && survivalJson.status !== 200) {
-      setRenderSurvival(false);
-      setCoxNoData(false)
-    }
-  }, [survivalJson]);
-
-  const selectCoxFiler = (e) => {
-    let val_ = e.target.value;
-    let check = e.target.checked;
-    if (check) {
-      setCoxFilter({ ...coxFilter, [val_]: true });
-    } else {
-      setCoxFilter({ ...coxFilter, [val_]: false });
-    }
-  };
-  let tmp = []
-  if (project_id !== undefined) {
-    if (coxUserDefinedFilter && Object.keys(coxUserDefinedFilter).length > 0) {
-      for (const a in coxUserDefinedFilter) {
-        if (a !== 'rlps_yn' && a !== 'rlps_cnfr_drtn') {
-          if ('value' in coxUserDefinedFilter[a][0] && coxUserDefinedFilter[a][0]['value'] !== 'yes' && 'value' in coxUserDefinedFilter[a][0] && coxUserDefinedFilter[a][0]['value'] !== 'no') {
-            continue
-          }
-          else {
-            tmp.push(a);
-          }
-
-        }
-      }
-    }
-  }
-  else {
-
-    let tmpe = [
-      "BodyMassIndex",
-      "AlcoholConsumption",
-      "FamilyHistoryofBreastCancer",
-      "IntakeOfContraceptivePill",
-      "HormoneReplaceTherapy",
-      "Menopause",
-      "Childbirth",
-      "DiagnosisofBilateralBreastCancer",
-      "FirstMenstrualAge",
-      "ERTestResults",
-      "PRTestResults",
-      "Ki67Index",
-      "AgeOfDiagnosis",
-    ];
-    tmp = [...tmpe]
-  }
-  const survivalModelFun = (e, type) => {
-    setSurvivalModel(type);
-  };
-
-  const submitCox = (e, type) => {
-    setSurvivalModel(type);
-    if (type === "cox") {
-      inputData["survival_type"] = type;
-      inputData["coxFilter"] = coxFilter;
-      let return_data = SurvivalInformation("POST", inputData)
-      return_data.then((result) => {
-        const d = result
-        if (d.status === 200) {
-          let r_ = d["data"]
-          r_['status'] = 200
-          setSurvivalJson(r_)
-          setRenderNoContent(false)
-        } else {
-          setRenderNoContent(true)
-          setSurvivalJson({ status: d.status })
-          setRenderNoContent(true)
-        }
-      })
-        .catch((e) => {
-          setSurvivalJson({ status: 204 })
-        });
-    }
-  };
-
-  useEffect(() => {
-  }, [coxFilter]);
-
-  const selectAllCox = (e, type) => {
-    let tmp = coxFilter;
-    for (const key in tmp) {
-      if (type === "select") {
-        tmp[key] = true;
-      } else {
-        setRenderNoContent(false);
-        setCoxNoData(true)
-        setRenderSurvival(false)
-        tmp[key] = false;
-      }
-    }
-    setCoxFilter({ ...tmp });
-  };
 
   return (
     <>
       {loader ? (
-        <LoaderCmp />
+        <div className="MarginTop20 Flex JustifyCenter" style={{margin:'auto'}}>
+          <LoaderCmp  style={{
+
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100%'
+          }
+          }/>
+        </div>
       ) : (
-        <div className="Grid GridCols12 P5 GridGap20">
-          <div className="Flex FlexDirCol ColSpan3">
 
-            <div className="Flex FlexDirRow">
-              <h3 className="SurvivalChooseModel" style={{ margin: 'auto' }}>
-                <FormattedMessage id="ChooseModel" defaultMessage="Choose Model" />
-              </h3>
-            </div>
+        <>
 
-            <div className="Flex FlexDirRowSurvivalFilter Gap2">
+          {renderNoContent && <div className="MarginTop4"><NoContentMessage /></div>}
+
+          {
+            (inputData && inputData.genes.length === 0) &&
+            <p className="MarginTop4"> <FormattedMessage id="PleaseSelecttheGeneSetData" defaultMessage="Please Select the Gene Set Data" /> </p>
+          }
+
+          {
+            (vizType !== 'single' && inputState && ('group_filters' in inputState === false ||
+              (inputState['survival_type'] === 'cox' && 'coxFilter' in inputState === false))) && <p className="MarginTop4">
+              <FormattedMessage id="PleaseSelectFilterData" defaultMessage="Please Select Filter Data" />
+            </p>
+          }
+
+          {vizType && vizType === "single" &&
+            <div className="Flex Gap2 FitContent M4">
               <button
                 onClick={(e) => {
-                  survivalModelFun(e, "recurrence");
+                  callSingleSurvial("recurrence");
                 }}
                 className={
-                  survivalModel === "recurrence" ? "SurvivalSelectedCss btn btnPrimary MAuto" : "SurvivalNonSelectedCss btn MAuto"
+                  singelSurvialType === "recurrence" ? "SurvivalSelectedCss btn btnPrimary MAuto on" : "SurvivalNonSelectedCss btn MAuto"
                 }
               >
                 Recurrence
@@ -560,377 +353,40 @@ export default function DataSurvival({
 
               <button
                 onClick={(e) => {
-                  survivalModelFun(e, "survival");
+                  callSingleSurvial("survival");
                 }}
                 className={
-                  survivalModel === "survival" ? "SurvivalSelectedCss btn btnPrimary MAuto" : "SurvivalNonSelectedCss btn MAuto"
+                  singelSurvialType === "survival" ? "SurvivalSelectedCss btn btnPrimary MAuto on" : "SurvivalNonSelectedCss btn MAuto"
                 }
               >
                 Survival
               </button>
-
-              {
-                vizType && vizType === 'multi' && <button
-                  onClick={(e) => {
-                    survivalModelFun(e, "cox");
-                  }}
-                  className={
-                    survivalModel === "cox" ? "SurvivalSelectedCss btn btnPrimary MAuto" : "SurvivalNonSelectedCss btn MAuto"
-                  }
-                >
-                  Cox Regression
-                </button>
-              }
-
             </div>
+          }
 
 
+          {/* chart */}
+          {renderSurvival && <div className='BorderstyleViz'>
 
-            {(survivalModel === "recurrence" || survivalModel === "survival") && (
-              <>
-                <div
-                  className={`Flex FlexDirCol Border Backgroundwhite  ${smallScreen
-                    ? " Flex FlexDirRow SurvivalSmallScreen"
-                    : "SurvivalSmallScreenHidden"
-                    }`}
-                >
-                  {sampleCountsCard.length > 0 && (
-                    <div className="SurvivalSampleCountCard">
-                      {sampleCountsCard}
-                    </div>
-                  )}
-
-                  {project_id === undefined && (
-                    <h3 className="SurvivalChooseModel">
-                      <FormattedMessage id="Choose Filter group" defaultMessage="Choose Filter group" />
-                    </h3>
-                  ) && (
-                      <div className="M1 Flex FlexDirRow JustifyContent Gap2">
-                        <button
-                          onClick={() => {
-                            setUserDefienedFilter("static");
-                            setGroupFilters({});
-                          }}
-                          className={
-                            userDefienedFilter === "static" ? "SurvivalSelectedCss btn btnPrimary" : "SurvivalNonSelectedCss btn"
-                          }
-                        >
-                          <FormattedMessage
-                            id="Static_volcano"
-                            defaultMessage="Static"
-                          />
-                        </button>
-                        <button
-                          onClick={() => {
-                            setUserDefienedFilter("dynamic");
-                            setGroupFilters({});
-                          }}
-                          className={
-                            userDefienedFilter === "dynamic" ? "SurvivalSelectedCss btn btnPrimary" : "SurvivalNonSelectedCss btn"
-                          }
-                        >
-                          <FormattedMessage
-                            id="Dynamic_volcano"
-                            defaultMessage="Dynamic"
-                          />
-                        </button>
-                      </div>
-                    )}
-                  {vizType && vizType === 'multi' &&
-                    <h3 className="SurvivalChooseModel"><FormattedMessage id="ChooseFilterType" defaultMessage="Choose Filter Type" /></h3>
-                  }
-                  {vizType && vizType === 'multi' && <div className="M1 Flex FlexDirRow JustifyContent Gap2">
-                    <button
-                      onClick={() => setFilterTypeButton("clinical")}
-                      id="Mutation"
-                      name="type"
-                      className={
-                        filterTypeButton === "clinical" ? "SurvivalSelectedCss btn btnPrimary" : "SurvivalNonSelectedCss btn"
-                      }
-                    >
-                      <FormattedMessage
-                        id="Clinical"
-                        defaultMessage="Clinical"
-                      />
-                    </button>
-
-                    <button
-                      onClick={() => {
-                        setFilterTypeButton("omics")
-                        setGroupFilters({})
-                      }}
-                      id="Phospho"
-                      name="type"
-                      className={
-                        filterTypeButton === "omics" ? "SurvivalSelectedCss btn btnPrimary" : "SurvivalNonSelectedCss btn"
-                      }
-                    >
-                      <FormattedMessage id="Omics" defaultMessage="Omics" />
-                    </button>
-                  </div>}
-
-                  {filterTypeButton === "omics" && (
-                    <div className="M1 P1">
-                      <h6
-                        className="SurvivalSelectDatabase MB2 TextLeft"
-                        htmlFor="dropdown-gene"
-                      >
-                        <FormattedMessage
-                          id="Select Gene"
-                          defaultMessage="Select Gene"
-                        />
-                      </h6>
-                      <select
-                        id="dropdown-gene"
-                        onChange={(e) => setFilteredGene(e.target.value)}
-                        defaultValue={fileredGene}
-                        className="SurvivalSelectDatabase"
-                      >
-                        <option defaultValue={fileredGene === ""} value=""></option>
-                        {genesArray.map((gene, index) => (
-                          <option
-                            defaultValue={fileredGene === gene}
-                            key={`${gene}-${index}`}
-                            value={gene}
-                          >
-                            {gene}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  )}
-
-
-                  {filterTypeButton === "omics" && (
-                    <div className="M1 P1">
-                      <h6
-                        className="SurvivalSelectDatabase MB1 TextLeft"
-                        htmlFor="dropdown-database"
-                      >
-                        Select Database
-                      </h6>
-                      <select
-                        id="dropdown-database"
-                        onChange={(e) => setGeneDatabase(e.target.value)}
-                        defaultValue={geneDatabase}
-                        className="SurvivalSelectDatabase"
-                      >
-
-                        {project_id !== undefined && alltabList['dna_mutation'] && <option
-                          defaultValue={geneDatabase === "dna_mutation"}
-                          value="dna_mutation"
-                        >
-                          DNA Mutation
-                        </option>
-                        }
-                        {project_id === undefined && <option
-                          defaultValue={geneDatabase === "dna_mutation"}
-                          value="dna_mutation"
-                        >
-                          DNA Mutation
-                        </option>}
-
-                        {project_id !== undefined && alltabList['rna'] &&
-                          <option defaultValue={geneDatabase === "rna"} value="rna">
-                            RNA Expression
-                          </option>
-                        }
-
-                        {
-                          project_id === undefined && <option defaultValue={geneDatabase === "rna"} value="rna">
-                            RNA Expression
-                          </option>
-                        }
-
-                        {project_id !== undefined && alltabList['proteome'] &&
-                          <option
-                            defaultValue={geneDatabase === "proteome"}
-                            value="proteome"
-                          >
-                            Global Proteome
-                          </option>
-                        }
-
-                        {project_id === undefined && <option
-                          defaultValue={geneDatabase === "proteome"}
-                          value="proteome"
-                        >
-                          Global Proteome
-                        </option>}
-                      </select>
-                    </div>
-                  )}
-
-                  {filterTypeButton === "clinical" &&
-                    userDefienedFilter === "static" &&
-                    project_id === undefined && (
-                      <PreDefienedFiltersSurvival
-                        type="survival"
-                        parentCallback={updateGroupFilters}
-                        groupFilters={groupFilters}
-                        survivalModel={survivalModel}
-                      />
-                    )}
-
-                  {filterTypeButton === "clinical" &&
-                    userDefienedFilter === "dynamic" &&
-                    project_id === undefined && (
-                      <GroupFilters
-                        viz_type="survival"
-                        parentCallback={updateGroupFilters}
-                        groupFilters={groupFilters}
-                        survivalModel={survivalModel}
-                      />
-                    )}
-
-                  {filterTypeButton === "clinical" &&
-                    project_id !== undefined && (
-                      <UserDefinedGroupFilters
-                        viz_type="survival"
-                        parentCallback={updateGroupFilters}
-                        groupFilters={groupFilters}
-                        survivalModel={survivalModel}
-                        vizType={vizType}
-                      />
-                    )}
-
-                  {filterTypeButton === "omics" && (
-                    <div>
-                      <div>
-                        <button
-                          onClick={submitFitersAndFetchData}
-                          className="SubmitButtonFilter"
-                        >
-                          <FormattedMessage
-                            id="Submit_volcano"
-                            defaultMessage="Submit"
-                          />
-                        </button>
-                      </div>
-                      <div>
-                        <button className="ResetButtonFilter">
-                          <FormattedMessage
-                            id="Reset_volcano"
-                            defaultMessage="Reset"
-                          />
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </>
+            {survivalJson && (inputState['survival_type'] === "recurrence" || inputState['survival_type'] === "survival") && (
+              <SurvivalCmp watermarkCss={watermarkCss} ref={reference} width={width} data={{
+                fileredGene: inputState['filter_gene'],
+                survivalJson: survivalJson,
+              }} pValue={pValueData} />
             )}
 
-
-
-
-
-
-            {survivalModel === "cox" && (
-              <>
-                <div
-                  className={`Flex FlexDirCol border Backgroundwhite  ${smallScreen
-                    ? " Flex FlexDirRow SurvivalSmallScreen"
-                    : "SurvivalSmallScreenHidden"
-                    }`}
-                >
-                  <h3 className="SurvivalChooseModel">
-                    <FormattedMessage id="Choose Filter group" defaultMessage="Choose Filter group" />
-                  </h3>
-
-
-                  <div className="M1 Flex FlexDirRow JustifyContent WMax">
-                    <div className="Flex JustifyCenter">
-                      <div>
-                        {tmp.map((element, index) => (
-                          <div
-                            className="form-check Flex MB4"
-                            key={"cox" + index}
-                          >
-                            <label
-                              className="form-check-label TextLeft Inline TextGray800"
-                              htmlFor={"flexCheckChecked_" + index}
-                            >
-                              <input
-                                onChange={(e) => selectCoxFiler(e)}
-                                className="form-check-input SurvivalInput Backgroundwhite"
-                                type="checkbox"
-                                name={element}
-                                id={"flexCheckChecked_" + index}
-                                checked={coxFilter[element]}
-                                value={element}
-                              />
-                              <FormattedMessage id={element} defaultMessage={element} />
-                            </label>
-                          </div>
-                        ))}
-                        <div className="Flex FlexDirRow Gap5">
-                          <button
-                            onClick={(e) => selectAllCox(e, "select")}
-                            className={
-                              survivalModel === "cox" ? "SurvivalSelectedCss btn btnPrimary" : "SurvivalNonSelectedCss btn"
-                            }
-                          >
-                            <FormattedMessage id="SelectAll" defaultMessage="Select All" />
-                          </button>
-                          <button
-                            onClick={(e) => selectAllCox(e, "reset")}
-                            className="SurvivalSelectedCss btn"
-                            style={{ color: 'black' }}
-                          >
-                            <FormattedMessage
-                              id="Reset_volcano"
-                              defaultMessage="Reset"
-                            />
-                          </button>
-                        </div>
-                        <div className="Flex FlexDirRow Gap5 PY2">
-                          <button
-                            onClick={(e) => submitCox(e, "cox")}
-                            className="SubmitButtonFilter"
-                          >
-                            <FormattedMessage
-                              id="Submit_volcano"
-                              defaultMessage="Submit"
-                            />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
-
-          <div className="ColSpan8">
-            {renderSurvival && (survivalModel === "recurrence" || survivalModel === "survival") && (
-              <SurvivalCmp
-                watermarkCss={watermarkCss}
-                ref={reference}
-                width={width}
-                data={{
-                  fileredGene: fileredGene,
-                  survivalJson: survivalJson,
-                }}
-                pValue={pValueData}
-              />
-            )}
-            {renderSurvival && survivalModel === "cox" && (
+            {inputState['survival_type'] === "cox" && (
               <>
                 <div ref={reference}>{coxTable}</div>
               </>
             )}
-            {renderNoContent && <NoContentMessage />}
-            {
-              (inputData.genes.length === 0) && <p><FormattedMessage id="PleaseSelecttheGeneSetData" defaultMessage="Please Select the Gene Set Data" /></p>
-            }
-            {
-              (coxNoData && survivalModel === "cox" || (reqstMsg && inputData.genes.length > 0)) && <p><FormattedMessage id="PleaseSelectFilterData" defaultMessage="Please Select Filter Data" /> </p>
-            }
           </div>
-        </div>
-      )}
+          }
+        </>
+
+      )
+      }
     </>
+
   );
 }

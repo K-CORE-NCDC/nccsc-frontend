@@ -8,7 +8,7 @@ const HomeComponent = () => {
   const title = { id: "MultiDataVisualization", defaultMessage: "Multi Data Visualization" }
   let gridData = [
     { title: 'Create Project', image: require(`../../../assets/images/Visualizations/circos.png`).default, link: `/newmultidataproject/` },
-    { title: 'View Project', image: require(`../../../assets/images/Visualizations/circos.png`).default, link: `/newmultidataproject/` },
+    { title: 'View Project', image: require(`../../../assets/images/Visualizations/circos.png`).default, link: `/multidataprojectview/` },
   ]
 
   

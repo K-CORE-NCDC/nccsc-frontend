@@ -18,8 +18,8 @@
     justify-content: center;
     width: 50%;
     border-radius: 0.25rem;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+    /* border-top-right-radius: 0;
+    border-bottom-right-radius: 0; */
     border-width: 1px;
     border-color: #4B5563;
     cursor: pointer;
