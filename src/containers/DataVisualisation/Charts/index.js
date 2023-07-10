@@ -8,7 +8,7 @@ import Scatter from "./Scatter";
 import DataIgv from "./igv";
 import FusionPlot from "./Fusion";
 import Box from "./Box";
-
+import DataGenomic from "./Genomic";
 function circos(
   width,
   inputData,
@@ -171,7 +171,17 @@ function box(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
     />
   );
 }
-
+function genomic(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
+  return (
+    <DataGenomic
+      key="genomic"
+      width={width}
+      inputData={inputData}
+      screenCapture={screenCapture}
+      setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+    />
+  );
+}
 
 export const Charts = {
   circos,
@@ -184,5 +194,6 @@ export const Charts = {
   igv,
   fusion,
   box,
-  
+  genomic,
+
 };

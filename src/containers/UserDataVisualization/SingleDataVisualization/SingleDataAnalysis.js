@@ -50,7 +50,7 @@ export default function DataVisualization() {
   const [chartName, setChartName] = useState(tab === 'home' ? undefined : tab);
   const [tabName, setTabName] = useState(tab === 'home' ? undefined : tab)
   const [toggle, setToggle] = useState(true);
-  
+
   const [screenCapture, setScreenCapture] = useState(false);
   const setToFalseAfterScreenCapture = (param = false) => {
     if (param === false) {
@@ -72,7 +72,7 @@ export default function DataVisualization() {
   };
 
   const LoadChart = (w, type) => {
-    console.log('type' , type)
+    console.log('type', type)
     switch (type) {
       case "circos":
         return Charts.circos(
@@ -106,6 +106,13 @@ export default function DataVisualization() {
         );
       case "box":
         return Charts.box(
+          w,
+          state,
+          screenCapture,
+          setToFalseAfterScreenCapture
+        );
+      case "genomic-data":
+        return Charts.genomic(
           w,
           state,
           screenCapture,
@@ -159,16 +166,16 @@ export default function DataVisualization() {
       }));
       // setfilterApplied(true);
     }
-    
+
     if (value && genes) {
-    
+
       setState((prevState) => ({
         ...prevState,
         genes: genes,
         type: value,
       }));
     }
-    
+
   }, []);
 
 
@@ -198,7 +205,7 @@ export default function DataVisualization() {
   }, [tab, tabName, chartName, BrstKeys]);
 
   useEffect(() => {
-    
+
     let w = elementRef.current.getBoundingClientRect().width;
     setWidth(w);
     setBoolChartState(false);
@@ -214,6 +221,7 @@ export default function DataVisualization() {
       "cnv",
       "heatmap",
       "box",
+      "genomic-data",
       "survival",
     ];
     let gridData = []
@@ -225,7 +233,13 @@ export default function DataVisualization() {
         name = "";
       } else if (element === "cnv") {
         element = "CNV";
-      } 
+      } else if (element === "onco") {
+        name = "";
+        element = "OncoPrint";
+      } else if (element === "genomic-data") {
+        name = "";
+        element = "genomic-data";
+      }
 
       let gridobj = { title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/singledata-upload/${element}/` }
       gridData.push(gridobj)
@@ -241,7 +255,7 @@ export default function DataVisualization() {
       // if(userProjectDetails && 'key' in  userProjectDetails &&  userProjectDetails.key === 'NotFound'){
       //   history.push('/login')
       // }
-      if (userProjectDetails &&  'available_steps' in userProjectDetails) {
+      if (userProjectDetails && 'available_steps' in userProjectDetails) {
         projectAvailableSteps = userProjectDetails.available_steps;
       }
 
@@ -258,6 +272,8 @@ export default function DataVisualization() {
             tabList.push("CNV");
           } else if (stepName === "scatter") {
             tabList.push("correlation");
+          } else if (stepName === "genomic-data") {
+            tabList.push("genomic-data");
           } else {
             tabList.push(stepName);
           }
@@ -279,9 +295,9 @@ export default function DataVisualization() {
   //   }
   // }, [project_id])
 
-    
+
   useEffect(() => {
-   
+
     if (project_id !== undefined) {
       if (state.genes.length > 0) {
         dispatch(samplesCount("POST", { project_id: project_id }));
@@ -291,7 +307,7 @@ export default function DataVisualization() {
         setCharts((prevState) => ({
           ...prevState,
           viz: chartx,
-        }));  
+        }));
       }
     } else {
       if (state.genes.length > 0) {
