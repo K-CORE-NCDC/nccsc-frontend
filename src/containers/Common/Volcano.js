@@ -35,7 +35,7 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
         if (element["log2(fold_change)"] <= -5) {
           rows.push([element["gene"], element["log2(fold_change)"], element["q_value"]])
         }
-        
+
       });
     } else if (tableType === "negative") {
       tableData.forEach(element => {
@@ -58,11 +58,11 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
     link.click();
   }
   return (
-    <div>
+    <div className='BorderstyleViz'>
       <div id='scatter_parent'  >
-        <VolcanoPlotD3 watermarkCss={watermarkCss} dataProps={data}/>
+        <VolcanoPlotD3 watermarkCss={watermarkCss} dataProps={data} />
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="M4 PopoverStyles">
         <div>
           <h2 className="text-left text-blue-800 mb-12 mt-12"><strong>{"Expression Down Level"}</strong></h2>
           <div>
@@ -70,13 +70,14 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
               columns={table_cols}
               data={negative_data}
             />
-            <div className="mt-8 ml-4 text-left flex flex-row justify-between">
-              <h2><strong>Total entries:  {tab_count['negative']}</strong></h2>
-              <button onClick={() => downloadTableAsCsv("negative")} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
-                <svg className="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg>
-                <span>Download</span>
+            <div className="VolcanoContainer">
+              <h2 className="VolcanoText">Total entries: <strong>{tab_count['negative']}</strong></h2>
+              <button onClick={() => downloadTableAsCsv("negative")} className="VolcanoButton">
+                <svg className="VolcanoIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg>
+                <span className="VolcanoDownloadText">Download</span>
               </button>
             </div>
+
           </div>
         </div>
         <div>
@@ -85,21 +86,22 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
             columns={table_cols}
             data={positive_data}
           />
-          <div className="mt-8 ml-4 text-left flex flex-row justify-between">
-            <h2><strong>Total entries:  {tab_count['positive']}</strong></h2>
-            <button onClick={() => downloadTableAsCsv("negative")} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
-              <svg className="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg>
-              <span>Download</span>
+          <div className="VolcanoContainer">
+            <h2 className="VolcanoText">Total entries: <strong>{tab_count['positive']}</strong></h2>
+            <button onClick={() => downloadTableAsCsv("positive")} className="VolcanoButton">
+              <svg className="VolcanoIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg>
+              <span className="VolcanoDownloadText">Download</span>
             </button>
           </div>
         </div>
-        <div className="mt-8 ml-4 text-left flex flex-row justify-between">
-          <h2><strong>Download Entire Data</strong></h2>
-          <button onClick={() => downloadTableAsCsv("")} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center">
-            <svg className="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg>
-            <span>Download</span>
-          </button>
-        </div>
+      </div>
+
+      <div className="VolcanoContainer" style={{margin:"20px 0px"}}>
+        <h2 className="VolcanoText"><strong>Download Entire Data</strong></h2>
+        <button onClick={() => downloadTableAsCsv("")} className="VolcanoButton">
+          <svg className="VolcanoIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg>
+          <span className="VolcanoDownloadText">Download</span>
+        </button>
       </div>
     </div>
   )

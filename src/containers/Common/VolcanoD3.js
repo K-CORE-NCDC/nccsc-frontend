@@ -343,7 +343,7 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
     },[watermarkCss])
     return (
         <div>
-            <div>Volcano plot</div>
+            <div className='MarginTop4'>Volcano plot</div>
             <div id="chart-d3-volcano" className="chart-d3-volcano"></div>
         </div>
     );
