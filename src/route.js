@@ -5,6 +5,7 @@ import { SiteIntro } from './containers/Introduction/SiteIntro';
 import { SingleDataVisualization } from './containers/VisualizeMyExampleData/SingleDataVisualization';
 import { VisualizeMyData } from './containers/VisualizeMyData/VisualizeMyData';
 import Home from './containers/Home';
+import MultiDataViewProject from './containers/UserDataVisualization/MultiDataVisualization/MultiDataViewProject';
 const DataSummary = React.lazy(() => import('./containers/DataSummary'));
 const Login = React.lazy(() => import('./containers/Login/login'));
 const DataVisualization = React.lazy(() => import('./containers/DataVisualisation'));
@@ -180,6 +181,15 @@ const route = [
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
     childname: <FormattedMessage id="MultiDataVisualization" defaultMessage="Multi Data Visualization" />,
     component: MultiDataVisualizationUploadIndex,
+  },
+
+  {
+    path: '/multidataprojectview/',
+    exact: true,
+    type: 'unauth',
+    name: <FormattedMessage id="Home" defaultMessage="Home" />,
+    childname: <FormattedMessage id="MultiDataVisualization" defaultMessage="Multi Data Visualization" />,
+    component: MultiDataViewProject,
   },
 
 

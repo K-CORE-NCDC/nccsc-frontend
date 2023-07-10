@@ -1,4 +1,3 @@
-import { FilterIcon } from "@heroicons/react/outline";
 import React, {
   Fragment,
   useCallback,
@@ -7,18 +6,23 @@ import React, {
   useRef,
   useState
 } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { CogIcon, FilterIcon } from "@heroicons/react/outline";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import ConfirmDownload from "../../Common/downloadConfirmation";
+import { Charts } from "../../DataVisualisation/Charts";
+import genes from "../../Common/gene.json";
+import { Context } from "../../../wrapper";
+import { useHistory, Link } from "react-router-dom";
 import {
   getBreastKeys,
   getUserDataProjectsTableData,
   samplesCount
 } from "../../../actions/api_actions";
-import { Context } from "../../../wrapper";
-import { Charts } from "../../DataVisualisation/Charts";
 import { Popover, Transition } from "@headlessui/react";
 import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
 import GeneSet from "../Components/MainComponents/GeneSet";
+import SurvivalFilterComponent from "../Components/MainComponents/SurvivalFilterComponent";
 
 export default function DataVisualization() {
   const context = useContext(Context);
@@ -102,6 +106,13 @@ export default function DataVisualization() {
           screenCapture,
           setToFalseAfterScreenCapture
         );
+      case "genomic-data":
+        return Charts.genomic(
+          w,
+          state,
+          screenCapture,
+          setToFalseAfterScreenCapture
+        );
       case "survival":
         return Charts.survival(
           w,
@@ -151,10 +162,8 @@ export default function DataVisualization() {
         type: value,
       }));
     }
-
-
-
   }, []);
+
 
 
   // useEffect(() => {
@@ -197,6 +206,7 @@ export default function DataVisualization() {
       "cnv",
       "heatmap",
       "box",
+      "genomic-data",
       "survival",
     ];
     let gridData = []
@@ -208,6 +218,12 @@ export default function DataVisualization() {
         name = "";
       } else if (element === "cnv") {
         element = "CNV";
+      } else if (element === "onco") {
+        name = "";
+        element = "OncoPrint";
+      } else if (element === "genomic-data") {
+        name = "";
+        element = "genomic-data";
       }
 
       let gridobj = { title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/singledata-upload/${element}/` }
@@ -241,6 +257,8 @@ export default function DataVisualization() {
             tabList.push("CNV");
           } else if (stepName === "scatter") {
             tabList.push("correlation");
+          } else if (stepName === "genomic-data") {
+            tabList.push("genomic-data");
           } else {
             tabList.push(stepName);
           }
@@ -354,9 +372,11 @@ export default function DataVisualization() {
                 </ul>
               </div>
             }
+
             <section>
               <div
-                className="block text-center">
+                className="block text-center Flex">
+
                 <Popover className="relative gene_main_box" style={{ margin: 'auto' }}>
                   {({ open }) => {
                     return (
@@ -388,6 +408,7 @@ export default function DataVisualization() {
                     )
                   }}
                 </Popover>
+
               </div>
             </section>
 

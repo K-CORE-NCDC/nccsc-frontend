@@ -157,7 +157,7 @@ export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
         
         
         h.push(
-          <div key={key} className='grid w-full overflow-hidden' >  
+          <div key={key} className='FusionChromosome' style={{margin:'20px'}} >  
             <h3 style={{color:fusionJson['exons'][key][0].color}}>{key} -- {fusionPlotJson['pos'][key]}</h3>
             
             <div id={'row_'+i} className={'grid_row flex justify-center items-end  mt-10 relative '+id+' '+direction} style={{color:fusionJson['exons'][key][0].color,height:'100px',borderBottom:'1px solid '+fusionJson['exons'][key][0].color,borderColor:fusionJson['exons'][key][0].color}}>
@@ -256,7 +256,7 @@ export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
               <h3 className="text-3xl">{gene} Fusion Gene Plot</h3>
             </div>
           
-            <div className="grid grid-cols-4 gap-8 p-5 relative mb-10 mt-5" >
+            <div className="FusionChromosome" >
               <div className="text-left">
                 <label>Left Transcript Id</label>
                 <select onChange={e=>transcriptChange(e,'left')} className="w-full lg:p-4 xs:p-2 border xs:text-sm lg:text-lg focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3">
