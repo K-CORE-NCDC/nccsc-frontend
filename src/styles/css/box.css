@@ -2,17 +2,52 @@
   margin-top: 30px;
 }
 
-.cnv_sub_head{
-  display: flex;
-  
-}
+
 
 .tabs_box{
   width: 50%;
+  padding-top: 20px;
 }
 
 .box_gap{
+  width: 50%;
   gap:10%;
   justify-content: flex-end;
+ 
+}
+
+.text_align{
+  text-align: left;
+}
+
+
+@media (max-width: 767px) {
+  
+  .tabs_box{
+    width: 100%;
+  }
+  
+  .box_gap{
+    width: 100%;
+  }
+
+  .text_align{
+    text-align: center;
+  }
+  
+
+}
+@media (min-width: 767px) {
+.cnv_sub_head{
   display: flex;
 }
+
+
+
+.box_gap{
+  display: flex;
+}
+}
+
+
+

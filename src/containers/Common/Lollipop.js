@@ -5,9 +5,10 @@ import $ from "jquery";
 
 const LollipopCmp = React.forwardRef(({ type,width,data,gene,watermarkCss }, ref) => {
   const [active, setActive] = useState(false)
+  let _width = width < 400 ? 800 : width -400 
   const mockData = {
     vizHeight: 400, // hardcoded
-    vizWidth: width-400, // hardcoded
+    vizWidth: _width, // hardcoded
     xMax: data['width'], // protein length
     yMax: data['height'], // max #mutations
     hugoGeneSymbol: gene,
@@ -52,7 +53,7 @@ const LollipopCmp = React.forwardRef(({ type,width,data,gene,watermarkCss }, ref
 
   return (
 
-    <div ref={ref} id='lolipop' className={`lollipop ${watermarkCss}`}>
+    <div ref={ref} id='lolipop' className={`lollipop ${watermarkCss}`} style={{overflowX:'auto'}}>
       {active &&
       
         <LollipopPlot

@@ -8,6 +8,7 @@ import DataTable from 'react-data-table-component';
 import NoContentMessage from '../../Common/NoContentComponent';
 import { FormattedMessage } from 'react-intl';
 import { useParams, useHistory } from "react-router-dom";
+import '../../../styles/css/lollipop.css'
 
 export default function DataLolipop({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   console.log('load chart called-----')
@@ -511,7 +512,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
       loader ?
         <LoaderCmp />
         :
-        <div>
+        <div style={{ marginTop: '5%', border: '1px solid #d6d6d6', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.05)', position: 'relative', padding: '5%' }}>
           {activeCmp &&
             <Fragment>
               <div className="tabs_box">
@@ -552,7 +553,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                   </div>
                 </div>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <div className='selectionGenes'>
                 <div >
                   <div><FormattedMessage id="Selected Gene" defaultMessage='Selected Gene Is' /></div>
                   <div>
@@ -572,7 +573,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                         data={state}
                       />
                       {tableType === "Mutation" &&
-                        <div className='id_lists' style={{ display: 'flex' }}>
+                        <div className='id_lists' >
                           <div className='box' >
                             <label >Enst Id List</label>
                             <textarea defaultValue={enstId.join("\n")} className="" rows="4" ></textarea>

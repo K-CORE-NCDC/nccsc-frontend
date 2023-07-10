@@ -1,29 +1,22 @@
+import { FilterIcon } from "@heroicons/react/outline";
 import React, {
-  useState,
-  useEffect,
-  useRef,
+  Fragment,
   useCallback,
   useContext,
-  Fragment
+  useEffect,
+  useRef,
+  useState
 } from "react";
-import { FilterIcon } from "@heroicons/react/outline";
-import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import ConfirmDownload from "../../Common/downloadConfirmation";
-import { Charts } from "../../DataVisualisation/Charts";
-import genes from "../../Common/gene.json";
-import { Context } from "../../../wrapper";
-import { useHistory, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory, useParams } from "react-router-dom";
 import {
   getBreastKeys,
   getUserDataProjectsTableData,
-  clearDataVisualizationState,
-  samplesCount,
-  getUserDefinedFilter
+  samplesCount
 } from "../../../actions/api_actions";
-
-import { Popover, Transition } from "@headlessui/react"
-import { FormattedMessage } from "react-intl";
+import { Context } from "../../../wrapper";
+import { Charts } from "../../DataVisualisation/Charts";
+import { Popover, Transition } from "@headlessui/react";
 import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
 import GeneSet from "../Components/MainComponents/GeneSet";
 
@@ -44,13 +37,13 @@ export default function DataVisualization() {
     (data) => data.homeReducer.project_id_status
   );
   const [availableTabsForProject, setavailableTabsForProject] = useState([]);
-  const history = useHistory()
   let { tab, project_id } = useParams();
   const [chartName, setChartName] = useState(tab === 'home' ? undefined : tab);
   const [tabName, setTabName] = useState(tab === 'home' ? undefined : tab)
   const [toggle, setToggle] = useState(true);
-  
   const [screenCapture, setScreenCapture] = useState(false);
+
+
   const setToFalseAfterScreenCapture = (param = false) => {
     if (param === false) {
       setScreenCapture(false);
@@ -61,7 +54,7 @@ export default function DataVisualization() {
 
   const submitFilter = (e) => {
     setBoolChartState(false);
-    setChartName(tabName);
+    // setChartName(tabName);
     let chartx = LoadChart(width, tabName);
     setCharts((prevState) => ({
       ...prevState,
@@ -71,7 +64,6 @@ export default function DataVisualization() {
   };
 
   const LoadChart = (w, type) => {
-    console.log('type' , type)
     switch (type) {
       case "circos":
         return Charts.circos(
@@ -124,7 +116,6 @@ export default function DataVisualization() {
 
   useEffect(() => {
     if (chart) {
-
       setBoolChartState(true);
     }
   }, [chart]);
@@ -144,13 +135,6 @@ export default function DataVisualization() {
 
 
   const callback = useCallback(({ filters, filterKeyandValues, value, genes }) => {
-    // let g = []
-    // if(genes.includes(' ')){
-    //   g = genes.split(' ')
-    // }
-    // else{
-    //   g.push(genes)
-    // }
     if (filters && filterKeyandValues) {
       setState((prevState) => ({
         ...prevState,
@@ -158,16 +142,18 @@ export default function DataVisualization() {
       }));
       // setfilterApplied(true);
     }
-    
+
     if (value && genes) {
-    
+
       setState((prevState) => ({
         ...prevState,
         genes: genes,
         type: value,
       }));
     }
-    
+
+
+
   }, []);
 
 
@@ -196,7 +182,6 @@ export default function DataVisualization() {
   }, [tab, tabName, chartName, BrstKeys]);
 
   useEffect(() => {
-    
     let w = elementRef.current.getBoundingClientRect().width;
     setWidth(w);
     setBoolChartState(false);
@@ -223,7 +208,7 @@ export default function DataVisualization() {
         name = "";
       } else if (element === "cnv") {
         element = "CNV";
-      } 
+      }
 
       let gridobj = { title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/singledata-upload/${element}/` }
       gridData.push(gridobj)
@@ -239,7 +224,7 @@ export default function DataVisualization() {
       // if(userProjectDetails && 'key' in  userProjectDetails &&  userProjectDetails.key === 'NotFound'){
       //   history.push('/login')
       // }
-      if (userProjectDetails &&  'available_steps' in userProjectDetails) {
+      if (userProjectDetails && 'available_steps' in userProjectDetails) {
         projectAvailableSteps = userProjectDetails.available_steps;
       }
 
@@ -277,19 +262,19 @@ export default function DataVisualization() {
   //   }
   // }, [project_id])
 
-    
+
   useEffect(() => {
-   
+
     if (project_id !== undefined) {
       if (state.genes.length > 0) {
         dispatch(samplesCount("POST", { project_id: project_id }));
         dispatch(getBreastKeys(state));
         setBoolChartState(false);
-        let chartx = LoadChart(width, tabName);
-        setCharts((prevState) => ({
-          ...prevState,
-          viz: chartx,
-        }));  
+        // let chartx = LoadChart(width, tabName);
+        // setCharts((prevState) => ({
+        //   ...prevState,
+        //   viz: chartx,
+        // }));  
       }
     } else {
       if (state.genes.length > 0) {
@@ -297,7 +282,7 @@ export default function DataVisualization() {
         dispatch(getBreastKeys(state));
       }
     }
-  }, [ state]);
+  }, [state]);
 
   const breadCrumbs = {
     '/visualise-singledata/': [
@@ -410,6 +395,7 @@ export default function DataVisualization() {
               <div
                 id="tab-contents"
                 className="block text-center"
+                style={{ display: "block", textAlign: "center" }}
                 ref={elementRef}>
                 {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div>{chart["viz"]}</div>}
                 {tabName && tabName !== 'home' && !boolChartState && (

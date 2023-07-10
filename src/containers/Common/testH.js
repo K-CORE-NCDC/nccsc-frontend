@@ -24,7 +24,7 @@ const HeatmapCmp = React.forwardRef(({ settings, inputData, type, watermarkCss,w
     const [dataLoaded,setDataLoaded] = useState(false)
     const [configVis,setConfigVis] = useState({})
     let target = "canvas";
-    
+ 
     let config = {
         "colorSpectrum": settings['colorSpectrum'],
         "graphType": "Heatmap",
@@ -147,10 +147,10 @@ const HeatmapCmp = React.forwardRef(({ settings, inputData, type, watermarkCss,w
         }
     },[data])
 
-    console.log('heatmap Inside')
 
     return (
 
+     
       
         <div ref={ref} className={`heatmap ${watermarkCss}` }>
             <div className=''>
@@ -160,7 +160,7 @@ const HeatmapCmp = React.forwardRef(({ settings, inputData, type, watermarkCss,w
                 </div>
             </div>
             { dataLoaded &&
-                <CanvasXpressReact target={target} data={data} config={configVis} width={width} height={'700px'} />
+                <CanvasXpressReact target={target} data={data} config={configVis} width={width} height={'700px'} style={{color:'red'}} />
             }
             
         </div>

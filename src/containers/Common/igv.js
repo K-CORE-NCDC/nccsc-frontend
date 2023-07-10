@@ -40,13 +40,13 @@ const Igv = React.forwardRef(({width,data, watermarkCss}, ref) => {
   },[data])
 
   return (
-    <div ref={ref} className={watermarkCss +" sm:w-5/6 xs:w-5/6 lg:w-full"}>
+    <div ref={ref} className={watermarkCss +""}>
       {/* <div className='ml-6 grid grid-cols-4'>
         <div className='col-span-2'>
 
         </div>
       </div> */}
-      <div className='ad pt-6' id="igv-div" style={{"height":"500px","width":width+"px"}}>
+      <div className='' id="igv-div" style={{"height":"500px","width":width+"px"}}>
       </div>
     </div>
   )

@@ -1463,16 +1463,6 @@
   border-color: #003177;
 }
 
-
-
-
-
-.mutation_labels {
-  display: flex;
-  justify-content: center;
-  gap: 3%
-}
-
 .chart_dataBox {
   background-color: lavender;
   padding: 3%;

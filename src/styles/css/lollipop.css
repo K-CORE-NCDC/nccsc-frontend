@@ -1,0 +1,25 @@
+.id_lists {
+  display: none;
+}
+
+.mutation_labels {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media (min-width: 768px) {
+  .selectionGenes {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .id_lists {
+    display: flex;
+  }
+
+  .mutation_labels {
+    display: flex;
+    justify-content: center;
+    gap: 3%
+  }
+}

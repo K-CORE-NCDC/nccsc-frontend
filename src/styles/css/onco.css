@@ -1,0 +1,30 @@
+#oncoprint-glyphmap span div:first-child {
+  display: block !important;
+}
+
+#oncoprint-glyphmap span:nth-child(2) div:first-child{
+    border: none !important;
+}
+
+.gene_selctionBox{
+  width: 50%;
+  text-align: left;
+  margin-bottom: 3%;
+}
+
+.data_box{
+  text-align: left;
+  background-color: aliceblue;
+  padding: 3%;
+}
+
+
+@media (max-width: 767px) {
+  .gene_selctionBox{
+    width: 100%;
+  }
+
+  .data_box h3{
+    margin-top: 3%;
+  }
+}
