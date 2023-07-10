@@ -1,40 +1,37 @@
+import { CogIcon, FilterIcon } from "@heroicons/react/outline";
 import React, {
-  useState,
-  useEffect,
-  useRef,
+  Fragment,
   useCallback,
   useContext,
-  Fragment
+  useEffect,
+  useRef,
+  useState
 } from "react";
-import { CogIcon, FilterIcon } from "@heroicons/react/outline";
-import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import Filter from "../../Common/filter";
-import { Charts } from "../../DataVisualisation/Charts";
-import { Context } from "../../../wrapper";
-import { useHistory, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory, useParams } from "react-router-dom";
 import {
+  clearDataVisualizationState,
   getBreastKeys,
   getUserDataProjectsTableData,
-  clearDataVisualizationState,
-  samplesCount,
-  getUserDefinedFilter
+  getUserDefinedFilter,
+  samplesCount
 } from "../../../actions/api_actions";
+import { Context } from "../../../wrapper";
+import Filter from "../../Common/filter";
+import { Charts } from "../../DataVisualisation/Charts";
 
-import { Popover, Transition } from "@headlessui/react"
+import { Popover, Transition } from "@headlessui/react";
 import { FormattedMessage } from "react-intl";
-import GeneSet from "../Components/MainComponents/GeneSet";
 import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
+import GeneSet from "../Components/MainComponents/GeneSet";
 import SurvivalFilterComponent from "../Components/MainComponents/SurvivalFilterComponent";
 import VolcanoFusionFilterComponent from "../Components/MainComponents/VolcanoFusionFilterComponent";
 
 
 export default function DataVisualization() {
   const context = useContext(Context);
-
   const elementRef = useRef(null);
   const dispatch = useDispatch();
-
   const [width, setWidth] = useState(0);
   const [chart, setCharts] = useState({ viz: [] });
   const [boolChartState, setBoolChartState] = useState(true);
@@ -43,14 +40,10 @@ export default function DataVisualization() {
   const [survivalCardData, setSurvivalCardData] = useState({})
   const [VFData, setVFData] = useState({})
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
-
   const [gridData, setGridData] = useState([])
   const numRows = Math.ceil(gridData.length / 3);
-
   const imageStyles = "object-cover object-center w-full h-full mt-8";
-
   const history = useHistory();
-
   const project_id_status = useSelector(
     (data) => data.homeReducer.project_id_status
   );
@@ -58,9 +51,6 @@ export default function DataVisualization() {
     (data) => data.dataVisualizationReducer.userProjectsDataTable
   );
   let { tab, project_id } = useParams();
-
-
-
   const [chartName, setChartName] = useState(tab === 'home' ? undefined : tab);
   const [tabName, setTabName] = useState(tab === 'home' ? undefined : tab)
   const [screenCapture, setScreenCapture] = useState(false);
@@ -76,18 +66,19 @@ export default function DataVisualization() {
     }
   };
 
-
-
   const submitFilter = (e) => {
-    setBoolChartState(false);
-    setChartName(tabName);
-    let chartx = LoadChart(width, tabName);
-    setCharts((prevState) => ({
-      ...prevState,
-      viz: chartx,
-    }));
-
+    if(BrstKeys){
+      setBoolChartState(false);
+      // setChartName(tabName);
+      let chartx = LoadChart(width, tabName);
+      setCharts((prevState) => ({
+        ...prevState,
+        viz: chartx,
+      }));
+    }
   };
+
+  
 
   const callback = useCallback(({ filters, filterKeyandValues, value, genes }) => {
     let g = []
@@ -173,6 +164,7 @@ export default function DataVisualization() {
           if (stepName === "lollypop") {
             tabList.push("lollipop");
           } else if (stepName === "oncoprint") {
+
             tabList.push("onco");
           } else if (stepName === "igv") {
             tabList.push("CNV");
@@ -191,7 +183,7 @@ export default function DataVisualization() {
   useEffect(() => {
     setTabName(tab === 'home' ? undefined : tab)
     setChartName(tabName)
-    if (chartName) {
+    if (chartName && state?.genes?.length > 0) {
       submitFilter();
     }
     let t = ["volcano", "survival", "fusion"];
@@ -201,7 +193,7 @@ export default function DataVisualization() {
     else {
       setToggle(true);
     }
-  }, [tab, tabName, chartName, boolChartState]);
+  }, [tab, , tabName, chartName,state,BrstKeys]);
 
   useEffect(() => {
     dispatch(getUserDefinedFilter({
@@ -256,7 +248,7 @@ export default function DataVisualization() {
         name = "";
       }
 
-      let gridobj = { title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/visualise-multidata/${element}/${project_id}` }
+      let gridobj = { title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: project_id !== undefined ? `/visualise-multidata/${element}/${project_id}` : `/visualise-multidata/${element}/` }
       gridData.push(gridobj)
 
     });
@@ -264,18 +256,20 @@ export default function DataVisualization() {
   }, [availableTabsForProject, chartName]);
 
   useEffect(() => {
-    if (project_id !== undefined) {
-      if (state.genes.length > 0) {
-        dispatch(samplesCount("POST", { project_id: project_id }));
-        dispatch(getBreastKeys(state));
-      }
-    } else {
-      if (state.genes.length > 0) {
-        dispatch(samplesCount("POST", {}));
-        dispatch(getBreastKeys(state));
+    if(BrstKeys === undefined){
+      if (project_id !== undefined) {
+        if (state.genes.length > 0) {
+          dispatch(samplesCount("POST", { project_id: project_id }));
+          dispatch(getBreastKeys(state));
+        }
+      } else {
+        if (state.genes.length > 0) {
+          dispatch(samplesCount("POST", {}));
+          dispatch(getBreastKeys(state));
+        }
       }
     }
-  }, [tabName, state]);
+  }, [state]);
 
 
 
@@ -561,7 +555,7 @@ export default function DataVisualization() {
                   {({ open }) => {
                     return (
                       <>
-                        <div className='w-full'>
+                        <div className=''>
                           <Popover.Button className={'selectBox'}>
                             <div className="GeneSetgeneSetButton">
                               <div className="flex-1">Gene set Re-filtering</div>

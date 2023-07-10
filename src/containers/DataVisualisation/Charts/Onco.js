@@ -9,6 +9,7 @@ import inputJson from '../../Common/data';
 import { FormattedMessage } from 'react-intl';
 import { useParams } from "react-router-dom";
 import { Context } from "../../../wrapper";
+import '../../../styles/css/onco.css'
 
 export default function DataOnco({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
 
@@ -77,7 +78,7 @@ export default function DataOnco({ width, inputData, screenCapture, setToFalseAf
         }
       }
     }
-  }, [koreanlanguage,filterData, project_id])
+  }, [koreanlanguage, filterData, project_id])
 
   useEffect(() => {
     if (inputData && 'genes' in inputData) {
@@ -278,35 +279,31 @@ export default function DataOnco({ width, inputData, screenCapture, setToFalseAf
 
   return (
 
-    <>
-    {console.log('width', width)}
+    <div style={{ marginTop: '5%', border: '1px solid #d6d6d6', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.05)', position: 'relative', padding: '5%' }}>
+      {console.log('width', width)}
       {optionChoices &&
-        <div className=''>
-          <div className=''>
-            <div className=''>
-              {!noGeneData && <>
-                <label><FormattedMessage id="Clinical_Filters_heatmap" defaultMessage='Clinical Attribute annotation' /></label>
-                <Multiselect
-                  options={optionChoices} // Options to display in the dropdown
-                  selectedValues={option} // Preselected value to persist in dropdown
-                  onSelect={onSelect} // Function will trigger on select event
-                  onRemove={onRemove} // Function will trigger on remove event
-                  displayValue="name" // Property name to display in the dropdown options
-                /> </>}
-            </div>
-          </div>
+        <div className='gene_selctionBox'>
+          {!noGeneData && <>
+            <label><FormattedMessage id="Clinical_Filters_heatmap" defaultMessage='Clinical Attribute annotation' /></label>
+            <Multiselect
+              options={optionChoices} // Options to display in the dropdown
+              selectedValues={option} // Preselected value to persist in dropdown
+              onSelect={onSelect} // Function will trigger on select event
+              onRemove={onRemove} // Function will trigger on remove event
+              displayValue="name" // Property name to display in the dropdown options
+            /> </>}
         </div>
       }
       {
         loader ?
           <LoaderCmp />
           :
-          <div>
+          <div >
             {activeCmp &&
               <div className="">
                 <div className="">
                   {showOnco && <div className=''>
-                    <div className="">
+                    <div className="data_box">
                       <h3>
                         <FormattedMessage id="GlobalMutationDistribution" defaultMessage="Global Mutation Distribution :distribution of total mutation" />
                       </h3>
@@ -341,7 +338,7 @@ export default function DataOnco({ width, inputData, screenCapture, setToFalseAf
                       project_id={project_id}
                     />
                   </div>}
-                
+
                   {noContent && <NoContentMessage />}
 
 
@@ -352,6 +349,6 @@ export default function DataOnco({ width, inputData, screenCapture, setToFalseAf
             {noGeneData && <p><FormattedMessage id="PleaseSelecttheGeneSetData" defaultMessage="Please Select the Gene Set Data" /></p>}
           </div>
       }
-    </>
+    </div >
   )
 }

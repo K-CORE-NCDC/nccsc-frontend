@@ -1,23 +1,287 @@
-.sub_head_heat{
-  display: flex;
-}
-
-.tabs_box{
+.tabs_box {
   width: 50%;
 }
 
-.box_space{
-  gap:5%
+.box_space {
+  display: flex;
+  gap: 5%
 }
 
-.sub_sec_head{
-  gap:10%;
+.sub_sec_head {
+  gap: 10%;
   margin-top: 3%;
-      background-color: aliceblue;
-    padding: 2%;
+  background-color: aliceblue;
+  padding: 2%;
 }
 
-.sub_tabs{
- 
+.sub_tabs {
+
   flex-direction: 'column';
+}
+
+.GeneFilteringBox {
+  gap: 5%;
+  margin-top: 3%;
+  background-color: aliceblue;
+  padding: 2%;
+}
+
+.GeneFilteringBox .Spectrum {
+  display: flex;
+}
+
+.FilterBox {
+  display: flex !important;
+  gap: 3% !important;
+  justify-content: center !important;
+}
+
+.mainTab ul {
+  flex-direction: row !important;
+  gap: 0px !important;
+  margin-bottom: 7px;
+}
+
+.subContents {
+  min-height: 700px;
+}
+
+.sub_head_heat .selectBox {
+  display: none;
+}
+
+.sub_head_heat .tabs_box {
+  display: block;
+  width: 100%;
+}
+
+.GeneSelectionBox .selectionBox {
+  text-align: left;
+}
+
+/* .GeneFilteringBox{
+  text-align: left;
+} */
+
+
+.GeneSelectionBox .selectionBox {
+  width: 50%;
+}
+
+.sub_head_heat .selectBox {
+  width: 50%;
+}
+
+.ClusterBox{
+  width: 50%;
+  text-align: left;
+}
+
+.ClusterBox .ClusterBtn{
+  display: flex;
+  justify-content: space-between;
+}
+
+.ClusterBox ul{
+  display: flex;
+  justify-content: space-between;
+}
+
+.custom-slider {
+  width: 100% !important;
+  height: 10px !important;
+  background: #eee !important;
+  opacity: .8 !important;
+  outline: none !important;
+  transition: .3s !important;
+  -webkit-appearance: none !important;
+  position: relative !important;
+}
+
+input[type="range"].custom-slider {
+  -webkit-appearance: none  !important;
+  margin-right: 15px !important;
+  /* width: 200px !important; */
+  height: 7px !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+  border-radius: 5px !important;
+  background-image: linear-gradient(#eee, #eee) !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+}
+
+input[type="range"].custom-slider::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  height: 10px !important;
+  width: 10px !important;
+  border-radius: 50% !important ;
+  background: #ff4500 !important;
+  cursor: ew-resize !important;
+  box-shadow: 0 0 2px 0 #555 !important;
+  transition: background .3s ease-in-out !important;
+}
+
+input[type=range].custom-slider::-webkit-slider-runnable-track  {
+  -webkit-appearance: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+
+@media (max-width: 500px) {
+  .GeneSelectionBox {
+    gap: 3%;
+  }
+  /* .GeneFilteringBox .Spectrum  {
+    margin-left: 10%;
+   } */
+  .GeneSelectionBox .selectionBox {
+    width: 100%;
+  }
+}
+
+@media (min-width: 500px) {
+  .GeneSelectionBox {
+    display: flex;
+    gap: 3%;
+  }
+
+
+}
+
+@media (min-width: 450px) and (max-width: 640px) {
+    .GeneFilteringBox .Spectrum  {
+    margin-left: 10%;
+   }
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+  .sub_head_heat {
+    /* display: flex; */
+  }
+
+  /* .GeneSelectionBox{
+    display: flex;
+    gap:3%;
+  } */
+  .ClusterBox{
+    width: 100%;
+    text-align: left;
+    margin-top: 2%;
+  }
+  .GeneFilteringBox .Spectrum input {
+    width: 50%;
+    text-align: center;
+  }
+
+  .Spectrumbtn .btn {
+    width: 75%;
+    margin: 10px 0px 7px 13%;
+
+  }
+
+  .Spectrum {
+    margin-left: 21%;
+  }
+}
+
+@media (max-width: 640px) {
+  .sub_head_heat .selectBox {
+    display: block;
+    width: 100%;
+  }
+
+  .ClusterBox{
+    width: 100%;
+    text-align: left;
+    margin-top: 2%;
+  }
+
+  .sub_head_heat .tabs_box {
+    display: none;
+  }
+
+
+  .GeneFilteringBox .Spectrum input {
+    width: 50%;
+    text-align: center;
+  }
+
+  .Spectrumbtn .btn {
+    width: 75%;
+    margin: 10px 0px 7px 13%;
+
+  }
+
+  .GeneSelectionBox {
+    gap: 3%;
+  }
+
+
+
+}
+
+@media (min-width: 767px) and (max-width: 1275px) {
+  .GeneSelectionBox {
+    width: 100%;
+  }
+
+  .selectionBox {
+    width: 50% !important;
+  }
+
+  .sub_head_heat .mainTab li {
+    width: 100%;
+  }
+
+  .GeneFilteringBox{
+    display: flex;
+  }
+
+  .GeneFilteringBox .Spectrum input {
+    width: 50%;
+    text-align: center;
+  }
+  .GeneFilteringBox .Spectrum  {
+   padding-top: 10px;
+  }
+
+  .Spectrumbtn  {
+    padding-top: 10px;
+   }
+}
+
+
+@media (min-width: 1275px) {
+  .sub_head_heat {
+    display: flex;
+  }
+  .GeneFilteringBox{
+    display: flex;
+  }
+
+  .GeneFilteringBox .Spectrum input {
+    width: 50%;
+    text-align: center;
+  }
+  .GeneFilteringBox .Spectrum  {
+   padding-top: 10px;
+  }
+
+  .sub_head_heat .tabs_box {
+    width: 50%;
+  }
+
+  .sub_head_heat .selectBox .mainTab li {
+    width: 100%;
+  }
+
+  .GeneSelectionBox {
+    width: 50%;
+  }
+  .Spectrumbtn  {
+   padding-top: 10px;
+  }
+
 }

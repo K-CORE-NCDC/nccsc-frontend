@@ -457,9 +457,9 @@ export default function Web(props) {
                   </a>
                 </h1>
                 <div className="headerUtils">
-                  <a href=""><FormattedMessage id="GenerateRegistrationNumber" defaultMessage='Generate registration number' /></a>
+                  <Link to="/findid/"><FormattedMessage id="GenerateRegistrationNumber" defaultMessage='Generate registration number' /></Link>
                   <Link to='/login/'><FormattedMessage id="Login" defaultMessage='Login' /></Link>
-                  <a href=""><FormattedMessage id="FindPassword" defaultMessage='Find Password' /></a>
+                  <Link to="/findpassword/"><FormattedMessage id="FindPassword" defaultMessage='Find Password' /></Link>
                   <div className="language">
                     <a className="on" onClick={() => { setShowLangMenu(!showLangMenu) }}>&nbsp;</a>
                     <ul style={showLangMenu ? { display: "block" } : { display: 'none' }}>

@@ -1,10 +1,10 @@
 import React, {
-  useState,
-  useEffect,
-  useRef,
+  Fragment,
   useCallback,
   useContext,
-  Fragment
+  useEffect,
+  useRef,
+  useState
 } from "react";
 import { CogIcon, FilterIcon } from "@heroicons/react/outline";
 import { useSelector, useDispatch } from "react-redux";
@@ -17,13 +17,9 @@ import { useHistory, Link } from "react-router-dom";
 import {
   getBreastKeys,
   getUserDataProjectsTableData,
-  clearDataVisualizationState,
-  samplesCount,
-  getUserDefinedFilter
+  samplesCount
 } from "../../../actions/api_actions";
-
-import { Popover, Transition } from "@headlessui/react"
-import { FormattedMessage } from "react-intl";
+import { Popover, Transition } from "@headlessui/react";
 import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
 import GeneSet from "../Components/MainComponents/GeneSet";
 import SurvivalFilterComponent from "../Components/MainComponents/SurvivalFilterComponent";
@@ -45,13 +41,13 @@ export default function DataVisualization() {
     (data) => data.homeReducer.project_id_status
   );
   const [availableTabsForProject, setavailableTabsForProject] = useState([]);
-  const history = useHistory()
   let { tab, project_id } = useParams();
   const [chartName, setChartName] = useState(tab === 'home' ? undefined : tab);
   const [tabName, setTabName] = useState(tab === 'home' ? undefined : tab)
   const [toggle, setToggle] = useState(true);
-
   const [screenCapture, setScreenCapture] = useState(false);
+
+
   const setToFalseAfterScreenCapture = (param = false) => {
     if (param === false) {
       setScreenCapture(false);
@@ -62,7 +58,7 @@ export default function DataVisualization() {
 
   const submitFilter = (e) => {
     setBoolChartState(false);
-    setChartName(tabName);
+    // setChartName(tabName);
     let chartx = LoadChart(width, tabName);
     setCharts((prevState) => ({
       ...prevState,
@@ -72,7 +68,6 @@ export default function DataVisualization() {
   };
 
   const LoadChart = (w, type) => {
-    console.log('type', type)
     switch (type) {
       case "circos":
         return Charts.circos(
@@ -132,7 +127,6 @@ export default function DataVisualization() {
 
   useEffect(() => {
     if (chart) {
-
       setBoolChartState(true);
     }
   }, [chart]);
@@ -152,13 +146,6 @@ export default function DataVisualization() {
 
 
   const callback = useCallback(({ filters, filterKeyandValues, value, genes }) => {
-    // let g = []
-    // if(genes.includes(' ')){
-    //   g = genes.split(' ')
-    // }
-    // else{
-    //   g.push(genes)
-    // }
     if (filters && filterKeyandValues) {
       setState((prevState) => ({
         ...prevState,
@@ -175,7 +162,6 @@ export default function DataVisualization() {
         type: value,
       }));
     }
-
   }, []);
 
 
@@ -205,7 +191,6 @@ export default function DataVisualization() {
   }, [tab, tabName, chartName, BrstKeys]);
 
   useEffect(() => {
-
     let w = elementRef.current.getBoundingClientRect().width;
     setWidth(w);
     setBoolChartState(false);
@@ -303,11 +288,11 @@ export default function DataVisualization() {
         dispatch(samplesCount("POST", { project_id: project_id }));
         dispatch(getBreastKeys(state));
         setBoolChartState(false);
-        let chartx = LoadChart(width, tabName);
-        setCharts((prevState) => ({
-          ...prevState,
-          viz: chartx,
-        }));
+        // let chartx = LoadChart(width, tabName);
+        // setCharts((prevState) => ({
+        //   ...prevState,
+        //   viz: chartx,
+        // }));  
       }
     } else {
       if (state.genes.length > 0) {
@@ -431,6 +416,7 @@ export default function DataVisualization() {
               <div
                 id="tab-contents"
                 className="block text-center"
+                style={{ display: "block", textAlign: "center" }}
                 ref={elementRef}>
                 {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div>{chart["viz"]}</div>}
                 {tabName && tabName !== 'home' && !boolChartState && (

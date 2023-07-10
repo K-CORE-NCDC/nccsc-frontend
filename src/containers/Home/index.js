@@ -95,7 +95,7 @@ export default function Home(parentProps) {
   };
   return (
     <>
-      {(width > 1025 && height > 870) &&
+      {(width > 1025 && height > 800) &&
         <SwiperComponent
           ref={swiperRef}
           loop={false}
@@ -158,7 +158,7 @@ export default function Home(parentProps) {
       }
 
       {
-        (width <= 1025 || height <= 870) &&
+        (width <= 1025 || height <= 800) &&
         <>
 
           <div className=" section01" style={{ marginBottom: '50px', borderBottom: '1px solid', paddingBottom: '100px' }} id="introduce" ref={resultRef?.current[0]}>

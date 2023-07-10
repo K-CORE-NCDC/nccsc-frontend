@@ -47,7 +47,6 @@
     justify-self: center; 
   } */
 
-
 .DataVizGridImage {
   object-fit: cover;
   object-position: center;
@@ -520,6 +519,7 @@
     font-size: 0.875rem;
     line-height: 1.25rem;
   }
+
 }
 
 @media (min-width: 1024px) {
@@ -1269,6 +1269,15 @@
     font-size: 14px;
     padding: 0 10px;
   }
+
+  .FilterBox {
+    flex-direction: column;
+  }
+
+  .FilterBox .selectBox {
+    width: 100%;
+    margin-bottom: 7px;
+  }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
@@ -1364,6 +1373,7 @@
     line-height: 1.75rem;
   }
 }
+
 
 .FilterReset3:hover {
   background-color: #374151;

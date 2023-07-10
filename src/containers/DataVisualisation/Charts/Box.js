@@ -34,7 +34,7 @@ export default function Box({
   const [alltabList, setAllTabList] = useState({});
   const [activeTab, setActiveTab] = useState('1')
   const [selectedType, setSelectedType] = useState('1')
-  const [btnClickNote , setBtnClickNote] = useState(false)
+  const [btnClickNote, setBtnClickNote] = useState(false)
 
   let { project_id } = useParams();
   const tabList = useSelector(
@@ -44,14 +44,14 @@ export default function Box({
   useEffect(() => {
     if ('userProjectsDataTable' in tabList) {
       let _data = tabList?.userProjectsDataTable
-      if(_data?.viz_type === 'single'){
-        if(_data['proteome'] !== null){
+      if (_data?.viz_type === 'single') {
+        if (_data['proteome'] !== null) {
           setActiveTab('1')
-        }else if(_data["dna_mutation"] !== null){
+        } else if (_data["dna_mutation"] !== null) {
           setActiveTab('2')
           setTableType('mutation')
         }
-      }else{
+      } else {
         setActiveTab('1')
       }
       setAllTabList(tabList.userProjectsDataTable)
@@ -319,11 +319,11 @@ export default function Box({
     " border duration-200 ease-in-out border-teal-600 transition px-10 xs:p-3 xs:text-sm";
 
   return (
-    <div className="main_div">
+    <div className="main_div" style={{ marginTop: '5%', border: '1px solid #d6d6d6', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.05)', position: 'relative', padding: '5%' }}>
       <div className="cnv_sub_head">
         <div className="tabs_box">
           <div className="tab">
-          {btnClickNote ? <> <p style={{color:'red'}}>No {activeTab !== '1' ? 'mutation' : 'proteome'} file</p> </> : ''}
+            {btnClickNote ? <> <p style={{ color: 'red' }}>No {activeTab !== '1' ? 'mutation' : 'proteome'} file</p> </> : ''}
             <div className="tab_main">
               <ul>
                 {/* {
@@ -348,7 +348,7 @@ export default function Box({
                   <li className={activeTab === '2' ? 'on' : ''}> <button onClick={e => { changeType(e, 'mutation'); setActiveTab('2') }} name='type' >
                     <FormattedMessage id="VariantType" defaultMessage="Variant Type" /> </button> </li>
                 } */}
-               
+
                 {/* <li className={activeTab === '2' ? 'on' : ''}> <button onClick={e => {
                   if (alltabList['dna_mutation'] === null) {
                     setBtnClickNote(true)
@@ -358,14 +358,14 @@ export default function Box({
                     setBtnClickNote(false)
                   }
                 }} name='type' >  <FormattedMessage id="VariantType" defaultMessage="Variant Type" /> </button></li> */}
-               
+
               </ul>
             </div>
           </div>
         </div>
 
 
-        <div className=" tabs_box box_gap">
+        <div className="box_gap">
           <div className="">
             {tableType === "proteome" && (
               <>
@@ -468,7 +468,7 @@ export default function Box({
       ) : (
         boxJson && (
           <>
-            {tableType && <p className="" style={{ marginBottom: '30px' }}>{tableType === 'proteome' ? <FormattedMessage id="BoxTvNDesc" defaultMessage="Proteome expression of Tumor samples vs Normal samples" /> : <FormattedMessage id="BoxVariantDesc" defaultMessage="Proteome expression by variant type number (Missense mutation, Nonsense mutation, Splice site, Frame-shift insertion, Frame-shift deletion, In-frame insertion, In-frame deletion" />}</p>}
+            {tableType && <p className="text_align" style={{ marginBottom: '30px' }}>{tableType === 'proteome' ? <FormattedMessage id="BoxTvNDesc" defaultMessage="Proteome expression of Tumor samples vs Normal samples" /> : <FormattedMessage id="BoxVariantDesc" defaultMessage="Proteome expression by variant type number (Missense mutation, Nonsense mutation, Splice site, Frame-shift insertion, Frame-shift deletion, In-frame insertion, In-frame deletion" />}</p>}
             {showBoxPlot && (
               <BoxPlot
                 view_type={viewType}

@@ -101,9 +101,9 @@ export const CBioPortal = () => {
                       </span>
                       <span style={{ paddingLeft: '1%', color: 'dodgerblue' }}><a href="http://www.cbioportal.org/">http://www.cbioportal.org/</a></span>
                     </div>
-                    <div style={{ justifyContent: 'flex-end' }}>
+                    {/* <div style={{ justifyContent: 'flex-end' }}>
                       suhshma
-                    </div>
+                    </div> */}
                   </div>
 
                 </div>

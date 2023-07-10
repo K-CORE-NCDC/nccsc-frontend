@@ -146,7 +146,10 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
         "translate(" + margin.left + "," + margin.top + ")");
 
     var tooltip = d3.select("#box2").append("div").attr('class', 'boxplot_tooltip')
-      .style("opacity", 0);
+      .style("opacity", 0)
+      .style('position','absolute')
+      .style('background-color' , 'lavender')
+      .style('padding' , '1%')
     // Show the X scale
     var x = d3.scaleBand()
       .range([0, (250 * sumstat.length) + 250])
@@ -267,13 +270,13 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
           .attr("stroke", "black")
           .style("fill", "#fff")
           .on("mouseover", (d, i) => {
-
+              console.log('d', d)
             tooltip.transition()
               .duration(200)
               .style('opacity', 0.9);
-            tooltip.html("Sample:<br/>" + BrstKeys[i.Sample] + `<br/>${view_type === "gene_vl" ? 'gene val' : 'z-score'}<br/>` + i.Sepal_Length)
-              .style('left', d.pageX - 550 + 'px')
-              .style('top', d.pageY - 150 + 'px');
+            tooltip.html("Sample: &nbsp;"+  BrstKeys[i.Sample] + `<br/>${view_type === "gene_vl" ? 'gene val' : 'z-score'} &nbsp;` + i.Sepal_Length)
+              .style('left', d.offsetX + 'px')
+              .style('top', d.offsetY+ 'px')
           })
           .on('mouseout', () => {
           });
@@ -350,17 +353,18 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
             }
           })
           .on("mouseover", (d, i) => {
-            tooltip.transition()
+            tooltip
+            .transition()
               .duration(200)
               .style('opacity', 0.9);
-            tooltip.html("Sample:<br/>" + BrstKeys[i.Sample] + `<br/>${view_type === "gene_vl" ? 'gene val' : 'z-score'}<br/>` + i.Sepal_Length)
+            tooltip.html("Sample: &nbsp;" + BrstKeys[i.Sample] + `<br/>${view_type === "gene_vl" ? 'gene val' : 'z-score'} &nbsp;` + i.Sepal_Length)
 
             if (document.getElementById('filterBoxCmp')) {
               tooltip.style('left', d.pageX - 550 + 'px')
               tooltip.style('top', d.pageY - 150 + 'px');
             } else {
-              tooltip.style('left', d.pageX + 'px')
-              tooltip.style('top', d.pageY + 'px');
+              tooltip.style('left', d.offsetX + 'px')
+              tooltip.style('top', d.offsetY + 'px');
             }
           })
           .on('mouseout', () => {
@@ -391,7 +395,7 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
         <>
           <div id="box3">
           </div>
-          <div ref={ref} className={watermarkCss + "w-full overflow-x-auto "} id="box2" >
+          <div ref={ref} className={watermarkCss + "w-full overflow-x-auto "} style={{overflowX:'auto' , position:'relative'}} id="box2" >
           </div> </>)}
     </>
   )
