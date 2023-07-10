@@ -67,7 +67,7 @@ export default function DataVisualization() {
   };
 
   const submitFilter = (e) => {
-    if(BrstKeys){
+    if (BrstKeys) {
       setBoolChartState(false);
       // setChartName(tabName);
       let chartx = LoadChart(width, tabName);
@@ -78,7 +78,7 @@ export default function DataVisualization() {
     }
   };
 
-  
+
 
   const callback = useCallback(({ filters, filterKeyandValues, value, genes }) => {
     let g = []
@@ -193,7 +193,7 @@ export default function DataVisualization() {
     else {
       setToggle(true);
     }
-  }, [tab, , tabName, chartName,state,BrstKeys]);
+  }, [tab, , tabName, chartName, state, BrstKeys]);
 
   useEffect(() => {
     dispatch(getUserDefinedFilter({
@@ -256,7 +256,7 @@ export default function DataVisualization() {
   }, [availableTabsForProject, chartName]);
 
   useEffect(() => {
-    if(BrstKeys === undefined){
+    if (BrstKeys === undefined) {
       if (project_id !== undefined) {
         if (state.genes.length > 0) {
           dispatch(samplesCount("POST", { project_id: project_id }));
@@ -293,13 +293,13 @@ export default function DataVisualization() {
     }
   }, [chart]);
 
-  // useEffect(() => {
-  //   let chartx = LoadChart(width, tabName);
-  //   setCharts((prevState) => ({
-  //     ...prevState,
-  //     viz: chartx,
-  //   }));
-  // }, [screenCapture]);
+  useEffect(() => {
+    let chartx = LoadChart(width, tabName);
+    setCharts((prevState) => ({
+      ...prevState,
+      viz: chartx,
+    }));
+  }, [screenCapture]);
 
   const LoadChart = (w, type) => {
     switch (type) {
@@ -462,7 +462,7 @@ export default function DataVisualization() {
                               leaveFrom="opacity-100 translate-y-0"
                               leaveTo="opacity-0 translate-y-1"
                             >
-                              <Popover.Panel className="GeneSetPopoverPanel">
+                              <Popover.Panel className="GeneSetPopoverPanel" style={{height:'450px' , overflowY:'auto'}}>
                                 <Filter
                                   parentCallback={callback}
                                   filterState={state["filter"]}
@@ -471,7 +471,11 @@ export default function DataVisualization() {
                                 />
                               </Popover.Panel>
                             </Transition>
+
+
                           </div>
+
+
                         </>
                       );
                     }}
@@ -488,7 +492,7 @@ export default function DataVisualization() {
                               <div className="GeneSetgeneSetButton">
                                 <div className="flex-1">Filter</div>
                                 <div className="w-20">
-                                <CogIcon className="filter-icon" />
+                                  <CogIcon className="filter-icon" />
                                 </div>
                               </div>
                             </Popover.Button>
@@ -527,7 +531,7 @@ export default function DataVisualization() {
                               <div className="GeneSetgeneSetButton">
                                 <div className="flex-1">Gene set Re-filtering</div>
                                 <div className="w-20">
-                                <CogIcon className="filter-icon" />
+                                  <CogIcon className="filter-icon" />
                                 </div>
                               </div>
                             </Popover.Button>
@@ -582,6 +586,25 @@ export default function DataVisualization() {
                     )
                   }}
                 </Popover>
+
+                  <Popover className="relative gene_main_box">
+                    {({ open }) => {
+                      return (
+                        <>
+                          <div className=''>
+                            <Popover.Button className={'button'}>
+                              <div>
+                                <button onClick={() =>
+                                  setToFalseAfterScreenCapture(true)
+                                } className="btn btnPrimary">Capture Screenshot</button>
+                              </div>
+                            </Popover.Button>
+                           
+                          </div>
+                        </>
+                      )
+                    }}
+                  </Popover>
 
               </div>
             </section>

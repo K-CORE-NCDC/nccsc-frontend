@@ -24,6 +24,11 @@ const HeatmapCmp = React.forwardRef(({ settings, inputData, type, watermarkCss,w
     const [dataLoaded,setDataLoaded] = useState(false)
     const [configVis,setConfigVis] = useState({})
     let target = "canvas";
+
+
+    useEffect(() =>{
+          console.log('settings' , settings)
+    },[settings])
  
     let config = {
         "colorSpectrum": settings['colorSpectrum'],
@@ -130,20 +135,25 @@ const HeatmapCmp = React.forwardRef(({ settings, inputData, type, watermarkCss,w
         }
     },[watermarkCss])
 
+    useEffect(() =>{
+      setConfigVis(config)
+    },[settings?.colorSpectrum])
 
     useEffect(()=>{
         
         if(Object.keys(inputData).length>0){
             setData(inputData)
+            console.log('initial config' , config)
             setConfigVis(config)
         }
 
-    },[inputData])
+    },[inputData ])
 
     useEffect(()=>{
         
         if(Object.keys(data).length>0){
             setDataLoaded(true)
+          
         }
     },[data])
 
@@ -159,6 +169,8 @@ const HeatmapCmp = React.forwardRef(({ settings, inputData, type, watermarkCss,w
                     
                 </div>
             </div>
+
+            {/* {console.log('final config' , configVis)} */}
             { dataLoaded &&
                 <CanvasXpressReact target={target} data={data} config={configVis} width={width} height={'700px'} style={{color:'red'}} />
             }

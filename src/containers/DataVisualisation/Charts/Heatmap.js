@@ -203,9 +203,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
 
 
   useEffect(() => {
-    console.log('heatmapJson', heatmapJson)
     if (heatmapJson?.data?.length > 0 && brstKeys) {
-      console.log('if Condition')
       setNoData(false)
       let genes = []
       let unique_sample_values = {}
@@ -323,7 +321,6 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
 
       // }, (1000));
     }else{
-      console.log('else Condition')
       if(heatmapSummaryStatusCode?.status === 204 && (heatmapJson?.data?.length === 0 || heatmapJson?.length === 0) ){
         setData("")
         setNoData(true)
@@ -365,6 +362,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
 
 
   useEffect(() => {
+    console.log('screenshot')
     if (screenCapture) {
       setWatermarkCSS("watermark")
     } else {
@@ -670,7 +668,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
 
   }
   const changeTheme = (e) => {
-    // setLoader(true)
+    setLoader(true)
     let theme_name = e.target.value
     let colors = []
     for (let index = 0; index < themes.length; index++) {
@@ -687,10 +685,6 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
 
   useEffect(() => {
     setLoader(false)
-
-    if(noData){
-      setLoader(false)
-    }
   }, [configVis , noData])
 
 
@@ -923,7 +917,6 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
 
         </div>
       </div>
-              {console.log('data_' , data_ , 'nodData' , noData , 'loader' , loader)}
       {loader ? <LoaderCmp /> : <div style={noGeneData === false ? { marginTop: '5%', display: 'inline-block', paddingBottom: '3%' } : { paddingBottom: '10%' }}>
         {(data_ && (inSufficientData !== true)) && <HeatmapNewCmp settings={configVis} clinicalFilter={optionChoices} inputData={data_} type={mainTab} watermarkCss={watermarkCss} ref={reference} width={_width} />
         }
