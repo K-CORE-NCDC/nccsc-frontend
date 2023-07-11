@@ -15,7 +15,9 @@ import { Context } from "../../../wrapper";
 export default function FusionPlot({
   width,
   inputData,
-  VFData
+  screenCapture,
+  setToFalseAfterScreenCapture,
+  VFData,
 }) {
   const context = useContext(Context);
   const [koreanlanguage, setKoreanlanguage] = useState(false);

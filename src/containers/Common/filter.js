@@ -46,7 +46,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
     }
   });
 
-  
+
   useEffect(() => {
     if (project_id !== undefined) {
       if (userDefinedFilter && Object.keys(userDefinedFilter).length > 0) {
@@ -161,7 +161,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
             <div className=" PaddingT10 PaddingB10 Relative ZIndex10" key={"div_mb_" + c}>
               <label
                 htmlFor="toogleA"
-                className="Flex ItemsCenter CursorPointer"
+                className="FilterBoxData"
               >
                 <div className="Toggle FilterLabelText">
                   {childelm in chart_names ? (
@@ -172,6 +172,9 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
                   ) : (
                     <FormattedMessage id={childelm} defaultMessage={childelm} />
                   )}
+                </div>
+                <div className="py-5 Flex Gap2" id={"child_md_" + id + "_" + c} >
+                  {inputHtml}
                 </div>
                 <div
                   className="Relative"
@@ -196,9 +199,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
                   ></div>
                 </div>
               </label>
-              <div className="py-5" id={"child_md_" + id + "_" + c}>
-                {inputHtml}
-              </div>
+
             </div>
           );
         });
@@ -271,7 +272,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
       check = true;
     }
     return (
-      <div key={d.id} className="PX10">
+      <div key={d.id} className="">
         <label className="InlineFlex ItemsCenter">
           <input
             type="checkbox"
@@ -296,8 +297,9 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
         key={d.id}
         className="FilterInputGrid"
       >
-        <div className="ColSpan2">
+        <div className="inpuDiv">
           <input
+
             type="number"
             id={"from_" + d.id}
             className="HFull FilterNumberStyle Rounded"
@@ -309,12 +311,12 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
             max={d.max}
           />
         </div>
-        <div className="ColSpan1">
+        <div className="divisionBox">
           <div className="FilterNumberLineBreak HFull">
             <b>-</b>
           </div>
         </div>
-        <div className="ColSpan2">
+        <div className="inpuDiv">
           <input
             type="number"
             id={"to_" + d.id}
@@ -507,8 +509,8 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
   };
 
   const sendFilter = () => {
-    console.log('selectState', selectState )
-    console.log('filterJson', filterJson )
+    console.log('selectState', selectState)
+    console.log('filterJson', filterJson)
     parentCallback({ filters: selectState });
     drawTags(filterJson);
   };
@@ -542,7 +544,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
     });
     setSelectState({ 'filterCondition': 'and' });
     // parentCallback("");
-    parentCallback({ filter: ""});
+    parentCallback({ filter: "" });
     if (document.getElementById('default-radio-1')) {
       document.getElementById('default-radio-1').checked = true
     }
@@ -576,7 +578,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
         </button>
         &nbsp;&nbsp;&nbsp;&nbsp;
         <button
-          className="FilterLabelText FilterButton" style={{backgroundColor:"#009fe2"}}
+          className="FilterLabelText FilterButton" style={{ backgroundColor: "#009fe2" }}
           onClick={sendFilter}
         >
           <FormattedMessage id='Search' defaultMessage={' Search '} />

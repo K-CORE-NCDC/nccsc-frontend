@@ -233,9 +233,15 @@
 
 
 .gene_main_box {
-  width: 320px;
+  width: 280px;
   text-align: center;
 }
+
+
+.gene_main_box:last-child{
+  margin-left: 25%;
+}
+ 
 
 .gene_main_box .selectBox {
   width: 100%
@@ -386,7 +392,7 @@
   transform: translateX(-50%);
   top: 55px;
   display: inline-block;
-  left: 50%;
+  /* left: 50%; */
   width: 50%;
 }
 
@@ -535,6 +541,33 @@
     line-height: 1.75rem;
   }
 }
+@media (max-width: 1280px) {
+ .gene_main_box:last-child{
+  margin-left: 10%;
+ }
+}
+@media (min-width:1183px) and (max-width: 1199px) {
+ .gene_main_box:last-child{
+  margin-left: 20%;
+ }
+}
+@media  (max-width: 1060px) {
+ .gene_main_box:last-child{
+  margin-left: 2%;
+ }
+ .PopoverStyles{
+  justify-content: center;
+ }
+}
+@media( min-width:769px) and (max-width: 979px)  {
+  /* .gene_main_box:last-child{
+   margin-left: 2%;
+  } */
+  .PopoverStyles{
+   justify-content: center;
+  }
+ }
+
 
 .Inline {
   display: inline;
@@ -794,7 +827,7 @@
   margin-left: 0.75rem;
   color: #374151;
   letter-spacing: 0.025em;
-  width: 83.333333%;
+  /* width: 83.333333%; */
 }
 
 .CheckBoxSROnly {
@@ -960,7 +993,7 @@
 
 
 .FilterInputGrid {
-  display: grid;
+  display: flex;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   margin-left: 2.5rem;
   margin-right: 2.5rem;
@@ -1222,6 +1255,9 @@
     font-size: 14px;
     padding: 0 10px;
   }
+  .GeneSetPopoverPanel{
+    display: block;
+  }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
@@ -1421,8 +1457,13 @@
 .PopoverStyles {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  /* justify-content: space-between; */
+  /* justify-content: flex-start; */
   gap: 20px;
+}
+
+.single_viz{
+  justify-content: space-between;
 }
 
 @media (max-width: 767px) {
@@ -1509,4 +1550,23 @@
 
 .pagination span {
   margin: 0 10px;
+}
+
+.FilterBoxData{
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  align-items: center;
+}
+
+.FilterInputGrid .inpuDiv{
+  padding-top: 10%;
+  height: 10%;
+}
+.FilterInputGrid .inpuDiv input{
+ height: 40px;
+}
+
+.FilterInputGrid .divisionBox{
+  padding-top: 5%;
 }
