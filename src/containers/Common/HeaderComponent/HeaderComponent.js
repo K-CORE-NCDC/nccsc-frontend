@@ -38,50 +38,98 @@ function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
     if (breadCrumbs) {
       const items = breadCrumbs;
 
+      //   return (
+      //     <ul>
+      //       {items.length > 0 && items.map((item, index) => (
+      //         <li key={index} className={routeName === item.to ? 'on' : ''}>
+      //           <Link to={item.to}>
+      //             <FormattedMessage id={item.id} defaultMessage={item.defaultMessage} />
+      //           </Link>
+      //         </li>
+      //       )
+
+      //         // (
+      //         //   item && item.defaultMessage !=='' && 
+      //         //   <li key={index}>
+      //         //     {item.defaultMessage}
+      //         //   </li>
+      //         // )
+
+      //       )}
+      //     </ul>
+      //   );
+      // }
+      // return null;
       return (
         <ul>
-          {items.length>0 && items.map((item, index) => (
-            <li key={index} className={routeName === item.to ? 'on' : ''}>
-              <Link to={item.to}>
-                <FormattedMessage id={item.id} defaultMessage={item.defaultMessage} />
-              </Link>
-            </li>
-          ))}
+          {items.length > 0 &&
+            items.map((item, index) => {
+              if (item && item.to !== '' && item.id !== 'Null') {
+                return (
+                  <li key={index} className={routeName === item.to ? 'on' : ''}>
+                    <Link to={item.to}>
+                      <FormattedMessage
+                        id={item.id}
+                        defaultMessage={item.defaultMessage}
+                      />
+                    </Link>
+                  </li>
+                );
+              }
+              // else {
+              //   console.log('b');
+              //   if(item.id !== 'Null'){
+              //     console.log('c');
+              //     return (
+              //       <li key={index}>
+              //       {item.defaultMessage}
+              //     </li>
+              //   )
+              // }
+              // else{
+              //   console.log('d');
+              //   return null
+              // }
+
+              // }
+
+            })}
         </ul>
       );
     }
     return null;
   };
 
-  return (
-    <div>
-      {(
-        <div id="subVisual" className="subVisual">
-          <div className="imgBox" style={{ backgroundImage: `url(${background})` }}></div>
-          <div className="txtBox">
-            <div className="auto">
-              <h2 className="main">
-                {title && title.id && title.defaultMessage && (
-                  <FormattedMessage id={title.id} defaultMessage={title.defaultMessage} />
-                )}
-              </h2>
-            </div>
-          </div>
-        </div>
-      )}
-      {(
-        <div id="breadCrumbs" className="breadCrumbs">
+
+return (
+  <div>
+    {(
+      <div id="subVisual" className="subVisual">
+        <div className="imgBox" style={{ backgroundImage: `url(${background})` }}></div>
+        <div className="txtBox">
           <div className="auto">
-            <ul>
-              <li key="key0"><img src={homeIcon} alt="" /></li>
-              {renderBreadcrumbs()}
-            </ul>
+            <h2 className="main">
+              {title && title.id && title.defaultMessage && (
+                <FormattedMessage id={title.id} defaultMessage={title.defaultMessage} />
+              )}
+            </h2>
           </div>
         </div>
-      )}
-      {renderLnbContent()}
-    </div>
-  );
+      </div>
+    )}
+    {(
+      <div id="breadCrumbs" className="breadCrumbs">
+        <div className="auto">
+          <ul>
+            <li key="key0"><img src={homeIcon} alt="" /></li>
+            {renderBreadcrumbs()}
+          </ul>
+        </div>
+      </div>
+    )}
+    {renderLnbContent()}
+  </div>
+);
 }
 
 

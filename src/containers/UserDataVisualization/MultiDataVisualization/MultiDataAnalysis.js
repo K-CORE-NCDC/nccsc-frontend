@@ -397,10 +397,12 @@ export default function DataVisualization() {
   }, []);
 
   const breadCrumbs = {
-    '/visualise-multidata/': [
-      { id: 'FindID', defaultMessage: 'Home', to: '/' },
-      { id: 'MultiDataVisualization', defaultMessage: 'Multi Data Visualisation', to: '/visualise-multidata/home/' },
-    ],
+    '/visualise-multidata/': 
+    [
+      { id: 'Home', defaultMessage: 'Home', to: '/' },
+      { id: 'MultiDataVisualization', defaultMessage: 'Multi Data Visualisation', to: `/visualise-multidata/home/${project_id}` },
+      { id: tab !== 'home' ? tab :'Null', defaultMessage: tab !== 'home' ? tab :'Null' , to: `/visualise-multidata/${tabName}/${project_id}` }
+    ]
 
   };
 

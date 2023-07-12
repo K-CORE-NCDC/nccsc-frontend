@@ -698,8 +698,8 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
 
   return (
     <div style={{ marginTop: '5%', border: '1px solid #d6d6d6', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.05)', position: 'relative' }}>
-      <div className="" style={{ padding: '5%' }}>
-        <div className=''>
+      <div style={{ padding: '5%' }}>
+        <div>
           <div className="tab mainTab">
             <div className="tab_main" >
               <ul>

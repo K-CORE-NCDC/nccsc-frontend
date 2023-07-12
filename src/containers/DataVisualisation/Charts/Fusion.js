@@ -11,6 +11,7 @@ import FusionCustomPlot from "../../Common/FusionCustomPlot";
 import { FormattedMessage } from "react-intl";
 import DataTable from "react-data-table-component";
 import { Context } from "../../../wrapper";
+import { EyeIcon } from "@heroicons/react/outline";
 
 export default function FusionPlot({
   width,
@@ -51,6 +52,16 @@ export default function FusionPlot({
     {
       name: <FormattedMessage id="SampleName" defaultMessage="Sample Name" />,
       cell: (row, index) => {
+      //   cell: (row) => (
+      //     <div className="MultiDataTableViewDelete">
+      //         <div>
+      //             {row.project_name}
+      //         </div>
+      //         <button onClick={(e) => generateFusion(e, row.id)} id={row.id}>
+      //             <EyeIcon style={{width:"15px"}} />
+      //         </button>
+      //     </div>
+      // )
         let html = [];
         let check = false;
         if ("group 1" in row) {
@@ -89,11 +100,17 @@ export default function FusionPlot({
         }
         let main_html = [];
         main_html.push(
-          <div className="flex flex-col w-full text-left">{html}</div>
+          <div className="flex flex-col w-full text-left" style={{gap:'10px'}}>
+            {html}
+            <button onClick={(e) => generateFusion(e, row.id)} id={row.id}>
+                  <EyeIcon style={{width:"15px"}} />
+              </button>
+          </div>
         );
         return main_html;
       },
       sortable: true,
+      minWidth:'12%'
     },
     {
       name: <FormattedMessage id="LeftGeneName" defaultMessage="Left Gene Name" />,
@@ -143,21 +160,23 @@ export default function FusionPlot({
       name: <FormattedMessage id="SpliceType" defaultMessage="Splice Type" />,
       selector: (row) => row.splice_type ? row.splice_type : 'None',
       sortable: true,
-    },
-    {
-      button: true,
-      cell: (row, index, column, id) => {
-        return (
-          <button
-            onClick={(e) => generateFusion(e, row.id)}
-            id={row.id}
-            className="bg-main-blue hover:bg-main-blue mb-3 w-50  text-md text-white mt-2 px-8 py-4 border border-blue-700 rounded"
-          >
-            View
-          </button>
-        );
-      },
-    },
+    }
+
+    // {
+    //   button: true,
+    //   cell: (row) => {
+    //     return (
+    //       <button
+    //         onClick={(e) => generateFusion(e, row.id)}
+    //         id={row.id}
+    //         className="bg-main-blue hover:bg-main-blue mb-3 w-50  text-md text-white mt-2 px-8 py-4 border border-blue-700 rounded"
+    //       >
+    //         <EyeIcon />
+    //       </button>
+    //     );
+        
+    //   },
+    // },
   ];
 
   const generateFusion = (e, id) => {

@@ -1,6 +1,6 @@
 import { homeConstants } from '../actions/Constants';
 
-const homeReducer = (state = { home: 'home' }, { type, payload } ) => {
+const homeReducer = (state = { home: 'home' }, { type, payload }) => {
   switch (type) {
     case homeConstants.HOME_REQUEST:
       return { ...state };
@@ -36,7 +36,7 @@ const homeReducer = (state = { home: 'home' }, { type, payload } ) => {
         ...state,
         singleFileUploadData: payload,
       };
-      
+
     case homeConstants.MULTI_USERDATA_VISUALIZATION:
       return {
         ...state,
@@ -75,12 +75,12 @@ const homeReducer = (state = { home: 'home' }, { type, payload } ) => {
         // newFileUploadData: payload
       }
     case homeConstants.CLEAR_UPLOAD_CLININCAL_COLUMNS:
-    {
-      const { uploadClinicalColumns, ...remaininClinicalColumns } = state;
-      /* eslint-disable no-param-reassign */
-      state = remaininClinicalColumns;
-      return state;
-    }
+      {
+        const { uploadClinicalColumns, ...remaininClinicalColumns } = state;
+        /* eslint-disable no-param-reassign */
+        state = remaininClinicalColumns;
+        return state;
+      }
 
     case homeConstants.NEWUSERDATA_VISUALIZATION_ERROR:
       return {
@@ -106,6 +106,11 @@ const homeReducer = (state = { home: 'home' }, { type, payload } ) => {
       return {
         ...state,
         dataNotice: payload,
+      };
+    case homeConstants.DATA_PROJECTS:
+      return {
+        ...state,
+        dataProjects: payload,
       };
     case homeConstants.DATA_QA:
       return {
@@ -178,21 +183,21 @@ const homeReducer = (state = { home: 'home' }, { type, payload } ) => {
         sendlogmanagement: payload,
       };
     case homeConstants.CLEAR_NOTICE_DETAILS:
-    {
-      const { noticedata, ...remains } = state;
-      /* eslint-disable no-param-reassign */
-      state = remains;
-      return state;
-    }
+      {
+        const { noticedata, ...remains } = state;
+        /* eslint-disable no-param-reassign */
+        state = remains;
+        return state;
+      }
     case homeConstants.CLEAR_ID_PASSWORD_RESET_PASSWORD:
-    {
-      const {
-        findId, findPassword, changePasswordStatus, ...rest
-      } = state;
-      /* eslint-disable no-param-reassign */
-      state = rest;
-      return state;
-    }
+      {
+        const {
+          findId, findPassword, changePasswordStatus, ...rest
+        } = state;
+        /* eslint-disable no-param-reassign */
+        state = rest;
+        return state;
+      }
 
     default:
       return state;

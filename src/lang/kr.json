@@ -35,6 +35,7 @@
     "Filter": "적용",
     "Selected Gene": "유전자 선택",
     "Choose Filter group": "임상정보 선택",
+    "MultiDataProjectView":"다중 데이터 프로젝트 보기",
     "Clinical_Filters": "임상정보",
     "Clinical Attribute":"임상 속성",
     "Static_volcano": "지정그룹",

@@ -196,6 +196,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
     }
 
     let chord_data = api_data['fusion_genes_data']
+    console.log('before ->',chord_data);
 
     if ('sv_data' in api_data){
       let svData = api_data['sv_data']
@@ -221,6 +222,8 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
     }
     }
 
+    console.log('after ->',chord_data);
+
     let circosPlot = circosHighlight.layout(GRCh37,conf)
     .highlight('cytobands-1', data, {
       innerRadius: newWidth/2 -100,
@@ -230,6 +233,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
         return gieStainColor[d.gieStain]
       }
     })
+
     if(mutationData.length > 24){
       console.log('mutationData',mutationData);
       circosPlot.scatter('dna-mutation', mutationData, {
@@ -271,6 +275,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
       }
     })
     }
+
     if(rna_expression_up.length > 24){
       circosPlot.scatter('rna-up', rna_expression_up, {
       innerRadius: 0.74,
@@ -307,6 +312,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
       },
     })
     }
+
     if(dna_methylation.length > 24){
       circosPlot.scatter('snp-250-4', dna_methylation, {
       innerRadius: 0.59,
@@ -355,6 +361,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
       },
     })
     }
+
     if(global_proteome_up.length > 24){
       circosPlot.scatter('snp-250-5', global_proteome_up, {
       innerRadius: 0.47,
@@ -391,6 +398,7 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
       },
     })
     }
+
     if(cnvData.length > 24){
       circosPlot.scatter('snp-250-6', cnvData, {
       innerRadius: 0.36,
@@ -431,15 +439,18 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
       },
     })
     }
-    circosPlot.highlight('cytobands', data, {
-      innerRadius: .3,
-      outerRadius: .35,
-      opacity: 0.5,
-      color: function (d) {
-        return gieStainColor[d.gieStain]
-      }
-    })
-    if(chord_data){
+
+    if(chord_data.length > 0){
+
+      circosPlot.highlight('cytobands', data, {
+        innerRadius: .3,
+        outerRadius: .35,
+        opacity: 0.5,
+        color: function (d) {
+          return gieStainColor[d.gieStain]
+        }
+      })
+      
       circosPlot.chords('l1',chord_data,{
       radius: 0.3,
       logScale: false,
@@ -578,11 +589,11 @@ export default CircosCmp
 
 export const ModalComponent = ({setOpenModal}) =>{
   return(
-    <div className='overflow-y-scroll fixed inset-0 bg-gray-600 bg-opacity-50 h-full  z-50'>
-        <div className = 'flex items-center justify-center h-screen'> 
-             <div className = 'border shadow-lg rounded-md bg-white text-left flex flex-col'>
-              <div className='flex justify-end'>
-                  <XCircleIcon className='h-10 w-10' onClick={() => setOpenModal(false)}/>
+    <div className='CircosModal'>
+        <div className = 'CircosModalHeader'> 
+             <div className = 'CircosModalBody'>
+              <div className='Flex JustifyEnd'>
+                  <XCircleIcon style={{width:'15px', height:'15px'}} onClick={() => setOpenModal(false)}/>
               </div>
               <div>
                   <img alt='placeholder' src={placeholder}  className="mt-10 object-contain h-2/5"/>

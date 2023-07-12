@@ -15,7 +15,7 @@ const HomeComponent = () => {
   const breadCrumbs = {
     '/multidatavisualization/': [
       { id: 'FindID', defaultMessage: 'Home', to: '/' },
-      { id: 'MultiDataVisualization', defaultMessage: 'Multi Data Visualization', to: '/home/visualizeMyData/' },
+      { id: 'MultiDataVisualization', defaultMessage: 'Multi Data Visualization', to: '/multidatavisualization/' },
     ]
   }
 

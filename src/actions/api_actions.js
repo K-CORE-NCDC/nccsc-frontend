@@ -1377,6 +1377,21 @@ export function getFaqData(id) {
   };
 }
 
+export function getProjectsData(id) {
+  return (dispatch) => {
+    const url = `${config.auth}user-projects-data/?id=${id}`;
+    sendRequest(url, 'GET', '')
+      .then((result) => {
+        const d = result;
+        dispatch({
+          type: homeConstants.DATA_FAQ,
+          payload: d.data,
+        });
+      })
+      .catch(() => { });
+  };
+}
+
 export function getNoticeData(id) {
   return (dispatch) => {
     const url = `${config.auth}notice-api/?id=${id}`;

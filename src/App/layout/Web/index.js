@@ -62,7 +62,7 @@ export const Home = (parentProps) => {
 export default function Web(props) {
   const routeLocation = useLocation();
   const timeout = 3000
-  const [showPopup, setShowPopup] = useState(false)
+  const [showPopup, setShowPopup] = useState(true)
   const handleOnActive = () => { }
   const handleOnIdle = () => { }
   const [showModal, setShowModal] = useState(false);
@@ -561,7 +561,7 @@ export default function Web(props) {
           </Switch>
         </Suspense>
         <div>
-          {showPopup ? <Popup toggleModal={toggleModal} /> : ''}
+          {showPopup && <Popup toggleModal={toggleModal} /> }
         </div>
       </div>
     </div>

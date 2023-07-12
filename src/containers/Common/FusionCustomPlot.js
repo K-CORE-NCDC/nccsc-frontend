@@ -80,16 +80,16 @@ export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
         let f_w = 0
         let left_w = false
         let right_w = false
-        let name = 'float-right justify-end'
+        let name = 'FusionNameRE'
         let gene_type = 'exon1 leftGene'
         let id = 'leftGene'
         if(i===1){
-          name = 'float-left justify-start'
+          name = 'FusionNameLS'
           gene_type = 'exon2 rightGene'
           right_w = true
           id = 'rightGene'
         }else{
-          name = 'float-right justify-end'
+          name = 'FusionNameRE'
           gene_type = 'exon1 leftGene'
           left_w = true
           id = 'leftGene'
@@ -157,18 +157,17 @@ export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
         
         
         h.push(
-          <div key={key} className='FusionChromosome' style={{margin:'20px'}} >  
+          <div key={key} className='ChromosomeFusionPlotDivision'>  
             <h3 style={{color:fusionJson['exons'][key][0].color}}>{key} -- {fusionPlotJson['pos'][key]}</h3>
             
-            <div id={'row_'+i} className={'grid_row flex justify-center items-end  mt-10 relative '+id+' '+direction} style={{color:fusionJson['exons'][key][0].color,height:'100px',borderBottom:'1px solid '+fusionJson['exons'][key][0].color,borderColor:fusionJson['exons'][key][0].color}}>
+            <div id={'row_'+i} className={'grid_row Flex JustifyCenter AlignItemsFlexEnd  MarginTop10 Relative '+id+' '+direction} style={{color:fusionJson['exons'][key][0].color,height:'100px',borderBottom:'1px solid '+fusionJson['exons'][key][0].color,borderColor:fusionJson['exons'][key][0].color}}>
               {htmlExons}   
-              <div id={id+"1"} className={gene_type} style={{borderColor:fusionJson['exons'][key][0].color,width:f_w,position:'absolute',}}>
-              </div>         
+              <div id={id+"1"} className={gene_type} style={{borderColor:fusionJson['exons'][key][0].color,width:f_w,position:'absolute',}}></div>         
             </div>
-            <div className={'grid_row flex  items-end  mt-10 relative '+id+' '+name+" "+direction} style={{height:'60px',borderBottom:'1px solid '+fusionJson['exons'][key][0].color,color:fusionJson['exons'][key][0].color}}>
+            <div className={'grid_row Flex  AlignItemsFlexEnd  MarginTop10 Relative '+id+' '+name+" "+direction} style={{height:'60px',borderBottom:'1px solid '+fusionJson['exons'][key][0].color,color:fusionJson['exons'][key][0].color}}>
               {htmlExons1}            
             </div>
-            <div className={'grid_row flex  items-end  mt-10 relative '+id+' '+name+" "+direction} style={{height:'60px',borderBottom:'1px solid '+fusionJson['exons'][key][0].color,color:fusionJson['exons'][key][0].color}}>
+            <div className={'grid_row flex  AlignItemsFlexEnd  MarginTop10 Relative '+id+' '+name+" "+direction} style={{height:'60px',borderBottom:'1px solid '+fusionJson['exons'][key][0].color,color:fusionJson['exons'][key][0].color}}>
               {htmlExons2}            
             </div>
             
@@ -179,7 +178,7 @@ export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
       }
       setGene(tg.join('-'))
       h.push(
-        <div key='horizontalLine' className='absolute' style={{height:"210px",borderRight:'1px solid red',width:'1px',left:'50%',top:'51.5%'}}>
+        <div key='horizontalLine' style={{height:"210px",borderRight:'1px solid red',width:'1px',left:'50%',top:'49.5%', position:'absolute'}}>
         </div>
       )
       setHtml(h)
@@ -271,7 +270,7 @@ export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
                 </select>
               </div>
             </div>
-            <div className="grid grid-cols-2 p-5  relative mb-20" ref={listRef}>
+            <div className="ChromosomeFusionPlot" ref={listRef}>
               {html}
             </div>
           </> 
