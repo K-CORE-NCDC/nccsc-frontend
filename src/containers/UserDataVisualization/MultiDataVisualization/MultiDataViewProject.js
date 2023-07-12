@@ -1,119 +1,364 @@
-import React, { useState } from 'react';
-// import './TableComponent.css'; // Import your custom CSS file
+import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { TrashIcon } from "@heroicons/react/outline";
+import React, { useState, useEffect, useContext } from "react";
+import '../../../interceptor/interceptor'
+import config from '../../../config'
+import { Redirect, useParams } from "react-router-dom";
+import DataTable from "react-data-table-component";
 import HeaderComponent from '../../Common/HeaderComponent/HeaderComponent';
-import { FormattedMessage } from "react-intl";
-import PagingArrowFirst from '../../../styles/images/paging-arrow-first.svg'
-// import PagingArrowFirst from '../../../styles/images/paging-arrow-first.svg'
-const dummyData = [
-    {
-        id: 1,
-        name: "John Doe",
-        email: "johndoe@example.com",
-        phone: "123-456-7890",
-        address: "123 Main Street",
-    },
-    {
-        id: 2,
-        name: "Jane Smith",
-        email: "janesmith@example.com",
-        phone: "987-654-3210",
-        address: "456 Elm Street",
-    },
-    {
-        id: 3,
-        name: "Jane Smith",
-        email: "janesmith@example.com",
-        phone: "987-654-3210",
-        address: "456 Elm Street",
-    },
-    {
-        id: 4,
-        name: "Jane Smith",
-        email: "janesmith@example.com",
-        phone: "987-654-3210",
-        address: "456 Elm Street",
-    },
-    {
-        id: 5,
-        name: "Jane Smith",
-        email: "janesmith@example.com",
-        phone: "987-654-3210",
-        address: "456 Elm Street",
-    },
-    {
-        id: 6,
-        name: "Jane Smith",
-        email: "janesmith@example.com",
-        phone: "987-654-3210",
-        address: "456 Elm Street",
-    },
-    {
-        id: 7,
-        name: "Jane Smith",
-        email: "janesmith@example.com",
-        phone: "987-654-3210",
-        address: "456 Elm Street",
-    },
-    {
-        id: 8,
-        name: "Jane Smith",
-        email: "janesmith@example.com",
-        phone: "987-654-3210",
-        address: "456 Elm Street",
-    },
-    {
-        id: 9,
-        name: "Jane Smith",
-        email: "janesmith@example.com",
-        phone: "987-654-3210",
-        address: "456 Elm Street",
-    },
-    {
-        id: 10,
-        name: "Jane Smith",
-        email: "janesmith@example.com",
-        phone: "987-654-3210",
-        address: "456 Elm Street",
-    }, {
-        id: 11,
-        name: "Jane Smith",
-        email: "janesmith@example.com",
-        phone: "987-654-3210",
-        address: "456 Elm Street",
-    }, {
-        id: 12,
-        name: "Jane Smith",
-        email: "janesmith@example.com",
-        phone: "987-654-3210",
-        address: "456 Elm Street",
-    }
-];
+import { FormattedMessage } from 'react-intl';
+import { Context } from "../../../wrapper";
+import { useHistory } from "react-router-dom";
+import Swal from 'sweetalert2'
 
-const TableComponent = () => {
+
+
+
+function ProjectsList() {
+    let history = useHistory();
+    const context = useContext(Context);
+    const [koreanlanguage, setKoreanlanguage] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
-    const totalPages = Math.ceil(dummyData.length / itemsPerPage);
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = dummyData.slice(indexOfFirstItem, indexOfLastItem);
+    const [tableData, setTableData] = useState([])
+    const [totalRows, setTotalRows] = useState(0);
+    const [perPage, setPerPage] = useState(10);
+    const [loading, setLoading] = useState(false);
+    const [selectInput, setSelectInput] = useState("title");
+    const [searchInput, setSearchInput] = useState("");
+    const [redirState, setState] = useState(false);
+    const [projectId, setProjectId] = useState('');
+    const [SNo, setSNo] = useState("SNo")
+    const [projectName, setProjectName] = useState('')
+    const [clinicalInformation, setClinicalInformation] = useState("Clinical Information")
+    const [dnaMutation, setDnaMutation] = useState("Dna Mutation")
+    const [methylation, setMethylation] = useState("Methylation")
+    const [rna, setRna] = useState("RNA")
+    const [cnv, setCnv] = useState("CNV")
+    const [proteome, setProteome] = useState("Proteome")
+    const [phospho, setPhospho] = useState("Phospho")
+    const [fusion, setFusion] = useState("Fusiom")
+    useEffect(() => {
+        if (context["locale"] === "kr-KO") {
+            setKoreanlanguage(true);
+        } else {
+            setKoreanlanguage(false);
+        }
+    });
 
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
+    useEffect(() => {
+        if (koreanlanguage) {
+            setSNo("일련 번호")
+            setProjectName('프로젝트 이름')
+            setClinicalInformation("임상 정보")
+            setDnaMutation("DNA 돌연변이")
+            setMethylation("메틸화")
+            setRna("RNA")
+            setCnv("CNV")
+            setProteome("프로테옴")
+            setPhospho("포스포")
+            setFusion("퓨전")
+
+        }
+        else {
+            setSNo("SNo")
+            setProjectName('ProjectName')
+            setClinicalInformation("ClinicalInformation")
+            setDnaMutation("DnaMutation")
+            setMethylation("Methylation")
+            setRna("Rna")
+            setCnv("Cnv")
+            setProteome("Proteome")
+            setPhospho("Phospho")
+            setFusion("Fusion")
+
+        }
+    })
+
+    const fetchUsers = async (page, method) => {
+        setLoading(true);
+        let response
+        if (method === "GET") {
+            response = await axios.get(config.auth + `user-projects-data/?page=${page}&per_page=${perPage}&delay=1`);
+        } else {
+            response = await axios.post(config.auth + `user-projects-data/?page=${page}&per_page=${perPage}&delay=1&input`, {
+                type: selectInput,
+                searchTerm: searchInput
+            });
+        }
+        setTableData(response.data.data);
+        setTotalRows(response.data.total);
+        setLoading(false);
     };
 
-    const clearOldPageRows = () => {
-        // setCurrentPage(1);
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+        fetchUsers(page, "GET");
     };
 
+    const handlePerRowsChange = async (newPerPage, page) => {
+        setLoading(true);
+        const response = await axios.get(config.auth + `user-projects-data/?page=${page}&per_page=${perPage}&delay=1`);
+        setTableData(response.data.data);
+        setPerPage(newPerPage);
+        setLoading(false);
+    };
+
+    const deleteRow = async (projectId) => {
+        const response = await axios.get(config.auth + `delete-user-project-data/${projectId}`);
+        fetchUsers(1, "GET");
+    }
+
+    useEffect(() => {
+        fetchUsers(1, "GET"); // fetch page 1 of users
+    }, []);
+
+    let handleButtonClick = async (type, projectId) => {
+        if (type === 'delete') {
+
+            Swal.fire({
+                text: "Are you sure you want to Delete this Project?",
+                icon: 'error',
+                confirmButtonColor: '#003177',
+                confirmButtonText: 'Ok',
+                showCancelButton: true,
+                cancelButtonText: 'Cancel',
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.value) {
+                    deleteRow(projectId)
+                }
+            })
+
+        }
+    }
+
+    const columns = [
+        {
+            name: SNo,
+            selector: (_, index) => index + 1 + (currentPage - 1) * perPage,
+            sortable: true
+        },
+        {
+            name: projectName,
+            // selector: row => row.project_name,
+            cell: (row) => (
+                <div className="MultiDataTableViewDelete">
+                    <div>
+                        {row.project_name}
+                    </div>
+                    <button onClick={() => handleButtonClick('delete', row.id)}>
+                        <TrashIcon style={{width:"15px"}} />
+                    </button>
+                </div>
+            ),
+            sortable: true,
+            minWidth: '15%'
+        },
+        {
+            name: clinicalInformation,
+            selector: row => row.clinical_information ? 'O' : '',
+            sortable: true
+        },
+        {
+            name: dnaMutation,
+            selector: row => row.dna_mutation ? 'O' : '',
+            sortable: true
+        },
+        {
+            name: methylation,
+            selector: row => row.methylation ? 'O' : '',
+            sortable: true
+        },
+        {
+            name: rna,
+            selector: row => row.rna ? 'O' : '',
+            sortable: true
+        },
+        {
+            name: cnv,
+            selector: row => row.cnv ? 'O' : '',
+            sortable: true
+        },
+        {
+            name: proteome,
+            selector: row => row.proteome ? 'O' : '',
+            sortable: true
+        },
+        {
+            name: phospho,
+            selector: row => row.phospho ? 'O' : '',
+            sortable: true
+        },
+        {
+            name: fusion,
+            selector: row => row.fusion ? 'O' : '',
+            sortable: true
+        }
+
+    ]
+
+    const customStyles = {
+        table: {
+            style: {
+                display: "table",
+                width: "100%",
+                tableLayout: "fixed",
+                borderTop: "2px solid #2e2e2e",
+                borderCollapse: "collapse",
+                fontSize: "16px",
+                color: "#8f8f8f",
+                fontWeight: "500",
+                textAlign: "center !important"
+            },
+        },
+        thead: {
+            style: {
+                display: "table-header-group",
+                fontWeight: "500",
+            },
+        },
+        td: {
+            style: {
+                display: "table-cell",
+                verticalAlign: "middle",
+                padding: "20px 16px",
+                position: "relative",
+                width: "90px",
+                color: "#2e2e2e",
+                borderBottom: "1px solid #2e2e2e"
+            },
+        },
+        tr: {
+            style: {
+                display: "table-row",
+                borderBottom: "1px solid #2e2e2e"
+            },
+        },
+        tbody: {
+            style: {
+                display: "table-row-group",
+            },
+        },
+    };
+    function searchTerm() {
+        fetchUsers(1, "POST");
+    }
+
+    let redirecting = redirState ? (<Redirect push to={`/visualise-multidata/home/${projectId}`} />) : '';
+
+    return (
+        <div className="container mx-auto p-4">
+            {/* <div className="grid grid-col-4"> */}
+            {/* <div className="col-span-4">
+              <h4 className="h-tit4_tit clear">
+                  <font>
+                    <font>FAQ</font>
+                  </font>
+              </h4>
+          </div>
+          <div className="col-span-4 h-8">
+            <div className="grid grid-col-4">
+              <div className="col-span-2">
+              </div>
+              <div className="col-span-2">
+                <div className="flex float-right">
+                  <div className="flex-none w-40 h-14">
+                    <select value={selectInput} onChange={(e)=>setSelectInput(e.target.value)} name="cars" id="cars" className="border border-slate-400 rounded pt-1 pb-1">
+                      <option className="text-xl" value="title">{projectName}</option>
+                      <option className="text-xl" value="content">{content}</option>
+                      <option className="text-xl" value="writer">{writer}</option>
+                    </select>
+                  </div>
+                  <div className="flex-initial w-80 mr-4 mb-4">
+                    <input type="text" value={searchInput} onChange={(e)=>setSearchInput(e.target.value)}className="border border-slate-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" />
+                  </div>
+                  <div className="flex-initial w-32">
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={searchTerm}>
+                    <FormattedMessage id="Search" defaultMessage="Search"/>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> */}
+            <div className="">
+                {
+                    tableData &&
+                    <DataTable
+                        columns={columns}
+                        data={tableData}
+                        customStyles={customStyles}
+                        progressPending={loading}
+                        pagination
+                        paginationServer
+                        paginationTotalRows={totalRows}
+                        onChangeRowsPerPage={handlePerRowsChange}
+                        onChangePage={handlePageChange}
+                        onRowClicked={rowData => {
+                            setState(true);
+                            setProjectId(rowData.id);
+                        }}
+                        pointerOnHover={true}
+                        highlightOnHover={true}
+                    />
+                }
+                {redirecting}
+            </div>
+        </div>
+        // </div>
+    )
+}
+
+// function ProjectsDetail({ slug_id }) {
+//     const dispatch = useDispatch()
+//     const notice_data = useSelector((state) => state.homeReducer.dataProjects)
+
+//     useEffect(() => {
+//         dispatch(getProjectsData(slug_id))
+//     }, [])
+
+//     return (
+//         <div className="container mx-auto p-4">
+//             {notice_data && <div className="grid grid-col-2">
+//                 <div className="col-span-4">
+//                     <h4 className="h-tit4_tit clear">
+//                         <font>
+//                             <font>FAQ</font>
+//                         </font>
+//                     </h4>
+//                 </div>
+//                 <div className="shadow-sm">
+//                     <table className="border-slate-300 table-auto">
+//                         <tbody>
+//                             <tr className="h-8">
+//                                 <td className="p-4">Title</td>
+//                                 <td className="p-4">{notice_data['project_name']}</td>
+//                             </tr>
+//                             <tr className="h-8">
+//                                 <td className="p-4">Content</td>
+//                                 <td className="p-4"><div dangerouslySetInnerHTML={{ __html: notice_data['content'] }} /></td>
+//                             </tr>
+//                         </tbody>
+//                     </table>
+//                 </div>
+//             </div>
+//             }
+//         </div>
+//     )
+// }
+
+export default function MultiDataViewProject() {
+    let { slug } = useParams();
     const breadCrumbs = {
         '/multidatavisualization/': [
             { id: 'FindID', defaultMessage: 'Home', to: '/' },
-            { id: 'MultiDataVisualization', defaultMessage: 'Multi Data Visualization', to: '/home/visualizeMyData/' },
+            { id: 'MultiDataVisualization', defaultMessage: 'Multi Data Visualization', to: '/multidatavisualization/' },
+            { id: 'MultiDataProjectView', defaultMessage: 'Multi Data Project View', to: '/MultiDataProjectView/' }
         ]
     }
 
     return (
-
         <>
             <HeaderComponent
                 title={"sd"}
@@ -133,87 +378,13 @@ const TableComponent = () => {
                         </font>
                     </h3>
                 </div>
-                {/* <div className="table-container">
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Address</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {currentItems.map((item) => (
-                                <tr key={item.id}>
-                                    <td>{item.id}</td>
-                                    <td>{item.name}</td>
-                                    <td>{item.email}</td>
-                                    <td>{item.phone}</td>
-                                    <td>{item.address}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    <div className="pagination">
-                        <button
-                            disabled={currentPage === 1}
-                            onClick={() => {
-                                handlePageChange(currentPage - 1);
-                                clearOldPageRows();
-                            }}
-                        >
-                            Previous
-                        </button>
-                        <span>{currentPage}</span>
-                        <button
-                            disabled={currentPage === totalPages}
-                            onClick={() => {
-                                handlePageChange(currentPage + 1);
-                                clearOldPageRows();
-                            }}
-                        >
-                            Next
-                        </button>
-                    </div>
-                </div> */}
-                <div className="boardList">
-                    <table className="table">
-                        <thead className="boardHeader">
-                            <tr className='boardTr'>
-                                <th className='boardCell'>ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Address</th>
-                            </tr>
-                        </thead>
-                        <tbody className='boardBody'>
-                            {currentItems.map((item) => (
-                                <tr className='boardTr' key={item.id}>
-                                    <td className='boardCell'>{item.id}</td>
-                                    <td className='boardCell'>{item.name}</td>
-                                    <td className='boardCell'>{item.email}</td>
-                                    <td className='boardCell'>{item.phone}</td>
-                                    <td className='boardCell'>{item.address}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    <div className="paging">
-                        <button disabled={currentPage === 1}
-                            onClick={() => {
-                                handlePageChange(currentPage - 1);
-                                clearOldPageRows();
-                            }}>
-
-                        </button>
+                <div className="ptn">
+                    <div className="auto">
+                        {/* {slug ? <ProjectsDetail slug_id={slug} /> : <ProjectsList />} */}
+                        {<ProjectsList />}
                     </div>
                 </div>
             </article>
         </>
-    );
-};
-
-export default TableComponent;
+    )
+}

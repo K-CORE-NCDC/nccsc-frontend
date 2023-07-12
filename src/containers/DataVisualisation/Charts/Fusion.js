@@ -11,6 +11,7 @@ import FusionCustomPlot from "../../Common/FusionCustomPlot";
 import { FormattedMessage } from "react-intl";
 import DataTable from "react-data-table-component";
 import { Context } from "../../../wrapper";
+import { EyeIcon } from "@heroicons/react/outline";
 import html2canvas from 'html2canvas';
 import $ from 'jquery'
 
@@ -42,96 +43,6 @@ export default function FusionPlot({
       setKoreanlanguage(false);
     }
   }, [context]);
-
-  //   let takeScreenshot = async () => {
-  //     const element = document.getElementById('venn')
-  //     // let imgData
-  //     const element2 = document.getElementById('vennn')
-  //     var overlayCanvases = await function(cnv1, cnv2) {
-  //       var newCanvas = document.createElement('canvas'),
-  //           ctx = newCanvas.getContext('2d'),
-  //           width = cnv1.width,
-  //           height = cnv1.height;
-
-  //       newCanvas.width = width;
-  //       newCanvas.height = height;
-
-  //       [cnv1, cnv2].forEach(function(n) {
-  //           ctx.beginPath();
-  //           ctx.drawImage(n, 0, 0, width, height);
-  //       });
-
-  //       return newCanvas.toDataURL();
-  //   };
-  //   var verticalCanvases = await function(cnv1, cnv2) {
-  //     var newCanvas = document.createElement('canvas'),
-  //         ctx = newCanvas.getContext('2d'),
-  //         width = cnv1.width,
-  //         height = cnv1.height + cnv2.height ;
-
-  //     newCanvas.width = width;
-  //     newCanvas.height = height;
-
-  //     [{
-  //         cnv: cnv1,
-  //         y: 0
-  //     },
-  //     {
-  //         cnv: cnv2,
-  //         y: cnv1.height+20
-  //     }
-  //     ].forEach(function(n) {
-  //         ctx.beginPath();
-  //         ctx.drawImage(n.cnv, 0, n.y, width, n.cnv.height);
-  //     });
-
-  //     return newCanvas.toDataURL();
-  // };
-  //   overlayCanvases(element,element2)
-  //   var final = verticalCanvases(element,element2)
-  //   console.log(final)
-  //     // await html2canvas(element).then(canvas => {
-  //     //   // imgData = canvas.toDataURL('image/jpeg', 1.0);
-  //     //   $(canvas).css({"position" : "absolute", "z-index" : "999"});
-  //     //   document.getElementById("preview").appendChild(canvas);
-  //     //   // console.log(imgData)
-  //     //   if(element2){
-  //     //     let imgData1
-  //     //     html2canvas(element2).then(canvas2 => {
-  //     //       $(canvas2).css({"position" : "absolute", "z-index" : "999"});
-  //     //       // imgData1 = canvas2.toDataURL('image/jpeg', 1.0);
-  //     //       document.getElementById("preview").appendChild(canvas2);
-  //     //     })
-  //     //   }
-  //     // });
-  //     // setTimeout( async function () {
-  //     //   const element3 = document.getElementById('preview')
-  //     //   await html2canvas(element3).then(canvas => {
-  //     //     imgData = canvas.toDataURL('image/jpeg', 1.0);
-  //     //     console.log(imgData)
-  //     //   })
-  //       // await html2canvas(element).then {
-  //       //   logging: true,
-  //       //   onrendered: function(canvas2) {
-
-  //       //       var img = canvas2.toDataURL("image/png");
-  //       //       console.log(img)
-  //       //           // window.open(img);
-  //       //           // var link = document.createElement("a");
-  //       //           // link.download = "image-download.png";
-  //       //           // link.href = img;
-  //       //           // link.click();
-  //       //       }
-  //       //   });
-  //     // },5000)
-  //     // let link = document.createElement('a');
-  //     // link.href = imgData;
-  //     // link.download = 'downloaded-image.jpg';
-
-  //     // document.body.appendChild(link);
-  //     // link.click();
-  //     // document.body.removeChild(link);
-  //   }
 
 
   let takeScreenshot = async () => {
@@ -229,11 +140,17 @@ export default function FusionPlot({
         }
         let main_html = [];
         main_html.push(
-          <div className="flex flex-col w-full text-left">{html}</div>
+          <div className="flex flex-col w-full text-left" style={{gap:'10px'}}>
+            {html}
+            <button onClick={(e) => generateFusion(e, row.id)} id={row.id}>
+                  <EyeIcon style={{width:"15px"}} />
+              </button>
+          </div>
         );
         return main_html;
       },
       sortable: true,
+      minWidth:'12%'
     },
     {
       name: <FormattedMessage id="LeftGeneName" defaultMessage="Left Gene Name" />,
@@ -283,21 +200,7 @@ export default function FusionPlot({
       name: <FormattedMessage id="SpliceType" defaultMessage="Splice Type" />,
       selector: (row) => row.splice_type ? row.splice_type : 'None',
       sortable: true,
-    },
-    {
-      button: true,
-      cell: (row, index, column, id) => {
-        return (
-          <button
-            onClick={(e) => generateFusion(e, row.id)}
-            id={row.id}
-            className="bg-main-blue hover:bg-main-blue mb-3 w-50  text-md text-white mt-2 px-8 py-4 border border-blue-700 rounded"
-          >
-            View
-          </button>
-        );
-      },
-    },
+    }
   ];
 
   const generateFusion = (e, id) => {

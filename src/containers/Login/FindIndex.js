@@ -15,9 +15,7 @@ function FindIndex() {
 
     const breadCrumbs = {
         '/findid/': [
-            { id: 'FindID', defaultMessage: 'Find ID', to: '/findid/' },
-            { id: 'SubPage1', defaultMessage: 'Sub Page 1', to: '/findid/' },
-            { id: 'SubPage2', defaultMessage: 'Sub Page 2', to: '/findid/' },
+            { id: 'FindID', defaultMessage: 'Find ID', to: '/findid/' }
         ],
         '/findpassword/': [
             { id: 'FindPassword', defaultMessage: 'Find Password', to: '/findpassword/' },

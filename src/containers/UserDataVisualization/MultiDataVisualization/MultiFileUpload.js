@@ -82,7 +82,8 @@ const Table = ({ updateComponentNumber }) => {
   const breadCrumbs = {
     '/newmultidataproject/': [
       { id: 'FindID', defaultMessage: 'Home', to: '/' },
-      { id: 'MultiDataUpload', defaultMessage: 'Multi Data Upload', to: '/home/visualizeMyData/' },
+      { id: 'MultiDataVisualization', defaultMessage: 'Multi Data Visualization', to: '/multidatavisualization/' },
+      { id: 'MultiDataUpload', defaultMessage: 'Multi Data Upload', to: '/newmultidataproject/' },
     ]
   }
 

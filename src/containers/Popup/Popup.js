@@ -1,115 +1,117 @@
 import React, { useState, useEffect } from 'react'
-import { NoticeDetail} from '../../actions/api_actions'
+import { NoticeDetail } from '../../actions/api_actions'
 import config from '../../config';
+import Draggable from 'react-draggable';
 
+function Popup({ toggleModal }) {
 
-function Popup({toggleModal}) {
-  
-  const [showModal, setShowModal] = useState(false);
-  const[content, setContent] = useState('')
+  const [content, setContent] = useState('')
   const [noticedetails, setNoticeDetails] = useState({})
   const [noticeStatus, setNoticeStatus] = useState(200)
+  const [isOpen, setIsOpen] = useState(false);
 
   /* getting the notice detail as response */
-  
+
   useEffect(() => {
-    // let data =  NoticeDetail('GET')
-    // data.then((result) => {
-    //   if(result.status === 200)
-    //   {
-    //     setNoticeDetails(result.data)
-    //     setNoticeStatus(200)
-    //   }
-    //   else{
-    //     setNoticeDetails({})
-    //     setNoticeStatus(204)
-    //   }
-    // })
-  },[])
-
-
-  useEffect(()=>{
+    console.log('first call');
     let currentUrl = window.location
-    
-    if((currentUrl['pathname'] === '/k-core/' || currentUrl['pathname']==='/k-core/home/' || currentUrl['pathname']==='/' || currentUrl['pathname']==='/k-core/') ){
-      setShowModal(true)
-      }
+    if ((currentUrl['pathname'] === '/k-core/' || currentUrl['pathname'] === '/k-core/home/' || currentUrl['pathname'] === '/' || currentUrl['pathname'] === '/k-core/')) {
+      let data = NoticeDetail('GET')
+      data.then((result) => {
+        if (result.status === 200) {
+          setNoticeDetails(result.data)
+          setNoticeStatus(200)
+        }
+        else {
+          setNoticeDetails({})
+          setNoticeStatus(204)
+        }
+      })
+    }
+  }, [])
+
+
+
+  useEffect(() => {
+    let currentUrl = window.location
+    if ((currentUrl['pathname'] === '/k-core/' || currentUrl['pathname'] === '/k-core/home/' || currentUrl['pathname'] === '/' || currentUrl['pathname'] === '/k-core/')) {
+      setIsOpen(true)
+      toggleModal(true)
+    }
+    else {
+      setIsOpen(false)
+      toggleModal(false)
+    }
   })
 
-  let changeDay = ()=>{
+  let changeDay = () => {
     let date = new Date().toISOString().split('T')[0]
-    localStorage.setItem('ncc_notice_popup',JSON.stringify({'date':date, 'showpopup':false}))
-    setShowModal(false)
+    localStorage.setItem('ncc_notice_popup', JSON.stringify({ 'date': date, 'showpopup': false }))
+    setIsOpen(false);
     toggleModal(false)
   }
-  let closeModal = ()=>{
-    setShowModal(false)
+
+  let closeModal = () => {
+    setIsOpen(false);
     toggleModal(false)
-  }  
-  useEffect(()=>{
-    if(noticedetails &&  noticedetails.data && ( Object.keys(noticedetails['data']).length > 0)){
+  }
+  useEffect(() => {
+    if (noticedetails && noticedetails.data && (Object.keys(noticedetails['data']).length > 0)) {
       let content = noticedetails['data']['content']
-      if(content){
-        content = content.replaceAll('="/media','="'+config['media']+'')
+      if (content) {
+        content = content.replaceAll('="/media', '="' + config['media'] + '')
         setContent(content)
+        setIsOpen(true)
       }
     }
-  },[noticedetails])
+  }, [noticedetails])
+
+
+
+  const handleDrag = () => {
+    if (!isOpen) {
+      return false;
+    }
+  };
 
   return (
+
     <>
-      {showModal && ( noticeStatus === 200 && noticedetails &&  noticedetails.data && ( Object.keys(noticedetails['data']).length > 0) ) ? (
-        <>
-          <div
-            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-          >
-            <div className="relative w-auto my-6 mx-auto max-w-3xl w-6/12">
-              {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-fit bg-white outline-none focus:outline-none p-10">
-                {/*header*/}
-                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                  <h3 className="text-3xl font-semibold">
-                    K-Core Portal Notice
-                  </h3>
-                  <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => closeModal()}
+      {isOpen && isOpen === true && <Draggable disabled={!isOpen} onDrag={handleDrag}>
+        <div
+          style={{
+            width: '600px',
+            height: '400px',
+            position: 'absolute',
+            top: isOpen ? '50px' : '-1000px',
+            left: isOpen ? '50px' : '-1000px',
+            transition: 'top 0.3s ease-in-out, left 0.3s ease-in-out',
+            zIndex: '15'
+          }}
+        >
+          <div className="mainPopup">
+            <div className="popupHeader">
+              <h3 className='TextAlignCenter'>Notice Popup</h3>
+              <span className="material-icons mainPopupClose" id="mainPopupClose" onClick={closeModal}>
+                close
+              </span>
+            </div>
 
-                  >
-                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      ×
-                    </span>
-                  </button>
-                </div>
-                
-
-
-                {noticeStatus === 200 && noticedetails &&  noticedetails.data && ( Object.keys(noticedetails['data']).length > 0) &&<div  dangerouslySetInnerHTML={{ __html: content }}></div>}
-
-
-                {/*footer*/}
-                <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                  <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => closeModal()}
-                  >
-                    Close
-                  </button>
-                  <button
-                    className="bg-emerald-500 text-dark active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => changeDay() }
-                  >
-                    Remind after 24 hrs
-                  </button>
-                </div>
-              </div>
+            {noticeStatus === 200 && noticedetails && noticedetails.data && (Object.keys(noticedetails['data']).length > 0) && <div className='popupBody' dangerouslySetInnerHTML={{ __html: content }}></div>}
+            <div className="popupFooter">
+              <button
+                className="mainPopupClose"
+                type="button"
+                onClick={changeDay}
+              >
+                Remind after 24 hrs
+              </button>
+              <button className="mainPopupClose" onClick={closeModal}>close </button>
             </div>
           </div>
-          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-        </>
-      ) : null}
+        </div>
+      </Draggable>
+      }
     </>
   );
 }

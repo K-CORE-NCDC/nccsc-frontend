@@ -303,11 +303,12 @@ export default function DataVisualization() {
   }, [state]);
 
   const breadCrumbs = {
-    '/visualise-singledata/': [
-      { id: 'FindID', defaultMessage: 'Home', to: '/' },
-      { id: 'SubPage1', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
-      { id: 'SubPage2', defaultMessage: 'Single Data Visualisation', to: '' },
-    ],
+    '/visualise-singledata/':
+    [
+      { id: 'Home', defaultMessage: 'Home', to: '/' },
+      { id: 'SingleDataVisualisation', defaultMessage: 'Single Data Visualisation', to: `/visualise-singledata/home/${project_id}` },
+      { id: tab !== 'home' ? tab :'Null', defaultMessage: tab !== 'home' ? tab :'Null' , to: `/visualise-multidata/${tabName}/${project_id}` }
+    ]
 
   };
   return (
