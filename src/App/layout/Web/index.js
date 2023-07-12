@@ -8,30 +8,30 @@ import { Route, Switch, useLocation } from "react-router-dom";
 import uuid from 'react-uuid';
 import logoNew from "../../../assets/images/Left_up.png";
 import menu_black from "../../../assets/images/right_below_add.png";
+import icon_home from "../../../styles/images/icon-home02.svg";
+import icon_lang from "../../../styles/images/icon-language.svg";
 import login_icon from "../../../styles/images/icon-login.svg";
 import icon_user04 from "../../../styles/images/icon-user04.svg";
-import icon_lang from "../../../styles/images/icon-language.svg";
-import icon_home from "../../../styles/images/icon-home02.svg";
 // /images/ncdc/icon-home02.svg
 // import logoNew from '../../../assets/images/KoreanImageNcc.png'
 import AOS from 'aos';
 import "aos/dist/aos.css";
 import { useIdleTimer } from 'react-idle-timer';
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, matchPath } from "react-router-dom";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
+import Swal from 'sweetalert2';
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.css";
-import { DashboardCount, SetCookie, sendlogManagement } from "../../../actions/api_actions";
+import { SetCookie, sendlogManagement } from "../../../actions/api_actions";
 import NotFound from "../../../containers/404NotFound";
 import Popup from "../../../containers/Popup/Popup";
-import { getCookie, getCookieExpiry } from "../../../containers/getCookie";
+import { getCookie } from "../../../containers/getCookie";
 import childMenu from "../../../menu-item";
 import route from "../../../route";
 import { Context } from "../../../wrapper";
 import Loader from "../Loader";
-import Swal from 'sweetalert2'
 
 AOS.init({
   offset: 200,
@@ -82,23 +82,31 @@ export default function Web(props) {
   const [mouseEnterFlag, setMouseEnterFlag] = useState(false)
   const [menuTabOpen, setMenuTabOpen] = useState(false)
   const [swiperOn, setSwiperOn] = useState(true)
+
+ 
+  
+  let tabs = ['singledata-upload' , 'visualise-singledata' , 'visualise-multidata' , 'newmultidataproject' , 'multidataprojectview']
+
   useEffect(() => {
     let cookiedata = SetCookie()
     cookiedata && cookiedata.then((result) => {
       if (result.status === 200) {
-        // let data = DashboardCount()
-        // data.then((result) => {
-        //   if (result.status === 200)
-        //     setCountJson(result.data)
-        //   else {
-        //     setCountJson({})
-        //     setCountStatus(204)
-        //   }
-        // })
-      }
-    })
-  }, [])
 
+      }
+
+      // for (let index = 0; index < tabs.length; index++) {
+      //   const element = tabs[index];
+      //   if(element in window.location.pathname && getCookie('is_login') && getCookie('is_login') === 'True'){
+      //         setIsLogin(true)
+      //   }
+        
+      // }
+    })
+
+    
+
+  }, [])
+ 
 
   useEffect(() => {
     const cookieExpiry = getCookie('expiry');
@@ -171,7 +179,6 @@ export default function Web(props) {
     onIdle: handleOnIdle
   })
 
-  let { project_id } = useParams()
   let id = useParams();
   let pid = routeLocation.pathname
 
@@ -422,7 +429,7 @@ export default function Web(props) {
     //     }
     //   }
     //   setBreadCrumb(html);
-  }, [props, project_id, routeLocation.pathname]);
+  }, [props, routeLocation.pathname]);
 
   let classes = "";
   if (window.innerWidth > 1025 && window.innerHeight > 870) {
@@ -457,7 +464,7 @@ export default function Web(props) {
                   </a>
                 </h1>
                 <div className="headerUtils">
-                  <Link to="/findid/"><FormattedMessage id="GenerateRegistrationNumber" defaultMessage='Generate registration number' /></Link>
+                  <Link to="/signup/"><FormattedMessage id="GenerateRegistrationNumber" defaultMessage='Generate registration number' /></Link>
                   <Link to='/login/'><FormattedMessage id="Login" defaultMessage='Login' /></Link>
                   <Link to="/findpassword/"><FormattedMessage id="FindPassword" defaultMessage='Find Password' /></Link>
                   <div className="language">

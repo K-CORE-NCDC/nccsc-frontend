@@ -12,11 +12,15 @@ import { FormattedMessage } from "react-intl";
 import DataTable from "react-data-table-component";
 import { Context } from "../../../wrapper";
 import { EyeIcon } from "@heroicons/react/outline";
+import html2canvas from 'html2canvas';
+import $ from 'jquery'
 
 export default function FusionPlot({
   width,
   inputData,
-  VFData
+  screenCapture,
+  setToFalseAfterScreenCapture,
+  VFData,
 }) {
   const context = useContext(Context);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
@@ -29,6 +33,8 @@ export default function FusionPlot({
   const [showFusion, setShowFusion] = useState(false)
   const [VennData, setVennData] = useState({})
   const [inputState, setInputState] = useState({})
+  const [watermarkCss, setWatermarkCSS] = useState("")
+  const [showDiv, setShowDiv] = useState(true)
 
   useEffect(() => {
     if (context["locale"] === "kr-KO") {
@@ -37,6 +43,50 @@ export default function FusionPlot({
       setKoreanlanguage(false);
     }
   }, [context]);
+
+
+  let takeScreenshot = async () => {
+   
+    const element = document.getElementById('venn')
+    const clone = element.cloneNode(true);
+    document.getElementById('preview').appendChild(clone);
+    const element2 = document.getElementById('vennn')
+ 
+    if (element2) {
+      const clone2 = element2.cloneNode(true);
+      document.getElementById('preview').appendChild(clone2);
+    }
+    const ctx = document.getElementById('preview')
+    let imgData
+    await html2canvas(ctx).then(canvas => {
+      imgData = canvas.toDataURL('image/jpeg', 1.0);
+
+    });
+    let link = document.createElement('a');
+    link.href = imgData;
+    link.download = 'downloaded-image.jpg';
+
+    document.body.appendChild(link);
+    link.click();
+    setShowDiv(false)
+    document.body.removeChild(link);
+
+  }
+
+
+  useEffect(() => {
+    if (screenCapture) {
+      setWatermarkCSS("watermark")
+    } else {
+      setWatermarkCSS("")
+    }
+
+    if (watermarkCss !== "" && screenCapture) {
+      takeScreenshot()
+      setToFalseAfterScreenCapture()
+    }
+
+  }, [screenCapture, watermarkCss])
 
   let { project_id } = useParams();
 
@@ -52,16 +102,6 @@ export default function FusionPlot({
     {
       name: <FormattedMessage id="SampleName" defaultMessage="Sample Name" />,
       cell: (row, index) => {
-      //   cell: (row) => (
-      //     <div className="MultiDataTableViewDelete">
-      //         <div>
-      //             {row.project_name}
-      //         </div>
-      //         <button onClick={(e) => generateFusion(e, row.id)} id={row.id}>
-      //             <EyeIcon style={{width:"15px"}} />
-      //         </button>
-      //     </div>
-      // )
         let html = [];
         let check = false;
         if ("group 1" in row) {
@@ -161,22 +201,6 @@ export default function FusionPlot({
       selector: (row) => row.splice_type ? row.splice_type : 'None',
       sortable: true,
     }
-
-    // {
-    //   button: true,
-    //   cell: (row) => {
-    //     return (
-    //       <button
-    //         onClick={(e) => generateFusion(e, row.id)}
-    //         id={row.id}
-    //         className="bg-main-blue hover:bg-main-blue mb-3 w-50  text-md text-white mt-2 px-8 py-4 border border-blue-700 rounded"
-    //       >
-    //         <EyeIcon />
-    //       </button>
-    //     );
-        
-    //   },
-    // },
   ];
 
   const generateFusion = (e, id) => {
@@ -232,8 +256,8 @@ export default function FusionPlot({
             setNoData(true)
             setVennData({})
           });
-      
-        
+
+
 
       }
     }
@@ -292,7 +316,7 @@ export default function FusionPlot({
             </p>}
 
           {showFusion &&
-            <div className="MarginTop4 BorderstyleViz OverFlowXHide">
+            <div className="MarginTop4 BorderstyleViz OverFlowXHide" >
               {VennData && !noData && (
                 <FusionVennCmp
                   parentCallback={getVennIds}
@@ -343,9 +367,15 @@ export default function FusionPlot({
                 </div>
               )}
             </div>
+
+
+
           }
+
         </>
       )}
+
+      <div id="preview" style={showDiv ? { display: 'block' } : { display: 'none' }}></div>
     </>
   );
 }

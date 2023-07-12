@@ -233,9 +233,15 @@
 
 
 .gene_main_box {
-  width: 320px;
+  width: 280px;
   text-align: center;
 }
+
+
+.gene_main_box:last-child {
+  margin-left: 25%;
+}
+
 
 .gene_main_box .selectBox {
   width: 100%
@@ -383,11 +389,11 @@
   background-color: #fff;
   padding: 1rem;
   margin-top: 0;
-  transform: translateX(-50%);
+  transform: translateX(-67%);
   top: 55px;
   display: inline-block;
-  left: 50%;
-  width: 50%;
+  /* left: 50%; */
+  width: 35%;
 }
 
 .GeneSetPopoverPanel.sm {
@@ -433,39 +439,40 @@
 }
 
 .FilterLabelText {
-  font-size: 1rem;
+  /* font-size: 1rem; */
   line-height: 1.5rem;
 }
 
 .FilterButton {
-  padding: 0.5rem 1rem;
+  padding: 0 1rem;
   margin-bottom: 0.75rem;
   background-color: #ffffff;
   font-weight: 700;
   width: 100%;
   border-radius: 0.25rem;
-  border-width: 1px;
-  border-color: #111827;
+  /* border-width: 1px;
+  border-color: #111827; */
+  border: 1px solid black;
 }
 
 
 @media (min-width: 640px) {
   .FilterLabelText {
-    font-size: 0.875rem;
+    /* font-size: 0.875rem; */
     line-height: 1.25rem;
   }
 }
 
 @media (min-width: 1024px) {
   .FilterLabelText {
-    font-size: 1rem;
+    /* font-size: 1rem; */
     line-height: 1.5rem;
   }
 }
 
 @media (min-width: 1280px) {
   .FilterLabelText {
-    font-size: 1.5rem;
+    /* font-size: 1.5rem; */
     line-height: 2rem;
   }
 }
@@ -535,6 +542,39 @@
     line-height: 1.75rem;
   }
 }
+
+@media (max-width: 1280px) {
+  .gene_main_box:last-child {
+    margin-left: 10%;
+  }
+}
+
+@media (min-width:1183px) and (max-width: 1199px) {
+  .gene_main_box:last-child {
+    margin-left: 20%;
+  }
+}
+
+@media (max-width: 1060px) {
+  .gene_main_box:last-child {
+    margin-left: 2%;
+  }
+
+  .PopoverStyles {
+    justify-content: center;
+  }
+}
+
+@media(min-width:769px) and (max-width: 979px) {
+
+  /* .gene_main_box:last-child{
+   margin-left: 2%;
+  } */
+  .PopoverStyles {
+    justify-content: center;
+  }
+}
+
 
 .Inline {
   display: inline;
@@ -965,22 +1005,24 @@
 
 
 .LabelText {
-  font-size: 1.25rem;
+  /* font-size: 1.25rem; */
   line-height: 1.75rem;
+  font-weight: bold;
 }
 
 @media (min-width: 1024px) {
   .LabelText {
-    font-size: 1.5rem;
+    /* font-size: 1.5rem; */
     line-height: 2rem;
+    font-weight: bold;
   }
 }
 
 
 .FilterInputGrid {
-  display: grid;
+  display: flex;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  margin-left: 2.5rem;
+  margin-left: 4.5rem;
   margin-right: 2.5rem;
   border-radius: 0.25rem;
   border-width: 1px;
@@ -1245,6 +1287,10 @@
     font-size: 14px;
     padding: 0 10px;
   }
+
+  .GeneSetPopoverPanel {
+    display: block;
+  }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1023px) {
@@ -1444,8 +1490,13 @@
 .PopoverStyles {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  /* justify-content: space-between; */
+  /* justify-content: flex-start; */
   gap: 20px;
+}
+
+.single_viz {
+  justify-content: space-between;
 }
 
 @media (max-width: 767px) {
@@ -1664,5 +1715,123 @@
   text-align: left;
   background-color: #ffffff;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
 
+.FilterBoxData {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  align-items: center;
+}
+
+.FilterInputGrid .inpuDiv {
+  padding-top: 10%;
+  height: 10%;
+}
+
+.FilterInputGrid input {
+  height: 30px;
+}
+
+.FilterInputGrid .divisionBox {
+  padding-top: 5%;
+}
+
+
+.filter_sample {
+  display: flex;
+  flex-direction: row;
+  margin-left: 2.5rem;
+}
+
+.filter_sample .Radiobtns {
+  display: flex;
+}
+
+.filter_sample label:first-child {
+  font-weight: 700;
+  padding-top: 1%;
+}
+
+.FilterInputGrid {
+  margin-left: 4.5rem;
+  margin-top: 0.5rem;
+  height: 30px;
+}
+
+@media (min-width: 767px) and (max-width:965px) {
+  /* .filter_sample{
+    flex-direction: column;
+  } */
+
+
+  .GeneSetPopoverPanel {
+    transform: translateX(-84%);
+    width: 50%;
+  }
+
+  .FilterInputGrid {
+    margin-left: 4rem;
+    margin-top: 0.5rem;
+    height: 40px;
+  }
+
+  .contentBox {
+    position: relative;
+  }
+}
+
+@media (min-width: 500px) and (max-width:767px) {
+  .filter_sample {
+    flex-direction: column;
+  }
+
+
+  .GeneSetPopoverPanel {
+    transform: translateX(0%);
+    width: 50%;
+  }
+
+
+}
+
+
+@media (min-width: 375px) and (max-width:500px) {
+  .filter_sample {
+    flex-direction: column;
+  }
+
+
+  .GeneSetPopoverPanel {
+    transform: translateX(0%);
+    width: 80%;
+  }
+
+  .FilterInputGrid {
+    margin-left: 2rem;
+    margin-top: 0.5rem;
+    height: 40px;
+  }
+
+  .contentBox {
+    position: relative;
+  }
+}
+
+
+.visualize_btns span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #003177;
+  font-weight: 500;
+}
+
+.visualize_btns {
+  display: flex;
+}
+
+.relatedurls {
+  padding-top: 5%;
+  display: flex;
 }

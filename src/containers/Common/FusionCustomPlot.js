@@ -270,7 +270,7 @@ export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
                 </select>
               </div>
             </div>
-            <div className="ChromosomeFusionPlot" ref={listRef}>
+            <div className="ChromosomeFusionPlot" ref={listRef} id="vennn">
               {html}
             </div>
           </> 

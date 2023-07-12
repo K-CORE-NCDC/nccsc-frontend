@@ -395,7 +395,7 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
         <>
           <div id="box3">
           </div>
-          <div ref={ref} className={watermarkCss + "w-full overflow-x-auto "} style={{overflowX:'auto' , position:'relative'}} id="box2" >
+          <div ref={ref} className={watermarkCss + "w-full overflow-x-auto "} style={{overflowX:'auto' , position:'relative' , width:'100%'}} id="box2" >
           </div> </>)}
     </>
   )

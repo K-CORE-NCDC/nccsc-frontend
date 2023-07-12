@@ -1,18 +1,17 @@
-import React, { useState } from "react";
-import logoNew from "../../assets/images/Left_up.png";
-import bgimg from '../../assets/images/bg.png';
+import React, { useEffect, useState } from "react";
+import { FormattedMessage } from "react-intl";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import MultiDataVisualization from "./MultiDataVisualization";
-import { FormattedMessage } from "react-intl";
-import correct_icon from '../../assets/images/icons8-correct-48.png'
 import { OtherTools } from "./OtherTools";
 
 
-export const SingleDataVisualization = () => {
+export const SingleDataVisualization = ({isLogin}) => {
   const [activeTab, setActiveTab] = useState('1')
   const history = useHistory()
 
-
+useEffect(() =>{
+  console.log('isLogin' , isLogin)
+},[])
   return (
     <div className="auto">
       <div className="mainContentsBox">
@@ -46,7 +45,9 @@ export const SingleDataVisualization = () => {
                   <div className="subHeader">
                     <p className="tit h5">Contents</p>
                     <div className="tit contentBtns">
-                      <button className="btn">
+                      <button className="btn" onClick={() =>{
+                        history.push("/visualise-singledata/home/")
+                      }}>
                         <FormattedMessage id="ExamplePage" defaultMessage='Example Page' />
                       </button>
                       <button className="btn">

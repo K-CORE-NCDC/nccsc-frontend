@@ -141,19 +141,20 @@ export default function Box({
   }, [inputState, tableType]);
 
   let takeScreenshot = async () => {
-    const element = document.getElementById('box2')
-    let imgData
-    await html2canvas(element).then(canvas => {
-      imgData = canvas.toDataURL('image/jpeg', 1.0);
-
-    });
-    let link = document.createElement('a');
-    link.href = imgData;
-    link.download = 'downloaded-image.jpg';
-
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    const element = document.getElementById('box2').children[0]
+    console.log('element', element)
+    var xml = new XMLSerializer().serializeToString(element);
+    console.log(xml)
+    var svg64 = btoa(unescape(encodeURIComponent(xml))) //for utf8: btoa(unescape(encodeURIComponent(xml)))
+    var b64start = 'data:image/svg+xml;base64,';
+    var image64 = b64start + svg64;
+    // var image64 = element;
+    const downloadLink = document.createElement('a');
+    document.body.appendChild(downloadLink);
+    downloadLink.href = image64;
+    downloadLink.target = '_self';
+    downloadLink.download = 'box.svg';
+    downloadLink.click(); 
   }
 
   useEffect(() => {

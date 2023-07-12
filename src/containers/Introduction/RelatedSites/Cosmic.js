@@ -25,9 +25,14 @@ export const Cosmic = () => {
           </div>
           <div className="introduceBox02">
             <div className="imgBox">
-              <img className="w100" src={introduce_VisualContents} alt="img" style={{height:'300px'}}/>
+              <img className="w100" src={introduce_VisualContents} alt="img" style={{ height: '300px' }} />
             </div>
-            <span style={{paddingLeft:'30%'}}><a href="https://cancer.sanger.ac.uk/cosmic">https://cancer.sanger.ac.uk/cosmic</a></span>
+            <div className="relatedurls" style={{ paddingTop: '5%' }}>
+              <span className="material-icons" style={{ color: 'rosybrown' }}>
+                output
+              </span>
+              <span style={{ paddingLeft: '1%', color: 'dodgerblue' }}><a href="https://cancer.sanger.ac.uk/cosmic">https://cancer.sanger.ac.uk/cosmic</a></span>
+            </div>
           </div>
           <div className="introduceBox03">
             <ul>

@@ -166,13 +166,13 @@ export default function DataVisualization() {
 
 
 
-  // useEffect(() => {
-  //   let chartx = LoadChart(width, tabName);
-  //   setCharts((prevState) => ({
-  //     ...prevState,
-  //     viz: chartx,
-  //   }));
-  // }, [screenCapture]);
+  useEffect(() => {
+    let chartx = LoadChart(width, tabName);
+    setCharts((prevState) => ({
+      ...prevState,
+      viz: chartx,
+    }));
+  }, [screenCapture]);
 
   useEffect(() => {
     setTabName(tab === 'home' ? undefined : tab)
@@ -191,7 +191,7 @@ export default function DataVisualization() {
   }, [tab, tabName, chartName, BrstKeys]);
 
   useEffect(() => {
-    let w = elementRef.current.getBoundingClientRect().width;
+    let w = elementRef?.current?.getBoundingClientRect().width;
     setWidth(w);
     setBoolChartState(false);
     if (project_id !== undefined) {
@@ -226,7 +226,7 @@ export default function DataVisualization() {
         element = "genomic-data";
       }
 
-      let gridobj = { title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/singledata-upload/${element}/` }
+      let gridobj = { title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/singledata-upload/${element}/`, viewLink: `/visualise-singledata/${element}` }
       gridData.push(gridobj)
 
     });
@@ -335,96 +335,122 @@ export default function DataVisualization() {
         <div className="ptn">
           <div className="auto">
             {
-              gridData && !tabName &&
-              <div className='dataList singleDataViz'>
-                <ul >
-                  {gridData.map((item, index) => (
+              gridData && !tabName ?
+                <div className='dataList singleDataViz'>
+                  <ul >
+                    {gridData.map((item, index) => (
 
-                    <li key={index} >
-                      <div className="labelBox">
-                        <div className="labels01">
-                          <h3 style={{ textTransform: 'capitalize' }}>
-                            {item.title}
-                          </h3>
-                        </div>
-                        <div className="labels02" style={{ columnGap: "10px" }}>
-                          <Link to={item.link}>
-                            <span className="label01">
-                              <font>
-                                <font>Download</font>
-                              </font>
-                            </span>
-                          </Link>
-                          <Link to={item.link}>
-                            <span className="label01">
-                              <font>
-                                <font>Run Analysis</font>
-                              </font>
-                            </span>
-                          </Link>
-                        </div>
+                      <li key={index} >
+                        <div className="labelBox">
+                          <div className="labels01">
+                            <h3 style={{ textTransform: 'capitalize' }}>
+                              {item.title}
+                            </h3>
+                          </div>
+                          <div className="visualize_btns" style={{ columnGap: "10px" }}>
+                            <Link to={item.link}>
 
-                      </div>
-                      <div>
-                        <img src={item.image} alt="img" />
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                              <span class="material-icons">
+                                download
+                              </span>
+
+                            </Link>
+                            <Link to={item.link}>
+
+                              <span class="material-icons ">
+                                play_circle
+                              </span>
+
+                            </Link>
+                            <Link to={item.viewLink}>
+                              <span class="material-icons">
+                                visibility
+                              </span>
+
+                            </Link>
+                          </div>
+
+                        </div>
+                        <div>
+                          <img src={item.image} alt="img" />
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div> :
+                <>
+                  <section >
+                    <div className="PopoverStyles single_viz">
+                      <Popover className="relative gene_main_box">
+                        {({ open }) => {
+                          return (
+                            <>
+                              <div className="w-full">
+                                <Popover.Button className={'selectBox'}>
+                                  <div className="GeneSetgeneSetButton">
+                                    <div className="flex-1">Gene set Re-filtering</div>
+                                    <div className="w-20">
+                                      <FilterIcon className="filter-icon" />
+                                    </div>
+                                  </div>
+                                </Popover.Button>
+                                <Transition
+                                  as={Fragment}
+                                  enter="transition ease-out duration-200"
+                                  enterFrom="opacity-0 translate-y-1"
+                                  enterTo="opacity-100 translate-y-0"
+                                  leave="transition ease-in duration-150"
+                                  leaveFrom="opacity-100 translate-y-0"
+                                  leaveTo="opacity-0 translate-y-1"
+                                >
+                                  <Popover.Panel className="GeneSetPopoverPanel">
+                                    <GeneSet parentCallback={callback} filterState={state} />
+                                  </Popover.Panel>
+                                </Transition>
+                              </div>
+                            </>
+                          )
+                        }}
+                      </Popover>
+
+                      <Popover className="relative gene_main_box">
+                        {({ open }) => {
+                          return (
+                            <>
+                              <div className=''>
+                                <Popover.Button className={'button'}>
+                                  <div>
+                                    <button onClick={() =>
+                                      setToFalseAfterScreenCapture(true)
+                                    } className="btn btnPrimary">Capture Screenshot</button>
+                                  </div>
+                                </Popover.Button>
+
+                              </div>
+                            </>
+                          )
+                        }}
+                      </Popover>
+
+                    </div>
+                  </section>
+
+                  <section>
+                    <div
+                      id="tab-contents"
+                      className="block text-center"
+                      style={{ display: "block", textAlign: "center" }}
+                      ref={elementRef}>
+                      {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div>{chart["viz"]}</div>}
+                      {tabName && tabName !== 'home' && !boolChartState && (
+                        <div className="p-1 text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">Please select Genes</div>
+                      )}
+                    </div>
+                  </section>
+                </>
             }
 
-            <section>
-              <div
-                className="block text-center Flex">
 
-                <Popover className="relative gene_main_box" style={{ margin: 'auto' }}>
-                  {({ open }) => {
-                    return (
-                      <>
-                        <div className="w-full">
-                          <Popover.Button className={'selectBox'}>
-                            <div className="GeneSetgeneSetButton">
-                              <div className="flex-1">Gene set Re-filtering</div>
-                              <div className="w-20">
-                                <FilterIcon className="filter-icon" />
-                              </div>
-                            </div>
-                          </Popover.Button>
-                          <Transition
-                            as={Fragment}
-                            enter="transition ease-out duration-200"
-                            enterFrom="opacity-0 translate-y-1"
-                            enterTo="opacity-100 translate-y-0"
-                            leave="transition ease-in duration-150"
-                            leaveFrom="opacity-100 translate-y-0"
-                            leaveTo="opacity-0 translate-y-1"
-                          >
-                            <Popover.Panel className="GeneSetPopoverPanel">
-                              <GeneSet parentCallback={callback} filterState={state} />
-                            </Popover.Panel>
-                          </Transition>
-                        </div>
-                      </>
-                    )
-                  }}
-                </Popover>
-
-              </div>
-            </section>
-
-            <section>
-              <div
-                id="tab-contents"
-                className="block text-center"
-                style={{ display: "block", textAlign: "center" }}
-                ref={elementRef}>
-                {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div>{chart["viz"]}</div>}
-                {tabName && tabName !== 'home' && !boolChartState && (
-                  <div className="p-1 text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">Please select Genes</div>
-                )}
-              </div>
-            </section>
 
           </div>
         </div>

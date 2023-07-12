@@ -1,9 +1,54 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FormattedMessage } from "react-intl";
 import background from "../../../styles/images/subVisual-img06.jpg"
 import homeIcon from "../../../styles/images/icon-home.svg"
 import { Link } from "react-router-dom";
+import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { getCookie } from '../../getCookie';
 function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
+  const { project_id, tab } = useParams()
+  const history = useHistory()
+  const viz_tabs = ["visualise-multidata", "visualise-singledata"]
+  const upload_tabs = ["singledata-upload", "newmultidataproject", "multidataprojectview"]
+
+
+  useEffect(() => {
+    viz_tabs?.forEach(item => {
+      if (project_id && window.location.pathname.includes(item)) {
+        if (getCookie('is_login') && getCookie('is_login') === 'True') {
+        } else {
+          history.push('/login')
+        }
+      }
+    })
+    upload_tabs?.forEach(ele => {
+      if (window.location.pathname.includes(ele)) {
+        if (getCookie('is_login') && getCookie('is_login') === 'True') {
+        } else {
+          history.push('/login')
+        }
+      }
+    })
+
+
+    // if (project_id && window.location.pathname.includes(viz_tabs)) {
+    //   console.log('iddfff')
+    //   if (getCookie('is_login') && getCookie('is_login') === 'True') {
+
+    //   } else {
+    //     history.push('/login')
+    //   }
+    // } else if (window.location.pathname.includes(upload_tabs)) {
+    //   console.log('elseeee')
+    //   if (getCookie('is_login') && getCookie('is_login') === 'True') {
+
+    //   } else {
+    //     history.push('/login')
+    //   }
+    // }
+
+
+  }, [history])
 
   const renderLnbContent = () => {
     if (type && type === 'single') {
@@ -76,23 +121,6 @@ function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
                   </li>
                 );
               }
-              // else {
-              //   console.log('b');
-              //   if(item.id !== 'Null'){
-              //     console.log('c');
-              //     return (
-              //       <li key={index}>
-              //       {item.defaultMessage}
-              //     </li>
-              //   )
-              // }
-              // else{
-              //   console.log('d');
-              //   return null
-              // }
-
-              // }
-
             })}
         </ul>
       );

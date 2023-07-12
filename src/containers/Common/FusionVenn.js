@@ -99,8 +99,8 @@ export default function FusionVennCmp({ parentCallback,width, VennData = null })
             x: xTmp,
             y: yTmp,
             dy: dyTmp,
-            size: data[x].size,
-            total_size:data[x].total_size
+            size: data[x]?.size,
+            total_size:data[x]?.total_size
           });
         }
 

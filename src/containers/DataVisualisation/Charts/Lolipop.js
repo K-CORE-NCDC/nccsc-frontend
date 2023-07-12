@@ -11,7 +11,6 @@ import { useParams, useHistory } from "react-router-dom";
 import '../../../styles/css/lollipop.css'
 
 export default function DataLolipop({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
-  console.log('load chart called-----')
   const reference = useRef()
   const history = useHistory();
   const [genesHtml, setGenesHtml] = useState([])

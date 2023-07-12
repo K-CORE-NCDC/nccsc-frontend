@@ -27,7 +27,12 @@ export const TCGA = () =>{
           <div className="imgBox">
             <img className="w100" src={introduce_VisualContents} alt="img" />
           </div>
-          <span style={{paddingLeft:'15%'}}><a href="https://www.cancer.gov/ccg/research/genome-sequencing/tcga">https://www.cancer.gov/ccg/research/genome-sequencing/tcga</a></span>
+          <div className="relatedurls" style={{ paddingTop: '5%' }}>
+              <span className="material-icons" style={{ color: 'rosybrown' }}>
+                output
+              </span>
+              <span style={{ paddingLeft: '1%', color: 'dodgerblue' }}><a href="https://www.cancer.gov/ccg/research/genome-sequencing/tcga">https://www.cancer.gov/ccg/research/genome-sequencing/tcga</a></span>
+            </div>
         </div>
         <div className="introduceBox03">
           <ul>
