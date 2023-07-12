@@ -12,7 +12,9 @@ const MultiDataVisualization = () => {
         <div className="subHeader">
           <p className="tit h5">Contents</p>
           <div className="tit contentBtns">
-            <button className="btn">
+            <button className="btn" onClick={() =>{
+              history.push('/visualise-multidata/home')
+            }}>
             <FormattedMessage id="ExamplePage" defaultMessage='Example Page' />
             </button>
             <button  className="btn">

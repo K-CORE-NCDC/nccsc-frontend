@@ -11,6 +11,8 @@ import FusionCustomPlot from "../../Common/FusionCustomPlot";
 import { FormattedMessage } from "react-intl";
 import DataTable from "react-data-table-component";
 import { Context } from "../../../wrapper";
+import html2canvas from 'html2canvas';
+import $ from 'jquery'
 
 export default function FusionPlot({
   width,
@@ -30,6 +32,8 @@ export default function FusionPlot({
   const [showFusion, setShowFusion] = useState(false)
   const [VennData, setVennData] = useState({})
   const [inputState, setInputState] = useState({})
+  const [watermarkCss, setWatermarkCSS] = useState("")
+  const [showDiv, setShowDiv] = useState(true)
 
   useEffect(() => {
     if (context["locale"] === "kr-KO") {
@@ -38,6 +42,140 @@ export default function FusionPlot({
       setKoreanlanguage(false);
     }
   }, [context]);
+
+  //   let takeScreenshot = async () => {
+  //     const element = document.getElementById('venn')
+  //     // let imgData
+  //     const element2 = document.getElementById('vennn')
+  //     var overlayCanvases = await function(cnv1, cnv2) {
+  //       var newCanvas = document.createElement('canvas'),
+  //           ctx = newCanvas.getContext('2d'),
+  //           width = cnv1.width,
+  //           height = cnv1.height;
+
+  //       newCanvas.width = width;
+  //       newCanvas.height = height;
+
+  //       [cnv1, cnv2].forEach(function(n) {
+  //           ctx.beginPath();
+  //           ctx.drawImage(n, 0, 0, width, height);
+  //       });
+
+  //       return newCanvas.toDataURL();
+  //   };
+  //   var verticalCanvases = await function(cnv1, cnv2) {
+  //     var newCanvas = document.createElement('canvas'),
+  //         ctx = newCanvas.getContext('2d'),
+  //         width = cnv1.width,
+  //         height = cnv1.height + cnv2.height ;
+
+  //     newCanvas.width = width;
+  //     newCanvas.height = height;
+
+  //     [{
+  //         cnv: cnv1,
+  //         y: 0
+  //     },
+  //     {
+  //         cnv: cnv2,
+  //         y: cnv1.height+20
+  //     }
+  //     ].forEach(function(n) {
+  //         ctx.beginPath();
+  //         ctx.drawImage(n.cnv, 0, n.y, width, n.cnv.height);
+  //     });
+
+  //     return newCanvas.toDataURL();
+  // };
+  //   overlayCanvases(element,element2)
+  //   var final = verticalCanvases(element,element2)
+  //   console.log(final)
+  //     // await html2canvas(element).then(canvas => {
+  //     //   // imgData = canvas.toDataURL('image/jpeg', 1.0);
+  //     //   $(canvas).css({"position" : "absolute", "z-index" : "999"});
+  //     //   document.getElementById("preview").appendChild(canvas);
+  //     //   // console.log(imgData)
+  //     //   if(element2){
+  //     //     let imgData1
+  //     //     html2canvas(element2).then(canvas2 => {
+  //     //       $(canvas2).css({"position" : "absolute", "z-index" : "999"});
+  //     //       // imgData1 = canvas2.toDataURL('image/jpeg', 1.0);
+  //     //       document.getElementById("preview").appendChild(canvas2);
+  //     //     })
+  //     //   }
+  //     // });
+  //     // setTimeout( async function () {
+  //     //   const element3 = document.getElementById('preview')
+  //     //   await html2canvas(element3).then(canvas => {
+  //     //     imgData = canvas.toDataURL('image/jpeg', 1.0);
+  //     //     console.log(imgData)
+  //     //   })
+  //       // await html2canvas(element).then {
+  //       //   logging: true,
+  //       //   onrendered: function(canvas2) {
+
+  //       //       var img = canvas2.toDataURL("image/png");
+  //       //       console.log(img)
+  //       //           // window.open(img);
+  //       //           // var link = document.createElement("a");
+  //       //           // link.download = "image-download.png";
+  //       //           // link.href = img;
+  //       //           // link.click();
+  //       //       }
+  //       //   });
+  //     // },5000)
+  //     // let link = document.createElement('a');
+  //     // link.href = imgData;
+  //     // link.download = 'downloaded-image.jpg';
+
+  //     // document.body.appendChild(link);
+  //     // link.click();
+  //     // document.body.removeChild(link);
+  //   }
+
+
+  let takeScreenshot = async () => {
+   
+    const element = document.getElementById('venn')
+    const clone = element.cloneNode(true);
+    document.getElementById('preview').appendChild(clone);
+    const element2 = document.getElementById('vennn')
+ 
+    if (element2) {
+      const clone2 = element2.cloneNode(true);
+      document.getElementById('preview').appendChild(clone2);
+    }
+    const ctx = document.getElementById('preview')
+    let imgData
+    await html2canvas(ctx).then(canvas => {
+      imgData = canvas.toDataURL('image/jpeg', 1.0);
+
+    });
+    let link = document.createElement('a');
+    link.href = imgData;
+    link.download = 'downloaded-image.jpg';
+
+    document.body.appendChild(link);
+    link.click();
+    setShowDiv(false)
+    document.body.removeChild(link);
+
+  }
+
+
+  useEffect(() => {
+    if (screenCapture) {
+      setWatermarkCSS("watermark")
+    } else {
+      setWatermarkCSS("")
+    }
+
+    if (watermarkCss !== "" && screenCapture) {
+      takeScreenshot()
+      setToFalseAfterScreenCapture()
+    }
+
+  }, [screenCapture, watermarkCss])
 
   let { project_id } = useParams();
 
@@ -215,8 +353,8 @@ export default function FusionPlot({
             setNoData(true)
             setVennData({})
           });
-      
-        
+
+
 
       }
     }
@@ -275,7 +413,7 @@ export default function FusionPlot({
             </p>}
 
           {showFusion &&
-            <div className="MarginTop4 BorderstyleViz OverFlowXHide">
+            <div className="MarginTop4 BorderstyleViz OverFlowXHide" >
               {VennData && !noData && (
                 <FusionVennCmp
                   parentCallback={getVennIds}
@@ -326,9 +464,15 @@ export default function FusionPlot({
                 </div>
               )}
             </div>
+
+
+
           }
+
         </>
       )}
+
+      <div id="preview" style={showDiv ? { display: 'block' } : { display: 'none' }}></div>
     </>
   );
 }

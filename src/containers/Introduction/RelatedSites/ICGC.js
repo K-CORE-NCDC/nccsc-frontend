@@ -27,10 +27,14 @@ export const ICGC = () => {
             <div className="imgBox">
               <img className="w100" src={introduce_VisualContents} alt="img" />
             </div>
-            <div style={{marginTop:'50%'}}>
-            <span style={{ paddingLeft: '30%' }}><a href="https://dcc.icgc.org/">https://dcc.icgc.org/</a></span>
+            <div className="relatedurls" style={{ paddingTop: '5%' }}>
+              <span className="material-icons" style={{ color: 'rosybrown' }}>
+                output
+              </span>
+              <span style={{ paddingLeft: '1%', color: 'dodgerblue' }}><a href="https://dcc.icgc.org/">https://dcc.icgc.org/</a></span>
             </div>
-            
+
+
           </div>
           <div className="introduceBox03">
             <ul>

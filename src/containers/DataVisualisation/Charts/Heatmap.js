@@ -82,6 +82,9 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
         setTableType('rna')
       }
       setAllTabList(tabList.userProjectsDataTable)
+    }else{
+      setActiveTab('1')
+      setTableType('rna')
     }
   }, [tabList])
 

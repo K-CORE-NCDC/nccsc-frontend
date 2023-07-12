@@ -85,7 +85,7 @@ function FindID() {
             </h3>
           </div>
         </div>
-        <div className="section ptn">
+        <div className="ptn">
           <div className="auto">
             <div className="pwSearch tac">
               <p className="h5">

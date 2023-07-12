@@ -271,7 +271,7 @@ export default function FusionCustomPlot({ fusionId,parentCallback,width}) {
                 </select>
               </div>
             </div>
-            <div className="grid grid-cols-2 p-5  relative mb-20" ref={listRef}>
+            <div className="grid grid-cols-2 p-5  relative mb-20" ref={listRef} id="vennn">
               {html}
             </div>
           </> 

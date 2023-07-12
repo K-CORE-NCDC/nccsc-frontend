@@ -7,31 +7,31 @@ export default function Index() {
   let history = useHistory();
   const [componentNumber, setComponentNumber] = useState()
 
-  const updateComponentNumber = (num) =>{
+  const updateComponentNumber = (num) => {
     setComponentNumber(num)
   }
-  
-  useEffect(() => {
-    if(getCookie('is_login') && getCookie('is_login') === 'True'){
-      updateComponentNumber(0)
-    }
-    else{
-      history.push("/login")
-      }
-  }, [history])
+
+  // useEffect(() => {
+  //   if (getCookie('is_login') && getCookie('is_login') === 'True') {
+  //     updateComponentNumber(0)
+  //   }
+  //   else {
+  //     history.push("/login")
+  //   }
+  // }, [history])
 
 
- 
-  
+
+
   return (
     <div className="w-full">
       {
         <div>
-            { 
-             componentNumber === 0 && <FileUpload updateComponentNumber ={updateComponentNumber}  />
-            }
-            { componentNumber === 1 && <FileProjectDataTable updateComponentNumber ={updateComponentNumber}  />
-            }
+          {
+            componentNumber === 0 && <FileUpload updateComponentNumber={updateComponentNumber} />
+          }
+          {componentNumber === 1 && <FileProjectDataTable updateComponentNumber={updateComponentNumber} />
+          }
         </div>
       }
     </div>

@@ -248,7 +248,7 @@ export default function DataVisualization() {
         name = "";
       }
 
-      let gridobj = { title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: project_id !== undefined ? `/visualise-multidata/${element}/${project_id}` : `/visualise-multidata/${element}/` }
+      let gridobj = { title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/visualise-multidata/${element}/${project_id}`, viewLink: `/visualise-multidata/${element}/` }
       gridData.push(gridobj)
 
     });
@@ -462,7 +462,7 @@ export default function DataVisualization() {
                               leaveFrom="opacity-100 translate-y-0"
                               leaveTo="opacity-0 translate-y-1"
                             >
-                              <Popover.Panel className="GeneSetPopoverPanel" style={{height:'450px' , overflowY:'auto'}}>
+                              <Popover.Panel className="GeneSetPopoverPanel" style={{ height: '450px', overflowY: 'auto' }}>
                                 <Filter
                                   parentCallback={callback}
                                   filterState={state["filter"]}
@@ -587,24 +587,24 @@ export default function DataVisualization() {
                   }}
                 </Popover>
 
-                  <Popover className="relative gene_main_box">
-                    {({ open }) => {
-                      return (
-                        <>
-                          <div className=''>
-                            <Popover.Button className={'button'}>
-                              <div>
-                                <button onClick={() =>
-                                  setToFalseAfterScreenCapture(true)
-                                } className="btn btnPrimary">Capture Screenshot</button>
-                              </div>
-                            </Popover.Button>
-                           
-                          </div>
-                        </>
-                      )
-                    }}
-                  </Popover>
+                <Popover className="relative gene_main_box">
+                  {({ open }) => {
+                    return (
+                      <>
+                        <div className=''>
+                          <Popover.Button className={'button'}>
+                            <div>
+                              <button onClick={() =>
+                                setToFalseAfterScreenCapture(true)
+                              } className="btn btnPrimary">Capture Screenshot</button>
+                            </div>
+                          </Popover.Button>
+
+                        </div>
+                      </>
+                    )
+                  }}
+                </Popover>
 
               </div>
             </section>
@@ -622,14 +622,21 @@ export default function DataVisualization() {
                             {item.title}
                           </h3>
                         </div>
-                        <div className="labels02" style={{ columnGap: "10px" }}>
-                          <Link to={item.link}>
-                            <span className="label01">
-                              <font>
-                                <font>Run Analysis</font>
-                              </font>
-                            </span>
-                          </Link>
+                        <div className="visualize_btns" style={{ columnGap: "10px" }}>
+                          {project_id ?
+                            <Link to={item.link}>
+
+                              <span class="material-icons ">
+                                play_circle
+                              </span>
+
+                            </Link> :
+                            <Link to={item.viewLink}>
+                              <span class="material-icons">
+                                visibility
+                              </span>
+
+                            </Link>}
                         </div>
 
                       </div>

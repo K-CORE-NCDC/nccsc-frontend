@@ -94,8 +94,8 @@ export const CBioPortal = () => {
                   <div className="imgBox">
                     <img className="w100" src={introduce_VisualContents} alt="img" />
                   </div>
-                  <div style={{display:'flex'}}>
-                    <div style={{ paddingTop: '5%' }}>
+                  <div>
+                    <div className="relatedurls" style={{ paddingTop: '5%' }}>
                       <span className="material-icons" style={{ color: 'rosybrown' }}>
                         output
                       </span>
