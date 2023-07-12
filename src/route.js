@@ -1,9 +1,5 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import Introduction from './containers/Home/Introduction';
-import { SiteIntro } from './containers/Introduction/SiteIntro';
-import { SingleDataVisualization } from './containers/VisualizeMyExampleData/SingleDataVisualization';
-import { VisualizeMyData } from './containers/VisualizeMyData/VisualizeMyData';
 import Home from './containers/Home';
 import MultiDataViewProject from './containers/UserDataVisualization/MultiDataVisualization/MultiDataViewProject';
 const DataSummary = React.lazy(() => import('./containers/DataSummary'));
@@ -235,14 +231,7 @@ const route = [
     childname: <FormattedMessage id="Signup" defaultMessage="Join" />,
     component: Join,
   },
-  {
-    path: '/signup/',
-    exact: true,
-    type: 'unauth',
-    name: <FormattedMessage id="Home" defaultMessage="Home" />,
-    childname: <FormattedMessage id="Signup" defaultMessage="Sign Up" />,
-    component: Signup,
-  },
+ 
   {
     path: '/genefusion/',
     exact: true,
@@ -323,6 +312,14 @@ const route = [
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
     childname: <FormattedMessage id="FindPassword" defaultMessage="Find Password" />,
     component: FindIndex,
+  },
+  {
+    path: '/signup/',
+    exact: true,
+    type: 'unauth',
+    name: <FormattedMessage id="Home" defaultMessage="Home" />,
+    childname: <FormattedMessage id="Signup" defaultMessage="Sign Up" />,
+    component: Signup,
   },
   {
     path: '/resetpassword/:token',

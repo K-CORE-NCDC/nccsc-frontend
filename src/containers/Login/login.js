@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { login } from "../../actions/api_actions";
@@ -56,7 +56,7 @@ const LoginComponent = () => {
   };
 
 
- 
+
 
   const formSubmitAction = (e) => {
     setIsError(false)
@@ -93,7 +93,7 @@ const LoginComponent = () => {
         if ('data' in result && 'status' in result.data && result.data.status === "Login Successfull") {
           loginSuccess();
         }
-        else if('data' in result && 'status' in result.data) {
+        else if ('data' in result && 'status' in result.data) {
           loginFailure(result.data.status);
         }
       }).catch((error) => {
@@ -104,9 +104,9 @@ const LoginComponent = () => {
 
   const breadCrumbs = {
     '/login/': [
-        { id: 'Login', defaultMessage: 'Login', to: '/login/' }
+      { id: 'Login', defaultMessage: 'Login', to: '/login/' }
     ],
-};
+  };
 
   return (
     <div>
@@ -116,7 +116,7 @@ const LoginComponent = () => {
         type="single"
       />
       <article id="subContents" className="subContents">
-        <div className=" ptn">
+        <div className="ptn">
           <div className="auto">
             <div className="loginWrap">
               <img src={NCCLogo} alt="" />
@@ -207,6 +207,13 @@ const LoginComponent = () => {
                       <font style={{ verticalAlign: 'inherit' }}>Find Password</font>
                     </font>
                   </Link>
+
+                  {/* <Link to="/signup/">
+                    <img src={loginIcon2} alt="" />
+                    <font style={{ verticalAlign: 'inherit' }}>
+                      <font style={{ verticalAlign: 'inherit' }}>Generate Registration Number</font>
+                    </font>
+                  </Link> */}
                 </div>
 
               </form>

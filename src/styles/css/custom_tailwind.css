@@ -389,11 +389,11 @@
   background-color: #fff;
   padding: 1rem;
   margin-top: 0;
-  transform: translateX(-50%);
+  transform: translateX(-67%);
   top: 55px;
   display: inline-block;
   /* left: 50%; */
-  width: 50%;
+  width: 35%;
 }
 
 .GeneSetPopoverPanel.sm {
@@ -439,39 +439,40 @@
 }
 
 .FilterLabelText {
-  font-size: 1rem;
+  /* font-size: 1rem; */
   line-height: 1.5rem;
 }
 
 .FilterButton {
-  padding: 0.5rem 1rem;
+  padding: 0 1rem;
   margin-bottom: 0.75rem;
   background-color: #ffffff;
   font-weight: 700;
   width: 100%;
   border-radius: 0.25rem;
-  border-width: 1px;
-  border-color: #111827;
+  /* border-width: 1px;
+  border-color: #111827; */
+  border: 1px solid black;
 }
 
 
 @media (min-width: 640px) {
   .FilterLabelText {
-    font-size: 0.875rem;
+    /* font-size: 0.875rem; */
     line-height: 1.25rem;
   }
 }
 
 @media (min-width: 1024px) {
   .FilterLabelText {
-    font-size: 1rem;
+    /* font-size: 1rem; */
     line-height: 1.5rem;
   }
 }
 
 @media (min-width: 1280px) {
   .FilterLabelText {
-    font-size: 1.5rem;
+    /* font-size: 1.5rem; */
     line-height: 2rem;
   }
 }
@@ -827,7 +828,7 @@
   margin-left: 0.75rem;
   color: #374151;
   letter-spacing: 0.025em;
-  /* width: 83.333333%; */
+  width: 83.333333%;
 }
 
 .CheckBoxSROnly {
@@ -980,14 +981,16 @@
 
 
 .LabelText {
-  font-size: 1.25rem;
+  /* font-size: 1.25rem; */
   line-height: 1.75rem;
+  font-weight: bold;
 }
 
 @media (min-width: 1024px) {
   .LabelText {
-    font-size: 1.5rem;
+    /* font-size: 1.5rem; */
     line-height: 2rem;
+    font-weight: bold;
   }
 }
 
@@ -995,7 +998,7 @@
 .FilterInputGrid {
   display: flex;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  margin-left: 2.5rem;
+  margin-left: 4.5rem;
   margin-right: 2.5rem;
   border-radius: 0.25rem;
   border-width: 1px;
@@ -1563,10 +1566,109 @@
   padding-top: 10%;
   height: 10%;
 }
-.FilterInputGrid .inpuDiv input{
- height: 40px;
+.FilterInputGrid input{
+ height: 30px;
 }
 
 .FilterInputGrid .divisionBox{
   padding-top: 5%;
+}
+
+
+.filter_sample{
+  display: flex;
+  flex-direction: row;
+  margin-left:2.5rem ;
+}
+
+.filter_sample .Radiobtns{
+  display: flex;
+}
+
+.filter_sample label:first-child{
+  font-weight: 700;
+  padding-top: 1%;
+ }
+
+ .FilterInputGrid{
+  margin-left: 4.5rem;
+  margin-top: 0.5rem;
+  height: 30px;
+}
+
+@media (min-width: 767px) and (max-width:965px){
+  /* .filter_sample{
+    flex-direction: column;
+  } */
+  
+ 
+  .GeneSetPopoverPanel{
+    transform: translateX(-84%);
+    width: 50%;
+  }
+
+  .FilterInputGrid{
+    margin-left: 4rem;
+    margin-top: 0.5rem;
+    height: 40px;
+  }
+
+  .contentBox{
+      position: relative;
+  }
+}
+
+@media (min-width: 500px) and (max-width:767px){
+  .filter_sample{
+    flex-direction: column;
+  }
+  
+ 
+  .GeneSetPopoverPanel{
+    transform: translateX(0%);
+    width: 50%;
+  }
+
+  
+}
+
+
+@media (min-width: 375px) and (max-width:500px){
+  .filter_sample{
+    flex-direction: column;
+  }
+  
+ 
+  .GeneSetPopoverPanel{
+    transform: translateX(0%);
+    width: 80%;
+  }
+
+  .FilterInputGrid{
+    margin-left: 2rem;
+    margin-top: 0.5rem;
+    height: 40px;
+  }
+
+  .contentBox{
+      position: relative;
+  }
+}
+
+
+.visualize_btns span{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ color: #003177;
+ font-weight: 500;
+}
+
+.visualize_btns{
+  display: flex;
+}
+
+.relatedurls{
+  padding-top:5%;
+  display: flex;
 }
