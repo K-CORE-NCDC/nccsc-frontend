@@ -1,23 +1,49 @@
 import React from 'react'
-import { Link,useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import HeaderComponent from '../Common/HeaderComponent/HeaderComponent';
 function NotFound() {
-  const routeLocation = useLocation(); 
-    return (
-      <>
-       {routeLocation.pathname !== '/' ? 
+  const routeLocation = useLocation();
+  const title = { id: "notfound", defaultMessage: "notfound" }
+
+  const breadCrumbs = {
+    '/notfound/': [
+      { id: 'notfound', defaultMessage: 'notfound', to: '/notfound/' }
+    ],
+  };
+
+  return (
+    <>
+
+      <HeaderComponent
+        title={title}
+        breadCrumbs={breadCrumbs['/notfound/']}
+        type="single"
+      />
+
+      <article id="subContents" className="subContents">
         <div>
-        <div>
-        <h1 className='text-center m-28 font-sans' style={{fontSize:'140px', color:'rgb(249 115 22)'}}>404</h1>
+        
+          <div className="ptn">
+            <div className="auto">
+              {routeLocation.pathname !== '/' ?
+                <div className='notFound'>
+                  <div>
+                    <h1 className='' style={{ fontSize: '140px', color: 'rgb(249 115 22)' }}>404</h1>
+                  </div>
+                  <h2 className=''>OOPS! NOTHING WAS FOUND</h2>
+                  <h3 className=''>The page you are looking for might have been removed, had it changed or is temporarily unavailable.</h3>
+                  <div className=''>
+                    <Link className="" style={{ color: 'rgb(249 115 22)' }} to={`/`}>Click here to return to HomePage</Link>
+                  </div>
+                </div>
+                : <></>}
+            </div>
+          </div>
         </div>
-        <h2 className='text-6xl text-center m-4 font-sans'>OOPS! NOTHING WAS FOUND</h2>
-        <h3 className='text-4xl text-center m-4 font-sans'>The page you are looking for might have been removed, had it changed or is temporarily unavailable.</h3>
-        <div className='text-center m-8'>
-        <Link className="capitalize text-4xl m-2 font-sans" style={{color:'rgb(249 115 22)'}} to={`/`}>Click here to return to HomePage</Link>
-        </div>
-      </div>
-    : <></>}
-     
-      </>
+      </article>
+
+
+    </>
   )
 }
 

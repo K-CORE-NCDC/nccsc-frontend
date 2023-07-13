@@ -46,9 +46,9 @@
 
 } */
 
-/* body{
+body{
   overflow-y: hidden;
-} */
+}
 
 /* span:hover::after{
   background-color: #fff;

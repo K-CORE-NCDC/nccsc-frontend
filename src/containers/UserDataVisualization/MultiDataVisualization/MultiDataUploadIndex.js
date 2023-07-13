@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
-import FileUpload from './MultiFileUpload'
-import FileProjectDataTable from "./MultiDataTable";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { getCookie } from "../../getCookie";
+import FileProjectDataTable from "./MultiDataTable";
+import FileUpload from './MultiFileUpload';
 export default function Index() {
-  let history = useHistory();
   const [componentNumber, setComponentNumber] = useState(0)
 
   const updateComponentNumber = (num) =>{
