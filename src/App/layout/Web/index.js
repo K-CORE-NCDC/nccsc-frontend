@@ -8,6 +8,7 @@ import { Route, Switch, useLocation } from "react-router-dom";
 import uuid from 'react-uuid';
 import logoNew from "../../../assets/images/Left_up.png";
 import menu_black from "../../../assets/images/right_below_add.png";
+import footer_img from "../../../assets/images/f_logo.png";
 import icon_home from "../../../styles/images/icon-home02.svg";
 import icon_lang from "../../../styles/images/icon-language.svg";
 import login_icon from "../../../styles/images/icon-login.svg";
@@ -32,6 +33,7 @@ import childMenu from "../../../menu-item";
 import route from "../../../route";
 import { Context } from "../../../wrapper";
 import Loader from "../Loader";
+import FooterComponent from "../../../containers/Common/FooterComponent/FooterComponent";
 
 AOS.init({
   offset: 200,
@@ -82,10 +84,11 @@ export default function Web(props) {
   const [mouseEnterFlag, setMouseEnterFlag] = useState(false)
   const [menuTabOpen, setMenuTabOpen] = useState(false)
   const [swiperOn, setSwiperOn] = useState(true)
+  const [is_login, setIsLogin] = useState(false)
 
- 
-  
-  let tabs = ['singledata-upload' , 'visualise-singledata' , 'visualise-multidata' , 'newmultidataproject' , 'multidataprojectview']
+
+
+  let tabs = ['singledata-upload', 'visualise-singledata', 'visualise-multidata', 'newmultidataproject', 'multidataprojectview']
 
   useEffect(() => {
     let cookiedata = SetCookie()
@@ -93,20 +96,18 @@ export default function Web(props) {
       if (result.status === 200) {
 
       }
-
-      // for (let index = 0; index < tabs.length; index++) {
-      //   const element = tabs[index];
-      //   if(element in window.location.pathname && getCookie('is_login') && getCookie('is_login') === 'True'){
-      //         setIsLogin(true)
-      //   }
-        
-      // }
     })
-
-    
-
   }, [])
- 
+
+
+  useEffect(() => {
+    if (getCookie('is_login') && getCookie('is_login') === 'True') {
+      setIsLogin(true)
+    } else {
+      setIsLogin(false)
+    }
+  }, [window.location.pathname])
+
 
   useEffect(() => {
     const cookieExpiry = getCookie('expiry');
@@ -265,7 +266,7 @@ export default function Web(props) {
       var time = today.getHours() + ":" + (today.getMinutes() <= 9 ? `00` : today.getMinutes());
       // let check_popup = localStorage.getItem('show_popup') 
       setCurrentTime(time);
-      
+
     }
     setCurrentDate(date);
     let path = window.location.pathname
@@ -464,9 +465,13 @@ export default function Web(props) {
                   </a>
                 </h1>
                 <div className="headerUtils">
-                  <Link to="/signup/"><FormattedMessage id="GenerateRegistrationNumber" defaultMessage='Generate registration number' /></Link>
-                  <Link to='/login/'><FormattedMessage id="Login" defaultMessage='Login' /></Link>
-                  <Link to="/findpassword/"><FormattedMessage id="FindPassword" defaultMessage='Find Password' /></Link>
+
+                  {is_login ? <Link to='/logout/'><FormattedMessage id="Logout" defaultMessage='Logout' /></Link>
+                    :
+                    <>
+                      <Link to="/signup/"><FormattedMessage id="GenerateRegistrationNumber" defaultMessage='Generate registration number' /></Link>
+                      <Link to='/login/'><FormattedMessage id="Login" defaultMessage='Login' /></Link>
+                      <Link to="/findpassword/"><FormattedMessage id="FindPassword" defaultMessage='Find Password' /></Link> </>}
                   <div className="language">
                     <a className="on" onClick={() => { setShowLangMenu(!showLangMenu) }}>&nbsp;</a>
                     <ul style={showLangMenu ? { display: "block" } : { display: 'none' }}>
@@ -493,7 +498,7 @@ export default function Web(props) {
                 <nav id="gnb" className="gnb">
                   <ul>
                     {childMenu?.mainmenu?.items?.map((item, i) => (
-                      <li key={'menuli_'+i}
+                      <li key={'menuli_' + i}
                         ref={buttonRef} onClick={() => {
                           setActiveclassPath(item?.id)
                           setActiveClassIndex(item?.index)
@@ -546,7 +551,7 @@ export default function Web(props) {
               <div className="allMenu">
                 <ul>
                   {childMenu?.mainmenu?.items?.map((item, i) => (
-                    <li key={'allMenu_li_'+i}><a className="menu_li">{item?.title}</a></li>
+                    <li key={'allMenu_li_' + i}><a className="menu_li">{item?.title}</a></li>
                   ))}
                 </ul>
               </div>
@@ -568,9 +573,10 @@ export default function Web(props) {
           </Switch>
         </Suspense>
         <div>
-          {showPopup && <Popup toggleModal={toggleModal} /> }
+          {showPopup && <Popup toggleModal={toggleModal} />}
         </div>
       </div>
+      <FooterComponent />
     </div>
   );
 }

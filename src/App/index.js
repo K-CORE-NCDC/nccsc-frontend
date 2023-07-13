@@ -4,7 +4,7 @@ import Loader from './layout/Loader';
 import '../assets/css/style.css';
 import Wrapper from '../wrapper';
 import MainPage from '../MainPage';
-import {  XCircleIcon } from '@heroicons/react/outline';
+import { XCircleIcon } from '@heroicons/react/outline';
 // import mainlogo from '../assets/images/KoreanImageNcc.png'
 import mainlogo from "../assets/images/Left_up.png";
 import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react';
@@ -30,7 +30,8 @@ export default function App() {
     <Wrapper>
       <div >
         <Web></Web>
-      </div>
+       
+        </div>
     </Wrapper>
   );
 }

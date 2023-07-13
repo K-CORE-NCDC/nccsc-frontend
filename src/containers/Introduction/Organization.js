@@ -11,11 +11,14 @@ import fig_08 from '../../assets/images/organization-img08.svg'
 
 
 const Organization = () => {
+
+  var scrollDiv = document?.getElementById("ptn")?.offsetTop;
+  window.scrollTo({ top: scrollDiv, behavior: 'smooth' });
   return (
     <div className="contentsTitle">
       <div className=" ptn">
         <div className="auto">
-          <div className="organization" style={{overflowY:'scroll',height:'70vh'}}>
+          <div className="organization" style={{ overflowY: 'scroll', height: '70vh' }}>
             <div className="conBox conBox01">
               <div className="cellBox">
                 <img src={fig_01} alt="" />

@@ -15,7 +15,7 @@ import warningImage from '../../../assets/images/warning.png'
 
 
 
-function Modal({ showModal, setShowModal}) {
+function Modal({ showModal, setShowModal }) {
   const verificationResponse = useSelector(
     (data) => data.homeReducer.singleFileUploadData
   );
@@ -45,70 +45,70 @@ function Modal({ showModal, setShowModal}) {
                 </div>
                 {/*body*/}
                 {
-                    verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'allFileColumns' && 
-                    verificationResponse['res'].map((item,index)=>{
-                        return (
-                        <div key={index}>
-                            <div className="uppercase m-auto" key={Math.random()*102323}>{`Error in File ${item['tab']}: ${item['message']}`}</div>
-                        </div>)
-                    })
+                  verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'allFileColumns' &&
+                  verificationResponse['res'].map((item, index) => {
+                    return (
+                      <div key={index}>
+                        <div className="uppercase m-auto" key={Math.random() * 102323}>{`Error in File ${item['tab']}: ${item['message']}`}</div>
+                      </div>)
+                  })
                 }
-                {verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'clinicalInforamtionFile' && 
+                {verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'clinicalInforamtionFile' &&
                   <div className="relative p-6 flex-auto">
-                  <div className="my-4 text-2xl leading-relaxed">
-                    
-                    {
-                      Object.keys(verificationResponse["clinicalRows"]).map(filename => {
-                        return (
-                          <div key={Math.random}>
-                            <div className="uppercase underline" >{filename}</div>
-                            {
-                              Object.keys(verificationResponse["clinicalRows"][filename]).map((item,index) => {
-                                return(
-                                <div className="capitalize ml-2 m-2" key={Math.random}>
-                                <p>{verificationResponse["clinicalRows"][filename][index]}</p>
-                                <p></p>
-                                </div> 
-                                )
-                              })
-                            }
-                          </div>
-                        )
-                      })
-                    }
+                    <div className="my-4 text-2xl leading-relaxed">
+
+                      {
+                        Object.keys(verificationResponse["clinicalRows"]).map(filename => {
+                          return (
+                            <div key={Math.random}>
+                              <div className="uppercase underline" >{filename}</div>
+                              {
+                                Object.keys(verificationResponse["clinicalRows"][filename]).map((item, index) => {
+                                  return (
+                                    <div className="capitalize ml-2 m-2" key={Math.random}>
+                                      <p>{verificationResponse["clinicalRows"][filename][index]}</p>
+                                      <p></p>
+                                    </div>
+                                  )
+                                })
+                              }
+                            </div>
+                          )
+                        })
+                      }
+                    </div>
                   </div>
-                </div>
                 }
-                {verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'clinicalInforamtionFile' && 
+                {verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'clinicalInforamtionFile' &&
                   <div className="relative p-6 flex-auto">
-                  <div className="my-4 text-2xl leading-relaxed">
-                    
-                    {verificationResponse && "columnMessages" in verificationResponse &&
-                      Object.keys(verificationResponse["columnMessages"]).map(filename => {
-                        return (
-                          <div key={filename}>
-                            <div className="uppercase underline " key={filename}>{filename}</div>
-                            {
-                              Object.keys(verificationResponse["columnMessages"][filename]).map(item => {
-                                return(verificationResponse["columnMessages"][filename][item] !== '' ?
-                                <div className="capitalize ml-2 m-2" key={item}>
-                                <p>{item}: {verificationResponse["columnMessages"][filename][item]}</p>
-                                <p></p>
-                                </div> 
-                                : null)
-                              })
-                            }
-                          </div>
-                        )
-                      })
-                    }
+                    <div className="my-4 text-2xl leading-relaxed">
+
+                      {verificationResponse && "columnMessages" in verificationResponse &&
+                        Object.keys(verificationResponse["columnMessages"]).map(filename => {
+                          return (
+                            <div key={filename}>
+                              <div className="uppercase underline " key={filename}>{filename}</div>
+                              {
+                                Object.keys(verificationResponse["columnMessages"][filename]).map(item => {
+                                  return (verificationResponse["columnMessages"][filename][item] !== '' ?
+                                    <div className="capitalize ml-2 m-2" key={item}>
+                                      <p>{item}: {verificationResponse["columnMessages"][filename][item]}</p>
+                                      <p></p>
+                                    </div>
+                                    : null)
+                                })
+                              }
+                            </div>
+                          )
+                        })
+                      }
+                    </div>
                   </div>
-                </div>
                 }
 
                 <div className="relative p-6 flex-auto">
                   <div className="my-4 text-2xl leading-relaxed">
-                    
+
                     {verificationResponse && "columnMessages" in verificationResponse &&
                       Object.keys(verificationResponse["columnMessages"]).map(filename => {
                         return (
@@ -116,12 +116,12 @@ function Modal({ showModal, setShowModal}) {
                             <div className="uppercase underline " key={filename}>{filename}</div>
                             {
                               Object.keys(verificationResponse["columnMessages"][filename]).map(item => {
-                                return(verificationResponse["columnMessages"][filename][item] !== '' ?
-                                <div className="capitalize ml-2 m-2" key={item}>
-                                <p>{item}: {verificationResponse["columnMessages"][filename][item]}</p>
-                                <p></p>
-                                </div> 
-                                : null)
+                                return (verificationResponse["columnMessages"][filename][item] !== '' ?
+                                  <div className="capitalize ml-2 m-2" key={item}>
+                                    <p>{item}: {verificationResponse["columnMessages"][filename][item]}</p>
+                                    <p></p>
+                                  </div>
+                                  : null)
                               })
                             }
                           </div>
@@ -153,7 +153,7 @@ function Modal({ showModal, setShowModal}) {
 }
 
 
-function SingleDataTable({updateComponentNumber}) {
+function SingleDataTable({ updateComponentNumber }) {
   const dispatch = useDispatch();
   const [rowData, setRowData] = useState([]);
   const [colData, setColData] = useState([]);
@@ -175,21 +175,21 @@ function SingleDataTable({updateComponentNumber}) {
     setActiveTableKey(tab);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     if (verificationResponse && verificationResponse["project_details"]) {
 
-      for(const available_step in verificationResponse["project_details"]["available_steps"]){
-        if(verificationResponse["project_details"]["available_steps"][available_step].length > 0){
+      for (const available_step in verificationResponse["project_details"]["available_steps"]) {
+        if (verificationResponse["project_details"]["available_steps"][available_step].length > 0) {
           setNavTabIs(available_step)
         }
       }
-      if ('result' in verificationResponse){
-          let first = Object.values(verificationResponse['result'])[0]; 
+      if ('result' in verificationResponse) {
+        let first = Object.values(verificationResponse['result'])[0];
         setActiveTableKey(first[0]['tab']);
       }
-      
+
     }
-  },[verificationResponse])
+  }, [verificationResponse])
   useEffect(() => {
     if (verificationResponse && verificationResponse["result"]) {
       let temptabs = [];
@@ -197,7 +197,7 @@ function SingleDataTable({updateComponentNumber}) {
       for (const tabrow in verificationResponse["result"]) {
         let tab = verificationResponse["result"][tabrow][0]["tab"];
         temptabs.push(
-          <li key={tab} className={(activeTableKey === tab)?'on':''}>
+          <li key={tab} className={(activeTableKey === tab) ? 'on' : ''}>
             <button
               value={tab}
               onClick={() => tabDropdownTable(tab)}
@@ -231,9 +231,9 @@ function SingleDataTable({updateComponentNumber}) {
                 } else {
                   return <div className="boardCell">{String(row[columns[i]])}</div>;
                 }
-                
+
               },
-              className:'boardCell',
+              className: 'boardCell',
               sortable: true,
             });
           }
@@ -261,7 +261,7 @@ function SingleDataTable({updateComponentNumber}) {
           setRowData(rowdata);
         }
       }
-      let projectResponse = 'project_details' in verificationResponse ?verificationResponse["project_details"]:{};
+      let projectResponse = 'project_details' in verificationResponse ? verificationResponse["project_details"] : {};
       if ("id" in projectResponse) {
         setProjectId(projectResponse["id"]);
       } else {
@@ -284,57 +284,63 @@ function SingleDataTable({updateComponentNumber}) {
     setShowModal(stateData)
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     return () => {
       dispatch(clearSingleFIleUploadState())
     };
-  },[])
+  }, [])
 
   return (
     <div className="auto">
-      <div  className="flex">
+      <div className="flex" style={{ justifyContent: 'space-between' }}>
         <Modal showModal={showModal} setShowModal={setShowModalFunction} />
-        { projectId === 0 && 
-          (
+
+        {projectId === 0 ?
+
+          <>
             <button
               className='btn btnGray bdBtn'
               type="button"
               onClick={() => {
                 updateComponentNumber(0)
               }}
-              >
+            >
               <FormattedMessage id="Back" defaultMessage="Back" />
             </button>
-          )
-        }
-        {
-          projectId === 0 && (
+
             <div>
-                <button onClick={() => setShowModalFunction(true)} className="">
-                  <img width='50' src={warningImage}></img>
-                </button>
+              <button onClick={() => setShowModalFunction(true)} className="">
+                <img width='50' src={warningImage}></img>
+              </button>
             </div>
-          )
+          </> :
+          <>
+            <div className=" tab uploadTab">
+              <ul >
+                {tableNavTabs}
+              </ul>
+            </div>
+            <div>
+              <button
+                onClick={() => {
+                  dispatch(clearSingleFIleUploadState())
+                  history.push(`/visualise-singledata/${tab}/${projectId}`)
+                }}
+                className='btn btnPrimary'
+              >
+                <FormattedMessage id="Visualize" defaultMessage="Visualize" />
+              </button>
+            </div>
+          </>
         }
 
-        {projectId !== 0 && (
-          <button
-            onClick={() => {
-              dispatch(clearSingleFIleUploadState())
-              history.push(`/visualise-singledata/${tab}/${projectId}`)}}
-            className='btn btnPrimary'
-          >
-            <FormattedMessage id="Visualize" defaultMessage="Visualize" />
-          </button>
-        )}
+
+
+
       </div>
-      <div className=" tab">
-        <ul >
-          {tableNavTabs}
-        </ul>
-      </div>
-      <div className="boardList">
-        {verificationResponse  && (
+
+      <div className="boardList" style={{ textAlign: 'center' }}>
+        {verificationResponse && (
           <DataTable
             title=""
             columns={colData}
@@ -344,25 +350,25 @@ function SingleDataTable({updateComponentNumber}) {
             conditionalRowStyles={conditionalRowStyles}
           />
         )}
-        {!verificationResponse  && (
+        {!verificationResponse && (
           <div>
             <LoaderCmp />
-            { <p className="text-center">
-              <FormattedMessage id = 'WaitMessage' defaultMessage=' It takes some time to process the data. Please wait ! (2 minutes per 100 samples)' /> 
+            {<p className="text-center">
+              <FormattedMessage id='WaitMessage' defaultMessage=' It takes some time to process the data. Please wait ! (2 minutes per 100 samples)' />
             </p>
             }
           </div>
         )}
       </div>
-      <div>
+      <div style={{ textAlign: 'center' }}>
         {
-          fileUploadStatus && fileUploadStatus['failed'] && 
+          fileUploadStatus && fileUploadStatus['failed'] &&
           <div>
-           <p>Error</p>
+            <p>Error</p>
           </div>
         }
       </div>
- 
+
     </div>
   );
 }

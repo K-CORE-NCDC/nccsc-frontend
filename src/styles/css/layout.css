@@ -1885,6 +1885,10 @@ table tbody tr {
   margin-bottom: 24px;
 }
 
+.uploadTab {
+  margin-bottom: 10px !important;
+}
+
 .tab ul {
   display: flex;
   justify-content: flex-start;
@@ -2710,12 +2714,13 @@ table tbody tr {
 }
 
 .footer .footerMiddle {
-  padding: 56px 0 25px;
+  padding: 25px 0 25px;
   font-size: 14px;
   font-weight: 500;
   line-height: 140%;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
+
 
 .footer .footerMiddle .footerLogo {
   display: flex;
@@ -2771,10 +2776,14 @@ table tbody tr {
 }
 
 .footer .footerBottom {
-  padding: 24px 0 38px;
+  padding: 20px 55px 30px;
   font-size: 14px;
   font-weight: 500;
   line-height: 140%;
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(240, 235, 227);
+  color: #000;
 }
 
 .footer .footerBottom .footerMenu {
@@ -3202,6 +3211,8 @@ body {
   border-radius: 50%;
   border: 1px solid rgb(255, 255, 255);
 }
+
+
 
 #fullSlide .pagination div.swiper-pagination-bullet-active span {
   display: block;

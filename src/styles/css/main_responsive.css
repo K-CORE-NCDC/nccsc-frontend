@@ -48,7 +48,7 @@
 
 
 @media all and (max-width: 1600px) {
-  #fullSlide .pagination div.swiper-pagination-bullet-active span {
+  #fullSlide .pagination div .swiper-pagination-bullet-active span {
     display: none;
   }
 }

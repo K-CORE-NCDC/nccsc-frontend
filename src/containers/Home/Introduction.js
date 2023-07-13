@@ -14,7 +14,7 @@ const Introduction = ({ height, innerHeight }) => {
         <div className="visual">
           <div className="txtBox main_box" data-aos="fade-in" >
             <div className="txtBox_child1">
-              <p className="d2" >KCore Cancer Omics Research Portal</p>
+              <p className="d2" >K-Core Cancer Omics Research Portal</p>
               <br />
               <p className="h6">
                 <FormattedMessage

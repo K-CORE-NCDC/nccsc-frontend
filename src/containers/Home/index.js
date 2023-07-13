@@ -4,7 +4,6 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import { Mousewheel, Pagination } from "swiper";
 import { Context } from "../../wrapper";
-// import Swiper from "swiper";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { Swiper as SwiperComponent, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
@@ -14,6 +13,8 @@ import { SiteIntro } from "../Introduction/SiteIntro";
 import { VisualizeMyData } from "../VisualizeMyData/VisualizeMyData";
 import { SingleDataVisualization } from "../VisualizeMyExampleData/SingleDataVisualization";
 import Introduction from "./Introduction";
+import FooterComponent from "../Common/FooterComponent/FooterComponent";
+// import "../../styles/swiper_cus.css"
 
 export default function Home(parentProps) {
   const params = useParams()
@@ -27,7 +28,7 @@ export default function Home(parentProps) {
   const [activeClassPath, setActiveclassPath] = useState('')
   const [activeClassIndex, setActiveClassIndex] = useState(0)
   const countJson = useSelector((data) => data.homeReducer.dataCount);
-  const sections = ["MAIN", "INTRODUCTION", "VISUALIZEDATA", "VISUALIZEMYDATA", "CUSTOMERSERVICE"];
+  const sections = ["MAIN", "INTRODUCTION", "VISUALIZEDATA", "VISUALIZEMYDATA", "CUSTOMERSERVICE", "FOOTER"];
   const resultRef = useRef([]);
 
   useEffect(() => {
@@ -47,11 +48,16 @@ export default function Home(parentProps) {
 
     setCurrentDate(date);
     setCurrentTime(time);
+    console.log(parentProps?.parentProps?.activeClassIndex)
     toSlide(parentProps?.parentProps?.activeClassIndex)
-
-    console.log('height', window?.innerHeight)
-    console.log('width', window?.innerWidth)
-
+    var body = document.getElementsByTagName('body')[0]
+    if (body) {
+      console.log(body)
+      body?.classList?.add('no-overflow')
+    }
+    return () => {
+      body?.classList?.remove('no-overflow')
+    }
   }, []);
 
   const toSlide = (num) => {
@@ -96,65 +102,73 @@ export default function Home(parentProps) {
   return (
     <>
       {(width > 1025 && height > 800) &&
-        <SwiperComponent
-          ref={swiperRef}
-          loop={false}
-          speed={800}
-          direction="vertical"
-          slidesPerView="auto"
-          mousewheel={
-            {
-              sensitivity: 5,
-              thresholdDelta: 1,
-            }
-          }
-          simulateTouch={false}
-          watchSlidesProgress={true}
-
-          pagination={{
-            el: '.pagination',
-            clickable: true,
-            renderBullet: function (index, className) {
-              return "<div className='" + className + "'><span>" + sections[index] + "</span></div>";
-            },
-          }}
-
-          height={window.innerHeight}
-          modules={[Pagination, Mousewheel]}
-
-          onSnapIndexChange={activeClassIndex}
-          onSlideChange={(e) => {
-
-            // let _activeURl = childMenu?.mainmenu?.items?.find(event => event?.index === e?.activeIndex)
-            // history.push(_activeURl?.url || '/')
-            parentProps?.parentProps?.setActiveClassIndex(e?.activeIndex)
-            // setActiveclassPath(_activeURl?.title)
-          }}
-
-          className=" h-screen ">
+        <>
           <div className={`${parentProps?.parentProps?.activeClassIndex !== 0 ? 'on' : ''} pagination `}></div>
 
-          <SwiperSlide id="home" className="section section01">
-            <Introduction height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
-          </SwiperSlide>
+          <SwiperComponent
+            ref={swiperRef}
+            loop={false}
+            speed={800}
+            direction="vertical"
+            slidesPerView="auto"
+            watchSlidesProgress={true}
+            mousewheel={
+              {
+                sensitivity: 3,
+                thresholdDelta: 1,
+              }
+            }
+            simulateTouch={false}
 
-          <SwiperSlide id="introduction" className="section section04">
-            <SiteIntro height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
-          </SwiperSlide>
+            pagination={{
+              el: '.pagination',
+              clickable: true,
+              renderBullet: function (index, className)  {
+                
+                return `<div class="${parentProps?.parentProps?.activeClassIndex === index ? 'circle ' :' ' } ${className} "><span>  ${sections[index]} </span></div>`;
+              }
+            }}
 
-          <SwiperSlide className="section section02" id="visualization">
-            <SingleDataVisualization height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
+            height={window.innerHeight}
+            modules={[Pagination, Mousewheel]}
 
-          </SwiperSlide >
+            // onSnapIndexChange={activeClassIndex}
+            onSlideChange={(e) => {
 
-          <SwiperSlide className="section section03" id="visualizationMyData">
-            <VisualizeMyData />
+              // let _activeURl = childMenu?.mainmenu?.items?.find(event => event?.index === e?.activeIndex)
+              // history.push(_activeURl?.url || '/')
 
-          </SwiperSlide>
-          <SwiperSlide className="section section04" id="customerService">
-            <Notice />
-          </SwiperSlide>
-        </SwiperComponent>
+              parentProps?.parentProps?.setActiveClassIndex(e?.activeIndex)
+
+              // setActiveclassPath(_activeURl?.title)
+            }}
+
+            className=" h-screen ">
+
+            <SwiperSlide id="home" className="section section01">
+              <Introduction height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
+            </SwiperSlide>
+
+            <SwiperSlide id="introduction" className="section section04">
+              <SiteIntro height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
+            </SwiperSlide>
+
+            <SwiperSlide className="section section02" id="visualization">
+              <SingleDataVisualization height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
+
+            </SwiperSlide >
+
+            <SwiperSlide className="section section03" id="visualizationMyData">
+              <VisualizeMyData />
+
+            </SwiperSlide>
+            <SwiperSlide className="section section04" id="customerService">
+              <Notice />
+            </SwiperSlide>
+            <SwiperSlide id="footer">
+                <FooterComponent/>
+            </SwiperSlide>
+          </SwiperComponent> </>
       }
 
       {

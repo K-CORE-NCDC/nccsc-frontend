@@ -1,5 +1,7 @@
 /* Sohel New Classes */
-
+.no-overflow{
+  overflow-y: hidden;
+}
 .ErrorInput {
   border: 2px solid #f56565;
 }
@@ -1834,4 +1836,9 @@
 .relatedurls {
   padding-top: 5%;
   display: flex;
+}
+
+.notFound{
+  justify-content: center;
+  display: grid;
 }
