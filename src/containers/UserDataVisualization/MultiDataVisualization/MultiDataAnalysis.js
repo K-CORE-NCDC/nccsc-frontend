@@ -26,6 +26,7 @@ import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
 import GeneSet from "../Components/MainComponents/GeneSet";
 import SurvivalFilterComponent from "../Components/MainComponents/SurvivalFilterComponent";
 import VolcanoFusionFilterComponent from "../Components/MainComponents/VolcanoFusionFilterComponent";
+import ExampleImage from '../../../assets/images/mainSection05-img02.jpg';
 
 
 export default function DataVisualization() {
@@ -248,7 +249,10 @@ export default function DataVisualization() {
         name = "";
       }
 
-      let gridobj = { title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/visualise-multidata/${element}/${project_id}`, viewLink: `/visualise-multidata/${element}/` }
+      let gridobj = {
+        title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/visualise-multidata/${element}/${project_id}`, viewLink: `/visualise-multidata/${element}/`
+        , description: 'Provides a visualization analysis service that can be implemented according to the uploaded user data.'
+      }
       gridData.push(gridobj)
 
     });
@@ -397,12 +401,12 @@ export default function DataVisualization() {
   }, []);
 
   const breadCrumbs = {
-    '/visualise-multidata/': 
-    [
-      { id: 'Home', defaultMessage: 'Home', to: '/' },
-      { id: 'MultiDataVisualization', defaultMessage: 'Multi Data Visualisation', to: `/visualise-multidata/home/${project_id}` },
-      { id: tab !== 'home' ? tab :'Null', defaultMessage: tab !== 'home' ? tab :'Null' , to: `/visualise-multidata/${tabName}/${project_id}` }
-    ]
+    '/visualise-multidata/':
+      [
+        { id: 'Home', defaultMessage: 'Home', to: '/' },
+        { id: 'MultiDataVisualization', defaultMessage: 'Multi Data Visualisation', to: `/visualise-multidata/home/${project_id}` },
+        { id: tab !== 'home' ? tab : 'Null', defaultMessage: tab !== 'home' ? tab : 'Null', to: `/visualise-multidata/${tabName}/${project_id}` }
+      ]
 
   };
 
@@ -610,44 +614,40 @@ export default function DataVisualization() {
 
               </div>
             </section>
-
             {
               gridData && !tabName &&
-              <div className='dataList' style={{ marginTop: '5%' }}>
-                <ul >
-                  {gridData.map((item, index) => (
+              <div className='mainContentsBox' style={{ marginTop: '50px' }}>
+                <div className="galleryList">
+                  <ul className="justify-content-center">
+                    {gridData.map((item, index) => {
+                        return <li key={index} className="listitems">
+                          <Link to={item.link}>
+                            <div className="thumb">
+                              <img src={item.image} alt="img" />
+                              <div className="hvBox">
+                                <span className="playicon">
+                                  <Link to={item.link}>
+                                    <span className="material-icons">
+                                      play_circle
+                                    </span>
+                                  </Link>
+                                </span>
+                              </div>
+                            </div>
 
-                    <li key={index} >
-                      <div className="labelBox">
-                        <div className="labels01">
-                          <h3 style={{ textTransform: 'capitalize' }}>
-                            {item.title}
-                          </h3>
-                        </div>
-                        <div className="visualize_btns" style={{ columnGap: "10px" }}>
-                          {project_id ?
-                            <Link to={item.link}>
-
-                              <span class="material-icons ">
-                                play_circle
-                              </span>
-
-                            </Link> :
-                            <Link to={item.viewLink}>
-                              <span class="material-icons">
-                                visibility
-                              </span>
-
-                            </Link>}
-                        </div>
-
-                      </div>
-                      <div>
-                        <img src={item.image} alt="img" className={imageStyles} />
-                      </div>
-                    </li>
-                  ))}
-                </ul>
+                            <div className="txtBox txtBoxpadding tac Relative">
+                              <dl className="MarginTop8">
+                                <dt className="h4 Capitalize">{item.title}</dt>
+                                <dd className="p1">
+                                  {item.description}
+                                </dd>
+                              </dl>
+                            </div>
+                          </Link>
+                        </li>
+                    })}
+                  </ul>
+                </div>
               </div>
             }
 

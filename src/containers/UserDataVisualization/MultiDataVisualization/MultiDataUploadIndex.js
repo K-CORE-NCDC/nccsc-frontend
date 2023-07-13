@@ -10,19 +10,6 @@ export default function Index() {
   const updateComponentNumber = (num) =>{
     setComponentNumber(num)
   }
-  console.log(componentNumber,'---')
-  
-  // useEffect(() => {
-  //   if(getCookie('is_login') && getCookie('is_login') === 'True'){
-  //     updateComponentNumber(0)
-  //   }
-  //   else{
-  //     history.push("/login")
-  //     }
-  // }, [history])
-
-
- 
   
   return (
     <div className="w-full">

@@ -259,6 +259,10 @@
   width: 100%;
 }
 
+.H100 {
+  height: 100%;
+}
+
 .GeneSetgeneItem {
   display: flex;
   align-items: center;
@@ -668,7 +672,9 @@
 .MarginTop4 {
   margin-top: 1rem;
 }
-
+.MarginTop8 {
+  margin-top: 2rem;
+}
 .MarginLeft4 {
 
   margin-left: 1rem;
@@ -779,9 +785,6 @@
   grid-column: span 12 / span 12;
 }
 
-.Relative {
-  position: relative;
-}
 
 .ZIndex10 {
   z-index: 10;
@@ -838,6 +841,7 @@
   justify-content: space-evenly;
 }
 
+
 .MultiDataTableViewDelete {
   display: grid;
   width: 100%;
@@ -880,6 +884,14 @@
 
 .Absolute {
   position: absolute;
+}
+
+.Relative {
+  position: relative;
+}
+
+.Capitalize {
+  text-transform: capitalize;
 }
 
 .FilterDot {
@@ -1826,7 +1838,20 @@
   color: #003177;
   font-weight: 500;
 }
-
+.visualize_btns a span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #003177;
+  font-weight: 500;
+}
+.visualize_btns:hover a span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #003177;
+  font-weight: 500;
+}
 .visualize_btns {
   display: flex;
 }
@@ -1835,3 +1860,4 @@
   padding-top: 5%;
   display: flex;
 }
+
