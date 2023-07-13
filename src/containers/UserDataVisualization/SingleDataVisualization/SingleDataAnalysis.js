@@ -22,7 +22,7 @@ import {
 import { Popover, Transition } from "@headlessui/react";
 import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
 import GeneSet from "../Components/MainComponents/GeneSet";
-import SurvivalFilterComponent from "../Components/MainComponents/SurvivalFilterComponent";
+import ExampleImage from '../../../assets/images/mainSection05-img02.jpg';
 
 export default function DataVisualization() {
   const context = useContext(Context);
@@ -226,7 +226,9 @@ export default function DataVisualization() {
         element = "genomic-data";
       }
 
-      let gridobj = { title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/singledata-upload/${element}/`, viewLink: `/visualise-singledata/${element}` }
+      let gridobj = { title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/singledata-upload/${element}/`, viewLink: `/visualise-singledata/${element}` ,
+      description: 'Provides a visualization analysis service that can be implemented according to the uploaded user data.'
+      }
       gridData.push(gridobj)
 
     });
@@ -304,11 +306,11 @@ export default function DataVisualization() {
 
   const breadCrumbs = {
     '/visualise-singledata/':
-    [
-      { id: 'Home', defaultMessage: 'Home', to: '/' },
-      { id: 'SingleDataVisualisation', defaultMessage: 'Single Data Visualisation', to: `/visualise-singledata/home/${project_id}` },
-      { id: tab !== 'home' ? tab :'Null', defaultMessage: tab !== 'home' ? tab :'Null' , to: `/visualise-multidata/${tabName}/${project_id}` }
-    ]
+      [
+        { id: 'Home', defaultMessage: 'Home', to: '/' },
+        { id: 'SingleDataVisualisation', defaultMessage: 'Single Data Visualisation', to: `/visualise-singledata/home/${project_id}` },
+        { id: tab !== 'home' ? tab : 'Null', defaultMessage: tab !== 'home' ? tab : 'Null', to: `/visualise-multidata/${tabName}/${project_id}` }
+      ]
 
   };
   return (
@@ -336,48 +338,53 @@ export default function DataVisualization() {
           <div className="auto">
             {
               gridData && !tabName ?
-                <div className='dataList singleDataViz'>
-                  <ul >
-                    {gridData.map((item, index) => (
-
-                      <li key={index} >
-                        <div className="labelBox">
-                          <div className="labels01">
-                            <h3 style={{ textTransform: 'capitalize' }}>
-                              {item.title}
-                            </h3>
-                          </div>
-                          <div className="visualize_btns" style={{ columnGap: "10px" }}>
-                            <Link to={item.link}>
-
-                              <span class="material-icons">
-                                download
+                <div className='mainContentsBox' style={{ marginTop: '50px' }}>
+                  <div className="galleryList">
+                    <ul className="justify-content-center">
+                      {gridData.map((item, index) => {
+                        return <li key={index} className="listitems">
+                          <Link to={item.link}>
+                            <div className="thumb">
+                              <img src={ExampleImage} alt="img" />
+                              <div className="hvBox">
+                                <div className="vizButtons" style={{ columnGap: "10px" }}>
+                                  <Link to={item.link}>
+                                    <span className="material-icons">
+                                      download
+                                    </span>
+                                  </Link>
+                                  <Link to={item.viewLink}>
+                                    <span className="material-icons">
+                                      visibility
+                                    </span>
+                                  </Link>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="txtBox txtBoxpadding tac Relative">
+                              <dl className="MarginTop10">
+                                <dt className="h4 Capitalize">{item.title}</dt>
+                                <dd className="p1">
+                                  {item.description}
+                                </dd>
+                              </dl>
+                              <span className="playicon">
+                              <Link to={item.link}>
+                                  <span className=" material-icons">
+                                    play_circle
+                                  </span>
+                                </Link>
                               </span>
+                            </div>
 
-                            </Link>
-                            <Link to={item.link}>
+                          </Link>
+                        </li>
+                      })}
+                    </ul>
+                  </div>
+                </div>
 
-                              <span class="material-icons ">
-                                play_circle
-                              </span>
-
-                            </Link>
-                            <Link to={item.viewLink}>
-                              <span class="material-icons">
-                                visibility
-                              </span>
-
-                            </Link>
-                          </div>
-
-                        </div>
-                        <div>
-                          <img src={item.image} alt="img" />
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                </div> :
+                :
                 <>
                   <section >
                     <div className="PopoverStyles single_viz">
