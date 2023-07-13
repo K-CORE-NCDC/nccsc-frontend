@@ -3353,7 +3353,7 @@ body {
 
 .galleryList ul li {
   width: 33.33%;
-  padding: 20px 11px;
+  padding: 20px 31px;
 }
 
 .galleryList ul li a {
@@ -3396,6 +3396,67 @@ body {
   display: flex;
 }
 
+.mainContents  .galleryList ul li a .thumb .hvBox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 2;
+  opacity: 0;
+}
+
+/* .mainContents .galleryList ul li {
+  padding: 0px 12px;
+} */
+
+.mainContents .galleryList ul.listitems {
+  padding: 27px 31px;
+}
+
+.mainContents .galleryList ul li a .icon {
+  position: absolute;
+  top: 12px ;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+  background-image: url("../images/icon-link.svg");
+  margin-top: 0;
+}
+
+
+.mainContents .galleryList ul li a .playicon, .mainContents .galleryList ul li a .txtBox .playicon  {
+  position: absolute;
+  top: 12px ;
+  right: 12px;
+  /* width: 28px; */
+  /* height: 28px; */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+  margin-top: 0;
+}
+
+.galleryList ul li a:hover .thumb .hvBox .playicon {
+  position: absolute;
+  top: 50% ;
+  right: 50%;
+  /* width: 100px; */
+  /* height: 28px; */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+  margin-top: 0;
+}
+
+.galleryList ul li a:hover .thumb .hvBox .vizButtons {
+  display: flex;
+}
+
 .galleryList .thumb .labels img {
   width: 27px;
 }
@@ -3411,6 +3472,15 @@ body {
 .galleryList .txtBox dl dd {
   margin-top: 16px;
 }
+
+.galleryList .txtBoxpadding dl dd {
+  margin-top: 16px;
+  padding-bottom: 58px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+
 
 .galleryList .txtBox p {
   height: 2.8em;
@@ -3447,17 +3517,43 @@ body {
   margin-right: 6px;
 }
 
+.mainContents .section05 .galleryList ul li a .txtBox {
+  position: relative;
+  padding: 48px 32px
+}
+
 /* 변경 */
-/*.galleryList ul li a:hover .thumb > img {
+.galleryList ul li a:hover .thumb > img {
   transform: scale(1.1);
-}*/
+}
+
+.galleryList ul li a:hover .thumb .hvBox {
+  opacity: 100;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.galleryList ul li a:hover .thumb .hvBox span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  font-weight: 700;
+  color: rgb(255, 255, 255);
+}
+
+
+.galleryList ul li a:hover .txtBox{
+  background-color: #003177;
+}
 .galleryList ul li a:hover .txtBox dt {
   color: rgb(255, 255, 255);
 }
 
-.galleryList ul li a:hover .txtBox dd {
+.galleryList ul li a:hover .txtBox dd, .galleryList ul li a:hover .txtBox span  {
   color: rgba(255, 255, 255, 0.8);
 }
+
 
 .announce {
   display: inline-block;

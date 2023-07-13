@@ -8,7 +8,7 @@ export default function Index() {
   const updateComponentNumber = (num) =>{
     setComponentNumber(num)
   }
-
+  
   return (
     <div className="w-full">
       {
