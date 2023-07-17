@@ -42,8 +42,6 @@ export default function DataVisualization() {
   const [VFData, setVFData] = useState({})
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
   const [gridData, setGridData] = useState([])
-  const numRows = Math.ceil(gridData.length / 3);
-  const imageStyles = "object-cover object-center w-full h-full mt-8";
   const history = useHistory();
   const project_id_status = useSelector(
     (data) => data.homeReducer.project_id_status
@@ -68,6 +66,7 @@ export default function DataVisualization() {
   };
 
   const submitFilter = (e) => {
+    console.log('submit filter');
     if (BrstKeys) {
       // setChartName(tabName);
       let chartx = LoadChart(width, tabName);
@@ -80,7 +79,7 @@ export default function DataVisualization() {
 
 
 
-  const callback = useCallback(({ filters, filterKeyandValues, value, genes }) => {
+  const callback = useCallback(({ filter, value, genes }) => {
     let g = []
     if (genes?.includes(' ')) {
       g = genes?.split(' ')
@@ -88,12 +87,12 @@ export default function DataVisualization() {
     else {
       g?.push(genes)
     }
-    if (filters && filterKeyandValues) {
+    if (filter) {
       setState((prevState) => ({
         ...prevState,
-        'filterKeyandValues': filterKeyandValues
+        filter:filter
       }));
-      // setfilterApplied(true);
+      setfilterApplied(true);
     }
     else if (value && genes) {
       setState((prevState) => ({
@@ -256,7 +255,7 @@ export default function DataVisualization() {
   }, [availableTabsForProject, chartName]);
 
   useEffect(() => {
-    if (BrstKeys === undefined) {
+    // if (BrstKeys !== undefined) {
       if (project_id !== undefined) {
         if (state.genes.length > 0) {
           dispatch(samplesCount("POST", { project_id: project_id }));
@@ -268,7 +267,7 @@ export default function DataVisualization() {
           dispatch(getBreastKeys(state));
         }
       }
-    }
+    // }
   }, [state]);
 
 

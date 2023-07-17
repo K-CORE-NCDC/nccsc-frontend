@@ -219,7 +219,6 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                   lollipopTmp[p_vc] = [data[i]['sample'] + "||" + data[i]['protein']]
                 }
               }
-              console.log('BrstKeys', BrstKeys)
               table_data?.push({
                 "sample": BrstKeys[data[i]['sample']],
                 "protein": data[i]['protein'],

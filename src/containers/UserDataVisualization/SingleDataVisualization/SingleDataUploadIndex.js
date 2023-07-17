@@ -9,7 +9,6 @@ export default function Index() {
   
   const [componentNumber, setComponentNumber] = useState(0)
   let { tab, project_id } = useParams();
-  console.log(tab)
   const updateComponentNumber = (num) =>{
     setComponentNumber(num)
   }

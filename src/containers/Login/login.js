@@ -89,7 +89,6 @@ const LoginComponent = () => {
       setIsError(false)
       let data = login("POST", userFormData)
       data.then((result) => {
-        console.log(result);
         if ('data' in result && 'status' in result.data && result.data.status === "Login Successfull") {
           loginSuccess();
         }

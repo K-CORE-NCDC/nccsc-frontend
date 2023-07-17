@@ -71,7 +71,7 @@ export default function DataVisualization() {
     switch (type) {
       case "circos":
         return Charts.circos(
-          w,
+          elementRef.current.getBoundingClientRect().width,
           state,
           screenCapture,
           setToFalseAfterScreenCapture,
