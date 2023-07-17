@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick.css";
 import { Mousewheel, Pagination } from "swiper";
 import { Context } from "../../wrapper";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
-import { Swiper as SwiperComponent, SwiperSlide } from "swiper/react";
+import { Swiper as SwiperComponent, SwiperSlide, useSwiper } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.css";
 import { Notice } from "../CustomerService/Notice";
@@ -30,6 +30,7 @@ export default function Home(parentProps) {
   const countJson = useSelector((data) => data.homeReducer.dataCount);
   const sections = ["MAIN", "INTRODUCTION", "VISUALIZEDATA", "VISUALIZEMYDATA", "CUSTOMERSERVICE", "FOOTER"];
   const resultRef = useRef([]);
+  // const swiper = useSwiper()
 
   useEffect(() => {
 
@@ -48,20 +49,46 @@ export default function Home(parentProps) {
 
     setCurrentDate(date);
     setCurrentTime(time);
-    console.log(parentProps?.parentProps?.activeClassIndex)
-    toSlide(parentProps?.parentProps?.activeClassIndex)
-    var body = document.getElementsByTagName('body')[0]
-    if (body) {
-      console.log(body)
-      body?.classList?.add('no-overflow')
+
+
+
+
+    if (width > 1025 && height > 800) {
+      var body = document.getElementsByTagName('body')[0]
+      if (body) {
+        console.log(body)
+        body?.classList?.add('no-overflow')
+      }
+      return () => {
+        body?.classList?.remove('no-overflow')
+      }
     }
-    return () => {
-      body?.classList?.remove('no-overflow')
+
+  }, []);
+
+  useEffect(() => {
+    const storedSlideIndex = localStorage.getItem('activeSlideIndex');
+    const parsedIndex = parseInt(storedSlideIndex, 10);
+
+    if (!isNaN(parsedIndex) && swiperRef.current && swiperRef.current.swiper) {
+      swiperRef.current.swiper.slideTo(parsedIndex);
+      swiperRef.current.swiper.update(0);
+      // history.push('/') // Add this line to update Swiper
     }
   }, []);
 
+  useEffect(() =>{
+    toSlide(parentProps?.parentProps?.activeClassIndex)
+  },[parentProps?.parentProps?.activeClassIndex])
+
+ 
+
   const toSlide = (num) => {
-    swiperRef?.current?.swiper?.slideTo(num);
+    if (swiperRef.current && swiperRef.current.swiper) {
+      swiperRef.current.swiper.slideTo(num);
+      localStorage.setItem('activeSlideIndex', num.toString());
+    }
+   
   };
 
   const [koreanlanguage, setKoreanlanguage] = useState(false);
@@ -70,15 +97,6 @@ export default function Home(parentProps) {
   const height = window?.innerHeight
   const context = useContext(Context);
 
-  resultRef.current = [...Array(5).keys()].map(
-    (_, i) => resultRef.current[i] ?? createRef()
-  );
-
-  useEffect(() => {
-    resultRef?.current[parentProps?.parentProps?.activeClassIndex]?.current?.scrollIntoView({
-      behavior: "smooth",
-    });
-  }, [parentProps?.parentProps?.activeClassIndex]);
 
   useEffect(() => {
     if (context["locale"] === "kr-KO") {
@@ -106,12 +124,12 @@ export default function Home(parentProps) {
           <div className={`${parentProps?.parentProps?.activeClassIndex !== 0 ? 'on' : ''} pagination `}></div>
 
           <SwiperComponent
-            ref={swiperRef}
+            // ref={swiperRef}
             loop={false}
             speed={800}
             direction="vertical"
             slidesPerView="auto"
-            watchSlidesProgress={true}
+            watchSlidesProgress={false}
             mousewheel={
               {
                 sensitivity: 3,
@@ -123,18 +141,16 @@ export default function Home(parentProps) {
             pagination={{
               el: '.pagination',
               clickable: true,
-              renderBullet: function (index, className)  {
-                
-                return `<div class="${parentProps?.parentProps?.activeClassIndex === index ? 'circle ' :' ' } ${className} "><span>  ${sections[index]} </span></div>`;
+              renderBullet: function (index, className) {
+
+                return `<div class="${parentProps?.parentProps?.activeClassIndex === index ? 'circle ' : ' '} ${className} "><span>  ${sections[index]} </span></div>`;
               }
             }}
-
+            initialSlide={0}
             height={window.innerHeight}
             modules={[Pagination, Mousewheel]}
-
-            // onSnapIndexChange={activeClassIndex}
             onSlideChange={(e) => {
-
+              console.log(e)
               // let _activeURl = childMenu?.mainmenu?.items?.find(event => event?.index === e?.activeIndex)
               // history.push(_activeURl?.url || '/')
 
@@ -142,31 +158,29 @@ export default function Home(parentProps) {
 
               // setActiveclassPath(_activeURl?.title)
             }}
-
             className=" h-screen ">
-
             <SwiperSlide id="home" className="section section01">
-              <Introduction height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
+              <Introduction />
             </SwiperSlide>
 
-            <SwiperSlide id="introduction" className="section section04">
-              <SiteIntro height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
+            <SwiperSlide id="intro" className="section section04">
+              <SiteIntro />
             </SwiperSlide>
 
-            <SwiperSlide className="section section02" id="visualization">
-              <SingleDataVisualization height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
+            <SwiperSlide id="exampleData" className="section section02">
+              <SingleDataVisualization />
 
             </SwiperSlide >
 
-            <SwiperSlide className="section section03" id="visualizationMyData">
+            <SwiperSlide className="section section03">
               <VisualizeMyData />
 
             </SwiperSlide>
-            <SwiperSlide className="section section04" id="customerService">
+            <SwiperSlide className="section section04" >
               <Notice />
             </SwiperSlide>
             <SwiperSlide id="footer">
-                <FooterComponent/>
+              <FooterComponent />
             </SwiperSlide>
           </SwiperComponent> </>
       }

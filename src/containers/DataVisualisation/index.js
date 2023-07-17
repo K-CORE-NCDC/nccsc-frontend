@@ -1225,7 +1225,7 @@ export default function DataVisualization() {
   const breadCrumbs = {
     '/visualise-multidata/': [
       { id: 'FindID', defaultMessage: 'Home', to: '/' },
-      { id: 'MultiDataVisualization', defaultMessage: 'Multi Data Visualisation', to: '/visualise-multidata/home/' },
+      { id: 'MultiDataVisualization', defaultMessage: 'Multi Data Visualization', to: '/visualise-multidata/home/' },
     ],
 
   };

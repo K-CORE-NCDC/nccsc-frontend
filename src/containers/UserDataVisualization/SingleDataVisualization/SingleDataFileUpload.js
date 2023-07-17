@@ -17,10 +17,11 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
   const [loader, setLoader] = useState({})
   const [selectedFiles, setSelectedFiles] = useState([])
   const [uploadFile, setUploadFile] = useState({})
-  const [projectName, setProjectName] = useState("")
+  const projectName = "Project_name"
   const [formSbubmitButtonText, setFormSubmitButtonText] = useState("upload")
   const [initialInputState, setInitialInputState] = useState(undefined)
   let { tab } = useParams();
+  const inputRef  = useRef(null)
   const allowedTabs = ["circos", "lollipop", "CNV", "heatmap", "box", "survival", "genomic-data"]
   const charts = {
     "circos": {
@@ -121,7 +122,8 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
   }, [])
 
   const resetStates = () => {
-    dispatch(clearSingleFIleUploadState())
+    // dispatch(clearSingleFIleUploadState())
+    inputRef.current.value = null;
     setSelectedFileSampleType({
       1: "clinical_information",
     })
@@ -132,7 +134,7 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
         object = charts[tab]
       return { 1: object }
     })
-    setSelectedFiles({})
+    setSelectedFiles([])
     setUploadFile([])
   }
 
@@ -282,10 +284,10 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
         </dl>
         <dl key={'dl2-' + key}>
           <dt>&nbsp;</dt>
-          <dd className='inputText'>
+          <dd className='inputText' style={{ paddingTop: '2%' }}>
             <label
               className="select-color w-full block text-right border focus:outline-none border-b-color focus:ring focus:border-blue-300 p-4 mt-3">
-              <input type='file' className="w-full" data={key} name={selectedFileSampleType[key]} id="user-file-input" filename={key} onChange={file_Upload_} />
+              <input type='file' className="w-full" data={key} name={selectedFileSampleType[key]} id="user-file-input" filename={key} onChange={file_Upload_} ref={inputRef}/>
             </label>
           </dd>
         </dl>
@@ -348,50 +350,6 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
     }
   }
 
-
-
-  const addNewHTML = () => {
-    const newElementId = Math.max(...Object.keys(selectedFileSampleType)) + 1
-    if (newElementId < 9) {
-      let checkedFileTypes = Object.values(selectedFileSampleType)
-      let availableTypes = Object.keys(dropdownOptions).filter(step => (!checkedFileTypes.includes(step)))
-      let availableTypesJson = {}
-
-      availableTypes.forEach(element => {
-        availableTypesJson[element] = dropdownOptions[element]
-      })
-
-      setDropdownOptionsSelected(prevState => ({
-        ...prevState,
-        [newElementId]: availableTypesJson
-      }))
-
-      setSelectedFileSampleType((prevState) => ({
-        ...prevState,
-        [newElementId]: availableTypes[0]
-      }))
-    }
-  }
-
-  const deleteHtml = (e) => {
-    let deleteKey = e.target.id
-    let selected_ = selectedFiles
-    if (deleteKey !== 1) {
-      let activeElementKeys = {}
-      Object.keys(selectedFileSampleType).forEach(key => {
-        if (key !== deleteKey) {
-          activeElementKeys = { ...activeElementKeys, [key]: selectedFileSampleType[key] }
-          selected_.splice(key, 1)
-        }
-      })
-      setSelectedFileSampleType(activeElementKeys)
-      setSelectedFiles([...selected_])
-    }
-  }
-
-
-
-
   return (
     <>
 
@@ -407,7 +365,7 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
             </span>
           </div> : ""}
           <div className="formBox">
-            <dl>
+            {/* <dl>
               <dt>
                 <FormattedMessage id="ProjectName" defaultMessage="Project Name" />:
               </dt>
@@ -416,7 +374,7 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
                   <input ref={projectNameRef} onChange={(e) => setProjectName(e.target.value)} value={projectName} required={true} id="project" type="text" placeholder="Project Name" />
                 </div>
               </dd>
-            </dl>
+            </dl> */}
             {initialInputState}
           </div>
           <div className="bottomBtns">

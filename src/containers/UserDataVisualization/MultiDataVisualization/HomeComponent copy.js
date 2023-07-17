@@ -14,7 +14,7 @@ const HomeComponent = () => {
       >
         <div>
           <Link to='/newmultidataproject'  className="px-3 py-4 lg:py-2 flex  ">
-          <span>Create Project</span>
+          <span >Create Project</span>
         </Link>
         <p>
         Provides a visualization analysis service that can be implemented according to the uploaded user data.
@@ -30,7 +30,7 @@ const HomeComponent = () => {
         margin="m-4"
       >
         <div>
-        <h1>View Projects</h1>
+        <h1 style={{fontSize:'20px'}}>View Projects</h1>
         <p>View the List of analysis projects and navigate to the desired project.</p>
         </div>
       </ChildCard>

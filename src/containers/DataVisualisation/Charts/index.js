@@ -171,7 +171,7 @@ function box(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
     />
   );
 }
-function genomic(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
+function variant_summary(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
   return (
     <DataGenomic
       key="genomic"
@@ -194,6 +194,6 @@ export const Charts = {
   igv,
   fusion,
   box,
-  genomic,
+  variant_summary,
 
 };

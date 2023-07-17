@@ -68,7 +68,6 @@ export default function DataVisualization() {
   const submitFilter = (e) => {
     console.log('submit filter');
     if (BrstKeys) {
-      setBoolChartState(false);
       // setChartName(tabName);
       let chartx = LoadChart(width, tabName);
       setCharts((prevState) => ({
@@ -102,14 +101,12 @@ export default function DataVisualization() {
         type: value,
       }));
     }
-    setBoolChartState(false);
     setChartName(tabName);
 
   }, []);
 
   const volcanoFusionFilterCallback = useCallback(({ volcanoFusionFilterData }) => {
     setVFData(volcanoFusionFilterData)
-    setBoolChartState(false);
     setChartName(tabName);
 
   }, []);
@@ -118,7 +115,6 @@ export default function DataVisualization() {
 
   const survivalCallback = useCallback(({ updatedState }) => {
     setSurvivalData(updatedState)
-    setBoolChartState(false);
     setChartName(tabName);
   }, []);
 
@@ -249,7 +245,7 @@ export default function DataVisualization() {
       }
 
       let gridobj = {
-        title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/visualise-multidata/${element}/${project_id}`, viewLink: `/visualise-multidata/${element}/`
+        title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: project_id ? `/visualise-multidata/${element}/${project_id} ` : `/visualise-multidata/${element}/`
         , description: 'Provides a visualization analysis service that can be implemented according to the uploaded user data.'
       }
       gridData.push(gridobj)
@@ -292,9 +288,15 @@ export default function DataVisualization() {
 
   useEffect(() => {
     if (chart) {
+      console.log('insidee chart')
       setBoolChartState(true);
     }
-  }, [chart]);
+
+    if(tabName !== 'home' && state?.genes?.length === 0){
+      setBoolChartState(false);
+    }
+    
+  }, [chart, tabName , state]);
 
   useEffect(() => {
     let chartx = LoadChart(width, tabName);
@@ -403,8 +405,8 @@ export default function DataVisualization() {
     '/visualise-multidata/':
       [
         { id: 'Home', defaultMessage: 'Home', to: '/' },
-        { id: 'MultiDataVisualization', defaultMessage: 'Multi Data Visualisation', to: `/visualise-multidata/home/${project_id}` },
-        { id: tab !== 'home' ? tab : 'Null', defaultMessage: tab !== 'home' ? tab : 'Null', to: `/visualise-multidata/${tabName}/${project_id}` }
+        { id: 'MultiDataVisualization', defaultMessage: 'Multi Data Visualization', to: project_id ? `/visualise-multidata/home/${project_id}` :   `/visualise-multidata/home/`},
+        { id: tab !== 'home' ? tab : 'Null', defaultMessage: tab !== 'home' ? tab : 'Null', to: project_id ? `/visualise-multidata/${tabName}/${project_id}` : `/visualise-multidata/${tabName}` }
       ]
 
   };
@@ -624,9 +626,9 @@ export default function DataVisualization() {
                             <div className="thumb">
                               <img src={item.image} alt="img" />
                               <div className="hvBox">
-                                <span className="playicon">
+                                <span className="vizButtons">
                                   <Link to={item.link}>
-                                    <span className="material-icons">
+                                    <span className="material-icons" style={{fontSize:'50px'}}>
                                       play_circle
                                     </span>
                                   </Link>
@@ -657,6 +659,7 @@ export default function DataVisualization() {
               {tabName && tabName !== 'home' && boolChartState && (
                 <div className="">{chart["viz"]}</div>
               )}
+              {console.log('tabName' , tabName , 'boolChartState' , boolChartState)}
               {tabName && tabName !== 'home' && !boolChartState && (
                 <div className="MultiDataVizErrorMessage">Please select Genes</div>
               )}

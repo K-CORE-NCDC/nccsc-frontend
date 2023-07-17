@@ -16,7 +16,7 @@ export default function Index() {
     '/singledata-upload/': [
         { id: 'FindID', defaultMessage: 'Home', to: '/' },
         { id: 'SubPage1', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
-        { id: 'SubPage2', defaultMessage: 'Single Data Visualisation', to: '/visualise-singledata/home/' },
+        { id: 'SubPage2', defaultMessage: 'Single Data Visualization', to: '/visualise-singledata/home/' },
         { id: 'SubPage2', defaultMessage: `Upload ${tab}`, to: `/singledata-upload/${tab}` },
         
     ],

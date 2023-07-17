@@ -14,11 +14,42 @@ const Organization = () => {
 
   var scrollDiv = document?.getElementById("ptn")?.offsetTop;
   window.scrollTo({ top: scrollDiv, behavior: 'smooth' });
+
+  const handleScroll = (event) => {
+    // console.log(event)
+    // var topPos = document.getElementById('parent').offsetTop;
+    // event.scrollTop = topPos-10;
+    // // document.getElementById('ptnO').scrollTop = 150;
+    if (event?.deltaY > 0) {
+      document.getElementById('ptnO').scrollTop += 10;
+      // this.decreaseValue()
+    } else {
+      document.getElementById('ptnO').scrollTop -= 10;
+      // this.increaseValue()
+    }
+  }
+  const preventDefault = (e) => {
+    e = e || window.event
+    if (e.preventDefault) {
+      e.preventDefault()
+    }
+    e.returnValue = false
+  }
+  const disableScroll = () => {
+    document.addEventListener('wheel', preventDefault, {
+      passive: false,
+    })
+}
+
+const enableScroll = () => {
+  document.removeEventListener('wheel', preventDefault, false)
+}
+
   return (
-    <div className="contentsTitle">
+    <div id='parent' className="contentsTitle" onWheel={(e) => handleScroll(e)} onMouseEnter={() =>disableScroll()} onMouseLeave={() => enableScroll()}>
       <div className=" ptn">
         <div className="auto">
-          <div className="organization" style={{ overflowY: 'scroll', height: '70vh' }}>
+          <div id='ptnO' className="organization" style={{ overflowY: 'scroll', height: '70vh' }}>
             <div className="conBox conBox01">
               <div className="cellBox">
                 <img src={fig_01} alt="" />
