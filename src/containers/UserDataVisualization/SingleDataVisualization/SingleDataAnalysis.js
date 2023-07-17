@@ -71,7 +71,7 @@ export default function DataVisualization() {
     switch (type) {
       case "circos":
         return Charts.circos(
-          w,
+          elementRef.current.getBoundingClientRect().width,
           state,
           screenCapture,
           setToFalseAfterScreenCapture,
@@ -309,7 +309,7 @@ export default function DataVisualization() {
       [
         { id: 'Home', defaultMessage: 'Home', to: '/' },
         { id: 'SingleDataVisualisation', defaultMessage: 'Single Data Visualisation', to: `/visualise-singledata/home/${project_id}` },
-        { id: tab !== 'home' ? tab : 'Null', defaultMessage: tab !== 'home' ? tab : 'Null', to: `/visualise-multidata/${tabName}/${project_id}` }
+        { id: tab !== 'home' ? tab : 'Null', defaultMessage: tab !== 'home' ? tab : 'Null', to: `/visualise-singledata/${tabName}/${project_id}` }
       ]
 
   };

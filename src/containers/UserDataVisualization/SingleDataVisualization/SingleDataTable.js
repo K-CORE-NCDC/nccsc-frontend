@@ -14,144 +14,100 @@ import warningImage from '../../../assets/images/warning.png'
 
 
 
+function ModalDiv() {
 
-function Modal({ showModal, setShowModal }) {
   const verificationResponse = useSelector(
     (data) => data.homeReducer.singleFileUploadData
   );
-  return (
-    <>
-      {showModal ? (
-        <>
-          <div
-            className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-          >
-            <div className="relative my-6 mx-auto">
-              {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col max-w-max bg-white outline-none focus:outline-none" >
-                {/*header*/}
-                <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                  <h3 className="text-3xl font-semibold">
-                    Errors in the Columns of Uploaded Files
-                  </h3>
-                  <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setShowModal(false)}
-                  >
-                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      ×
-                    </span>
-                  </button>
-                </div>
-                {/*body*/}
-                {
-                  verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'allFileColumns' &&
-                  verificationResponse['res'].map((item, index) => {
-                    return (
-                      <div key={index}>
-                        <div className="uppercase m-auto" key={Math.random() * 102323}>{`Error in File ${item['tab']}: ${item['message']}`}</div>
-                      </div>)
-                  })
-                }
-                {verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'clinicalInforamtionFile' &&
-                  <div className="relative p-6 flex-auto">
-                    <div className="my-4 text-2xl leading-relaxed">
+  return (verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] !== '' && <div className="MarginBottom4">
+    <div className="InsideModel">
+      {/*content*/}
+      <div className="ErrorModalDivHeader">
+        {/*header*/}
+        <div className="HeaderTitle" style={{ textAlign: 'center', fontSize: '20px' }}>
+          <h3>
+            Errors in the Columns of Uploaded Files
+          </h3>
+        </div>
 
-                      {
-                        Object.keys(verificationResponse["clinicalRows"]).map(filename => {
-                          return (
-                            <div key={Math.random}>
-                              <div className="uppercase underline" >{filename}</div>
-                              {
-                                Object.keys(verificationResponse["clinicalRows"][filename]).map((item, index) => {
-                                  return (
-                                    <div className="capitalize ml-2 m-2" key={Math.random}>
-                                      <p>{verificationResponse["clinicalRows"][filename][index]}</p>
-                                      <p></p>
-                                    </div>
-                                  )
-                                })
-                              }
-                            </div>
-                          )
-                        })
-                      }
-                    </div>
-                  </div>
-                }
-                {verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'clinicalInforamtionFile' &&
-                  <div className="relative p-6 flex-auto">
-                    <div className="my-4 text-2xl leading-relaxed">
-
-                      {verificationResponse && "columnMessages" in verificationResponse &&
-                        Object.keys(verificationResponse["columnMessages"]).map(filename => {
-                          return (
-                            <div key={filename}>
-                              <div className="uppercase underline " key={filename}>{filename}</div>
-                              {
-                                Object.keys(verificationResponse["columnMessages"][filename]).map(item => {
-                                  return (verificationResponse["columnMessages"][filename][item] !== '' ?
-                                    <div className="capitalize ml-2 m-2" key={item}>
-                                      <p>{item}: {verificationResponse["columnMessages"][filename][item]}</p>
-                                      <p></p>
-                                    </div>
-                                    : null)
-                                })
-                              }
-                            </div>
-                          )
-                        })
-                      }
-                    </div>
-                  </div>
-                }
-
-                <div className="relative p-6 flex-auto">
-                  <div className="my-4 text-2xl leading-relaxed">
-
-                    {verificationResponse && "columnMessages" in verificationResponse &&
-                      Object.keys(verificationResponse["columnMessages"]).map(filename => {
-                        return (
-                          <div key={filename}>
-                            <div className="uppercase underline " key={filename}>{filename}</div>
-                            {
-                              Object.keys(verificationResponse["columnMessages"][filename]).map(item => {
-                                return (verificationResponse["columnMessages"][filename][item] !== '' ?
-                                  <div className="capitalize ml-2 m-2" key={item}>
-                                    <p>{item}: {verificationResponse["columnMessages"][filename][item]}</p>
-                                    <p></p>
-                                  </div>
-                                  : null)
-                              })
-                            }
-                          </div>
-                        )
-                      })
-                    }
-                  </div>
-                </div>
-
-
-                {/*footer*/}
-                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                  <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Close
-                  </button>
-                </div>
+        {/* Render the error messages */}
+        {verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'allFileColumns' &&
+          verificationResponse['res'].map((item, index) => {
+            return (
+              <div key={index} style={{ margin: "20px", maxHeight: "400px", overflowY: "auto" }}>
+                <ul>
+                  {item['message'] !== "" && (
+                    <li style={{ textTransform: "uppercase", margin: "auto", fontSize: "15px", fontWeight: "500" }}>
+                      Error in File {item['tab']}:
+                      <p className="MarginTop4 MarginLeft4" style={{ fontSize: "12px", marginLeft: "3rem" }}>
+                        {item['message']}
+                      </p>
+                    </li>
+                  )}
+                </ul>
               </div>
+            );
+          })}
+
+        {verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'clinicalInforamtionFile' && (
+          <div className="ClinicalInformationErrors">
+            <div>
+              <h2>
+                Clinical Information
+              </h2>
+              {Object.keys(verificationResponse["clinicalRows"]).map((filename) => {
+                return (
+                  <div key={Math.random} style={{ margin: "20px", maxHeight: "400px", overflowY: "auto" }}>
+                    <div className="uppercase" style={{ fontSize: "20px" }}>
+                      {filename}
+                    </div>
+                    <ul>
+                      {Object.keys(verificationResponse["clinicalRows"][filename]).map((item, index) => {
+                        return (
+                          <li style={{ textTransform: "uppercase", margin: "auto", fontSize: "15px", fontWeight: "500", marginLeft: "20px" }} key={Math.random}>
+                            <p style={{ fontSize: "12px" }}>{verificationResponse["clinicalRows"][filename][index]}</p>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                );
+              })}
             </div>
           </div>
-          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-        </>
-      ) : null}
-    </>
-  );
-}
+        )}
 
+        {verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'DataIssues' && (
+          <div style={{ margin: "20px", maxHeight: "400px", overflowY: "auto" }}>
+            {Object.entries(verificationResponse.result).map(([tabName, tabData]) => (
+              <div key={tabName} style={{ textTransform: "uppercase", margin: "auto" }}>
+                {tabData[0]['is_error'] && <h2 style={{ textTransform: "uppercase", margin: "auto", fontSize: "15px" }}>{tabData[0]['tab']}</h2>}
+                <ul>
+                  {tabData.slice(1).map((rowData) => {
+                    const rowNumber = Object.keys(rowData)[0];
+                    const rowValues = rowData[rowNumber];
+                    return Object.entries(rowValues).map(([columnName, columnData]) => {
+                      const { success, message, row } = columnData;
+                      if (success === "False") {
+                        return (
+                          <li key={columnName} className="MarginTop4 MarginLeft4">
+                            Row {row}: In {columnName} Column {message} but Found Something Else.
+                          </li>
+                        );
+                      }
+                      return null;
+                    });
+                  })}
+                </ul>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  </div>)
+
+}
 
 function SingleDataTable({ updateComponentNumber }) {
   const dispatch = useDispatch();
@@ -161,7 +117,6 @@ function SingleDataTable({ updateComponentNumber }) {
   const [projectId, setProjectId] = useState(0);
   const [activeTableKey, setActiveTableKey] = useState("");
   const [navTabIs, setNavTabIs] = useState('circos')
-  const [showModal, setShowModal] = useState(false)
   let history = useHistory();
   let { tab } = useParams();
   const verificationResponse = useSelector(
@@ -190,9 +145,10 @@ function SingleDataTable({ updateComponentNumber }) {
 
     }
   }, [verificationResponse])
+
   useEffect(() => {
+    let temptabs = [];
     if (verificationResponse && verificationResponse["result"]) {
-      let temptabs = [];
 
       for (const tabrow in verificationResponse["result"]) {
         let tab = verificationResponse["result"][tabrow][0]["tab"];
@@ -213,6 +169,7 @@ function SingleDataTable({ updateComponentNumber }) {
 
     let Tablecolumns = [];
     let rowdata = [];
+    
     if (verificationResponse) {
       for (const key in verificationResponse["result"]) {
         if (activeTableKey === verificationResponse["result"][key][0]["tab"]) {
@@ -280,9 +237,6 @@ function SingleDataTable({ updateComponentNumber }) {
     },
   ];
 
-  const setShowModalFunction = (stateData) => {
-    setShowModal(stateData)
-  }
 
   useEffect(() => {
     return () => {
@@ -292,8 +246,10 @@ function SingleDataTable({ updateComponentNumber }) {
 
   return (
     <div className="auto">
+
+      <ModalDiv />
+
       <div className="flex" style={{ justifyContent: 'space-between' }}>
-        <Modal showModal={showModal} setShowModal={setShowModalFunction} />
 
         {projectId === 0 ?
 
@@ -308,11 +264,12 @@ function SingleDataTable({ updateComponentNumber }) {
               <FormattedMessage id="Back" defaultMessage="Back" />
             </button>
 
-            <div>
-              <button onClick={() => setShowModalFunction(true)} className="">
-                <img width='50' src={warningImage}></img>
-              </button>
+            <div className=" tab uploadTab">
+              <ul >
+                {tableNavTabs}
+              </ul>
             </div>
+
           </> :
           <>
             <div className=" tab uploadTab">
@@ -333,10 +290,6 @@ function SingleDataTable({ updateComponentNumber }) {
             </div>
           </>
         }
-
-
-
-
       </div>
 
       <div className="boardList" style={{ textAlign: 'center' }}>

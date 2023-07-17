@@ -509,8 +509,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
 
   const sendFilter = () => {
     console.log('selectState', selectState )
-    console.log('filterJson', filterJson )
-    parentCallback({ filters: selectState });
+    parentCallback({ filter: selectState });
     drawTags(filterJson);
   };
 
@@ -542,7 +541,6 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
       il.value = "";
     });
     setSelectState({ 'filterCondition': 'and' });
-    // parentCallback("");
     parentCallback({ filter: ""});
     if (document.getElementById('default-radio-1')) {
       document.getElementById('default-radio-1').checked = true

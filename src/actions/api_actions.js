@@ -1377,6 +1377,10 @@ export function getFaqData(id) {
   };
 }
 
+export function getFaqPageData(url,method,data) {
+  return sendRequest(url, method, data);  
+}
+
 export function getProjectsData(id) {
   return (dispatch) => {
     const url = `${config.auth}user-projects-data/?id=${id}`;
