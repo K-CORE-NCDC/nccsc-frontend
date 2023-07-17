@@ -196,7 +196,6 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
     }
 
     let chord_data = api_data['fusion_genes_data']
-    console.log('before ->',chord_data);
 
     if ('sv_data' in api_data){
       let svData = api_data['sv_data']
@@ -222,7 +221,6 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
     }
     }
 
-    console.log('after ->',chord_data);
 
     let circosPlot = circosHighlight.layout(GRCh37,conf)
     .highlight('cytobands-1', data, {
@@ -235,7 +233,6 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
     })
 
     if(mutationData.length > 24){
-      console.log('mutationData',mutationData);
       circosPlot.scatter('dna-mutation', mutationData, {
       color:function(d){
         if(mutationData){

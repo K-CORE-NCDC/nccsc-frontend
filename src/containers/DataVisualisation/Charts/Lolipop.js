@@ -131,8 +131,6 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   useEffect(() => {
     if (inputState && 'genes' in inputState) {
       let g = inputState['genes']
-      console.log('ggg', g[0], typeof (g))
-      console.log('input', inputState)
       loadGenesDropdown(g)
       setGene(g[0])
       if (inputState.type !== '') {
@@ -220,7 +218,6 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                   lollipopTmp[p_vc] = [data[i]['sample'] + "||" + data[i]['protein']]
                 }
               }
-              console.log('BrstKeys', BrstKeys)
               table_data?.push({
                 "sample": BrstKeys[data[i]['sample']],
                 "protein": data[i]['protein'],
