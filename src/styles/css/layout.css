@@ -3530,14 +3530,18 @@ body {
 .galleryList ul li a:hover .thumb .hvBox {
   opacity: 100;
   background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap:30%;
 }
 
 .galleryList ul li a:hover .thumb .hvBox span {
-  position: absolute;
+  /* position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 18px;
+  left: 50%; */
+  /* transform: translate(-50%, -50%); */
+  font-size: 20px;
   font-weight: 700;
   color: rgb(255, 255, 255);
 }
@@ -4072,4 +4076,8 @@ big {
   letter-spacing: -0.04rem;
   line-height: 130%;
   color: #616161;
+}
+
+.rdt_Pagination .grsa-Dj select{
+  background-image: none;
 }

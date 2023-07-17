@@ -55,7 +55,7 @@ const HomeComponent = () => {
                             <div className="hvBox">
                               <span className="">
                                 {item.title}
-                                <img src={ArrowRight} alt="img" />
+                                <img src={ArrowRight} alt="img" style={{paddingTop:'5px'}}/>
                               </span>
                             </div>
                           </div>

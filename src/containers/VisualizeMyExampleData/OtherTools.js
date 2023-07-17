@@ -20,7 +20,7 @@ export const OtherTools = () => {
           </div>
 
           <div className="contentBox">
-            <ul className="contentBox_left" >
+            <ul className="contentBox_left" style={{width:'100%'}}>
               <li className="" tabIndex="0" >
                 <p> <b>VCF to MAF: </b> &nbsp;
                   <FormattedMessage id="Example_tools_vcftomaf" defaultMessage='automatically convert VCF to MAF files (VCF file needed)' />

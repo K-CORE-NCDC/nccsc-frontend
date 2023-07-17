@@ -2,6 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Home from './containers/Home';
 import MultiDataViewProject from './containers/UserDataVisualization/MultiDataVisualization/MultiDataViewProject';
+import { CustomerServiceDetail } from './containers/Common/CusomerSeviceDetail';
 const DataSummary = React.lazy(() => import('./containers/DataSummary'));
 const Login = React.lazy(() => import('./containers/Login/login'));
 const DataVisualization = React.lazy(() => import('./containers/DataVisualisation'));
@@ -272,6 +273,14 @@ const route = [
     name: <FormattedMessage id="CustomerVoice" defaultMessage="Customer Voice" />,
     childname: <FormattedMessage id="QA" defaultMessage="Q&A" />,
     component: Qa,
+  },
+  {
+    path: '/details/:slug?/',
+    exact: true,
+    type: 'unauth',
+    name: <FormattedMessage id="CustomerVoice" defaultMessage="Customer Voice" />,
+    childname: <FormattedMessage id="details" defaultMessage="Details" />,
+    component: CustomerServiceDetail,
   },
   {
     path: '/termsandconditions/',

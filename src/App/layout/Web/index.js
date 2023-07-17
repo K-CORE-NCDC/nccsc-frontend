@@ -85,6 +85,7 @@ export default function Web(props) {
   const [menuTabOpen, setMenuTabOpen] = useState(false)
   const [swiperOn, setSwiperOn] = useState(true)
   const [is_login, setIsLogin] = useState(false)
+  const [footer, setFooter] = useState(false)
 
 
 
@@ -452,10 +453,119 @@ export default function Web(props) {
   }
 
   return (
-    <div className="relative" id='fullSlide' >
-      <Popover>
-        {({ open }) => (
-          <header id="header" className={classes}>
+    <>
+      <header id="header" className={classes}>
+        <div className="headerTop">
+          <div className="auto fullsize">
+            <h1 className="logo">
+              <a href="/">
+                <img src={menu_black} alt="logo" className="logo02" />
+                <img src={logoNew} alt="logo" className="logo01" />
+              </a>
+            </h1>
+            <div className="headerUtils">
+
+              {is_login ? <Link to='/logout/'><FormattedMessage id="Logout" defaultMessage='Logout' /></Link>
+                :
+                <>
+                  <Link to="/signup/"><FormattedMessage id="GenerateRegistrationNumber" defaultMessage='Generate registration number' /></Link>
+                  <Link to='/login/'><FormattedMessage id="Login" defaultMessage='Login' /></Link>
+                  <Link to="/findpassword/"><FormattedMessage id="FindPassword" defaultMessage='Find Password' /></Link> </>}
+              <div className="language">
+                <a className="on" onClick={() => { setShowLangMenu(!showLangMenu) }}>&nbsp;</a>
+                <ul style={showLangMenu ? { display: "block" } : { display: 'none' }}>
+                  <li className={((context.locale === 'kr-KO') ? ' on ' : '')}>
+                    <a onClick={() => { changeLang('kr-KO') }}>KOR</a>
+                  </li>
+                  <li className={((context.locale === 'en-US') ? ' on ' : '')}>
+                    <a onClick={() => { changeLang('en-US') }}>ENG</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <a onClick={() => {
+            setMenuTabOpen(true)
+          }} className="btnAllMenu" >
+            <span></span>
+            <span></span>
+            <span></span>
+          </a>
+        </div>
+        <div className="headerBottom">
+          <div className="auto fullsize">
+            <nav id="gnb" className="gnb">
+              <ul>
+                {childMenu?.mainmenu?.items?.map((item, i) => (
+                  <li key={'menuli_' + i}
+                    ref={buttonRef} onClick={() => {
+                      setActiveclassPath(item?.id)
+                      setActiveClassIndex(item?.index)
+                      history.push(`/home${item?.url}`)
+                      toSlide(item?.index)
+                    }} onMouseEnter={() => {
+                      setMouseEnterFlag(true)
+                    }}
+                    onMouseLeave={() => {
+                      setMouseEnterFlag(false)
+                    }}
+                  ><a className={`${activeClassIndex === item?.index ? 'active_menu' : ''} menu_li`} style={activeClassIndex === item?.index ? { color: '#009fe2' } : { color: '' }}>{item?.title}</a></li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <div id="allMenuWrap" className="allMenuWrap" style={menuTabOpen ? { display: 'block' } : { display: 'none' }}>
+          <div className="imgBox">
+            <dl>
+              <dt><font className="font1"></font><br /><font className="font1"><font className="font1"><FormattedMessage id="Welcome" defaultMessage='Welcome to the National Cancer Data Center .' /></font></font></dt>
+              <dd><font className="font1"><font className="font1"><FormattedMessage id="Designated" defaultMessage='The National Cancer Center was designated as the National Cancer Data Center (NCDC) by the Ministry of Health and Welfare in September 2021 under the Cancer Control Act. ' /></font><font className="font1"><FormattedMessage id="Motive" defaultMessage='The National Cancer Data Center will carry out the business of collecting, processing, analyzing, and providing cancer data for research and development for cancer management.' /></font></font></dd>
+            </dl>
+            <div className="members">
+              <p>
+                <span><font className="font1"><font className="font1"><FormattedMessage id="PleaseLogIn" defaultMessage='Please log in' /></font></font></span><font className="font1"><font className="font1"> .
+                </font></font></p>
+            </div>
+            <div className="btnsMember">
+              <Link to='/login/'><font className="font1"><font className="font1"><FormattedMessage id="Login" defaultMessage='Login' /></font></font><img src={login_icon} alt="login_icon" /></Link>
+              <Link to='#'><font className="font1"><font className="font1"><FormattedMessage id="Join" defaultMessage='Register' /></font></font><img src={icon_user04} alt="user" /></Link>
+            </div>
+            <div className="utils">
+              <Link to='/login/'><font className="font1"><font className="font1"><FormattedMessage id="Login" defaultMessage='Log in' /></font></font></Link>
+              <Link to='#'><font className="font1"><font className="font1"><FormattedMessage id="Join" defaultMessage='Register' /></font></font></Link>
+              <div className="language">
+                <a className="on" onClick={() => { setShowLangMenu(!showLangMenu) }}><img src={icon_lang} alt="lang" /></a>
+                <ul style={showLangMenu ? { display: "block" } : { display: 'none' }}>
+                  <li className={((context.locale === 'kr-KO') ? ' on ' : '')}>
+                    <a onClick={() => { changeLang('kr-KO') }}>KOR</a>
+                  </li>
+                  <li className={((context.locale === 'en-US') ? ' on ' : '')}>
+                    <a onClick={() => { changeLang('en-US') }}>ENG</a>
+                  </li>
+                </ul>
+              </div>
+              <Link to='/'><img src={icon_home} alt="home" /></Link>
+            </div>
+          </div>
+          <div className="allMenu">
+            <ul>
+              {childMenu?.mainmenu?.items?.map((item, i) => (
+                <li key={'allMenu_li_' + i}><a className="menu_li">{item?.title}</a></li>
+              ))}
+            </ul>
+          </div>
+          <a className="btnClose" onClick={() => {
+            setMenuTabOpen(false)
+          }}>
+            <span></span>
+            <span></span>
+          </a>
+        </div>
+      </header>
+      <div className="relative" id='fullSlide' >
+
+        {/* // <header id="header" className={classes}> */}
+        {/* <header id="header" className={"header on rev"}>
             <div className="headerTop">
               <div className="auto fullsize">
                 <h1 className="logo">
@@ -562,21 +672,21 @@ export default function Web(props) {
                 <span></span>
               </a>
             </div>
-          </header>
-        )}
-      </Popover>
-      <div className={`mainContents ${routeLocation.pathname === '/' ? '' : 'min-h-70'} `} >
-        <Suspense fallback={<Loader />}>
-          <Switch>
-            <Home setActiveClassIndex={(data) => setActiveClassIndex(data)} activeClassIndex={activeClassIndex} setActiveclassPath={(data) => setActiveclassPath(data)} />
-            <Route exact path="*" component={NotFound} />
-          </Switch>
-        </Suspense>
-        <div>
-          {showPopup && <Popup toggleModal={toggleModal} />}
+          </header> */}
+
+        <div className={`mainContents ${routeLocation.pathname === '/' ? '' : 'min-h-70'} `} >
+          <Suspense fallback={<Loader />}>
+            <Switch>
+              <Home setActiveClassIndex={(data) => setActiveClassIndex(data)} activeClassIndex={activeClassIndex} setActiveclassPath={(data) => setActiveclassPath(data)} activePath={activeClassPath}/>
+              <Route exact path="*" component={NotFound} />
+            </Switch>
+          </Suspense>
+          <div>
+            {showPopup && <Popup toggleModal={toggleModal} />}
+          </div>
         </div>
+        <FooterComponent />
       </div>
-      <FooterComponent />
-    </div>
+    </>
   );
 }

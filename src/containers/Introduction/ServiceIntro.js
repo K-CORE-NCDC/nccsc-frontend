@@ -6,8 +6,10 @@ import icon3 from '../../assets/images/publicDataInfo-img03.svg'
 import MemoizedFormattedMessage from "react-intl/src/components/message";
 import { FormattedMessage } from "react-intl";
 const ServiceIntro = () => {
+
+ 
   return (
-    <div className="auto">
+    <div className="auto" >
       <div className="publicDataInfo">
         <ul>
           <li>
@@ -18,10 +20,10 @@ const ServiceIntro = () => {
                 defaultMessage="Single Data Visualization"
               /></dt>
               <dd>
-              <FormattedMessage
-                id="serviceIntro_txt1"
-                defaultMessage="This service visualizes single user input data. It is a one-time analysis service that is not saved."
-              /></dd>
+                <FormattedMessage
+                  id="serviceIntro_txt1"
+                  defaultMessage="This service visualizes single user input data. It is a one-time analysis service that is not saved."
+                /></dd>
             </dl>
           </li>
           <li>

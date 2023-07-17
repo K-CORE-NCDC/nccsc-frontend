@@ -106,8 +106,8 @@ export default function DataVisualization() {
           screenCapture,
           setToFalseAfterScreenCapture
         );
-      case "genomic-data":
-        return Charts.genomic(
+      case "variant-summary":
+        return Charts.variant_summary(
           w,
           state,
           screenCapture,
@@ -127,9 +127,14 @@ export default function DataVisualization() {
 
   useEffect(() => {
     if (chart) {
-      setBoolChartState(true);
+      if (tabName !== 'home' && state?.genes?.length > 0) {
+        setBoolChartState(true);
+      } else {
+        setBoolChartState(false)
+      }
+
     }
-  }, [chart]);
+  }, [chart, tabName]);
 
   useEffect(() => {
     if (BrstKeys) {
@@ -206,7 +211,7 @@ export default function DataVisualization() {
       "cnv",
       "heatmap",
       "box",
-      "genomic-data",
+      "variant_summary",
       "survival",
     ];
     let gridData = []
@@ -221,13 +226,14 @@ export default function DataVisualization() {
       } else if (element === "onco") {
         name = "";
         element = "OncoPrint";
-      } else if (element === "genomic-data") {
+      } else if (element === "variant_summary") {
         name = "";
-        element = "genomic-data";
+        element = "variant-summary";
       }
 
-      let gridobj = { title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/singledata-upload/${element}/`, viewLink: `/visualise-singledata/${element}` ,
-      description: 'Provides a visualization analysis service that can be implemented according to the uploaded user data.'
+      let gridobj = {
+        title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/singledata-upload/${element}/`, viewLink: `/visualise-singledata/${element}`,
+        description: 'Provides a visualization analysis service that can be implemented according to the uploaded user data.'
       }
       gridData.push(gridobj)
 
@@ -259,8 +265,8 @@ export default function DataVisualization() {
             tabList.push("CNV");
           } else if (stepName === "scatter") {
             tabList.push("correlation");
-          } else if (stepName === "genomic-data") {
-            tabList.push("genomic-data");
+          } else if (stepName === "variant_summary") {
+            tabList.push("variant_summary");
           } else {
             tabList.push(stepName);
           }
@@ -308,7 +314,7 @@ export default function DataVisualization() {
     '/visualise-singledata/':
       [
         { id: 'Home', defaultMessage: 'Home', to: '/' },
-        { id: 'SingleDataVisualisation', defaultMessage: 'Single Data Visualisation', to: `/visualise-singledata/home/${project_id}` },
+        { id: 'SingleDataVisualisation', defaultMessage: 'Single Data Visualization', to: project_id ? `/visualise-singledata/home/${project_id}` : `/visualise-singledata/home/` },
         { id: tab !== 'home' ? tab : 'Null', defaultMessage: tab !== 'home' ? tab : 'Null', to: `/visualise-multidata/${tabName}/${project_id}` }
       ]
 
@@ -347,15 +353,18 @@ export default function DataVisualization() {
                             <div className="thumb">
                               <img src={ExampleImage} alt="img" />
                               <div className="hvBox">
-                                <div className="vizButtons" style={{ columnGap: "10px" }}>
+                                <div className="vizButtons" >
                                   <Link to={item.link}>
-                                    <span className="material-icons">
+                                    <span className="material-icons" style={{ fontSize: "50px" }}>
                                       download
                                     </span>
                                   </Link>
-                                  <Link to={item.viewLink}>
-                                    <span className="material-icons">
-                                      visibility
+
+                                </div>
+                                <div className="vizButtons" >
+                                  <Link to={item.link}>
+                                    <span className=" material-icons" style={{ fontSize: "50px" }}>
+                                      play_circle
                                     </span>
                                   </Link>
                                 </div>
@@ -369,9 +378,9 @@ export default function DataVisualization() {
                                 </dd>
                               </dl>
                               <span className="playicon">
-                              <Link to={item.link}>
-                                  <span className=" material-icons">
-                                    play_circle
+                                <Link to={item.viewLink}>
+                                  <span className="material-icons">
+                                    visibility
                                   </span>
                                 </Link>
                               </span>

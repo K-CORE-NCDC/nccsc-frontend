@@ -9,14 +9,16 @@ function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
   const { project_id, tab } = useParams()
   const history = useHistory()
   const viz_tabs = ["visualise-multidata", "visualise-singledata"]
-  const upload_tabs = ["singledata-upload", "newmultidataproject", "multidataprojectview"]
+  const upload_tabs = ["singledata-upload", "newmultidataproject", "multidataprojectview" , "multidatavisualization"]
 
 
   useEffect(() => {
     viz_tabs?.forEach(item => {
       if (project_id && window.location.pathname.includes(item)) {
+        console.log('iffff')
         if (getCookie('is_login') && getCookie('is_login') === 'True') {
         } else {
+          console.log('elseee')
           history.push('/login')
         }
       }
@@ -29,25 +31,6 @@ function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
         }
       }
     })
-
-
-    // if (project_id && window.location.pathname.includes(viz_tabs)) {
-    //   console.log('iddfff')
-    //   if (getCookie('is_login') && getCookie('is_login') === 'True') {
-
-    //   } else {
-    //     history.push('/login')
-    //   }
-    // } else if (window.location.pathname.includes(upload_tabs)) {
-    //   console.log('elseeee')
-    //   if (getCookie('is_login') && getCookie('is_login') === 'True') {
-
-    //   } else {
-    //     history.push('/login')
-    //   }
-    // }
-
-
   }, [history])
 
   const renderLnbContent = () => {

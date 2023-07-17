@@ -129,10 +129,9 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   }, [inputData])
 
   useEffect(() => {
+    console.log('inputState' , inputState)
     if (inputState && 'genes' in inputState) {
       let g = inputState['genes']
-      console.log('ggg', g[0], typeof (g))
-      console.log('input', inputState)
       loadGenesDropdown(g)
       setGene(g[0])
       if (inputState.type !== '') {
@@ -519,11 +518,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                   {btnClickNote ? <> <p style={{color:'red'}}>No {activeTab !== '1' ? 'mutation' : 'phospho'} file</p> </> : ''}
                   <div className="tab_main">
                     <ul>
-                      {
-                        project_id === undefined &&
-                        <li className={activeTab === '1' ? 'on' : ''}> <button disabled={alltabList['dna_mutation'] === null} id='Mutation' onClick={e => { changeType(e, 'Mutation'); setActiveTab('1') }} name='type' >
-                          <FormattedMessage id="Mutation" defaultMessage='Mutation' /> </button> </li>
-                      }
+                   
                       <li className={activeTab === '1' ? 'on' : ''}> <button  onClick={(e) => {
                         if (alltabList['dna_mutation'] === null) {
                           setBtnClickNote(true)
@@ -533,11 +528,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                           setBtnClickNote(false)
                         }
                       }} name='type' >  <FormattedMessage id="Mutation" defaultMessage='Mutation' /> </button></li>
-                      {
-                        project_id === undefined &&
-                        <li className={activeTab === '2' ? 'on' : ''}> <button disabled={alltabList['phospho'] === null} id="Phospho" onClick={e => { changeType(e, 'Phospho'); setActiveTab('2') }} name='type' >
-                          <FormattedMessage id="Phospho" defaultMessage='Phospho' />  </button> </li>
-                      }
+                     
                       <li className={activeTab === '2' ? 'on' : ''}> <button id='Phospho'
                         onClick={(e) => {
                           if (alltabList['phospho'] === null) {
