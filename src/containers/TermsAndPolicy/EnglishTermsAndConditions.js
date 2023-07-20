@@ -45,7 +45,7 @@ function EnglishTermsAndConditions() {
                 </h1>
                 <div
                   className=""
-                  style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
+                 
                 >
                   <ul className="">
                     <li>
@@ -78,7 +78,7 @@ function EnglishTermsAndConditions() {
                 </h1>
                 <div
                   className=""
-                  style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
+                 
                 >
                   <ul className="">
                     <li>
@@ -150,7 +150,7 @@ function EnglishTermsAndConditions() {
                 </h1>
                 <div
                   className=""
-                  style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
+                  
                 >
                   <ul className="">
                     <li>
@@ -234,7 +234,7 @@ function EnglishTermsAndConditions() {
                 </h1>
                 <div
                   className=""
-                  style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
+                  
                 >
                   <ul className="">
                     <li>
@@ -348,7 +348,7 @@ function EnglishTermsAndConditions() {
                 </h1>
                 <div
                   className=""
-                  style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
+                  
                 >
                   <ul className="">
                     <li>
@@ -424,7 +424,7 @@ function EnglishTermsAndConditions() {
                 </h1>
                 <div
                   className=""
-                  style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
+                  
                 >
                   <ul className="">
                     <li>
@@ -494,7 +494,7 @@ function EnglishTermsAndConditions() {
                 </h1>
                 <div
                   className=""
-                  style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
+                 
                 >
                   <ul className="">
                     <li>
@@ -540,7 +540,7 @@ function EnglishTermsAndConditions() {
                 </h1>
                 <div
                   className=""
-                  style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
+                  
                 >
                   <ul className="">
                     <li>
@@ -567,7 +567,7 @@ function EnglishTermsAndConditions() {
                 </h1>
                 <div
                   className=""
-                  style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
+                
                 >
                   <ul className="">
                     <li>
@@ -591,7 +591,7 @@ function EnglishTermsAndConditions() {
                 </h1>
                 <div
                   className=""
-                  style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
+                 
                 >
                   <ul className="">
                     <li>
@@ -627,7 +627,7 @@ function EnglishTermsAndConditions() {
                 </h1>
                 <div
                   className=""
-                  style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
+                  
                 >
                   <ul className="">
                     <li>
@@ -663,7 +663,7 @@ function EnglishTermsAndConditions() {
                 </h1>
                 <div
                   className=""
-                  style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
+                 
                 >
                   <ul className="">
                     <li>
@@ -789,7 +789,7 @@ function EnglishTermsAndConditions() {
                 </h1>
                 <div
                   className=""
-                  style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
+                  
                 >
                   <ul className="m-8">
                     <li>
@@ -820,7 +820,7 @@ function EnglishTermsAndConditions() {
                 </h1>
                 <div
                   className=""
-                  style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
+                 
                 >
                   <ul className="">
                     <li>
@@ -841,7 +841,7 @@ function EnglishTermsAndConditions() {
                 </h1>
                 <div
                   className=""
-                  style={{ lineHeight: "2", position: "relative", fontSize: "20px" }}
+                 
                 >
                   <ul className="">
                     <li>
