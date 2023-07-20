@@ -435,9 +435,9 @@ export default function Web(props) {
 
   let classes = "";
   if (window.innerWidth > 1025 && window.innerHeight > 870) {
-    if (activeClassIndex === 0 && mouseEnterFlag) {
+    if (activeClassIndex === 0 && mouseEnterFlag && (window.location.pathname === '/k-core/' || window.location.pathname === '/')) {
       classes = "header rev";
-    } else if (activeClassIndex === 0 && !mouseEnterFlag) {
+    } else if (activeClassIndex === 0 && !mouseEnterFlag && (window.location.pathname === '/k-core/' || window.location.pathname === '/')) {
       classes = "header";
     } else if (activeClassIndex !== 0 && mouseEnterFlag) {
       classes = "header on rev";

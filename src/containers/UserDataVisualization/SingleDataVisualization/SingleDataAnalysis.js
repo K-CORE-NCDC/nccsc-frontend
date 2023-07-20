@@ -14,6 +14,7 @@ import { Charts } from "../../DataVisualisation/Charts";
 import genes from "../../Common/gene.json";
 import { Context } from "../../../wrapper";
 import { useHistory, Link } from "react-router-dom";
+import ArrowRight from '../../../assets/images/icon-arrow-right.svg';
 import {
   getBreastKeys,
   getUserDataProjectsTableData,
@@ -353,19 +354,30 @@ export default function DataVisualization() {
                             <div className="thumb">
                               <img src={ExampleImage} alt="img" />
                               <div className="hvBox">
-                                <div className="vizButtons" >
+                                <div className="hvBox_links">
                                   <Link to={item.link}>
-                                    <span className="material-icons" style={{ fontSize: "50px" }}>
-                                      download
-                                    </span>
+                                    <div>
+                                      <span>Download</span>
+                                      <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }} >
+                                        download
+                                      </span>
+                                    </div>
                                   </Link>
-
-                                </div>
-                                <div className="vizButtons" >
                                   <Link to={item.link}>
-                                    <span className=" material-icons" style={{ fontSize: "50px" }}>
-                                      play_circle
-                                    </span>
+                                    <div>
+                                      <span>Run Analysis</span>
+                                      <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
+                                        arrow_right_alt
+                                      </span>
+                                    </div>
+                                  </Link>
+                                  <Link to={item.viewLink}>
+                                    <div>
+                                      <span>Example</span>
+                                      <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
+                                        arrow_right_alt
+                                      </span>
+                                    </div>
                                   </Link>
                                 </div>
                               </div>
@@ -377,15 +389,14 @@ export default function DataVisualization() {
                                   {item.description}
                                 </dd>
                               </dl>
-                              <span className="playicon">
+                              {/* <span className="playicon">
                                 <Link to={item.viewLink}>
                                   <span className="material-icons">
                                     visibility
                                   </span>
                                 </Link>
-                              </span>
+                              </span> */}
                             </div>
-
                           </Link>
                         </li>
                       })}

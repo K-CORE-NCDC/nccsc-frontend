@@ -12,13 +12,13 @@ const FooterComponent = () => {
         <footer id="footer" className="swiper-slide footer" >
           <div className="footerMiddle ">
             <div className="footerMiddle_data Flex" style={{ marginLeft: '3%' }}>
-              <Link to="/k-core/termsandconditions/">
+              <Link to="/termsandconditions/">
                 <span >
                   Member Terms and Conditions
                 </span>
               </Link>
               <p style={{ paddingLeft: '25px' }}> | </p>
-              <Link to="/k-core/privacypolicy/">
+              <Link to="/privacypolicy/">
                 <span style={{ paddingLeft: '25px' }}>
                   Privacy Policy
                 </span>

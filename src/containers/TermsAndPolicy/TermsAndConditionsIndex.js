@@ -18,7 +18,7 @@ function KoreanTermsAndConditionsIndex() {
   },[context]);
 
   return (
-    <div>
+    <div >
       {koreanlanguage && (
         <div>
           <KoreanTermsAndConditions></KoreanTermsAndConditions>
