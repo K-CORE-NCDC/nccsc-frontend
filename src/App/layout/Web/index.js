@@ -527,11 +527,31 @@ export default function Web(props) {
                 </font></font></p>
             </div>
             <div className="btnsMember">
-              <Link to='/login/'><font className="font1"><font className="font1"><FormattedMessage id="Login" defaultMessage='Login' /></font></font><img src={login_icon} alt="login_icon" /></Link>
+              {!is_login ?
+                <Link to='/login/'><font className="font1">
+                  <font className="font1"><FormattedMessage id="Login" defaultMessage='Login' /></font></font>
+                  {/* <img src={login_icon} alt="login_icon" /> */}
+                </Link> :
+
+                <Link to='/logout/'><font className="font1">
+                  <font className="font1"><FormattedMessage id="Logout" defaultMessage='Logout' /></font></font>
+                  {/* <img src={login_icon} alt="login_icon" /> */}
+                </Link>
+              }
               <Link to='#'><font className="font1"><font className="font1"><FormattedMessage id="Join" defaultMessage='Register' /></font></font><img src={icon_user04} alt="user" /></Link>
             </div>
             <div className="utils">
-              <Link to='/login/'><font className="font1"><font className="font1"><FormattedMessage id="Login" defaultMessage='Log in' /></font></font></Link>
+              {!is_login ?
+                <Link to='/login/'><font className="font1">
+                  <font className="font1"><FormattedMessage id="Login" defaultMessage='Login' /></font></font>
+                  {/* <img src={login_icon} alt="login_icon" /> */}
+                </Link> :
+
+                <Link to='/logout/'><font className="font1">
+                  <font className="font1"><FormattedMessage id="Logout" defaultMessage='Logout' /></font></font>
+                  {/* <img src={login_icon} alt="login_icon" /> */}
+                </Link>
+              }
               <Link to='#'><font className="font1"><font className="font1"><FormattedMessage id="Join" defaultMessage='Register' /></font></font></Link>
               <div className="language">
                 <a className="on" onClick={() => { setShowLangMenu(!showLangMenu) }}><img src={icon_lang} alt="lang" /></a>
@@ -554,12 +574,12 @@ export default function Web(props) {
               ))}
             </ul>
           </div>
-          <a className="btnClose" onClick={() => {
+          <button className="btnClose" onClick={() => {
             setMenuTabOpen(false)
           }}>
             <span></span>
             <span></span>
-          </a>
+          </button>
         </div>
       </header>
       <div className="relative" id='fullSlide' >
@@ -677,7 +697,7 @@ export default function Web(props) {
         <div className={`mainContents ${routeLocation.pathname === '/' ? '' : 'min-h-70'} `} >
           <Suspense fallback={<Loader />}>
             <Switch>
-              <Home setActiveClassIndex={(data) => setActiveClassIndex(data)} activeClassIndex={activeClassIndex} setActiveclassPath={(data) => setActiveclassPath(data)} activePath={activeClassPath}/>
+              <Home setActiveClassIndex={(data) => setActiveClassIndex(data)} activeClassIndex={activeClassIndex} setActiveclassPath={(data) => setActiveclassPath(data)} activePath={activeClassPath} />
               <Route exact path="*" component={NotFound} />
             </Switch>
           </Suspense>

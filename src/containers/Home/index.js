@@ -150,7 +150,7 @@ export default function Home(parentProps) {
             className=" h-screen ">
 
             <SwiperSlide id="home" className="section section01">
-              <Introduction height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
+              <Introduction height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} setActiveClassIndex= {(data) => parentProps?.parentProps?.setActiveClassIndex(data)}/>
             </SwiperSlide>
 
             <SwiperSlide id="introduction" className="section section04">

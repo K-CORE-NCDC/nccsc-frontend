@@ -24,6 +24,7 @@ import { Popover, Transition } from "@headlessui/react";
 import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
 import GeneSet from "../Components/MainComponents/GeneSet";
 import ExampleImage from '../../../assets/images/mainSection05-img02.jpg';
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function DataVisualization() {
   const context = useContext(Context);
@@ -47,6 +48,7 @@ export default function DataVisualization() {
   const [tabName, setTabName] = useState(tab === 'home' ? undefined : tab)
   const [toggle, setToggle] = useState(true);
   const [screenCapture, setScreenCapture] = useState(false);
+  const location = useLocation()
 
 
   const setToFalseAfterScreenCapture = (param = false) => {
@@ -167,7 +169,9 @@ export default function DataVisualization() {
         genes: genes,
         type: value,
       }));
+     
     }
+   
   }, []);
 
 
@@ -355,30 +359,35 @@ export default function DataVisualization() {
                               <img src={ExampleImage} alt="img" />
                               <div className="hvBox">
                                 <div className="hvBox_links">
-                                  <Link to={item.link}>
-                                    <div>
-                                      <span>Download</span>
-                                      <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }} >
-                                        download
-                                      </span>
-                                    </div>
-                                  </Link>
-                                  <Link to={item.link}>
-                                    <div>
-                                      <span>Run Analysis</span>
-                                      <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
-                                        arrow_right_alt
-                                      </span>
-                                    </div>
-                                  </Link>
-                                  <Link to={item.viewLink}>
-                                    <div>
-                                      <span>Example</span>
-                                      <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
-                                        arrow_right_alt
-                                      </span>
-                                    </div>
-                                  </Link>
+
+                                  {!location?.state?.example ?
+                                    <>
+                                      <Link to={item.link}>
+                                        <div>
+                                          <span>Download</span>
+                                          <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }} >
+                                            download
+                                          </span>
+                                        </div>
+                                      </Link>
+                                      <Link to={item.link}>
+                                        <div>
+                                          <span>Run Analysis</span>
+                                          <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
+                                            arrow_right_alt
+                                          </span>
+                                        </div>
+                                      </Link>
+                                    </> :
+                                    <Link to={item.viewLink}>
+                                      <div>
+                                        <span>Example</span>
+                                        <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
+                                          arrow_right_alt
+                                        </span>
+                                      </div>
+                                    </Link>
+                                  }
                                 </div>
                               </div>
                             </div>
