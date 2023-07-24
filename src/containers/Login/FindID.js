@@ -85,6 +85,7 @@ function FindID() {
             </h3>
           </div>
         </div>
+        
         <div className="ptn">
           <div className="auto">
             <div className="pwSearch tac">
@@ -115,10 +116,10 @@ function FindID() {
             <div className="bottomBtns">
               <div className="flex">
                 <button onClick={cancelfunction} className="btn btnGray bdBtn">
-                  cancellation
+                  Reset
                 </button>
                 <button onClick={findIdfunction} className="btn btnPrimary" >
-                  submit
+                  Submit
                 </button>
               </div>
             </div>

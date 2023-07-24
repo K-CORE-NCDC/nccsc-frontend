@@ -301,6 +301,16 @@ function SingleDataTable({ updateComponentNumber }) {
             defaultSortField="title"
             pagination
             conditionalRowStyles={conditionalRowStyles}
+            customStyles={{
+              table: {
+                border: '1px solid black',
+              },
+              pagination: {
+                style: {
+                    gap:"10px"
+                }
+              }      
+            }}
           />
         )}
         {!verificationResponse && (

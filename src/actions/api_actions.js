@@ -277,21 +277,10 @@ export function checkMobile(method, data) {
 }
 
 export function changePassword(method, data) {
-  return (dispatch) => {
-    const url = `${config.auth}change-password/`;
-    sendRequest(url, method, data)
-      .then((result) => {
-        const d = result;
-        dispatch({
-          type: homeConstants.CHANGE_PASSWORD,
-          payload: d.data,
-        });
-        dispatch({ type: homeConstants.REQUEST_DONE });
-      })
-
-      .catch(() => { });
-  };
+  const url = `${config.auth}change-password/`;
+  return sendRequest(url, method, data)
 }
+
 export function verifyEncodeData(method, data) {
   return (dispatch) => {
     const url = `${config.auth}checkplus_success/?${data}`;

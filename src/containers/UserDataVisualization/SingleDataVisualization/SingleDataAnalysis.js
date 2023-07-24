@@ -23,6 +23,7 @@ import { Popover, Transition } from "@headlessui/react";
 import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
 import GeneSet from "../Components/MainComponents/GeneSet";
 import ExampleImage from '../../../assets/images/mainSection05-img02.jpg';
+import ArrowRight from '../../../assets/images/icon-arrow-right.svg';
 
 export default function DataVisualization() {
   const context = useContext(Context);
@@ -314,6 +315,7 @@ export default function DataVisualization() {
     '/visualise-singledata/':
       [
         { id: 'Home', defaultMessage: 'Home', to: '/' },
+        { id: 'VisualiseMyData', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
         { id: 'SingleDataVisualisation', defaultMessage: 'Single Data Visualization', to: project_id ? `/visualise-singledata/home/${project_id}` : `/visualise-singledata/home/` },
         { id: tab !== 'home' ? tab : 'Null', defaultMessage: tab !== 'home' ? tab : 'Null', to: `/visualise-multidata/${tabName}/${project_id}` }
       ]
@@ -346,7 +348,7 @@ export default function DataVisualization() {
               gridData && !tabName ?
                 <div className='mainContentsBox' style={{ marginTop: '50px' }}>
                   <div className="galleryList">
-                    <ul className="justify-content-center">
+                    <ul className={`justify-content-${Object.keys(gridData).length > 2 ? 'start' : 'center'}`}>
                       {gridData.map((item, index) => {
                         return <li key={index} className="listitems">
                           <Link to={item.link}>
@@ -363,9 +365,16 @@ export default function DataVisualization() {
                                 </div>
                                 <div className="vizButtons" >
                                   <Link to={item.link}>
-                                    <span className=" material-icons" style={{ fontSize: "50px" }}>
-                                      play_circle
-                                    </span>
+                                    <p>Analyze</p>
+                                    <img src={ArrowRight} style={{ fontSize: "50px" }}>
+                                    </img>
+                                  </Link>
+                                </div>
+                                <div className="vizButtons" >
+                                  <Link to={item.link}>
+                                    <p>Analyze</p>
+                                    <img src={ArrowRight} style={{ fontSize: "50px" }}>
+                                    </img>
                                   </Link>
                                 </div>
                               </div>

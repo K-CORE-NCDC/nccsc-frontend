@@ -35,7 +35,12 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
               customStyles={{
                 table: {
                   border: '1px solid black',
-                }
+                },
+                pagination: {
+                  style: {
+                      gap:"10px"
+                  }
+                }      
               }}
             />
           </div>)

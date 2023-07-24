@@ -69,6 +69,16 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
             <DataTable pagination
               columns={table_cols}
               data={negative_data}
+              customStyles={{
+                table: {
+                  border: '1px solid black',
+                },
+                pagination: {
+                  style: {
+                      gap:"10px"
+                  }
+                }      
+              }}
             />
             <div className="VolcanoContainer">
               <h2 className="VolcanoText">Total entries: <strong>{tab_count['negative']}</strong></h2>
@@ -85,6 +95,16 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
           <DataTable pagination
             columns={table_cols}
             data={positive_data}
+            customStyles={{
+              table: {
+                border: '1px solid black',
+              },
+              pagination: {
+                style: {
+                    gap:"10px"
+                }
+              }      
+            }}
           />
           <div className="VolcanoContainer">
             <h2 className="VolcanoText">Total entries: <strong>{tab_count['positive']}</strong></h2>

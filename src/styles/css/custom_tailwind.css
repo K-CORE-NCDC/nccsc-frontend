@@ -15,7 +15,7 @@
   font-style: italic;
 }
 
-.mainContents{
+.mainContents {
   min-height: calc(100vh - 150px);
 }
 
@@ -826,6 +826,10 @@
   align-items: center;
 }
 
+.JustifySpaceBetween {
+  justify-content: space-between;
+}
+
 .AlignItemsFlexEnd {
   align-items: flex-end;
 }
@@ -841,6 +845,8 @@
   position: relative;
 }
 
+
+
 .JustifyContent {
   justify-content: space-around;
 }
@@ -853,7 +859,7 @@
 .MultiDataTableViewDelete {
   display: grid;
   width: 100%;
-  grid-template-columns: 70% 20%;
+  grid-template-columns: 20% 70%;
 }
 
 .CursorPointer {
@@ -1000,6 +1006,12 @@
 .PY4 {
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+
+.PY5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+
 }
 
 .PX2 {
@@ -1157,6 +1169,13 @@
   justify-content: center;
 }
 
+.BorderstyleVizAbs {
+  margin-top: 5%;
+  border: 1px solid #d6d6d6;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+  position: absolute;
+}
+
 /* Popover Panel */
 .popover-panel {
   position: absolute;
@@ -1238,12 +1257,6 @@
   font-size: 1rem;
   outline: none;
   margin-top: 0.75rem;
-}
-
-@media (min-width: 1024px) {
-  .SelectDiv {
-    padding: 1rem;
-  }
 }
 
 @media (min-width: 1024px) {
@@ -1897,7 +1910,7 @@
   position: relative;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
-  border:1px solid black;
+  border: 1px solid black;
 
 }
 
@@ -2003,10 +2016,210 @@
   opacity: 0;
 }
 
-.ErrorModalDivHeader{
+.ErrorModalDivHeader {
   margin-left: auto;
   margin-right: auto;
   border: 1px solid black;
   padding: 20px;
   width: fit-content;
+}
+
+
+.Tool .Section {
+  display: flex;
+  margin-top: 0.5rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.Tool .BG {
+  padding: 2rem;
+}
+
+.Tool .ModalBtn {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.Tool label {
+  display: inline-block;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: #374151;
+}
+
+.Tool .FilterInput {
+  display: block;
+  margin: 0;
+  border-radius: 0.25rem;
+  border-width: 1px;
+  border-color: #D1D5DB;
+  border-style: solid;
+  width: 100%;
+  color: #374151;
+  background-clip: padding-box;
+  background-color: #ffffff;
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.Tool .SubmitButton {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin: auto;
+  margin-top: 20px;
+  border-width: 1px;
+  border-color: #1D4ED8;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+@media (min-width: 640px) {
+  .Tool .SubmitButton {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+
+.Tool .VCFHtml {
+  display: flex;
+  margin-top: 0.5rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.ToolResultsReady {
+  margin-bottom: 1rem;
+  color: #2563EB;
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ToolResultsReady:hover {
+  color: #1D4ED8;
+}
+
+
+
+
+/* modal container */
+.Toolmodal-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+}
+
+/* modal overlay */
+.Toolmodal-overlay {
+  opacity: 0.25;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 40;
+}
+
+/* modal content */
+.Toolmodal-content {
+  position: relative;
+  width: auto;
+  margin: 6px auto;
+  max-width: 768px;
+  background-color: white;
+  border: 1px solid #CBD5E0;
+  border-radius: 8px;
+}
+
+/* modal dialog */
+.Toolmodal-dialog {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  outline: none;
+}
+
+/* modal header */
+.Toolmodal-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid #CBD5E0;
+  border-radius: 8px 8px 0 0;
+}
+
+/* modal title */
+.Toolmodal-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* modal close button */
+.Toolmodal-close-btn {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  color: black;
+  font-size: 24px;
+  font-weight: bold;
+  outline: none;
+}
+
+/* modal body */
+.Toolmodal-body {
+  padding: 16px;
+}
+
+/* modal text */
+.Toolmodal-text {
+  margin-top: 16px;
+  font-size: 18px;
+}
+
+/* download link */
+.Tooldownload-link {
+  color: #3182CE;
+}
+
+/* modal footer */
+.Toolmodal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
+  border-top: 1px solid #CBD5E0;
+  border-radius: 0 0 8px 8px;
+}
+
+.ToolModalBtn {
+  display: inline-flex;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  align-items: center;
+  border-radius: 9999px;
+  width: 3.5rem;
+  height: 3.5rem;
+  text-align: center;
+  color: #ffffff;
+  background-color: #EF4444;
 }

@@ -15,9 +15,9 @@ export default function Index() {
   const breadCrumbs = {
     '/singledata-upload/': [
         { id: 'FindID', defaultMessage: 'Home', to: '/' },
-        { id: 'SubPage1', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
-        { id: 'SubPage2', defaultMessage: 'Single Data Visualization', to: '/visualise-singledata/home/' },
-        { id: 'SubPage2', defaultMessage: `Upload ${tab}`, to: `/singledata-upload/${tab}` },
+        { id: 'VisualiseMyData', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
+        { id: 'SingleDataVisualization', defaultMessage: 'Single Data Visualization', to: '/visualise-singledata/home/' },
+        { id: 'upload', defaultMessage: `Upload ${tab}`, to: `/singledata-upload/${tab}` },
         
     ],
     

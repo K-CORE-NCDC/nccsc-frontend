@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
 import { TrashIcon } from "@heroicons/react/outline";
 import React, { useState, useEffect, useContext } from "react";
 import '../../../interceptor/interceptor'
@@ -11,7 +10,6 @@ import { FormattedMessage } from 'react-intl';
 import { Context } from "../../../wrapper";
 import { useHistory } from "react-router-dom";
 import Swal from 'sweetalert2'
-
 
 
 
@@ -141,15 +139,14 @@ function ProjectsList() {
         },
         {
             name: projectName,
-            // selector: row => row.project_name,
             cell: (row) => (
                 <div className="MultiDataTableViewDelete">
+                    <button onClick={() => handleButtonClick('delete', row.id)}>
+                        <TrashIcon style={{ width: "15px" }} />
+                    </button>
                     <div>
                         {row.project_name}
                     </div>
-                    <button onClick={() => handleButtonClick('delete', row.id)}>
-                        <TrashIcon style={{width:"15px"}} />
-                    </button>
                 </div>
             ),
             sortable: true,
@@ -240,7 +237,13 @@ function ProjectsList() {
                 display: "table-row-group",
             },
         },
+        pagination: {
+            style: {
+                gap:"10px"
+            }
+        }
     };
+
     function searchTerm() {
         fetchUsers(1, "POST");
     }
@@ -249,39 +252,6 @@ function ProjectsList() {
 
     return (
         <div className="container mx-auto p-4">
-            {/* <div className="grid grid-col-4"> */}
-            {/* <div className="col-span-4">
-              <h4 className="h-tit4_tit clear">
-                  <font>
-                    <font>FAQ</font>
-                  </font>
-              </h4>
-          </div>
-          <div className="col-span-4 h-8">
-            <div className="grid grid-col-4">
-              <div className="col-span-2">
-              </div>
-              <div className="col-span-2">
-                <div className="flex float-right">
-                  <div className="flex-none w-40 h-14">
-                    <select value={selectInput} onChange={(e)=>setSelectInput(e.target.value)} name="cars" id="cars" className="border border-slate-400 rounded pt-1 pb-1">
-                      <option className="text-xl" value="title">{projectName}</option>
-                      <option className="text-xl" value="content">{content}</option>
-                      <option className="text-xl" value="writer">{writer}</option>
-                    </select>
-                  </div>
-                  <div className="flex-initial w-80 mr-4 mb-4">
-                    <input type="text" value={searchInput} onChange={(e)=>setSearchInput(e.target.value)}className="border border-slate-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" />
-                  </div>
-                  <div className="flex-initial w-32">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={searchTerm}>
-                    <FormattedMessage id="Search" defaultMessage="Search"/>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> */}
             <div className="">
                 {
                     tableData &&
@@ -290,7 +260,7 @@ function ProjectsList() {
                         data={tableData}
                         customStyles={customStyles}
                         progressPending={loading}
-                        pagination
+                        pagination={true}
                         paginationServer
                         paginationTotalRows={totalRows}
                         onChangeRowsPerPage={handlePerRowsChange}
@@ -306,47 +276,8 @@ function ProjectsList() {
                 {redirecting}
             </div>
         </div>
-        // </div>
     )
 }
-
-// function ProjectsDetail({ slug_id }) {
-//     const dispatch = useDispatch()
-//     const notice_data = useSelector((state) => state.homeReducer.dataProjects)
-
-//     useEffect(() => {
-//         dispatch(getProjectsData(slug_id))
-//     }, [])
-
-//     return (
-//         <div className="container mx-auto p-4">
-//             {notice_data && <div className="grid grid-col-2">
-//                 <div className="col-span-4">
-//                     <h4 className="h-tit4_tit clear">
-//                         <font>
-//                             <font>FAQ</font>
-//                         </font>
-//                     </h4>
-//                 </div>
-//                 <div className="shadow-sm">
-//                     <table className="border-slate-300 table-auto">
-//                         <tbody>
-//                             <tr className="h-8">
-//                                 <td className="p-4">Title</td>
-//                                 <td className="p-4">{notice_data['project_name']}</td>
-//                             </tr>
-//                             <tr className="h-8">
-//                                 <td className="p-4">Content</td>
-//                                 <td className="p-4"><div dangerouslySetInnerHTML={{ __html: notice_data['content'] }} /></td>
-//                             </tr>
-//                         </tbody>
-//                     </table>
-//                 </div>
-//             </div>
-//             }
-//         </div>
-//     )
-// }
 
 export default function MultiDataViewProject() {
     let { slug } = useParams();
