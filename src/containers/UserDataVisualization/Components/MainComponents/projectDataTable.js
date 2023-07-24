@@ -123,6 +123,16 @@ const ProjectDataTable = () => {
                             <DataTable pagination
                                 columns={tableHeaders}
                                 data={fileDataAsTableRendered}
+                                customStyles={{
+                                    table: {
+                                      border: '1px solid black',
+                                    },
+                                    pagination: {
+                                      style: {
+                                          gap:"10px"
+                                      }
+                                    }      
+                                  }}
                             />
                         </div>
                     </div>

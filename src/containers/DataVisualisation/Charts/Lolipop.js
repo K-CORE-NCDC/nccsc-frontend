@@ -588,6 +588,16 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                       <DataTable pagination
                         columns={tableColumnsData}
                         data={tableData}
+                        customStyles={{
+                          table: {
+                            border: '1px solid black',
+                          },
+                          pagination: {
+                            style: {
+                                gap:"10px"
+                            }
+                          }      
+                        }}
                       />
                     </div>}
                   </div>}

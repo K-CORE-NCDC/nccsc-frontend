@@ -26,7 +26,7 @@ import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
 import GeneSet from "../Components/MainComponents/GeneSet";
 import SurvivalFilterComponent from "../Components/MainComponents/SurvivalFilterComponent";
 import VolcanoFusionFilterComponent from "../Components/MainComponents/VolcanoFusionFilterComponent";
-import ExampleImage from '../../../assets/images/mainSection05-img02.jpg';
+import ArrowRight from '../../../assets/images/icon-arrow-right.svg';
 
 
 export default function DataVisualization() {
@@ -66,7 +66,6 @@ export default function DataVisualization() {
   };
 
   const submitFilter = (e) => {
-    console.log('submit filter');
     if (BrstKeys) {
       // setChartName(tabName);
       let chartx = LoadChart(width, tabName);
@@ -90,7 +89,7 @@ export default function DataVisualization() {
     if (filter) {
       setState((prevState) => ({
         ...prevState,
-        filter:filter
+        filter: filter
       }));
       setfilterApplied(true);
     }
@@ -255,19 +254,17 @@ export default function DataVisualization() {
   }, [availableTabsForProject, chartName]);
 
   useEffect(() => {
-    // if (BrstKeys !== undefined) {
-      if (project_id !== undefined) {
-        if (state.genes.length > 0) {
-          dispatch(samplesCount("POST", { project_id: project_id }));
-          dispatch(getBreastKeys(state));
-        }
-      } else {
-        if (state.genes.length > 0) {
-          dispatch(samplesCount("POST", {}));
-          dispatch(getBreastKeys(state));
-        }
+    if (project_id !== undefined) {
+      if (state.genes.length > 0) {
+        dispatch(samplesCount("POST", { project_id: project_id }));
+        dispatch(getBreastKeys(state));
       }
-    // }
+    } else {
+      if (state.genes.length > 0) {
+        dispatch(samplesCount("POST", {}));
+        dispatch(getBreastKeys(state));
+      }
+    }
   }, [state]);
 
 
@@ -288,15 +285,14 @@ export default function DataVisualization() {
 
   useEffect(() => {
     if (chart) {
-      console.log('insidee chart')
       setBoolChartState(true);
     }
 
-    if(tabName !== 'home' && state?.genes?.length === 0){
+    if (tabName !== 'home' && state?.genes?.length === 0) {
       setBoolChartState(false);
     }
-    
-  }, [chart, tabName , state]);
+
+  }, [chart, tabName, state]);
 
   useEffect(() => {
     let chartx = LoadChart(width, tabName);
@@ -405,11 +401,250 @@ export default function DataVisualization() {
     '/visualise-multidata/':
       [
         { id: 'Home', defaultMessage: 'Home', to: '/' },
-        { id: 'MultiDataVisualization', defaultMessage: 'Multi Data Visualization', to: project_id ? `/visualise-multidata/home/${project_id}` :   `/visualise-multidata/home/`},
+        { id: 'VisualiseMyData', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
+        { id: 'MultiDataVisualization', defaultMessage: 'Multi Data Visualization', to: project_id ? `/visualise-multidata/home/${project_id}` : `/visualise-multidata/home/` },
         { id: tab !== 'home' ? tab : 'Null', defaultMessage: tab !== 'home' ? tab : 'Null', to: project_id ? `/visualise-multidata/${tabName}/${project_id}` : `/visualise-multidata/${tabName}` }
       ]
 
   };
+
+  const [isGeneSetPopoverOpen, setGeneSetPopoverOpen] = useState(false);
+  const [isFilterPopoverOpen, setFilterPopoverOpen] = useState(false);
+  const [isSurvivalPopoverOpen, setSurvivalPopoverOpen] = useState(false);
+  const [isVolFusPopoverOpen, setVolFusPopoverOpen] = useState(false);
+
+  let toggleGeneSetPopover = (value) => {
+    setGeneSetPopoverOpen(value)
+  }
+
+  let toggleFilterPopover = (value) => {
+    setFilterPopoverOpen(value)
+  }
+
+  let toggleSurvivalPopover = (value) => {
+    setSurvivalPopoverOpen(value)
+  }
+
+  let toggleVolFusPopover = (value) => {
+    setVolFusPopoverOpen(value)
+  }
+
+  let GenePopover = ({ isGeneSetPopoverOpen, toggleGeneSetPopover }) => {
+    if (!isGeneSetPopoverOpen) {
+      return (
+        <Popover className="relative gene_main_box">
+          <>
+            <div className=''>
+              <Popover.Button className={'selectBox'} onClick={() => toggleGeneSetPopover(true)}>
+                <div className="GeneSetgeneSetButton">
+                  <div className="flex-1">Gene set Re-filtering</div>
+                  <div className="w-20">
+                    <FilterIcon className="filter-icon" />
+                  </div>
+                </div>
+              </Popover.Button>
+            </div>
+          </>
+        </Popover>
+      )
+    }
+    else {
+      return (
+        <Popover className="relative gene_main_box">
+          <div className=''>
+            <Popover.Button className={'selectBox'}>
+              <div className="GeneSetgeneSetButton">
+                <div className="flex-1">Gene set Re-filtering</div>
+                <div className="w-20">
+                  <FilterIcon className="filter-icon" />
+                </div>
+              </div>
+            </Popover.Button>
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-200"
+              enterFrom="opacity-0 translate-y-1"
+              enterTo="opacity-100 translate-y-0"
+              leave="transition ease-in duration-150"
+              leaveFrom="opacity-100 translate-y-0"
+              leaveTo="opacity-0 translate-y-1"
+            >
+              <Popover.Panel className="GeneSetPopoverPanel">
+                <GeneSet parentCallback={callback} filterState={state} />
+              </Popover.Panel>
+            </Transition>
+          </div>
+        </Popover>
+      );
+    }
+
+  }
+
+  let FilterPopover = ({ isFilterPopoverOpen, toggleFilterPopover }) => {
+    if (!isFilterPopoverOpen) {
+      return (
+        <Popover className="relative gene_main_box">
+          <>
+            <div className="w-full">
+              <Popover.Button className={'selectBox'} onClick={() => toggleFilterPopover(true)}>
+                <div className="GeneSetgeneSetButton">
+                  <div className="flex-1">Clinical info. Re-filtering</div>
+                  <div className="w-20">
+                    <CogIcon className="filter-icon" />
+                  </div>
+                </div>
+              </Popover.Button>
+            </div>
+          </>
+        </Popover>
+      )
+    }
+    else {
+      return (
+        <Popover className="relative gene_main_box">
+          <div className="w-full">
+            <Popover.Button className={'selectBox'}>
+              <div className="GeneSetgeneSetButton">
+                <div className="flex-1">Clinical info. Re-filtering</div>
+                <div className="w-20">
+                  <CogIcon className="filter-icon" />
+                </div>
+              </div>
+            </Popover.Button>
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-200"
+              enterFrom="opacity-0 translate-y-1"
+              enterTo="opacity-100 translate-y-0"
+              leave="transition ease-in duration-150"
+              leaveFrom="opacity-100 translate-y-0"
+              leaveTo="opacity-0 translate-y-1"
+            >
+              <Popover.Panel className="GeneSetPopoverPanel" style={{ height: '450px', overflowY: 'auto' }}>
+                <Filter
+                  parentCallback={callback}
+                  filterState={state["filter"]}
+                  set_screen={screen_call}
+                  project_id={project_id}
+                />
+              </Popover.Panel>
+
+            </Transition>
+          </div>
+        </Popover>
+      );
+    }
+  }
+
+  let SurvivalFilterPopover = ({ isSurvivalPopoverOpen, toggleSurvivalPopover }) => {
+    if (!isSurvivalPopoverOpen) {
+      return (
+        <Popover className="Relative gene_main_box">
+          <>
+            <div className='w-full'>
+              <Popover.Button className={'selectBox'} onClick={() => toggleSurvivalPopover(true)}>
+                <div className="GeneSetgeneSetButton">
+                  <div className="flex-1">Filter</div>
+                  <div className="w-20">
+                    <CogIcon className="filter-icon" />
+                  </div>
+                </div>
+              </Popover.Button>
+            </div>
+          </>
+        </Popover>
+      )
+    }
+    else {
+      return (
+        <Popover className="Relative gene_main_box">
+          <>
+            <div className='w-full'>
+              <Popover.Button className={'selectBox'}>
+                <div className="GeneSetgeneSetButton">
+                  <div className="flex-1">Filter</div>
+                  <div className="w-20">
+                    <CogIcon className="filter-icon" />
+                  </div>
+                </div>
+              </Popover.Button>
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-200"
+                enterFrom="opacity-0 translate-y-1"
+                enterTo="opacity-100 translate-y-0"
+                leave="transition ease-in duration-150"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 translate-y-1"
+              >
+                <Popover.Panel className="SurvivalFilter W100 BorderstyleVizAbs" style={{ height: '450px', overflowY: 'auto' }}>
+                  <SurvivalFilterComponent
+                    parentCallback={survivalCallback}
+                    filterState={state}
+                    setSurvivalCardData={survivalCardData}
+                  />
+                </Popover.Panel>
+              </Transition>
+            </div>
+          </>
+        </Popover>
+      );
+    }
+
+  }
+
+  let VolFusFilterPopover = ({ isVolFusPopoverOpen, toggleVolFusPopover }) => {
+    if (!isVolFusPopoverOpen) {
+      return (
+        <Popover className="Relative gene_main_box">
+          <>
+            <div className='w-full'>
+              <Popover.Button className={'selectBox'} onClick={() => toggleVolFusPopover(true)}>
+                <div className="GeneSetgeneSetButton">
+                  <div className="flex-1">Gene set Re-filtering</div>
+                  <div className="w-20">
+                    <CogIcon className="filter-icon" />
+                  </div>
+                </div>
+              </Popover.Button>
+            </div>
+          </>
+        </Popover>
+      )
+    }
+    else {
+      return (
+        <Popover className="Relative gene_main_box">
+          <>
+            <div className='w-full'>
+              <Popover.Button className={'selectBox'}>
+                <div className="GeneSetgeneSetButton">
+                  <div className="flex-1">Gene set Re-filtering</div>
+                  <div className="w-20">
+                    <CogIcon className="filter-icon" />
+                  </div>
+                </div>
+              </Popover.Button>
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-200"
+                enterFrom="opacity-0 translate-y-1"
+                enterTo="opacity-100 translate-y-0"
+                leave="transition ease-in duration-150"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 translate-y-1"
+              >
+                <Popover.Panel className="VFFilter W100 BorderstyleVizAbs">
+                  <VolcanoFusionFilterComponent parentCallback={volcanoFusionFilterCallback} tab={tabName} />
+                </Popover.Panel>
+              </Transition>
+            </div>
+          </>
+        </Popover>
+      );
+    }
+
+  }
 
   return (
 
@@ -444,6 +679,20 @@ export default function DataVisualization() {
             <section >
               <div className="PopoverStyles">
 
+                {/* {toggle && <FilterPopover isFilterPopoverOpen={isFilterPopoverOpen} toggleFilterPopover={toggleFilterPopover} />} */}
+
+
+                {/* {!toggle && (tabName === 'survival') &&
+                  <SurvivalFilterPopover isSurvivalPopoverOpen={isSurvivalPopoverOpen} toggleSurvivalPopover={toggleSurvivalPopover} />
+                } */}
+
+
+                {/* {
+                  !toggle && (tabName === 'fusion' || tabName === 'volcano') &&
+                  <VolFusFilterPopover isVolFusPopoverOpen={isVolFusPopoverOpen} toggleVolFusPopover={toggleVolFusPopover} />
+                } */}
+
+                {/* <GenePopover isGeneSetPopoverOpen={isGeneSetPopoverOpen} toggleGeneSetPopover={toggleGeneSetPopover} /> */}
 
                 {toggle &&
                   <Popover className="relative">
@@ -490,7 +739,7 @@ export default function DataVisualization() {
                 }
 
                 {!toggle && tabName === 'survival' &&
-                  <Popover className="relative gene_main_box">
+                  <Popover className="Relative gene_main_box">
                     {({ open }) => {
                       return (
                         <>
@@ -512,7 +761,7 @@ export default function DataVisualization() {
                               leaveFrom="opacity-100 translate-y-0"
                               leaveTo="opacity-0 translate-y-1"
                             >
-                              <Popover.Panel className="SurvivalFilter W100 BorderstyleViz">
+                              <Popover.Panel className="SurvivalFilter W100 BorderstyleVizAbs" style={{ height: '450px', overflowY: 'scroll' }}>
                                 <SurvivalFilterComponent
                                   parentCallback={survivalCallback}
                                   filterState={state}
@@ -529,7 +778,7 @@ export default function DataVisualization() {
 
 
                 {!toggle && (tabName === 'fusion' || tabName === 'volcano') &&
-                  <Popover className="relative gene_main_box">
+                  <Popover className="Relative gene_main_box">
                     {({ open }) => {
                       return (
                         <>
@@ -551,7 +800,7 @@ export default function DataVisualization() {
                               leaveFrom="opacity-100 translate-y-0"
                               leaveTo="opacity-0 translate-y-1"
                             >
-                              <Popover.Panel className="VFFilter W100 BorderstyleViz">
+                              <Popover.Panel className="VFFilter W100 BorderstyleViz" style={{position:"absolute"}}>
                                 <VolcanoFusionFilterComponent parentCallback={volcanoFusionFilterCallback} tab={tabName} />
                               </Popover.Panel>
                             </Transition>
@@ -613,39 +862,41 @@ export default function DataVisualization() {
                   }}
                 </Popover>
 
+
+
               </div>
             </section>
             {
               gridData && !tabName &&
               <div className='mainContentsBox' style={{ marginTop: '50px' }}>
                 <div className="galleryList">
-                  <ul className="justify-content-center">
+                  <ul className={`justify-content-${Object.keys(gridData).length > 2 ? 'start' : 'center'}`}>
                     {gridData.map((item, index) => {
-                        return <li key={index} className="listitems">
-                          <Link to={item.link}>
-                            <div className="thumb">
-                              <img src={item.image} alt="img" />
-                              <div className="hvBox">
-                                <span className="vizButtons">
-                                  <Link to={item.link}>
-                                    <span className="material-icons" style={{fontSize:'50px'}}>
-                                      play_circle
-                                    </span>
-                                  </Link>
-                                </span>
-                              </div>
+                      return <li key={index} className="listitems">
+                        <Link to={item.link}>
+                          <div className="thumb">
+                            <img src={item.image} alt="img" />
+                            <div className="hvBox">
+                              <span className="vizButtons">
+                                <Link to={item.link}>
+                                  <span className="material-icons" style={{ fontSize: '50px' }}>
+                                    play_circle
+                                  </span>
+                                </Link>
+                              </span>
                             </div>
+                          </div>
 
-                            <div className="txtBox txtBoxpadding tac Relative">
-                              <dl className="MarginTop8">
-                                <dt className="h4 Capitalize">{item.title}</dt>
-                                <dd className="p1">
-                                  {item.description}
-                                </dd>
-                              </dl>
-                            </div>
-                          </Link>
-                        </li>
+                          <div className="txtBox txtBoxpadding tac Relative">
+                            <dl className="MarginTop8">
+                              <dt className="h4 Capitalize">{item.title}</dt>
+                              <dd className="p1">
+                                {item.description}
+                              </dd>
+                            </dl>
+                          </div>
+                        </Link>
+                      </li>
                     })}
                   </ul>
                 </div>
@@ -659,7 +910,6 @@ export default function DataVisualization() {
               {tabName && tabName !== 'home' && boolChartState && (
                 <div className="">{chart["viz"]}</div>
               )}
-              {console.log('tabName' , tabName , 'boolChartState' , boolChartState)}
               {tabName && tabName !== 'home' && !boolChartState && (
                 <div className="MultiDataVizErrorMessage">Please select Genes</div>
               )}

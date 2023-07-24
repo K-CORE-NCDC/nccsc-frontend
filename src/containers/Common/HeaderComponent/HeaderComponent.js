@@ -15,7 +15,6 @@ function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
   useEffect(() => {
     viz_tabs?.forEach(item => {
       if (project_id && window.location.pathname.includes(item)) {
-        console.log('iffff')
         if (getCookie('is_login') && getCookie('is_login') === 'True') {
         } else {
           console.log('elseee')
@@ -65,29 +64,6 @@ function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
   const renderBreadcrumbs = () => {
     if (breadCrumbs) {
       const items = breadCrumbs;
-
-      //   return (
-      //     <ul>
-      //       {items.length > 0 && items.map((item, index) => (
-      //         <li key={index} className={routeName === item.to ? 'on' : ''}>
-      //           <Link to={item.to}>
-      //             <FormattedMessage id={item.id} defaultMessage={item.defaultMessage} />
-      //           </Link>
-      //         </li>
-      //       )
-
-      //         // (
-      //         //   item && item.defaultMessage !=='' && 
-      //         //   <li key={index}>
-      //         //     {item.defaultMessage}
-      //         //   </li>
-      //         // )
-
-      //       )}
-      //     </ul>
-      //   );
-      // }
-      // return null;
       return (
         <ul>
           {items.length > 0 &&
@@ -101,6 +77,16 @@ function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
                         defaultMessage={item.defaultMessage}
                       />
                     </Link>
+                  </li>
+                );
+              }
+              else if(item.to === ''){
+                return (
+                  <li key={index} className={routeName === item.to ? 'on' : ''}>
+                      <FormattedMessage
+                        id={item.id}
+                        defaultMessage={item.defaultMessage}
+                      />
                   </li>
                 );
               }

@@ -14,7 +14,6 @@ import { Charts } from "../../DataVisualisation/Charts";
 import genes from "../../Common/gene.json";
 import { Context } from "../../../wrapper";
 import { useHistory, Link } from "react-router-dom";
-import ArrowRight from '../../../assets/images/icon-arrow-right.svg';
 import {
   getBreastKeys,
   getUserDataProjectsTableData,
@@ -25,6 +24,7 @@ import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
 import GeneSet from "../Components/MainComponents/GeneSet";
 import ExampleImage from '../../../assets/images/mainSection05-img02.jpg';
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import ArrowRight from '../../../assets/images/icon-arrow-right.svg';
 
 export default function DataVisualization() {
   const context = useContext(Context);
@@ -169,9 +169,9 @@ export default function DataVisualization() {
         genes: genes,
         type: value,
       }));
-     
+
     }
-   
+
   }, []);
 
 
@@ -319,6 +319,7 @@ export default function DataVisualization() {
     '/visualise-singledata/':
       [
         { id: 'Home', defaultMessage: 'Home', to: '/' },
+        { id: 'VisualiseMyData', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
         { id: 'SingleDataVisualisation', defaultMessage: 'Single Data Visualization', to: project_id ? `/visualise-singledata/home/${project_id}` : `/visualise-singledata/home/` },
         { id: tab !== 'home' ? tab : 'Null', defaultMessage: tab !== 'home' ? tab : 'Null', to: `/visualise-multidata/${tabName}/${project_id}` }
       ]
@@ -351,7 +352,7 @@ export default function DataVisualization() {
               gridData && !tabName ?
                 <div className='mainContentsBox' style={{ marginTop: '50px' }}>
                   <div className="galleryList">
-                    <ul className="justify-content-center">
+                    <ul className={`justify-content-${Object.keys(gridData).length > 2 ? 'start' : 'center'}`}>
                       {gridData.map((item, index) => {
                         return <li key={index} className="listitems">
                           <Link to={item.link}>

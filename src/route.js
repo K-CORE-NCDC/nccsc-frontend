@@ -44,6 +44,7 @@ const Faq = React.lazy(() => import('./containers/CustomerVoice/Faq'));
 const Notice = React.lazy(() => import('./containers/CustomerVoice/Notice'));
 const Qa = React.lazy(() => import('./containers/CustomerVoice/QA'));
 
+const ToolsIndex = React.lazy(() => import('./containers/Tools/ToolsIndex'));
 const InterPro = React.lazy(() => import('./containers/Tools/InterPro'));
 const Blast = React.lazy(() => import('./containers/Tools/Blast'));
 const VcfMaf = React.lazy(() => import('./containers/Tools/Vcfmaf'));
@@ -346,6 +347,15 @@ const route = [
     childname: <FormattedMessage id="SetPassword" defaultMessage="Set Password" />,
     component: SetPassword,
   },
+
+  {
+    path: '/tools/',
+    exact: true,
+    type: 'unauth',
+    name: <FormattedMessage id="Tools" defaultMessage="Tools" />,
+    component: ToolsIndex,
+  },
+
   {
     path: '/blast/',
     exact: true,

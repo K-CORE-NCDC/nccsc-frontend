@@ -121,6 +121,11 @@ function NoticeList() {
               borderTop: "2px solid #4e4e4e!important",
               borderBottom: "1px solid #4e4e4e!important"
           },
+      },
+      pagination: {
+        style: {
+          gap: "10px"
+        }
       }
     };
 

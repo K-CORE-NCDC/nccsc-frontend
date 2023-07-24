@@ -6,6 +6,64 @@ import { useHistory } from 'react-router-dom'
 import { useParams } from "react-router-dom";
 import { Context } from "../../../wrapper";
 import { FormattedMessage } from 'react-intl';
+import Swal from 'sweetalert2';
+
+
+function Modal({ showModal, toggleModal, fileName }) {
+  let fileNameImage = require(`../../../assets/images/FileScreenshots/${fileName}.png`).default
+  let fileNameFile = require(`../../../assets/files/20_samples/${fileName}.tsv`).default
+  return (
+    <>
+      {showModal ? (
+        <>
+          <div className="Toolmodal-container">
+            <div className="Toolmodal-content" style={{ maxWidth: "60vw" }}>
+              {/*content*/}
+              <div className="Toolmodal-dialog">
+                {/*header*/}
+                <div className="Toolmodal-header">
+                  <h3 className="Toolmodal-title">Sample File Download</h3>
+                  <button
+                    className="Toolmodal-close-btn"
+                    onClick={() => toggleModal(false, '')}
+                  >
+                    ×
+                  </button>
+                </div>
+                {/*body*/}
+                <div className="Toolmodal-body">
+                  <div className="Toolmodal-text">
+                    <ul style={{ margin: "10px" }}>
+                      <li>{`This is a Sample Example File for ${fileName}`}</li>
+                    </ul>
+                    <img src={fileNameImage} alt="ExampleFileImage" />
+                    <div className='Flex FlexDirRow' style={{ marginTop: "20px", gap: "10px" }}>
+
+                      <p>Click on the link to download the sample file</p>
+                      <a className="Tooldownload-link" href={fileNameFile} download>
+                        Download
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                {/*footer*/}
+                <div className="Toolmodal-footer">
+                  <button
+                    className="Toolmodal-close-btn"
+                    onClick={() => toggleModal(false, '')}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="Toolmodal-overlay"></div>
+        </>
+      ) : null}
+    </>
+  );
+}
 
 const SingleDataFileUpload = ({ updateComponentNumber }) => {
   const projectNameRef = useRef(null);
@@ -21,7 +79,7 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
   const [formSbubmitButtonText, setFormSubmitButtonText] = useState("upload")
   const [initialInputState, setInitialInputState] = useState(undefined)
   let { tab } = useParams();
-  const inputRef  = useRef(null)
+  const inputRef = useRef(null)
   const allowedTabs = ["circos", "lollipop", "CNV", "heatmap", "box", "survival", "genomic-data"]
   const charts = {
     "circos": {
@@ -47,7 +105,6 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
     },
     "box": {
       proteome: "proteome",
-      dna_mutation: "DNA Mutation",
     },
     "survival": {
       clinical_information: "Clinical Information",
@@ -78,6 +135,20 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
       object = charts[tab]
     return object
   })
+
+  let fileNames = {
+    clinica_information: "ClinicalInformation",
+    cnv: "CNV",
+    dna_mutation: "DnaMutation",
+    rna: "RNA",
+    fusion: "Fusion",
+    methylation: "Methylation",
+    proteome: "Proteome",
+    phospho: "Phospho"
+  }
+
+  const [showModal, setShowModal] = useState(false)
+  const [fileName, setFileName] = useState(fileNames[selectedFileSampleType['1']])
   const [fileDataAsTableAll, setFileDataAsTableAll] = useState({})
   const [showFileDataTable, setShowFileDataTable] = useState(false)
   const [disableUploadButton, setDisableUploadButton] = useState(true)
@@ -85,6 +156,12 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const [Englishlanguage, setEnglishlanguage] = useState(true);
   const context = useContext(Context);
+
+
+  let toggleModal = (status, file) => {
+    setShowModal(status)
+    setFileName(file)
+  }
 
   useEffect(() => {
     if (!allowedTabs.includes(tab)) {
@@ -161,6 +238,8 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
       ...prevState,
       [divName]: divValue
     }))
+
+    setFileName(fileNames[divValue])
   }
 
 
@@ -266,9 +345,17 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
     Object.keys(selectedFileSampleType).forEach(key => {
 
       firstInput.push(<>
+      <dl>
+        <dt>&nbsp;</dt>
+        <dd>
+        <button onClick={() => toggleModal(true, fileName)} className="ToolModalBtn" style={{float:"right"}}>
+            <InforIcon />
+          </button>
+        </dd>
+      </dl>
         <dl key={'dl1-' + key} className="boardSearchBox">
           <dt>Select Type:</dt>
-          <dd className="selectBox select">
+          <dd className="selectBox select Flex">
             <select onChange={updateFileTypeOnChange}
               name={key}
               defaultChecked={selectedFileSampleType[key]}
@@ -280,14 +367,13 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
               ))}
             </select>
           </dd>
-
         </dl>
         <dl key={'dl2-' + key}>
           <dt>&nbsp;</dt>
           <dd className='inputText' style={{ paddingTop: '2%' }}>
             <label
               className="select-color w-full block text-right border focus:outline-none border-b-color focus:ring focus:border-blue-300 p-4 mt-3">
-              <input type='file' className="w-full" data={key} name={selectedFileSampleType[key]} id="user-file-input" filename={key} onChange={file_Upload_} ref={inputRef}/>
+              <input type='file' className="w-full" data={key} name={selectedFileSampleType[key]} id="user-file-input" filename={key} onChange={file_Upload_} ref={inputRef} />
             </label>
           </dd>
         </dl>
@@ -316,19 +402,29 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
     }
   }
   const on_upload = () => {
-    let abcd = uploadFile
-    console.log('a-----', abcd)
-    abcd = Object.keys(abcd).reduce((acc, key) => {
+    let FilesData = uploadFile
+    FilesData = Object.keys(FilesData).reduce((acc, key) => {
       const { type, file } = uploadFile[key];
       acc[type] = { type, file };
       return acc;
     }, {});
-    setUploadFile(abcd)
-    console.log('abcd', abcd)
-    dispatch(SingleFileUpload(abcd, projectName))
-    updateComponentNumber(1)
-    for (let key in uploadFile) {
-      setLoader((prevState) => ({ ...prevState, [uploadFile[key].type]: 'loader' }))
+    setUploadFile(FilesData)
+    if (Object.keys(FilesData).length > 0) {
+      dispatch(SingleFileUpload(FilesData, projectName))
+      updateComponentNumber(1)
+      for (let key in uploadFile) {
+        setLoader((prevState) => ({ ...prevState, [uploadFile[key].type]: 'loader' }))
+      }
+    }
+    else {
+      Swal.fire({
+        title: 'Warning',
+        text: "Select File.",
+        icon: 'warning',
+        confirmButtonColor: '#003177',
+        confirmButtonText: 'Ok',
+        allowOutsideClick: false
+      })
     }
   }
 
@@ -350,11 +446,22 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
     }
   }
 
+  const InforIcon = () => {
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" style={{ width: "1.5rem", height: "1.5rem" }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+      </svg>
+    )
+  }
+
   return (
     <>
 
       {!showFileDataTable &&
         <div className="auto ">
+          <div>
+            {showModal && <Modal showModal={showModal} toggleModal={toggleModal} fileName={fileName} />}
+          </div>
           {error ? <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
             <strong className="font-bold">{error_message['type']}</strong>
             <span className="block sm:inline">  {error_message['message']}</span>
@@ -364,17 +471,8 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
                 onClick={(e) => setError(false)}><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" /></svg>
             </span>
           </div> : ""}
+
           <div className="formBox">
-            {/* <dl>
-              <dt>
-                <FormattedMessage id="ProjectName" defaultMessage="Project Name" />:
-              </dt>
-              <dd >
-                <div className="inputText">
-                  <input ref={projectNameRef} onChange={(e) => setProjectName(e.target.value)} value={projectName} required={true} id="project" type="text" placeholder="Project Name" />
-                </div>
-              </dd>
-            </dl> */}
             {initialInputState}
           </div>
           <div className="bottomBtns">

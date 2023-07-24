@@ -1,131 +1,187 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
 import {
-  useParams,
-  useHistory
+  useHistory, useParams
 } from "react-router-dom";
-
 import {
-  changePassword,
-  clearIDPasswordResetPASSWORD
+  changePassword
 } from "../../actions/api_actions";
 import Swal from 'sweetalert2';
-import { useSelector, useDispatch } from "react-redux";
+import HeaderComponent from "../Common/HeaderComponent/HeaderComponent";
+import NCCLogo from "../../styles/images/logo02.svg"
 
 function SetPassword() {
-  const [status, setstatus] = useState("")
-  const [visibility, setvisibility] = useState(false);
-  const [errorClass, setErrorClass] = useState("");
-  const dispatch = useDispatch();
-  let history = useHistory();
+
   const { token } = useParams();
-  const change_password_status = useSelector((data) => data.homeReducer.changePasswordStatus);
-  let changePasswordfunction = () => {
-    
-    let new_password = document.getElementById('NewPassword').value
-    let confirm_password = document.getElementById('ConfirmNewPassword').value
-    if (new_password === "" || confirm_password === "") {
-      setErrorClass("border-red-500");
-      setstatus('Please Enter Password');
-    }
-    else if (new_password !== confirm_password) {
-      setErrorClass("border-red-500");
-      setstatus('Password and confirm password must match');
-    }
-    else {
-      dispatch(changePassword("POST", { 'new_password': new_password, 'confirm_password': confirm_password, 'token': token }));
-    }
+  let history = useHistory();
+  const [errorMessage, setErrorMessage] = useState([]);
+  const [isError, setIsError] = useState(false)
+  const title = { id: "SetPassword", defaultMessage: "Set Password" }
+  const [userFormData, setUserFormData] = useState({
+    password: "",
+    cnfmpassword: "",
+    token:token,
+    cp_type: "set_password"
+  });
+
+  const updateSetPassword = (e) => {
+    setUserFormData((previousState) => ({
+      ...previousState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const setPasswordSuccess = () => {
+
+    Swal.fire({
+      title: 'Success',
+      text: "Password Set Success",
+      icon: 'success',
+      confirmButtonColor: '#003177',
+      confirmButtonText: 'Ok',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.value) {
+        history.push('/login/')
+      }
+    })
 
   }
 
-  useEffect(() => {
-    change_password_status && setstatus(change_password_status.status)
-    if (status === "Password Updated Successfully") {
-        Swal.fire({
-          title: 'Success',
-          text: "Password Updated Successfully.",
-          icon: 'success',
-          confirmButtonColor: '#003177',
-          confirmButtonText: 'Ok',
-          allowOutsideClick: false
-        }).then((result) => {
-          if (result.value) {
-            dispatch(clearIDPasswordResetPASSWORD());
-            history.push('/login')
-          }
-        })
-    }
-  }, [change_password_status, status])
+  const setPasswordFailure = (status) => {
+    setIsError(true)
+    setErrorMessage([
+      <p key="error" className="ErrorText">
+        {status}
+      </p>,
+    ]);
+  };
 
+
+  const formSubmitAction = (e) => {
+    setIsError(false)
+
+    if (userFormData && userFormData.password === '') {
+      setIsError(true)
+      setErrorMessage([
+        <p key="error" className="ErrorText">
+          Password Can't be Empty
+        </p>,
+      ]);
+    }
+    else if (userFormData && userFormData.cnfmpassword === '') {
+      setIsError(true)
+      setErrorMessage([
+        <p key="error" className="ErrorText">
+          Password Can't be Empty
+        </p>,
+      ]);
+    }
+    else if (userFormData && userFormData.cnfmpassword !== '' && userFormData.password !== userFormData.cnfmpassword) {
+      setIsError(true)
+      setErrorMessage([
+        <p key="error" className="ErrorText">
+          Both Password and Confirm Password Should Match
+        </p>,
+      ]);
+    }
+    else {
+      setIsError(false)
+      let data = changePassword("POST", userFormData)
+      data.then((result) => {
+        if ('data' in result && 'status' in result.data && result.data.status === "Password Updated Successfully") {
+          setPasswordSuccess();
+        }
+        else if ('data' in result && 'status' in result.data) {
+          setPasswordFailure(result.data.status);
+        }
+      }).catch((error) => {
+        setPasswordFailure('Password Update Failed');
+      });
+    }
+  };
+
+  const breadCrumbs = {
+    '/set-password/': [
+      { id: 'set-password', defaultMessage: 'SetPassword', to: '' }
+    ],
+  };
 
   return (
     <div>
-      <section className="mt-10 flex flex-col items-center justify-center">
-        <div>
-          <span className="text-7xl font-bold text-gray-800">Set Password</span>
+      <HeaderComponent
+        title={title}
+        breadCrumbs={breadCrumbs['/set-password/']}
+        type="single"
+      />
+      <article id="subContents" className="subContents">
+        <div className="ptn">
+          <div className="auto">
+            <div className="loginWrap">
+              <img src={NCCLogo} alt="" />
+              <p className="main">
+                <span className="colorSecondary">
+                  <font style={{ verticalAlign: 'inherit' }}></font>
+                </span>
+                <font style={{ verticalAlign: 'inherit' }}>
+                  <span className="colorPrimary">
+                    <font style={{ verticalAlign: 'inherit' }}>Welcome</font>
+                  </span>
+                  <font style={{ verticalAlign: 'inherit' }}> to </font>
+                  <span className="colorSecondary">
+                    <font style={{ verticalAlign: 'inherit' }}>NCDC .</font>
+                  </span>
+                </font>
+                <span className="colorPrimary">
+                  <font style={{ verticalAlign: 'inherit' }}></font>
+                </span>
+              </p>
+              <p className="sub">
+                <font style={{ verticalAlign: 'inherit' }}>
+                  <font style={{ verticalAlign: 'inherit' }}>
+                    Welcome to the National Cancer Data Center website.{' '}
+                  </font>
+                </font>
+                <br />
+                <font style={{ verticalAlign: 'inherit' }}>
+                  <font style={{ verticalAlign: 'inherit' }}>
+                    Please enter the information below to Set Password.
+                  </font>
+                </font>
+              </p>
+
+
+              <form className="loginForm" id="frm" method="post">
+
+                {/*  error messages */}
+                {isError && errorMessage && (
+                  <div className="ErrorText">
+                    {errorMessage}
+                  </div>
+                )}
+                {/* Input Password */}
+                <div className="inputText">
+                  <input className={isError == true ? 'ErrorInput' : ""} type="password" value={userFormData.password} onChange={updateSetPassword} id="password" name="password" placeholder="Please Enter New Password." autoComplete="off" />
+                </div>
+
+                {/* Input ConfirmPassword */}
+                <div className="inputText">
+                  <input className={isError ? 'ErrorInput' : ""} type="password" id="cnfmpassword" name="cnfmpassword" placeholder="Renter New Password." value={userFormData.cnfmpassword} onChange={updateSetPassword} />
+                </div>
+
+
+                {/* Set Password Button  */}
+                <button type="button" className="btn btnPrimary" id="setPasswordBtn" onClick={formSubmitAction}>
+                  <font style={{ verticalAlign: 'inherit' }}>
+                    <font style={{ verticalAlign: 'inherit' }}>Set Password</font>
+                  </font>
+                </button>
+
+              </form>
+            </div>
+          </div>
         </div>
-        <div className="my-32">
-
-          <div className="grid grid-cols-3 border-b-2 border-gray-600 pt-12 pb-12">
-            <div className="pt-6 pl-48 pr-8 col-span-1">
-              <h1 className="font-bold">Password</h1>
-            </div>
-            <div>
-              <div className="mb-4 pr-45 col-span-2 relative">
-                <div>
-                  <input
-                    type={visibility ? "input" : "password"}
-                    id="NewPassword"
-                    name="newpassword"
-                    className={`shadow appearance-none border rounded-lg w-full py-8 px-5 text-gray-700 leading-tight focus:border-blue-500  w-28 ${errorClass}`}
-                    placeholder="Please Enter a password "
-
-                  >
-                  </input>
-                  <span className="absolute cursor-pointer left-96 top-4" > {visibility ? <EyeIcon className="h-14 w-12 inline text-main-white" onClick={() => setvisibility(visibility => !visibility)}></EyeIcon> : <EyeOffIcon className="h-14 w-12 inline text-main-white" onClick={() => setvisibility(visibility => !visibility)}></EyeOffIcon>}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="grid grid-cols-3 border-b-2 border-gray-600 pt-12 pb-12">
-            <div className="pt-6 pl-48 pr-8 col-span-1">
-              <h1 className="font-bold">Confirm-Password</h1>
-            </div>
-            <div>
-              <div className="mb-4 pr-45 col-span-2 relative">
-                <div>
-                  <input
-                    type={visibility ? "input" : "password"}
-                    id="ConfirmNewPassword"
-                    name="confirmnewpassword"
-                    className={`shadow appearance-none border rounded-lg w-full py-8 px-5 text-gray-700 leading-tight focus:border-blue-500  w-28 ${errorClass}`}
-                    placeholder="Please Enter a password "
-
-                  >
-                  </input>
-                  <span className="absolute cursor-pointer left-96 top-4" > {visibility ? <EyeIcon className="h-14 w-12 inline text-main-white" onClick={() => setvisibility(visibility => !visibility)}></EyeIcon> : <EyeOffIcon className="h-14 w-12 inline text-main-white" onClick={() => setvisibility(visibility => !visibility)}></EyeOffIcon>}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="grid grid-cols-3 pt-12">
-            <div className="w-full col-span-3">
-              {status && (
-                <div className="font-bold text-3xl text-red-500">
-                  {status}
-                </div>
-              )}
-              <button
-                onClick={changePasswordfunction}
-                className="bg-blue-500 hover:bg-blue-700 text-white h-28 font-bold py-2 px-4 border border-blue-700 w-full rounded"
-
-              >
-                <span>Set Password</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+      </article>
     </div>
   )
 }

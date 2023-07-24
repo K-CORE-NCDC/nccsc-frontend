@@ -26,7 +26,8 @@ const LoginComponent = () => {
   };
 
   const loginSuccess = () => {
-
+    // console.log('windows',windows);
+    // console.log('histpry',history);
     Swal.fire({
       title: 'Success',
       text: "Login Success",
@@ -36,17 +37,17 @@ const LoginComponent = () => {
       allowOutsideClick: false
     }).then((result) => {
       if (result.value) {
-        history.push('/visualise-singledata/home/')
+        history.goBack()
+        // history.push('/visualise-singledata/home/')
       }
     })
-
   }
 
-  const loginFailure = () => {
+  const loginFailure = (status) => {
     setIsError(true)
     setErrorMessage([
       <p key="error" className="ErrorText">
-        Invalid username/Password
+        {status}
       </p>,
       <h1 className="ErrorText" key="CountToEnterCredentials">
         {" "}
@@ -96,7 +97,7 @@ const LoginComponent = () => {
           loginFailure(result.data.status);
         }
       }).catch((error) => {
-        loginFailure('Login Failed, check Credentials');
+        loginFailure('Invalid username/Password');
       });
     }
   };
@@ -216,6 +217,10 @@ const LoginComponent = () => {
                 </div>
 
               </form>
+
+
+
+              
             </div>
           </div>
         </div>
