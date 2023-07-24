@@ -1,373 +1,407 @@
 import React from "react";
+import HeaderComponent from "../Common/HeaderComponent/HeaderComponent";
 
 function KoreanTermsAndConditions() {
+  const title = { id: "TermsofService", defaultMessage: "Terms of Service" }
+
+  const breadCrumbs = {
+    '/termsandconditions/': [
+      { id: 'TermsofService', defaultMessage: 'Terms of Service', to: '/termsandconditions/' }
+    ],
+  };
   return (
-    <div  className=" text-5xl ml-52">
-      <h1
-        className=""
-        style={{ lineHeight: "2.3",color: 'rgb(0, 118, 192)' }} 
-      >
-       국립암센터(국가암데이터센터) K-CORE 회원 이용약관
-      </h1>
 
-      <h1
-        className="text-center text-9xl relative m-2 highlightH1 w-fit ms-5 KtermsandconditionsH1" 
-      >
-        제1조 목적
-      </h1>
-      <div  style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'
-      >
-        <ul>
-          <li> <p className="paragraphAdjust"> 
-          ① 본 약관은 국립암센터(국가암데이터센터)가 운영하는 K-CORE 인터넷 홈페이지에서 제공하는 인터넷 관련 서비스(이하 "서비스"라 합니다) 이용에 관한 이용 조건 및 절차 등 기본적인 사항을 규정함을 목적으로 합니다.
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ② 이용자가 되고자 하는 자가 국립암센터(국가암데이터센터) K-CORE에서 정한 소정의 절차를 거쳐서 "동의" 단추를 누르면 본 약관에 동의하는 것으로 간주합니다. 본 약관에 정하는 이외의 이용자와 국립암센터(국가암데이터센터)의 권리, 의무 및 책임사항에 관해서는 대한민국의 관련 법령과 상관습에 의합니다.
-          </p></li>
-        </ul>
-      </div>
 
-      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
-      제2조 약관의 명시와 개정
-      </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'
-      >
-        <ul>
-          <li> <p className="paragraphAdjust"> 
-          ① 이 약관의 내용과 주소지, 관리자의 성명, 개인정보보호 담당자의 성명, 연락처(전화, 팩스, 전자우편 주소 등) 등을 이용자가 알 수 있도록 사이트의 초기 서비스화면(개인정보처리방침)에 게시합니다.
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ② 국립암센터(국가암데이터센터) K-CORE는 관계법령을 위배하지 않는 범위에서 본 약관을 개정할 수 있습니다.
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ③ 약관을 개정할 경우에는 적용일자 및 개정사유를 명시하여 현행약관과 함께 사이트의 초기화면에 그 적용일자 7일 이전부터 적용일자 전일까지 공지합니다.
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ④ 국립암센터(국가암데이터센터) K-CORE는 이용자가 본 약관 내용에 동의하는 것을 조건으로 이용자에게 서비스를 제공할 것이며, 이용자가 본 약관의 내용에 동의하는 경우, 국립암센터(국가암데이터센터) K-CORE의 서비스 제공 행위 및 이용자의 서비스 사용 행위에는 본 약관이 우선적으로 적용될 것입니다.
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ⑤ 이 약관에 동의하는 것은 정기적으로 웹을 방문하여 약관의 변경사항을 확인하는 것에 동의함을 의미합니다. 변경된 약관에 대한 정보를 알지 못해 발생하는 이용자의 피해는 국립암센터(국가암데이터센터) K-CORE에서 책임지지 않습니다. 
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ⑥ 이용자는 변경된 약관에 동의하지 않을 경우 회원 탈퇴(해지)를 요청할 수 있으며, 변경된 약관의 효력 발생일로부터 7일 이후에도 거부의사를 표시하지 아니하고 서비스를 계속 사용할 경우 약관의 변경 사항에 동의한 것으로 간주됩니다.
-          </p></li>
-        </ul>
-      </div>
+    <>
+      <HeaderComponent
+        title={title}
+        breadCrumbs={breadCrumbs['/termsandconditions/']}
+        type="single"
+      />
 
-      {/* 3 */}
-      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
-      제3조 용어의 정의
-      </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
-        <ul>
-        <li> <p className="paragraphAdjust"> 
-      본 약관에서 사용하는 용어의 정의는 다음과 같습니다.
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ① 이용자(회원) : 홈페이지 회원가입에 필요한 개인 정보를 제공하여 회원 가입을 한 자로서, 사이트의 정보 및 서비스를 이용할 수 있는 자를 말합니다.
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ② 운영자 : 서비스의 전반적인 관리와 원활한 운영을 위하여 국립암센터(국가암데이터센터) K-CORE에서 선정한 사람을 말합니다. 
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ③ 회원가입 : 사이트에서 제공하는 신청서 양식에 해당 정보를 기입하고, 본 약관에 동의하여 서비스 이용계약을 완료시키는 행위를 말합니다.
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ④ 개인정보 : 살아 있는 개인에 관한 정보로서 성명, 주민등록번호 및 영상 등을 통하여 개인을 알아볼 수 있는 정보(해당 정보만으로는 특정 개인을 알아볼 수 없더라도 다른 정보와 쉽게 결합하여 알아볼 수 있는 것을 포함한다)를 말합니다.
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ⑤ 아이디 : 이용고객의 식별과 이용자가 서비스 이용을 위하여 이용자가 선정하고 사이트가 부여하는 문자와 숫자의 조합을 말합니다.
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ⑥ 비밀번호 : 이용자가 등록회원과 동일인인지 신원을 확인하고 통신상의 자신의 개인정보보호를 위하여 이용자 자신이 선정한 문자와 숫자의 조합을 말합니다.
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ⑦ 연결사이트 : 홈페이지와 하이퍼링크 방식(하이퍼링크의 대상에는 문자, 정지 및 동화상 등이 포함됨) 등으로 연결된 웹 사이트를 말합니다.
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ⑧ 해지 : 이용자가 서비스 개통 후 이용계약을 종료시키는 행위를 말합니다.
-          </p></li>
-        </ul>
-      </div>
-      {/* 4 */}
-      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
-      제4조 회원가입
-      </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
-        <ul>
-          <li> <p className="paragraphAdjust"> 
-          ① 회원가입은 이용자가 본 이용약관 내용에 대한 동의와 이용신청에 대하여 사이트의 이용승낙으로 성립합니다.
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ② 본 이용약관에 대한 동의는 회원가입 절차 중 해당 사이트의 '동의함' 버튼을 누름으로써 의사표시를 합니다.
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ③ 국립암센터(국가암데이터센터) K-CORE는 다음 각 호에 해당하는 회원가입에 대하여는 가입을 취소할 수 있습니다. </p>
-            <ul>
-              <li> <p className="paragraphAdjust"> 
-              1. 가입신청자가 본 약관 제5조 제2항에 의거하여 이전에 회원 자격을 상실한 적이 있는 경우 
-              </p></li>
-              <li> <p className="paragraphAdjust"> 2. 등록내용에 허위, 기재누락, 오기가 있는 경우</p></li>
-              <li> <p className="paragraphAdjust"> 
-              3. 기타 회원으로 등록하는 것이 센터의 기술상 또는 업무 수행 상 현저히 지장이 있다고 판단하는 경우
-              </p></li>
-              <li> <p className="paragraphAdjust"> 
-              4. 사회의 안녕 질서 혹은 미풍양속을 저해할 목적으로 신청하였을 때
-              </p></li>
-              <li> <p className="paragraphAdjust"> 
-              5. 사이트를 이용하며 법령과 본 약관이 금지하는 행위를 하는 경우
-              </p></li>
-              <li> <p className="paragraphAdjust"> 
-              6. 입력한 비밀번호가 9자 이상 20자 이내(영대문자, 영소문자, 숫자, 특수문자 3종류 혼용)가 아닌 경우
-              </p></li>
-            </ul>
-          </li>
-          <li> <p className="paragraphAdjust"> 
-          ④ 국립암센터(국가암데이터센터) K-CORE는 다음 각 항에 해당하는 경우 그 사유가 해소될 때까지 이용계약 성립을 유보할 수 있습니다. 
-            <ul>
-              <li> <p className="paragraphAdjust"> 1. 서비스 관련 제반 용량이 부족한 경우 </p></li>
-              <li> <p className="paragraphAdjust"> 2. 기술상 장애 사유가 있는 경우</p></li>
-            </ul>
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ⑤ 이용자는 등록사항에 변경이 있는 경우, 즉시 회원정보 수정 등 기타 방법으로 국립암센터(국가암데이터센터) K-CORE에 대하여 그 변경사항을 알려야 합니다.
-          </p></li>
-        </ul>
-      </div>
-      {/* 5  */}
-      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
-      제5조 회원탈퇴 및 자격의 상실 등
-      </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
-        <ul>
-          <li> <p className="paragraphAdjust"> 
-          ① 이용자는 회원가입이후 국립암센터(국가암데이터센터) K-CORE에서 제공하는 인터넷 서비스를 제공받을 의사가 없는 등의 사유가 있을 경우에는 언제든지 회원탈퇴(해지)를 할 수 있습니다.
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ② 이용자가 다음 각 호의 사유에 해당하는 경우, 국립암센터(국가암데이터센터) K-CORE는 회원자격을 상실시킬 수 있습니다. </p>
-            <ul>
-              <li> <p className="paragraphAdjust"> 1. 등록 신청 시에 허위 내용을 등록한 경우</p></li>
-              <li> <p className="paragraphAdjust"> 
-              2. 다른 이용자의 서비스 이용을 방해하거나 그 정보를 도용하는 등 질서를 위협하는 경우
-              </p></li>
-              <li> <p className="paragraphAdjust"> 
-              3. 국립암센터(국가암데이터센터) K-CORE 내에서 검증되지 않은 허위정보 및 기타 허락되지 않은 물품의 판매 행위를 하는 경우
-              </p></li>
-              <li> <p className="paragraphAdjust"> 
-              4. 국립암센터(국가암데이터센터) K-CORE 내에서 허락되지 않은 진료행위 또는 진료행위를 위한 선전의 장소로 이용하는 경우 
-              </p></li>
-              <li> <p className="paragraphAdjust"> 
-              5. 국립암센터(국가암데이터센터) K-CORE 내에 제공되는 정보를 변경하는 등 홈페이지 운영을 방해한 경우
-              </p></li>
-              <li> <p className="paragraphAdjust"> 
-              6. 국립암센터(국가암데이터센터) K-CORE를 이용하여 법령과 본 약관이 금지하거나 공서양속에 반하는 행위를 하는 경우
-              </p></li>
-              <li> <p className="paragraphAdjust"> 
-              7. 기타 회원으로서의 자격을 지속시키는 것이 부적절하다고 판단되는 경우
-              </p></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
+      <article id="subContents" className="subContents">
+        <div>
+          <div className="contentsTitle">
+            <div className="auto">
+              <h3 className="colorSecondary">
+                <span className="colorPrimary">Terms of</span>
+                Service
+              </h3>
+            </div>
+          </div>
+          <div className="ptn">
+            <div className="auto">
+              <div className="termsAndConditions">
+                <h1
+                  className=""
+                  style={{ lineHeight: "2.3", color: 'rgb(0, 118, 192)' }}
+                >
+                  국립암센터(국가암데이터센터) K-CORE 회원 이용약관
+                </h1>
 
-      {/* 6 */}
-      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
-      제6조 서비스의 내용 및 변경
-      </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
-        <ul>
-          <li> <p className="paragraphAdjust"> 
-          ① 국립암센터(국가암데이터센터) K-CORE는 다음의 서비스를 제공합니다. </p>
-            <ul>
-              <li> <p className="paragraphAdjust"> 1. 국립암센터(국가암데이터센터) K-CORE 관련 사업 소개</p></li>
-              <li> <p className="paragraphAdjust"> 2. 국립암센터(국가암데이터센터) 제공 데이터 시각화 서비스</p></li>
-              <li> <p className="paragraphAdjust"> 3. 국립암센터(국가암데이터센터) 데이터 신청 안내</p></li>
-              <li> <p className="paragraphAdjust"> 4. 사용자데이터 시각화 서비스</p></li>
-              <li> <p className="paragraphAdjust"> 5. 기타 제공 서비스</p></li>
-            </ul>
-        </li>
-          <li> <p className="paragraphAdjust"> 
-          ② 국립암센터(국가암데이터센터) K-CORE는 불가피한 사정이 있는 경우 제공하는 서비스의 내용을 변경할 수 있으며, 이 경우 변경된 서비스의 내용 및 제공일자를 명시하여 그 제공일자 이전 7일부터 공지합니다.
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ③ 국립암센터(국가암데이터센터) K-CORE는 서비스 내용의 변경으로 인하여 이용자가 입은 손해에 대하여 배상하지 아니합니다. 단, 국립암센터(국가암데이터센터) K-CORE의 고의 또는 중과실이 있는 경우에는 그러하지 아니합니다. 
-          </p></li>
-        </ul>
-      </div>
-      {/* 7*/}
-      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
-      제7조 서비스의 중단
-      </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
-        <ul>
-          <li> <p className="paragraphAdjust"> 
-          ① 국립암센터(국가암데이터센터) K-CORE는 컴퓨터, 시스템 등 정보통신설비의 보수점검·교체 및 고장, 통신의 두절, 기타 불가항력적 사유 등이 발생한 경우에는 서비스의 제공을 일시적으로 중단할 수 있습니다.
-          </p>
-          </li>
-          <li> 
-            
-            <p className="paragraphAdjust"> 
-          ② 국립암센터(국가암데이터센터) K-CORE는 제1항의 사유로 서비스 제공이 일시적으로 중단의 경우에는 국립암센터(국가암데이터센터)
-           K-CORE 홈페이지에 사전 게시함으로써 이용자 개별통지를 대신할 수 있습니다.
-          </p></li>
-          <li>
-          <p className="paragraphAdjust">  다만, 국립암센터(국가암데이터센터) K-CORE가 통제할 수 없는
-           사유로 인한 서비스의 중단(시스템 관리자의 고의, 과실이 없는 디스크 장애, 시스템 다운 등)으로 인하여 사전 통지가 불가능한 경우에는 그러하지 아니합니다. </p>
-          </li>
-          <li> <p className="paragraphAdjust"> 
-          ③ 국립암센터(국가암데이터센터) K-CORE의 고의 또는 과실이 없는 서비스 내용의 변경으로 인하여 이용자 또는 제3자가 입은 손해에 대하여는 배상하지 아니합니다. 단, 센터의 고의 또는 중과실이 있는 경우에는 그러하지 아니합니다. 
-          </p>
-          </li>
-        </ul>
-      </div>
-      {/* 8*/}
-      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
-      제8조 회원에 대한 통지
-      </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
-        <ul>
-          <li> <p className="paragraphAdjust"> 
-          ① 국립암센터(국가암데이터센터) K-CORE는 회원에 대한 통지를 하는 경우, 회원이 센터에 제공한 전자우편 주소 또는 전화번호로 할 수 있습니다. 
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ② 국립암센터(국가암데이터센터) K-CORE는 불특정다수 회원에 대한 통지의 경우 게시판에 게시함으로써 개별통지에 갈음할 수 있습니다. 
-          </p></li>
-        </ul>
-      </div>
-      {/* 9*/}
-      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
-      제9조 회원의 개인정보보호
-      </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
-        <ul>
-          <li> <p className="paragraphAdjust"> 
-          ① 국립암센터(국가암데이터센터) K-CORE는 관련법령이 정하는 바에 따라서 이용자 등록정보를 포함한 이용자의 개인정보를 보호하기 위하여 노력합니다. 이용자의 개인정보보호에 관해서는 관련법령 및 국립암센터(국가암데이터센터) K-CORE에서 정하는 "개인정보처리방침"에 정한 바에 의합니다.
-          </p></li>
-        </ul>
-      </div>
-      {/* 10*/}
-      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
-      제10조 국립암센터 국가암데이터센터 K-CORE의 의무
-      </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
-        <ul>
-          <li> <p className="paragraphAdjust"> 
-          ① 국립암센터(국가암데이터센터) K-CORE는 법령과 본 약관이 금지하거나 공서양속에 반하는 행위를 하지 않으며, 본 약관이 정하는 바에 따라 지속적이고 안정적으로 서비스를 제공하기 위해서 노력합니다.
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ② 국립암센터(국가암데이터센터) K-CORE는 이용자가 안전하게 인터넷 서비스를 이용할 수 있도록 이용자의 개인정보보호를 위한 보안 시스템을 구축합니다.
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ③ 국립암센터(국가암데이터센터) K-CORE는 이용자가 원하지 않는 영리목적의 광고성 전자우편을 발송하지 않습니다.
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-            ② 국립암센터(국가암데이터센터) K-CORE는 이용자가 안전하게 인터넷
-            서비스를 이용할 수 있도록 이용자의 개인정보보호를 위한 보안 시스템을
-            구축합니다. ③ 국립암센터(국가암데이터센터) K-CORE는 이용자가 원하지
-            않는 영리목적의 광고성 전자우편을 발송하지 않습니다.
-          </p></li>
-        </ul>
-      </div>
-      {/* 11*/}
-      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
-      제11조 이용자의 아이디 및 비밀번호에 대한 의무
-      </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
-        <ul>
-          <li> <p className="paragraphAdjust"> 
-          ① 국립암센터(국가암데이터센터) K-CORE에서 "관계법령", "개인정보처리방침"에 의해서 그 책임을 지는 경우를 제외하고, 자신의 ID와 비밀번호에 관한 관리책임은 각 이용자에게 있습니다.
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ② 이용자는 자신의 ID 및 비밀번호를 제3자에게 이용하게 해서는 안됩니다.
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ③ 이용자는 자신의 ID 및 비밀번호를 도난당하거나 제3자가 사용하고 있음을 인지한 경우에는 바로 국립암센터(국가암데이터센터) K-CORE에 통보하고 국립암센터(국가암데이터센터) K-CORE의 안내가 있는 경우에는 그에 따라야 합니다.
-          </p></li>
-        </ul>
-      </div>
-      {/* 12*/}
-      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
-      제12조 이용자의 의무
-      </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
-        <ul>
-          <li> <p className="paragraphAdjust"> 
-          ① 이용자는 다음 각 호의 행위를 하여서는 안됩니다. </p>
-            <ul>
-              <li> <p className="paragraphAdjust"> 1. 회원가입신청 또는 변경 시 허위내용을 등록하는 행위</p></li>
-              <li> <p className="paragraphAdjust"> 
-              2. 국립암센터(국가암데이터센터) K-CORE에 게시된 정보를 변경하는 행위
-              </p></li>
-              <li> <p className="paragraphAdjust"> 
-              3. 국립암센터(국가암데이터센터) K-CORE, 기타 제3자의 인격권 또는 지적재산권을 침해하거나 업무를 방해하는 행위
-              </p></li>
-              <li> <p className="paragraphAdjust"> 4. 다른 회원의 ID를 도용하는 행위</p></li>
-              <li> <p className="paragraphAdjust"> 
-              5. 광고 또는 외설, 폭력적인 메시지·화상·음성 등이 담긴 메일을 보내는 등 기타 공서양속에 반하는 정보를 공개 또는 게시하는 행위.
-              </p></li>
-              <li> <p className="paragraphAdjust"> 
-              6. 관련 법령에 의하여 그 전송 또는 게시가 금지되는 정보(컴퓨터 프로그램 등)의 전송 또는 게시하는 행위
-              </p></li>
-              <li> <p className="paragraphAdjust"> 
-              7. 국립암센터(국가암데이터센터) K-CORE의 직원이나 서비스 관리자를 가장 혹은 사칭하거나 타인의 명의를 도용하여 글을 게시하거나 메일을 발송하는 행위 
-              </p></li>
-              <li> <p className="paragraphAdjust"> 
-              8. 컴퓨터 소프트웨어, 하드웨어, 전기통신 장비의 정상적인 가동을 방해, 파괴할 목적으로 고안된 소프트웨어 바이러스, 기타 다른 컴퓨터 코드, 파일, 프로그램을 포함하고 있는 자료를 게시하거나 전자우편으로 발송하는 행위
-              </p></li>
-              <li> <p className="paragraphAdjust"> 
-              9. 다른 이용자에 대한 개인정보를 동의 없이 수집, 저장, 공개하는 행위
-              </p></li>
-              <li> <p className="paragraphAdjust"> 
-              10. 불특정 다수를 대상으로 하여 광고 또는 선전을 게시하거나 스팸메일을 전송하는 등의 방법으로 영리목적의 활동을 하는 행위
-              </p></li>
-              <li> <p className="paragraphAdjust"> 
-              11. 국립암센터(국가암데이터센터) K-CORE에서 제공하는 서비스에 정한 약관 혹은 기타 서비스 이용에 관한 규정을 위반하는 행위
-              </p></li>
-            </ul>
-          </li>
-          <li> <p className="paragraphAdjust"> 
-          ② 제1항에 해당하는 행위를 한 이용자가 있을 경우 국립암센터(국가암데이터센터) K-CORE의 본 약관 제5조 제2항에서 정한 바에 따라 이용자의 회원자격을 적절한 방법으로 제한 및 정지, 상실시킬 수 있습니다. 
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ③ 이용자는 그 귀책사유로 인하여 국립암센터(국가암데이터센터) K-CORE나 다른 이용자가 입은 손해를 배상할 책임이 있습니다. 
-          </p></li>
-        </ul>
-      </div>
+                <h1
+                  className=""
+                >
+                  제1조 목적
+                </h1>
+                <div style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'
+                >
+                  <ul>
+                    <li> <p className="paragraphAdjust">
+                      ① 본 약관은 국립암센터(국가암데이터센터)가 운영하는 K-CORE 인터넷 홈페이지에서 제공하는 인터넷 관련 서비스(이하 "서비스"라 합니다) 이용에 관한 이용 조건 및 절차 등 기본적인 사항을 규정함을 목적으로 합니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ② 이용자가 되고자 하는 자가 국립암센터(국가암데이터센터) K-CORE에서 정한 소정의 절차를 거쳐서 "동의" 단추를 누르면 본 약관에 동의하는 것으로 간주합니다. 본 약관에 정하는 이외의 이용자와 국립암센터(국가암데이터센터)의 권리, 의무 및 책임사항에 관해서는 대한민국의 관련 법령과 상관습에 의합니다.
+                    </p></li>
+                  </ul>
+                </div>
 
-      {/* 13*/}
-      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
-      제13조 저작권의 귀속 및 이용제한
-      </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
-        <ul>
-          <li> <p className="paragraphAdjust"> 
-          ① 국립암센터(국가암데이터센터) K-CORE에서 작성한 저작물에 대한 저작권 기타 지적재산권은 국립암센터(국가암데이터센터) K-CORE에 귀속합니다.
-          </p></li>
-          <li> <p className="paragraphAdjust"> 
-          ② 이용자는 국립암센터(국가암데이터센터) K-CORE를 이용함으로써 얻은 정보를 국립암센터(국가암데이터센터) K-CORE의 사전승낙 없이 복제, 전송, 출판, 배포, 방송 기타 방법에 의하여 영리목적으로 이용하거나 제3자에게 이용하게 하여서는 안됩니다.
-          </p></li>
-        </ul>
-      </div>
-      {/* 14*/}
-      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
-      제14조 재판관할      </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
-        <ul>
-          <li> <p className="paragraphAdjust"> 
-          ① 국립암센터(국가암데이터센터) K-CORE와 이용자간에 발생한 서비스 이용에 관한 분쟁에 대하여는 대한민국 법을 적용하며, 본 분쟁으로 인한 소는 민사소송법상의 관할을 가지는 대한민국의 법원에 제기합니다.
-          </p></li>
-        </ul>
-      </div>
-      {/* 15*/}
-      <h1 className="text-center text-9xl relative m-2 highlightH1 w-fit">
-      제15조 시행일 
-      </h1>
-      <div   style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
-        <ul>
-          <li> <p className="paragraphAdjust">  ①	 본 약관은 2022년 9월 30일부터 적용합니다.</p></li>
-        </ul>
-      </div>
-    </div>
+                <h1 className="">
+                  제2조 약관의 명시와 개정
+                </h1>
+                <div style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'
+                >
+                  <ul>
+                    <li> <p className="paragraphAdjust">
+                      ① 이 약관의 내용과 주소지, 관리자의 성명, 개인정보보호 담당자의 성명, 연락처(전화, 팩스, 전자우편 주소 등) 등을 이용자가 알 수 있도록 사이트의 초기 서비스화면(개인정보처리방침)에 게시합니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ② 국립암센터(국가암데이터센터) K-CORE는 관계법령을 위배하지 않는 범위에서 본 약관을 개정할 수 있습니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ③ 약관을 개정할 경우에는 적용일자 및 개정사유를 명시하여 현행약관과 함께 사이트의 초기화면에 그 적용일자 7일 이전부터 적용일자 전일까지 공지합니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ④ 국립암센터(국가암데이터센터) K-CORE는 이용자가 본 약관 내용에 동의하는 것을 조건으로 이용자에게 서비스를 제공할 것이며, 이용자가 본 약관의 내용에 동의하는 경우, 국립암센터(국가암데이터센터) K-CORE의 서비스 제공 행위 및 이용자의 서비스 사용 행위에는 본 약관이 우선적으로 적용될 것입니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ⑤ 이 약관에 동의하는 것은 정기적으로 웹을 방문하여 약관의 변경사항을 확인하는 것에 동의함을 의미합니다. 변경된 약관에 대한 정보를 알지 못해 발생하는 이용자의 피해는 국립암센터(국가암데이터센터) K-CORE에서 책임지지 않습니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ⑥ 이용자는 변경된 약관에 동의하지 않을 경우 회원 탈퇴(해지)를 요청할 수 있으며, 변경된 약관의 효력 발생일로부터 7일 이후에도 거부의사를 표시하지 아니하고 서비스를 계속 사용할 경우 약관의 변경 사항에 동의한 것으로 간주됩니다.
+                    </p></li>
+                  </ul>
+                </div>
+
+                {/* 3 */}
+                <h1 className="">
+                  제3조 용어의 정의
+                </h1>
+                <div style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
+                  <ul>
+                    <li> <p className="paragraphAdjust">
+                      본 약관에서 사용하는 용어의 정의는 다음과 같습니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ① 이용자(회원) : 홈페이지 회원가입에 필요한 개인 정보를 제공하여 회원 가입을 한 자로서, 사이트의 정보 및 서비스를 이용할 수 있는 자를 말합니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ② 운영자 : 서비스의 전반적인 관리와 원활한 운영을 위하여 국립암센터(국가암데이터센터) K-CORE에서 선정한 사람을 말합니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ③ 회원가입 : 사이트에서 제공하는 신청서 양식에 해당 정보를 기입하고, 본 약관에 동의하여 서비스 이용계약을 완료시키는 행위를 말합니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ④ 개인정보 : 살아 있는 개인에 관한 정보로서 성명, 주민등록번호 및 영상 등을 통하여 개인을 알아볼 수 있는 정보(해당 정보만으로는 특정 개인을 알아볼 수 없더라도 다른 정보와 쉽게 결합하여 알아볼 수 있는 것을 포함한다)를 말합니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ⑤ 아이디 : 이용고객의 식별과 이용자가 서비스 이용을 위하여 이용자가 선정하고 사이트가 부여하는 문자와 숫자의 조합을 말합니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ⑥ 비밀번호 : 이용자가 등록회원과 동일인인지 신원을 확인하고 통신상의 자신의 개인정보보호를 위하여 이용자 자신이 선정한 문자와 숫자의 조합을 말합니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ⑦ 연결사이트 : 홈페이지와 하이퍼링크 방식(하이퍼링크의 대상에는 문자, 정지 및 동화상 등이 포함됨) 등으로 연결된 웹 사이트를 말합니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ⑧ 해지 : 이용자가 서비스 개통 후 이용계약을 종료시키는 행위를 말합니다.
+                    </p></li>
+                  </ul>
+                </div>
+                {/* 4 */}
+                <h1 className="">
+                  제4조 회원가입
+                </h1>
+                <div style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
+                  <ul>
+                    <li> <p className="paragraphAdjust">
+                      ① 회원가입은 이용자가 본 이용약관 내용에 대한 동의와 이용신청에 대하여 사이트의 이용승낙으로 성립합니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ② 본 이용약관에 대한 동의는 회원가입 절차 중 해당 사이트의 '동의함' 버튼을 누름으로써 의사표시를 합니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ③ 국립암센터(국가암데이터센터) K-CORE는 다음 각 호에 해당하는 회원가입에 대하여는 가입을 취소할 수 있습니다. </p>
+                      <ul>
+                        <li> <p className="paragraphAdjust">
+                          1. 가입신청자가 본 약관 제5조 제2항에 의거하여 이전에 회원 자격을 상실한 적이 있는 경우
+                        </p></li>
+                        <li> <p className="paragraphAdjust"> 2. 등록내용에 허위, 기재누락, 오기가 있는 경우</p></li>
+                        <li> <p className="paragraphAdjust">
+                          3. 기타 회원으로 등록하는 것이 센터의 기술상 또는 업무 수행 상 현저히 지장이 있다고 판단하는 경우
+                        </p></li>
+                        <li> <p className="paragraphAdjust">
+                          4. 사회의 안녕 질서 혹은 미풍양속을 저해할 목적으로 신청하였을 때
+                        </p></li>
+                        <li> <p className="paragraphAdjust">
+                          5. 사이트를 이용하며 법령과 본 약관이 금지하는 행위를 하는 경우
+                        </p></li>
+                        <li> <p className="paragraphAdjust">
+                          6. 입력한 비밀번호가 9자 이상 20자 이내(영대문자, 영소문자, 숫자, 특수문자 3종류 혼용)가 아닌 경우
+                        </p></li>
+                      </ul>
+                    </li>
+                    <li> <p className="paragraphAdjust">
+                      ④ 국립암센터(국가암데이터센터) K-CORE는 다음 각 항에 해당하는 경우 그 사유가 해소될 때까지 이용계약 성립을 유보할 수 있습니다.
+                      <ul>
+                        <li> <p className="paragraphAdjust"> 1. 서비스 관련 제반 용량이 부족한 경우 </p></li>
+                        <li> <p className="paragraphAdjust"> 2. 기술상 장애 사유가 있는 경우</p></li>
+                      </ul>
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ⑤ 이용자는 등록사항에 변경이 있는 경우, 즉시 회원정보 수정 등 기타 방법으로 국립암센터(국가암데이터센터) K-CORE에 대하여 그 변경사항을 알려야 합니다.
+                    </p></li>
+                  </ul>
+                </div>
+                {/* 5  */}
+                <h1 className="">
+                  제5조 회원탈퇴 및 자격의 상실 등
+                </h1>
+                <div style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
+                  <ul>
+                    <li> <p className="paragraphAdjust">
+                      ① 이용자는 회원가입이후 국립암센터(국가암데이터센터) K-CORE에서 제공하는 인터넷 서비스를 제공받을 의사가 없는 등의 사유가 있을 경우에는 언제든지 회원탈퇴(해지)를 할 수 있습니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ② 이용자가 다음 각 호의 사유에 해당하는 경우, 국립암센터(국가암데이터센터) K-CORE는 회원자격을 상실시킬 수 있습니다. </p>
+                      <ul>
+                        <li> <p className="paragraphAdjust"> 1. 등록 신청 시에 허위 내용을 등록한 경우</p></li>
+                        <li> <p className="paragraphAdjust">
+                          2. 다른 이용자의 서비스 이용을 방해하거나 그 정보를 도용하는 등 질서를 위협하는 경우
+                        </p></li>
+                        <li> <p className="paragraphAdjust">
+                          3. 국립암센터(국가암데이터센터) K-CORE 내에서 검증되지 않은 허위정보 및 기타 허락되지 않은 물품의 판매 행위를 하는 경우
+                        </p></li>
+                        <li> <p className="paragraphAdjust">
+                          4. 국립암센터(국가암데이터센터) K-CORE 내에서 허락되지 않은 진료행위 또는 진료행위를 위한 선전의 장소로 이용하는 경우
+                        </p></li>
+                        <li> <p className="paragraphAdjust">
+                          5. 국립암센터(국가암데이터센터) K-CORE 내에 제공되는 정보를 변경하는 등 홈페이지 운영을 방해한 경우
+                        </p></li>
+                        <li> <p className="paragraphAdjust">
+                          6. 국립암센터(국가암데이터센터) K-CORE를 이용하여 법령과 본 약관이 금지하거나 공서양속에 반하는 행위를 하는 경우
+                        </p></li>
+                        <li> <p className="paragraphAdjust">
+                          7. 기타 회원으로서의 자격을 지속시키는 것이 부적절하다고 판단되는 경우
+                        </p></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* 6 */}
+                <h1 className="">
+                  제6조 서비스의 내용 및 변경
+                </h1>
+                <div style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
+                  <ul>
+                    <li> <p className="paragraphAdjust">
+                      ① 국립암센터(국가암데이터센터) K-CORE는 다음의 서비스를 제공합니다. </p>
+                      <ul>
+                        <li> <p className="paragraphAdjust"> 1. 국립암센터(국가암데이터센터) K-CORE 관련 사업 소개</p></li>
+                        <li> <p className="paragraphAdjust"> 2. 국립암센터(국가암데이터센터) 제공 데이터 시각화 서비스</p></li>
+                        <li> <p className="paragraphAdjust"> 3. 국립암센터(국가암데이터센터) 데이터 신청 안내</p></li>
+                        <li> <p className="paragraphAdjust"> 4. 사용자데이터 시각화 서비스</p></li>
+                        <li> <p className="paragraphAdjust"> 5. 기타 제공 서비스</p></li>
+                      </ul>
+                    </li>
+                    <li> <p className="paragraphAdjust">
+                      ② 국립암센터(국가암데이터센터) K-CORE는 불가피한 사정이 있는 경우 제공하는 서비스의 내용을 변경할 수 있으며, 이 경우 변경된 서비스의 내용 및 제공일자를 명시하여 그 제공일자 이전 7일부터 공지합니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ③ 국립암센터(국가암데이터센터) K-CORE는 서비스 내용의 변경으로 인하여 이용자가 입은 손해에 대하여 배상하지 아니합니다. 단, 국립암센터(국가암데이터센터) K-CORE의 고의 또는 중과실이 있는 경우에는 그러하지 아니합니다.
+                    </p></li>
+                  </ul>
+                </div>
+                {/* 7*/}
+                <h1 className="">
+                  제7조 서비스의 중단
+                </h1>
+                <div style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
+                  <ul>
+                    <li> <p className="paragraphAdjust">
+                      ① 국립암센터(국가암데이터센터) K-CORE는 컴퓨터, 시스템 등 정보통신설비의 보수점검·교체 및 고장, 통신의 두절, 기타 불가항력적 사유 등이 발생한 경우에는 서비스의 제공을 일시적으로 중단할 수 있습니다.
+                    </p>
+                    </li>
+                    <li>
+
+                      <p className="paragraphAdjust">
+                        ② 국립암센터(국가암데이터센터) K-CORE는 제1항의 사유로 서비스 제공이 일시적으로 중단의 경우에는 국립암센터(국가암데이터센터)
+                        K-CORE 홈페이지에 사전 게시함으로써 이용자 개별통지를 대신할 수 있습니다.
+                      </p></li>
+                    <li>
+                      <p className="paragraphAdjust">  다만, 국립암센터(국가암데이터센터) K-CORE가 통제할 수 없는
+                        사유로 인한 서비스의 중단(시스템 관리자의 고의, 과실이 없는 디스크 장애, 시스템 다운 등)으로 인하여 사전 통지가 불가능한 경우에는 그러하지 아니합니다. </p>
+                    </li>
+                    <li> <p className="paragraphAdjust">
+                      ③ 국립암센터(국가암데이터센터) K-CORE의 고의 또는 과실이 없는 서비스 내용의 변경으로 인하여 이용자 또는 제3자가 입은 손해에 대하여는 배상하지 아니합니다. 단, 센터의 고의 또는 중과실이 있는 경우에는 그러하지 아니합니다.
+                    </p>
+                    </li>
+                  </ul>
+                </div>
+                {/* 8*/}
+                <h1 className="">
+                  제8조 회원에 대한 통지
+                </h1>
+                <div style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
+                  <ul>
+                    <li> <p className="paragraphAdjust">
+                      ① 국립암센터(국가암데이터센터) K-CORE는 회원에 대한 통지를 하는 경우, 회원이 센터에 제공한 전자우편 주소 또는 전화번호로 할 수 있습니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ② 국립암센터(국가암데이터센터) K-CORE는 불특정다수 회원에 대한 통지의 경우 게시판에 게시함으로써 개별통지에 갈음할 수 있습니다.
+                    </p></li>
+                  </ul>
+                </div>
+                {/* 9*/}
+                <h1 className="">
+                  제9조 회원의 개인정보보호
+                </h1>
+                <div style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
+                  <ul>
+                    <li> <p className="paragraphAdjust">
+                      ① 국립암센터(국가암데이터센터) K-CORE는 관련법령이 정하는 바에 따라서 이용자 등록정보를 포함한 이용자의 개인정보를 보호하기 위하여 노력합니다. 이용자의 개인정보보호에 관해서는 관련법령 및 국립암센터(국가암데이터센터) K-CORE에서 정하는 "개인정보처리방침"에 정한 바에 의합니다.
+                    </p></li>
+                  </ul>
+                </div>
+                {/* 10*/}
+                <h1 className="">
+                  제10조 국립암센터 국가암데이터센터 K-CORE의 의무
+                </h1>
+                <div style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
+                  <ul>
+                    <li> <p className="paragraphAdjust">
+                      ① 국립암센터(국가암데이터센터) K-CORE는 법령과 본 약관이 금지하거나 공서양속에 반하는 행위를 하지 않으며, 본 약관이 정하는 바에 따라 지속적이고 안정적으로 서비스를 제공하기 위해서 노력합니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ② 국립암센터(국가암데이터센터) K-CORE는 이용자가 안전하게 인터넷 서비스를 이용할 수 있도록 이용자의 개인정보보호를 위한 보안 시스템을 구축합니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ③ 국립암센터(국가암데이터센터) K-CORE는 이용자가 원하지 않는 영리목적의 광고성 전자우편을 발송하지 않습니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ② 국립암센터(국가암데이터센터) K-CORE는 이용자가 안전하게 인터넷
+                      서비스를 이용할 수 있도록 이용자의 개인정보보호를 위한 보안 시스템을
+                      구축합니다. ③ 국립암센터(국가암데이터센터) K-CORE는 이용자가 원하지
+                      않는 영리목적의 광고성 전자우편을 발송하지 않습니다.
+                    </p></li>
+                  </ul>
+                </div>
+                {/* 11*/}
+                <h1 className="">
+                  제11조 이용자의 아이디 및 비밀번호에 대한 의무
+                </h1>
+                <div style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
+                  <ul>
+                    <li> <p className="paragraphAdjust">
+                      ① 국립암센터(국가암데이터센터) K-CORE에서 "관계법령", "개인정보처리방침"에 의해서 그 책임을 지는 경우를 제외하고, 자신의 ID와 비밀번호에 관한 관리책임은 각 이용자에게 있습니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ② 이용자는 자신의 ID 및 비밀번호를 제3자에게 이용하게 해서는 안됩니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ③ 이용자는 자신의 ID 및 비밀번호를 도난당하거나 제3자가 사용하고 있음을 인지한 경우에는 바로 국립암센터(국가암데이터센터) K-CORE에 통보하고 국립암센터(국가암데이터센터) K-CORE의 안내가 있는 경우에는 그에 따라야 합니다.
+                    </p></li>
+                  </ul>
+                </div>
+                {/* 12*/}
+                <h1 className="">
+                  제12조 이용자의 의무
+                </h1>
+                <div style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
+                  <ul>
+                    <li> <p className="paragraphAdjust">
+                      ① 이용자는 다음 각 호의 행위를 하여서는 안됩니다. </p>
+                      <ul>
+                        <li> <p className="paragraphAdjust"> 1. 회원가입신청 또는 변경 시 허위내용을 등록하는 행위</p></li>
+                        <li> <p className="paragraphAdjust">
+                          2. 국립암센터(국가암데이터센터) K-CORE에 게시된 정보를 변경하는 행위
+                        </p></li>
+                        <li> <p className="paragraphAdjust">
+                          3. 국립암센터(국가암데이터센터) K-CORE, 기타 제3자의 인격권 또는 지적재산권을 침해하거나 업무를 방해하는 행위
+                        </p></li>
+                        <li> <p className="paragraphAdjust"> 4. 다른 회원의 ID를 도용하는 행위</p></li>
+                        <li> <p className="paragraphAdjust">
+                          5. 광고 또는 외설, 폭력적인 메시지·화상·음성 등이 담긴 메일을 보내는 등 기타 공서양속에 반하는 정보를 공개 또는 게시하는 행위.
+                        </p></li>
+                        <li> <p className="paragraphAdjust">
+                          6. 관련 법령에 의하여 그 전송 또는 게시가 금지되는 정보(컴퓨터 프로그램 등)의 전송 또는 게시하는 행위
+                        </p></li>
+                        <li> <p className="paragraphAdjust">
+                          7. 국립암센터(국가암데이터센터) K-CORE의 직원이나 서비스 관리자를 가장 혹은 사칭하거나 타인의 명의를 도용하여 글을 게시하거나 메일을 발송하는 행위
+                        </p></li>
+                        <li> <p className="paragraphAdjust">
+                          8. 컴퓨터 소프트웨어, 하드웨어, 전기통신 장비의 정상적인 가동을 방해, 파괴할 목적으로 고안된 소프트웨어 바이러스, 기타 다른 컴퓨터 코드, 파일, 프로그램을 포함하고 있는 자료를 게시하거나 전자우편으로 발송하는 행위
+                        </p></li>
+                        <li> <p className="paragraphAdjust">
+                          9. 다른 이용자에 대한 개인정보를 동의 없이 수집, 저장, 공개하는 행위
+                        </p></li>
+                        <li> <p className="paragraphAdjust">
+                          10. 불특정 다수를 대상으로 하여 광고 또는 선전을 게시하거나 스팸메일을 전송하는 등의 방법으로 영리목적의 활동을 하는 행위
+                        </p></li>
+                        <li> <p className="paragraphAdjust">
+                          11. 국립암센터(국가암데이터센터) K-CORE에서 제공하는 서비스에 정한 약관 혹은 기타 서비스 이용에 관한 규정을 위반하는 행위
+                        </p></li>
+                      </ul>
+                    </li>
+                    <li> <p className="paragraphAdjust">
+                      ② 제1항에 해당하는 행위를 한 이용자가 있을 경우 국립암센터(국가암데이터센터) K-CORE의 본 약관 제5조 제2항에서 정한 바에 따라 이용자의 회원자격을 적절한 방법으로 제한 및 정지, 상실시킬 수 있습니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ③ 이용자는 그 귀책사유로 인하여 국립암센터(국가암데이터센터) K-CORE나 다른 이용자가 입은 손해를 배상할 책임이 있습니다.
+                    </p></li>
+                  </ul>
+                </div>
+
+                {/* 13*/}
+                <h1 className="">
+                  제13조 저작권의 귀속 및 이용제한
+                </h1>
+                <div style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
+                  <ul>
+                    <li> <p className="paragraphAdjust">
+                      ① 국립암센터(국가암데이터센터) K-CORE에서 작성한 저작물에 대한 저작권 기타 지적재산권은 국립암센터(국가암데이터센터) K-CORE에 귀속합니다.
+                    </p></li>
+                    <li> <p className="paragraphAdjust">
+                      ② 이용자는 국립암센터(국가암데이터센터) K-CORE를 이용함으로써 얻은 정보를 국립암센터(국가암데이터센터) K-CORE의 사전승낙 없이 복제, 전송, 출판, 배포, 방송 기타 방법에 의하여 영리목적으로 이용하거나 제3자에게 이용하게 하여서는 안됩니다.
+                    </p></li>
+                  </ul>
+                </div>
+                {/* 14*/}
+                <h1 className="">
+                  제14조 재판관할      </h1>
+                <div style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
+                  <ul>
+                    <li> <p className="paragraphAdjust">
+                      ① 국립암센터(국가암데이터센터) K-CORE와 이용자간에 발생한 서비스 이용에 관한 분쟁에 대하여는 대한민국 법을 적용하며, 본 분쟁으로 인한 소는 민사소송법상의 관할을 가지는 대한민국의 법원에 제기합니다.
+                    </p></li>
+                  </ul>
+                </div>
+                {/* 15*/}
+                <h1 className="">
+                  제15조 시행일
+                </h1>
+                <div style={{ lineHeight: "2.3", position: "relative", fontSize: "20px" }} className='border-div'>
+                  <ul>
+                    <li> <p className="paragraphAdjust">  ①	 본 약관은 2022년 9월 30일부터 적용합니다.</p></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </>
   );
 }
 

@@ -2024,6 +2024,91 @@
   width: fit-content;
 }
 
+.hvBox .hvBox_links {
+  display: flex;
+  flex-direction: column;
+  gap: 20px
+}
+
+.termsAndConditions h1 {
+  padding-top: 3%;
+  color: cadetblue
+}
+
+.termsAndConditions div {
+  line-height: 2;
+  position: relative;
+  font-size: 14px;
+  padding: 3%;
+  border: 1px solid gray;
+  border-radius: 25px;
+  margin-top: 3%;
+}
+
+.div_64_1 {
+  text-align: center;
+  padding: 2%;
+}
+
+/* .div_64 .div_64_box {
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+} */
+
+.div_64 {
+  border: 1px solid gray;
+  margin-top: 3%;
+  border-radius: 25px;
+}
+
+.div_64 .div_64_box div {
+  width: 25%;
+}
+
+.div_64_box {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2%;
+  text-align: center;
+}
+
+.div_64_box_text {
+  text-align: center !important;
+  padding: 10px 0px 10px 0px;
+}
+
+.div_64_box_div {
+  display: flex;
+  flex-direction: column;
+}
+
+.div_64_box_img {
+  margin-left: 33%;
+}
+
+.ktable {
+  border: 1px solid;
+  text-align: center;
+}
+
+.ktd {
+  border: 1px solid;
+  text-align: center;
+  /* margin: 10px; */
+  padding: 10px;
+}
+
+.ktd:first-child{
+ width: 25%;
+}
+.kth:first-child{
+ width: 25%;
+}
+.kth {
+  border: 1px solid;
+  text-align: center;
+}
 
 .Tool .Section {
   display: flex;

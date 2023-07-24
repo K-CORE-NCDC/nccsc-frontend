@@ -5,13 +5,13 @@ import MultiDataVisualization from "./MultiDataVisualization";
 import { OtherTools } from "./OtherTools";
 
 
-export const SingleDataVisualization = ({isLogin}) => {
+export const SingleDataVisualization = ({ isLogin }) => {
   const [activeTab, setActiveTab] = useState('1')
   const history = useHistory()
 
-useEffect(() =>{
-  console.log('isLogin' , isLogin)
-},[])
+  useEffect(() => {
+    console.log('isLogin', isLogin)
+  }, [])
   return (
     <div className="auto">
       <div className="mainContentsBox">
@@ -45,8 +45,12 @@ useEffect(() =>{
                   <div className="subHeader">
                     <p className="tit h5">Contents</p>
                     <div className="tit contentBtns">
-                      <button className="btn" onClick={() =>{
-                        history.push("/visualise-singledata/home/")
+                      <button className="btn" onClick={() => {
+                        // history.push({"/visualise-singledata/home/"})
+                        history.push({
+                          pathname: '/visualise-singledata/home/',
+                          state: { example: true }
+                        })
                       }}>
                         <FormattedMessage id="ExamplePage" defaultMessage='Example Page' />
                       </button>
