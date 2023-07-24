@@ -137,11 +137,6 @@ const homeReducer = (state = { home: 'home' }, { type, payload }) => {
         ...state,
         registration_status: payload,
       };
-    case homeConstants.CHANGE_PASSWORD:
-      return {
-        ...state,
-        changePasswordStatus: payload,
-      };
     case homeConstants.REQUEST_DONE:
       return {
         ...state,
@@ -192,7 +187,7 @@ const homeReducer = (state = { home: 'home' }, { type, payload }) => {
     case homeConstants.CLEAR_ID_PASSWORD_RESET_PASSWORD:
       {
         const {
-          findId, findPassword, changePasswordStatus, ...rest
+          findId, findPassword, ...rest
         } = state;
         /* eslint-disable no-param-reassign */
         state = rest;

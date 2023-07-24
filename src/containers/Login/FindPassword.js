@@ -144,10 +144,10 @@ function FindPassword() {
             <div className="bottomBtns">
               <div className="flex">
                 <button onClick={cancelfunction} className="btn btnGray bdBtn">
-                  cancellation
+                  Reset
                 </button>
                 <button onClick={findPasswordfunction} className="btn btnPrimary" >
-                  submit
+                  Submit
                 </button>
               </div>
             </div>

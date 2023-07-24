@@ -1,5 +1,6 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 export const OtherTools = () => {
   return (
@@ -10,7 +11,9 @@ export const OtherTools = () => {
             <p className="tit h5">Contents</p>
             <div className="tit contentBtns">
               <button className="btn">
-              <FormattedMessage id="ExamplePage" defaultMessage='Example Page' />
+                <Link to="/tools/">
+                <FormattedMessage id="ExamplePage" defaultMessage='Example Page' />
+                </Link>
               </button>
               <button className="btn">
                 <FormattedMessage id="DownloadManual" defaultMessage='Download Manual' />

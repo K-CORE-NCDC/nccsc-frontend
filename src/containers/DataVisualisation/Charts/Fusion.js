@@ -361,6 +361,16 @@ export default function FusionPlot({
                       pagination
                       columns={tableColumnsData}
                       data={tableData}
+                      customStyles={{
+                        table: {
+                          border: '1px solid black',
+                        },
+                        pagination: {
+                          style: {
+                              gap:"10px"
+                          }
+                        }      
+                      }}
                     />
                     }
                   </div>

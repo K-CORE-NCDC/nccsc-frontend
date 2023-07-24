@@ -4,9 +4,67 @@ import { useDispatch } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import Swal from 'sweetalert2';
 import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
+
+function Modal({ showModal, toggleModal, fileName }) {
+  let fileNameImage = require(`../../../assets/images/FileScreenshots/${fileName}.png`).default
+  let fileNameFile = require(`../../../assets/files/20_samples/${fileName}.tsv`).default
+  return (
+    <>
+      {showModal ? (
+        <>
+          <div className="Toolmodal-container">
+            <div className="Toolmodal-content" style={{maxWidth:"60vw"}}>
+              {/*content*/}
+              <div className="Toolmodal-dialog">
+                {/*header*/}
+                <div className="Toolmodal-header">
+                  <h3 className="Toolmodal-title">Sample File Download</h3>
+                  <button
+                    className="Toolmodal-close-btn"
+                    onClick={() => toggleModal(false, '')}
+                  >
+                    ×
+                  </button>
+                </div>
+                {/*body*/}
+                <div className="Toolmodal-body">
+                  <div className="Toolmodal-text">
+                    <ul style={{ margin: "10px" }}>
+                      <li>{`This is a Sample Example File for ${fileName}`}</li>
+                    </ul>
+                    <img src={fileNameImage} alt="ExampleFileImage" />
+                    <div className='Flex FlexDirRow' style={{ marginTop: "20px", gap: "10px" }}>
+
+                      <p>Click on the link to download the sample file</p>
+                      <a className="Tooldownload-link" href={fileNameFile} download>
+                      Download
+                    </a> 
+                    </div>
+                  </div>
+                </div>
+                {/*footer*/}
+                <div className="Toolmodal-footer">
+                  <button
+                    className="Toolmodal-close-btn"
+                    onClick={() => toggleModal(false, '')}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="Toolmodal-overlay"></div>
+        </>
+      ) : null}
+    </>
+  );
+}
 const Table = ({ updateComponentNumber }) => {
   const [filesData, setFilesData] = useState({});
   const [projectName, setProjectName] = useState("");
+  const [showModal, setShowModal] = useState(false)
+  const [fileName, setFileName] = useState("")
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -73,9 +131,17 @@ const Table = ({ updateComponentNumber }) => {
   const handleReset = () => {
     setFilesData({});
     setProjectName('');
+    if (document.getElementById('projectName')) {
+      document.getElementById('projectName').value = ''
+    }
     dispatch(clearMultiFIleUploadState())
-    
+
   };
+
+  let toggleModal = (status,file) => {
+    setShowModal(status)
+    setFileName(file)
+  }
 
   const title = { id: "MultiDataVisualization", defaultMessage: "Multi Data Visualization" }
 
@@ -85,6 +151,14 @@ const Table = ({ updateComponentNumber }) => {
       { id: 'MultiDataVisualization', defaultMessage: 'Multi Data Visualization', to: '/multidatavisualization/' },
       { id: 'MultiDataUpload', defaultMessage: 'Multi Data Upload', to: '/newmultidataproject/' },
     ]
+  }
+
+  const InforIcon = () => {
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" style={{ width: "1.5rem", height: "1.5rem" }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+      </svg>
+    )
   }
 
   return (
@@ -98,12 +172,15 @@ const Table = ({ updateComponentNumber }) => {
 
       />
       <article id="subContents" className="subContents">
-      <div className="contentsTitle" style={{margin:"0px"}}>
+        <div>
+          {showModal && <Modal showModal={showModal} toggleModal={toggleModal} fileName={fileName} />}
+        </div>
+        <div className="contentsTitle" style={{ margin: "0px" }}>
           <h3>
             <font>
-              <font><FormattedMessage id="MultiData" defaultMessage="Multi Data"/></font>
+              <font><FormattedMessage id="MultiData" defaultMessage="Multi Data" /></font>
               <span className="colorSecondary">
-                <font><FormattedMessage id="Upload" defaultMessage="Upload"/> </font>
+                <font><FormattedMessage id="Upload" defaultMessage="Upload" /> </font>
               </span>
             </font>
           </h3>
@@ -119,7 +196,7 @@ const Table = ({ updateComponentNumber }) => {
                   type="text"
                   id="projectName"
                   name="project_name"
-                  value={filesData.project_name}
+                  value={projectName}
                   onChange={handleInputChange}
                 />
               </div>
@@ -129,11 +206,18 @@ const Table = ({ updateComponentNumber }) => {
               <tbody>
                 <tr className="MultiUploadBGGray">
                   <td className="MultiUploadTDHeader MultiUploadTextCenter" colSpan="2">
-                    Clinical Information file <span style={{color:"red"}}> (Required) </span>
+                    Clinical Information file <span style={{ color: "red" }}> (Required) </span>
                   </td>
                 </tr>
                 <tr>
-                  <td className="MultiUploadTDHeader MultiUploadW208" style={{ width: '31vw' }}>Clinical Information</td>
+                  <td className="MultiUploadTDHeader MultiUploadW208" style={{ width: '31vw' }}>
+                    <div className="Flex JustifySpaceBetween">
+                      <span>Clinical Information</span>
+                      <button onClick={() => toggleModal(true,'ClinicalInformation')}>
+                        <InforIcon />
+                      </button>
+                    </div>
+                  </td>
                   <td className="MultiUploadTDHeader MultiUploadTD">
                     {filesData["clinical_information"] ? (
                       <>
@@ -143,7 +227,7 @@ const Table = ({ updateComponentNumber }) => {
                           type="button"
                           onClick={() => handleClearFile("clinical_information")}
                         >
-                          No file
+                          Reset
                         </button>
                       </>
                     ) : (
@@ -153,7 +237,7 @@ const Table = ({ updateComponentNumber }) => {
                           onChange={(event) => handleFileChange(event, "clinical_information")}
                         />
                         <button className="MultiUploadBgGrayButton" disabled>
-                          No file
+                          Reset
                         </button>
                       </>
                     )}
@@ -162,7 +246,7 @@ const Table = ({ updateComponentNumber }) => {
               </tbody>
             </table>
 
-             <table className="MultiUploadTableHead">
+            <table className="MultiUploadTableHead">
               <tbody>
                 <tr className="MultiUploadBGYellow">
                   <td className="MultiUploadTDHeader MultiUploadTextCenter" colSpan="2">
@@ -170,7 +254,14 @@ const Table = ({ updateComponentNumber }) => {
                   </td>
                 </tr>
                 <tr>
-                  <td className="MultiUploadTDHeader MultiUploadW208">DNA Mutation</td>
+                  <td className="MultiUploadTDHeader MultiUploadW208">
+                    <div className="Flex JustifySpaceBetween">
+                      <span>DNA Mutation</span>
+                      <button onClick={() => toggleModal(true,'DnaMutation')}>
+                        <InforIcon />
+                      </button>
+                    </div>
+                  </td>
                   <td className="MultiUploadTDHeader MultiUploadTD">
                     {filesData["dna_mutation"] ? (
                       <>
@@ -180,7 +271,7 @@ const Table = ({ updateComponentNumber }) => {
                           type="button"
                           onClick={() => handleClearFile("dna_mutation")}
                         >
-                          No file
+                          Reset
                         </button>
                       </>
                     ) : (
@@ -190,14 +281,21 @@ const Table = ({ updateComponentNumber }) => {
                           onChange={(event) => handleFileChange(event, "dna_mutation")}
                         />
                         <button className="MultiUploadBgGrayButton" disabled>
-                          No file
+                          Reset
                         </button>
                       </>
                     )}
                   </td>
                 </tr>
                 <tr>
-                  <td className="MultiUploadTDHeader">CNV</td>
+                  <td className="MultiUploadTDHeader">
+                    <div className="Flex JustifySpaceBetween">
+                      <span>CNV</span>
+                      <button onClick={() => toggleModal(true,'CNV')}>
+                        <InforIcon />
+                      </button>
+                    </div>
+                  </td>
                   <td className="MultiUploadTDHeader MultiUploadTD">
                     {filesData["cnv"] ? (
                       <>
@@ -207,7 +305,7 @@ const Table = ({ updateComponentNumber }) => {
                           type="button"
                           onClick={() => handleClearFile("cnv")}
                         >
-                          No file
+                          Reset
                         </button>
                       </>
                     ) : (
@@ -217,14 +315,21 @@ const Table = ({ updateComponentNumber }) => {
                           onChange={(event) => handleFileChange(event, "cnv")}
                         />
                         <button className="MultiUploadBgGrayButton" disabled>
-                          No file
+                          Reset
                         </button>
                       </>
                     )}
                   </td>
                 </tr>
                 <tr>
-                  <td className="MultiUploadTDHeader">Methylation</td>
+                  <td className="MultiUploadTDHeader">
+                    <div className="Flex JustifySpaceBetween">
+                      <span>methylation</span>
+                      <button onClick={() => toggleModal(true,'Methylation')}>
+                        <InforIcon />
+                      </button>
+                    </div>
+                  </td>
                   <td className="MultiUploadTDHeader MultiUploadTD">
                     {filesData["methylation"] ? (
                       <>
@@ -234,7 +339,7 @@ const Table = ({ updateComponentNumber }) => {
                           type="button"
                           onClick={() => handleClearFile("methylation")}
                         >
-                          No file
+                          Reset
                         </button>
                       </>
                     ) : (
@@ -244,7 +349,7 @@ const Table = ({ updateComponentNumber }) => {
                           onChange={(event) => handleFileChange(event, "methylation")}
                         />
                         <button className="MultiUploadBgGrayButton" disabled>
-                          No file
+                          Reset
                         </button>
                       </>
                     )}
@@ -262,7 +367,14 @@ const Table = ({ updateComponentNumber }) => {
                   </td>
                 </tr>
                 <tr>
-                  <td className="MultiUploadTDHeader MultiUploadW208">RNA </td>
+                  <td className="MultiUploadTDHeader MultiUploadW208">
+                    <div className="Flex JustifySpaceBetween">
+                      <span>RNA</span>
+                      <button onClick={() => toggleModal(true,'RNA')}>
+                        <InforIcon />
+                      </button>
+                    </div>
+                  </td>
                   <td className="MultiUploadTDHeader MultiUploadTD">
                     {filesData["rna"] ? (
                       <>
@@ -272,7 +384,7 @@ const Table = ({ updateComponentNumber }) => {
                           type="button"
                           onClick={() => handleClearFile("rna")}
                         >
-                          No file
+                          Reset
                         </button>
                       </>
                     ) : (
@@ -282,14 +394,21 @@ const Table = ({ updateComponentNumber }) => {
                           onChange={(event) => handleFileChange(event, "rna")}
                         />
                         <button className="MultiUploadBgGrayButton" disabled>
-                          No file
+                          Reset
                         </button>
                       </>
                     )}
                   </td>
                 </tr>
                 <tr>
-                  <td className="MultiUploadTDHeader">Fusion</td>
+                  <td className="MultiUploadTDHeader">
+                    <div className="Flex JustifySpaceBetween">
+                      <span>Fusion</span>
+                      <button onClick={() => toggleModal(true,'Fusion')}>
+                        <InforIcon />
+                      </button>
+                    </div>
+                  </td>
                   <td className="MultiUploadTDHeader MultiUploadTD">
                     {filesData["fusion"] ? (
                       <>
@@ -299,7 +418,7 @@ const Table = ({ updateComponentNumber }) => {
                           type="button"
                           onClick={() => handleClearFile("fusion")}
                         >
-                          No file
+                          Reset
                         </button>
                       </>
                     ) : (
@@ -309,7 +428,7 @@ const Table = ({ updateComponentNumber }) => {
                           onChange={(event) => handleFileChange(event, "fusion")}
                         />
                         <button className="MultiUploadBgGrayButton" disabled>
-                          No file
+                          Reset
                         </button>
                       </>
                     )}
@@ -327,7 +446,14 @@ const Table = ({ updateComponentNumber }) => {
                   </td>
                 </tr>
                 <tr>
-                  <td className="MultiUploadTDHeader MultiUploadW208">Proteome</td>
+                  <td className="MultiUploadTDHeader MultiUploadW208">
+                    <div className="Flex JustifySpaceBetween">
+                      <span>Proteome</span>
+                      <button onClick={() => toggleModal(true,'Proteome')}>
+                        <InforIcon />
+                      </button>
+                    </div>
+                  </td>
                   <td className="MultiUploadTDHeader MultiUploadTD">
                     {filesData["proteome"] ? (
                       <>
@@ -337,7 +463,7 @@ const Table = ({ updateComponentNumber }) => {
                           type="button"
                           onClick={() => handleClearFile("proteome")}
                         >
-                          No file
+                          Reset
                         </button>
                       </>
                     ) : (
@@ -347,14 +473,21 @@ const Table = ({ updateComponentNumber }) => {
                           onChange={(event) => handleFileChange(event, "proteome")}
                         />
                         <button className="MultiUploadBgGrayButton" disabled>
-                          No file
+                          Reset
                         </button>
                       </>
                     )}
                   </td>
                 </tr>
                 <tr>
-                  <td className="MultiUploadTDHeader">Phosphorylation</td>
+                  <td className="MultiUploadTDHeader">
+                    <div className="Flex JustifySpaceBetween">
+                      <span>Phosphorylation</span>
+                      <button onClick={() => toggleModal(true,'Phospho')}>
+                        <InforIcon />
+                      </button>
+                    </div>
+                  </td>
                   <td className="MultiUploadTDHeader MultiUploadTD">
                     {filesData["phospho"] ? (
                       <>
@@ -364,7 +497,7 @@ const Table = ({ updateComponentNumber }) => {
                           type="button"
                           onClick={() => handleClearFile("phospho")}
                         >
-                          No file
+                          Reset
                         </button>
                       </>
                     ) : (
@@ -374,26 +507,26 @@ const Table = ({ updateComponentNumber }) => {
                           onChange={(event) => handleFileChange(event, "phospho")}
                         />
                         <button className="MultiUploadBgGrayButton" disabled>
-                          No file
+                          Reset
                         </button>
                       </>
                     )}
                   </td>
                 </tr>
               </tbody>
-            </table> 
+            </table>
 
             <div className="bottomBtns">
               <div className="flex">
-                <button className="btn btnGray bdBtn"  onClick={handleReset}>
-                <FormattedMessage id="Reset" defaultMessage="Reset" />
+                <button className="btn btnGray bdBtn" onClick={handleReset}>
+                  <FormattedMessage id="ResetAll" defaultMessage="Reset All" />
                 </button>
                 <button className="btn btnPrimary" onClick={handleUpload}>
-                <FormattedMessage id="Upload" defaultMessage="Upload" />
+                  <FormattedMessage id="Upload" defaultMessage="Upload" />
                 </button>
               </div>
             </div>
-            
+
           </div>
         </div>
       </article>

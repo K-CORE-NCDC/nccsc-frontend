@@ -1,4 +1,4 @@
-import { GroupFilters,UserDefinedGroupFilters,PreDefienedFiltersSurvival } from "../../../Common/SurvivalFusionVolcanoFilters";
+import { GroupFilters, UserDefinedGroupFilters, PreDefienedFiltersSurvival } from "../../../Common/SurvivalFusionVolcanoFilters";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from 'react-router-dom';
@@ -13,6 +13,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
     const route = useLocation();
     const dispatch = useDispatch();
     let { project_id } = useParams();
+
     const clinicalMaxMinInfo = useSelector(
         (data) => data.dataVisualizationReducer.clinicalMaxMinInfo
     );
@@ -25,10 +26,8 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
     const [geneDatabase, setGeneDatabase] = useState("dna_mutation");
     const [sampleCountsCard, setSampleCountsCard] = useState({})
 
-
     const [filterTypeButton, setFilterTypeButton] = useState("clinical");
     const [vizType, setVizType] = useState("single")
-
 
     const [userDefienedFilter, setUserDefienedFilter] = useState(
         project_id === undefined ? "static" : "dynamic"
@@ -47,9 +46,9 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
 
     }, [tabList])
 
-    useEffect(()=>{
+    useEffect(() => {
         setSampleCountsCard(survivalCardData)
-    },[survivalCardData])
+    }, [survivalCardData])
 
     useEffect(() => {
         if (route.pathname.includes('visualise-singledata')) {
@@ -59,6 +58,11 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
             setVizType("multi")
         }
     }, [route.pathname])
+
+    let ChangeGeneDataBase = (geneDB) => {
+        console.log(geneDB);
+        setGeneDatabase(geneDB)
+    }
 
     const [coxUserDefinedFilter, setCoxUserDefinedFilter] = useState({})
     const [survivalModel, setSurvivalModel] = useState("recurrence");
@@ -133,6 +137,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
 
     const submitFitersAndFetchData = () => {
         setLoader(true);
+        let disableCall = true
         let copyState = {}
         copyState["filterType"] = userDefienedFilter;
         copyState["survival_type"] = survivalModel;
@@ -142,16 +147,31 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
             copyState['gene_database'] = geneDatabase
             copyState['group_filters'] = groupFilters
             copyState['clinical'] = true
-            // copyState['viz_type'] = vizType 
         }
         else {
             copyState['filter_gene'] = fileredGene
-            copyState['gene_database'] = geneDatabase
             copyState['group_filters'] = groupFilters
             copyState['clinical'] = false
-            // copyState['viz_type'] = vizType
+            if(filterTypeButton === "omics" && project_id === undefined){
+                copyState['gene_database'] = geneDatabase
+            }
+            else if(filterTypeButton === "omics" && project_id !== undefined){
+                if(alltabList[geneDatabase]){
+                    copyState['gene_database'] = geneDatabase
+                    disableCall = false
+                }
+                else{
+                    disableCall = true
+                }
+            }
         }
-        if(groupFilters){
+        
+        if ( filterTypeButton === 'omics' && disableCall === false) {
+            console.log('a');
+            parentCallback({ updatedState: copyState })
+        }
+        else if (filterTypeButton === 'clinical' && Object.keys(groupFilters).length > 0){
+            console.log('b');
             parentCallback({ updatedState: copyState })
         }
 
@@ -163,8 +183,8 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
         if (filterState && filterState.genes) {
             setGenesArray(filterState.genes);
         }
-        
-        if(groupFilters){
+
+        if (groupFilters) {
             submitFitersAndFetchData();
         }
 
@@ -237,8 +257,8 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
             copyState["filterType"] = userDefienedFilter;
             copyState['coxUserDefinedFilter'] = coxUserDefinedFilter
             copyState['viz_type'] = vizType
-            
-            if(coxFilter){
+
+            if (coxFilter) {
                 parentCallback({ updatedState: copyState })
             }
         }
@@ -257,7 +277,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
         }
         setCoxFilter({ ...tmp });
     };
-    
+
     return (
         <div>
             <div className="P5">
@@ -396,47 +416,36 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
                                     </div>
                                 )}
 
-
                                 {filterTypeButton === "omics" && (
                                     <div className="M1 P1">
+                                         {project_id !== undefined && !alltabList[geneDatabase] && <p className="ErrorText MB1 MultiUploadTextCenter" style={{ textTransform: "capitalize" }}>Please Upload {geneDatabase} file to use the {geneDatabase} Database</p>}
                                         <h6 className="SurvivalSelectDatabase MB1 TextLeft" htmlFor="dropdown-database">
                                             Select Database
                                         </h6>
-                                        <select id="dropdown-database" onChange={(e) => setGeneDatabase(e.target.value)}
+                                        <select id="dropdown-database" onChange={(e) => ChangeGeneDataBase(e.target.value)}
                                             defaultValue={geneDatabase}
                                             className="SurvivalSelectDatabase"
                                         >
 
-                                            {project_id !== undefined && alltabList['dna_mutation'] && <option
-                                                defaultValue={geneDatabase === "dna_mutation"} value="dna_mutation">
+                                            {   <option defaultValue={geneDatabase === "dna_mutation"} value="dna_mutation">
                                                 DNA Mutation
-                                            </option>
+                                                </option>
                                             }
-                                            {project_id === undefined && <option defaultValue={geneDatabase === "dna_mutation"} value="dna_mutation">
-                                                DNA Mutation
-                                            </option>}
 
-                                            {project_id !== undefined && alltabList['rna'] &&
+
+                                            {
                                                 <option defaultValue={geneDatabase === "rna"} value="rna">
                                                     RNA Expression
                                                 </option>
                                             }
 
+
                                             {
-                                                project_id === undefined && <option defaultValue={geneDatabase === "rna"} value="rna">
-                                                    RNA Expression
-                                                </option>
-                                            }
-
-                                            {project_id !== undefined && alltabList['proteome'] &&
                                                 <option defaultValue={geneDatabase === "proteome"} value="proteome">
-                                                    Global Proteome
+                                                Global Proteome
                                                 </option>
                                             }
 
-                                            {project_id === undefined && <option defaultValue={geneDatabase === "proteome"} value="proteome">
-                                                Global Proteome
-                                            </option>}
                                         </select>
                                     </div>
                                 )}

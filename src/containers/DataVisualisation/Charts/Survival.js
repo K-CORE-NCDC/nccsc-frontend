@@ -111,6 +111,7 @@ export default function DataSurvival({
           setCoxNoData(false)
 
         } else if (d.status === 200 && "data" in d && 'survival_type' in inputState && inputState['survival_type'] === 'cox') {
+          console.log("data",d["data"]);
           let r_ = d["data"]
           r_['status'] = 200
           setSurvivalJson(r_)
