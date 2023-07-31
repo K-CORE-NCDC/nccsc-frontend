@@ -92,6 +92,7 @@ export default function DataVisualization() {
         filter: filter
       }));
       setfilterApplied(true);
+      setFilterPopoverOpen(false)
     }
     else if (value && genes) {
       setState((prevState) => ({
@@ -99,6 +100,7 @@ export default function DataVisualization() {
         genes: genes,
         type: value,
       }));
+      setIsGeneSetPopoverOpen(false)
     }
     setChartName(tabName);
 
@@ -107,6 +109,7 @@ export default function DataVisualization() {
   const volcanoFusionFilterCallback = useCallback(({ volcanoFusionFilterData }) => {
     setVFData(volcanoFusionFilterData)
     setChartName(tabName);
+    setVolFusFilterPopoverOpen(false)
 
   }, []);
 
@@ -115,6 +118,7 @@ export default function DataVisualization() {
   const survivalCallback = useCallback(({ updatedState }) => {
     setSurvivalData(updatedState)
     setChartName(tabName);
+    setSurvivalFilterPopoverOpen(false)
   }, []);
 
   let trasnferSurvivalData = (cardData) => {
@@ -408,243 +412,11 @@ export default function DataVisualization() {
 
   };
 
-  const [isGeneSetPopoverOpen, setGeneSetPopoverOpen] = useState(false);
+  const [isGeneSetPopoverOpen, setIsGeneSetPopoverOpen] = useState(false);
   const [isFilterPopoverOpen, setFilterPopoverOpen] = useState(false);
-  const [isSurvivalPopoverOpen, setSurvivalPopoverOpen] = useState(false);
-  const [isVolFusPopoverOpen, setVolFusPopoverOpen] = useState(false);
+  const [isSurvivalFilterPopoverOpen, setSurvivalFilterPopoverOpen] = useState(false);
+  const [isVolFusFilterPopoverOpen, setVolFusFilterPopoverOpen] = useState(false);
 
-  let toggleGeneSetPopover = (value) => {
-    setGeneSetPopoverOpen(value)
-  }
-
-  let toggleFilterPopover = (value) => {
-    setFilterPopoverOpen(value)
-  }
-
-  let toggleSurvivalPopover = (value) => {
-    setSurvivalPopoverOpen(value)
-  }
-
-  let toggleVolFusPopover = (value) => {
-    setVolFusPopoverOpen(value)
-  }
-
-  let GenePopover = ({ isGeneSetPopoverOpen, toggleGeneSetPopover }) => {
-    if (!isGeneSetPopoverOpen) {
-      return (
-        <Popover className="relative gene_main_box">
-          <>
-            <div className=''>
-              <Popover.Button className={'selectBox'} onClick={() => toggleGeneSetPopover(true)}>
-                <div className="GeneSetgeneSetButton">
-                  <div className="flex-1">Gene set Re-filtering</div>
-                  <div className="w-20">
-                    <FilterIcon className="filter-icon" />
-                  </div>
-                </div>
-              </Popover.Button>
-            </div>
-          </>
-        </Popover>
-      )
-    }
-    else {
-      return (
-        <Popover className="relative gene_main_box">
-          <div className=''>
-            <Popover.Button className={'selectBox'}>
-              <div className="GeneSetgeneSetButton">
-                <div className="flex-1">Gene set Re-filtering</div>
-                <div className="w-20">
-                  <FilterIcon className="filter-icon" />
-                </div>
-              </div>
-            </Popover.Button>
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-200"
-              enterFrom="opacity-0 translate-y-1"
-              enterTo="opacity-100 translate-y-0"
-              leave="transition ease-in duration-150"
-              leaveFrom="opacity-100 translate-y-0"
-              leaveTo="opacity-0 translate-y-1"
-            >
-              <Popover.Panel className="GeneSetPopoverPanel">
-                <GeneSet parentCallback={callback} filterState={state} />
-              </Popover.Panel>
-            </Transition>
-          </div>
-        </Popover>
-      );
-    }
-
-  }
-
-  let FilterPopover = ({ isFilterPopoverOpen, toggleFilterPopover }) => {
-    if (!isFilterPopoverOpen) {
-      return (
-        <Popover className="relative gene_main_box">
-          <>
-            <div className="w-full">
-              <Popover.Button className={'selectBox'} onClick={() => toggleFilterPopover(true)}>
-                <div className="GeneSetgeneSetButton">
-                  <div className="flex-1">Clinical info. Re-filtering</div>
-                  <div className="w-20">
-                    <CogIcon className="filter-icon" />
-                  </div>
-                </div>
-              </Popover.Button>
-            </div>
-          </>
-        </Popover>
-      )
-    }
-    else {
-      return (
-        <Popover className="relative gene_main_box">
-          <div className="w-full">
-            <Popover.Button className={'selectBox'}>
-              <div className="GeneSetgeneSetButton">
-                <div className="flex-1">Clinical info. Re-filtering</div>
-                <div className="w-20">
-                  <CogIcon className="filter-icon" />
-                </div>
-              </div>
-            </Popover.Button>
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-200"
-              enterFrom="opacity-0 translate-y-1"
-              enterTo="opacity-100 translate-y-0"
-              leave="transition ease-in duration-150"
-              leaveFrom="opacity-100 translate-y-0"
-              leaveTo="opacity-0 translate-y-1"
-            >
-              <Popover.Panel className="GeneSetPopoverPanel" style={{ height: '450px', overflowY: 'auto' }}>
-                <Filter
-                  parentCallback={callback}
-                  filterState={state["filter"]}
-                  set_screen={screen_call}
-                  project_id={project_id}
-                />
-              </Popover.Panel>
-
-            </Transition>
-          </div>
-        </Popover>
-      );
-    }
-  }
-
-  let SurvivalFilterPopover = ({ isSurvivalPopoverOpen, toggleSurvivalPopover }) => {
-    if (!isSurvivalPopoverOpen) {
-      return (
-        <Popover className="Relative gene_main_box">
-          <>
-            <div className='w-full'>
-              <Popover.Button className={'selectBox'} onClick={() => toggleSurvivalPopover(true)}>
-                <div className="GeneSetgeneSetButton">
-                  <div className="flex-1">Filter</div>
-                  <div className="w-20">
-                    <CogIcon className="filter-icon" />
-                  </div>
-                </div>
-              </Popover.Button>
-            </div>
-          </>
-        </Popover>
-      )
-    }
-    else {
-      return (
-        <Popover className="Relative gene_main_box">
-          <>
-            <div className='w-full'>
-              <Popover.Button className={'selectBox'}>
-                <div className="GeneSetgeneSetButton">
-                  <div className="flex-1">Filter</div>
-                  <div className="w-20">
-                    <CogIcon className="filter-icon" />
-                  </div>
-                </div>
-              </Popover.Button>
-              <Transition
-                as={Fragment}
-                enter="transition ease-out duration-200"
-                enterFrom="opacity-0 translate-y-1"
-                enterTo="opacity-100 translate-y-0"
-                leave="transition ease-in duration-150"
-                leaveFrom="opacity-100 translate-y-0"
-                leaveTo="opacity-0 translate-y-1"
-              >
-                <Popover.Panel className="SurvivalFilter W100 BorderstyleVizAbs" style={{ height: '450px', overflowY: 'auto' }}>
-                  <SurvivalFilterComponent
-                    parentCallback={survivalCallback}
-                    filterState={state}
-                    setSurvivalCardData={survivalCardData}
-                  />
-                </Popover.Panel>
-              </Transition>
-            </div>
-          </>
-        </Popover>
-      );
-    }
-
-  }
-
-  let VolFusFilterPopover = ({ isVolFusPopoverOpen, toggleVolFusPopover }) => {
-    if (!isVolFusPopoverOpen) {
-      return (
-        <Popover className="Relative gene_main_box">
-          <>
-            <div className='w-full'>
-              <Popover.Button className={'selectBox'} onClick={() => toggleVolFusPopover(true)}>
-                <div className="GeneSetgeneSetButton">
-                  <div className="flex-1">Gene set Re-filtering</div>
-                  <div className="w-20">
-                    <CogIcon className="filter-icon" />
-                  </div>
-                </div>
-              </Popover.Button>
-            </div>
-          </>
-        </Popover>
-      )
-    }
-    else {
-      return (
-        <Popover className="Relative gene_main_box">
-          <>
-            <div className='w-full'>
-              <Popover.Button className={'selectBox'}>
-                <div className="GeneSetgeneSetButton">
-                  <div className="flex-1">Gene set Re-filtering</div>
-                  <div className="w-20">
-                    <CogIcon className="filter-icon" />
-                  </div>
-                </div>
-              </Popover.Button>
-              <Transition
-                as={Fragment}
-                enter="transition ease-out duration-200"
-                enterFrom="opacity-0 translate-y-1"
-                enterTo="opacity-100 translate-y-0"
-                leave="transition ease-in duration-150"
-                leaveFrom="opacity-100 translate-y-0"
-                leaveTo="opacity-0 translate-y-1"
-              >
-                <Popover.Panel className="VFFilter W100 BorderstyleVizAbs">
-                  <VolcanoFusionFilterComponent parentCallback={volcanoFusionFilterCallback} tab={tabName} />
-                </Popover.Panel>
-              </Transition>
-            </div>
-          </>
-        </Popover>
-      );
-    }
-
-  }
 
   return (
 
@@ -679,28 +451,13 @@ export default function DataVisualization() {
             <section >
               <div className="PopoverStyles">
 
-                {/* {toggle && <FilterPopover isFilterPopoverOpen={isFilterPopoverOpen} toggleFilterPopover={toggleFilterPopover} />} */}
-
-
-                {/* {!toggle && (tabName === 'survival') &&
-                  <SurvivalFilterPopover isSurvivalPopoverOpen={isSurvivalPopoverOpen} toggleSurvivalPopover={toggleSurvivalPopover} />
-                } */}
-
-
-                {/* {
-                  !toggle && (tabName === 'fusion' || tabName === 'volcano') &&
-                  <VolFusFilterPopover isVolFusPopoverOpen={isVolFusPopoverOpen} toggleVolFusPopover={toggleVolFusPopover} />
-                } */}
-
-                {/* <GenePopover isGeneSetPopoverOpen={isGeneSetPopoverOpen} toggleGeneSetPopover={toggleGeneSetPopover} /> */}
-
                 {toggle &&
                   <Popover className="relative">
                     {({ open }) => {
                       return (
                         <>
                           <div className="w-full">
-                            <Popover.Button className={'selectBox'}>
+                            <Popover.Button className={'selectBox'} onClick={() => (setFilterPopoverOpen(!isFilterPopoverOpen))}>
                               <div className="GeneSetgeneSetButton">
                                 <div className="flex-1">Clinical info. Re-filtering</div>
                                 <div className="w-20">
@@ -710,6 +467,7 @@ export default function DataVisualization() {
                             </Popover.Button>
 
                             <Transition
+                              show={isFilterPopoverOpen}
                               as={Fragment}
                               enter="transition ease-out duration-200"
                               enterFrom="opacity-0 translate-y-1"
@@ -727,8 +485,6 @@ export default function DataVisualization() {
                                 />
                               </Popover.Panel>
                             </Transition>
-
-
                           </div>
 
 
@@ -744,7 +500,8 @@ export default function DataVisualization() {
                       return (
                         <>
                           <div className='w-full'>
-                            <Popover.Button className={'selectBox'}>
+                            <Popover.Button className={'selectBox'}
+                              onClick={() => (setSurvivalFilterPopoverOpen(!isSurvivalFilterPopoverOpen))}>
                               <div className="GeneSetgeneSetButton">
                                 <div className="flex-1">Filter</div>
                                 <div className="w-20">
@@ -753,6 +510,7 @@ export default function DataVisualization() {
                               </div>
                             </Popover.Button>
                             <Transition
+                              show={isSurvivalFilterPopoverOpen}
                               as={Fragment}
                               enter="transition ease-out duration-200"
                               enterFrom="opacity-0 translate-y-1"
@@ -761,7 +519,7 @@ export default function DataVisualization() {
                               leaveFrom="opacity-100 translate-y-0"
                               leaveTo="opacity-0 translate-y-1"
                             >
-                              <Popover.Panel className="SurvivalFilter W100 BorderstyleVizAbs" style={{ height: '450px', overflowY: 'scroll' }}>
+                              <Popover.Panel className="SurvivalFilter W100 BorderstyleVizAbs" style={{ maxHeight: '450px', overflowY: 'scroll', zIndex: '10', background: 'white' }}>
                                 <SurvivalFilterComponent
                                   parentCallback={survivalCallback}
                                   filterState={state}
@@ -783,7 +541,8 @@ export default function DataVisualization() {
                       return (
                         <>
                           <div className='w-full'>
-                            <Popover.Button className={'selectBox'}>
+                            <Popover.Button className={'selectBox'}
+                              onClick={() => (setVolFusFilterPopoverOpen(!isVolFusFilterPopoverOpen))}>
                               <div className="GeneSetgeneSetButton">
                                 <div className="flex-1">Gene set Re-filtering</div>
                                 <div className="w-20">
@@ -792,6 +551,7 @@ export default function DataVisualization() {
                               </div>
                             </Popover.Button>
                             <Transition
+                              show={isVolFusFilterPopoverOpen}
                               as={Fragment}
                               enter="transition ease-out duration-200"
                               enterFrom="opacity-0 translate-y-1"
@@ -800,7 +560,7 @@ export default function DataVisualization() {
                               leaveFrom="opacity-100 translate-y-0"
                               leaveTo="opacity-0 translate-y-1"
                             >
-                              <Popover.Panel className="VFFilter W100 BorderstyleViz" style={{position:"absolute"}}>
+                              <Popover.Panel className="VFFilter W100 BorderstyleViz" style={{ position: "absolute", maxHeight: '450px', overflowY: 'scroll', zIndex: '10', background: 'white' }}>
                                 <VolcanoFusionFilterComponent parentCallback={volcanoFusionFilterCallback} tab={tabName} />
                               </Popover.Panel>
                             </Transition>
@@ -816,7 +576,7 @@ export default function DataVisualization() {
                     return (
                       <>
                         <div className=''>
-                          <Popover.Button className={'selectBox'}>
+                          <Popover.Button className={'selectBox'} onClick={() => (setIsGeneSetPopoverOpen(!isGeneSetPopoverOpen))}>
                             <div className="GeneSetgeneSetButton">
                               <div className="flex-1">Gene set Re-filtering</div>
                               <div className="w-20">
@@ -825,6 +585,7 @@ export default function DataVisualization() {
                             </div>
                           </Popover.Button>
                           <Transition
+                            show={isGeneSetPopoverOpen}
                             as={Fragment}
                             enter="transition ease-out duration-200"
                             enterFrom="opacity-0 translate-y-1"
@@ -833,7 +594,7 @@ export default function DataVisualization() {
                             leaveFrom="opacity-100 translate-y-0"
                             leaveTo="opacity-0 translate-y-1"
                           >
-                            <Popover.Panel className="GeneSetPopoverPanel">
+                            <Popover.Panel className="GeneSetPopoverPanel" id="GeneSetPopverChild">
                               <GeneSet parentCallback={callback} filterState={state} />
                             </Popover.Panel>
                           </Transition>
@@ -852,7 +613,7 @@ export default function DataVisualization() {
                             <div>
                               <button onClick={() =>
                                 setToFalseAfterScreenCapture(true)
-                              } className="btn btnPrimary">Capture Screenshot</button>
+                              } className="btn btnPrimary"><FormattedMessage id="Capture_screen" defaultMessage="Capture Screenshot" /></button>
                             </div>
                           </Popover.Button>
 
@@ -910,6 +671,10 @@ export default function DataVisualization() {
               {tabName && tabName !== 'home' && boolChartState && (
                 <div className="">{chart["viz"]}</div>
               )}
+              {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div style={{ marginTop: "50px", marginRight: "50px" }}>
+                <button className="btn btnPrimary" style={{ float: "right", margin: "10px 0px 10px 0px" }} onClick={() => (history.push(`/visualise-multidata/home/${project_id}`))}>Back</button>
+              </div>}
+
               {tabName && tabName !== 'home' && !boolChartState && (
                 <div className="MultiDataVizErrorMessage">Please select Genes</div>
               )}

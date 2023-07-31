@@ -56,6 +56,7 @@ const MobileSuccess = React.lazy(() => import('./containers/Signup/MobileVerify'
 const Organoid = React.lazy(() => import('./containers/CustomerVoice/OtherServices/Organoid'));
 const RelatedSites = React.lazy(() => import('./containers/CustomerVoice/OtherServices/RelatedSitesIndex'));
 const Refresh = React.lazy(() => import('./containers/Refresh'));
+const SankeyPlot = React.lazy(() => import('./containers/DataVisualisation/Charts/SankeyPlot'));
 
 const NotFound = React.lazy(() => import('./containers/404NotFound/index'))
 const route = [
@@ -72,18 +73,37 @@ const route = [
     component: DataSummary,
   },
 
+  // {
+  //   path: '/visualise/:tab?/:project_id?/',
+  //   exact: true,
+  //   type: 'unauth',
+  //   category: 'visualize',
+  //   name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
+  //   childname: <FormattedMessage id="DataVisualization" defaultMessage="DataVisualization" />,
+  //   component: DataVisualization,
+  // },
+
   {
-    path: '/visualise/:tab?/:project_id?/',
+    path: '/sankeyplot/',
     exact: true,
     type: 'unauth',
-    category: 'visualize',
+    category: 'home',
     name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
-    childname: <FormattedMessage id="DataVisualization" defaultMessage="DataVisualization" />,
-    component: DataVisualization,
+    childname: <FormattedMessage id="SingleDataVisualization" defaultMessage="Single Data Visualization" />,
+    component: SankeyPlot,
   },
 
   {
     path: '/visualise-singledata/:tab?/:project_id?/',
+    exact: true,
+    type: 'unauth',
+    category: 'visualize',
+    name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
+    childname: <FormattedMessage id="SingleDataVisualization" defaultMessage="Single Data Visualization" />,
+    component: SingleDataAnalysis,
+  },
+  {
+    path: '/visualise-exampledata/:tab?/',
     exact: true,
     type: 'unauth',
     category: 'visualize',

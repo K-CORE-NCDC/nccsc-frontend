@@ -34,7 +34,7 @@ function ResetPassword() {
   };
 
   const setPasswordSuccess = () => {
-
+    // id is PasswordUpdateSuccess
     Swal.fire({
       title: 'Success',
       text: "Password Reset Success, use your new Password to Login",
@@ -52,11 +52,41 @@ function ResetPassword() {
 
   const setPasswordFailure = (status) => {
     setIsError(true)
-    setErrorMessage([
-      <p key="error" className="ErrorText">
+    if (status === 'UserDoesntExist') {
+      setErrorMessage([
+        <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
+          <FormattedMessage id={status} defaultMessage="User Doesn't Exist" />
+        </p>,
+      ]);
+    }
+    else if (status === 'PasswordResetLinkExpire') {
+      setErrorMessage([
+        <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
+          <FormattedMessage id={status} defaultMessage="Password Set link expired, Please try again after sometime" />
+        </p>,
+      ]);
+    }
+    else if(status === 'SomethingWentWrong'){
+      setErrorMessage([
+        <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
+          <FormattedMessage id={status} defaultMessage="Something went wrong, Please try again or Contact Us" />
+        </p>,
+      ]);
+    }
+    else if(status === 'UniqueKeyError'){
+      setErrorMessage([
+        <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
+          <FormattedMessage id={status} defaultMessage="Unique Key is Incorrect, Please check" />
+        </p>,
+      ]);
+    }
+    else{
+      setErrorMessage([
+        <p key="error" className="ErrorText">
         {status}
       </p>,
     ]);
+  }
   };
 
  const formSubmitAction = (e) => {
@@ -66,7 +96,7 @@ function ResetPassword() {
       setIsError(true)
       setErrorMessage([
         <p key="error" className="ErrorText">
-          Password Can't be Empty
+          <FormattedMessage id="PasswordEmpty" defaultMessage="Password cant be Empty" />
         </p>,
       ]);
     }
@@ -74,7 +104,7 @@ function ResetPassword() {
       setIsError(true)
       setErrorMessage([
         <p key="error" className="ErrorText">
-          Password Can't be Empty
+          <FormattedMessage id="PasswordEmpty" defaultMessage="Password cant be Empty" />
         </p>,
       ]);
     }
@@ -82,7 +112,7 @@ function ResetPassword() {
       setIsError(true)
       setErrorMessage([
         <p key="error" className="ErrorText">
-          Both Password and Confirm Password Should Match
+          <FormattedMessage id="PasswordsMatch" defaultMessage="Both Password and Confirm Password Should Match" />
         </p>,
       ]);
     }
@@ -93,11 +123,20 @@ function ResetPassword() {
         if ('data' in result && 'status' in result.data && result.data.status === "Password Updated Successfully") {
           setPasswordSuccess();
         }
+        else if ('data' in result && 'status' in result.data && result.data.status === "User Doesn't Exist") {
+          setPasswordFailure("UserDoesntExist");
+        }
+        else if ('data' in result && 'status' in result.data && result.data.status === "Password Reset link expired") {
+          setPasswordFailure("PasswordResetLinkExpire");
+        }
+        else if ('data' in result && 'status' in result.data && result.data.status === "Unique Key is Incorrect, Please check") {
+          setPasswordFailure("UniqueKeyError");
+        }
         else if ('data' in result && 'status' in result.data) {
           setPasswordFailure(result.data.status);
         }
       }).catch((error) => {
-        setPasswordFailure('Password Update Failed');
+        setPasswordFailure('SomethingWentWrong');
       });
     }
   };
@@ -129,9 +168,9 @@ function ResetPassword() {
                 </span>
                 <font style={{ verticalAlign: 'inherit' }}>
                   <span className="colorPrimary">
-                    <font style={{ verticalAlign: 'inherit' }}>Welcome</font>
+                    <font style={{ verticalAlign: 'inherit' }}><FormattedMessage id="Welcome" defaultMessage="Welcome"/></font>
                   </span>
-                  <font style={{ verticalAlign: 'inherit' }}> to </font>
+                  <font style={{ verticalAlign: 'inherit' }}> <FormattedMessage id="to" defaultMessage="to"/> </font>
                   <span className="colorSecondary">
                     <font style={{ verticalAlign: 'inherit' }}>NCDC .</font>
                   </span>
@@ -143,17 +182,17 @@ function ResetPassword() {
               <p className="sub">
                 <font style={{ verticalAlign: 'inherit' }}>
                   <font style={{ verticalAlign: 'inherit' }}>
-                    Welcome to the National Cancer Data Center website.{' '}
+                    <FormattedMessage id="WelcomeNcdc" defaultMessage="Welcome to the National Cancer Data Center website."/>
+                    {' '}
                   </font>
                 </font>
                 <br />
                 <font style={{ verticalAlign: 'inherit' }}>
                   <font style={{ verticalAlign: 'inherit' }}>
-                    Please enter the information below to Reset Password.
+                  <FormattedMessage id="loginmessage" defaultMessage="Please enter the information below to log in."/>
                   </font>
                 </font>
               </p>
-
 
               <form className="loginForm" id="frm" method="post">
 

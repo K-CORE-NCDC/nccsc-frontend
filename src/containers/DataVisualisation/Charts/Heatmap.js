@@ -365,7 +365,6 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
 
 
   useEffect(() => {
-    console.log('screenshot')
     if (screenCapture) {
       setWatermarkCSS("watermark")
     } else {
@@ -789,7 +788,8 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
 
 
             <div className='GeneSelectionBox'>
-              <div className='selectionBox'>
+
+             { 'viz_type' in alltabList && alltabList['viz_type'] !== 'single' && <div className='selectionBox'>
                 <label><FormattedMessage id="Clinical_Filters_heatmap" defaultMessage='Clinical Attribute' />:</label>
                 <Multiselect
                   style={style}
@@ -799,8 +799,8 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
                   onRemove={onRemove} // Function will trigger on remove event
                   displayValue="name" // Property name to display in the dropdown options
                 />
-
               </div>
+              }
               {tableType !== 'methylation' && tableType !== 'phospho' &&
                 <div className="selectionBox">
                   <FormattedMessage id="View_By_heatmap" defaultMessage='View By' />:

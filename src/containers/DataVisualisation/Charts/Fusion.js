@@ -226,12 +226,10 @@ export default function FusionPlot({
         Object.keys(groupFilters).length > 0 &&
         inputState["genes"].length > 0
       ) {
-        console.log('a');
         setLoader(true);
         inputState["filterType"] = userDefienedFilter;
         let return_data = FusionVennDaigram('POST', { ...inputState, filterGroup: groupFilters })
         return_data.then((result) => {
-          console.log('b');
           const d = result
           if (d.status === 200) {
             let r_ = {}
@@ -242,7 +240,6 @@ export default function FusionPlot({
             setLoader(false);
             setNoData(false)
           } else {
-            console.log('c');
             setNoData(true)
             setShowFusion(false)
             setVennData({})
@@ -250,7 +247,6 @@ export default function FusionPlot({
           }
         })
           .catch((e) => {
-            console.log('d');
             setLoader(false);
             setShowFusion(false)
             setNoData(true)
