@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { login } from "../../actions/api_actions";
@@ -7,6 +7,7 @@ import NCCLogo from "../../styles/images/logo02.svg"
 import loginIcon1 from "../../styles/images/loginForm-icon01.svg"
 import loginIcon2 from "../../styles/images/loginForm-icon02.svg"
 import Swal from 'sweetalert2'
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 const LoginComponent = () => {
   const [userFormData, setUserFormData] = useState({
@@ -14,9 +15,11 @@ const LoginComponent = () => {
     password: "",
   });
   let history = useHistory();
+  let location = useLocation();
   const [errorMessage, setErrorMessage] = useState([]);
   const [isError, setIsError] = useState(false)
   const title = { id: "Login", defaultMessage: "Login" }
+
 
   const updateUserNamePassword = (e) => {
     setUserFormData((previousState) => ({
@@ -37,8 +40,11 @@ const LoginComponent = () => {
       allowOutsideClick: false
     }).then((result) => {
       if (result.value) {
-        history.goBack()
-        // history.push('/visualise-singledata/home/')
+        if(history?.location?.pathname === '/login/'){
+          history.push('/')
+        }else{
+          history.goBack()
+        }
       }
     })
   }

@@ -13,8 +13,6 @@ import icon_home from "../../../styles/images/icon-home02.svg";
 import icon_lang from "../../../styles/images/icon-language.svg";
 import login_icon from "../../../styles/images/icon-login.svg";
 import icon_user04 from "../../../styles/images/icon-user04.svg";
-// /images/ncdc/icon-home02.svg
-// import logoNew from '../../../assets/images/KoreanImageNcc.png'
 import AOS from 'aos';
 import "aos/dist/aos.css";
 import { useIdleTimer } from 'react-idle-timer';
@@ -86,6 +84,7 @@ export default function Web(props) {
   const [swiperOn, setSwiperOn] = useState(true)
   const [is_login, setIsLogin] = useState(false)
   const [footer, setFooter] = useState(false)
+  const [mainPageInSmallScreen, setMainPageInSmallScreen] = useState(true)
 
 
 
@@ -383,55 +382,6 @@ export default function Web(props) {
     }
   }, [window.location.href])
 
-  useEffect(() => {
-    //   let html = [];
-    //   for (let m = 0; m < menu.length; m++) {
-    //     let p = ''
-    //     if (Object.keys(id).length !== 0) {
-    //       p = id[0].split("/")[1];
-    //     }
-    //     let pp = pid.split("/")[1]
-    //     if (menu[m].props.path.includes(pp)) {
-    //       let name = menu[m].props.name;
-    //       let childname = menu[m].props.childname;
-
-    //       html.push(
-    //         <li key={m + "icon"}>
-    //           <HomeIcon className="h-6 w-6" aria-hidden="true" />
-    //         </li>
-    //       );
-    //       html.push(
-    //         <li key={m + "1pipe"}>
-    //           <span className="mx-2">|</span>
-    //         </li>
-    //       );
-    //       html.push(
-    //         <li key={m + name}>
-    //           <a className="font-bold">
-    //             {name}
-    //           </a>
-    //         </li>
-    //       );
-    //       html.push(
-    //         <li key={m + "c1"}>
-    //           <span className="mx-2">|</span>
-    //         </li>
-    //       );
-    //       if (window.location.href.includes('visualise')) {
-    //         if (routeLocation.pathname.split("/")[3] !== '') {
-    //           html.push(<li key={m + "child"}>MyData Visualization</li>);
-    //         }
-    //         else {
-    //           html.push(<li key={m + "child"}>{childname}</li>);
-    //         }
-    //       }
-    //       else {
-    //         html.push(<li key={m + "child"}>{childname}</li>);
-    //       }
-    //     }
-    //   }
-    //   setBreadCrumb(html);
-  }, [props, routeLocation.pathname]);
 
   let classes = "";
   if (window.innerWidth > 1025 && window.innerHeight > 870) {
@@ -528,31 +478,42 @@ export default function Web(props) {
             </div>
             <div className="btnsMember">
               {!is_login ?
-                <Link to='/login/'><font className="font1">
-                  <font className="font1"><FormattedMessage id="Login" defaultMessage='Login' /></font></font>
-                  {/* <img src={login_icon} alt="login_icon" /> */}
-                </Link> :
-
-                <Link to='/logout/'><font className="font1">
-                  <font className="font1"><FormattedMessage id="Logout" defaultMessage='Logout' /></font></font>
-                  {/* <img src={login_icon} alt="login_icon" /> */}
+                <>
+                  <Link to='/login/' onClick={() => {
+                    setMenuTabOpen(false)
+                  }}><font className="font1">
+                      <font className="font1"><FormattedMessage id="Login" defaultMessage='Login' /></font></font>
+                  </Link>
+                  <Link to='/signup/' onClick={() => {
+                    setMenuTabOpen(false)
+                  }}><font className="font1"><font className="font1"><FormattedMessage id="Join" defaultMessage='Register' /></font></font><img src={icon_user04} alt="user" /></Link>
+                </> :
+                <Link to='/logout/' onClick={() => {
+                  setMenuTabOpen(false)
+                }}><font className="font1">
+                    <font className="font1"><FormattedMessage id="Logout" defaultMessage='Logout' /></font></font>
                 </Link>
               }
-              <Link to='#'><font className="font1"><font className="font1"><FormattedMessage id="Join" defaultMessage='Register' /></font></font><img src={icon_user04} alt="user" /></Link>
             </div>
             <div className="utils">
               {!is_login ?
-                <Link to='/login/'><font className="font1">
-                  <font className="font1"><FormattedMessage id="Login" defaultMessage='Login' /></font></font>
-                  {/* <img src={login_icon} alt="login_icon" /> */}
-                </Link> :
-
-                <Link to='/logout/'><font className="font1">
-                  <font className="font1"><FormattedMessage id="Logout" defaultMessage='Logout' /></font></font>
-                  {/* <img src={login_icon} alt="login_icon" /> */}
+                <>
+                  <Link to='/login/' onClick={() => {
+                    setMenuTabOpen(false)
+                  }}><font className="font1">
+                      <font className="font1"><FormattedMessage id="Login" defaultMessage='Login' /></font></font>
+                  </Link>
+                  <Link to='/signup/' onClick={() => {
+                    setMenuTabOpen(false)
+                  }}><font className="font1"><font className="font1"><FormattedMessage id="Join" defaultMessage='Register' /></font></font></Link>
+                </> :
+                <Link to='/logout/' onClick={() => {
+                  setMenuTabOpen(false)
+                }}><font className="font1">
+                    <font className="font1"><FormattedMessage id="Logout" defaultMessage='Logout' /></font></font>
                 </Link>
               }
-              <Link to='#'><font className="font1"><font className="font1"><FormattedMessage id="Join" defaultMessage='Register' /></font></font></Link>
+
               <div className="language">
                 <a className="on" onClick={() => { setShowLangMenu(!showLangMenu) }}><img src={icon_lang} alt="lang" /></a>
                 <ul style={showLangMenu ? { display: "block" } : { display: 'none' }}>
@@ -564,13 +525,27 @@ export default function Web(props) {
                   </li>
                 </ul>
               </div>
-              <Link to='/'><img src={icon_home} alt="home" /></Link>
+              <Link to='/' onClick={() => {
+                setActiveClassIndex(0)
+                setMenuTabOpen(false)
+              }}><img src={icon_home} alt="home" /></Link>
             </div>
           </div>
           <div className="allMenu">
             <ul>
               {childMenu?.mainmenu?.items?.map((item, i) => (
-                <li key={'allMenu_li_' + i}><a className="menu_li">{item?.title}</a></li>
+                <li ref={buttonRef} onClick={() => {
+                  setActiveclassPath(item?.id)
+                  setActiveClassIndex(item?.index)
+                  history.push(`/home${item?.url}`)
+                  toSlide(item?.index)
+                  setMenuTabOpen(false)
+                }} onMouseEnter={() => {
+                  setMouseEnterFlag(true)
+                }}
+                  onMouseLeave={() => {
+                    setMouseEnterFlag(false)
+                  }} key={'allMenu_li_' + i}><a className={`${activeClassIndex === item?.index ? 'active_menu' : ''} menu_li`}>{item?.title}</a></li>
               ))}
             </ul>
           </div>
@@ -583,116 +558,6 @@ export default function Web(props) {
         </div>
       </header>
       <div className="relative" id='fullSlide' >
-
-        {/* // <header id="header" className={classes}> */}
-        {/* <header id="header" className={"header on rev"}>
-            <div className="headerTop">
-              <div className="auto fullsize">
-                <h1 className="logo">
-                  <a href="/">
-                    <img src={menu_black} alt="logo" className="logo02" />
-                    <img src={logoNew} alt="logo" className="logo01" />
-                  </a>
-                </h1>
-                <div className="headerUtils">
-
-                  {is_login ? <Link to='/logout/'><FormattedMessage id="Logout" defaultMessage='Logout' /></Link>
-                    :
-                    <>
-                      <Link to="/signup/"><FormattedMessage id="GenerateRegistrationNumber" defaultMessage='Generate registration number' /></Link>
-                      <Link to='/login/'><FormattedMessage id="Login" defaultMessage='Login' /></Link>
-                      <Link to="/findpassword/"><FormattedMessage id="FindPassword" defaultMessage='Find Password' /></Link> </>}
-                  <div className="language">
-                    <a className="on" onClick={() => { setShowLangMenu(!showLangMenu) }}>&nbsp;</a>
-                    <ul style={showLangMenu ? { display: "block" } : { display: 'none' }}>
-                      <li className={((context.locale === 'kr-KO') ? ' on ' : '')}>
-                        <a onClick={() => { changeLang('kr-KO') }}>KOR</a>
-                      </li>
-                      <li className={((context.locale === 'en-US') ? ' on ' : '')}>
-                        <a onClick={() => { changeLang('en-US') }}>ENG</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <a onClick={() => {
-                setMenuTabOpen(true)
-              }} className="btnAllMenu" >
-                <span></span>
-                <span></span>
-                <span></span>
-              </a>
-            </div>
-            <div className="headerBottom">
-              <div className="auto fullsize">
-                <nav id="gnb" className="gnb">
-                  <ul>
-                    {childMenu?.mainmenu?.items?.map((item, i) => (
-                      <li key={'menuli_' + i}
-                        ref={buttonRef} onClick={() => {
-                          setActiveclassPath(item?.id)
-                          setActiveClassIndex(item?.index)
-                          history.push(`/home${item?.url}`)
-                          toSlide(item?.index)
-                        }} onMouseEnter={() => {
-                          setMouseEnterFlag(true)
-                        }}
-                        onMouseLeave={() => {
-                          setMouseEnterFlag(false)
-                        }}
-                      ><a className={`${activeClassIndex === item?.index ? 'active_menu' : ''} menu_li`} style={activeClassIndex === item?.index ? { color: '#009fe2' } : { color: '' }}>{item?.title}</a></li>
-                    ))}
-                  </ul>
-                </nav>
-              </div>
-            </div>
-            <div id="allMenuWrap" className="allMenuWrap" style={menuTabOpen ? { display: 'block' } : { display: 'none' }}>
-              <div className="imgBox">
-                <dl>
-                  <dt><font className="font1"></font><br /><font className="font1"><font className="font1"><FormattedMessage id="Welcome" defaultMessage='Welcome to the National Cancer Data Center .' /></font></font></dt>
-                  <dd><font className="font1"><font className="font1"><FormattedMessage id="Designated" defaultMessage='The National Cancer Center was designated as the National Cancer Data Center (NCDC) by the Ministry of Health and Welfare in September 2021 under the Cancer Control Act. ' /></font><font className="font1"><FormattedMessage id="Motive" defaultMessage='The National Cancer Data Center will carry out the business of collecting, processing, analyzing, and providing cancer data for research and development for cancer management.' /></font></font></dd>
-                </dl>
-                <div className="members">
-                  <p>
-                    <span><font className="font1"><font className="font1"><FormattedMessage id="PleaseLogIn" defaultMessage='Please log in' /></font></font></span><font className="font1"><font className="font1"> .
-                    </font></font></p>
-                </div>
-                <div className="btnsMember">
-                  <Link to='/login/'><font className="font1"><font className="font1"><FormattedMessage id="Login" defaultMessage='Login' /></font></font><img src={login_icon} alt="login_icon" /></Link>
-                  <Link to='#'><font className="font1"><font className="font1"><FormattedMessage id="Join" defaultMessage='Register' /></font></font><img src={icon_user04} alt="user" /></Link>
-                </div>
-                <div className="utils">
-                  <Link to='/login/'><font className="font1"><font className="font1"><FormattedMessage id="Login" defaultMessage='Log in' /></font></font></Link>
-                  <Link to='#'><font className="font1"><font className="font1"><FormattedMessage id="Join" defaultMessage='Register' /></font></font></Link>
-                  <div className="language">
-                    <a className="on" onClick={() => { setShowLangMenu(!showLangMenu) }}><img src={icon_lang} alt="lang" /></a>
-                    <ul style={showLangMenu ? { display: "block" } : { display: 'none' }}>
-                      <li className={((context.locale === 'kr-KO') ? ' on ' : '')}>
-                        <a onClick={() => { changeLang('kr-KO') }}>KOR</a>
-                      </li>
-                      <li className={((context.locale === 'en-US') ? ' on ' : '')}>
-                        <a onClick={() => { changeLang('en-US') }}>ENG</a>
-                      </li>
-                    </ul>
-                  </div>
-                  <Link to='/'><img src={icon_home} alt="home" /></Link>
-                </div>
-              </div>
-              <div className="allMenu">
-                <ul>
-                  {childMenu?.mainmenu?.items?.map((item, i) => (
-                    <li key={'allMenu_li_' + i}><a className="menu_li">{item?.title}</a></li>
-                  ))}
-                </ul>
-              </div>
-              <a className="btnClose" onClick={() => {
-                setMenuTabOpen(false)
-              }}>
-                <span></span>
-                <span></span>
-              </a>
-            </div>
-          </header> */}
 
         <div className={`mainContents ${routeLocation.pathname === '/' ? '' : 'min-h-70'} `} >
           <Suspense fallback={<Loader />}>
