@@ -10,11 +10,11 @@ export const OtherTools = () => {
           <div className="subHeader">
             <p className="tit h5">Contents</p>
             <div className="tit contentBtns">
-              <button className="btn">
+              {/* <button className="btn">
                 <Link to="/tools/">
                 <FormattedMessage id="ExamplePage" defaultMessage='Example Page' />
                 </Link>
-              </button>
+              </button> */}
               <button className="btn">
                 <FormattedMessage id="DownloadManual" defaultMessage='Download Manual' />
 

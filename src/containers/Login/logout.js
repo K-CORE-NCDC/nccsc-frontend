@@ -1,7 +1,6 @@
 import React,{useEffect} from 'react';
 import config from '../../config'
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-
+import { useHistory } from "react-router-dom";
 
 const LogOutComponent = () => {
   const history = useHistory()

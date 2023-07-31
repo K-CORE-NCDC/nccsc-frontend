@@ -44,10 +44,10 @@ function FindIndex() {
         <>
             <HeaderComponent
                 title={title}
+                routeName={routeName}
                 breadCrumbs={breadCrumbs[routeName]}
                 type="multiple"
                 listItems={listItems}
-                routeName={routeName}
             />
             <article id="subContents" className="subContents">
                 {renderContent()}

@@ -87,7 +87,9 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
         else if(tab === 'fusion'){
             let volcanoFusionFilterData = {}
             volcanoFusionFilterData['groupFilters'] = groupFilters
-            parentCallback({ volcanoFusionFilterData: volcanoFusionFilterData })
+            if(groupFilters && Object.keys(groupFilters).length){
+                parentCallback({ volcanoFusionFilterData: volcanoFusionFilterData })
+            }
         }
     }, [groupFilters])
 

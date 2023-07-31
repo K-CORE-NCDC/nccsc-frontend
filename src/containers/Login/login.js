@@ -8,6 +8,7 @@ import loginIcon1 from "../../styles/images/loginForm-icon01.svg"
 import loginIcon2 from "../../styles/images/loginForm-icon02.svg"
 import Swal from 'sweetalert2'
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { FormattedMessage } from "react-intl";
 
 const LoginComponent = () => {
   const [userFormData, setUserFormData] = useState({
@@ -27,10 +28,11 @@ const LoginComponent = () => {
       [e.target.name]: e.target.value,
     }));
   };
-
+  
   const loginSuccess = () => {
     // console.log('windows',windows);
     // console.log('histpry',history);
+    // id is LoginSuccess
     Swal.fire({
       title: 'Success',
       text: "Login Success",
@@ -51,15 +53,31 @@ const LoginComponent = () => {
 
   const loginFailure = (status) => {
     setIsError(true)
-    setErrorMessage([
-      <p key="error" className="ErrorText">
+    if (status === 'UserDoesntExist') {
+      setErrorMessage([
+        <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
+          <FormattedMessage id={status} defaultMessage="User Doesn't Exist" />
+        </p>,
+      ]);
+    }
+    else if (status === 'InvalidUsernamePass') {
+      setErrorMessage([
+        <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
+          <FormattedMessage id={status} defaultMessage="Login Failed, Invalid username/Password" />
+        </p>,
+      ]);
+    }
+    else{
+      setErrorMessage([
+        <p key="error" className="ErrorText">
         {status}
       </p>,
       <h1 className="ErrorText" key="CountToEnterCredentials">
         {" "}
-        If an error in consecutive password input (5 times) occurs, the account is locked.
+        <FormattedMessage id="login5try" defaultMessage="If an error in consecutive password input (5 times) occurs, the account is locked." />
       </h1>,
     ]);
+  }
   };
 
 
@@ -72,24 +90,24 @@ const LoginComponent = () => {
       setIsError(true)
       setErrorMessage([
         <p key="error" className="ErrorText">
-          User ID cant be Empty
+          <FormattedMessage id="UserIdEmpty" defaultMessage="User ID cant be Empty" />
         </p>,
-        <h1 className="ErrorText" key="CountToEnterCredentials">
-          {" "}
-          If an error in consecutive password input (5 times) occurs, the account is locked.
-        </h1>,
+        // <h1 className="ErrorText" key="CountToEnterCredentials">
+        //   {" "}
+        //   <FormattedMessage id="login5try" defaultMessage="If an error in consecutive password input (5 times) occurs, the account is locked." />
+        // </h1>,
       ]);
     }
     else if (userFormData && userFormData.password === '') {
       setIsError(true)
       setErrorMessage([
         <p key="error" className="ErrorText">
-          Password cant be Empty
+          <FormattedMessage id="PasswordEmpty" defaultMessage="Password cant be Empty" />
         </p>,
-        <h1 className="ErrorText" key="CountToEnterCredentials">
-          {" "}
-          If an error in consecutive password input (5 times) occurs, the account is locked.
-        </h1>,
+        // <h1 className="ErrorText" key="CountToEnterCredentials">
+        //   {" "}
+        //   <FormattedMessage id="login5try" defaultMessage="If an error in consecutive password input (5 times) occurs, the account is locked." />
+        // </h1>,
       ]);
     }
     else {
@@ -99,11 +117,17 @@ const LoginComponent = () => {
         if ('data' in result && 'status' in result.data && result.data.status === "Login Successfull") {
           loginSuccess();
         }
+        else if ('data' in result && 'status' in result.data && result.data.status === "User Doesn't Exist") {
+          loginFailure("UserDoesntExist");
+        }
+        else if ('data' in result && 'status' in result.data && result.data.status === "Login Failed, Invalid username/Password") {
+          loginFailure("InvalidUsernamePass");
+        }
         else if ('data' in result && 'status' in result.data) {
           loginFailure(result.data.status);
         }
       }).catch((error) => {
-        loginFailure('Invalid username/Password');
+        loginFailure('InvalidUsernamePass');
       });
     }
   };
@@ -132,9 +156,9 @@ const LoginComponent = () => {
                 </span>
                 <font style={{ verticalAlign: 'inherit' }}>
                   <span className="colorPrimary">
-                    <font style={{ verticalAlign: 'inherit' }}>Welcome</font>
+                    <font style={{ verticalAlign: 'inherit' }}><FormattedMessage id="Welcome" defaultMessage="Welcome"/></font>
                   </span>
-                  <font style={{ verticalAlign: 'inherit' }}> to </font>
+                  <font style={{ verticalAlign: 'inherit' }}> <FormattedMessage id="to" defaultMessage="to"/> </font>
                   <span className="colorSecondary">
                     <font style={{ verticalAlign: 'inherit' }}>NCDC .</font>
                   </span>
@@ -146,13 +170,14 @@ const LoginComponent = () => {
               <p className="sub">
                 <font style={{ verticalAlign: 'inherit' }}>
                   <font style={{ verticalAlign: 'inherit' }}>
-                    Welcome to the National Cancer Data Center website.{' '}
+                    <FormattedMessage id="WelcomeNcdc" defaultMessage="Welcome to the National Cancer Data Center website."/>
+                    {' '}
                   </font>
                 </font>
                 <br />
                 <font style={{ verticalAlign: 'inherit' }}>
                   <font style={{ verticalAlign: 'inherit' }}>
-                    Please enter the information below to log in.
+                  <FormattedMessage id="loginmessage" defaultMessage="Please enter the information below to log in."/>
                   </font>
                 </font>
               </p>
@@ -178,7 +203,7 @@ const LoginComponent = () => {
 
 
                 {/* Remember Id */}
-                <div className="idSave">
+                {/* <div className="idSave">
                   <div className="switcher">
                     <input type="checkbox" id="id_save" name="saveIdYn" value="1" />
                     <label htmlFor="id_save">
@@ -188,12 +213,12 @@ const LoginComponent = () => {
                       <font style={{ verticalAlign: 'inherit' }}>Remember ID</font>
                     </font>
                   </div>
-                </div>
+                </div> */}
 
                 {/* Login Button  */}
                 <button type="button" className="btn btnPrimary" id="loginBtn" onClick={formSubmitAction}>
                   <font style={{ verticalAlign: 'inherit' }}>
-                    <font style={{ verticalAlign: 'inherit' }}>Log In</font>
+                    <font style={{ verticalAlign: 'inherit' }}><FormattedMessage id="Login" defaultMessage="Login" /></font>
                   </font>
                 </button>
 
@@ -202,7 +227,7 @@ const LoginComponent = () => {
                   <Link to="/findid/" >
                     <img src={loginIcon1} alt="" />
                     <font style={{ verticalAlign: 'inherit' }}>
-                      <font style={{ verticalAlign: 'inherit' }}>Find ID</font>
+                      <font style={{ verticalAlign: 'inherit' }}><FormattedMessage id="FindID" defaultMessage="Find ID" /></font>
                     </font>
                   </Link>
 
@@ -210,7 +235,7 @@ const LoginComponent = () => {
                   <Link to="/findpassword/">
                     <img src={loginIcon2} alt="" />
                     <font style={{ verticalAlign: 'inherit' }}>
-                      <font style={{ verticalAlign: 'inherit' }}>Find Password</font>
+                      <font style={{ verticalAlign: 'inherit' }}><FormattedMessage id="FindPassword" defaultMessage="Find Password" /></font>
                     </font>
                   </Link>
 

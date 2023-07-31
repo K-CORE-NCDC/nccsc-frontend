@@ -60,7 +60,6 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
     }, [route.pathname])
 
     let ChangeGeneDataBase = (geneDB) => {
-        console.log(geneDB);
         setGeneDatabase(geneDB)
     }
 
@@ -156,7 +155,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
                 copyState['gene_database'] = geneDatabase
             }
             else if(filterTypeButton === "omics" && project_id !== undefined){
-                if(alltabList[geneDatabase]){
+                if(alltabList[geneDatabase] && copyState['filter_gene'] ){
                     copyState['gene_database'] = geneDatabase
                     disableCall = false
                 }
@@ -167,11 +166,9 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
         }
         
         if ( filterTypeButton === 'omics' && disableCall === false) {
-            console.log('a');
             parentCallback({ updatedState: copyState })
         }
         else if (filterTypeButton === 'clinical' && Object.keys(groupFilters).length > 0){
-            console.log('b');
             parentCallback({ updatedState: copyState })
         }
 
@@ -258,7 +255,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
             copyState['coxUserDefinedFilter'] = coxUserDefinedFilter
             copyState['viz_type'] = vizType
 
-            if (coxFilter) {
+            if (coxFilter && Object.values(coxFilter).some((value) => value === true)) {
                 parentCallback({ updatedState: copyState })
             }
         }
@@ -280,7 +277,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
 
     return (
         <div>
-            <div className="P5">
+            <div className="Margin0313">
                 <div className="Flex FlexDirCol ColSpan3">
 
                     <div className="Flex FlexDirRow">

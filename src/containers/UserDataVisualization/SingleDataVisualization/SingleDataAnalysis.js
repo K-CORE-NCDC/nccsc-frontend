@@ -25,8 +25,10 @@ import GeneSet from "../Components/MainComponents/GeneSet";
 import ExampleImage from '../../../assets/images/mainSection05-img02.jpg';
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import ArrowRight from '../../../assets/images/icon-arrow-right.svg';
+import { FormattedMessage } from "react-intl";
 
-export default function DataVisualization() {
+export default function DataVisualization({ parentProps }) {
+  const history = useHistory();
   const context = useContext(Context);
   const elementRef = useRef(null);
   const dispatch = useDispatch();
@@ -36,6 +38,7 @@ export default function DataVisualization() {
   const [gridData, setGridData] = useState([])
   const [width, setWidth] = useState(0);
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
+  const [title, setTitle] = useState({ id: "", defaultMessage: "" })
   const userProjectDetails = useSelector(
     (data) => data.dataVisualizationReducer.userProjectsDataTable
   );
@@ -49,7 +52,8 @@ export default function DataVisualization() {
   const [toggle, setToggle] = useState(true);
   const [screenCapture, setScreenCapture] = useState(false);
   const location = useLocation()
-
+  const route = useLocation();
+  const [exampleData, setExampleData] = useState(false);
 
   const setToFalseAfterScreenCapture = (param = false) => {
     if (param === false) {
@@ -169,7 +173,7 @@ export default function DataVisualization() {
         genes: genes,
         type: value,
       }));
-
+      setIsGeneSetPopoverOpen(false)
     }
 
   }, []);
@@ -237,7 +241,7 @@ export default function DataVisualization() {
       }
 
       let gridobj = {
-        title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/singledata-upload/${element}/`, viewLink: `/visualise-singledata/${element}`,
+        title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/singledata-upload/${element}/`, viewLink: `/visualise-exampledata/${element}`,
         description: 'Provides a visualization analysis service that can be implemented according to the uploaded user data.'
       }
       gridData.push(gridobj)
@@ -315,23 +319,43 @@ export default function DataVisualization() {
     }
   }, [state]);
 
+  useEffect(() => {
+    if (route.pathname.includes('/visualise-exampledata/')) {
+      setExampleData(true)
+      setTitle({ id: "VisualizeExampleData", defaultMessage: "Visualize Example Data" })
+    } else if (route.pathname.includes('/visualise-singledata/')) {
+      setExampleData(false)
+      setTitle({ id: 'SingleDataVisualization', defaultMessage: 'SingleDataVisualization' })
+    }
+  }, [route.pathname]);
+
   const breadCrumbs = {
     '/visualise-singledata/':
       [
         { id: 'Home', defaultMessage: 'Home', to: '/' },
-        { id: 'VisualiseMyData', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
-        { id: 'SingleDataVisualisation', defaultMessage: 'Single Data Visualization', to: project_id ? `/visualise-singledata/home/${project_id}` : `/visualise-singledata/home/` },
-        { id: tab !== 'home' ? tab : 'Null', defaultMessage: tab !== 'home' ? tab : 'Null', to: `/visualise-multidata/${tabName}/${project_id}` }
-      ]
+        { id: `VisualizeMyData`, defaultMessage: `Visualize My Data`, to: `/home/visualizeMyData/` },
+        { id: `SingleDataVisualization`, defaultMessage: `Single Data Visualization`, to: project_id ? `/visualise-singledata/home/${project_id}` : `/visualise-singledata/home/` },
+        { id: tab !== 'home' ? tab : 'Null', defaultMessage: tab !== 'home' ? tab : 'Null', to: `/visualise-singledata/${tabName}/${project_id}` }
+      ],
+    '/visualise-exampledata/':
+      [
+        { id: 'Home', defaultMessage: 'Home', to: '/' },
+        { id: `VisualizeExampleData`, defaultMessage: `Visualize Example Data`, to: `/home/visualizeMyExampleData/` },
+        { id: 'ExampleVisualization', defaultMessage: `Example Visualization`, to: `/visualise-exampledata/home/` },
+        { id: tab !== 'home' ? tab : 'Null', defaultMessage: tab !== 'home' ? tab : 'Null', to: `/visualise-singledata/${tabName}/` }
+      ],
 
   };
+
+  const [isGeneSetPopoverOpen, setIsGeneSetPopoverOpen] = useState(false);
+
   return (
 
     <div>
       <HeaderComponent
-        title="회원가입"
-        routeName="/visualise-singledata/"
-        breadCrumbs={breadCrumbs['/visualise-singledata/']}
+        title={title}
+        routeName={route.pathname.includes('/visualise-singledata/') ? `/visualise-singledata/` : `/visualise-exampledata/`}
+        breadCrumbs={breadCrumbs[route.pathname.includes('/visualise-singledata/') ? `/visualise-singledata/` : `/visualise-exampledata/`]}
         type="single"
 
       />
@@ -339,9 +363,9 @@ export default function DataVisualization() {
         <div className="contentsTitle">
           <h3>
             <font>
-              <font >Single Data </font>
+              <font >{!exampleData ? <FormattedMessage id="SingleData" defaultMessage="Single Data" /> : <FormattedMessage id="VisualizeExample" defaultMessage="Visualize Example" />} </font>
               <span className="colorSecondary">
-                <font >Visualization</font>
+                <font >{!exampleData ?  <FormattedMessage id="Visualization" defaultMessage="Visualization" /> : <FormattedMessage id="Data" defaultMessage="Data" />}</font>
               </span>
             </font>
           </h3>
@@ -355,13 +379,13 @@ export default function DataVisualization() {
                     <ul className={`justify-content-${Object.keys(gridData).length > 2 ? 'start' : 'center'}`}>
                       {gridData.map((item, index) => {
                         return <li key={index} className="listitems">
-                          <Link to={item.link}>
+                          <Link to={!exampleData ? item.link : item.viewLink}>
                             <div className="thumb">
-                              <img src={ExampleImage} alt="img" />
+                              <img src={item.image} alt="img" />
                               <div className="hvBox">
                                 <div className="hvBox_links">
 
-                                  {!location?.state?.example ?
+                                  {!exampleData &&
                                     <>
                                       <Link to={item.link}>
                                         <div>
@@ -379,8 +403,11 @@ export default function DataVisualization() {
                                           </span>
                                         </div>
                                       </Link>
-                                    </> :
-                                    <Link to={item.viewLink}>
+                                    </>
+                                  }
+
+                                  {
+                                    exampleData && <Link to={item.viewLink}>
                                       <div>
                                         <span>Example</span>
                                         <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
@@ -422,8 +449,8 @@ export default function DataVisualization() {
                         {({ open }) => {
                           return (
                             <>
-                              <div className="w-full">
-                                <Popover.Button className={'selectBox'}>
+                              <div className=''>
+                                <Popover.Button className={'selectBox'} onClick={() => (setIsGeneSetPopoverOpen(!isGeneSetPopoverOpen))}>
                                   <div className="GeneSetgeneSetButton">
                                     <div className="flex-1">Gene set Re-filtering</div>
                                     <div className="w-20">
@@ -432,6 +459,7 @@ export default function DataVisualization() {
                                   </div>
                                 </Popover.Button>
                                 <Transition
+                                  show={isGeneSetPopoverOpen}
                                   as={Fragment}
                                   enter="transition ease-out duration-200"
                                   enterFrom="opacity-0 translate-y-1"
@@ -440,7 +468,7 @@ export default function DataVisualization() {
                                   leaveFrom="opacity-100 translate-y-0"
                                   leaveTo="opacity-0 translate-y-1"
                                 >
-                                  <Popover.Panel className="GeneSetPopoverPanel">
+                                  <Popover.Panel className="GeneSetPopoverPanel" id="GeneSetPopverChild">
                                     <GeneSet parentCallback={callback} filterState={state} />
                                   </Popover.Panel>
                                 </Transition>
@@ -459,7 +487,7 @@ export default function DataVisualization() {
                                   <div>
                                     <button onClick={() =>
                                       setToFalseAfterScreenCapture(true)
-                                    } className="btn btnPrimary">Capture Screenshot</button>
+                                    } className="btn btnPrimary"><FormattedMessage id="Capture_screen" defaultMessage="Capture Screenshot" /></button>
                                   </div>
                                 </Popover.Button>
 
@@ -478,7 +506,11 @@ export default function DataVisualization() {
                       className="block text-center"
                       style={{ display: "block", textAlign: "center" }}
                       ref={elementRef}>
-                      {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div>{chart["viz"]}</div>}
+                      {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div>{chart["viz"]}</div>
+                      }
+                      {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div style={{ marginTop: "50px", marginRight: "50px" }}>
+                        <button className="btn btnPrimary" style={{ float: "right", margin: "10px 0px 10px 0px" }} onClick={() => (history.push(`/visualise-singledata/home/${project_id}`))}>Back</button>
+                      </div>}
                       {tabName && tabName !== 'home' && !boolChartState && (
                         <div className="p-1 text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">Please select Genes</div>
                       )}

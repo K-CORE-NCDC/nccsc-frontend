@@ -4,7 +4,8 @@ import { signin } from "../../actions/api_actions";
 import config from "../../config";
 import nameIcon from "../../styles/images/icon-text.svg";
 import HeaderComponent from "../Common/HeaderComponent/HeaderComponent";
-
+import { FormattedMessage } from "react-intl";
+import Swal from 'sweetalert2'
 const SignupComponent = () => {
   const [userFormData, setUserFormData] = useState({
     emailId: "",
@@ -27,20 +28,50 @@ const SignupComponent = () => {
   };
 
   const registerSuccess = (data) => {
-    history.push('/login')
+    //Id is SignupSuccess
+    Swal.fire({
+      title: 'Success',
+      text: "ID Sent to Your Email",
+      icon: 'success',
+      confirmButtonColor: '#003177',
+      confirmButtonText: 'Ok',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.value) {
+        history.push('/login')
+      }
+    })
   }
 
-  const registerFailure = () => {
-    setErrorMessage([
-      <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
-        Invalid username/Password
-      </p>,
-      <h1 className="p-1 font-bold text-3xl text-red-500 italic" key="CountToEnterCredentials">
-        {" "}
-        If an error in consecutive password input (5 times) occurs, the account
-        is locked.
-      </h1>,
-    ]);
+  const registerFailure = (status) => {
+    if (status === 'SignupAlreadyExist') {
+      setErrorMessage([
+        <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
+          <FormattedMessage id={status} defaultMessage="User already exists" />
+        </p>,
+      ]);
+    }
+    else if (status === 'SignupEmailError') {
+      setErrorMessage([
+        <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
+          <FormattedMessage id={status} defaultMessage="Error in sending mail" />
+        </p>,
+      ]);
+    }
+    else if (status === 'SignupContact') {
+      setErrorMessage([
+        <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
+          <FormattedMessage id={status} defaultMessage="Unable to complete Signup, please try again or Contact Us" />
+        </p>,
+      ]);
+    }
+    else {
+      setErrorMessage([
+        <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
+          {status}
+        </p>,
+      ]);
+    }
   };
 
 
@@ -52,14 +83,20 @@ const SignupComponent = () => {
     // let x = axios({ method: "POST", url: url, data: userFormData, headers:headers });
     let data = signin("POST", userFormData)
     data.then((result) => {
-      if (result.status === 200) {
+      if (result.status === 200 && 'status' in result.data && result.data.status === "Registered Successfully") {
         registerSuccess(data);
       }
-      else {
-        registerFailure();
+      else if ('data' in result && 'status' in result.data && result.data.status === "User already exists") {
+        registerFailure('SignupAlreadyExist');
+      }
+      else if ('data' in result && 'status' in result.data && result.data.status === "Error in sending mail") {
+        registerFailure("SignupEmailError");
+      }
+      else if ('data' in result && 'status' in result.data) {
+        registerFailure(result.data.status);
       }
     }).catch((error) => {
-      registerFailure();
+      registerFailure('SignupContact');
     });
   };
 
@@ -77,8 +114,8 @@ const SignupComponent = () => {
           <div className="contentsTitle">
             <div className="auto">
               <h3 className="colorSecondary">
-                <span className="colorPrimary">Sign</span>
-                up
+                <span className="colorPrimary"><FormattedMessage id='Sign' defaultMessage='Sign' /></span>
+                <FormattedMessage id="up" defaultMessage='up' />
               </h3>
             </div>
           </div>
@@ -86,7 +123,8 @@ const SignupComponent = () => {
             <div className="auto">
               <div className="pwSearch tac">
                 <p className="h5">
-                  Please use the service after Signing Up
+                  <FormattedMessage id='SignupMsg1' defaultMessage='Please use the service after Signing Up' />
+
                 </p>
                 <form className="formBox" id="frm" method="post" name="frm">
                   {errorMessage && (
@@ -98,7 +136,7 @@ const SignupComponent = () => {
                   <dl>
                     <dt>
                       <img src={nameIcon} alt="" />
-                      Email Id
+                      <FormattedMessage id="EmailId" defaultMessage="Email Id" />
                     </dt>
                     <dd>
                       <div className="inputText">
@@ -112,7 +150,7 @@ const SignupComponent = () => {
               <div className="bottomBtns">
                 <div className="flex">
                   <button onClick={formSubmitAction} className="btn btnPrimary">
-                    <span>Sign Up</span>
+                    <span><FormattedMessage id="Signup" defaultMessage="Signup" /></span>
                   </button>
                 </div>
               </div>

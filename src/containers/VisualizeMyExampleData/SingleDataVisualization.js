@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import MultiDataVisualization from "./MultiDataVisualization";
 import { OtherTools } from "./OtherTools";
 
@@ -48,9 +48,10 @@ export const SingleDataVisualization = ({ isLogin }) => {
                       <button className="btn" onClick={() => {
                         // history.push({"/visualise-singledata/home/"})
                         history.push({
-                          pathname: '/visualise-singledata/home/',
+                          pathname: '/visualise-exampledata/home/',
                           state: { example: true }
                         })
+                        // <Link to={`/visualise-exampledata/home/`} />
                       }}>
                         <FormattedMessage id="ExamplePage" defaultMessage='Example Page' />
                       </button>

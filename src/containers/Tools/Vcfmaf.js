@@ -153,6 +153,8 @@ function Vcfmaf() {
 
   const breadCrumbs = {
     '/vcfmaf/': [
+      { id: 'Home', defaultMessage: 'Home', to: '/' },
+      { id: 'Tools', defaultMessage: 'Tools', to: '/tools/' },
       { id: 'VCFMAF', defaultMessage: 'VCFMAF', to: '/vcfmaf/' }
     ],
   };

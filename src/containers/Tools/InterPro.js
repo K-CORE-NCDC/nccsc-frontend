@@ -148,6 +148,8 @@ function InterPro() {
 
     const breadCrumbs = {
         '/interpro/': [
+            { id: 'Home', defaultMessage: 'Home', to: '/' },
+            { id: 'Tools', defaultMessage: 'Tools', to: '/tools/' },
             { id: 'Interpro', defaultMessage: 'Interpro', to: '/interpro/' }
         ],
     };
