@@ -66,10 +66,10 @@ export const VisualizeMyData = () => {
                     <FormattedMessage id="visualize_otherTools" defaultMessage='Other Tools' />
                   </dt>
                 </dl>
-                <a className="btn btnDetail" href="/">
+                <Link className="btn btnDetail" to="/tools/">
                   <FormattedMessage id="Analyze" defaultMessage='Analyze' />
                   <img src={arrow_icon} alt="" />
-                </a>
+                </Link>
               </div>
             </li>
           </ul>

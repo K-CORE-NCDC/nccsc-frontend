@@ -17,7 +17,8 @@ const HomeComponent = () => {
 
     const breadCrumbs = {
         '/tools/': [
-            { id: 'Tools', defaultMessage: 'Tools', to: '/' },
+            { id: 'Home', defaultMessage: 'Home', to: '/' },
+            { id: 'Tools', defaultMessage: 'Tools', to: '/tools/' },
         ]
     }
 

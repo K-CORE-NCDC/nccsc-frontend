@@ -5,6 +5,7 @@ import {
 import nameIcon from "../../styles/images/icon-text.svg"
 import { useHistory } from "react-router-dom";
 import Swal from 'sweetalert2'
+import { FormattedMessage } from "react-intl";
 function FindID() {
 
   const EmailId = useRef(null);
@@ -14,7 +15,7 @@ function FindID() {
 
 
   const findIdSuccess = () => {
-
+    // id is FindIdSuccess
     Swal.fire({
       title: 'Success',
       text: "ID Sent to Your Email",
@@ -31,11 +32,28 @@ function FindID() {
   }
 
   const findIdFailure = (status) => {
-    setErrorMessage([
-      <p key="error" className="ErrorText">
-        {status}
-      </p>
-    ]);
+
+    if (status === 'EmailNotRegistered') {
+      setErrorMessage([
+        <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
+          <FormattedMessage id={status} defaultMessage="Email is Not Registered" />
+        </p>,
+      ]);
+    }
+    else if(status === 'SomethingWentWrong'){
+      setErrorMessage([
+        <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
+          <FormattedMessage id={status} defaultMessage="Something went wrong, Please try again or Contact Us" />
+        </p>,
+      ]);
+    }
+    else {
+      setErrorMessage([
+        <p key="error" className="ErrorText">
+          {status}
+        </p>
+      ]);
+    }
     setIsError(true)
   }
 
@@ -46,7 +64,7 @@ function FindID() {
     if (email_id === "") {
       setErrorMessage([
         <p key="error" className="ErrorText">
-          Email ID cant be Empty
+          <FormattedMessage id='EmailNotEmpty' defaultMessage="Email Id cant be empty" />
         </p>
       ]);
       setIsError(true)
@@ -59,11 +77,14 @@ function FindID() {
         if ('data' in result && 'status' in result.data && result.data.status === "ID Sent to Your Email") {
           findIdSuccess();
         }
-        else if('data' in result && 'status' in result.data) {
+        else if ('data' in result && 'status' in result.data && result.data.status === "Email Not Registered") {
+          findIdFailure("EmailNotRegistered");
+        }
+        else if ('data' in result && 'status' in result.data) {
           findIdFailure(result.data.status);
         }
       }).catch((error) => {
-        findIdFailure('Something went wrong');
+        findIdFailure('SomethingWentWrong');
       });
     };
 
@@ -77,54 +98,55 @@ function FindID() {
 
   return (
     <div>
-        <div className="contentsTitle">
-          <div className="auto">
-            <h3 className="colorSecondary">
-              <span className="colorPrimary">Find</span>
-              ID
-            </h3>
-          </div>
+      <div className="contentsTitle">
+        <div className="auto">
+          <h3 className="colorSecondary">
+            <span className="colorPrimary"><FormattedMessage id='Find' defaultMessage="Find" /></span>
+            ID
+          </h3>
         </div>
-        
-        <div className="ptn">
-          <div className="auto">
-            <div className="pwSearch tac">
-              <p className="h5">
-                Find your ID.<br />
-                Please enter the information below.
-              </p>
-              <form className="formBox" id="frm" method="post" name="frm">
-                {isError && errorMessage && (
-                  <div className="ErrorText">
-                    {errorMessage}
-                  </div>
-                )}
+      </div>
 
-                <dl>
-                  <dt>
-                    <img src={nameIcon} alt="" />
-                    Email Id
-                  </dt>
-                  <dd>
-                    <div className="inputText">
-                      <input ref={EmailId} type="text" className="w100" id="Email" name="Email" placeholder="Please enter your Email Id." autoComplete="off" />
-                    </div>
-                  </dd>
-                </dl>
-              </form>
-            </div>
-            <div className="bottomBtns">
-              <div className="flex">
-                <button onClick={cancelfunction} className="btn btnGray bdBtn">
-                  Reset
-                </button>
-                <button onClick={findIdfunction} className="btn btnPrimary" >
-                  Submit
-                </button>
-              </div>
+      <div className="ptn">
+        <div className="auto">
+          <div className="pwSearch tac">
+            <p className="h5">
+              <FormattedMessage id='FindYourID' defaultMessage="Find Your ID" />
+              <br />
+              <FormattedMessage id='EnterInfo' defaultMessage="Please enter the information below." />
+            </p>
+            <form className="formBox" id="frm" method="post" name="frm">
+              {isError && errorMessage && (
+                <div className="ErrorText">
+                  {errorMessage}
+                </div>
+              )}
+
+              <dl>
+                <dt>
+                  <img src={nameIcon} alt="" />
+                  <FormattedMessage id='EmailId' defaultMessage='Email Id' />
+                </dt>
+                <dd>
+                  <div className="inputText">
+                    <input ref={EmailId} type="text" className="w100" id="Email" name="Email" placeholder="Please enter your Email Id." autoComplete="off" />
+                  </div>
+                </dd>
+              </dl>
+            </form>
+          </div>
+          <div className="bottomBtns">
+            <div className="flex">
+              <button onClick={cancelfunction} className="btn btnGray bdBtn">
+                <FormattedMessage id='Reset_volcano' defaultMessage='Reset' />
+              </button>
+              <button onClick={findIdfunction} className="btn btnPrimary" >
+                <FormattedMessage id='Submit_volcano' defaultMessage='Submit' />
+              </button>
             </div>
           </div>
         </div>
+      </div>
     </div>
 
   )

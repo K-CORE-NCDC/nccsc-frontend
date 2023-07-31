@@ -62,7 +62,7 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
       <div id='scatter_parent'  >
         <VolcanoPlotD3 watermarkCss={watermarkCss} dataProps={data} />
       </div>
-      <div className="M4 PopoverStyles">
+      <div className="M4 PopoverStyles" style={{justifyContent:"center"}}>
         <div>
           <h2 className="text-left text-blue-800 mb-12 mt-12"><strong>{"Expression Down Level"}</strong></h2>
           <div>

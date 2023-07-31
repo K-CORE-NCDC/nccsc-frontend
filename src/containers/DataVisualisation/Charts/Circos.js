@@ -502,7 +502,7 @@ export default function DataCircos({
                   </option>
                 </select>
               </div>
-              <div className="element">
+              {/* <div className="element">
                 <button
                   id="images"
                   className='btn btnPrimary'
@@ -536,7 +536,7 @@ export default function DataCircos({
                       defaultMessage="Report"
                     />
                 </button>
-              </div>
+              </div> */}
             </div>
           
           <div>

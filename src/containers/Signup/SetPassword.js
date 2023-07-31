@@ -9,6 +9,7 @@ import {
 import Swal from 'sweetalert2';
 import HeaderComponent from "../Common/HeaderComponent/HeaderComponent";
 import NCCLogo from "../../styles/images/logo02.svg"
+import { FormattedMessage } from "react-intl";
 
 function SetPassword() {
 
@@ -32,7 +33,7 @@ function SetPassword() {
   };
 
   const setPasswordSuccess = () => {
-
+    //id is PasswordUpdateSuccess
     Swal.fire({
       title: 'Success',
       text: "Password Set Success",
@@ -50,11 +51,34 @@ function SetPassword() {
 
   const setPasswordFailure = (status) => {
     setIsError(true)
-    setErrorMessage([
-      <p key="error" className="ErrorText">
+    if (status === 'UserDoesntExist') {
+      setErrorMessage([
+        <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
+          <FormattedMessage id={status} defaultMessage="User Doesn't Exist" />
+        </p>,
+      ]);
+    }
+    else if (status === 'PasswordSetLinkExpire') {
+      setErrorMessage([
+        <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
+          <FormattedMessage id={status} defaultMessage="Password Set link expired, Please try again after sometime" />
+        </p>,
+      ]);
+    }
+    else if(status === 'SomethingWentWrong'){
+      setErrorMessage([
+        <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
+          <FormattedMessage id={status} defaultMessage="Something went wrong, Please try again or Contact Us" />
+        </p>,
+      ]);
+    }
+    else{
+      setErrorMessage([
+        <p key="error" className="ErrorText">
         {status}
       </p>,
     ]);
+  }
   };
 
 
@@ -65,7 +89,7 @@ function SetPassword() {
       setIsError(true)
       setErrorMessage([
         <p key="error" className="ErrorText">
-          Password Can't be Empty
+          <FormattedMessage id="PasswordEmpty" defaultMessage="Password cant be Empty" />
         </p>,
       ]);
     }
@@ -73,7 +97,7 @@ function SetPassword() {
       setIsError(true)
       setErrorMessage([
         <p key="error" className="ErrorText">
-          Password Can't be Empty
+          <FormattedMessage id="PasswordEmpty" defaultMessage="Password cant be Empty" />
         </p>,
       ]);
     }
@@ -81,7 +105,7 @@ function SetPassword() {
       setIsError(true)
       setErrorMessage([
         <p key="error" className="ErrorText">
-          Both Password and Confirm Password Should Match
+          <FormattedMessage id="PasswordsMatch" defaultMessage="Both Password and Confirm Password Should Match" />
         </p>,
       ]);
     }
@@ -92,11 +116,17 @@ function SetPassword() {
         if ('data' in result && 'status' in result.data && result.data.status === "Password Updated Successfully") {
           setPasswordSuccess();
         }
+        else if ('data' in result && 'status' in result.data && result.data.status === "User Doesn't Exist") {
+          setPasswordFailure("UserDoesntExist");
+        }
+        else if ('data' in result && 'status' in result.data && result.data.status === "Password Set link expired") {
+          setPasswordFailure("PasswordSetLinkExpire");
+        }
         else if ('data' in result && 'status' in result.data) {
           setPasswordFailure(result.data.status);
         }
       }).catch((error) => {
-        setPasswordFailure('Password Update Failed');
+        setPasswordFailure('SomethingWentWrong');
       });
     }
   };
@@ -125,9 +155,9 @@ function SetPassword() {
                 </span>
                 <font style={{ verticalAlign: 'inherit' }}>
                   <span className="colorPrimary">
-                    <font style={{ verticalAlign: 'inherit' }}>Welcome</font>
+                    <font style={{ verticalAlign: 'inherit' }}><FormattedMessage id="Welcome" defaultMessage="Welcome"/></font>
                   </span>
-                  <font style={{ verticalAlign: 'inherit' }}> to </font>
+                  <font style={{ verticalAlign: 'inherit' }}> <FormattedMessage id="to" defaultMessage="to"/> </font>
                   <span className="colorSecondary">
                     <font style={{ verticalAlign: 'inherit' }}>NCDC .</font>
                   </span>
@@ -139,17 +169,17 @@ function SetPassword() {
               <p className="sub">
                 <font style={{ verticalAlign: 'inherit' }}>
                   <font style={{ verticalAlign: 'inherit' }}>
-                    Welcome to the National Cancer Data Center website.{' '}
+                    <FormattedMessage id="WelcomeNcdc" defaultMessage="Welcome to the National Cancer Data Center website."/>
+                    {' '}
                   </font>
                 </font>
                 <br />
                 <font style={{ verticalAlign: 'inherit' }}>
                   <font style={{ verticalAlign: 'inherit' }}>
-                    Please enter the information below to Set Password.
+                  <FormattedMessage id="loginmessage" defaultMessage="Please enter the information below to log in."/>
                   </font>
                 </font>
               </p>
-
 
               <form className="loginForm" id="frm" method="post">
 

@@ -6,7 +6,7 @@ import nameIcon from "../../styles/images/icon-text.svg"
 import idIcon from "../../styles/images/icon-user.svg"
 import { useHistory } from "react-router-dom";
 import Swal from 'sweetalert2'
-
+import { FormattedMessage } from "react-intl";
 function FindPassword() {
 
   const UserId = useRef(null);
@@ -17,7 +17,7 @@ function FindPassword() {
 
 
   const findPasswordSuccess = () => {
-
+    // id is PasswordResetLink 
     Swal.fire({
       title: 'Success',
       text: "Password Reset Link is sent to your Email",
@@ -36,11 +36,27 @@ function FindPassword() {
 
 
   const findPasswordFailure = (status) => {
-    setErrorMessage([
-      <p key="error" className="ErrorText">
+    if (status === 'EmailNotRegistered') {
+      setErrorMessage([
+        <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
+          <FormattedMessage id={status} defaultMessage="Email is Not Registered" />
+        </p>,
+      ]);
+    }
+    else if(status === 'SomethingWentWrong'){
+      setErrorMessage([
+        <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
+          <FormattedMessage id={status} defaultMessage="Something went wrong, Please try again or Contact Us" />
+        </p>,
+      ]);
+    }
+    else{
+      setErrorMessage([
+        <p key="error" className="ErrorText">
         {status}
       </p>
     ]);
+  }
     setIsError(true)
   }
 
@@ -53,7 +69,7 @@ function FindPassword() {
     if (user_id === "") {
       setErrorMessage([
         <p key="error" className="ErrorText">
-          User ID cant be Empty
+          <FormattedMessage id='UserIdNotEmpty' defaultMessage="User ID cant be Empty" />
         </p>
       ]);
       setIsError(true)
@@ -62,7 +78,7 @@ function FindPassword() {
     else if (registration_pin === "") {
       setErrorMessage([
         <p className="ErrorText">
-          Registration Pin cant be Empty
+          <FormattedMessage id='UniquePinNotEmpty' defaultMessage="Registration Pin cant be Empty" />  
         </p>
       ]);
       setIsError(true)
@@ -75,11 +91,14 @@ function FindPassword() {
         if ('data' in result && 'status' in result.data && result.data.status === "Password Reset Link is sent to your Email") {
           findPasswordSuccess();
         }
+        else if ('data' in result && 'status' in result.data && result.data.status === "Email Not Registered") {
+          findPasswordFailure("EmailNotRegistered");
+        }
         else if('data' in result && 'status' in result.data) {
           findPasswordFailure(result.data.status);
         }
       }).catch((error) => {
-        findPasswordFailure('Something went wrong');
+        findPasswordFailure('SomethingWentWrong');
       });
     };
 
@@ -97,8 +116,8 @@ function FindPassword() {
         <div className="contentsTitle">
           <div className="auto">
             <h3 className="colorSecondary">
-              <span className="colorPrimary">Find</span>
-              password
+              <span className="colorPrimary"><FormattedMessage id='Find' defaultMessage="Find" /></span>
+              <FormattedMessage id='Password' defaultMessage="Password" />
             </h3>
           </div>
         </div>
@@ -106,8 +125,10 @@ function FindPassword() {
           <div className="auto">
             <div className="pwSearch tac">
               <p className="h5">
-                Reset your password through Registration Pin authentication.<br />
-                Please enter the information below.
+                
+                <FormattedMessage id='FindPasswordmsg1' defaultMessage='Reset your password through Registration Pin authentication.' />
+                <br />
+                <FormattedMessage id='FindPasswordmsg2' defaultMessage='Please enter the information below.' />
               </p>
               <form className="formBox" id="frm" method="post" name="frm">
                 {isError && errorMessage && (
@@ -117,24 +138,24 @@ function FindPassword() {
                 )}
 
                 <dl>
-                  <dt>
+                  <dt style={{width:"180px"}}>
                     <img src={nameIcon} alt="" />
-                    User Id
+                    <FormattedMessage id='UserId' defaultMessage='User Id' />
                   </dt>
                   <dd>
                     <div className="inputText">
-                      <input ref={UserId} type="text" className="w100" id="userName" name="userName" placeholder="Please enter your name." autoComplete="off" />
+                      <input ref={UserId} type="text" className="w100" id="userName" name="userName" placeholder="Please enter your User Id." autoComplete="off" />
                     </div>
                   </dd>
                 </dl>
                 <dl>
-                  <dt>
+                  <dt style={{width:"180px"}}>
                     <img src={idIcon} alt="" />
-                    Unique Pin
+                    <FormattedMessage id='RegistrationPin' defaultMessage='Registration Pin' />
                   </dt>
                   <dd>
                     <div className="inputText">
-                      <input ref={RegistrationPin} type="text" className="w100" id="userId" name="userId" placeholder="Please enter your Registration ID." autoComplete="off" />
+                      <input ref={RegistrationPin} type="text" className="w100" id="userId" name="userId" placeholder="Please enter your Registration Pin." autoComplete="off" />
                     </div>
                   </dd>
                 </dl>
@@ -144,10 +165,10 @@ function FindPassword() {
             <div className="bottomBtns">
               <div className="flex">
                 <button onClick={cancelfunction} className="btn btnGray bdBtn">
-                  Reset
+                <FormattedMessage id='Reset_volcano' defaultMessage='Reset' />
                 </button>
                 <button onClick={findPasswordfunction} className="btn btnPrimary" >
-                  Submit
+                <FormattedMessage id='Submit_volcano' defaultMessage='Submit' />
                 </button>
               </div>
             </div>
