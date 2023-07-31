@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import {
   useParams
 } from "react-router-dom";
-
+import { FormattedMessage } from "react-intl";
 import {
   changePassword,
 } from "../../actions/api_actions";
