@@ -470,7 +470,7 @@ export default function DataCircos({
       {loader ? (
         <LoaderCmp />
       ) : (
-        <div className="">
+        <div style={{ marginTop: '5%', border: '1px solid #d6d6d6', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.05)', position: 'relative', padding: '5%' }}>
           
             <div className="flex visualGrid">
               <div>
@@ -494,7 +494,7 @@ export default function DataCircos({
                   id="samples"
                 >
                   <option className="xs:text-sm sm:text-sm lg:text-xl">
-                    --Select Sample--
+                    Select Sample
                   </option>
                   {sampleListElements}
                   <option className="xs:text-sm lg:text-xl" value="all">

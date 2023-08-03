@@ -40,7 +40,7 @@ function FindID() {
         </p>,
       ]);
     }
-    else if(status === 'SomethingWentWrong'){
+    else if (status === 'SomethingWentWrong') {
       setErrorMessage([
         <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
           <FormattedMessage id={status} defaultMessage="Something went wrong, Please try again or Contact Us" />
@@ -101,8 +101,8 @@ function FindID() {
       <div className="contentsTitle">
         <div className="auto">
           <h3 className="colorSecondary">
-            <span className="colorPrimary"><FormattedMessage id='Find' defaultMessage="Find" /></span>
-            ID
+            <span className="colorPrimary"><FormattedMessage id='HeadFind' defaultMessage="Find" /></span>
+            <FormattedMessage id='HeadID' defaultMessage="ID" />
           </h3>
         </div>
       </div>
@@ -129,7 +129,12 @@ function FindID() {
                 </dt>
                 <dd>
                   <div className="inputText">
-                    <input ref={EmailId} type="text" className="w100" id="Email" name="Email" placeholder="Please enter your Email Id." autoComplete="off" />
+                    <FormattedMessage id="PleaseEnterYourEmailId" defaultMessage="Please enter your Emain ID">
+                      {placeholder =>
+                        <input ref={EmailId} type="text" className="w100" id="Email" name="Email" placeholder={placeholder} autoComplete="off" />
+                      }
+                    </FormattedMessage>
+
                   </div>
                 </dd>
               </dl>

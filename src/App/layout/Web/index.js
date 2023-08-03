@@ -84,7 +84,7 @@ export default function Web(props) {
   const [swiperOn, setSwiperOn] = useState(true)
   const [is_login, setIsLogin] = useState(false)
   const [footer, setFooter] = useState(false)
-  const [mainPageInSmallScreen, setMainPageInSmallScreen] = useState(true)
+  const [mainPageInSmallScreen, setMainPageInSmallScreen] = useState(0)
 
 
 
@@ -394,13 +394,19 @@ export default function Web(props) {
     } else {
       classes = "header on"
     }
-  } else {
-    if (mouseEnterFlag) {
-      classes = "header on"
-    } else {
+  }
+  else {
+    if (mainPageInSmallScreen === 0 && mouseEnterFlag && (window.location.pathname === '/k-core/' || window.location.pathname === '/')) {
+      classes = "header rev";
+    } else if (mainPageInSmallScreen === 0 && !mouseEnterFlag && (window.location.pathname === '/k-core/' || window.location.pathname === '/')) {
       classes = "header";
+    } else if (mainPageInSmallScreen !== 0 && mouseEnterFlag) {
+      classes = "header on rev";
+    } else {
+      classes = "header on"
     }
   }
+  console.log('Current Sub-Div ID:', mainPageInSmallScreen);
 
   return (
     <>
@@ -459,7 +465,7 @@ export default function Web(props) {
                     onMouseLeave={() => {
                       setMouseEnterFlag(false)
                     }}
-                  ><a className={`${activeClassIndex === item?.index ? 'active_menu' : ''} menu_li`} style={activeClassIndex === item?.index ? { color: '#009fe2' } : { color: '' }}>{item?.title}</a></li>
+                  ><a className={`${mainPageInSmallScreen !== 0 && activeClassIndex === item?.index ? 'active_menu' : ''} menu_li`} style={mainPageInSmallScreen !== 0 && activeClassIndex === item?.index ? { color: '#009fe2' } : { color: '' }}>{item?.title}</a></li>
                 ))}
               </ul>
             </nav>
@@ -468,8 +474,8 @@ export default function Web(props) {
         <div id="allMenuWrap" className="allMenuWrap" style={menuTabOpen ? { display: 'block' } : { display: 'none' }}>
           <div className="imgBox">
             <dl>
-              <dt><font className="font1"></font><br /><font className="font1"><font className="font1"><FormattedMessage id="Welcome" defaultMessage='Welcome to the National Cancer Data Center .' /></font></font></dt>
-              <dd><font className="font1"><font className="font1"><FormattedMessage id="Designated" defaultMessage='The National Cancer Center was designated as the National Cancer Data Center (NCDC) by the Ministry of Health and Welfare in September 2021 under the Cancer Control Act. ' /></font><font className="font1"><FormattedMessage id="Motive" defaultMessage='The National Cancer Data Center will carry out the business of collecting, processing, analyzing, and providing cancer data for research and development for cancer management.' /></font></font></dd>
+              <dt><font className="font1"></font><br /><font className="font1"><font className="font1"><FormattedMessage id="WelcometoK-corePortal" defaultMessage='Welcome to K-Core Portal' /></font></font></dt>
+              <dd><font className="font1"><font className="font1"><FormattedMessage id="Designated" defaultMessage='K-Core Portal is a web-based analysis portal that provides visualizations of cancer genomic data, and it is a sub-service portal of the National Cancer Data Center website.' /></font></font></dd>
             </dl>
             <div className="members">
               <p>
@@ -558,11 +564,11 @@ export default function Web(props) {
         </div>
       </header>
       <div className="relative" id='fullSlide' >
-
         <div className={`mainContents ${routeLocation.pathname === '/' ? '' : 'min-h-70'} `} >
           <Suspense fallback={<Loader />}>
             <Switch>
-              <Home setActiveClassIndex={(data) => setActiveClassIndex(data)} activeClassIndex={activeClassIndex} setActiveclassPath={(data) => setActiveclassPath(data)} activePath={activeClassPath} />
+              <Home setActiveClassIndex={(data) => setActiveClassIndex(data)} activeClassIndex={activeClassIndex} setActiveclassPath={(data) => setActiveclassPath(data)} activePath={activeClassPath} lan={context.locale}
+                setMainPageInSmallScreen={(data) => setMainPageInSmallScreen(data)} mainPageInSmallScreen={mainPageInSmallScreen} />
               <Route exact path="*" component={NotFound} />
             </Switch>
           </Suspense>

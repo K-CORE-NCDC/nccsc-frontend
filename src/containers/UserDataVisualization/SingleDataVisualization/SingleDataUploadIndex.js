@@ -14,10 +14,10 @@ export default function Index() {
   }
   const breadCrumbs = {
     '/singledata-upload/': [
-        { id: 'FindID', defaultMessage: 'Home', to: '/' },
-        { id: 'VisualiseMyData', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
+        { id: 'Home', defaultMessage: 'Home', to: '/' },
+        { id: 'MyDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
         { id: 'SingleDataVisualization', defaultMessage: 'Single Data Visualization', to: '/visualise-singledata/home/' },
-        { id: 'upload', defaultMessage: `Upload ${tab}`, to: `/singledata-upload/${tab}` },
+        { id: 'Upload', defaultMessage: `Upload ${tab}`, to: `/singledata-upload/${tab}` },
         
     ],
     
@@ -36,7 +36,7 @@ export default function Index() {
           <div className="contentsTitle">
             <h3>
               <font>
-                <font >Single Data </font>
+                <font><FormattedMessage id="SingleData" defaultMessage="Single Data" /></font>
                 <span className="colorSecondary">
                   <font ><FormattedMessage id="Upload" defaultMessage="Upload" /></font>
                 </span>

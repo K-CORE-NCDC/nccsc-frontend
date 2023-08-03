@@ -380,7 +380,7 @@
 .GeneSetgeneSetButton .w-20 {
   width: 5rem;
   height: 100%;
-  background-color: #ccc;
+  background-color:white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -861,9 +861,10 @@
 
 
 .MultiDataTableViewDelete {
-  display: grid;
+  /* display: grid; */
   width: 100%;
-  grid-template-columns: 20% 70%;
+  text-align: left;
+  /* grid-template-columns: 20% 70%; */
 }
 
 .CursorPointer {
@@ -2345,3 +2346,8 @@
   grid-template-columns: repeat(12, 1fr);
   grid-gap: 10px;
 }
+
+.galleryList ul li a:hover .thumb .hvBox .textdiv :hover {
+ font-size: 30px ;
+}
+

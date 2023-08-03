@@ -467,7 +467,7 @@ img.m {
   margin-top: 0;
 }
 .formBox dl dt {
-  width: 110px;
+  width: 126px;
   font-size: 16px;
   font-weight: 500;
   line-height: 150%;
@@ -5837,3 +5837,15 @@ h5 {
 }
 
 /*# sourceMappingURL=contents.css.map */
+#FastaFile{
+  overflow: hidden;
+  color: transparent;
+  width: 90px;
+}
+#FastaFile::after{
+  content: attr(data-title);
+  color: gray;
+  left:25%;
+  position: absolute;
+  
+}

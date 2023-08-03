@@ -9,13 +9,15 @@ export const SingleDataVisualization = ({ isLogin }) => {
   const [activeTab, setActiveTab] = useState('1')
   const history = useHistory()
 
-  useEffect(() => {
-    console.log('isLogin', isLogin)
-  }, [])
+  // useEffect(() => {
+  //   if (width <= 1025 || height <= 800) {
+  //     setVariable(true)
+  //   }
+  // }, [])
   return (
     <div className="auto">
       <div className="mainContentsBox">
-        <div className="tab " style={{ height: '20vh', display: 'flex', alignItems: 'end' }} >
+        <div className="tab visualizeExampleData">
           <ul>
             <li className={activeTab === '1' ? 'on' : ''}>
               <button type="button" onClick={() => setActiveTab('1')}><FormattedMessage

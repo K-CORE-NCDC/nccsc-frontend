@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { SingleFileUpload, clearSingleFIleUploadState } from '../../../actions/api_actions'
+import { SingleFileUpload, clearFusionVennDaigram, clearProjectTableDataTableData, clearSingleFIleUploadState } from '../../../actions/api_actions'
 import { useSelector, useDispatch } from "react-redux";
 import Loader from '../Widgets/loader';
 import { useHistory } from 'react-router-dom'
@@ -7,11 +7,15 @@ import { useParams } from "react-router-dom";
 import { Context } from "../../../wrapper";
 import { FormattedMessage } from 'react-intl';
 import Swal from 'sweetalert2';
+import { dispatch } from "d3";
+import { userdataVisualization } from "../../../actions/Constants";
 
 
 function Modal({ showModal, toggleModal, fileName }) {
   let fileNameImage = require(`../../../assets/images/FileScreenshots/${fileName}.png`).default
   let fileNameFile = require(`../../../assets/files/20_samples/${fileName}.tsv`).default
+
+  
   return (
     <>
       {showModal ? (
@@ -81,6 +85,15 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
   let { tab } = useParams();
   const inputRef = useRef(null)
   const allowedTabs = ["circos", "lollipop", "CNV", "heatmap", "box", "survival", "genomic-data"]
+
+
+  // useEffect(() => {
+  //   dispatch({
+  //     type: userdataVisualization.USER_DATA_PROJECT_TABLE,
+  //     payload: {},
+  //   });
+  // },[]) 
+  
   const charts = {
     "circos": {
       rna: "RNA",
@@ -184,9 +197,9 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
   }, [context]);
 
   useEffect(() => {
-    if (formSbubmitButtonText === 'upload' || formSbubmitButtonText === '업로드 파일') {
+    if (formSbubmitButtonText === 'upload' || formSbubmitButtonText === '업로드') {
       if (koreanlanguage) {
-        setFormSubmitButtonText('업로드 파일')
+        setFormSubmitButtonText('업로드')
       }
       else {
         setFormSubmitButtonText('upload')
@@ -345,16 +358,16 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
     Object.keys(selectedFileSampleType).forEach(key => {
 
       firstInput.push(<>
-      <dl>
-        <dt>&nbsp;</dt>
-        <dd>
-        <button onClick={() => toggleModal(true, fileName)} className="ToolModalBtn" style={{float:"right"}}>
-            <InforIcon />
-          </button>
-        </dd>
-      </dl>
+        <dl>
+          <dt>&nbsp;</dt>
+          <dd>
+            <button onClick={() => toggleModal(true, fileName)} className="ToolModalBtn" style={{ float: "right" }}>
+              <InforIcon />
+            </button>
+          </dd>
+        </dl>
         <dl key={'dl1-' + key} className="boardSearchBox">
-          <dt>Select Type:</dt>
+          <dt> <FormattedMessage id="selectType"  defaultMessage='Select Type' /></dt>
           <dd className="selectBox select Flex">
             <select onChange={updateFileTypeOnChange}
               name={key}
@@ -431,7 +444,7 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
 
   const formSubmitButtonActions = () => {
     if (projectName.length > 0) {
-      if (formSbubmitButtonText === 'upload' || formSbubmitButtonText === '업로드 파일') {
+      if (formSbubmitButtonText === 'upload' || formSbubmitButtonText === '업로드') {
         on_upload()
       }
       if (formSbubmitButtonText === 'retry' || formSbubmitButtonText === '다시 해 보다') {

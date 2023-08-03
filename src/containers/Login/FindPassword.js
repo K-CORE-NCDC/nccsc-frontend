@@ -43,20 +43,20 @@ function FindPassword() {
         </p>,
       ]);
     }
-    else if(status === 'SomethingWentWrong'){
+    else if (status === 'SomethingWentWrong') {
       setErrorMessage([
         <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
           <FormattedMessage id={status} defaultMessage="Something went wrong, Please try again or Contact Us" />
         </p>,
       ]);
     }
-    else{
+    else {
       setErrorMessage([
         <p key="error" className="ErrorText">
-        {status}
-      </p>
-    ]);
-  }
+          {status}
+        </p>
+      ]);
+    }
     setIsError(true)
   }
 
@@ -78,7 +78,7 @@ function FindPassword() {
     else if (registration_pin === "") {
       setErrorMessage([
         <p className="ErrorText">
-          <FormattedMessage id='UniquePinNotEmpty' defaultMessage="Registration Pin cant be Empty" />  
+          <FormattedMessage id='UniquePinNotEmpty' defaultMessage="Registration Pin cant be Empty" />
         </p>
       ]);
       setIsError(true)
@@ -94,7 +94,7 @@ function FindPassword() {
         else if ('data' in result && 'status' in result.data && result.data.status === "Email Not Registered") {
           findPasswordFailure("EmailNotRegistered");
         }
-        else if('data' in result && 'status' in result.data) {
+        else if ('data' in result && 'status' in result.data) {
           findPasswordFailure(result.data.status);
         }
       }).catch((error) => {
@@ -113,67 +113,77 @@ function FindPassword() {
 
   return (
     <div>
-        <div className="contentsTitle">
-          <div className="auto">
-            <h3 className="colorSecondary">
-              <span className="colorPrimary"><FormattedMessage id='Find' defaultMessage="Find" /></span>
-              <FormattedMessage id='Password' defaultMessage="Password" />
-            </h3>
-          </div>
+      <div className="contentsTitle">
+        <div className="auto">
+          <h3 className="colorSecondary">
+            <span className="colorPrimary"><FormattedMessage id='HeadPassword' defaultMessage="Find" /></span>
+            <FormattedMessage id='HeadID' defaultMessage="Password" />
+          </h3>
         </div>
-        <div className="ptn">
-          <div className="auto">
-            <div className="pwSearch tac">
-              <p className="h5">
-                
-                <FormattedMessage id='FindPasswordmsg1' defaultMessage='Reset your password through Registration Pin authentication.' />
-                <br />
-                <FormattedMessage id='FindPasswordmsg2' defaultMessage='Please enter the information below.' />
-              </p>
-              <form className="formBox" id="frm" method="post" name="frm">
-                {isError && errorMessage && (
-                  <div className="ErrorText">
-                    {errorMessage}
+      </div>
+      <div className="ptn">
+        <div className="auto">
+          <div className="pwSearch tac">
+            <p className="h5">
+
+              <FormattedMessage id='FindPasswordmsg1' defaultMessage='Reset your password through Registration Pin authentication.' />
+              <br />
+              <FormattedMessage id='FindPasswordmsg2' defaultMessage='Please enter the information below.' />
+            </p>
+            <form className="formBox" id="frm" method="post" name="frm">
+              {isError && errorMessage && (
+                <div className="ErrorText">
+                  {errorMessage}
+                </div>
+              )}
+
+              <dl>
+                <dt style={{ width: "180px" }}>
+                  <img src={nameIcon} alt="" />
+                  <FormattedMessage id='UserId' defaultMessage='User Id' />
+                </dt>
+                <dd>
+                  <div className="inputText">
+                    <FormattedMessage id="PleaseEnterYourUserId" defaultMessage="Please enter your User Id">
+                      {placeholder =>
+                        <input ref={UserId} type="text" className="w100" id="userName" name="userName" placeholder={placeholder} autoComplete="off" />
+                      }
+                    </FormattedMessage>
+
                   </div>
-                )}
+                </dd>
+              </dl>
+              <dl>
+                <dt style={{ width: "180px" }}>
+                  <img src={idIcon} alt="" />
+                  <FormattedMessage id='RegistrationPin' defaultMessage='Registration Pin' />
+                </dt>
+                <dd>
+                  <div className="inputText">
+                    <FormattedMessage id="PleaseEnterYourRegistrationPin" defaultMessage="Please enter your Registration Pin">
+                      {placeholder =>
+                        <input ref={RegistrationPin} type="text" className="w100" id="userId" name="userId" placeholder={placeholder} autoComplete="off" />
+                      }
+                    </FormattedMessage>
 
-                <dl>
-                  <dt style={{width:"180px"}}>
-                    <img src={nameIcon} alt="" />
-                    <FormattedMessage id='UserId' defaultMessage='User Id' />
-                  </dt>
-                  <dd>
-                    <div className="inputText">
-                      <input ref={UserId} type="text" className="w100" id="userName" name="userName" placeholder="Please enter your User Id." autoComplete="off" />
-                    </div>
-                  </dd>
-                </dl>
-                <dl>
-                  <dt style={{width:"180px"}}>
-                    <img src={idIcon} alt="" />
-                    <FormattedMessage id='RegistrationPin' defaultMessage='Registration Pin' />
-                  </dt>
-                  <dd>
-                    <div className="inputText">
-                      <input ref={RegistrationPin} type="text" className="w100" id="userId" name="userId" placeholder="Please enter your Registration Pin." autoComplete="off" />
-                    </div>
-                  </dd>
-                </dl>
+                  </div>
+                </dd>
+              </dl>
 
-              </form>
-            </div>
-            <div className="bottomBtns">
-              <div className="flex">
-                <button onClick={cancelfunction} className="btn btnGray bdBtn">
+            </form>
+          </div>
+          <div className="bottomBtns">
+            <div className="flex">
+              <button onClick={cancelfunction} className="btn btnGray bdBtn">
                 <FormattedMessage id='Reset_volcano' defaultMessage='Reset' />
-                </button>
-                <button onClick={findPasswordfunction} className="btn btnPrimary" >
+              </button>
+              <button onClick={findPasswordfunction} className="btn btnPrimary" >
                 <FormattedMessage id='Submit_volcano' defaultMessage='Submit' />
-                </button>
-              </div>
+              </button>
             </div>
           </div>
         </div>
+      </div>
     </div>
 
   )

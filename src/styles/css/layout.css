@@ -708,7 +708,7 @@ select {
   font-size: 16px;
   color: #5a5e61;
   background-image: url("../images/select-arrow.svg");
-  background-position: right 20px center;
+  background-position: right 0px center;
   background-repeat: no-repeat;
   background-color: rgb(255, 255, 255);
   -webkit-appearance: none;
@@ -3396,7 +3396,7 @@ body {
   display: flex;
 }
 
-.mainContents  .galleryList ul li a .thumb .hvBox {
+.mainContents .galleryList ul li a .thumb .hvBox {
   position: absolute;
   top: 0;
   left: 0;
@@ -3417,7 +3417,7 @@ body {
 
 .mainContents .galleryList ul li a .icon {
   position: absolute;
-  top: 12px ;
+  top: 12px;
   right: 12px;
   width: 28px;
   height: 28px;
@@ -3429,9 +3429,10 @@ body {
 }
 
 
-.mainContents .galleryList ul li a .playicon, .mainContents .galleryList ul li a .txtBox .playicon  {
+.mainContents .galleryList ul li a .playicon,
+.mainContents .galleryList ul li a .txtBox .playicon {
   position: absolute;
-  top: 12px ;
+  top: 12px;
   right: 12px;
   /* width: 28px; */
   /* height: 28px; */
@@ -3443,7 +3444,7 @@ body {
 
 .galleryList ul li a:hover .thumb .hvBox .playicon {
   position: absolute;
-  top: 50% ;
+  top: 50%;
   right: 50%;
   /* width: 100px; */
   /* height: 28px; */
@@ -3523,7 +3524,7 @@ body {
 }
 
 /* 변경 */
-.galleryList ul li a:hover .thumb > img {
+.galleryList ul li a:hover .thumb>img {
   transform: scale(1.1);
 }
 
@@ -3533,7 +3534,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap:30%;
+  gap: 30%;
 }
 
 .galleryList ul li a:hover .thumb .hvBox span {
@@ -3547,14 +3548,16 @@ body {
 }
 
 
-.galleryList ul li a:hover .txtBox{
+.galleryList ul li a:hover .txtBox {
   background-color: #003177;
 }
+
 .galleryList ul li a:hover .txtBox dt {
   color: rgb(255, 255, 255);
 }
 
-.galleryList ul li a:hover .txtBox dd, .galleryList ul li a:hover .txtBox span  {
+.galleryList ul li a:hover .txtBox dd,
+.galleryList ul li a:hover .txtBox span {
   color: rgba(255, 255, 255, 0.8);
 }
 
@@ -4078,6 +4081,22 @@ big {
   color: #616161;
 }
 
-.rdt_Pagination .grsa-Dj select{
+.rdt_Pagination .grsa-Dj select {
   background-image: none;
+}
+
+@media (max-width:1025px) and (max-height: 800px) {
+  .visualizeExampleData {
+    /* height: 20vh; */
+    display: flex;
+    align-items: end;
+  }
+}
+
+@media (min-width:1026px) and (min-height: 801px) {
+  .visualizeExampleData {
+    height: 20vh;
+    display: flex;
+    align-items: end;
+  }
 }
