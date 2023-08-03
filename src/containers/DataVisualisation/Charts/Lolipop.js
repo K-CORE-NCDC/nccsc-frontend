@@ -129,7 +129,6 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   }, [inputData])
 
   useEffect(() => {
-    console.log('inputState' , inputState)
     if (inputState && 'genes' in inputState) {
       let g = inputState['genes']
       loadGenesDropdown(g)

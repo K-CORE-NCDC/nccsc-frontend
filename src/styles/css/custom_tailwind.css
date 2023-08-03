@@ -661,9 +661,11 @@
 .MAuto {
   margin: auto;
 }
-.Margin0313{
-  margin:0.313rem
+
+.Margin0313 {
+  margin: 0.313rem
 }
+
 .MarginTop2 {
   margin-top: 0.5rem;
 }
@@ -2101,12 +2103,14 @@
   padding: 10px;
 }
 
-.ktd:first-child{
- width: 25%;
+.ktd:first-child {
+  width: 25%;
 }
-.kth:first-child{
- width: 25%;
+
+.kth:first-child {
+  width: 25%;
 }
+
 .kth {
   border: 1px solid;
   text-align: center;
@@ -2309,4 +2313,35 @@
   text-align: center;
   color: #ffffff;
   background-color: #EF4444;
+}
+
+.BasicInformationTable {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-bottom-width: 1px;
+  border-color: #E5E7EB;
+  width: 100%;
+}
+
+.BasicInformationTable .BorderDiv {
+  border-right-width: 1px;
+  border-color: #E5E7EB;
+}
+
+.BasicInformationTable p {
+  padding: 0.75rem 1.5rem;
+}
+
+.BasicGenomic .SampleName {
+  text-align: start;
+}
+
+.BasicGenomic .BasicInformationTitle{
+  margin: 10px;
+}
+
+.BasicGenomicGrid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-gap: 10px;
 }

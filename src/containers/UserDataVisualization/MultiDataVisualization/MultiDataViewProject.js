@@ -10,6 +10,7 @@ import { FormattedMessage } from 'react-intl';
 import { Context } from "../../../wrapper";
 import { useHistory } from "react-router-dom";
 import Swal from 'sweetalert2'
+import {MultiProjectsView} from '../../../actions/api_actions'
 
 
 
@@ -75,18 +76,28 @@ function ProjectsList() {
 
     const fetchUsers = async (page, method) => {
         setLoading(true);
-        let response
-        if (method === "GET") {
-            response = await axios.get(config.auth + `user-projects-data/?page=${page}&per_page=${perPage}&delay=1`);
-        } else {
-            response = await axios.post(config.auth + `user-projects-data/?page=${page}&per_page=${perPage}&delay=1&input`, {
-                type: selectInput,
-                searchTerm: searchInput
-            });
-        }
-        setTableData(response.data.data);
-        setTotalRows(response.data.total);
-        setLoading(false);
+        let postData = {}
+        postData['type'] = selectInput
+        postData['searchTerm'] = searchInput
+
+        let data = MultiProjectsView(method, postData, page, perPage)
+        data.then((response) => {
+            if ('data' in response) {
+                setTableData(response.data.data);
+                setTotalRows(response.data.total);
+                setLoading(false);
+            }
+        })
+
+        // if (method === "GET") {
+        //     response = await axios.get(config.auth + `user-projects-data/?page=${page}&per_page=${perPage}&delay=1`);
+        //     MultiProjectsView('GET',)
+        // } else {
+        //     response = await axios.post(config.auth + `user-projects-data/?page=${page}&per_page=${perPage}&delay=1&input`, {
+        //         type: selectInput,
+        //         searchTerm: searchInput
+        //     });
+        // }
     };
 
     const handlePageChange = (page) => {
@@ -239,7 +250,7 @@ function ProjectsList() {
         },
         pagination: {
             style: {
-                gap:"10px"
+                gap: "10px"
             }
         }
     };

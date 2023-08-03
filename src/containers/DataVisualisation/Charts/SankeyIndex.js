@@ -9,18 +9,18 @@ import { SankeyJson } from "../../../actions/api_actions";
 import NoContentGene from "../../Common/NoContentGene";
 
 
-function SankeyIndex({ ...props }) {
-  const d = { ...props };
-  const [initalProps, setInitialProps] = useState({});
+function SankeyIndex({selectedGene,variants}) {
+  const d = selectedGene
+  const [initalProps, setInitialProps] = useState("");
   const reportData = useSelector(
     (state) => state.dataVisualizationReducer.rniData
   );
 
   const [gene, setGene] = useState("");
   const [loader, setLoader] = useState(false);
-  const [sankeyJson, setSankeyJson] = useState([])
   const [detailGeneData, setDetailGeneData] = useState([]);
   const [showNoContent, setShowNoContent] = useState(false);
+  const [sankeyJson, setSankeyJson] = useState([])
   const [SankeyJsonData, setSankeyJsonData] = useState({
     nodes: [],
     links: [],
@@ -31,20 +31,26 @@ function SankeyIndex({ ...props }) {
   const uniqiue_values = {'dbsnp_rs':new Set(),'diseasename':new Set()}
   useEffect(() => {
     setLoader(true)
-    if (initalProps && "data" in initalProps) {
+    setShowNoContent(false)
+    if (initalProps) {
       let d = initalProps;
-      let variants = reportData.variant_info;
-      let gene = d["data"]["gene"];
+      let gene = d
       let inputData = {
         gene: gene,
-        mutation: variants[gene],
       };
+      if(variants && gene in variants ){
+        inputData['mutation'] = variants[gene]
+      }
+      else{
+        inputData['mutation'] = []
+      }
       setGene(gene);
       let return_data = SankeyJson("POST", inputData)
         return_data.then((result) => {
           const d = result
           if (d.status === 200 && "data" in d && d['data'].length > 0) {
             setSankeyJson(d['data'])
+            setShowNoContent(false)
           } else {
             setLoader(false)
             setShowNoContent(true)
@@ -52,11 +58,16 @@ function SankeyIndex({ ...props }) {
           }
         })
         .catch((e) => {
+          setShowNoContent(true)
           setSankeyJson([])
           history.push('/notfound')
         });
-        
-      setSankyTableData2(variants[gene].filter(Boolean).toString());
+      if(variants && gene in variants){
+        setSankyTableData2(variants[gene].filter(Boolean).toString());
+      }
+      else{
+        setSankyTableData2([])
+      }
     }
   }, [initalProps]);
 
@@ -64,7 +75,7 @@ function SankeyIndex({ ...props }) {
     if (d) {
       setInitialProps(d);
     }
-  }, []);
+  }, [selectedGene,variants]);
 
   useEffect(() => {
     if (sankeyJson && sankeyJson.length > 0) {
@@ -192,8 +203,8 @@ function SankeyIndex({ ...props }) {
       // console.log("final_links",final_links);
       setDetailGeneData(detailgeneData);
       setSankeyJsonData({ nodes: final_nodes, links: final_links });
-      console.log('final_nodes',final_nodes,final_nodes.length);
-      console.log('final_links',final_links,final_links.length);
+      // console.log('final_nodes',final_nodes,final_nodes.length);
+      // console.log('final_links',final_links,final_links.length);
       setLoader(false)
       // console.log('uniqiue_values',uniqiue_values);
     }
@@ -323,7 +334,7 @@ function SankeyIndex({ ...props }) {
       {loader ? (<div className="mb-28"><LoaderCmp /></div>) : 
       (
         <div id="main_chart_cont">
-          {gene &&
+          {gene && sankeyJson.length > 0 &&
             SankeyJsonData["nodes"].length > 0 &&
             SankeyJsonData["links"].length > 0 && (
               <>

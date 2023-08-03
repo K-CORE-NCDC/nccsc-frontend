@@ -13,6 +13,7 @@ function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, b
   const reportData = useSelector(state => state.dataVisualizationReducer.rniData)
   const [tableRender,setTableRender] = useState(false)
   const [currentRow, setCurrentRow] = useState(null);
+  
   useEffect(()=>{
     if(tableData && tableData.length>0){
       setTableRender(true)
@@ -114,7 +115,7 @@ function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, b
                     Genomic Summary
                   </h3>
                 </div>
-                {tableData && <div className=' report_table'>
+                {tableData && <div className='report_table'>
                   <DataTable pagination
                     responsive
                     columns={tableColumnsData}

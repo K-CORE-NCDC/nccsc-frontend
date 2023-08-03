@@ -84,7 +84,7 @@ const route = [
   // },
 
   {
-    path: '/sankeyplot/',
+    path: '/sankey/',
     exact: true,
     type: 'unauth',
     category: 'home',
@@ -103,7 +103,7 @@ const route = [
     component: SingleDataAnalysis,
   },
   {
-    path: '/visualise-exampledata/:tab?/',
+    path: '/visualizesingle-exampledata/:tab?/',
     exact: true,
     type: 'unauth',
     category: 'visualize',

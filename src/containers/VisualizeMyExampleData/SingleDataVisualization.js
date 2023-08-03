@@ -48,10 +48,10 @@ export const SingleDataVisualization = ({ isLogin }) => {
                       <button className="btn" onClick={() => {
                         // history.push({"/visualise-singledata/home/"})
                         history.push({
-                          pathname: '/visualise-exampledata/home/',
+                          pathname: '/visualizesingle-exampledata/home/',
                           state: { example: true }
                         })
-                        // <Link to={`/visualise-exampledata/home/`} />
+                        // <Link to={`/visualizesingle-exampledata/home/`} />
                       }}>
                         <FormattedMessage id="ExamplePage" defaultMessage='Example Page' />
                       </button>
