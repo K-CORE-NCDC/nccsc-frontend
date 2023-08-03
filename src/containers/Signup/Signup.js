@@ -12,7 +12,7 @@ const SignupComponent = () => {
   });
   let history = useHistory();
   const [errorMessage, setErrorMessage] = useState([]);
-  const title = { id: "Signup", defaultMessage: "Sing Up" }
+  const title = { id: "Signup", defaultMessage: "Sign Up" }
 
   const breadCrumbs = {
     '/signup/': [
@@ -140,8 +140,13 @@ const SignupComponent = () => {
                     </dt>
                     <dd>
                       <div className="inputText">
-                        <input type="text" className="w100" id="emailId" name="emailId" placeholder="Please enter your Email Id." autoComplete="off" value={userFormData.emailId}
+                      <FormattedMessage id="PleaseEnterYourEmailId" defaultMessage="Please enter your Email Id">
+                      {placeholder =>
+                          <input type="text" className="w100" id="emailId" name="emailId" placeholder={placeholder} autoComplete="off" value={userFormData.emailId}
                           onChange={updateEmailId} />
+                      }
+                    </FormattedMessage>
+                      
                       </div>
                     </dd>
                   </dl>

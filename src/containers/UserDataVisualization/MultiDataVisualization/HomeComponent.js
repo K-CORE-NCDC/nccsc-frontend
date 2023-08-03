@@ -39,7 +39,7 @@ const HomeComponent = () => {
             <font>
               <font><FormattedMessage id="MultiData" defaultMessage="Multi Data" /></font>
               <span className="colorSecondary">
-                <font ><FormattedMessage id="Visualization" defaultMessage="Visualization" /></font>
+                <font ><FormattedMessage id="visualization" defaultMessage="Visualization" /></font>
               </span>
             </font>
           </h3>
@@ -92,7 +92,7 @@ const HomeComponent = () => {
                       /></dt>
                       <dd>
                         <FormattedMessage
-                          id="serviceIntro_txt1"
+                          id="CreateProjectContent"
                           defaultMessage="Provides a visualization analysis service that can be implemented according to the uploaded user data."
                         /></dd>
                     </dl>

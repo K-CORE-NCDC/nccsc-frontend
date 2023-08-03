@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { createRef, useEffect, useRef } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
@@ -17,8 +17,8 @@ import Introduction from "./Introduction";
 export default function Home(parentProps) {
   const swiperRef = useRef(null);
   const menuHeightRef = useRef(null);
-
-  const sections = ["MAIN", "INTRODUCTION", "VISUALIZEDATA", "VISUALIZEMYDATA", "CUSTOMERSERVICE", "FOOTER"];
+  const containerRef = useRef(null)
+  const sections = ["MAIN", "INTRODUCTION", "VISUALIZE EXAMPLE DATA", "VISUALIZE MYDATA", "CUSTOMER SERVICE", "FOOTER"];
   const resultRef = useRef([]);
   const history = useHistory()
 
@@ -27,6 +27,7 @@ export default function Home(parentProps) {
     toSlide(parentProps?.parentProps?.activeClassIndex)
 
     if ((width > 1025 && height > 800)) {
+      
       var body = document.getElementsByTagName('body')[0]
       if (body) {
         body?.classList?.add('no-overflow')
@@ -38,6 +39,17 @@ export default function Home(parentProps) {
     }
 
   }, []);
+
+
+  resultRef.current = [...Array(5).keys()].map(
+    (_, i) => resultRef.current[i] ?? createRef()
+  );
+
+  useEffect(() => {
+    resultRef?.current[parentProps?.parentProps?.activeClassIndex]?.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [parentProps?.parentProps?.activeClassIndex]);
 
   const toSlide = (num) => {
     swiperRef?.current?.swiper?.slideTo(num);
@@ -68,6 +80,36 @@ export default function Home(parentProps) {
   };
 
   useEffect(() => {
+    const handleIntersection = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          parentProps?.parentProps?.setMainPageInSmallScreen(parseInt(entry.target.id))
+          if (entry.target.id === '0') {
+            history.push("/")
+          }
+        }
+      });
+    };
+    const options = {
+      root: containerRef.current,
+      rootMargin: '0px',
+      threshold: 0.5,
+    };
+    const observer = new IntersectionObserver(handleIntersection, options);
+
+    resultRef.current.forEach((ref) => {
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [parentProps?.parentProps?.mainPageInSmallScreen]);
+
+  useEffect(() => {
+
     const handleSlideChange = () => {
       if (swiperRef.current && swiperRef.current.swiper) {
         const activeSlide = swiperRef.current.swiper.activeIndex;
@@ -150,7 +192,7 @@ export default function Home(parentProps) {
             className=" h-screen ">
 
             <SwiperSlide id="home" className="section section01">
-              <Introduction height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} setActiveClassIndex= {(data) => parentProps?.parentProps?.setActiveClassIndex(data)}/>
+              <Introduction height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} setActiveClassIndex={(data) => parentProps?.parentProps?.setActiveClassIndex(data)} lan={parentProps?.parentProps?.lan} />
             </SwiperSlide>
 
             <SwiperSlide id="introduction" className="section section04">
@@ -178,66 +220,20 @@ export default function Home(parentProps) {
       {
         (width <= 1025 || height <= 800) &&
         <>
-
-          <div className=" section01" style={{ marginBottom: '50px', borderBottom: '1px solid', paddingBottom: '100px' }} id="introduce" ref={resultRef?.current[0]}>
-            <Introduction height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
+          <div className=" section01" style={{ }} id="0" ref={resultRef?.current[0]}>
+            <Introduction height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} lan={parentProps?.parentProps?.lan} setActiveClassIndex={(data) => parentProps?.parentProps?.setActiveClassIndex(data)}/>
           </div>
-
-          <div className=" section04" style={{ marginBottom: '50px', borderBottom: '1px solid', paddingBottom: '100px' }} id="visualization" ref={resultRef?.current[1]}>
-            <div className="contentsTitle">
-              <h3>
-                <font>
-                  <font>Intro</font>
-                  <span className="colorSecondary">
-                    <font >duction</font>
-                  </span>
-                </font>
-              </h3>
-            </div>
+          <div className=" section04" style={{ paddingTop:'20vh' }} id="1" ref={resultRef?.current[1]}>
             <SiteIntro height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} /> </div>
-
-          <div className=" section02" style={{ marginBottom: '50px', borderBottom: '1px solid', paddingBottom: '100px' }} ref={resultRef?.current[2]}>
-            <div className="contentsTitle">
-              <h3>
-                <font>
-                  <font>Visualize </font>
-                  <span className="colorSecondary">
-                    <font >Example Data</font>
-                  </span>
-                </font>
-              </h3>
-            </div>
+          <div className=" section02" style={{ paddingTop:'20vh'}} ref={resultRef?.current[2]} id="2">
             <SingleDataVisualization height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} /> </div>
-
-          <div className=" section03" style={{ marginBottom: '50px', borderBottom: '1px solid', paddingBottom: '100px' }} ref={resultRef?.current[3]}>
-            <div className="contentsTitle">
-              <h3>
-                <font>
-                  <font>Visualize</font>
-                  <span className="colorSecondary">
-                    <font >My Data</font>
-                  </span>
-                </font>
-              </h3>
-            </div>
+          <div className="section section03" style={{ paddingTop:'20vh'}} ref={resultRef?.current[3]} id="3">
             <VisualizeMyData />
           </div>
-
-          <div className=" section04" style={{ marginBottom: '50px', borderBottom: '1px solid', paddingBottom: '100px' }} ref={resultRef?.current[4]}>
-            <div className="contentsTitle">
-              <h3>
-                <font>
-                  <font>Customer</font>
-                  <span className="colorSecondary">
-                    <font >Service</font>
-                  </span>
-                </font>
-              </h3>
-            </div>
-            <Notice /> </div>
+          <div className="section04" style={{ paddingTop:'20vh'}} ref={resultRef?.current[4]} id="4">
+            <Notice />
+          </div>
         </>
-
-
       }
     </>
   );

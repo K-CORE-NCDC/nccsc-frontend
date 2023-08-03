@@ -1,4 +1,4 @@
-import { CogIcon, FilterIcon } from "@heroicons/react/outline";
+import { CogIcon, FilterIcon, UserCircleIcon } from "@heroicons/react/outline";
 import React, {
   Fragment,
   useCallback,
@@ -27,6 +27,7 @@ import GeneSet from "../Components/MainComponents/GeneSet";
 import SurvivalFilterComponent from "../Components/MainComponents/SurvivalFilterComponent";
 import VolcanoFusionFilterComponent from "../Components/MainComponents/VolcanoFusionFilterComponent";
 import ArrowRight from '../../../assets/images/icon-arrow-right.svg';
+import sample_img from '../../../assets/images/sample.webp'
 
 
 export default function DataVisualization() {
@@ -405,7 +406,7 @@ export default function DataVisualization() {
     '/visualise-multidata/':
       [
         { id: 'Home', defaultMessage: 'Home', to: '/' },
-        { id: 'VisualiseMyData', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
+        { id: 'MyDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
         { id: 'MultiDataVisualization', defaultMessage: 'Multi Data Visualization', to: project_id ? `/visualise-multidata/home/${project_id}` : `/visualise-multidata/home/` },
         { id: tab !== 'home' ? tab : 'Null', defaultMessage: tab !== 'home' ? tab : 'Null', to: project_id ? `/visualise-multidata/${tabName}/${project_id}` : `/visualise-multidata/${tabName}` }
       ]
@@ -437,7 +438,7 @@ export default function DataVisualization() {
             <font>
               <font ><FormattedMessage id="MultiData" defaultMessage="MultiData" /> </font>
               <span className="colorSecondary">
-                <font ><FormattedMessage id="Visualization" defaultMessage="Visualization" /></font>
+                <font ><FormattedMessage id="visualization" defaultMessage="Visualization" /></font>
               </span>
             </font>
           </h3>
@@ -459,9 +460,9 @@ export default function DataVisualization() {
                           <div className="w-full">
                             <Popover.Button className={'selectBox'} onClick={() => (setFilterPopoverOpen(!isFilterPopoverOpen))}>
                               <div className="GeneSetgeneSetButton">
-                                <div className="flex-1">Clinical info. Re-filtering</div>
+                                <div className="flex-1"><FormattedMessage id="ClinicalInfoReFiltering" defaultMessage="Clinical info. Re-filtering" /></div>
                                 <div className="w-20">
-                                  <CogIcon className="filter-icon" />
+                                  <UserCircleIcon className="filter-icon" />
                                 </div>
                               </div>
                             </Popover.Button>
@@ -503,7 +504,7 @@ export default function DataVisualization() {
                             <Popover.Button className={'selectBox'}
                               onClick={() => (setSurvivalFilterPopoverOpen(!isSurvivalFilterPopoverOpen))}>
                               <div className="GeneSetgeneSetButton">
-                                <div className="flex-1">Filter</div>
+                                <div className="flex-1"><FormattedMessage id="Filter" defaultMessage="Filter" /></div>
                                 <div className="w-20">
                                   <CogIcon className="filter-icon" />
                                 </div>
@@ -544,9 +545,9 @@ export default function DataVisualization() {
                             <Popover.Button className={'selectBox'}
                               onClick={() => (setVolFusFilterPopoverOpen(!isVolFusFilterPopoverOpen))}>
                               <div className="GeneSetgeneSetButton">
-                                <div className="flex-1">Gene set Re-filtering</div>
+                                <div className="flex-1"><FormattedMessage id="ClinicalInfoReFiltering" defaultMessage="Clinical info. Re-filtering" /></div>
                                 <div className="w-20">
-                                  <CogIcon className="filter-icon" />
+                                  <UserCircleIcon className="filter-icon" />
                                 </div>
                               </div>
                             </Popover.Button>
@@ -578,9 +579,9 @@ export default function DataVisualization() {
                         <div className=''>
                           <Popover.Button className={'selectBox'} onClick={() => (setIsGeneSetPopoverOpen(!isGeneSetPopoverOpen))}>
                             <div className="GeneSetgeneSetButton">
-                              <div className="flex-1">Gene set Re-filtering</div>
-                              <div className="w-20">
-                                <FilterIcon className="filter-icon" />
+                              <div className="flex-1"><FormattedMessage id="GeneSetRe-filtering" defaultMessage="Gene set Re-filtering" /> </div>
+                              <div className="w-20" style={{ backgroundColor: 'white' }}>
+                                <span className="filter-icon"><img src={sample_img} alt="img" /></span>
                               </div>
                             </div>
                           </Popover.Button>
@@ -629,7 +630,7 @@ export default function DataVisualization() {
             </section>
             {
               gridData && !tabName &&
-              <div className='mainContentsBox' style={{ marginTop: '50px' }}>
+              <div className='mainContentsBox' style={{ marginTop: '50px' }}>x
                 <div className="galleryList">
                   <ul className={`justify-content-${Object.keys(gridData).length > 2 ? 'start' : 'center'}`}>
                     {gridData.map((item, index) => {
@@ -638,13 +639,29 @@ export default function DataVisualization() {
                           <div className="thumb">
                             <img src={item.image} alt="img" />
                             <div className="hvBox">
-                              <span className="vizButtons">
+                              <div className="hvBox_links">
                                 <Link to={item.link}>
+                                  <div className="textdiv">
+                                    <span><FormattedMessage id="DownloadManual" defaultMessage="Download Manual" /></span>
+                                    <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }} >
+                                      download
+                                    </span>
+                                  </div>
+                                </Link>
+                                <Link to={item.link}>
+                                  <div className="textdiv">
+                                    <span><FormattedMessage id="RunAnalysis" defaultMessage="Run Analysis" /></span>
+                                    <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
+                                      arrow_right_alt
+                                    </span>
+                                  </div>
+                                </Link>
+                                {/* <Link to={item.link}>
                                   <span className="material-icons" style={{ fontSize: '50px' }}>
                                     play_circle
                                   </span>
-                                </Link>
-                              </span>
+                                </Link> */}
+                              </div>
                             </div>
                           </div>
 
@@ -672,11 +689,15 @@ export default function DataVisualization() {
                 <div className="">{chart["viz"]}</div>
               )}
               {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div style={{ marginTop: "50px", marginRight: "50px" }}>
-                <button className="btn btnPrimary" style={{ float: "right", margin: "10px 0px 10px 0px" }} onClick={() => (history.push(`/visualise-multidata/home/${project_id}`))}>Back</button>
+                <button className="btn btnPrimary" style={{ float: "right", margin: "10px 0px 10px 0px" }} onClick={() => (history.push(`/visualise-multidata/home/${project_id}`))}>
+                  <FormattedMessage id="Back" defaultMessage="Back" />
+                </button>
               </div>}
 
               {tabName && tabName !== 'home' && !boolChartState && (
-                <div className="MultiDataVizErrorMessage">Please select Genes</div>
+                <div className="MultiDataVizErrorMessage">
+                  <FormattedMessage id="PleaseSelectGenes" defaultMessage="Please Select Genes" />
+                </div>
               )}
             </div>
           </section>

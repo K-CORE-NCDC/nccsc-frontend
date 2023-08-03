@@ -64,22 +64,22 @@ function QAList({ new_post }) {
 
   const columns = [
     {
-      name: order,
+      name: <FormattedMessage id="Order" defaultMessage="Order" />,
       selector: (row, index) => index + 1,
       sortable: true
     },
     {
-      name: title,
+      name: <FormattedMessage id="Title" defaultMessage="Title" />,
       selector: row => row.title,
       sortable: true
     },
     {
-      name: writer,
+      name: <FormattedMessage id="Writer" defaultMessage="Writer" />,
       selector: row => row.writer,
       sortable: true
     },
     {
-      name: Dateofissue,
+      name: <FormattedMessage id="DateOfIssue" defaultMessage="Date Of Issue" />,
       selector: row => row.created_on,
       sortable: true
     }
@@ -119,6 +119,12 @@ function QAList({ new_post }) {
             customStyles={customStyles}
             progressPending={loading}
             pagination
+            paginationComponentOptions={{
+              rowsPerPageText:
+                <FormattedMessage id="RowsPerPage" defaultMessage="Rows Per Page">
+                  {msg => msg}
+                </FormattedMessage>
+            }}
             paginationServer
             paginationTotalRows={totalRows}
             onChangeRowsPerPage={handlePerRowsChange}
@@ -148,7 +154,7 @@ function QaDetail({ slug_id }) {
   }, [])
 
   return (
-    <div className="" style={{color:'black' , border:'1px solid black'}}>
+    <div className="" style={{ color: 'black', border: '1px solid black' }}>
       "sushma"
       {notice_data && <div className="">
         {/* <div className="col-span-4">

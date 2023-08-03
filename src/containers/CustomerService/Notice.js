@@ -9,7 +9,7 @@ export const Notice = () => {
   return (
     <div className="auto">
       <div className="mainContentsBox">
-        <div className="tab" style={{ height: '20vh', display: 'flex', alignItems: 'end' }}>
+        <div className="tab visualizeExampleData">
           <div className="tab_main" >
             <ul>
               <li className={activeTab === '1' ? 'on' : ''}>

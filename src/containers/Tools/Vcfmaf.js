@@ -79,7 +79,7 @@ function Vcfmaf() {
   const [isError, setIsError] = useState(false)
   const dispatch = useDispatch();
   const vcf2mafResponse = useSelector((data) => data.homeReducer.vcfmaf);
-  const title = { id: "VCFMAF", defaultMessage: "VCFMAF" }
+  const title = { id: "VCFMAF", defaultMessage: "VCF To MAF" }
 
   const setShowModalFunction = (stateData) => {
     setShowModal(stateData)
@@ -155,7 +155,7 @@ function Vcfmaf() {
     '/vcfmaf/': [
       { id: 'Home', defaultMessage: 'Home', to: '/' },
       { id: 'Tools', defaultMessage: 'Tools', to: '/tools/' },
-      { id: 'VCFMAF', defaultMessage: 'VCFMAF', to: '/vcfmaf/' }
+      { id: 'VCFMAF', defaultMessage: 'VCF To MAF', to: '/vcfmaf/' }
     ],
   };
 
@@ -170,8 +170,8 @@ function Vcfmaf() {
         <div className="contentsTitle">
           <div className="auto">
             <h3 className="colorSecondary">
-              <span className="colorPrimary">VCF</span>
-              MAF
+              <span className="colorPrimary">VCF T</span>
+              o MAF
             </h3>
           </div>
         </div>
@@ -199,7 +199,7 @@ function Vcfmaf() {
                             </dt>
                             <dd>
                               <div className="inputText">
-                                <input type="file" className="w100" accept=".vcf, " id="VcfMafFile" onChange={(e) => VcfMafTool(e)} placeholder="Please Select the File" autoComplete="off" style={{ padding: "10px" }} />
+                                <input type="file" className="w100" accept=".vcf, " id="VcfMafFile" onChange={(e) => VcfMafTool(e)}  autoComplete="off" style={{ padding: "10px" }} />
                               </div>
                             </dd>
                           </dl>
@@ -212,7 +212,8 @@ function Vcfmaf() {
                       </div>
                     </div>
                     <span style={{ fontSize: "1rem", lineHeight: "1.5rem", justifyContent: "center" }} className='Flex'>
-                      Note: only .vcf file accepted and files which are generated using genome version hg38
+                     
+                      <FormattedMessage id="VcfToMafNote" defaultMessage=" Note: only .vcf file accepted and files which are generated using genome version hg38" />
                     </span>
                   </div>
                 </section>

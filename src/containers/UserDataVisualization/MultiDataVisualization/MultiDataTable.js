@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
-
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import LoaderCmp from "../../Common/Loader";
@@ -270,9 +269,9 @@ function MultiDataTable({ updateComponentNumber }) {
         <div className="contentsTitle">
           <h3>
             <font>
-              <font >Multi Data </font>
+              <font ><FormattedMessage id="MultiData" defaultMessage="Multi Data" /> </font>
               <span className="colorSecondary">
-                <font >Upload</font>
+                <font ><FormattedMessage id="Upload" defaultMessage="Upload" /> </font>
               </span>
             </font>
           </h3>
