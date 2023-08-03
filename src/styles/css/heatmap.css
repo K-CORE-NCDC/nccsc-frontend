@@ -279,6 +279,7 @@ input[type=range].custom-slider::-webkit-slider-runnable-track  {
 
   .GeneSelectionBox {
     width: 50%;
+    justify-content: end;
   }
   .Spectrumbtn  {
    padding-top: 10px;

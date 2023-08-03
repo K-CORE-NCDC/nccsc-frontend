@@ -28,7 +28,7 @@ const LoginComponent = () => {
       [e.target.name]: e.target.value,
     }));
   };
-  
+
   const loginSuccess = () => {
     // console.log('windows',windows);
     // console.log('histpry',history);
@@ -42,9 +42,9 @@ const LoginComponent = () => {
       allowOutsideClick: false
     }).then((result) => {
       if (result.value) {
-        if(history?.location?.pathname === '/login/'){
+        if (history?.location?.pathname === '/login/') {
           history.push('/')
-        }else{
+        } else {
           history.goBack()
         }
       }
@@ -67,17 +67,17 @@ const LoginComponent = () => {
         </p>,
       ]);
     }
-    else{
+    else {
       setErrorMessage([
         <p key="error" className="ErrorText">
-        {status}
-      </p>,
-      <h1 className="ErrorText" key="CountToEnterCredentials">
-        {" "}
-        <FormattedMessage id="login5try" defaultMessage="If an error in consecutive password input (5 times) occurs, the account is locked." />
-      </h1>,
-    ]);
-  }
+          {status}
+        </p>,
+        <h1 className="ErrorText" key="CountToEnterCredentials">
+          {" "}
+          <FormattedMessage id="login5try" defaultMessage="If an error in consecutive password input (5 times) occurs, the account is locked." />
+        </h1>,
+      ]);
+    }
   };
 
 
@@ -156,11 +156,12 @@ const LoginComponent = () => {
                 </span>
                 <font style={{ verticalAlign: 'inherit' }}>
                   <span className="colorPrimary">
-                    <font style={{ verticalAlign: 'inherit' }}><FormattedMessage id="Welcome" defaultMessage="Welcome"/></font>
+                    <font style={{ verticalAlign: 'inherit' }}><FormattedMessage id="LoginWelCome" defaultMessage="Welcome" /></font>
                   </span>
-                  <font style={{ verticalAlign: 'inherit' }}> <FormattedMessage id="to" defaultMessage="to"/> </font>
+
+                  <font style={{ verticalAlign: 'inherit' }}> <FormattedMessage id="LoginTo" defaultMessage="to" /> </font>
                   <span className="colorSecondary">
-                    <font style={{ verticalAlign: 'inherit' }}>NCDC .</font>
+                    <font style={{ verticalAlign: 'inherit' }}><FormattedMessage id="LoginK-CoreProtal" defaultMessage="K-Core Portal" /></font>
                   </span>
                 </font>
                 <span className="colorPrimary">
@@ -170,14 +171,14 @@ const LoginComponent = () => {
               <p className="sub">
                 <font style={{ verticalAlign: 'inherit' }}>
                   <font style={{ verticalAlign: 'inherit' }}>
-                    <FormattedMessage id="WelcomeNcdc" defaultMessage="Welcome to the National Cancer Data Center website."/>
+                    <FormattedMessage id="WelcomeNcdc" defaultMessage="Welcome to K-Cancer Omics Research Portal." />
                     {' '}
                   </font>
                 </font>
                 <br />
                 <font style={{ verticalAlign: 'inherit' }}>
                   <font style={{ verticalAlign: 'inherit' }}>
-                  <FormattedMessage id="loginmessage" defaultMessage="Please enter the information below to log in."/>
+                    <FormattedMessage id="loginmessage" defaultMessage="Please enter the information below to log in." />
                   </font>
                 </font>
               </p>
@@ -193,12 +194,20 @@ const LoginComponent = () => {
                 )}
                 {/* Input Username */}
                 <div className="inputText">
-                  <input className={isError == true ? 'ErrorInput' : ""} type="text" value={userFormData.userId} onChange={updateUserNamePassword} id="userId" name="userId" placeholder="Please enter your ID." autoComplete="off" />
+                  <FormattedMessage id="PleaseEnterYourID" defaultMessage="Please enter your ID.">
+                    {placeholder =>
+                      <input className={isError === true ? 'ErrorInput' : ""} type="text" value={userFormData.userId} onChange={updateUserNamePassword} id="userId" name="userId" placeholder={placeholder} autoComplete="off" />
+                    }
+                  </FormattedMessage>
                 </div>
 
                 {/* Input Password */}
                 <div className="inputText">
-                  <input className={isError ? 'ErrorInput' : ""} type="password" id="password" name="password" placeholder="Please enter a password." value={userFormData.password} onChange={updateUserNamePassword} />
+                  <FormattedMessage id="PleaseEnterAPassword" defaultMessage="Please enter a password">
+                    {placeholder =>
+                      <input className={isError ? 'ErrorInput' : ""} type="password" id="password" name="password" placeholder={placeholder} value={userFormData.password} onChange={updateUserNamePassword} />
+                    }
+                  </FormattedMessage>
                 </div>
 
 
@@ -251,7 +260,7 @@ const LoginComponent = () => {
 
 
 
-              
+
             </div>
           </div>
         </div>

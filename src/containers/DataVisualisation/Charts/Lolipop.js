@@ -43,11 +43,13 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   useEffect(() => {
     if ('userProjectsDataTable' in tabList) {
       let _data = tabList.userProjectsDataTable
+      console.log('_data', _data)
       if (_data?.viz_type === 'single') {
         if (_data["phospho"] !== null) {
           setActiveTab('2')
           setTableType('phospho')
         } else if (_data["dna_mutation"]) {
+          setTableType('Mutation')
           setActiveTab('1')
         }
       } else {
@@ -129,7 +131,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   }, [inputData])
 
   useEffect(() => {
-    console.log('inputState' , inputState)
+    console.log('inputState', inputState)
     if (inputState && 'genes' in inputState) {
       let g = inputState['genes']
       loadGenesDropdown(g)
@@ -169,7 +171,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
     }
   }, [inputState])
 
- 
+
 
   const generateColor = () => {
     var letters = "0123456789ABCDEF";
@@ -514,30 +516,51 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
             <Fragment>
               <div className="tabs_box">
                 <div className="tab">
-                  {btnClickNote ? <> <p style={{color:'red'}}>No {activeTab !== '1' ? 'mutation' : 'phospho'} file</p> </> : ''}
+                  {btnClickNote ? <> <p style={{ color: 'red' }}>No {activeTab !== '1' ? 'mutation' : 'phospho'} file</p> </> : ''}
                   <div className="tab_main">
                     <ul>
-                   
-                      <li className={activeTab === '1' ? 'on' : ''}> <button  onClick={(e) => {
-                        if (alltabList['dna_mutation'] === null) {
-                          setBtnClickNote(true)
-                        } else {
-                          changeType(e, 'Mutation')
-                          setActiveTab('1')
-                          setBtnClickNote(false)
-                        }
-                      }} name='type' >  <FormattedMessage id="Mutation" defaultMessage='Mutation' /> </button></li>
-                     
-                      <li className={activeTab === '2' ? 'on' : ''}> <button id='Phospho'
-                        onClick={(e) => {
-                          if (alltabList['phospho'] === null) {
+                      {(project_id && alltabList['dna_mutation']) &&
+                        <li className={activeTab === '1' ? 'on' : ''}> <button onClick={(e) => {
+                          if (alltabList['dna_mutation'] === null) {
                             setBtnClickNote(true)
                           } else {
-                            changeType(e, 'Phospho')
-                            setActiveTab('2')
+                            changeType(e, 'Mutation')
+                            setActiveTab('1')
                             setBtnClickNote(false)
                           }
-                        }} name='type' >  <FormattedMessage id="Phospho" defaultMessage='Phospho' /> </button></li>
+                        }} name='type' >  <FormattedMessage id="Mutation" defaultMessage='Mutation' /> </button></li>}
+                      {project_id === undefined &&
+                        <li className={activeTab === '1' ? 'on' : ''}> <button onClick={(e) => {
+                          if (alltabList['dna_mutation'] === null) {
+                            setBtnClickNote(true)
+                          } else {
+                            changeType(e, 'Mutation')
+                            setActiveTab('1')
+                            setBtnClickNote(false)
+                          }
+                        }} name='type' >  <FormattedMessage id="Mutation" defaultMessage='Mutation' /> </button></li>}
+                      {(project_id && alltabList['phospho']) &&
+                        <li className={activeTab === '2' ? 'on' : ''}> <button id='Phospho'
+                          onClick={(e) => {
+                            if (alltabList['phospho'] === null) {
+                              setBtnClickNote(true)
+                            } else {
+                              changeType(e, 'Phospho')
+                              setActiveTab('2')
+                              setBtnClickNote(false)
+                            }
+                          }} name='type' >  <FormattedMessage id="Phospho" defaultMessage='Phospho' /> </button></li>}
+                      {project_id === undefined &&
+                        <li className={activeTab === '2' ? 'on' : ''}> <button id='Phospho'
+                          onClick={(e) => {
+                            if (alltabList['phospho'] === null) {
+                              setBtnClickNote(true)
+                            } else {
+                              changeType(e, 'Phospho')
+                              setActiveTab('2')
+                              setBtnClickNote(false)
+                            }
+                          }} name='type' >  <FormattedMessage id="Phospho" defaultMessage='Phospho' /> </button></li>}
                     </ul>
                   </div>
                 </div>
@@ -594,9 +617,9 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                           },
                           pagination: {
                             style: {
-                                gap:"10px"
+                              gap: "10px"
                             }
-                          }      
+                          }
                         }}
                       />
                     </div>}
@@ -608,7 +631,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
           }
           {/* {noGeneData && <p><FormattedMessage id="PleaseSelecttheGeneSetData" defaultMessage="Please Select the Gene Set Data" /></p>} */}
 
-        </div>
+        </div >
     }
 
     </>

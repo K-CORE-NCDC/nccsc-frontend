@@ -82,7 +82,8 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
         setTableType('rna')
       }
       setAllTabList(tabList.userProjectsDataTable)
-    }else{
+    } else {
+      console.log()
       setActiveTab('1')
       setTableType('rna')
     }
@@ -323,8 +324,8 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
 
 
       // }, (1000));
-    }else{
-      if(heatmapSummaryStatusCode?.status === 204 && (heatmapJson?.data?.length === 0 || heatmapJson?.length === 0) ){
+    } else {
+      if (heatmapSummaryStatusCode?.status === 204 && (heatmapJson?.data?.length === 0 || heatmapJson?.length === 0)) {
         setData("")
         setNoData(true)
         setLoader(false)
@@ -687,7 +688,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
 
   useEffect(() => {
     setLoader(false)
-  }, [configVis , noData])
+  }, [configVis, noData])
 
 
 
@@ -740,47 +741,92 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
                 {btnClickNote !== '' && <> <p style={{ color: 'red' }}>No {alltabList[btnClickNote] === null && btnClickNote} file</p> </>}
                 <div className="tab_main">
                   <ul>
+                    {project_id === undefined &&
+                      <li className={activeTab === '1' ? 'on' : ''}> <button onClick={e => {
+                        if (alltabList['rna'] === null) {
+                          setBtnClickNote('rna')
+                        } else {
+                          changeType(e, 'rna')
+                          setActiveTab('1')
+                          setBtnClickNote('')
+                        }
+                      }} name='type' > RNA </button></li>}
+                    {(project_id && alltabList['rna']) &&
+                      <li className={activeTab === '1' ? 'on' : ''}> <button onClick={e => {
+                        if (alltabList['rna'] === null) {
+                          setBtnClickNote('rna')
+                        } else {
+                          changeType(e, 'rna')
+                          setActiveTab('1')
+                          setBtnClickNote('')
+                        }
+                      }} name='type' > RNA </button></li>}
+                    {project_id === undefined &&
+                      <li className={activeTab === '2' ? 'on' : ''}> <button onClick={e => {
+                        if (alltabList['methylation'] === null) {
+                          setBtnClickNote('methylation')
+                        } else {
+                          changeType(e, 'methylation')
+                          setActiveTab('2')
+                          setBtnClickNote('')
+                        }
+                      }} name='type' > Methylation </button></li>
+                    }
 
-                    <li className={activeTab === '1' ? 'on' : ''}> <button onClick={e => {
-                      if (alltabList['rna'] === null) {
-                        setBtnClickNote('rna')
-                      } else {
-                        changeType(e, 'rna')
-                        setActiveTab('1')
-                        setBtnClickNote('')
-                      }
-                    }} name='type' > RNA </button></li>
+                    {(project_id && alltabList['methylation']) &&
+                      <li className={activeTab === '2' ? 'on' : ''}> <button onClick={e => {
+                        if (alltabList['methylation'] === null) {
+                          setBtnClickNote('methylation')
+                        } else {
+                          changeType(e, 'methylation')
+                          setActiveTab('2')
+                          setBtnClickNote('')
+                        }
+                      }} name='type' > Methylation </button></li>}
 
-                    <li className={activeTab === '2' ? 'on' : ''}> <button onClick={e => {
-                      if (alltabList['methylation'] === null) {
-                        setBtnClickNote('methylation')
-                      } else {
-                        changeType(e, 'methylation')
-                        setActiveTab('2')
-                        setBtnClickNote('')
-                      }
-                    }} name='type' > Methylation </button></li>
+                    {project_id === undefined &&
+                      <li className={activeTab === '3' ? 'on' : ''}> <button onClick={e => {
+                        if (alltabList['proteome'] === null) {
+                          setBtnClickNote('proteome')
+                        } else {
+                          changeType(e, 'proteome')
+                          setActiveTab('3')
+                          setBtnClickNote('')
+                        }
+                      }} name='type' > Global Proteome </button></li>}
 
+                    {(project_id && alltabList['proteome']) &&
+                      <li className={activeTab === '3' ? 'on' : ''}> <button onClick={e => {
+                        if (alltabList['proteome'] === null) {
+                          setBtnClickNote('proteome')
+                        } else {
+                          changeType(e, 'proteome')
+                          setActiveTab('3')
+                          setBtnClickNote('')
+                        }
+                      }} name='type' > Global Proteome </button></li>}
 
-                    <li className={activeTab === '3' ? 'on' : ''}> <button onClick={e => {
-                      if (alltabList['proteome'] === null) {
-                        setBtnClickNote('proteome')
-                      } else {
-                        changeType(e, 'proteome')
-                        setActiveTab('3')
-                        setBtnClickNote('')
-                      }
-                    }} name='type' > Global Proteome </button></li>
+                    {project_id === undefined &&
+                      <li className={activeTab === '4' ? 'on' : ''}> <button onClick={e => {
+                        if (alltabList['phospho'] === null) {
+                          setBtnClickNote('phospho')
+                        } else {
+                          changeType(e, 'phospho')
+                          setActiveTab('4')
+                          setBtnClickNote('')
+                        }
+                      }} name='type' > Phospho </button></li>}
 
-                    <li className={activeTab === '4' ? 'on' : ''}> <button onClick={e => {
-                      if (alltabList['phospho'] === null) {
-                        setBtnClickNote('phospho')
-                      } else {
-                        changeType(e, 'phospho')
-                        setActiveTab('4')
-                        setBtnClickNote('')
-                      }
-                    }} name='type' > Phospho </button></li>
+                    {(project_id && alltabList['phospho']) &&
+                      <li className={activeTab === '4' ? 'on' : ''}> <button onClick={e => {
+                        if (alltabList['phospho'] === null) {
+                          setBtnClickNote('phospho')
+                        } else {
+                          changeType(e, 'phospho')
+                          setActiveTab('4')
+                          setBtnClickNote('')
+                        }
+                      }} name='type' > Phospho </button></li>}
                   </ul>
                 </div>
               </div>
@@ -789,7 +835,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
 
             <div className='GeneSelectionBox'>
 
-             { 'viz_type' in alltabList && alltabList['viz_type'] !== 'single' && <div className='selectionBox'>
+              {'viz_type' in alltabList && alltabList['viz_type'] !== 'single' && <div className='selectionBox'>
                 <label><FormattedMessage id="Clinical_Filters_heatmap" defaultMessage='Clinical Attribute' />:</label>
                 <Multiselect
                   style={style}

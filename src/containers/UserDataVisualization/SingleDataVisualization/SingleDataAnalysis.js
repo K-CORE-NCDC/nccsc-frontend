@@ -26,6 +26,8 @@ import ExampleImage from '../../../assets/images/mainSection05-img02.jpg';
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import ArrowRight from '../../../assets/images/icon-arrow-right.svg';
 import { FormattedMessage } from "react-intl";
+import sample_img from '../../../assets/images/sample.webp'
+import { userdataVisualization } from "../../../actions/Constants";
 
 export default function DataVisualization({ parentProps }) {
   const history = useHistory();
@@ -73,6 +75,17 @@ export default function DataVisualization({ parentProps }) {
     }));
 
   };
+
+
+  useEffect(() => {
+    return () => {
+      dispatch({
+        type: userdataVisualization.USER_DATA_PROJECT_TABLE,
+        payload: {},
+      });
+    }
+  }, [])
+
 
   const LoadChart = (w, type) => {
     switch (type) {
@@ -252,11 +265,8 @@ export default function DataVisualization({ parentProps }) {
 
 
   useEffect(() => {
-    if (project_id !== undefined) {
+    if (project_id) {
       let projectAvailableSteps = undefined;
-      // if(userProjectDetails && 'key' in  userProjectDetails &&  userProjectDetails.key === 'NotFound'){
-      //   history.push('/login')
-      // }
       if (userProjectDetails && 'available_steps' in userProjectDetails) {
         projectAvailableSteps = userProjectDetails.available_steps;
       }
@@ -286,30 +296,14 @@ export default function DataVisualization({ parentProps }) {
 
   }, [project_id, userProjectDetails, project_id_status]);
 
-  // useEffect(() => {
-  //   if (project_id) {
-  //     dispatch(getUserDefinedFilter({
-  //       "project_id": project_id
-  //     }));
-  //     // dispatch(samplesCount("POST", {}));
-  //     dispatch(getBreastKeys(state));
-
-  //   }
-  // }, [project_id])
 
 
   useEffect(() => {
-
     if (project_id !== undefined) {
       if (state.genes.length > 0) {
         dispatch(samplesCount("POST", { project_id: project_id }));
         dispatch(getBreastKeys(state));
         setBoolChartState(false);
-        // let chartx = LoadChart(width, tabName);
-        // setCharts((prevState) => ({
-        //   ...prevState,
-        //   viz: chartx,
-        // }));  
       }
     } else {
       if (state.genes.length > 0) {
@@ -363,9 +357,9 @@ export default function DataVisualization({ parentProps }) {
         <div className="contentsTitle">
           <h3>
             <font>
-              <font >{!exampleData ? <FormattedMessage id="SingleData" defaultMessage="Single Data" /> : <FormattedMessage id="VisualizeExample" defaultMessage="Visualize Example" />} </font>
+              <font > <FormattedMessage id="SingleData" defaultMessage="Single Data" />  </font>
               <span className="colorSecondary">
-                <font >{!exampleData ?  <FormattedMessage id="Visualization" defaultMessage="Visualization" /> : <FormattedMessage id="Data" defaultMessage="Data" />}</font>
+                <font > <FormattedMessage id="visualization" defaultMessage="Visualization" /></font>
               </span>
             </font>
           </h3>
@@ -388,16 +382,16 @@ export default function DataVisualization({ parentProps }) {
                                   {!exampleData &&
                                     <>
                                       <Link to={item.link}>
-                                        <div>
-                                          <span>Download</span>
+                                        <div className="textdiv">
+                                          <span><FormattedMessage id="DownloadManual" defaultMessage="Download Manual" /></span>
                                           <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }} >
                                             download
                                           </span>
                                         </div>
                                       </Link>
                                       <Link to={item.link}>
-                                        <div>
-                                          <span>Run Analysis</span>
+                                        <div className="textdiv">
+                                          <span><FormattedMessage id="RunAnalysis" defaultMessage="Run Analysis" /></span>
                                           <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
                                             arrow_right_alt
                                           </span>
@@ -408,8 +402,8 @@ export default function DataVisualization({ parentProps }) {
 
                                   {
                                     exampleData && <Link to={item.viewLink}>
-                                      <div>
-                                        <span>Example</span>
+                                      <div className="textdiv">
+                                        <span><FormattedMessage id="Example" defaultMessage="Example" /></span>
                                         <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
                                           arrow_right_alt
                                         </span>
@@ -452,9 +446,9 @@ export default function DataVisualization({ parentProps }) {
                               <div className=''>
                                 <Popover.Button className={'selectBox'} onClick={() => (setIsGeneSetPopoverOpen(!isGeneSetPopoverOpen))}>
                                   <div className="GeneSetgeneSetButton">
-                                    <div className="flex-1">Gene set Re-filtering</div>
-                                    <div className="w-20">
-                                      <FilterIcon className="filter-icon" />
+                                    <div className="flex-1"><FormattedMessage id="GeneSetRe-filtering" defaultMessage="Gene set Re-filtering" />  </div>
+                                    <div className="w-20" style={{ backgroundColor: 'white' }}>
+                                      <span className="filter-icon"><img src={sample_img} alt="img" /></span>
                                     </div>
                                   </div>
                                 </Popover.Button>
@@ -509,10 +503,18 @@ export default function DataVisualization({ parentProps }) {
                       {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div>{chart["viz"]}</div>
                       }
                       {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div style={{ marginTop: "50px", marginRight: "50px" }}>
-                        <button className="btn btnPrimary" style={{ float: "right", margin: "10px 0px 10px 0px" }} onClick={() => (history.push(`/visualise-singledata/home/${project_id}`))}>Back</button>
+                        <button className="btn btnPrimary" style={{ float: "right", margin: "10px 0px 10px 0px" }} onClick={() => {
+                          if (project_id) {
+                            history.push(`/visualise-singledata/home/`)
+                          } else {
+                            history.push(`/visualise-exampledata/home/`)
+                          }
+                        }}><FormattedMessage id="Back" defaultMessage="Back" /></button>
                       </div>}
                       {tabName && tabName !== 'home' && !boolChartState && (
-                        <div className="p-1 text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">Please select Genes</div>
+                        <div className="p-1 text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">
+                          <FormattedMessage id="PleaseSelectGenes" defaultMessage="Please Select Genes" />
+                        </div>
                       )}
                     </div>
                   </section>

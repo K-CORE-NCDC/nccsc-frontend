@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import footer_img from "../../../assets/images/f_logo.png";
+import { FormattedMessage } from "react-intl";
 
 const FooterComponent = () => {
   const [isFooter, setFooter] = useState(true)
- 
+
   return (
 
     <>
@@ -14,13 +15,13 @@ const FooterComponent = () => {
             <div className="footerMiddle_data Flex" style={{ marginLeft: '3%' }}>
               <Link to="/termsandconditions/">
                 <span >
-                  Member Terms and Conditions
+                  <FormattedMessage id='TermsofService' defaultMessage='Member Terms and Conditions' />
                 </span>
               </Link>
               <p style={{ paddingLeft: '25px' }}> | </p>
               <Link to="/privacypolicy/">
                 <span style={{ paddingLeft: '25px' }}>
-                  Privacy Policy
+                <FormattedMessage id='PrivacyPolicy' defaultMessage='Privacy Policy' />
                 </span>
               </Link>
             </div>

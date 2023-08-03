@@ -7,6 +7,7 @@ import config from '../../config'
 import { Redirect, useParams } from "react-router-dom";
 import { Context } from "../../wrapper";
 import { getFaqData, getFaqPageData } from '../../actions/api_actions'
+import { FormattedMessage } from "react-intl";
 
 function FaqList() {
   const context = useContext(Context);
@@ -149,6 +150,12 @@ function FaqList() {
             customStyles={customStyles}
             progressPending={loading}
             pagination
+            paginationComponentOptions={{
+              rowsPerPageText:
+                <FormattedMessage id="RowsPerPage" defaultMessage="Rows Per Page">
+                  {msg => msg}
+                </FormattedMessage>
+            }}
             paginationServer
             paginationTotalRows={totalRows}
             onChangeRowsPerPage={handlePerRowsChange}

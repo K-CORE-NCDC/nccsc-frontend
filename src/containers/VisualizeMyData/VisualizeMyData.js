@@ -16,7 +16,7 @@ export const VisualizeMyData = () => {
     <>
       {
         (analyzeButton?.singleData === false && analyzeButton?.multiData === false && analyzeButton?.otherTools === false) &&
-        <div className="fullBox mainContentsBox">
+        <div className="fullBox mainContentsBox visualizeMyData">
           <ul>
             <li className="box01">
               <div className="cover">
@@ -26,7 +26,7 @@ export const VisualizeMyData = () => {
                 <div className="icon"></div>
                 <dl>
                   <dt className="h3">
-                    <FormattedMessage id="visualizeMyData_single" defaultMessage='Single Data Visualization' />
+                    <FormattedMessage id="SingleDataVisualization"  defaultMessage='Single Data Visualization' />
                   </dt>
                 </dl>
                 <Link className="btn btnDetail" to="/visualise-singledata/home/">

@@ -380,7 +380,7 @@
 .GeneSetgeneSetButton .w-20 {
   width: 5rem;
   height: 100%;
-  background-color: #ccc;
+  background-color:white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -661,9 +661,11 @@
 .MAuto {
   margin: auto;
 }
-.Margin0313{
-  margin:0.313rem
+
+.Margin0313 {
+  margin: 0.313rem
 }
+
 .MarginTop2 {
   margin-top: 0.5rem;
 }
@@ -859,9 +861,10 @@
 
 
 .MultiDataTableViewDelete {
-  display: grid;
+  /* display: grid; */
   width: 100%;
-  grid-template-columns: 20% 70%;
+  text-align: left;
+  /* grid-template-columns: 20% 70%; */
 }
 
 .CursorPointer {
@@ -2101,12 +2104,14 @@
   padding: 10px;
 }
 
-.ktd:first-child{
- width: 25%;
+.ktd:first-child {
+  width: 25%;
 }
-.kth:first-child{
- width: 25%;
+
+.kth:first-child {
+  width: 25%;
 }
+
 .kth {
   border: 1px solid;
   text-align: center;
@@ -2310,3 +2315,9 @@
   color: #ffffff;
   background-color: #EF4444;
 }
+
+
+.galleryList ul li a:hover .thumb .hvBox .textdiv :hover {
+ font-size: 30px ;
+}
+
