@@ -230,57 +230,56 @@ function ProjectsList() {
       selector: row => row.fusion ? 'O' : '',
       sortable: true
     }
-
   ]
+    const customStyles = {
+        table: {
+            style: {
+                display: "table",
+                width: "100%",
+                tableLayout: "fixed",
+                borderTop: "2px solid #2e2e2e",
+                borderCollapse: "collapse",
+                fontSize: "16px",
+                color: "#8f8f8f",
+                fontWeight: "500",
+                textAlign: "center !important"
+            },
+        },
+        thead: {
+            style: {
+                display: "table-header-group",
+                fontWeight: "500",
+            },
+        },
+        td: {
+            style: {
+                display: "table-cell",
+                verticalAlign: "middle",
+                padding: "20px 16px",
+                position: "relative",
+                width: "90px",
+                color: "#2e2e2e",
+                borderBottom: "1px solid #2e2e2e"
+            },
+        },
+        tr: {
+            style: {
+                display: "table-row",
+                borderBottom: "1px solid #2e2e2e"
+            },
+        },
+        tbody: {
+            style: {
+                display: "table-row-group",
+            },
+        },
+        pagination: {
+            style: {
+                gap: "10px"
+            }
+        }
+    };
 
-  const customStyles = {
-    table: {
-      style: {
-        display: "table",
-        width: "100%",
-        tableLayout: "fixed",
-        borderTop: "2px solid #2e2e2e",
-        borderCollapse: "collapse",
-        fontSize: "16px",
-        color: "#8f8f8f",
-        fontWeight: "500",
-        textAlign: "center !important"
-      },
-    },
-    thead: {
-      style: {
-        display: "table-header-group",
-        fontWeight: "500",
-      },
-    },
-    td: {
-      style: {
-        display: "table-cell",
-        verticalAlign: "middle",
-        padding: "20px 16px",
-        position: "relative",
-        width: "90px",
-        color: "#2e2e2e",
-        borderBottom: "1px solid #2e2e2e"
-      },
-    },
-    tr: {
-      style: {
-        display: "table-row",
-        borderBottom: "1px solid #2e2e2e"
-      },
-    },
-    tbody: {
-      style: {
-        display: "table-row-group",
-      },
-    },
-    pagination: {
-      style: {
-        gap: "10px"
-      }
-    }
-  };
 
   function searchTerm() {
     fetchUsers(1, "POST");

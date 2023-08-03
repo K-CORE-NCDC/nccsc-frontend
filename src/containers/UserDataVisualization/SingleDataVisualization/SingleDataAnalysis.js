@@ -152,6 +152,9 @@ export default function DataVisualization({ parentProps }) {
       } else {
         setBoolChartState(false)
       }
+      if (tabName === 'survival') {
+        setBoolChartState(true);
+      }
 
     }
   }, [chart, tabName]);
@@ -254,7 +257,7 @@ export default function DataVisualization({ parentProps }) {
       }
 
       let gridobj = {
-        title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/singledata-upload/${element}/`, viewLink: `/visualise-exampledata/${element}`,
+        title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/singledata-upload/${element}/`, viewLink: `/visualizesingle-exampledata/${element}`,
         description: 'Provides a visualization analysis service that can be implemented according to the uploaded user data.'
       }
       gridData.push(gridobj)
@@ -305,6 +308,9 @@ export default function DataVisualization({ parentProps }) {
         dispatch(getBreastKeys(state));
         setBoolChartState(false);
       }
+      if (tabName === 'survival') {
+        setBoolChartState(true);
+      }
     } else {
       if (state.genes.length > 0) {
         dispatch(samplesCount("POST", {}));
@@ -314,7 +320,7 @@ export default function DataVisualization({ parentProps }) {
   }, [state]);
 
   useEffect(() => {
-    if (route.pathname.includes('/visualise-exampledata/')) {
+    if (route.pathname.includes('/visualizesingle-exampledata/')) {
       setExampleData(true)
       setTitle({ id: "VisualizeExampleData", defaultMessage: "Visualize Example Data" })
     } else if (route.pathname.includes('/visualise-singledata/')) {
@@ -331,11 +337,11 @@ export default function DataVisualization({ parentProps }) {
         { id: `SingleDataVisualization`, defaultMessage: `Single Data Visualization`, to: project_id ? `/visualise-singledata/home/${project_id}` : `/visualise-singledata/home/` },
         { id: tab !== 'home' ? tab : 'Null', defaultMessage: tab !== 'home' ? tab : 'Null', to: `/visualise-singledata/${tabName}/${project_id}` }
       ],
-    '/visualise-exampledata/':
+    '/visualizesingle-exampledata/':
       [
         { id: 'Home', defaultMessage: 'Home', to: '/' },
         { id: `VisualizeExampleData`, defaultMessage: `Visualize Example Data`, to: `/home/visualizeMyExampleData/` },
-        { id: 'ExampleVisualization', defaultMessage: `Example Visualization`, to: `/visualise-exampledata/home/` },
+        { id: 'ExampleVisualization', defaultMessage: `Example Visualization`, to: `/visualizesingle-exampledata/home/` },
         { id: tab !== 'home' ? tab : 'Null', defaultMessage: tab !== 'home' ? tab : 'Null', to: `/visualise-singledata/${tabName}/` }
       ],
 
@@ -348,8 +354,8 @@ export default function DataVisualization({ parentProps }) {
     <div>
       <HeaderComponent
         title={title}
-        routeName={route.pathname.includes('/visualise-singledata/') ? `/visualise-singledata/` : `/visualise-exampledata/`}
-        breadCrumbs={breadCrumbs[route.pathname.includes('/visualise-singledata/') ? `/visualise-singledata/` : `/visualise-exampledata/`]}
+        routeName={route.pathname.includes('/visualise-singledata/') ? `/visualise-singledata/` : `/visualizesingle-exampledata/`}
+        breadCrumbs={breadCrumbs[route.pathname.includes('/visualise-singledata/') ? `/visualise-singledata/` : `/visualizesingle-exampledata/`]}
         type="single"
 
       />
@@ -439,38 +445,41 @@ export default function DataVisualization({ parentProps }) {
                 <>
                   <section >
                     <div className="PopoverStyles single_viz">
-                      <Popover className="relative gene_main_box">
-                        {({ open }) => {
-                          return (
-                            <>
-                              <div className=''>
-                                <Popover.Button className={'selectBox'} onClick={() => (setIsGeneSetPopoverOpen(!isGeneSetPopoverOpen))}>
-                                  <div className="GeneSetgeneSetButton">
-                                    <div className="flex-1"><FormattedMessage id="GeneSetRe-filtering" defaultMessage="Gene set Re-filtering" />  </div>
-                                    <div className="w-20" style={{ backgroundColor: 'white' }}>
-                                      <span className="filter-icon"><img src={sample_img} alt="img" /></span>
+                      {
+                        tabName !== 'survival' &&
+                        <Popover className="relative gene_main_box">
+                          {({ open }) => {
+                            return (
+                              <>
+                                <div className=''>
+                                  <Popover.Button className={'selectBox'} onClick={() => (setIsGeneSetPopoverOpen(!isGeneSetPopoverOpen))}>
+                                    <div className="GeneSetgeneSetButton">
+                                      <div className="flex-1"><FormattedMessage id="GeneSetRe-filtering" defaultMessage="Gene set Re-filtering" />  </div>
+                                      <div className="w-20" style={{ backgroundColor: 'white' }}>
+                                        <span className="filter-icon"><img src={sample_img} alt="img" /></span>
+                                      </div>
                                     </div>
-                                  </div>
-                                </Popover.Button>
-                                <Transition
-                                  show={isGeneSetPopoverOpen}
-                                  as={Fragment}
-                                  enter="transition ease-out duration-200"
-                                  enterFrom="opacity-0 translate-y-1"
-                                  enterTo="opacity-100 translate-y-0"
-                                  leave="transition ease-in duration-150"
-                                  leaveFrom="opacity-100 translate-y-0"
-                                  leaveTo="opacity-0 translate-y-1"
-                                >
-                                  <Popover.Panel className="GeneSetPopoverPanel" id="GeneSetPopverChild">
-                                    <GeneSet parentCallback={callback} filterState={state} />
-                                  </Popover.Panel>
-                                </Transition>
-                              </div>
-                            </>
-                          )
-                        }}
-                      </Popover>
+                                  </Popover.Button>
+                                  <Transition
+                                    show={isGeneSetPopoverOpen}
+                                    as={Fragment}
+                                    enter="transition ease-out duration-200"
+                                    enterFrom="opacity-0 translate-y-1"
+                                    enterTo="opacity-100 translate-y-0"
+                                    leave="transition ease-in duration-150"
+                                    leaveFrom="opacity-100 translate-y-0"
+                                    leaveTo="opacity-0 translate-y-1"
+                                  >
+                                    <Popover.Panel className="GeneSetPopoverPanel" id="GeneSetPopverChild">
+                                      <GeneSet parentCallback={callback} filterState={state} />
+                                    </Popover.Panel>
+                                  </Transition>
+                                </div>
+                              </>
+                            )
+                          }}
+                        </Popover>
+                      }
 
                       <Popover className="relative gene_main_box">
                         {({ open }) => {
@@ -500,9 +509,11 @@ export default function DataVisualization({ parentProps }) {
                       className="block text-center"
                       style={{ display: "block", textAlign: "center" }}
                       ref={elementRef}>
-                      {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div>{chart["viz"]}</div>
-                      }
-                      {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div style={{ marginTop: "50px", marginRight: "50px" }}>
+                      {BrstKeys && tabName && tabName !== 'home' && tabName !== 'survival' && boolChartState && <div>{chart["viz"]}</div>}
+
+                      {tabName && tabName === 'survival' && boolChartState && <div>{chart["viz"]}</div>}
+
+                      {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div style={{ marginTop: "50px" }}>
                         <button className="btn btnPrimary" style={{ float: "right", margin: "10px 0px 10px 0px" }} onClick={() => {
                           if (project_id) {
                             history.push(`/visualise-singledata/home/`)
@@ -510,23 +521,39 @@ export default function DataVisualization({ parentProps }) {
                             history.push(`/visualise-exampledata/home/`)
                           }
                         }}><FormattedMessage id="Back" defaultMessage="Back" /></button>
-                      </div>}
-                      {tabName && tabName !== 'home' && !boolChartState && (
+                      </div>
+                      }
+
+                      {
+                        tabName && tabName === 'survival' && boolChartState &&
+                        <div style={{ marginTop: "50px" }}>
+                          <button className="btn btnPrimary" style={{ float: "right", margin: "10px 0px 10px 0px" }} onClick={() => {
+                            if (project_id) {
+                              history.push(`/visualise-singledata/home/`)
+                            } else {
+                              history.push(`/visualise-exampledata/home/`)
+                            }
+                          }}><FormattedMessage id="Back" defaultMessage="Back" /></button>
+                        </div>
+                      }
+
+                      {tabName && tabName !== 'home' && !boolChartState && tabName !== 'survival' && (
                         <div className="p-1 text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">
                           <FormattedMessage id="PleaseSelectGenes" defaultMessage="Please Select Genes" />
                         </div>
                       )}
                     </div>
                   </section>
+
                 </>
             }
 
 
 
-          </div>
+          </div >
         </div>
-      </article>
-    </div>
+      </article >
+    </div >
 
   );
 }

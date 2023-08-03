@@ -992,6 +992,7 @@ export const PreDefienedFiltersSurvival = ({
   };
 
   const submitFilters = () => {
+    
     if (Object.keys(filters).length > 0) {
       parentCallback(filters);
     } else {

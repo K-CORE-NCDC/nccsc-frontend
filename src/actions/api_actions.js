@@ -301,6 +301,19 @@ export function changePassword(method, data) {
   return sendRequest(url, method, data)
 }
 
+export function MultiProjectsView(method, data, page, perPage){
+
+  let url = ''
+
+  if (method === 'GET') {
+    url = config.auth + `user-projects-data/?page=${page}&per_page=${perPage}&delay=1`
+  }
+  else {
+    url = config.auth + `user-projects-data/?page=${page}&per_page=${perPage}&delay=1&input`
+  }
+  return sendRequest(url, method, data)
+}
+
 export function verifyEncodeData(method, data) {
   return (dispatch) => {
     const url = `${config.auth}checkplus_success/?${data}`;
@@ -361,6 +374,13 @@ export function getRNIDetails(type, data) {
       });
   };
 }
+
+export function RNIDetails(method, data) {
+    const url = `${config.auth}report/`;
+    return sendRequest(url, method, data)
+}
+
+
 export function getUserFiles() {
   return (dispatch) => {
     //   dispatch({ type: homeConstants.DATA_SUMMARY });
@@ -1386,8 +1406,8 @@ export function getFaqData(id) {
   };
 }
 
-export function getFaqPageData(url,method,data) {
-  return sendRequest(url, method, data);  
+export function getFaqPageData(url, method, data) {
+  return sendRequest(url, method, data);
 }
 
 export function getProjectsData(id) {

@@ -143,18 +143,19 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
 
         if (filterTypeButton === "clinical") {
             copyState['filter_gene'] = fileredGene
-            copyState['gene_database'] = geneDatabase
             copyState['group_filters'] = groupFilters
+            copyState['gene_database'] = geneDatabase
             copyState['clinical'] = true
         }
         else {
             copyState['filter_gene'] = fileredGene
             copyState['group_filters'] = groupFilters
             copyState['clinical'] = false
-            if(filterTypeButton === "omics" && project_id === undefined){
+            if(filterTypeButton === "omics" && project_id === undefined && fileredGene){
                 copyState['gene_database'] = geneDatabase
+                disableCall = false
             }
-            else if(filterTypeButton === "omics" && project_id !== undefined){
+            else if(filterTypeButton === "omics" && project_id !== undefined && fileredGene){
                 if(alltabList[geneDatabase] && copyState['filter_gene'] ){
                     copyState['gene_database'] = geneDatabase
                     disableCall = false
@@ -173,6 +174,8 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
         }
 
     };
+
+    
 
 
     useEffect(() => {
@@ -450,7 +453,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
                                 {filterTypeButton === "clinical" &&
                                     userDefienedFilter === "static" &&
                                     project_id === undefined && (
-                                        <PreDefienedFiltersSurvival type="survival" viz_type="survival" filterParentCallback={updateGroupFilters} groupFilters={groupFilters}
+                                        <PreDefienedFiltersSurvival type="survival" viz_type="survival" parentCallback={updateGroupFilters} groupFilters={groupFilters}
                                             survivalModel={survivalModel} />
                                     )}
 

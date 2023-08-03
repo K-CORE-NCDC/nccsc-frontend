@@ -125,7 +125,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
                             <button
                                 onClick={() => changeVolcanoType("proteome")}
                                 className={
-                                    volcanoType === "proteome" ? selectedCss : nonSelectedCss
+                                    volcanoType === "proteome" ? "SurvivalSelectedCss btn btnPrimary MAuto on" : "SurvivalNonSelectedCss btn MAuto"
                                 }
                             >
                                 <FormattedMessage id="Proteome" defaultMessage="Proteome" />
@@ -207,7 +207,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
                                     />
                                 </h6>
                             ) && (
-                                    <div className="m-1 flex flex-row justify-around">
+                                    <div className="m-1 flex flex-row justify-around" style={{gap:"15px"}}>
                                         {
                                             <button
                                                 onClick={() => {
@@ -215,9 +215,8 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
                                                     setGroupFilters({});
                                                 }}
                                                 className={
-                                                    userDefienedFilter === "static"
-                                                        ? selectedCss
-                                                        : nonSelectedCss
+                                                    userDefienedFilter === "static" ?
+                                                     "SurvivalSelectedCss btn btnPrimary MAuto on" : "SurvivalNonSelectedCss btn MAuto"
                                                 }
                                             >
                                                 <FormattedMessage
@@ -233,8 +232,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
                                             }}
                                             className={
                                                 userDefienedFilter === "dynamic"
-                                                    ? selectedCss
-                                                    : nonSelectedCss
+                                                  ? "SurvivalSelectedCss btn btnPrimary MAuto on" : "SurvivalNonSelectedCss btn MAuto"
                                             }
                                         >
                                             <FormattedMessage

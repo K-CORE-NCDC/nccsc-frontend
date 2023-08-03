@@ -227,6 +227,7 @@ export default function DataVisualization() {
         "cnv",
         "box",
         "fusion",
+        "sankey"
       ];
     }
 
@@ -385,6 +386,15 @@ export default function DataVisualization() {
           state,
           screenCapture,
           setToFalseAfterScreenCapture
+        );
+      case "sankey":
+        return Charts.sankey(
+          w,
+          state,
+          screenCapture,
+          setToFalseAfterScreenCapture,
+          toggle,
+          state
         );
       default:
         return false;
@@ -545,7 +555,7 @@ export default function DataVisualization() {
                             <Popover.Button className={'selectBox'}
                               onClick={() => (setVolFusFilterPopoverOpen(!isVolFusFilterPopoverOpen))}>
                               <div className="GeneSetgeneSetButton">
-                                <div className="flex-1"><FormattedMessage id="ClinicalInfoReFiltering" defaultMessage="Clinical info. Re-filtering" /></div>
+                                <div className="flex-1"><FormattedMessage id="Filter" defaultMessage="Filter" /></div>
                                 <div className="w-20">
                                   <UserCircleIcon className="filter-icon" />
                                 </div>
@@ -688,9 +698,9 @@ export default function DataVisualization() {
               {tabName && tabName !== 'home' && boolChartState && (
                 <div className="">{chart["viz"]}</div>
               )}
-              {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div style={{ marginTop: "50px", marginRight: "50px" }}>
+              {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div style={{ marginTop: "50px"}}>
                 <button className="btn btnPrimary" style={{ float: "right", margin: "10px 0px 10px 0px" }} onClick={() => (history.push(`/visualise-multidata/home/${project_id}`))}>
-                  <FormattedMessage id="Back" defaultMessage="Back" />
+                <FormattedMessage id="Back" defaultMessage="Back" />
                 </button>
               </div>}
 

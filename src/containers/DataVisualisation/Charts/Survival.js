@@ -18,8 +18,6 @@ export default function DataSurvival({
   screenCapture,
   setToFalseAfterScreenCapture,
   survialData,
-  trasnferSurvivalData
-
 }) {
   const route = useLocation();
   const reference = useRef();
@@ -57,7 +55,7 @@ export default function DataSurvival({
   }, [screenCapture, watermarkCss]);
 
   useEffect(() => {
-    if (route.pathname.includes('visualise-singledata')) {
+    if (route.pathname.includes('visualise-singledata') || route.pathname.includes('visualizesingle-exampledata')) {
       setVizType("single")
       callSingleSurvial('recurrence')
     }
@@ -68,7 +66,6 @@ export default function DataSurvival({
 
 
   let callSingleSurvial = (survivalType) => {
-
     setSingelSurvialType(survivalType)
     let staticSurvivalData = {}
     staticSurvivalData['filterType'] = "dynamic"
@@ -98,7 +95,7 @@ export default function DataSurvival({
 
 
   useEffect(() => {
-    if (inputState && 'genes' in inputState && inputState['genes'].length > 0 && 'survival_type' in inputState) {
+    if (inputState && 'genes' in inputState && ((vizType !== 'single' && inputState['genes'].length > 0) || vizType === 'single' ) && 'survival_type' in inputState) {
       let return_data = SurvivalInformation("POST", inputState)
       return_data.then((result) => {
         const d = result
@@ -328,7 +325,7 @@ export default function DataSurvival({
           {renderNoContent && <div className="MarginTop4"><NoContentMessage /></div>}
 
           {
-            (inputData && inputData.genes.length === 0) &&
+            (inputData && vizType !== 'single' && inputData.genes.length === 0) &&
             <p className="MarginTop4"> <FormattedMessage id="PleaseSelecttheGeneSetData" defaultMessage="Please Select the Gene Set Data" /> </p>
           }
 

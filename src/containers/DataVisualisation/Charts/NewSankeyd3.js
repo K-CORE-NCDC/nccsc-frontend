@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import d3 from 'd3v3/d3'
 import '../../../styles/sankey.css'
 
 
 
 function NewSankeyd3({SankeyJson, idName, forGene}) {
+  const svgRef = useRef(null);
+
+
   var margin = {top: 1, right: 1, bottom: 6, left: 1},
   width = 960 - margin.left - margin.right,
-  height = 500 - margin.top - margin.bottom;
-  console.log('==',height);
+  height = 1200 - margin.top - margin.bottom;
   const drawChart = (energyjson)=>{
       
     var sankey = d3.sankey().nodeWidth(15).nodePadding(10).size([width, height]);
@@ -94,6 +96,9 @@ function NewSankeyd3({SankeyJson, idName, forGene}) {
           if(d['type']===maxName){
             heigthCalc = heigthCalc+d.dy
           }
+          // console.log('maxName',maxName);
+          // console.log('d.dy',d.dy);
+          // console.log('d',d);
           return d.dy; 
         })
         .attr("width", sankey.nodeWidth())
@@ -165,12 +170,24 @@ function NewSankeyd3({SankeyJson, idName, forGene}) {
 
     function highlight_link(id,opacity){
         d3.select("#link-"+id).style("stroke-opacity", opacity);
-    }
-    svg1.attr("height",400+heigthCalc)
+    } 
+    
+    svg1.attr("height",1200)
+
+    const svgWrapper = d3.select(`#${idName}`).append('div')
+      .style('height', '500px') // Set the fixed height here
+      .style('overflow', 'scroll');
+
+    // Append the svg element to the wrapper div
+    svgWrapper.node().appendChild(svg1.node());
   }
 
   useEffect(()=>{
     if(SankeyJson){
+      if (svgRef.current) {
+        svgRef.current.innerHTML = '';
+      }
+
       if(document.getElementById(idName)){
         document.getElementById(idName).innerHTML = ''
       }
@@ -181,7 +198,7 @@ function NewSankeyd3({SankeyJson, idName, forGene}) {
 
   return (
     <div className='randomclass'>
-        <div id={idName} name={forGene} className='relative w-full text-center'  style={{'padding':"50px"}}></div>
+        <div id={idName}  ref={svgRef} name={forGene} className='relative w-full text-center'  style={{'padding':"50px"}}></div>
     </div>
   )
 }

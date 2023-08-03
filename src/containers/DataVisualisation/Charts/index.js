@@ -9,6 +9,7 @@ import DataIgv from "./igv";
 import FusionPlot from "./Fusion";
 import Box from "./Box";
 import DataGenomic from "./Genomic";
+import SankeyPlot from "./SankeyPlot";
 function circos(
   width,
   inputData,
@@ -20,6 +21,28 @@ function circos(
   return (
     <DataCircos
       key="circos"
+      width={width}
+      inputData={inputData}
+      screenCapture={screenCapture}
+      setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+      toggle={toggle}
+      state={state}
+    />
+  );
+}
+
+
+function sankey(
+  width,
+  inputData,
+  screenCapture,
+  setToFalseAfterScreenCapture,
+  toggle,
+  state
+) {
+  return (
+    <SankeyPlot
+      key="sankey"
       width={width}
       inputData={inputData}
       screenCapture={screenCapture}
@@ -195,5 +218,6 @@ export const Charts = {
   fusion,
   box,
   variant_summary,
+  sankey
 
 };
