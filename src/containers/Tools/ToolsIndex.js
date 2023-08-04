@@ -69,15 +69,11 @@ const HomeComponent = () => {
                     </dl>
                   </Link>
                 </li>
-
                 <li>
                   <Link to='/interpro/'>
                     <img src={icon3} alt="" />
-                    <br />
-                    <br />
                     <dl>
                       <dt>Interpro</dt>
-                      <br />
                       <dd ><FormattedMessage
                         id="InterproDesc"
                         defaultMessage="InterPro is a database of protein families, protein domains in which identifiable features found in known proteins can be applied to new protein sequences"
@@ -85,7 +81,6 @@ const HomeComponent = () => {
                     </dl>
                   </Link>
                 </li>
-
               </ul>
             </div>
           </div>

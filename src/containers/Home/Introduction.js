@@ -22,7 +22,7 @@ const Introduction = ({ height, innerHeight, setActiveClassIndex, lan }) => {
                     id="home_child_title"
                   /> :
                   <>
-                    A cancer data platform that provides a variety of visualized analysis results <br /> by combining high quality clinical and proteogenomic information of domestic cancer patients.F
+                    A cancer data platform that provides a variety of visualized analysis results <br /> by combining high quality clinical and proteogenomic information of domestic cancer patients.
                   </>}
               </p>
             </div>

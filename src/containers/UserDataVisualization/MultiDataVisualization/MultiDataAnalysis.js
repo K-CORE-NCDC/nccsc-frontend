@@ -57,6 +57,9 @@ export default function DataVisualization() {
   const [availableTabsForProject, setavailableTabsForProject] = useState([]);
   const [toggle, setToggle] = useState(true);
   const [filterApplied, setfilterApplied] = useState(false);
+  const [title, setTitle] = useState({})
+
+
 
   const setToFalseAfterScreenCapture = (param = false) => {
     if (param === false) {
@@ -240,21 +243,89 @@ export default function DataVisualization() {
         classes = classes + " border-blue-400 border-b-4 -mb-px opacity-100";
       }
       let name = " Plot";
+      let desc = ''
       if (element === "heatmap") {
         name = "";
-      } else if (element === "cnv") {
+        desc = <FormattedMessage id="Example_mutli_heatmap" defaultMessage='represent genomic/proteomic data in the form of a map or diagram in which data values are represented as colors(heats)'>
+          {placeholder =>
+            placeholder
+          }
+        </FormattedMessage>
+      } else if (element === "cnv" || element === 'CNV') {
         element = "CNV";
+        desc = <FormattedMessage id="Example_signle_CNV" defaultMessage='visualize copy number variation data on integrated genome viewer'>
+          {placeholder =>
+            placeholder
+          }
+        </FormattedMessage>
       } else if (element === "onco") {
         element = "OncoPrint";
         name = "";
+        desc = <FormattedMessage id="Example_multi_onco" defaultMessage="visualize DNA mutations and various omics information of each patient's gene with columns, colors, symbols, etc." >
+          {placeholder =>
+            placeholder
+          }
+        </FormattedMessage>
+      } else if (element === 'circos') {
+        desc = <FormattedMessage id="Example_multi_circos" defaultMessage='visualize seven omics data as a circular layer on a circular chromosome map'>
+          {placeholder =>
+            placeholder
+          }
+        </FormattedMessage>
+      } else if (element === 'lollipop') {
+        desc = <FormattedMessage id="Example_signle_Lollipop" defaultMessage=' visualize mutation or phosphorylation of certain gene on a sequence'>
+          {placeholder =>
+            placeholder
+          }
+        </FormattedMessage>
+      } else if (element === 'survival') {
+        desc = <FormattedMessage id="Example_multi_survival" defaultMessage='visualize the recurrence/survival probability of patients according to clinical variable or genetic conditions'>
+          {placeholder =>
+            placeholder
+          }
+        </FormattedMessage>
+      } else if (element === 'correlation') {
+        desc = <FormattedMessage id="Example_multi_correlation" defaultMessage=' visualize the correlation between RNA expression values and proteome abundance values for a selected gene'>
+          {placeholder =>
+            placeholder
+          }
+        </FormattedMessage>
+      } else if (element === 'box') {
+        desc = <FormattedMessage id="Example_signle_box" defaultMessage='visualize the genetic information statistics of the selected gene(s) in the form of boxes'>
+          {placeholder =>
+            placeholder
+          }
+        </FormattedMessage>
+      } else if (element === 'fusion') {
+        desc = <FormattedMessage id="Example_multi_fusion" defaultMessage='visualize the number of fusion gene(s) and individual fusion gene for the selected sample group'>
+          {placeholder =>
+            placeholder
+          }
+        </FormattedMessage>
+      } else if (element === 'sankey') {
+        desc = <FormattedMessage id="Example_multi_sankey" defaultMessage=' visualize drug relation information of the selected mutations'>
+          {placeholder =>
+            placeholder
+          }
+        </FormattedMessage>
       }
-
+      else if (element === 'volcano') {
+        desc = <FormattedMessage id="Example_multi_valcano" defaultMessage='visualize genes (DEGs) showing significant expression differences between the two groups divided according to clinical conditions'>
+          {placeholder =>
+            placeholder
+          }
+        </FormattedMessage>
+      }
       let gridobj = {
         title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: project_id ? `/visualise-multidata/${element}/${project_id} ` : `/visualise-multidata/${element}/`
-        , description: 'Provides a visualization analysis service that can be implemented according to the uploaded user data.'
+        , description: desc || ''
       }
       gridData.push(gridobj)
-
+      if (project_id) {
+        setTitle({ id: "MultiDataVisualization", defaultMessage: "Multi Data Visualization" })
+      } else {
+        setTitle({ id: "VisualizeExampleData", defaultMessage: "Visualize Example Data" })
+      }
     });
     setGridData(gridData)
   }, [availableTabsForProject, chartName]);
@@ -433,7 +504,7 @@ export default function DataVisualization() {
 
     <div>
       <HeaderComponent
-        title="회원가입"
+        title={title}
         routeName="/visualise-multidata/"
         breadCrumbs={breadCrumbs['/visualise-multidata/']}
         type="single"
@@ -443,16 +514,29 @@ export default function DataVisualization() {
       {/* List of Tabs and Chart */}
 
       <article id="subContents" className="subContents">
-        <div className="contentsTitle">
-          <h3>
-            <font>
-              <font ><FormattedMessage id="MultiData" defaultMessage="MultiData" /> </font>
-              <span className="colorSecondary">
-                <font ><FormattedMessage id="visualization" defaultMessage="Visualization" /></font>
-              </span>
-            </font>
-          </h3>
-        </div>
+        {gridData && !tabName ?
+          <div className="contentsTitle">
+            <h3>
+              <font>
+                <font > <FormattedMessage id="MultiData" defaultMessage="Multi Data" />  </font>
+                <span className="colorSecondary">
+                  <font > <FormattedMessage id="visualization" defaultMessage="Visualization" /></font>
+                </span>
+              </font>
+            </h3>
+          </div>
+          :
+          <div className="contentsTitle">
+            <h3>
+              <font>
+                <span className="colorSecondary">
+                  <font >{tabName[0]?.toUpperCase() +
+                    tabName?.slice(1)}</font>
+                </span>
+              </font>
+            </h3>
+          </div>
+        }
 
         <div className="ptn">
           <div className="auto">
@@ -640,7 +724,7 @@ export default function DataVisualization() {
             </section>
             {
               gridData && !tabName &&
-              <div className='mainContentsBox' style={{ marginTop: '50px' }}>x
+              <div className='mainContentsBox' style={{ marginTop: '50px' }}>
                 <div className="galleryList">
                   <ul className={`justify-content-${Object.keys(gridData).length > 2 ? 'start' : 'center'}`}>
                     {gridData.map((item, index) => {
@@ -650,22 +734,33 @@ export default function DataVisualization() {
                             <img src={item.image} alt="img" />
                             <div className="hvBox">
                               <div className="hvBox_links">
-                                <Link to={item.link}>
-                                  <div className="textdiv">
-                                    <span><FormattedMessage id="DownloadManual" defaultMessage="Download Manual" /></span>
-                                    <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }} >
-                                      download
-                                    </span>
-                                  </div>
-                                </Link>
-                                <Link to={item.link}>
-                                  <div className="textdiv">
-                                    <span><FormattedMessage id="RunAnalysis" defaultMessage="Run Analysis" /></span>
-                                    <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
-                                      arrow_right_alt
-                                    </span>
-                                  </div>
-                                </Link>
+
+                                {project_id ?
+                                  <>
+                                    <Link to={item.link}>
+                                      <div className="textdiv">
+                                        <span><FormattedMessage id="DownloadManual" defaultMessage="Download Manual" /></span>
+                                        <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }} >
+                                          download
+                                        </span>
+                                      </div>
+                                    </Link>
+                                    <Link to={item.link}>
+                                      <div className="textdiv">
+                                        <span><FormattedMessage id="RunAnalysis" defaultMessage="Run Analysis" /></span>
+                                        <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
+                                          arrow_right_alt
+                                        </span>
+                                      </div>
+                                    </Link> </> :
+                                  <Link to={item.link}>
+                                    <div className="textdiv">
+                                      <span><FormattedMessage id="Example" defaultMessage="Example" /></span>
+                                      <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
+                                        arrow_right_alt
+                                      </span>
+                                    </div>
+                                  </Link>}
                                 {/* <Link to={item.link}>
                                   <span className="material-icons" style={{ fontSize: '50px' }}>
                                     play_circle
@@ -698,9 +793,9 @@ export default function DataVisualization() {
               {tabName && tabName !== 'home' && boolChartState && (
                 <div className="">{chart["viz"]}</div>
               )}
-              {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div style={{ marginTop: "50px"}}>
+              {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div style={{ marginTop: "50px" }}>
                 <button className="btn btnPrimary" style={{ float: "right", margin: "10px 0px 10px 0px" }} onClick={() => (history.push(`/visualise-multidata/home/${project_id}`))}>
-                <FormattedMessage id="Back" defaultMessage="Back" />
+                  <FormattedMessage id="Back" defaultMessage="Back" />
                 </button>
               </div>}
 

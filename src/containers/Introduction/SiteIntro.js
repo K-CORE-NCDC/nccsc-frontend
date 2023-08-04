@@ -12,12 +12,13 @@ import "aos/dist/aos.css"
 import { CBioPortal } from "./RelatedSites/CBioPortal";
 
 
-export const SiteIntro = ({ height, innerHeight }) => {
+export const SiteIntro = ({ height, innerHeight , lan }) => {
   const [activeTab, setActiveTab] = useState('1')
   const _height = innerHeight - height
   const [addingStyle, setAddingStyle] = useState(false)
   const [selectedOption, setSelectedOption] = useState('')
 
+  console.log('site' , lan)
 
   return (
     <div className="auto">
@@ -121,7 +122,7 @@ export const SiteIntro = ({ height, innerHeight }) => {
 
           </div>}
         {activeTab === '2' &&
-          <ServiceIntro />
+          <ServiceIntro lan={lan} />
         }
         {activeTab === '3' &&
           <Organization />

@@ -5,9 +5,9 @@ import icon2 from '../../assets/images/publicDataInfo-img02.svg'
 import icon3 from '../../assets/images/publicDataInfo-img03.svg'
 import MemoizedFormattedMessage from "react-intl/src/components/message";
 import { FormattedMessage } from "react-intl";
-const ServiceIntro = () => {
+const ServiceIntro = ({ lan }) => {
+console.log('lan', lan)
 
- 
   return (
     <div className="auto" >
       <div className="publicDataInfo">
@@ -41,17 +41,14 @@ const ServiceIntro = () => {
           </li>
           <li>
             <img src={icon3} alt="" />
-            <br />
-            <br />
-            <dl>
-              <dt ><FormattedMessage
+            <dl >
+              <dt><FormattedMessage
                 id="serviceIntro_h3"
                 defaultMessage="Other Tools"
               /></dt>
-              <br />
-              <dd ><FormattedMessage
+              <dd className={`${lan === 'kr-KO' ? '' : 'LastDiv'}`}><FormattedMessage
                 id="serviceIntro_txt3"
-                defaultMessage="This service visualizes multiple(more than 2) user input data. Up to 5 projects can be created."
+                defaultMessage="This service provides various functions such as pre-processing of genomic data and annotation of biomedical information."
               /></dd>
             </dl>
           </li>
