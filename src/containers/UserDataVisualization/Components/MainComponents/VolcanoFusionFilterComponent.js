@@ -66,14 +66,42 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
 
     useEffect(() => {
         if (tab === 'volcano') {
+
             let volcanoFusionFilterData = {}
+
             volcanoFusionFilterData['groupFilters'] = groupFilters
+
             if (proteomeValue === 'NT') {
                 volcanoFusionFilterData['groupFilters'] = {}
             }
-            volcanoFusionFilterData['volcanoType'] = volcanoType
+
+            volcanoFusionFilterData['volcanoType'] = volcanoType    
             volcanoFusionFilterData['proteomeValue'] = proteomeValue
             volcanoFusionFilterData['userDefienedFilter'] = userDefienedFilter
+
+            
+            if(!project_id){
+                if('group_1' in groupFilters)
+                    groupFilters.group_a = groupFilters.group_1;
+                
+                if('group_2' in groupFilters)
+                    groupFilters.group_b = groupFilters.group_2;
+                
+                if('group_3' in groupFilters)
+                    groupFilters.group_c = groupFilters.group_3;
+
+                if('group_1' in groupFilters)
+                    delete groupFilters.group_1;
+                
+                if('group_2' in groupFilters)
+                    delete groupFilters.group_2;
+                
+                if('group_3' in groupFilters)
+                    delete groupFilters.group_3;
+                
+                
+            }
+
             if (volcanoType === 'transcriptome' && groupFilters && Object.keys(groupFilters).length) {
                 parentCallback({ volcanoFusionFilterData: volcanoFusionFilterData })
             }

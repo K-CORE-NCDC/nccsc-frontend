@@ -198,7 +198,7 @@ function NewSankeyd3({SankeyJson, idName, forGene}) {
 
   return (
     <div className='randomclass'>
-        <div id={idName}  ref={svgRef} name={forGene} className='relative w-full text-center'  style={{'padding':"50px"}}></div>
+        <div id={idName}  ref={svgRef} name={forGene} className='relative w-full text-center'  style={{'margin':"60px 0px"}}></div>
     </div>
   )
 }

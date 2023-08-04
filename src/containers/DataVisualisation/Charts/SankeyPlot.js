@@ -34,6 +34,9 @@ function SankeyPlot({
   const [genesHtml, setGenesHtml] = useState([])
   const [inputState, setInputState] = useState({})
   const [selectedGene, setSelectedGene] = useState("")
+  const [variantClassificationHtml, setVariantClassificationHtml] = useState()
+  const [variantClassification, setVariantClassification] = useState("")
+  const [variantClassificationList, setVariantClassificationList] = useState([])
   const [showSankey, setShowSankey] = useState(true)
 
   const SampleRnidListData = useSelector(
@@ -56,7 +59,7 @@ function SankeyPlot({
   }
 
   let getReport = (sampleId) => {
-    let returnedData = RNIDetails("POST", { rnid: sampleId, 'project_id': project_id })
+    let returnedData = RNIDetails("POST", { rnid: sampleId, 'project_id': project_id, 'genes': inputData['genes'] })
     returnedData.then((result) => {
       setRnaData(result.data)
     })
@@ -272,19 +275,67 @@ function SankeyPlot({
   ];
 
   const loadGenesDropdown = (genes) => {
-
     let t = []
-    for (var i = 0; i < genes.length; i++) {
+    let firstGene = true
+    if (rnaData && 'variant_info' in rnaData) {
+
+      for (var i = 0; i < genes.length; i++) {
+        if (genes[i] in rnaData['variant_info']) {
+          if (firstGene) {
+            setSelectGene(genes[i])
+            firstGene = false
+          }
+          t.push(
+            <option key={i + '_' + genes[i]} value={genes[i]}>
+              {genes[i]}
+            </option>
+          )
+        }
+      }
+    }
+    setGenesHtml(t)
+  }
+
+  const loadVarinatClassificationDropdown = (VCList) => {
+    let t = []
+    for (let i = 0; i < VCList.length; i++) {
       if (i === 0) {
-        setSelectedGene(genes[0])
+        setSelectVariantClassification(VCList[0])
       }
       t.push(
-        <option key={i + '_' + genes[i]} value={genes[i]}>
-          {genes[i]}
+        <option key={i + '_' + VCList[i]} value={VCList[i]}>
+          {VCList[i]}
         </option>
       )
     }
-    setGenesHtml(t)
+    t.push(
+      <option value="all">
+        all
+      </option>
+    )
+    setVariantClassificationHtml(t)
+  }
+
+
+
+  let setSelectGene = (g) => {
+    setSelectedGene(g)
+    if ('variant_info' in rnaData && g in rnaData['variant_info']) {
+      loadVarinatClassificationDropdown(rnaData['variant_info'][g])
+    }
+  }
+
+  let setSelectVariantClassification = (v) => {
+    if (v === 'all' && selectedGene in rnaData['variant_info']) {
+      setVariantClassificationList(rnaData['variant_info'][selectedGene])
+      setVariantClassification(v)
+    }
+    else {
+      let arr = []
+      arr.push(v)
+      setVariantClassificationList(arr)
+      setVariantClassification(v)
+    }
   }
 
   useEffect(() => {
@@ -294,13 +345,16 @@ function SankeyPlot({
   }, [inputData])
 
   useEffect(() => {
-    if (inputState && 'genes' in inputState) {
-      let g = inputState['genes']
-      loadGenesDropdown(g)
+    if (sampleKey) {
+      getReport(sampleKey)
     }
   }, [inputState])
 
   useEffect(() => {
+    if (inputState && 'genes' in inputState) {
+      let g = inputState['genes']
+      loadGenesDropdown(g)
+    }
     if (rnaData) {
       setLoader(true)
       setTimeout(() => {
@@ -373,9 +427,6 @@ function SankeyPlot({
     }
   }, [SampleRnidListData]);
 
-  let setSelectGene = (e) => {
-    setSelectedGene(e.target.value)
-  }
 
 
   return (
@@ -431,19 +482,39 @@ function SankeyPlot({
 
         {
           // tabName !== 'patientSummary' && sampleKey &&  <div style={{ maxWidth: 'fit-content' }}>
-          tabName === 'drugRelation' && sampleKey && <div style={{ maxWidth: 'fit-content' }}>
-            <div className='selectionGenes' style={{ maxWidth: 'fit-content' }}>
-              <div >
-                <div><FormattedMessage id="Selected Gene" defaultMessage='Selected Gene Is' /></div>
-                <div>
-                  <select defaultValue={selectedGene} onChange={e => setSelectGene(e)}>
-                    {genesHtml}
-                  </select>
+          tabName === 'drugRelation' && sampleKey &&
+          <div className='SankeyVariantandGene'>
+
+            <div style={{ maxWidth: 'fit-content' }}>
+              <div className='selectionGenes' style={{ maxWidth: 'fit-content' }}>
+                <div >
+                  <div><FormattedMessage id="Selected Gene" defaultMessage='Selected Gene Is' /></div>
+                  <div>
+                    <select defaultValue={selectedGene} onChange={e => setSelectGene(e.target.value)}>
+                      {genesHtml}
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
+
+            <div style={{ maxWidth: 'fit-content' }}>
+              <div className='selectionGenes' style={{ maxWidth: 'fit-content' }}>
+                <div >
+                  <div><FormattedMessage id="Selected Variant Classification is" defaultMessage='Selected Variant Classification Is' /></div>
+                  <div>
+                    <select defaultValue={variantClassification} onChange={e => setSelectVariantClassification(e.target.value)}>
+                      {variantClassificationHtml}
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         }
+
+
 
 
       </div>
@@ -505,7 +576,7 @@ function SankeyPlot({
       {
         tabName === 'drugRelation' && sampleKey !== "" &&
         <div>
-          <SankeyIndex selectedGene={selectedGene} variants={rnaData.variant_info} />
+          <SankeyIndex selectedGene={selectedGene} variants={variantClassificationList} allVariants={rnaData['variant_info']} />
         </div>
       }
 

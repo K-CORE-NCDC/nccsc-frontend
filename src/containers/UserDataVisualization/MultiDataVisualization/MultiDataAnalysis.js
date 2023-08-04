@@ -463,7 +463,7 @@ export default function DataVisualization() {
               <div className="PopoverStyles">
 
                 {toggle &&
-                  <Popover className="relative">
+                  <Popover className="Relative">
                     {({ open }) => {
                       return (
                         <>
@@ -582,7 +582,7 @@ export default function DataVisualization() {
                   </Popover>
                 }
 
-                <Popover className="relative gene_main_box">
+                <Popover className="Relative gene_main_box">
                   {({ open }) => {
                     return (
                       <>
@@ -640,7 +640,7 @@ export default function DataVisualization() {
             </section>
             {
               gridData && !tabName &&
-              <div className='mainContentsBox' style={{ marginTop: '50px' }}>x
+              <div className='mainContentsBox' style={{ marginTop: '50px' }}>
                 <div className="galleryList">
                   <ul className={`justify-content-${Object.keys(gridData).length > 2 ? 'start' : 'center'}`}>
                     {gridData.map((item, index) => {
@@ -650,27 +650,44 @@ export default function DataVisualization() {
                             <img src={item.image} alt="img" />
                             <div className="hvBox">
                               <div className="hvBox_links">
-                                <Link to={item.link}>
-                                  <div className="textdiv">
-                                    <span><FormattedMessage id="DownloadManual" defaultMessage="Download Manual" /></span>
-                                    <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }} >
-                                      download
-                                    </span>
-                                  </div>
-                                </Link>
-                                <Link to={item.link}>
-                                  <div className="textdiv">
-                                    <span><FormattedMessage id="RunAnalysis" defaultMessage="Run Analysis" /></span>
-                                    <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
-                                      arrow_right_alt
-                                    </span>
-                                  </div>
-                                </Link>
+                                {
+                                  project_id &&
+                                  <Link to={item.link}>
+                                    <div className="textdiv">
+                                      <span><FormattedMessage id="DownloadManual" defaultMessage="Download Manual" /></span>
+                                      <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }} >
+                                        download
+                                      </span>
+                                    </div>
+                                  </Link>
+                                }
+                                {
+                                  project_id &&
+                                  <Link to={item.link}>
+                                    <div className="textdiv">
+                                      <span><FormattedMessage id="RunAnalysis" defaultMessage="Run Analysis" /></span>
+                                      <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
+                                        arrow_right_alt
+                                      </span>
+                                    </div>
+                                  </Link>
+                                }
                                 {/* <Link to={item.link}>
                                   <span className="material-icons" style={{ fontSize: '50px' }}>
                                     play_circle
                                   </span>
                                 </Link> */}
+
+                                {
+                                  !project_id && <Link to={item.viewLink}>
+                                    <div className="textdiv">
+                                      <span><FormattedMessage id="Example" defaultMessage="Example" /></span>
+                                      <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
+                                        arrow_right_alt
+                                      </span>
+                                    </div>
+                                  </Link>
+                                }
                               </div>
                             </div>
                           </div>
@@ -698,11 +715,13 @@ export default function DataVisualization() {
               {tabName && tabName !== 'home' && boolChartState && (
                 <div className="">{chart["viz"]}</div>
               )}
-              {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div style={{ marginTop: "50px"}}>
-                <button className="btn btnPrimary" style={{ float: "right", margin: "10px 0px 10px 0px" }} onClick={() => (history.push(`/visualise-multidata/home/${project_id}`))}>
-                <FormattedMessage id="Back" defaultMessage="Back" />
+              {/* {BrstKeys && tabName && tabName !== 'home' && boolChartState &&  */}
+              <div style={{ marginTop: "50px" }}>
+                <button className="btn btnPrimary" style={{ float: "right", margin: "10px 0px 10px 0px" }} onClick={() => (project_id ? history.push(`/visualise-multidata/home/${project_id}`) : history.push(`/visualise-multidata/home/`))}>
+                  <FormattedMessage id="Back" defaultMessage="Back" />
                 </button>
-              </div>}
+              </div>
+              {/* } */}
 
               {tabName && tabName !== 'home' && !boolChartState && (
                 <div className="MultiDataVizErrorMessage">

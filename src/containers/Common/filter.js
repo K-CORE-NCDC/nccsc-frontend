@@ -541,7 +541,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
       il.value = "";
     });
     setSelectState({ 'filterCondition': 'and' });
-    parentCallback({ filter: ""});
+    parentCallback({ filter: {}});
     if (document.getElementById('default-radio-1')) {
       document.getElementById('default-radio-1').checked = true
     }
