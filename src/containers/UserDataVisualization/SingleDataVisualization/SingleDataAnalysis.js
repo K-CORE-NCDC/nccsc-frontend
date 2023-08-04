@@ -501,7 +501,7 @@ export default function DataVisualization({ parentProps }) {
                     <div className="PopoverStyles single_viz">
                       {
                         tabName !== 'survival' &&
-                        <Popover className="relative gene_main_box">
+                        <Popover className="Relative gene_main_box">
                           {({ open }) => {
                             return (
                               <>

@@ -547,7 +547,7 @@ export default function DataVisualization() {
               <div className="PopoverStyles">
 
                 {toggle &&
-                  <Popover className="relative">
+                  <Popover className="Relative">
                     {({ open }) => {
                       return (
                         <>
@@ -666,7 +666,7 @@ export default function DataVisualization() {
                   </Popover>
                 }
 
-                <Popover className="relative gene_main_box">
+                <Popover className="Relative gene_main_box">
                   {({ open }) => {
                     return (
                       <>
@@ -766,6 +766,17 @@ export default function DataVisualization() {
                                     play_circle
                                   </span>
                                 </Link> */}
+
+                                {
+                                  !project_id && <Link to={item.viewLink}>
+                                    <div className="textdiv">
+                                      <span><FormattedMessage id="Example" defaultMessage="Example" /></span>
+                                      <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
+                                        arrow_right_alt
+                                      </span>
+                                    </div>
+                                  </Link>
+                                }
                               </div>
                             </div>
                           </div>
@@ -793,11 +804,13 @@ export default function DataVisualization() {
               {tabName && tabName !== 'home' && boolChartState && (
                 <div className="">{chart["viz"]}</div>
               )}
-              {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div style={{ marginTop: "50px" }}>
-                <button className="btn btnPrimary" style={{ float: "right", margin: "10px 0px 10px 0px" }} onClick={() => (history.push(`/visualise-multidata/home/${project_id}`))}>
+              {/* {BrstKeys && tabName && tabName !== 'home' && boolChartState &&  */}
+              <div style={{ marginTop: "50px" }}>
+                <button className="btn btnPrimary" style={{ float: "right", margin: "10px 0px 10px 0px" }} onClick={() => (project_id ? history.push(`/visualise-multidata/home/${project_id}`) : history.push(`/visualise-multidata/home/`))}>
                   <FormattedMessage id="Back" defaultMessage="Back" />
                 </button>
-              </div>}
+              </div>
+              {/* } */}
 
               {tabName && tabName !== 'home' && !boolChartState && (
                 <div className="MultiDataVizErrorMessage">

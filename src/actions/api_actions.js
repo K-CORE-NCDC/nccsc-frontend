@@ -100,18 +100,7 @@ export function sendlogManagement(method, data) {
   };
 }
 
-export function MultiProjectsView(method, data, page, perPage){
 
-  let url = ''
-
-  if (method === 'GET') {
-    url = config.auth + `user-projects-data/?page=${page}&per_page=${perPage}&delay=1`
-  }
-  else {
-    url = config.auth + `user-projects-data/?page=${page}&per_page=${perPage}&delay=1&input`
-  }
-  return sendRequest(url, method, data)
-}
 
 export function MultiProjectsDelete(method, projectId){
   let url = ''

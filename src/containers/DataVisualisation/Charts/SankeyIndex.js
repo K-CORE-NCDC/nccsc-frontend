@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Sankey from "./NewSankey";
 import NewSankeyd3 from "./NewSankeyd3";
-import { useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import LoaderCmp from "../../Common/Loader";
 import { useHistory } from "react-router-dom";
 import React, { useState, useEffect } from "react";
@@ -9,9 +9,8 @@ import { SankeyJson } from "../../../actions/api_actions";
 import NoContentGene from "../../Common/NoContentGene";
 
 
-function SankeyIndex({selectedGene,variants}) {
+function SankeyIndex({ selectedGene, variants, allVariants }) {
   const d = selectedGene
-  const [initalProps, setInitialProps] = useState("");
   const reportData = useSelector(
     (state) => state.dataVisualizationReducer.rniData
   );
@@ -28,105 +27,132 @@ function SankeyIndex({selectedGene,variants}) {
   const [sankyTableData, setSankyTableData] = useState();
   const [sankyTableData2, setSankyTableData2] = useState("");
   const history = useHistory();
-  const uniqiue_values = {'dbsnp_rs':new Set(),'diseasename':new Set()}
+  const uniqiue_values = { 'dbsnp_rs': new Set(), 'diseasename': new Set() }
   useEffect(() => {
     setLoader(true)
     setShowNoContent(false)
-    if (initalProps) {
-      let d = initalProps;
-      let gene = d
-      let inputData = {
-        gene: gene,
-      };
-      if(variants && gene in variants ){
-        inputData['mutation'] = variants[gene]
-      }
-      else{
-        inputData['mutation'] = []
-      }
-      setGene(gene);
+
+    let gene = selectedGene
+    let inputData = {
+      gene: gene,
+    };
+    inputData['mutation'] = variants
+    // if(variants && gene in variants ){
+    //   inputData['mutation'] = variants[gene]
+    // }
+    // else{
+    //   inputData['mutation'] = []
+    // }
+    setGene(gene);
+
+    if (selectedGene && variants.length > 0) {
       let return_data = SankeyJson("POST", inputData)
-        return_data.then((result) => {
-          const d = result
-          if (d.status === 200 && "data" in d && d['data'].length > 0) {
-            setSankeyJson(d['data'])
-            setShowNoContent(false)
-          } else {
-            setLoader(false)
-            setShowNoContent(true)
-            setSankeyJson([])
-          }
-        })
+      return_data.then((result) => {
+        const d = result
+        if (d.status === 200 && "data" in d && d['data'].length > 0) {
+          setSankeyJson(d['data'])
+          setShowNoContent(false)
+        } else {
+          setLoader(false)
+          setShowNoContent(true)
+          setSankeyJson([])
+        }
+      })
         .catch((e) => {
           setShowNoContent(true)
           setSankeyJson([])
           history.push('/notfound')
         });
-      if(variants && gene in variants){
-        setSankyTableData2(variants[gene].filter(Boolean).toString());
-      }
-      else{
-        setSankyTableData2([])
-      }
     }
-  }, [initalProps]);
-
-  useEffect(() => {
-    if (d) {
-      setInitialProps(d);
+    if (variants) {
+      setSankyTableData2(variants);
     }
-  }, [selectedGene,variants]);
+    else {
+      setSankyTableData2([])
+    }
+  }, [selectedGene, variants]);
 
   useEffect(() => {
     if (sankeyJson && sankeyJson.length > 0) {
       setShowNoContent(false)
+
+
+
+      const maxDbsnpRsCount = 50;       // Limit for dbsnp_rs
+      const maxDiseaseCount = 15;       // Limit for diseasename
+
       let detailgeneData = [];
       let nodes = {};
       let node_type = {};
       let i = 1;
+
+      let dbsnpRsCount = 0;             // Counter for dbsnp_rs
+      let diseaseCount = 0;
+
+
+
       sankeyJson.forEach((element) => {
+
+        if (dbsnpRsCount >= maxDbsnpRsCount && diseaseCount >= maxDiseaseCount) {
+          return;  // Exit the loop once the limits are reached
+        }
+
         for (const key in element) {
           if (key !== "sourceurl") {
             if (!nodes.hasOwnProperty(element[key]) && element[key]) {
               nodes[element[key]] = i;
               node_type[i] = key;
               i = i + 1;
+
+
+              if (key === "dbsnp_rs" && dbsnpRsCount < maxDbsnpRsCount) {
+                dbsnpRsCount++;
+              }
+
+              if (key === "diseasename" && diseaseCount < maxDiseaseCount) {
+                diseaseCount++;
+              }
+
+
             }
           }
         }
       });
 
+      console.log('nodes', nodes);
+      console.log('node_type', node_type);
+
       let final_nodes = [];
       let drugNodeCount = 0
-      let drugToDisease = 0 
+      let drugToDisease = 0
       for (const key in nodes) {
-       
+
         // if(node_type[nodes[key]] === 'drugname' && drugNodeCount<=15){
         //   console.log(node_type[nodes[key]],key);
         //   final_nodes.push({ name: key, type: node_type[nodes[key]] });
         //   drugNodeCount+=1
         // }
         // else{
-          final_nodes.push({ name: key, type: node_type[nodes[key]] });
+        final_nodes.push({ name: key, type: node_type[nodes[key]] });
         // }
       }
       let fn = {};
       let final_links = [];
       let tmpTable = {}
 
-     
+
       sankeyJson.forEach((element) => {
-        if (element["hugo_symbol"] && element["variant_classification"] && element["dbsnp_rs"] && element["diseasename"] ){
-          let kt = element["hugo_symbol"]+"||"+element["variant_classification"]+"||"+element["dbsnp_rs"]+"||"+element["diseasename"]
-          if(kt in tmpTable){
-            if (tmpTable[kt].indexOf(element["drugname"]) === -1){
+        if (element["hugo_symbol"] && element["variant_classification"] && element["dbsnp_rs"] && element["diseasename"]) {
+          let kt = element["hugo_symbol"] + "||" + element["variant_classification"] + "||" + element["dbsnp_rs"] + "||" + element["diseasename"]
+          if (kt in tmpTable) {
+            if (tmpTable[kt].indexOf(element["drugname"]) === -1) {
               tmpTable[kt].push(element["drugname"])
             }
-          }else{
+          } else {
             tmpTable[kt] = [element["drugname"]]
           }
         }
-        
+
         if (element["hugo_symbol"] && element["variant_classification"]) {
           let k =
             nodes[element["hugo_symbol"]] +
@@ -172,7 +198,7 @@ function SankeyIndex({selectedGene,variants}) {
         if (element["diseasename"] && element["drugname"]) {
           let k =
             nodes[element["diseasename"]] + "_" + nodes[element["drugname"]];
-          if(drugToDisease <= 15){
+          if (drugToDisease <= 15) {
             if (!(k in fn)) {
               fn[k] = "";
               final_links.push({
@@ -180,20 +206,20 @@ function SankeyIndex({selectedGene,variants}) {
                 target: element["drugname"],
                 value: 10,
               });
-              drugToDisease +=1
+              drugToDisease += 1
             }
           }
-         
+
         }
       });
       for (const key in tmpTable) {
         let r = key.split("||")
         let d = tmpTable[key]
         let row = {
-          "hugo_symbol":r[0],
-          "variant_classification":r[1],
-          "dbsnp_rs":r[2],
-          "diseasename":r[3],
+          "hugo_symbol": r[0],
+          "variant_classification": r[1],
+          "dbsnp_rs": r[2],
+          "diseasename": r[3],
           "drugname": d.join(",")
         }
         detailgeneData.push(row)
@@ -331,21 +357,21 @@ function SankeyIndex({selectedGene,variants}) {
   return (
     <>
       {showNoContent && <div className="mt-20 mb-20"><NoContentGene /></div>}
-      {loader ? (<div className="mb-28"><LoaderCmp /></div>) : 
-      (
-        <div id="main_chart_cont">
-          {gene && sankeyJson.length > 0 &&
-            SankeyJsonData["nodes"].length > 0 &&
-            SankeyJsonData["links"].length > 0 && (
-              <>
-                <Sankey></Sankey>
-                <NewSankeyd3 SankeyJson={SankeyJsonData} idName="chart"></NewSankeyd3>
-                {sankyTableData}
-              </>
-            )}
-        </div>
+      {loader ? (<div className="mb-28"><LoaderCmp /></div>) :
+        (
+          <div id="main_chart_cont">
+            {gene && sankeyJson.length > 0 &&
+              SankeyJsonData["nodes"].length > 0 &&
+              SankeyJsonData["links"].length > 0 && (
+                <>
+                  <Sankey></Sankey>
+                  <NewSankeyd3 SankeyJson={SankeyJsonData} idName="chart"></NewSankeyd3>
+                  {sankyTableData}
+                </>
+              )}
+          </div>
 
-      )}
+        )}
     </>
   );
 }

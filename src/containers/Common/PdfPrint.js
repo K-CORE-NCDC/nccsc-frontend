@@ -8,6 +8,7 @@ import uuid from 'react-uuid';
 import html2canvas from "html2canvas";
 import { useSelector, useDispatch } from "react-redux";
 import config from "../../config";
+
 function PdfPrint({ isReportClicked }) {
   const [loader, setLoader] = useState(false);
   const [anchorTag, setAnchorTag] = useState([])

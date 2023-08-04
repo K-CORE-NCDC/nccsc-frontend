@@ -71,8 +71,9 @@ const GeneSet = ({ parentCallback, filterState }) => {
                     <option value="tgf-beta-path">General: TGF-β Pathway (43 genes)</option>
                 </select>
             </div>
-            <div className="GeneSetgeneItem inputText">
-                <input
+            <div className="GeneSetgeneItem inputText" style={{height:"100%"}}>
+                <textarea
+                    rows={8}
                     type="text"
                     id="genes"
                     ref={geneValue}
@@ -82,6 +83,7 @@ const GeneSet = ({ parentCallback, filterState }) => {
                     value={geneData}
                     onChange={(e) => {
                         const abc = document.getElementById('gene_type').value;
+                        console.log('abc',abc);
                         if (abc === 'user-defined') {
                             let userGenes = document
                                 .getElementById('genes')
@@ -89,6 +91,7 @@ const GeneSet = ({ parentCallback, filterState }) => {
                             userGenes = userGenes.toUpperCase() 
                             setGeneData(userGenes)
                         }
+                        
                     }}
                 />
             </div>

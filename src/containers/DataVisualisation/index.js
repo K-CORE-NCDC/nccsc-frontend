@@ -1313,7 +1313,7 @@ export default function DataVisualization() {
   
                 {/* // JSX in your component file */}
 
-                <Popover className="relative">
+                <Popover className="Relative">
                   {({ open }) => {
                     return (
                       <>
@@ -1354,7 +1354,7 @@ export default function DataVisualization() {
                   }}
                 </Popover>
 
-                <Popover className="relative" style={{ margin: 'auto' }}>
+                <Popover className="Relative" style={{ margin: 'auto' }}>
                   {({ open }) => {
                     return (
                       <>
