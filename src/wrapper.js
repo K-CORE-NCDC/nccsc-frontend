@@ -5,11 +5,11 @@ import Korea from './lang/kr.json';
 import English from './lang/en.json';
 import { languageChange } from './actions/api_actions';
 
-export const Context = React.createContext('en-US');
+export const Context = React.createContext('kr-KO');
 
 // import reportWebVitals from './reportWebVitals';
 // const local = 'kr-KO'//navigator.language;
-const local = 'en-US';
+const local = 'kr-KO';
 let lang;
 if (local === 'kr-KO') {
   lang = Korea;

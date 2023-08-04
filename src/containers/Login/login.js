@@ -156,12 +156,12 @@ const LoginComponent = () => {
                 </span>
                 <font style={{ verticalAlign: 'inherit' }}>
                   <span className="colorPrimary">
-                    <font style={{ verticalAlign: 'inherit' }}><FormattedMessage id="LoginWelCome" defaultMessage="Welcome" /></font>
+                    <font style={{ verticalAlign: 'inherit' }}><FormattedMessage id=" " defaultMessage="Welcome" /></font>
                   </span>
 
-                  <font style={{ verticalAlign: 'inherit' }}> <FormattedMessage id="LoginTo" defaultMessage="to" /> </font>
+                  <font style={{ verticalAlign: 'inherit' }}> <FormattedMessage id=" " defaultMessage="to" /> </font>
                   <span className="colorSecondary">
-                    <font style={{ verticalAlign: 'inherit' }}><FormattedMessage id="LoginK-CoreProtal" defaultMessage="K-Core Portal" /></font>
+                    <font style={{ verticalAlign: 'inherit' }}><FormattedMessage id="WelCome" defaultMessage="K-Core Portal" /></font>
                   </span>
                 </font>
                 <span className="colorPrimary">

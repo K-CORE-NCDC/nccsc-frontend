@@ -29,6 +29,7 @@ import { FormattedMessage } from "react-intl";
 import sample_img from '../../../assets/images/sample.webp'
 import { userdataVisualization } from "../../../actions/Constants";
 
+
 export default function DataVisualization({ parentProps }) {
   const history = useHistory();
   const context = useContext(Context);
@@ -244,21 +245,61 @@ export default function DataVisualization({ parentProps }) {
     l.forEach((element) => {
 
       let name = " Plot";
+      let desc = ''
       if (element === "heatmap") {
         name = "";
+        desc = <FormattedMessage id="Example_signle_heatMap" defaultMessage='represent genomic/proteomic data in the form of a map or diagram in which data values are represented as colors(heats)'>
+          {placeholder =>
+            placeholder
+          }
+        </FormattedMessage>
       } else if (element === "cnv") {
         element = "CNV";
+        desc = <FormattedMessage id="Example_signle_CNV" defaultMessage='visualize copy number variation data on integrated genome viewer'>
+          {placeholder =>
+            placeholder
+          }
+        </FormattedMessage>
       } else if (element === "onco") {
         name = "";
         element = "OncoPrint";
       } else if (element === "variant_summary") {
         name = "";
         element = "variant-summary";
+        desc = <FormattedMessage id="Example_signle_variantSummary" defaultMessage='visualize summary information of major variant types'>
+          {placeholder =>
+            placeholder
+          }
+        </FormattedMessage>
+      } else if (element === 'box') {
+        desc = <FormattedMessage id="Example_signle_box" defaultMessage='visualize the genetic information statistics of the selected gene(s) in the form of boxes'>
+          {placeholder =>
+            placeholder
+          }
+        </FormattedMessage>
+      } else if (element === 'lollipop') {
+        desc = <FormattedMessage id="Example_signle_Lollipop" defaultMessage=' visualize mutation or phosphorylation of certain gene on a sequence'>
+          {placeholder =>
+            placeholder
+          }
+        </FormattedMessage>
+      } else if (element === 'circos') {
+        desc = <FormattedMessage id="Example_signle_circos" defaultMessage=' visualize one of the seven omics data as a circular layer on a circular chromosome map'>
+          {placeholder =>
+            placeholder
+          }
+        </FormattedMessage>
+      } else if (element === 'survival') {
+        desc = <FormattedMessage id="Example_signle_sirvival" defaultMessage='visualize the recurrence/survival probability of patients according to clinical variable conditions'>
+          {placeholder =>
+            placeholder
+          }
+        </FormattedMessage>
       }
 
       let gridobj = {
         title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/singledata-upload/${element}/`, viewLink: `/visualizesingle-exampledata/${element}`,
-        description: 'Provides a visualization analysis service that can be implemented according to the uploaded user data.'
+        description: desc || ''
       }
       gridData.push(gridobj)
 
@@ -325,7 +366,7 @@ export default function DataVisualization({ parentProps }) {
       setTitle({ id: "VisualizeExampleData", defaultMessage: "Visualize Example Data" })
     } else if (route.pathname.includes('/visualise-singledata/')) {
       setExampleData(false)
-      setTitle({ id: 'SingleDataVisualization', defaultMessage: 'SingleDataVisualization' })
+      setTitle({ id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' })
     }
   }, [route.pathname]);
 
@@ -360,89 +401,102 @@ export default function DataVisualization({ parentProps }) {
 
       />
       <article id="subContents" className="subContents">
-        <div className="contentsTitle">
-          <h3>
-            <font>
-              <font > <FormattedMessage id="SingleData" defaultMessage="Single Data" />  </font>
-              <span className="colorSecondary">
-                <font > <FormattedMessage id="visualization" defaultMessage="Visualization" /></font>
-              </span>
-            </font>
-          </h3>
-        </div>
+
         <div className="ptn">
           <div className="auto">
+
             {
               gridData && !tabName ?
-                <div className='mainContentsBox' style={{ marginTop: '50px' }}>
-                  <div className="galleryList">
-                    <ul className={`justify-content-${Object.keys(gridData).length > 2 ? 'start' : 'center'}`}>
-                      {gridData.map((item, index) => {
-                        return <li key={index} className="listitems">
-                          <Link to={!exampleData ? item.link : item.viewLink}>
-                            <div className="thumb">
-                              <img src={item.image} alt="img" />
-                              <div className="hvBox">
-                                <div className="hvBox_links">
+                <>
+                  <div className="contentsTitle">
+                    <h3>
+                      <font>
+                        <font > <FormattedMessage id="SingleData" defaultMessage="Single Data" />  </font>
+                        <span className="colorSecondary">
+                          <font > <FormattedMessage id="visualization" defaultMessage="Visualization" /></font>
+                        </span>
+                      </font>
+                    </h3>
+                  </div>
+                  <div className='mainContentsBox' style={{ marginTop: '50px' }}>
+                    <div className="galleryList">
+                      <ul className={`justify-content-${Object.keys(gridData).length > 2 ? 'start' : 'center'}`}>
+                        {gridData.map((item, index) => {
+                          return <li key={index} className="listitems">
+                            <Link to={!exampleData ? item.link : item.viewLink}>
+                              <div className="thumb">
+                                <img src={item.image} alt="img" />
+                                <div className="hvBox">
+                                  <div className="hvBox_links">
 
-                                  {!exampleData &&
-                                    <>
-                                      <Link to={item.link}>
+                                    {!exampleData &&
+                                      <>
+                                        <Link to={item.link}>
+                                          <div className="textdiv">
+                                            <span><FormattedMessage id="DownloadManual" defaultMessage="Download Manual" /></span>
+                                            <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }} >
+                                              download
+                                            </span>
+                                          </div>
+                                        </Link>
+                                        <Link to={item.link}>
+                                          <div className="textdiv">
+                                            <span><FormattedMessage id="RunAnalysis" defaultMessage="Run Analysis" /></span>
+                                            <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
+                                              arrow_right_alt
+                                            </span>
+                                          </div>
+                                        </Link>
+                                      </>
+                                    }
+
+                                    {
+                                      exampleData && <Link to={item.viewLink}>
                                         <div className="textdiv">
-                                          <span><FormattedMessage id="DownloadManual" defaultMessage="Download Manual" /></span>
-                                          <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }} >
-                                            download
-                                          </span>
-                                        </div>
-                                      </Link>
-                                      <Link to={item.link}>
-                                        <div className="textdiv">
-                                          <span><FormattedMessage id="RunAnalysis" defaultMessage="Run Analysis" /></span>
+                                          <span><FormattedMessage id="Example" defaultMessage="Example" /></span>
                                           <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
                                             arrow_right_alt
                                           </span>
                                         </div>
                                       </Link>
-                                    </>
-                                  }
-
-                                  {
-                                    exampleData && <Link to={item.viewLink}>
-                                      <div className="textdiv">
-                                        <span><FormattedMessage id="Example" defaultMessage="Example" /></span>
-                                        <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
-                                          arrow_right_alt
-                                        </span>
-                                      </div>
-                                    </Link>
-                                  }
+                                    }
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                            <div className="txtBox txtBoxpadding tac Relative">
-                              <dl className="MarginTop10">
-                                <dt className="h4 Capitalize">{item.title}</dt>
-                                <dd className="p1">
-                                  {item.description}
-                                </dd>
-                              </dl>
-                              {/* <span className="playicon">
+                              <div className="txtBox txtBoxpadding tac Relative">
+                                <dl className="MarginTop10">
+                                  <dt className="h4 Capitalize">{item.title}</dt>
+                                  <dd className="p1">
+                                    {item.description}
+                                  </dd>
+                                </dl>
+                                {/* <span className="playicon">
                                 <Link to={item.viewLink}>
                                   <span className="material-icons">
                                     visibility
                                   </span>
                                 </Link>
                               </span> */}
-                            </div>
-                          </Link>
-                        </li>
-                      })}
-                    </ul>
+                              </div>
+                            </Link>
+                          </li>
+                        })}
+                      </ul>
+                    </div>
                   </div>
-                </div>
-
+                </>
                 :
                 <>
+                  <div className="contentsTitle">
+                    <h3>
+                      <font>
+                        <span className="colorSecondary">
+                          <font >{tabName[0]?.toUpperCase() +
+                            tabName?.slice(1)}</font>
+                        </span>
+                      </font>
+                    </h3>
+                  </div>
                   <section >
                     <div className="PopoverStyles single_viz">
                       {

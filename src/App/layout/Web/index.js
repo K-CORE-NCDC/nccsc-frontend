@@ -474,7 +474,7 @@ export default function Web(props) {
         <div id="allMenuWrap" className="allMenuWrap" style={menuTabOpen ? { display: 'block' } : { display: 'none' }}>
           <div className="imgBox">
             <dl>
-              <dt><font className="font1"></font><br /><font className="font1"><font className="font1"><FormattedMessage id="WelcometoK-corePortal" defaultMessage='Welcome to K-Core Portal' /></font></font></dt>
+              <dt className={`${context?.locale === 'kr-KO' ? "korean" : ''}`}><font className="font1"></font><br /><font className="font1"><font className="font1"><FormattedMessage id="WelcometoK-corePortal" defaultMessage='Welcome to K-Core Portal' /></font></font></dt>
               <dd><font className="font1"><font className="font1"><FormattedMessage id="Designated" defaultMessage='K-Core Portal is a web-based analysis portal that provides visualizations of cancer genomic data, and it is a sub-service portal of the National Cancer Data Center website.' /></font></font></dd>
             </dl>
             <div className="members">
