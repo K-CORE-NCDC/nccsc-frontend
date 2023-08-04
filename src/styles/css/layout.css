@@ -2415,6 +2415,11 @@ table tbody tr {
   color: rgb(255, 255, 255);
 }
 
+.allMenuWrap .imgBox dl .korean {
+  font-size: 47px !important;
+}
+
+
 @media all and (max-width: 767px) {
   .allMenuWrap .imgBox dl dt {
     font-size: 28px;

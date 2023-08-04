@@ -9,7 +9,7 @@ import icon2 from '../../../assets/images/publicDataInfo-img02.svg'
 import icon3 from '../../../assets/images/publicDataInfo-img03.svg'
 const HomeComponent = () => {
 
-  const title = { id: "MultiDataVisualization", defaultMessage: "Multi Data Visualization" }
+  const title = { id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' }
   let gridData = [
     { title: 'Create Project', image: require(`../../../assets/images/Visualizations/circos.png`).default, link: `/newmultidataproject/`, description: 'Provides a visualization analysis service that can be implemented according to the uploaded user data.' },
     { title: 'View Project', image: require(`../../../assets/images/Visualizations/circos.png`).default, link: `/multidataprojectview/`, description: 'Provides a visualization analysis service that can be implemented according to the uploaded user data.' },
@@ -93,7 +93,7 @@ const HomeComponent = () => {
                       <dd>
                         <FormattedMessage
                           id="CreateProjectContent"
-                          defaultMessage="Provides a visualization analysis service that can be implemented according to the uploaded user data."
+                          defaultMessage="Provides a visualization analysis service according to the uploaded user data."
                         /></dd>
                     </dl>
                   </li>
@@ -108,8 +108,8 @@ const HomeComponent = () => {
                         defaultMessage="View Projects"
                       /></dt>
                       <dd><FormattedMessage
-                        id="serviceIntro_txt2"
-                        defaultMessage="Provides a visualization analysis service that can be implemented according to the uploaded user data."
+                        id="ViewProjectText"
+                        defaultMessage="View the list of analysis projects and it will navigate to the desired project."
                       /></dd>
                     </dl>
                   </li>

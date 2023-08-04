@@ -196,7 +196,7 @@ export default function Home(parentProps) {
             </SwiperSlide>
 
             <SwiperSlide id="introduction" className="section section04">
-              <SiteIntro height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} />
+              <SiteIntro height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} lan={parentProps?.parentProps?.lan}/>
             </SwiperSlide>
 
             <SwiperSlide className="section section02" id="visualization">
@@ -224,7 +224,7 @@ export default function Home(parentProps) {
             <Introduction height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} lan={parentProps?.parentProps?.lan} setActiveClassIndex={(data) => parentProps?.parentProps?.setActiveClassIndex(data)}/>
           </div>
           <div className=" section04" style={{ paddingTop:'20vh' }} id="1" ref={resultRef?.current[1]}>
-            <SiteIntro height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} /> </div>
+            <SiteIntro height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} lan={parentProps?.parentProps?.lan}/> </div>
           <div className=" section02" style={{ paddingTop:'20vh'}} ref={resultRef?.current[2]} id="2">
             <SingleDataVisualization height={menuHeightRef?.current?.clientHeight} innerHeight={window.innerHeight} /> </div>
           <div className="section section03" style={{ paddingTop:'20vh'}} ref={resultRef?.current[3]} id="3">

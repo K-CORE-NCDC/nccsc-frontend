@@ -111,6 +111,7 @@ const route = [
     childname: <FormattedMessage id="SingleDataVisualization" defaultMessage="Single Data Visualization" />,
     component: SingleDataAnalysis,
   },
+  
   {
     path: '/gene-set/',
     exact: true,

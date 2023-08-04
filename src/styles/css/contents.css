@@ -1166,8 +1166,8 @@ h5 {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
   margin-right: 24px;
 }
-.publicDataInfo ul li:last-child {
-  margin-right: 0;
+.publicDataInfo ul li dl .LastDiv{
+  padding-top:13% ;
 }
 .publicDataInfo ul li dl dt {
   font-size: 24px;
