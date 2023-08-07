@@ -2356,7 +2356,54 @@
   font-size: 30px;
 }
 
-.SankeyVariantandGene{
+.SankeyVariantandGene {
   display: flex;
   gap: 20px;
+}
+
+.FusionCardText{
+  text-align: start;
+  padding: 0.25rem;
+  margin: 0.25rem;
+  border-width: 1px;
+  border-color: #000000;
+  border-style: dashed;
+  width: fit-content;
+  margin: 40px auto;
+  padding: 15px;
+}
+
+.VolcanoCardText {
+  padding: 0.25rem;
+  margin: 0.25rem;
+  border-width: 1px;
+  border-color: #000000;
+  border-style: dashed;
+  width: fit-content;
+  margin: 40px auto;
+  padding: 15px;
+}
+
+.VolcanoCardText .TextBlue{
+  font-weight: 700; 
+  text-align: left; 
+  color: #1E3A8A;   
+}
+
+.VolcanoCardText .TextRed{
+  font-weight: 700; 
+  text-align: left; 
+  color: #7F1D1D; 
+}
+
+.VolcanoCardText .TextGrey{
+  font-weight: 700; 
+  text-align: left; 
+  color: #111827; 
+}
+
+.VolcanoCardText .TextBlack{
+  font-weight: 700; 
+  text-align: left; 
+  color: #0b0b0c;   
 }

@@ -598,7 +598,7 @@ export default function DataVisualization() {
                             <Popover.Button className={'selectBox'}
                               onClick={() => (setSurvivalFilterPopoverOpen(!isSurvivalFilterPopoverOpen))}>
                               <div className="GeneSetgeneSetButton">
-                                <div className="flex-1"><FormattedMessage id="Filter" defaultMessage="Filter" /></div>
+                                <div className="flex-1"><FormattedMessage id="Clinical Grouping" defaultMessage="Clinical Grouping" /></div>
                                 <div className="w-20">
                                   <CogIcon className="filter-icon" />
                                 </div>
@@ -639,7 +639,7 @@ export default function DataVisualization() {
                             <Popover.Button className={'selectBox'}
                               onClick={() => (setVolFusFilterPopoverOpen(!isVolFusFilterPopoverOpen))}>
                               <div className="GeneSetgeneSetButton">
-                                <div className="flex-1"><FormattedMessage id="Filter" defaultMessage="Filter" /></div>
+                                <div className="flex-1"><FormattedMessage id="Clinical Grouping" defaultMessage="Clinical Grouping" /></div>
                                 <div className="w-20">
                                   <UserCircleIcon className="filter-icon" />
                                 </div>

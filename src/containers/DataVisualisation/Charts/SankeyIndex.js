@@ -76,26 +76,12 @@ function SankeyIndex({ selectedGene, variants, allVariants }) {
     if (sankeyJson && sankeyJson.length > 0) {
       setShowNoContent(false)
 
-
-
-      const maxDbsnpRsCount = 50;       // Limit for dbsnp_rs
-      const maxDiseaseCount = 15;       // Limit for diseasename
-
       let detailgeneData = [];
       let nodes = {};
       let node_type = {};
       let i = 1;
 
-      let dbsnpRsCount = 0;             // Counter for dbsnp_rs
-      let diseaseCount = 0;
-
-
-
       sankeyJson.forEach((element) => {
-
-        if (dbsnpRsCount >= maxDbsnpRsCount && diseaseCount >= maxDiseaseCount) {
-          return;  // Exit the loop once the limits are reached
-        }
 
         for (const key in element) {
           if (key !== "sourceurl") {
@@ -103,39 +89,19 @@ function SankeyIndex({ selectedGene, variants, allVariants }) {
               nodes[element[key]] = i;
               node_type[i] = key;
               i = i + 1;
-
-
-              if (key === "dbsnp_rs" && dbsnpRsCount < maxDbsnpRsCount) {
-                dbsnpRsCount++;
-              }
-
-              if (key === "diseasename" && diseaseCount < maxDiseaseCount) {
-                diseaseCount++;
-              }
-
-
             }
           }
         }
       });
 
-      console.log('nodes', nodes);
-      console.log('node_type', node_type);
 
       let final_nodes = [];
       let drugNodeCount = 0
       let drugToDisease = 0
       for (const key in nodes) {
-
-        // if(node_type[nodes[key]] === 'drugname' && drugNodeCount<=15){
-        //   console.log(node_type[nodes[key]],key);
-        //   final_nodes.push({ name: key, type: node_type[nodes[key]] });
-        //   drugNodeCount+=1
-        // }
-        // else{
         final_nodes.push({ name: key, type: node_type[nodes[key]] });
-        // }
       }
+
       let fn = {};
       let final_links = [];
       let tmpTable = {}
@@ -212,6 +178,7 @@ function SankeyIndex({ selectedGene, variants, allVariants }) {
 
         }
       });
+
       for (const key in tmpTable) {
         let r = key.split("||")
         let d = tmpTable[key]
@@ -225,14 +192,9 @@ function SankeyIndex({ selectedGene, variants, allVariants }) {
         detailgeneData.push(row)
 
       }
-      // console.log("final_nodes",final_nodes);
-      // console.log("final_links",final_links);
       setDetailGeneData(detailgeneData);
       setSankeyJsonData({ nodes: final_nodes, links: final_links });
-      // console.log('final_nodes',final_nodes,final_nodes.length);
-      // console.log('final_links',final_links,final_links.length);
       setLoader(false)
-      // console.log('uniqiue_values',uniqiue_values);
     }
   }, [sankeyJson]);
 

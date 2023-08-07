@@ -331,12 +331,7 @@ export default function FusionPlot({
               {VennData && !noData && tableData.length > 0 && (
                 <div>
                   <div
-                    className="MarginBottom5 MarginLeft4"
-                    style={{
-                      textAlign: "start",
-                      lineHeight: "1.4",
-                      fontSize: "12px",
-                    }}
+                    className="FusionCardText"
                   >
                     <p>
                       {koreanlanguage ? "환자군에서 적어도 1명의 환자에게 검출된 융합 유전자의 수를 센다." : "Fusion gene detected in at least 1 patient in a paitent group is counted"}

@@ -1,33 +1,33 @@
-import React, { useEffect,useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { QuestionMarkCircleIcon } from "@heroicons/react/outline";
 import ReactTooltip from 'react-tooltip';
 
-function ReportSubHeader({tData}) {
+function ReportSubHeader({ tData,tableData }) {
 
-  const [sm,setSm] = useState(0)
-  const [md,setMd] = useState(0)
-  const [width,setWidth] = useState(0)
-  const [dataExist,setDataExist] = useState(false)
-  
-  useEffect(()=>{
-    if(dataExist){
-      let w=0,s=0,m=0
-      
-      if(document.getElementsByClassName('rdt_TableRow')){
+  const [sm, setSm] = useState(0)
+  const [md, setMd] = useState(0)
+  const [width, setWidth] = useState(0)
+  const [dataExist, setDataExist] = useState(false)
+
+  useEffect(() => {
+    if (dataExist) {
+      let w = 0, s = 0, m = 0
+
+      if (document.getElementsByClassName('rdt_TableRow')) {
         let row = document.getElementsByClassName('rdt_TableRow')[0]
-        if(row && w===0 && s===0 && m===0){
+        if (row && w === 0 && s === 0 && m === 0) {
           let r = row.childNodes
-          if(r.length>0){
+          if (r.length > 0) {
             for (let index = 0; index < r.length; index++) {
               const element = r[index];
-              if (index===0){
+              if (index === 0) {
                 // eslint-disable-next-line react-hooks/exhaustive-deps
                 s = element.offsetWidth
-                w = w+s
-              }else{
+                w = w + s
+              } else {
                 // eslint-disable-next-line react-hooks/exhaustive-deps
                 m = element.offsetWidth
-                w = w+m
+                w = w + m
               }
             }
             setSm(s)
@@ -37,47 +37,52 @@ function ReportSubHeader({tData}) {
         }
       }
     }
-  },[dataExist])
-  useEffect(()=>{
-    if(tData!==undefined && tData){
+  }, [dataExist])
+  useEffect(() => {
+    if (tData !== undefined && tData) {
       setDataExist(tData)
     }
-  },[tData,sm,md])
-  
+  }, [tData, sm, md])
+
 
   return (
     <>
-      {width >0 && sm>0 && md>0 && 
-      <div className='flex  w-full  border-b border-gray-200' style={{ "borderRight": '1px solid #6F7378',minWidth:width+'px' }}>
+      {width > 0 && sm > 0 && md > 0 &&
+        <div className='flex  w-full  border-b border-gray-200' style={{ "borderRight": '1px solid #6F7378', minWidth: width + 'px' }}>
 
-        <div style={{ minWidth: (sm+md+2)+'px', 'borderRight': '1px solid #6F7378','borderLeft': '1px solid #fff' }} className=' px-5 py-8 text-center'>Cancer Major Genes
-        </div>
-        <div style={{ minWidth: (md*2)+1+"px", 'borderRight': '1px solid #6F7378','borderLeft': '1px solid #fff' }} className=' px-5 py-8 text-center  '>DNA Mutation
-          <span>
+          <div style={{ minWidth: (sm + md + 2) + 'px', 'borderRight': '1px solid #6F7378', 'borderLeft': '1px solid #fff' }} className=' px-5 py-8 text-center'>Cancer Major Genes
+          </div>
 
-            <QuestionMarkCircleIcon data-multiline={true} className="inline ml-2 mb-1"  data-class="my-tooltip" data-tip="Yes : if occured mutation is one of the following variant <br>  <br/>types - Missense mutation, Nonsense mutation, Splice site, <br>  <br/>In frame insertion, In frame deletion, Frame-shift insertion, Frame-shift deletion" style={{ width: '20px' , cursor:'pointer' }}>
-            </QuestionMarkCircleIcon >
-            <ReactTooltip   />
-            
-          </span>
+          {dataExist && tableData[0].hasOwnProperty('dna') &&
+          <div style={{ minWidth: (md * 2) + 1 + "px", 'borderRight': '1px solid #6F7378', 'borderLeft': '1px solid #fff' }} className=' px-5 py-8 text-center  '>DNA Mutation
+            <span>
+              <QuestionMarkCircleIcon data-multiline={true} className="inline ml-2 mb-1" data-class="my-tooltip" data-tip="Yes : if occured mutation is one of the following variant <br>  <br/>types - Missense mutation, Nonsense mutation, Splice site, <br>  <br/>In frame insertion, In frame deletion, Frame-shift insertion, Frame-shift deletion" style={{ width: '20px', cursor: 'pointer' }}>
+              </QuestionMarkCircleIcon >
+              <ReactTooltip />
+            </span>
+          </div>
+          } 
 
-        </div>
-        <div style={{ minWidth: (md*3)+1+"px", 'borderRight': '1px solid #6F7378','borderLeft': '1px solid #fff' }} className=' px-5 py-8 text-center  '>RNA
-          <span>
+          {dataExist && tableData[0].hasOwnProperty('rna') &&
+          <div style={{ minWidth: (md * 3) + 1 + "px", 'borderRight': '1px solid #6F7378', 'borderLeft': '1px solid #fff' }} className=' px-5 py-8 text-center  '>RNA
+            <span>
+              <QuestionMarkCircleIcon data-multiline="true" className='inline ml-2 mb-1' data-tip="RNA high : z-score ≥ 1,<br>  <br/>RNA low : z-score ≤ -1 " style={{ width: '20px', cursor: 'pointer' }}>
+              </QuestionMarkCircleIcon>
+              <ReactTooltip />
+            </span>
+          </div>
+          } 
 
-            <QuestionMarkCircleIcon data-multiline="true"   className='inline ml-2 mb-1' data-tip="RNA high : z-score ≥ 1,<br>  <br/>RNA low : z-score ≤ -1 " style={{ width: '20px' , cursor:'pointer' }}>
-            </QuestionMarkCircleIcon>
-            <ReactTooltip />
-          </span>
+        {dataExist && tableData[0].hasOwnProperty('proteome') &&
+          <div style={{ minWidth: (md * 3) + 1 + "px", 'borderRight': '1px solid transparent', 'borderLeft': '1px solid #fff' }} className=' px-5 py-8 text-center  '>Proteome
+            <span>
+              <QuestionMarkCircleIcon data-multiline="true" className='inline ml-2 mb-1' data-tip="Proteome high : z-score ≥ 1.5,<br>  <br/>Proteome low : z-score ≤ 0.5" style={{ width: '20px', cursor: 'pointer' }}>
+              </QuestionMarkCircleIcon>
+              <ReactTooltip />
+            </span>
+          </div>
+         } 
         </div>
-        <div style={{ minWidth: (md*3)+1+"px", 'borderRight': '1px solid transparent','borderLeft': '1px solid #fff' }} className=' px-5 py-8 text-center  '>Proteome
-          <span>
-          <QuestionMarkCircleIcon data-multiline="true"  className='inline ml-2 mb-1' data-tip="Proteome high : z-score ≥ 1.5,<br>  <br/>Proteome low : z-score ≤ 0.5" style={{ width: '20px' , cursor:'pointer' }}>
-            </QuestionMarkCircleIcon>
-            <ReactTooltip   />
-          </span>
-        </div>
-      </div>
       }
     </>
   )
