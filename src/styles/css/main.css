@@ -1506,4 +1506,8 @@
   margin-right: 2px;
 }
 
+.CanvasXpressTooltip {
+  color: rgb(110, 164, 117) !important;
+}
+
 /* Existing CSS code */
