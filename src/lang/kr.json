@@ -60,6 +60,7 @@
   "Capture_screen": "이미지 다운로드",
   "Filter": "적용",
   "Selected Gene": "유전자 선택",
+  "Clinical Grouping":"임상정보 그룹화",
   "Choose Filter group": "임상정보 선택",
   "MultiDataProjectView": "다중 데이터 프로젝트 보기",
   "Clinical_Filters": "임상정보",

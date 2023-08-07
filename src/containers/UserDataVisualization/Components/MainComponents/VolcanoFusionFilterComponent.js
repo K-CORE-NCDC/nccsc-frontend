@@ -337,16 +337,15 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
                         </div>
 
                         {project_id === undefined && (
-                            <div className="m-1 flex flex-row justify-around">
+                            <div className="m-1 flex flex-row justify-around" style={{gap:"10px"}}>
                                 <button
                                     onClick={() => {
                                         setUserDefienedFilter("static");
                                         setGroupFilters({});
                                     }}
                                     className={
-                                        userDefienedFilter === "static"
-                                            ? selectedCss
-                                            : nonSelectedCss
+                                        userDefienedFilter === "static" ?
+                                                     "SurvivalSelectedCss btn btnPrimary MAuto on" : "SurvivalNonSelectedCss btn MAuto"
                                     }
                                 >
                                     <FormattedMessage
@@ -361,8 +360,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
                                     }}
                                     className={
                                         userDefienedFilter === "dynamic"
-                                            ? selectedCss
-                                            : nonSelectedCss
+                                        ? "SurvivalSelectedCss btn btnPrimary MAuto on" : "SurvivalNonSelectedCss btn MAuto"
                                     }
                                 >
                                     <FormattedMessage
