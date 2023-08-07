@@ -149,9 +149,25 @@ function MultiDataTable({ updateComponentNumber }) {
   useEffect(() => {
     let temptabs = [];
     if (verificationResponse && verificationResponse["result"]) {
-
       for (const tabrow in verificationResponse["result"]) {
         let tab = verificationResponse["result"][tabrow][0]["tab"];
+        if (tab === 'clinical_information') {
+          verificationResponse["result"][tabrow][0]["tabName"] = "Clinical info"
+        } else if (tab === 'dna_mutation') {
+          verificationResponse["result"][tabrow][0]["tabName"] = "DNA Mutation"
+        } else if (tab === 'cnv') {
+          verificationResponse["result"][tabrow][0]["tabName"] = "CNV"
+        } else if (tab === 'methylation') {
+          verificationResponse["result"][tabrow][0]["tabName"] = "Methylation"
+        } else if (tab === 'rna') {
+          verificationResponse["result"][tabrow][0]["tabName"] = "RNA"
+        } else if (tab === 'fusion') {
+          verificationResponse["result"][tabrow][0]["tabName"] = "Fusion"
+        } else if (tab === 'proteome') {
+          verificationResponse["result"][tabrow][0]["tabName"] = "Proteome"
+        } else {
+          verificationResponse["result"][tabrow][0]["tabName"] = "Phosphorylation"
+        }
         temptabs.push(
           <li key={tab} className={(activeTableKey === tab) ? 'on' : ''}>
             <button
@@ -159,7 +175,7 @@ function MultiDataTable({ updateComponentNumber }) {
               onClick={() => tabDropdownTable(tab)}
               className="capitalize"
             >
-              {tab}
+              {verificationResponse["result"][tabrow][0]["tabName"]}
             </button>
           </li>
         );
@@ -184,7 +200,7 @@ function MultiDataTable({ updateComponentNumber }) {
                 let rdata = String(row[columns[i]]);
                 let v = rdata.split("||");
                 if (v.length > 1) {
-                  return <div className="boardCell text-red-700">{v[1]}</div>;
+                  return <div className="boardCell" style={{color:"red"}}>{v[1]}</div>;
                 } else {
                   return <div className="boardCell">{String(row[columns[i]])}</div>;
                 }
@@ -336,9 +352,9 @@ function MultiDataTable({ updateComponentNumber }) {
                   },
                   pagination: {
                     style: {
-                        gap:"10px"
+                      gap: "10px"
                     }
-                  }      
+                  }
                 }}
               />
             )}

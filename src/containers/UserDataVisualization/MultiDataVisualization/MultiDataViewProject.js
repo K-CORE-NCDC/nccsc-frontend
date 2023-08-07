@@ -231,54 +231,54 @@ function ProjectsList() {
       sortable: true
     }
   ]
-    const customStyles = {
-        table: {
-            style: {
-                display: "table",
-                width: "100%",
-                tableLayout: "fixed",
-                borderTop: "2px solid #2e2e2e",
-                borderCollapse: "collapse",
-                fontSize: "16px",
-                color: "#8f8f8f",
-                fontWeight: "500",
-                textAlign: "center !important"
-            },
-        },
-        thead: {
-            style: {
-                display: "table-header-group",
-                fontWeight: "500",
-            },
-        },
-        td: {
-            style: {
-                display: "table-cell",
-                verticalAlign: "middle",
-                padding: "20px 16px",
-                position: "relative",
-                width: "90px",
-                color: "#2e2e2e",
-                borderBottom: "1px solid #2e2e2e"
-            },
-        },
-        tr: {
-            style: {
-                display: "table-row",
-                borderBottom: "1px solid #2e2e2e"
-            },
-        },
-        tbody: {
-            style: {
-                display: "table-row-group",
-            },
-        },
-        pagination: {
-            style: {
-                gap: "10px"
-            }
-        }
-    };
+  const customStyles = {
+    table: {
+      style: {
+        display: "table",
+        width: "100%",
+        tableLayout: "fixed",
+        borderTop: "2px solid #2e2e2e",
+        borderCollapse: "collapse",
+        fontSize: "16px",
+        color: "#8f8f8f",
+        fontWeight: "500",
+        textAlign: "center !important"
+      },
+    },
+    thead: {
+      style: {
+        display: "table-header-group",
+        fontWeight: "500",
+      },
+    },
+    td: {
+      style: {
+        display: "table-cell",
+        verticalAlign: "middle",
+        padding: "20px 16px",
+        position: "relative",
+        width: "90px",
+        color: "#2e2e2e",
+        borderBottom: "1px solid #2e2e2e"
+      },
+    },
+    tr: {
+      style: {
+        display: "table-row",
+        borderBottom: "1px solid #2e2e2e"
+      },
+    },
+    tbody: {
+      style: {
+        display: "table-row-group",
+      },
+    },
+    pagination: {
+      style: {
+        gap: "10px"
+      }
+    }
+  };
 
 
   function searchTerm() {
@@ -289,6 +289,36 @@ function ProjectsList() {
 
   return (
     <div className="container mx-auto p-4">
+      <div className="flex" style={{ justifyContent: 'space-between', marginBottom: '10px' }}>
+        <>
+          <div>
+            <button
+              className='btn btnPrimary'
+              type="button"
+              onClick={() => {
+                history.goBack()
+              }}
+            >
+              <FormattedMessage id="Back" defaultMessage="Back" />
+            </button>
+          </div>
+
+          <div>
+            <button
+              onClick={() => {
+                history.push('/newmultidataproject/')
+              }}
+              className='btn btnPrimary'
+            >
+              <FormattedMessage
+                id="CreateProjects"
+                defaultMessage="Create Project"
+              />
+            </button>
+          </div>
+        </>
+
+      </div>
       <div className="">
         {
           tableData &&

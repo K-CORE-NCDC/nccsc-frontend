@@ -134,14 +134,19 @@ function SingleDataTable({ updateComponentNumber }) {
     if (verificationResponse && verificationResponse["project_details"]) {
 
       for (const available_step in verificationResponse["project_details"]["available_steps"]) {
+
         if (verificationResponse["project_details"]["available_steps"][available_step].length > 0) {
           setNavTabIs(available_step)
         }
       }
       if ('result' in verificationResponse) {
+
         let first = Object.values(verificationResponse['result'])[0];
-        setActiveTableKey(first[0]['tab']);
+
+        setActiveTableKey(first[0]["tab"]);
       }
+
+
 
     }
   }, [verificationResponse])
@@ -152,6 +157,23 @@ function SingleDataTable({ updateComponentNumber }) {
 
       for (const tabrow in verificationResponse["result"]) {
         let tab = verificationResponse["result"][tabrow][0]["tab"];
+        if (tab === 'clinical_information') {
+          verificationResponse["result"][tabrow][0]["tabName"] = "Clinical info"
+        } else if (tab === 'dna_mutation') {
+          verificationResponse["result"][tabrow][0]["tabName"] = "DNA Mutation"
+        } else if (tab === 'cnv') {
+          verificationResponse["result"][tabrow][0]["tabName"] = "CNV"
+        } else if (tab === 'methylation') {
+          verificationResponse["result"][tabrow][0]["tabName"] = "Methylation"
+        } else if (tab === 'rna') {
+          verificationResponse["result"][tabrow][0]["tabName"] = "RNA"
+        } else if (tab === 'fusion') {
+          verificationResponse["result"][tabrow][0]["tabName"] = "Fusion"
+        } else if (tab === 'proteome') {
+          verificationResponse["result"][tabrow][0]["tabName"] = "Proteome"
+        } else {
+          verificationResponse["result"][tabrow][0]["tabName"] = "Phosphorylation"
+        }
         temptabs.push(
           <li key={tab} className={(activeTableKey === tab) ? 'on' : ''}>
             <button
@@ -159,7 +181,7 @@ function SingleDataTable({ updateComponentNumber }) {
               onClick={() => tabDropdownTable(tab)}
               className="capitalize"
             >
-              {tab}
+              {verificationResponse["result"][tabrow][0]["tabName"]}
             </button>
           </li>
         );
@@ -169,7 +191,7 @@ function SingleDataTable({ updateComponentNumber }) {
 
     let Tablecolumns = [];
     let rowdata = [];
-    
+
     if (verificationResponse) {
       for (const key in verificationResponse["result"]) {
         if (activeTableKey === verificationResponse["result"][key][0]["tab"]) {
@@ -184,7 +206,7 @@ function SingleDataTable({ updateComponentNumber }) {
                 let rdata = String(row[columns[i]]);
                 let v = rdata.split("||");
                 if (v.length > 1) {
-                  return <div className="boardCell text-red-700">{v[1]}</div>;
+                  return <div className="boardCell" style={{ color: 'red' }}>{v[1]}</div>;
                 } else {
                   return <div className="boardCell">{String(row[columns[i]])}</div>;
                 }
@@ -307,9 +329,9 @@ function SingleDataTable({ updateComponentNumber }) {
               },
               pagination: {
                 style: {
-                    gap:"10px"
+                  gap: "10px"
                 }
-              }      
+              }
             }}
           />
         )}

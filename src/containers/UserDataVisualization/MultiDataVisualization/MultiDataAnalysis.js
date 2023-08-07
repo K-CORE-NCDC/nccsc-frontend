@@ -321,7 +321,7 @@ export default function DataVisualization() {
         , description: desc || ''
       }
       gridData.push(gridobj)
-      if (project_id) {
+      if (project_id) { 
         setTitle({ id: "MultiDataVisualization", defaultMessage: "Multi Data Visualization" })
       } else {
         setTitle({ id: "VisualizeExampleData", defaultMessage: "Visualize Example Data" })
@@ -767,7 +767,7 @@ export default function DataVisualization() {
                                   </span>
                                 </Link> */}
 
-                                {
+                                {/* {
                                   !project_id && <Link to={item.viewLink}>
                                     <div className="textdiv">
                                       <span><FormattedMessage id="Example" defaultMessage="Example" /></span>
@@ -776,7 +776,7 @@ export default function DataVisualization() {
                                       </span>
                                     </div>
                                   </Link>
-                                }
+                                } */}
                               </div>
                             </div>
                           </div>

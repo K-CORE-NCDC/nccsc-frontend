@@ -498,7 +498,7 @@ export default function DataVisualization({ parentProps }) {
                     </h3>
                   </div>
                   <section >
-                    <div className="PopoverStyles single_viz">
+                    <div className={`${tabName !== 'survival' ? 'single_viz' : 'single_viz_singleTab'} PopoverStyles `}>
                       {
                         tabName !== 'survival' &&
                         <Popover className="Relative gene_main_box">
