@@ -32,7 +32,7 @@ import route from "../../../route";
 import { Context } from "../../../wrapper";
 import Loader from "../Loader";
 import FooterComponent from "../../../containers/Common/FooterComponent/FooterComponent";
-
+import config from '../../../config';
 AOS.init({
   offset: 200,
   duration: 600,
@@ -421,7 +421,10 @@ export default function Web(props) {
             </h1>
             <div className="headerUtils">
 
-              {is_login ? <Link to='/logout/'><FormattedMessage id="Logout" defaultMessage='Logout' /></Link>
+              {is_login ? <>
+              <Link to='/logout/'><FormattedMessage id="Logout" defaultMessage='Logout' /></Link>
+              {getCookie('superuser') && <a href={`${config.auth}login`}><FormattedMessage id="Admin" defaultMessage='Admin' /></a>}
+              </>
                 :
                 <>
                   <Link to="/signup/"><FormattedMessage id="GenerateRegistrationNumber" defaultMessage='Generate registration number' /></Link>

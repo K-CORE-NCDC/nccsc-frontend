@@ -13,6 +13,7 @@ import { VisualizeMyData } from "../VisualizeMyData/VisualizeMyData";
 import { SingleDataVisualization } from "../VisualizeMyExampleData/SingleDataVisualization";
 import Introduction from "./Introduction";
 // import "../../styles/swiper_cus.css"
+import SlickSlider from "./slickSlide";
 
 export default function Home(parentProps) {
   const swiperRef = useRef(null);
@@ -154,6 +155,7 @@ export default function Home(parentProps) {
   return (
     <>
       {activeItem && <p style={{ position: 'absolute', bottom: '9999' }}>{activeItem.title}</p>}
+      {/* don't delete this title */}
       {(width > 1025 && height > 800) &&
         <>
           <div className={`${parentProps?.parentProps?.activeClassIndex !== 0 ? 'on' : ''} pagination `}></div>
@@ -212,6 +214,7 @@ export default function Home(parentProps) {
               <Notice />
             </SwiperSlide>
             <SwiperSlide id="footer">
+              <SlickSlider/>
               <FooterComponent />
             </SwiperSlide>
           </SwiperComponent> </>

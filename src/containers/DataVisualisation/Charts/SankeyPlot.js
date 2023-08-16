@@ -127,7 +127,7 @@ function SankeyPlot({
       style: {
         textAlign: 'center',
         display: 'flex',
-        justifyContent:'center',
+        justifyContent: 'center',
         borderBottom: "1px solid #2e2e2e",
         borderRight: "1px solid #2e2e2e"
       }
@@ -136,7 +136,16 @@ function SankeyPlot({
       style: {
         gap: "10px"
       }
-    }
+    },
+    subHeader: {
+      style: {
+        fontWeight: 'bold',
+        fontSize: '16px',
+        border: '2px solid black',
+        padding:'0px',
+        minHeight:'15px'
+      },
+    },
   };
 
 
@@ -618,11 +627,9 @@ function SankeyPlot({
               {tableData && tableData.length > 0 &&
                 <div>
                   <div className='rounded-lg border border-gray-200'>
-                    <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                      <h3 className='BasicInformationTitle'>
+                      <h3 className='BasicInformationTitle' style={{margin:"40px 0px"}}>
                         Genomic Information
                       </h3>
-                    </div>
                     <div className=' report_table'>
                       <DataTable pagination
                         responsive

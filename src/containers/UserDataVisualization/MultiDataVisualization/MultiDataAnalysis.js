@@ -804,13 +804,13 @@ export default function DataVisualization() {
               {tabName && tabName !== 'home' && boolChartState && (
                 <div className="">{chart["viz"]}</div>
               )}
-              {/* {BrstKeys && tabName && tabName !== 'home' && boolChartState &&  */}
+              {tabName && tabName !== 'home' && boolChartState && 
               <div style={{ marginTop: "50px" }}>
                 <button className="btn btnPrimary" style={{ float: "right", margin: "10px 0px 10px 0px" }} onClick={() => (project_id ? history.push(`/visualise-multidata/home/${project_id}`) : history.push(`/visualise-multidata/home/`))}>
                   <FormattedMessage id="Back" defaultMessage="Back" />
                 </button>
               </div>
-              {/* } */}
+              } 
 
               {tabName && tabName !== 'home' && !boolChartState && (
                 <div className="MultiDataVizErrorMessage">

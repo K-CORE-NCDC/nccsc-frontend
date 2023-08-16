@@ -34,19 +34,19 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
   //   if (tableType === "positive") {
   //     tableData.forEach(element => {
   //       if (element["log2(fold_change)"] <= -5) {
-  //         rows.push([element["gene"], element["log2(fold_change)"], element["q_value"]])
+  //         rows.push([element["gene"], element["log2(fold_change)"], element["p_value"]])
   //       }
 
   //     });
   //   } else if (tableType === "negative") {
   //     tableData.forEach(element => {
-  //       if (element["q_value"] >= 5) {
-  //         rows.push([element["gene"], element["log2(fold_change)"], element["q_value"]])
+  //       if (element["p_value"] >= 5) {
+  //         rows.push([element["gene"], element["log2(fold_change)"], element["p_value"]])
   //       }
   //     });
   //   } else {
   //     tableData.forEach(element => {
-  //       rows.push([element["gene"], element["log2(fold_change)"], element["q_value"]])
+  //       rows.push([element["gene"], element["log2(fold_change)"], element["p_value"]])
   //     })
   //   }
   //   let csvContent = "data:text/csv;charset=utf-8,"
@@ -63,21 +63,21 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
       ["GENE NAME", "LOG2FC", "LOG(PVALUE) negative"],
     ];
   
-    if (tableType === "positive") {
+    if (tableType === "negative") {
       tableData.forEach(element => {
-        if (element["log2(fold_change)"] <= -5) {
-          rows.push([element["gene"], element["log2(fold_change)"], element["q_value"]]);
+        if (element["log2(fold_change)"] <= -1.5) {
+          rows.push([element["gene"], element["log2(fold_change)"], element["p_value"]]);
         }
       });
-    } else if (tableType === "negative") {
+    } else if (tableType === "positive") {
       tableData.forEach(element => {
-        if (element["q_value"] >= 5) {
-          rows.push([element["gene"], element["log2(fold_change)"], element["q_value"]]);
+        if (element["p_value"] >= 1.5) {
+          rows.push([element["gene"], element["log2(fold_change)"], element["p_value"]]);
         }
       });
     } else {
       tableData.forEach(element => {
-        rows.push([element["gene"], element["log2(fold_change)"], element["q_value"]]);
+        rows.push([element["gene"], element["log2(fold_change)"], element["p_value"]]);
       });
     }
   

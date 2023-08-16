@@ -9,13 +9,14 @@ import { FormattedMessage } from 'react-intl';
 import Swal from 'sweetalert2';
 import { dispatch } from "d3";
 import { userdataVisualization } from "../../../actions/Constants";
+import { DataOfFiles } from "../MultiDataVisualization/MultiFileUpload";
 
 
 function Modal({ showModal, toggleModal, fileName }) {
   let fileNameImage = require(`../../../assets/images/FileScreenshots/${fileName}.png`).default
   let fileNameFile = require(`../../../assets/files/20_samples/${fileName}.tsv`).default
 
-  
+
   return (
     <>
       {showModal ? (
@@ -37,10 +38,11 @@ function Modal({ showModal, toggleModal, fileName }) {
                 {/*body*/}
                 <div className="Toolmodal-body">
                   <div className="Toolmodal-text">
-                    <ul style={{ margin: "10px" }}>
+                    {/* <ul style={{ margin: "10px" }}>
                       <li>{`This is a Sample Example File for ${fileName}`}</li>
-                    </ul>
+                    </ul> */}
                     <img src={fileNameImage} alt="ExampleFileImage" />
+                    <DataOfFiles fileName={fileName} />
                     <div className='Flex FlexDirRow' style={{ marginTop: "20px", gap: "10px" }}>
 
                       <p>Click on the link to download the sample file</p>
@@ -93,7 +95,7 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
   //     payload: {},
   //   });
   // },[]) 
-  
+
   const charts = {
     "circos": {
       rna: "RNA",
@@ -118,6 +120,7 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
     },
     "box": {
       proteome: "proteome",
+      rna: "RNA",
     },
     "survival": {
       clinical_information: "Clinical Information",
@@ -367,7 +370,7 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
           </dd>
         </dl>
         <dl key={'dl1-' + key} className="boardSearchBox">
-          <dt> <FormattedMessage id="selectType"  defaultMessage='Select Type' /></dt>
+          <dt> <FormattedMessage id="selectType" defaultMessage='Select Type' /></dt>
           <dd className="selectBox select Flex">
             <select onChange={updateFileTypeOnChange}
               name={key}

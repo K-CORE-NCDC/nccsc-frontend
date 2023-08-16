@@ -238,7 +238,7 @@ export const PreDefienedFilters = ({
     ],
     bmi_vl: [
       { label: "18.5~24.9", from: 18.5, to: 24.9 },
-      { label: "25-", from: 25, to: 100 },
+      { label: "25-100", from: 25, to: 100 },
     ],
     mena_age: [
       { label: "10-13", from: 10, to: 13 },
@@ -335,13 +335,13 @@ export const PreDefienedFilters = ({
       if (groupFilters.type === "boolean") {
         filterGroupsHtmlTemp.push(
           <div key="bool">
-            <div className="flex flex-row justify-around">
-              <h5 className="P4 xs:text-xl">Group 1 : </h5>
-              <h5 className="P4 text-bold xs:text-xl text-blue-700">Yes</h5>
+            <div className="flex flex-row JustifyCenter gap10px">
+              <h5>Group 1 : </h5>
+              <h5>Yes</h5>
             </div>
-            <div className="flex flex-row justify-around">
-              <h5 className="P4 xs:text-xl">Group 2 : </h5>
-              <h5 className="P4 text-bold xs:text-xl text-blue-700">No</h5>
+            <div className="flex flex-row JustifyCenter gap10px">
+              <h5>Group 2 : </h5>
+              <h5>No</h5>
             </div>
           </div>
         );
@@ -350,13 +350,13 @@ export const PreDefienedFilters = ({
       if (groupFilters.type === "static") {
         filterGroupsHtmlTemp.push(
           <div key="bool">
-            <div className="flex flex-row justify-around">
-              <h5 className="P4 xs:text-xl">Group 1 : </h5>
-              <h5 className="P4 text-bold xs:text-xl text-blue-700">Male</h5>
+            <div className="flex flex-row JustifyCenter gap10px">
+              <h5>Group 1 : </h5>
+              <h5>Male</h5>
             </div>
-            <div className="flex flex-row justify-around">
+            <div className="flex flex-row JustifyCenter gap10px">
               <h5 className="P4 xs:text-xl">Group 2 : </h5>
-              <h5 className="P4 text-bold xs:text-xl text-blue-700">Female</h5>
+              <h5>Female</h5>
             </div>
           </div>
         );
@@ -365,15 +365,15 @@ export const PreDefienedFilters = ({
       if (groupFilters.type === "text") {
         filterGroupsHtmlTemp.push(
           <div key="bool">
-            <div className="flex flex-row justify-around">
-              <h5 className="P4 xs:text-xl">Group 1 : </h5>
-              <h5 className="P4 text-bold xs:text-xl text-blue-700">
+            <div className="flex flex-row JustifyCenter gap10px">
+              <h5>Group 1 : </h5>
+              <h5>
                 {preDefienedGroups1[colName][0]["label"]}
               </h5>
             </div>
-            <div className="flex flex-row justify-around">
-              <h5 className="P4 xs:text-xl">Group 2 : </h5>
-              <h5 className="P4 text-bold xs:text-xl text-blue-700">
+            <div className="flex flex-row JustifyCenter gap10px">
+              <h5>Group 2 : </h5>
+              <h5 className="">
                 {preDefienedGroups1[colName][1]["label"]}
               </h5>
             </div>
@@ -383,15 +383,15 @@ export const PreDefienedFilters = ({
       if (groupFilters.type === "number") {
         filterGroupsHtmlTemp.push(
           <div key="bool">
-            <div className="flex flex-row justify-around">
-              <h5 className="P4 xs:text-xl">Group 1 : </h5>
-              <h5 className="P4 text-bold xs:text-xl text-blue-700">
+            <div className="flex flex-row JustifyCenter gap10px">
+              <h5 className="">Group 1 : </h5>
+              <h5 className="">
                 {preDefienedGroups1[colName][0]["label"]}
               </h5>
             </div>
-            <div className="flex flex-row justify-around">
-              <h5 className="P4 xs:text-xl">Group 2 : </h5>
-              <h5 className="P4 text-bold xs:text-xl text-blue-700">
+            <div className="flex flex-row JustifyCenter gap10px">
+              <h5 className="">Group 2 : </h5>
+              <h5 className="">
                 {preDefienedGroups1[colName][1]["label"]}
               </h5>
             </div>
@@ -431,13 +431,13 @@ export const PreDefienedFilters = ({
         });
         filterGroupsHtmlTemp.push(
           <div key="bool">
-            <div className="flex flex-row">
-              <h5 className="P4 xs:text-xl">Group 1 : </h5>
-              <h5 className="P4 text-bold xs:text-xl text-blue-700">Yes</h5>
+            <div className="flex flex-row JustifyCenter gap10px">
+              <h5 className="">Group 1 : </h5>
+              <h5 className="">Yes</h5>
             </div>
-            <div className="flex flex-row">
-              <h5 className="P4 xs:text-xl">Group 2 : </h5>
-              <h5 className="P4 text-bold xs:text-xl text-blue-700">No</h5>
+            <div className="flex flex-row JustifyCenter gap10px">
+              <h5 className="">Group 2 : </h5>
+              <h5 className="">No</h5>
             </div>
           </div>
         );
@@ -452,13 +452,13 @@ export const PreDefienedFilters = ({
         });
         filterGroupsHtmlTemp.push(
           <div key="gender">
-            <div className="flex Border mb-1 flex-row justify-around">
-              <h5 className="P4 xs:text-xl">Group 1 : </h5>
-              <h5 className="P4 text-bold xs:text-xl text-blue-700">Male</h5>
+            <div className="flex Border mb-1 flex-row JustifyCenter gap10px">
+              <h5 className="">Group 1 : </h5>
+              <h5 className="">Male</h5>
             </div>
-            <div className="flex Border mb-1 flex-row justify-around">
-              <h5 className="P4 xs:text-xl">Group 2 : </h5>
-              <h5 className="P4 text-bold xs:text-xl text-blue-700">Female</h5>
+            <div className="flex Border mb-1 flex-row JustifyCenter gap10px">
+              <h5 className="">Group 2 : </h5>
+              <h5 className="">Female</h5>
             </div>
           </div>
         );
@@ -478,9 +478,9 @@ export const PreDefienedFilters = ({
           let indx = index + 1;
           filterGroupsHtmlTemp.push(
             <div key={"drop-user-" + index}>
-              <div className="flex flex-row justify-around">
-                <h5 className="P4 xs:text-xl">Group {indx}: </h5>
-                <h5 className="P4 text-bold xs:text-xl text-blue-700">
+              <div className="flex flex-row JustifyCenter gap10px">
+                <h5 className="">Group {indx}: </h5>
+                <h5 className="">
                   {element.label}
                 </h5>
               </div>
@@ -499,7 +499,7 @@ export const PreDefienedFilters = ({
   return (
     <div className="M1 BGGray100">
       <div className="P1 PY3 PX2 ColSpan2">
-        <div className="Block  TextBlue700 TextLG  FontBold MB2">
+        <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter">
           <FormattedMessage
             id="Clinical Filters"
             defaultMessage="Clinical Attribute"
@@ -1083,13 +1083,13 @@ export const PreDefienedFiltersSurvival = ({
         });
         filterGroupsHtmlTemp.push(
           <div key="bool">
-            <div className="flex flex-row">
-              <h5 className="P4 xs:text-xl">Group 1 : </h5>
-              <h5 className="P4 text-bold xs:text-xl text-blue-700">Yes</h5>
+            <div className="flex flex-row JustifyCenter gap10px">
+              <h5 className="">Group 1 : </h5>
+              <h5 className="">Yes</h5>
             </div>
-            <div className="flex flex-row">
-              <h5 className="P4 xs:text-xl">Group 2 : </h5>
-              <h5 className="P4 text-bold xs:text-xl text-blue-700">No</h5>
+            <div className="flex flex-row JustifyCenter gap10px">
+              <h5 className="">Group 2 : </h5>
+              <h5 className="">No</h5>
             </div>
           </div>
         );
@@ -1104,13 +1104,13 @@ export const PreDefienedFiltersSurvival = ({
         });
         filterGroupsHtmlTemp.push(
           <div key="gender">
-            <div className="flex Border mb-1 flex-row justify-around">
-              <h5 className="P4 xs:text-xl">Group 1 : </h5>
-              <h5 className="P4 text-bold xs:text-xl text-blue-700">Male</h5>
+            <div className="flex Border mb-1 flex-row JustifyCenter gap10px">
+              <h5 className="">Group 1 : </h5>
+              <h5 className="">Male</h5>
             </div>
-            <div className="flex Border mb-1 flex-row justify-around">
-              <h5 className="P4 xs:text-xl">Group 2 : </h5>
-              <h5 className="P4 text-bold xs:text-xl text-blue-700">Female</h5>
+            <div className="flex Border mb-1 flex-row JustifyCenter gap10px">
+              <h5 className="">Group 2 : </h5>
+              <h5 className="">Female</h5>
             </div>
           </div>
         );
@@ -1137,8 +1137,8 @@ export const PreDefienedFiltersSurvival = ({
           <div key="drop-user">
             {preDefienedGroups1[colName].map((element, index) => (
               <div className="TextLG" key={`${element.label}-${index}-grp-a`}>
-                <div className="flex flex-row justify-around">
-                  <h5 className="P4 xs:text-xl">
+                <div className="flex flex-row JustifyCenter gap10px">
+                  <h5 className="">
                     Group {index + 1} : {element.label}
                   </h5>
                 </div>
@@ -1155,7 +1155,7 @@ export const PreDefienedFiltersSurvival = ({
   return (
     <div className="M1 BGGray100">
       <div className="P1 PY3 PX2 ColSpan2">
-        <div className="Block  TextBlue700 TextLG  FontBold MB2">
+        <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter">
           <FormattedMessage
             id="Clinical Filters"
             defaultMessage="Clinical Attribute"
@@ -1596,6 +1596,7 @@ export const GroupFilters = ({
       }
     }
     else {
+      console.log('-------------');
       if (isFilterResetHappened) {
         let send_response = true;
         if (userGivenInputValues['type'] === 'static') {
@@ -1787,7 +1788,7 @@ export const GroupFilters = ({
           valsArray.push(
             <div key={`${i}-text-${Math.random()}`} className="MarginBottom4">
               <div>
-                <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
                   {`Group ${i}`}
                 </div>
                 <div>
@@ -1808,7 +1809,7 @@ export const GroupFilters = ({
           valsArray.push(
             <div key={`number-${i}${Math.random()}`} className="MarginBottom4">
               <div>
-                <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
                   {`Group ${i}`}
                 </div>
                 <div>
@@ -1860,10 +1861,10 @@ export const GroupFilters = ({
           <div key={compCase} className="MarginBottom4">
             {["A Group", "B Group"].map((e, index) => (
               <div key={index} className="Border MarginTop4 P1">
-                <div key={e} className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="yes">
+                <div key={e} className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="yes">
                   {e}
                 </div>
-                <h1 id="yes" className=" MarginTop2">
+                <h1 id="yes" className="MultiUploadTextCenter MarginTop2">
                   {groupLabels[index]}
                 </h1>
               </div>
@@ -1877,7 +1878,7 @@ export const GroupFilters = ({
             <div key={`${compCase}-${Math.random()}`}>
               <div key={`${compCase}-1${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
+                  <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
                     Group 1
                   </div>
                   <div>
@@ -1914,7 +1915,7 @@ export const GroupFilters = ({
               </div>
               <div key={`${compCase}-2${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
+                  <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
                     Group 2
                   </div>
                   <div>
@@ -1959,7 +1960,7 @@ export const GroupFilters = ({
               className="MarginBottom4"
             >
               <div>
-                <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
                   {`Group ${groupsCounter}`}
                 </div>
                 <div>
@@ -1992,7 +1993,7 @@ export const GroupFilters = ({
             <div key={`${compCase}--${Math.random()}`}>
               <div key={`${compCase}-1-${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
+                  <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
                     Group 1
                   </div>
                   <div>
@@ -2009,7 +2010,7 @@ export const GroupFilters = ({
 
               <div key={`${compCase}-2-${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
+                  <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
                     Group 2
                   </div>
                   <div>
@@ -2032,7 +2033,7 @@ export const GroupFilters = ({
               className="MarginBottom4"
             >
               <div>
-                <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
                   {`Group ${groupsCounter}`}
                 </div>
                 <div>
@@ -2596,7 +2597,7 @@ export const GroupFilters = ({
   return (
     <div className="M1 BGGray100">
       <div className="P1 PY3 PX2 ColSpan2">
-        <div className="Block  TextBlue700 TextLG  FontBold MB2">
+        <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter">
           <FormattedMessage
             id="Clinical Filters"
             defaultMessage="Clinical Attribute"
@@ -3150,7 +3151,7 @@ export const UserDefinedGroupFilters = ({
           valsArray.push(
             <div key={`${i}-text-${Math.random()}`} className="MarginBottom4">
               <div>
-                <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
                   {`Group ${i}`}
                 </div>
                 <div>
@@ -3171,7 +3172,7 @@ export const UserDefinedGroupFilters = ({
           valsArray.push(
             <div key={`number-${i}${Math.random()}`} className="MarginBottom4">
               <div>
-                <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
                   {`Group ${i}`}
                 </div>
                 <div>
@@ -3224,10 +3225,10 @@ export const UserDefinedGroupFilters = ({
           <div key={compCase} className="MarginBottom4">
             {["A Group", "B Group"].map((e, index) => (
               <div key={e} className="Border MarginTop4 P1">
-                <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="yes">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="yes">
                   {e}
                 </div>
-                <h1 id="yes" className=" MarginTop2">
+                <h1 id="yes" className="MultiUploadTextCenter MarginTop2">
                   {groupLabels[index]}
                 </h1>
               </div>
@@ -3241,7 +3242,7 @@ export const UserDefinedGroupFilters = ({
             <React.Fragment key={`${compCase}-${Math.random()}`}>
               <div key={`${compCase}-1${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
+                  <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
                     Group 1
                   </div>
                   <div>
@@ -3278,7 +3279,7 @@ export const UserDefinedGroupFilters = ({
               </div>
               <div key={`${compCase}-2${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
+                  <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
                     Group 2
                   </div>
                   <div>
@@ -3322,7 +3323,7 @@ export const UserDefinedGroupFilters = ({
               className="MarginBottom4"
             >
               <div>
-                <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
                   {`Group ${groupsCounter}`}
                 </div>
                 <div>
@@ -3355,7 +3356,7 @@ export const UserDefinedGroupFilters = ({
             <>
               <div key={`${compCase}-1-${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
+                  <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
                     Group 1
                   </div>
                   <div>
@@ -3371,7 +3372,7 @@ export const UserDefinedGroupFilters = ({
               </div>
               <div key={`${compCase}-2-${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
+                  <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
                     Group 2
                   </div>
                   <div>
@@ -3394,7 +3395,7 @@ export const UserDefinedGroupFilters = ({
               className="MarginBottom4"
             >
               <div>
-                <div className="Block  TextBlue700 TextLG  FontBold MB2" htmlFor="username">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
                   {`Group ${groupsCounter}`}
                 </div>
                 <div>
@@ -3923,7 +3924,7 @@ export const UserDefinedGroupFilters = ({
   return (
     <div className="M1 BGGray100">
       <div className="P1 PY3 PX2 ColSpan2">
-        <div className="Block  TextBlue700 TextLG  FontBold MB2">
+        <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter">
           <FormattedMessage
             id="Clinical Filters"
             defaultMessage="Clinical Attribute"
@@ -3964,7 +3965,7 @@ export const UserDefinedGroupFilters = ({
         {filterInputs}
       </div>
       {filterSelected && (
-        <div className="Flex">
+        <div className="FilterGeneSet">
           <div>
             <button
               onClick={submitFilters}

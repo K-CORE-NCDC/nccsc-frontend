@@ -36,8 +36,8 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
                 let max = 0
                 for (let idx = 0; idx < data.length; idx++) {
                     const element = data[idx];
-                    if(element.q_value>max){
-                        max = element.q_value
+                    if(element.p_value>max){
+                        max = element.p_value
                     }
                 }
                 max = Math.round(max)+1
@@ -181,7 +181,7 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
                         .html(
                             '<strong>' + sampleID + '</strong>: ' + d.target.__data__.gene + '<br/>' +
                             '<strong>' + xColumn + '</strong>: ' + d3.format('.2f')(d.target.__data__["log2(fold_change)"]) + '<br/>' +
-                            '<strong>' + yColumn + '</strong>: ' + d.target.__data__.q_value
+                            '<strong>' + yColumn + '</strong>: ' + d.target.__data__.p_value
                         );
                 }
 
@@ -202,6 +202,7 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
                 }
 
                 function circleClass(d) {
+                    console.log('d',d);
                     if (d['color'] === 'red') return 'dot red';
                     else if (d['color'] === 'blue') return 'dot blue';
                     else if (d['color'] === 'black') return 'dot black';
@@ -320,7 +321,7 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
         if (volcanoData.length > 0) {
             let arr = volcanoData
             arr.forEach(function (part, index, theArray) {
-                theArray[index] = { ...part, q_value: parseFloat(part.q_value), "log2(fold_change)": parseFloat(part["log2(fold_change)"]) };
+                theArray[index] = { ...part, p_value: parseFloat(part.p_value), "log2(fold_change)": parseFloat(part["log2(fold_change)"]) };
             });
             var yLabel = '-log<tspan baseline-shift="sub">10</tspan>P-Value',
                 xLabel = 'log<tspan baseline-shift="sub">2</tspan>Fold-change';
@@ -330,7 +331,7 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
                 .foldChangeThreshold(2.0)
                 .sampleID("gene")
                 .xColumn("log2(fold_change)")
-                .yColumn("q_value");
+                .yColumn("p_value");
             d3.select('#chart-d3-volcano')
                 .data([arr])
                 .call(volcanoPlot1);

@@ -28,7 +28,7 @@ const superAdmin = {
   title: 'Admin',
   type: 'admin',
   icon: 'fa fa-dashboard',
-  url: `${config.auth}/login`,
+  url: `${config.auth}login`,
   children: [],
 };
 

@@ -1,17 +1,36 @@
 import React, { useState } from "react";
 import fig from '../../assets/images/figure01.png'
 import { FormattedMessage } from "react-intl";
-
+import icon1 from '../../assets/images/publicDataInfo-img01.svg'
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 export const Others = () => {
+  const style = {
+    mainBox:{
+      textAlign: "center",
+      justifyContent: "center",
+      display: "flex"
+    },
+    wrapper:{
+      width:"350px"
+    }
+  }
   return (
     <div className="auto">
-      <div className="publicDataInfo">
-        <ul>
+      <div className="publicDataInfo" style={style.mainBox}>
+        <ul style={style.wrapper}>
           <li>
-            <div className="">
-              <img src={fig} alt="" style={{height:'200px'}} />
-            </div>
-            <span><a href=" ">Organoid Service</a></span>
+            <img src={icon1} alt="" />
+            <dl>
+              <dt>
+                <FormattedMessage
+                  id="organoid"
+                  defaultMessage="Organoid Service"/>
+              </dt>
+              <dd>
+                <span><Link to="/organoid/">Organoid Service</Link></span>
+              </dd>
+            </dl>
+            
           </li>
         </ul>
       </div>
