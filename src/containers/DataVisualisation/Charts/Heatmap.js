@@ -9,10 +9,11 @@ import { CheckIcon } from '@heroicons/react/solid';
 import Multiselect from 'multiselect-react-dropdown';
 import { FormattedMessage } from 'react-intl';
 import { Context } from "../../../wrapper";
-import { useParams } from "react-router-dom";
+import { useParams,useLocation } from "react-router-dom";
 import '../../../styles/css/heatmap.css'
 
 export default function DataHeatmap({ width, inputData, screenCapture, brstKeys, setToFalseAfterScreenCapture }) {
+  const route = useLocation();
   const context = useContext(Context);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const reference = useRef()
@@ -46,11 +47,13 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
   const [selectedType, setSelectedType] = useState('1')
   const _width = width - width * (3 / 100)
   const [noData, setNoData] = useState(false)
+  const [vizType, setVizType] = useState('')
 
 
   const tabList = useSelector(
     (data) => data.dataVisualizationReducer
   );
+
   let themes = [
     { "name": "Theme 1", "value": ["navy", "firebrick3"] },
     { "name": "Theme 2", "value": ["#F9F9F9", "#FCD200"] },
@@ -59,6 +62,14 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
 
   ]
 
+  useEffect(() => {
+    if (route.pathname.includes('visualise-singledata') || route.pathname.includes('visualizesingle-exampledata')) {
+      setVizType("single")
+    }
+    else {
+      setVizType("multi")
+    }
+  }, [route.pathname])
 
   useEffect(() => {
     if ('userProjectsDataTable' in tabList) {
@@ -835,7 +846,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
 
             <div className='GeneSelectionBox'>
 
-              {'viz_type' in alltabList && alltabList['viz_type'] !== 'single' && <div className='selectionBox'>
+              {(vizType !== 'single') && <div className='selectionBox'>
                 <label><FormattedMessage id="Clinical_Filters_heatmap" defaultMessage='Clinical Attribute' />:</label>
                 <Multiselect
                   style={style}
@@ -862,7 +873,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
                             name="view"
 
                           >
-                            Gene-vl
+                            Raw count
                           </button>
                           </li>
                           <li className={selectedType === '2' ? 'on' : ''}>
@@ -874,7 +885,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
                               name="view"
 
                             >
-                              Z-Score
+                              Normalization
                             </button>
                           </li>
                         </ul>

@@ -4,7 +4,8 @@ import { useDispatch } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import Swal from 'sweetalert2';
 import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
-
+import Draggable from 'react-draggable';
+import AOS from 'aos';
 function Modal({ showModal, toggleModal, fileName }) {
   let fileNameImage = require(`../../../assets/images/FileScreenshots/${fileName}.png`).default
   let fileNameFile = require(`../../../assets/files/20_samples/${fileName}.tsv`).default
@@ -31,10 +32,13 @@ function Modal({ showModal, toggleModal, fileName }) {
                   </button>
                 </div>
                 {/*body*/}
+                <img src={fileNameImage} alt="ExampleFileImage" style={{ margin: "0px 20px 0px 20px" }} />
                 <div className="Toolmodal-body">
                   <div className="Toolmodal-text">
-                    <ul style={{ margin: "10px" }}>
+                    <DataOfFiles fileName={fileName} />
+                    {/* <ul style={{ margin: "10px" }}>
                       <li>{`This is a Sample Example File for ${fileName}`}</li>
+                       
                       <ul>
                         {fileName !== 'ClinicalInformation' ?
                           <li style={{ paddingLeft: '5%', paddingTop: '10px' }}> 1. &nbsp; &nbsp; Each column configuration of omics data must be same to the sample format. </li>
@@ -51,8 +55,8 @@ function Modal({ showModal, toggleModal, fileName }) {
                             </li> </>
                         }
                       </ul>
-                    </ul>
-                    <img src={fileNameImage} alt="ExampleFileImage" />
+                    </ul> */}
+
                     <div className='Flex FlexDirRow' style={{ marginTop: "20px", gap: "10px" }}>
 
                       <p>Click on the link to download the sample file</p>
@@ -86,10 +90,17 @@ const Table = ({ updateComponentNumber }) => {
   const [showModal, setShowModal] = useState(false)
   const [fileName, setFileName] = useState("")
   const dispatch = useDispatch()
-
+  const [isOpen, setIsOpen] = useState(true);
   useEffect(() => {
     dispatch(clearMultiFIleUploadState())
+    AOS.init({});
+    AOS.refresh()
   }, [])
+  const handleDrag = () => {
+    if (!isOpen) {
+      return false;
+    }
+  };
 
   const handleFileChange = (event, type) => {
     const selectedFile = event.target.files[0];
@@ -181,10 +192,62 @@ const Table = ({ updateComponentNumber }) => {
       </svg>
     )
   }
+  let closeModal = () => {
+    setIsOpen(false);
+    toggleModal(false)
+  }
 
   return (
 
     <div>
+       {isOpen && isOpen === true && 
+       
+        <Draggable disabled={!isOpen} onDrag={handleDrag}>
+          <div
+              style={{
+                width: '300px',
+                height: '400px',
+                position: 'fixed',
+                transitionDelay: '3s',
+                bottom: isOpen ? '150px' : '-1000px',
+                right: isOpen ? '50px' : '-1000px',
+                transition: 'bottom 0.10s ease-in-out, right 0.5s ease-in-out',
+                zIndex: '15',
+                transitionDuration:'5s',
+                transitionTimingFunction: 'linear'
+              }}
+              
+            >
+          <div className="mainPopup W100" data-aos="zoom-in" data-aos-once='true' >
+            <div className="popupHeader">
+              <h3 className='TextLeft'>Note</h3>
+              <span className="material-icons mainPopupClose" id="mainPopupClose" onClick={closeModal}>
+                close
+              </span>
+            </div>
+            <div className='popupBody  introduceWrap' style={{"padding":"0px","border":"1px solid #ddd"}}>
+              <div className="introduceBox03" style={{"width":"100%"}}>
+                <ul>
+                  <li>
+                    <p>
+                      <FormattedMessage id="uploadGuide1" defaultMessage="Provides visualization results only for plots related to the uploaded data."/>
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <FormattedMessage id="uploadGuide2" defaultMessage="For omics data information required for each plot, please refer to the [Visualize Example Data] page."/>
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        </Draggable>
+        
+      }
+
       <HeaderComponent
         title={title}
         routeName="/newmultidataproject/"
@@ -556,6 +619,99 @@ const Table = ({ updateComponentNumber }) => {
 };
 
 export default Table;
+
+
+export const DataOfFiles = ({ fileName }) => {
+
+
+
+  return (
+    <ul style={{ margin: "10px" }}>
+      <li> <FormattedMessage id="CommonGuideMsg" defaultMessage='This is a Sample Example File for ' />{` ${fileName}`}</li>
+
+      <div className="popularBox" >
+        <div className="contentBox">
+          {fileName === 'ClinicalInformation' &&
+            <ul className="" style={{ paddingTop: '10px' }}>
+              <li className="" tabIndex="0" >
+                <p style={{ color: 'black' }}> <b></b> &nbsp;
+                  <FormattedMessage id="clinicalInformationGuidep1" defaultMessage='[sample_id] columns is essential. Other columns except [sample_id] are userdata.' />
+                </p>
+              </li>
+              <li tabIndex="-1" style={{ paddingTop: '10px' }}>
+                <p style={{ color: 'black' }}> <b></b> &nbsp;
+                  <FormattedMessage id="clinicalInformationGuidep2" defaultMessage=' For survival plot, [rlps_yn], [rlps_cnfr_drtn], [death_yn], [death_cnfr_drtn] are essential. Recurrence or survival plot is composed of [rlps_yn], [rlps_cnfr_drtn], and Survival of survival plot is composed of [death_yn], [death_cnfr_drtn].' />
+                </p>
+
+                <ul>
+                  <li style={{ paddingLeft: '5%', paddingTop: '10px' }}> -  <FormattedMessage id="clinicalInformationGuideinnerp1" defaultMessage='rlps_yn : recurrence yes or no (TRUE / FALSE)' /> </li>
+                  <li style={{ paddingLeft: '5%' }}> - <FormattedMessage id="clinicalInformationGuideinnerp2" defaultMessage='rlps_cnfr_drtn : recurrence confirmation duration (numeric data)' /> </li>
+                  <li style={{ paddingLeft: '5%' }}>- <FormattedMessage id="clinicalInformationGuideinnerp3" defaultMessage='death_yn : death yes or no (TRUE / FALSE)' /></li>
+                  <li style={{ paddingLeft: '5%' }}>- <FormattedMessage id="clinicalInformationGuideinnerp4" defaultMessage='death_cnfr_drtn : death confirmation duration (numeric data)' /> </li>
+                </ul>
+              </li>
+
+            </ul>}
+
+          {(fileName === 'DnaMutation' || fileName === 'CNV' || fileName === 'Methylation' || fileName === 'Fusion' || fileName === 'Phospho') &&
+            <ul className="" style={{ paddingTop: '10px' }}>
+              <li className="" tabIndex="0" >
+                <p style={{ color: 'black' }}> <b></b> &nbsp;
+                  <FormattedMessage id="DNAMutationGuideP1" defaultMessage='Each column configuration of omics data must be same to the sample format. ' />
+                </p>
+              </li>
+              <li tabIndex="-1" style={{ paddingTop: '10px' }}>
+                <p style={{ color: 'black' }}> <b></b> &nbsp;
+                  <FormattedMessage id="DNAMutationGuideP2" defaultMessage='Leave the “None” value empty.' />
+                </p>
+              </li>
+            </ul>
+          }
+          {(fileName === 'RNA' || fileName === 'Proteome') &&
+            <ul className="" style={{ paddingTop: '10px' }}>
+              <li className="" tabIndex="0" >
+                <p style={{ color: 'black' }}> <b></b> &nbsp;
+                  <FormattedMessage id="RNAGuideP1" defaultMessage='Each column configuration of omics data must be same to the sample format.' />
+                </p>
+              </li>
+              <li tabIndex="-1" style={{ paddingTop: '10px' }}>
+                <p style={{ color: 'black' }}> <b></b> &nbsp;
+                  <FormattedMessage id="RNAGuideP2" defaultMessage='Leave the “None” value empty.' />
+                </p>
+              </li>
+              <li tabIndex="-1" style={{ paddingTop: '10px' }}>
+                <p style={{ color: 'black' }}> <b></b> &nbsp;
+                  <FormattedMessage id="RNAGuideP3" defaultMessage='[raw] column is raw count information. [norm] column is normalization information like CPM, RPKM, FPKM, TPM.' />
+                </p>
+              </li>
+            </ul>
+          }
+
+        </div>
+
+
+
+      </div>
+      {/* <ul>
+        {fileName !== 'ClinicalInformation' ?
+          <li style={{ paddingLeft: '5%', paddingTop: '10px' }}> 1. &nbsp; &nbsp; Each column configuration of omics data must be same to the sample format. </li>
+          :
+          <>
+            <li style={{ paddingLeft: '5%', paddingTop: '10px' }}>1. &nbsp; &nbsp; [sample_id] column is essential. Other columns except [sample_id] are userdata. </li>
+            <li style={{ paddingLeft: '5%', paddingTop: '10px' }}>2. &nbsp; &nbsp; For survival plot, [rlps_yn], [rlps_cnfr_drtn], [death_yn], [death_cnfr_drtn] are essential. Recurrence or survival plot is composed of [rlps_yn], [rlps_cnfr_drtn], and Survival of survival plot is composed of [death_yn], [death_cnfr_drtn].
+              <ul>
+                <li style={{ paddingLeft: '5%', paddingTop: '10px' }}> - &nbsp; &nbsp; rlps_yn : &nbsp; &nbsp;recurrence yes or no (TRUE / FALSE) </li>
+                <li style={{ paddingLeft: '5%' }}> - &nbsp; &nbsp; rlps_cnfr_drtn : &nbsp; &nbsp;recurrence confirmation duration (numeric data)</li>
+                <li style={{ paddingLeft: '5%' }}>- &nbsp; &nbsp; death_yn : &nbsp; &nbsp;death yes or no (TRUE / FALSE)</li>
+                <li style={{ paddingLeft: '5%' }}>- &nbsp; &nbsp; death_cnfr_drtn : &nbsp; &nbsp; death confirmation duration (numeric data) </li>
+              </ul>
+            </li> </>
+        }
+      </ul> */}
+    </ul>
+  )
+
+}
 
 
 

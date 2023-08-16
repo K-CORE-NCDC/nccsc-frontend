@@ -8,13 +8,12 @@ function ReportSubHeader({ tData,tableData }) {
   const [md, setMd] = useState(0)
   const [width, setWidth] = useState(0)
   const [dataExist, setDataExist] = useState(false)
-
   useEffect(() => {
     if (dataExist) {
       let w = 0, s = 0, m = 0
 
-      if (document.getElementsByClassName('rdt_TableRow')) {
-        let row = document.getElementsByClassName('rdt_TableRow')[0]
+      if (document.getElementsByClassName('rdt_TableHeadRow')) {
+        let row = document.getElementsByClassName('rdt_TableHeadRow')[0]
         if (row && w === 0 && s === 0 && m === 0) {
           let r = row.childNodes
           if (r.length > 0) {
@@ -38,6 +37,7 @@ function ReportSubHeader({ tData,tableData }) {
       }
     }
   }, [dataExist])
+
   useEffect(() => {
     if (tData !== undefined && tData) {
       setDataExist(tData)
@@ -48,13 +48,15 @@ function ReportSubHeader({ tData,tableData }) {
   return (
     <>
       {width > 0 && sm > 0 && md > 0 &&
-        <div className='flex  w-full  border-b border-gray-200' style={{ "borderRight": '1px solid #6F7378', minWidth: width + 'px' }}>
+        <div className='flex' style={{ minWidth: width + 'px', minHeight:'15px' }}>
 
-          <div style={{ minWidth: (sm + md + 2) + 'px', 'borderRight': '1px solid #6F7378', 'borderLeft': '1px solid #fff' }} className=' px-5 py-8 text-center'>Cancer Major Genes
+          <div style={{ minWidth: (sm) + 'px', 'borderRight': '1px solid #6F7378', 'borderLeft': '1px solid #fff' }} className=' px-5 py-8 text-center Flex JustifyCenter'>
+            <h1 style={{marginTop:'5px'}}> Cancer Major Genes</h1>
           </div>
 
           {dataExist && tableData[0].hasOwnProperty('dna') &&
-          <div style={{ minWidth: (md * 2) + 1 + "px", 'borderRight': '1px solid #6F7378', 'borderLeft': '1px solid #fff' }} className=' px-5 py-8 text-center  '>DNA Mutation
+          <div style={{ minWidth: (md * 2) + "px", 'borderRight': '1px solid #6F7378', 'borderLeft': '1px solid #fff' }} className=' px-5 py-8 text-center Flex JustifyCenter '>
+            <h1 style={{marginTop:'5px'}}>DNA Mutation</h1>
             <span>
               <QuestionMarkCircleIcon data-multiline={true} className="inline ml-2 mb-1" data-class="my-tooltip" data-tip="Yes : if occured mutation is one of the following variant <br>  <br/>types - Missense mutation, Nonsense mutation, Splice site, <br>  <br/>In frame insertion, In frame deletion, Frame-shift insertion, Frame-shift deletion" style={{ width: '20px', cursor: 'pointer' }}>
               </QuestionMarkCircleIcon >
@@ -64,7 +66,8 @@ function ReportSubHeader({ tData,tableData }) {
           } 
 
           {dataExist && tableData[0].hasOwnProperty('rna') &&
-          <div style={{ minWidth: (md * 3) + 1 + "px", 'borderRight': '1px solid #6F7378', 'borderLeft': '1px solid #fff' }} className=' px-5 py-8 text-center  '>RNA
+          <div style={{ minWidth: (md * 3) + "px", 'borderRight': '1px solid #6F7378', 'borderLeft': '1px solid #fff' }} className=' px-5 py-8 text-center Flex JustifyCenter '>
+            <h1 style={{marginTop:'5px'}}>RNA</h1>
             <span>
               <QuestionMarkCircleIcon data-multiline="true" className='inline ml-2 mb-1' data-tip="RNA high : z-score ≥ 1,<br>  <br/>RNA low : z-score ≤ -1 " style={{ width: '20px', cursor: 'pointer' }}>
               </QuestionMarkCircleIcon>
@@ -74,7 +77,8 @@ function ReportSubHeader({ tData,tableData }) {
           } 
 
         {dataExist && tableData[0].hasOwnProperty('proteome') &&
-          <div style={{ minWidth: (md * 3) + 1 + "px", 'borderRight': '1px solid transparent', 'borderLeft': '1px solid #fff' }} className=' px-5 py-8 text-center  '>Proteome
+          <div style={{ minWidth: (md * 3) + "px", 'borderLeft': '1px solid #fff' }} className=' px-5 py-8 text-center Flex JustifyCenter '>
+            <h1 style={{marginTop:'5px'}}>Proteome</h1>
             <span>
               <QuestionMarkCircleIcon data-multiline="true" className='inline ml-2 mb-1' data-tip="Proteome high : z-score ≥ 1.5,<br>  <br/>Proteome low : z-score ≤ 0.5" style={{ width: '20px', cursor: 'pointer' }}>
               </QuestionMarkCircleIcon>

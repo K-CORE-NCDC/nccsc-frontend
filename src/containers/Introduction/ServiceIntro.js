@@ -10,49 +10,56 @@ console.log('lan', lan)
 
   return (
     <div className="auto" >
-      <div className="publicDataInfo">
-        <ul>
-          <li>
-            <img src={icon1} alt="" />
-            <dl>
-              <dt><FormattedMessage
-                id="serviceIntro_h1"
-                defaultMessage="Single Data Visualization"
-              /></dt>
-              <dd>
-                <FormattedMessage
+      <div className="publicDataInfo ">
+        <div className="mainDataStatusWrap Relative">
+          <div className="mainDataStatus">
+            <dl className="serviceIntroBox">
+              <dt>
+                <img src={icon1} alt="" />
+                <strong><FormattedMessage
+                    id="serviceIntro_h1"
+                    defaultMessage="Single Data Visualization"
+                  /></strong>
+              </dt>
+              <dd className="subtitle01"><FormattedMessage
                   id="serviceIntro_txt1"
                   defaultMessage="This service visualizes single user input data. It is a one-time analysis service that is not saved."
                 /></dd>
             </dl>
-          </li>
-          <li>
-            <img src={icon2} alt="" />
-            <dl>
-              <dt><FormattedMessage
-                id="serviceIntro_h2"
-                defaultMessage="Multi Data Visualization"
-              /></dt>
-              <dd><FormattedMessage
+            <dl className="serviceIntroBox">
+              <dt>
+                <img src={icon2} alt="" />
+                <strong>
+                  <FormattedMessage
+                  id="serviceIntro_h2"
+                  defaultMessage="Multi Data Visualization"
+                  />
+                </strong>
+              </dt>
+              <dd className="subtitle01"><FormattedMessage
                 id="serviceIntro_txt2"
                 defaultMessage="This service visualizes multiple(more than 2) user input data. Up to 5 projects can be created."
               /></dd>
             </dl>
-          </li>
-          <li>
-            <img src={icon3} alt="" />
-            <dl >
-              <dt><FormattedMessage
-                id="serviceIntro_h3"
-                defaultMessage="Other Tools"
-              /></dt>
-              <dd className={`${lan === 'kr-KO' ? '' : 'LastDiv'}`}><FormattedMessage
-                id="serviceIntro_txt3"
-                defaultMessage="This service provides various functions such as pre-processing of genomic data and annotation of biomedical information."
-              /></dd>
+            <dl className="serviceIntroBox">
+              <dt>
+                <img src={icon3} alt="" />
+                <strong>
+                  <FormattedMessage
+                    id="serviceIntro_h3"
+                    defaultMessage="Other Tools"
+                  />
+                </strong>
+              </dt>
+              <dd className="subtitle01">
+                <FormattedMessage
+                  id="serviceIntro_txt3"
+                  defaultMessage="This service provides various functions such as pre-processing of genomic data and annotation of biomedical information."
+                />
+              </dd>
             </dl>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
 
     </div>

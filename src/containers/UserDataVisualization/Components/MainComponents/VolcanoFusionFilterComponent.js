@@ -6,10 +6,6 @@ import { useParams } from "react-router-dom";
 
 
 let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
-    const selectedCss =
-        "w-1/2 rounded-r-none  hover:scale-110 focus:outline-none flex  justify-center p-5 rounded font-bold cursor-pointer hover:bg-main-blue bg-main-blue text-white border duration-200  ease-in-out border-gray-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md";
-    const nonSelectedCss =
-        "w-1/2 rounded-l-none  hover:scale-110 focus:outline-none flex justify-center p-5 rounded font-bold cursor-pointer hover:bg-teal-200 bg-teal-100 text-teal-700 border duration-200 ease-in-out border-teal-600 transition text-base sm:text-sm md:text-md lg:text-base xl:text-xl  2xl:text-md";
 
     let { project_id } = useParams();
 
@@ -43,7 +39,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
 
 
     const updateGroupFilters = (filtersObject) => {
-        if(tab === 'volcano'){
+        if (tab === 'volcano') {
 
             if (filtersObject && proteomeValue !== 'NT') {
                 setGroupFilters(filtersObject);
@@ -52,7 +48,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
                 setGroupFilters(filtersObject);
             }
         }
-        else if(tab === 'fusion'){
+        else if (tab === 'fusion') {
             setGroupFilters(filtersObject);
         }
     };
@@ -75,31 +71,31 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
                 volcanoFusionFilterData['groupFilters'] = {}
             }
 
-            volcanoFusionFilterData['volcanoType'] = volcanoType    
+            volcanoFusionFilterData['volcanoType'] = volcanoType
             volcanoFusionFilterData['proteomeValue'] = proteomeValue
             volcanoFusionFilterData['userDefienedFilter'] = userDefienedFilter
 
-            
-            if(!project_id){
-                if('group_1' in groupFilters)
+
+            if (!project_id) {
+                if ('group_1' in groupFilters)
                     groupFilters.group_a = groupFilters.group_1;
-                
-                if('group_2' in groupFilters)
+
+                if ('group_2' in groupFilters)
                     groupFilters.group_b = groupFilters.group_2;
-                
-                if('group_3' in groupFilters)
+
+                if ('group_3' in groupFilters)
                     groupFilters.group_c = groupFilters.group_3;
 
-                if('group_1' in groupFilters)
+                if ('group_1' in groupFilters)
                     delete groupFilters.group_1;
-                
-                if('group_2' in groupFilters)
+
+                if ('group_2' in groupFilters)
                     delete groupFilters.group_2;
-                
-                if('group_3' in groupFilters)
+
+                if ('group_3' in groupFilters)
                     delete groupFilters.group_3;
-                
-                
+
+
             }
 
             if (volcanoType === 'transcriptome' && groupFilters && Object.keys(groupFilters).length) {
@@ -112,10 +108,10 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
                 parentCallback({ volcanoFusionFilterData: volcanoFusionFilterData })
             }
         }
-        else if(tab === 'fusion'){
+        else if (tab === 'fusion') {
             let volcanoFusionFilterData = {}
             volcanoFusionFilterData['groupFilters'] = groupFilters
-            if(groupFilters && Object.keys(groupFilters).length){
+            if (groupFilters && Object.keys(groupFilters).length) {
                 parentCallback({ volcanoFusionFilterData: volcanoFusionFilterData })
             }
         }
@@ -235,7 +231,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
                                     />
                                 </h6>
                             ) && (
-                                    <div className="m-1 flex flex-row justify-around" style={{gap:"15px"}}>
+                                    <div className="m-1 flex flex-row justify-around" style={{ gap: "15px" }}>
                                         {
                                             <button
                                                 onClick={() => {
@@ -244,7 +240,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
                                                 }}
                                                 className={
                                                     userDefienedFilter === "static" ?
-                                                     "SurvivalSelectedCss btn btnPrimary MAuto on" : "SurvivalNonSelectedCss btn MAuto"
+                                                        "SurvivalSelectedCss btn btnPrimary MAuto on" : "SurvivalNonSelectedCss btn MAuto"
                                                 }
                                             >
                                                 <FormattedMessage
@@ -260,7 +256,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
                                             }}
                                             className={
                                                 userDefienedFilter === "dynamic"
-                                                  ? "SurvivalSelectedCss btn btnPrimary MAuto on" : "SurvivalNonSelectedCss btn MAuto"
+                                                    ? "SurvivalSelectedCss btn btnPrimary MAuto on" : "SurvivalNonSelectedCss btn MAuto"
                                             }
                                         >
                                             <FormattedMessage
@@ -337,7 +333,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
                         </div>
 
                         {project_id === undefined && (
-                            <div className="m-1 flex flex-row justify-around" style={{gap:"10px"}}>
+                            <div className="m-1 flex flex-row justify-around" style={{ gap: "10px" }}>
                                 <button
                                     onClick={() => {
                                         setUserDefienedFilter("static");
@@ -345,7 +341,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
                                     }}
                                     className={
                                         userDefienedFilter === "static" ?
-                                                     "SurvivalSelectedCss btn btnPrimary MAuto on" : "SurvivalNonSelectedCss btn MAuto"
+                                            "SurvivalSelectedCss btn btnPrimary MAuto on" : "SurvivalNonSelectedCss btn MAuto"
                                     }
                                 >
                                     <FormattedMessage
@@ -360,7 +356,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
                                     }}
                                     className={
                                         userDefienedFilter === "dynamic"
-                                        ? "SurvivalSelectedCss btn btnPrimary MAuto on" : "SurvivalNonSelectedCss btn MAuto"
+                                            ? "SurvivalSelectedCss btn btnPrimary MAuto on" : "SurvivalNonSelectedCss btn MAuto"
                                     }
                                 >
                                     <FormattedMessage

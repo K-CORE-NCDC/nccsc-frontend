@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { SankeyJson } from "../../../actions/api_actions";
 import NoContentGene from "../../Common/NoContentGene";
-
+import DataTable from 'react-data-table-component';
 
 function SankeyIndex({ selectedGene, variants, allVariants }) {
   const d = selectedGene
@@ -26,8 +26,10 @@ function SankeyIndex({ selectedGene, variants, allVariants }) {
   });
   const [sankyTableData, setSankyTableData] = useState();
   const [sankyTableData2, setSankyTableData2] = useState("");
+
   const history = useHistory();
   const uniqiue_values = { 'dbsnp_rs': new Set(), 'diseasename': new Set() }
+
   useEffect(() => {
     setLoader(true)
     setShowNoContent(false)
@@ -199,122 +201,286 @@ function SankeyIndex({ selectedGene, variants, allVariants }) {
   }, [sankeyJson]);
 
   useEffect(() => {
-    if (detailGeneData.length > 0) {
-      let tableHTML = (
-        <table className="min-w-full border text-center">
-          <thead className="border-b">
-            <tr>
-              <th
-                scope="col"
-                className="text-md font-medium text-gray-900 px-6 py-4 border-r"
-              >
-                gene
-              </th>
-              <th
-                scope="col"
-                className="text-md font-medium text-gray-900 px-6 py-4 border-r"
-              >
-                Variant
-              </th>
-              <th
-                scope="col"
-                className="text-md font-medium text-gray-900 px-6 py-4 border-r"
-              >
-                Rsid
-              </th>
-              <th
-                scope="col"
-                className="text-md font-medium text-gray-900 px-6 py-4 border-r"
-              >
-                Disease
-              </th>
-              <th
-                scope="col"
-                className="text-md font-medium text-gray-900 px-6 py-4"
-              >
-                Drug
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {detailGeneData.map((genedata, index) => (
-              <tr key={index} className="border-b">
-                <td
-                  className="
-                            px-6 py-4  text-md font-medium text-gray-900 border-r"
-                >
-                  {genedata["hugo_symbol"]}
-                </td>
-                <td className="px-6 py-4  text-md font-medium text-gray-900 border-r">
-                  {genedata["variant_classification"]}
-                </td>
-                <td className="px-6 py-4  text-md font-medium text-gray-900 border-r">
-                  {genedata["dbsnp_rs"]}
-                </td>
-                <td className="px-6 py-4 text-md font-medium text-gray-900 border-r">
-                  {genedata["diseasename"]}
-                </td>
-                <td className="px-6 py-4 text-md font-medium text-gray-900 border-r">
-                  {genedata["drugname"]}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      );
-      setSankyTableData(tableHTML);
-    } else {
-      let tableHTML = (
-        <table className="min-w-full border text-center">
-          <thead className="border-b">
-            <tr>
-              <th
-                scope="col"
-                className="text-sm font-medium text-gray-900 px-6 py-4 border-r"
-              >
-                gene
-              </th>
-              <th
-                scope="col"
-                className="text-sm font-medium text-gray-900 px-6 py-4 border-r"
-              >
-                Variant
-              </th>
-              <th
-                scope="col"
-                className="text-sm font-medium text-gray-900 px-6 py-4 border-r"
-              >
-                Rsid
-              </th>
-              <th
-                scope="col"
-                className="text-sm font-medium text-gray-900 px-6 py-4 border-r"
-              >
-                Disease
-              </th>
-              <th
-                scope="col"
-                className="text-sm font-medium text-gray-900 px-6 py-4"
-              >
-                Drug
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="border-b">
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
-                {gene}
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
-                {sankyTableData2}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      );
-      setSankyTableData(tableHTML);
-    }
+    // if (detailGeneData.length > 0) {
+    //   let tableHTML = (
+    //     <table className="min-w-full border text-center">
+    //       <thead className="border-b">
+    //         <tr>
+    //           <th
+    //             scope="col"
+    //             className="text-md font-medium text-gray-900 px-6 py-4 border-r"
+    //           >
+    //             gene
+    //           </th>
+    //           <th
+    //             scope="col"
+    //             className="text-md font-medium text-gray-900 px-6 py-4 border-r"
+    //           >
+    //             Variant
+    //           </th>
+    //           <th
+    //             scope="col"
+    //             className="text-md font-medium text-gray-900 px-6 py-4 border-r"
+    //           >
+    //             Rsid
+    //           </th>
+    //           <th
+    //             scope="col"
+    //             className="text-md font-medium text-gray-900 px-6 py-4 border-r"
+    //           >
+    //             Disease
+    //           </th>
+    //           <th
+    //             scope="col"
+    //             className="text-md font-medium text-gray-900 px-6 py-4"
+    //           >
+    //             Drug
+    //           </th>
+    //         </tr>
+    //       </thead>
+    //       <tbody>
+    //         {detailGeneData.map((genedata, index) => (
+    //           <tr key={index} className="border-b">
+    //             <td
+    //               className="
+    //                         px-6 py-4  text-md font-medium text-gray-900 border-r"
+    //             >
+    //               {genedata["hugo_symbol"]}
+    //             </td>
+    //             <td className="px-6 py-4  text-md font-medium text-gray-900 border-r">
+    //               {genedata["variant_classification"]}
+    //             </td>
+    //             <td className="px-6 py-4  text-md font-medium text-gray-900 border-r">
+    //               {genedata["dbsnp_rs"]}
+    //             </td>
+    //             <td className="px-6 py-4 text-md font-medium text-gray-900 border-r">
+    //               {genedata["diseasename"]}
+    //             </td>
+    //             <td className="px-6 py-4 text-md font-medium text-gray-900 border-r">
+    //               {genedata["drugname"]}
+    //             </td>
+    //           </tr>
+    //         ))}
+    //       </tbody>
+    //     </table>
+    //   );
+    //   setSankyTableData(tableHTML);
+    // } else {
+    //   let tableHTML = (
+    //     <table className="min-w-full border text-center">
+    //       <thead className="border-b">
+    //         <tr>
+    //           <th
+    //             scope="col"
+    //             className="text-sm font-medium text-gray-900 px-6 py-4 border-r"
+    //           >
+    //             gene
+    //           </th>
+    //           <th
+    //             scope="col"
+    //             className="text-sm font-medium text-gray-900 px-6 py-4 border-r"
+    //           >
+    //             Variant
+    //           </th>
+    //           <th
+    //             scope="col"
+    //             className="text-sm font-medium text-gray-900 px-6 py-4 border-r"
+    //           >
+    //             Rsid
+    //           </th>
+    //           <th
+    //             scope="col"
+    //             className="text-sm font-medium text-gray-900 px-6 py-4 border-r"
+    //           >
+    //             Disease
+    //           </th>
+    //           <th
+    //             scope="col"
+    //             className="text-sm font-medium text-gray-900 px-6 py-4"
+    //           >
+    //             Drug
+    //           </th>
+    //         </tr>
+    //       </thead>
+    //       <tbody>
+    //         <tr className="border-b">
+    //           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
+    //             {gene}
+    //           </td>
+    //           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
+    //             {sankyTableData2}
+    //           </td>
+    //         </tr>
+    //       </tbody>
+    //     </table>
+    //   );
+    //   setSankyTableData(tableHTML);
+    // }
+    generateTableColumnsData(detailGeneData)
   }, [detailGeneData]);
+
+
+  const generateTableColumnsData = (detailGeneData) => {
+
+    if (detailGeneData && detailGeneData.length > 0) {
+
+      let tableColumnsData = [
+        {
+          name: "geneName",
+          selector: (row) => {
+            return row.hugo_symbol;
+          },
+          sortable: true,
+          classNames: ["report_sankey"],
+          style: {
+            borderLeft: "1px solid #fff",
+            borderRight: "1px solid #fff",
+            boxSizing: "border-box",
+            textAlign: "center",
+            lineHeight: "3.5",
+            display: "flex",
+            justifyContent: "center"
+          },
+        },
+      ];
+
+      tableColumnsData.push(
+        {
+          name: "Variant",
+          selector: (row) => {
+            return row.variant_classification;
+          },
+          sortable: true,
+          style: {
+            borderLeft: "1px solid #6F7378",
+            borderRight: "1px solid #fff",
+            boxSizing: "border-box",
+            textAlign: "center",
+            display: "flex",
+            justifyContent: "center",
+            lineHeight: "3.5",
+          },
+        }
+      )
+
+      tableColumnsData.push(
+        {
+          name: "Rsid",
+          selector: (row) => {
+            return row.dbsnp_rs;
+          },
+          sortable: true,
+          style: {
+            borderLeft: "1px solid #ABB0B8",
+            borderRight: "1px solid #fff",
+            boxSizing: "border-box",
+            textAlign: "center",
+            display: "flex",
+            justifyContent: "center",
+            lineHeight: "3.5",
+          },
+        })
+
+      tableColumnsData.push(
+        {
+          name: "Disease",
+          selector: (row) => {
+            return row.dbsnp_rs;
+          },
+          sortable: true,
+          style: {
+            borderLeft: "1px solid #ABB0B8",
+            borderRight: "1px solid #fff",
+            boxSizing: "border-box",
+            textAlign: "center",
+            display: "flex",
+            justifyContent: "center",
+            lineHeight: "3.5",
+          },
+        })
+
+      tableColumnsData.push(
+        {
+          name: "Drug",
+          selector: (row) => {
+            return row.drugname;
+          },
+          sortable: true,
+          style: {
+            borderLeft: "1px solid #ABB0B8",
+            borderRight: "1px solid #fff",
+            boxSizing: "border-box",
+            textAlign: "center",
+            display: "flex",
+            justifyContent: "center",
+            lineHeight: "3.5",
+          },
+        })
+
+      return tableColumnsData;
+    }
+    else return []
+  }
+
+  const customStyles = {
+    table: {
+      style: {
+        display: "table",
+        width: "100%",
+        tableLayout: "fixed",
+        border: "2px solid #2e2e2e",
+        borderCollapse: "collapse",
+        fontSize: "16px",
+        color: "#8f8f8f",
+        fontWeight: "500",
+        textAlign: "center !important"
+      },
+    },
+    thead: {
+      style: {
+        display: "table-header-group",
+        fontWeight: "500",
+        borderBottom: "2px solid #2e2e2e",
+      },
+    },
+    td: {
+      style: {
+        display: "table-cell",
+        verticalAlign: "middle",
+        padding: "20px 16px",
+        position: "relative",
+        width: "90px",
+        color: "#2e2e2e",
+        borderBottom: "1px solid #2e2e2e"
+      },
+    },
+    tr: {
+      style: {
+        display: "table-row",
+      },
+    },
+    tbody: {
+      style: {
+        display: "table-row-group",
+      },
+    },
+    headCells: {
+      classNames: ['report_sankey'],
+      style: {
+        textAlign: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        borderBottom: "1px solid #2e2e2e",
+        borderRight: "1px solid #2e2e2e"
+      }
+    },
+    pagination: {
+      style: {
+        gap: "10px"
+      }
+    }
+  };
+
 
   return (
     <>
@@ -328,7 +494,23 @@ function SankeyIndex({ selectedGene, variants, allVariants }) {
                 <>
                   <Sankey></Sankey>
                   <NewSankeyd3 SankeyJson={SankeyJsonData} idName="chart"></NewSankeyd3>
-                  {sankyTableData}
+                  <div>
+                    {detailGeneData && detailGeneData.length > 0 &&
+                      <div className='rounded-lg border border-gray-200'>
+                        <h3 className='BasicInformationTitle' style={{margin:"40px 0px"}}>
+                          Sankey Information
+                        </h3>
+                        <div className='report_table'>
+                          <DataTable pagination
+                            responsive
+                            columns={generateTableColumnsData(detailGeneData)}
+                            data={detailGeneData}
+                            customStyles={customStyles}
+                          />
+                        </div>
+                      </div>
+                    }
+                  </div>
                 </>
               )}
           </div>

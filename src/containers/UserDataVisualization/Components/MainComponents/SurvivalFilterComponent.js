@@ -76,7 +76,10 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
 
     useEffect(() => {
         if (userDefinedFilterColumns && userDefinedFilterColumns["filterJson"] && userDefinedFilterColumns["filterJson"]["Clinical Information"] && Object.keys(userDefinedFilterColumns).length > 0) {
-            setCoxUserDefinedFilter(userDefinedFilterColumns["filterJson"]["Clinical Information"])
+            let columns = userDefinedFilterColumns["filterJson"]["Clinical Information"]
+            delete columns['death_yn']
+            delete columns['death_cnfr_drtn']
+            setCoxUserDefinedFilter(columns)
         }
     }, [userDefinedFilterColumns])
 

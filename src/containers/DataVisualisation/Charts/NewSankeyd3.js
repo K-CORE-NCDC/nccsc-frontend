@@ -203,7 +203,7 @@ function NewSankeyd3({ SankeyJson, idName, forGene }) {
       }
       let j = SankeyJson;
 
-      const maxDbsnpRsCount = 50;   // Maximum dbsnp_rs nodes
+      const maxDbsnpRsCount = 20;   // Maximum dbsnp_rs nodes
       const maxDrugnameCount = 20;  // Maximum drugname nodes
 
       let dbsnpRsCounter = 0;        // Counter for dbsnp_rs nodes

@@ -132,7 +132,9 @@ const SignupComponent = () => {
                       {errorMessage}
                     </div>
                   )}
-
+                  
+                    <p style={{"marginBottom":"30px","textAlign":"center"}}><FormattedMessage id="singUpGuide" defaultMessage="An email containing the registration number, PIN number, and password setting link will be sent to the entered email address." /></p>
+                  
                   <dl>
                     <dt>
                       <img src={nameIcon} alt="" />

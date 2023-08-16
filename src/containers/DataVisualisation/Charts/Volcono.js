@@ -124,19 +124,19 @@ export default function DataVolcono({
       if ("table_data" in volcanoJson) {
         volcanoJson["table_data"].forEach((item, i) => {
           let log2foldchange = parseFloat(item["log2(fold_change)"]);
-          if (log2foldchange < 0) {
+          if (log2foldchange <= -1.5) {
             negativeCount += 1;
             negative.push({
               "Gene Name": item["gene"],
               Log2FC: parseFloat(item["log2(fold_change)"]),
-              "-Log(Pvalue)": item["q_value"],
+              "-Log(Pvalue)": item["p_value"],
             });
-          } else {
+          } else if(log2foldchange >= 1.5) {
             positiveCount += 1;
             positive.push({
               "Gene Name": item["gene"],
               Log2FC: parseFloat(item["log2(fold_change)"]),
-              "-Log(Pvalue)": item["q_value"],
+              "-Log(Pvalue)": item["p_value"],
             });
           }
         });
