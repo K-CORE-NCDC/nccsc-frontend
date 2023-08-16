@@ -108,7 +108,6 @@ export default function DataSurvival({
           setCoxNoData(false)
 
         } else if (d.status === 200 && "data" in d && 'survival_type' in inputState && inputState['survival_type'] === 'cox') {
-          console.log("data",d["data"]);
           let r_ = d["data"]
           r_['status'] = 200
           setSurvivalJson(r_)
@@ -142,7 +141,6 @@ export default function DataSurvival({
     setTimeout(function () {
       setLoader(false);
     }, 1000);
-
     if (inputState['survival_type'] === "recurrence" || inputState['survival_type'] === "survival") {
       if (survivalJson && survivalJson.sample_counts) {
         const sampleCountsObject = survivalJson.sample_counts;
@@ -330,7 +328,7 @@ export default function DataSurvival({
           }
 
           {
-            (vizType !== 'single' && inputState && ('group_filters' in inputState === false ||
+            (vizType !== 'single' && inputState && ((inputState['survival_type'] !== 'cox' && 'group_filters' in inputState === false) ||
               (inputState['survival_type'] === 'cox' && 'coxFilter' in inputState === false))) && <p className="MarginTop4">
               <FormattedMessage id="PleaseSelectFilterData" defaultMessage="Please Select Filter Data" />
             </p>

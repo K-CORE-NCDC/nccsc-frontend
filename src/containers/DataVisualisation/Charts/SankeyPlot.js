@@ -5,17 +5,11 @@ import { RNIDetails } from '../../../actions/api_actions'
 import { useParams } from "react-router-dom";
 import DataTable from 'react-data-table-component';
 import ReportSubHeader from '../../Common/ReportSubHeader';
-import NoContentMessage from '../../Common/NoContentComponent';
 import SankeyIndex from './SankeyIndex';
 import LoaderComp from '../../Common/Loader';
 
 function SankeyPlot({
-  width,
   inputData,
-  screenCapture,
-  setToFalseAfterScreenCapture,
-  toggle,
-  state,
 }) {
 
   const basicTable = useRef()
@@ -37,7 +31,6 @@ function SankeyPlot({
   const [variantClassificationHtml, setVariantClassificationHtml] = useState()
   const [variantClassification, setVariantClassification] = useState("")
   const [variantClassificationList, setVariantClassificationList] = useState([])
-  const [showSankey, setShowSankey] = useState(true)
 
   const SampleRnidListData = useSelector(
     (data) => data.dataVisualizationReducer.Keys
@@ -66,213 +59,298 @@ function SankeyPlot({
     setSampleKey(sampleId)
   }
 
+  // const customStyles = {
+  //   headCells: {
+  //     classNames: ['report_sankey'],
+  //     style: {
+  //       'textAlign': 'center',
+  //       'display': 'block',
+  //     }
+  //   },
+  //   expanderCell: {
+  //     style: {
+  //       'minWidth': '5%',
+  //       'display': 'block',
+  //     }
+  //   },
+  //   pagination: {
+  //     style: {
+  //       gap: "10px"
+  //     }
+  //   }
+  // }
+
   const customStyles = {
+    table: {
+      style: {
+        display: "table",
+        width: "100%",
+        tableLayout: "fixed",
+        border: "2px solid #2e2e2e",
+        borderCollapse: "collapse",
+        fontSize: "16px",
+        color: "#8f8f8f",
+        fontWeight: "500",
+        textAlign: "center !important"
+      },
+    },
+    thead: {
+      style: {
+        display: "table-header-group",
+        fontWeight: "500",
+        borderBottom: "2px solid #2e2e2e",
+      },
+    },
+    td: {
+      style: {
+        display: "table-cell",
+        verticalAlign: "middle",
+        padding: "20px 16px",
+        position: "relative",
+        width: "90px",
+        color: "#2e2e2e",
+        borderBottom: "1px solid #2e2e2e"
+      },
+    },
+    tr: {
+      style: {
+        display: "table-row",
+      },
+    },
+    tbody: {
+      style: {
+        display: "table-row-group",
+      },
+    },
     headCells: {
       classNames: ['report_sankey'],
       style: {
-        'textAlign': 'center',
-        'display': 'block',
-      }
-    },
-    expanderCell: {
-      style: {
-        'minWidth': '5%',
-        'display': 'block',
+        textAlign: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        borderBottom: "1px solid #2e2e2e",
+        borderRight: "1px solid #2e2e2e"
       }
     },
     pagination: {
       style: {
         gap: "10px"
       }
-    }
-  }
-
-  const rowPreDisabled = (row) => {
-    let variant = rnaData.variant_info
-    let gene = row.gene
-    if (variant && gene in variant) {
-      // return row
-    } else {
-      return row
-    }
-  }
-
-  const rowExpandFunc = (expanded, row) => {
-    if (expanded) {
-      let gene = row['gene']
-      if (document.getElementById('chart_' + gene)) {
-        document.getElementById('chart_' + gene).innerHTML = ''
-      }
-      setCurrentRow(row)
-    }
-
-  }
-
-  const tableColumnsData = [
-    {
-      name: "geneName",
-      selector: (row) => {
-        return row.gene;
-      },
-      sortable: true,
-      classNames: ["report_sankey"],
+    },
+    subHeader: {
       style: {
-        borderLeft: "1px solid #fff",
-        borderRight: "1px solid #fff",
-        boxSizing: "border-box",
-        textAlign: "center",
-        display: "block",
-        lineHeight: "3.5",
+        fontWeight: 'bold',
+        fontSize: '16px',
+        border: '2px solid black',
+        padding:'0px',
+        minHeight:'15px'
       },
     },
+  };
 
-    {
-      name: "Yes",
-      selector: (row) => {
-        if (row.dna === "YES") {
-          if (row.gene in rnaData["variant_info"]) {
-            let variants = rnaData["variant_info"][row.gene];
-            variants = variants.join("-");
-            return (
-              <div data-bs-toggle="tooltip" title={variants}>
-                {"O  (" + rnaData["variant_info"][row.gene].length + ")"}
-              </div>
-            );
-          } else {
-            return row.dna;
+
+  const generateTableColumnsData = (rnaData) => {
+    if (rnaData && 'genomic_summary' in rnaData) {
+
+      let tableColumnsData = [
+        {
+          name: "geneName",
+          selector: (row) => {
+            return row.gene;
+          },
+          sortable: true,
+          classNames: ["report_sankey"],
+          style: {
+            borderLeft: "1px solid #fff",
+            borderRight: "1px solid #fff",
+            boxSizing: "border-box",
+            textAlign: "center",
+            lineHeight: "3.5",
+            display: "flex",
+            justifyContent: "center"
+          },
+        },
+      ];
+
+      if (rnaData.genomic_summary[0].hasOwnProperty('dna')) {
+        tableColumnsData.push(
+          {
+            name: "Yes",
+            selector: (row) => {
+              if (row.dna === "YES") {
+                if (row.gene in rnaData["variant_info"]) {
+                  let variants = rnaData["variant_info"][row.gene];
+                  variants = variants.join("-");
+                  return (
+                    <div data-bs-toggle="tooltip" title={variants}>
+                      {"O  (" + rnaData["variant_info"][row.gene].length + ")"}
+                    </div>
+                  );
+                } else {
+                  return row.dna;
+                }
+              } else return "";
+            },
+            sortable: true,
+            style: {
+              borderLeft: "1px solid #6F7378",
+              borderRight: "1px solid #fff",
+              boxSizing: "border-box",
+              textAlign: "center",
+              display: "flex",
+              justifyContent: "center",
+              lineHeight: "3.5",
+            },
           }
-        } else return "";
-      },
-      sortable: true,
-      style: {
-        borderLeft: "1px solid #6F7378",
-        borderRight: "1px solid #fff",
-        boxSizing: "border-box",
-        textAlign: "center",
-        display: "block",
-        lineHeight: "3.5",
-      },
-    },
-    {
-      name: "No",
-      selector: (row) => {
-        if (row.dna === "NO") {
-          return "O ";
-        } else return "";
-      },
-      sortable: true,
-      style: {
-        borderLeft: "1px solid #ABB0B8",
-        borderRight: "1px solid #fff",
-        boxSizing: "border-box",
-        textAlign: "center",
-        display: "block",
-        lineHeight: "3.5",
-      },
-    },
-    {
-      name: "High",
-      selector: (row) => {
-        if (row.rna === "HIGH") {
-          return "O ";
-        } else return "";
-      },
-      sortable: true,
-      style: {
-        borderLeft: "1px solid #6F7378",
-        borderRight: "1px solid #fff",
-        boxSizing: "border-box",
-        textAlign: "center",
-        display: "block",
-        lineHeight: "3.5",
-      },
-    },
-    {
-      name: "Intermediate",
-      selector: (row) => {
-        if (row.rna !== "HIGH" && row.rna !== "LOW") {
-          return "O ";
-        } else return "";
-      },
-      sortable: true,
-      style: {
-        borderLeft: "1px solid #ABB0B8",
-        borderRight: "1px solid #fff",
-        boxSizing: "border-box",
-        textAlign: "center",
-        display: "block",
-        lineHeight: "3.5",
-      },
-    },
-    {
-      name: "Low",
-      selector: (row) => {
-        if (row.rna === "LOW") {
-          return "O ";
-        } else return "";
-      },
-      sortable: true,
-      style: {
-        borderLeft: "1px solid #ABB0B8",
-        borderRight: "1px solid #fff",
-        boxSizing: "border-box",
-        textAlign: "center",
-        display: "block",
-        lineHeight: "3.5",
-      },
-    },
-    {
-      name: "High",
-      selector: (row) => {
-        if (row.proteome === "HIGH") {
-          return "O ";
-        } else return "";
-      },
-      sortable: true,
-      style: {
-        borderLeft: "1px solid #6F7378",
-        borderRight: "1px solid #fff",
-        boxSizing: "border-box",
-        textAlign: "center",
-        display: "block",
-        lineHeight: "3.5",
-      },
-    },
-    {
-      name: "Intermediate",
-      selector: (row) => {
-        if (row.proteome !== "HIGH" && row.proteome !== "LOW") {
-          return "O ";
-        } else return "";
-      },
-      sortable: true,
-      style: {
-        borderLeft: "1px solid #ABB0B8",
-        borderRight: "1px solid #fff",
-        boxSizing: "border-box",
-        textAlign: "center",
-        display: "block",
-        lineHeight: "3.5",
-      },
-    },
-    {
-      name: "Low",
-      selector: (row) => {
-        if (row.proteome === "LOW") {
-          return "O ";
-        } else return "";
-      },
-      sortable: true,
-      style: {
-        borderLeft: "1px solid #ABB0B8",
-        borderRight: "1px solid #6F7378",
-        boxSizing: "border-box",
-        textAlign: "center",
-        display: "block",
-        lineHeight: "3.5",
-      },
-    },
-  ];
+        )
+        tableColumnsData.push(
+          {
+            name: "No",
+            selector: (row) => {
+              if (row.dna === "NO") {
+                return "O ";
+              } else return "";
+            },
+            sortable: true,
+            style: {
+              borderLeft: "1px solid #ABB0B8",
+              borderRight: "1px solid #fff",
+              boxSizing: "border-box",
+              textAlign: "center",
+              display: "flex",
+              justifyContent: "center",
+              lineHeight: "3.5",
+            },
+          })
+      }
+
+      if (rnaData.genomic_summary[0].hasOwnProperty('rna')) {
+        tableColumnsData.push(
+          {
+            name: "High",
+            selector: (row) => {
+              if (row.rna === "HIGH") {
+                return "O ";
+              } else return "";
+            },
+            sortable: true,
+            style: {
+              borderLeft: "1px solid #6F7378",
+              borderRight: "1px solid #fff",
+              boxSizing: "border-box",
+              textAlign: "center",
+              display: "flex",
+              justifyContent: "center",
+              lineHeight: "3.5",
+            },
+          })
+
+        tableColumnsData.push(
+          {
+            name: "Intermediate",
+            selector: (row) => {
+              if (row.rna !== "HIGH" && row.rna !== "LOW") {
+                return "O ";
+              } else return "";
+            },
+            sortable: true,
+            style: {
+              borderLeft: "1px solid #ABB0B8",
+              borderRight: "1px solid #fff",
+              boxSizing: "border-box",
+              textAlign: "center",
+              display: "flex",
+              justifyContent: "center",
+              lineHeight: "3.5",
+            },
+          })
+
+        tableColumnsData.push(
+          {
+            name: "Low",
+            selector: (row) => {
+              if (row.rna === "LOW") {
+                return "O ";
+              } else return "";
+            },
+            sortable: true,
+            style: {
+              borderLeft: "1px solid #ABB0B8",
+              borderRight: "1px solid #fff",
+              boxSizing: "border-box",
+              textAlign: "center",
+              display: "flex",
+              justifyContent: "center",
+              lineHeight: "3.5",
+            },
+          })
+      }
+
+      if (rnaData.genomic_summary[0].hasOwnProperty('proteome')) {
+        tableColumnsData.push(
+          {
+            name: "High",
+            selector: (row) => {
+              if (row.proteome === "HIGH") {
+                return "O ";
+              } else return "";
+            },
+            sortable: true,
+            style: {
+              borderLeft: "1px solid #6F7378",
+              borderRight: "1px solid #fff",
+              boxSizing: "border-box",
+              textAlign: "center",
+              display: "flex",
+              justifyContent: "center",
+              lineHeight: "3.5",
+            },
+          })
+        tableColumnsData.push(
+          {
+            name: "Intermediate",
+            selector: (row) => {
+              if (row.proteome !== "HIGH" && row.proteome !== "LOW") {
+                return "O ";
+              } else return "";
+            },
+            sortable: true,
+            style: {
+              borderLeft: "1px solid #ABB0B8",
+              borderRight: "1px solid #fff",
+              boxSizing: "border-box",
+              textAlign: "center",
+              display: "flex",
+              justifyContent: "center",
+              lineHeight: "3.5",
+            },
+          })
+        tableColumnsData.push(
+          {
+            name: "Low",
+            selector: (row) => {
+              if (row.proteome === "LOW") {
+                return "O ";
+              } else return "";
+            },
+            sortable: true,
+            style: {
+              borderLeft: "1px solid #ABB0B8",
+              borderRight: "1px solid #6F7378",
+              boxSizing: "border-box",
+              textAlign: "center",
+              display: "flex",
+              justifyContent: "center",
+              lineHeight: "3.5",
+            },
+          })
+      }
+      return tableColumnsData;
+    }
+    else return []
+  }
+
+  const tableColumnsData = generateTableColumnsData(rnaData)
 
   const loadGenesDropdown = (genes) => {
     let t = []
@@ -523,10 +601,10 @@ function SankeyPlot({
         sampleKey === "" && <p className='MultiUploadTextCenter'>Select Sample</p>
       }
 
-      {loader && <LoaderComp />}
+      {loader && tabName === 'patientSummary' && <LoaderComp />}
 
       {
-        !loader && tabName === 'patientSummary' &&
+        !loader && tabName === 'patientSummary' && sampleKey !== "" &&
         <div>
           {sampleKey !== "" && <div className='BasicGenomic'>
             {/* <h3 className='SampleName'>Sample Name : {sampleKey}</h3> */}
@@ -549,11 +627,9 @@ function SankeyPlot({
               {tableData && tableData.length > 0 &&
                 <div>
                   <div className='rounded-lg border border-gray-200'>
-                    <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                      <h3 className='BasicInformationTitle'>
+                      <h3 className='BasicInformationTitle' style={{margin:"40px 0px"}}>
                         Genomic Information
                       </h3>
-                    </div>
                     <div className=' report_table'>
                       <DataTable pagination
                         responsive
@@ -561,7 +637,7 @@ function SankeyPlot({
                         data={tableData}
                         subHeader
                         customStyles={customStyles}
-                        subHeaderComponent={<ReportSubHeader tData={tableRender} />}
+                        subHeaderComponent={<ReportSubHeader tData={tableRender} tableData={tableData} />}
                       />
                     </div>
                   </div>

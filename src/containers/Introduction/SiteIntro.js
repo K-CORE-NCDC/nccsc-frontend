@@ -125,7 +125,7 @@ export const SiteIntro = ({ height, innerHeight , lan }) => {
           <ServiceIntro lan={lan} />
         }
         {activeTab === '3' &&
-          <Organization />
+          <Organization lan={lan}/>
         }
          {activeTab === '4' &&
           <CBioPortal />

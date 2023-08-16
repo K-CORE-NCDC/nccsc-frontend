@@ -44,15 +44,12 @@ export default function Box({
   useEffect(() => {
     if ('userProjectsDataTable' in tabList) {
       let _data = tabList?.userProjectsDataTable
-      if (_data?.viz_type === 'single') {
-        if (_data['proteome'] !== null) {
-          setActiveTab('1')
-        } else if (_data["dna_mutation"] !== null) {
-          setActiveTab('2')
-          setTableType('mutation')
-        }
-      } else {
+      console.log('_data', _data);
+      if (_data['proteome'] !== null) {
         setActiveTab('1')
+      } else if (_data['rna'] !== null) {
+        setActiveTab('2')
+        setTableType('rna')
       }
       setAllTabList(tabList.userProjectsDataTable)
     }
@@ -63,7 +60,7 @@ export default function Box({
       setGenes(inputData["genes"]);
       setInputState({ ...inputData });
     }
-  }, []);
+  }, [inputData]);
 
 
   const dispatchActionCommon = (postJsonBody) => {
@@ -101,32 +98,25 @@ export default function Box({
     }
   };
 
-  const loadGenesDropdownMutation = (genes) => {
-    let t = [];
-    let t_ = [];
-    for (var i = 0; i < genes.length; i++) {
-      t_.push(
-        <option key={i + "_" + genes[i]} value={genes[i]}>
-          {genes[i]}
-        </option>
-      );
-      t.push({ name: genes[i], id: i });
-    }
-    setGenesHtml(t);
-  };
 
   useEffect(() => {
     if (inputState && "genes" in inputState && tableType) {
+
+      console.log('tableType', tableType);
+      console.log('viewType', viewType);
+
       let g = inputState["genes"];
       let dataJson = inputState;
       loadGenesDropdown(g);
       loadGenesDropdownMutation(g);
       setGene(g[0]);
-      if (tableType === "proteome") {
+      if (tableType === "proteome" || tableType === "rna") {
+        console.log('all the genes setting');
         dataJson["genes"] = g;
-      } else {
-        dataJson["genes"] = [g[0]];
       }
+      // else {
+      //   dataJson["genes"] = [g[0]];
+      // }
 
       if (inputState.type !== "" && inputData["genes"].length > 0) {
         setLoader(true);
@@ -154,7 +144,7 @@ export default function Box({
     downloadLink.href = image64;
     downloadLink.target = '_self';
     downloadLink.download = 'box.svg';
-    downloadLink.click(); 
+    downloadLink.click();
   }
 
   useEffect(() => {
@@ -199,6 +189,21 @@ export default function Box({
     setGenesHtml(t);
   };
 
+  const loadGenesDropdownMutation = (genes) => {
+    let t = [];
+    let t_ = [];
+    for (var i = 0; i < genes.length; i++) {
+      t_.push(
+        <option key={i + "_" + genes[i]} value={genes[i]}>
+          {genes[i]}
+        </option>
+      );
+      t.push({ name: genes[i], id: i });
+    }
+    setGenesHtml(t);
+  };
+
+
   function onSelect(selectedList, selectedItem) {
     let genes = [];
     setSelectedValue(selectedList);
@@ -239,6 +244,7 @@ export default function Box({
   const changeType = (e, type) => {
     let c = document.getElementsByName("type");
     setTableType(type);
+    console.log('type', type);
     // setActiveCmp(false);
     setLoader(true);
     for (var i = 0; i < c.length; i++) {
@@ -253,21 +259,23 @@ export default function Box({
       if (gene_.length <= 0) {
         gene_ = [gene];
       }
-      if (type === "mutation") {
-        dataJson["genes"] = gene_;
+      setSelectedValue([]);
+      dataJson["genes"] = genes;
+      // if (type === "rna") {
+      //   dataJson["genes"] = gene_;
 
-        let selected = selectedValue;
-        if (selected.length > 0) {
-          selected = selected.filter((data, index) => {
-            return selected.indexOf(data) === index;
-          });
-        } else {
-          selected.push({ name: gene, id: 1 });
-        }
-      } else {
-        setSelectedValue([]);
-        dataJson["genes"] = genes;
-      }
+      //   let selected = selectedValue;
+      //   if (selected.length > 0) {
+      //     selected = selected.filter((data, index) => {
+      //       return selected.indexOf(data) === index;
+      //     });
+      //   } else {
+      //     selected.push({ name: gene, id: 1 });
+      //   }
+      // } else {
+      //   setSelectedValue([]);
+      //   dataJson["genes"] = genes;
+      // }
 
       dataJson["table_type"] = type;
       dataJson["view"] = viewType;
@@ -322,43 +330,68 @@ export default function Box({
   return (
     <div className="main_div" style={{ marginTop: '5%', border: '1px solid #d6d6d6', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.05)', position: 'relative', padding: '5%' }}>
       <div className="cnv_sub_head">
-        <div className="tabs_box">
+        <div className="tabs_box Flex Gap5">
           <div className="tab">
-            {btnClickNote ? <> <p style={{ color: 'red' }}>No {activeTab !== '1' ? 'mutation' : 'proteome'} file</p> </> : ''}
             <div className="tab_main">
               <ul>
-                {/* {
-                  project_id === undefined &&
+                <li className='on'> <button name='type' > <FormattedMessage id="TumorVsNormal" defaultMessage="Tumor Vs Normal" /> </button></li>
+              </ul>
+            </div>
+          </div>
+          <div className="tab">
+            <div className="tab_main">
+              <ul>
+                {project_id === undefined &&
                   <li className={activeTab === '1' ? 'on' : ''}> <button onClick={e => {
-                     changeType(e, 'proteome'); setActiveTab('1')
-                    
-                      }} name='type' >
-                    <FormattedMessage id="TumorVsNormal" defaultMessage="Tumor Vs Normal" /> </button> </li>
-                } */}
-                <li className={activeTab === '1' ? 'on' : ''}> <button onClick={e => {
-                  if (alltabList['proteome'] === null) {
-                    setBtnClickNote(true)
-                  } else {
-                    changeType(e, 'proteome')
-                    setActiveTab('1')
-                    setBtnClickNote(false)
-                  }
-                }} name='type' > <FormattedMessage id="TumorVsNormal" defaultMessage="Tumor Vs Normal" /> </button></li>
-                {/* {
-                  project_id === undefined &&
-                  <li className={activeTab === '2' ? 'on' : ''}> <button onClick={e => { changeType(e, 'mutation'); setActiveTab('2') }} name='type' >
-                    <FormattedMessage id="VariantType" defaultMessage="Variant Type" /> </button> </li>
-                } */}
+                    if (alltabList['proteome'] === null) {
+                      setBtnClickNote(true)
+                    } else {
+                      changeType(e, 'proteome')
+                      setActiveTab('1')
+                      setBtnClickNote(false)
+                    }
+                  }} name='type' > <FormattedMessage id="Proteome" defaultMessage="Proteome" /> </button></li>
+                }
 
-                {/* <li className={activeTab === '2' ? 'on' : ''}> <button onClick={e => {
-                  if (alltabList['dna_mutation'] === null) {
-                    setBtnClickNote(true)
-                  } else {
-                    changeType(e, 'mutation')
-                    setActiveTab('2')
-                    setBtnClickNote(false)
-                  }
-                }} name='type' >  <FormattedMessage id="VariantType" defaultMessage="Variant Type" /> </button></li> */}
+                {(project_id && alltabList['proteome']) &&
+                  <li className={activeTab === '1' ? 'on' : ''}> <button onClick={e => {
+                    if (alltabList['proteome'] === null) {
+                      setBtnClickNote(true)
+                    } else {
+                      changeType(e, 'proteome')
+                      setActiveTab('1')
+                      setBtnClickNote(false)
+                    }
+                  }} name='type' > <FormattedMessage id="Proteome" defaultMessage="Proteome" /> </button></li>
+                }
+
+
+
+
+
+                {project_id === undefined &&
+                  <li className={activeTab === '2' ? 'on' : ''}> <button onClick={e => {
+                    if (alltabList['proteome'] === null) {
+                      setBtnClickNote(true)
+                    } else {
+                      changeType(e, 'rna')
+                      setActiveTab('2')
+                      setBtnClickNote(false)
+                    }
+                  }} name='type' > <FormattedMessage id="RNA" defaultMessage="RNA" /> </button></li>
+                }
+
+                {(project_id && alltabList['rna']) &&
+                  <li className={activeTab === '2' ? 'on' : ''}> <button onClick={e => {
+                    if (alltabList['rna'] === null) {
+                      setBtnClickNote(true)
+                    } else {
+                      changeType(e, 'rna')
+                      setActiveTab('2')
+                      setBtnClickNote(false)
+                    }
+                  }} name='type' > <FormattedMessage id="RNA" defaultMessage="RNA" /> </button></li>
+                }
 
               </ul>
             </div>
@@ -368,65 +401,26 @@ export default function Box({
 
         <div className="box_gap">
           <div className="">
-            {tableType === "proteome" && (
-              <>
-                <label className="">
-                  <FormattedMessage
-                    id="Selected Gene Is"
-                    defaultMessage="Selected Gene Is"
-                  />
-                </label>
-                <Multiselect
-                  options={genesHtml} // Options to display in the dropdown
-                  selectedValues={selectedValue} // Preselected value to persist in dropdown
-                  onSelect={onSelect} // Function will trigger on select event
-                  onRemove={onRemove} // Function will trigger on remove event
-                  displayValue="name" // Property name to display in the dropdown options
-                  style={style}
-                />{" "}
-              </>
-            )}
-            {tableType === "mutation" && (
-              <div>
-                <label className="">
-                  <FormattedMessage
-                    id="Selected Gene Is"
-                    defaultMessage="Selected Gene Is"
-                  />
-                </label>
-                <Multiselect
-                  options={genesHtml} // Options to display in the dropdown
-                  selectedValues={selectedValue} // Preselected value to persist in dropdown
-                  onSelect={onSelect} // Function will trigger on select event
-                  onRemove={onRemove} // Function will trigger on remove event
-                  displayValue="name" // Property name to display in the dropdown options
-                  style={style}
+            <>
+              <label className="">
+                <FormattedMessage
+                  id="Selected Gene Is"
+                  defaultMessage="Selected Gene Is"
                 />
-              </div>
-            )}
+              </label>
+              <Multiselect
+                options={genesHtml} // Options to display in the dropdown
+                selectedValues={selectedValue} // Preselected value to persist in dropdown
+                onSelect={onSelect} // Function will trigger on select event
+                onRemove={onRemove} // Function will trigger on remove event
+                displayValue="name" // Property name to display in the dropdown options
+                style={style}
+              />{" "}
+            </>
+
           </div>
           <div className="">
             <FormattedMessage id="View_By_heatmap" defaultMessage="View By" />:
-            {/* <div className="">
-              <button
-                onClick={(e) => changeView(e, "gene_vl")}
-                name="view"
-                className={
-                  viewType === "gene_vl" ? selected_button : normal_button
-                }
-              >
-                Gene-vl
-              </button>
-              <button
-                onClick={(e) => changeView(e, "z_score")}
-                name="view"
-                className={
-                  viewType === "z_score" ? selected_button : normal_button
-                }
-              >
-                Z-Score
-              </button>
-            </div> */}
             <div className="tab">
               <div className="tab_main">
                 <ul>
@@ -440,7 +434,7 @@ export default function Box({
                       viewType === "gene_vl" ? selected_button : normal_button
                     }
                   >
-                    Gene-vl
+                    Raw count
                   </button>
                   </li>
                   <li className={selectedType === '2' ? 'on' : ''}>
@@ -454,7 +448,7 @@ export default function Box({
                         viewType === "z_score" ? selected_button : normal_button
                       }
                     >
-                      Z-Score
+                      Normalization
                     </button>
                   </li>
 

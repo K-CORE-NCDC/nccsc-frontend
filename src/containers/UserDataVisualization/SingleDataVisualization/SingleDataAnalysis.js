@@ -28,6 +28,7 @@ import ArrowRight from '../../../assets/images/icon-arrow-right.svg';
 import { FormattedMessage } from "react-intl";
 import sample_img from '../../../assets/images/sample.webp'
 import { userdataVisualization } from "../../../actions/Constants";
+import arrow_icon from '../../../assets/images/btnDetail-arrow-white.svg'
 
 
 export default function DataVisualization({ parentProps }) {
@@ -432,19 +433,17 @@ export default function DataVisualization({ parentProps }) {
                                     {!exampleData &&
                                       <>
                                         <Link to={item.link}>
-                                          <div className="textdiv">
+                                          <div className="textdiv ">
                                             <span><FormattedMessage id="DownloadManual" defaultMessage="Download Manual" /></span>
-                                            <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }} >
-                                              download
-                                            </span>
+                                            <img src={arrow_icon} alt="arrow-icon" />
+                                            
                                           </div>
                                         </Link>
                                         <Link to={item.link}>
                                           <div className="textdiv">
                                             <span><FormattedMessage id="RunAnalysis" defaultMessage="Run Analysis" /></span>
-                                            <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
-                                              arrow_right_alt
-                                            </span>
+                                            <img src={arrow_icon} alt="arrow-icon" />
+                                            
                                           </div>
                                         </Link>
                                       </>

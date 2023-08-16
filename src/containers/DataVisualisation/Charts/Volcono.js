@@ -18,7 +18,6 @@ export default function DataVolcono({
   screenCapture,
   setToFalseAfterScreenCapture,
   VFData,
-  transferCardData
 }) {
   const reference = useRef();
   const dispatch = useDispatch();
@@ -39,8 +38,6 @@ export default function DataVolcono({
   const [noContent, setNoContent] = useState(false);
   const [sampleCount, setSampleCount] = useState({});
   const [inputState, setInputState] = useState({})
-  const [sampleCountsCard, setSampleCountsCard] = useState([]);
-
   const [groupFilters, setGroupFilters] = useState({});
   const [volcanoType, setVolcanoType] = useState("transcriptome");
   const [proteomeValue, setProteomeValue] = useState("N");
@@ -127,19 +124,19 @@ export default function DataVolcono({
       if ("table_data" in volcanoJson) {
         volcanoJson["table_data"].forEach((item, i) => {
           let log2foldchange = parseFloat(item["log2(fold_change)"]);
-          if (log2foldchange < 0) {
+          if (log2foldchange <= -1.5) {
             negativeCount += 1;
             negative.push({
               "Gene Name": item["gene"],
               Log2FC: parseFloat(item["log2(fold_change)"]),
-              "-Log(Pvalue)": item["q_value"],
+              "-Log(Pvalue)": item["p_value"],
             });
-          } else {
+          } else if(log2foldchange >= 1.5) {
             positiveCount += 1;
             positive.push({
               "Gene Name": item["gene"],
               Log2FC: parseFloat(item["log2(fold_change)"]),
-              "-Log(Pvalue)": item["q_value"],
+              "-Log(Pvalue)": item["p_value"],
             });
           }
         });
@@ -173,20 +170,7 @@ export default function DataVolcono({
               Group {e} : {sampleCount[e]}
             </div>)
           ))
-          sampleCountsCard_.push(
-            <div className="m-1 p-1 border border-black border-dashed">
-              <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left"><FormattedMessage id="Blue" defaultMessage="Blue :" />{`Blue: Log2FC <= -1.5 & pvalue <= 0.05`}</p>
-              <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left"><FormattedMessage id="Red" defaultMessage="Red :" />{`Log2FC >= 1.5 & pvalue <= 0.05`}</p>
-              <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left">
-                <FormattedMessage id="Grey" defaultMessage="Grey :" /> Not significant gene
-              </p>
-              <p className="text-blue-900 lg:text-lg sm:text-xl xs:text-sm font-bold text-left">
-                <FormattedMessage id="Black" defaultMessage="Black :" /> Selected genes
-              </p>
-            </div>
-          )
         }
-        setSampleCountsCard(sampleCountsCard_)
       } else {
         setShowVolcano(false);
         setNoContent(true);
@@ -257,7 +241,7 @@ export default function DataVolcono({
     <>
       {loader ? (
         <div className="MarginTop4">
-        <LoaderCmp />
+          <LoaderCmp />
         </div>
       ) : (
         <>

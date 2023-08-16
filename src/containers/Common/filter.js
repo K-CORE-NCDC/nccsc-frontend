@@ -207,7 +207,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
       html.push(
         <div
           key={item + "_" + k}
-          className="tab WFull OverFlowHidden BorderTop1"
+          className=" WFull OverFlowHidden BorderTop1 "
           onClick={(e) => switchButton(e, item, k)}
         >
           <input
@@ -594,67 +594,67 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
         <label className="">
           <FormattedMessage id='filterCondition' defaultMessage={'Sample filter condition'} />:
         </label>
-          <div className="Radiobtns">
+        <div className="Radiobtns" style={{"marginTop":"5px"}}>
           <div className="Flex ItemsCenter MarginLeft4">
-          {filterCondition === "and" ? (
-            <input
-              id="default-radio-1"
-              type="radio"
-              value="and"
-              name="condition"
-              checked
-              onChange={e => changeFilterCondition(e)}
-              className="FilterCondition"
-            />
-          ) : (
-            <input
-              id="default-radio-1"
-              type="radio"
-              value="and"
-              name="condition"
-              onChange={e => changeFilterCondition(e)}
-              className="FilterCondition"
-            />
-          )}
+            {filterCondition === "and" ? (
+              <input
+                id="default-radio-1"
+                type="radio"
+                value="and"
+                name="condition"
+                checked
+                onChange={e => changeFilterCondition(e)}
+                className="FilterCondition"
+              />
+            ) : (
+              <input
+                id="default-radio-1"
+                type="radio"
+                value="and"
+                name="condition"
+                onChange={e => changeFilterCondition(e)}
+                className="FilterCondition"
+              />
+            )}
 
-          <label
-            htmlFor="default-radio-1"
-            className="MarginLeft2 ConditionLabel"
-          >
-            And
-          </label>
-        </div>
-        <div className="Flex ItemsCenter MarginLeft4">
-          {filterCondition === "or" ? (
-            <input
-              id="default-radio-2"
-              type="radio"
-              value="or"
-              name="condition"
-              onChange={e => changeFilterCondition(e)}
-              className="FilterCondition"
-            />
-          ) : (
-            <input
-              id="default-radio-2"
-              type="radio"
-              value="or"
-              name="condition"
-              onChange={e => changeFilterCondition(e)}
-              className="FilterCondition"
-            />
-          )}
-          <label
-            htmlFor="default-radio-2"
-            className="MarginLeft2 ConditionLabel"
-          >
-            Or
-          </label>
-        </div>
+            <label
+              htmlFor="default-radio-1"
+              className="MarginLeft2 ConditionLabel"
+            >
+              And
+            </label>
           </div>
+          <div className="Flex ItemsCenter MarginLeft4">
+            {filterCondition === "or" ? (
+              <input
+                id="default-radio-2"
+                type="radio"
+                value="or"
+                name="condition"
+                onChange={e => changeFilterCondition(e)}
+                className="FilterCondition"
+              />
+            ) : (
+              <input
+                id="default-radio-2"
+                type="radio"
+                value="or"
+                name="condition"
+                onChange={e => changeFilterCondition(e)}
+                className="FilterCondition"
+              />
+            )}
+            <label
+              htmlFor="default-radio-2"
+              className="MarginLeft2 ConditionLabel"
+            >
+              Or
+            </label>
+          </div>
+        </div>
 
       </div>
-      <div className="" id="all_checkboxes">
+      <div className="MarginTop4" id="all_checkboxes">
         {state["html"]}
       </div>
       <div className=" p-1">

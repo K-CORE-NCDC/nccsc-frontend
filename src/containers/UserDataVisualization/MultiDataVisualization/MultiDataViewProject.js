@@ -12,8 +12,8 @@ import { useHistory } from "react-router-dom";
 import Swal from 'sweetalert2'
 import { MultiProjectsDelete, MultiProjectsView } from "../../../actions/api_actions";
 import { Link } from "react-router-dom/cjs/react-router-dom";
-
-
+import Draggable from 'react-draggable';
+import AOS from 'aos';
 
 
 function ProjectsList() {
@@ -355,6 +355,7 @@ function ProjectsList() {
 
 export default function MultiDataViewProject() {
   let { slug } = useParams();
+  const [isOpen, setIsOpen] = useState(true);
   const breadCrumbs = {
     '/multidatavisualization/': [
       { id: 'Home', defaultMessage: 'Home', to: '/' },
@@ -362,9 +363,64 @@ export default function MultiDataViewProject() {
       { id: 'MultiDataProjectView', defaultMessage: 'Multi Data Project View', to: '/MultiDataProjectView/' }
     ]
   }
+  useEffect(()=>{
+    AOS.init({
+      duration : 2000
+    });
+    AOS.refresh()
+  },[])
+  let closeModal = () => {
+    setIsOpen(false);
+    
+  }
+  const handleDrag = () => {
+    if (!isOpen) {
+      return false;
+    }
+  };
 
   return (
     <>
+      {isOpen && isOpen === true && <Draggable disabled={!isOpen} onDrag={handleDrag}>
+          <div
+              style={{
+                width: '300px',
+                height: '400px',
+                position: 'fixed',
+                bottom: isOpen ? '0px' : '-1000px',
+                right: isOpen ? '50px' : '-1000px',
+                zIndex: '15',
+                
+              }}
+              
+            >
+          <div className="mainPopup W100" data-aos="zoom-in" data-aos-once='true'>
+            <div className="popupHeader">
+              <h3 className='TextLeft'>Note</h3>
+              <span className="material-icons mainPopupClose" id="mainPopupClose" onClick={closeModal}>
+                close
+              </span>
+            </div>
+            <div className='popupBody  introduceWrap' style={{"padding":"0px","border":"1px solid #ddd"}}>
+              <div className="introduceBox03" style={{"width":"100%"}}>
+                <ul>
+                  <li>
+                    <p>
+                      <FormattedMessage id="uploadGuide1" defaultMessage="Provides visualization results only for plots related to the uploaded data."/>
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <FormattedMessage id="uploadGuide2" defaultMessage="For omics data information required for each plot, please refer to the [Visualize Example Data] page."/>
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </Draggable>}
       <HeaderComponent
         title={"sd"}
         routeName="/multidatavisualization/"

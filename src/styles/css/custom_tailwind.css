@@ -343,6 +343,10 @@
   gap: 0.5rem;
 }
 
+.gap10px {
+  gap: 10px;
+}
+
 /* @media (min-width: 768px) {
     .FilterGeneSet {
       justify-content: flex-start;
@@ -402,7 +406,7 @@
   padding: 1rem;
   margin-top: 0;
   top: 55px;
-  width: 100%;
+  width: 120%;
   /* transform: translateX(-67%); */
   /* display: inline-block; */
   /* left: 50%; */
@@ -894,8 +898,8 @@
 
 .InputCheckBox {
   background-color: #6B7280;
-  width: 3.5rem;
-  height: 1.5rem;
+  width: 2.2rem;
+  height: 1.2rem;
   border-radius: 9999px;
 }
 
@@ -916,12 +920,12 @@
 }
 
 .FilterDot {
-  top: 0.25rem;
-  left: 0.25rem;
+  top: 0.2rem;
+  left: 0.2rem;
   background-color: #ffffff;
   transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
-  width: 1.5rem;
-  height: 1rem;
+  width: 0.75rem;
+  height: 0.75rem;
   border-radius: 9999px;
 }
 
@@ -987,8 +991,9 @@
 
 .IconClass {
   display: inline;
-  width: 2rem;
-  height: 2rem;
+  width: 1rem;
+  height: 1rem;
+  vertical-align: middle;
 }
 
 .P12 {
@@ -1121,6 +1126,7 @@
   color: #111827;
   font-size: 1rem;
   line-height: 1.5rem;
+  text-transform:uppercase;
 }
 
 @media (min-width: 640px) {
@@ -1132,8 +1138,8 @@
 
 @media (min-width: 1280px) {
   .ConditionLabel {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
+    font-size: 1rem;
+    line-height: 1rem;
   }
 }
 
@@ -1242,7 +1248,9 @@
 .TextLeft {
   text-align: left;
 }
-
+.TextWhite {
+  color:#fff;
+}
 .TextBlue700 {
   color: #1D4ED8;
 }
@@ -2353,8 +2361,18 @@
   grid-gap: 10px;
 }
 
-.galleryList ul li a:hover .thumb .hvBox .textdiv :hover {
-  font-size: 30px;
+.galleryList ul li a:hover .thumb .hvBox .textdiv img{
+  margin-left: -20px;
+  
+  opacity: 0;
+  margin-top: -1px;
+  margin-right: 0;
+}
+.galleryList ul li a:hover .thumb .hvBox .textdiv:hover img {
+  opacity: 1;
+  margin-left: 6px;
+  transition: 0.5s;
+  margin-top: 3px;
 }
 
 .SankeyVariantandGene {
@@ -2366,4 +2384,83 @@
   border: 1px solid #003177;
   width: 35px;
   height: 35px;
+}
+.FusionCardText {
+  text-align: start;
+  padding: 0.25rem;
+  margin: 0.25rem;
+  border-width: 1px;
+  border-color: #000000;
+  border-style: dashed;
+  width: fit-content;
+  margin: 40px auto;
+  padding: 15px;
+}
+
+.VolcanoCardText {
+  padding: 0.25rem;
+  margin: 0.25rem;
+  border-width: 1px;
+  border-color: #000000;
+  border-style: dashed;
+  width: fit-content;
+  margin: 40px auto;
+  padding: 15px;
+}
+
+.VolcanoCardText .TextBlue {
+  font-weight: 700;
+  text-align: left;
+  color: #1E3A8A;
+}
+
+.VolcanoCardText .TextRed {
+  font-weight: 700;
+  text-align: left;
+  color: #7F1D1D;
+}
+
+.VolcanoCardText .TextGrey {
+  font-weight: 700;
+  text-align: left;
+  color: #111827;
+}
+
+.VolcanoCardText .TextBlack {
+  font-weight: 700;
+  text-align: left;
+  color: #0b0b0c;
+}
+
+.list_style ul li p::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 14px;
+  width: 6px;
+  height: 6px;
+  background-color: #757575;
+  border-radius: 50%;
+}
+.mainDataStatusWrap .mainDataStatus dl.serviceIntroBox{
+  height:180px;
+  border:1px solid #ddd;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+.mainDataStatusWrap .mainDataStatus dl.serviceIntroBox dt{
+  flex-direction: column;
+  background:#fff;
+  color:#000;
+
+}
+
+.mainDataStatusWrap .mainDataStatus dl.serviceIntroBox dd{
+  display:flex;
+  align-items: center;
+  word-wrap: break-word;
+  width:70%;
+  background-color: #f6fbfd;
+  padding:5%;
+  border-left: 1px solid #ddd;
 }

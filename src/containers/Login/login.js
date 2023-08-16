@@ -258,7 +258,7 @@ const LoginComponent = () => {
 
               </form>
 
-
+              <p style={{"marginTop":"30px"}}><FormattedMessage id="loginGuide" defaultMessage="The user should be responsible for using result." /></p>
 
 
             </div>
