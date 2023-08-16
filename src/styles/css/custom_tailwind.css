@@ -244,7 +244,7 @@
 }
 
 
-.gene_main_box:last-child {
+.capture {
   margin-left: 25%;
 }
 
@@ -1539,6 +1539,7 @@
 .single_viz {
   justify-content: space-between;
 }
+
 .single_viz_singleTab {
   justify-content: flex-end;
 }
@@ -2356,7 +2357,13 @@
   font-size: 30px;
 }
 
-.SankeyVariantandGene{
+.SankeyVariantandGene {
   display: flex;
   gap: 20px;
+}
+
+.btnMore {
+  border: 1px solid #003177;
+  width: 35px;
+  height: 35px;
 }

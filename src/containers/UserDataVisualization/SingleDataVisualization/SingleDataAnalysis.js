@@ -232,12 +232,12 @@ export default function DataVisualization({ parentProps }) {
       }));
     }
     let l = [
+      "variant_summary",
       "circos",
       "lollipop",
       "cnv",
       "heatmap",
       "box",
-      "variant_summary",
       "survival",
     ];
     let gridData = []
@@ -298,7 +298,7 @@ export default function DataVisualization({ parentProps }) {
       }
 
       let gridobj = {
-        title: element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/singledata-upload/${element}/`, viewLink: `/visualizesingle-exampledata/${element}`,
+        title: element === 'variant-summary' ? 'Variant Summary' : element, image: require(`../../../assets/images/Visualizations/${element}.png`).default, link: `/singledata-upload/${element}/`, viewLink: `/visualizesingle-exampledata/${element}`,
         description: desc || ''
       }
       gridData.push(gridobj)
@@ -535,24 +535,26 @@ export default function DataVisualization({ parentProps }) {
                         </Popover>
                       }
 
-                      <Popover className="relative gene_main_box">
-                        {({ open }) => {
-                          return (
-                            <>
-                              <div className=''>
-                                <Popover.Button className={'button'}>
-                                  <div>
-                                    <button onClick={() =>
-                                      setToFalseAfterScreenCapture(true)
-                                    } className="btn btnPrimary"><FormattedMessage id="Capture_screen" defaultMessage="Capture Screenshot" /></button>
-                                  </div>
-                                </Popover.Button>
 
-                              </div>
-                            </>
-                          )
-                        }}
-                      </Popover>
+                      {!exampleData &&
+                        <Popover className="relative gene_main_box capture">
+                          {({ open }) => {
+                            return (
+                              <>
+                                <div className=''>
+                                  <Popover.Button className={'button'}>
+                                    <div>
+                                      <button onClick={() =>
+                                        setToFalseAfterScreenCapture(true)
+                                      } className="btn btnPrimary"><FormattedMessage id="Capture_screen" defaultMessage="Capture Screenshot" /></button>
+                                    </div>
+                                  </Popover.Button>
+
+                                </div>
+                              </>
+                            )
+                          }}
+                        </Popover>}
 
                     </div>
                   </section>
