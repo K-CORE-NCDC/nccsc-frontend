@@ -244,7 +244,7 @@
 }
 
 
-.gene_main_box:last-child {
+.capture {
   margin-left: 25%;
 }
 
@@ -2380,6 +2380,11 @@
   gap: 20px;
 }
 
+.btnMore {
+  border: 1px solid #003177;
+  width: 35px;
+  height: 35px;
+}
 .FusionCardText {
   text-align: start;
   padding: 0.25rem;
