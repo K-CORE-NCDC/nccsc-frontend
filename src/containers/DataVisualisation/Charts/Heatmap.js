@@ -826,7 +826,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
                           setActiveTab('4')
                           setBtnClickNote('')
                         }
-                      }} name='type' > Phospho </button></li>}
+                      }} name='type' > Phosphorylation </button></li>}
 
                     {(project_id && alltabList['phospho']) &&
                       <li className={activeTab === '4' ? 'on' : ''}> <button onClick={e => {
@@ -837,7 +837,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
                           setActiveTab('4')
                           setBtnClickNote('')
                         }
-                      }} name='type' > Phospho </button></li>}
+                      }} name='type' > Phosphorylation </button></li>}
                   </ul>
                 </div>
               </div>

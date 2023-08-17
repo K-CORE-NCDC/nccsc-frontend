@@ -100,7 +100,10 @@ export function sendlogManagement(method, data) {
   };
 }
 
-
+export function UserDataProjectsCount(type, data) {
+  const url = `${config.auth}user-projects-data-count/`;
+  return sendRequest(url, type, data);
+}
 
 export function MultiProjectsDelete(method, projectId) {
   let url = ''

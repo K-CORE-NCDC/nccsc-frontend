@@ -102,16 +102,12 @@ export default function Box({
   useEffect(() => {
     if (inputState && "genes" in inputState && tableType) {
 
-      console.log('tableType', tableType);
-      console.log('viewType', viewType);
-
       let g = inputState["genes"];
       let dataJson = inputState;
       loadGenesDropdown(g);
       loadGenesDropdownMutation(g);
       setGene(g[0]);
       if (tableType === "proteome" || tableType === "rna") {
-        console.log('all the genes setting');
         dataJson["genes"] = g;
       }
       // else {
