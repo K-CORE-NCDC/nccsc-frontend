@@ -700,7 +700,7 @@ export default function DataVisualization() {
                 </Popover>
 
 
-                {/* {project_id && */}
+                {project_id &&
                   <Popover className="relative gene_main_box capture">
                     {({ open }) => {
                       return (
@@ -719,7 +719,7 @@ export default function DataVisualization() {
                       )
                     }}
                   </Popover>
-                  {/* } */}
+                 } 
               </div>
             </section>
             {
