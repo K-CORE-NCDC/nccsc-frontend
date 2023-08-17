@@ -463,6 +463,7 @@ export default function Box({
       ) : (
         boxJson && (
           <>
+          <div className="boxplot_tooltip" id="box2_tooltip" style={{width:'150px' , float:'right'}}></div>
             {tableType && <p className="text_align" style={{ marginBottom: '30px' }}>{tableType === 'proteome' ? <FormattedMessage id="BoxTvNDesc" defaultMessage="Proteome expression of Tumor samples vs Normal samples" /> : <FormattedMessage id="BoxVariantDesc" defaultMessage="Proteome expression by variant type number (Missense mutation, Nonsense mutation, Splice site, Frame-shift insertion, Frame-shift deletion, In-frame insertion, In-frame deletion" />}</p>}
             {showBoxPlot && (
               <BoxPlot

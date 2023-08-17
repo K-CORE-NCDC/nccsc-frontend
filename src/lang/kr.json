@@ -473,6 +473,8 @@
   "singUpGuide":"입력한 이메일로 분석접수번호, PIN 번호, 비밀번호 설정 링크 포함된 메일이 전송됩니다.",
   "uploadGuide1":"업로드한 데이터와 관련된 플롯에 대해서만 시각화 결과를 제공합니다.",
   "uploadGuide2":"플롯마다 필요한 오믹스 데이터 정보는 [데이터 분석 예시] 페이지를 참고 바랍니다.",
-  "Admin":"관리자"
+  "Admin":"관리자",
+  "ViewProjectUploadGuidepopUp1":"생성 가능한 프로젝트는 총 5 개입니다.",
+  "ViewProjectUploadGuidepopUp2":"프로젝트마다 확인 가능한 기간은 생성일로부터 2주입니다. 이후 해당 프로젝트는 삭제됩니다."
   
 }

@@ -200,52 +200,52 @@ const Table = ({ updateComponentNumber }) => {
   return (
 
     <div>
-       {isOpen && isOpen === true && 
-       
+      {isOpen && isOpen === true &&
+
         <Draggable disabled={!isOpen} onDrag={handleDrag}>
           <div
-              style={{
-                width: '300px',
-                height: '400px',
-                position: 'fixed',
-                transitionDelay: '3s',
-                bottom: isOpen ? '150px' : '-1000px',
-                right: isOpen ? '50px' : '-1000px',
-                transition: 'bottom 0.10s ease-in-out, right 0.5s ease-in-out',
-                zIndex: '15',
-                transitionDuration:'5s',
-                transitionTimingFunction: 'linear'
-              }}
-              
-            >
-          <div className="mainPopup W100" data-aos="zoom-in" data-aos-once='true' >
-            <div className="popupHeader">
-              <h3 className='TextLeft'>Note</h3>
-              <span className="material-icons mainPopupClose" id="mainPopupClose" onClick={closeModal}>
-                close
-              </span>
-            </div>
-            <div className='popupBody  introduceWrap' style={{"padding":"0px","border":"1px solid #ddd"}}>
-              <div className="introduceBox03" style={{"width":"100%"}}>
-                <ul>
-                  <li>
-                    <p>
-                      <FormattedMessage id="uploadGuide1" defaultMessage="Provides visualization results only for plots related to the uploaded data."/>
-                    </p>
-                  </li>
-                  <li>
-                    <p>
-                      <FormattedMessage id="uploadGuide2" defaultMessage="For omics data information required for each plot, please refer to the [Visualize Example Data] page."/>
-                    </p>
-                  </li>
-                </ul>
+            style={{
+              width: '300px',
+              height: '400px',
+              position: 'fixed',
+              transitionDelay: '3s',
+              bottom: isOpen ? '150px' : '-1000px',
+              right: isOpen ? '50px' : '-1000px',
+              transition: 'bottom 0.10s ease-in-out, right 0.5s ease-in-out',
+              zIndex: '15',
+              transitionDuration: '5s',
+              transitionTimingFunction: 'linear'
+            }}
+
+          >
+            <div className="mainPopup W100" data-aos="zoom-in" data-aos-once='true' >
+              <div className="popupHeader">
+                <h3 className='TextLeft'>Note</h3>
+                <span className="material-icons mainPopupClose" id="mainPopupClose" onClick={closeModal}>
+                  close
+                </span>
               </div>
+              <div className='popupBody  introduceWrap' style={{ "padding": "0px", "border": "1px solid #ddd" }}>
+                <div className="introduceBox03" style={{ "width": "100%" }}>
+                  <ul>
+                    <li>
+                      <p>
+                        <FormattedMessage id="uploadGuide1" defaultMessage="Provides visualization results only for plots related to the uploaded data." />
+                      </p>
+                    </li>
+                    <li>
+                      <p>
+                        <FormattedMessage id="uploadGuide2" defaultMessage="For omics data information required for each plot, please refer to the [Visualize Example Data] page." />
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
             </div>
-            
           </div>
-        </div>
         </Draggable>
-        
+
       }
 
       <HeaderComponent
@@ -627,7 +627,7 @@ export const DataOfFiles = ({ fileName }) => {
 
   return (
     <ul style={{ margin: "10px" }}>
-      <li> <FormattedMessage id="CommonGuideMsg" defaultMessage='This is a Sample Example File for ' />{` ${fileName}`}</li>
+      {/* <li> <FormattedMessage id="CommonGuideMsg" defaultMessage='This is a Sample Example File for ' />{` ${fileName}`}</li> */}
 
       <div className="popularBox" >
         <div className="contentBox">
@@ -649,6 +649,11 @@ export const DataOfFiles = ({ fileName }) => {
                   <li style={{ paddingLeft: '5%' }}>- <FormattedMessage id="clinicalInformationGuideinnerp3" defaultMessage='death_yn : death yes or no (TRUE / FALSE)' /></li>
                   <li style={{ paddingLeft: '5%' }}>- <FormattedMessage id="clinicalInformationGuideinnerp4" defaultMessage='death_cnfr_drtn : death confirmation duration (numeric data)' /> </li>
                 </ul>
+              </li>
+              <li tabIndex="-1" style={{ paddingTop: '10px' }}>
+                <p style={{ color: 'black' }}> <b></b> &nbsp;
+                  <FormattedMessage id="RNAGuideP2" defaultMessage='Leave the “None” value empty.' />
+                </p>
               </li>
 
             </ul>}
