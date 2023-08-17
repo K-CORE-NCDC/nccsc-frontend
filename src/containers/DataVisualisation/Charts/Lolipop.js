@@ -16,7 +16,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   const [genesHtml, setGenesHtml] = useState([])
   const [gene, setGene] = useState('')
   const [activeCmp, setActiveCmp] = useState(true)
-  const [tableType, setTableType] = useState('')
+  const [tableType, setTableType] = useState('Mutation')
   const [inputState, setInputState] = useState({})
   const [watermarkCss, setWatermarkCSS] = useState("")
   const [lolipopJson, setLolipopJson] = useState({ data: [], domains: [], status: 204 })

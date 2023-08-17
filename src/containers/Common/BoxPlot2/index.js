@@ -177,10 +177,10 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
       .attr("dy", "1em")
       .style("text-anchor", "middle")
       .text(function () {
-        if (view_type === "gene_vl") {
-          return "Proteome expression (gene_vl)"
+        if (chart_type === "gene_vl") {
+          return "Proteome expression"
         } else {
-          return "Proteome expression (z-score)"
+          return "RNA expression"
         }
       });
 

@@ -110,6 +110,14 @@ function ModalDiv() {
 
 }
 
+function ErrorMessage(){
+  const verificationResponse = useSelector(
+    (data) => data.homeReducer.singleFileUploadData
+  );
+
+  return verificationResponse && 'issue' in verificationResponse &&   <p className="h5 MultiUploadTextCenter"><FormattedMessage id="UserDataGuideMessage" defaultMessage="Red mark for invalid data." /></p>
+}
+
 function MultiDataTable({ updateComponentNumber }) {
   const dispatch = useDispatch();
   const [rowData, setRowData] = useState([]);
@@ -294,7 +302,9 @@ function MultiDataTable({ updateComponentNumber }) {
         </div>
         <div className="auto">
 
-          <ModalDiv />
+          {/* <ModalDiv /> */}
+
+          <ErrorMessage />
 
           <div className="flex" style={{ justifyContent: 'space-between' }}>
             {projectId === 0 ?

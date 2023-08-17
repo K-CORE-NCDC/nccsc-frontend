@@ -1,12 +1,12 @@
-import React from "react";
+import React,{useEffect, useState} from "react";
 import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
-import ArrowRight from '../../../assets/images/icon-arrow-right.svg';
 import { Link } from "react-router-dom/cjs/react-router-dom";
 import { FormattedMessage } from "react-intl";
-import ExampleImage from '../../../assets/images/mainSection05-img02.jpg';
 import icon1 from '../../../assets/images/publicDataInfo-img01.svg'
 import icon2 from '../../../assets/images/publicDataInfo-img02.svg'
-import icon3 from '../../../assets/images/publicDataInfo-img03.svg'
+import { useLocation,useHistory } from 'react-router-dom';
+
+import Draggable from 'react-draggable';
 const HomeComponent = () => {
 
   const title = { id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' }
@@ -15,7 +15,24 @@ const HomeComponent = () => {
     { title: 'View Project', image: require(`../../../assets/images/Visualizations/circos.png`).default, link: `/multidataprojectview/`, description: 'Provides a visualization analysis service that can be implemented according to the uploaded user data.' },
   ]
 
+  const location = useLocation();
+  const history = useHistory();
+  const [isOpen, setIsOpen] = useState(true);
 
+  let closeModal = () => {
+    setIsOpen(false);
+    history.replace({
+      ...location,
+      state: {},
+    });
+  }
+
+  const handleDrag = () => {
+    if (!isOpen) {
+      return false;
+    }
+  };
+ 
   const breadCrumbs = {
     '/multidatavisualization/': [
       { id: 'Home', defaultMessage: 'Home', to: '/' },
@@ -26,6 +43,48 @@ const HomeComponent = () => {
 
   return (
     <div>
+
+      {location.state && location.state.redirected && isOpen && isOpen === true && <Draggable disabled={!isOpen} onDrag={handleDrag}>
+        <div
+          style={{
+            width: '300px',
+            height: '400px',
+            position: 'fixed',
+            bottom: isOpen ? '0px' : '-1000px',
+            right: isOpen ? '50px' : '-1000px',
+            zIndex: '15',
+
+          }}
+
+        >
+          <div className="mainPopup W100" data-aos="zoom-in" data-aos-once='true'>
+            <div className="popupHeader">
+              <h3 className='TextLeft'>Note</h3>
+              <span className="material-icons mainPopupClose" id="mainPopupClose" onClick={closeModal}>
+                close
+              </span>
+            </div>
+            <div className='popupBody  introduceWrap' style={{ "padding": "0px", "border": "1px solid #ddd" }}>
+              <div className="introduceBox03" style={{ "width": "100%" }}>
+                <ul>
+                  <li>
+                    <p>
+                      <FormattedMessage id="projectCountGuide1" defaultMessage="It is possible to create 5 projects on a account." />
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      <FormattedMessage id="projectCountGuide2" defaultMessage="The period to check each project is 2 weeks from the date of creation. After 2 weeks, the project will be deleted." />
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </Draggable>}
+
       <HeaderComponent
         title={title}
         routeName="/multidatavisualization/"
@@ -81,7 +140,7 @@ const HomeComponent = () => {
               </div>
             } */}
             <div className="publicDataInfo" style={{ padding: '60px 230px', marginBottom: '0px' }}>
-              <ul style={{ marginTop: '-40px', gap:'40px' }}>
+              <ul style={{ marginTop: '-40px', gap: '40px' }}>
                 <Link to='/newmultidataproject/'>
                   <li>
                     <img src={icon1} alt="" />

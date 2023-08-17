@@ -234,7 +234,9 @@ export default function Home(parentProps) {
             <VisualizeMyData />
           </div>
           <div className="section04" style={{ paddingTop:'20vh'}} ref={resultRef?.current[4]} id="4">
+
             <Notice />
+            <SlickSlider/>
           </div>
         </>
       }

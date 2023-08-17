@@ -369,10 +369,11 @@ export default function MultiDataViewProject() {
     });
     AOS.refresh()
   },[])
+
   let closeModal = () => {
     setIsOpen(false);
-    
   }
+  
   const handleDrag = () => {
     if (!isOpen) {
       return false;
@@ -421,6 +422,7 @@ export default function MultiDataViewProject() {
           </div>
         </div>
       </Draggable>}
+
       <HeaderComponent
         title={"sd"}
         routeName="/multidatavisualization/"

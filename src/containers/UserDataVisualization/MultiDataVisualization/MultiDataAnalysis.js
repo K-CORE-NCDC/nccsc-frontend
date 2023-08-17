@@ -28,7 +28,7 @@ import SurvivalFilterComponent from "../Components/MainComponents/SurvivalFilter
 import VolcanoFusionFilterComponent from "../Components/MainComponents/VolcanoFusionFilterComponent";
 import ArrowRight from '../../../assets/images/icon-arrow-right.svg';
 import sample_img from '../../../assets/images/sample.webp'
-
+import arrow_icon from '../../../assets/images/btnDetail-arrow-white.svg'
 
 export default function DataVisualization() {
   const context = useContext(Context);
@@ -740,25 +740,19 @@ export default function DataVisualization() {
                                     <Link to={item.link}>
                                       <div className="textdiv">
                                         <span><FormattedMessage id="DownloadManual" defaultMessage="Download Manual" /></span>
-                                        <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }} >
-                                          download
-                                        </span>
+                                        <img src={arrow_icon} alt="arrow-icon" />
                                       </div>
                                     </Link>
                                     <Link to={item.link}>
                                       <div className="textdiv">
                                         <span><FormattedMessage id="RunAnalysis" defaultMessage="Run Analysis" /></span>
-                                        <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
-                                          arrow_right_alt
-                                        </span>
+                                        <img src={arrow_icon} alt="arrow-icon" />
                                       </div>
                                     </Link> </> :
                                   <Link to={item.link}>
                                     <div className="textdiv">
                                       <span><FormattedMessage id="Example" defaultMessage="Example" /></span>
-                                      <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
-                                        arrow_right_alt
-                                      </span>
+                                      <img src={arrow_icon} alt="arrow-icon" />
                                     </div>
                                   </Link>}
                               </div>
