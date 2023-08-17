@@ -1126,7 +1126,7 @@
   color: #111827;
   font-size: 1rem;
   line-height: 1.5rem;
-  text-transform:uppercase;
+  text-transform: uppercase;
 }
 
 @media (min-width: 640px) {
@@ -1248,9 +1248,11 @@
 .TextLeft {
   text-align: left;
 }
+
 .TextWhite {
-  color:#fff;
+  color: #fff;
 }
+
 .TextBlue700 {
   color: #1D4ED8;
 }
@@ -2361,13 +2363,14 @@
   grid-gap: 10px;
 }
 
-.galleryList ul li a:hover .thumb .hvBox .textdiv img{
+.galleryList ul li a:hover .thumb .hvBox .textdiv img {
   margin-left: -20px;
-  
+
   opacity: 0;
   margin-top: -1px;
   margin-right: 0;
 }
+
 .galleryList ul li a:hover .thumb .hvBox .textdiv:hover img {
   opacity: 1;
   margin-left: 6px;
@@ -2385,6 +2388,7 @@
   width: 35px;
   height: 35px;
 }
+
 .FusionCardText {
   text-align: start;
   padding: 0.25rem;
@@ -2442,25 +2446,40 @@
   background-color: #757575;
   border-radius: 50%;
 }
-.mainDataStatusWrap .mainDataStatus dl.serviceIntroBox{
-  height:180px;
-  border:1px solid #ddd;
+
+.mainDataStatusWrap .mainDataStatus dl.serviceIntroBox {
+  height: 180px;
+  border: 1px solid #ddd;
   flex-direction: column;
   margin-bottom: 30px;
 }
-.mainDataStatusWrap .mainDataStatus dl.serviceIntroBox dt{
+
+.mainDataStatusWrap .mainDataStatus dl.serviceIntroBox dt {
   flex-direction: column;
-  background:#fff;
-  color:#000;
+  background: #fff;
+  color: #000;
 
 }
 
-.mainDataStatusWrap .mainDataStatus dl.serviceIntroBox dd{
-  display:flex;
+.mainDataStatusWrap .mainDataStatus dl.serviceIntroBox dd {
+  display: flex;
   align-items: center;
   word-wrap: break-word;
-  width:70%;
+  width: 70%;
   background-color: #f6fbfd;
-  padding:5%;
+  padding: 5%;
   border-left: 1px solid #ddd;
+}
+
+.bg-blue-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(219, 234, 254, var(--tw-bg-opacity));
+}
+
+.bg-slate-50 {
+  background-color: rgb(248 250 252);
+}
+
+.bg-gray-100 {
+  background-color: rgb(243 244 246);
 }

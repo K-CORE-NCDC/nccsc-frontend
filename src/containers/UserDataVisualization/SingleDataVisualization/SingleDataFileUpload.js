@@ -86,7 +86,7 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
   const [initialInputState, setInitialInputState] = useState(undefined)
   let { tab } = useParams();
   const inputRef = useRef(null)
-  const allowedTabs = ["circos", "lollipop", "CNV", "heatmap", "box", "survival", "genomic-data"]
+  const allowedTabs = ["circos", "lollipop", "CNV", "heatmap", "box", "survival", "variant-summary"]
 
 
   // useEffect(() => {
@@ -125,7 +125,7 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
     "survival": {
       clinical_information: "Clinical Information",
     },
-    "genomic-data": {
+    "variant-summary": {
       dna_mutation: "DNA Mutation",
     },
 

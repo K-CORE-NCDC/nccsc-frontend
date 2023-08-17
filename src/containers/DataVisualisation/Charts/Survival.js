@@ -95,7 +95,7 @@ export default function DataSurvival({
 
 
   useEffect(() => {
-    if (inputState && 'genes' in inputState && ((vizType !== 'single' && inputState['genes'].length > 0) || vizType === 'single' ) && 'survival_type' in inputState) {
+    if (inputState && 'genes' in inputState && ((vizType !== 'single' && inputState['genes'].length > 0) || vizType === 'single') && 'survival_type' in inputState) {
       let return_data = SurvivalInformation("POST", inputState)
       return_data.then((result) => {
         const d = result
@@ -306,15 +306,15 @@ export default function DataSurvival({
   return (
     <>
       {loader ? (
-        <div className="MarginTop20 Flex JustifyCenter" style={{margin:'auto'}}>
-          <LoaderCmp  style={{
+        <div className="MarginTop20 Flex JustifyCenter" style={{ margin: 'auto' }}>
+          <LoaderCmp style={{
 
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             height: '100%'
           }
-          }/>
+          } />
         </div>
       ) : (
 
@@ -364,11 +364,15 @@ export default function DataSurvival({
           {/* chart */}
           {renderSurvival && <div className='BorderstyleViz'>
 
+
+
             {survivalJson && (inputState['survival_type'] === "recurrence" || inputState['survival_type'] === "survival") && (
-              <SurvivalCmp watermarkCss={watermarkCss} ref={reference} width={width} data={{
-                fileredGene: inputState['filter_gene'],
-                survivalJson: survivalJson,
-              }} pValue={pValueData} />
+              <>
+                <div id="tootltip_survival" className="svg-line-chart-tooltip-custom"></div>
+                <SurvivalCmp watermarkCss={watermarkCss} ref={reference} width={width} data={{
+                  fileredGene: inputState['filter_gene'],
+                  survivalJson: survivalJson,
+                }} pValue={pValueData} /></>
             )}
 
             {inputState['survival_type'] === "cox" && (

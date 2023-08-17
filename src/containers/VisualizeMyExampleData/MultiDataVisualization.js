@@ -91,7 +91,7 @@ const MultiDataVisualization = () => {
                     </p>
                   </li></>}
               <button className="btnMore" style={{ float: 'right' }} onClick={() => {
-                setViewMoreData(!viewMoreData)
+                history.push("/visualise-multidata/home")
               }}><img src={!viewMoreData ? plusicon : minusicon} alt="" /></button>
             </ul>
           </div>
@@ -100,25 +100,31 @@ const MultiDataVisualization = () => {
       <table className="contentsTable" style={{ marginTop: '15px' }}>
         <thead>
           <tr>
-            <th>Data Type</th>
-            <th style={{ width: '160px' }}>Circos Plot</th>
+            <th style={{ width: '160px' }}>Data Type</th>
+            <th >Circos </th>
             <th>Oncoprint</th>
-            <th>Volcano Plot</th>
+            <th>Lollipop</th>
+            <th>Volcano </th>
             <th>Heatmap</th>
-            <th>Survival Plot</th>
+            <th>Survival </th>
             <th>Correlation</th>
             <th>CNV</th>
-            <th>Fusion Plot</th>
+            <th>Box</th>
+            <th>Fusion </th>
+            <th>Sankey</th>
           </tr>
         </thead>
         <tbody>
           <tr >
-            <td style={{ fontSize: '14px' }}>Clinical Information</td>
+            <td>Clinical Information</td>
             <td></td>
             <td><span className="material-icons">radio_button_unchecked</span></td>
+            <td ></td>
             <td><span className="material-icons">radio_button_unchecked</span></td>
             <td><span className="material-icons">radio_button_unchecked</span></td>
             <td><span className="material-icons">radio_button_unchecked</span></td>
+            <td></td>
+            <td><span className="material-icons">radio_button_unchecked</span> </td>
             <td></td>
             <td><span className="material-icons">radio_button_unchecked</span> </td>
             <td><span className="material-icons">radio_button_unchecked</span> </td>
@@ -127,9 +133,12 @@ const MultiDataVisualization = () => {
             <td>Dna Mutation</td>
             <td><span className="material-icons">radio_button_unchecked</span></td>
             <td><span className="material-icons">radio_button_unchecked</span></td>
+            <td><span className="material-icons">radio_button_unchecked</span></td>
             <td></td>
             <td></td>
             <td><span className="material-icons">radio_button_unchecked</span></td>
+            <td></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -142,7 +151,10 @@ const MultiDataVisualization = () => {
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
             <td><span className="material-icons">radio_button_unchecked</span></td>
+            <td></td>
+            <td></td>
             <td></td>
           </tr>
           <tr>
@@ -150,7 +162,10 @@ const MultiDataVisualization = () => {
             <td><span className="material-icons">radio_button_unchecked</span></td>
             <td></td>
             <td></td>
+            <td></td>
             <td><span className="material-icons">radio_button_unchecked</span></td>
+            <td></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -160,9 +175,12 @@ const MultiDataVisualization = () => {
             <td>RNA</td>
             <td><span className="material-icons">radio_button_unchecked</span></td>
             <td></td>
+            <td></td>
             <td><span className="material-icons">radio_button_unchecked</span></td>
             <td><span className="material-icons">radio_button_unchecked</span></td>
             <td><span className="material-icons">radio_button_unchecked</span></td>
+            <td><span className="material-icons">radio_button_unchecked</span></td>
+            <td></td>
             <td><span className="material-icons">radio_button_unchecked</span></td>
             <td></td>
             <td></td>
@@ -176,15 +194,21 @@ const MultiDataVisualization = () => {
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
+            <td></td>
             <td><span className="material-icons">radio_button_unchecked</span></td>
+            <td></td>
           </tr>
           <tr>
             <td>Proteome</td>
             <td><span className="material-icons">radio_button_unchecked</span></td>
             <td></td>
+            <td></td>
             <td><span className="material-icons">radio_button_unchecked</span></td>
             <td><span className="material-icons">radio_button_unchecked</span></td>
             <td><span className="material-icons">radio_button_unchecked</span></td>
+            <td><span className="material-icons">radio_button_unchecked</span></td>
+            <td></td>
             <td><span className="material-icons">radio_button_unchecked</span></td>
             <td></td>
             <td></td>
@@ -193,8 +217,11 @@ const MultiDataVisualization = () => {
             <td>Phosphorylation</td>
             <td></td>
             <td></td>
+            <td><span className="material-icons">radio_button_unchecked</span></td>
             <td></td>
             <td><span className="material-icons">radio_button_unchecked</span></td>
+            <td></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>

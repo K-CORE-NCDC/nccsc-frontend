@@ -145,11 +145,12 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
       .attr("transform",
         "translate(" + margin.left + "," + margin.top + ")");
 
-    var tooltip = d3.select("#box2").append("div").attr('class', 'boxplot_tooltip')
-      .style("opacity", 0)
-      .style('position','absolute')
-      .style('background-color' , 'lavender')
-      .style('padding' , '1%')
+    var tooltip = d3.select("#box2_tooltip")
+    // .append("div").attr('class', 'boxplot_tooltip')
+      .style("opacity", 1)
+     
+      .style('background-color', 'lavender')
+      .style('padding', '1%')
     // Show the X scale
     var x = d3.scaleBand()
       .range([0, (250 * sumstat.length) + 250])
@@ -270,13 +271,13 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
           .attr("stroke", "black")
           .style("fill", "#fff")
           .on("mouseover", (d, i) => {
-              console.log('d', d)
+            console.log('d', d)
             tooltip.transition()
               .duration(200)
               .style('opacity', 0.9);
-            tooltip.html("Sample: &nbsp;"+  BrstKeys[i.Sample] + `<br/>${view_type === "gene_vl" ? 'gene val' : 'z-score'} &nbsp;` + i.Sepal_Length)
-              .style('left', d.offsetX + 'px')
-              .style('top', d.offsetY+ 'px')
+            tooltip.html("Sample: &nbsp;" + BrstKeys[i.Sample] + `<br/>${view_type === "gene_vl" ? 'gene val' : 'z-score'} &nbsp;` + i.Sepal_Length)
+              .style('right', height -25 + 'px')
+              .style('top',  height -255 + 'px')
           })
           .on('mouseout', () => {
           });
@@ -354,24 +355,28 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
           })
           .on("mouseover", (d, i) => {
             tooltip
-            .transition()
+              .transition()
               .duration(200)
-              .style('opacity', 0.9);
+              .style('opacity', 1);
             tooltip.html("Sample: &nbsp;" + BrstKeys[i.Sample] + `<br/>${view_type === "gene_vl" ? 'gene val' : 'z-score'} &nbsp;` + i.Sepal_Length)
 
             if (document.getElementById('filterBoxCmp')) {
+              console.log('x', d.offsetX, 'y', d.offsetY)
               tooltip.style('left', d.pageX - 550 + 'px')
               tooltip.style('top', d.pageY - 150 + 'px');
             } else {
-              tooltip.style('left', d.offsetX + 'px')
-              tooltip.style('top', d.offsetY + 'px');
+              console.log('height' , height)
+              // tooltip.style('left', 50  + '%')
+              // tooltip.style('top', d.pageX + 'px');
+              tooltip.style('right', height -25 + 'px')
+              tooltip.style('top', height - 255 + 'px');
             }
           })
           .on('mouseout', () => {
             tooltip
               .transition()
               .duration(500)
-              .style('opacity', 0);
+              .style('opacity', 1);
           });
         key = key + 80
       }
@@ -395,7 +400,7 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
         <>
           <div id="box3">
           </div>
-          <div ref={ref} className={watermarkCss + "w-full overflow-x-auto "} style={{overflowX:'auto' , position:'relative' , width:'100%'}} id="box2" >
+          <div ref={ref} className={watermarkCss + "w-full overflow-x-auto "} style={{ overflowX: 'auto', position: 'relative', width: '100%' }} id="box2" >
           </div> </>)}
     </>
   )
