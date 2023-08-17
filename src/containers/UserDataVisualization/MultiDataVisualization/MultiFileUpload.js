@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { multiFileUpload, clearMultiFIleUploadState } from "../../../actions/api_actions";
+import { multiFileUpload, clearMultiFIleUploadState, UserDataProjectsCount } from "../../../actions/api_actions";
 import { useDispatch } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import Swal from 'sweetalert2';
 import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
 import Draggable from 'react-draggable';
 import AOS from 'aos';
+import { useHistory } from 'react-router-dom';
+
 function Modal({ showModal, toggleModal, fileName }) {
+
   let fileNameImage = require(`../../../assets/images/FileScreenshots/${fileName}.png`).default
   let fileNameFile = require(`../../../assets/files/20_samples/${fileName}.tsv`).default
 
-  useEffect(() => {
-    console.log('fileName', fileName)
-  }, [fileName])
   return (
     <>
       {showModal ? (
@@ -84,6 +84,7 @@ function Modal({ showModal, toggleModal, fileName }) {
     </>
   );
 }
+
 const Table = ({ updateComponentNumber }) => {
   const [filesData, setFilesData] = useState({});
   const [projectName, setProjectName] = useState("");
@@ -91,11 +92,24 @@ const Table = ({ updateComponentNumber }) => {
   const [fileName, setFileName] = useState("")
   const dispatch = useDispatch()
   const [isOpen, setIsOpen] = useState(true);
+  const history = useHistory();
+
   useEffect(() => {
     dispatch(clearMultiFIleUploadState())
     AOS.init({});
     AOS.refresh()
+    // let return_data = UserDataProjectsCount('GET', {})
+    // return_data.then((result) => {
+    //   const d = result
+    //   if (d.status === 200 && result.data.data >= 5 ) {
+    //     history.push({
+    //       pathname: '/multidatavisualization/',
+    //       state: { redirected: true },
+    //     });
+    //   }
+    // })
   }, [])
+
   const handleDrag = () => {
     if (!isOpen) {
       return false;
@@ -200,52 +214,52 @@ const Table = ({ updateComponentNumber }) => {
   return (
 
     <div>
-       {isOpen && isOpen === true && 
-       
+      {isOpen && isOpen === true &&
+
         <Draggable disabled={!isOpen} onDrag={handleDrag}>
           <div
-              style={{
-                width: '300px',
-                height: '400px',
-                position: 'fixed',
-                transitionDelay: '3s',
-                bottom: isOpen ? '150px' : '-1000px',
-                right: isOpen ? '50px' : '-1000px',
-                transition: 'bottom 0.10s ease-in-out, right 0.5s ease-in-out',
-                zIndex: '15',
-                transitionDuration:'5s',
-                transitionTimingFunction: 'linear'
-              }}
-              
-            >
-          <div className="mainPopup W100" data-aos="zoom-in" data-aos-once='true' >
-            <div className="popupHeader">
-              <h3 className='TextLeft'>Note</h3>
-              <span className="material-icons mainPopupClose" id="mainPopupClose" onClick={closeModal}>
-                close
-              </span>
-            </div>
-            <div className='popupBody  introduceWrap' style={{"padding":"0px","border":"1px solid #ddd"}}>
-              <div className="introduceBox03" style={{"width":"100%"}}>
-                <ul>
-                  <li>
-                    <p>
-                      <FormattedMessage id="uploadGuide1" defaultMessage="Provides visualization results only for plots related to the uploaded data."/>
-                    </p>
-                  </li>
-                  <li>
-                    <p>
-                      <FormattedMessage id="uploadGuide2" defaultMessage="For omics data information required for each plot, please refer to the [Visualize Example Data] page."/>
-                    </p>
-                  </li>
-                </ul>
+            style={{
+              width: '300px',
+              height: '400px',
+              position: 'fixed',
+              transitionDelay: '3s',
+              bottom: isOpen ? '150px' : '-1000px',
+              right: isOpen ? '50px' : '-1000px',
+              transition: 'bottom 0.10s ease-in-out, right 0.5s ease-in-out',
+              zIndex: '15',
+              transitionDuration: '5s',
+              transitionTimingFunction: 'linear'
+            }}
+
+          >
+            <div className="mainPopup W100" data-aos="zoom-in" data-aos-once='true' >
+              <div className="popupHeader">
+                <h3 className='TextLeft'>Note</h3>
+                <span className="material-icons mainPopupClose" id="mainPopupClose" onClick={closeModal}>
+                  close
+                </span>
               </div>
+              <div className='popupBody  introduceWrap' style={{ "padding": "0px", "border": "1px solid #ddd" }}>
+                <div className="introduceBox03" style={{ "width": "100%" }}>
+                  <ul>
+                    <li>
+                      <p>
+                        <FormattedMessage id="uploadGuide1" defaultMessage="Provides visualization results only for plots related to the uploaded data." />
+                      </p>
+                    </li>
+                    <li>
+                      <p>
+                        <FormattedMessage id="uploadGuide2" defaultMessage="For omics data information required for each plot, please refer to the [Visualize Example Data] page." />
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
             </div>
-            
           </div>
-        </div>
         </Draggable>
-        
+
       }
 
       <HeaderComponent

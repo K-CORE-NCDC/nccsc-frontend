@@ -450,12 +450,11 @@ export default function DataVisualization({ parentProps }) {
                                     }
 
                                     {
-                                      exampleData && <Link to={item.viewLink}>
+                                      exampleData && 
+                                      <Link to={item.viewLink}>
                                         <div className="textdiv">
                                           <span><FormattedMessage id="Example" defaultMessage="Example" /></span>
-                                          <span className="material-icons" style={{ padding: '5px 0px 0px 3px' }}>
-                                            arrow_right_alt
-                                          </span>
+                                          <img src={arrow_icon} alt="arrow-icon" />
                                         </div>
                                       </Link>
                                     }

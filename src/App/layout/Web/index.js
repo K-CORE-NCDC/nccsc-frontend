@@ -423,7 +423,7 @@ export default function Web(props) {
 
               {is_login ? <>
               <Link to='/logout/'><FormattedMessage id="Logout" defaultMessage='Logout' /></Link>
-              {getCookie('superuser') && <a href={`${config.auth}login`}><FormattedMessage id="Admin" defaultMessage='Admin' /></a>}
+              {getCookie('superuser') && <a href={`${config.auth}home`}><FormattedMessage id="Admin" defaultMessage='Admin' /></a>}
               </>
                 :
                 <>

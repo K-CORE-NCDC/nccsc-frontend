@@ -102,16 +102,12 @@ export default function Box({
   useEffect(() => {
     if (inputState && "genes" in inputState && tableType) {
 
-      console.log('tableType', tableType);
-      console.log('viewType', viewType);
-
       let g = inputState["genes"];
       let dataJson = inputState;
       loadGenesDropdown(g);
       loadGenesDropdownMutation(g);
       setGene(g[0]);
       if (tableType === "proteome" || tableType === "rna") {
-        console.log('all the genes setting');
         dataJson["genes"] = g;
       }
       // else {
@@ -463,7 +459,7 @@ export default function Box({
       ) : (
         boxJson && (
           <>
-            {tableType && <p className="text_align" style={{ marginBottom: '30px' }}>{tableType === 'proteome' ? <FormattedMessage id="BoxTvNDesc" defaultMessage="Proteome expression of Tumor samples vs Normal samples" /> : <FormattedMessage id="BoxVariantDesc" defaultMessage="Proteome expression by variant type number (Missense mutation, Nonsense mutation, Splice site, Frame-shift insertion, Frame-shift deletion, In-frame insertion, In-frame deletion" />}</p>}
+            {tableType && <p className="text_align" style={{ marginBottom: '30px' }}>{tableType === 'proteome' ? <FormattedMessage id="BoxTvNDesc" defaultMessage="Proteome expression of Tumor samples vs Normal samples" /> : <FormattedMessage id="BoxRnaDesc" defaultMessage="RNA expression of Tumor samples vs Normal samples" />}</p>}
             {showBoxPlot && (
               <BoxPlot
                 view_type={viewType}
