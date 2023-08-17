@@ -475,8 +475,10 @@
   "uploadGuide2":"플롯마다 필요한 오믹스 데이터 정보는 [데이터 분석 예시] 페이지를 참고 바랍니다.",
   "projectCountGuide1":"생성 가능한 프로젝트는 총 5개입니다.",
   "projectCountGuide2":"프로젝트마다 확인 가능한 기간은 생성일로부터 2주입니다. 이후 해당 프로젝트는 삭제됩니다.",
-  "Admin":"관리자",
   "UserDataGuideMessage":"잘못된 데이터에 대해 빨간색으로 표시됩니다.",
-  "BoxRnaDesc":"암과 정생 샘플의 RNA 발현"
+  "BoxRnaDesc":"암과 정생 샘플의 RNA 발현",
+  "Admin":"관리자",
+  "ViewProjectUploadGuidepopUp1":"생성 가능한 프로젝트는 총 5 개입니다.",
+  "ViewProjectUploadGuidepopUp2":"프로젝트마다 확인 가능한 기간은 생성일로부터 2주입니다. 이후 해당 프로젝트는 삭제됩니다."
   
 }

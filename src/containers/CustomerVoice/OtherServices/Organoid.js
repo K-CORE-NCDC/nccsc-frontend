@@ -17,22 +17,22 @@ function Organoid() {
     ],
   };
   const styles = {
-    h1:{
-      marginBottom:'2rem',
-      fontSize:'2rem',
-      fontWeight:'bold'
+    h1: {
+      marginBottom: '2rem',
+      fontSize: '2rem',
+      fontWeight: 'bold'
     },
-    firstBox:{
-      padding:'20px',
-      border:'1px solid #ddd'
+    firstBox: {
+      padding: '20px',
+      border: '1px solid #ddd'
     },
-    imgBox:{
-      width:'25%',
-      textAlign:'center'
+    imgBox: {
+      width: '25%',
+      textAlign: 'center'
     },
-    tableBorder:{
-      border:"1px solid #000"
-      
+    tableBorder: {
+      border: "1px solid #000"
+
     }
   }
   return (
@@ -114,8 +114,8 @@ function Organoid() {
                   <li>
                     <h1 className="MarginBottom4 m-5 text-3xl font-bold my-5 ">오가노이드 제공방법</h1>
                     <div className="ml-32 my-16">
-                      <div className="flex my-20 Border BorderstyleViz MarginBottom5" style={{"marginTop":"0%"}}>
-                        <div className="w-64 TextAlignCenter" style={{"width":"25%"}}>
+                      <div className="flex my-20 Border BorderstyleViz MarginBottom5" style={{ "marginTop": "0%" }}>
+                        <div className="w-64 TextAlignCenter" style={{ "width": "25%" }}>
                           <img src={organoid04} alt="organoid" width="150"></img>
                         </div>
 
@@ -128,8 +128,8 @@ function Organoid() {
                         </div>
                       </div>
 
-                      <div className="flex Border BorderstyleViz MarginBottom5" style={{"marginTop":"0%"}}>
-                        <div className="w-64 TextAlignCenter" style={{"width":"25%"}}>
+                      <div className="flex Border BorderstyleViz MarginBottom5" style={{ "marginTop": "0%" }}>
+                        <div className="w-64 TextAlignCenter" style={{ "width": "25%" }}>
                           <img
                             className="mt-5 ml-5"
                             src={organoid05}
@@ -163,76 +163,76 @@ function Organoid() {
 
                       <li>
                         <div className="flex ml-8">
-                      <div className="w-86per">
-                        <table className="min-w-full " style={style.tableBorder}>
-                          <thead className="border border-black">
-                            <tr className="h-20 MultiUploadTextCenter TextWhite" style={{background:"#0c3c6a"}}>
-                              <th className="text165rem lineHeightInitial font-medium text-white PX6Y4 border border-black">연계 임상정보</th>
-                              <th className="text165rem lineHeightInitial font-medium text-white PX6Y4 border border-black" style={{"width":'20%'}}>기본정보</th>
-                              <th className="text165rem lineHeightInitial font-medium text-white PX6Y4 border border-black" style={{"width":'20%'}}>상세정보</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr className="border border-black h-20">
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50">나이</td>
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50 MultiUploadTextCenter">0</td>
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
-                            </tr>
-                            <tr className="border border-black h-20">
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50">성별</td>
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50 MultiUploadTextCenter">0</td>
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
-                            </tr>
-                            <tr className="border border-black h-20">
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50">원발암</td>
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50 MultiUploadTextCenter">0</td>
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
-                            </tr>
-                            <tr className="border border-black h-20">
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50 ">검체정보</td>
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50 MultiUploadTextCenter">0</td>
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white">
-                              </td>
-                            </tr>
-                            <tr className="border border-black h-20">
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 ">병리검사결과</td>
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 MultiUploadTextCenter">0</td>
-                            </tr>
-                            <tr className="border border-black h-20">
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 ">수술정보 및 수술병리조직결과</td>
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 MultiUploadTextCenter">0</td>
-                            </tr>
-                            <tr className="border border-black h-20">
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 ">항암제 치료 정보 및 반응성</td>
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 MultiUploadTextCenter">0</td>
-                            </tr>
-                            <tr className="border border-black h-20">
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 ">방사선 치료 유무 및 반응성</td>
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 MultiUploadTextCenter">0</td>
-                            </tr>
-                            <tr className="border border-black h-20">
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 ">추적관찰</td>
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
-                              <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 MultiUploadTextCenter MultiUploadTextCenter">0</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
+                          <div className="w-86per">
+                            <table className="min-w-full " style={style.tableBorder}>
+                              <thead className="border border-black">
+                                <tr className="h-20 MultiUploadTextCenter TextWhite" style={{ background: "#0c3c6a" }}>
+                                  <th className="text165rem lineHeightInitial font-medium text-white PX6Y4 border border-black">연계 임상정보</th>
+                                  <th className="text165rem lineHeightInitial font-medium text-white PX6Y4 border border-black" style={{ "width": '20%' }}>기본정보</th>
+                                  <th className="text165rem lineHeightInitial font-medium text-white PX6Y4 border border-black" style={{ "width": '20%' }}>상세정보</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr className="border border-black h-20">
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50">나이</td>
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50 MultiUploadTextCenter">0</td>
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
+                                </tr>
+                                <tr className="border border-black h-20">
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50">성별</td>
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50 MultiUploadTextCenter">0</td>
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
+                                </tr>
+                                <tr className="border border-black h-20">
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50">원발암</td>
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50 MultiUploadTextCenter">0</td>
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
+                                </tr>
+                                <tr className="border border-black h-20">
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50 ">검체정보</td>
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50 MultiUploadTextCenter">0</td>
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white">
+                                  </td>
+                                </tr>
+                                <tr className="border border-black h-20">
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 " >병리검사결과</td>
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 MultiUploadTextCenter" >0</td>
+                                </tr>
+                                <tr className="border border-black h-20">
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 " >수술정보 및 수술병리조직결과</td>
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 MultiUploadTextCenter" >0</td>
+                                </tr>
+                                <tr className="border border-black h-20">
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 " >항암제 치료 정보 및 반응성</td>
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 MultiUploadTextCenter" >0</td>
+                                </tr>
+                                <tr className="border border-black h-20">
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 " >방사선 치료 유무 및 반응성</td>
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 MultiUploadTextCenter" >0</td>
+                                </tr>
+                                <tr className="border border-black h-20">
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 " >추적관찰</td>
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 MultiUploadTextCenter MultiUploadTextCenter" >0</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
                       </li>
                     </ul>
                   </li>
 
                   <ul>
-                    <li className="m-12">
+                    <li className="m-12" style={{ lineHeight: '35px' }}>
                       <h1 className="m-5 text-3xl font-bold my-5 mt-24">
                         오가노이드 연구 관련 특화서비스 제공
                       </h1>
-                      <ul className="m-12">
+                      <ul className="M4" >
                         <li className="m-8 text165rem lineHeightInitial">1. 종사자 대상 교육 - 오가노이드 연구 초심자 혹은 경력자를대상으로 한 배양 이론 및 관련기법 교육</li>
                         <li className="m-8 text165rem lineHeightInitial">2. 연구 디자인 컨설팅 연구 디자인 및 결과의 임상적 의의 해석 등오가노이드 제공 전/후 전문가 그룹과의 자문/협력 제공 오가노이드제공 신청 단계에서 특화 서비스 항목으로 추가 신청</li>
                         <li className="m-8 text165rem lineHeightInitial">3. STR analysis</li>
@@ -249,6 +249,7 @@ function Organoid() {
                           alt="organoid"
                           width="50%"
                           className="my-2 mx-auto"
+                          style={{ marginLeft: '25%' }}
                         ></img>
                       </li>
                     </ul>
@@ -257,15 +258,15 @@ function Organoid() {
                   <li className="m-12">
                     <h1 className="m-5 text-3xl font-bold my-5 ">신청자 구비서류</h1>
 
-                    <ul>
+                    <ul style={{ marginTop: '10px' }}>
                       <li>
                         <div className="container flex justify-items-start m-8 text165rem lineHeightInitial">
                           <div>
-                            <h1 className="mr-5">◦ 신청단계</h1>
+                            <p className="mr-5">◦ 신청단계</p>
                             <br></br>
-                            <p className="ml-8">- IRB 승인서</p>
+                            <p className="ml-8" style={{ marginLeft: '1rem' }}>- IRB 승인서</p>
                             <br></br>
-                            <p className="ml-8">- 오가노이드 데이터 제공 신청서</p>
+                            <p className="ml-8" style={{ marginLeft: '1rem' }}>- 오가노이드 데이터 제공 신청서</p>
                             <br></br>
                           </div>
                         </div>
@@ -273,11 +274,11 @@ function Organoid() {
                       <li>
                         <div className="container flex justify-items-start m-8 text165rem lineHeightInitial">
                           <div>
-                            <h1 className="mr-5">◦ 제공단계</h1>
+                            <p className="mr-5">◦ 제공단계</p>
                             <br></br>
-                            <p className="ml-8">- 오가노이드 제공 확인서</p>
+                            <p className="ml-8" style={{ marginLeft: '1rem' }}>- 오가노이드 제공 확인서</p>
                             <br></br>
-                            <p className="ml-8">- MTA</p>
+                            <p className="ml-8" style={{ marginLeft: '1rem' }}>- MTA</p>
                             <br></br>
                           </div>
                         </div>
@@ -286,50 +287,89 @@ function Organoid() {
                   </li>
                 </ul>
               </div>
-              <div className="flex container m-12 justify-between">
+              <div className="flex container m-12 justify-between" style={{ margin: '3%', display: 'flex', justifyContent: 'space-between' }}>
                 <h1 className="m-5 text-3xl font-bold my-5 mt-24 ">검색 및 신청</h1>
-                <div className="m-12 rounded bg-blue-100 ">
+                <div className="m-12 rounded bg-blue-100 " style={{padding: '15px' }}>
                   <a
                     className="m-5 text-3xl font-normal my-5 block"
                     href={Attachments}
-                    download="organoid_application_document">신청서류 다운로드</a>
+                    download="organoid_application_document"
+                  >신청서류 다운로드</a>
                 </div>
               </div>
 
               {/* table */}
-              <div className="">
-                <table className="table-auto  border border-black mx-auto ml-16 w-86per">
-                  <tbody className=" border border-black">
-                    <tr className=" border border-black bg-gray-100 mr-40">
-                      <td className=" border border-black m-20 p-7 w-80 MultiUploadTextCenter">
+              <div className="" >
+                <table className="table-auto  border border-black mx-auto ml-16 w-86per" style={{ border: '1px solid #ddd' }}>
+                  <tbody>
+                    <tr className=" border border-black bg-gray-100">
+                      <td className=" border border-black m-20 p-7 w-80 MultiUploadTextCenter" style={{ borderRightStyle: 'groove', width: '300px' }}>
                         신청자 정보
                       </td>
-                      <td className="grid grid-cols-3 gap-6 m-5">
-                        <p>◦성명________ </p>
-                        <p>◦ 연락처________ </p>
-                        <p>◦ E-mail________ </p>
-                        <p>◦소속기관________ </p>
-                        <p>◦ 기관유형________ </p>
-                        <p>◦ 직위________ </p>
+                      <td>
+                        <div style={{ display: 'flex', flexDirection: 'row', gap: '27%', margin: '20px 10px 20px 20px', }} >
+                          <p>◦성명________ </p>
+                          <p>◦ 연락처________ </p>
+                          <p>◦ E-mail________ </p>
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'row', margin: '20px 0px 20px 20px', gap: '24%' }} >
+                          <p>◦소속기관________ </p>
+                          <p>◦ 기관유형________ </p>
+                          <p>◦ 직위________ </p>
+                        </div>
                       </td>
                     </tr>
+
                     <tr className=" border border-black">
-                      <td className=" border border-black m-5 p-7 MultiUploadTextCenter">제공유형</td>
-                      <td className="grid grid-cols-3 gap-6 m-5">
-                        <p>◦단순제공</p>
-                        <p>◦ 공동협력 연구</p>
+                      <td className=" border border-black m-5 p-7 MultiUploadTextCenter" style={{ borderRightStyle: 'groove' }}>제공유형</td>
+                      <td className="">
+                        <div style={{ display: 'flex', flexDirection: 'row', margin: '20px 0px 20px 20px', gap: '32%' }} >
+                          <p>◦단순제공</p>
+                          <p>◦ 공동협력 연구</p>
+                        </div>
                       </td>
                     </tr>
                     <tr className=" border border-black bg-gray-100">
-                      <td className=" border border-black m-5 p-7 MultiUploadTextCenter ">기본검색</td>
-                      <td className="grid grid-cols-3 gap-6 m-5">
-                        <p>◦암종 _______ </p>
-                        <p>◦ 조직 (오가노이드 기원) _______</p>
+                      <td className=" border border-black m-5 p-7 MultiUploadTextCenter " style={{ borderRightStyle: 'groove' }}>기본검색</td>
+                      <td className="">
+                        <div style={{ display: 'flex', flexDirection: 'row', margin: '20px 0px 20px 20px', gap: '28%' }} >
+                          <p>◦암종 _______ </p>
+                          <p>◦ 조직 (오가노이드 기원) _______</p>
+                        </div>
+
                       </td>
                     </tr>
-                    <tr className=" border border-black">
+                    <tr>
+                      <td className=" border border-black m-20 p-7 w-80 MultiUploadTextCenter" style={{ borderRightStyle: 'groove' }}>
+                        심화검색
+                      </td>
+                      <td>
+                        <div style={{ display: 'flex', flexDirection: 'row', gap: '32%', margin: '20px 0px 20px 20px' }} >
+                          <p>◦면역병리</p>
+                          <p>◦ 조직병리</p>
+                          <p>◦치료반응성</p>
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'row', margin: '20px 0px 20px 20px', gap: '32%' }} >
+                          <p>◦ 추적관찰</p>
+                          <p>◦ 오믹스정보</p>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr className=" border border-black bg-gray-100">
+                      <td className=" border border-black m-5 p-7 MultiUploadTextCenter" style={{ borderRightStyle: 'groove' }}>특화서비스</td>
+                      <td className="">
+                        <div style={{ display: 'flex', flexDirection: 'row', gap: '36%', margin: '20px 0px 20px 20px' }} >
+                          <p>◦교육</p>
+                          <p>◦ 연구컨설팅 </p>
+                          <p>◦ STR analysis</p>
+                        </div>
+
+                      </td>
+                    </tr>
+                    {/* <tr className=" border border-black">
                       <td className=" border border-black m-5 p-7 MultiUploadTextCenter">심화검색</td>
-                      <td className="grid grid-cols-3 gap-6 m-5">
+                      <td className="">
                         <p>◦면역병리</p>
                         <p>◦ 조직병리</p>
                         <p>◦치료반응성</p>
@@ -339,26 +379,30 @@ function Organoid() {
                     </tr>
                     <tr className=" border border-black bg-gray-100">
                       <td className=" border border-black m-5 p-7 MultiUploadTextCenter">특화서비스</td>
-                      <td className="grid grid-cols-3 gap-6 m-5">
+                      <td className="">
                         <p>◦교육</p>
                         <p>◦ 연구컨설팅 </p>
                         <p>◦ STR analysis</p>
                       </td>
-                    </tr>
+                    </tr> */}
                   </tbody>
                 </table>
               </div>
 
               <div>
-                <h1 className="m-12 text-3xl font-bold my-12 mt-24">검색 및 신청은 서류 작성 후 이메일 사전신청</h1>
-                <h1 className="m-12 text-3xl font-bold my-8 mt-24">문의</h1>
-                <div className="grid grid-cols-3 gap-6 m-12 text-3xl font-normal my-8">
-                  <p>공선영</p>
-                  <p>ksy@ncc.re.kr </p>
-                  <p>031-920-2362</p>
-                  <p>김윤희 </p>
-                  <p> sensia37@ncc.re.kr </p>
-                  <p>031-920-2511</p>
+                <h1 className="m-12 text-3xl font-bold my-12 mt-24" style={{ margin: '3% 3% 3% 0px' }}>검색 및 신청은 서류 작성 후 이메일 사전신청</h1>
+                <h1 className="m-12 text-3xl font-bold my-8 mt-24" style={{ marginBottom: '3% ' }}>문의</h1>
+                <div className="" style={{ border: '1px solid #ddd' }}>
+                  <div style={{ display: 'flex', margin: '3%', justifyContent: 'space-between' }}>
+                    <p>공선영</p>
+                    <p>ksy@ncc.re.kr </p>
+                    <p>031-920-2362</p>
+                  </div>
+                  <div style={{ display: 'flex', margin: '3%', justifyContent: 'space-between' }}>
+                    <p>김윤희 </p>
+                    <p> sensia37@ncc.re.kr </p>
+                    <p>031-920-2511</p>
+                  </div>
                 </div>
               </div>
             </div>

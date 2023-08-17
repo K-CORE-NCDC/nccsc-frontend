@@ -280,6 +280,8 @@ function SingleDataTable({ updateComponentNumber }) {
       {/* <ModalDiv /> */}
       <ErrorMessage />
 
+      <p style={{ justifyContent:'center', display:'flex' }}><FormattedMessage id="loginGuide" defaultMessage="The user should be responsible for using result." /></p>
+
       <div className="flex" style={{ justifyContent: 'space-between' }}>
 
         {projectId === 0 ?

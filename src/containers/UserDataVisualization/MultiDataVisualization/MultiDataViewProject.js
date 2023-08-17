@@ -407,12 +407,12 @@ export default function MultiDataViewProject() {
                 <ul>
                   <li>
                     <p>
-                      <FormattedMessage id="uploadGuide1" defaultMessage="Provides visualization results only for plots related to the uploaded data."/>
+                      <FormattedMessage id="ViewProjectUploadGuidepopUp1" defaultMessage="It is possible to create 5 projects on a account."/>
                     </p>
                   </li>
                   <li>
                     <p>
-                      <FormattedMessage id="uploadGuide2" defaultMessage="For omics data information required for each plot, please refer to the [Visualize Example Data] page."/>
+                      <FormattedMessage id="ViewProjectUploadGuidepopUp2" defaultMessage="The period to check each project is 2 weeks from the date of creation. After 2 weeks, the project will be deleted."/>
                     </p>
                   </li>
                 </ul>

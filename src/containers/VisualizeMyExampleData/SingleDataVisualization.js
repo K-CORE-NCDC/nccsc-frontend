@@ -113,7 +113,7 @@ export const SingleDataVisualization = ({ isLogin }) => {
                 <thead>
                   <tr>
                     <th>Data Type</th>
-                    <th style={{ width: '160px' }}>Variant Summary</th>
+                    <th style={{ width: '150px' }}>Variant Summary</th>
                     <th >Circos Plot</th>
                     <th>Lollipop</th>
                     <th>CNV Plot</th>

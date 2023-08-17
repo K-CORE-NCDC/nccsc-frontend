@@ -641,7 +641,7 @@ export const DataOfFiles = ({ fileName }) => {
 
   return (
     <ul style={{ margin: "10px" }}>
-      <li> <FormattedMessage id="CommonGuideMsg" defaultMessage='This is a Sample Example File for ' />{` ${fileName}`}</li>
+      {/* <li> <FormattedMessage id="CommonGuideMsg" defaultMessage='This is a Sample Example File for ' />{` ${fileName}`}</li> */}
 
       <div className="popularBox" >
         <div className="contentBox">
@@ -663,6 +663,11 @@ export const DataOfFiles = ({ fileName }) => {
                   <li style={{ paddingLeft: '5%' }}>- <FormattedMessage id="clinicalInformationGuideinnerp3" defaultMessage='death_yn : death yes or no (TRUE / FALSE)' /></li>
                   <li style={{ paddingLeft: '5%' }}>- <FormattedMessage id="clinicalInformationGuideinnerp4" defaultMessage='death_cnfr_drtn : death confirmation duration (numeric data)' /> </li>
                 </ul>
+              </li>
+              <li tabIndex="-1" style={{ paddingTop: '10px' }}>
+                <p style={{ color: 'black' }}> <b></b> &nbsp;
+                  <FormattedMessage id="RNAGuideP2" defaultMessage='Leave the “None” value empty.' />
+                </p>
               </li>
 
             </ul>}
