@@ -591,7 +591,7 @@ export default function DataVisualization() {
                               <div className="GeneSetgeneSetButton">
                                 <div className="flex-1"><FormattedMessage id="Clinical Grouping" defaultMessage="Clinical Grouping" /></div>
                                 <div className="w-20">
-                                  <CogIcon className="filter-icon" />
+                                <UserCircleIcon className="filter-icon" />
                                 </div>
                               </div>
                             </Popover.Button>

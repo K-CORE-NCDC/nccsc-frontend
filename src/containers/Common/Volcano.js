@@ -21,7 +21,7 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
       sortable: true
     },
     {
-      name: '-LOG(PVALUE)',
+      name: 'PVALUE',
       selector: row => row["-Log(Pvalue)"],
       sortable: true
     }
@@ -59,19 +59,20 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
   //   link.click();
   // }
   const downloadTableAsCsv = (tableType) => {
+    console.log('tt',tableType);
     let rows = [
       ["GENE NAME", "LOG2FC", "LOG(PVALUE) negative"],
     ];
   
     if (tableType === "negative") {
       tableData.forEach(element => {
-        if (element["log2(fold_change)"] <= -1.5) {
+        if (element["log2(fold_change)"] <= -1.5 && element["p_value"] <= 0.5) {
           rows.push([element["gene"], element["log2(fold_change)"], element["p_value"]]);
         }
       });
     } else if (tableType === "positive") {
       tableData.forEach(element => {
-        if (element["p_value"] >= 1.5) {
+        if (element["log2(fold_change)"] >= 1.5 && element["p_value"] <= 0.5) {
           rows.push([element["gene"], element["log2(fold_change)"], element["p_value"]]);
         }
       });

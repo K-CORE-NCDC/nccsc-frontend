@@ -72,12 +72,12 @@ export const SingleDataVisualization = ({ isLogin }) => {
                         </p>
                       </li>
                       <li className="" tabIndex="-1" style={{}}>
-                        <p> <b>Circos plot :</b> &nbsp;
+                        <p> <b>Circos:</b> &nbsp;
                           <FormattedMessage id="Example_signle_circos" defaultMessage=' visualize one of the seven omics data as a circular layer on a circular chromosome map' />
                         </p>
                       </li>
                       <li tabIndex="-1" >
-                        <p> <b>Lollipop Plot :</b> &nbsp;
+                        <p> <b>Lollipop:</b> &nbsp;
                           <FormattedMessage id="Example_signle_Lollipop" defaultMessage=' visualize mutation or phosphorylation of certain gene on a sequence' />
                         </p>
                       </li>
@@ -90,18 +90,18 @@ export const SingleDataVisualization = ({ isLogin }) => {
                     </ul>
                     <ul className="contentBox_right">
                       <li className="" tabIndex="-1" >
-                        <p> <b>Heatmap :</b> &nbsp;
+                        <p> <b>Heatmap:</b> &nbsp;
                           <FormattedMessage id="Example_signle_heatMap" defaultMessage='represent genomic/proteomic data in the form of a map or diagram in which data values are represented as colors(heats)' />
                         </p>
                       </li>
                       <li className="" tabIndex="-1" style={{}}>
-                        <p><b>Box Plot (Tumor vs Normal):</b> &nbsp;
+                        <p><b>Box (Tumor vs Normal):</b> &nbsp;
                           <FormattedMessage id="Example_signle_box" defaultMessage='visualize the genetic information statistics of the selected gene(s) in the form of boxes' />
                         </p>
                       </li>
 
                       <li className="" tabIndex="-1" style={{}}>
-                        <p> <b>Survival Plot :</b> &nbsp;
+                        <p> <b>Survival:</b> &nbsp;
                           <FormattedMessage id="Example_signle_sirvival" defaultMessage='visualize the recurrence/survival probability of patients according to clinical variable conditions' />
                         </p>
                       </li>
@@ -114,12 +114,12 @@ export const SingleDataVisualization = ({ isLogin }) => {
                   <tr>
                     <th>Data Type</th>
                     <th style={{ width: '150px' }}>Variant Summary</th>
-                    <th >Circos Plot</th>
+                    <th >Circos </th>
                     <th>Lollipop</th>
-                    <th>CNV Plot</th>
+                    <th>CNV </th>
                     <th>Heatmap</th>
-                    <th>Box Plot</th>
-                    <th>Survival Plot</th>
+                    <th>Box </th>
+                    <th>Survival </th>
                   </tr>
                 </thead>
                 <tbody>

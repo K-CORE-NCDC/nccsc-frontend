@@ -349,6 +349,7 @@ function ProjectsList() {
           // highlightOnHover={true}
           />
         }
+        {!tableData && <p className="MultiUploadTextCenter">No Records Found</p>}
         {/* {redirecting} */}
       </div>
     </div>

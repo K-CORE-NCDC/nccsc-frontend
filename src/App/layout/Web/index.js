@@ -99,6 +99,11 @@ export default function Web(props) {
     })
     document.body.addEventListener('click',checkPopup)
   }, [])
+  const checkState =()=>{
+    if(showLangMenu===true){
+      setShowLangMenu(false)
+    }
+  }
 
   const checkPopup = (event) => {
     
@@ -162,6 +167,7 @@ export default function Web(props) {
   }, [context]);
 
   const changeLang = (type) => {
+    setShowLangMenu(!showLangMenu) 
     if (type === "kr-KO") {
       setKoreanlanguage(true);
       setEnglishlanguage(false);

@@ -46,12 +46,11 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
       .attr("transform",
         "translate(" + margin.left + "," + margin.top + ")");
 
+    // Adding tumor vs Normal Legends
     svg1.append("circle").attr("cx", 20).attr("cy", -5).attr("r", 6).style("fill", "red")
     svg1.append("text").attr("x", 30).attr("y", 1).text("Tumor").style("font-size", "15px").attr("alignment-baseline", "top")
-    if (chart_type === "proteome") {
-      svg1.append("circle").attr("cx", 90).attr("cy", -5).attr("r", 6).style("fill", "blue")
-      svg1.append("text").attr("x", 100).attr("y", 1).text("Normal").style("font-size", "15px").attr("alignment-baseline", "top")
-    }
+    svg1.append("circle").attr("cx", 90).attr("cy", -5).attr("r", 6).style("fill", "blue")
+    svg1.append("text").attr("x", 100).attr("y", 1).text("Normal").style("font-size", "15px").attr("alignment-baseline", "top")
 
 
 

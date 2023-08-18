@@ -101,12 +101,11 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
             left: ${mousePosition.x + 10}px;
             top: ${mousePosition.y + 20}px;
             background:#fff;
-
           `;
 
           return `<div style='${tooltipStyle}'><b>duration: </b>${e.x}<br /><b>Survival Rate: </b>${e.y}<br /><b>Sample: </b>${e.sample}</div>`;
         }}
-
+        margin = {{ top: 50, right: 100, bottom: 50, left: 55 }}
         yMin={yMinValue}
         xMin={0}
         xMax={xMaxValue}
