@@ -258,7 +258,7 @@ const Table = ({ updateComponentNumber }) => {
         <div className="contentsTitle" style={{ margin: "0px" }}>
           <h3>
             <font>
-              <font><FormattedMessage id="MultiData" defaultMessage="Multi Data" /></font>
+              <font><FormattedMessage id="MultiData" defaultMessage="Multi Data" /></font>&nbsp;
               <span className="colorSecondary">
                 <font><FormattedMessage id="Upload" defaultMessage="Upload" /> </font>
               </span>

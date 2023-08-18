@@ -114,7 +114,7 @@ const SignupComponent = () => {
           <div className="contentsTitle">
             <div className="auto">
               <h3 className="colorSecondary">
-                <span className="colorPrimary"><FormattedMessage id='Sign' defaultMessage='Sign' /></span>
+                <span className="colorPrimary"><FormattedMessage id='Sign' defaultMessage='Sign' />&nbsp;</span>
                 <FormattedMessage id="up" defaultMessage='up' />
               </h3>
             </div>

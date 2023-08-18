@@ -163,7 +163,11 @@ function ProjectsList() {
       name: <FormattedMessage id="VisualizationColumn" defaultMessage="Visualization" />,
       cell: (row) => (
         <div className="MultiDataTableViewDelete">
-          <Link to={`/visualise-multidata/home/${row?.project_id}`}>
+          {/* <Link to={`/visualise-multidata/home/${row?.project_id}`} > */}
+          <Link to={{
+            pathname: `/visualise-multidata/home/${row?.project_id}`,
+            state: { projectName: row.project_name }
+          }}>
             <span style={{ color: 'blue' }}>
               <FormattedMessage id="View" defaultMessage="View" />
             </span>
@@ -361,6 +365,7 @@ export default function MultiDataViewProject() {
   const breadCrumbs = {
     '/multidatavisualization/': [
       { id: 'Home', defaultMessage: 'Home', to: '/' },
+      { id: `VisualizeMyData`, defaultMessage: `Visualize My Data`, to: `/home/visualizeMyData/` },
       { id: 'MultiDataVisualization', defaultMessage: 'Multi Data Visualization', to: '/multidatavisualization/' },
       { id: 'MultiDataProjectView', defaultMessage: 'Multi Data Project View', to: '/MultiDataProjectView/' }
     ]

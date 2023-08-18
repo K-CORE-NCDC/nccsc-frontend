@@ -110,12 +110,13 @@ function ModalDiv() {
 
 }
 
-function ErrorMessage(){
+function ErrorMessage() {
   const verificationResponse = useSelector(
-    (data) => data.homeReducer.singleFileUploadData
+    (data) => data.homeReducer.multiFileUploadData
   );
 
-  return verificationResponse && 'issue' in verificationResponse &&   <p className="h5 MultiUploadTextCenter"><FormattedMessage id="UserDataGuideMessage" defaultMessage="Red mark for invalid data." /></p>
+  return verificationResponse && 'issue' in verificationResponse && (verificationResponse['issue'] === 'allFileColumns' || verificationResponse['issue'] === 'clinicalInforamtionFile' || verificationResponse['issue'] === 'DataIssues') &&
+    <p className="h5 MultiUploadTextCenter"><FormattedMessage id="UserDataGuideMessage" defaultMessage="Red mark for invalid data." /></p>
 }
 
 function MultiDataTable({ updateComponentNumber }) {
@@ -208,7 +209,7 @@ function MultiDataTable({ updateComponentNumber }) {
                 let rdata = String(row[columns[i]]);
                 let v = rdata.split("||");
                 if (v.length > 1) {
-                  return <div className="boardCell" style={{color:"red"}}>{v[1]}</div>;
+                  return <div className="boardCell" style={{ color: "red" }}>{v[1]}</div>;
                 } else {
                   return <div className="boardCell">{String(row[columns[i]])}</div>;
                 }
@@ -243,6 +244,7 @@ function MultiDataTable({ updateComponentNumber }) {
         }
       }
       let projectResponse = 'project_details' in verificationResponse ? verificationResponse["project_details"] : {};
+      console.log('projectResponse', projectResponse)
       if ("id" in projectResponse) {
         setProjectId(projectResponse["id"]);
       } else {
@@ -309,7 +311,7 @@ function MultiDataTable({ updateComponentNumber }) {
           <div className="flex" style={{ justifyContent: 'space-between' }}>
             {projectId === 0 ?
               <>
-                <div>
+                <div style={{ marginBottom: '10px' }}>
                   <button
                     className='btn btnGray bdBtn'
                     type="button"
@@ -336,7 +338,7 @@ function MultiDataTable({ updateComponentNumber }) {
                   <button
                     onClick={() => {
                       dispatch(clearMultiFIleUploadState())
-                      history.push(`/visualise-multidata/home/${projectId}`)
+                      history.push({ pathname: `/visualise-multidata/home/${projectId}`, state: { projectName: verificationResponse?.project_details?.name } })
                     }}
                     className='btn btnPrimary'
                   >
@@ -371,7 +373,7 @@ function MultiDataTable({ updateComponentNumber }) {
             {!verificationResponse && (
               <div className="MultiUploadTextCenter">
                 <LoaderCmp />
-                {<p className="MultiUploadTextCenter">
+                {<p className="MultiUploadTextCenter" style={{ marginTop: '20px' }}>
                   <FormattedMessage id='WaitMessage' defaultMessage=' It takes some time to process the data. Please wait ! (2 minutes per 100 samples)' />
                 </p>
                 }
