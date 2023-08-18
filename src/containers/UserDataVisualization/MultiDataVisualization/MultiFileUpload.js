@@ -98,16 +98,16 @@ const Table = ({ updateComponentNumber }) => {
     dispatch(clearMultiFIleUploadState())
     AOS.init({});
     AOS.refresh()
-    // let return_data = UserDataProjectsCount('GET', {})
-    // return_data.then((result) => {
-    //   const d = result
-    //   if (d.status === 200 && result.data.data >= 5 ) {
-    //     history.push({
-    //       pathname: '/multidatavisualization/',
-    //       state: { redirected: true },
-    //     });
-    //   }
-    // })
+    let return_data = UserDataProjectsCount('GET', {})
+    return_data.then((result) => {
+      const d = result
+      if (d.status === 200 && result.data.data >= 5 ) {
+        history.push({
+          pathname: '/multidatavisualization/',
+          state: { redirected: true },
+        });
+      }
+    })
   }, [])
 
   const handleDrag = () => {

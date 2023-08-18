@@ -600,7 +600,7 @@ export default function DataVisualization() {
                               <div className="GeneSetgeneSetButton">
                                 <div className="flex-1"><FormattedMessage id="Clinical Grouping" defaultMessage="Clinical Grouping" /></div>
                                 <div className="w-20">
-                                  <CogIcon className="filter-icon" />
+                                <UserCircleIcon className="filter-icon" />
                                 </div>
                               </div>
                             </Popover.Button>
@@ -700,7 +700,7 @@ export default function DataVisualization() {
                 </Popover>
 
 
-                {/* {project_id && */}
+                {project_id &&
                   <Popover className="relative gene_main_box capture">
                     {({ open }) => {
                       return (
@@ -719,7 +719,7 @@ export default function DataVisualization() {
                       )
                     }}
                   </Popover>
-                  {/* } */}
+                }
               </div>
             </section>
             {

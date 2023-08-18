@@ -202,7 +202,6 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
                 }
 
                 function circleClass(d) {
-                    console.log('d',d);
                     if (d['color'] === 'red') return 'dot red';
                     else if (d['color'] === 'blue') return 'dot blue';
                     else if (d['color'] === 'black') return 'dot black';

@@ -97,7 +97,14 @@ export default function Web(props) {
 
       }
     })
+    // var body = document.getElementsByTagName('body')
+    // body.onclick = checkState()
   }, [])
+  const checkState =()=>{
+    if(showLangMenu===true){
+      setShowLangMenu(false)
+    }
+  }
 
 
   useEffect(() => {
@@ -151,6 +158,7 @@ export default function Web(props) {
   }, [context]);
 
   const changeLang = (type) => {
+    setShowLangMenu(!showLangMenu) 
     if (type === "kr-KO") {
       setKoreanlanguage(true);
       setEnglishlanguage(false);
@@ -406,7 +414,7 @@ export default function Web(props) {
       classes = "header on"
     }
   }
-  console.log('Current Sub-Div ID:', mainPageInSmallScreen);
+  
 
   return (
     <>

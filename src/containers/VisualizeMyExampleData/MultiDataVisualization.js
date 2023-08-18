@@ -29,22 +29,22 @@ const MultiDataVisualization = () => {
           <div className="contentBox">
             <ul className="contentBox_left" >
               <li className="" tabIndex="0" >
-                <p> <b>Circos Plot : </b> &nbsp;
+                <p> <b>Circos: </b> &nbsp;
                   <FormattedMessage id="Example_multi_circos" defaultMessage='visualize seven omics data as a circular layer on a circular chromosome map' />
                 </p>
               </li>
               <li className="" tabIndex="-1" >
-                <p> <b>Oncoprint  :</b> &nbsp;
+                <p> <b>Oncoprint:</b> &nbsp;
                   <FormattedMessage id="Example_multi_onco" defaultMessage="visualize DNA mutations and various omics information of each patient's gene with columns, colors, symbols, etc." />
                 </p>
               </li>
               <li tabIndex="-1" >
-                <p> <b>Lollipop Plot :</b> &nbsp;
+                <p> <b>Lollipop:</b> &nbsp;
                   <FormattedMessage id="Example_signle_Lollipop" defaultMessage=' visualize mutation or phosphorylation of certain gene on a sequence' />
                 </p>
               </li>
               <li className="" tabIndex="-1" style={{}}>
-                <p><b> Volcano Plot:</b> &nbsp;
+                <p><b> Volcano:</b> &nbsp;
                   <FormattedMessage id="Example_multi_valcano" defaultMessage='visualize genes (DEGs) showing significant expression differences between the two groups divided according to clinical conditions' />
                 </p>
               </li>
@@ -56,7 +56,7 @@ const MultiDataVisualization = () => {
                     </p>
                   </li>
                   <li className="" tabIndex="-1" style={{}}>
-                    <p> <b>Survival Plot :</b> &nbsp;
+                    <p> <b>Survival :</b> &nbsp;
                       <FormattedMessage id="Example_multi_survival" defaultMessage='visualize the recurrence/survival probability of patients according to clinical variable or genetic conditions' />
                     </p>
                   </li></>}
@@ -73,7 +73,7 @@ const MultiDataVisualization = () => {
                 </p>
               </li>
               <li className="" tabIndex="-1" style={{}}>
-                <p><b>Box Plot (Tumor vs Normal):</b> &nbsp;
+                <p><b>Box (Tumor vs Normal):</b> &nbsp;
                   <FormattedMessage id="Example_signle_box" defaultMessage='visualize the genetic information statistics of the selected gene(s) in the form of boxes' />
                 </p>
               </li>
@@ -81,16 +81,16 @@ const MultiDataVisualization = () => {
               {viewMoreData &&
                 <>
                   <li className="" tabIndex="-1" style={{}}>
-                    <p> <b>Fusion Plot :</b> &nbsp;
+                    <p> <b>Fusion:</b> &nbsp;
                       <FormattedMessage id="Example_multi_fusion" defaultMessage='visualize the number of fusion gene(s) and individual fusion gene for the selected sample group' />
                     </p>
                   </li>
                   <li className="" tabIndex="-1" style={{}}>
-                    <p> <b>Sankey Plot  :</b> &nbsp;
+                    <p> <b>Sankey:</b> &nbsp;
                       <FormattedMessage id="Example_multi_sankey" defaultMessage=' visualize drug relation information of the selected mutations' />
                     </p>
                   </li></>}
-              <button className="btnMore" style={{ float: 'right' }} onClick={() => {
+              <button className="btnMore" style={{ float: 'right',marginTop:'25px' }} onClick={() => {
                 history.push("/visualise-multidata/home")
               }}><img src={!viewMoreData ? plusicon : minusicon} alt="" /></button>
             </ul>

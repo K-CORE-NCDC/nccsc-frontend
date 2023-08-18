@@ -154,51 +154,51 @@ export default function FusionPlot({
     },
     {
       name: <FormattedMessage id="LeftGeneName" defaultMessage="Left Gene Name" />,
-      selector: (row) => row.left_gene_name,
+      selector: (row) => <div><span title={row.left_gene_name}>{row.left_gene_name}</span></div>,
       sortable: true,
     },
     {
       name: <FormattedMessage id="LeftEnsemblId" defaultMessage="Left Ensembl Id" />,
-      selector: (row) => row.left_gene_ensmbl_id,
+      selector: (row) => <div><span title={row.left_gene_ensmbl_id}>{row.left_gene_ensmbl_id}</span></div>,
       sortable: true,
     },
     {
       name: <FormattedMessage id="LeftBreakpoint" defaultMessage="Left Breakpoint" />,
       cell: (row, index) => {
-        return row.left_gene_chr + ":" + row.left_hg38_pos;
+        return <div><span title={row.left_gene_chr + ":" + row.left_hg38_pos}>{row.left_gene_chr + ":" + row.left_hg38_pos}</span></div>
       },
       sortable: true,
     },
     {
       name: <FormattedMessage id="RightGeneName" defaultMessage="Right Gene Name" />,
-      selector: (row) => row.right_gene_name,
+      selector: (row) => <div><span title={row.right_gene_name}>{row.right_gene_name}</span></div>,
       sortable: true,
     },
     {
       name: <FormattedMessage id="RightEnsemblId" defaultMessage="Right Ensembl Id" />,
-      selector: (row) => row.right_gene_ensmbl_id,
+      selector: (row) => <div><span title={row.right_gene_ensmbl_id}>{row.right_gene_ensmbl_id}</span></div>,
       sortable: true,
     },
     {
       name: <FormattedMessage id="RightBreakpoint" defaultMessage="Right Breakpoint" />,
       cell: (row, index) => {
-        return row.right_gene_chr + ":" + row.right_hg38_pos;
+        return <div><span title={row.right_gene_chr + ":" + row.right_hg38_pos}>{row.right_gene_chr + ":" + row.right_hg38_pos}</span></div>
       },
       sortable: true,
     },
     {
       name: <FormattedMessage id="JunctionReadCount" defaultMessage="Junction Read Count" />,
-      selector: (row) => row.junction_read_count ? row.junction_read_count : 0,
+      selector: (row) => <div><span title={row.junction_read_count ? row.junction_read_count : 0}>{row.junction_read_count ? row.junction_read_count : 0}</span></div>,
       sortable: true,
     },
     {
       name: <FormattedMessage id="SpanningFragCount" defaultMessage="Spanning Frag Count" />,
-      selector: (row) => row.spanning_frag_count ? row.spanning_frag_count : 0,
+      selector: (row) => <div><span title={row.spanning_frag_count ? row.spanning_frag_count : 0}>{row.spanning_frag_count ? row.spanning_frag_count : 0}</span></div>,
       sortable: true,
     },
     {
       name: <FormattedMessage id="SpliceType" defaultMessage="Splice Type" />,
-      selector: (row) => row.splice_type ? row.splice_type : 'None',
+      selector: (row) => <div><span title={row.splice_type ? row.splice_type : 'None'}>{row.splice_type ? row.splice_type : 'None'}</span></div>,
       sortable: true,
     }
   ];

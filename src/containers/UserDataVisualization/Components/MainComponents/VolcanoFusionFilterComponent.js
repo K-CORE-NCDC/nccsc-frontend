@@ -77,22 +77,22 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
 
 
             if (!project_id) {
-                if ('group_1' in groupFilters)
+                if (groupFilters && 'group_1' in groupFilters)
                     groupFilters.group_a = groupFilters.group_1;
 
-                if ('group_2' in groupFilters)
+                if (groupFilters && 'group_2' in groupFilters)
                     groupFilters.group_b = groupFilters.group_2;
 
-                if ('group_3' in groupFilters)
+                if (groupFilters && 'group_3' in groupFilters)
                     groupFilters.group_c = groupFilters.group_3;
 
-                if ('group_1' in groupFilters)
+                if (groupFilters && 'group_1' in groupFilters)
                     delete groupFilters.group_1;
 
-                if ('group_2' in groupFilters)
+                if (groupFilters && 'group_2' in groupFilters)
                     delete groupFilters.group_2;
 
-                if ('group_3' in groupFilters)
+                if (groupFilters && 'group_3' in groupFilters)
                     delete groupFilters.group_3;
 
 

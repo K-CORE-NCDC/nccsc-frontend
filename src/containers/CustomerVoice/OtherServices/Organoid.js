@@ -164,7 +164,7 @@ function Organoid() {
                       <li>
                         <div className="flex ml-8">
                           <div className="w-86per">
-                            <table className="min-w-full " style={style.tableBorder}>
+                            <table className="min-w-full " style={style.tableBorder} border="1">
                               <thead className="border border-black">
                                 <tr className="h-20 MultiUploadTextCenter TextWhite" style={{ background: "#0c3c6a" }}>
                                   <th className="text165rem lineHeightInitial font-medium text-white PX6Y4 border border-black">연계 임상정보</th>
