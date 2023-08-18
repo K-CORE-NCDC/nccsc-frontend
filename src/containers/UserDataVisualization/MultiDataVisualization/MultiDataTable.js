@@ -110,12 +110,13 @@ function ModalDiv() {
 
 }
 
-function ErrorMessage(){
+function ErrorMessage() {
   const verificationResponse = useSelector(
-    (data) => data.homeReducer.singleFileUploadData
+    (data) => data.homeReducer.multiFileUploadData
   );
-
-  return verificationResponse && 'issue' in verificationResponse &&   <p className="h5 MultiUploadTextCenter"><FormattedMessage id="UserDataGuideMessage" defaultMessage="Red mark for invalid data." /></p>
+  console.log('verificationResponse',verificationResponse);
+  return verificationResponse && 'issue' in verificationResponse && (verificationResponse['issue'] === 'allFileColumns' || verificationResponse['issue'] === 'clinicalInforamtionFile' || verificationResponse['issue'] === 'DataIssues') &&
+    <p className="h5 MultiUploadTextCenter"><FormattedMessage id="UserDataGuideMessage" defaultMessage="Red mark for invalid data." /></p>
 }
 
 function MultiDataTable({ updateComponentNumber }) {
@@ -208,7 +209,7 @@ function MultiDataTable({ updateComponentNumber }) {
                 let rdata = String(row[columns[i]]);
                 let v = rdata.split("||");
                 if (v.length > 1) {
-                  return <div className="boardCell" style={{color:"red"}}>{v[1]}</div>;
+                  return <div className="boardCell" style={{ color: "red" }}>{v[1]}</div>;
                 } else {
                   return <div className="boardCell">{String(row[columns[i]])}</div>;
                 }
