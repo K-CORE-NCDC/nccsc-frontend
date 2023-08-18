@@ -280,7 +280,6 @@ export default function DataOnco({ width, inputData, screenCapture, setToFalseAf
   return (
 
     <div style={{ marginTop: '5%', border: '1px solid #d6d6d6', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.05)', position: 'relative', padding: '5%' }}>
-      {console.log('width', width)}
       {optionChoices &&
         <div className='gene_selctionBox'>
           {!noGeneData && <>

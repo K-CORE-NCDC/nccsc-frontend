@@ -38,7 +38,7 @@ function PdfPrint({ isReportClicked }) {
   }, [isReportClicked]);
 
   let DownloadPDF = async () => {
-    if(reportData && 'response_sanky_data' in reportData ){
+    if (reportData && 'response_sanky_data' in reportData) {
       setLoader(true);
       let GeneListSanky = [];
       for (let i in reportData["response_sanky_data"]) {
@@ -47,43 +47,42 @@ function PdfPrint({ isReportClicked }) {
         }
         GeneListSanky.push(i);
       }
-   
-    let GeneandMutationList = {};
-    let className = `printpdf`,
-      count = 0;
-    while (document.querySelector(`.${className}`) !== null) {
-      className = `sanky_chart_pdf${count}`;
-      count++;
-    }
-    if (GeneListSanky.length > 0) {
-      if (GeneMutationData && "variant_info" in GeneMutationData) {
-        for (let i = 0; i < GeneListSanky.length; i++) {
-          GeneandMutationList[GeneListSanky[i]] =
-            GeneMutationData["variant_info"][GeneListSanky[i]];
+
+      let GeneandMutationList = {};
+      let className = `printpdf`,
+        count = 0;
+      while (document.querySelector(`.${className}`) !== null) {
+        className = `sanky_chart_pdf${count}`;
+        count++;
+      }
+      if (GeneListSanky.length > 0) {
+        if (GeneMutationData && "variant_info" in GeneMutationData) {
+          for (let i = 0; i < GeneListSanky.length; i++) {
+            GeneandMutationList[GeneListSanky[i]] =
+              GeneMutationData["variant_info"][GeneListSanky[i]];
+          }
         }
       }
-    }
-    let unq = uuid()
-    for (let i = 0; i < count - 1; i++) {
-      // let element = document.querySelector(`.sanky_chart_pdf${i}`)
-      let element = document.querySelector(`#chart${i}`);
-      await html2canvas(element).then(canvas => {
-          const imgData = canvas.toDataURL('image/jpeg',1.0);
+      let unq = uuid()
+      for (let i = 0; i < count - 1; i++) {
+        let element = document.querySelector(`#chart${i}`);
+        await html2canvas(element).then(canvas => {
+          const imgData = canvas.toDataURL('image/jpeg', 1.0);
 
-          dispatch(sankeyImageData({'filename':element.getAttribute('name'), 'imgdata':imgData, 'unq':unq}))
-      });
+          dispatch(sankeyImageData({ 'filename': element.getAttribute('name'), 'imgdata': imgData, 'unq': unq }))
+        });
+      }
+      setTimeout(() => {
+        dispatch(
+          sendReportData("POST", {
+            GeneandMutationList: GeneandMutationList,
+            BasicInformation: reportData.basic_information[0],
+            rows: reportData.genomic_summary,
+            'unq': unq
+          })
+        );
+      }, 4000);
     }
-    setTimeout(() => {
-      dispatch(
-        sendReportData("POST", {
-          GeneandMutationList: GeneandMutationList,
-          BasicInformation: reportData.basic_information[0],
-          rows: reportData.genomic_summary,
-          'unq':unq
-        })
-      );
-    }, 4000);
-  }
   };
 
   useEffect(() => {
@@ -93,21 +92,21 @@ function PdfPrint({ isReportClicked }) {
       dispatch(clearPdfLink());
       setLoader(false);
       window.location.href = navlink;
-      
+
     }
   }, [PDF_Report_Status]);
-  useEffect(()=>{
-    if(anchorTag.length > 0 && document.getElementById('downloadPDF')){
+  useEffect(() => {
+    if (anchorTag.length > 0 && document.getElementById('downloadPDF')) {
       document.getElementById('downloadPDF').click()
       setAnchorTag([])
     }
-  },[anchorTag])
+  }, [anchorTag])
   return (
     <div>
       <div className="flex items-center justify-center">
         <button
           type="button"
-          className={`inline-flex  items-center py-6 px-6  float-left font-semibold leading-6 text-white ${loader ? 'cursor-not-allowed':""}transition duration-150 ease-in-out bg-NccBlue-700 rounded-md shadow  hover:bg-blue-700`}
+          className={`inline-flex  items-center py-6 px-6  float-left font-semibold leading-6 text-white ${loader ? 'cursor-not-allowed' : ""}transition duration-150 ease-in-out bg-NccBlue-700 rounded-md shadow  hover:bg-blue-700`}
           onClick={(e) => DownloadPDF(e)}
           disabled={loader ? true : false}
         >
@@ -133,14 +132,14 @@ function PdfPrint({ isReportClicked }) {
                   d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                 ></path>
               </svg>
-              </div>
-            ) }
+            </div>
+          )}
 
-          {loader === false  && <p>Download</p>}
+          {loader === false && <p>Download</p>}
         </button>
       </div>
       {
-        (anchorTag.length > 0) ? anchorTag : '' 
+        (anchorTag.length > 0) ? anchorTag : ''
       }
     </div>
   );

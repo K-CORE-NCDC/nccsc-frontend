@@ -16,7 +16,7 @@ export default function Pipeline() {
       setKoreanlanguage(false);
       setEnglishlanguage(true);
     }
-  },[context]);
+  }, [context]);
 
   return (
     <div className="cont_wrap my-10">

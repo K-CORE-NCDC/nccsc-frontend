@@ -6,7 +6,7 @@ function RelatedSitesIndex() {
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const [Englishlanguage, setEnglishlanguage] = useState(true);
   const context = useContext(Context);
-  
+
   useEffect(() => {
     if (context["locale"] === "kr-KO") {
       setKoreanlanguage(true);
@@ -15,7 +15,7 @@ function RelatedSitesIndex() {
       setKoreanlanguage(false);
       setEnglishlanguage(true);
     }
-  },[context]);
+  }, [context]);
 
   return (
     <div>

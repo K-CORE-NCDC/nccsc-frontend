@@ -15,49 +15,49 @@ import { useSelector } from "react-redux";
 
 
 
-export default function Filter({ parentCallback, set_screen,project_id }) {
+export default function Filter({ parentCallback, set_screen, project_id }) {
   const [state, setState] = useState({ html: [] });
-  const [selectState, setSelectState] = useState({'filterCondition':'and'});
+  const [selectState, setSelectState] = useState({ 'filterCondition': 'and' });
   const [selected, setSelected] = useState("Basic/Diagnostic Information");
   const [filtersUi, setFiltersUi] = useState({});
-  // const [filterHtml, setFilterHtml] = useState([]);
   const userDefinedFilter = useSelector((data) => data.dataVisualizationReducer.userDefinedFilter);
-  const [filterJson,setFilterJson] = useState({})
+  const [filterJson, setFilterJson] = useState({})
 
   const [filterCondition, setFilterCondition] = useState("and");
 
 
-  useEffect(()=>{
-    if(project_id!==undefined){
-      if(userDefinedFilter && Object.keys(userDefinedFilter).length > 0){
+  useEffect(() => {
+    if (project_id !== undefined) {
+      if (userDefinedFilter && Object.keys(userDefinedFilter).length > 0) {
         setSelected('Clinical Information')
         setFilterJson(userDefinedFilter['filterJson'])
 
-      }}
-      else{
-        let filterBoxes = inputJson.filterBoxes;
-        setFilterJson(filterBoxes)
       }
-  },[project_id,userDefinedFilter])
+    }
+    else {
+      let filterBoxes = inputJson.filterBoxes;
+      setFilterJson(filterBoxes)
+    }
+  }, [project_id, userDefinedFilter])
   useEffect(() => {
-    if(project_id!==undefined){
-      if(userDefinedFilter && Object.keys(userDefinedFilter).length > 0){
+    if (project_id !== undefined) {
+      if (userDefinedFilter && Object.keys(userDefinedFilter).length > 0) {
         leftSide(filterJson);
       }
-    }else{
+    } else {
       leftSide(filterJson);
     }
-  }, [userDefinedFilter,filterJson]);
+  }, [userDefinedFilter, filterJson]);
 
   useEffect(() => {
-    if(project_id!==undefined){
-      if(userDefinedFilter && Object.keys(userDefinedFilter).length > 0){
+    if (project_id !== undefined) {
+      if (userDefinedFilter && Object.keys(userDefinedFilter).length > 0) {
         leftSide(filterJson);
       }
-    }else{
+    } else {
       leftSide(filterJson);
     }
-  }, [selected, selectState,filterJson]);
+  }, [selected, selectState, filterJson]);
 
 
   useEffect(() => {
@@ -88,7 +88,7 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
         }
       });
     }
-    
+
   }, [filtersUi]);
 
   const leftSide = (filterBoxes) => {
@@ -259,8 +259,7 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
             type="number"
             id={"from_" + d.id}
             className="h-full shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight"
-            onKeyDown={(e) =>["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
-            // value={selectState["from_" + d.id]}
+            onKeyDown={(e) => ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
             onChange={(e) => selectFn(e)}
             placeholder={d.min}
             min={d.min}
@@ -277,8 +276,7 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
             type="number"
             id={"to_" + d.id}
             className="h-full  shadow appearance-none w-full py-2 px-3 text-gray-700 leading-tight"
-            onKeyDown={(e) =>["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
-            // value={selectState["to_" + d.id]}
+            onKeyDown={(e) => ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()}
             onChange={(e) => selectFn(e)}
             placeholder={d.max}
             min={d.min}
@@ -302,25 +300,25 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
       let from_ = from_0 ? +(from_0.value) : from_0.min;
       let min_value = from_0 ? +(from_0.min) : 0
       let to_0 = document.getElementById(`to_${m_id}`);
-      let to_ = to_0 ? +(to_0.value) : from_0.max ;
+      let to_ = to_0 ? +(to_0.value) : from_0.max;
       let max_value = from_0 ? +(from_0.max) : 0
 
       let checked = true
 
-      if(from_ > max_value || from_ < min_value ||  from_ > to_ ){
+      if (from_ > max_value || from_ < min_value || from_ > to_) {
         delete tmp[`from_${m_id}`];
         delete tmp[`to_${m_id}`];
         setSelectState(tmp)
         checked = false
 
       }
-      else if(to_ >max_value || to_ < min_value || to_ < from_){
+      else if (to_ > max_value || to_ < min_value || to_ < from_) {
         delete tmp[`from_${m_id}`];
         delete tmp[`to_${m_id}`];
         setSelectState(tmp)
         checked = false
       }
-      else{
+      else {
         tmp[`from_${m_id}`] = from_;
         tmp[`to_${m_id}`] = to_;
         setSelectState(tmp)
@@ -331,8 +329,8 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
         from_0.classList.remove('border-red-400')
         to_0.classList.remove('border-2')
         to_0.classList.remove('border-red-400')
-       
-      } 
+
+      }
       else {
         from_0.classList.add('border-2')
         from_0.classList.add('border-red-400')
@@ -373,18 +371,18 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
   };
 
   const checkBoxFn = (event, id) => {
-     let child_id = "child_" + id; 
-     let child_did = document.getElementById(child_id);
-     const inputElements = child_did.querySelectorAll(
-       "input, select, checkbox, textarea"
-     );
-     for (let e in inputElements) {
-       if (inputElements[e].id) {
-         checkboxselectFn(inputElements[e]);
-       }
-     }
+    let child_id = "child_" + id;
+    let child_did = document.getElementById(child_id);
+    const inputElements = child_did.querySelectorAll(
+      "input, select, checkbox, textarea"
+    );
+    for (let e in inputElements) {
+      if (inputElements[e].id) {
+        checkboxselectFn(inputElements[e]);
+      }
+    }
     var did = document.getElementById(id);
-   
+
     var checkbox_elm = document.getElementById(id).checked;
     if (checkbox_elm) {
       document.getElementById(id).checked = false;
@@ -416,7 +414,7 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
     }
   };
 
-  
+
   const sendFilter = () => {
     parentCallback(selectState);
   };
@@ -448,21 +446,21 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
       delete tmp[il.id];
       il.value = "";
     });
-    setSelectState({'filterCondition':'and'});
+    setSelectState({ 'filterCondition': 'and' });
     parentCallback("");
-    if(document.getElementById('default-radio-1')){
+    if (document.getElementById('default-radio-1')) {
       document.getElementById('default-radio-1').checked = true
     }
-    if(document.getElementById('default-radio-2')){
+    if (document.getElementById('default-radio-2')) {
       document.getElementById('default-radio-2').checked = false
     }
-    let abcd = {...filtersUi}
+    let abcd = { ...filtersUi }
     abcd['Basic/Diagnostic Information'] = []
     setFiltersUi(abcd)
   };
 
-  const changeFilterCondition = (e)=>{
-    
+  const changeFilterCondition = (e) => {
+
     let tmp = selectState
     let val = e.target.value
     setFilterCondition(val)
@@ -477,15 +475,15 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
           className="bg-white  lg:w-80 sm:w-52  lg:h-20 sm:h-16 mb-3 text-gray-500 ml-2 font-bold py-2 px-4 border border-gray-900 rounded"
           onClick={reset}
         >
-          <FormattedMessage id='Reset' defaultMessage={' Reset '}/>
-          
+          <FormattedMessage id='Reset' defaultMessage={' Reset '} />
+
         </button>
         &nbsp;&nbsp;&nbsp;&nbsp;
         <button
           className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 lg:h-20 sm:w-52 sm:h-16 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded"
           onClick={sendFilter}
         >
-          <FormattedMessage id='Search' defaultMessage={' Search '}/>
+          <FormattedMessage id='Search' defaultMessage={' Search '} />
         </button>
         <button
           className="float-right lg:hidden md:hidden bg-blue-500 text-white active:bg-pink-600 font-bold uppercase text-xs px-4 py-2 my-4 mr-4 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -496,66 +494,66 @@ export default function Filter({ parentCallback, set_screen,project_id }) {
         </button>
       </div>
       <div className="flex flex-row mb-4 ml-4">
-          <label className="text-2xl font-bold">
-            <FormattedMessage id='filterCondition' defaultMessage={' Sample filter condition'}/>:
-          </label>
-          <div className="flex items-center ml-4">
-            {filterCondition === "and" ? (
-              <input
-                id="default-radio-1"
-                type="radio"
-                value="and"
-                name="condition"
-                checked
-                onChange={e=>changeFilterCondition(e)}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              />
-            ) : (
-              <input
-                id="default-radio-1"
-                type="radio"
-                value="and"
-                name="condition"
-                onChange={e=>changeFilterCondition(e)}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              />
-            )}
+        <label className="text-2xl font-bold">
+          <FormattedMessage id='filterCondition' defaultMessage={' Sample filter condition'} />:
+        </label>
+        <div className="flex items-center ml-4">
+          {filterCondition === "and" ? (
+            <input
+              id="default-radio-1"
+              type="radio"
+              value="and"
+              name="condition"
+              checked
+              onChange={e => changeFilterCondition(e)}
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+          ) : (
+            <input
+              id="default-radio-1"
+              type="radio"
+              value="and"
+              name="condition"
+              onChange={e => changeFilterCondition(e)}
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+          )}
 
-            <label
-              htmlFor="default-radio-1"
-              className="ml-2 text-gray-900 dark:text-gray-300"
-            >
-              And
-            </label>
-          </div>
-          <div className="flex items-center ml-4">
-            {filterCondition === "or" ? (
-              <input
-                id="default-radio-2"
-                type="radio"
-                value="or"
-                name="condition"
-                onChange={e=>changeFilterCondition(e)}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              />
-            ) : (
-              <input
-                id="default-radio-2"
-                type="radio"
-                value="or"
-                name="condition"
-                onChange={e=>changeFilterCondition(e)}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              />
-            )}
-            <label
-              htmlFor="default-radio-2"
-              className="ml-2 text-gray-900 dark:text-gray-300"
-            >
-              Or
-            </label>
-          </div>
-        
+          <label
+            htmlFor="default-radio-1"
+            className="ml-2 text-gray-900 dark:text-gray-300"
+          >
+            And
+          </label>
+        </div>
+        <div className="flex items-center ml-4">
+          {filterCondition === "or" ? (
+            <input
+              id="default-radio-2"
+              type="radio"
+              value="or"
+              name="condition"
+              onChange={e => changeFilterCondition(e)}
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+          ) : (
+            <input
+              id="default-radio-2"
+              type="radio"
+              value="or"
+              name="condition"
+              onChange={e => changeFilterCondition(e)}
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+          )}
+          <label
+            htmlFor="default-radio-2"
+            className="ml-2 text-gray-900 dark:text-gray-300"
+          >
+            Or
+          </label>
+        </div>
+
       </div>
       <div className="col-span-2" id="all_checkboxes">
         {state["html"]}

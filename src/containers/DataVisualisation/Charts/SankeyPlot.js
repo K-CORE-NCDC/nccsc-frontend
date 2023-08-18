@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { FormattedMessage } from "react-intl";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { RNIDetails } from '../../../actions/api_actions'
 import { useParams } from "react-router-dom";
 import DataTable from 'react-data-table-component';
@@ -23,7 +23,6 @@ function SankeyPlot({
   const [basicHtml, setBasicHtml] = useState([]);
   const [rnaData, setRnaData] = useState([])
   const [tableRender, setTableRender] = useState(false)
-  const [currentRow, setCurrentRow] = useState(null);
   const [loader, setLoader] = useState(false);
   const [genesHtml, setGenesHtml] = useState([])
   const [inputState, setInputState] = useState({})
@@ -58,27 +57,6 @@ function SankeyPlot({
     })
     setSampleKey(sampleId)
   }
-
-  // const customStyles = {
-  //   headCells: {
-  //     classNames: ['report_sankey'],
-  //     style: {
-  //       'textAlign': 'center',
-  //       'display': 'block',
-  //     }
-  //   },
-  //   expanderCell: {
-  //     style: {
-  //       'minWidth': '5%',
-  //       'display': 'block',
-  //     }
-  //   },
-  //   pagination: {
-  //     style: {
-  //       gap: "10px"
-  //     }
-  //   }
-  // }
 
   const customStyles = {
     table: {
@@ -142,8 +120,8 @@ function SankeyPlot({
         fontWeight: 'bold',
         fontSize: '16px',
         border: '2px solid black',
-        padding:'0px',
-        minHeight:'15px'
+        padding: '0px',
+        minHeight: '15px'
       },
     },
   };
@@ -559,7 +537,6 @@ function SankeyPlot({
         </div>
 
         {
-          // tabName !== 'patientSummary' && sampleKey &&  <div style={{ maxWidth: 'fit-content' }}>
           tabName === 'drugRelation' && sampleKey &&
           <div className='SankeyVariantandGene'>
 
@@ -592,9 +569,6 @@ function SankeyPlot({
           </div>
         }
 
-
-
-
       </div>
 
       {
@@ -607,8 +581,6 @@ function SankeyPlot({
         !loader && tabName === 'patientSummary' && sampleKey !== "" &&
         <div>
           {sampleKey !== "" && <div className='BasicGenomic'>
-            {/* <h3 className='SampleName'>Sample Name : {sampleKey}</h3> */}
-            {/* <div className='BasicGenomicGrid'> */}
             <div className=''>
 
               {basicInformationData && basicInformationData.length > 0 && <div>
@@ -617,7 +589,6 @@ function SankeyPlot({
                     Basic Information
                   </h3>
                 </div>
-                {/* <h3 className='SampleName'>Sample Name : {sampleKey}</h3> */}
                 <div className='basicTable' ref={basicTable}>
                   {basicHtml}
                 </div>
@@ -627,9 +598,9 @@ function SankeyPlot({
               {tableData && tableData.length > 0 &&
                 <div>
                   <div className='rounded-lg border border-gray-200'>
-                      <h3 className='BasicInformationTitle' style={{margin:"40px 0px"}}>
-                        Genomic Information
-                      </h3>
+                    <h3 className='BasicInformationTitle' style={{ margin: "40px 0px" }}>
+                      Genomic Information
+                    </h3>
                     <div className=' report_table'>
                       <DataTable pagination
                         responsive

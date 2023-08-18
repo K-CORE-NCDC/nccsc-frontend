@@ -14,7 +14,7 @@ import warningImage from '../../../../assets/images/warning.png'
 
 
 
-function Modal({ showModal, setShowModal}) {
+function Modal({ showModal, setShowModal }) {
   const verificationResponse = useSelector(
     (data) => data.homeReducer.uploadClinicalColumns
   );
@@ -52,12 +52,12 @@ function Modal({ showModal, setShowModal}) {
                             <div className="uppercase underline " key={filename}>{filename}</div>
                             {
                               Object.keys(verificationResponse["columnMessages"][filename]).map(item => {
-                                return(verificationResponse["columnMessages"][filename][item] !== '' ?
-                                <div className="capitalize ml-2 m-2" key={item}>
-                                <p>{item}: {verificationResponse["columnMessages"][filename][item]}</p>
-                                <p></p>
-                                </div> 
-                                : null)
+                                return (verificationResponse["columnMessages"][filename][item] !== '' ?
+                                  <div className="capitalize ml-2 m-2" key={item}>
+                                    <p>{item}: {verificationResponse["columnMessages"][filename][item]}</p>
+                                    <p></p>
+                                  </div>
+                                  : null)
                               })
                             }
                           </div>
@@ -105,21 +105,21 @@ function FileProjectDataTable({ updateComponentNumber }) {
     setActiveTableKey(tab);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     if (verificationResponse && verificationResponse["project_details"]) {
 
-      for(const available_step in verificationResponse["project_details"]["available_steps"]){
-        if(verificationResponse["project_details"]["available_steps"][available_step].length > 0){
+      for (const available_step in verificationResponse["project_details"]["available_steps"]) {
+        if (verificationResponse["project_details"]["available_steps"][available_step].length > 0) {
           setNavTabIs(available_step)
         }
       }
-      if ('result' in verificationResponse){
-          let first = Object.values(verificationResponse['result'])[0]; 
+      if ('result' in verificationResponse) {
+        let first = Object.values(verificationResponse['result'])[0];
         setActiveTableKey(first[0]['tab']);
       }
-      
+
     }
-  },[verificationResponse])
+  }, [verificationResponse])
   useEffect(() => {
     if (verificationResponse && verificationResponse["result"]) {
       let temptabs = [];
@@ -220,34 +220,35 @@ function FileProjectDataTable({ updateComponentNumber }) {
   return (
     <div>
       <div className="p-1 flex justify-around">
-      <Modal showModal={showModal} setShowModal={setShowModalFunction} />
-      {projectId === 0 && (
-        <button
-           className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
-          type="button"
-          onClick={() => {
-            updateComponentNumber(1);
-          }}
+        <Modal showModal={showModal} setShowModal={setShowModalFunction} />
+        {projectId === 0 && (
+          <button
+            className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
+            type="button"
+            onClick={() => {
+              updateComponentNumber(1);
+            }}
           >
-          <FormattedMessage id="Back" defaultMessage="Back" />
-        </button>
-      )
-      }
-    {
-      projectId === 0 && (
-        <div>
-            <button onClick={() => setShowModalFunction(true)} className="has-tooltip bg-red-500 hover:bg-red-700 text-white text-center py-2 px-4 rounded-full h-20 w-20 inline-flex items-center">
-                  <img src={warningImage}></img>
-            </button>
-        </div>
-      )
-    }
+            <FormattedMessage id="Back" defaultMessage="Back" />
+          </button>
+        )
+        }
+        {
+          projectId === 0 && (
+            <div>
+              <button onClick={() => setShowModalFunction(true)} className="has-tooltip bg-red-500 hover:bg-red-700 text-white text-center py-2 px-4 rounded-full h-20 w-20 inline-flex items-center">
+                <img src={warningImage}></img>
+              </button>
+            </div>
+          )
+        }
 
         {projectId !== 0 && (
           <button
             onClick={() => {
               dispatch(clearNewFileUploadState())
-              history.push(`/visualise-singledata/${navTabIs}/${projectId}`)}}
+              history.push(`/visualise-singledata/${navTabIs}/${projectId}`)
+            }}
             className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
           >
             <FormattedMessage id="Visualize" defaultMessage="Visualize" />
@@ -260,7 +261,7 @@ function FileProjectDataTable({ updateComponentNumber }) {
         </ul>
       </nav>
       <div className="App">
-        {verificationResponse  && (
+        {verificationResponse && (
           <DataTable
             title=""
             columns={colData}
@@ -274,17 +275,17 @@ function FileProjectDataTable({ updateComponentNumber }) {
               },
               pagination: {
                 style: {
-                    gap:"10px"
+                  gap: "10px"
                 }
-              }      
+              }
             }}
           />
         )}
 
-        {!verificationResponse  && (
+        {!verificationResponse && (
           <div>
-          <LoaderCmp />
-          { <p className="mt-8 text-center text-lg"><FormattedMessage id = 'WaitMessage' defaultMessage=' It takes some time to process the data. Please wait ! (2 minutes per 100 samples)' /> </p>}
+            <LoaderCmp />
+            {<p className="mt-8 text-center text-lg"><FormattedMessage id='WaitMessage' defaultMessage=' It takes some time to process the data. Please wait ! (2 minutes per 100 samples)' /> </p>}
           </div>
         )}
       </div>

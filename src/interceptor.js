@@ -6,7 +6,6 @@ let localStorageService = LocalStorageService
 
 
 axios.interceptors.request.use( config =>{
-    console.log('->frominterceptor');
     const token = localStorageService.getAccessToken();
     if (token) {
       config.headers['Authorization'] = 'Bearer '+token;
@@ -19,7 +18,6 @@ axios.interceptors.request.use( config =>{
 })
 
 axios.interceptors.response.use((response) => {
-  console.log('->frominterceptor1');
   return response
   },
   function (error){
@@ -40,7 +38,6 @@ axios.interceptors.response.use((response) => {
       }).catch((error) => {
 
         localStorageService.clearToken()
-        // window.location.href = '/'
       })
 
     } else if (error.response.status === 409) {

@@ -1,13 +1,9 @@
 import React from "react";
-import { ChartPieIcon, ChevronDownIcon, FingerPrintIcon, MenuIcon, PhoneIcon, PlusIcon, XCircleIcon } from '@heroicons/react/outline';
 import icon1 from '../../assets/images/publicDataInfo-img01.svg'
 import icon2 from '../../assets/images/publicDataInfo-img02.svg'
 import icon3 from '../../assets/images/publicDataInfo-img03.svg'
-import MemoizedFormattedMessage from "react-intl/src/components/message";
 import { FormattedMessage } from "react-intl";
 const ServiceIntro = ({ lan }) => {
-console.log('lan', lan)
-
   return (
     <div className="auto" >
       <div className="publicDataInfo ">
@@ -17,22 +13,22 @@ console.log('lan', lan)
               <dt>
                 <img src={icon1} alt="" />
                 <strong><FormattedMessage
-                    id="serviceIntro_h1"
-                    defaultMessage="Single Data Visualization"
-                  /></strong>
+                  id="serviceIntro_h1"
+                  defaultMessage="Single Data Visualization"
+                /></strong>
               </dt>
               <dd className="subtitle01"><FormattedMessage
-                  id="serviceIntro_txt1"
-                  defaultMessage="This service visualizes single user input data. It is a one-time analysis service that is not saved."
-                /></dd>
+                id="serviceIntro_txt1"
+                defaultMessage="This service visualizes single user input data. It is a one-time analysis service that is not saved."
+              /></dd>
             </dl>
             <dl className="serviceIntroBox">
               <dt>
                 <img src={icon2} alt="" />
                 <strong>
                   <FormattedMessage
-                  id="serviceIntro_h2"
-                  defaultMessage="Multi Data Visualization"
+                    id="serviceIntro_h2"
+                    defaultMessage="Multi Data Visualization"
                   />
                 </strong>
               </dt>

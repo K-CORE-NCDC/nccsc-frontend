@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
-import introduce_img from '../../../assets/images/introduce_logo.svg'
 import introduce_VisualContents from '../../../assets/images/cBioPortal_sub.jpg'
 import cBioPortal from '../../../styles/images/cBioPortal.png'
 import { Cosmic } from "./Cosmic";

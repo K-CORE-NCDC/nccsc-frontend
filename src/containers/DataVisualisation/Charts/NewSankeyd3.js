@@ -7,11 +7,6 @@ import '../../../styles/sankey.css'
 function NewSankeyd3({ SankeyJson, idName, forGene }) {
   const svgRef = useRef(null);
 
-  const maxDbsnpRsCount = 50;   // Maximum dbsnp_rs nodes
-  const maxDrugnameCount = 20;  // Maximum drugname nodes
-
-  let dbsnpRsCount = 0;        // Counter for dbsnp_rs nodes
-  let drugnameCount = 0;
 
   var margin = { top: 1, right: 1, bottom: 6, left: 1 },
     width = 960 - margin.left - margin.right,
@@ -27,9 +22,6 @@ function NewSankeyd3({ SankeyJson, idName, forGene }) {
       "diseasename": '#e377c2',
       'drugname': "#9467bd"
     }
-
-    let dbsnpRsCount = 0;        // Counter for dbsnp_rs nodes
-    let drugnameCount = 0;      // Counter for drugname nodes
 
     var formatNumber = d3.format(",.0f"),
       format = function (d) { return formatNumber(d) + " TWh"; }
@@ -106,9 +98,7 @@ function NewSankeyd3({ SankeyJson, idName, forGene }) {
         if (d['type'] === maxName) {
           heigthCalc = heigthCalc + d.dy
         }
-        // console.log('maxName',maxName);
-        // console.log('d.dy',d.dy);
-        // console.log('d',d);
+
         return d.dy;
       })
       .attr("width", sankey.nodeWidth())
@@ -226,7 +216,6 @@ function NewSankeyd3({ SankeyJson, idName, forGene }) {
       });
 
 
-      console.log('filteredNodes', filteredNodes);
       // Create a set of valid node names for efficient lookup
       const validNodeNames = new Set(filteredNodes.map(node => node.name));
 
@@ -234,8 +223,6 @@ function NewSankeyd3({ SankeyJson, idName, forGene }) {
       const filteredLinks = j.links.filter(link =>
         validNodeNames.has(link.source) && validNodeNames.has(link.target)
       );
-      
-      console.log('filteredLinks',filteredLinks);
 
       const filteredSankeyJson = {
         nodes: filteredNodes,

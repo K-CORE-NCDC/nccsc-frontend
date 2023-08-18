@@ -11,14 +11,14 @@ function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, b
   const [basicHtml, setBasicHtml] = useState([])
   const basicTable = useRef()
   const reportData = useSelector(state => state.dataVisualizationReducer.rniData)
-  const [tableRender,setTableRender] = useState(false)
+  const [tableRender, setTableRender] = useState(false)
   const [currentRow, setCurrentRow] = useState(null);
-  
-  useEffect(()=>{
-    if(tableData && tableData.length>0){
+
+  useEffect(() => {
+    if (tableData && tableData.length > 0) {
       setTableRender(true)
     }
-  },[tableData])
+  }, [tableData])
 
 
   useEffect(() => {
@@ -46,7 +46,7 @@ function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, b
       setBasicHtml(tmp)
     }
 
-    
+
   }, [basicInformationData])
 
   const customStyles = {
@@ -72,27 +72,27 @@ function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, b
       // return row
     } else {
       return row
-    } 
+    }
   }
 
   const rowExpandFunc = (expanded, row) => {
-    if(expanded){
+    if (expanded) {
       let gene = row['gene']
-      if(document.getElementById('chart_'+gene)){
-        document.getElementById('chart_'+gene).innerHTML=''
+      if (document.getElementById('chart_' + gene)) {
+        document.getElementById('chart_' + gene).innerHTML = ''
       }
       setCurrentRow(row)
     }
 
   }
- 
+
 
   return (
     <>
       <div className='overflow-y-scroll fixed inset-0 bg-gray-600 bg-opacity-50 h-full w-full z-50'>
         <div className="relative top-20 m-10 p-5 border shadow-lg rounded-md bg-white text-left">
           <div className='float-right m-5'>
-            <PdfPrint/>
+            <PdfPrint />
           </div>
           <div className="border-0  relative flex flex-col w-full bg-white outline-none focus:outline-none">
             <h3 className='py-4 px-3'>Sample Name : {sampleKey}</h3>
@@ -108,29 +108,29 @@ function Report({ sampleKey, tableData, tableColumnsData, closeReportFunction, b
                 </div>
               </div>
               <div className='col-span-3'>
-              <p>Click on the dropdown to view Drug Prediction report</p>   
-              <div className='col-span-3 rounded-lg border border-gray-200'>
-                <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                  <h3 className="lg:text-3xl  sm:text-xl font-semibold">
-                    Genomic Summary
-                  </h3>
+                <p>Click on the dropdown to view Drug Prediction report</p>
+                <div className='col-span-3 rounded-lg border border-gray-200'>
+                  <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+                    <h3 className="lg:text-3xl  sm:text-xl font-semibold">
+                      Genomic Summary
+                    </h3>
+                  </div>
+                  {tableData && <div className='report_table'>
+                    <DataTable pagination
+                      responsive
+                      columns={tableColumnsData}
+                      data={tableData}
+                      subHeader
+                      customStyles={customStyles}
+                      subHeaderComponent={<ReportSubHeader tData={tableRender} />}
+                      expandableRows
+                      expandableRowDisabled={rowPreDisabled}
+                      expandableRowsComponent={SankeyIndex}
+                      expandableRowExpanded={(row) => (row === currentRow)}
+                      onRowExpandToggled={rowExpandFunc}
+                    />
+                  </div>}
                 </div>
-                {tableData && <div className='report_table'>
-                  <DataTable pagination
-                    responsive
-                    columns={tableColumnsData}
-                    data={tableData}
-                    subHeader
-                    customStyles={customStyles}
-                    subHeaderComponent={<ReportSubHeader tData={tableRender}/>}
-                    expandableRows
-                    expandableRowDisabled={rowPreDisabled}
-                    expandableRowsComponent={SankeyIndex}
-                    expandableRowExpanded={(row)=>(row === currentRow)}
-                    onRowExpandToggled={rowExpandFunc}
-                  />
-                </div>}
-              </div>
               </div>
             </div>
             <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">

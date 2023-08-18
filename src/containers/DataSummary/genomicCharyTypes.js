@@ -4,18 +4,18 @@ import Boxplot from "../Common/boxplot"
 import VerticalStackBarChartComp from "../Common/VerticalStackBarChart"
 import VennCmp from "../Common/Venn"
 
-const chart_types = (type,payload,axis) => {
+const chart_types = (type, payload, axis) => {
   switch (type) {
     case "Bar":
-      return <BarChartComp data={payload}/>
+      return <BarChartComp data={payload} />
     case "stack_bar":
-      return <StackBarChartComp data={payload} axis={axis}/>
+      return <StackBarChartComp data={payload} axis={axis} />
     case "box_plot":
-      return <Boxplot data={payload}/>
+      return <Boxplot data={payload} />
     case "vertical_stack_bar":
       return <VerticalStackBarChartComp data={payload} />
     case "Venn":
-        return <VennCmp width={300} data={payload}/>
+      return <VennCmp width={300} data={payload} />
     default:
       return ""
   }

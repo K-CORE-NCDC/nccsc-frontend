@@ -15,7 +15,7 @@ function PDFReport() {
 
   useEffect(() => {
     if (reportData) {
-      
+
       setGene(gene)
       let listofSankey = []
       let GeneListSanky = []
@@ -32,8 +32,8 @@ function PDFReport() {
     }
   }, [reportData])
 
-    useEffect(() => {
-    
+  useEffect(() => {
+
     const sankeyCharts = []
     for (let i = 0; i < sankeyData.length; i++) {
       let SankeyJsonDataIs = getSankyData(sankeyData[i]['links'])
@@ -54,7 +54,7 @@ function PDFReport() {
             </h1>
             <div>
               <Sankey></Sankey>
-              <NewSankeyd3 SankeyJson={SankeyJsonDataIs} idName={`chart${i}`} forGene = {SankeyJsonDataIs.nodes[0].name}></NewSankeyd3>
+              <NewSankeyd3 SankeyJson={SankeyJsonDataIs} idName={`chart${i}`} forGene={SankeyJsonDataIs.nodes[0].name}></NewSankeyd3>
             </div>
           </div>
         }
@@ -152,7 +152,7 @@ function PDFReport() {
           tmpTable[kt] = [element["drugname"]]
         }
       }
-      
+
 
     });
 
@@ -165,7 +165,7 @@ function PDFReport() {
     return sankeyjsondata;
 
   }
-  
+
 
 
 
@@ -174,7 +174,7 @@ function PDFReport() {
       <div>
         <div className='printpdf' id='printpdf'>
           {sankyDataCharts && sankyDataCharts}
-      </div>
+        </div>
       </div>
     </>
 

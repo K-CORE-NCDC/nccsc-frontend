@@ -1,8 +1,7 @@
-import { CogIcon, UserCircleIcon } from "@heroicons/react/outline";
+import { UserCircleIcon } from "@heroicons/react/outline";
 import React, {
   Fragment,
   useCallback,
-  useContext,
   useEffect,
   useRef,
   useState
@@ -16,7 +15,6 @@ import {
   getUserDefinedFilter,
   samplesCount
 } from "../../../actions/api_actions";
-import { Context } from "../../../wrapper";
 import Filter from "../../Common/filter";
 import { Charts } from "../../DataVisualisation/Charts";
 
@@ -348,7 +346,6 @@ export default function DataVisualization() {
     else if (event.target.id === 'geneFilterPopover') {
       setIsGeneSetPopoverOpen(!isGeneSetPopoverOpen)
     }
-    console.log(isFilterPopoverOpen, isGeneSetPopoverOpen)
     if (isFilterPopoverOpen) {
       setFilterPopoverOpen(false)
     }
@@ -620,7 +617,7 @@ export default function DataVisualization() {
                               <div className="GeneSetgeneSetButton">
                                 <div className="flex-1"><FormattedMessage id="Clinical Grouping" defaultMessage="Clinical Grouping" /></div>
                                 <div className="w-20">
-                                <UserCircleIcon className="filter-icon" />
+                                  <UserCircleIcon className="filter-icon" />
                                 </div>
                               </div>
                             </Popover.Button>

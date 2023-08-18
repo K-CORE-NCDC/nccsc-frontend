@@ -10,10 +10,6 @@ import NoContentGene from "../../Common/NoContentGene";
 import DataTable from 'react-data-table-component';
 
 function SankeyIndex({ selectedGene, variants, allVariants }) {
-  const d = selectedGene
-  const reportData = useSelector(
-    (state) => state.dataVisualizationReducer.rniData
-  );
 
   const [gene, setGene] = useState("");
   const [loader, setLoader] = useState(false);
@@ -24,8 +20,6 @@ function SankeyIndex({ selectedGene, variants, allVariants }) {
     nodes: [],
     links: [],
   });
-  const [sankyTableData, setSankyTableData] = useState();
-  const [sankyTableData2, setSankyTableData2] = useState("");
 
   const history = useHistory();
   const uniqiue_values = { 'dbsnp_rs': new Set(), 'diseasename': new Set() }
@@ -39,12 +33,6 @@ function SankeyIndex({ selectedGene, variants, allVariants }) {
       gene: gene,
     };
     inputData['mutation'] = variants
-    // if(variants && gene in variants ){
-    //   inputData['mutation'] = variants[gene]
-    // }
-    // else{
-    //   inputData['mutation'] = []
-    // }
     setGene(gene);
 
     if (selectedGene && variants.length > 0) {
@@ -65,12 +53,6 @@ function SankeyIndex({ selectedGene, variants, allVariants }) {
           setSankeyJson([])
           history.push('/notfound')
         });
-    }
-    if (variants) {
-      setSankyTableData2(variants);
-    }
-    else {
-      setSankyTableData2([])
     }
   }, [selectedGene, variants]);
 
@@ -201,121 +183,6 @@ function SankeyIndex({ selectedGene, variants, allVariants }) {
   }, [sankeyJson]);
 
   useEffect(() => {
-    // if (detailGeneData.length > 0) {
-    //   let tableHTML = (
-    //     <table className="min-w-full border text-center">
-    //       <thead className="border-b">
-    //         <tr>
-    //           <th
-    //             scope="col"
-    //             className="text-md font-medium text-gray-900 px-6 py-4 border-r"
-    //           >
-    //             gene
-    //           </th>
-    //           <th
-    //             scope="col"
-    //             className="text-md font-medium text-gray-900 px-6 py-4 border-r"
-    //           >
-    //             Variant
-    //           </th>
-    //           <th
-    //             scope="col"
-    //             className="text-md font-medium text-gray-900 px-6 py-4 border-r"
-    //           >
-    //             Rsid
-    //           </th>
-    //           <th
-    //             scope="col"
-    //             className="text-md font-medium text-gray-900 px-6 py-4 border-r"
-    //           >
-    //             Disease
-    //           </th>
-    //           <th
-    //             scope="col"
-    //             className="text-md font-medium text-gray-900 px-6 py-4"
-    //           >
-    //             Drug
-    //           </th>
-    //         </tr>
-    //       </thead>
-    //       <tbody>
-    //         {detailGeneData.map((genedata, index) => (
-    //           <tr key={index} className="border-b">
-    //             <td
-    //               className="
-    //                         px-6 py-4  text-md font-medium text-gray-900 border-r"
-    //             >
-    //               {genedata["hugo_symbol"]}
-    //             </td>
-    //             <td className="px-6 py-4  text-md font-medium text-gray-900 border-r">
-    //               {genedata["variant_classification"]}
-    //             </td>
-    //             <td className="px-6 py-4  text-md font-medium text-gray-900 border-r">
-    //               {genedata["dbsnp_rs"]}
-    //             </td>
-    //             <td className="px-6 py-4 text-md font-medium text-gray-900 border-r">
-    //               {genedata["diseasename"]}
-    //             </td>
-    //             <td className="px-6 py-4 text-md font-medium text-gray-900 border-r">
-    //               {genedata["drugname"]}
-    //             </td>
-    //           </tr>
-    //         ))}
-    //       </tbody>
-    //     </table>
-    //   );
-    //   setSankyTableData(tableHTML);
-    // } else {
-    //   let tableHTML = (
-    //     <table className="min-w-full border text-center">
-    //       <thead className="border-b">
-    //         <tr>
-    //           <th
-    //             scope="col"
-    //             className="text-sm font-medium text-gray-900 px-6 py-4 border-r"
-    //           >
-    //             gene
-    //           </th>
-    //           <th
-    //             scope="col"
-    //             className="text-sm font-medium text-gray-900 px-6 py-4 border-r"
-    //           >
-    //             Variant
-    //           </th>
-    //           <th
-    //             scope="col"
-    //             className="text-sm font-medium text-gray-900 px-6 py-4 border-r"
-    //           >
-    //             Rsid
-    //           </th>
-    //           <th
-    //             scope="col"
-    //             className="text-sm font-medium text-gray-900 px-6 py-4 border-r"
-    //           >
-    //             Disease
-    //           </th>
-    //           <th
-    //             scope="col"
-    //             className="text-sm font-medium text-gray-900 px-6 py-4"
-    //           >
-    //             Drug
-    //           </th>
-    //         </tr>
-    //       </thead>
-    //       <tbody>
-    //         <tr className="border-b">
-    //           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
-    //             {gene}
-    //           </td>
-    //           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r">
-    //             {sankyTableData2}
-    //           </td>
-    //         </tr>
-    //       </tbody>
-    //     </table>
-    //   );
-    //   setSankyTableData(tableHTML);
-    // }
     generateTableColumnsData(detailGeneData)
   }, [detailGeneData]);
 
@@ -497,7 +364,7 @@ function SankeyIndex({ selectedGene, variants, allVariants }) {
                   <div>
                     {detailGeneData && detailGeneData.length > 0 &&
                       <div className='rounded-lg border border-gray-200'>
-                        <h3 className='BasicInformationTitle' style={{margin:"40px 0px"}}>
+                        <h3 className='BasicInformationTitle' style={{ margin: "40px 0px" }}>
                           Sankey Information
                         </h3>
                         <div className='report_table'>

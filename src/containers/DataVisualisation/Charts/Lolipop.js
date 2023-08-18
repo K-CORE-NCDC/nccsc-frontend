@@ -29,7 +29,6 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   const [refSeqId, setRefSeqId] = useState([])
   const [showLollipop, setShowLollipop] = useState(false)
   const [noContent, setNoContent] = useState(true)
-  const [noGeneData, setNoGeneData] = useState(false)
   const [percentage, setPercentage] = useState("")
   const [alltabList, setAllTabList] = useState({});
   let { project_id } = useParams();
@@ -43,7 +42,6 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
   useEffect(() => {
     if ('userProjectsDataTable' in tabList) {
       let _data = tabList.userProjectsDataTable
-      console.log('_data', _data)
       if (_data?.viz_type === 'single') {
         if (_data["phospho"] !== null) {
           setActiveTab('2')
@@ -162,12 +160,8 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
             setLolipopJson({ data: [], domains: [], status: 204 })
             history.push('/notfound')
           });
-        setNoGeneData(false)
       }
       setTableType(tableType)
-    }
-    else {
-      setNoGeneData(true)
     }
   }, [inputState])
 
@@ -197,7 +191,6 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
         let refseq_id = []
         let sample_length = []
         let unique_sample = []
-        // setPercentage(lolipopJson['percentage'])
         if (data.length > 0) {
           for (var i = 0; i < data.length; i++) {
             sample_length.push(data[i]['sample'])
@@ -390,10 +383,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
             name = domains_data[i]['domain'].substring(0, 1)
           }
 
-
           width.push(domains_data[i]['end'])
-
-
           domains.push({
             "startCodon": domains_data[i]['start'],
             "endCodon": domains_data[i]['end'],
@@ -405,9 +395,6 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
 
           })
         }
-
-        // }
-
 
         let w = 300
         let h = 10
@@ -599,8 +586,8 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                     </div>
                     <div className='chart_dataBox'>
                       <div className="">
-                        {tableType === "Mutation" && <h5 className="" style={{fontSize:'1rem'}}> <FormattedMessage id="SomanticMutationFrequency" defaultMessage="Somatic Mutation Frequency: " />{percentage ? percentage : ""}<FormattedMessage id="SomanticMutationmutationsamplenumber/totalselectedsamplenumber(%)Frequency" defaultMessage="%(mutation sample number/total selected sample number(%))" /></h5>}
-                        {tableType !== "Mutation" && <h5 className="" style={{fontSize:'1rem'}}> <FormattedMessage id="PhosphorylationFrequency" defaultMessage="Phosphorylation Frequency: " />{percentage ? percentage : ""}<FormattedMessage id="Phosphorylationsamplenumber/totalselectedsamplenumber(%)" defaultMessage="%(Phosphorylation sample number/total selected sample number(%))" /></h5>}
+                        {tableType === "Mutation" && <h5 className="" style={{ fontSize: '1rem' }}> <FormattedMessage id="SomanticMutationFrequency" defaultMessage="Somatic Mutation Frequency: " />{percentage ? percentage : ""}<FormattedMessage id="SomanticMutationmutationsamplenumber/totalselectedsamplenumber(%)Frequency" defaultMessage="%(mutation sample number/total selected sample number(%))" /></h5>}
+                        {tableType !== "Mutation" && <h5 className="" style={{ fontSize: '1rem' }}> <FormattedMessage id="PhosphorylationFrequency" defaultMessage="Phosphorylation Frequency: " />{percentage ? percentage : ""}<FormattedMessage id="Phosphorylationsamplenumber/totalselectedsamplenumber(%)" defaultMessage="%(Phosphorylation sample number/total selected sample number(%))" /></h5>}
                       </div>
                       <div className='mutation_labels'>
                         {mutationLabel}
@@ -626,10 +613,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                   </div>}
               </>
             </Fragment>
-
-
           }
-          {/* {noGeneData && <p><FormattedMessage id="PleaseSelecttheGeneSetData" defaultMessage="Please Select the Gene Set Data" /></p>} */}
 
         </div >
     }

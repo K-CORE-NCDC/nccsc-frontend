@@ -1,14 +1,11 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { SingleFileUpload, clearFusionVennDaigram, clearProjectTableDataTableData, clearSingleFIleUploadState } from '../../../actions/api_actions'
+import { SingleFileUpload, clearSingleFIleUploadState } from '../../../actions/api_actions'
 import { useSelector, useDispatch } from "react-redux";
-import Loader from '../Widgets/loader';
 import { useHistory } from 'react-router-dom'
 import { useParams } from "react-router-dom";
 import { Context } from "../../../wrapper";
 import { FormattedMessage } from 'react-intl';
 import Swal from 'sweetalert2';
-import { dispatch } from "d3";
-import { userdataVisualization } from "../../../actions/Constants";
 import { DataOfFiles } from "../MultiDataVisualization/MultiFileUpload";
 
 
@@ -38,9 +35,6 @@ function Modal({ showModal, toggleModal, fileName }) {
                 {/*body*/}
                 <div className="Toolmodal-body">
                   <div className="Toolmodal-text">
-                    {/* <ul style={{ margin: "10px" }}>
-                      <li>{`This is a Sample Example File for ${fileName}`}</li>
-                    </ul> */}
                     <img src={fileNameImage} alt="ExampleFileImage" />
                     <DataOfFiles fileName={fileName} />
                     <div className='Flex FlexDirRow' style={{ marginTop: "20px", gap: "10px" }}>
@@ -88,13 +82,6 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
   const inputRef = useRef(null)
   const allowedTabs = ["circos", "lollipop", "CNV", "heatmap", "box", "survival", "variant-summary"]
 
-
-  // useEffect(() => {
-  //   dispatch({
-  //     type: userdataVisualization.USER_DATA_PROJECT_TABLE,
-  //     payload: {},
-  //   });
-  // },[]) 
 
   const charts = {
     "circos": {
@@ -215,7 +202,6 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
   }, [])
 
   const resetStates = () => {
-    // dispatch(clearSingleFIleUploadState())
     inputRef.current.value = null;
     setSelectedFileSampleType({
       1: "clinical_information",

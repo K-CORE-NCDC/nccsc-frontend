@@ -32,7 +32,7 @@ export default function Refresh() {
     }, 1000);
   }, []);
 
-  useEffect(() => {}, [isIdle]);
+  useEffect(() => { }, [isIdle]);
 
   return (
     <div>
@@ -50,7 +50,6 @@ export default function Refresh() {
           Time Elapsed:
           {elapsed}
         </h1>
-        {/* <h1>Last Active: {format(lastActive, 'MM-dd-yyyy HH:MM:ss.SSS')}</h1> */}
         <h1>
           Idle:
           {isIdle.toString()}

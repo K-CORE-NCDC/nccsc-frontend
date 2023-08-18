@@ -165,65 +165,6 @@ function OldKoreanprivacyact() {
 
                     </div>
 
-
-                    {/* <div id="DIV_94">
-                        <p id="P_95">
-                            목 차
-                        </p>
-                        <div id="DIV_96" >
-                            <div id="" className='m-auto' >
-                                <ul id="UL_98" >
-                                    <li style={{ borderBottom: "1px solid black" }}>
-                                        <p
-                                            id="A_100">제1 조(개인정보의 처리 목적, 처리 항목, 보유기간)</p>
-                                    </li>
-                                    <li style={{ borderBottom: "1px solid black" }}>
-                                        <p
-                                            id="A_102">제2 조(인터넷 접속정보파일 등 개인정보를 자동으로 수집 <span className='m-8'>  하는 장치의 설치·운영 및 그 거부에 관한 사항)</span></p>
-                                    </li>
-                                    <li style={{ borderBottom: "1px solid black" }}>
-                                        <p
-                                            id="A_104">제3 조 (개인정보의 파기 절차 및 방법)</p>
-                                    </li>
-                                    <li style={{ borderBottom: "1px solid black" }}>
-                                        <p
-                                            id="A_106">제4 조 (개인정보처리의 위탁에 관한 사항)</p>
-                                    </li>
-                                    <li style={{ borderBottom: "1px solid black" }}>
-                                        <p
-                                            id="A_108">제5 조 (개인정보 안정성 확보조치)</p>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div id="DIV_112">
-                                <ul id="UL_113" className=''>
-                                    <li style={{ borderBottom: "1px solid black" }} >
-                                        <p
-                                            id="A_110">제6 조 (정보주체와 법정대리인의 권리·의무 및 그 행사법)</p>
-                                    </li>
-                                    <li style={{ borderBottom: "1px solid black" }}>
-                                        <p
-                                            id="A_115">제7 조 (개인정보의 열람청구를 접수·처리하는 부서)</p>
-                                    </li>
-                                    <li style={{ borderBottom: "1px solid black" }}>
-                                        <p
-                                            id="A_117">제8 조 (권익침해 구제방법)</p>
-                                    </li>
-                                    <li style={{ borderBottom: "1px solid black" }}>
-                                        <p
-                                            id="A_119">제9 조 (개인정보보호 책임자 및 담당자 연락처)</p>
-                                    </li>
-                                    <li style={{ borderBottom: "1px solid black" }} >
-                                        <p
-                                            id="A_121">제10 조 (개인정보 처리방침의 변경)</p>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div> */}
-
-
                     <h5 className='flex m-5'>
                         <span id="SPAN_128">제1조(개인정보의 처리 목적, 처리 항목, 보유기간)</span>
                         <img

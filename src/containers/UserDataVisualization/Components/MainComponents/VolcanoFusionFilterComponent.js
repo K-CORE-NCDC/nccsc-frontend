@@ -126,27 +126,27 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
                 <div>
                     <div className="M4 JustifyContent Gap2 tab">
                         <ul>
-                        <li className={
-                                    volcanoType === "transcriptome" ? "on W50" : " W50 "
-                                }>
-                            <button onClick={() => changeVolcanoType("transcriptome")}>
-                                <FormattedMessage id="Transcriptome" defaultMessage="Transcriptome" />
-                            </button></li>
+                            <li className={
+                                volcanoType === "transcriptome" ? "on W50" : " W50 "
+                            }>
+                                <button onClick={() => changeVolcanoType("transcriptome")}>
+                                    <FormattedMessage id="Transcriptome" defaultMessage="Transcriptome" />
+                                </button></li>
 
 
-                        {project_id !== undefined && alltabList['proteome'] && 
-                            <li className={volcanoType === "proteome" ? "on W50" : " W50 "}>
-                                <button onClick={() => changeVolcanoType("proteome")}>
-                            <FormattedMessage id="Proteome" defaultMessage="Proteome" />
-                        </button></li>}
+                            {project_id !== undefined && alltabList['proteome'] &&
+                                <li className={volcanoType === "proteome" ? "on W50" : " W50 "}>
+                                    <button onClick={() => changeVolcanoType("proteome")}>
+                                        <FormattedMessage id="Proteome" defaultMessage="Proteome" />
+                                    </button></li>}
 
-                        {project_id === undefined &&
-                            <li  className={volcanoType === "proteome" ? "on W50" : " W50 "}>
-                                <button onClick={() => changeVolcanoType("proteome")}>
-                                    <FormattedMessage id="Proteome" defaultMessage="Proteome" />
-                                </button>
-                            </li>
-                        }
+                            {project_id === undefined &&
+                                <li className={volcanoType === "proteome" ? "on W50" : " W50 "}>
+                                    <button onClick={() => changeVolcanoType("proteome")}>
+                                        <FormattedMessage id="Proteome" defaultMessage="Proteome" />
+                                    </button>
+                                </li>
+                            }
                         </ul>
                     </div>
 
@@ -226,37 +226,37 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
                             ) && (
                                     <div className="m-1   tab" style={{ gap: "15px" }}>
                                         <ul>
-                                        {
-                                            <li className={
-                                                userDefienedFilter === "static" ? " on W50" : " W50"
-                                            }>
+                                            {
+                                                <li className={
+                                                    userDefienedFilter === "static" ? " on W50" : " W50"
+                                                }>
+                                                    <button
+                                                        onClick={() => {
+                                                            setUserDefienedFilter("static");
+                                                            setGroupFilters({});
+                                                        }}
+
+                                                    >
+                                                        <FormattedMessage
+                                                            id="Static_volcano"
+                                                            defaultMessage="Static"
+                                                        />
+                                                    </button>
+                                                </li>
+                                            }
+                                            <li className={userDefienedFilter === "dynamic" ? "on W50" : " W50"}>
                                                 <button
-                                                onClick={() => {
-                                                    setUserDefienedFilter("static");
-                                                    setGroupFilters({});
-                                                }}
-                                                
-                                            >
-                                                <FormattedMessage
-                                                    id="Static_volcano"
-                                                    defaultMessage="Static"
-                                                />
-                                            </button>
-                                            </li>
-                                        }
-                                        <li className={userDefienedFilter === "dynamic"? "on W50" : " W50"}>
-                                            <button
                                                     onClick={() => {
                                                         setUserDefienedFilter("dynamic");
                                                         setGroupFilters({});
                                                     }}
                                                 >
-                                                <FormattedMessage
-                                                    id="Dynamic_volcano"
-                                                    defaultMessage="Dynamic"
-                                                />
-                                            </button>
-                                        </li>
+                                                    <FormattedMessage
+                                                        id="Dynamic_volcano"
+                                                        defaultMessage="Dynamic"
+                                                    />
+                                                </button>
+                                            </li>
                                         </ul>
                                     </div>
                                 )}
@@ -329,36 +329,36 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
                         {project_id === undefined && (
                             <div className="m-1 tab" style={{ gap: "10px" }}>
                                 <ul>
-                                <li className={
-                                            userDefienedFilter === "static" ?
-                                                " on W50" : " W50 "
-                                        }>
-                                    <button
-                                        onClick={() => {
-                                            setUserDefienedFilter("static");
-                                            setGroupFilters({});
-                                        }}>
-                                    <FormattedMessage
-                                        id="Static_volcano"
-                                        defaultMessage="Static"
-                                    />
-                                </button></li>
-                                <li className={
+                                    <li className={
+                                        userDefienedFilter === "static" ?
+                                            " on W50" : " W50 "
+                                    }>
+                                        <button
+                                            onClick={() => {
+                                                setUserDefienedFilter("static");
+                                                setGroupFilters({});
+                                            }}>
+                                            <FormattedMessage
+                                                id="Static_volcano"
+                                                defaultMessage="Static"
+                                            />
+                                        </button></li>
+                                    <li className={
                                         userDefienedFilter === "dynamic"
                                             ? " on W50" : "W50"
                                     }>
-                                    <button
-                                    onClick={() => {
-                                        setUserDefienedFilter("dynamic");
-                                        setGroupFilters({});
-                                    }}
-                                    
-                                >
-                                    <FormattedMessage
-                                        id="Dynamic_volcano"
-                                        defaultMessage="Dynamic"
-                                    />
-                                </button></li>
+                                        <button
+                                            onClick={() => {
+                                                setUserDefienedFilter("dynamic");
+                                                setGroupFilters({});
+                                            }}
+
+                                        >
+                                            <FormattedMessage
+                                                id="Dynamic_volcano"
+                                                defaultMessage="Dynamic"
+                                            />
+                                        </button></li>
                                 </ul>
                             </div>
                         )}

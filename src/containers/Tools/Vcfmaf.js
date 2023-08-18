@@ -34,18 +34,18 @@ function Modal({ showModal, setShowModal, body }) {
                 {/*body*/}
                 <div className="Toolmodal-body">
                   <div className="Toolmodal-text">
-                    <ul style={{margin:"10px"}}>
+                    <ul style={{ margin: "10px" }}>
                       <li>VCF(Variant Call Format) is a text file format for variant information.</li>
                       <li>It contains meta-information lines, a headerline, and then data lines each containing information about a position in the genome.</li>
                       <li>The format also has the ability to contain genotype information on samples for each position.</li>
                     </ul>
                     <img src={AttachmentsImage} alt="ExampleFileImage" />
-                    <div className='Flex FlexDirRow' style={{marginTop:"20px", gap:"10px"}}>
+                    <div className='Flex FlexDirRow' style={{ marginTop: "20px", gap: "10px" }}>
 
-                    <p>Click on the link to download the sample file</p>
-                    <a className="Tooldownload-link" href={Attachments} download>
-                      Download
-                    </a>
+                      <p>Click on the link to download the sample file</p>
+                      <a className="Tooldownload-link" href={Attachments} download>
+                        Download
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -92,7 +92,7 @@ function Vcfmaf() {
       </svg>
     )
   }
-  
+
   let backend_url = config['auth']
   let VcfMafTool = (event) => {
     setVcfMafFile(event.target.files[0])
@@ -181,12 +181,12 @@ function Vcfmaf() {
               {showModal && <Modal showModal={showModal} setShowModal={setShowModalFunction} />}
             </div>
 
-            <div className='Tool formBox' style={{paddingTop:"0px"}}>
+            <div className='Tool formBox' style={{ paddingTop: "0px" }}>
               <div className="PY5">
                 {!loader ? <section className="Section">
                   <div>
                     <div className="BG">
-                      <div className="ModalBtn" style={{marginBottom:"20px"}}>
+                      <div className="ModalBtn" style={{ marginBottom: "20px" }}>
                         <button onClick={() => setShowModal(true)} className="ToolModalBtn">
                           <InforIcon />
                         </button>
@@ -199,7 +199,7 @@ function Vcfmaf() {
                             </dt>
                             <dd>
                               <div className="inputText">
-                                <input type="file" className="w100" accept=".vcf, " id="VcfMafFile" onChange={(e) => VcfMafTool(e)}  autoComplete="off" style={{ padding: "10px" }} />
+                                <input type="file" className="w100" accept=".vcf, " id="VcfMafFile" onChange={(e) => VcfMafTool(e)} autoComplete="off" style={{ padding: "10px" }} />
                               </div>
                             </dd>
                           </dl>
@@ -212,7 +212,7 @@ function Vcfmaf() {
                       </div>
                     </div>
                     <span style={{ fontSize: "1rem", lineHeight: "1.5rem", justifyContent: "center" }} className='Flex'>
-                     
+
                       <FormattedMessage id="VcfToMafNote" defaultMessage=" Note: only .vcf file accepted and files which are generated using genome version hg38" />
                     </span>
                   </div>

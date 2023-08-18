@@ -1,8 +1,7 @@
-import {isSessionAndSessionData} from '../actions/api_actions'
+import { isSessionAndSessionData } from '../actions/api_actions'
 export const getCookie = (name) => {
-    
+
     const cookies = document.cookie.split(';');
-    // console.log('cookies',cookies);
     for (let i = 0; i < cookies.length; i++) {
         const cookie = cookies[i].trim();
         if (cookie.startsWith(name + '=')) {
@@ -13,16 +12,14 @@ export const getCookie = (name) => {
     return null;
 };
 
-export const getSession = ()=>{
-    console.log('entered here')
-    let data = isSessionAndSessionData('GET',{})
+export const getSession = () => {
+    let data = isSessionAndSessionData('GET', {})
     data.then((result) => {
-        console.log('first call')
-        if(result.status === 200){
+        if (result.status === 200) {
             return result.data.response_data
         }
-        else{
-        return {}
+        else {
+            return {}
         }
     })
 }

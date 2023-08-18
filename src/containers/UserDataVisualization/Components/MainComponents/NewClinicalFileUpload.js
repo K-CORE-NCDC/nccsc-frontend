@@ -35,11 +35,6 @@ import LollipopplotGuidelinesKorean from "../GuideLines/LollipopGuidelinesKorean
 import HeatMapGuidelinesKorean from "../GuideLines/HeatmapGuidelinesKorean";
 
 
-
-
-
-
-
 function Modal({ showModal, setShowModal, body }) {
   return (
     <>
@@ -403,14 +398,6 @@ export default function FileUpload({ updateComponentNumber}) {
             {(loader[selectedFileSampleType[key]] === 'loader') && <p className="mt-5 text-center"><FormattedMessage id = 'WaitMessage' defaultMessage='It takes 1 or 2 minutes to process data' /> </p>}
             {(loader[selectedFileSampleType[key]] === 'failed') && <strong className="text-red-700 font-bold">Failed!</strong>}
           </div>
-          {/* <div className="relative w-full col-span-2">
-            <div className="pt-8 pr-0 pl-0">
-              <a href={renderSwitch(selectedFileSampleType[key])} className="no-underline hover:underline text-blue-500" download>
-                Download Sample
-                <DownloadIcon className='w-10' />
-              </a>
-            </div>
-          </div> */}
         </div>
       )
     })
@@ -438,8 +425,6 @@ export default function FileUpload({ updateComponentNumber}) {
     }
   }
   const on_upload = () => {
-    console.log(uploadFile);
-    console.log(projectName);
     dispatch(newFileUpload(uploadFile, projectName))
     updateComponentNumber(1)
     for (let key in uploadFile) {
@@ -536,7 +521,6 @@ export default function FileUpload({ updateComponentNumber}) {
                   <input ref={projectNameRef} onChange={(e) => setProjectName(e.target.value)} value={projectName} className={` ${borderRed ? "border-red-400" : ""} ml-10 shadow appearance-none border rounded w-96 h-12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} required={true} id="project" type="text" placeholder="Project Name" />
                 </div>
               </div>
-              {/* <div className="pb-3">{selectedFiles ? <h2> Selected Files: <b>{selectedFiles.join(', ')}</b></h2> : ""}</div> */}
               <h2 className="text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md"><FormattedMessage id="Upload" defaultMessage="Upload" /></h2>
             </div>
             {initialInputState}

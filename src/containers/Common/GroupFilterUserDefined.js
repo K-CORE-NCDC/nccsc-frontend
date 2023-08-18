@@ -279,29 +279,29 @@ let UserDefinedGroupFilters = ({
         parentCallback(userGivenInputValues);
       }
     }
-    else if(viz_type === 'fusion'){
+    else if (viz_type === 'fusion') {
       if (isFilterResetHappened) {
         let send_response = true;
-        if(userGivenInputValues['type'] === 'static'){
+        if (userGivenInputValues['type'] === 'static') {
           let final_payload = { ...userGivenInputValues };
-          let total_groups=0;
-          for(let i=1;i<=3;i++){
-              if(`group_${i}` in final_payload){
-                  total_groups++;
-              }
+          let total_groups = 0;
+          for (let i = 1; i <= 3; i++) {
+            if (`group_${i}` in final_payload) {
+              total_groups++;
+            }
           }
-          if(total_groups === 1 ){
-              send_response = false; 
+          if (total_groups === 1) {
+            send_response = false;
           }
         }
-        else{
+        else {
           let min1Value = Number.MAX_VALUE;
           let max1Value = Number.MIN_VALUE;
           let final_payload = { ...userGivenInputValues };
-          for(let i = 1; i <groupsCounter; i++){
+          for (let i = 1; i < groupsCounter; i++) {
             const min_1_from = document.querySelectorAll(`[name="${i}_from"]`);
             const max_1_to = document.querySelectorAll(`[name="${i}_to"]`);
-            let min_1_num,max_1_num
+            let min_1_num, max_1_num
             for (let obj in min_1_from) {
               if (min_1_from[obj]) {
                 if (
@@ -313,7 +313,7 @@ let UserDefinedGroupFilters = ({
                   send_response = false;
                 } else {
                   if (min_1_from[obj].value) {
-                    min1Value = Math.min(min_1_from[obj].value,min1Value);
+                    min1Value = Math.min(min_1_from[obj].value, min1Value);
                     min_1_num = +(min_1_from[obj].value)
                   }
                 }
@@ -330,31 +330,31 @@ let UserDefinedGroupFilters = ({
                   send_response = false;
                 } else {
                   if (max_1_to[obj].value) {
-                    max1Value = Math.max(max_1_to[obj].value,max1Value);
+                    max1Value = Math.max(max_1_to[obj].value, max1Value);
                     max_1_num = +(max_1_to[obj].value)
                   }
                 }
               }
             }
-                let one_from = `${i}_from`
-                let one_to = `${i}_to`
-                final_payload[one_from] = min_1_num;
-                final_payload[one_to] = max_1_num ;
+            let one_from = `${i}_from`
+            let one_to = `${i}_to`
+            final_payload[one_from] = min_1_num;
+            final_payload[one_to] = max_1_num;
           }
-  
+
           if (send_response === true) {
             setGroupsCounter(1)
             setUserGivenInputValues(final_payload);
             parentCallback(final_payload);
           }
         }
-        if (send_response === true &&  userGivenInputValues['type'] !== 'number') {
+        if (send_response === true && userGivenInputValues['type'] !== 'number') {
           parentCallback(userGivenInputValues);
           setGroupsCounter(1)
         }
-      } 
+      }
       else {
-        parentCallback(userGivenInputValues );
+        parentCallback(userGivenInputValues);
       }
     }
     else {
@@ -463,7 +463,6 @@ let UserDefinedGroupFilters = ({
     }
   };
 
-  // Chnage
   useEffect(() => {
     if (groupFilters && Object.keys(groupFilters).length > 0) {
       let filterType = groupFilters.type;
@@ -1045,14 +1044,14 @@ let UserDefinedGroupFilters = ({
               </table>
             );
           }
-          else   if(viz_type === 'fusion'){
+          else if (viz_type === 'fusion') {
             if (Object.keys(groupFilters).length > 0 && groupFilters["type"] === "static") {
               if (
                 groupFilters &&
                 groupFilters["column"] === colName &&
-                "group_1" in groupFilters  && groupFilters["group_1"].length > 0 &&
-                "group_2" in groupFilters && groupFilters["group_2"].length > 0 && 
-                "group_3" in groupFilters &&groupFilters["group_3"].length > 0
+                "group_1" in groupFilters && groupFilters["group_1"].length > 0 &&
+                "group_2" in groupFilters && groupFilters["group_2"].length > 0 &&
+                "group_3" in groupFilters && groupFilters["group_3"].length > 0
               ) {
                 preDefienedGroups1[colName].forEach((element, index) => {
                   let group_a = false;
@@ -1082,7 +1081,7 @@ let UserDefinedGroupFilters = ({
                             colName: colName,
                             group: "group_1",
                           })}
-                          defaultChecked = {false}
+                          defaultChecked={false}
                         />
                       </td>
                       <td className="PX6Y4">
@@ -1095,7 +1094,7 @@ let UserDefinedGroupFilters = ({
                             colName: colName,
                             group: "group_2",
                           })}
-                          defaultChecked = {false}
+                          defaultChecked={false}
                         />
                       </td>
                       <td className="PX6Y4">
@@ -1108,7 +1107,7 @@ let UserDefinedGroupFilters = ({
                             colName: colName,
                             group: "group_3",
                           })}
-                          defaultChecked = {false}
+                          defaultChecked={false}
                         />
                       </td>
                     </tr>
@@ -1130,7 +1129,7 @@ let UserDefinedGroupFilters = ({
                             colName: colName,
                             group: "group_1",
                           })}
-                          defaultChecked = {false}
+                          defaultChecked={false}
                         />
                       </td>
                       <td className="PX6Y4">
@@ -1142,7 +1141,7 @@ let UserDefinedGroupFilters = ({
                             colName: colName,
                             group: "group_2",
                           })}
-                          defaultChecked = {false}
+                          defaultChecked={false}
                         />
                       </td>
                       <td className="PX6Y4">
@@ -1154,7 +1153,7 @@ let UserDefinedGroupFilters = ({
                             colName: colName,
                             group: "group_3",
                           })}
-                          defaultChecked = {false}
+                          defaultChecked={false}
                         />
                       </td>
                     </tr>
@@ -1177,7 +1176,7 @@ let UserDefinedGroupFilters = ({
                           colName: colName,
                           group: "group_1",
                         })}
-                        defaultChecked = {false}
+                        defaultChecked={false}
                       />
                     </td>
                     <td className="PX6Y4">
@@ -1189,7 +1188,7 @@ let UserDefinedGroupFilters = ({
                           colName: colName,
                           group: "group_2",
                         })}
-                        defaultChecked = {false}
+                        defaultChecked={false}
                       />
                     </td>
                     <td className="PX6Y4">
@@ -1201,7 +1200,7 @@ let UserDefinedGroupFilters = ({
                           colName: colName,
                           group: "group_3",
                         })}
-                        defaultChecked = {false}
+                        defaultChecked={false}
                       />
                     </td>
                   </tr>
@@ -1241,7 +1240,7 @@ let UserDefinedGroupFilters = ({
   }, [selectedFilterDetails]);
 
   const AppendNewGroup = () => {
-    if(viz_type === fusion){
+    if (viz_type === fusion) {
       if (groupsCounter <= 3) {
         const filterType = selectedFilterDetails.type;
         const componentData = componetSwitch(filterType);
@@ -1249,7 +1248,7 @@ let UserDefinedGroupFilters = ({
         setGroupsCounter((prevState) => prevState + 1);
       }
     }
-    else{
+    else {
       const filterType = selectedFilterDetails.type;
       const componentData = componetSwitch(filterType);
       setFilterInputs((prevState) => [...prevState, componentData]);

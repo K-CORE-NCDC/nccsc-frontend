@@ -54,68 +54,68 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
       }
     }
   }, [clinicalfileresponse]);
-  
-  useEffect(()=>{
-  dispatch(clearUploadClinicalColumns())
-  },[])
+
+  useEffect(() => {
+    dispatch(clearUploadClinicalColumns())
+  }, [])
 
 
   const clinicalUpdateFileTypeOnChange = (e) => {
     let divName = e.target.name;
     let divValue = e.target.value;
-    if(responseData && 'clinical_information' in responseData && 'types' in responseData['clinical_information'] && 
-      ('sample_id' in responseData['clinical_information']['types'] === false || 'rlps_yn' in  responseData['clinical_information']['types'] === false || 
-      'rlps_cnfr_drtn' in  responseData['clinical_information']['types'] === false || 'death_yn' in  responseData['clinical_information']['types'] === false ||
-      'death_cnfr_drtn' in  responseData['clinical_information']['types'] === false )){
+    if (responseData && 'clinical_information' in responseData && 'types' in responseData['clinical_information'] &&
+      ('sample_id' in responseData['clinical_information']['types'] === false || 'rlps_yn' in responseData['clinical_information']['types'] === false ||
+        'rlps_cnfr_drtn' in responseData['clinical_information']['types'] === false || 'death_yn' in responseData['clinical_information']['types'] === false ||
+        'death_cnfr_drtn' in responseData['clinical_information']['types'] === false)) {
       let tempresponseData = { ...responseData };
-          tempresponseData[activeTableKey]["types"]["sample_id"] = 'character';
-          tempresponseData[activeTableKey]["types"]["rlps_yn"] = 'yesorno';
-          tempresponseData[activeTableKey]["types"]["rlps_cnfr_drtn"] = 'decimal';
-          tempresponseData[activeTableKey]["types"]["death_yn"] = 'yesorno';
-          tempresponseData[activeTableKey]["types"]["death_cnfr_drtn"] = 'decimal';
-          setResponseData(tempresponseData);
+      tempresponseData[activeTableKey]["types"]["sample_id"] = 'character';
+      tempresponseData[activeTableKey]["types"]["rlps_yn"] = 'yesorno';
+      tempresponseData[activeTableKey]["types"]["rlps_cnfr_drtn"] = 'decimal';
+      tempresponseData[activeTableKey]["types"]["death_yn"] = 'yesorno';
+      tempresponseData[activeTableKey]["types"]["death_cnfr_drtn"] = 'decimal';
+      setResponseData(tempresponseData);
     }
-    if(divName === 'sample_id' || divName === 'rlps_yn' || divName === 'rlps_cnfr_drtn' || divName === 'death_yn' || divName === 'death_cnfr_drtn'){
+    if (divName === 'sample_id' || divName === 'rlps_yn' || divName === 'rlps_cnfr_drtn' || divName === 'death_yn' || divName === 'death_cnfr_drtn') {
 
-          if(defaultClinicalInformationColumns[divName] === divValue ){
-            let tempresponseData = { ...responseData };
-            if (tempresponseData[activeTableKey]) {
-              tempresponseData[activeTableKey]["types"][divName] = divValue;
-          } else {
-            tempresponseData[activeTableKey] = {};
-            tempresponseData[activeTableKey]["tab"] = activeTableKey;
-            tempresponseData[activeTableKey]["filename"] = getFileName(
-              clinicalfileresponse,
-              activeTableKey
-              );
-              tempresponseData[activeTableKey]["types"] = {};
-              tempresponseData[activeTableKey]["types"][divName] = divValue;
-            }
-            setResponseData(tempresponseData);
-           if(e){
-            e.target.classList.remove("border-red-400")
-           }
-          }
-          else{
-            if(e){
-              e.target.classList.add("border-red-400")
-            }
-            let tempresponseData = { ...responseData };
-            if (tempresponseData[activeTableKey]) {
-              tempresponseData[activeTableKey]["types"][divName] = '';
-          } else {
-            tempresponseData[activeTableKey] = {};
-            tempresponseData[activeTableKey]["tab"] = activeTableKey;
-            tempresponseData[activeTableKey]["filename"] = getFileName(
-              clinicalfileresponse,
-              activeTableKey
-              );
-              tempresponseData[activeTableKey]["types"] = {};
-              tempresponseData[activeTableKey]["types"][divName] = '';
-            }
-            setResponseData(tempresponseData);
-          }
-         
+      if (defaultClinicalInformationColumns[divName] === divValue) {
+        let tempresponseData = { ...responseData };
+        if (tempresponseData[activeTableKey]) {
+          tempresponseData[activeTableKey]["types"][divName] = divValue;
+        } else {
+          tempresponseData[activeTableKey] = {};
+          tempresponseData[activeTableKey]["tab"] = activeTableKey;
+          tempresponseData[activeTableKey]["filename"] = getFileName(
+            clinicalfileresponse,
+            activeTableKey
+          );
+          tempresponseData[activeTableKey]["types"] = {};
+          tempresponseData[activeTableKey]["types"][divName] = divValue;
+        }
+        setResponseData(tempresponseData);
+        if (e) {
+          e.target.classList.remove("border-red-400")
+        }
+      }
+      else {
+        if (e) {
+          e.target.classList.add("border-red-400")
+        }
+        let tempresponseData = { ...responseData };
+        if (tempresponseData[activeTableKey]) {
+          tempresponseData[activeTableKey]["types"][divName] = '';
+        } else {
+          tempresponseData[activeTableKey] = {};
+          tempresponseData[activeTableKey]["tab"] = activeTableKey;
+          tempresponseData[activeTableKey]["filename"] = getFileName(
+            clinicalfileresponse,
+            activeTableKey
+          );
+          tempresponseData[activeTableKey]["types"] = {};
+          tempresponseData[activeTableKey]["types"][divName] = '';
+        }
+        setResponseData(tempresponseData);
+      }
+
     }
 
     if (activeTableKey === "clinical_information") {
@@ -128,15 +128,15 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
       setClinincalFilterColumns(tmp);
       let tempresponseData = { ...responseData };
 
-      if(divName !== 'sample_id' && divName !== 'rlps_yn' && divName !== 'rlps_cnfr_drtn' && divName !== 'death_yn' && divName !== 'death_cnfr_drtn'){
+      if (divName !== 'sample_id' && divName !== 'rlps_yn' && divName !== 'rlps_cnfr_drtn' && divName !== 'death_yn' && divName !== 'death_cnfr_drtn') {
         if (tempresponseData[activeTableKey]) {
           tempresponseData[activeTableKey]["types"][divName] = divValue;
-      } else {
-        tempresponseData[activeTableKey] = {};
-        tempresponseData[activeTableKey]["tab"] = activeTableKey;
-        tempresponseData[activeTableKey]["filename"] = getFileName(
-          clinicalfileresponse,
-          activeTableKey
+        } else {
+          tempresponseData[activeTableKey] = {};
+          tempresponseData[activeTableKey]["tab"] = activeTableKey;
+          tempresponseData[activeTableKey]["filename"] = getFileName(
+            clinicalfileresponse,
+            activeTableKey
           );
           tempresponseData[activeTableKey]["types"] = {};
           tempresponseData[activeTableKey]["types"][divName] = divValue;
@@ -157,39 +157,37 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
         let total_columns;
         let send_c = true
         total_columns = 0
-        if (columnsData && 'clinical_information' in columnsData){
+        if (columnsData && 'clinical_information' in columnsData) {
 
           for (let i = 0; i < clinicalfileresponse["res"].length; i++) {
             if (
-            clinicalfileresponse["res"][i]["tab"] === "clinical_information"
+              clinicalfileresponse["res"][i]["tab"] === "clinical_information"
             ) {
               total_columns = clinicalfileresponse["res"][i]["columns"].length;
             }
           }
-        for (let i = 0; i < clinicalfileresponse["res"].length; i++) {
-          if (clinicalfileresponse["res"][i]["tab"] === "clinical_information") 
-          {
-            if(columnsData && 'clinical_information' in columnsData && 'types' in   columnsData['clinical_information']){
-              for(let kv in columnsData['clinical_information']['types'])
-              {
-                if(columnsData['clinical_information']['types'][kv] === ''){
-                  send_c = false
+          for (let i = 0; i < clinicalfileresponse["res"].length; i++) {
+            if (clinicalfileresponse["res"][i]["tab"] === "clinical_information") {
+              if (columnsData && 'clinical_information' in columnsData && 'types' in columnsData['clinical_information']) {
+                for (let kv in columnsData['clinical_information']['types']) {
+                  if (columnsData['clinical_information']['types'][kv] === '') {
+                    send_c = false
+                  }
                 }
               }
             }
           }
+
+          if (send_c && Object.keys(columnsData['clinical_information']['types']).length === total_columns) {
+            return true
+          }
+          else {
+            return false
+          }
         }
-        
-        if(send_c && Object.keys(columnsData['clinical_information']['types']).length  === total_columns ){
+        else {
           return true
         }
-        else{
-          return false
-        }
-      }
-      else{
-        return true
-      }
       }
     };
     if (
@@ -347,7 +345,7 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
         if (
           activeTableKey === "clinical_information" &&
           key === "clinical_information"
-        ) { 
+        ) {
           clinincalFilterColumns[key].forEach((obj) => {
             firstInput.push(
               <div className="flex justify-between" key={key + "_" + obj.id}>
@@ -359,8 +357,8 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
                     <select
                       onChange={clinicalUpdateFileTypeOnChange}
                       name={obj.title}
-                      defaultValue={(obj.id === 'rlps_yn') ? 'yesorno': (obj.id === 'rlps_cnfr_drtn') ? 'decimal': (obj.id === 'sample_id') ? 'character' :
-                      (obj.id === 'death_yn') ? 'yesorno': (obj.id === 'death_cnfr_drtn') ? 'decimal': ''}
+                      defaultValue={(obj.id === 'rlps_yn') ? 'yesorno' : (obj.id === 'rlps_cnfr_drtn') ? 'decimal' : (obj.id === 'sample_id') ? 'character' :
+                        (obj.id === 'death_yn') ? 'yesorno' : (obj.id === 'death_cnfr_drtn') ? 'decimal' : ''}
                       className="select-color w-48 p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3"
                     >
                       {Object.keys(obj.options).map((type) => (
@@ -432,7 +430,7 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
         {!clinicalfileresponse && (
           <div>
             <LoaderCmp />
-            <p className="mt-8 text-center text-lg"><FormattedMessage id = 'UploadWaitMessage' defaultMessage='Uploading data, Please wait for a moment.' /> </p>
+            <p className="mt-8 text-center text-lg"><FormattedMessage id='UploadWaitMessage' defaultMessage='Uploading data, Please wait for a moment.' /> </p>
 
           </div>
         )}
@@ -450,7 +448,7 @@ function FileUploadDropdowncomponent({ updateComponentNumber }) {
               updateComponentNumber(0);
             }}
           >
-             <FormattedMessage id="Back" defaultMessage="Back" />
+            <FormattedMessage id="Back" defaultMessage="Back" />
           </button>
         </div>
         <div className="">

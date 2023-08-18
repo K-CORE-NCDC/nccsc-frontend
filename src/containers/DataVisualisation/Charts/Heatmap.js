@@ -5,11 +5,10 @@ import { HeatmapInformation } from '../../../actions/api_actions'
 import LoaderCmp from '../../Common/Loader'
 import NoContentMessage from '../../Common/NoContentComponent'
 import inputJson from '../../Common/data'
-import { CheckIcon } from '@heroicons/react/solid';
 import Multiselect from 'multiselect-react-dropdown';
 import { FormattedMessage } from 'react-intl';
 import { Context } from "../../../wrapper";
-import { useParams,useLocation } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import '../../../styles/css/heatmap.css'
 
 export default function DataHeatmap({ width, inputData, screenCapture, brstKeys, setToFalseAfterScreenCapture }) {
@@ -33,7 +32,7 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
   const [viewType, setViewType] = useState('gene_vl')
   const [mainTab, setMainTab] = useState('heatmap')
   const [clusterRange, setClusterRange] = useState("")
-  const [inSufficientData, setInSufficientData] = useState(false)
+  const inSufficientData = false
   const [renderNoContent, setRenderNoContent] = useState(false)
   let { project_id } = useParams();
   const [configVis, setConfigVis] = useState({ "colorSpectrumBreaks": [], "colorSpectrum": ["navy", "firebrick3"] })
@@ -94,7 +93,6 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
       }
       setAllTabList(tabList.userProjectsDataTable)
     } else {
-      console.log()
       setActiveTab('1')
       setTableType('rna')
     }
@@ -331,10 +329,6 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
         setRenderNoContent(true)
       }
       setLoader(false)
-      // setTimeout(function () {
-
-
-      // }, (1000));
     } else {
       if (heatmapSummaryStatusCode?.status === 204 && (heatmapJson?.data?.length === 0 || heatmapJson?.length === 0)) {
         setData("")
@@ -342,35 +336,6 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
         setLoader(false)
       }
     }
-    // else if (heatmapJson?.length > 0) {
-    //   let geneSet = new Set();
-    //   if ('data' in heatmapJson) {
-    //     heatmapJson.data.forEach(e => {
-    //       if (tableType === 'phospho' || tableType === 'methylation') {
-    //         geneSet.add(e.gene_name_site)
-    //       } else {
-    //         geneSet.add(e.gene_name)
-    //       }
-
-    //     })
-    //   } else if (heatmapJson.length > 1) {
-    //     heatmapJson.forEach(e => {
-    //       if (tableType === 'phospho' || tableType === 'methylation') {
-    //         geneSet.add(e.gene_name_site)
-    //       } else {
-    //         geneSet.add(e.gene_name)
-    //       }
-
-    //     })
-    //   }
-    // if (geneSet.size > 2) {
-    //   setInSufficientData(false)
-    // } else {
-
-    //   setInSufficientData(true)
-    // }
-    // setLoader(false)
-    // }
   }, [heatmapJson, brstKeys])
 
 
@@ -414,8 +379,6 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
   }
 
   const changeMainType = (e, type) => {
-    // setTableType('rna')
-    // setActiveTab('1')
     let c = document.getElementsByName('maintype')
     for (var i = 0; i < c.length; i++) {
       let classList = c[i].classList
@@ -542,7 +505,6 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
       dataJson['clinicalFilters'] = items
       dataJson['view'] = viewType
       dataJson['heat_type'] = mainTab
-      // dataJson['genes'] = selectedGene
       if ((tableType === "methylation") || (tableType === "phospho")) {
         dataJson['genes'] = selectedGene
       }
@@ -650,27 +612,6 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
         });
     }
   }
-
-  // useEffect(() => {
-  // if (heatmapSummaryStatusCode && heatmapSummaryStatusCode?.loader && heatmapSummaryStatusCode?.status === 0) {
-  //   setLoader(true)
-  // } else {
-  // if (heatmapSummaryStatusCode && heatmapSummaryStatusCode.status === 200) {
-  //   setRenderNoContent(false)
-  //   setLoader(false)
-  // } else{
-  //   setLoader(false)
-  //   setRenderNoContent(true)
-  //   setData('')
-  // }
-  // else if(heatmapSummaryStatusCode && heatmapSummaryStatusCode.loader === true){
-  //   setLoader(true)
-  //   setData('')
-  // }
-  // }
-
-
-  // }, [heatmapSummaryStatusCode])
 
   const changeSepctrum = (e) => {
     setLoader(true)
@@ -963,10 +904,8 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
                   <input type="range" className="custom-slider opacity-100"
                     id="points" name="points" min="1" step={1} max={clusterRange} defaultValue={rangeValue} onChange={rangeCall} />
                   <ul className="" id='tickmarks'>
-                    {/* {[...Array(clusterRange)].map((e, i) =>  */}
                     <li key="min-range" className=""><span className="absolute">1</span></li>
                     <li key="max-range" className=""><span className="absolute">{clusterRange}</span></li>
-                    {/*} */}
                   </ul>
                 </div>
 

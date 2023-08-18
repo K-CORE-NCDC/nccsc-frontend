@@ -154,31 +154,31 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
             copyState['filter_gene'] = fileredGene
             copyState['group_filters'] = groupFilters
             copyState['clinical'] = false
-            if(filterTypeButton === "omics" && project_id === undefined && fileredGene){
+            if (filterTypeButton === "omics" && project_id === undefined && fileredGene) {
                 copyState['gene_database'] = geneDatabase
                 disableCall = false
             }
-            else if(filterTypeButton === "omics" && project_id !== undefined && fileredGene){
-                if(alltabList[geneDatabase] && copyState['filter_gene'] ){
+            else if (filterTypeButton === "omics" && project_id !== undefined && fileredGene) {
+                if (alltabList[geneDatabase] && copyState['filter_gene']) {
                     copyState['gene_database'] = geneDatabase
                     disableCall = false
                 }
-                else{
+                else {
                     disableCall = true
                 }
             }
         }
-        
-        if ( filterTypeButton === 'omics' && disableCall === false) {
+
+        if (filterTypeButton === 'omics' && disableCall === false) {
             parentCallback({ updatedState: copyState })
         }
-        else if (filterTypeButton === 'clinical' && Object.keys(groupFilters).length > 0){
+        else if (filterTypeButton === 'clinical' && Object.keys(groupFilters).length > 0) {
             parentCallback({ updatedState: copyState })
         }
 
     };
 
-    
+
 
 
     useEffect(() => {
@@ -294,20 +294,20 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
 
                     <div className="m-1 tab ">
                         <ul>
-                            <li className={survivalModel === "recurrence"?" on ":""}>
-                                <button onClick={(e) => {survivalModelFun(e, "recurrence");}}>
+                            <li className={survivalModel === "recurrence" ? " on " : ""}>
+                                <button onClick={(e) => { survivalModelFun(e, "recurrence"); }}>
                                     Recurrence
                                 </button>
                             </li>
 
-                            <li className={survivalModel === "survival"?" on ":""}>
-                                <button onClick={(e) => {survivalModelFun(e, "survival");}}>
+                            <li className={survivalModel === "survival" ? " on " : ""}>
+                                <button onClick={(e) => { survivalModelFun(e, "survival"); }}>
                                     Survival
                                 </button>
                             </li>
 
-                            <li className={survivalModel === "cox"?" on ":""}>
-                                <button onClick={(e) => {survivalModelFun(e, "cox")}}>
+                            <li className={survivalModel === "cox" ? " on " : ""}>
+                                <button onClick={(e) => { survivalModelFun(e, "cox") }}>
                                     Cox Regression
                                 </button>
                             </li>
@@ -332,16 +332,19 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
                                 ) && (
                                         <div className="m-1 tab Gap2">
                                             <ul>
-                                                <li className={userDefienedFilter === "static" ? " on W50" :"W50"}>
-                                                    <button onClick={() => {setUserDefienedFilter("static");
-                                                        setGroupFilters({});}}>
+                                                <li className={userDefienedFilter === "static" ? " on W50" : "W50"}>
+                                                    <button onClick={() => {
+                                                        setUserDefienedFilter("static");
+                                                        setGroupFilters({});
+                                                    }}>
                                                         <FormattedMessage id="Static_volcano" defaultMessage="Static" />
                                                     </button>
                                                 </li>
-                                                <li className={userDefienedFilter === "dynamic" ? " on W50" :"W50"}>
+                                                <li className={userDefienedFilter === "dynamic" ? " on W50" : "W50"}>
                                                     <button onClick={() => {
                                                         setUserDefienedFilter("dynamic");
-                                                        setGroupFilters({});}}
+                                                        setGroupFilters({});
+                                                    }}
                                                     >
                                                         <FormattedMessage id="Dynamic_volcano" defaultMessage="Dynamic" />
                                                     </button>
@@ -355,7 +358,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
                                 </h3>
                                 <div className="m-1 tab Gap2 MarginTop2" >
                                     <ul>
-                                        <li className={filterTypeButton === "clinical" ? "on W50" :"W50"}>
+                                        <li className={filterTypeButton === "clinical" ? "on W50" : "W50"}>
                                             <button onClick={() => setFilterTypeButton("clinical")}
                                                 id="Mutation"
                                                 name="type">
@@ -364,19 +367,19 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
                                         </li>
 
                                         <li className={
-                                                    filterTypeButton === "omics" ? "on W50" :
-                                                    "W50"
-                                            }>
+                                            filterTypeButton === "omics" ? "on W50" :
+                                                "W50"
+                                        }>
                                             <button onClick={() => {
                                                 setFilterTypeButton("omics")
                                                 setGroupFilters({})
-                                                }}
+                                            }}
                                                 id="Phospho"
                                                 name="type"
-                                                
-                                        >
-                                            <FormattedMessage id="Omics" defaultMessage="Omics" />
-                                        </button>
+
+                                            >
+                                                <FormattedMessage id="Omics" defaultMessage="Omics" />
+                                            </button>
                                         </li>
                                     </ul>
                                 </div>
@@ -402,7 +405,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
 
                                 {filterTypeButton === "omics" && (
                                     <div className="M1 P1">
-                                         {project_id !== undefined && !alltabList[geneDatabase] && <p className="ErrorText MB1 MultiUploadTextCenter" style={{ textTransform: "capitalize" }}>Please Upload {geneDatabase} file to use the {geneDatabase} Database</p>}
+                                        {project_id !== undefined && !alltabList[geneDatabase] && <p className="ErrorText MB1 MultiUploadTextCenter" style={{ textTransform: "capitalize" }}>Please Upload {geneDatabase} file to use the {geneDatabase} Database</p>}
                                         <h6 className=" MB1 TextLeft TextBase" htmlFor="dropdown-database">
                                             Select Database
                                         </h6>
@@ -411,9 +414,9 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
                                             className="SurvivalSelectDatabase"
                                         >
 
-                                            {   <option className="TextBase" defaultValue={geneDatabase === "dna_mutation"} value="dna_mutation">
+                                            {<option className="TextBase" defaultValue={geneDatabase === "dna_mutation"} value="dna_mutation">
                                                 DNA Mutation
-                                                </option>
+                                            </option>
                                             }
 
 
@@ -426,7 +429,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
 
                                             {
                                                 <option className="TextBase" defaultValue={geneDatabase === "proteome"} value="proteome">
-                                                Global Proteome
+                                                    Global Proteome
                                                 </option>
                                             }
 
@@ -494,7 +497,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
                                                             id={"flexCheckChecked_" + index}
                                                             checked={coxFilter[element]}
                                                             value={element}
-                                                            style={{marginRight:'5px'}}
+                                                            style={{ marginRight: '5px' }}
                                                         />
                                                         <FormattedMessage id={element} defaultMessage={element} />
                                                     </label>

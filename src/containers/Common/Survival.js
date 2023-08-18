@@ -38,9 +38,9 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
                 },
                 pagination: {
                   style: {
-                      gap:"10px"
+                    gap: "10px"
                   }
-                }      
+                }
               }}
             />
           </div>)
@@ -79,7 +79,7 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
     const { clientX, clientY } = event;
     setMousePosition({ x: clientX, y: clientY });
   };
-  
+
 
   return (
     <div id="survival" ref={ref} className={`${watermarkCss} P1 OverFlowXHide`} onMouseMove={handleMouseMove}>
@@ -92,9 +92,6 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
         yLabel='Survival(%)'
         interpolate="step-before"
         pointRadius={1}
-        // onPointHover={(e) => {
-        //   return `<div style='position:absolute'><b>duration: </b>${e.x}<br /><b>Survival Rate: </b>${e.y}<br /><b>Sample: </b>${e.sample}</div>`;
-        // }}
         onPointHover={(e) => {
           const tooltipStyle = `
             position: fixed;
@@ -105,7 +102,7 @@ const SurvivalCmp = React.forwardRef(({ width, data, watermarkCss, pValue }, ref
 
           return `<div style='${tooltipStyle}'><b>duration: </b>${e.x}<br /><b>Survival Rate: </b>${e.y}<br /><b>Sample: </b>${e.sample}</div>`;
         }}
-        margin = {{ top: 50, right: 100, bottom: 50, left: 55 }}
+        margin={{ top: 50, right: 100, bottom: 50, left: 55 }}
         yMin={yMinValue}
         xMin={0}
         xMax={xMaxValue}

@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { SingleDataVisualization } from "./SingleDataVisualization";
 import { FormattedMessage } from "react-intl";
 import arrow_icon from '../../assets/images/btnDetail-arrow-white.svg'
-// import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { Link } from "react-router-dom";
 export const VisualizeMyData = () => {
-  const history = useHistory()
   const [analyzeButton, setAnalyzeButton] = useState({
     singleData: false,
     multiData: false,

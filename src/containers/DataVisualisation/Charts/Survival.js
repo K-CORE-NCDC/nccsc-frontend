@@ -26,9 +26,7 @@ export default function DataSurvival({
   const [pValueData, setPvalueData] = useState("");
   const [loader, setLoader] = useState(true);
   const [renderSurvival, setRenderSurvival] = useState(false);
-  const [coxNoData, setCoxNoData] = useState(true)
   const [renderNoContent, setRenderNoContent] = useState(false);
-  const [sampleCountsCard, setSampleCountsCard] = useState([]);
   const [coxTable, setCoxTable] = useState([]);
   const [watermarkCss, setWatermarkCSS] = useState("");
   const [vizType, setVizType] = useState('')
@@ -105,7 +103,6 @@ export default function DataSurvival({
           setSurvivalJson(r_)
           setRenderNoContent(false)
           setRenderSurvival(true);
-          setCoxNoData(false)
 
         } else if (d.status === 200 && "data" in d && 'survival_type' in inputState && inputState['survival_type'] === 'cox') {
           let r_ = d["data"]
@@ -113,13 +110,11 @@ export default function DataSurvival({
           setSurvivalJson(r_)
           setRenderNoContent(false)
           setRenderSurvival(true);
-          setCoxNoData(false)
         }
         else {
           setRenderNoContent(true)
           setSurvivalJson({ status: d.status })
           setRenderSurvival(false);
-          setCoxNoData(false)
         }
       })
         .catch((e) => {
@@ -174,7 +169,6 @@ export default function DataSurvival({
           </div>,
           ...htmlArray,
           ]
-          setSampleCountsCard(sampleCountsCard_);
         } else {
           if (survivalJson.pvalue !== 0) {
             setPvalueData(`P-Value : ${survivalJson.pvalue.toPrecision(3)}`);
@@ -186,9 +180,7 @@ export default function DataSurvival({
             <FormattedMessage id="Total" defaultMessage="Total" /> :{" "}
             {totalCount}
           </div>,]
-          setSampleCountsCard(sampleCountsCard_);
         }
-        // trasnferSurvivalData(sampleCountsCard_)
       }
     }
     else if (inputState['survival_type'] === "cox") {
@@ -363,8 +355,6 @@ export default function DataSurvival({
 
           {/* chart */}
           {renderSurvival && <div className='BorderstyleViz'>
-
-
 
             {survivalJson && (inputState['survival_type'] === "recurrence" || inputState['survival_type'] === "survival") && (
               <>

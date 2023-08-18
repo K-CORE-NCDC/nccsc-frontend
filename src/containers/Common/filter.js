@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 
 
 
-export default function Filter({ parentCallback, filterState, set_screen, project_id }) {
+export default function Filter({ parentCallback, filterState, project_id }) {
   const [state, setState] = useState({ html: [] });
   const [selectState, setSelectState] = useState({ 'filterCondition': 'and' });
   const [selected, setSelected] = useState("Basic/Diagnostic Information");
@@ -30,7 +30,6 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
       setSelectState({ ...filterState });
       switchButton();
     }
-    console.log('-=====')
   }, [filterState]);
 
   useEffect(() => {
@@ -47,7 +46,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
     }
   });
 
-  
+
   useEffect(() => {
     if (project_id !== undefined) {
       if (userDefinedFilter && Object.keys(userDefinedFilter).length > 0) {
@@ -67,7 +66,6 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
               }
             })
           });
-          // setFilterKeyandValues(obj_dict)
         }
       }
     }
@@ -133,7 +131,6 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
     setFilterHtml(html);
   }, [filtersUi]);
 
-  // for rendering the filter // inputs and checkboxes all html store in state
   const leftSide = (filterBoxes) => {
 
     let html = [];
@@ -176,7 +173,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
                 </div>
                 <div
                   className="Relative"
-                  style={{paddingRight:'0.5rem'}}
+                  style={{ paddingRight: '0.5rem' }}
                   onClick={(e) => checkBoxFn(e, "md_" + id + "_" + c)}
                 >
                   <input
@@ -510,7 +507,6 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
 
   const sendFilter = () => {
     drawTags(filterJson);
-    console.log('--------------11111');
     parentCallback({ filter: selectState });
   };
 
@@ -542,7 +538,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
       il.value = "";
     });
     setSelectState({ 'filterCondition': 'and' });
-    parentCallback({ filter: {}});
+    parentCallback({ filter: {} });
     if (document.getElementById('default-radio-1')) {
       document.getElementById('default-radio-1').checked = true
     }
@@ -576,26 +572,18 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
         </button>
         &nbsp;&nbsp;&nbsp;&nbsp;
         <button
-          className="FilterLabelText FilterButton" style={{backgroundColor:"#009fe2" , border:'1px solid white'}}
+          className="FilterLabelText FilterButton" style={{ backgroundColor: "#009fe2", border: '1px solid white' }}
           onClick={sendFilter}
         >
           <FormattedMessage id='Search' defaultMessage={' Search '} />
         </button>
       </div>
-      {/* <div className="m-2">
-        <button
-          className="FilterButtonClose"
-          onClick={() => set_screen(false)}
-          type="button"
-        >
-          close
-        </button>
-      </div> */}
+
       <div className="filter_sample">
         <label className="">
           <FormattedMessage id='filterCondition' defaultMessage={'Sample filter condition'} />:
         </label>
-        <div className="Radiobtns" style={{"marginTop":"5px"}}>
+        <div className="Radiobtns" style={{ "marginTop": "5px" }}>
           <div className="Flex ItemsCenter MarginLeft4">
             {filterCondition === "and" ? (
               <input

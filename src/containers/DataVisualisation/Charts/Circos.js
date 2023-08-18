@@ -10,7 +10,6 @@ import {
   CircosInformation,
   OncoImages,
   CircosTimelineTable,
-  getBreastKeys,
   getRNIDetails,
 } from "../../../actions/api_actions";
 
@@ -24,8 +23,6 @@ export default function DataCircos({
   inputData,
   screenCapture,
   setToFalseAfterScreenCapture,
-  toggle,
-  state,
 }) {
   const reference = useRef();
   const dispatch = useDispatch();
@@ -33,7 +30,7 @@ export default function DataCircos({
   const [circosJson, setCircosJson] = useState({ status: 0 })
   const [oncoImageJson, setOncoImageJson] = useState(null)
   const [circosTimelieTableData, setCircosTimelieTableData] = useState(null)
-  
+
   const reportData = useSelector(
     (state) => state.dataVisualizationReducer.rniData
   );
@@ -53,7 +50,7 @@ export default function DataCircos({
   const [tableData, setTableData] = useState([]);
   const [noGeneData, setNoGeneData] = useState(true)
   const [basicInformationData, setBasicInformationData] = useState([]);
-  let {  project_id } = useParams();
+  let { project_id } = useParams();
 
   const [isReportClicked, setIsReportClicked] = useState(false);
 
@@ -234,13 +231,13 @@ export default function DataCircos({
   const oncoImagesClickFunction = () => {
     setShowOncoImages(true);
     let returnData = OncoImages("POST", { sample_id: sampleKey })
-    returnData.then((result)=>{
+    returnData.then((result) => {
       let r_ = result.data
-      if(result.status === 200){
+      if (result.status === 200) {
         setOncoImageJson(r_)
 
       }
-      else{
+      else {
         setOncoImageJson(null)
       }
     })
@@ -250,13 +247,13 @@ export default function DataCircos({
     setShowOncoImages(false);
     setShowOncoTimelineTables(true);
     let returnData = CircosTimelineTable("POST", { sample_id: sampleKey })
-    returnData.then((result)=>{
+    returnData.then((result) => {
       let r_ = result.data
-      if(result.status === 200){
+      if (result.status === 200) {
         setCircosTimelieTableData(r_)
 
       }
-      else{
+      else {
         setCircosTimelieTableData(null)
       }
     })
@@ -264,7 +261,7 @@ export default function DataCircos({
 
   const ReportDataFunction = () => {
     setshowReportTable(true);
-    dispatch(getRNIDetails("POST", { rnid: sampleKey, 'project_id':project_id }));
+    dispatch(getRNIDetails("POST", { rnid: sampleKey, 'project_id': project_id }));
   };
 
   useEffect(() => {
@@ -326,11 +323,10 @@ export default function DataCircos({
 
       let editInputData = inputData;
       editInputData = { ...editInputData, sampleKey: sampleKey };
-      // dispatch(getBreastKeys(editInputData));
-      if(editInputData["genes"].length < 0){
+      if (editInputData["genes"].length < 0) {
         setNoGeneData(true)
       }
-      else{
+      else {
         setNoGeneData(false)
       }
       if (
@@ -341,15 +337,15 @@ export default function DataCircos({
         setLoader(true);
         setRenderCircos(false);
         let returnData = CircosInformation("POST", editInputData)
-        returnData.then((result)=>{
-          if(result.status === 200){
+        returnData.then((result) => {
+          if (result.status === 200) {
             let r_ = result.data
             r_['status'] = 200
             setCircosJson(r_)
 
           }
-          else{
-            setCircosJson({'status':204})
+          else {
+            setCircosJson({ 'status': 204 })
           }
         })
       }
@@ -363,20 +359,20 @@ export default function DataCircos({
     }
   }, [])
 
-  let takeScreenshot = async()=>{
+  let takeScreenshot = async () => {
     const element = document.getElementById('circos')
-    let imgData 
+    let imgData
     await html2canvas(element).then(canvas => {
-       imgData = canvas.toDataURL('image/jpeg',1.0);
+      imgData = canvas.toDataURL('image/jpeg', 1.0);
 
-  });
-  let link = document.createElement('a');
-  link.href = imgData;
-  link.download = 'downloaded-image.jpg';
+    });
+    let link = document.createElement('a');
+    link.href = imgData;
+    link.download = 'downloaded-image.jpg';
 
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   useEffect(() => {
@@ -430,17 +426,17 @@ export default function DataCircos({
       if (circosJson && circosJson.status !== 0) {
         setLoader(false);
         if (sampleKey !== "all") {
-          if(document.getElementById("images")){
+          if (document.getElementById("images")) {
             document.getElementById("images").classList.remove("opacity-50");
           }
-          if( document.getElementById("tables")){
+          if (document.getElementById("tables")) {
             document.getElementById("tables").classList.remove("opacity-50");
           }
         } else {
-          if(document.getElementById("images")){
+          if (document.getElementById("images")) {
             document.getElementById("images").classList.add("opacity-50");
           }
-          if( document.getElementById("tables")){
+          if (document.getElementById("tables")) {
             document.getElementById("tables").classList.add("opacity-50");
           }
         }
@@ -471,38 +467,38 @@ export default function DataCircos({
         <LoaderCmp />
       ) : (
         <div style={{ marginTop: '5%', border: '1px solid #d6d6d6', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.05)', position: 'relative', padding: '5%' }}>
-          
-            <div className="flex visualGrid">
-              <div>
-                {(
-                  <div
-                    htmlFor="samples"
-                    className="lg:text-2xl sm:text-xl xs:text-sm"
-                  >
-                    <FormattedMessage
-                      id="Cir_choose_sample"
-                      defaultMessage="Choose a Sample"
-                    />
-                    : ({samplesCount}){" "}
-                  </div>
-                )}
-                <select
-                  className="selectBox"
-                  value={sampleKey}
-                  onChange={(e) => setSampleKey(e.target.value)}
-                  name="samples"
-                  id="samples"
+
+          <div className="flex visualGrid">
+            <div>
+              {(
+                <div
+                  htmlFor="samples"
+                  className="lg:text-2xl sm:text-xl xs:text-sm"
                 >
-                  <option className="xs:text-sm sm:text-sm lg:text-xl">
-                    Select Sample
-                  </option>
-                  {sampleListElements}
-                  <option className="xs:text-sm lg:text-xl" value="all">
-                    all
-                  </option>
-                </select>
-              </div>
-              {/* <div className="element">
+                  <FormattedMessage
+                    id="Cir_choose_sample"
+                    defaultMessage="Choose a Sample"
+                  />
+                  : ({samplesCount}){" "}
+                </div>
+              )}
+              <select
+                className="selectBox"
+                value={sampleKey}
+                onChange={(e) => setSampleKey(e.target.value)}
+                name="samples"
+                id="samples"
+              >
+                <option className="xs:text-sm sm:text-sm lg:text-xl">
+                  Select Sample
+                </option>
+                {sampleListElements}
+                <option className="xs:text-sm lg:text-xl" value="all">
+                  all
+                </option>
+              </select>
+            </div>
+            {/* <div className="element">
                 <button
                   id="images"
                   className='btn btnPrimary'
@@ -537,8 +533,8 @@ export default function DataCircos({
                     />
                 </button>
               </div> */}
-            </div>
-          
+          </div>
+
           <div>
             <div>
               {renderCircos && (
@@ -556,7 +552,7 @@ export default function DataCircos({
         </div>
       )}
       <div>
-      {noGeneData && <p><FormattedMessage id="PleaseSelecttheGeneSetData" defaultMessage="Please Select the Gene Set Data" /></p>}
+        {noGeneData && <p><FormattedMessage id="PleaseSelecttheGeneSetData" defaultMessage="Please Select the Gene Set Data" /></p>}
       </div>
       {showOncoImages && (
         <PagenationTableComponent
@@ -570,8 +566,8 @@ export default function DataCircos({
           closeShowTimelineTables={closeShowTimelineTables}
         />
       )}
-       {
-          showReportTable
+      {
+        showReportTable
         &&
         <Report
           sampleKey={circosSanpleRnidListData[sampleKey]}
@@ -583,19 +579,19 @@ export default function DataCircos({
           isReportClicked={isReportClicked}
         />
 
-      }        
+      }
 
-       {
-       showReportTable
+      {
+        showReportTable
         && <PDFReport
           sampleKey={circosSanpleRnidListData[sampleKey]}
           tableColumnsData={tableColumnsData}
           tableData={tableData}
           basicInformationData={basicInformationData}
         />
-        }  
+      }
 
     </>
-    
+
   );
 }

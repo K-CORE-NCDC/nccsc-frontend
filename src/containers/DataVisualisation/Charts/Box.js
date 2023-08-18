@@ -6,7 +6,6 @@ import "../../../assets/css/style.css";
 import Multiselect from "multiselect-react-dropdown";
 import NoContentMessage from "../../Common/NoContentComponent";
 import { FormattedMessage } from "react-intl";
-import html2canvas from 'html2canvas';
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import '../../../styles/css/box.css'
@@ -34,7 +33,6 @@ export default function Box({
   const [alltabList, setAllTabList] = useState({});
   const [activeTab, setActiveTab] = useState('1')
   const [selectedType, setSelectedType] = useState('1')
-  const [btnClickNote, setBtnClickNote] = useState(false)
 
   let { project_id } = useParams();
   const tabList = useSelector(
@@ -109,9 +107,6 @@ export default function Box({
       if (tableType === "proteome" || tableType === "rna") {
         dataJson["genes"] = g;
       }
-      // else {
-      //   dataJson["genes"] = [g[0]];
-      // }
 
       if (inputState.type !== "" && inputData["genes"].length > 0) {
         setLoader(true);
@@ -127,13 +122,10 @@ export default function Box({
 
   let takeScreenshot = async () => {
     const element = document.getElementById('box2').children[0]
-    console.log('element', element)
     var xml = new XMLSerializer().serializeToString(element);
-    console.log(xml)
     var svg64 = btoa(unescape(encodeURIComponent(xml))) //for utf8: btoa(unescape(encodeURIComponent(xml)))
     var b64start = 'data:image/svg+xml;base64,';
     var image64 = b64start + svg64;
-    // var image64 = element;
     const downloadLink = document.createElement('a');
     document.body.appendChild(downloadLink);
     downloadLink.href = image64;
@@ -153,12 +145,6 @@ export default function Box({
       setToFalseAfterScreenCapture();
     }
   }, [screenCapture, watermarkCss]);
-
-  // useEffect(() => {
-  //   setTimeout(function () {
-  //     setLoader(false);
-  //   }, 1000);
-  // }, [boxJson]);
 
   useEffect(() => {
     if (boxJson) {
@@ -231,7 +217,6 @@ export default function Box({
       dataJson["view"] = viewType;
 
       setLoader(true);
-      // setActiveCmp(false)
       dispatchActionCommon(dataJson);
     }
   }
@@ -239,8 +224,6 @@ export default function Box({
   const changeType = (e, type) => {
     let c = document.getElementsByName("type");
     setTableType(type);
-    console.log('type', type);
-    // setActiveCmp(false);
     setLoader(true);
     for (var i = 0; i < c.length; i++) {
       let classList = c[i].classList;
@@ -256,22 +239,6 @@ export default function Box({
       }
       setSelectedValue([]);
       dataJson["genes"] = genes;
-      // if (type === "rna") {
-      //   dataJson["genes"] = gene_;
-
-      //   let selected = selectedValue;
-      //   if (selected.length > 0) {
-      //     selected = selected.filter((data, index) => {
-      //       return selected.indexOf(data) === index;
-      //     });
-      //   } else {
-      //     selected.push({ name: gene, id: 1 });
-      //   }
-      // } else {
-      //   setSelectedValue([]);
-      //   dataJson["genes"] = genes;
-      // }
-
       dataJson["table_type"] = type;
       dataJson["view"] = viewType;
       dispatchActionCommon(dataJson);
@@ -338,52 +305,36 @@ export default function Box({
               <ul>
                 {project_id === undefined &&
                   <li className={activeTab === '1' ? 'on' : ''}> <button onClick={e => {
-                    if (alltabList['proteome'] === null) {
-                      setBtnClickNote(true)
-                    } else {
+                    if (alltabList['proteome'] !== null) {
                       changeType(e, 'proteome')
                       setActiveTab('1')
-                      setBtnClickNote(false)
                     }
                   }} name='type' > <FormattedMessage id="Proteome" defaultMessage="Proteome" /> </button></li>
                 }
 
                 {(project_id && alltabList['proteome']) &&
                   <li className={activeTab === '1' ? 'on' : ''}> <button onClick={e => {
-                    if (alltabList['proteome'] === null) {
-                      setBtnClickNote(true)
-                    } else {
+                    if (alltabList['proteome'] !== null) {
                       changeType(e, 'proteome')
                       setActiveTab('1')
-                      setBtnClickNote(false)
                     }
                   }} name='type' > <FormattedMessage id="Proteome" defaultMessage="Proteome" /> </button></li>
                 }
 
-
-
-
-
                 {project_id === undefined &&
                   <li className={activeTab === '2' ? 'on' : ''}> <button onClick={e => {
-                    if (alltabList['proteome'] === null) {
-                      setBtnClickNote(true)
-                    } else {
+                    if (alltabList['proteome'] !== null) {
                       changeType(e, 'rna')
                       setActiveTab('2')
-                      setBtnClickNote(false)
                     }
                   }} name='type' > <FormattedMessage id="RNA" defaultMessage="RNA" /> </button></li>
                 }
 
                 {(project_id && alltabList['rna']) &&
                   <li className={activeTab === '2' ? 'on' : ''}> <button onClick={e => {
-                    if (alltabList['rna'] === null) {
-                      setBtnClickNote(true)
-                    } else {
+                    if (alltabList['rna'] !== null) {
                       changeType(e, 'rna')
                       setActiveTab('2')
-                      setBtnClickNote(false)
                     }
                   }} name='type' > <FormattedMessage id="RNA" defaultMessage="RNA" /> </button></li>
                 }
@@ -458,7 +409,7 @@ export default function Box({
       ) : (
         boxJson && (
           <>
-          <div className="boxplot_tooltip" id="box2_tooltip" style={{width:'150px' , float:'right'}}></div>
+            <div className="boxplot_tooltip" id="box2_tooltip" style={{ width: '150px', float: 'right' }}></div>
             {tableType && <p className="text_align" style={{ marginBottom: '30px' }}>{tableType === 'proteome' ? <FormattedMessage id="BoxTvNDesc" defaultMessage="Proteome expression of Tumor samples vs Normal samples" /> : <FormattedMessage id="BoxRnaDesc" defaultMessage="RNA expression of Tumor samples vs Normal samples" />}</p>}
             {showBoxPlot && (
               <BoxPlot

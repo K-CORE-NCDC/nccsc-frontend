@@ -243,7 +243,6 @@ function MultiDataTable({ updateComponentNumber }) {
         }
       }
       let projectResponse = 'project_details' in verificationResponse ? verificationResponse["project_details"] : {};
-      console.log('projectResponse', projectResponse)
       if ("id" in projectResponse) {
         setProjectId(projectResponse["id"]);
       } else {

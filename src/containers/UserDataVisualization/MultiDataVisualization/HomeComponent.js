@@ -27,7 +27,7 @@ const HomeComponent = () => {
       return false;
     }
   };
- 
+
   const breadCrumbs = {
     '/multidatavisualization/': [
       { id: 'Home', defaultMessage: 'Home', to: '/' },

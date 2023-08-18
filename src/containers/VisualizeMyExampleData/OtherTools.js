@@ -1,29 +1,22 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 export const OtherTools = () => {
   return (
-    <div className="tabContents " style={{height:'85vh'}}>
+    <div className="tabContents " style={{ height: '85vh' }}>
       <div className="dataSearchWrap">
         <div className="popularBox">
           <div className="subHeader">
             <p className="tit h5">Contents</p>
             <div className="tit contentBtns">
-              {/* <button className="btn">
-                <Link to="/tools/">
-                <FormattedMessage id="ExamplePage" defaultMessage='Example Page' />
-                </Link>
-              </button> */}
               <button className="btn">
                 <FormattedMessage id="DownloadManual" defaultMessage='Download Manual' />
-
               </button>
             </div>
           </div>
 
           <div className="contentBox">
-            <ul className="contentBox_left" style={{width:'100%'}}>
+            <ul className="contentBox_left" style={{ width: '100%' }}>
               <li className="" tabIndex="0" >
                 <p> <b>VCF to MAF: </b> &nbsp;
                   <FormattedMessage id="Example_tools_vcftomaf" defaultMessage='automatically convert VCF to MAF files (VCF file needed)' />

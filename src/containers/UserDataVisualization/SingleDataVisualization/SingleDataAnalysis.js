@@ -2,7 +2,6 @@ import { Popover, Transition } from "@headlessui/react";
 import React, {
   Fragment,
   useCallback,
-  useContext,
   useEffect,
   useRef,
   useState
@@ -19,13 +18,12 @@ import {
 } from "../../../actions/api_actions";
 import arrow_icon from '../../../assets/images/btnDetail-arrow-white.svg';
 import sample_img from '../../../assets/images/sample.webp';
-import { Context } from "../../../wrapper";
 import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
 import { Charts } from "../../DataVisualisation/Charts";
 import GeneSet from "../Components/MainComponents/GeneSet";
 
 
-export default function DataVisualization({ parentProps }) {
+export default function DataVisualization() {
   const history = useHistory();
   const elementRef = useRef(null);
   const dispatch = useDispatch();

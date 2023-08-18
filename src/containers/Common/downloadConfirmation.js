@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import config from "../../config";
-import { useSelector,useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateDownloadVisualizationPurpose } from "../../actions/api_actions";
 import { useParams } from "react-router-dom";
 import { getCookie } from "../../containers/getCookie";

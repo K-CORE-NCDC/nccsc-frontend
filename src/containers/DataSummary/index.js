@@ -1,17 +1,17 @@
-import React,{useState,useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import GenomicInfo from "./GenomicInformation";
 import ClinicalInformation from "./ClinicalInformation";
 import AdvancedInfo from './AdvanceAnalysis/'
 import {
   Link, useParams
 } from "react-router-dom";
-import {FormattedMessage} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 export default function DataSummary() {
   const elementRef = useRef(null);
   const [menuItems, setMenuItems] = useState([])
   let { tab } = useParams();
-  tab = tab?tab:"Clinical_Information";
+  tab = tab ? tab : "Clinical_Information";
 
   const toggleTab = (event) => {
     let tabsContainer = document.querySelector("#tabs");
@@ -39,14 +39,14 @@ export default function DataSummary() {
     })
   }, [tab])
 
-  const LoadChart = (type) =>{
+  const LoadChart = (type) => {
     switch (type) {
       case "Clinical_Information":
-        return <ClinicalInformation/>
+        return <ClinicalInformation />
       case "Genomic_Information":
-        return <GenomicInfo/>
+        return <GenomicInfo />
       case "Advanced_Information":
-        return <AdvancedInfo/>
+        return <AdvancedInfo />
       default:
         return ""
     }
@@ -56,9 +56,9 @@ export default function DataSummary() {
     let l = ['Clinical_Information', 'Genomic_Information', 'Advanced_Information']
     let tmp = []
     let name = {
-      "Clinical_Information":"Clinical Information",
-      "Genomic_Information":"Genomic Information",
-      "Advanced_Information":"Advanced Information"
+      "Clinical_Information": "Clinical Information",
+      "Genomic_Information": "Genomic Information",
+      "Advanced_Information": "Advanced Information"
     }
     l.forEach(element => {
       let classes = 'px-4 py-2 font-semibold rounded-t opacity-50 '
@@ -68,7 +68,7 @@ export default function DataSummary() {
       tmp.push(
         <li key={element} className={classes}>
           <Link className="capitalize" to={`/summary/${element}/`}>
-            <FormattedMessage  id ={element} defaultMessage={name[element]}/>
+            <FormattedMessage id={element} defaultMessage={name[element]} />
           </Link>
         </li>
       )
@@ -81,17 +81,17 @@ export default function DataSummary() {
     <div className="header">
       <section className="relative  items-center  bg-cover bg-center bg-white border-t justify-center">
         <nav className=" px-8 pt-2 shadow-md">
-            <ul id="tabs" className="inline-flex justify-center w-full px-1 pt-2 text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md" onClick={e => toggleTab(e)}>
-              {menuItems}
-            </ul>
+          <ul id="tabs" className="inline-flex justify-center w-full px-1 pt-2 text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md" onClick={e => toggleTab(e)}>
+            {menuItems}
+          </ul>
         </nav>
       </section>
       <section >
-      <div id="tab-contents" className='block ' ref={elementRef}>
+        <div id="tab-contents" className='block ' ref={elementRef}>
           {
             LoadChart(tab)
           }
-      </div>
+        </div>
       </section>
     </div>
   )

@@ -3,7 +3,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.css"
 import "swiper/swiper-bundle.min.css";
 import { Mousewheel, Pagination } from "swiper";
-// import "../src/styles/swiper_cus.css"
 import Introduction from "./containers/Home/Introduction";
 
 
