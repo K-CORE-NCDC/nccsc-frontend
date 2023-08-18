@@ -114,7 +114,6 @@ function ErrorMessage() {
   const verificationResponse = useSelector(
     (data) => data.homeReducer.multiFileUploadData
   );
-
   return verificationResponse && 'issue' in verificationResponse && (verificationResponse['issue'] === 'allFileColumns' || verificationResponse['issue'] === 'clinicalInforamtionFile' || verificationResponse['issue'] === 'DataIssues') &&
     <p className="h5 MultiUploadTextCenter"><FormattedMessage id="UserDataGuideMessage" defaultMessage="Red mark for invalid data." /></p>
 }
