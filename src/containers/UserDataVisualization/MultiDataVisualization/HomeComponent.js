@@ -1,20 +1,15 @@
-import React,{useEffect, useState} from "react";
-import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
-import { Link } from "react-router-dom/cjs/react-router-dom";
+import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
-import icon1 from '../../../assets/images/publicDataInfo-img01.svg'
-import icon2 from '../../../assets/images/publicDataInfo-img02.svg'
-import { useLocation,useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import { Link } from "react-router-dom/cjs/react-router-dom";
+import icon1 from '../../../assets/images/publicDataInfo-img01.svg';
+import icon2 from '../../../assets/images/publicDataInfo-img02.svg';
+import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
 
 import Draggable from 'react-draggable';
 const HomeComponent = () => {
 
   const title = { id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' }
-  let gridData = [
-    { title: 'Create Project', image: require(`../../../assets/images/Visualizations/circos.png`).default, link: `/newmultidataproject/`, description: 'Provides a visualization analysis service that can be implemented according to the uploaded user data.' },
-    { title: 'View Project', image: require(`../../../assets/images/Visualizations/circos.png`).default, link: `/multidataprojectview/`, description: 'Provides a visualization analysis service that can be implemented according to the uploaded user data.' },
-  ]
-
   const location = useLocation();
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(true);
@@ -96,7 +91,7 @@ const HomeComponent = () => {
         <div className="contentsTitle">
           <h3>
             <font>
-              <font><FormattedMessage id="MultiData" defaultMessage="Multi Data" /></font>
+              <font><FormattedMessage id="MultiData" defaultMessage="Multi Data" /></font>&nbsp;
               <span className="colorSecondary">
                 <font ><FormattedMessage id="visualization" defaultMessage="Visualization" /></font>
               </span>
@@ -105,40 +100,6 @@ const HomeComponent = () => {
         </div>
         <div className="ptn">
           <div className="auto">
-            {/* {
-              gridData  &&
-              <div className='mainContentsBox' style={{ marginTop: '50px' }}>
-                <div className="galleryList">
-                  <ul className="justify-content-center">
-                    {gridData.map((item, index) => {
-                      return <li key={index} className="listitems">
-                        <Link to={item.link}>
-                          <div className="thumb">
-                            <img src={ExampleImage} alt="img" />
-                            <div className="hvBox">
-                              <span className="">
-                                {item.title}
-                                <img src={ArrowRight} alt="img" style={{paddingTop:'5px'}}/>
-                              </span>
-                            </div>
-                          </div>
-
-                          <div className="txtBox txtBoxpadding tac Relative">
-                            <dl className="MarginTop10">
-                              <dt className="h4 Capitalize">{item.title}</dt>
-                              <dd className="p1">
-                                {item.description}
-                              </dd>
-                            </dl>
-                            <span className="icon"></span>
-                          </div>
-                        </Link>
-                      </li>
-                    })}
-                  </ul>
-                </div>
-              </div>
-            } */}
             <div className="publicDataInfo" style={{ padding: '60px 230px', marginBottom: '0px' }}>
               <ul style={{ marginTop: '-40px', gap: '40px' }}>
                 <Link to='/newmultidataproject/'>
