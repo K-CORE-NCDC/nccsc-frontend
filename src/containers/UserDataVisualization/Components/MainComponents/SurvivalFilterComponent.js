@@ -287,45 +287,31 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
                 <div className="Flex FlexDirCol ColSpan3">
 
                     <div className="Flex FlexDirRow">
-                        <h3 className="SurvivalChooseModel" style={{ margin: 'auto' }}>
+                        <h3 className="SurvivalChooseModel TextLeft">
                             <FormattedMessage id="ChooseModel" defaultMessage="Choose Model" />
                         </h3>
                     </div>
 
-                    <div className="Flex FlexDirRowSurvivalFilter Gap2">
-                        <button onClick={(e) => {
-                            survivalModelFun(e, "recurrence");
-                        }}
-                            className={
-                                survivalModel === "recurrence" ? "SurvivalSelectedCss btn btnPrimary MAuto" :
-                                    "SurvivalNonSelectedCss btn MAuto"
-                            }
-                        >
-                            Recurrence
-                        </button>
+                    <div className="m-1 tab ">
+                        <ul>
+                            <li className={survivalModel === "recurrence"?" on ":""}>
+                                <button onClick={(e) => {survivalModelFun(e, "recurrence");}}>
+                                    Recurrence
+                                </button>
+                            </li>
 
-                        <button onClick={(e) => {
-                            survivalModelFun(e, "survival");
-                        }}
-                            className={
-                                survivalModel === "survival" ? "SurvivalSelectedCss btn btnPrimary MAuto" :
-                                    "SurvivalNonSelectedCss btn MAuto"
-                            }
-                        >
-                            Survival
-                        </button>
+                            <li className={survivalModel === "survival"?" on ":""}>
+                                <button onClick={(e) => {survivalModelFun(e, "survival");}}>
+                                    Survival
+                                </button>
+                            </li>
 
-                        <button onClick={(e) => {
-                            survivalModelFun(e, "cox");
-                        }}
-                            className={
-                                survivalModel === "cox" ? "SurvivalSelectedCss btn btnPrimary MAuto" :
-                                    "SurvivalNonSelectedCss btn MAuto"
-                            }
-                        >
-                            Cox Regression
-                        </button>
-
+                            <li className={survivalModel === "cox"?" on ":""}>
+                                <button onClick={(e) => {survivalModelFun(e, "cox")}}>
+                                    Cox Regression
+                                </button>
+                            </li>
+                        </ul>
                     </div>
 
 
@@ -340,78 +326,73 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
                                 )}
 
                                 {project_id === undefined && (
-                                    <h3 className="SurvivalChooseModel">
+                                    <h3 className="SurvivalChooseModel TextLeft">
                                         <FormattedMessage id="Choose Filter group" defaultMessage="Choose Filter group" />
                                     </h3>
                                 ) && (
-                                        <div className="M1 Flex FlexDirRow JustifyContent Gap2">
-                                            <button onClick={() => {
-                                                setUserDefienedFilter("static");
-                                                setGroupFilters({});
-                                            }}
-                                                className={
-                                                    userDefienedFilter === "static" ? "SurvivalSelectedCss btn btnPrimary" :
-                                                        "SurvivalNonSelectedCss btn"
-                                                }
-                                            >
-                                                <FormattedMessage id="Static_volcano" defaultMessage="Static" />
-                                            </button>
-                                            <button onClick={() => {
-                                                setUserDefienedFilter("dynamic");
-                                                setGroupFilters({});
-                                            }}
-                                                className={
-                                                    userDefienedFilter === "dynamic" ? "SurvivalSelectedCss btn btnPrimary" :
-                                                        "SurvivalNonSelectedCss btn"
-                                                }
-                                            >
-                                                <FormattedMessage id="Dynamic_volcano" defaultMessage="Dynamic" />
-                                            </button>
+                                        <div className="m-1 tab Gap2">
+                                            <ul>
+                                                <li className={userDefienedFilter === "static" ? " on W50" :"W50"}>
+                                                    <button onClick={() => {setUserDefienedFilter("static");
+                                                        setGroupFilters({});}}>
+                                                        <FormattedMessage id="Static_volcano" defaultMessage="Static" />
+                                                    </button>
+                                                </li>
+                                                <li className={userDefienedFilter === "dynamic" ? " on W50" :"W50"}>
+                                                    <button onClick={() => {
+                                                        setUserDefienedFilter("dynamic");
+                                                        setGroupFilters({});}}
+                                                    >
+                                                        <FormattedMessage id="Dynamic_volcano" defaultMessage="Dynamic" />
+                                                    </button>
+                                                </li>
+                                            </ul>
                                         </div>
                                     )}
 
-                                <h3 className="SurvivalChooseModel">
+                                <h3 className="SurvivalChooseModel TextLeft">
                                     <FormattedMessage id="ChooseFilterType" defaultMessage="Choose Filter Type" />
                                 </h3>
-                                <div className="M1 Flex FlexDirRow JustifyContent Gap2">
-                                    <button onClick={() => setFilterTypeButton("clinical")}
-                                        id="Mutation"
-                                        name="type"
-                                        className={
-                                            filterTypeButton === "clinical" ? "SurvivalSelectedCss btn btnPrimary" :
-                                                "SurvivalNonSelectedCss btn"
-                                        }
-                                    >
-                                        <FormattedMessage id="Clinical" defaultMessage="Clinical" />
-                                    </button>
+                                <div className="m-1 tab Gap2 MarginTop2" >
+                                    <ul>
+                                        <li className={filterTypeButton === "clinical" ? "on W50" :"W50"}>
+                                            <button onClick={() => setFilterTypeButton("clinical")}
+                                                id="Mutation"
+                                                name="type">
+                                                <FormattedMessage id="Clinical" defaultMessage="Clinical" />
+                                            </button>
+                                        </li>
 
-                                    <button onClick={() => {
-                                        setFilterTypeButton("omics")
-                                        setGroupFilters({})
-                                    }}
-                                        id="Phospho"
-                                        name="type"
-                                        className={
-                                            filterTypeButton === "omics" ? "SurvivalSelectedCss btn btnPrimary" :
-                                                "SurvivalNonSelectedCss btn"
-                                        }
-                                    >
-                                        <FormattedMessage id="Omics" defaultMessage="Omics" />
-                                    </button>
+                                        <li className={
+                                                    filterTypeButton === "omics" ? "on W50" :
+                                                    "W50"
+                                            }>
+                                            <button onClick={() => {
+                                                setFilterTypeButton("omics")
+                                                setGroupFilters({})
+                                                }}
+                                                id="Phospho"
+                                                name="type"
+                                                
+                                        >
+                                            <FormattedMessage id="Omics" defaultMessage="Omics" />
+                                        </button>
+                                        </li>
+                                    </ul>
                                 </div>
 
                                 {filterTypeButton === "omics" && (
                                     <div className="M1 P1">
-                                        <h6 className="SurvivalSelectDatabase MB2 TextLeft" htmlFor="dropdown-gene">
+                                        <h6 className="MB2 TextLeft TextBase" htmlFor="dropdown-gene">
                                             <FormattedMessage id="Select Gene" defaultMessage="Select Gene" />
                                         </h6>
                                         <select id="dropdown-gene" onChange={(e) => setFilteredGene(e.target.value)}
                                             defaultValue={fileredGene}
                                             className="SurvivalSelectDatabase"
                                         >
-                                            <option defaultValue={fileredGene === ""} value=""></option>
+                                            <option className="TextBase" defaultValue={fileredGene === ""} value=""></option>
                                             {genesArray.map((gene, index) => (
-                                                <option defaultValue={fileredGene === gene} key={`${gene}-${index}`} value={gene}>
+                                                <option className="TextBase" defaultValue={fileredGene === gene} key={`${gene}-${index}`} value={gene}>
                                                     {gene}
                                                 </option>
                                             ))}
@@ -422,7 +403,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
                                 {filterTypeButton === "omics" && (
                                     <div className="M1 P1">
                                          {project_id !== undefined && !alltabList[geneDatabase] && <p className="ErrorText MB1 MultiUploadTextCenter" style={{ textTransform: "capitalize" }}>Please Upload {geneDatabase} file to use the {geneDatabase} Database</p>}
-                                        <h6 className="SurvivalSelectDatabase MB1 TextLeft" htmlFor="dropdown-database">
+                                        <h6 className=" MB1 TextLeft TextBase" htmlFor="dropdown-database">
                                             Select Database
                                         </h6>
                                         <select id="dropdown-database" onChange={(e) => ChangeGeneDataBase(e.target.value)}
@@ -430,21 +411,21 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
                                             className="SurvivalSelectDatabase"
                                         >
 
-                                            {   <option defaultValue={geneDatabase === "dna_mutation"} value="dna_mutation">
+                                            {   <option className="TextBase" defaultValue={geneDatabase === "dna_mutation"} value="dna_mutation">
                                                 DNA Mutation
                                                 </option>
                                             }
 
 
                                             {
-                                                <option defaultValue={geneDatabase === "rna"} value="rna">
+                                                <option className="TextBase" defaultValue={geneDatabase === "rna"} value="rna">
                                                     RNA Expression
                                                 </option>
                                             }
 
 
                                             {
-                                                <option defaultValue={geneDatabase === "proteome"} value="proteome">
+                                                <option className="TextBase" defaultValue={geneDatabase === "proteome"} value="proteome">
                                                 Global Proteome
                                                 </option>
                                             }
@@ -474,14 +455,14 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
                                     )}
 
                                 {filterTypeButton === "omics" && (
-                                    <div>
-                                        <div>
-                                            <button onClick={submitFitersAndFetchData} className="SubmitButtonFilter">
+                                    <div className="FilterGeneSet M1" >
+                                        <div className="P1 PY3 PX2 W50">
+                                            <button onClick={submitFitersAndFetchData} className="FilterLabelText FilterButton">
                                                 <FormattedMessage id="Submit_volcano" defaultMessage="Submit" />
                                             </button>
                                         </div>
-                                        <div>
-                                            <button className="ResetButtonFilter">
+                                        <div className="P1 PY3 PX2 W50">
+                                            <button className="FilterLabelText FilterButton">
                                                 <FormattedMessage id="Reset_volcano" defaultMessage="Reset" />
                                             </button>
                                         </div>
@@ -495,17 +476,17 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
                         <>
                             <div className={`Flex FlexDirCol border Backgroundwhite ${smallScreen ? " Flex FlexDirRow SurvivalSmallScreen"
                                 : "SurvivalSmallScreenHidden"}`}>
-                                <h3 className="SurvivalChooseModel">
+                                <h3 className="SurvivalChooseModel TextLeft">
                                     <FormattedMessage id="Choose Filter group" defaultMessage="Choose Filter group" />
                                 </h3>
 
 
-                                <div className="M1 Flex FlexDirRow JustifyContent WMax">
+                                <div className="m-1 Flex FlexDirRow JustifyContent WMax">
                                     <div className="Flex JustifyCenter">
                                         <div>
                                             {tmp.map((element, index) => (
                                                 <div className="form-check Flex MB4" key={"cox" + index}>
-                                                    <label className="form-check-label TextLeft Inline TextGray800" htmlFor={"flexCheckChecked_" + index}>
+                                                    <label className="form-check-label TextLeft Inline TextGray800 TextBase" htmlFor={"flexCheckChecked_" + index}>
                                                         <input onChange={(e) => selectCoxFiler(e)}
                                                             className="form-check-input SurvivalInputBackgroundwhite"
                                                             type="checkbox"
@@ -513,6 +494,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
                                                             id={"flexCheckChecked_" + index}
                                                             checked={coxFilter[element]}
                                                             value={element}
+                                                            style={{marginRight:'5px'}}
                                                         />
                                                         <FormattedMessage id={element} defaultMessage={element} />
                                                     </label>

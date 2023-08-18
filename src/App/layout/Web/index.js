@@ -97,8 +97,19 @@ export default function Web(props) {
 
       }
     })
+    document.body.addEventListener('click',checkPopup)
   }, [])
 
+  const checkPopup = (event) => {
+    
+    if(event.target.id === 'langBox'){
+      setShowLangMenu(true)
+    }else{
+      if(showLangMenu){
+        setShowLangMenu(false)
+      }
+    }
+  }
 
   useEffect(() => {
     if (getCookie('is_login') && getCookie('is_login') === 'True') {
@@ -406,7 +417,6 @@ export default function Web(props) {
       classes = "header on"
     }
   }
-  console.log('Current Sub-Div ID:', mainPageInSmallScreen);
 
   return (
     <>
@@ -431,7 +441,7 @@ export default function Web(props) {
                   <Link to='/login/'><FormattedMessage id="Login" defaultMessage='Login' /></Link>
                   <Link to="/findpassword/"><FormattedMessage id="FindPassword" defaultMessage='Find Password' /></Link> </>}
               <div className="language">
-                <a className="on" onClick={() => { setShowLangMenu(!showLangMenu) }}>&nbsp;</a>
+                <a id='langBox' className="on" onClick={() => { setShowLangMenu(!showLangMenu) }}>&nbsp;</a>
                 <ul style={showLangMenu ? { display: "block" } : { display: 'none' }}>
                   <li className={((context.locale === 'kr-KO') ? ' on ' : '')}>
                     <a onClick={() => { changeLang('kr-KO') }}>KOR</a>
@@ -468,7 +478,7 @@ export default function Web(props) {
                     onMouseLeave={() => {
                       setMouseEnterFlag(false)
                     }}
-                  ><a className={`${mainPageInSmallScreen !== 0 && activeClassIndex === item?.index ? 'active_menu' : ''} menu_li`} style={mainPageInSmallScreen !== 0 && activeClassIndex === item?.index ? { color: '#009fe2' } : { color: '' }}>{item?.title}</a></li>
+                  ><a className={`${((mainPageInSmallScreen !== 0 && activeClassIndex === item?.index) ||  activeClassIndex === item?.index) ? 'active_menu' : ''} menu_li`} style={((mainPageInSmallScreen !== 0 && activeClassIndex === item?.index) ||  activeClassIndex === item?.index) ? { color: '#009fe2' } : { color: '' }}>{item?.title}</a></li>
                 ))}
               </ul>
             </nav>

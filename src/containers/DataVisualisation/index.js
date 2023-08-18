@@ -907,6 +907,7 @@ export default function DataVisualization() {
   const [filterApplied, setfilterApplied] = useState(false);
   const [screenCaptureConfirmation, setScreenCaptureConfirmation] =
     useState(false);
+  const [filterPopup,setFilterPopup] = useState(false)
   const setToFalseAfterScreenCapture = (param = false) => {
     if (param === false) {
       setScreenCapture(false);
@@ -1217,10 +1218,15 @@ export default function DataVisualization() {
 
 
   useEffect(() => {
+    document.addEventListener.click = checkPopup
     return () => {
       dispatch(clearDataVisualizationState());
     };
+
   }, []);
+  const checkPopup = (event)=>{
+    console.log(event)
+  }
 
   const breadCrumbs = {
     '/visualise-multidata/': [
@@ -1232,60 +1238,6 @@ export default function DataVisualization() {
 
   return (
     <div>
-      {/* <HeaderComponent
-        title="회원가입"
-        routeName="/visualise-multidata/"
-        breadCrumbs={breadCrumbs['/visualise-multidata/']}
-        type="single"
-
-      /> */}
-
-
-
-      {/* List of Tabs and Chart */}
-      {/* style={{height:"60vh"}} */}
-      {/* <div className="gap-6" >
-
-            <section>
-              {
-                gridData && !tabName && <div className={containerStyles}>
-                  <div className={`${gridStyles} grid-rows-${numRows}`} style={{ gridTemplateRows }}>
-                    {gridData.map((item, index) => (
-                      <div key={index} className={cardStyles}>
-                        <div className="flex justify-between">
-                          <h6 className={titleStyles}>{item.title}</h6>
-                          <div className="pt-2 pr-2">
-                            <div className={buttonStyles}>
-                              <Link to={item.link}>Run Analysis</Link>
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <img src={item.image} alt="img" className={imageStyles} />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              }
-            </section>
-
-
-            <section>
-              <div
-                id="tab-contents"
-                className="block text-center"
-                ref={elementRef}>
-                {tabName && tabName !== 'home' && boolChartState && <div>{chart["viz"]}</div>}
-                {tabName && tabName !== 'home' && !boolChartState && (
-                  <div className="p-1 text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">Please select Genes</div>
-                )}
-              </div>
-            </section>
-
-
-        </div> */}
-
       <article id="subContents" className="subContents">
         <div className="contentsTitle">
           <h3>
@@ -1301,10 +1253,6 @@ export default function DataVisualization() {
         <div>
           {/* <div className="auto"> */}
           <div>
-
-
-
-
             {/* Filter and Gene Filter */}
             <div className="Flex">
 
@@ -1313,12 +1261,14 @@ export default function DataVisualization() {
   
                 {/* // JSX in your component file */}
 
-                <Popover className="Relative">
-                  {({ open }) => {
+                <Popover className="Relative"  title="ClinicalFilter">
+                  {({ filterPopup }) => {
+                    
                     return (
                       <>
-                        <div>
-                          <Popover.Button>
+                        
+                        
+                          <Popover.Button id="filterPopover">
                             <div className="GeneSetgeneSetButton">
                               <div className="flex-1">Clinical info. Re-filtering</div>
                               <div className="w-20">
@@ -1348,7 +1298,7 @@ export default function DataVisualization() {
                               {/* </div> */}
                             </Popover.Panel>
                           </Transition>
-                        </div>
+                        
                       </>
                     );
                   }}

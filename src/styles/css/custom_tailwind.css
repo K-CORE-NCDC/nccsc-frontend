@@ -256,7 +256,9 @@
 .WFull {
   width: 100%
 }
-
+.W50{
+  width:49%;
+}
 .WMax {
   width: max-content;
 }
@@ -1274,7 +1276,7 @@
   border-color: #E5E7EB;
   font-size: 1rem;
   outline: none;
-  margin-top: 0.75rem;
+  
 }
 
 @media (min-width: 1024px) {
@@ -1515,10 +1517,11 @@
   padding: 0.5rem 0.75rem;
   color: #374151;
   line-height: 1.25;
-  width: 50%;
+  width: 46%;
   border-radius: 0.25rem;
   appearance: none;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  margin:0 5px;
 }
 
 .GroupNamesFilter {
