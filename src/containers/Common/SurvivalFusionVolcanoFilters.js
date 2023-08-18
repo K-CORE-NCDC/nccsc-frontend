@@ -336,12 +336,12 @@ export const PreDefienedFilters = ({
         filterGroupsHtmlTemp.push(
           <div key="bool">
             <div className="flex flex-row JustifyCenter gap10px">
-              <h5>Group 1 : </h5>
-              <h5>Yes</h5>
+              <h5 className="TextBase MarginTop2">Group 1 : </h5>
+              <h5 className="TextBase MarginTop2">Yes</h5>
             </div>
             <div className="flex flex-row JustifyCenter gap10px">
-              <h5>Group 2 : </h5>
-              <h5>No</h5>
+              <h5 className="TextBase MarginTop2">Group 2 : </h5>
+              <h5 className="TextBase MarginTop2">No</h5>
             </div>
           </div>
         );
@@ -351,12 +351,12 @@ export const PreDefienedFilters = ({
         filterGroupsHtmlTemp.push(
           <div key="bool">
             <div className="flex flex-row JustifyCenter gap10px">
-              <h5>Group 1 : </h5>
-              <h5>Male</h5>
+              <h5 className="TextBase MarginTop2">Group 1 : </h5>
+              <h5 className="TextBase MarginTop2">Male</h5>
             </div>
             <div className="flex flex-row JustifyCenter gap10px">
               <h5 className="P4 xs:text-xl">Group 2 : </h5>
-              <h5>Female</h5>
+              <h5 className="TextBase MarginTop2">Female</h5>
             </div>
           </div>
         );
@@ -366,14 +366,14 @@ export const PreDefienedFilters = ({
         filterGroupsHtmlTemp.push(
           <div key="bool">
             <div className="flex flex-row JustifyCenter gap10px">
-              <h5>Group 1 : </h5>
-              <h5>
+              <h5 className="TextBase MarginTop2">Group 1 : </h5>
+              <h5 className="TextBase MarginTop2">
                 {preDefienedGroups1[colName][0]["label"]}
               </h5>
             </div>
             <div className="flex flex-row JustifyCenter gap10px">
-              <h5>Group 2 : </h5>
-              <h5 className="">
+              <h5 className="TextBase MarginTop2">Group 2 : </h5>
+              <h5 className="TextBase MarginTop2">
                 {preDefienedGroups1[colName][1]["label"]}
               </h5>
             </div>
@@ -384,14 +384,14 @@ export const PreDefienedFilters = ({
         filterGroupsHtmlTemp.push(
           <div key="bool">
             <div className="flex flex-row JustifyCenter gap10px">
-              <h5 className="">Group 1 : </h5>
-              <h5 className="">
+              <h5 className="TextBase MarginTop2">Group 1 : </h5>
+              <h5 className="TextBase MarginTop2">
                 {preDefienedGroups1[colName][0]["label"]}
               </h5>
             </div>
             <div className="flex flex-row JustifyCenter gap10px">
-              <h5 className="">Group 2 : </h5>
-              <h5 className="">
+              <h5 className="TextBase MarginTop2">Group 2 : </h5>
+              <h5 className="TextBase MarginTop2">
                 {preDefienedGroups1[colName][1]["label"]}
               </h5>
             </div>
@@ -432,12 +432,12 @@ export const PreDefienedFilters = ({
         filterGroupsHtmlTemp.push(
           <div key="bool">
             <div className="flex flex-row JustifyCenter gap10px">
-              <h5 className="">Group 1 : </h5>
-              <h5 className="">Yes</h5>
+              <h5 className="TextBase MarginTop2">Group 1 : </h5>
+              <h5 className="TextBase MarginTop2">Yes</h5>
             </div>
             <div className="flex flex-row JustifyCenter gap10px">
-              <h5 className="">Group 2 : </h5>
-              <h5 className="">No</h5>
+              <h5 className="TextBase MarginTop2">Group 2 : </h5>
+              <h5 className="TextBase MarginTop2">No</h5>
             </div>
           </div>
         );
@@ -453,12 +453,12 @@ export const PreDefienedFilters = ({
         filterGroupsHtmlTemp.push(
           <div key="gender">
             <div className="flex Border mb-1 flex-row JustifyCenter gap10px">
-              <h5 className="">Group 1 : </h5>
-              <h5 className="">Male</h5>
+              <h5 className="TextBase MarginTop2">Group 1 : </h5>
+              <h5 className="TextBase MarginTop2">Male</h5>
             </div>
             <div className="flex Border mb-1 flex-row JustifyCenter gap10px">
-              <h5 className="">Group 2 : </h5>
-              <h5 className="">Female</h5>
+              <h5 className="TextBase MarginTop2">Group 2 : </h5>
+              <h5 className="TextBase MarginTop2">Female</h5>
             </div>
           </div>
         );
@@ -479,8 +479,8 @@ export const PreDefienedFilters = ({
           filterGroupsHtmlTemp.push(
             <div key={"drop-user-" + index}>
               <div className="flex flex-row JustifyCenter gap10px">
-                <h5 className="">Group {indx}: </h5>
-                <h5 className="">
+                <h5 className="TextBase MarginTop2">Group {indx}: </h5>
+                <h5 className="TextBase MarginTop2">
                   {element.label}
                 </h5>
               </div>
@@ -497,9 +497,9 @@ export const PreDefienedFilters = ({
     }
   }, [selectedFilterType]);
   return (
-    <div className="M1 BGGray100">
+    <div className="M1 PY3 PX2 BGGray100">
       <div className="P1 PY3 PX2 ColSpan2">
-        <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter">
+        <div className="Block  TextBase  FontBold MB2 TextLeft">
           <FormattedMessage
             id="Clinical Filters"
             defaultMessage="Clinical Attribute"
@@ -544,18 +544,19 @@ export const PreDefienedFilters = ({
       </div>
       <div className="P1 PY3 PX2 ColSpan2">{filterGroupsHtml}</div>
       <div  className="FilterGeneSet">
-        <div>
+        <div className="P1 PY3 PX2 W50">
           <button
             onClick={submitFilters}
-            className="SubmitButtonFilter"
+            className="FilterLabelText FilterButton"
+            style={{backgroundColor:"rgb(0, 159, 226)", border: "1px solid white"}}
           >
             <FormattedMessage id="Submit_volcano" defaultMessage="Submit" />
           </button>
         </div>
-        <div>
+        <div className="P1 PY3 PX2 W50">
           <button
             onClick={resetFilters}
-            className="ResetButtonFilter"
+            className="FilterLabelText FilterButton"
           >
             <FormattedMessage id="Reset_volcano" defaultMessage="Reset" />
           </button>
@@ -567,312 +568,6 @@ export const PreDefienedFilters = ({
 };
 
 
-// export const PreDefienedFilters = ({
-//   parentCallback,
-//   groupFilters,
-// }) => {
-//   const [selectedFilterType, setSelectedFilterType] = useState({});
-//   const [filterGroupsHtml, setFilterGroupsHtml] = useState([]);
-//   const [filters, setFilters] = useState({});
-//   const [resetClicked, setResetClicked] = useState(false);
-//   const [isGroupFilterProp, setIsGroupFilterProp] = useState(false);
-//   // const [filterType,setFilterType] = useState('transcriptome')
-//   const preDefienedGroups1 = {
-//     diag_age: [
-//       { label: "21-35", from: 21, to: 35 },
-//       { label: "36-40", from: 36, to: 40 },
-//     ],
-//     bmi_vl: [
-//       { label: "18.5~24.9", from: 18.5, to: 24.9 },
-//       { label: "25-", from: 25, to: 100 },
-//     ],
-//     mena_age: [
-//       { label: "10-13", from: 10, to: 13 },
-//       { label: "14-17", from: 14, to: 17 },
-//     ],
-//     feed_drtn_mnth: [
-//       { label: "> 1 Year", from: 12, to: 24 },
-//       { label: "1year ≤", from: 1, to: 11 },
-//     ],
-//     t_category: [
-//       { label: "Tis-T2", from: "Tis", to: "T2" },
-//       { label: "T3-T4", from: "T3", to: "T4" },
-//     ],
-//     n_category: [
-//       { label: "Nx-N2", from: "Nx", to: "N2" },
-//       { label: "N3", from: "N3", to: "" },
-//     ],
-//     her2_score: [
-//       {
-//         label: "negative(0-1+)",
-//         from: "negative(0-1+)",
-//         to: "0,0~1,1+",
-//         value: "negative(0-1+)",
-//       },
-//       {
-//         label: "positive(2+-3+)",
-//         from: "positive(2+-3+)",
-//         to: "2+,3+",
-//         value: "positive(2+-3+)",
-//       },
-//     ],
-//     pr_score: [
-//       { label: "Positive", from: 0, to: 1 },
-//       { label: "Negative", from: 1, to: 2 },
-//     ],
-//     er_score: [
-//       { label: "Positive", from: 0, to: 1 },
-//       { label: "Negative", from: 1, to: 2 },
-//     ],
-//     ki67_score: [
-//       { label: "low(≤15%)", from: "0", to: "15" },
-//       { label: "intermediate, high(15%<)", from: "15", to: "100" },
-//     ],
-//     smok_yn: [
-//       { label: "No", value: "smok_yn||N" },
-//       { label: "Yes", value: "smok_yn||Y" },
-//     ],
-//   };
-
-//   const submitFilters = () => {
-//     if (Object.keys(filters).length > 0) {
-
-//       parentCallback(filters);
-//     } else {
-//       parentCallback(groupFilters);
-//     }
-//   };
-
-//   const resetFilters = () => {
-//     setSelectedFilterType({});
-//     setFilterGroupsHtml([]);
-//     setFilters({});
-//     setResetClicked(true);
-//     setIsGroupFilterProp(false);
-//   };
-
-
-//   useEffect(() => {
-//     if (groupFilters && groupFilters.type) {
-//       if (resetClicked === false) {
-//         setIsGroupFilterProp(true);
-//       }
-
-//       let colName = groupFilters["column"];
-//       let filterGroupsHtmlTemp = [];
-//       if (groupFilters.type === "boolean") {
-//         filterGroupsHtmlTemp.push(
-//           <div key="bool">
-//             <div className="flex flex-row justify-around">
-//               <h5 className="P4 xs:text-xl">Group 1 : </h5>
-//               <h5 className="P4 text-bold xs:text-xl text-blue-700">Yes</h5>
-//             </div>
-//             <div className="flex flex-row justify-around">
-//               <h5 className="P4 xs:text-xl">Group 2 : </h5>
-//               <h5 className="P4 text-bold xs:text-xl text-blue-700">No</h5>
-//             </div>
-//           </div>
-//         );
-//       }
-
-//       if (groupFilters.type === "static") {
-//         filterGroupsHtmlTemp.push(
-//           <div key="bool">
-//             <div className="flex flex-row justify-around">
-//               <h5 className="P4 xs:text-xl">Group 1 : </h5>
-//               <h5 className="P4 text-bold xs:text-xl text-blue-700">Male</h5>
-//             </div>
-//             <div className="flex flex-row justify-around">
-//               <h5 className="P4 xs:text-xl">Group 2 : </h5>
-//               <h5 className="P4 text-bold xs:text-xl text-blue-700">Female</h5>
-//             </div>
-//           </div>
-//         );
-//       }
-
-//       if (groupFilters.type === "text") {
-//         filterGroupsHtmlTemp.push(
-//           <div key="bool">
-//             <div className="flex flex-row justify-around">
-//               <h5 className="P4 xs:text-xl">Group 1 : </h5>
-//               <h5 className="P4 text-bold xs:text-xl text-blue-700">
-//                 {preDefienedGroups1[colName][0]["label"]}
-//               </h5>
-//             </div>
-//             <div className="flex flex-row justify-around">
-//               <h5 className="P4 xs:text-xl">Group 2 : </h5>
-//               <h5 className="P4 text-bold xs:text-xl text-blue-700">
-//                 {preDefienedGroups1[colName][1]["label"]}
-//               </h5>
-//             </div>
-//           </div>
-//         );
-//       }
-//       if (groupFilters.type === "number") {
-//         filterGroupsHtmlTemp.push(
-//           <div key="bool">
-//             <div className="flex flex-row justify-around">
-//               <h5 className="P4 xs:text-xl">Group 1 : </h5>
-//               <h5 className="P4 text-bold xs:text-xl text-blue-700">
-//                 {preDefienedGroups1[colName][0]["label"]}
-//               </h5>
-//             </div>
-//             <div className="flex flex-row justify-around">
-//               <h5 className="P4 xs:text-xl">Group 2 : </h5>
-//               <h5 className="P4 text-bold xs:text-xl text-blue-700">
-//                 {preDefienedGroups1[colName][1]["label"]}
-//               </h5>
-//             </div>
-//           </div>
-//         );
-//       }
-//       setFilterGroupsHtml(filterGroupsHtmlTemp);
-//     }
-//   }, [groupFilters]);
-
-//   const filterTypeDropdownSelection = (event) => {
-//     let key = event.target.value;
-//     setSelectedFilterType({
-//       details: filterChoicesCustom[parseInt(key)],
-//       index: key,
-//     });
-//   };
-
-
-//   useEffect(() => {
-//     let filterGroupsHtmlTemp = [];
-//     if (selectedFilterType && selectedFilterType.details) {
-//       if (selectedFilterType.details.type === "boolean") {
-//         setFilters({
-//           group_a: true,
-//           group_b: false,
-//           column: selectedFilterType.details.id,
-//           type: "boolean",
-//         });
-//         filterGroupsHtmlTemp.push(
-//           <div key="bool">
-//             <div className="flex flex-row">
-//               <h5 className="P4 xs:text-xl">Group 1 : </h5>
-//               <h5 className="P4 text-bold xs:text-xl text-blue-700">Yes</h5>
-//             </div>
-//             <div className="flex flex-row">
-//               <h5 className="P4 xs:text-xl">Group 2 : </h5>
-//               <h5 className="P4 text-bold xs:text-xl text-blue-700">No</h5>
-//             </div>
-//           </div>
-//         );
-//       }
-
-//       if (selectedFilterType.details.type === "static") {
-//         setFilters({
-//           group_a: "F",
-//           group_b: "M",
-//           column: selectedFilterType.details.id,
-//           type: "static",
-//         });
-//         filterGroupsHtmlTemp.push(
-//           <div key="gender">
-//             <div className="flex Border mb-1 flex-row justify-around">
-//               <h5 className="P4 xs:text-xl">Group 1 : </h5>
-//               <h5 className="P4 text-bold xs:text-xl text-blue-700">Male</h5>
-//             </div>
-//             <div className="flex Border mb-1 flex-row justify-around">
-//               <h5 className="P4 xs:text-xl">Group 2 : </h5>
-//               <h5 className="P4 text-bold xs:text-xl text-blue-700">Female</h5>
-//             </div>
-//           </div>
-//         );
-//       }
-
-//       if (
-//         selectedFilterType.details.type === "number" ||
-//         selectedFilterType.details.type === "text"
-//       ) {
-//         const colName = selectedFilterType.details.id;
-
-//         let t = preDefienedGroups1[colName];
-//         let tmp = { column: colName, type: selectedFilterType.details.type };
-
-//         for (let index = 0; index < t.length; index++) {
-//           const element = t[index];
-//           let indx = index + 1;
-//           filterGroupsHtmlTemp.push(
-//             <div key={"drop-user-" + index}>
-//               <div className="flex flex-row justify-around">
-//                 <h5 className="P4 xs:text-xl">Group {indx}: </h5>
-//                 <h5 className="P4 text-bold xs:text-xl text-blue-700">
-//                   {element.label}
-//                 </h5>
-//               </div>
-//             </div>
-//           );
-//           tmp[indx + "_from"] = element.from;
-//           tmp[indx + "_to"] = element.to;
-//         }
-
-//         setFilters(tmp);
-//       }
-
-//       setFilterGroupsHtml(filterGroupsHtmlTemp);
-//     }
-//   }, [selectedFilterType]);
-//   return (
-//     <div className="M1 BGGray100">
-//       <div className="P1 PY3 PX2 ColSpan2">
-//         <div className="Block  TextBlue700 TextLG  FontBold MB2">
-//           <FormattedMessage
-//             id="Clinical Attribute"
-//             defaultMessage="Clinical Attribute"
-//           />
-//         </div>
-//         {(resetClicked === true || isGroupFilterProp === false) && (
-//           <select
-//             onChange={filterTypeDropdownSelection}
-//             defaultValue=""
-//             className="SelectDiv"
-//           >
-//             <option value=""></option>
-//             {filterChoicesCustom.map((type, index) => (
-//               <option
-//                 className="FilterOptionText"
-//                 key={type.name}
-//                 value={index}
-//               >
-//                 {type.name}
-//               </option>
-//             ))}
-//           </select>
-//         )}
-//         {resetClicked === false && isGroupFilterProp === true && (
-//           <h6 className="Border P4">
-//             {filterChoicesCustom.forEach((e) => {
-//               if (groupFilters.column === e.id) {
-//                 return e.name;
-//               }
-//             })}
-//           </h6>
-//         )}
-//       </div>
-//       <div className="P1 PY3 PX2 ColSpan2">{filterGroupsHtml}</div>
-//       <div>
-//         <button
-//           onClick={submitFilters}
-//           className="bg-main-blue hover:bg-main-blue mb-3 lg:w-80 xs:w-28 h-20 xs:text-sm text-white ml-2 FontBold py-2 px-4 Border Border-blue-700 rounded"
-//         >
-//           <FormattedMessage id="Submit_volcano" defaultMessage="Submit" />
-//         </button>
-//       </div>
-//       <div>
-//         <button
-//           onClick={resetFilters}
-//           className="bg-white hover:bg-gray-700 mb-3 lg:w-80 h-20 xs:w-28 xs:text-sm text-black hover:text-white ml-2 FontBold py-2 px-4 Border Border-blue-700 rounded"
-//         >
-//           <FormattedMessage id="Reset_volcano" defaultMessage="Reset" />
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
 
 
 export const PreDefienedFiltersSurvival = ({
@@ -1018,12 +713,12 @@ export const PreDefienedFiltersSurvival = ({
         filterGroupsHtmlTemp.push(
           <div key="bool">
             <div className="flex flex-row">
-              <h5 className="xs:text-xl">Group 1 : </h5>
-              <h5 className="text-bold xs:text-xl text-blue-700">Yes</h5>
+              <h5 className="TextBase MarginTop2">Group 1 : </h5>
+              <h5 className="TextBase MarginTop2">Yes</h5>
             </div>
             <div className="flex flex-row">
-              <h5 className="xs:text-xl">Group 2 : </h5>
-              <h5 className="text-bold xs:text-xl text-blue-700">No</h5>
+              <h5 className="TextBase MarginTop2">Group 2 : </h5>
+              <h5 className="TextBase MarginTop2">No</h5>
             </div>
           </div>
         );
@@ -1084,12 +779,12 @@ export const PreDefienedFiltersSurvival = ({
         filterGroupsHtmlTemp.push(
           <div key="bool">
             <div className="flex flex-row JustifyCenter gap10px">
-              <h5 className="">Group 1 : </h5>
-              <h5 className="">Yes</h5>
+              <h5 className="TextBase MarginTop2">Group 1 : </h5>
+              <h5 className="TextBase MarginTop2">Yes</h5>
             </div>
             <div className="flex flex-row JustifyCenter gap10px">
-              <h5 className="">Group 2 : </h5>
-              <h5 className="">No</h5>
+              <h5 className="TextBase MarginTop2">Group 2 : </h5>
+              <h5 className="TextBase MarginTop2">No</h5>
             </div>
           </div>
         );
@@ -1105,12 +800,12 @@ export const PreDefienedFiltersSurvival = ({
         filterGroupsHtmlTemp.push(
           <div key="gender">
             <div className="flex Border mb-1 flex-row JustifyCenter gap10px">
-              <h5 className="">Group 1 : </h5>
-              <h5 className="">Male</h5>
+              <h5 className="TextBase MarginTop2">Group 1 : </h5>
+              <h5 className="TextBase MarginTop2">Male</h5>
             </div>
             <div className="flex Border mb-1 flex-row JustifyCenter gap10px">
-              <h5 className="">Group 2 : </h5>
-              <h5 className="">Female</h5>
+              <h5 className="TextBase MarginTop2">Group 2 : </h5>
+              <h5 className="TextBase MarginTop2">Female</h5>
             </div>
           </div>
         );
@@ -1138,7 +833,7 @@ export const PreDefienedFiltersSurvival = ({
             {preDefienedGroups1[colName].map((element, index) => (
               <div className="TextLG" key={`${element.label}-${index}-grp-a`}>
                 <div className="flex flex-row JustifyCenter gap10px">
-                  <h5 className="">
+                  <h5 className="TextBase MarginTop2">
                     Group {index + 1} : {element.label}
                   </h5>
                 </div>
@@ -1153,9 +848,9 @@ export const PreDefienedFiltersSurvival = ({
   }, [selectedFilterType]);
 
   return (
-    <div className="M1 BGGray100">
+    <div className="m-1 PY3 PX2 BGGray100">
       <div className="P1 PY3 PX2 ColSpan2">
-        <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter">
+        <div className="Block  TextBlue700 TextLG  FontBold MB2 TextLeft">
           <FormattedMessage
             id="Clinical Filters"
             defaultMessage="Clinical Attribute"
@@ -1170,12 +865,12 @@ export const PreDefienedFiltersSurvival = ({
             <option value=""></option>
 
             {Englishlanguage && filterChoicesCustom.map((type, index) => (
-              <option className="TextLG" key={type.name} value={index}>
+              <option className="TextBase" key={type.name} value={index}>
                 {type.name}
               </option>
             ))}
             {koreanlanguage && filterChoicesCustomKorean.map((type, index) => (
-              <option className="TextLG" key={type.name} value={index}>
+              <option className="TextBase" key={type.name} value={index}>
                 {type.name}
               </option>
             ))}
@@ -1197,24 +892,27 @@ export const PreDefienedFiltersSurvival = ({
         )}
       </div>
       <div className="P1 PY3 PX2 ColSpan2">{filterGroupsHtml}</div>
-      <div>
-        <button
-          onClick={() => submitFilters()}
-          className="SubmitButtonFilter"
-        >
-          <FormattedMessage
-            id="Submit_volcano"
-            defaultMessage="Submit"
-          />
-        </button>
-      </div>
-      <div>
-        <button
-          onClick={() => resetFilters()}
-          className="ResetButtonFilter"
-        >
-          <FormattedMessage id="Reset_volcano" defaultMessage="Reset" />
-        </button>
+      <div className="FilterGeneSet">
+        <div className="P1 PY3 PX2 W50">
+          <button
+            onClick={() => submitFilters()}
+            className="FilterLabelText FilterButton"
+            style={{backgroundColor: "rgb(0, 159, 226)", border: "1px solid white"}}
+          >
+            <FormattedMessage
+              id="Submit_volcano"
+              defaultMessage="Submit"
+            />
+          </button>
+        </div>
+        <div className="P1 PY3 PX2 W50">
+          <button
+            onClick={() => resetFilters()}
+            className="FilterLabelText FilterButton"
+          >
+            <FormattedMessage id="Reset_volcano" defaultMessage="Reset" />
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -1788,7 +1486,7 @@ export const GroupFilters = ({
           valsArray.push(
             <div key={`${i}-text-${Math.random()}`} className="MarginBottom4">
               <div>
-                <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
+                <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
                   {`Group ${i}`}
                 </div>
                 <div>
@@ -1809,7 +1507,7 @@ export const GroupFilters = ({
           valsArray.push(
             <div key={`number-${i}${Math.random()}`} className="MarginBottom4">
               <div>
-                <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
+                <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
                   {`Group ${i}`}
                 </div>
                 <div>
@@ -1861,7 +1559,7 @@ export const GroupFilters = ({
           <div key={compCase} className="MarginBottom4">
             {["A Group", "B Group"].map((e, index) => (
               <div key={index} className="Border MarginTop4 P1">
-                <div key={e} className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="yes">
+                <div key={e} className="Block  TextBlue700 TextLG  FontBold MB2 TextLeft" htmlFor="yes">
                   {e}
                 </div>
                 <h1 id="yes" className="MultiUploadTextCenter MarginTop2">
@@ -1878,7 +1576,7 @@ export const GroupFilters = ({
             <div key={`${compCase}-${Math.random()}`}>
               <div key={`${compCase}-1${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
+                  <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
                     Group 1
                   </div>
                   <div>
@@ -1915,7 +1613,7 @@ export const GroupFilters = ({
               </div>
               <div key={`${compCase}-2${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
+                  <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
                     Group 2
                   </div>
                   <div>
@@ -1960,7 +1658,7 @@ export const GroupFilters = ({
               className="MarginBottom4"
             >
               <div>
-                <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
+                <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
                   {`Group ${groupsCounter}`}
                 </div>
                 <div>
@@ -1993,7 +1691,7 @@ export const GroupFilters = ({
             <div key={`${compCase}--${Math.random()}`}>
               <div key={`${compCase}-1-${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
+                  <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
                     Group 1
                   </div>
                   <div>
@@ -2010,7 +1708,7 @@ export const GroupFilters = ({
 
               <div key={`${compCase}-2-${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
+                  <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
                     Group 2
                   </div>
                   <div>
@@ -2033,7 +1731,7 @@ export const GroupFilters = ({
               className="MarginBottom4"
             >
               <div>
-                <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
+                <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
                   {`Group ${groupsCounter}`}
                 </div>
                 <div>
@@ -2595,9 +2293,9 @@ export const GroupFilters = ({
   };
 
   return (
-    <div className="M1 BGGray100">
+    <div className="m-1 PY3 PX2  BGGray100">
       <div className="P1 PY3 PX2 ColSpan2">
-        <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter">
+        <div className="Block  TextBlue700 TextLG  FontBold MB2 TextLeft">
           <FormattedMessage
             id="Clinical Filters"
             defaultMessage="Clinical Attribute"
@@ -2623,7 +2321,7 @@ export const GroupFilters = ({
         </select>
       </div>
       {userGivenInputValues['type'] === 'number' &&
-        <p className=" TextBase MarginLeft6">Max and Min Values are based on Clinincal Information File</p>
+        <p className="P1 PY3 PX2 TextBase TextLeft">Max and Min Values are based on Clinincal Information File</p>
       }
       {showAddGroupButton && (
         <div onClick={AppendNewGroup} className="P1 PY3 PX2 ColSpan2">
@@ -2636,30 +2334,33 @@ export const GroupFilters = ({
       <div className="P1 PY3 PX2 ColSpan2" style={{ overflowX: "auto" }}>
         {filterInputs}
       </div>
-
-      {filterSelected && (
-        <div>
-          <button
-            onClick={submitFilters}
-            className="SubmitButtonFilter"
-          >
-            <FormattedMessage id="Submit_volcano" defaultMessage="Submit" />
-          </button>
-        </div>
-      )}
-      {filterSelected && (
-        <div>
-          <button
-            onClick={resetFilters}
-            className="ResetButtonFilter"
-          >
-            <FormattedMessage
-              id="Reset_volcano"
-              defaultMessage="Reset"
-            />
-          </button>
-        </div>
-      )}
+      <div className="FilterGeneSet">
+        {filterSelected && (
+          <div className="P1 PY3 PX2 W50">
+            <button
+              onClick={submitFilters}
+              className="FilterLabelText FilterButton"
+              style={{backgroundColor:"rgb(0, 159, 226)", border: "1px solid white"}}
+            >
+              <FormattedMessage id="Submit_volcano" defaultMessage="Submit" />
+            </button>
+          </div>
+        )}
+        {filterSelected && (
+          <div className="P1 PY3 PX2 W50">
+            <button
+              onClick={resetFilters}
+              className="FilterLabelText FilterButton"
+            >
+              <FormattedMessage
+                id="Reset_volcano"
+                defaultMessage="Reset"
+              />
+            </button>
+          </div>
+          
+        )}
+      </div>
     </div>
   );
 };
@@ -3151,7 +2852,7 @@ export const UserDefinedGroupFilters = ({
           valsArray.push(
             <div key={`${i}-text-${Math.random()}`} className="MarginBottom4">
               <div>
-                <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
+                <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
                   {`Group ${i}`}
                 </div>
                 <div>
@@ -3172,7 +2873,7 @@ export const UserDefinedGroupFilters = ({
           valsArray.push(
             <div key={`number-${i}${Math.random()}`} className="MarginBottom4">
               <div>
-                <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
+                <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
                   {`Group ${i}`}
                 </div>
                 <div>
@@ -3225,7 +2926,7 @@ export const UserDefinedGroupFilters = ({
           <div key={compCase} className="MarginBottom4">
             {["A Group", "B Group"].map((e, index) => (
               <div key={e} className="Border MarginTop4 P1">
-                <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="yes">
+                <div className="Block  TextBlue700 TextLG  FontBold MB2 TextLeft" htmlFor="yes">
                   {e}
                 </div>
                 <h1 id="yes" className="MultiUploadTextCenter MarginTop2">
@@ -3242,7 +2943,7 @@ export const UserDefinedGroupFilters = ({
             <React.Fragment key={`${compCase}-${Math.random()}`}>
               <div key={`${compCase}-1${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
+                  <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
                     Group 1
                   </div>
                   <div>
@@ -3279,7 +2980,7 @@ export const UserDefinedGroupFilters = ({
               </div>
               <div key={`${compCase}-2${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
+                  <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
                     Group 2
                   </div>
                   <div>
@@ -3323,7 +3024,7 @@ export const UserDefinedGroupFilters = ({
               className="MarginBottom4"
             >
               <div>
-                <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
+                <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
                   {`Group ${groupsCounter}`}
                 </div>
                 <div>
@@ -3356,7 +3057,7 @@ export const UserDefinedGroupFilters = ({
             <>
               <div key={`${compCase}-1-${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
+                  <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
                     Group 1
                   </div>
                   <div>
@@ -3372,7 +3073,7 @@ export const UserDefinedGroupFilters = ({
               </div>
               <div key={`${compCase}-2-${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
+                  <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
                     Group 2
                   </div>
                   <div>
@@ -3395,7 +3096,7 @@ export const UserDefinedGroupFilters = ({
               className="MarginBottom4"
             >
               <div>
-                <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter" htmlFor="username">
+                <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
                   {`Group ${groupsCounter}`}
                 </div>
                 <div>
@@ -3922,9 +3623,9 @@ export const UserDefinedGroupFilters = ({
   };
 
   return (
-    <div className="M1 BGGray100">
+    <div className="m-1 PY3 PX2 BGGray100">
       <div className="P1 PY3 PX2 ColSpan2">
-        <div className="Block  TextBlue700 TextLG  FontBold MB2 MultiUploadTextCenter">
+        <div className="Block  TextBlue700 TextLG  FontBold MB2 TextLeft">
           <FormattedMessage
             id="Clinical Filters"
             defaultMessage="Clinical Attribute"
@@ -3951,7 +3652,7 @@ export const UserDefinedGroupFilters = ({
         </select>
       </div>
       {userGivenInputValues['type'] === 'number' &&
-        <p className=" TextBase MarginLeft6">Max and Min Values are based on Clinincal Information File</p>
+        <p className="P1 PY3 PX2 TextBase TextLeft">Max and Min Values are based on Clinincal Information File</p>
       }
 
       {showAddGroupButton && (
@@ -3966,10 +3667,11 @@ export const UserDefinedGroupFilters = ({
       </div>
       {filterSelected && (
         <div className="FilterGeneSet">
-          <div>
+          <div className="P1 PY3 PX2 W50">
             <button
               onClick={submitFilters}
-              className="SubmitButtonFilter"
+              className="FilterLabelText FilterButton"
+              style = {{backgroundColor:"rgb(0, 159, 226)", border: "1px solid white"}}
             >
               <FormattedMessage
                 id="Submit_volcano"
@@ -3977,10 +3679,10 @@ export const UserDefinedGroupFilters = ({
               />
             </button>
           </div>
-          <div>
+          <div className="P1 PY3 PX2 W50">
             <button
               onClick={resetFilters}
-              className="ResetButtonFilter"
+              className="FilterLabelText FilterButton"
             >
               <FormattedMessage
                 id="Reset_volcano"

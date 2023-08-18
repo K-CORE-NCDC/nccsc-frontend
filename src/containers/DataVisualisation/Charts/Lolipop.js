@@ -230,7 +230,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
               enst_id?.push(data[i]['annotation_transcript'])
 
             } else if (tableType === "Phospho") {
-              let site_sample = data[i]['site'].split(' ')
+              let site_sample = data[i]['site']?.split(' ')
               let regex = /\D/g;
               for (var k = 0; k < site_sample.length; k++) {
                 let phospho_num = site_sample[k].replace(regex, "");
@@ -364,7 +364,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
             }
             tmp.push(
               <div className='p-3' key={key}>
-                <span style={{ 'backgroundColor': colors[name] }} className="inline-flex items-center justify-center px-3 mr-3 pb-1 lg:text-md sm:text-xl font-bold leading-none text-white rounded-full">
+                <span style={{ 'backgroundColor': colors[name] }} className="data_bubbles">
                   {count}
                 </span>
                 <span style={{ 'color': colors[key] }}>
@@ -599,8 +599,8 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                     </div>
                     <div className='chart_dataBox'>
                       <div className="">
-                        {tableType === "Mutation" && <h5 className=""> <FormattedMessage id="SomanticMutationFrequency" defaultMessage="Somatic Mutation Frequency: " />{percentage ? percentage : ""}<FormattedMessage id="SomanticMutationmutationsamplenumber/totalselectedsamplenumber(%)Frequency" defaultMessage="%(mutation sample number/total selected sample number(%))" /></h5>}
-                        {tableType !== "Mutation" && <h5 className=""> <FormattedMessage id="PhosphorylationFrequency" defaultMessage="Phosphorylation Frequency: " />{percentage ? percentage : ""}<FormattedMessage id="Phosphorylationsamplenumber/totalselectedsamplenumber(%)" defaultMessage="%(Phosphorylation sample number/total selected sample number(%))" /></h5>}
+                        {tableType === "Mutation" && <h5 className="" style={{fontSize:'1rem'}}> <FormattedMessage id="SomanticMutationFrequency" defaultMessage="Somatic Mutation Frequency: " />{percentage ? percentage : ""}<FormattedMessage id="SomanticMutationmutationsamplenumber/totalselectedsamplenumber(%)Frequency" defaultMessage="%(mutation sample number/total selected sample number(%))" /></h5>}
+                        {tableType !== "Mutation" && <h5 className="" style={{fontSize:'1rem'}}> <FormattedMessage id="PhosphorylationFrequency" defaultMessage="Phosphorylation Frequency: " />{percentage ? percentage : ""}<FormattedMessage id="Phosphorylationsamplenumber/totalselectedsamplenumber(%)" defaultMessage="%(Phosphorylation sample number/total selected sample number(%))" /></h5>}
                       </div>
                       <div className='mutation_labels'>
                         {mutationLabel}

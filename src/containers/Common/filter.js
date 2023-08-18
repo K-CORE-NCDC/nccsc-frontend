@@ -30,6 +30,7 @@ export default function Filter({ parentCallback, filterState, set_screen, projec
       setSelectState({ ...filterState });
       switchButton();
     }
+    console.log('-=====')
   }, [filterState]);
 
   useEffect(() => {

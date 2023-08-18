@@ -1465,8 +1465,11 @@
 
 .chart_dataBox {
   background-color: lavender;
-  padding: 3%;
+  padding: 1%;
   margin-top: 3%;
+  text-align: start;
+  padding-left: 30px;
+  padding-bottom: 30px;
 }
 
 .chart_box {

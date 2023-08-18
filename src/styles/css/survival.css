@@ -102,9 +102,10 @@
 
 
 .SurvivalChooseModel {
-    padding: 1rem;
     margin-left: 0.25rem;
-    color:black;;
+    color:black;
+    margin:0rem 1rem;
+
 }
 
 .SurvivalSampleCountCard {

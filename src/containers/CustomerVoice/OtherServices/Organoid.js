@@ -60,7 +60,7 @@ function Organoid() {
                     <li>
                       <ul>
                         <li className="text165rem lineHeightInitial">
-                          <ul className="">
+                          <ul className="" style={{lineHeight:'30px' , fontSize:'16px'}}>
                             <li className="m-8 text165rem lineHeightInitial MarginBottom4">
                               - 2020년 6월부터, 임상검체의 접근성, 암종별 오가노이드
                               제작 기술, 제작비용, 시간 등 개별적 암 오가노이드 연구의
@@ -119,7 +119,7 @@ function Organoid() {
                           <img src={organoid04} alt="organoid" width="150"></img>
                         </div>
 
-                        <div style={{ marginLeft: "10%" }}>
+                        <div style={{ marginLeft: "10%" , lineHeight:'30px' , fontSize:'16px' }}>
                           <ul className="mt-8 ml-8 ">
                             <li className="mb-4">1) 동결바이얼</li>
                             <li className="ml-12 mb-4">- 드라이아이스 상태의 1 바이얼 (106 cells/vial)</li>
@@ -138,7 +138,7 @@ function Organoid() {
                           ></img>
                         </div>
 
-                        <div className="" style={{ marginLeft: "10%" }}>
+                        <div className="" style={{ marginLeft: "10%" , lineHeight:'30px', fontSize:'16px' }}>
                           <ul className="mt-8 ml-8">
                             <li className="mb-4">2) 배양바이얼</li>
                             <li className="ml-12 mb-4">- matrigel 배양상태의 오가노이드 1 바이얼 (상온)</li>
@@ -154,7 +154,7 @@ function Organoid() {
                       <h1 className="m-5 text-3xl font-bold my-5 mt-36 ">{" "}오가노이드 연계 데이터 제공</h1>
                     </div>
 
-                    <ul className="M4">
+                    <ul className="M4" style={{fontSize:'16px'}}>
                       <li className="m-8 text165rem lineHeightInitial MarginTop4">- 기본정보: 연구조건에 부합하는 검체자원 검색을 위한 온라인 공개정보</li>
                       <li className="m-8 text165rem lineHeightInitial MarginTop4 MarginBottom5">
                         - 상세정보: 공동연구 및 임상전문가 협력 연구를 통해서만 요청가능한
@@ -232,7 +232,7 @@ function Organoid() {
                       <h1 className="m-5 text-3xl font-bold my-5 mt-24">
                         오가노이드 연구 관련 특화서비스 제공
                       </h1>
-                      <ul className="M4" >
+                      <ul className="M4" style={{fontSize:'15px'}}>
                         <li className="m-8 text165rem lineHeightInitial">1. 종사자 대상 교육 - 오가노이드 연구 초심자 혹은 경력자를대상으로 한 배양 이론 및 관련기법 교육</li>
                         <li className="m-8 text165rem lineHeightInitial">2. 연구 디자인 컨설팅 연구 디자인 및 결과의 임상적 의의 해석 등오가노이드 제공 전/후 전문가 그룹과의 자문/협력 제공 오가노이드제공 신청 단계에서 특화 서비스 항목으로 추가 신청</li>
                         <li className="m-8 text165rem lineHeightInitial">3. STR analysis</li>
@@ -258,7 +258,7 @@ function Organoid() {
                   <li className="m-12">
                     <h1 className="m-5 text-3xl font-bold my-5 ">신청자 구비서류</h1>
 
-                    <ul style={{ marginTop: '10px' }}>
+                    <ul style={{ marginTop: '10px' , fontSize:'16px' }}>
                       <li>
                         <div className="container flex justify-items-start m-8 text165rem lineHeightInitial">
                           <div>
@@ -359,32 +359,14 @@ function Organoid() {
                     <tr className=" border border-black bg-gray-100">
                       <td className=" border border-black m-5 p-7 MultiUploadTextCenter" style={{ borderRightStyle: 'groove' }}>특화서비스</td>
                       <td className="">
-                        <div style={{ display: 'flex', flexDirection: 'row', gap: '36%', margin: '20px 0px 20px 20px' }} >
+                        <div style={{ display: 'flex', flexDirection: 'row', margin: '20px 0px 20px 20px' }} >
                           <p>◦교육</p>
-                          <p>◦ 연구컨설팅 </p>
-                          <p>◦ STR analysis</p>
+                          <p style={{marginLeft:'36%'}}>◦ 연구컨설팅 </p>
+                          <p style={{marginLeft:'30%'}}>◦ STR analysis</p>
                         </div>
 
                       </td>
                     </tr>
-                    {/* <tr className=" border border-black">
-                      <td className=" border border-black m-5 p-7 MultiUploadTextCenter">심화검색</td>
-                      <td className="">
-                        <p>◦면역병리</p>
-                        <p>◦ 조직병리</p>
-                        <p>◦치료반응성</p>
-                        <p>◦ 추적관찰</p>
-                        <p>◦ 오믹스정보</p>
-                      </td>
-                    </tr>
-                    <tr className=" border border-black bg-gray-100">
-                      <td className=" border border-black m-5 p-7 MultiUploadTextCenter">특화서비스</td>
-                      <td className="">
-                        <p>◦교육</p>
-                        <p>◦ 연구컨설팅 </p>
-                        <p>◦ STR analysis</p>
-                      </td>
-                    </tr> */}
                   </tbody>
                 </table>
               </div>
@@ -392,7 +374,7 @@ function Organoid() {
               <div>
                 <h1 className="m-12 text-3xl font-bold my-12 mt-24" style={{ margin: '3% 3% 3% 0px' }}>검색 및 신청은 서류 작성 후 이메일 사전신청</h1>
                 <h1 className="m-12 text-3xl font-bold my-8 mt-24" style={{ marginBottom: '3% ' }}>문의</h1>
-                <div className="" style={{ border: '1px solid #ddd' }}>
+                <div className="" style={{ border: '1px solid #ddd' , fontSize:'16px' }}>
                   <div style={{ display: 'flex', margin: '3%', justifyContent: 'space-between' }}>
                     <p>공선영</p>
                     <p>ksy@ncc.re.kr </p>

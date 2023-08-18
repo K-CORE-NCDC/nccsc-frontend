@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { NoticeDetail } from '../../actions/api_actions'
 import config from '../../config';
 import Draggable from 'react-draggable';
+import { FormattedMessage } from 'react-intl';
 
 function Popup({ toggleModal }) {
 
@@ -91,7 +92,7 @@ function Popup({ toggleModal }) {
         >
           <div className="mainPopup">
             <div className="popupHeader">
-              <h3 className='TextAlignCenter'>Notice Popup</h3>
+              <h3 className='TextAlignCenter'><FormattedMessage id='NoticePopup' defaultMessage="Notice Popup" /></h3>
               <span className="material-icons mainPopupClose" id="mainPopupClose" onClick={closeModal}>
                 close
               </span>
@@ -104,9 +105,10 @@ function Popup({ toggleModal }) {
                 type="button"
                 onClick={changeDay}
               >
-                Remind after 24 hrs
+                <FormattedMessage id='RemindAfter24hrs' defaultMessage="Remind after 24 hrs" />
+               
               </button>
-              <button className="mainPopupClose" onClick={closeModal}>close </button>
+              <button className="mainPopupClose" onClick={closeModal}> <FormattedMessage id='Close' defaultMessage="Close" /> </button>
             </div>
           </div>
         </div>

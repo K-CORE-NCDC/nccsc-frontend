@@ -16,7 +16,7 @@
   "DataSummary": "데이터요약",
   "DataVisualization": "데이터시각화",
   "MyDataVisualization": "사용자 데이터 분석",
-  "ExampleVisualization": "예시 시각화",
+  "ExampleVisualization": "단일 데이터 예제 시각화",
   "VisualizeExample": "시각화예제",
   "Data": "데이터",
   "VisualizeMyData": "내 데이터시각화",
@@ -252,6 +252,7 @@
   "Tools": "분석 도구",
   "OtherServices": "기타 서비스",
   "Organoid": "오가노이드 서비스",
+  "Organoid2":" 오가노이드 서비스 안내",
   "RelatedSites": "관련 사이트",
   "Reset": "초기화",
   "ResetAll": "모두 초기화",
@@ -461,7 +462,7 @@
   "clinicalInformationGuidep2": "Survival plot을 그리기 위해선 Clinical information 파일에 [rlps_yn], [rlps_cnfr_drtn], [death_yn], [death_cnfr_drtn] 4개의 열이 필수적으로 구성되어 합니다. Recurrence plot은 [rlps_yn], [rlps_cnfr_drtn] 그리고 Survival plot은 [death_yn], [death_cnfr_drtn] 열이 필요합니다.",
   "clinicalInformationGuideinnerp1": "rlps_yn : 재발 여부 (TRUE / FALSE)",
   "clinicalInformationGuideinnerp2": "rlps_cnfr_drtn : 재발되는데 걸린 시간 (numeric data)",
-  "clinicalInformationGuideinnerp3": "rlps_yn : 재발 여부 (TRUE / FALSE)death_yn : 사망 여부 (TRUE / FALSE)",
+  "clinicalInformationGuideinnerp3": "death_yn : 사망 여부 (TRUE / FALSE)",
   "clinicalInformationGuideinnerp4": "death_cnfr_drtn : 사망까지 걸린 시간 (numeric data)",
   "DNAMutationGuideP1": "각 열 구성은 예시 파일의 형식과 똑같이 맞춰 주시면 됩니다.",
   "DNAMutationGuideP2": "“None” 값은 비워 두면 됩니다.",
@@ -479,6 +480,18 @@
   "BoxRnaDesc":"암과 정생 샘플의 RNA 발현",
   "Admin":"관리자",
   "ViewProjectUploadGuidepopUp1":"생성 가능한 프로젝트는 총 5 개입니다.",
-  "ViewProjectUploadGuidepopUp2":"프로젝트마다 확인 가능한 기간은 생성일로부터 2주입니다. 이후 해당 프로젝트는 삭제됩니다."
+  "ViewProjectUploadGuidepopUp2":"프로젝트마다 확인 가능한 기간은 생성일로부터 2주입니다. 이후 해당 프로젝트는 삭제됩니다.",
+  "NoticePopup":"공지사항",
+  "RemindAfter24hrs":"오늘 하루 보지 않기",
+  "Number":"번호",
+  "VisualizationColumn":"관리",
+  "clinicalInformation":"임상정보",
+  "SampleFileDownload":"예시 파일 다운로드",
+  "Click on the link to download the sample file Download":"클릭하여 예시 파일을 다운로드",
+  "Download":"다운로드",
+  "ClickToZoomIn":"클릭하여 확대 보기",
+  "EnterYourGenes":"유전자 이름 입력"
+
+
   
 }
