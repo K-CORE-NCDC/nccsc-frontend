@@ -114,7 +114,7 @@ function ErrorMessage(){
     (data) => data.homeReducer.singleFileUploadData
   );
 
-  return verificationResponse && 'issue' in verificationResponse &&   <p className="h5 MultiUploadTextCenter"><FormattedMessage id="UserDataGuideMessage" defaultMessage="Red mark for invalid data." /></p>
+  return <p className="h5 MultiUploadTextCenter"><FormattedMessage id="UserDataGuideMessage" defaultMessage="Red mark for invalid data." /></p>
 }
 
 function SingleDataTable({ updateComponentNumber }) {

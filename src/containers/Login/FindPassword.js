@@ -116,7 +116,7 @@ function FindPassword() {
       <div className="contentsTitle">
         <div className="auto">
           <h3 className="colorSecondary">
-            <span className="colorPrimary"><FormattedMessage id='HeadPassword' defaultMessage="Find" /></span>
+            <span className="colorPrimary"><FormattedMessage id='HeadPassword' defaultMessage="Find" />&nbsp;</span> 
             <FormattedMessage id='HeadID' defaultMessage="Password" />
           </h3>
         </div>

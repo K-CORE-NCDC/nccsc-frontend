@@ -385,7 +385,7 @@ function SankeyIndex({ selectedGene, variants, allVariants }) {
         {
           name: "Disease",
           selector: (row) => {
-            return row.dbsnp_rs;
+            return row.diseasename;
           },
           sortable: true,
           style: {

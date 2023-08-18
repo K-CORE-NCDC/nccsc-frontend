@@ -372,7 +372,7 @@ export default function DataVisualization({ parentProps }) {
       [
         { id: 'Home', defaultMessage: 'Home', to: '/' },
         { id: `VisualizeExampleData`, defaultMessage: `Visualize Example Data`, to: `/home/visualizeMyExampleData/` },
-        { id: 'ExampleVisualization', defaultMessage: `Single Data Example Visualization`, to: `/visualizesingle-exampledata/home/` },
+        { id: 'SingleDataVisualization', defaultMessage: `Single Data Visualization`, to: `/visualizesingle-exampledata/home/` },
         { id: tab !== 'home' ? tab : 'Null', defaultMessage: tab !== 'home' ? tab : 'Null', to: `/visualise-singledata/${tabName}/` }
       ],
 

@@ -101,7 +101,7 @@ function FindID() {
       <div className="contentsTitle">
         <div className="auto">
           <h3 className="colorSecondary">
-            <span className="colorPrimary"><FormattedMessage id='HeadFind' defaultMessage="Find" /></span>
+            <span className="colorPrimary"><FormattedMessage id='HeadFind' defaultMessage="Find" />&nbsp;</span>
             <FormattedMessage id='HeadID' defaultMessage="ID" />
           </h3>
         </div>
