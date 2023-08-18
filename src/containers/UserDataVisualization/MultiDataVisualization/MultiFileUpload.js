@@ -23,7 +23,7 @@ function Modal({ showModal, toggleModal, fileName }) {
               <div className="Toolmodal-dialog">
                 {/*header*/}
                 <div className="Toolmodal-header">
-                  <h3 className="Toolmodal-title">Sample File Download</h3>
+                  <h5 className="Toolmodal-title" style={{ fontSize: '20px' }}> <FormattedMessage id="SampleFileDownload" defaultMessage='Sample File Download.' /></h5>
                   <button
                     className="Toolmodal-close-btn"
                     onClick={() => toggleModal(false, '')}
@@ -32,36 +32,17 @@ function Modal({ showModal, toggleModal, fileName }) {
                   </button>
                 </div>
                 {/*body*/}
-                <img src={fileNameImage} alt="ExampleFileImage" style={{ margin: "0px 20px 0px 20px" }} />
+                <div style={{border:'1px solid black' , objectFit:'contain' , margin:'0px 10px 0px 15px'}}>
+                <img src={fileNameImage} alt="ExampleFileImage" style={{padding:'5px 10px 5px 10px'}} /></div>
                 <div className="Toolmodal-body">
                   <div className="Toolmodal-text">
                     <DataOfFiles fileName={fileName} />
-                    {/* <ul style={{ margin: "10px" }}>
-                      <li>{`This is a Sample Example File for ${fileName}`}</li>
-                       
-                      <ul>
-                        {fileName !== 'ClinicalInformation' ?
-                          <li style={{ paddingLeft: '5%', paddingTop: '10px' }}> 1. &nbsp; &nbsp; Each column configuration of omics data must be same to the sample format. </li>
-                          :
-                          <>
-                            <li style={{ paddingLeft: '5%', paddingTop: '10px' }}>1. &nbsp; &nbsp; [sample_id] column is essential. Other columns except [sample_id] are userdata. </li>
-                            <li style={{ paddingLeft: '5%', paddingTop: '10px' }}>2. &nbsp; &nbsp; For survival plot, [rlps_yn], [rlps_cnfr_drtn], [death_yn], [death_cnfr_drtn] are essential. Recurrence or survival plot is composed of [rlps_yn], [rlps_cnfr_drtn], and Survival of survival plot is composed of [death_yn], [death_cnfr_drtn].
-                              <ul>
-                                <li style={{ paddingLeft: '5%', paddingTop: '10px' }}> - &nbsp; &nbsp; rlps_yn : &nbsp; &nbsp;recurrence yes or no (TRUE / FALSE) </li>
-                                <li style={{ paddingLeft: '5%' }}> - &nbsp; &nbsp; rlps_cnfr_drtn : &nbsp; &nbsp;recurrence confirmation duration (numeric data)</li>
-                                <li style={{ paddingLeft: '5%' }}>- &nbsp; &nbsp; death_yn : &nbsp; &nbsp;death yes or no (TRUE / FALSE)</li>
-                                <li style={{ paddingLeft: '5%' }}>- &nbsp; &nbsp; death_cnfr_drtn : &nbsp; &nbsp; death confirmation duration (numeric data) </li>
-                              </ul>
-                            </li> </>
-                        }
-                      </ul>
-                    </ul> */}
-
                     <div className='Flex FlexDirRow' style={{ marginTop: "20px", gap: "10px" }}>
 
-                      <p>Click on the link to download the sample file</p>
+                      <p><FormattedMessage id="Click on the link to download the sample file Download" defaultMessage='Click on the link to download the sample file.' /></p>
                       <a className="Tooldownload-link" href={fileNameFile} download>
-                        Download
+
+                        <FormattedMessage id="Download" defaultMessage='Download' />
                       </a>
                     </div>
                   </div>
@@ -70,9 +51,10 @@ function Modal({ showModal, toggleModal, fileName }) {
                 <div className="Toolmodal-footer">
                   <button
                     className="Toolmodal-close-btn"
+                    style={{ fontSize: '20px' }}
                     onClick={() => toggleModal(false, '')}
                   >
-                    Close
+                    <FormattedMessage id="Close" defaultMessage='Close' />
                   </button>
                 </div>
               </div>

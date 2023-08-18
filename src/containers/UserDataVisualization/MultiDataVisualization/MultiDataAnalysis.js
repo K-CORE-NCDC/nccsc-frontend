@@ -1,4 +1,4 @@
-import { CogIcon, FilterIcon, UserCircleIcon } from "@heroicons/react/outline";
+import { CogIcon, UserCircleIcon } from "@heroicons/react/outline";
 import React, {
   Fragment,
   useCallback,
@@ -22,16 +22,14 @@ import { Charts } from "../../DataVisualisation/Charts";
 
 import { Popover, Transition } from "@headlessui/react";
 import { FormattedMessage } from "react-intl";
+import arrow_icon from '../../../assets/images/btnDetail-arrow-white.svg';
+import sample_img from '../../../assets/images/sample.webp';
 import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
 import GeneSet from "../Components/MainComponents/GeneSet";
 import SurvivalFilterComponent from "../Components/MainComponents/SurvivalFilterComponent";
 import VolcanoFusionFilterComponent from "../Components/MainComponents/VolcanoFusionFilterComponent";
-import ArrowRight from '../../../assets/images/icon-arrow-right.svg';
-import sample_img from '../../../assets/images/sample.webp'
-import arrow_icon from '../../../assets/images/btnDetail-arrow-white.svg'
 
 export default function DataVisualization() {
-  const context = useContext(Context);
   const elementRef = useRef(null);
   const dispatch = useDispatch();
   const [width, setWidth] = useState(0);
@@ -71,7 +69,6 @@ export default function DataVisualization() {
 
   const submitFilter = (e) => {
     if (BrstKeys) {
-      // setChartName(tabName);
       let chartx = LoadChart(width, tabName);
       setCharts((prevState) => ({
         ...prevState,
@@ -207,7 +204,6 @@ export default function DataVisualization() {
   useEffect(() => {
     let w = elementRef.current.getBoundingClientRect().width;
     setWidth(w);
-    // setBoolChartState(false);
     if (project_id !== undefined) {
       setState((prevState) => ({
         ...prevState,
@@ -511,8 +507,6 @@ export default function DataVisualization() {
 
       />
 
-      {/* List of Tabs and Chart */}
-
       <article id="subContents" className="subContents">
         {gridData && !tabName ?
           <div className="contentsTitle">
@@ -540,9 +534,6 @@ export default function DataVisualization() {
 
         <div className="ptn">
           <div className="auto">
-
-            {/* Filter and Gene Filter */}
-
             <section >
               <div className="PopoverStyles">
 
@@ -614,7 +605,7 @@ export default function DataVisualization() {
                               leaveFrom="opacity-100 translate-y-0"
                               leaveTo="opacity-0 translate-y-1"
                             >
-                              <Popover.Panel className="SurvivalFilter W100 BorderstyleVizAbs" style={{ maxHeight: '450px', overflowY: 'scroll', zIndex: '10', background: 'white' }}>
+                              <Popover.Panel className="SurvivalFilter W100 BorderstyleVizAbs" style={{ maxHeight: '450px', overflowY: 'scroll', zIndex: '10', background: 'white',width:"140%" }}>
                                 <SurvivalFilterComponent
                                   parentCallback={survivalCallback}
                                   filterState={state}
@@ -655,7 +646,7 @@ export default function DataVisualization() {
                               leaveFrom="opacity-100 translate-y-0"
                               leaveTo="opacity-0 translate-y-1"
                             >
-                              <Popover.Panel className="VFFilter W100 BorderstyleViz" style={{ position: "absolute", maxHeight: '450px', overflowY: 'scroll', zIndex: '10', background: 'white' }}>
+                              <Popover.Panel className="VFFilter W100 BorderstyleViz" style={{ width:"120%",position: "absolute", maxHeight: '450px', overflowY: 'scroll', zIndex: '10', background: 'white' }}>
                                 <VolcanoFusionFilterComponent parentCallback={volcanoFusionFilterCallback} tab={tabName} />
                               </Popover.Panel>
                             </Transition>
@@ -719,7 +710,7 @@ export default function DataVisualization() {
                       )
                     }}
                   </Popover>
-                }
+                 } 
               </div>
             </section>
             {

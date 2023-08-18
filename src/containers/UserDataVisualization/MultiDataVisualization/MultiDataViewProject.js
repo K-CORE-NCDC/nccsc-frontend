@@ -48,32 +48,32 @@ function ProjectsList() {
   });
 
   useEffect(() => {
-    if (koreanlanguage) {
-      setSNo("일련 번호")
-      setProjectName('프로젝트 이름')
-      setClinicalInformation("임상 정보")
-      setDnaMutation("DNA 돌연변이")
-      setMethylation("메틸화")
-      setRna("RNA")
-      setCnv("CNV")
-      setProteome("프로테옴")
-      setPhospho("포스포")
-      setFusion("퓨전")
+    // if (koreanlanguage) {
+    //   setSNo("일련 번호")
+    //   setProjectName('프로젝트 이름')
+    //   setClinicalInformation("임상 정보")
+    //   setDnaMutation("DNA 돌연변이")
+    //   setMethylation("메틸화")
+    //   setRna("RNA")
+    //   setCnv("CNV")
+    //   setProteome("프로테옴")
+    //   setPhospho("포스포")
+    //   setFusion("퓨전")
 
-    }
-    else {
-      setSNo("SNo")
-      setProjectName('ProjectName')
-      setClinicalInformation("ClinicalInformation")
-      setDnaMutation("DnaMutation")
-      setMethylation("Methylation")
-      setRna("Rna")
-      setCnv("Cnv")
-      setProteome("Proteome")
-      setPhospho("Phospho")
-      setFusion("Fusion")
+    // }
+    // else {
+    //   setSNo("SNo")
+    //   setProjectName('ProjectName')
+    //   setClinicalInformation("ClinicalInformation")
+    //   setDnaMutation("DnaMutation")
+    //   setMethylation("Methylation")
+    //   setRna("Rna")
+    //   setCnv("Cnv")
+    //   setProteome("Proteome")
+    //   setPhospho("Phospho")
+    //   setFusion("Fusion")
 
-    }
+    // }
   })
 
   const fetchUsers = async (page, method) => {
@@ -155,12 +155,12 @@ function ProjectsList() {
 
   const columns = [
     {
-      name: "No",
+      name: <FormattedMessage id="Number" defaultMessage="No" />,
       selector: (_, index) => index + 1 + (currentPage - 1) * perPage,
       sortable: true
     },
     {
-      name: "Visualization",
+      name: <FormattedMessage id="VisualizationColumn" defaultMessage="Visualization" />,
       cell: (row) => (
         <div className="MultiDataTableViewDelete">
           <Link to={`/visualise-multidata/home/${row?.project_id}`}>
@@ -179,7 +179,7 @@ function ProjectsList() {
     },
 
     {
-      name: projectName,
+      name: <FormattedMessage id="ProjectName" defaultMessage="Project Name" />,
       cell: (row) => (
         <div className="MultiDataTableViewDelete">
           <div>
@@ -191,45 +191,47 @@ function ProjectsList() {
       minWidth: '15%'
     },
     {
-      name: clinicalInformation,
+      name: <FormattedMessage id="clinicalInformation" defaultMessage="clinicalInformation" />,
       selector: row => row.clinical_information ? 'O' : '',
       sortable: true
     },
     {
-      name: dnaMutation,
+      name: 'DNA Mutation',
       selector: row => row.dna_mutation ? 'O' : '',
       sortable: true
     },
     {
-      name: methylation,
-      selector: row => row.methylation ? 'O' : '',
-      sortable: true
-    },
-    {
-      name: rna,
-      selector: row => row.rna ? 'O' : '',
-      sortable: true
-    },
-    {
-      name: cnv,
+      name: "CNV",
       selector: row => row.cnv ? 'O' : '',
       sortable: true
     },
     {
-      name: proteome,
+      name: "Methylation",
+      selector: row => row.methylation ? 'O' : '',
+      sortable: true
+    },
+    {
+      name: "RNA",
+      selector: row => row.rna ? 'O' : '',
+      sortable: true
+    },
+    {
+      name: "Fusion",
+      selector: row => row.fusion ? 'O' : '',
+      sortable: true
+    },
+
+    {
+      name: "Proteome",
       selector: row => row.proteome ? 'O' : '',
       sortable: true
     },
     {
-      name: phospho,
+      name: "Phosphorylation",
       selector: row => row.phospho ? 'O' : '',
       sortable: true
     },
-    {
-      name: fusion,
-      selector: row => row.fusion ? 'O' : '',
-      sortable: true
-    }
+
   ]
   const customStyles = {
     table: {
@@ -364,17 +366,17 @@ export default function MultiDataViewProject() {
       { id: 'MultiDataProjectView', defaultMessage: 'Multi Data Project View', to: '/MultiDataProjectView/' }
     ]
   }
-  useEffect(()=>{
+  useEffect(() => {
     AOS.init({
-      duration : 2000
+      duration: 2000
     });
     AOS.refresh()
-  },[])
+  }, [])
 
   let closeModal = () => {
     setIsOpen(false);
   }
-  
+
   const handleDrag = () => {
     if (!isOpen) {
       return false;
@@ -384,18 +386,18 @@ export default function MultiDataViewProject() {
   return (
     <>
       {isOpen && isOpen === true && <Draggable disabled={!isOpen} onDrag={handleDrag}>
-          <div
-              style={{
-                width: '300px',
-                height: '400px',
-                position: 'fixed',
-                bottom: isOpen ? '0px' : '-1000px',
-                right: isOpen ? '50px' : '-1000px',
-                zIndex: '15',
-                
-              }}
-              
-            >
+        <div
+          style={{
+            width: '300px',
+            height: '400px',
+            position: 'fixed',
+            bottom: isOpen ? '0px' : '-1000px',
+            right: isOpen ? '50px' : '-1000px',
+            zIndex: '15',
+
+          }}
+
+        >
           <div className="mainPopup W100" data-aos="zoom-in" data-aos-once='true'>
             <div className="popupHeader">
               <h3 className='TextLeft'>Note</h3>
@@ -403,23 +405,23 @@ export default function MultiDataViewProject() {
                 close
               </span>
             </div>
-            <div className='popupBody  introduceWrap' style={{"padding":"0px","border":"1px solid #ddd"}}>
-              <div className="introduceBox03" style={{"width":"100%"}}>
+            <div className='popupBody  introduceWrap' style={{ "padding": "0px", "border": "1px solid #ddd" }}>
+              <div className="introduceBox03" style={{ "width": "100%" }}>
                 <ul>
                   <li>
                     <p>
-                      <FormattedMessage id="ViewProjectUploadGuidepopUp1" defaultMessage="It is possible to create 5 projects on a account."/>
+                      <FormattedMessage id="ViewProjectUploadGuidepopUp1" defaultMessage="It is possible to create 5 projects on a account." />
                     </p>
                   </li>
                   <li>
                     <p>
-                      <FormattedMessage id="ViewProjectUploadGuidepopUp2" defaultMessage="The period to check each project is 2 weeks from the date of creation. After 2 weeks, the project will be deleted."/>
+                      <FormattedMessage id="ViewProjectUploadGuidepopUp2" defaultMessage="The period to check each project is 2 weeks from the date of creation. After 2 weeks, the project will be deleted." />
                     </p>
                   </li>
                 </ul>
               </div>
             </div>
-            
+
           </div>
         </div>
       </Draggable>}

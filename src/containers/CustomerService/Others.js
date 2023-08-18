@@ -5,13 +5,13 @@ import icon1 from '../../assets/images/publicDataInfo-img01.svg'
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 export const Others = () => {
   const style = {
-    mainBox:{
+    mainBox: {
       textAlign: "center",
       justifyContent: "center",
       display: "flex"
     },
-    wrapper:{
-      width:"350px"
+    wrapper: {
+      width: "350px"
     }
   }
   return (
@@ -23,14 +23,16 @@ export const Others = () => {
             <dl>
               <dt>
                 <FormattedMessage
-                  id="organoid"
-                  defaultMessage="Organoid Service"/>
+                  id="Organoid"
+                  defaultMessage="Organoid Service" />
               </dt>
               <dd>
-                <span><Link to="/organoid/">Organoid Service</Link></span>
+                <span><Link to="/organoid/"> <FormattedMessage
+                  id="Organoid2"
+                  defaultMessage="Organoid Service" /></Link></span>
               </dd>
             </dl>
-            
+
           </li>
         </ul>
       </div>

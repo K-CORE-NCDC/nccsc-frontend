@@ -19,7 +19,8 @@
 
   .mutation_labels {
     display: flex;
-    justify-content: center;
-    gap: 3%
+    justify-content: start;
+    gap: 2%;
+    line-height: 30px;
   }
 }

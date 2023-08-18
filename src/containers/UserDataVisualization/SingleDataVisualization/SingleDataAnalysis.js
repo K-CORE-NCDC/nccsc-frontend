@@ -1,3 +1,4 @@
+import { Popover, Transition } from "@headlessui/react";
 import React, {
   Fragment,
   useCallback,
@@ -6,34 +7,26 @@ import React, {
   useRef,
   useState
 } from "react";
-import { CogIcon, FilterIcon } from "@heroicons/react/outline";
-import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import ConfirmDownload from "../../Common/downloadConfirmation";
-import { Charts } from "../../DataVisualisation/Charts";
-import genes from "../../Common/gene.json";
-import { Context } from "../../../wrapper";
-import { useHistory, Link } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { userdataVisualization } from "../../../actions/Constants";
 import {
   getBreastKeys,
   getUserDataProjectsTableData,
   samplesCount
 } from "../../../actions/api_actions";
-import { Popover, Transition } from "@headlessui/react";
+import arrow_icon from '../../../assets/images/btnDetail-arrow-white.svg';
+import sample_img from '../../../assets/images/sample.webp';
+import { Context } from "../../../wrapper";
 import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
+import { Charts } from "../../DataVisualisation/Charts";
 import GeneSet from "../Components/MainComponents/GeneSet";
-import ExampleImage from '../../../assets/images/mainSection05-img02.jpg';
-import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
-import ArrowRight from '../../../assets/images/icon-arrow-right.svg';
-import { FormattedMessage } from "react-intl";
-import sample_img from '../../../assets/images/sample.webp'
-import { userdataVisualization } from "../../../actions/Constants";
-import arrow_icon from '../../../assets/images/btnDetail-arrow-white.svg'
 
 
 export default function DataVisualization({ parentProps }) {
   const history = useHistory();
-  const context = useContext(Context);
   const elementRef = useRef(null);
   const dispatch = useDispatch();
   const [chart, setCharts] = useState({ viz: [] });
@@ -55,7 +48,6 @@ export default function DataVisualization({ parentProps }) {
   const [tabName, setTabName] = useState(tab === 'home' ? undefined : tab)
   const [toggle, setToggle] = useState(true);
   const [screenCapture, setScreenCapture] = useState(false);
-  const location = useLocation()
   const route = useLocation();
   const [exampleData, setExampleData] = useState(false);
 
@@ -69,7 +61,6 @@ export default function DataVisualization({ parentProps }) {
 
   const submitFilter = (e) => {
     setBoolChartState(false);
-    // setChartName(tabName);
     let chartx = LoadChart(width, tabName);
     setCharts((prevState) => ({
       ...prevState,
@@ -87,7 +78,6 @@ export default function DataVisualization({ parentProps }) {
       });
     }
   }, [])
-
 
   const LoadChart = (w, type) => {
     switch (type) {
@@ -181,7 +171,6 @@ export default function DataVisualization({ parentProps }) {
         ...prevState,
         'filterKeyandValues': filterKeyandValues
       }));
-      // setfilterApplied(true);
     }
 
     if (value && genes) {
@@ -383,7 +372,7 @@ export default function DataVisualization({ parentProps }) {
       [
         { id: 'Home', defaultMessage: 'Home', to: '/' },
         { id: `VisualizeExampleData`, defaultMessage: `Visualize Example Data`, to: `/home/visualizeMyExampleData/` },
-        { id: 'ExampleVisualization', defaultMessage: `Example Visualization`, to: `/visualizesingle-exampledata/home/` },
+        { id: 'ExampleVisualization', defaultMessage: `Single Data Example Visualization`, to: `/visualizesingle-exampledata/home/` },
         { id: tab !== 'home' ? tab : 'Null', defaultMessage: tab !== 'home' ? tab : 'Null', to: `/visualise-singledata/${tabName}/` }
       ],
 
@@ -436,21 +425,21 @@ export default function DataVisualization({ parentProps }) {
                                           <div className="textdiv ">
                                             <span><FormattedMessage id="DownloadManual" defaultMessage="Download Manual" /></span>
                                             <img src={arrow_icon} alt="arrow-icon" />
-                                            
+
                                           </div>
                                         </Link>
                                         <Link to={item.link}>
                                           <div className="textdiv">
                                             <span><FormattedMessage id="RunAnalysis" defaultMessage="Run Analysis" /></span>
                                             <img src={arrow_icon} alt="arrow-icon" />
-                                            
+
                                           </div>
                                         </Link>
                                       </>
                                     }
 
                                     {
-                                      exampleData && 
+                                      exampleData &&
                                       <Link to={item.viewLink}>
                                         <div className="textdiv">
                                           <span><FormattedMessage id="Example" defaultMessage="Example" /></span>
@@ -468,13 +457,6 @@ export default function DataVisualization({ parentProps }) {
                                     {item.description}
                                   </dd>
                                 </dl>
-                                {/* <span className="playicon">
-                                <Link to={item.viewLink}>
-                                  <span className="material-icons">
-                                    visibility
-                                  </span>
-                                </Link>
-                              </span> */}
                               </div>
                             </Link>
                           </li>
@@ -567,30 +549,16 @@ export default function DataVisualization({ parentProps }) {
 
                       {tabName && tabName === 'survival' && boolChartState && <div>{chart["viz"]}</div>}
 
-                      {BrstKeys && tabName && tabName !== 'home' && boolChartState && <div style={{ marginTop: "50px" }}>
+                      {tabName && tabName !== 'home' && <div style={{ marginTop: "50px" }}>
                         <button className="btn btnPrimary" style={{ float: "right", margin: "10px 0px 10px 0px" }} onClick={() => {
                           if (project_id) {
                             history.push(`/visualise-singledata/home/`)
                           } else {
-                            history.push(`/visualise-exampledata/home/`)
+                            history.push(`/visualizesingle-exampledata/home/`)
                           }
                         }}><FormattedMessage id="Back" defaultMessage="Back" /></button>
                       </div>
                       }
-
-                      {
-                        tabName && tabName === 'survival' && boolChartState &&
-                        <div style={{ marginTop: "50px" }}>
-                          <button className="btn btnPrimary" style={{ float: "right", margin: "10px 0px 10px 0px" }} onClick={() => {
-                            if (project_id) {
-                              history.push(`/visualise-singledata/home/`)
-                            } else {
-                              history.push(`/visualise-exampledata/home/`)
-                            }
-                          }}><FormattedMessage id="Back" defaultMessage="Back" /></button>
-                        </div>
-                      }
-
                       {tabName && tabName !== 'home' && !boolChartState && tabName !== 'survival' && (
                         <div className="p-1 text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">
                           <FormattedMessage id="PleaseSelectGenes" defaultMessage="Please Select Genes" />
@@ -598,12 +566,8 @@ export default function DataVisualization({ parentProps }) {
                       )}
                     </div>
                   </section>
-
                 </>
             }
-
-
-
           </div >
         </div>
       </article >

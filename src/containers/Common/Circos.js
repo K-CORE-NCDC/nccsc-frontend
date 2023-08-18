@@ -4,6 +4,7 @@ import * as Circos from 'circos';
 import cytobands from './cytobands.csv'
 import placeholder from '../../assets/images/circosImage.png'
 import { XCircleIcon } from '@heroicons/react/solid';
+import { FormattedMessage } from 'react-intl';
 
 
 const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, selectedGenes }, ref) => {
@@ -568,7 +569,9 @@ const CircosCmp = React.forwardRef(({ width, data, watermarkCss, fusionJson, sel
       <div className="col-span-10 p-5">
         <div ref={ref} className={`circos block ${watermarkCss}`} id='circos'></div>
       </div>
+      
       <div className="col-span-2 pl-8">
+      <p><FormattedMessage id="ClickToZoomIn" defaultMessage='Click to zoom in !' /></p>
         <span onClick = {() =>{
           setOpenModal(true)
         }}>
