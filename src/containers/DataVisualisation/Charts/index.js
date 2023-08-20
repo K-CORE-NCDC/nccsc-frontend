@@ -1,23 +1,16 @@
-import DataCircos from "./Circos";
-import DataOnco from "./Onco";
-import DataLolipop from "./Lolipop";
-import DataVolcono from "./Volcono";
-import DataHeatmap from "./Heatmap";
-import DataSurvival from "./Survival";
-import Scatter from "./Scatter";
-import DataIgv from "./igv";
-import FusionPlot from "./Fusion";
-import Box from "./Box";
-import DataGenomic from "./Genomic";
-import SankeyPlot from "./SankeyPlot";
-function circos(
-  width,
-  inputData,
-  screenCapture,
-  setToFalseAfterScreenCapture,
-  toggle,
-  state
-) {
+import DataCircos from './Circos';
+import DataOnco from './Onco';
+import DataLolipop from './Lolipop';
+import DataVolcono from './Volcono';
+import DataHeatmap from './Heatmap';
+import DataSurvival from './Survival';
+import Scatter from './Scatter';
+import DataIgv from './igv';
+import FusionPlot from './Fusion';
+import Box from './Box';
+import DataGenomic from './Genomic';
+import SankeyPlot from './SankeyPlot';
+function circos(width, inputData, screenCapture, setToFalseAfterScreenCapture, toggle, state) {
   return (
     <DataCircos
       key="circos"
@@ -31,15 +24,7 @@ function circos(
   );
 }
 
-
-function sankey(
-  width,
-  inputData,
-  screenCapture,
-  setToFalseAfterScreenCapture,
-  toggle,
-  state
-) {
+function sankey(width, inputData, screenCapture, setToFalseAfterScreenCapture, toggle, state) {
   return (
     <SankeyPlot
       key="sankey"
@@ -65,12 +50,7 @@ function onco(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
   );
 }
 
-function lollipop(
-  width,
-  inputData,
-  screenCapture,
-  setToFalseAfterScreenCapture
-) {
+function lollipop(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
   return (
     <DataLolipop
       key="lolipop"
@@ -82,13 +62,7 @@ function lollipop(
   );
 }
 
-function volcano(
-  width,
-  inputData,
-  screenCapture,
-  setToFalseAfterScreenCapture,
-  VFData
-) {
+function volcano(width, inputData, screenCapture, setToFalseAfterScreenCapture, VFData) {
   return (
     <DataVolcono
       key="volcano"
@@ -101,13 +75,7 @@ function volcano(
   );
 }
 
-function heatmap(
-  width,
-  inputData,
-  screenCapture,
-  BrstKeys,
-  setToFalseAfterScreenCapture
-) {
+function heatmap(width, inputData, screenCapture, BrstKeys, setToFalseAfterScreenCapture) {
   return (
     <DataHeatmap
       key="heatmap"
@@ -137,16 +105,11 @@ function survival(
       setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
       survialData={survialData}
       trasnferSurvivalData={trasnferSurvivalData}
-      />
+    />
   );
 }
 
-function scatter(
-  width,
-  inputData,
-  screenCapture,
-  setToFalseAfterScreenCapture
-) {
+function scatter(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
   return (
     <Scatter
       key="scatter"
@@ -178,7 +141,7 @@ function fusion(width, inputData, screenCapture, setToFalseAfterScreenCapture, V
       inputData={inputData}
       screenCapture={screenCapture}
       setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
-      VFData = {VFData}
+      VFData={VFData}
     />
   );
 }
@@ -219,5 +182,4 @@ export const Charts = {
   box,
   variant_summary,
   sankey
-
 };

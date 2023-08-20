@@ -2,7 +2,8 @@ $faded: #e6dede;
 $selection: #edf8ff;
 
 .axis {
-  path, line {
+  path,
+  line {
     fill: none;
     stroke: #000;
     shape-rendering: crispEdges;
@@ -39,17 +40,21 @@ $selection: #edf8ff;
     transition: all 0.1s;
     cursor: pointer;
     stroke-width: none;
-    &:hover, &:active {
+    &:hover,
+    &:active {
       r: 5;
     }
-    &[status="alive"] {
+    &[status='alive'] {
       opacity: 0.5;
     }
-    &[status="deceased"] {
+    &[status='deceased'] {
       opacity: 0;
-      transition: r 0.3s, opacity 0.3s;
+      transition:
+        r 0.3s,
+        opacity 0.3s;
       r: 5;
-      &:hover, &:active {
+      &:hover,
+      &:active {
         opacity: 1;
         r: 2;
       }
@@ -58,7 +63,7 @@ $selection: #edf8ff;
 
   .point-line {
     cursor: pointer;
-    &[status="deceased"] {
+    &[status='deceased'] {
       opacity: 0;
     }
   }

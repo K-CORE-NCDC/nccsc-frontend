@@ -1,24 +1,24 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Context } from "../../wrapper";
-import KoreanTermsAndConditions from "./KoreanTermsAndConditions";
-import EnglishTermsAndConditions from "./EnglishTermsAndConditions";
+import React, { useState, useContext, useEffect } from 'react';
+import { Context } from '../../wrapper';
+import KoreanTermsAndConditions from './KoreanTermsAndConditions';
+import EnglishTermsAndConditions from './EnglishTermsAndConditions';
 function KoreanTermsAndConditionsIndex() {
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const [Englishlanguage, setEnglishlanguage] = useState(true);
   const context = useContext(Context);
-  
+
   useEffect(() => {
-    if (context["locale"] === "kr-KO") {
+    if (context['locale'] === 'kr-KO') {
       setKoreanlanguage(true);
       setEnglishlanguage(false);
     } else {
       setKoreanlanguage(false);
       setEnglishlanguage(true);
     }
-  },[context]);
+  }, [context]);
 
   return (
-    <div >
+    <div>
       {koreanlanguage && (
         <div>
           <KoreanTermsAndConditions></KoreanTermsAndConditions>

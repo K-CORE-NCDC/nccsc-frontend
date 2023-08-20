@@ -1,31 +1,31 @@
-import React, { useState, useContext, useEffect } from "react";
-import { Context } from "../../wrapper";
-import EnglishPrivacyAct from "./EnglishPrivacyAct";
-import Koreanprivacyact from "./KoreanPrivacyAct";
+import React, { useState, useContext, useEffect } from 'react';
+import { Context } from '../../wrapper';
+import EnglishPrivacyAct from './EnglishPrivacyAct';
+import Koreanprivacyact from './KoreanPrivacyAct';
 function PrivacyActIndex() {
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const [Englishlanguage, setEnglishlanguage] = useState(true);
   const context = useContext(Context);
   useEffect(() => {
-    if (context["locale"] === "kr-KO") {
+    if (context['locale'] === 'kr-KO') {
       setKoreanlanguage(true);
       setEnglishlanguage(false);
     } else {
       setKoreanlanguage(false);
       setEnglishlanguage(true);
     }
-  },[context]);
+  }, [context]);
 
   return (
     <div>
       {koreanlanguage && (
         <div>
-           <Koreanprivacyact></Koreanprivacyact>
+          <Koreanprivacyact></Koreanprivacyact>
         </div>
       )}
       {Englishlanguage && (
         <div>
-         <EnglishPrivacyAct></EnglishPrivacyAct>
+          <EnglishPrivacyAct></EnglishPrivacyAct>
         </div>
       )}
     </div>

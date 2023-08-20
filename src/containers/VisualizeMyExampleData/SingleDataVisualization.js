@@ -1,108 +1,137 @@
-import React, { useEffect, useState } from "react";
-import { FormattedMessage } from "react-intl";
-import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import MultiDataVisualization from "./MultiDataVisualization";
-import { OtherTools } from "./OtherTools";
+import React, { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import MultiDataVisualization from './MultiDataVisualization';
+import { OtherTools } from './OtherTools';
 
+export const SingleDataVisualization = () => {
+  const [activeTab, setActiveTab] = useState('1');
+  const history = useHistory();
 
-export const SingleDataVisualization = ({ isLogin }) => {
-  const [activeTab, setActiveTab] = useState('1')
-  const history = useHistory()
-
-  // useEffect(() => {
-  //   if (width <= 1025 || height <= 800) {
-  //     setVariable(true)
-  //   }
-  // }, [])
   return (
     <div className="auto">
       <div className="mainContentsBox">
         <div className="tab visualizeExampleData">
           <ul>
             <li className={activeTab === '1' ? 'on' : ''}>
-              <button type="button" onClick={() => setActiveTab('1')}><FormattedMessage
-                id="Example_tab_01"
-                defaultMessage="Single Data Visualization Guidelines"
-              /></button>
+              <button type="button" onClick={() => setActiveTab('1')}>
+                <FormattedMessage
+                  id="Example_tab_01"
+                  defaultMessage="Single Data Visualization Guidelines"
+                />
+              </button>
             </li>
             <li className={activeTab === '2' ? 'on' : ''}>
-              <button type="button" onClick={() => setActiveTab('2')}><FormattedMessage
-                id="Example_tab_02"
-                defaultMessage="Multi Data Visualization Guidelines"
-              /></button>
+              <button type="button" onClick={() => setActiveTab('2')}>
+                <FormattedMessage
+                  id="Example_tab_02"
+                  defaultMessage="Multi Data Visualization Guidelines"
+                />
+              </button>
             </li>
             <li className={activeTab === '3' ? 'on' : ''}>
-              <button type="button" onClick={() => setActiveTab('3')}><FormattedMessage
-                id="Example_tab_03"
-                defaultMessage="Other Tools Guidelines"
-              /></button>
+              <button type="button" onClick={() => setActiveTab('3')}>
+                <FormattedMessage id="Example_tab_03" defaultMessage="Other Tools Guidelines" />
+              </button>
             </li>
           </ul>
         </div>
-        {activeTab === '1' &&
+        {activeTab === '1' && (
           <>
-            <div className="tabContents " style={{ height: '85vh' }} >
+            <div className="tabContents " style={{ height: '85vh' }}>
               <div className="dataSearchWrap">
                 <div className="popularBox">
                   <div className="subHeader">
                     <p className="tit h5">Contents</p>
                     <div className="tit contentBtns">
-                      <button className="btn" onClick={() => {
-                        // history.push({"/visualise-singledata/home/"})
-                        history.push({
-                          pathname: '/visualizesingle-exampledata/home/',
-                          state: { example: true }
-                        })
-                        // <Link to={`/visualizesingle-exampledata/home/`} />
-                      }}>
-                        <FormattedMessage id="ExamplePage" defaultMessage='Example Page' />
+                      <button
+                        className="btn"
+                        onClick={() => {
+                          history.push({
+                            pathname: '/visualizesingle-exampledata/home/',
+                            state: { example: true }
+                          });
+                        }}
+                      >
+                        <FormattedMessage id="ExamplePage" defaultMessage="Example Page" />
                       </button>
                       <button className="btn">
-                        <FormattedMessage id="DownloadManual" defaultMessage='Download Manual' />
-
+                        <FormattedMessage id="DownloadManual" defaultMessage="Download Manual" />
                       </button>
                     </div>
                   </div>
 
                   <div className="contentBox">
-                    <ul className="contentBox_left" >
-                      <li className="" tabIndex="0" >
-                        <p> <b>Variant Summary : </b> &nbsp;
-                          <FormattedMessage id="Example_signle_variantSummary" defaultMessage='visualize summary information of major variant types' />
+                    <ul className="contentBox_left">
+                      <li className="" tabIndex="0">
+                        <p>
+                          {' '}
+                          <b>Variant Summary : </b> &nbsp;
+                          <FormattedMessage
+                            id="Example_signle_variantSummary"
+                            defaultMessage="visualize summary information of major variant types"
+                          />
                         </p>
                       </li>
                       <li className="" tabIndex="-1" style={{}}>
-                        <p> <b>Circos:</b> &nbsp;
-                          <FormattedMessage id="Example_signle_circos" defaultMessage=' visualize one of the seven omics data as a circular layer on a circular chromosome map' />
+                        <p>
+                          {' '}
+                          <b>Circos:</b> &nbsp;
+                          <FormattedMessage
+                            id="Example_signle_circos"
+                            defaultMessage=" visualize one of the seven omics data as a circular layer on a circular chromosome map"
+                          />
                         </p>
                       </li>
-                      <li tabIndex="-1" >
-                        <p> <b>Lollipop:</b> &nbsp;
-                          <FormattedMessage id="Example_signle_Lollipop" defaultMessage=' visualize mutation or phosphorylation of certain gene on a sequence' />
+                      <li tabIndex="-1">
+                        <p>
+                          {' '}
+                          <b>Lollipop:</b> &nbsp;
+                          <FormattedMessage
+                            id="Example_signle_Lollipop"
+                            defaultMessage=" visualize mutation or phosphorylation of certain gene on a sequence"
+                          />
                         </p>
                       </li>
-                      <li className="" tabIndex="-1" >
-                        <p><b>CNV:</b>  &nbsp;
-                          <FormattedMessage id="Example_signle_CNV" defaultMessage='visualize copy number variation data on integrated genome viewer' />
+                      <li className="" tabIndex="-1">
+                        <p>
+                          <b>CNV:</b> &nbsp;
+                          <FormattedMessage
+                            id="Example_signle_CNV"
+                            defaultMessage="visualize copy number variation data on integrated genome viewer"
+                          />
                         </p>
                       </li>
-
                     </ul>
                     <ul className="contentBox_right">
-                      <li className="" tabIndex="-1" >
-                        <p> <b>Heatmap:</b> &nbsp;
-                          <FormattedMessage id="Example_signle_heatMap" defaultMessage='represent genomic/proteomic data in the form of a map or diagram in which data values are represented as colors(heats)' />
+                      <li className="" tabIndex="-1">
+                        <p>
+                          {' '}
+                          <b>Heatmap:</b> &nbsp;
+                          <FormattedMessage
+                            id="Example_signle_heatMap"
+                            defaultMessage="represent genomic/proteomic data in the form of a map or diagram in which data values are represented as colors(heats)"
+                          />
                         </p>
                       </li>
                       <li className="" tabIndex="-1" style={{}}>
-                        <p><b>Box (Tumor vs Normal):</b> &nbsp;
-                          <FormattedMessage id="Example_signle_box" defaultMessage='visualize the genetic information statistics of the selected gene(s) in the form of boxes' />
+                        <p>
+                          <b>Box (Tumor vs Normal):</b> &nbsp;
+                          <FormattedMessage
+                            id="Example_signle_box"
+                            defaultMessage="visualize the genetic information statistics of the selected gene(s) in the form of boxes"
+                          />
                         </p>
                       </li>
 
                       <li className="" tabIndex="-1" style={{}}>
-                        <p> <b>Survival:</b> &nbsp;
-                          <FormattedMessage id="Example_signle_sirvival" defaultMessage='visualize the recurrence/survival probability of patients according to clinical variable conditions' />
+                        <p>
+                          {' '}
+                          <b>Survival:</b> &nbsp;
+                          <FormattedMessage
+                            id="Example_signle_sirvival"
+                            defaultMessage="visualize the recurrence/survival probability of patients according to clinical variable conditions"
+                          />
                         </p>
                       </li>
                     </ul>
@@ -114,7 +143,7 @@ export const SingleDataVisualization = ({ isLogin }) => {
                   <tr>
                     <th>Data Type</th>
                     <th style={{ width: '150px' }}>Variant Summary</th>
-                    <th >Circos </th>
+                    <th>Circos </th>
                     <th>Lollipop</th>
                     <th>CNV </th>
                     <th>Heatmap</th>
@@ -123,22 +152,29 @@ export const SingleDataVisualization = ({ isLogin }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr >
+                  <tr>
                     <td>Clinical Information</td>
                     <td></td>
                     <td></td>
-                    <td ></td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><span className="material-icons">radio_button_unchecked</span>
+                    <td></td>
+                    <td>
+                      <span className="material-icons">radio_button_unchecked</span>
                     </td>
                   </tr>
                   <tr>
                     <td>Dna Mutation</td>
-                    <td><span className="material-icons">radio_button_unchecked</span></td>
-                    <td><span className="material-icons">radio_button_unchecked</span></td>
-                    <td><span className="material-icons">radio_button_unchecked</span></td>
+                    <td>
+                      <span className="material-icons">radio_button_unchecked</span>
+                    </td>
+                    <td>
+                      <span className="material-icons">radio_button_unchecked</span>
+                    </td>
+                    <td>
+                      <span className="material-icons">radio_button_unchecked</span>
+                    </td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -147,9 +183,13 @@ export const SingleDataVisualization = ({ isLogin }) => {
                   <tr>
                     <td>CNV</td>
                     <td></td>
-                    <td><span className="material-icons">radio_button_unchecked</span></td>
+                    <td>
+                      <span className="material-icons">radio_button_unchecked</span>
+                    </td>
                     <td></td>
-                    <td><span className="material-icons">radio_button_unchecked</span></td>
+                    <td>
+                      <span className="material-icons">radio_button_unchecked</span>
+                    </td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -157,27 +197,39 @@ export const SingleDataVisualization = ({ isLogin }) => {
                   <tr>
                     <td>Methylation</td>
                     <td></td>
-                    <td><span className="material-icons">radio_button_unchecked</span></td>
+                    <td>
+                      <span className="material-icons">radio_button_unchecked</span>
+                    </td>
                     <td></td>
                     <td></td>
-                    <td><span className="material-icons">radio_button_unchecked</span></td>
+                    <td>
+                      <span className="material-icons">radio_button_unchecked</span>
+                    </td>
                     <td></td>
                     <td></td>
                   </tr>
                   <tr>
                     <td>RNA</td>
                     <td></td>
-                    <td><span className="material-icons">radio_button_unchecked</span></td>
+                    <td>
+                      <span className="material-icons">radio_button_unchecked</span>
+                    </td>
                     <td></td>
                     <td></td>
-                    <td><span className="material-icons">radio_button_unchecked</span></td>
-                    <td><span className="material-icons">radio_button_unchecked</span></td>
+                    <td>
+                      <span className="material-icons">radio_button_unchecked</span>
+                    </td>
+                    <td>
+                      <span className="material-icons">radio_button_unchecked</span>
+                    </td>
                     <td></td>
                   </tr>
                   <tr>
                     <td>Fusion</td>
                     <td></td>
-                    <td><span className="material-icons">radio_button_unchecked</span></td>
+                    <td>
+                      <span className="material-icons">radio_button_unchecked</span>
+                    </td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -187,20 +239,30 @@ export const SingleDataVisualization = ({ isLogin }) => {
                   <tr>
                     <td>Proteome</td>
                     <td></td>
-                    <td><span className="material-icons">radio_button_unchecked</span></td>
+                    <td>
+                      <span className="material-icons">radio_button_unchecked</span>
+                    </td>
                     <td></td>
                     <td></td>
-                    <td><span className="material-icons">radio_button_unchecked</span></td>
-                    <td><span className="material-icons">radio_button_unchecked</span></td>
+                    <td>
+                      <span className="material-icons">radio_button_unchecked</span>
+                    </td>
+                    <td>
+                      <span className="material-icons">radio_button_unchecked</span>
+                    </td>
                     <td></td>
                   </tr>
                   <tr>
                     <td>Phosphorylation</td>
                     <td></td>
                     <td></td>
-                    <td><span className="material-icons">radio_button_unchecked</span></td>
+                    <td>
+                      <span className="material-icons">radio_button_unchecked</span>
+                    </td>
                     <td></td>
-                    <td><span className="material-icons">radio_button_unchecked</span></td>
+                    <td>
+                      <span className="material-icons">radio_button_unchecked</span>
+                    </td>
                     <td></td>
                     <td></td>
                   </tr>
@@ -208,17 +270,11 @@ export const SingleDataVisualization = ({ isLogin }) => {
               </table>
             </div>
           </>
-        }
-        {activeTab === '2' &&
-          <MultiDataVisualization />
-        }
+        )}
+        {activeTab === '2' && <MultiDataVisualization />}
 
-        {activeTab === '3' &&
-          <OtherTools />
-        }
+        {activeTab === '3' && <OtherTools />}
       </div>
     </div>
-
-  )
-
-}
+  );
+};

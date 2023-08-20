@@ -1,22 +1,24 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import config from "../../config";
-import { useSelector,useDispatch } from "react-redux";
-import { updateDownloadVisualizationPurpose } from "../../actions/api_actions";
-import { useParams } from "react-router-dom";
-import { getCookie } from "../../containers/getCookie";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { updateDownloadVisualizationPurpose } from '../../actions/api_actions';
+import config from '../../config';
+import { getCookie } from '../../containers/getCookie';
+
+
 const ConfirmDownload = ({ screenCaptureFunction, hideModal }) => {
   const dispatch = useDispatch();
   const [userFormData, setUserFormData] = useState({
-    username: "",
-    password: "",
+    username: '',
+    password: ''
   });
-  const [downloadOrganization, setDownloadOrganization] = useState("");
-  const [downloadPurpose, setDownloadPurpose] = useState("");
-  const [errorClass, setErrorClass] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [downloadOrganization, setDownloadOrganization] = useState('');
+  const [downloadPurpose, setDownloadPurpose] = useState('');
+  const [errorClass, setErrorClass] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [showLoginPage, setShowLoginPage] = useState(false);
-  const purposeOptions = ["business", "research", "diagonosis"];
+  const purposeOptions = ['business', 'research', 'diagonosis'];
   let { tab, project_id } = useParams();
 
   useEffect(() => {
@@ -28,27 +30,27 @@ const ConfirmDownload = ({ screenCaptureFunction, hideModal }) => {
   }, [getCookie('is_login')]);
 
   const updateUserNamePassword = (e) => {
-    setErrorClass("");
+    setErrorClass('');
     setUserFormData((previousState) => ({
       ...previousState,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     }));
   };
 
   const loginFailure = () => {
-    setErrorClass("border-red-500");
-    setErrorMessage("Invalid username/Password");
-    setUserFormData({ username: "", password: "" });
+    setErrorClass('border-red-500');
+    setErrorMessage('Invalid username/Password');
+    setUserFormData({ username: '', password: '' });
   };
 
-  const loginSuccess = (data) => {
+  const loginSuccess = () => {
     setShowLoginPage(false);
   };
 
   const formSubmitAction = (e) => {
     e.preventDefault();
     const url = `${config.auth}api/token/`;
-    let x = axios({ method: "POST", url: url, data: userFormData });
+    let x = axios({ method: 'POST', url: url, data: userFormData });
     x.then((response) => {
       const data = response.data;
       const statusCode = response.status;
@@ -57,15 +59,15 @@ const ConfirmDownload = ({ screenCaptureFunction, hideModal }) => {
       } else {
         loginFailure();
       }
-    }).catch((error) => {
+    }).catch(() => {
       loginFailure();
     });
   };
 
   const downloadScreenshot = () => {
-    if ((downloadOrganization === "") | (downloadPurpose === "")) {
-      setErrorClass("border-red-500");
-      setErrorMessage("Fields can not be empty");
+    if ((downloadOrganization === '') | (downloadPurpose === '')) {
+      setErrorClass('border-red-500');
+      setErrorMessage('Fields can not be empty');
     } else {
       dispatch(
         updateDownloadVisualizationPurpose({
@@ -82,8 +84,8 @@ const ConfirmDownload = ({ screenCaptureFunction, hideModal }) => {
   };
 
   useEffect(() => {
-    setErrorClass("");
-    setErrorMessage("");
+    setErrorClass('');
+    setErrorMessage('');
   }, [downloadOrganization, downloadPurpose]);
 
   return (
@@ -132,11 +134,7 @@ const ConfirmDownload = ({ screenCaptureFunction, hideModal }) => {
                       type="password"
                       placeholder="******************"
                     />
-                    {errorMessage && (
-                      <p className="text-red-500 text-lg italic">
-                        {errorMessage}
-                      </p>
-                    )}
+                    {errorMessage && <p className="text-red-500 text-lg italic">{errorMessage}</p>}
                   </div>
                   <div className="flex items-center justify-between">
                     <button
@@ -153,10 +151,7 @@ const ConfirmDownload = ({ screenCaptureFunction, hideModal }) => {
             {!showLoginPage && (
               <form className="bg-white rounded px-8 pt-6 pb-8 mb-4">
                 <div className="mb-4">
-                  <label
-                    className="block text-gray-700 text-lg font-bold mb-2"
-                    htmlFor="username"
-                  >
+                  <label className="block text-gray-700 text-lg font-bold mb-2" htmlFor="username">
                     Organization
                   </label>
                   <input
@@ -186,21 +181,12 @@ const ConfirmDownload = ({ screenCaptureFunction, hideModal }) => {
                       </option>
                     ))}
                   </select>
-                  {errorMessage && (
-                    <p className="text-red-500 text-lg italic">
-                      {errorMessage}
-                    </p>
-                  )}
+                  {errorMessage && <p className="text-red-500 text-lg italic">{errorMessage}</p>}
                 </div>
-                <p className="text-center mb-7 text-base"
-                >
-                  If processed information is big, it will take few minutes to
-                  download image.
+                <p className="text-center mb-7 text-base">
+                  If processed information is big, it will take few minutes to download image.
                 </p>
-                <div
-                  onClick={downloadScreenshot}
-                  className="flex items-center justify-between"
-                >
+                <div onClick={downloadScreenshot} className="flex items-center justify-between">
                   <button
                     className="bg-main-blue hover:bg-main-blue text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mx-auto"
                     type="button"

@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const CardContainer = styled.div`
   background-color: #fff;
@@ -20,7 +20,7 @@ const CardDescription = styled.p`
   color: #555;
 `;
 
-const Card = ({ title, description,children }) => {
+const Card = ({ title, description, children }) => {
   return (
     <CardContainer>
       <CardTitle>{title}</CardTitle>

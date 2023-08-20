@@ -1,204 +1,201 @@
-import { dataVisualization, userdataVisualization, CLEAR_ALL_STATES } from '../actions/Constants';
+import { CLEAR_ALL_STATES, dataVisualization, userdataVisualization } from '../actions/Constants';
 
-const dataVisualizationReducer = (state = { data: 'data' },{ type, payload }) => {
+const dataVisualizationReducer = (state = { data: 'data' }, { type, payload }) => {
   switch (type) {
     case dataVisualization.CIRCOS_REQUEST:
       return {
         ...state,
-        circosSummary: payload,
+        circosSummary: payload
       };
-    case dataVisualization.CLEAR_CIRCOS_INFORMATION:
-    { const { circosSummary, ...restt } = state;
-    /* eslint-disable no-param-reassign */
+    case dataVisualization.CLEAR_CIRCOS_INFORMATION: {
+      const {...restt } = state;
+      /* eslint-disable no-param-reassign */
       state = restt;
       return state;
     }
     case dataVisualization.ONCO_REQUEST:
       return {
         ...state,
-        oncoSummary: payload,
+        oncoSummary: payload
       };
     case dataVisualization.KEYS_REQUEST:
       return {
         ...state,
-        Keys: payload,
+        Keys: payload
       };
     case dataVisualization.LOLLIPOP_REQUEST:
       return {
         ...state,
-        lollipopSummary: payload,
+        lollipopSummary: payload
       };
     case dataVisualization.REQUEST_DONE:
       return {
-        ...state,
+        ...state
       };
     case dataVisualization.VOLCANO_REQUEST:
       return {
         ...state,
-        volcanoSummary: payload,
+        volcanoSummary: payload
       };
     case dataVisualization.USER_DEFINED_VOLCANO_REQUEST:
       return {
         ...state,
-        userDefinedVolcanoSummary: payload,
+        userDefinedVolcanoSummary: payload
       };
     case dataVisualization.HEATMAP_REQUEST:
       return {
         ...state,
-        heatmapSummary: payload,
+        heatmapSummary: payload
       };
     case dataVisualization.HEATMAP_REQUEST_STATUS_CODE:
       return {
         ...state,
-        heatmapSummaryStatusCode: payload,
+        heatmapSummaryStatusCode: payload
       };
     case dataVisualization.SURVIVAL_REQUEST:
       return {
         ...state,
-        survivalSummary: payload,
+        survivalSummary: payload
       };
 
     case dataVisualization.CLEAR_SURVIVAL_IMAGE:
       return {
         ...state,
-        survivalSummary: '',
+        survivalSummary: ''
       };
     case dataVisualization.IGV_REQUEST:
       return {
         ...state,
-        igvSummary: payload,
+        igvSummary: payload
       };
     case userdataVisualization.USER_DATA_PROJECT_TABLE:
       return {
         ...state,
-        userProjectsDataTable: payload,
+        userProjectsDataTable: payload
       };
     case dataVisualization.CIRCOS_SAMPLES_RNID:
       return {
         ...state,
-        circosSanpleRnidListData: payload,
+        circosSanpleRnidListData: payload
       };
     case dataVisualization.SCATTER_REQUEST:
       return {
         ...state,
-        scatterData: payload,
+        scatterData: payload
       };
     case dataVisualization.CHECK_GENE_FUSION_REQUEST:
       return {
         ...state,
-        fusionGenes: payload,
+        fusionGenes: payload
       };
     case dataVisualization.FUSION_REQUEST:
       return {
         ...state,
-        fusionData: payload,
+        fusionData: payload
       };
     case dataVisualization.BOX_REQUEST:
       return {
         ...state,
-        boxData: payload,
+        boxData: payload
       };
     case dataVisualization.ONCO_IMAGES_INFORMATION:
       return {
         ...state,
-        oncoSampleImagesData: payload,
+        oncoSampleImagesData: payload
       };
     case dataVisualization.CIRCOS_TIMELINE_GRAPH:
       return {
         ...state,
-        circosTimelieTableData: payload,
+        circosTimelieTableData: payload
       };
 
     case dataVisualization.PASS_ENCODE_ID:
       return {
         ...state,
-        passKey: payload,
+        passKey: payload
       };
     case dataVisualization.CHECK_USER:
       return {
         ...state,
-        checkUserName: payload,
+        checkUserName: payload
       };
     case dataVisualization.REGISTER_REQUEST:
       return {
         ...state,
-        registerData: payload,
+        registerData: payload
       };
     case dataVisualization.KMEAN_REQUEST:
       return {
         ...state,
-        kmeanSummary: payload,
+        kmeanSummary: payload
       };
     case dataVisualization.CLINICALMAXMIN_REQUEST:
       return {
         ...state,
-        clinicalMaxMinInfo: payload,
+        clinicalMaxMinInfo: payload
       };
     case dataVisualization.RNI_DATA:
       return {
         ...state,
-        rniData: payload,
+        rniData: payload
       };
     case dataVisualization.FUSIONVENN_REQUEST:
       return {
         ...state,
-        VennData: payload,
+        VennData: payload
       };
-    case dataVisualization.FUSIONVENN_CLEAR:
-    {
-      const { VennData, ...remaining } = state;
-      /* eslint-disable no-param-reassign */
+    case dataVisualization.FUSIONVENN_CLEAR: {
+      const {...remaining } = state;
       state = remaining;
       return state;
     }
     case dataVisualization.FUSION_EXON_REQUEST:
       return {
         ...state,
-        ExonData: payload,
+        ExonData: payload
       };
     case dataVisualization.FUSIONVENN_RNID:
       return {
         ...state,
-        VennRnid: payload,
+        VennRnid: payload
       };
     case dataVisualization.FUSIONTABLE_REQUEST:
       return {
         ...state,
-        FusionTable: payload,
+        FusionTable: payload
       };
     case CLEAR_ALL_STATES:
       return {};
     case userdataVisualization.USER_DATA_PROJECT_TABLE_PROJECT:
       return {
         ...state,
-        userDataProjectTable: payload,
+        userDataProjectTable: payload
       };
     case userdataVisualization.USER_DEFINED_FILTER:
       return {
         ...state,
-        userDefinedFilter: payload,
+        userDefinedFilter: payload
       };
     case dataVisualization.SAMPLES_COUNT:
       return {
         ...state,
-        samplesCount: payload,
+        samplesCount: payload
       };
     case dataVisualization.UPDATE_DOWNLOAD_VISUALIZATION_PURPOSE:
       return {
         ...state,
-        UpdateDownloadVisualizationPurpose: payload,
+        UpdateDownloadVisualizationPurpose: payload
       };
 
     case dataVisualization.PDF_REPORT:
       return {
         ...state,
-        PDFReport: payload,
+        PDFReport: payload
       };
 
-    case dataVisualization.CLEAR_PDF_LINK:
-    {
+    case dataVisualization.CLEAR_PDF_LINK: {
       /* eslint-disable no-param-reassign */
-      const { PDFReport, ...rest } = state;
+      const {...rest } = state;
       state = rest;
       return state;
     }

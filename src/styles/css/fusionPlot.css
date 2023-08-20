@@ -1,24 +1,23 @@
 .ChromosomeFusionPlot {
-    display: grid;
-    position: relative;
-    padding: 1.25rem;
-    margin-bottom: 9rem;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: grid;
+  position: relative;
+  padding: 1.25rem;
+  margin-bottom: 9rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .ChromosomeFusionPlotDivision {
-    display: grid;
-    overflow: hidden;
-    width: 100%;
+  display: grid;
+  overflow: hidden;
+  width: 100%;
 }
 
 .FusionNameRE {
-    float: right;
-    justify-content: flex-end;
+  float: right;
+  justify-content: flex-end;
 }
 
 .FusionNameLS {
-    float: left;
-    justify-content: flex-start;
-
+  float: left;
+  justify-content: flex-start;
 }

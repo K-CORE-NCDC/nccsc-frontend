@@ -38,20 +38,20 @@
   text-overflow: ellipsis;
 }
 
-.visual .txtBox .txtBox_child1{
+.visual .txtBox .txtBox_child1 {
   width: 100%;
 }
-.visual .txtBox .txtBox_child2{
+.visual .txtBox .txtBox_child2 {
   width: 25%;
 }
-.mainVisual .visual .main_box{
+.mainVisual .visual .main_box {
   flex-direction: row;
 }
-.clearfix{
-  clear:both;
+.clearfix {
+  clear: both;
 }
 
-.tab .btn{
+.tab .btn {
   display: none;
 }
 
@@ -87,7 +87,8 @@
   .codeCertification .inputText {
     width: calc(100% - 168px);
   }
-  .boardList.api .boardCell:nth-child(7), .boardList.api .boardCell:nth-child(8) {
+  .boardList.api .boardCell:nth-child(7),
+  .boardList.api .boardCell:nth-child(8) {
     display: none;
   }
   .visualContents .flex {
@@ -237,7 +238,10 @@
     order: 2;
     font-size: 14px;
   }
-  .boardList.results .boardCell:nth-child(2), .boardList.results .boardCell:nth-child(3), .boardList.results .boardCell:nth-child(4), .boardList.results .boardCell:nth-child(7) {
+  .boardList.results .boardCell:nth-child(2),
+  .boardList.results .boardCell:nth-child(3),
+  .boardList.results .boardCell:nth-child(4),
+  .boardList.results .boardCell:nth-child(7) {
     order: 3;
   }
   .imgTitleBox.remote {
@@ -250,16 +254,20 @@
     width: calc(33.33% - 48px);
     margin-top: 32px;
   }
-  .remoteProcess ul li:nth-child(1), .remoteProcess ul li:nth-child(2), .remoteProcess ul li:nth-child(3) {
+  .remoteProcess ul li:nth-child(1),
+  .remoteProcess ul li:nth-child(2),
+  .remoteProcess ul li:nth-child(3) {
     margin-top: 0;
     margin-right: 48px;
   }
-  .remoteProcess ul li:nth-child(4), .remoteProcess ul li:nth-child(5), .remoteProcess ul li:nth-child(6) {
+  .remoteProcess ul li:nth-child(4),
+  .remoteProcess ul li:nth-child(5),
+  .remoteProcess ul li:nth-child(6) {
     margin-left: 48px;
     margin-right: 0;
   }
   .remoteProcess ul li:nth-child(4)::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 50%;
     right: 100%;
@@ -280,7 +288,8 @@
   .researchStatus01 ul li:nth-child(3) {
     margin-right: 0;
   }
-  .researchStatus01 ul li:nth-child(4), .researchStatus01 ul li:nth-child(5) {
+  .researchStatus01 ul li:nth-child(4),
+  .researchStatus01 ul li:nth-child(5) {
     width: calc(50% - 12px);
     margin-top: 24px;
   }
@@ -816,7 +825,8 @@
     display: block;
     margin-right: 0;
   }
-  .boardList.api .boardCell:nth-child(7), .boardList.api .boardCell:nth-child(8) {
+  .boardList.api .boardCell:nth-child(7),
+  .boardList.api .boardCell:nth-child(8) {
     display: inline-block;
   }
   .introduce.faqList.cancer dt {
@@ -913,10 +923,10 @@
     padding-left: 134px;
   }
   .popup.results .contentsTable,
-.popup.results tbody,
-.popup.results tr,
-.popup.results th,
-.popup.results td {
+  .popup.results tbody,
+  .popup.results tr,
+  .popup.results th,
+  .popup.results td {
     display: block;
   }
   .popup.results .contentsTable tr {
@@ -946,9 +956,9 @@
     margin-top: 8px;
   }
   .boardList.results .boardCell:nth-child(2),
-.boardList.results .boardCell:nth-child(3),
-.boardList.results .boardCell:nth-child(4),
-.boardList.results .boardCell:nth-child(7) {
+  .boardList.results .boardCell:nth-child(3),
+  .boardList.results .boardCell:nth-child(4),
+  .boardList.results .boardCell:nth-child(7) {
     display: inline-block;
     order: 3;
   }
@@ -1070,12 +1080,14 @@
   .researchStatus01 ul li:nth-child(4) {
     margin-right: 16px;
   }
-  .researchStatus01 ul li:nth-child(4), .researchStatus01 ul li:nth-child(5) {
+  .researchStatus01 ul li:nth-child(4),
+  .researchStatus01 ul li:nth-child(5) {
     display: block;
     width: calc(50% - 8px);
     margin-top: 16px;
   }
-  .researchStatus01 ul li:nth-child(4) a, .researchStatus01 ul li:nth-child(5) a {
+  .researchStatus01 ul li:nth-child(4) a,
+  .researchStatus01 ul li:nth-child(5) a {
     width: 100%;
   }
   .researchStatus02 ul li a {
@@ -1511,7 +1523,8 @@
   .historyList > ul > li:first-child {
     margin-top: 0;
   }
-  .historyList > ul > li::before, .historyList > ul > li::after {
+  .historyList > ul > li::before,
+  .historyList > ul > li::after {
     display: none;
   }
   .historyList > ul > li .year {
@@ -1814,16 +1827,16 @@
   }
 }
 @media all and (max-width: 320px) {
-  .visual .txtBox .txtBox_child1{
+  .visual .txtBox .txtBox_child1 {
     display: none;
   }
-  .visual .txtBox .txtBox_child2{
+  .visual .txtBox .txtBox_child2 {
     display: none;
   }
-  .visual .txtBox .main_child{
+  .visual .txtBox .main_child {
     display: block;
   }
-  .mainDataStatusWrap{
+  .mainDataStatusWrap {
     display: none;
   }
 
@@ -1831,7 +1844,7 @@
     display: none;
   }
 
-  .mainContents .section04 .tab ul{
+  .mainContents .section04 .tab ul {
     flex-direction: column;
   }
 
@@ -1839,13 +1852,13 @@
     flex-direction: column;
   }
 
-  .contentsTable{
+  .contentsTable {
     display: none;
   }
-  .dataSearchWrap .popularBox ul{
+  .dataSearchWrap .popularBox ul {
     height: 100%;
   }
-  .popularBox{
+  .popularBox {
     height: 100vh;
   }
   .boardList .boardCell.mobileBlock::after {
@@ -1866,7 +1879,7 @@
   }
 }
 @media all and (max-width: 1199px) {
-  .visual .txtBox .main_child{
+  .visual .txtBox .main_child {
     display: none;
   }
   .lnb {
@@ -1896,19 +1909,19 @@
   }
 }
 @media all and (max-width: 767px) {
-  .visual .txtBox .txtBox_child1{
+  .visual .txtBox .txtBox_child1 {
     width: 100%;
   }
-  .visual .txtBox .txtBox_child2{
+  .visual .txtBox .txtBox_child2 {
     width: 100%;
     padding-top: 100px;
   }
-  .mainVisual .visual .main_box{
+  .mainVisual .visual .main_box {
     flex-direction: column;
     padding-top: 100px !important;
-  } 
+  }
 
-  .mainContents .section04 .tab ul{
+  .mainContents .section04 .tab ul {
     flex-direction: column;
   }
 
@@ -1919,29 +1932,29 @@
   .tab ul {
     flex-direction: column;
   }
-  
-  .mainDataStatusWrap{
+
+  .mainDataStatusWrap {
     display: none;
   }
-  .contentsTable{
+  .contentsTable {
     display: none;
   }
-  .popularBox{
+  .popularBox {
     height: 100vh;
   }
 
-  .popularBox .contentBox{
+  .popularBox .contentBox {
     display: block;
   }
-  
-  .popularBox .contentBox .contentBox_left{
-   width: 100%;
+
+  .popularBox .contentBox .contentBox_left {
+    width: 100%;
   }
-  
-  .popularBox .contentBox .contentBox_right{
-   width: 100%;
+
+  .popularBox .contentBox .contentBox_right {
+    width: 100%;
   }
-  .dataSearchWrap .popularBox ul{
+  .dataSearchWrap .popularBox ul {
     height: 100%;
   }
   .lnb {

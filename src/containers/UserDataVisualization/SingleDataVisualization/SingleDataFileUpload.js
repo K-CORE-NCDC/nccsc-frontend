@@ -1,50 +1,38 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
-import { SingleFileUpload, clearFusionVennDaigram, clearProjectTableDataTableData, clearSingleFIleUploadState } from '../../../actions/api_actions'
-import { useSelector, useDispatch } from "react-redux";
-import Loader from '../Widgets/loader';
-import { useHistory } from 'react-router-dom'
-import { useParams } from "react-router-dom";
-import { Context } from "../../../wrapper";
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { dispatch } from "d3";
-import { userdataVisualization } from "../../../actions/Constants";
-import { DataOfFiles } from "../MultiDataVisualization/MultiFileUpload";
-
+import {
+  SingleFileUpload,
+  clearSingleFIleUploadState
+} from '../../../actions/api_actions';
+import { Context } from '../../../wrapper';
+import { DataOfFiles } from '../MultiDataVisualization/MultiFileUpload';
 
 function Modal({ showModal, toggleModal, fileName }) {
-  let fileNameImage = require(`../../../assets/images/FileScreenshots/${fileName}.png`).default
-  let fileNameFile = require(`../../../assets/files/20_samples/${fileName}.tsv`).default
-
+  let fileNameImage = require(`../../../assets/images/FileScreenshots/${fileName}.png`).default;
+  let fileNameFile = require(`../../../assets/files/20_samples/${fileName}.tsv`).default;
 
   return (
     <>
       {showModal ? (
         <>
           <div className="Toolmodal-container">
-            <div className="Toolmodal-content" style={{ maxWidth: "60vw" }}>
+            <div className="Toolmodal-content" style={{ maxWidth: '60vw' }}>
               {/*content*/}
               <div className="Toolmodal-dialog">
-                {/*header*/}
                 <div className="Toolmodal-header">
                   <h3 className="Toolmodal-title">Sample File Download</h3>
-                  <button
-                    className="Toolmodal-close-btn"
-                    onClick={() => toggleModal(false, '')}
-                  >
+                  <button className="Toolmodal-close-btn" onClick={() => toggleModal(false, '')}>
                     ×
                   </button>
                 </div>
-                {/*body*/}
                 <div className="Toolmodal-body">
                   <div className="Toolmodal-text">
-                    {/* <ul style={{ margin: "10px" }}>
-                      <li>{`This is a Sample Example File for ${fileName}`}</li>
-                    </ul> */}
                     <img src={fileNameImage} alt="ExampleFileImage" />
                     <DataOfFiles fileName={fileName} />
-                    <div className='Flex FlexDirRow' style={{ marginTop: "20px", gap: "10px" }}>
-
+                    <div className="Flex FlexDirRow" style={{ marginTop: '20px', gap: '10px' }}>
                       <p>Click on the link to download the sample file</p>
                       <a className="Tooldownload-link" href={fileNameFile} download>
                         Download
@@ -52,12 +40,8 @@ function Modal({ showModal, toggleModal, fileName }) {
                     </div>
                   </div>
                 </div>
-                {/*footer*/}
                 <div className="Toolmodal-footer">
-                  <button
-                    className="Toolmodal-close-btn"
-                    onClick={() => toggleModal(false, '')}
-                  >
+                  <button className="Toolmodal-close-btn" onClick={() => toggleModal(false, '')}>
                     Close
                   </button>
                 </div>
@@ -73,124 +57,118 @@ function Modal({ showModal, toggleModal, fileName }) {
 
 const SingleDataFileUpload = ({ updateComponentNumber }) => {
   const projectNameRef = useRef(null);
-  const history = useHistory()
+  const history = useHistory();
   const response = useSelector((data) => data.homeReducer.fileUploadData);
-  const dispatch = useDispatch()
-  const [error, setError] = useState(false)
-  const [error_message, setErrorMessage] = useState({ type: "", message: "" })
-  const [loader, setLoader] = useState({})
-  const [selectedFiles, setSelectedFiles] = useState([])
-  const [uploadFile, setUploadFile] = useState({})
-  const projectName = "Project_name"
-  const [formSbubmitButtonText, setFormSubmitButtonText] = useState("upload")
-  const [initialInputState, setInitialInputState] = useState(undefined)
+  const dispatch = useDispatch();
+  const [error, setError] = useState(false);
+  const [error_message, setErrorMessage] = useState({ type: '', message: '' });
+  const [loader, setLoader] = useState({});
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [uploadFile, setUploadFile] = useState({});
+  const projectName = 'Project_name';
+  const [formSbubmitButtonText, setFormSubmitButtonText] = useState('upload');
+  const [initialInputState, setInitialInputState] = useState(undefined);
   let { tab } = useParams();
-  const inputRef = useRef(null)
-  const allowedTabs = ["circos", "lollipop", "CNV", "heatmap", "box", "survival", "variant-summary"]
+  const inputRef = useRef(null);
+  const allowedTabs = [
+    'circos',
+    'lollipop',
+    'CNV',
+    'heatmap',
+    'box',
+    'survival',
+    'variant-summary'
+  ];
 
-
-  // useEffect(() => {
-  //   dispatch({
-  //     type: userdataVisualization.USER_DATA_PROJECT_TABLE,
-  //     payload: {},
-  //   });
-  // },[]) 
 
   const charts = {
-    "circos": {
-      rna: "RNA",
-      dna_mutation: "DNA Mutation",
-      methylation: "DNA Methylation",
-      proteome: "proteome",
-      cnv: "CNV",
-      fusion: "fusion",
+    circos: {
+      rna: 'RNA',
+      dna_mutation: 'DNA Mutation',
+      methylation: 'DNA Methylation',
+      proteome: 'proteome',
+      cnv: 'CNV',
+      fusion: 'fusion'
     },
-    "lollipop": {
-      phospho: "phospho",
-      dna_mutation: "DNA Mutation",
+    lollipop: {
+      phospho: 'phospho',
+      dna_mutation: 'DNA Mutation'
     },
-    "CNV": {
-      cnv: "CNV",
+    CNV: {
+      cnv: 'CNV'
     },
-    "heatmap": {
-      rna: "RNA",
-      methylation: "DNA Methylation",
-      proteome: "proteome",
-      phospho: "phospho",
+    heatmap: {
+      rna: 'RNA',
+      methylation: 'DNA Methylation',
+      proteome: 'proteome',
+      phospho: 'phospho'
     },
-    "box": {
-      proteome: "proteome",
-      rna: "RNA",
+    box: {
+      proteome: 'proteome',
+      rna: 'RNA'
     },
-    "survival": {
-      clinical_information: "Clinical Information",
+    survival: {
+      clinical_information: 'Clinical Information'
     },
-    "variant-summary": {
-      dna_mutation: "DNA Mutation",
-    },
-
-  }
+    'variant-summary': {
+      dna_mutation: 'DNA Mutation'
+    }
+  };
 
   const [selectedFileSampleType, setSelectedFileSampleType] = useState(() => {
-    let firstKey = ''
+    let firstKey = '';
     if (allowedTabs.includes(tab) && Object.keys(charts).includes(tab))
-      firstKey = Object.keys(charts[tab])[0]
-    return { 1: firstKey }
-  })
+      firstKey = Object.keys(charts[tab])[0];
+    return { 1: firstKey };
+  });
   const [dropdownOptionsSelected, setDropdownOptionsSelected] = useState(() => {
-    let object = {}
-    if (allowedTabs.includes(tab) && Object.keys(charts).includes(tab))
-      object = charts[tab]
-    return { 1: object }
-  }
-  )
+    let object = {};
+    if (allowedTabs.includes(tab) && Object.keys(charts).includes(tab)) object = charts[tab];
+    return { 1: object };
+  });
 
-  const [dropdownOptions, setDropdownOptions] = useState(() => {
-    let object = {}
-    if (allowedTabs.includes(tab) && Object.keys(charts).includes(tab))
-      object = charts[tab]
-    return object
-  })
+  const dropdownOptions = (() => {
+    let object = {};
+    if (allowedTabs.includes(tab) && Object.keys(charts).includes(tab)) object = charts[tab];
+    return object;
+  });
 
   let fileNames = {
-    clinica_information: "ClinicalInformation",
-    cnv: "CNV",
-    dna_mutation: "DnaMutation",
-    rna: "RNA",
-    fusion: "Fusion",
-    methylation: "Methylation",
-    proteome: "Proteome",
-    phospho: "Phospho"
-  }
+    clinica_information: 'ClinicalInformation',
+    cnv: 'CNV',
+    dna_mutation: 'DnaMutation',
+    rna: 'RNA',
+    fusion: 'Fusion',
+    methylation: 'Methylation',
+    proteome: 'Proteome',
+    phospho: 'Phospho'
+  };
 
-  const [showModal, setShowModal] = useState(false)
-  const [fileName, setFileName] = useState(fileNames[selectedFileSampleType['1']])
-  const [fileDataAsTableAll, setFileDataAsTableAll] = useState({})
-  const [showFileDataTable, setShowFileDataTable] = useState(false)
-  const [disableUploadButton, setDisableUploadButton] = useState(true)
-  const [borderRed, setBorderRed] = useState(false)
+  const [showModal, setShowModal] = useState(false);
+  const [fileName, setFileName] = useState(fileNames[selectedFileSampleType['1']]);
+  const [fileDataAsTableAll, setFileDataAsTableAll] = useState({});
+  const [showFileDataTable, setShowFileDataTable] = useState(false);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const [Englishlanguage, setEnglishlanguage] = useState(true);
   const context = useContext(Context);
 
-
   let toggleModal = (status, file) => {
-    setShowModal(status)
-    setFileName(file)
-  }
+    setShowModal(status);
+    setFileName(file);
+  };
 
   useEffect(() => {
     if (!allowedTabs.includes(tab)) {
-      history.push('/notfound/')
+      history.push('/notfound/');
     }
-  }, [tab])
+  }, [tab]);
 
   useEffect(() => {
-    dispatch(clearSingleFIleUploadState())
-  }, [])
+    dispatch(clearSingleFIleUploadState());
+  }, []);
 
   useEffect(() => {
-    if (context["locale"] === "kr-KO") {
+    if (context['locale'] === 'kr-KO') {
       setKoreanlanguage(true);
       setEnglishlanguage(false);
     } else {
@@ -202,322 +180,340 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
   useEffect(() => {
     if (formSbubmitButtonText === 'upload' || formSbubmitButtonText === '업로드') {
       if (koreanlanguage) {
-        setFormSubmitButtonText('업로드')
-      }
-      else {
-        setFormSubmitButtonText('upload')
+        setFormSubmitButtonText('업로드');
+      } else {
+        setFormSubmitButtonText('upload');
       }
     }
-  }, [koreanlanguage, Englishlanguage])
+  }, [koreanlanguage, Englishlanguage]);
 
   useEffect(() => {
-    setErrorMessage({ type: "", message: "" })
-  }, [])
+    setErrorMessage({ type: '', message: '' });
+  }, []);
 
   const resetStates = () => {
     // dispatch(clearSingleFIleUploadState())
     inputRef.current.value = null;
     setSelectedFileSampleType({
-      1: "clinical_information",
-    })
+      1: 'clinical_information'
+    });
 
     setDropdownOptionsSelected(() => {
-      let object = {}
-      if (allowedTabs.includes(tab) && Object.keys(charts).includes(tab))
-        object = charts[tab]
-      return { 1: object }
-    })
-    setSelectedFiles([])
-    setUploadFile([])
-  }
+      let object = {};
+      if (allowedTabs.includes(tab) && Object.keys(charts).includes(tab)) object = charts[tab];
+      return { 1: object };
+    });
+    setSelectedFiles([]);
+    setUploadFile([]);
+  };
 
   useEffect(() => {
-    if (Object.values(loader).some(element => (element === 'failed'))) {
+    if (Object.values(loader).some((element) => element === 'failed')) {
       if (koreanlanguage) {
-        setFormSubmitButtonText('Retry')
-      }
-      else {
-
-        setFormSubmitButtonText('다시 해 보다')
+        setFormSubmitButtonText('Retry');
+      } else {
+        setFormSubmitButtonText('다시 해 보다');
       }
     }
-  }, [loader])
+  }, [loader]);
 
   const updateFileTypeOnChange = (e) => {
-    const divName = e.target.name
-    const divValue = e.target.value
-    setDropdownOptionsSelected(prevState => ({
+    const divName = e.target.name;
+    const divValue = e.target.value;
+    setDropdownOptionsSelected((prevState) => ({
       ...prevState,
       [divValue]: dropdownOptions[divValue]
-    }))
+    }));
     setSelectedFileSampleType((prevState) => ({
       ...prevState,
       [divName]: divValue
-    }))
+    }));
 
-    setFileName(fileNames[divValue])
-  }
-
+    setFileName(fileNames[divValue]);
+  };
 
   useEffect(() => {
-    let filesUploadedStatus = undefined
+    let filesUploadedStatus = undefined;
     if (response) {
-      filesUploadedStatus = response.files
+      filesUploadedStatus = response.files;
     }
 
     if (filesUploadedStatus) {
-      Object.keys(filesUploadedStatus).forEach(fileType => {
+      Object.keys(filesUploadedStatus).forEach((fileType) => {
         if (filesUploadedStatus[fileType]) {
-          setLoader((prevState) => ({ ...prevState, [fileType]: 'success' }))
+          setLoader((prevState) => ({ ...prevState, [fileType]: 'success' }));
         } else {
-          setLoader((prevState) => ({ ...prevState, [fileType]: 'failed' }))
+          setLoader((prevState) => ({ ...prevState, [fileType]: 'failed' }));
         }
-      })
+      });
     }
     if (filesUploadedStatus) {
-      let errorModalData = []
-      Object.keys(filesUploadedStatus).forEach(element => {
+      let errorModalData = [];
+      Object.keys(filesUploadedStatus).forEach((element) => {
         if (filesUploadedStatus[element] === false) {
-          let errorFileName = '' // uploadFile[element]['file'].name
-          Object.keys(uploadFile).forEach(e => {
+          let errorFileName = ''; // uploadFile[element]['file'].name
+          Object.keys(uploadFile).forEach((e) => {
             if (uploadFile[e].type === element) {
-              errorFileName = uploadFile[e]['file'].name
+              errorFileName = uploadFile[e]['file'].name;
             }
-          })
+          });
           errorModalData.push(
             <div key={element} className="text-black">
               <h6 className="text-red-500">{errorFileName}</h6>
               is invalid, check sample file for reference
             </div>
-          )
+          );
         }
-      })
+      });
 
-      if (Object.values(filesUploadedStatus).some(element => (element === false))) {
+      if (Object.values(filesUploadedStatus).some((element) => element === false)) {
         if (koreanlanguage) {
-          setFormSubmitButtonText('Retry')
-        }
-        else {
-
-          setFormSubmitButtonText('다시 해 보다')
+          setFormSubmitButtonText('Retry');
+        } else {
+          setFormSubmitButtonText('다시 해 보다');
         }
       } else {
         if (koreanlanguage) {
-          setFormSubmitButtonText('시각화')
-        }
-        else {
-
-          setFormSubmitButtonText('Visualize')
+          setFormSubmitButtonText('시각화');
+        } else {
+          setFormSubmitButtonText('Visualize');
         }
       }
     }
     if (filesUploadedStatus && filesUploadedStatus.table) {
-      setFileDataAsTableAll(filesUploadedStatus.table)
+      setFileDataAsTableAll(filesUploadedStatus.table);
     }
-  }, [response])
+  }, [response]);
 
   useEffect(() => {
     if (fileDataAsTableAll) {
-      let currentRenderedTable = Object.keys(fileDataAsTableAll)
+      let currentRenderedTable = Object.keys(fileDataAsTableAll);
       if (currentRenderedTable.length > 0) {
-        setShowFileDataTable(true)
+        setShowFileDataTable(true);
       }
     }
-  }, [fileDataAsTableAll])
+  }, [fileDataAsTableAll]);
+
+
 
   useEffect(() => {
-    if (projectName) {
-      if (selectedFiles.length === Object.keys(selectedFileSampleType).length) {
-        setDisableUploadButton(false)
-      } else {
-        setDisableUploadButton(true)
-      }
-    } else {
-      setDisableUploadButton(true)
-    }
-  }, [projectName, selectedFiles, selectedFileSampleType])
-
-  useEffect(() => {
-    if (projectName.length > 0) {
-      setBorderRed(false)
-    }
-  }, [projectName])
-
-  useEffect(() => {
-    Object.keys(uploadFile).forEach(element => {
+    Object.keys(uploadFile).forEach((element) => {
       if (uploadFile[element].type !== selectedFileSampleType[element]) {
-        setUploadFile(prevState => ({
+        setUploadFile((prevState) => ({
           ...prevState,
           [element]: { file: prevState[element].file, type: selectedFileSampleType[element] }
-        }))
+        }));
       }
-    })
-
-  }, [selectedFileSampleType])
+    });
+  }, [selectedFileSampleType]);
 
   useEffect(() => {
-    let firstInput = []
+    let firstInput = [];
 
-    Object.keys(selectedFileSampleType).forEach(key => {
+    Object.keys(selectedFileSampleType).forEach((key) => {
+      firstInput.push(
+        <>
+          <dl>
+            <dt>&nbsp;</dt>
+            <dd>
+              <button
+                onClick={() => toggleModal(true, fileName)}
+                className="ToolModalBtn"
+                style={{ float: 'right' }}
+              >
+                <InforIcon />
+              </button>
+            </dd>
+          </dl>
+          <dl key={'dl1-' + key} className="boardSearchBox">
+            <dt>
+              {' '}
+              <FormattedMessage id="selectType" defaultMessage="Select Type" />
+            </dt>
+            <dd className="selectBox select Flex">
+              <select
+                onChange={updateFileTypeOnChange}
+                name={key}
+                defaultChecked={selectedFileSampleType[key]}
+                value={selectedFileSampleType[key]}
+                className="select-color w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3"
+              >
+                {Object.keys(dropdownOptionsSelected[key]).map((type) => (
+                  <option className="text-gray-900" key={type} value={type}>
+                    {dropdownOptionsSelected[key][type]}
+                  </option>
+                ))}
+              </select>
+            </dd>
+          </dl>
+          <dl key={'dl2-' + key}>
+            <dt>&nbsp;</dt>
+            <dd className="inputText" style={{ paddingTop: '2%' }}>
+              <label className="select-color w-full block text-right border focus:outline-none border-b-color focus:ring focus:border-blue-300 p-4 mt-3">
+                <input
+                  type="file"
+                  className="w-full"
+                  data={key}
+                  name={selectedFileSampleType[key]}
+                  id="user-file-input"
+                  filename={key}
+                  onChange={file_Upload_}
+                  ref={inputRef}
+                />
+              </label>
+            </dd>
+          </dl>
+        </>
+      );
+    });
+    setInitialInputState(firstInput);
+  }, [selectedFileSampleType, loader, selectedFiles]);
 
-      firstInput.push(<>
-        <dl>
-          <dt>&nbsp;</dt>
-          <dd>
-            <button onClick={() => toggleModal(true, fileName)} className="ToolModalBtn" style={{ float: "right" }}>
-              <InforIcon />
-            </button>
-          </dd>
-        </dl>
-        <dl key={'dl1-' + key} className="boardSearchBox">
-          <dt> <FormattedMessage id="selectType" defaultMessage='Select Type' /></dt>
-          <dd className="selectBox select Flex">
-            <select onChange={updateFileTypeOnChange}
-              name={key}
-              defaultChecked={selectedFileSampleType[key]}
-              value={selectedFileSampleType[key]}
-              className='select-color w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3'>
-
-              {Object.keys(dropdownOptionsSelected[key]).map(type => (
-                <option className='text-gray-900' key={type} value={type}>{dropdownOptionsSelected[key][type]}</option>
-              ))}
-            </select>
-          </dd>
-        </dl>
-        <dl key={'dl2-' + key}>
-          <dt>&nbsp;</dt>
-          <dd className='inputText' style={{ paddingTop: '2%' }}>
-            <label
-              className="select-color w-full block text-right border focus:outline-none border-b-color focus:ring focus:border-blue-300 p-4 mt-3">
-              <input type='file' className="w-full" data={key} name={selectedFileSampleType[key]} id="user-file-input" filename={key} onChange={file_Upload_} ref={inputRef} />
-            </label>
-          </dd>
-        </dl>
-      </>
-      )
-    })
-    setInitialInputState(firstInput)
-  }, [selectedFileSampleType, loader, selectedFiles])
-
-
-  const file_Upload_ = (e, div_name) => {
+  const file_Upload_ = (e) => {
     let selected_files = selectedFiles;
     let type_name = e.target.name;
-    let divKey = e.target.getAttribute('filename')
+    let divKey = e.target.getAttribute('filename');
 
     if (type_name && e.target.files) {
       if (e.target.files[0] && 'name' in e.target.files[0]) {
-        let file_name = e.target.files[0]['name']
-        selectedFiles.push(file_name)
-        setUploadFile(prevState => ({
+        let file_name = e.target.files[0]['name'];
+        selectedFiles.push(file_name);
+        setUploadFile((prevState) => ({
           ...prevState,
           [divKey]: { type: type_name, file: e.target.files[0] }
         }));
-        setSelectedFiles([...selected_files])
+        setSelectedFiles([...selected_files]);
       }
     }
-  }
+  };
   const on_upload = () => {
-    let FilesData = uploadFile
+    let FilesData = uploadFile;
     FilesData = Object.keys(FilesData).reduce((acc, key) => {
       const { type, file } = uploadFile[key];
       acc[type] = { type, file };
       return acc;
     }, {});
-    setUploadFile(FilesData)
+    setUploadFile(FilesData);
     if (Object.keys(FilesData).length > 0) {
-      dispatch(SingleFileUpload(FilesData, projectName))
-      updateComponentNumber(1)
+      dispatch(SingleFileUpload(FilesData, projectName));
+      updateComponentNumber(1);
       for (let key in uploadFile) {
-        setLoader((prevState) => ({ ...prevState, [uploadFile[key].type]: 'loader' }))
+        setLoader((prevState) => ({ ...prevState, [uploadFile[key].type]: 'loader' }));
       }
-    }
-    else {
+    } else {
       Swal.fire({
         title: 'Warning',
-        text: "Select File.",
+        text: 'Select File.',
         icon: 'warning',
         confirmButtonColor: '#003177',
         confirmButtonText: 'Ok',
         allowOutsideClick: false
-      })
+      });
     }
-  }
-
+  };
 
   const formSubmitButtonActions = () => {
     if (projectName.length > 0) {
       if (formSbubmitButtonText === 'upload' || formSbubmitButtonText === '업로드') {
-        on_upload()
+        on_upload();
       }
       if (formSbubmitButtonText === 'retry' || formSbubmitButtonText === '다시 해 보다') {
-        on_upload()
+        on_upload();
       }
       if (formSbubmitButtonText === 'visualize') {
-        history.push(`/visualise-singledata/circos/${response['serializer'].id}`)
+        history.push(`/visualise-singledata/circos/${response['serializer'].id}`);
       }
     } else {
-      projectNameRef.current.focus()
-      setBorderRed(true)
+      projectNameRef.current.focus();
     }
-  }
+  };
 
   const InforIcon = () => {
     return (
-      <svg xmlns="http://www.w3.org/2000/svg" style={{ width: "1.5rem", height: "1.5rem" }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        style={{ width: '1.5rem', height: '1.5rem' }}
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+        />
       </svg>
-    )
-  }
+    );
+  };
 
   return (
     <>
-
-      {!showFileDataTable &&
+      {!showFileDataTable && (
         <div className="auto ">
           <div>
-            {showModal && <Modal showModal={showModal} toggleModal={toggleModal} fileName={fileName} />}
+            {showModal && (
+              <Modal showModal={showModal} toggleModal={toggleModal} fileName={fileName} />
+            )}
           </div>
-          {error ? <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-            <strong className="font-bold">{error_message['type']}</strong>
-            <span className="block sm:inline">  {error_message['message']}</span>
-            <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
-              <svg className="fill-current h-6 w-6 text-red-500" role="button"
-                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                onClick={(e) => setError(false)}><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" /></svg>
-            </span>
-          </div> : ""}
+          {error ? (
+            <div
+              className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+              role="alert"
+            >
+              <strong className="font-bold">{error_message['type']}</strong>
+              <span className="block sm:inline"> {error_message['message']}</span>
+              <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
+                <svg
+                  className="fill-current h-6 w-6 text-red-500"
+                  role="button"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  onClick={() => setError(false)}
+                >
+                  <title>Close</title>
+                  <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+                </svg>
+              </span>
+            </div>
+          ) : (
+            ''
+          )}
 
-          <div className="formBox">
-            {initialInputState}
-          </div>
+          <div className="formBox">{initialInputState}</div>
           <div className="bottomBtns">
             <div className="flex">
               <button onClick={resetStates} className="btn btnGray bdBtn">
                 <FormattedMessage id="Reset" defaultMessage="Reset" />
-              </button>&nbsp;&nbsp;&nbsp;&nbsp;
+              </button>
+              &nbsp;&nbsp;&nbsp;&nbsp;
               <button className="btn btnPrimary" onClick={formSubmitButtonActions}>
                 {formSbubmitButtonText}
               </button>
             </div>
           </div>
         </div>
-      }
-      {showFileDataTable &&
-        <div >
-          <button onClick={() => setShowFileDataTable(false)} className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
+      )}
+      {showFileDataTable && (
+        <div>
+          <button
+            onClick={() => setShowFileDataTable(false)}
+            className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
           >
             back to upload
           </button>
-          <button onClick={() => history.push(`/visualise-singledata/circos/${response['serializer'].id}`)} className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
+          <button
+            onClick={() =>
+              history.push(`/visualise-singledata/circos/${response['serializer'].id}`)
+            }
+            className={`capitalize bg-main-blue hover:bg-main-blue mb-3 w-80 h-20 text-white ml-2 font-bold py-2 px-4 border border-blue-700 rounded `}
           >
             visualize
           </button>
         </div>
-      }
-
+      )}
     </>
-  )
-}
+  );
+};
 
-export default SingleDataFileUpload
+export default SingleDataFileUpload;

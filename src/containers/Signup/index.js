@@ -1,24 +1,24 @@
-import React, { useState, useEffect, useContext } from "react";
-import MemberShip from "./MemberShip";
-import TermsandConditions from "./TermsandConditions";
-import SigninComplete from "./SigninComplete";
-import "../../styles/SignupStyles.css";
-import { CheckCircleIcon } from "@heroicons/react/outline";
-import { Context } from "../../wrapper";
+import React, { useState, useEffect, useContext } from 'react';
+import MemberShip from './MemberShip';
+import TermsandConditions from './TermsandConditions';
+import SigninComplete from './SigninComplete';
+import '../../styles/SignupStyles.css';
+import { CheckCircleIcon } from '@heroicons/react/outline';
+import { Context } from '../../wrapper';
 const SignupComponent = () => {
   const [currentStep, setcurrentStep] = useState(0);
   const [widthofProgress, setwidthofprogress] = useState(0);
 
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const context = useContext(Context);
-  
+
   useEffect(() => {
-    if (context["locale"] === "kr-KO") {
+    if (context['locale'] === 'kr-KO') {
       setKoreanlanguage(true);
     } else {
       setKoreanlanguage(false);
     }
-  },[context]);
+  }, [context]);
 
   useEffect(() => {
     if (currentStep === 0) {
@@ -33,24 +33,13 @@ const SignupComponent = () => {
   let showStep = (step) => {
     switch (step) {
       case 0:
-        return (
-          <TermsandConditions step={currentStep} changestep={changeStep}></TermsandConditions>
-        );
+        return <TermsandConditions step={currentStep} changestep={changeStep}></TermsandConditions>;
       case 1:
-        return (
-          <MemberShip step={currentStep} changestep={changeStep}></MemberShip>
-        );
+        return <MemberShip step={currentStep} changestep={changeStep}></MemberShip>;
       case 2:
-        return (
-          <SigninComplete
-            step={currentStep}
-            changestep={changeStep}
-          ></SigninComplete>
-        );
+        return <SigninComplete step={currentStep} changestep={changeStep}></SigninComplete>;
       default:
-        return (
-          <TermsandConditions step={currentStep} changestep={changeStep}></TermsandConditions>
-        );
+        return <TermsandConditions step={currentStep} changestep={changeStep}></TermsandConditions>;
     }
   };
 
@@ -63,16 +52,15 @@ const SignupComponent = () => {
       <div className="Layout">
         <div className={`progressbar`}>
           <div
-            className={"progress"}
+            className={'progress'}
             style={{
-              width: `${widthofProgress}%`,
+              width: `${widthofProgress}%`
             }}
             id="Member terms"
           ></div>
 
           <div
-            className={`progress-step ${currentStep >= 0 ? "progress-step-active" : ""
-              }`}
+            className={`progress-step ${currentStep >= 0 ? 'progress-step-active' : ''}`}
             data-title={koreanlanguage ? '이용약관' : 'Terms'}
           >
             {currentStep > 0 && <CheckCircleIcon></CheckCircleIcon>}
@@ -84,9 +72,8 @@ const SignupComponent = () => {
           </div>
 
           <div
-            className={`progress-step ${currentStep >= 1 ? "progress-step-active" : ""
-              }`}
-              data-title={koreanlanguage ? '등록' : 'Registration'}
+            className={`progress-step ${currentStep >= 1 ? 'progress-step-active' : ''}`}
+            data-title={koreanlanguage ? '등록' : 'Registration'}
           >
             {currentStep <= 1 && (
               <div className="stepNumber displayNumber">
@@ -97,9 +84,8 @@ const SignupComponent = () => {
           </div>
 
           <div
-            className={`progress-step ${currentStep >= 2 ? "progress-step-active" : ""
-              }`}
-              data-title={koreanlanguage ? '승인' : 'Approval'}
+            className={`progress-step ${currentStep >= 2 ? 'progress-step-active' : ''}`}
+            data-title={koreanlanguage ? '승인' : 'Approval'}
           >
             <div className="stepNumber displayNumber">
               <span>3</span>

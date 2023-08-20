@@ -1,28 +1,26 @@
-import {isSessionAndSessionData} from '../actions/api_actions'
+import { isSessionAndSessionData } from '../actions/api_actions';
 export const getCookie = (name) => {
-    
-    const cookies = document.cookie.split(';');
-    // console.log('cookies',cookies);
-    for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        if (cookie.startsWith(name + '=')) {
-            return cookie.substring(name.length + 1, cookie.length);
-        }
+  const cookies = document.cookie.split(';');
+  // console.log('cookies',cookies);
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i].trim();
+    if (cookie.startsWith(name + '=')) {
+      return cookie.substring(name.length + 1, cookie.length);
     }
+  }
 
-    return null;
+  return null;
 };
 
-export const getSession = ()=>{
-    console.log('entered here')
-    let data = isSessionAndSessionData('GET',{})
-    data.then((result) => {
-        console.log('first call')
-        if(result.status === 200){
-            return result.data.response_data
-        }
-        else{
-        return {}
-        }
-    })
-}
+export const getSession = () => {
+  console.log('entered here');
+  let data = isSessionAndSessionData('GET', {});
+  data.then((result) => {
+    console.log('first call');
+    if (result.status === 200) {
+      return result.data.response_data;
+    } else {
+      return {};
+    }
+  });
+};

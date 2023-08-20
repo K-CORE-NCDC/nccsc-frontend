@@ -1,14 +1,14 @@
-import React from "react";
+import React from 'react';
 
 const CircosPlot = (plot_type) => {
   return (
-    <div className="px-10 py-10 overflow-auto" style={{height:'60vh'}}>
-      <h1 className="pt-5 text-4xl"  >Step 1) Input clinical data :</h1>
+    <div className="px-10 py-10 overflow-auto" style={{ height: '60vh' }}>
+      <h1 className="pt-5 text-4xl">Step 1) Input clinical data :</h1>
       <h2 className="py-2 text-3xl text-green-300">Clinical data format</h2>
       <h1 className="py-4">All rows are tab-delimited.</h1>
       <h2 className="py-8">
-        The first (header) row gives the names of each clinical attribute, as
-        well as ‘sample_id’. An example first row is:
+        The first (header) row gives the names of each clinical attribute, as well as ‘sample_id’.
+        An example first row is:
       </h2>
 
       <div className="py-10">
@@ -23,8 +23,8 @@ const CircosPlot = (plot_type) => {
       </div>
 
       <p className="py-4">
-        Each following row gives the sample id, then the value for each clinical
-        attribute, or the blank which indicates that there's no data.
+        Each following row gives the sample id, then the value for each clinical attribute, or the
+        blank which indicates that there's no data.
       </p>
 
       <p>Some example data rows would then be:</p>
@@ -40,15 +40,15 @@ const CircosPlot = (plot_type) => {
           </div>
         </div>
         <div className=" py-2">
-        <div className="text-red-400 bg-red-200 flex justify-between py-4 px-4">
-          <p className="pl-2">u02</p>
-          <p className="pr-6">23</p>
-          <p className="pr-6">T0</p>
-          <p className="pr-8">no</p>
-          <p className="pr-8">no</p>
-          <p className="pr-6"></p>
+          <div className="text-red-400 bg-red-200 flex justify-between py-4 px-4">
+            <p className="pl-2">u02</p>
+            <p className="pr-6">23</p>
+            <p className="pr-6">T0</p>
+            <p className="pr-8">no</p>
+            <p className="pr-8">no</p>
+            <p className="pr-6"></p>
+          </div>
         </div>
-      </div>
         <div className=" py-2">
           <div className="text-red-400 bg-red-200 flex justify-between py-4 px-4">
             <p>u03</p>
@@ -62,11 +62,10 @@ const CircosPlot = (plot_type) => {
       </div>
 
       <p className="py-3">
-        After you upload your clinical data, you will decide the data type for
-        each column. The possible clinical data types are character, number,
-        decimal, or yes/no. If your data in a specific column does not match the
-        data type you select, the erroneous data will be highlighted in red in
-        the QC step.
+        After you upload your clinical data, you will decide the data type for each column. The
+        possible clinical data types are character, number, decimal, or yes/no. If your data in a
+        specific column does not match the data type you select, the erroneous data will be
+        highlighted in red in the QC step.
       </p>
 
       <h1 className="pt-10 pb-2 text-4xl">Step 2) Input genomic data :</h1>
@@ -74,39 +73,35 @@ const CircosPlot = (plot_type) => {
       <h1 className="py-4">All rows are tab-delimited.</h1>
       <div className="py-8">
         <p className="py-4">
-        The first (header) row gives the names of each clinical attribute, as
-        well as ‘sample_id’.
+          The first (header) row gives the names of each clinical attribute, as well as ‘sample_id’.
         </p>
-       
+
         <ol className="list-decimal px-10 py-2 pt-8">
           <li className="py-1">
-            <span className="text-red-400">sample_id:</span> &nbsp; should match
-            clinical information.
+            <span className="text-red-400">sample_id:</span> &nbsp; should match clinical
+            information.
           </li>
           <li className="py-1">
-            <span className="text-red-400">gene_name: </span> &nbsp; should be
-            given in the official gene symbol(HUGO).
+            <span className="text-red-400">gene_name: </span> &nbsp; should be given in the official
+            gene symbol(HUGO).
           </li>
           <li className="py-1">
-            <span className="text-red-400">chromosome :</span> &nbsp;
-            chromosome number (e.g. chr3).
+            <span className="text-red-400">chromosome :</span> &nbsp; chromosome number (e.g. chr3).
           </li>
           <li className="py-1">
-            <span className="text-red-400">start_position :</span> &nbsp; start
-            position of the mutation (e.g. 1573418).
+            <span className="text-red-400">start_position :</span> &nbsp; start position of the
+            mutation (e.g. 1573418).
           </li>
           <li className="py-1">
-            <span className="text-red-400">end_position : </span> &nbsp; end
-            position of the mutation (e.g. 1573418).
+            <span className="text-red-400">end_position : </span> &nbsp; end position of the
+            mutation (e.g. 1573418).
           </li>
           <li className="py-1">
-            <span className="text-red-400">variant_classification : </span>{" "}
-            &nbsp; Definition of consequences type. It has to be one of the
-            following.
+            <span className="text-red-400">variant_classification : </span> &nbsp; Definition of
+            consequences type. It has to be one of the following.
             <p className=" py-2">
-              {" "}
-              ● For a mutation event, please use one of the seven mutation types
-              below:{" "}
+              {' '}
+              ● For a mutation event, please use one of the seven mutation types below:{' '}
             </p>
             <ul className="list-disc px-20">
               <li className="py-1">
@@ -114,65 +109,58 @@ const CircosPlot = (plot_type) => {
                 chromosome number (e.g. chr3).
               </li>
               <li className="py-1">
-                <span className="text-red-400 "> Splice_Site: </span>a splice
-                site mutation.
+                <span className="text-red-400 "> Splice_Site: </span>a splice site mutation.
               </li>
               <li className="py-1">
-                <span className="text-red-400 "> In_Frame_Ins: </span>a inframe
-                insertion mutation.
+                <span className="text-red-400 "> In_Frame_Ins: </span>a inframe insertion mutation.
               </li>
               <li className="py-1">
-                <span className="text-red-400 "> In_Frame_Del: </span>a
-                frameshift insertion mutation.
-              </li>
-              <li className="py-1">
-                <span className="text-red-400 ">Frame_Shift_Del: </span>a
-                frameshift deletion mutation.
-              </li>
-              <li className="py-1">
-                <span className="text-red-400 "> Nonsense: </span>a nonsense
+                <span className="text-red-400 "> In_Frame_Del: </span>a frameshift insertion
                 mutation.
+              </li>
+              <li className="py-1">
+                <span className="text-red-400 ">Frame_Shift_Del: </span>a frameshift deletion
+                mutation.
+              </li>
+              <li className="py-1">
+                <span className="text-red-400 "> Nonsense: </span>a nonsense mutation.
               </li>
             </ul>
           </li>
           <li className="py-1">
-            <span className="text-red-400 px-20">variant_type :</span> Definition of
-            alteration type. It has to be one of the following.
+            <span className="text-red-400 px-20">variant_type :</span> Definition of alteration
+            type. It has to be one of the following.
             <p className="px-3 py-2">
-              {" "}
-              ● For a mutation event, please use one of the three mutation types
-              below:{" "}
+              {' '}
+              ● For a mutation event, please use one of the three mutation types below:{' '}
             </p>
             <ul className="list-disc pl-20">
               <li className="py-1">
-                <span className="text-red-400 "> SNP:</span>a single nucleotide
-                polymorphism.
+                <span className="text-red-400 "> SNP:</span>a single nucleotide polymorphism.
               </li>
               <li className="py-1">
-                <span className="text-red-400 "> INS: </span>an insertion
-                mutation.
+                <span className="text-red-400 "> INS: </span>an insertion mutation.
               </li>
               <li className="py-1">
-                <span className="text-red-400 "> DEL: </span>a deletion
-                mutation.
+                <span className="text-red-400 "> DEL: </span>a deletion mutation.
               </li>
             </ul>
           </li>
           <li className="py-1">
-            <span className="text-red-400 pl-20">protein_change : </span> &nbsp; an
-            amino acid change (e.g. p.R586R).
+            <span className="text-red-400 pl-20">protein_change : </span> &nbsp; an amino acid
+            change (e.g. p.R586R).
           </li>
           <li className="py-1">
-            <span className="text-red-400 pl-20">swiss_prot_acc_id : </span> &nbsp;
-            SwissProt protein accession ID (e.g. O60477).
+            <span className="text-red-400 pl-20">swiss_prot_acc_id : </span> &nbsp; SwissProt
+            protein accession ID (e.g. O60477).
           </li>
           <li className="py-1">
-            <span className="text-red-400 pl-20">annotation_transcript : </span>{" "}
-            &nbsp; Ensembl Gene ID (e.g. ENST00000449103.1).
+            <span className="text-red-400 pl-20">annotation_transcript : </span> &nbsp; Ensembl Gene
+            ID (e.g. ENST00000449103.1).
           </li>
           <li className="py-1">
-            <span className="text-red-400 pl-20">refseq_mrna_id : </span> &nbsp;
-            RefSeq mRNA ID (e.g. NM_001128432.2).
+            <span className="text-red-400 pl-20">refseq_mrna_id : </span> &nbsp; RefSeq mRNA ID
+            (e.g. NM_001128432.2).
           </li>
         </ol>
       </div>
@@ -181,24 +169,24 @@ const CircosPlot = (plot_type) => {
       <h2 className="py-5 text-2xl">All rows are tab-delimited.</h2>
       <div className="pt-2 my-4">
         <p>
-        The first (header) row gives the names of each clinical attribute, as
-        well as ‘sample_id’.</p>
+          The first (header) row gives the names of each clinical attribute, as well as ‘sample_id’.
+        </p>
         <ol className="list-decimal px-10 py-2">
           <li className="py-1">
-            <span className="text-red-400">sample_id</span> &nbsp; should match
-            clinical information.
+            <span className="text-red-400">sample_id</span> &nbsp; should match clinical
+            information.
           </li>
           <li className="py-1">
-            <span className="text-red-400">gene_name </span> &nbsp; should be
-            given in the official gene symbol(HUGO).
+            <span className="text-red-400">gene_name </span> &nbsp; should be given in the official
+            gene symbol(HUGO).
           </li>
           <li className="py-1">
-            <span className="text-red-400">gene_vl : </span> &nbsp; RNA
-            expression values (e.g. 24.74).
+            <span className="text-red-400">gene_vl : </span> &nbsp; RNA expression values (e.g.
+            24.74).
           </li>
           <li className="py-1">
-            <span className="text-red-400">z_score :</span> &nbsp; RNA
-            expression values in Z-score (e.g. -0.29075)
+            <span className="text-red-400">z_score :</span> &nbsp; RNA expression values in Z-score
+            (e.g. -0.29075)
           </li>
         </ol>
       </div>
@@ -206,27 +194,28 @@ const CircosPlot = (plot_type) => {
       <h1 className="py-2 text-green-300 my-4 text-4xl">Methylation data format</h1>
       <p>All rows are tab-delimited.</p>
       <div className="py-2">
-        <p>The first (header) row gives the names of each clinical attribute, as
-        well as ‘sample_id’.</p>
+        <p>
+          The first (header) row gives the names of each clinical attribute, as well as ‘sample_id’.
+        </p>
         <ol className="list-decimal px-10 py-2">
           <li className="py-1">
-            <span className="text-red-400">sample_id</span> &nbsp; should match
-            clinical information.
+            <span className="text-red-400">sample_id</span> &nbsp; should match clinical
+            information.
           </li>
           <li className="py-1">
-            <span className="text-red-400">gene_name </span> &nbsp; should be
-            given in the official gene symbol(HUGO).
+            <span className="text-red-400">gene_name </span> &nbsp; should be given in the official
+            gene symbol(HUGO).
           </li>
           <li className="py-1">
-            <span className="text-red-400">target_id : </span> &nbsp;
-            methylation target ID (e.g. cg00030074).
+            <span className="text-red-400">target_id : </span> &nbsp; methylation target ID (e.g.
+            cg00030074).
           </li>
           <li className="py-1">
-            <span className="text-red-400">target_type:</span> &nbsp; type of
-            samples. It has to be one of the following.
+            <span className="text-red-400">target_type:</span> &nbsp; type of samples. It has to be
+            one of the following.
             <p className="px-3 py-2">
-              {" "}
-              ● For a sample, please use either one of sample types below:{" "}
+              {' '}
+              ● For a sample, please use either one of sample types below:{' '}
             </p>
             <ul className="list-disc px-20">
               <li className="py-1"> N : Normal</li>
@@ -234,8 +223,8 @@ const CircosPlot = (plot_type) => {
             </ul>
           </li>
           <li className="py-1">
-            <span className="text-red-400">gene_vl : </span> &nbsp; methylation
-            gene values (e.g. 0.962545).
+            <span className="text-red-400">gene_vl : </span> &nbsp; methylation gene values (e.g.
+            0.962545).
           </li>
         </ol>
       </div>
@@ -243,18 +232,20 @@ const CircosPlot = (plot_type) => {
       <h1 className="py-2 text-green-300 text-4xl">Proteome data format</h1>
       <h2 className="text-3xl my-4">All rows are tab-delimited.</h2>
       <div className="py-6">
-        <p>The first (header) row gives the names of each clinical attribute, as
-        well as ‘sample_id’.</p>
+        <p>
+          The first (header) row gives the names of each clinical attribute, as well as ‘sample_id’.
+        </p>
         <ol className="list-decimal px-10 py-2">
           <li className="py-1">
-            <span className="text-red-400">sample_id</span> &nbsp; should match
-            clinical information.
+            <span className="text-red-400">sample_id</span> &nbsp; should match clinical
+            information.
           </li>
           <li className="py-1">
-            <span className="text-red-400">type : </span> &nbsp; type of samples. It has to be one of the following.
+            <span className="text-red-400">type : </span> &nbsp; type of samples. It has to be one
+            of the following.
             <p className="px-3 py-2">
-              {" "}
-              ● For a sample, please use either one of sample types below:{" "}
+              {' '}
+              ● For a sample, please use either one of sample types below:{' '}
             </p>
             <ul className="list-disc px-20">
               <li className="py-1"> N : Normal</li>
@@ -262,16 +253,19 @@ const CircosPlot = (plot_type) => {
             </ul>
           </li>
           <li className="py-1">
-            <span className="text-red-400">gene_name</span> &nbsp; should be given in the official gene symbol(HUGO).
+            <span className="text-red-400">gene_name</span> &nbsp; should be given in the official
+            gene symbol(HUGO).
           </li>
           <li className="py-1">
             <span className="text-red-400">p_name : </span> &nbsp; protein name (e.g. Q9UIB8).
           </li>
           <li className="py-1">
-            <span className="text-red-400">gene_vl : </span> &nbsp; Proteome expression values (e.g. 1.13929).
+            <span className="text-red-400">gene_vl : </span> &nbsp; Proteome expression values (e.g.
+            1.13929).
           </li>
           <li className="py-1">
-            <span className="text-red-400">z_score : </span> &nbsp; Proteome expression values in Z-score (e.g. 0.599818).
+            <span className="text-red-400">z_score : </span> &nbsp; Proteome expression values in
+            Z-score (e.g. 0.599818).
           </li>
         </ol>
       </div>
@@ -279,68 +273,83 @@ const CircosPlot = (plot_type) => {
       <h1 className="py-2 text-green-300 text-4xl">Copy Number Variation data format</h1>
       <h2 className="text-3l my-4">All rows are tab-delimited.</h2>
       <div className="py-2">
-        <p>The first (header) row gives the names of each clinical attribute, as
-        well as ‘sample_id’.</p>
+        <p>
+          The first (header) row gives the names of each clinical attribute, as well as ‘sample_id’.
+        </p>
         <ol className="list-decimal px-10 py-2">
           <li className="py-1">
-            <span className="text-red-400">sample_id</span> &nbsp; should match
-            clinical information.
+            <span className="text-red-400">sample_id</span> &nbsp; should match clinical
+            information.
           </li>
           <li className="py-1">
-            <span className="text-red-400">gene </span> &nbsp; should be given in the official gene symbol(HUGO).
+            <span className="text-red-400">gene </span> &nbsp; should be given in the official gene
+            symbol(HUGO).
           </li>
           <li className="py-1">
-            <span className="text-red-400">chromosome : </span> &nbsp; chromosome number (e.g. chr3).
+            <span className="text-red-400">chromosome : </span> &nbsp; chromosome number (e.g.
+            chr3).
           </li>
           <li className="py-1">
-            <span className="text-red-400">start_pos : </span> &nbsp; start position of the mutation (e.g. 1573418).
+            <span className="text-red-400">start_pos : </span> &nbsp; start position of the mutation
+            (e.g. 1573418).
           </li>
           <li className="py-1">
-            <span className="text-red-400">end_pos : </span> &nbsp; send position of the mutation (e.g. 1573418).
+            <span className="text-red-400">end_pos : </span> &nbsp; send position of the mutation
+            (e.g. 1573418).
           </li>
           <li className="py-1">
-            <span className="text-red-400">cn :  </span> &nbsp; copy numbers are given as positive integers or 0.
+            <span className="text-red-400">cn : </span> &nbsp; copy numbers are given as positive
+            integers or 0.
           </li>
           <li className="py-1">
-            <span className="text-red-400">depth : </span> &nbsp; depths are given as decimal values.
+            <span className="text-red-400">depth : </span> &nbsp; depths are given as decimal
+            values.
           </li>
           <li className="py-1">
-            <span className="text-red-400">probes : </span> &nbsp; number of probes are given as positive integers or 0.
+            <span className="text-red-400">probes : </span> &nbsp; number of probes are given as
+            positive integers or 0.
           </li>
           <li className="py-1">
-            <span className="text-red-400">weight:  </span> &nbsp; weights are given as decimal values.
+            <span className="text-red-400">weight: </span> &nbsp; weights are given as decimal
+            values.
           </li>
         </ol>
       </div>
 
-
       <h1 className="py-2 text-green-300 text-4xl">Fusion gene data format</h1>
       <h2 className="text-3xl my-4">All rows are tab-delimited.</h2>
       <div className="py-2">
-        <p>The first (header) row gives the names of each clinical attribute, as
-        well as ‘sample_id’.</p>
+        <p>
+          The first (header) row gives the names of each clinical attribute, as well as ‘sample_id’.
+        </p>
         <ol className="list-decimal px-10 py-2">
           <li className="py-1">
-            <span className="text-red-400">sample_id</span> &nbsp; should match
-            clinical information.
+            <span className="text-red-400">sample_id</span> &nbsp; should match clinical
+            information.
           </li>
           <li className="py-1">
-            <span className="text-red-400">left_gene_name  </span> &nbsp; should be given in the official gene symbol(HUGO).
+            <span className="text-red-400">left_gene_name </span> &nbsp; should be given in the
+            official gene symbol(HUGO).
           </li>
           <li className="py-1">
-            <span className="text-red-400">left_gene_chr : </span> &nbsp; chromosome number of the left gene(e.g.chr8).
+            <span className="text-red-400">left_gene_chr : </span> &nbsp; chromosome number of the
+            left gene(e.g.chr8).
           </li>
           <li className="py-1">
-            <span className="text-red-400">left_hg38_pos : </span> &nbsp; start position of the left gene (e.g. 140793354).
+            <span className="text-red-400">left_hg38_pos : </span> &nbsp; start position of the left
+            gene (e.g. 140793354).
           </li>
           <li className="py-1">
-            <span className="text-red-400">right_gene_name  : </span> &nbsp; should be given in the official gene symbol(HUGO).
+            <span className="text-red-400">right_gene_name : </span> &nbsp; should be given in the
+            official gene symbol(HUGO).
           </li>
           <li className="py-1">
-            <span className="text-red-400">right_gene_chr :   </span> &nbsp; chromosome number of the right gene (e.g.chr8).
+            <span className="text-red-400">right_gene_chr : </span> &nbsp; chromosome number of the
+            right gene (e.g.chr8).
           </li>
           <li className="py-1">
-            <span className="text-red-400">right_hg38_pos :  </span> &nbsp; start position of the right gene (e.g. 140793354).
+            <span className="text-red-400">right_hg38_pos : </span> &nbsp; start position of the
+            right gene (e.g. 140793354).
           </li>
         </ol>
       </div>

@@ -1,181 +1,191 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import CanvasXpressReact from 'canvasxpress-react';
 import html2canvas from 'html2canvas';
 
 function saveAs(uri, filename) {
-    var link = document.createElement('a');
-    link.className = 'watermark'
-    if (typeof link.download === 'string') {
-        link.href = uri;
-        link.download = filename;
-        //Firefox requires the link to be in the body
-        document.body.appendChild(link);
-        //simulate click
-        link.click();
-        //remove the link when done
-        document.body.removeChild(link);
-    } else {
-        window.open(uri);
-    }
+  var link = document.createElement('a');
+  link.className = 'watermark';
+  if (typeof link.download === 'string') {
+    link.href = uri;
+    link.download = filename;
+    //Firefox requires the link to be in the body
+    document.body.appendChild(link);
+    //simulate click
+    link.click();
+    //remove the link when done
+    document.body.removeChild(link);
+  } else {
+    window.open(uri);
+  }
 }
-const HeatmapCmp = React.forwardRef(({ settings, inputData, type, watermarkCss,width,clinicalFilter }, ref) => {
+const HeatmapCmp = React.forwardRef(
+  ({ settings, inputData, type, watermarkCss, width, clinicalFilter }, ref) => {
+    const [data, setData] = useState({});
+    const [dataLoaded, setDataLoaded] = useState(false);
+    const [configVis, setConfigVis] = useState({});
+    let target = 'canvas';
 
-    const [data,setData] = useState({})
-    const [dataLoaded,setDataLoaded] = useState(false)
-    const [configVis,setConfigVis] = useState({})
-    let target = "canvas";
+    useEffect(() => {
+      console.log('settings', settings);
+    }, [settings]);
 
-
-    useEffect(() =>{
-          console.log('settings' , settings)
-    },[settings])
- 
     let config = {
-        "colorSpectrum": settings['colorSpectrum'],
-        "graphType": "Heatmap",
-        "heatmapCellBoxColor": "rgb(255,255,255)",
-        "overlayScaleFontFactor" : 2,
-        "samplesClustered": true,
-        
-        "showTransition": false,
-        "variablesClustered": true,
-        "showVarOverlaysLegend": true,
-        'events': false,
-        'info': false,
-        "draw":true,
-        'afterRenderInit': true,
-        "lazyLoad":true,
-        'afterRender': [
-            [
-                'setDimensions',
-                [613,613,true]
-            ]
-        ],
-        'noValidate': true,
-        'disableConfigurator':false,
-        'disableToolbar':true
-    }
-    if(!isNaN(settings['colorSpectrumBreaks'][0]) && !isNaN(settings['colorSpectrumBreaks'][1])){
-        config["colorSpectrumBreaks"] = settings['colorSpectrumBreaks']
-    }
-    if(clinicalFilter.length>0){
-        config['varOverlayProperties'] = {}
-        config["varOverlays"] = []
-        for (let i = 0; i < clinicalFilter.length; i++) {
-            config['varOverlayProperties'][clinicalFilter[i].name] = {
-                "position": "top",
-                "type": "Default",
-                "color": "rgb(254,41,108)",
-                "spectrum": ["rgb(255,0,255)","rgb(0,0,255)","rgb(0,0,0)","rgb(255,0,0)","rgb(255,215,0)"],
-                "scheme": "GGPlot",
-                "showLegend": true,
-                "showName": true,
-                "showBox": true,
-                "rotate": false
-            }
-            config["varOverlays"].push(clinicalFilter[i].name)
-        }
-        config["variablesClustered"] =  true
-    }
+      colorSpectrum: settings['colorSpectrum'],
+      graphType: 'Heatmap',
+      heatmapCellBoxColor: 'rgb(255,255,255)',
+      overlayScaleFontFactor: 2,
+      samplesClustered: true,
 
-    if(type === "k-mean"){
-      config['smpOverlayProperties'] = {
-        "Treatment": {
-              "position": "right",
-              "type": "Default",
-              "color": "rgb(254,41,108)",
-              "spectrum": ["rgb(255,0,255)","rgb(0,0,255)","rgb(0,0,0)","rgb(255,0,0)","rgb(255,215,0)"],
-              "scheme": "User",
-              "showLegend": true,
-              "showName": true,
-              "showBox": true,
-              "rotate": false
-          },
-        "Cluster": {
-              "position": "left",
-              "type": "Default",
-              "color": "rgb(72,126,182)",
-              "spectrum": ["rgb(244,67,54)","rgb(225,101,25)","rgb(202,206,23)","rgb(4,115,49)","rgb(98,183,247)"],
-              "scheme": "User",
-              "showLegend": true,
-              "showName": true,
-              "showBox": true,
-              "rotate": false,
-              
-              
-          },
-          "Dose": {
-              "thickness": 50,
-              "type": "Dotplot",
-              "position": "right",
-              "color": "rgb(167,206,49)",
-              "spectrum": ["rgb(255,0,255)","rgb(0,0,255)","rgb(0,0,0)","rgb(255,0,0)","rgb(255,215,0)"],
-              "scheme": "User",
-              "showLegend": true,
-              "showName": true,
-              "showBox": true,
-              "rotate": false
-          }
+      showTransition: false,
+      variablesClustered: true,
+      showVarOverlaysLegend: true,
+      events: false,
+      info: false,
+      draw: true,
+      afterRenderInit: true,
+      lazyLoad: true,
+      afterRender: [['setDimensions', [613, 613, true]]],
+      noValidate: true,
+      disableConfigurator: false,
+      disableToolbar: true
+    };
+    if (!isNaN(settings['colorSpectrumBreaks'][0]) && !isNaN(settings['colorSpectrumBreaks'][1])) {
+      config['colorSpectrumBreaks'] = settings['colorSpectrumBreaks'];
+    }
+    if (clinicalFilter.length > 0) {
+      config['varOverlayProperties'] = {};
+      config['varOverlays'] = [];
+      for (let i = 0; i < clinicalFilter.length; i++) {
+        config['varOverlayProperties'][clinicalFilter[i].name] = {
+          position: 'top',
+          type: 'Default',
+          color: 'rgb(254,41,108)',
+          spectrum: [
+            'rgb(255,0,255)',
+            'rgb(0,0,255)',
+            'rgb(0,0,0)',
+            'rgb(255,0,0)',
+            'rgb(255,215,0)'
+          ],
+          scheme: 'GGPlot',
+          showLegend: true,
+          showName: true,
+          showBox: true,
+          rotate: false
+        };
+        config['varOverlays'].push(clinicalFilter[i].name);
       }
-      config['smpOverlays'] = ["Cluster","Treatment","Dose"]
-      config['samplesClustered'] = false
-      config['variablesClustered'] = false
-      
-      config['sortData'] = [["cat", "smp","Cluster"]]
-      config['sortDir'] = 'ascending'
+      config['variablesClustered'] = true;
     }
 
-    
-    useEffect(()=>{
-        if(watermarkCss){
-            html2canvas(document.querySelector('#canvas')).then(function(canvas) {
-                saveAs(canvas.toDataURL(), 'heatmap.png');
-            });
-           
+    if (type === 'k-mean') {
+      config['smpOverlayProperties'] = {
+        Treatment: {
+          position: 'right',
+          type: 'Default',
+          color: 'rgb(254,41,108)',
+          spectrum: [
+            'rgb(255,0,255)',
+            'rgb(0,0,255)',
+            'rgb(0,0,0)',
+            'rgb(255,0,0)',
+            'rgb(255,215,0)'
+          ],
+          scheme: 'User',
+          showLegend: true,
+          showName: true,
+          showBox: true,
+          rotate: false
+        },
+        Cluster: {
+          position: 'left',
+          type: 'Default',
+          color: 'rgb(72,126,182)',
+          spectrum: [
+            'rgb(244,67,54)',
+            'rgb(225,101,25)',
+            'rgb(202,206,23)',
+            'rgb(4,115,49)',
+            'rgb(98,183,247)'
+          ],
+          scheme: 'User',
+          showLegend: true,
+          showName: true,
+          showBox: true,
+          rotate: false
+        },
+        Dose: {
+          thickness: 50,
+          type: 'Dotplot',
+          position: 'right',
+          color: 'rgb(167,206,49)',
+          spectrum: [
+            'rgb(255,0,255)',
+            'rgb(0,0,255)',
+            'rgb(0,0,0)',
+            'rgb(255,0,0)',
+            'rgb(255,215,0)'
+          ],
+          scheme: 'User',
+          showLegend: true,
+          showName: true,
+          showBox: true,
+          rotate: false
         }
-    },[watermarkCss])
+      };
+      config['smpOverlays'] = ['Cluster', 'Treatment', 'Dose'];
+      config['samplesClustered'] = false;
+      config['variablesClustered'] = false;
 
-    useEffect(() =>{
-      setConfigVis(config)
-    },[settings?.colorSpectrum])
+      config['sortData'] = [['cat', 'smp', 'Cluster']];
+      config['sortDir'] = 'ascending';
+    }
 
-    useEffect(()=>{
-        
-        if(Object.keys(inputData).length>0){
-            setData(inputData)
-            console.log('initial config' , config)
-            setConfigVis(config)
-        }
+    useEffect(() => {
+      if (watermarkCss) {
+        html2canvas(document.querySelector('#canvas')).then(function (canvas) {
+          saveAs(canvas.toDataURL(), 'heatmap.png');
+        });
+      }
+    }, [watermarkCss]);
 
-    },[inputData ])
+    useEffect(() => {
+      setConfigVis(config);
+    }, [settings?.colorSpectrum]);
 
-    useEffect(()=>{
-        
-        if(Object.keys(data).length>0){
-            setDataLoaded(true)
-          
-        }
-    },[data])
+    useEffect(() => {
+      if (Object.keys(inputData).length > 0) {
+        setData(inputData);
+        console.log('initial config', config);
+        setConfigVis(config);
+      }
+    }, [inputData]);
 
+    useEffect(() => {
+      if (Object.keys(data).length > 0) {
+        setDataLoaded(true);
+      }
+    }, [data]);
 
     return (
-
-     
-      
-        <div ref={ref} className={`heatmap ${watermarkCss}` }>
-            <div className=''>
-                <div className=''>
-                    
-                    
-                </div>
-            </div>
-
-            {/* {console.log('final config' , configVis)} */}
-            { dataLoaded &&
-                <CanvasXpressReact target={target} data={data} config={configVis} width={width} height={'700px'} style={{color:'red'}} />
-            }
-            
+      <div ref={ref} className={`heatmap ${watermarkCss}`}>
+        <div className="">
+          <div className=""></div>
         </div>
-    )
-})
-export default HeatmapCmp
+
+        {/* {console.log('final config' , configVis)} */}
+        {dataLoaded && (
+          <CanvasXpressReact
+            target={target}
+            data={data}
+            config={configVis}
+            width={width}
+            height={'700px'}
+            style={{ color: 'red' }}
+          />
+        )}
+      </div>
+    );
+  }
+);
+export default HeatmapCmp;

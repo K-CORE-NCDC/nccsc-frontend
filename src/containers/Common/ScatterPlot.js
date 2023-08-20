@@ -1,21 +1,28 @@
-import React, { useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
-import {Chart, registerables} from 'chart.js';
+import { Chart, registerables } from 'chart.js';
+import React, { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 
 Chart.register(...registerables);
-var myChart
+var myChart;
 const ScatterPlot = React.forwardRef(({ scatter_data, watermarkCss }, ref) => {
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
   const scatter_plot = useRef(null);
   let option = {
-    plugins:{
+    plugins: {
       tooltip: {
         callbacks: {
-          label: function(tooltipItem, data) {
-            return  BrstKeys[tooltipItem['raw']['sample']]+ ': (' + tooltipItem.raw.x + ', ' + tooltipItem.raw.y + ')';
+          label: function (tooltipItem) {
+            return (
+              BrstKeys[tooltipItem['raw']['sample']] +
+              ': (' +
+              tooltipItem.raw.x +
+              ', ' +
+              tooltipItem.raw.y +
+              ')'
+            );
           }
         }
-      },
+      }
     },
     scales: {
       x: {
@@ -26,40 +33,42 @@ const ScatterPlot = React.forwardRef(({ scatter_data, watermarkCss }, ref) => {
           text: 'RNA Expression (z-score)'
         }
       },
-      y:{
+      y: {
         title: {
           display: true,
           text: 'Global Proteome (z-score)'
         }
       }
-
     },
-    responsive:true,
-  }
+    responsive: true
+  };
 
-
-  const drawChart = (data_) =>{
-    if(myChart){
-      myChart.destroy()
+  const drawChart = (data_) => {
+    if (myChart) {
+      myChart.destroy();
     }
     myChart = new Chart(scatter_plot.current, {
       type: 'scatter',
       data: data_,
-      options:option,
+      options: option
     });
-  }
+  };
 
-  useEffect(()=>{
-    if(scatter_data){
-        drawChart(scatter_data)
+  useEffect(() => {
+    if (scatter_data) {
+      drawChart(scatter_data);
     }
-  },[scatter_data])
-
+  }, [scatter_data]);
 
   return (
-      <div ref={ref} id='scatter_parent' className={`p-5 lg:w-full sm:w-5/6 ${watermarkCss}`} style={{marginTop:'5%'}}>
-        <canvas id="scatter" ref={scatter_plot} height="14vh" width="40vw"></canvas>
-      </div>
-  )
-})
-export default ScatterPlot
+    <div
+      ref={ref}
+      id="scatter_parent"
+      className={`p-5 lg:w-full sm:w-5/6 ${watermarkCss}`}
+      style={{ marginTop: '5%' }}
+    >
+      <canvas id="scatter" ref={scatter_plot} height="14vh" width="40vw"></canvas>
+    </div>
+  );
+});
+export default ScatterPlot;

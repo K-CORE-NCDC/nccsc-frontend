@@ -46,8 +46,6 @@
   margin-top: 15px;
 }
 
-
-
 @media all and (max-width: 1600px) {
   #fullSlide .pagination div .swiper-pagination-bullet-active span {
     display: none;
@@ -101,7 +99,7 @@
   }
 
   .dataSearchWrap .popularBox ul::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     right: 45px;
@@ -236,7 +234,7 @@
     padding-top: 50px;
   }
 
-  .mainContents .section03 .fullBox ul li .inner>img {
+  .mainContents .section03 .fullBox ul li .inner > img {
     width: 96px;
   }
 
@@ -315,7 +313,6 @@
 }
 
 @media all and (max-width: 1199px) {
-
   #fullSlide .pagination,
   #fullSlide .scrollDown,
   #fullSlide .navigation {
@@ -365,14 +362,13 @@
 }
 
 @media all and (max-width: 1024px) {
-
   html,
   body {
     height: auto;
   }
 
   #fullSlide,
-  #fullSlide .mainContents>.mask,
+  #fullSlide .mainContents > .mask,
   #fullSlide .mainContents .section {
     height: auto;
     display: block;
@@ -675,7 +671,7 @@
   }
 
   .mainDataStatusWrap .mainDataStatus.service dl dd ul::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     bottom: 0;
@@ -910,7 +906,7 @@
     display: inline;
   }
 
-  .mainContents .section03 .fullBox .slick-slide .inner>img {
+  .mainContents .section03 .fullBox .slick-slide .inner > img {
     width: 120px;
   }
 
@@ -999,7 +995,7 @@
     background-color: #003177;
   }
 
-  .mainContents .section04 .dataTypeWrap dt>span img {
+  .mainContents .section04 .dataTypeWrap dt > span img {
     width: 18px;
     margin-top: -1px;
     margin-right: 6px;
@@ -1026,7 +1022,7 @@
     color: #003177;
   }
 
-  .mainContents .section06 .btnMore>img {
+  .mainContents .section06 .btnMore > img {
     display: none;
   }
 
@@ -1093,7 +1089,7 @@
     width: 90%;
   }
 
-  .mainContents .section06 .galleryList02 .btnMore>span {
+  .mainContents .section06 .galleryList02 .btnMore > span {
     display: flex;
     align-items: center;
   }
@@ -1191,7 +1187,7 @@
     margin-top: 0;
   }
 
-  #fullSlide .mainContents>.mask {
+  #fullSlide .mainContents > .mask {
     display: block;
   }
 
@@ -1227,7 +1223,7 @@
   }
 }
 
-@media all and (min-width:1025px) and (min-height:870px) {
+@media all and (min-width: 1025px) and (min-height: 870px) {
   /* .mainVisual .visual .main_box{
     margin-top: 50px;
   } */
