@@ -25,10 +25,6 @@ const HeatmapCmp = React.forwardRef(
     const [configVis, setConfigVis] = useState({});
     let target = 'canvas';
 
-    useEffect(() => {
-      console.log('settings', settings);
-    }, [settings]);
-
     let config = {
       colorSpectrum: settings['colorSpectrum'],
       graphType: 'Heatmap',
@@ -156,7 +152,6 @@ const HeatmapCmp = React.forwardRef(
     useEffect(() => {
       if (Object.keys(inputData).length > 0) {
         setData(inputData);
-        console.log('initial config', config);
         setConfigVis(config);
       }
     }, [inputData]);
@@ -173,7 +168,6 @@ const HeatmapCmp = React.forwardRef(
           <div className=""></div>
         </div>
 
-        {/* {console.log('final config' , configVis)} */}
         {dataLoaded && (
           <CanvasXpressReact
             target={target}

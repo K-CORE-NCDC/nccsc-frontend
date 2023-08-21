@@ -283,7 +283,6 @@ export default function DataOnco({
         padding: '5%'
       }}
     >
-      {console.log('width', width)}
       {optionChoices && (
         <div className="gene_selctionBox">
           {!noGeneData && (

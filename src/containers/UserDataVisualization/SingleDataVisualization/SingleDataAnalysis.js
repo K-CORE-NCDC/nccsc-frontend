@@ -417,7 +417,7 @@ export default function DataVisualization() {
                                   <div className="hvBox_links">
                                     {!exampleData && (
                                       <>
-                                        <Link to={item.link}>
+                                       
                                           <div className="textdiv ">
                                             <span>
                                               <FormattedMessage
@@ -427,8 +427,7 @@ export default function DataVisualization() {
                                             </span>
                                             <img src={arrow_icon} alt="arrow-icon" />
                                           </div>
-                                        </Link>
-                                        <Link to={item.link}>
+                                      
                                           <div className="textdiv">
                                             <span>
                                               <FormattedMessage
@@ -437,23 +436,22 @@ export default function DataVisualization() {
                                               />
                                             </span>
                                             <img src={arrow_icon} alt="arrow-icon" />
-                                          </div>
-                                        </Link>
+                                          </div> 
                                       </>
                                     )}
 
                                     {exampleData && (
-                                      <Link to={item.viewLink}>
+                                    
                                         <div className="textdiv">
                                           <span>
                                             <FormattedMessage
                                               id="Example"
-                                              defaultMessage="Example"
+                                              defaultMessage="Examples"
                                             />
                                           </span>
                                           <img src={arrow_icon} alt="arrow-icon" />
                                         </div>
-                                      </Link>
+                                      
                                     )}
                                   </div>
                                 </div>

@@ -142,7 +142,6 @@ const Table = ({ updateComponentNumber }) => {
   };
 
   const handleUpload = () => {
-    console.log(projectName);
     if (filesData['clinical_information'] && projectName !== '') {
       dispatch(multiFileUpload(filesData, projectName));
       updateComponentNumber(1);

@@ -103,7 +103,6 @@ export default function DataHeatmap({
       }
       setAllTabList(tabList.userProjectsDataTable);
     } else {
-      console.log();
       setActiveTab('1');
       setTableType('rna');
     }
@@ -321,10 +320,11 @@ export default function DataHeatmap({
         }
       }
       let setStateTrue = false;
-      for (const [value] of Object.entries(y)) {
-        value.forEach((e) => {
+      for (const  value of Object.entries(y)) {
+        value[1].forEach((e) => {
           if (e.length > 0) {
             setStateTrue = true;
+          
           }
         });
       }

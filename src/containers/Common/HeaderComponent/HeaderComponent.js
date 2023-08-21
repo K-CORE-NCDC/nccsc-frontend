@@ -23,7 +23,6 @@ function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
       if (project_id && window.location.pathname.includes(item)) {
         if (getCookie('is_login') && getCookie('is_login') === 'True') {
         } else {
-          console.log('elseee');
           history.push('/login');
         }
       }
@@ -74,15 +73,15 @@ function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
         <ul>
           {items.length > 0 &&
             items.map((item, index) => {
-              if (item && item.to !== '' && item.id !== 'Null') {
+              if (item && item?.to !== '' && item.id !== 'Null') {
                 return (
                   <li key={index} className={routeName === item.to ? 'on' : ''}>
-                    <Link to={item.to}>
-                      <FormattedMessage id={item.id} defaultMessage={item.defaultMessage} />
+                    <Link to={item?.to}>
+                      <FormattedMessage id={item?.id} defaultMessage={item?.defaultMessage} />
                     </Link>
                   </li>
                 );
-              } else if (item.to === '') {
+              } else if (item?.to === '') {
                 return (
                   <li key={index} className={routeName === item.to ? 'on' : ''}>
                     <FormattedMessage id={item.id} defaultMessage={item.defaultMessage} />

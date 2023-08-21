@@ -60,7 +60,6 @@ const VolcanoCmp = React.forwardRef(
     //   link.click();
     // }
     const downloadTableAsCsv = (tableType) => {
-      console.log('tt', tableType);
       let rows = [['GENE NAME', 'LOG2FC', 'LOG(PVALUE) negative']];
 
       if (tableType === 'negative') {

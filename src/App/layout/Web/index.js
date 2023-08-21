@@ -127,30 +127,18 @@ export default function Web() {
     swiperRef.current?.swiper.slideTo(num);
   };
 
-  // useEffect(() => {
-  //   if (context['locale'] === 'kr-KO') {
-  //     setKoreanlanguage(true);
-  //     setEnglishlanguage(false);
-  //   } else {
-  //     setKoreanlanguage(false);
-  //     setEnglishlanguage(true);
-  //   }
-  // }, [context]);
 
-  // const changeLang = (type) => {
-  //   setShowLangMenu(!showLangMenu);
-  //   if (type === 'kr-KO') {
-  //     setKoreanlanguage(true);
-  //     setEnglishlanguage(false);
-  //     context.locale = 'kr-KO';
-  //     context.selectLanguage('kr-KO');
-  //   } else {
-  //     setKoreanlanguage(false);
-  //     setEnglishlanguage(true);
-  //     context.locale = 'en-US';
-  //     context.selectLanguage('en-US');
-  //   }
-  // };
+
+  const changeLang = (type) => {
+    setShowLangMenu(!showLangMenu);
+    if (type === 'kr-KO') {
+      context.locale = 'kr-KO';
+      context.selectLanguage('kr-KO');
+    } else {
+      context.locale = 'en-US';
+      context.selectLanguage('en-US');
+    }
+  };
 
 
   const { } = useIdleTimer({
@@ -223,19 +211,12 @@ export default function Web() {
         category: category
       };
       arrayOfLog[0] = object;
-      // let alid = sessionStorage.getItem('IdNumber')
       sessionStorage.setItem('logData', JSON.stringify(arrayOfLog));
     }
-    // let today = new Date();
-    let date = today.getFullYear() + '.' + (today.getMonth() + 1) + '.' + today.getDate();
     if (id[0] === '/') {
-      // var a_or_p = today.toLocaleString("en-US", { hour: "numeric", hour12: true }).split(" ")[1];
-      // var time = a_or_p + " " + today.getHours() + ":" + today.getMinutes();
       var time = today.getHours() + ':' + (today.getMinutes() <= 9 ? `00` : today.getMinutes());
-      // let check_popup = localStorage.getItem('show_popup')
       setCurrentTime(time);
     }
-    setCurrentDate(date);
 
   }, []);
 

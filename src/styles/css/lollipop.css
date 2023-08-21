@@ -19,7 +19,7 @@
 
   .mutation_labels {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     gap: 2%;
     line-height: 30px;
   }

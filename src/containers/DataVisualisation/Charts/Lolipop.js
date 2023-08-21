@@ -45,7 +45,6 @@ export default function DataLolipop({
   useEffect(() => {
     if ('userProjectsDataTable' in tabList) {
       let _data = tabList.userProjectsDataTable;
-      console.log('_data', _data);
       if (_data?.viz_type === 'single') {
         if (_data['phospho'] !== null) {
           setActiveTab('2');

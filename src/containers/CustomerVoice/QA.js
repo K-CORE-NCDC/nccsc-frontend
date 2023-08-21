@@ -137,7 +137,6 @@ function QaDetail({ slug_id }) {
   const notice_data = useSelector((state) => state.homeReducer.dataQA);
 
   useEffect(() => {
-    console.log('QA Detail');
     dispatch(getQaData(slug_id, ''));
   }, []);
 

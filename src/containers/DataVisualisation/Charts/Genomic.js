@@ -14,7 +14,6 @@ export default function DataGenomic() {
 
   useEffect(() => {
     if (project_id && activeCmp) {
-      console.log('activeCmp ifff', project_id);
       let dataJson = { project_id: project_id };
 
       let data = GeneInfo('POST', dataJson);

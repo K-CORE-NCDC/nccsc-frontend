@@ -21,7 +21,6 @@ export default function Filter({ parentCallback, filterState, project_id }) {
       setSelectState({ ...filterState });
       switchButton();
     }
-    console.log('-=====');
   }, [filterState]);
 
   useEffect(() => {
@@ -457,7 +456,6 @@ export default function Filter({ parentCallback, filterState, project_id }) {
 
   const sendFilter = () => {
     drawTags(filterJson);
-    console.log('--------------11111');
     parentCallback({ filter: selectState });
   };
 

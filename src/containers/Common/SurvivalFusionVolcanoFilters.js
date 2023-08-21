@@ -1242,7 +1242,6 @@ export const GroupFilters = ({
         parentCallback(userGivenInputValues);
       }
     } else {
-      console.log('-------------');
       if (isFilterResetHappened) {
         let send_response = true;
         if (userGivenInputValues['type'] === 'static') {

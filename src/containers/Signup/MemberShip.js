@@ -369,7 +369,6 @@ const MemberShip = ({ changestep }) => {
   };
   useEffect(() => {
     if (mobile_verified && mobile_verified['status'] === true) {
-      console.log(mobile_verified);
       let f = form;
       f.isVerified = true;
       f.mobileVerified = true;

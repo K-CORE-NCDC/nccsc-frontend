@@ -10,8 +10,6 @@ import ServiceIntro from './ServiceIntro';
 export const SiteIntro = ({ lan }) => {
   const [activeTab, setActiveTab] = useState('1');
 
-  console.log('site', lan);
-
   return (
     <div className="auto">
       <div className="mainContentsBox">

@@ -13,7 +13,6 @@ function Popup({ toggleModal }) {
   /* getting the notice detail as response */
 
   useEffect(() => {
-    console.log('first call');
     let currentUrl = window.location;
     if (
       currentUrl['pathname'] === '/k-core/' ||

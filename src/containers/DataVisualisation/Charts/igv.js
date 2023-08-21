@@ -17,7 +17,6 @@ export default function DataIgv({ inputData, screenCapture, setToFalseAfterScree
   const [selectGenemsg, setSelectGenemsg] = useState(true);
   const history = useHistory();
 
-  console.log('insideeee');
   useEffect(() => {
     if (inputData.type !== '' && inputData['genes'].length > 0) {
       let dataJson = inputData;

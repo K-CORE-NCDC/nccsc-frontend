@@ -248,7 +248,6 @@ function NewSankeyd3({ SankeyJson, idName, forGene }) {
         return false;
       });
 
-      console.log('filteredNodes', filteredNodes);
       // Create a set of valid node names for efficient lookup
       const validNodeNames = new Set(filteredNodes.map((node) => node.name));
 
@@ -257,7 +256,6 @@ function NewSankeyd3({ SankeyJson, idName, forGene }) {
         (link) => validNodeNames.has(link.source) && validNodeNames.has(link.target)
       );
 
-      console.log('filteredLinks', filteredLinks);
 
       const filteredSankeyJson = {
         nodes: filteredNodes,

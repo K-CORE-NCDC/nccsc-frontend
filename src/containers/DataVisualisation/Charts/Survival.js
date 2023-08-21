@@ -213,7 +213,7 @@ export default function DataSurvival({
 
       let tmp = [];
       let columns = survivalJson && 'columns' in survivalJson && survivalJson['columns'];
-      let thead = [<th key={'rows'}></th>];
+      let thead = [<th key={'rows' + Math?.random()}></th>];
       let data = survivalJson && 'data' in survivalJson && JSON.parse(survivalJson['data']);
       let cf = survivalJson && 'clinical_filter' in survivalJson && survivalJson['clinical_filter'];
       let image = survivalJson && 'image' in survivalJson && survivalJson['image'];
@@ -221,7 +221,7 @@ export default function DataSurvival({
       if (columns) {
         for (let c = 0; c < columns.length; c++) {
           thead.push(
-            <th className="FontMedium TextGray900 P0625" key={`${c}'_'${columns[c]}`}>
+            <th className="FontMedium TextGray900 P0625" key={`${c}'_'${columns[c]}`+Math.random()}>
               {columns[c]}
             </th>
           );
@@ -232,7 +232,7 @@ export default function DataSurvival({
           let col = cf[c];
           let td = [];
           td.push(
-            <td key={col} className="TextGray900 P0625">
+            <td key={col +  Math.random()} className="TextGray900 P0625">
               {col}
             </td>
           );
@@ -241,14 +241,14 @@ export default function DataSurvival({
             v = parseFloat(v).toFixed(2);
 
             td.push(
-              <td key={`${col}"_"${key}"_"${v}`} className="TextGray900 P0625">
+              <td key={`${col + Math.random()}"_"${key}"_"${v}`} className="TextGray900 P0625">
                 {v}
               </td>
             );
           }
 
           trow.push(
-            <tr className="BorderBottom1 PY1" key={`coxtr_${c}`}>
+            <tr className="BorderBottom1 PY1" key={`coxtr_${c}` +Math.random()}>
               {td}
             </tr>
           );
@@ -264,7 +264,7 @@ export default function DataSurvival({
             </h3>
             <table className="Table WFull">
               <thead className="BorderBottom1">
-                <tr>{thead}</tr>
+                <tr key={Math.random()}>{thead}</tr>
               </thead>
               <tbody>{trow}</tbody>
             </table>

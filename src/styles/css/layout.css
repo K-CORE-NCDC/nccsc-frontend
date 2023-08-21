@@ -4106,7 +4106,7 @@ big {
   .visualizeExampleData {
     /* height: 20vh; */
     display: flex;
-    align-items: end;
+    align-items: flex-end;
   }
 }
 
@@ -4114,6 +4114,6 @@ big {
   .visualizeExampleData {
     height: 20vh;
     display: flex;
-    align-items: end;
+    align-items: flex-end;
   }
 }

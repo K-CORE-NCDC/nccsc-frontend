@@ -118,7 +118,6 @@ const GraphsModal = ({ closeShowTimelineTables, circosTimelieTableData }) => {
               let day = new Date(d).getDate();
               let date = new Date(year, month, day + 1);
               t.push([score, '', tooltip, d, date]);
-              console.log('---->', t);
             } else {
               t.push([score, '', tooltip, d, d]);
             }

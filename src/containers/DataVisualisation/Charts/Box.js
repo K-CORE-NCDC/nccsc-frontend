@@ -116,13 +116,10 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
 
   let takeScreenshot = async () => {
     const element = document.getElementById('box2').children[0];
-    console.log('element', element);
     var xml = new XMLSerializer().serializeToString(element);
-    console.log(xml);
     var svg64 = btoa(unescape(encodeURIComponent(xml))); //for utf8: btoa(unescape(encodeURIComponent(xml)))
     var b64start = 'data:image/svg+xml;base64,';
     var image64 = b64start + svg64;
-    // var image64 = element;
     const downloadLink = document.createElement('a');
     document.body.appendChild(downloadLink);
     downloadLink.href = image64;
@@ -225,8 +222,6 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
   const changeType = (e, type) => {
     let c = document.getElementsByName('type');
     setTableType(type);
-    console.log('type', type);
-    // setActiveCmp(false);
     setLoader(true);
     for (var i = 0; i < c.length; i++) {
       let classList = c[i].classList;

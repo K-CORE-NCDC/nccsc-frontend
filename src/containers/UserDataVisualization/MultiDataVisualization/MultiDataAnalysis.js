@@ -1,6 +1,6 @@
 import { Popover, Transition } from '@headlessui/react';
 import { UserCircleIcon } from '@heroicons/react/outline';
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useRef, useState, lazy, Suspense } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory, useParams } from 'react-router-dom';
@@ -17,7 +17,6 @@ import HeaderComponent from '../../Common/HeaderComponent/HeaderComponent';
 import Filter from '../../Common/filter';
 import { Charts } from '../../DataVisualisation/Charts';
 import GeneSet from '../Components/MainComponents/GeneSet';
-import SurvivalFilterComponent from '../Components/MainComponents/SurvivalFilterComponent';
 import VolcanoFusionFilterComponent from '../Components/MainComponents/VolcanoFusionFilterComponent';
 
 export default function DataVisualization() {
@@ -38,6 +37,10 @@ export default function DataVisualization() {
     (data) => data.dataVisualizationReducer.userProjectsDataTable
   );
   let { tab, project_id } = useParams();
+  let SurvivalFilterComponent;
+  if (tab === 'survival') {
+    SurvivalFilterComponent = lazy(() => import('../Components/MainComponents/SurvivalFilterComponent'));
+  }
   const [chartName, setChartName] = useState(tab === 'home' ? undefined : tab);
   const [tabName, setTabName] = useState(tab === 'home' ? undefined : tab);
   const [screenCapture, setScreenCapture] = useState(false);
@@ -344,24 +347,23 @@ export default function DataVisualization() {
       }
     }
   }, [state]);
-  const checkPopup = (event) => {
-    if (event.target.id === 'clinicalFilterPopover') {
-      setFilterPopoverOpen(!isFilterPopoverOpen);
-    } else if (event.target.id === 'geneFilterPopover') {
-      setIsGeneSetPopoverOpen(!isGeneSetPopoverOpen);
-    }
-    console.log(isFilterPopoverOpen, isGeneSetPopoverOpen);
-    if (isFilterPopoverOpen) {
-      setFilterPopoverOpen(false);
-    }
-    if (isGeneSetPopoverOpen) {
-      setIsGeneSetPopoverOpen(false);
-    }
-    event.stopPropagation();
-  };
-  useEffect(() => {
-    document.body.addEventListener('click', checkPopup);
-  }, []);
+  // const checkPopup = (event) => {
+  //   if (event.target.id === 'clinicalFilterPopover') {
+  //     setFilterPopoverOpen(!isFilterPopoverOpen);
+  //   } else if (event.target.id === 'geneFilterPopover') {
+  //     setIsGeneSetPopoverOpen(!isGeneSetPopoverOpen);
+  //   }
+  //   if (isFilterPopoverOpen) {
+  //     setFilterPopoverOpen(false);
+  //   }
+  //   if (isGeneSetPopoverOpen) {
+  //     setIsGeneSetPopoverOpen(false);
+  //   }
+  //   event.stopPropagation();
+  // };
+  // useEffect(() => {
+  //   document.body.addEventListener('click', checkPopup);
+  // }, []);
 
   useEffect(() => {
     if (BrstKeys) {
@@ -624,11 +626,14 @@ export default function DataVisualization() {
                                   width: '140%'
                                 }}
                               >
-                                <SurvivalFilterComponent
-                                  parentCallback={survivalCallback}
-                                  filterState={state}
-                                  setSurvivalCardData={survivalCardData}
-                                />
+                                <Suspense >
+                                  <SurvivalFilterComponent
+                                    parentCallback={survivalCallback}
+                                    filterState={state}
+                                    setSurvivalCardData={survivalCardData}
+                                  />
+                                </Suspense>
+
                               </Popover.Panel>
                             </Transition>
                           </div>
@@ -640,7 +645,7 @@ export default function DataVisualization() {
 
                 {!toggle && (tabName === 'fusion' || tabName === 'volcano') && (
                   <Popover className="Relative gene_main_box">
-                    {({  }) => {
+                    {({ }) => {
                       return (
                         <>
                           <div className="w-full">
@@ -695,7 +700,7 @@ export default function DataVisualization() {
                 )}
 
                 <Popover className="Relative gene_main_box" id="geneFilterPopover">
-                  {({  }) => {
+                  {({ }) => {
                     return (
                       <>
                         <div className="">
@@ -742,7 +747,7 @@ export default function DataVisualization() {
 
                 {project_id && (
                   <Popover className="relative gene_main_box capture">
-                    {({  }) => {
+                    {({ }) => {
                       return (
                         <>
                           <div className="">
@@ -784,38 +789,32 @@ export default function DataVisualization() {
                                 <div className="hvBox_links">
                                   {project_id ? (
                                     <>
-                                      <Link to={item.link}>
-                                        <div className="textdiv">
-                                          <span>
-                                            <FormattedMessage
-                                              id="DownloadManual"
-                                              defaultMessage="Download Manual"
-                                            />
-                                          </span>
-                                          <img src={arrow_icon} alt="arrow-icon" />
-                                        </div>
-                                      </Link>
-                                      <Link to={item.link}>
-                                        <div className="textdiv">
-                                          <span>
-                                            <FormattedMessage
-                                              id="RunAnalysis"
-                                              defaultMessage="Run Analysis"
-                                            />
-                                          </span>
-                                          <img src={arrow_icon} alt="arrow-icon" />
-                                        </div>
-                                      </Link>{' '}
-                                    </>
-                                  ) : (
-                                    <Link to={item.link}>
                                       <div className="textdiv">
                                         <span>
-                                          <FormattedMessage id="Example" defaultMessage="Example" />
+                                          <FormattedMessage
+                                            id="DownloadManual"
+                                            defaultMessage="Download Manual"
+                                          />
                                         </span>
                                         <img src={arrow_icon} alt="arrow-icon" />
                                       </div>
-                                    </Link>
+                                      <div className="textdiv">
+                                        <span>
+                                          <FormattedMessage
+                                            id="RunAnalysis"
+                                            defaultMessage="Run Analysis"
+                                          />
+                                        </span>
+                                        <img src={arrow_icon} alt="arrow-icon" />
+                                      </div>{' '}
+                                    </>
+                                  ) : (
+                                    <div className="textdiv">
+                                      <span>
+                                        <FormattedMessage id="Example" defaultMessage="Example" />
+                                      </span>
+                                      <img src={arrow_icon} alt="arrow-icon" />
+                                    </div>
                                   )}
                                 </div>
                               </div>

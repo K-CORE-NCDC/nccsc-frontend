@@ -68,7 +68,6 @@ function FindID() {
       let data = findID('POST', { email_id: email_id });
       data
         .then((result) => {
-          console.log(result);
           if (
             'data' in result &&
             'status' in result.data &&

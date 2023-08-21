@@ -309,7 +309,6 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
           .attr('stroke', 'black')
           .style('fill', '#fff')
           .on('mouseover', (d, i) => {
-            console.log('d', d);
             tooltip.transition().duration(200).style('opacity', 0.9);
             tooltip
               .html(
@@ -413,13 +412,9 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
             );
 
             if (document.getElementById('filterBoxCmp')) {
-              console.log('x', d.offsetX, 'y', d.offsetY);
               tooltip.style('left', d.pageX - 550 + 'px');
               tooltip.style('top', d.pageY - 150 + 'px');
             } else {
-              console.log('height', height);
-              // tooltip.style('left', 50  + '%')
-              // tooltip.style('top', d.pageX + 'px');
               tooltip.style('right', height - 25 + 'px');
               tooltip.style('top', height - 255 + 'px');
             }
