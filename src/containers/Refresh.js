@@ -10,12 +10,10 @@ export default function Refresh() {
   const handleOnActive = () => setIsIdle(false);
   const handleOnIdle = () => setIsIdle(true);
 
-  const {
-    reset, pause, resume, getRemainingTime, getElapsedTime,
-  } = useIdleTimer({
+  const { reset, pause, resume, getRemainingTime, getElapsedTime } = useIdleTimer({
     timeout,
     onActive: handleOnActive,
-    onIdle: handleOnIdle,
+    onIdle: handleOnIdle
   });
 
   const handleReset = () => reset();
@@ -56,9 +54,15 @@ export default function Refresh() {
         </h1>
       </div>
       <div>
-        <button type="button" onClick={handleReset}>RESET</button>
-        <button type="button" onClick={handlePause}>PAUSE</button>
-        <button type="button" onClick={handleResume}>RESUME</button>
+        <button type="button" onClick={handleReset}>
+          RESET
+        </button>
+        <button type="button" onClick={handlePause}>
+          PAUSE
+        </button>
+        <button type="button" onClick={handleResume}>
+          RESUME
+        </button>
       </div>
     </div>
   );

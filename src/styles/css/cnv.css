@@ -1,6 +1,6 @@
-.sub_head{
+.sub_head {
   display: flex;
-  gap:10%;
+  gap: 10%;
   margin-top: 30px;
   margin-bottom: 50px;
 }

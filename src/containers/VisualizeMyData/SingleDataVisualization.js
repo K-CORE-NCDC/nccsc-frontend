@@ -1,5 +1,5 @@
-import React from "react";
-import HeaderComponent from "../Common/HeaderComponent/HeaderComponent";
+import React from 'react';
+import HeaderComponent from '../Common/HeaderComponent/HeaderComponent';
 export const SingleDataVisualization = () => {
   return (
     <div>
@@ -14,12 +14,9 @@ export const SingleDataVisualization = () => {
       />
       <article id="subContents" className="subContents">
         <div className="section ptn">
-          <div className="auto">
-
-          </div>
+          <div className="auto"></div>
         </div>
       </article>
     </div>
-  )
-
-}
+  );
+};

@@ -1,28 +1,17 @@
-import React, { useState, useEffect } from "react";
-import {
-  sankeyImageData,
-  sendReportData,
-  clearPdfLink,
-} from "../../actions/api_actions";
+import React, { useState, useEffect } from 'react';
+import { sankeyImageData, sendReportData, clearPdfLink } from '../../actions/api_actions';
 import uuid from 'react-uuid';
-import html2canvas from "html2canvas";
-import { useSelector, useDispatch } from "react-redux";
-import config from "../../config";
+import html2canvas from 'html2canvas';
+import { useSelector, useDispatch } from 'react-redux';
+import config from '../../config';
 
 function PdfPrint({ isReportClicked }) {
   const [loader, setLoader] = useState(false);
-  const [anchorTag, setAnchorTag] = useState([])
+  const [anchorTag, setAnchorTag] = useState([]);
   const dispatch = useDispatch();
-  const reportData = useSelector(
-    (state) => state.dataVisualizationReducer.rniData
-  );
-  const GeneMutationData = useSelector(
-    (data) => data.dataVisualizationReducer.rniData
-  );
-  const PDF_Report_Status = useSelector(
-    (data) => data.dataVisualizationReducer.PDFReport
-  );
-
+  const reportData = useSelector((state) => state.dataVisualizationReducer.rniData);
+  const GeneMutationData = useSelector((data) => data.dataVisualizationReducer.rniData);
+  const PDF_Report_Status = useSelector((data) => data.dataVisualizationReducer.PDFReport);
 
   useEffect(() => {
     let className = `.printpdf`,
@@ -41,8 +30,8 @@ function PdfPrint({ isReportClicked }) {
     if (reportData && 'response_sanky_data' in reportData) {
       setLoader(true);
       let GeneListSanky = [];
-      for (let i in reportData["response_sanky_data"]) {
-        if (reportData["response_sanky_data"][i]["gene_data"].length <= 0) {
+      for (let i in reportData['response_sanky_data']) {
+        if (reportData['response_sanky_data'][i]['gene_data'].length <= 0) {
           continue;
         }
         GeneListSanky.push(i);
@@ -56,29 +45,32 @@ function PdfPrint({ isReportClicked }) {
         count++;
       }
       if (GeneListSanky.length > 0) {
-        if (GeneMutationData && "variant_info" in GeneMutationData) {
+        if (GeneMutationData && 'variant_info' in GeneMutationData) {
           for (let i = 0; i < GeneListSanky.length; i++) {
             GeneandMutationList[GeneListSanky[i]] =
-              GeneMutationData["variant_info"][GeneListSanky[i]];
+              GeneMutationData['variant_info'][GeneListSanky[i]];
           }
         }
       }
-      let unq = uuid()
+      let unq = uuid();
       for (let i = 0; i < count - 1; i++) {
+        // let element = document.querySelector(`.sanky_chart_pdf${i}`)
         let element = document.querySelector(`#chart${i}`);
-        await html2canvas(element).then(canvas => {
+        await html2canvas(element).then((canvas) => {
           const imgData = canvas.toDataURL('image/jpeg', 1.0);
 
-          dispatch(sankeyImageData({ 'filename': element.getAttribute('name'), 'imgdata': imgData, 'unq': unq }))
+          dispatch(
+            sankeyImageData({ filename: element.getAttribute('name'), imgdata: imgData, unq: unq })
+          );
         });
       }
       setTimeout(() => {
         dispatch(
-          sendReportData("POST", {
+          sendReportData('POST', {
             GeneandMutationList: GeneandMutationList,
             BasicInformation: reportData.basic_information[0],
             rows: reportData.genomic_summary,
-            'unq': unq
+            unq: unq
           })
         );
       }, 4000);
@@ -86,27 +78,28 @@ function PdfPrint({ isReportClicked }) {
   };
 
   useEffect(() => {
-    if (PDF_Report_Status && "res" in PDF_Report_Status) {
-      let link = PDF_Report_Status["res"];
+    if (PDF_Report_Status && 'res' in PDF_Report_Status) {
+      let link = PDF_Report_Status['res'];
       let navlink = config.auth + link;
       dispatch(clearPdfLink());
       setLoader(false);
       window.location.href = navlink;
-
     }
   }, [PDF_Report_Status]);
   useEffect(() => {
     if (anchorTag.length > 0 && document.getElementById('downloadPDF')) {
-      document.getElementById('downloadPDF').click()
-      setAnchorTag([])
+      document.getElementById('downloadPDF').click();
+      setAnchorTag([]);
     }
-  }, [anchorTag])
+  }, [anchorTag]);
   return (
     <div>
       <div className="flex items-center justify-center">
         <button
           type="button"
-          className={`inline-flex  items-center py-6 px-6  float-left font-semibold leading-6 text-white ${loader ? 'cursor-not-allowed' : ""}transition duration-150 ease-in-out bg-NccBlue-700 rounded-md shadow  hover:bg-blue-700`}
+          className={`inline-flex  items-center py-6 px-6  float-left font-semibold leading-6 text-white ${
+            loader ? 'cursor-not-allowed' : ''
+          }transition duration-150 ease-in-out bg-NccBlue-700 rounded-md shadow  hover:bg-blue-700`}
           onClick={(e) => DownloadPDF(e)}
           disabled={loader ? true : false}
         >
@@ -138,9 +131,7 @@ function PdfPrint({ isReportClicked }) {
           {loader === false && <p>Download</p>}
         </button>
       </div>
-      {
-        (anchorTag.length > 0) ? anchorTag : ''
-      }
+      {anchorTag.length > 0 ? anchorTag : ''}
     </div>
   );
 }

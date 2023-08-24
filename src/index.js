@@ -3,18 +3,18 @@ import ReactDOM from 'react-dom/client';
 // import './styles/tailwind.css';
 // import './styles/index.css';
 
-import './styles/css/fonts.css'
-import './styles/css/material-icons.css'
-import './styles/css/layout.css'
-import './styles/css/layout_responsive.css'
-import './styles/css/main.css'
-import './styles/css/main_responsive.css'
-import './styles/css/contents.css'
-import './styles/css/contents_responsive.css'
-import './styles/css/custom_tailwind.css'
-import './styles/css/survival.css'
-import './styles/css/volcano.css'
-import './styles/css/fusionPlot.css'
+import './styles/css/fonts.css';
+import './styles/css/material-icons.css';
+import './styles/css/layout.css';
+import './styles/css/layout_responsive.css';
+import './styles/css/main.css';
+import './styles/css/main_responsive.css';
+import './styles/css/contents.css';
+import './styles/css/contents_responsive.css';
+import './styles/css/custom_tailwind.css';
+import './styles/css/survival.css';
+import './styles/css/volcano.css';
+import './styles/css/fusionPlot.css';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App/index';

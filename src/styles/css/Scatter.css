@@ -1,28 +1,27 @@
-.maintabs_box{
-    text-align: left;
-   
+.maintabs_box {
+  text-align: left;
 }
 
-.All_select{
+.All_select {
   padding-top: 8%;
 }
 
-.selctionBox{
+.selctionBox {
   width: 100%;
 }
 
 @media (min-width: 640px) {
-  .maintabs_box{
+  .maintabs_box {
     display: flex;
     text-align: left;
     width: 100%;
-}
-.All_select{
-  width: 50%;
-  padding-left: 15%;
-  padding-top: 2%;
-}
-.selctionBox{
-  width: 50%;
-}
+  }
+  .All_select {
+    width: 50%;
+    padding-left: 15%;
+    padding-top: 2%;
+  }
+  .selctionBox {
+    width: 50%;
+  }
 }

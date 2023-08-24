@@ -1,34 +1,34 @@
 .selected-tab {
-    background-color: aquamarine;
-  }
+  background-color: aquamarine;
+}
 
 .table-border {
-    border: solid black 1px;
+  border: solid black 1px;
 }
 
 .flex-row {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .flex-column {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .p-1 {
-    padding: 1em;
+  padding: 1em;
 }
 
 .m-1 {
-    margin: 1em;
+  margin: 1em;
 }
 
 .opacity-0 {
-    opacity: 0;
+  opacity: 0;
 }
-.height25{
-    height: 25%;
+.height25 {
+  height: 25%;
 }
 
 /* body{

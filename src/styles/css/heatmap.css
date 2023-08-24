@@ -4,7 +4,7 @@
 
 .box_space {
   display: flex;
-  gap: 5%
+  gap: 5%;
 }
 
 .sub_sec_head {
@@ -15,7 +15,6 @@
 }
 
 .sub_tabs {
-
   flex-direction: 'column';
 }
 
@@ -63,7 +62,6 @@
   text-align: left;
 } */
 
-
 .GeneSelectionBox .selectionBox {
   width: 50%;
 }
@@ -72,17 +70,17 @@
   width: 50%;
 }
 
-.ClusterBox{
+.ClusterBox {
   width: 50%;
   text-align: left;
 }
 
-.ClusterBox .ClusterBtn{
+.ClusterBox .ClusterBtn {
   display: flex;
   justify-content: space-between;
 }
 
-.ClusterBox ul{
+.ClusterBox ul {
   display: flex;
   justify-content: space-between;
 }
@@ -91,15 +89,15 @@
   width: 100% !important;
   height: 10px !important;
   background: #eee !important;
-  opacity: .8 !important;
+  opacity: 0.8 !important;
   outline: none !important;
-  transition: .3s !important;
+  transition: 0.3s !important;
   -webkit-appearance: none !important;
   position: relative !important;
 }
 
-input[type="range"].custom-slider {
-  -webkit-appearance: none  !important;
+input[type='range'].custom-slider {
+  -webkit-appearance: none !important;
   margin-right: 15px !important;
   /* width: 200px !important; */
   height: 7px !important;
@@ -110,7 +108,7 @@ input[type="range"].custom-slider {
   background-repeat: no-repeat !important;
 }
 
-input[type="range"].custom-slider::-webkit-slider-thumb {
+input[type='range'].custom-slider::-webkit-slider-thumb {
   -webkit-appearance: none !important;
   height: 10px !important;
   width: 10px !important;
@@ -118,16 +116,15 @@ input[type="range"].custom-slider::-webkit-slider-thumb {
   background: #ff4500 !important;
   cursor: ew-resize !important;
   box-shadow: 0 0 2px 0 #555 !important;
-  transition: background .3s ease-in-out !important;
+  transition: background 0.3s ease-in-out !important;
 }
 
-input[type=range].custom-slider::-webkit-slider-runnable-track  {
+input[type='range'].custom-slider::-webkit-slider-runnable-track {
   -webkit-appearance: none !important;
   box-shadow: none !important;
   border: none !important;
   background: transparent !important;
 }
-
 
 @media (max-width: 500px) {
   .GeneSelectionBox {
@@ -146,14 +143,12 @@ input[type=range].custom-slider::-webkit-slider-runnable-track  {
     display: flex;
     gap: 3%;
   }
-
-
 }
 
 @media (min-width: 450px) and (max-width: 640px) {
-    .GeneFilteringBox .Spectrum  {
+  .GeneFilteringBox .Spectrum {
     margin-left: 10%;
-   }
+  }
 }
 
 @media (min-width: 640px) and (max-width: 767px) {
@@ -165,7 +160,7 @@ input[type=range].custom-slider::-webkit-slider-runnable-track  {
     display: flex;
     gap:3%;
   } */
-  .ClusterBox{
+  .ClusterBox {
     width: 100%;
     text-align: left;
     margin-top: 2%;
@@ -178,7 +173,6 @@ input[type=range].custom-slider::-webkit-slider-runnable-track  {
   .Spectrumbtn .btn {
     width: 75%;
     margin: 10px 0px 7px 13%;
-
   }
 
   .Spectrum {
@@ -192,7 +186,7 @@ input[type=range].custom-slider::-webkit-slider-runnable-track  {
     width: 100%;
   }
 
-  .ClusterBox{
+  .ClusterBox {
     width: 100%;
     text-align: left;
     margin-top: 2%;
@@ -202,7 +196,6 @@ input[type=range].custom-slider::-webkit-slider-runnable-track  {
     display: none;
   }
 
-
   .GeneFilteringBox .Spectrum input {
     width: 50%;
     text-align: center;
@@ -211,15 +204,11 @@ input[type=range].custom-slider::-webkit-slider-runnable-track  {
   .Spectrumbtn .btn {
     width: 75%;
     margin: 10px 0px 7px 13%;
-
   }
 
   .GeneSelectionBox {
     gap: 3%;
   }
-
-
-
 }
 
 @media (min-width: 767px) and (max-width: 1275px) {
@@ -235,7 +224,7 @@ input[type=range].custom-slider::-webkit-slider-runnable-track  {
     width: 100%;
   }
 
-  .GeneFilteringBox{
+  .GeneFilteringBox {
     display: flex;
   }
 
@@ -243,21 +232,20 @@ input[type=range].custom-slider::-webkit-slider-runnable-track  {
     width: 50%;
     text-align: center;
   }
-  .GeneFilteringBox .Spectrum  {
-   padding-top: 10px;
+  .GeneFilteringBox .Spectrum {
+    padding-top: 10px;
   }
 
-  .Spectrumbtn  {
+  .Spectrumbtn {
     padding-top: 10px;
-   }
+  }
 }
-
 
 @media (min-width: 1275px) {
   .sub_head_heat {
     display: flex;
   }
-  .GeneFilteringBox{
+  .GeneFilteringBox {
     display: flex;
   }
 
@@ -265,8 +253,8 @@ input[type=range].custom-slider::-webkit-slider-runnable-track  {
     width: 50%;
     text-align: center;
   }
-  .GeneFilteringBox .Spectrum  {
-   padding-top: 10px;
+  .GeneFilteringBox .Spectrum {
+    padding-top: 10px;
   }
 
   .sub_head_heat .tabs_box {
@@ -281,8 +269,7 @@ input[type=range].custom-slider::-webkit-slider-runnable-track  {
     width: 50%;
     justify-content: end;
   }
-  .Spectrumbtn  {
-   padding-top: 10px;
+  .Spectrumbtn {
+    padding-top: 10px;
   }
-
 }

@@ -57,7 +57,7 @@
 }
 
 .mainVisual .visual::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -75,7 +75,6 @@
   display: flex;
   flex-direction: column;
   color: rgb(255, 255, 255);
-
 }
 
 .mainVisual .visual .txtBox .h6 {
@@ -188,7 +187,7 @@
 }
 
 .mainDataStatusWrap .mainDataStatus dl dd ul li::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 5px;
   bottom: 0;
@@ -348,7 +347,7 @@
   /* background-image: url("/images/ncdc/mainSection07-bg.jpg"); */
 }
 
-.mainContents .section.section07>img {
+.mainContents .section.section07 > img {
   position: absolute;
   top: 0;
   left: 0;
@@ -420,7 +419,7 @@
 }
 
 .mainContents .section03 .fullBox ul li::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   right: 0;
@@ -462,30 +461,30 @@
 }
 
 .mainContents .section03 .fullBox ul li.box01 .icon {
-  background-image: url("../../assets/images/mainSection03-icon01-on.svg");
+  background-image: url('../../assets/images/mainSection03-icon01-on.svg');
 }
 
 .mainContents .section03 .fullBox ul li.box02 .icon {
-  background-image: url("../../assets/images/mainSection03-icon02-on.svg");
+  background-image: url('../../assets/images/mainSection03-icon02-on.svg');
 }
 
 .mainContents .section03 .fullBox ul li.box03 .icon {
-  background-image: url("../../assets/images/mainSection03-icon03-on.svg");
+  background-image: url('../../assets/images/mainSection03-icon03-on.svg');
 }
 
 .mainContents .section03 .fullBox ul li.box01:hover .icon,
 .mainContents .section03 .fullBox ul li.box01.on .icon {
-  background-image: url("../../assets/images/mainSection03-icon01.svg");
+  background-image: url('../../assets/images/mainSection03-icon01.svg');
 }
 
 .mainContents .section03 .fullBox ul li.box02:hover .icon,
 .mainContents .section03 .fullBox ul li.box02.on .icon {
-  background-image: url("../../assets/images/mainSection03-icon02.svg");
+  background-image: url('../../assets/images/mainSection03-icon02.svg');
 }
 
 .mainContents .section03 .fullBox ul li.box03:hover .icon,
 .mainContents .section03 .fullBox ul li.box03.on .icon {
-  background-image: url("../../assets/images/mainSection03-icon03.svg");
+  background-image: url('../../assets/images/mainSection03-icon03.svg');
 }
 
 .mainContents .section03 .fullBox ul li dl {
@@ -584,7 +583,7 @@
   }
 }
 
-.mainContents .section04 .dataTypeWrap dt>span img {
+.mainContents .section04 .dataTypeWrap dt > span img {
   margin-top: -2px;
 }
 
@@ -597,7 +596,7 @@
   color: #2e2e2e;
 }
 
-.mainContents .section04 .dataTypeWrap dt .switcher input[type=checkbox]:checked+label {
+.mainContents .section04 .dataTypeWrap dt .switcher input[type='checkbox']:checked + label {
   background-color: #003177;
 }
 
@@ -611,7 +610,7 @@
   right: 12px;
 }
 
-.mainContents .section04 .dataTypeWrap .checkbox input:checked+label:before {
+.mainContents .section04 .dataTypeWrap .checkbox input:checked + label:before {
   background-color: rgba(255, 255, 255, 0.2);
   border: none;
 }
@@ -1010,7 +1009,7 @@
   width: 100%;
 }
 
-.mainContents .section06 .btnMore>span {
+.mainContents .section06 .btnMore > span {
   display: none;
 }
 
@@ -1050,7 +1049,7 @@
   margin-bottom: 12px;
 }
 
-.mainContents .section06 .galleryList02 .btnMore>span {
+.mainContents .section06 .galleryList02 .btnMore > span {
   display: none;
 }
 
@@ -1106,7 +1105,7 @@
   margin-bottom: 28px;
 }
 
-.mainContents .section07 .btns>a {
+.mainContents .section07 .btns > a {
   display: flex;
   align-items: center;
   color: rgb(255, 255, 255);
@@ -1126,7 +1125,7 @@
 }
 
 .mainContents .section07 .mediaSlide ul.slider .thumb::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -1221,7 +1220,7 @@
 }
 
 .dataSearchWrap .popularBox ul li::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   bottom: 0;
@@ -1392,7 +1391,7 @@
 }
 
 .dataSearchWrap .dataRecommend .recommend a::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -1451,7 +1450,7 @@
   top: -48px;
 }
 
-.mainContents .section06 .tabContents>ol>li {
+.mainContents .section06 .tabContents > ol > li {
   position: relative;
 }
 

@@ -1,9 +1,9 @@
-import React, { useEffect, useRef } from 'react';
 import { Chart, registerables } from 'chart.js';
+import React, { useEffect, useRef } from 'react';
 
 Chart.register(...registerables);
 
-export default function StackBarChartComp({ data, axis, key }) {
+export default function StackBarChartComp({ data, key }) {
   const chartRef = useRef(null);
 
   let option = {
@@ -18,14 +18,14 @@ export default function StackBarChartComp({ data, axis, key }) {
     },
     scales: {
       x: {
-        stacked: true,
+        stacked: true
       },
       y: {
         beginAtZero: true,
         stacked: true
       }
     }
-  }
+  };
 
   const drawGraph = (labels, data_) => {
     if (chartRef.current) {
@@ -38,18 +38,17 @@ export default function StackBarChartComp({ data, axis, key }) {
         options: option
       });
     }
-  }
+  };
 
   useEffect(() => {
-    let datasets = data['datasets']
-    let labels = data['labels']
-    drawGraph(labels, datasets)
+    let datasets = data['datasets'];
+    let labels = data['labels'];
+    drawGraph(labels, datasets);
   }, []);
-
 
   return (
     <div>
       <canvas ref={chartRef} id={key} height="200"></canvas>
     </div>
-  )
+  );
 }

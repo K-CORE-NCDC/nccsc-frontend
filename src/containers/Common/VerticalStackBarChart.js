@@ -3,7 +3,7 @@ import { Chart, registerables } from 'chart.js';
 
 Chart.register(...registerables);
 
-export default function VerticalStackBarChartComp({ data, axis, key }) {
+export default function VerticalStackBarChartComp({ data, key }) {
   const chartRef_1 = useRef(null);
   let option = {
     plugins: {
@@ -19,13 +19,13 @@ export default function VerticalStackBarChartComp({ data, axis, key }) {
     },
     scales: {
       x: {
-        stacked: true,
+        stacked: true
       },
       y: {
         stacked: true
       }
     }
-  }
+  };
   const drawGraph = (labels, data_) => {
     if (chartRef_1.current) {
       new Chart(chartRef_1.current, {
@@ -37,18 +37,17 @@ export default function VerticalStackBarChartComp({ data, axis, key }) {
         options: option
       });
     }
-  }
+  };
 
   useEffect(() => {
-    let datasets = data['datasets']
-    let labels = data['labels']
-    drawGraph(labels, datasets)
+    let datasets = data['datasets'];
+    let labels = data['labels'];
+    drawGraph(labels, datasets);
   }, []);
-
 
   return (
     <div>
       <canvas ref={chartRef_1} id={key} height="200"></canvas>
     </div>
-  )
+  );
 }

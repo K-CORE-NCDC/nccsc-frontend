@@ -1,21 +1,16 @@
-import React from "react";
-import HeaderComponent from "./HeaderComponent/HeaderComponent";
+import React from 'react';
+import HeaderComponent from './HeaderComponent/HeaderComponent';
 
-export const CustomerServiceDetail = ({ tabName, rowTitle }) => {
-  const title = { id: "details", defaultMessage: "Details" }
+export const CustomerServiceDetail = () => {
+  const title = { id: 'details', defaultMessage: 'Details' };
+
 
   const breadCrumbs = {
-    '/signup/': [
-      { id: 'Signup', defaultMessage: 'Sign Up', to: '/signup/' }
-    ],
+    '/signup/': [{ id: 'Signup', defaultMessage: 'Sign Up', to: '/signup/' }]
   };
   return (
     <>
-      <HeaderComponent
-        title={title}
-        breadCrumbs={breadCrumbs['/signup/']}
-        type="single"
-      />
+      <HeaderComponent title={title} breadCrumbs={breadCrumbs['/signup/']} type="single" />
       <article id="subContents" className="subContents">
         <div>
           <div className="contentsTitle">
@@ -27,13 +22,10 @@ export const CustomerServiceDetail = ({ tabName, rowTitle }) => {
             </div>
           </div>
           <div className="ptn">
-            <div className="auto">
-
-              sushma
-            </div>
+            <div className="auto">sushma</div>
           </div>
         </div>
       </article>
     </>
-  )
-}
+  );
+};

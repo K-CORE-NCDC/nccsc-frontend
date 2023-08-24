@@ -22,62 +22,112 @@
  */
 
 @font-face {
-  font-family: "Spoqa Han Sans Neo";
+  font-family: 'Spoqa Han Sans Neo';
   font-weight: 700;
-  src: local("Spoqa Han Sans Neo Bold"), url("../fonts/SpoqaHanSansNeo-Bold.woff2") format("woff2"), url("../fonts/SpoqaHanSansNeo-Bold.woff") format("woff"), url("../fonts/SpoqaHanSansNeo-Bold.ttf") format("truetype");
+  src:
+    local('Spoqa Han Sans Neo Bold'),
+    url('../fonts/SpoqaHanSansNeo-Bold.woff2') format('woff2'),
+    url('../fonts/SpoqaHanSansNeo-Bold.woff') format('woff'),
+    url('../fonts/SpoqaHanSansNeo-Bold.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: "Spoqa Han Sans Neo";
+  font-family: 'Spoqa Han Sans Neo';
   font-weight: 500;
-  src: local("Spoqa Han Sans Neo Medium"), url("../fonts/SpoqaHanSansNeo-Medium.woff2") format("woff2"), url("../fonts/SpoqaHanSansNeo-Medium.woff") format("woff"), url("../fonts/SpoqaHanSansNeo-Medium.ttf") format("truetype");
+  src:
+    local('Spoqa Han Sans Neo Medium'),
+    url('../fonts/SpoqaHanSansNeo-Medium.woff2') format('woff2'),
+    url('../fonts/SpoqaHanSansNeo-Medium.woff') format('woff'),
+    url('../fonts/SpoqaHanSansNeo-Medium.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: "Spoqa Han Sans Neo";
+  font-family: 'Spoqa Han Sans Neo';
   font-weight: 400;
-  src: local("Spoqa Han Sans Neo Regular"), url("../fonts/SpoqaHanSansNeo-Regular.woff2") format("woff2"), url("../fonts/SpoqaHanSansNeo-Regular.woff") format("woff"), url("../fonts/SpoqaHanSansNeo-Regular.ttf") format("truetype");
+  src:
+    local('Spoqa Han Sans Neo Regular'),
+    url('../fonts/SpoqaHanSansNeo-Regular.woff2') format('woff2'),
+    url('../fonts/SpoqaHanSansNeo-Regular.woff') format('woff'),
+    url('../fonts/SpoqaHanSansNeo-Regular.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: "Spoqa Han Sans Neo";
+  font-family: 'Spoqa Han Sans Neo';
   font-weight: 300;
-  src: local("Spoqa Han Sans Neo Light"), url("../fonts/SpoqaHanSansNeo-Light.woff2") format("woff2"), url("../fonts/SpoqaHanSansNeo-Light.woff") format("woff"), url("../fonts/SpoqaHanSansNeo-Light.ttf") format("truetype");
+  src:
+    local('Spoqa Han Sans Neo Light'),
+    url('../fonts/SpoqaHanSansNeo-Light.woff2') format('woff2'),
+    url('../fonts/SpoqaHanSansNeo-Light.woff') format('woff'),
+    url('../fonts/SpoqaHanSansNeo-Light.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: "Spoqa Han Sans Neo";
+  font-family: 'Spoqa Han Sans Neo';
   font-weight: 100;
-  src: local("Spoqa Han Sans Neo Thin"), url("../fonts/SpoqaHanSansNeo-Thin.woff2") format("woff2"), url("../fonts/SpoqaHanSansNeo-Thin.woff") format("woff"), url("../fonts/SpoqaHanSansNeo-Thin.ttf") format("truetype");
+  src:
+    local('Spoqa Han Sans Neo Thin'),
+    url('../fonts/SpoqaHanSansNeo-Thin.woff2') format('woff2'),
+    url('../fonts/SpoqaHanSansNeo-Thin.woff') format('woff'),
+    url('../fonts/SpoqaHanSansNeo-Thin.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-weight: 100;
-  src: local("Spoqa Han Sans Neo Thin"), url("../fonts/NotoSans-Thin.eot") format("embedded-opentype"), url("../fonts/NotoSans-Thin.woff2") format("woff2"), url("../fonts/NotoSans-Thin.woff") format("woff"), url("../fonts/NotoSans-Thin.ttf") format("truetype");
+  src:
+    local('Spoqa Han Sans Neo Thin'),
+    url('../fonts/NotoSans-Thin.eot') format('embedded-opentype'),
+    url('../fonts/NotoSans-Thin.woff2') format('woff2'),
+    url('../fonts/NotoSans-Thin.woff') format('woff'),
+    url('../fonts/NotoSans-Thin.ttf') format('truetype');
 }
 @font-face {
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-weight: 300;
-  src: local("Spoqa Han Sans Neo Light"), url("../fonts/NotoSans-Light.eot") format("embedded-opentype"), url("../fonts/NotoSans-Light.woff2") format("woff2"), url("../fonts/NotoSans-Light.woff") format("woff"), url("../fonts/NotoSans-Light.ttf") format("truetype");
+  src:
+    local('Spoqa Han Sans Neo Light'),
+    url('../fonts/NotoSans-Light.eot') format('embedded-opentype'),
+    url('../fonts/NotoSans-Light.woff2') format('woff2'),
+    url('../fonts/NotoSans-Light.woff') format('woff'),
+    url('../fonts/NotoSans-Light.ttf') format('truetype');
 }
 @font-face {
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-weight: 400;
-  src: local("Spoqa Han Sans Neo Regular"), url("../fonts/NotoSans-Regular.eot") format("embedded-opentype"), url("../fonts/NotoSans-Regular.woff2") format("woff2"), url("../fonts/NotoSans-Regular.woff") format("woff"), url("../fonts/NotoSans-Regular.ttf") format("truetype");
+  src:
+    local('Spoqa Han Sans Neo Regular'),
+    url('../fonts/NotoSans-Regular.eot') format('embedded-opentype'),
+    url('../fonts/NotoSans-Regular.woff2') format('woff2'),
+    url('../fonts/NotoSans-Regular.woff') format('woff'),
+    url('../fonts/NotoSans-Regular.ttf') format('truetype');
 }
 @font-face {
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-weight: 500;
-  src: local("Spoqa Han Sans Neo Medium"), url("../fonts/NotoSans-Medium.eot") format("embedded-opentype"), url("../fonts/NotoSans-Medium.woff2") format("woff2"), url("../fonts/NotoSans-Medium.woff") format("woff"), url("../fonts/NotoSans-Medium.ttf") format("truetype");
+  src:
+    local('Spoqa Han Sans Neo Medium'),
+    url('../fonts/NotoSans-Medium.eot') format('embedded-opentype'),
+    url('../fonts/NotoSans-Medium.woff2') format('woff2'),
+    url('../fonts/NotoSans-Medium.woff') format('woff'),
+    url('../fonts/NotoSans-Medium.ttf') format('truetype');
 }
 @font-face {
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-weight: 700;
-  src: local("Spoqa Han Sans Neo Bold"), url("../fonts/NotoSans-Bold.eot") format("embedded-opentype"), url("../fonts/NotoSans-Bold.woff2") format("woff2"), url("../fonts/NotoSans-Bold.woff") format("woff"), url("../fonts/NotoSans-Bold.ttf") format("truetype");
+  src:
+    local('Spoqa Han Sans Neo Bold'),
+    url('../fonts/NotoSans-Bold.eot') format('embedded-opentype'),
+    url('../fonts/NotoSans-Bold.woff2') format('woff2'),
+    url('../fonts/NotoSans-Bold.woff') format('woff'),
+    url('../fonts/NotoSans-Bold.ttf') format('truetype');
 }
 @font-face {
-  font-family: "Noto Sans KR";
+  font-family: 'Noto Sans KR';
   font-weight: 900;
-  src: local("Spoqa Han Sans Neo Black"), url("../fonts/NotoSans-Black.eot") format("embedded-opentype"), url("../fonts/NotoSans-Black.woff2") format("woff2"), url("../fonts/NotoSans-Black.woff") format("woff"), url("../fonts/NotoSans-Black.ttf") format("truetype");
+  src:
+    local('Spoqa Han Sans Neo Black'),
+    url('../fonts/NotoSans-Black.eot') format('embedded-opentype'),
+    url('../fonts/NotoSans-Black.woff2') format('woff2'),
+    url('../fonts/NotoSans-Black.woff') format('woff'),
+    url('../fonts/NotoSans-Black.ttf') format('truetype');
 }

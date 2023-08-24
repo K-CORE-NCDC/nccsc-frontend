@@ -10,30 +10,32 @@ export default function BarChartComp({ data }) {
         type: 'bar',
         data: {
           labels: labels,
-          datasets: [{
-            label: '',
-            data: data_,
-            backgroundColor: [
-              '#529d3f',
-              '#d2352b',
-              '#f18532',
-              '#644195',
-              '#3777af',
-              '#c74a52',
-              '#fffebc'
-            ],
-            borderColor: [
-              '#529d3f',
-              '#d2352b',
-              '#f18532',
-              '#644195',
-              '#3777af',
-              '#c74a52',
-              '#fffebc'
-            ],
-            borderWidth: 1,
-            borderRadius: 0
-          }]
+          datasets: [
+            {
+              label: '',
+              data: data_,
+              backgroundColor: [
+                '#529d3f',
+                '#d2352b',
+                '#f18532',
+                '#644195',
+                '#3777af',
+                '#c74a52',
+                '#fffebc'
+              ],
+              borderColor: [
+                '#529d3f',
+                '#d2352b',
+                '#f18532',
+                '#644195',
+                '#3777af',
+                '#c74a52',
+                '#fffebc'
+              ],
+              borderWidth: 1,
+              borderRadius: 0
+            }
+          ]
         },
         options: {
           indexAxis: 'y',
@@ -41,7 +43,6 @@ export default function BarChartComp({ data }) {
             legend: {
               display: false
             }
-
           },
           layout: {
             padding: 20
@@ -55,29 +56,28 @@ export default function BarChartComp({ data }) {
                 display: true,
                 drawBorder: true,
                 drawOnChartArea: true,
-                drawTicks: true,
+                drawTicks: true
               }
             }
           }
         }
       });
     }
-  }
+  };
 
   useEffect(() => {
-    let labels = []
-    let data_list = []
+    let labels = [];
+    let data_list = [];
     for (var k in data) {
-      labels.push(data[k]['name'])
-      data_list.push(data[k]['cnt'])
+      labels.push(data[k]['name']);
+      data_list.push(data[k]['cnt']);
     }
-    drawGraph(labels, data_list)
+    drawGraph(labels, data_list);
   }, []);
-
 
   return (
     <div>
       <canvas ref={chartRef} id="myChart" height="200"></canvas>
     </div>
-  )
+  );
 }

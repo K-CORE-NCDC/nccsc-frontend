@@ -39,7 +39,7 @@
 }
 
 @media all and (max-width: 1600px) {
-  .allMenuWrap .allMenu>ul>li {
+  .allMenuWrap .allMenu > ul > li {
     flex-direction: column;
     align-items: flex-start;
   }
@@ -50,11 +50,11 @@
     width: calc(100% - 526px);
   }
 
-  .allMenuWrap .allMenu>ul>li {
+  .allMenuWrap .allMenu > ul > li {
     margin-top: 20px;
   }
 
-  .allMenuWrap .allMenu>ul>li>a {
+  .allMenuWrap .allMenu > ul > li > a {
     font-size: 21px;
     font-weight: 700;
     letter-spacing: -0.04rem;
@@ -63,17 +63,17 @@
 }
 
 @media all and (max-width: 1280px) and (max-width: 767px) {
-  .allMenuWrap .allMenu>ul>li>a {
+  .allMenuWrap .allMenu > ul > li > a {
     font-size: 16px;
   }
 }
 
 @media all and (max-width: 1280px) {
-  .allMenuWrap .allMenu>ul>li .sub {
+  .allMenuWrap .allMenu > ul > li .sub {
     flex-wrap: wrap;
   }
 
-  .allMenuWrap .allMenu>ul>li .sub li {
+  .allMenuWrap .allMenu > ul > li .sub li {
     margin-right: 16px;
     margin-bottom: 8px;
   }
@@ -132,7 +132,7 @@
     right: 40px;
   }
 
-  .header .headerUtils>a {
+  .header .headerUtils > a {
     display: none;
   }
 
@@ -232,12 +232,12 @@
     padding: 0;
   }
 
-  .allMenuWrap .imgBox .utils>a:nth-child(2),
-  .allMenuWrap .imgBox .utils>a:nth-child(3) {
+  .allMenuWrap .imgBox .utils > a:nth-child(2),
+  .allMenuWrap .imgBox .utils > a:nth-child(3) {
     display: none;
   }
 
-  .allMenuWrap .imgBox .utils>a:nth-child(5) {
+  .allMenuWrap .imgBox .utils > a:nth-child(5) {
     display: block;
   }
 
@@ -278,7 +278,7 @@
   }
 
   .allMenuWrap .allMenu::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -288,7 +288,7 @@
     background-color: #e5e9f2;
   }
 
-  .allMenuWrap .allMenu>ul {
+  .allMenuWrap .allMenu > ul {
     margin-left: 70%;
     height: 100%;
     overflow-y: auto;
@@ -296,12 +296,12 @@
     padding: 60px 11px;
   }
 
-  .allMenuWrap .allMenu>ul>li {
+  .allMenuWrap .allMenu > ul > li {
     flex-direction: row;
     margin-top: 24px;
   }
 
-  .allMenuWrap .allMenu>ul>li>a {
+  .allMenuWrap .allMenu > ul > li > a {
     width: 266px;
     font-size: 21px;
     font-weight: 700;
@@ -312,13 +312,13 @@
 }
 
 @media all and (max-width: 1199px) and (max-width: 767px) {
-  .allMenuWrap .allMenu>ul>li>a {
+  .allMenuWrap .allMenu > ul > li > a {
     font-size: 21px;
   }
 }
 
 @media all and (max-width: 1199px) {
-  .allMenuWrap .allMenu>ul>li .sub {
+  .allMenuWrap .allMenu > ul > li .sub {
     width: calc(100% - 306px);
     /* flex-wrap: wrap; */
   }
@@ -486,7 +486,7 @@
   }
 
   .allMenuWrap::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 60px;
     left: 0;
@@ -557,7 +557,7 @@
     width: 50%;
   }
 
-  .allMenuWrap .allMenu>ul {
+  .allMenuWrap .allMenu > ul {
     /* padding: 24px 0; */
     display: flex;
     flex-direction: column;
@@ -565,7 +565,7 @@
     margin-left: 25%;
   }
 
-  .allMenuWrap .allMenu>ul>li {
+  .allMenuWrap .allMenu > ul > li {
     margin-top: 24px;
   }
 
@@ -577,12 +577,12 @@
     background-color: #2e2e2e;
   } */
 
-  .allMenuWrap .allMenu>ul>li>a {
+  .allMenuWrap .allMenu > ul > li > a {
     /* width: 50%; */
     padding: 10px 4px;
   }
 
-  .allMenuWrap .allMenu>ul>li .sub {
+  .allMenuWrap .allMenu > ul > li .sub {
     display: none;
     position: absolute;
     top: 0;
@@ -594,23 +594,23 @@
     text-align: left;
   }
 
-  .allMenuWrap .allMenu>ul>li .sub li {
+  .allMenuWrap .allMenu > ul > li .sub li {
     margin-top: 16px;
     margin-bottom: 0;
     margin-right: 0;
   }
 
-  .allMenuWrap .allMenu>ul>li .sub li:first-child {
+  .allMenuWrap .allMenu > ul > li .sub li:first-child {
     margin-top: 0;
   }
 
-  .allMenuWrap .allMenu>ul>li .sub li a {
+  .allMenuWrap .allMenu > ul > li .sub li a {
     font-size: 14px;
     font-weight: 500;
     line-height: 140%;
   }
 
-  .allMenuWrap .allMenu>ul>li:first-child .sub {
+  .allMenuWrap .allMenu > ul > li:first-child .sub {
     display: flex;
   }
 }
@@ -747,11 +747,11 @@
 }
 
 @media all and (max-width: 767px) {
-  .inlineLabels>* {
+  .inlineLabels > * {
     margin-right: 16px;
   }
 
-  .inlineLabels>*:last-child {
+  .inlineLabels > *:last-child {
     margin-right: 0;
   }
 }
