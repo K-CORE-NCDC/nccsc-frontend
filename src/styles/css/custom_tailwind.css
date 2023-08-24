@@ -2561,7 +2561,6 @@
 
 .fixed {
   position: sticky !important;
-  border-left: 1px solid black;
   z-index: 1;
   left: 0;
   background-color: white;

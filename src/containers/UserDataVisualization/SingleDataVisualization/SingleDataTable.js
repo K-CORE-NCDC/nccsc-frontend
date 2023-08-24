@@ -255,20 +255,24 @@ function SingleDataTable({ updateComponentNumber }) {
                 let v = rdata.split('||');
                 if (v.length > 1) {
                   return (
-                    <div className="boardCell" style={{ color: 'red' }}>
+                    <div className="" style={{ color: 'red' }}>
                       {v[1]}
                     </div>
                   );
                 } else {
-                  return <div className="boardCell">{String(row[columns[i]])}</div>;
+                  return <div className="">{String(row[columns[i]])}</div>;
                 }
-              },
-              className: 'boardCell',
-              sortable: true
+              }
             });
           }
 
           let tempRow = { ...rowObject };
+          Tablecolumns?.forEach(ele => {
+            if (ele?.Header === 'gene_name') {
+              ele["fixed"] = 'left'
+            }
+          })
+          console.log('Tablecolumns', Tablecolumns)
           setColData(Tablecolumns);
           // setting the row data
           let rawRowData = verificationResponse['result'][key];

@@ -98,7 +98,7 @@ function Table({
                             >
                                 {headerGroup.headers.map((column) => (
 
-                                    <th className={`${column?.fixed !== '' ? '' : 'fixed'} boardCell IconSpan`} {...column.getHeaderProps(column.getSortByToggleProps())} style={{ textAlign: 'center', padding: '16px 24px' }} >
+                                    <th className={`${(column?.fixed && column?.fixed  === 'left') ? 'fixed' : ''} boardCell IconSpan`} {...column.getHeaderProps(column.getSortByToggleProps())} style={{ textAlign: 'center', padding: '16px 24px' }} >
                                         {column.render('Header')}
 
                                         <span className={`${column.isSorted ? 'Opacity1' : 'Opacity0'}`}>
@@ -125,7 +125,7 @@ function Table({
                                     {row.cells.map((cell) => {
                                         return (
                                             <td
-                                                className={`${cell?.column?.fixed !== '' ? '' : 'fixed'} boardCell`}
+                                                className={`${(cell?.column?.fixed && cell?.column?.fixed === 'left') ? 'fixed' : ''} boardCell`}
                                                 {...cell.getCellProps()} style={{ textAlign: 'center', fontWeight: '400' }}
                                             >
                                                 {cell.render("Cell")}
