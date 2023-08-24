@@ -602,7 +602,7 @@ export default function DataLolipop({
                             name="type"
                           >
                             {' '}
-                            <FormattedMessage id="Phospho" defaultMessage="Phospho" />{' '}
+                            <FormattedMessage id="Phosphorylation" defaultMessage='Phosphorylation' />{' '}
                           </button>
                         </li>
                       )}
@@ -623,7 +623,7 @@ export default function DataLolipop({
                             name="type"
                           >
                             {' '}
-                            <FormattedMessage id="Phospho" defaultMessage="Phospho" />{' '}
+                            <FormattedMessage id="Phosphorylation" defaultMessage='Phosphorylation' />{' '}
                           </button>
                         </li>
                       )}

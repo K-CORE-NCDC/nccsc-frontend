@@ -275,6 +275,7 @@
   "SomanticMutationmutationsamplenumber/totalselectedsamplenumber(%)Frequency": "% (변이 샘플 수/전체 선택된 샘플 수(%))",
   "PhosphorylationFrequency": "인산화 빈도: ",
   "Phosphorylationsamplenumber/totalselectedsamplenumber(%)": "% (인산화된 샘플 수/전체 선택된 샘플 수(%))",
+  "Phosphorylation":"인산화",
   "sampleid": "샘플이름",
   "ProtienChange": "단백질변화 정보",
   "MutationType": "변이 종류",
