@@ -2523,4 +2523,23 @@
   height:100%;
 }
 
+.sankey_multi_table .boardHeader .boardTr:first-child .boardCell .Opacity0{
+  display:none;
+}
+.boardHeader .boardTr .boardCell{ 
+  border-right:1px solid #8f8f8f;
+}
 
+.boardHeader .boardTr .boardCell:last-child{
+  border-right:1px solid transparent;
+}
+.boardBody .boardTr .boardCell{
+  border-right:1px solid #8f8f8f;
+}
+
+.boardBody .boardTr .boardCell:last-child{
+  border-right:1px solid transparent;
+}
+.verticalend{
+  vertical-align: bottom;
+}

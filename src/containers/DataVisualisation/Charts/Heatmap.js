@@ -718,8 +718,8 @@ export default function DataHeatmap({
               </select>
             </div>
             <div
-              className="tabs_box"
-              style={btnClickNote === '' ? { paddingTop: '22px' } : { paddingTop: '0px' }}
+              className="tabs_box W100"
+              style={btnClickNote === '' ? { paddingTop: '22px', width:'100%' } : { paddingTop: '0px' , width:'100%' }}
             >
               <div className="tab mainTab">
                 {btnClickNote !== '' && (
@@ -1019,7 +1019,7 @@ export default function DataHeatmap({
           </div>
           <div className="Spectrumbtn">
             <button onClick={(e) => changeSepctrum(e)} className="btn btnPrimary">
-              Apply
+              <FormattedMessage id='apply' defaultMessage="Apply"/>
             </button>
           </div>
 

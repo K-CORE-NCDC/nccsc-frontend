@@ -503,5 +503,6 @@
   "value":"내용",
   "rsid":"변이아이디(RS ID)",
   "Disease":"질병",
-  "Drug":"약물"
+  "Drug":"약물",
+  "apply":"적용"
 }
