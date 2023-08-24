@@ -806,7 +806,7 @@ import $ from 'jquery';
 
             var $legend_div = $('<div></div>')
               .css({
-                position: 'absolute',
+                position: 'relative',
                 top: '250px',
                 'min-height': 1
               })
