@@ -80,7 +80,6 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
     'variant-summary'
   ];
 
-
   const charts = {
     circos: {
       rna: 'RNA',
@@ -192,7 +191,6 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
   }, []);
 
   const resetStates = () => {
-    // dispatch(clearSingleFIleUploadState())
     inputRef.current.value = null;
     setSelectedFileSampleType({
       1: 'clinical_information'

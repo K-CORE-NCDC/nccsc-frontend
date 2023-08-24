@@ -164,7 +164,6 @@ function Koreanprivacyact() {
                           <span className="div_64_box_text">일반개인정보 수집</span>
                         </div>
                       </div>
-                      {/* <div></div> */}
                     </div>
                     <div className="" style={{ marginTop: '5%' }}>
                       <div>

@@ -31,8 +31,7 @@ const superAdmin = {
 
 const childMenu = {
   social: {
-    items: [
-    ]
+    items: []
   },
   mainmenu: {
     items: [

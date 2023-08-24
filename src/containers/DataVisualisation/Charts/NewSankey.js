@@ -133,7 +133,6 @@ function Sankey() {
       scaleNodeBreadths((width - nodeWidth) / (x - 1));
     }
 
-
     function moveSinksRight(x) {
       nodes.forEach(function (node) {
         if (!node.sourceLinks.length) {

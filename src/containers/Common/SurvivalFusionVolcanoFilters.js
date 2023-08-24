@@ -1333,7 +1333,6 @@ export const GroupFilters = ({
 
   const updateSelectedFilter = (e) => {
     setGroupsCounter(1);
-    // resetFilters();
     setIsFilterResetHappened(true);
     setFilterInputs([]);
     const targetValue = e.target.value;
@@ -2583,7 +2582,6 @@ export const UserDefinedGroupFilters = ({
 
   const updateSelectedFilter = (e) => {
     setGroupsCounter(1);
-    // resetFilters()
     setIsFilterResetHappened(true);
     setFilterInputs([]);
     const targetValue = e.target.value;
@@ -2653,7 +2651,6 @@ export const UserDefinedGroupFilters = ({
     }
   };
 
-  // Chnage
   useEffect(() => {
     if (groupFilters && Object.keys(groupFilters).length > 0) {
       let filterType = groupFilters.type;

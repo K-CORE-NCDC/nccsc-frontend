@@ -257,7 +257,6 @@ function NewSankeyd3({ SankeyJson, idName, forGene }) {
         (link) => validNodeNames.has(link.source) && validNodeNames.has(link.target)
       );
 
-
       const filteredSankeyJson = {
         nodes: filteredNodes,
         links: filteredLinks

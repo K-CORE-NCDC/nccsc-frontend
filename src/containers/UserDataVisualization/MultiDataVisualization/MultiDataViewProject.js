@@ -393,7 +393,6 @@ export default function MultiDataViewProject() {
         </div>
         <div className="ptn">
           <div className="auto">
-            {/* {slug ? <ProjectsDetail slug_id={slug} /> : <ProjectsList />} */}
             {<ProjectsList />}
           </div>
         </div>
