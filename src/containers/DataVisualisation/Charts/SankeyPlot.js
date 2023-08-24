@@ -9,6 +9,8 @@ import LoaderComp from '../../Common/Loader';
 import SankeyIndex from './SankeyIndex';
 import Table from '../../Common/Table/ReactTable';
 import { useIntl } from 'react-intl';
+import { QuestionMarkCircleIcon } from '@heroicons/react/outline';
+import ReactTooltip from 'react-tooltip';
 // import {createColumnHelper} from 'react-table';
 function SankeyPlot({ inputData }) {
   // const basicTable = useRef();
@@ -91,7 +93,27 @@ function SankeyPlot({ inputData }) {
       ]
       if (rnaData.genomic_summary[0].hasOwnProperty('rna')) {
         tableColumnsData.push({
-          Header:'Dna Mutation',
+          id:'dna_mutation',
+          Header:<dt>DNA Mutation <span className='InlineFlex '>
+                 
+                <FormattedMessage id='SankeyTableDNAMutationTooltip' defaultMessage="if occured mutation is one of the following variant">
+                  {(placeholder) => (
+                    <>
+                      <QuestionMarkCircleIcon
+                        data-multiline={true}
+                        className="inline ml-2 mb-1"
+                        data-class="my-tooltip"
+                        data-tip={`Yes :  ${placeholder} <br>  <br/>Missense mutation, Nonsense mutation, Splice site, <br>  <br/>In frame insertion, In frame deletion, Frame-shift insertion, Frame-shift deletion`}
+                        style={{ width: '20px', cursor: 'pointer' }}
+                      ></QuestionMarkCircleIcon>
+                      <ReactTooltip /></>
+                  )}
+                </FormattedMessage>
+
+              </span></dt>,
+          style:{
+            borderRight:'1px solid #8f8f8f'
+          },
           columns:[
             {
               
@@ -122,7 +144,18 @@ function SankeyPlot({ inputData }) {
       }
       if (rnaData.genomic_summary[0].hasOwnProperty('rna')) {
         tableColumnsData.push({
-          Header:'Rna',
+          id:'rna',
+
+          Header:<dt>
+            RNA <span className='InlineFlex '>
+                <QuestionMarkCircleIcon
+                  data-multiline="true"
+                  className="inline ml-2 mb-1"
+                  data-tip="RNA high : z-score ≥ 1,<br>  <br/>RNA low : z-score ≤ -1 "
+                  style={{ width: '20px', cursor: 'pointer' }}
+                ></QuestionMarkCircleIcon>
+                <ReactTooltip />
+              </span></dt>,
           columns:[
             {
               Header:"High",
@@ -152,7 +185,18 @@ function SankeyPlot({ inputData }) {
       }
       if (rnaData.genomic_summary[0].hasOwnProperty('proteome')) {
         tableColumnsData.push({
-          Header:'Proteom',
+          id:'proteome',
+          Header:<dt>
+            Proteome <span className='InlineFlex '>
+                <QuestionMarkCircleIcon
+                  data-multiline="true"
+                  className="inline ml-2 mb-1"
+                  data-tip="Proteome high : z-score ≥ 1.5,<br>  <br/>Proteome low : z-score ≤ 0.5"
+                  style={{ width: '20px', cursor: 'pointer' }}
+                ></QuestionMarkCircleIcon>
+                <ReactTooltip />
+              </span>
+          </dt>,
           columns:[
             {
               id:'pHigh',
@@ -472,7 +516,7 @@ function SankeyPlot({ inputData }) {
                     <Table
                       columns={ColumnNames}
                       data={basicHtml}
-
+                      width={"1075"}
                     />
                   </div>
                 )}
@@ -488,11 +532,11 @@ function SankeyPlot({ inputData }) {
                           </span>
                         </h3>
                       </div>
-                      <div className=" report_table">
+                      <div className=" report_table sankey_multi_table">
                         <Table
                           columns={tableColumnsData}
                           data={tableData}
-
+                          width={'1600'}
                         />
                       </div>
                     </div>

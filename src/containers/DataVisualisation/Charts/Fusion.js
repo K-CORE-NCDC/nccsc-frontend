@@ -11,7 +11,6 @@ import FusionVennCmp from '../../Common/FusionVenn';
 import LoaderCmp from '../../Common/Loader';
 import NoContentMessage from '../../Common/NoContentComponent';
 import Table from '../../Common/Table/ReactTable';
-import { EyeIcon } from '@heroicons/react/outline';
 
 export default function FusionPlot({
   width,
@@ -88,8 +87,8 @@ export default function FusionPlot({
 
   const tableColumnsData = [
     {
-      Header: intl.formatMessage({ id: "SampleName", defaultMessage: 'Sample Name' }),
-      accessor: (row) => row?.sample_id?.join(','),
+      Header: intl.formatMessage({ id: "View", defaultMessage: 'View' }),
+      accessor: (row) => row?.view,
       Cell: ({ cell: { row, value } }) => {
         let html = [];
         let check = false;
@@ -129,15 +128,67 @@ export default function FusionPlot({
         }
         let main_html = [];
         main_html.push(
-          <div className="flex flex-col w-full text-left" style={{ gap: '10px' }}>
+          <div className="flex flex-col w-full text-left" style={{ gap: '10px', justifyContent:'center' }}>
             {value}
-            <button onClick={(e) => generateFusion(e, row.id)} id={row.id}>
-              <EyeIcon style={{ width: '15px' }} />
+            <button onClick={(e) => generateFusion(e, row.id)} id={row.id} style={{border:'1px solid black' , padding:'5px'}}>
+              <FormattedMessage id="View" defaultMessage="View"/>
             </button>
           </div>
         );
         return main_html;
       }
+    },
+    {
+      Header: intl.formatMessage({ id: "SampleName", defaultMessage: 'Sample Name' }),
+      accessor: (row) => row?.sample_id?.join(','),
+      // Cell: ({ cell: { row, value } }) => {
+      //   let html = [];
+      //   let check = false;
+      //   if ('group 1' in row) {
+      //     let s = row['group 1'];
+
+      //     html.push(
+      //       <p>
+      //         <strong>Group 1:</strong> {s.join(',')}
+      //       </p>
+      //     );
+      //     check = true;
+      //   }
+      //   if ('group 2' in row) {
+      //     let s = row['group 2'];
+      //     html.push(
+      //       <p>
+      //         <strong>Group 2:</strong> {s.join(',')}
+      //       </p>
+      //     );
+      //     check = true;
+      //   }
+      //   if ('group 3' in row) {
+      //     let s = row['group 3'];
+      //     html.push(
+      //       <p>
+      //         <strong>Group 3:</strong> {s.join(',')}
+      //       </p>
+      //     );
+      //     check = true;
+      //   }
+      //   if (!check) {
+      //     let s = row['sample_id'];
+      //     s = [...new Set(s)];
+      //     html.push(s.join(','));
+      //     // html.push(s);
+      //   }
+      //   let main_html = [];
+      //   main_html.push(
+      //     <div className="flex flex-col w-full text-left" style={{ gap: '10px' }}>
+      //       {value}
+      //       <button onClick={(e) => generateFusion(e, row.id)} id={row.id}>
+      //         <EyeIcon style={{ width: '15px' }} />
+      //       </button>
+      //     </div>
+      //   );
+      //   return main_html;
+      // }
     },
     {
       Header: intl.formatMessage({ id: "LeftGeneName", defaultMessage: 'Left Gene Name' }),
@@ -336,7 +387,7 @@ export default function FusionPlot({
                   </div>
 
                   <div className="mt-20 my-0 mx-auto  w-11/12 shadow-lg">
-                    <div className="bg-white border-b border-gray-200 py-5 text-left px-5">
+                    <div className="bg-white border-b border-gray-200 py-5 text-left px-5" style={{fontSize:'18px'}}>
                       {groupName}
                     </div>
                     {console.log('columns', tableColumnsData)}
@@ -346,7 +397,7 @@ export default function FusionPlot({
                         pagination
                         columns={tableColumnsData}
                         data={tableData}
-                        width="1650"
+                        width="2650"
                       />
                     )}
                   </div>

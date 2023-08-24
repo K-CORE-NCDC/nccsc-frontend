@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
-import { useSelector, useDispatch } from "react-redux";
+import { FormattedMessage } from "react-intl";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import LoaderCmp from "../../Common/Loader";
 import {
   clearMultiFIleUploadState
 } from "../../../actions/api_actions";
-import { FormattedMessage } from "react-intl";
-import { useParams } from "react-router-dom";
 import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
+import LoaderCmp from "../../Common/Loader";
 
 
 
@@ -180,7 +179,6 @@ function MultiDataTable({ updateComponentNumber }) {
     setShowModal(status)
   }
   let history = useHistory();
-  let { tab } = useParams();
 
   const verificationResponse = useSelector(
     (data) => data.homeReducer.multiFileUploadData
