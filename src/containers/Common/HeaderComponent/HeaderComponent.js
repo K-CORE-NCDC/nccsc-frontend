@@ -1,35 +1,41 @@
 import React, { useEffect } from 'react';
-import { FormattedMessage } from "react-intl";
-import background from "../../../styles/images/subVisual-img06.jpg"
-import homeIcon from "../../../styles/images/icon-home.svg"
-import { Link } from "react-router-dom";
+import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import homeIcon from '../../../styles/images/icon-home.svg';
+import background from '../../../styles/images/subVisual-img06.jpg';
 import { getCookie } from '../../getCookie';
-function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
-  const { project_id } = useParams()
-  const history = useHistory()
-  const viz_tabs = ["visualise-multidata", "visualise-singledata"]
-  const upload_tabs = ["singledata-upload", "newmultidataproject", "multidataprojectview" , "multidatavisualization"]
 
+
+function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
+  const { project_id } = useParams();
+  const history = useHistory();
+  const viz_tabs = ['visualise-multidata', 'visualise-singledata'];
+  const upload_tabs = [
+    'singledata-upload',
+    'newmultidataproject',
+    'multidataprojectview',
+    'multidatavisualization'
+  ];
 
   useEffect(() => {
-    viz_tabs?.forEach(item => {
+    viz_tabs?.forEach((item) => {
       if (project_id && window.location.pathname.includes(item)) {
         if (getCookie('is_login') && getCookie('is_login') === 'True') {
         } else {
-          history.push('/login')
+          history.push('/login');
         }
       }
-    })
-    upload_tabs?.forEach(ele => {
+    });
+    upload_tabs?.forEach((ele) => {
       if (window.location.pathname.includes(ele)) {
         if (getCookie('is_login') && getCookie('is_login') === 'True') {
         } else {
-          history.push('/login')
+          history.push('/login');
         }
       }
-    })
-  }, [history])
+    });
+  }, [history]);
 
   const renderLnbContent = () => {
     if (type && type === 'single') {
@@ -67,25 +73,18 @@ function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
         <ul>
           {items.length > 0 &&
             items.map((item, index) => {
-              if (item && item.to !== '' && item.id !== 'Null') {
+              if (item && item?.to !== '' && item.id !== 'Null') {
                 return (
                   <li key={index} className={routeName === item.to ? 'on' : ''}>
-                    <Link to={item.to}>
-                      <FormattedMessage
-                        id={item.id}
-                        defaultMessage={item.defaultMessage}
-                      />
+                    <Link to={item?.to}>
+                      <FormattedMessage id={item?.id} defaultMessage={item?.defaultMessage} />
                     </Link>
                   </li>
                 );
-              }
-              else if(item && item.to === ''){
+              } else if (item?.to === '') {
                 return (
                   <li key={index} className={routeName === item.to ? 'on' : ''}>
-                      <FormattedMessage
-                        id={item.id}
-                        defaultMessage={item.defaultMessage}
-                      />
+                    <FormattedMessage id={item.id} defaultMessage={item.defaultMessage} />
                   </li>
                 );
               }
@@ -95,38 +94,41 @@ function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
     }
     return null;
   };
-
-
-return (
-  <div>
-    {(
-      <div id="subVisual" className="subVisual">
-        <div className="imgBox" style={{ backgroundImage: `url(${background})` }}></div>
-        <div className="txtBox">
-          <div className="auto">
-            <h2 className="main">
-              {title && title.id && title.defaultMessage && (
-                <FormattedMessage id={title.id} defaultMessage={title.defaultMessage} />
-              )}
-            </h2>
+  if(document?.getElementById('imgBoxHead')){
+    let d = document?.getElementById('imgBoxHead')
+    d.style.transform = 'scale(1)';
+  }
+  return (
+    <div>
+      {
+        <div id="subVisual" className="subVisual">
+          <div id="imgBoxHead" className="imgBox" style={{ backgroundImage: `url(${background})`, }}></div>
+          <div className="txtBox">
+            <div className="auto">
+              <h2 className="main">
+                {title && title.id && title.defaultMessage && (
+                  <FormattedMessage id={title.id} defaultMessage={title.defaultMessage} />
+                )}
+              </h2>
+            </div>
           </div>
         </div>
-      </div>
-    )}
-    {(
-      <div id="breadCrumbs" className="breadCrumbs">
-        <div className="auto">
-          <ul>
-            <li key="key0"><img src={homeIcon} alt="" /></li>
-            {renderBreadcrumbs()}
-          </ul>
+      }
+      {
+        <div id="breadCrumbs" className="breadCrumbs">
+          <div className="auto">
+            <ul>
+              <li key="key0">
+                <img src={homeIcon} alt="" />
+              </li>
+              {renderBreadcrumbs()}
+            </ul>
+          </div>
         </div>
-      </div>
-    )}
-    {renderLnbContent()}
-  </div>
-);
+      }
+      {renderLnbContent()}
+    </div>
+  );
 }
-
 
 export default HeaderComponent;

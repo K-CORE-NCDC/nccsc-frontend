@@ -4,7 +4,7 @@ import dataVisualizationReducer from './datavisualisation.reducer';
 
 const rootReducer = combineReducers({
   homeReducer,
-  dataVisualizationReducer,
+  dataVisualizationReducer
 });
 
 export default rootReducer;

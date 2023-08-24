@@ -1,7 +1,7 @@
-import React from 'react'
-import Loader from "react-loader-spinner";
+import React from 'react';
+import Loader from 'react-loader-spinner';
 
-export default function LoaderComp() {
+const LoaderComp = () => {
   return (
     <div className="text-center">
       <div className="">
@@ -14,5 +14,6 @@ export default function LoaderComp() {
         />
       </div>
     </div>
-  )
+  );
 }
+export default LoaderComp;

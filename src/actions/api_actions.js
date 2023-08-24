@@ -3,34 +3,36 @@ import {
   homeConstants,
   dataVisualization,
   userdataVisualization,
-  CLEAR_ALL_STATES,
+  CLEAR_ALL_STATES
 } from './Constants';
 import config from '../config';
 import '../interceptor/interceptor';
 
-import { getCookie } from '../containers/getCookie'
+import { getCookie } from '../containers/getCookie';
 
 function sendRequest(url, method, data) {
-
-  const headers = {}
-  headers['X-CSRFToken'] = getCookie('csrftoken')
+  const headers = {};
+  headers['X-CSRFToken'] = getCookie('csrftoken');
   const x = axios({
-    method, url, data, withCredentials: true, headers: headers
+    method,
+    url,
+    data,
+    withCredentials: true,
+    headers: headers
   });
   return x;
 }
 
-
 export const isSessionAndSessionData = async (type, data) => {
   const url = `${config.auth}session-check/`;
   return sendRequest(url, type, data);
-}
+};
 
 export function clearIDPasswordResetPASSWORD() {
   return (dispatch) => {
     dispatch({
       type: homeConstants.CLEAR_ID_PASSWORD_RESET_PASSWORD,
-      payload: {},
+      payload: {}
     });
   };
 }
@@ -39,21 +41,20 @@ export function clearNotice() {
   return (dispatch) => {
     dispatch({
       type: homeConstants.CLEAR_NOTICE_DETAILS,
-      payload: {},
+      payload: {}
     });
   };
 }
 
 export function signin(method, data) {
   const url = `${config.auth}new-registration/`;
-  return sendRequest(url, method, data)
+  return sendRequest(url, method, data);
 }
 
 export function login(method, data) {
   const url = `${config.auth}api/token/`;
-  return sendRequest(url, method, data)
+  return sendRequest(url, method, data);
 }
-
 
 // export function logout(method, data) {
 //   return (dispatch) => {
@@ -74,13 +75,12 @@ export function login(method, data) {
 
 export function findID(method, data) {
   const url = `${config.auth}findid/`;
-  return sendRequest(url, method, data)
+  return sendRequest(url, method, data);
 }
-
 
 export function findPassword(method, data) {
   const url = `${config.auth}findpassword/`;
-  return sendRequest(url, method, data)
+  return sendRequest(url, method, data);
 }
 
 export function sendlogManagement(method, data) {
@@ -91,12 +91,12 @@ export function sendlogManagement(method, data) {
         const d = result;
         dispatch({
           type: homeConstants.SENDLOGMANAGEMENT,
-          payload: d.data,
+          payload: d.data
         });
         dispatch({ type: homeConstants.REQUEST_DONE });
       })
 
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 
@@ -106,10 +106,10 @@ export function UserDataProjectsCount(type, data) {
 }
 
 export function MultiProjectsDelete(method, projectId) {
-  let url = ''
-  let data = {}
-  url = config.auth + `delete-user-project-data/${projectId}`
-  return sendRequest(url, method, data)
+  let url = '';
+  let data = {};
+  url = config.auth + `delete-user-project-data/${projectId}`;
+  return sendRequest(url, method, data);
 }
 
 // export function projectIdStatus(type,data) {
@@ -131,19 +131,19 @@ export function samplesCount(type, data) {
         if (d.status === 200) {
           dispatch({
             type: dataVisualization.SAMPLES_COUNT,
-            payload: { ...d.data, status: 200 },
+            payload: { ...d.data, status: 200 }
           });
         } else {
           dispatch({
             type: dataVisualization.SAMPLES_COUNT,
-            payload: { status: d.status },
+            payload: { status: d.status }
           });
         }
       })
       .catch(() => {
         dispatch({
           type: dataVisualization.SAMPLES_COUNT,
-          payload: { status: 204 },
+          payload: { status: 204 }
         });
       });
   };
@@ -157,12 +157,12 @@ export function sendEmail(method, data) {
         const d = result;
         dispatch({
           type: homeConstants.OTP_REQUEST,
-          payload: d.data,
+          payload: d.data
         });
         dispatch({ type: homeConstants.REQUEST_DONE });
       })
 
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 export function verifyOTP(method, data) {
@@ -173,15 +173,14 @@ export function verifyOTP(method, data) {
         const d = result;
         dispatch({
           type: homeConstants.OTP_VALIDATION,
-          payload: d.data,
+          payload: d.data
         });
         dispatch({ type: homeConstants.REQUEST_DONE });
       })
 
-      .catch(() => { });
+      .catch(() => {});
   };
 }
-
 
 export function interPro(method, data) {
   return (dispatch) => {
@@ -195,12 +194,12 @@ export function interPro(method, data) {
           const d = result;
           dispatch({
             type: homeConstants.INTERPRO,
-            payload: d.data,
+            payload: d.data
           });
           dispatch({ type: homeConstants.REQUEST_DONE });
         })
 
-        .catch(() => { });
+        .catch(() => {});
     } else {
       // formData.append('container_name',data['container_name'])
       url += `?container_name=${data.container_name}`;
@@ -209,12 +208,12 @@ export function interPro(method, data) {
           const d = result;
           dispatch({
             type: homeConstants.INTERPRO,
-            payload: d.data,
+            payload: d.data
           });
           dispatch({ type: homeConstants.REQUEST_DONE });
         })
 
-        .catch(() => { });
+        .catch(() => {});
     }
   };
 }
@@ -230,12 +229,12 @@ export function vcfmaf(method, data) {
           const d = result;
           dispatch({
             type: homeConstants.VCFMAF,
-            payload: d.data,
+            payload: d.data
           });
           dispatch({ type: homeConstants.REQUEST_DONE });
         })
 
-        .catch(() => { });
+        .catch(() => {});
     } else {
       // formData.append('container_name',data['container_name'])
       url += `?container_name=${data.container_name}`;
@@ -244,12 +243,12 @@ export function vcfmaf(method, data) {
           const d = result;
           dispatch({
             type: homeConstants.VCFMAF,
-            payload: d.data,
+            payload: d.data
           });
           dispatch({ type: homeConstants.REQUEST_DONE });
         })
 
-        .catch(() => { });
+        .catch(() => {});
     }
   };
 }
@@ -262,12 +261,12 @@ export function checkEmail(method, data) {
         const d = result;
         dispatch({
           type: homeConstants.CHECK_EMAIL,
-          payload: d.data,
+          payload: d.data
         });
         dispatch({ type: homeConstants.REQUEST_DONE });
       })
 
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 
@@ -279,20 +278,19 @@ export function checkMobile(method, data) {
         const d = result;
         dispatch({
           type: homeConstants.CHECK_MOBILE,
-          payload: d.data,
+          payload: d.data
         });
         dispatch({ type: homeConstants.REQUEST_DONE });
       })
 
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 
 export function changePassword(method, data) {
   const url = `${config.auth}change-password/`;
-  return sendRequest(url, method, data)
+  return sendRequest(url, method, data);
 }
-
 
 export function verifyEncodeData(method, data) {
   return (dispatch) => {
@@ -303,10 +301,10 @@ export function verifyEncodeData(method, data) {
         const d = result;
         dispatch({
           type: homeConstants.VERIFY_ENCODE,
-          payload: d.data,
+          payload: d.data
         });
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 
@@ -315,7 +313,6 @@ export function NoticeDetail(type) {
   // let url = config.auth + `notice-api-get/${data.id}?id=${data.id}`;
   return sendRequest(url, type, '');
 }
-
 
 export function DashboardCount() {
   const url = `${config.auth}data-count/`;
@@ -336,12 +333,12 @@ export function getRNIDetails(type, data) {
         if (d.status === 200) {
           dispatch({
             type: dataVisualization.RNI_DATA,
-            payload: { ...d.data, status: 200 },
+            payload: { ...d.data, status: 200 }
           });
         } else {
           dispatch({
             type: dataVisualization.RNI_DATA,
-            payload: { status: d.status },
+            payload: { status: d.status }
           });
         }
         dispatch({ type: dataVisualization.REQUEST_DONE });
@@ -349,7 +346,7 @@ export function getRNIDetails(type, data) {
       .catch(() => {
         dispatch({
           type: dataVisualization.RNI_DATA,
-          payload: { status: 204 },
+          payload: { status: 204 }
         });
       });
   };
@@ -357,9 +354,8 @@ export function getRNIDetails(type, data) {
 
 export function RNIDetails(method, data) {
   const url = `${config.auth}report/`;
-  return sendRequest(url, method, data)
+  return sendRequest(url, method, data);
 }
-
 
 export function getUserFiles() {
   return (dispatch) => {
@@ -370,10 +366,10 @@ export function getUserFiles() {
         const d = result;
         dispatch({
           type: homeConstants.FILE_REQUEST,
-          payload: d.data,
+          payload: d.data
         });
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 
@@ -398,14 +394,13 @@ export function OncoInformation(type, data) {
 }
 
 export function MultiProjectsView(method, data, page, perPage) {
-  let url = ''
+  let url = '';
   if (method === 'GET') {
-    url = config.auth + `user-projects-data/?page=${page}&per_page=${perPage}&delay=1`
+    url = config.auth + `user-projects-data/?page=${page}&per_page=${perPage}&delay=1`;
+  } else {
+    url = config.auth + `user-projects-data/?page=${page}&per_page=${perPage}&delay=1&input`;
   }
-  else {
-    url = config.auth + `user-projects-data/?page=${page}&per_page=${perPage}&delay=1&input`
-  }
-  return sendRequest(url, method, data)
+  return sendRequest(url, method, data);
 }
 
 export function getLolipopInformation(type, data) {
@@ -417,12 +412,12 @@ export function getLolipopInformation(type, data) {
         if (d.status === 200) {
           dispatch({
             type: dataVisualization.LOLLIPOP_REQUEST,
-            payload: { ...d.data, status: 200 },
+            payload: { ...d.data, status: 200 }
           });
         } else {
           dispatch({
             type: dataVisualization.LOLLIPOP_REQUEST,
-            payload: { data: [], domains: [], status: 204 },
+            payload: { data: [], domains: [], status: 204 }
           });
         }
         dispatch({ type: dataVisualization.REQUEST_DONE });
@@ -430,7 +425,7 @@ export function getLolipopInformation(type, data) {
       .catch(() => {
         dispatch({
           type: dataVisualization.LOLLIPOP_REQUEST,
-          payload: { data: [], domains: [], status: 204 },
+          payload: { data: [], domains: [], status: 204 }
         });
       });
   };
@@ -450,11 +445,11 @@ export function getFusionTable(type, data) {
         if (d.status === 200) {
           dispatch({
             type: dataVisualization.FUSIONTABLE_REQUEST,
-            payload: d,
+            payload: d
           });
         }
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 
@@ -467,11 +462,11 @@ export function getFusionVennDaigram(type, data) {
         if (d.status === 200) {
           dispatch({
             type: dataVisualization.FUSIONVENN_REQUEST,
-            payload: { res: { ...d.data }, status: 200 },
+            payload: { res: { ...d.data }, status: 200 }
           });
         }
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 
@@ -484,7 +479,7 @@ export function clearFusionVennDaigram() {
   return (dispatch) => {
     dispatch({
       type: dataVisualization.FUSIONVENN_CLEAR,
-      payload: {},
+      payload: {}
     });
   };
 }
@@ -502,14 +497,13 @@ export function getClinicalMaxMinInfo(type, data) {
         if (d.status === 200) {
           dispatch({
             type: dataVisualization.CLINICALMAXMIN_REQUEST,
-            payload: { ...d.data, status: 200 },
+            payload: { ...d.data, status: 200 }
           });
         }
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
-
 
 export function SankeyJson(type, data) {
   const url = `${config.auth}getSankeyJson/`;
@@ -529,12 +523,12 @@ export function userDefinedGetVolcanoPlotInfo(type, data) {
         if (d.status === 200) {
           dispatch({
             type: dataVisualization.USER_DEFINED_VOLCANO_REQUEST,
-            payload: { ...d.data, status: 200 },
+            payload: { ...d.data, status: 200 }
           });
         } else {
           dispatch({
             type: dataVisualization.USER_DEFINED_VOLCANO_REQUEST,
-            payload: { status: 204 },
+            payload: { status: 204 }
           });
         }
         dispatch({ type: dataVisualization.REQUEST_DONE });
@@ -542,7 +536,7 @@ export function userDefinedGetVolcanoPlotInfo(type, data) {
       .catch(() => {
         dispatch({
           type: dataVisualization.USER_DEFINED_VOLCANO_REQUEST,
-          payload: { status: 204 },
+          payload: { status: 204 }
         });
       });
   };
@@ -553,7 +547,7 @@ export function getHeatmapInformation(type, data) {
     const url = `${config.auth}heatmap/`;
     dispatch({
       type: dataVisualization.HEATMAP_REQUEST_STATUS_CODE,
-      payload: { status: 204, loader: true },
+      payload: { status: 204, loader: true }
     });
     sendRequest(url, type, data)
       .then((result) => {
@@ -561,18 +555,18 @@ export function getHeatmapInformation(type, data) {
         if (d.status === 200) {
           dispatch({
             type: dataVisualization.HEATMAP_REQUEST_STATUS_CODE,
-            payload: { status: 200 },
+            payload: { status: 200 }
           });
         } else {
           dispatch({
             type: dataVisualization.HEATMAP_REQUEST_STATUS_CODE,
-            payload: { status: 204 },
+            payload: { status: 204 }
           });
         }
         dispatch({
           type: dataVisualization.HEATMAP_REQUEST,
           // payload: {...JSON.parse(d["data"]), status:200},
-          payload: d.data,
+          payload: d.data
         });
         // } else {
         //   dispatch({
@@ -589,7 +583,7 @@ export function getHeatmapInformation(type, data) {
       .catch(() => {
         dispatch({
           type: dataVisualization.HEATMAP_REQUEST,
-          payload: { status: 204 },
+          payload: { status: 204 }
         });
       });
   };
@@ -609,25 +603,24 @@ export function newFileUpload(fileData, projectName) {
       }
     });
     data.set('project_name', projectName);
-    data.set('csrftoken', getCookie('csrftoken'))
+    data.set('csrftoken', getCookie('csrftoken'));
     const url = `${config.auth}new-user-data-visualization/`;
     sendRequest(url, 'POST', data)
       .then((result) => {
         const d = result;
         dispatch({
           type: homeConstants.NEWUSERDATA_VISUALIZATION,
-          payload: d.data,
+          payload: d.data
         });
       })
       .catch(() => {
         dispatch({
           type: homeConstants.USERDATA_VISUALIZATION_ERROR,
-          payload: { [fileData.type]: 'failed' },
+          payload: { [fileData.type]: 'failed' }
         });
       });
   };
 }
-
 
 export function SingleFileUpload(fileData, projectName) {
   return (dispatch) => {
@@ -638,20 +631,20 @@ export function SingleFileUpload(fileData, projectName) {
       }
     });
     data.set('project_name', projectName);
-    data.set('csrftoken', getCookie('csrftoken'))
+    data.set('csrftoken', getCookie('csrftoken'));
     const url = `${config.auth}single-new-user-data-visualization/`;
     sendRequest(url, 'POST', data)
       .then((result) => {
         const d = result;
         dispatch({
           type: homeConstants.SINGLE_USERDATA_VISUALIZATION,
-          payload: d.data,
+          payload: d.data
         });
       })
       .catch(() => {
         dispatch({
           type: homeConstants.USERDATA_VISUALIZATION_ERROR,
-          payload: { 'status': 'failed' },
+          payload: { status: 'failed' }
         });
       });
   };
@@ -666,53 +659,55 @@ export function multiFileUpload(fileData, projectName) {
       }
     });
     data.set('project_name', projectName);
-    data.set('csrftoken', getCookie('csrftoken'))
+    data.set('csrftoken', getCookie('csrftoken'));
     const url = `${config.auth}multi-new-user-data-visualization/`;
     sendRequest(url, 'POST', data)
       .then((result) => {
         const d = result;
         dispatch({
           type: homeConstants.MULTI_USERDATA_VISUALIZATION,
-          payload: d.data,
+          payload: d.data
         });
       })
       .catch(() => {
         dispatch({
           type: homeConstants.USERDATA_VISUALIZATION_ERROR,
-          payload: { 'status': 'failed' },
+          payload: { status: 'failed' }
         });
       });
   };
 }
 
-
-
 export function clearNewFileUploadState() {
-  return (dispatch) => dispatch({
-    type: homeConstants.CLEARNEWUSERDATA_VISUALIZATION,
-    payload: {},
-  });
+  return (dispatch) =>
+    dispatch({
+      type: homeConstants.CLEARNEWUSERDATA_VISUALIZATION,
+      payload: {}
+    });
 }
 
 export function clearSingleFIleUploadState() {
-  return (dispatch) => dispatch({
-    type: homeConstants.CLEAR_SINGLE_USER_DATA_VISUALIZATION,
-    payload: {},
-  });
+  return (dispatch) =>
+    dispatch({
+      type: homeConstants.CLEAR_SINGLE_USER_DATA_VISUALIZATION,
+      payload: {}
+    });
 }
 
 export function clearMultiFIleUploadState() {
-  return (dispatch) => dispatch({
-    type: homeConstants.CLEAR_MULTI_USER_DATA_VISUALIZATION,
-    payload: {},
-  });
+  return (dispatch) =>
+    dispatch({
+      type: homeConstants.CLEAR_MULTI_USER_DATA_VISUALIZATION,
+      payload: {}
+    });
 }
 
 export function clearUploadClinicalColumns() {
-  return (dispatch) => dispatch({
-    type: homeConstants.CLEAR_UPLOAD_CLININCAL_COLUMNS,
-    payload: {},
-  });
+  return (dispatch) =>
+    dispatch({
+      type: homeConstants.CLEAR_UPLOAD_CLININCAL_COLUMNS,
+      payload: {}
+    });
 }
 
 export function uploadClinincalSamples(fileData) {
@@ -723,13 +718,13 @@ export function uploadClinincalSamples(fileData) {
         const d = result;
         dispatch({
           type: homeConstants.UPLOAD_CLININCAL_COLUMNS,
-          payload: d.data,
+          payload: d.data
         });
       })
       .catch(() => {
         dispatch({
           type: homeConstants.USERDATA_VISUALIZATION_ERROR,
-          payload: { [fileData.type]: 'failed' },
+          payload: { [fileData.type]: 'failed' }
         });
       });
   };
@@ -741,7 +736,7 @@ export function getCircosInformation(type, data) {
     const url = `${config.auth}circos/`;
     dispatch({
       type: dataVisualization.CIRCOS_REQUEST,
-      payload: { status: 0 },
+      payload: { status: 0 }
     });
     sendRequest(url, type, data)
       .then((result) => {
@@ -749,13 +744,13 @@ export function getCircosInformation(type, data) {
         if (d.status === 200) {
           dispatch({
             type: dataVisualization.CIRCOS_REQUEST,
-            payload: { ...d.data, status: 200 },
+            payload: { ...d.data, status: 200 }
           });
           // dispatch({ type: dataVisualization.REQUEST_DONE });
         } else {
           dispatch({
             type: dataVisualization.CIRCOS_REQUEST,
-            payload: { status: 204 },
+            payload: { status: 204 }
           });
         }
       })
@@ -775,7 +770,7 @@ export function clearCircosInfomation() {
   return (dispatch) => {
     dispatch({
       type: dataVisualization.CLEAR_CIRCOS_INFORMATION,
-      payload: {},
+      payload: {}
     });
   };
 }
@@ -791,12 +786,12 @@ export function getSurvivalInformation(type, data) {
         if (d.status === 200) {
           dispatch({
             type: dataVisualization.SURVIVAL_REQUEST,
-            payload: { ...d.data, status: 200 },
+            payload: { ...d.data, status: 200 }
           });
         } else {
           dispatch({
             type: dataVisualization.SURVIVAL_REQUEST,
-            payload: { status: d.status },
+            payload: { status: d.status }
           });
         }
         dispatch({ type: dataVisualization.REQUEST_DONE });
@@ -804,7 +799,7 @@ export function getSurvivalInformation(type, data) {
       .catch(() => {
         dispatch({
           type: dataVisualization.SURVIVAL_REQUEST,
-          payload: { status: 204 },
+          payload: { status: 204 }
         });
       });
   };
@@ -820,7 +815,7 @@ export function clearSurvivalIMage() {
   return (dispatch) => {
     dispatch({
       type: dataVisualization.CLEAR_SURVIVAL_IMAGE,
-      payload: {},
+      payload: {}
     });
   };
 }
@@ -836,12 +831,12 @@ export function getIgv(type, data) {
         if (d.status === 200) {
           dispatch({
             type: dataVisualization.IGV_REQUEST,
-            payload: d.data,
+            payload: d.data
           });
         } else {
           dispatch({
             type: dataVisualization.IGV_REQUEST,
-            payload: [],
+            payload: []
           });
         }
         dispatch({ type: dataVisualization.REQUEST_DONE });
@@ -849,7 +844,7 @@ export function getIgv(type, data) {
       .catch(() => {
         dispatch({
           type: dataVisualization.IGV_REQUEST,
-          payload: [],
+          payload: []
         });
       });
   };
@@ -874,14 +869,13 @@ export function getBreastKeys(data_) {
         }
         dispatch({
           type: dataVisualization.KEYS_REQUEST,
-          payload: tmp,
+          payload: tmp
         });
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
-
 
 export function getCircosUserData(data_) {
   return (dispatch) => {
@@ -901,10 +895,10 @@ export function getCircosUserData(data_) {
         const d = result;
         dispatch({
           type: userdataVisualization.CIRCOS_REQUEST,
-          payload: d.data,
+          payload: d.data
         });
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 
@@ -926,10 +920,10 @@ export function getOncoUserData(data_) {
         const d = result;
         dispatch({
           type: userdataVisualization.ONCO_REQUEST,
-          payload: d.data,
+          payload: d.data
         });
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 
@@ -948,10 +942,10 @@ export function getVolcanoUserData(data_) {
         const d = result;
         dispatch({
           type: userdataVisualization.VOLCANO_REQUEST,
-          payload: d.data,
+          payload: d.data
         });
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 
@@ -964,19 +958,19 @@ export function getVolcanoData() {
         if (d.status === 200) {
           dispatch({
             type: userdataVisualization.VOLCANO_DATA_VISUALIZATION_REQUEST,
-            payload: { ...d.data, status: 200 },
+            payload: { ...d.data, status: 200 }
           });
         } else {
           dispatch({
             type: userdataVisualization.VOLCANO_DATA_VISUALIZATION_REQUEST,
-            payload: { status: 204 },
+            payload: { status: 204 }
           });
         }
       })
       .catch(() => {
         dispatch({
           type: userdataVisualization.VOLCANO_DATA_VISUALIZATION_REQUEST,
-          payload: { status: 204 },
+          payload: { status: 204 }
         });
       });
   };
@@ -995,13 +989,13 @@ export function getUserDataProjectsTableData(project = false) {
         const d = result;
         dispatch({
           type: userdataVisualization.USER_DATA_PROJECT_TABLE,
-          payload: d.data,
+          payload: d.data
         });
       })
       .catch(() => {
         dispatch({
           type: userdataVisualization.USER_DATA_PROJECT_TABLE,
-          payload: { 'key': 'NotFound' },
+          payload: { key: 'NotFound' }
         });
       });
   };
@@ -1014,9 +1008,8 @@ export function UserDataProjectsTableData(project = false) {
   } else {
     url = `${config.auth}user-data-projects/`;
   }
-  return sendRequest(url, 'GET', '')
-
-};
+  return sendRequest(url, 'GET', '');
+}
 
 export function sankeyImageData(data) {
   return () => {
@@ -1033,17 +1026,17 @@ export function sendReportData(type, data) {
         const d = result;
         dispatch({
           type: dataVisualization.PDF_REPORT,
-          payload: d.data,
+          payload: d.data
         });
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 export function clearPdfLink() {
   return (dispatch) => {
     dispatch({
       type: dataVisualization.CLEAR_PDF_LINK,
-      payload: {},
+      payload: {}
     });
   };
 }
@@ -1056,10 +1049,10 @@ export function getCircosSamplesRnidList() {
         const d = result;
         dispatch({
           type: dataVisualization.CIRCOS_SAMPLES_RNID,
-          payload: d.data,
+          payload: d.data
         });
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 
@@ -1075,12 +1068,12 @@ export function getScatterInformation(type, data) {
         if (d.status === 200) {
           dispatch({
             type: dataVisualization.SCATTER_REQUEST,
-            payload: { ...d.data, status: 200 },
+            payload: { ...d.data, status: 200 }
           });
         } else {
           dispatch({
             type: dataVisualization.SCATTER_REQUEST,
-            payload: { status: d.status },
+            payload: { status: d.status }
           });
         }
         dispatch({ type: dataVisualization.REQUEST_DONE });
@@ -1088,7 +1081,7 @@ export function getScatterInformation(type, data) {
       .catch(() => {
         dispatch({
           type: dataVisualization.SCATTER_REQUEST,
-          payload: { status: 204 },
+          payload: { status: 204 }
         });
       });
   };
@@ -1108,11 +1101,11 @@ export function getGeneFusionInformation(type, data) {
         dispatch({ type: dataVisualization.REQUEST_DONE });
         dispatch({
           type: dataVisualization.CHECK_GENE_FUSION_REQUEST,
-          payload: d.data,
+          payload: d.data
         });
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 
@@ -1125,11 +1118,11 @@ export function getFusionExons(type, data) {
         dispatch({ type: dataVisualization.REQUEST_DONE });
         dispatch({
           type: dataVisualization.FUSION_EXON_REQUEST,
-          payload: d.data,
+          payload: d.data
         });
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 
@@ -1142,11 +1135,11 @@ export function getFusionInformation(type, data) {
         dispatch({ type: dataVisualization.REQUEST_DONE });
         dispatch({
           type: dataVisualization.FUSION_REQUEST,
-          payload: d.data,
+          payload: d.data
         });
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 
@@ -1162,12 +1155,12 @@ export function getBoxInformation(type, data) {
         if (d.status === 200) {
           dispatch({
             type: dataVisualization.BOX_REQUEST,
-            payload: { ...d.data, status: 200 },
+            payload: { ...d.data, status: 200 }
           });
         } else {
           dispatch({
             type: dataVisualization.BOX_REQUEST,
-            payload: { status: 204 },
+            payload: { status: 204 }
           });
         }
         dispatch({ type: dataVisualization.REQUEST_DONE });
@@ -1175,7 +1168,7 @@ export function getBoxInformation(type, data) {
       .catch(() => {
         dispatch({
           type: dataVisualization.BOX_REQUEST,
-          payload: { status: 204 },
+          payload: { status: 204 }
         });
       });
   };
@@ -1191,7 +1184,7 @@ export function getOncoImages(method, data) {
     const url = `${config.auth}onco-sample-images/`;
     dispatch({
       type: dataVisualization.ONCO_IMAGES_INFORMATION,
-      payload: null,
+      payload: null
     });
     sendRequest(url, method, data)
       .then((result) => {
@@ -1202,10 +1195,10 @@ export function getOncoImages(method, data) {
         }
         dispatch({
           type: dataVisualization.ONCO_IMAGES_INFORMATION,
-          payload,
+          payload
         });
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 
@@ -1219,7 +1212,7 @@ export function getCircosTimelineTable(method, data) {
     const url = `${config.auth}onco-age-diagram/`;
     dispatch({
       type: dataVisualization.CIRCOS_TIMELINE_GRAPH,
-      payload: null,
+      payload: null
     });
     sendRequest(url, method, data)
       .then((result) => {
@@ -1230,10 +1223,10 @@ export function getCircosTimelineTable(method, data) {
         }
         dispatch({
           type: dataVisualization.CIRCOS_TIMELINE_GRAPH,
-          payload,
+          payload
         });
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 
@@ -1252,11 +1245,11 @@ export function getPassEncodeId(type, data) {
           dispatch({ type: dataVisualization.REQUEST_DONE });
           dispatch({
             type: dataVisualization.PASS_ENCODE_ID,
-            payload: r,
+            payload: r
           });
         }
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 
@@ -1270,11 +1263,11 @@ export function checkUserName(type, data) {
           dispatch({ type: dataVisualization.REQUEST_DONE });
           dispatch({
             type: dataVisualization.CHECK_USER,
-            payload: r,
+            payload: r
           });
         }
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 
@@ -1288,20 +1281,19 @@ export function userRegister(type, data) {
         dispatch({ type: homeConstants.REQUEST_DONE });
         dispatch({
           type: homeConstants.REGISTRATION,
-          payload: d.data,
+          payload: d.data
         });
         dispatch({ type: homeConstants.REQUEST_DONE });
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
-
 
 export function clearDataVisualizationState() {
   return (dispatch) => {
     dispatch({
       type: CLEAR_ALL_STATES,
-      payload: {},
+      payload: {}
     });
   };
 }
@@ -1312,20 +1304,20 @@ export function fetchProjectTableData(data) {
     const url = `${config.auth}user-project-table/`;
     dispatch({
       type: userdataVisualization.USER_DATA_PROJECT_TABLE_PROJECT,
-      payload: {},
+      payload: {}
     });
     sendRequest(url, 'POST', data)
       .then((result) => {
         const d = result;
         dispatch({
           type: userdataVisualization.USER_DATA_PROJECT_TABLE_PROJECT,
-          payload: d.data,
+          payload: d.data
         });
       })
       .catch(() => {
         dispatch({
           type: userdataVisualization.USER_DATA_PROJECT_TABLE_PROJECT,
-          payload: {},
+          payload: {}
         });
       });
   };
@@ -1337,20 +1329,20 @@ export function getUserDefinedFilter(data) {
     const url = `${config.auth}new-user-data-visualization_filter/`;
     dispatch({
       type: userdataVisualization.USER_DEFINED_FILTER,
-      payload: {},
+      payload: {}
     });
     sendRequest(url, 'POST', data)
       .then((result) => {
         const d = result;
         dispatch({
           type: userdataVisualization.USER_DEFINED_FILTER,
-          payload: d.data,
+          payload: d.data
         });
       })
       .catch(() => {
         dispatch({
           type: userdataVisualization.USER_DEFINED_FILTER,
-          payload: {},
+          payload: {}
         });
       });
   };
@@ -1364,11 +1356,11 @@ export function updateDownloadVisualizationPurpose(data) {
         // let res = result
         dispatch({
           type: userdataVisualization.UPDATE_DOWNLOAD_VISUALIZATION_PURPOSE,
-          payload: result,
+          payload: result
         });
         return result;
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 
@@ -1377,7 +1369,7 @@ export function languageChange(data) {
     //   dispatch({ type: homeConstants.DATA_SUMMARY });
     dispatch({
       type: homeConstants.APPLICATION_LANGUAGE,
-      payload: data,
+      payload: data
     });
   };
 }
@@ -1390,10 +1382,10 @@ export function getFaqData(id) {
         const d = result;
         dispatch({
           type: homeConstants.DATA_FAQ,
-          payload: d.data,
+          payload: d.data
         });
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 
@@ -1409,10 +1401,10 @@ export function getProjectsData(id) {
         const d = result;
         dispatch({
           type: homeConstants.DATA_FAQ,
-          payload: d.data,
+          payload: d.data
         });
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 
@@ -1424,10 +1416,10 @@ export function getNoticeData(id) {
         const d = result;
         dispatch({
           type: homeConstants.DATA_NOTICE,
-          payload: d.data,
+          payload: d.data
         });
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 
@@ -1446,10 +1438,10 @@ export function getQaData(id, data) {
         const d = result;
         dispatch({
           type: homeConstants.DATA_QA,
-          payload: d.data,
+          payload: d.data
         });
       })
-      .catch(() => { });
+      .catch(() => {});
   };
 }
 
@@ -1457,7 +1449,7 @@ export function clearProjectTableDataTableData() {
   return (dispatch) => {
     dispatch({
       type: userdataVisualization.USER_DATA_PROJECT_TABLE_PROJECT,
-      payload: {},
+      payload: {}
     });
   };
 }

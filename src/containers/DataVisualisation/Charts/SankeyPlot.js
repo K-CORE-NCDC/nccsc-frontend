@@ -1,418 +1,271 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { FormattedMessage } from "react-intl";
-import { useSelector } from "react-redux";
-import { RNIDetails } from '../../../actions/api_actions'
-import { useParams } from "react-router-dom";
-import DataTable from 'react-data-table-component';
-import ReportSubHeader from '../../Common/ReportSubHeader';
-import SankeyIndex from './SankeyIndex';
+import React, { useEffect, useState } from 'react';
+// import DataTable from 'react-data-table-component';
+import { FormattedMessage } from 'react-intl';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { RNIDetails } from '../../../actions/api_actions';
 import LoaderComp from '../../Common/Loader';
-
-function SankeyPlot({
-  inputData,
-}) {
-
-  const basicTable = useRef()
+// import ReportSubHeader from '../../Common/ReportSubHeader';
+import SankeyIndex from './SankeyIndex';
+import Table from '../../Common/Table/ReactTable';
+import { useIntl } from 'react-intl';
+// import {createColumnHelper} from 'react-table';
+function SankeyPlot({ inputData }) {
+  // const basicTable = useRef();
   let { project_id } = useParams();
   const [samplesCount, setSamplesCount] = useState(0);
-  const [tabName, setTabName] = useState('patientSummary')
+  const [tabName, setTabName] = useState('patientSummary');
   const [sampleListElements, setSampleListElements] = useState([]);
-  const [sampleKey, setSampleKey] = useState("");
+  const [sampleKey, setSampleKey] = useState('');
   const [basicInformationData, setBasicInformationData] = useState([]);
   const [tableData, setTableData] = useState([]);
   const [basicHtml, setBasicHtml] = useState([]);
-  const [rnaData, setRnaData] = useState([])
-  const [tableRender, setTableRender] = useState(false)
+  const [rnaData, setRnaData] = useState([]);
+  // const [tableRender, setTableRender] = useState(false);
   const [loader, setLoader] = useState(false);
-  const [genesHtml, setGenesHtml] = useState([])
-  const [inputState, setInputState] = useState({})
-  const [selectedGene, setSelectedGene] = useState("")
-  const [variantClassificationHtml, setVariantClassificationHtml] = useState()
-  const [variantClassification, setVariantClassification] = useState("")
-  const [variantClassificationList, setVariantClassificationList] = useState([])
+  const [genesHtml, setGenesHtml] = useState([]);
+  const [inputState, setInputState] = useState({});
+  const [selectedGene, setSelectedGene] = useState('');
+  const [variantClassificationHtml, setVariantClassificationHtml] = useState();
+  const [variantClassification, setVariantClassification] = useState('');
+  const [variantClassificationList, setVariantClassificationList] = useState([]);
+  const intl = useIntl();
 
-  const SampleRnidListData = useSelector(
-    (data) => data.dataVisualizationReducer.Keys
-  );
+  const SampleRnidListData = useSelector((data) => data.dataVisualizationReducer.Keys);
 
   const reA = /[^a-zA-Z]/g;
   const reN = /[^0-9]/g;
 
   function sortAlphaNum(a, b) {
-    var aA = a.replace(reA, "");
-    var bA = b.replace(reA, "");
+    var aA = a.replace(reA, '');
+    var bA = b.replace(reA, '');
     if (aA === bA) {
-      var aN = parseInt(a.replace(reN, ""), 10);
-      var bN = parseInt(b.replace(reN, ""), 10);
+      var aN = parseInt(a.replace(reN, ''), 10);
+      var bN = parseInt(b.replace(reN, ''), 10);
       return aN === bN ? 0 : aN > bN ? 1 : -1;
     } else {
       return aA > bA ? 1 : -1;
     }
   }
 
-  let getReport = (sampleId) => {
-    let returnedData = RNIDetails("POST", { rnid: sampleId, 'project_id': project_id, 'genes': inputData['genes'] })
-    returnedData.then((result) => {
-      setRnaData(result.data)
-    })
-    setSampleKey(sampleId)
-  }
 
-  const customStyles = {
-    table: {
-      style: {
-        display: "table",
-        width: "100%",
-        tableLayout: "fixed",
-        border: "2px solid #2e2e2e",
-        borderCollapse: "collapse",
-        fontSize: "16px",
-        color: "#8f8f8f",
-        fontWeight: "500",
-        textAlign: "center !important"
-      },
-    },
-    thead: {
-      style: {
-        display: "table-header-group",
-        fontWeight: "500",
-        borderBottom: "2px solid #2e2e2e",
-      },
-    },
-    td: {
-      style: {
-        display: "table-cell",
-        verticalAlign: "middle",
-        padding: "20px 16px",
-        position: "relative",
-        width: "90px",
-        color: "#2e2e2e",
-        borderBottom: "1px solid #2e2e2e"
-      },
-    },
-    tr: {
-      style: {
-        display: "table-row",
-      },
-    },
-    tbody: {
-      style: {
-        display: "table-row-group",
-      },
-    },
-    headCells: {
-      classNames: ['report_sankey'],
-      style: {
-        textAlign: 'center',
-        display: 'flex',
-        justifyContent: 'center',
-        borderBottom: "1px solid #2e2e2e",
-        borderRight: "1px solid #2e2e2e"
-      }
-    },
-    pagination: {
-      style: {
-        gap: "10px"
-      }
-    },
-    subHeader: {
-      style: {
-        fontWeight: 'bold',
-        fontSize: '16px',
-        border: '2px solid black',
-        padding: '0px',
-        minHeight: '15px'
-      },
-    },
+  let getReport = (sampleId) => {
+    setLoader(true)
+    let returnedData = RNIDetails('POST', {
+      rnid: sampleId,
+      project_id: project_id,
+      genes: inputData['genes']
+    });
+    returnedData.then((result) => {
+      setLoader(false)
+      setRnaData(result.data);
+    });
+    setSampleKey(sampleId);
   };
+
+  const ColumnNames = [
+    {
+      Header: intl.formatMessage({ id: "ClinicalAttribute", defaultMessage: 'Clinical Attribute' }),
+      accessor: (row) =>
+        row.clinicalArrtibute,
+    },
+    {
+      Header: intl.formatMessage({ id: "value", defaultMessage: 'Value' }),
+      accessor: (row) =>
+        row.Value,
+    }
+  ]
+
+
 
 
   const generateTableColumnsData = (rnaData) => {
-    if (rnaData && 'genomic_summary' in rnaData) {
 
+    if (rnaData && 'genomic_summary' in rnaData) {
+      // const columnHelper = createColumnHelper()
       let tableColumnsData = [
         {
-          name: "geneName",
-          selector: (row) => {
-            return row.gene;
-          },
-          sortable: true,
-          classNames: ["report_sankey"],
-          style: {
-            borderLeft: "1px solid #fff",
-            borderRight: "1px solid #fff",
-            boxSizing: "border-box",
-            textAlign: "center",
-            lineHeight: "3.5",
-            display: "flex",
-            justifyContent: "center"
-          },
+          Header: 'Gene Name',
+          accessor: (row) =>row.gene,
         },
-      ];
-
-      if (rnaData.genomic_summary[0].hasOwnProperty('dna')) {
-        tableColumnsData.push(
-          {
-            name: "Yes",
-            selector: (row) => {
-              if (row.dna === "YES") {
-                if (row.gene in rnaData["variant_info"]) {
-                  let variants = rnaData["variant_info"][row.gene];
-                  variants = variants.join("-");
-                  return (
-                    <div data-bs-toggle="tooltip" title={variants}>
-                      {"O  (" + rnaData["variant_info"][row.gene].length + ")"}
-                    </div>
-                  );
-                } else {
-                  return row.dna;
-                }
-              } else return "";
-            },
-            sortable: true,
-            style: {
-              borderLeft: "1px solid #6F7378",
-              borderRight: "1px solid #fff",
-              boxSizing: "border-box",
-              textAlign: "center",
-              display: "flex",
-              justifyContent: "center",
-              lineHeight: "3.5",
-            },
-          }
-        )
-        tableColumnsData.push(
-          {
-            name: "No",
-            selector: (row) => {
-              if (row.dna === "NO") {
-                return "O ";
-              } else return "";
-            },
-            sortable: true,
-            style: {
-              borderLeft: "1px solid #ABB0B8",
-              borderRight: "1px solid #fff",
-              boxSizing: "border-box",
-              textAlign: "center",
-              display: "flex",
-              justifyContent: "center",
-              lineHeight: "3.5",
-            },
-          })
-      }
-
+      ]
       if (rnaData.genomic_summary[0].hasOwnProperty('rna')) {
-        tableColumnsData.push(
-          {
-            name: "High",
-            selector: (row) => {
-              if (row.rna === "HIGH") {
-                return "O ";
-              } else return "";
-            },
-            sortable: true,
-            style: {
-              borderLeft: "1px solid #6F7378",
-              borderRight: "1px solid #fff",
-              boxSizing: "border-box",
-              textAlign: "center",
-              display: "flex",
-              justifyContent: "center",
-              lineHeight: "3.5",
-            },
-          })
-
-        tableColumnsData.push(
-          {
-            name: "Intermediate",
-            selector: (row) => {
-              if (row.rna !== "HIGH" && row.rna !== "LOW") {
-                return "O ";
-              } else return "";
-            },
-            sortable: true,
-            style: {
-              borderLeft: "1px solid #ABB0B8",
-              borderRight: "1px solid #fff",
-              boxSizing: "border-box",
-              textAlign: "center",
-              display: "flex",
-              justifyContent: "center",
-              lineHeight: "3.5",
-            },
-          })
-
-        tableColumnsData.push(
-          {
-            name: "Low",
-            selector: (row) => {
-              if (row.rna === "LOW") {
-                return "O ";
-              } else return "";
-            },
-            sortable: true,
-            style: {
-              borderLeft: "1px solid #ABB0B8",
-              borderRight: "1px solid #fff",
-              boxSizing: "border-box",
-              textAlign: "center",
-              display: "flex",
-              justifyContent: "center",
-              lineHeight: "3.5",
-            },
-          })
+        tableColumnsData.push({
+          Header:'Dna Mutation',
+          columns:[
+            {
+              
+              Header:"Yes",
+              accessor: (row) => {
+                if (row.dna === 'YES') {
+                  if (row.gene in rnaData['variant_info']) {
+                    return  'O  (' + rnaData['variant_info'][row.gene].length + ')' 
+                  } else {
+                    return row.dna;
+                  }
+                } else '';
+              },
+            },{
+              Header:"No",
+              accessor: (row) => {
+                if (row.dna === 'NO') {
+                  if (row.gene in rnaData['variant_info']) {
+                    return  'O  (' + rnaData['variant_info'][row.gene].length + ')' 
+                  } else {
+                    return row.dna;
+                  }
+                } else '';
+              },
+            }
+          ]
+        })
       }
-
+      if (rnaData.genomic_summary[0].hasOwnProperty('rna')) {
+        tableColumnsData.push({
+          Header:'Rna',
+          columns:[
+            {
+              Header:"High",
+              accessor: (row) => {
+                if (row.rna === 'HIGH') {
+                  return 'O '
+                } else  return ''
+              },
+            },{
+              Header:"Intermediate",
+              accessor: (row) => {
+                if (row.rna !== 'HIGH' && row.rna !== 'LOW') {
+                  return 'O '
+                } else return ''
+              }
+            },
+            {
+              Header: 'Low',
+              accessor: (row) => {
+                if (row.rna === 'LOW') {
+                  return 'O '
+                } else return ''
+              },
+            }
+          ]
+        })
+      }
       if (rnaData.genomic_summary[0].hasOwnProperty('proteome')) {
-        tableColumnsData.push(
-          {
-            name: "High",
-            selector: (row) => {
-              if (row.proteome === "HIGH") {
-                return "O ";
-              } else return "";
+        tableColumnsData.push({
+          Header:'Proteom',
+          columns:[
+            {
+              id:'pHigh',
+              Header:"High",
+              accessor: (row) => {
+                if (row.proteome === 'HIGH') {
+                  return 'O '
+                } else  return ''
+              },
+            },{
+              id:'pIntermediate',
+              Header:"Intermediate",
+              accessor: (row) => {
+                if (row.proteome !== 'HIGH' && row.proteome !== 'LOW') {
+                  return 'O '
+                } else return ''
+              }
             },
-            sortable: true,
-            style: {
-              borderLeft: "1px solid #6F7378",
-              borderRight: "1px solid #fff",
-              boxSizing: "border-box",
-              textAlign: "center",
-              display: "flex",
-              justifyContent: "center",
-              lineHeight: "3.5",
-            },
-          })
-        tableColumnsData.push(
-          {
-            name: "Intermediate",
-            selector: (row) => {
-              if (row.proteome !== "HIGH" && row.proteome !== "LOW") {
-                return "O ";
-              } else return "";
-            },
-            sortable: true,
-            style: {
-              borderLeft: "1px solid #ABB0B8",
-              borderRight: "1px solid #fff",
-              boxSizing: "border-box",
-              textAlign: "center",
-              display: "flex",
-              justifyContent: "center",
-              lineHeight: "3.5",
-            },
-          })
-        tableColumnsData.push(
-          {
-            name: "Low",
-            selector: (row) => {
-              if (row.proteome === "LOW") {
-                return "O ";
-              } else return "";
-            },
-            sortable: true,
-            style: {
-              borderLeft: "1px solid #ABB0B8",
-              borderRight: "1px solid #6F7378",
-              boxSizing: "border-box",
-              textAlign: "center",
-              display: "flex",
-              justifyContent: "center",
-              lineHeight: "3.5",
-            },
-          })
+            {
+              id:'pLow',
+              Header: 'Low',
+              accessor: (row) => {
+                if (row.proteome === 'LOW') {
+                  return 'O '
+                } else return ''
+              },
+            }
+          ]
+        })
       }
+      
       return tableColumnsData;
-    }
-    else return []
-  }
+    } else return [];
+  };
 
-  const tableColumnsData = generateTableColumnsData(rnaData)
+  const tableColumnsData = generateTableColumnsData(rnaData);
 
   const loadGenesDropdown = (genes) => {
-    let t = []
-    let firstGene = true
+    let t = [];
+    let firstGene = true;
     if (rnaData && 'variant_info' in rnaData) {
-
       for (var i = 0; i < genes.length; i++) {
         if (genes[i] in rnaData['variant_info']) {
+          console.log(genes[i], rnaData['variant_info'])
           if (firstGene) {
-            setSelectGene(genes[i])
-            firstGene = false
+            setSelectGene(genes[i]);
+            firstGene = false;
           }
           t.push(
             <option key={i + '_' + genes[i]} value={genes[i]}>
               {genes[i]}
             </option>
-          )
+          );
         }
       }
     }
-    setGenesHtml(t)
-  }
+    setGenesHtml(t);
+  };
 
   const loadVarinatClassificationDropdown = (VCList) => {
-    let t = []
+    let t = [];
     for (let i = 0; i < VCList.length; i++) {
       if (i === 0) {
-        setSelectVariantClassification(VCList[0])
+        setSelectVariantClassification(VCList[0]);
       }
       t.push(
         <option key={i + '_' + VCList[i]} value={VCList[i]}>
           {VCList[i]}
         </option>
-      )
+      );
     }
-    t.push(
-      <option value="all">
-        all
-      </option>
-    )
-    setVariantClassificationHtml(t)
-  }
-
-
+    t.push(<option key="all" value="all">all</option>);
+    setVariantClassificationHtml(t);
+  };
 
   let setSelectGene = (g) => {
-    setSelectedGene(g)
+    setSelectedGene(g);
     if ('variant_info' in rnaData && g in rnaData['variant_info']) {
-      loadVarinatClassificationDropdown(rnaData['variant_info'][g])
+      loadVarinatClassificationDropdown(rnaData['variant_info'][g]);
     }
-  }
+  };
 
   let setSelectVariantClassification = (v) => {
     if (v === 'all' && selectedGene in rnaData['variant_info']) {
-      setVariantClassificationList(rnaData['variant_info'][selectedGene])
-      setVariantClassification(v)
+      setVariantClassificationList(rnaData['variant_info'][selectedGene]);
+      setVariantClassification(v);
+    } else {
+      let arr = [];
+      arr.push(v);
+      setVariantClassificationList(arr);
+      setVariantClassification(v);
     }
-    else {
-      let arr = []
-      arr.push(v)
-      setVariantClassificationList(arr)
-      setVariantClassification(v)
-    }
-  }
+  };
 
   useEffect(() => {
     if (inputData && 'genes' in inputData) {
-      setInputState((prevState) => ({ ...prevState, ...inputData }))
+      setInputState((prevState) => ({ ...prevState, ...inputData }));
     }
-  }, [inputData])
+  }, [inputData]);
 
   useEffect(() => {
     if (sampleKey) {
-      getReport(sampleKey)
+      getReport(sampleKey);
     }
-  }, [inputState])
+  }, [inputState]);
 
   useEffect(() => {
     if (inputState && 'genes' in inputState) {
-      let g = inputState['genes']
-      loadGenesDropdown(g)
+      let g = inputState['genes'];
+      loadGenesDropdown(g);
     }
     if (rnaData) {
-      setLoader(true)
+      setLoader(true);
       setTimeout(() => {
         if ('genomic_summary' in rnaData) {
           setTableData(rnaData.genomic_summary);
@@ -420,35 +273,37 @@ function SankeyPlot({
         if ('basic_information' in rnaData) {
           setBasicInformationData(rnaData.basic_information);
         }
-        setLoader(false)
-      }, 2000)
+        setLoader(false);
+      }, 2000);
     }
   }, [rnaData]);
 
   useEffect(() => {
     if (tableData && tableData.length > 0) {
-      setTableRender(true)
+      // setTableRender(true);
     }
-  }, [tableData])
+  }, [tableData]);
 
   useEffect(() => {
-    setLoader(true)
+    setLoader(true);
     if (basicInformationData.length > 0) {
       const tmp = [];
       for (let i = 0; i < basicInformationData.length; i++) {
         const row = basicInformationData[i];
         for (const key in row) {
-          tmp.push(
-            <tr key={key} className='BasicInformationTable'>
-              <td style={{ border: '1px solid black', padding: '8px' }}>{key}</td>
-              <td style={{ border: '1px solid black', padding: '8px' }}>{row[key]}</td>
-            </tr>
-          );
+          let obj = {}
+          if (key !== 'Sample') {
+            obj["clinicalArrtibute"] = key
+            obj["Value"] = row[key]
+            tmp.push(
+              obj
+            );
+          }
         }
       }
       setBasicHtml(tmp);
     }
-    setLoader(false)
+    setLoader(false);
   }, [basicInformationData]);
 
   useEffect(() => {
@@ -458,17 +313,13 @@ function SankeyPlot({
       Object.keys(SampleRnidListData).forEach((e) => {
         brstKeysObject = {
           ...brstKeysObject,
-          [SampleRnidListData[e]]: e,
+          [SampleRnidListData[e]]: e
         };
       });
       let brstKeysArray = Object.keys(brstKeysObject).sort(sortAlphaNum);
       brstKeysArray.forEach((element) => {
         sampleListElementsTemp.push(
-          <option
-            className="xs:text-sm lg:text-xl"
-            key={element}
-            value={brstKeysObject[element]}
-          >
+          <option className="xs:text-sm lg:text-xl" key={element} value={brstKeysObject[element]}>
             {element}
           </option>
         );
@@ -483,152 +334,187 @@ function SankeyPlot({
     }
   }, [SampleRnidListData]);
 
-
-
   return (
-    <div>
+    <div style={{
+      marginTop: '5%',
+      border: '1px solid #d6d6d6',
+      boxShadow: '0 5px 10px rgba(0, 0, 0, 0.05)',
+      position: 'relative',
+      padding: '5%',
+    }}>
       <div className="tabs_box">
         <div className="tab mainTab">
-          <div className="tab_main">
+          <div className="tab_main" >
             <ul>
-              <li className={tabName === 'patientSummary' ? 'on' : ''}> <button onClick={e => {
-                setTabName('patientSummary')
-              }} name='type' > <FormattedMessage id="PatientSummary" defaultMessage="Patient Summary" /> </button></li>
+              <li className={tabName === 'patientSummary' ? 'on' : ''}>
+                {' '}
+                <button
+                  onClick={() => {
+                    setTabName('patientSummary');
+                  }}
+                  name="type"
+                >
+                  {' '}
+                  <FormattedMessage id="PatientSummary" defaultMessage="Patient Summary" />{' '}
+                </button>
+              </li>
 
-              <li className={tabName === 'drugRelation' ? 'on' : ''}> <button onClick={e => {
-                setTabName('drugRelation')
-              }} name='type' > <FormattedMessage id="DrugRelationPlot" defaultMessage="Drug Relation Plot" /> </button></li>
+              <li className={tabName === 'drugRelation' ? 'on' : ''}>
+                {' '}
+                <button
+                  onClick={() => {
+                    setTabName('drugRelation');
+                  }}
+                  name="type"
+                >
+                  {' '}
+                  <FormattedMessage
+                    id="DrugRelationPlot"
+                    defaultMessage="Drug Relation Plot"
+                  />{' '}
+                </button>
+              </li>
             </ul>
           </div>
         </div>
       </div>
 
-      <div className='Flex JustifySpaceBetween'>
-
-        <div style={{ maxWidth: 'fit-content' }}>
-          {(
-            <div
-              htmlFor="samples"
-            >
-              <FormattedMessage
-                id="Cir_choose_sample"
-                defaultMessage="Choose a Sample"
-              />
-              : ({samplesCount}){" "}
+      <div className="Flex JustifySpaceBetween">
+        <div className="TextLeft InlineFlex FlexDirCol " style={{ marginLeft: 'auto', width: '250px' }}>
+          {
+            <div htmlFor="samples">
+              <FormattedMessage id="Cir_choose_sample" defaultMessage="Choose a Sample" />: (
+              {samplesCount}){' '}
             </div>
-          )}
+          }
           <select
             className="selectBox"
             value={sampleKey}
             onChange={(e) => {
-              getReport(e.target.value)
+              getReport(e.target.value);
             }}
             name="samples"
             id="samples"
           >
-            <option>
-              --Select Sample--
-            </option>
+            <option>--Select Sample--</option>
             {sampleListElements}
-            <option value="all">
-              all
-            </option>
+            <option value="all">all</option>
           </select>
         </div>
 
         {
-          tabName === 'drugRelation' && sampleKey &&
-          <div className='SankeyVariantandGene'>
-
-            <div style={{ maxWidth: 'fit-content' }}>
-              <div className='selectionGenes' style={{ maxWidth: 'fit-content' }}>
-                <div >
-                  <div><FormattedMessage id="Selected Gene" defaultMessage='Selected Gene Is' /></div>
+          // tabName !== 'patientSummary' && sampleKey &&  <div style={{ maxWidth: 'fit-content' }}>
+          tabName === 'drugRelation' && sampleKey && (
+            <div className="SankeyVariantandGene">
+              <div style={{ maxWidth: 'fit-content', marginLeft: '15px' }}>
+                <div className="selectionGenes" style={{ maxWidth: 'fit-content' }}>
                   <div>
-                    <select defaultValue={selectedGene} onChange={e => setSelectGene(e.target.value)}>
-                      {genesHtml}
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div style={{ maxWidth: 'fit-content' }}>
-              <div className='selectionGenes' style={{ maxWidth: 'fit-content' }}>
-                <div >
-                  <div><FormattedMessage id="Selected Variant Classification is" defaultMessage='Selected Variant Classification Is' /></div>
-                  <div>
-                    <select defaultValue={variantClassification} onChange={e => setSelectVariantClassification(e.target.value)}>
-                      {variantClassificationHtml}
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        }
-
-      </div>
-
-      {
-        sampleKey === "" && <p className='MultiUploadTextCenter'>Select Sample</p>
-      }
-
-      {loader && tabName === 'patientSummary' && <LoaderComp />}
-
-      {
-        !loader && tabName === 'patientSummary' && sampleKey !== "" &&
-        <div>
-          {sampleKey !== "" && <div className='BasicGenomic'>
-            <div className=''>
-
-              {basicInformationData && basicInformationData.length > 0 && <div>
-                <div>
-                  <h3 className='BasicInformationTitle'>
-                    Basic Information
-                  </h3>
-                </div>
-                <div className='basicTable' ref={basicTable}>
-                  {basicHtml}
-                </div>
-              </div>
-              }
-
-              {tableData && tableData.length > 0 &&
-                <div>
-                  <div className='rounded-lg border border-gray-200'>
-                    <h3 className='BasicInformationTitle' style={{ margin: "40px 0px" }}>
-                      Genomic Information
-                    </h3>
-                    <div className=' report_table'>
-                      <DataTable pagination
-                        responsive
-                        columns={tableColumnsData}
-                        data={tableData}
-                        subHeader
-                        customStyles={customStyles}
-                        subHeaderComponent={<ReportSubHeader tData={tableRender} tableData={tableData} />}
-                      />
+                    <div>
+                      <FormattedMessage id="Selected Gene" defaultMessage="Selected Gene Is" />
+                    </div>
+                    <div>
+                      <select
+                        defaultValue={selectedGene}
+                        onChange={(e) => setSelectGene(e.target.value)}
+                      >
+                        {genesHtml}
+                      </select>
                     </div>
                   </div>
                 </div>
-              }
+              </div>
+
+              <div style={{ maxWidth: 'fit-content' }}>
+                <div className="selectionGenes" style={{ maxWidth: 'fit-content', textAlign: 'left' }}>
+                  <div>
+                    <div>
+                      <FormattedMessage
+                        id="Selected Variant Classification is"
+                        defaultMessage="Selected Variant Classification Is"
+                      />
+                    </div>
+                    <div>
+                      <select
+                        defaultValue={variantClassification}
+                        onChange={(e) => setSelectVariantClassification(e.target.value)}
+                      >
+                        {variantClassificationHtml}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          }
-        </div>
-      }
+          )
+        }
+      </div>
 
-      {
-        tabName === 'drugRelation' && sampleKey !== "" &&
+      {sampleKey === '' && <p className="MultiUploadTextCenter">
+        <FormattedMessage id="SelectSample" defaultMessage="Select Sample" />
+      </p>}
+
+      {loader && tabName === 'patientSummary' && <LoaderComp />}
+
+      {!loader && tabName === 'patientSummary' && sampleKey !== '' && (
         <div>
-          <SankeyIndex selectedGene={selectedGene} variants={variantClassificationList} allVariants={rnaData['variant_info']} />
-        </div>
-      }
+          {sampleKey !== '' && (
+            <div className="BasicGenomic MarginTop10">
+              <div className="">
+                {basicInformationData && basicInformationData.length > 0 && (
+                  <div>
+                    <div className='boardTopUtil '>
+                      <h3 className="boardTotal">
+                        <span>
+                          <FormattedMessage id="BasicInformation" defaultMessage="Basic Information" />
+                        </span>
+                      </h3>
+                    </div>
+                    <Table
+                      columns={ColumnNames}
+                      data={basicHtml}
 
+                    />
+                  </div>
+                )}
+
+                {tableData && tableData.length > 0 && (
+                  <div className='MarginTop10'>
+                    <div className="rounded-lg border border-gray-200">
+
+                      <div className='boardTopUtil '>
+                        <h3 className="boardTotal">
+                          <span>
+                            <FormattedMessage id="GenomicInformation" defaultMessage="Genomic Information" />
+                          </span>
+                        </h3>
+                      </div>
+                      <div className=" report_table">
+                        <Table
+                          columns={tableColumnsData}
+                          data={tableData}
+
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {tabName === 'drugRelation' && sampleKey !== '' && (
+        <div>
+          <SankeyIndex
+            selectedGene={selectedGene}
+            variants={variantClassificationList}
+            allVariants={rnaData['variant_info']}
+          />
+        </div>
+      )}
     </div>
-  )
+  );
 }
 
-export default SankeyPlot
+export default SankeyPlot;

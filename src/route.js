@@ -1,43 +1,52 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { CustomerServiceDetail } from './containers/Common/CusomerSeviceDetail';
 import Home from './containers/Home';
 import MultiDataViewProject from './containers/UserDataVisualization/MultiDataVisualization/MultiDataViewProject';
-import { CustomerServiceDetail } from './containers/Common/CusomerSeviceDetail';
 const DataSummary = React.lazy(() => import('./containers/DataSummary'));
 const Login = React.lazy(() => import('./containers/Login/login'));
-const DataVisualization = React.lazy(() => import('./containers/DataVisualisation'));
-
-
-// User Datavisualisation
-// const UserDataVisualization = React.lazy(() => import('./containers/UserDataVisualization'));
-const UserDataVisualization = React.lazy(() => import('./containers/UserDataVisualization/mainindex'));
 
 //Single Data User Visulaization
-const SingleDataUploadIndex = React.lazy(() => import('./containers/UserDataVisualization/SingleDataVisualization/SingleDataUploadIndex'));
-const SingleDataAnalysis = React.lazy(() => import('./containers/UserDataVisualization/SingleDataVisualization/SingleDataAnalysis'));
+const SingleDataUploadIndex = React.lazy(() =>
+  import('./containers/UserDataVisualization/SingleDataVisualization/SingleDataUploadIndex')
+);
+const SingleDataAnalysis = React.lazy(() =>
+  import('./containers/UserDataVisualization/SingleDataVisualization/SingleDataAnalysis')
+);
 
 // Multi Data User Visulaization
-const MultiDataVisualizationHome = React.lazy(() => import('./containers/UserDataVisualization/MultiDataVisualization/HomeComponent'));
-const MultiDataVisualizationUploadIndex = React.lazy(() => import('./containers/UserDataVisualization/MultiDataVisualization/MultiDataUploadIndex'));
-const MultiDataAnalysis = React.lazy(() => import('./containers/UserDataVisualization/MultiDataVisualization/MultiDataAnalysis'));
-const GeneSet = React.lazy(() => import('./containers/UserDataVisualization/Components/MainComponents/GeneSet'));
-
-
+const MultiDataVisualizationHome = React.lazy(() =>
+  import('./containers/UserDataVisualization/MultiDataVisualization/HomeComponent')
+);
+const MultiDataVisualizationUploadIndex = React.lazy(() =>
+  import('./containers/UserDataVisualization/MultiDataVisualization/MultiDataUploadIndex')
+);
+const MultiDataAnalysis = React.lazy(() =>
+  import('./containers/UserDataVisualization/MultiDataVisualization/MultiDataAnalysis')
+);
+const GeneSet = React.lazy(() =>
+  import('./containers/UserDataVisualization/Components/MainComponents/GeneSet')
+);
 
 const Logout = React.lazy(() => import('./containers/Login/logout'));
 const Terms = React.lazy(() => import('./containers/Signup/TermsandConditions'));
 const Join = React.lazy(() => import('./containers/Signup/MemberShip'));
 const Signup = React.lazy(() => import('./containers/Signup/Signup'));
-const TermsandConditions = React.lazy(() => import('./containers/TermsAndPolicy/TermsAndConditionsIndex'));
+const TermsandConditions = React.lazy(() =>
+  import('./containers/TermsAndPolicy/TermsAndConditionsIndex')
+);
 const PrivacyPolicy = React.lazy(() => import('./containers/TermsAndPolicy/PrivacyActIndex'));
-const OldKoreanprivacyact = React.lazy(() => import('./containers/TermsAndPolicy/OldKoreanPrivacyAct'));
+const OldKoreanprivacyact = React.lazy(() =>
+  import('./containers/TermsAndPolicy/OldKoreanPrivacyAct')
+);
 
 const FindIndex = React.lazy(() => import('./containers/Login/FindIndex'));
 const ResetPassword = React.lazy(() => import('./containers/Login/ResetPassword'));
 const SetPassword = React.lazy(() => import('./containers/Signup/SetPassword'));
-const FileProjectDataTable = React.lazy(() => import('./containers/UserDataVisualization/Components/MainComponents/FileProjectDataTable'));
+const FileProjectDataTable = React.lazy(() =>
+  import('./containers/UserDataVisualization/Components/MainComponents/FileProjectDataTable')
+);
 
-const Introduce = React.lazy(() => import('./containers/Home/introduce'));
 const Pipeline = React.lazy(() => import('./containers/Home/pipeline'));
 
 const Faq = React.lazy(() => import('./containers/CustomerVoice/Faq'));
@@ -50,18 +59,26 @@ const Blast = React.lazy(() => import('./containers/Tools/Blast'));
 const VcfMaf = React.lazy(() => import('./containers/Tools/Vcfmaf'));
 
 const genefusion = React.lazy(() => import('./containers/Common/genefusion'));
-const UserDataTable = React.lazy(() => import('./containers/UserDataVisualization/Components/MainComponents/projectDataTable'));
+const UserDataTable = React.lazy(() =>
+  import('./containers/UserDataVisualization/Components/MainComponents/projectDataTable')
+);
 const MobileSuccess = React.lazy(() => import('./containers/Signup/MobileVerify'));
 
 const Organoid = React.lazy(() => import('./containers/CustomerVoice/OtherServices/Organoid'));
-const RelatedSites = React.lazy(() => import('./containers/CustomerVoice/OtherServices/RelatedSitesIndex'));
+const RelatedSites = React.lazy(() =>
+  import('./containers/CustomerVoice/OtherServices/RelatedSitesIndex')
+);
 const Refresh = React.lazy(() => import('./containers/Refresh'));
 const SankeyPlot = React.lazy(() => import('./containers/DataVisualisation/Charts/SankeyPlot'));
 
-const NotFound = React.lazy(() => import('./containers/404NotFound/index'))
+const NotFound = React.lazy(() => import('./containers/404NotFound/index'));
 const route = [
   {
-    path: '/mobile_verify/', exact: true, type: 'unauth', name: '', component: MobileSuccess,
+    path: '/mobile_verify/',
+    exact: true,
+    type: 'unauth',
+    name: '',
+    component: MobileSuccess
   },
   {
     path: '/summary/:tab?/',
@@ -70,7 +87,7 @@ const route = [
     category: 'visualize',
     name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
     childname: <FormattedMessage id="DataSummary" defaultMessage="Data Summary" />,
-    component: DataSummary,
+    component: DataSummary
   },
 
   // {
@@ -89,8 +106,10 @@ const route = [
     type: 'unauth',
     category: 'home',
     name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
-    childname: <FormattedMessage id="SingleDataVisualization" defaultMessage="Single Data Visualization" />,
-    component: SankeyPlot,
+    childname: (
+      <FormattedMessage id="SingleDataVisualization" defaultMessage="Single Data Visualization" />
+    ),
+    component: SankeyPlot
   },
 
   {
@@ -99,8 +118,10 @@ const route = [
     type: 'unauth',
     category: 'visualize',
     name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
-    childname: <FormattedMessage id="SingleDataVisualization" defaultMessage="Single Data Visualization" />,
-    component: SingleDataAnalysis,
+    childname: (
+      <FormattedMessage id="SingleDataVisualization" defaultMessage="Single Data Visualization" />
+    ),
+    component: SingleDataAnalysis
   },
   {
     path: '/visualizesingle-exampledata/:tab?/',
@@ -108,34 +129,42 @@ const route = [
     type: 'unauth',
     category: 'visualize',
     name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
-    childname: <FormattedMessage id="SingleDataVisualization" defaultMessage="Single Data Visualization" />,
-    component: SingleDataAnalysis,
+    childname: (
+      <FormattedMessage id="SingleDataVisualization" defaultMessage="Single Data Visualization" />
+    ),
+    component: SingleDataAnalysis
   },
-  
+
   {
     path: '/gene-set/',
     exact: true,
     type: 'unauth',
     category: 'visualize',
     name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
-    childname: <FormattedMessage id="SingleDataVisualization" defaultMessage="Single Data Visualization" />,
-    component: GeneSet,
+    childname: (
+      <FormattedMessage id="SingleDataVisualization" defaultMessage="Single Data Visualization" />
+    ),
+    component: GeneSet
   },
   {
     path: '/singledata-upload/:tab?/',
     exact: true,
     type: 'unauth',
     name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
-    childname: <FormattedMessage id="SingleDataVisualization" defaultMessage="Single Data Visualization" />,
-    component: SingleDataUploadIndex,
+    childname: (
+      <FormattedMessage id="SingleDataVisualization" defaultMessage="Single Data Visualization" />
+    ),
+    component: SingleDataUploadIndex
   },
   {
     path: '/visualise-multidata/:tab?/:project_id?/',
     exact: true,
     type: 'unauth',
     name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
-    childname: <FormattedMessage id="MultiDataVisualization" defaultMessage="Multi Data Visualization" />,
-    component: MultiDataAnalysis,
+    childname: (
+      <FormattedMessage id="MultiDataVisualization" defaultMessage="Multi Data Visualization" />
+    ),
+    component: MultiDataAnalysis
   },
 
   {
@@ -143,8 +172,10 @@ const route = [
     exact: true,
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
-    childname: <FormattedMessage id="MultiDataVisualization" defaultMessage="Multi Data Visualization" />,
-    component: MultiDataVisualizationHome,
+    childname: (
+      <FormattedMessage id="MultiDataVisualization" defaultMessage="Multi Data Visualization" />
+    ),
+    component: MultiDataVisualizationHome
   },
 
   {
@@ -154,7 +185,7 @@ const route = [
     category: 'home',
     name: <FormattedMessage id="Introduce" defaultMessage="Introduction" />,
     childname: <FormattedMessage id="BusinessIntroduce" defaultMessage="Business Introduction" />,
-    component: Home,
+    component: Home
   },
   {
     path: '/home/introduction/',
@@ -163,7 +194,7 @@ const route = [
     category: 'introduce',
     name: <FormattedMessage id="Introduce" defaultMessage="Introduction" />,
     childname: <FormattedMessage id="SiteIntro" defaultMessage="Business Introduction" />,
-    component: Home,
+    component: Home
   },
   {
     path: '/home/visualizeMyExampleData/',
@@ -172,7 +203,7 @@ const route = [
     category: 'visualize',
     name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
     childname: <FormattedMessage id="DataSummary" defaultMessage="Data Summary" />,
-    component: Home,
+    component: Home
   },
   {
     path: '/home/visualizeMyData/',
@@ -181,7 +212,7 @@ const route = [
     category: 'visualizeData',
     name: <FormattedMessage id="VisualizeMyData" defaultMessage="VisualizeMyData" />,
     childname: <FormattedMessage id="VisualizeMyData" defaultMessage="VisualizeMyData" />,
-    component: Home,
+    component: Home
   },
   {
     path: '/home/faq/',
@@ -190,7 +221,7 @@ const route = [
     category: 'visualizeData',
     name: <FormattedMessage id="CustomerService" defaultMessage="CustomerService" />,
     childname: <FormattedMessage id="CustomerService" defaultMessage="CustomerService" />,
-    component: Home,
+    component: Home
   },
 
   {
@@ -198,8 +229,10 @@ const route = [
     exact: true,
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
-    childname: <FormattedMessage id="MultiDataVisualization" defaultMessage="Multi Data Visualization" />,
-    component: MultiDataVisualizationUploadIndex,
+    childname: (
+      <FormattedMessage id="MultiDataVisualization" defaultMessage="Multi Data Visualization" />
+    ),
+    component: MultiDataVisualizationUploadIndex
   },
 
   {
@@ -207,10 +240,11 @@ const route = [
     exact: true,
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
-    childname: <FormattedMessage id="MultiDataVisualization" defaultMessage="Multi Data Visualization" />,
-    component: MultiDataViewProject,
+    childname: (
+      <FormattedMessage id="MultiDataVisualization" defaultMessage="Multi Data Visualization" />
+    ),
+    component: MultiDataViewProject
   },
-
 
   {
     path: '/pipeline/',
@@ -219,7 +253,7 @@ const route = [
     category: 'introduce',
     name: <FormattedMessage id="Introduce" defaultMessage="Introduction" />,
     childname: <FormattedMessage id="Pipeline" defaultMessage="Pipeline" />,
-    component: Pipeline,
+    component: Pipeline
   },
 
   {
@@ -228,7 +262,7 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
     childname: <FormattedMessage id="Login" defaultMessage="Login" />,
-    component: Login,
+    component: Login
   },
   {
     path: '/logout/',
@@ -236,7 +270,7 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
     childname: <FormattedMessage id="Logout" defaultMessage="Logout" />,
-    component: Logout,
+    component: Logout
   },
   {
     path: '/term/',
@@ -244,7 +278,7 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
     childname: <FormattedMessage id="Signup" defaultMessage="Terms" />,
-    component: Terms,
+    component: Terms
   },
   {
     path: '/member/',
@@ -252,16 +286,16 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
     childname: <FormattedMessage id="Signup" defaultMessage="Join" />,
-    component: Join,
+    component: Join
   },
- 
+
   {
     path: '/genefusion/',
     exact: true,
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
     childname: <FormattedMessage id="Signup" defaultMessage="Signup" />,
-    component: genefusion,
+    component: genefusion
   },
   {
     path: '/user-data/:id',
@@ -269,7 +303,7 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
     childname: <FormattedMessage id="Signup" defaultMessage="Signup" />,
-    component: UserDataTable,
+    component: UserDataTable
   },
 
   {
@@ -278,7 +312,7 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="CustomerVoice" defaultMessage="Customer Voice" />,
     childname: <FormattedMessage id="FAQ" defaultMessage="FAQ" />,
-    component: Faq,
+    component: Faq
   },
   {
     path: '/notice/:slug?/',
@@ -286,7 +320,7 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="CustomerVoice" defaultMessage="Customer Voice" />,
     childname: <FormattedMessage id="Notice" defaultMessage="Notice" />,
-    component: Notice,
+    component: Notice
   },
   {
     path: '/qa/:slug?/',
@@ -294,7 +328,7 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="CustomerVoice" defaultMessage="Customer Voice" />,
     childname: <FormattedMessage id="QA" defaultMessage="Q&A" />,
-    component: Qa,
+    component: Qa
   },
   {
     path: '/details/:slug?/',
@@ -302,7 +336,7 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="CustomerVoice" defaultMessage="Customer Voice" />,
     childname: <FormattedMessage id="details" defaultMessage="Details" />,
-    component: CustomerServiceDetail,
+    component: CustomerServiceDetail
   },
   {
     path: '/termsandconditions/',
@@ -310,7 +344,7 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
     childname: <FormattedMessage id="TermsofService" defaultMessage="Terms of Service" />,
-    component: TermsandConditions,
+    component: TermsandConditions
   },
   {
     path: '/oldprivacyact/',
@@ -318,7 +352,7 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
     childname: <FormattedMessage id="OldPrivacyPolicy" defaultMessage="PreviousPrivacyPolicy" />,
-    component: OldKoreanprivacyact,
+    component: OldKoreanprivacyact
   },
   {
     path: '/privacypolicy/',
@@ -326,7 +360,7 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
     childname: <FormattedMessage id="PrivacyPolicy" defaultMessage="PrivacyPolicy" />,
-    component: PrivacyPolicy,
+    component: PrivacyPolicy
   },
   {
     path: '/findid/',
@@ -334,7 +368,7 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
     childname: <FormattedMessage id="FindID" defaultMessage="Find ID" />,
-    component: FindIndex,
+    component: FindIndex
   },
   {
     path: '/findpassword/',
@@ -342,7 +376,7 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
     childname: <FormattedMessage id="FindPassword" defaultMessage="Find Password" />,
-    component: FindIndex,
+    component: FindIndex
   },
   {
     path: '/signup/',
@@ -350,7 +384,7 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
     childname: <FormattedMessage id="Signup" defaultMessage="Sign Up" />,
-    component: Signup,
+    component: Signup
   },
   {
     path: '/resetpassword/:token',
@@ -358,7 +392,7 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
     childname: <FormattedMessage id="ChangePassword" defaultMessage="ChangePassword" />,
-    component: ResetPassword,
+    component: ResetPassword
   },
   {
     path: '/set-password/:token',
@@ -366,7 +400,7 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
     childname: <FormattedMessage id="SetPassword" defaultMessage="Set Password" />,
-    component: SetPassword,
+    component: SetPassword
   },
 
   {
@@ -374,7 +408,7 @@ const route = [
     exact: true,
     type: 'unauth',
     name: <FormattedMessage id="Tools" defaultMessage="Tools" />,
-    component: ToolsIndex,
+    component: ToolsIndex
   },
 
   {
@@ -383,7 +417,7 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="Tools" defaultMessage="Tools" />,
     childname: <FormattedMessage id="blast" defaultMessage="Blast" />,
-    component: Blast,
+    component: Blast
   },
   {
     path: '/interpro/',
@@ -391,7 +425,7 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="Tools" defaultMessage="Tools" />,
     childname: <FormattedMessage id="Interpro" defaultMessage="Interpro" />,
-    component: InterPro,
+    component: InterPro
   },
   {
     path: '/vcfmaf/',
@@ -399,7 +433,7 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="Tools" defaultMessage="Tools" />,
     childname: <FormattedMessage id="VCFMAF" defaultMessage="VCF to MAF" />,
-    component: VcfMaf,
+    component: VcfMaf
   },
   {
     path: '/organoid/',
@@ -407,7 +441,7 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="OtherServices" defaultMessage="Other Services" />,
     childname: <FormattedMessage id="Organoid" defaultMessage="Organoid" />,
-    component: Organoid,
+    component: Organoid
   },
   {
     path: '/related-sites/',
@@ -415,7 +449,7 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="OtherServices" defaultMessage="Other Services" />,
     childname: <FormattedMessage id="RelatedSites" defaultMessage="Related Sites" />,
-    component: RelatedSites,
+    component: RelatedSites
   },
   {
     path: '/fileprojectdatatable/',
@@ -423,7 +457,7 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
     childname: <FormattedMessage id="Organoid" defaultMessage="Organoid" />,
-    component: FileProjectDataTable,
+    component: FileProjectDataTable
   },
   {
     path: '/refresh/',
@@ -431,7 +465,7 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
     childname: <FormattedMessage id="Organoid" defaultMessage="Organoid" />,
-    component: Refresh,
+    component: Refresh
   },
   {
     path: '/notfound/',
@@ -439,9 +473,8 @@ const route = [
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
     childname: <FormattedMessage id="notfound" defaultMessage="notfound" />,
-    component: NotFound,
-  },
+    component: NotFound
+  }
 ];
 
 export default route;
-

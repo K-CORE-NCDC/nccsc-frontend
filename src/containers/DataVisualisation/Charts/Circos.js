@@ -1,45 +1,28 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import CircosCmp from "../../Common/Circos";
-import NoContentMessage from "../../Common/NoContentComponent";
-import PagenationTableComponent from "../../Common/PagenationTable";
-import GraphsModal from "../../Common/circostimelineGraph";
-import LoaderCmp from "../../Common/Loader";
-import { useParams } from "react-router-dom";
-import {
-  CircosInformation,
-  OncoImages,
-  CircosTimelineTable,
-  getRNIDetails,
-} from "../../../actions/api_actions";
+import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { CircosInformation } from '../../../actions/api_actions';
+import CircosCmp from '../../Common/Circos';
+import LoaderCmp from '../../Common/Loader';
+import NoContentMessage from '../../Common/NoContentComponent';
+import PagenationTableComponent from '../../Common/PagenationTable';
+import GraphsModal from '../../Common/circostimelineGraph';
 
-import "../../../assets/css/style.css";
-import { FormattedMessage } from "react-intl";
-import Report from "../../Common/Report";
 import html2canvas from 'html2canvas';
-import PDFReport from "../../Common/PDFReport";
-export default function DataCircos({
-  width,
-  inputData,
-  screenCapture,
-  setToFalseAfterScreenCapture,
-}) {
+import { FormattedMessage } from 'react-intl';
+import '../../../assets/css/style.css';
+import PDFReport from '../../Common/PDFReport';
+import Report from '../../Common/Report';
+
+export default function DataCircos({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef();
-  const dispatch = useDispatch();
-  const [sampleKey, setSampleKey] = useState("");
-  const [circosJson, setCircosJson] = useState({ status: 0 })
-  const [oncoImageJson, setOncoImageJson] = useState(null)
-  const [circosTimelieTableData, setCircosTimelieTableData] = useState(null)
-
-  const reportData = useSelector(
-    (state) => state.dataVisualizationReducer.rniData
-  );
-
-  const circosSanpleRnidListData = useSelector(
-    (data) => data.dataVisualizationReducer.Keys
-  );
+  const [sampleKey, setSampleKey] = useState('');
+  const [circosJson, setCircosJson] = useState({ status: 0 });
+  const oncoImageJson = null;
+  const circosTimelieTableData = null;
+  const reportData = useSelector((state) => state.dataVisualizationReducer.rniData);
+  const circosSanpleRnidListData = useSelector((data) => data.dataVisualizationReducer.Keys);
   const [sampleListElements, setSampleListElements] = useState([]);
-  const [watermarkCss, setWatermarkCSS] = useState("");
+  const [watermarkCss, setWatermarkCSS] = useState('');
   const [loader, setLoader] = useState(false);
   const [showOncoImages, setShowOncoImages] = useState(false);
   const [showReportTable, setshowReportTable] = useState(false);
@@ -48,176 +31,173 @@ export default function DataCircos({
   const [renderCircos, setRenderCircos] = useState(false);
   const [samplesCount, setSamplesCount] = useState(0);
   const [tableData, setTableData] = useState([]);
-  const [noGeneData, setNoGeneData] = useState(true)
+  const [noGeneData, setNoGeneData] = useState(true);
   const [basicInformationData, setBasicInformationData] = useState([]);
-  let { project_id } = useParams();
-
   const [isReportClicked, setIsReportClicked] = useState(false);
-
   const tableColumnsData = [
     {
-      name: "geneName",
+      name: 'geneName',
       selector: (row) => {
         return row.gene;
       },
       sortable: true,
-      classNames: ["report_sankey"],
+      classNames: ['report_sankey'],
       style: {
-        borderLeft: "1px solid #fff",
-        borderRight: "1px solid #fff",
-        boxSizing: "border-box",
-        textAlign: "center",
-        display: "block",
-        lineHeight: "3.5",
-      },
+        borderLeft: '1px solid #fff',
+        borderRight: '1px solid #fff',
+        boxSizing: 'border-box',
+        textAlign: 'center',
+        display: 'block',
+        lineHeight: '3.5'
+      }
     },
 
     {
-      name: "Yes",
+      name: 'Yes',
       selector: (row) => {
-        if (row.dna === "YES") {
-          if (row.gene in reportData["variant_info"]) {
-            let variants = reportData["variant_info"][row.gene];
-            variants = variants.join("-");
+        if (row.dna === 'YES') {
+          if (row.gene in reportData['variant_info']) {
+            let variants = reportData['variant_info'][row.gene];
+            variants = variants.join('-');
             return (
               <div data-bs-toggle="tooltip" title={variants}>
-                {"O  (" + reportData["variant_info"][row.gene].length + ")"}
+                {'O  (' + reportData['variant_info'][row.gene].length + ')'}
               </div>
             );
           } else {
             return row.dna;
           }
-        } else return "";
+        } else return '';
       },
       sortable: true,
       style: {
-        borderLeft: "1px solid #6F7378",
-        borderRight: "1px solid #fff",
-        boxSizing: "border-box",
-        textAlign: "center",
-        display: "block",
-        lineHeight: "3.5",
-      },
+        borderLeft: '1px solid #6F7378',
+        borderRight: '1px solid #fff',
+        boxSizing: 'border-box',
+        textAlign: 'center',
+        display: 'block',
+        lineHeight: '3.5'
+      }
     },
     {
-      name: "No",
+      name: 'No',
       selector: (row) => {
-        if (row.dna === "NO") {
-          return "O ";
-        } else return "";
+        if (row.dna === 'NO') {
+          return 'O ';
+        } else return '';
       },
       sortable: true,
       style: {
-        borderLeft: "1px solid #ABB0B8",
-        borderRight: "1px solid #fff",
-        boxSizing: "border-box",
-        textAlign: "center",
-        display: "block",
-        lineHeight: "3.5",
-      },
+        borderLeft: '1px solid #ABB0B8',
+        borderRight: '1px solid #fff',
+        boxSizing: 'border-box',
+        textAlign: 'center',
+        display: 'block',
+        lineHeight: '3.5'
+      }
     },
     {
-      name: "High",
+      name: 'High',
       selector: (row) => {
-        if (row.rna === "HIGH") {
-          return "O ";
-        } else return "";
+        if (row.rna === 'HIGH') {
+          return 'O ';
+        } else return '';
       },
       sortable: true,
       style: {
-        borderLeft: "1px solid #6F7378",
-        borderRight: "1px solid #fff",
-        boxSizing: "border-box",
-        textAlign: "center",
-        display: "block",
-        lineHeight: "3.5",
-      },
+        borderLeft: '1px solid #6F7378',
+        borderRight: '1px solid #fff',
+        boxSizing: 'border-box',
+        textAlign: 'center',
+        display: 'block',
+        lineHeight: '3.5'
+      }
     },
     {
-      name: "Intermediate",
+      name: 'Intermediate',
       selector: (row) => {
-        if (row.rna !== "HIGH" && row.rna !== "LOW") {
-          return "O ";
-        } else return "";
+        if (row.rna !== 'HIGH' && row.rna !== 'LOW') {
+          return 'O ';
+        } else return '';
       },
       sortable: true,
       style: {
-        borderLeft: "1px solid #ABB0B8",
-        borderRight: "1px solid #fff",
-        boxSizing: "border-box",
-        textAlign: "center",
-        display: "block",
-        lineHeight: "3.5",
-      },
+        borderLeft: '1px solid #ABB0B8',
+        borderRight: '1px solid #fff',
+        boxSizing: 'border-box',
+        textAlign: 'center',
+        display: 'block',
+        lineHeight: '3.5'
+      }
     },
     {
-      name: "Low",
+      name: 'Low',
       selector: (row) => {
-        if (row.rna === "LOW") {
-          return "O ";
-        } else return "";
+        if (row.rna === 'LOW') {
+          return 'O ';
+        } else return '';
       },
       sortable: true,
       style: {
-        borderLeft: "1px solid #ABB0B8",
-        borderRight: "1px solid #fff",
-        boxSizing: "border-box",
-        textAlign: "center",
-        display: "block",
-        lineHeight: "3.5",
-      },
+        borderLeft: '1px solid #ABB0B8',
+        borderRight: '1px solid #fff',
+        boxSizing: 'border-box',
+        textAlign: 'center',
+        display: 'block',
+        lineHeight: '3.5'
+      }
     },
     {
-      name: "High",
+      name: 'High',
       selector: (row) => {
-        if (row.proteome === "HIGH") {
-          return "O ";
-        } else return "";
+        if (row.proteome === 'HIGH') {
+          return 'O ';
+        } else return '';
       },
       sortable: true,
       style: {
-        borderLeft: "1px solid #6F7378",
-        borderRight: "1px solid #fff",
-        boxSizing: "border-box",
-        textAlign: "center",
-        display: "block",
-        lineHeight: "3.5",
-      },
+        borderLeft: '1px solid #6F7378',
+        borderRight: '1px solid #fff',
+        boxSizing: 'border-box',
+        textAlign: 'center',
+        display: 'block',
+        lineHeight: '3.5'
+      }
     },
     {
-      name: "Intermediate",
+      name: 'Intermediate',
       selector: (row) => {
-        if (row.proteome !== "HIGH" && row.proteome !== "LOW") {
-          return "O ";
-        } else return "";
+        if (row.proteome !== 'HIGH' && row.proteome !== 'LOW') {
+          return 'O ';
+        } else return '';
       },
       sortable: true,
       style: {
-        borderLeft: "1px solid #ABB0B8",
-        borderRight: "1px solid #fff",
-        boxSizing: "border-box",
-        textAlign: "center",
-        display: "block",
-        lineHeight: "3.5",
-      },
+        borderLeft: '1px solid #ABB0B8',
+        borderRight: '1px solid #fff',
+        boxSizing: 'border-box',
+        textAlign: 'center',
+        display: 'block',
+        lineHeight: '3.5'
+      }
     },
     {
-      name: "Low",
+      name: 'Low',
       selector: (row) => {
-        if (row.proteome === "LOW") {
-          return "O ";
-        } else return "";
+        if (row.proteome === 'LOW') {
+          return 'O ';
+        } else return '';
       },
       sortable: true,
       style: {
-        borderLeft: "1px solid #ABB0B8",
-        borderRight: "1px solid #6F7378",
-        boxSizing: "border-box",
-        textAlign: "center",
-        display: "block",
-        lineHeight: "3.5",
-      },
-    },
+        borderLeft: '1px solid #ABB0B8',
+        borderRight: '1px solid #6F7378',
+        boxSizing: 'border-box',
+        textAlign: 'center',
+        display: 'block',
+        lineHeight: '3.5'
+      }
+    }
   ];
 
   const closeShowOncoImages = () => {
@@ -228,41 +208,6 @@ export default function DataCircos({
     setShowOncoTimelineTables(false);
   };
 
-  const oncoImagesClickFunction = () => {
-    setShowOncoImages(true);
-    let returnData = OncoImages("POST", { sample_id: sampleKey })
-    returnData.then((result) => {
-      let r_ = result.data
-      if (result.status === 200) {
-        setOncoImageJson(r_)
-
-      }
-      else {
-        setOncoImageJson(null)
-      }
-    })
-  };
-
-  const timelineGraphClickFunction = () => {
-    setShowOncoImages(false);
-    setShowOncoTimelineTables(true);
-    let returnData = CircosTimelineTable("POST", { sample_id: sampleKey })
-    returnData.then((result) => {
-      let r_ = result.data
-      if (result.status === 200) {
-        setCircosTimelieTableData(r_)
-
-      }
-      else {
-        setCircosTimelieTableData(null)
-      }
-    })
-  };
-
-  const ReportDataFunction = () => {
-    setshowReportTable(true);
-    dispatch(getRNIDetails("POST", { rnid: sampleKey, 'project_id': project_id }));
-  };
 
   useEffect(() => {
     if (reportData) {
@@ -282,11 +227,11 @@ export default function DataCircos({
   const reA = /[^a-zA-Z]/g;
   const reN = /[^0-9]/g;
   function sortAlphaNum(a, b) {
-    var aA = a.replace(reA, "");
-    var bA = b.replace(reA, "");
+    var aA = a.replace(reA, '');
+    var bA = b.replace(reA, '');
     if (aA === bA) {
-      var aN = parseInt(a.replace(reN, ""), 10);
-      var bN = parseInt(b.replace(reN, ""), 10);
+      var aN = parseInt(a.replace(reN, ''), 10);
+      var bN = parseInt(b.replace(reN, ''), 10);
       return aN === bN ? 0 : aN > bN ? 1 : -1;
     } else {
       return aA > bA ? 1 : -1;
@@ -301,70 +246,62 @@ export default function DataCircos({
 
   useEffect(() => {
     if (inputData) {
-      if (sampleKey !== "all") {
-        let imageDocumentObject = document.getElementById("images");
+      if (sampleKey !== 'all') {
+        let imageDocumentObject = document.getElementById('images');
         if (imageDocumentObject) {
-          imageDocumentObject.classList.remove("opacity-50");
+          imageDocumentObject.classList.remove('opacity-50');
         }
-        let tableDocumentObject = document.getElementById("tables");
+        let tableDocumentObject = document.getElementById('tables');
         if (tableDocumentObject) {
-          tableDocumentObject.classList.remove("opacity-50");
+          tableDocumentObject.classList.remove('opacity-50');
         }
       } else {
-        let imageDocumentObject = document.getElementById("images");
+        let imageDocumentObject = document.getElementById('images');
         if (imageDocumentObject) {
-          imageDocumentObject.classList.add("opacity-50");
+          imageDocumentObject.classList.add('opacity-50');
         }
-        let tableDocumentObject = document.getElementById("tables");
+        let tableDocumentObject = document.getElementById('tables');
         if (tableDocumentObject) {
-          tableDocumentObject.classList.add("opacity-50");
+          tableDocumentObject.classList.add('opacity-50');
         }
       }
 
       let editInputData = inputData;
       editInputData = { ...editInputData, sampleKey: sampleKey };
-      if (editInputData["genes"].length < 0) {
-        setNoGeneData(true)
+      if (editInputData['genes'].length < 0) {
+        setNoGeneData(true);
+      } else {
+        setNoGeneData(false);
       }
-      else {
-        setNoGeneData(false)
-      }
-      if (
-        editInputData.type !== "" &&
-        sampleKey !== "" &&
-        editInputData["genes"].length > 0
-      ) {
+      if (editInputData.type !== '' && sampleKey !== '' && editInputData['genes'].length > 0) {
         setLoader(true);
         setRenderCircos(false);
-        let returnData = CircosInformation("POST", editInputData)
+        let returnData = CircosInformation('POST', editInputData);
         returnData.then((result) => {
           if (result.status === 200) {
-            let r_ = result.data
-            r_['status'] = 200
-            setCircosJson(r_)
-
+            let r_ = result.data;
+            r_['status'] = 200;
+            setCircosJson(r_);
+          } else {
+            setCircosJson({ status: 204 });
           }
-          else {
-            setCircosJson({ 'status': 204 })
-          }
-        })
+        });
       }
     }
   }, [inputData, sampleKey]);
 
   useEffect(() => {
     return () => {
-      setCircosJson({ status: 0 })
-      setSampleKey("")
-    }
-  }, [])
+      setCircosJson({ status: 0 });
+      setSampleKey('');
+    };
+  }, []);
 
   let takeScreenshot = async () => {
-    const element = document.getElementById('circos')
-    let imgData
-    await html2canvas(element).then(canvas => {
+    const element = document.getElementById('circos');
+    let imgData;
+    await html2canvas(element).then((canvas) => {
       imgData = canvas.toDataURL('image/jpeg', 1.0);
-
     });
     let link = document.createElement('a');
     link.href = imgData;
@@ -373,20 +310,20 @@ export default function DataCircos({
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  }
+  };
 
   useEffect(() => {
-    if (inputData && inputData.genes.length > 0 && sampleKey !== "") {
+    if (inputData && inputData.genes.length > 0 && sampleKey !== '') {
       if (screenCapture) {
         if (reference !== null) {
-          setWatermarkCSS("watermark");
+          setWatermarkCSS('watermark');
         }
       } else {
-        setWatermarkCSS("");
+        setWatermarkCSS('');
       }
-      if (watermarkCss !== "" && screenCapture) {
+      if (watermarkCss !== '' && screenCapture) {
         if (reference !== null) {
-          takeScreenshot()
+          takeScreenshot();
         }
         setToFalseAfterScreenCapture();
       }
@@ -402,17 +339,13 @@ export default function DataCircos({
       Object.keys(circosSanpleRnidListData).forEach((e) => {
         brstKeysObject = {
           ...brstKeysObject,
-          [circosSanpleRnidListData[e]]: e,
+          [circosSanpleRnidListData[e]]: e
         };
       });
       let brstKeysArray = Object.keys(brstKeysObject).sort(sortAlphaNum);
       brstKeysArray.forEach((element) => {
         sampleListElementsTemp.push(
-          <option
-            className="xs:text-sm lg:text-xl"
-            key={element}
-            value={brstKeysObject[element]}
-          >
+          <option className="xs:text-sm lg:text-xl" key={element} value={brstKeysObject[element]}>
             {element}
           </option>
         );
@@ -425,19 +358,19 @@ export default function DataCircos({
     setTimeout(function () {
       if (circosJson && circosJson.status !== 0) {
         setLoader(false);
-        if (sampleKey !== "all") {
-          if (document.getElementById("images")) {
-            document.getElementById("images").classList.remove("opacity-50");
+        if (sampleKey !== 'all') {
+          if (document.getElementById('images')) {
+            document.getElementById('images').classList.remove('opacity-50');
           }
-          if (document.getElementById("tables")) {
-            document.getElementById("tables").classList.remove("opacity-50");
+          if (document.getElementById('tables')) {
+            document.getElementById('tables').classList.remove('opacity-50');
           }
         } else {
-          if (document.getElementById("images")) {
-            document.getElementById("images").classList.add("opacity-50");
+          if (document.getElementById('images')) {
+            document.getElementById('images').classList.add('opacity-50');
           }
-          if (document.getElementById("tables")) {
-            document.getElementById("tables").classList.add("opacity-50");
+          if (document.getElementById('tables')) {
+            document.getElementById('tables').classList.add('opacity-50');
           }
         }
       }
@@ -466,22 +399,23 @@ export default function DataCircos({
       {loader ? (
         <LoaderCmp />
       ) : (
-        <div style={{ marginTop: '5%', border: '1px solid #d6d6d6', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.05)', position: 'relative', padding: '5%' }}>
-
+        <div
+          style={{
+            marginTop: '5%',
+            border: '1px solid #d6d6d6',
+            boxShadow: '0 5px 10px rgba(0, 0, 0, 0.05)',
+            position: 'relative',
+            padding: '5%'
+          }}
+        >
           <div className="flex visualGrid">
             <div>
-              {(
-                <div
-                  htmlFor="samples"
-                  className="lg:text-2xl sm:text-xl xs:text-sm"
-                >
-                  <FormattedMessage
-                    id="Cir_choose_sample"
-                    defaultMessage="Choose a Sample"
-                  />
-                  : ({samplesCount}){" "}
+              {
+                <div htmlFor="samples" className="lg:text-2xl sm:text-xl xs:text-sm">
+                  <FormattedMessage id="Cir_choose_sample" defaultMessage="Choose a Sample" />: (
+                  {samplesCount}){' '}
                 </div>
-              )}
+              }
               <select
                 className="selectBox"
                 value={sampleKey}
@@ -489,50 +423,13 @@ export default function DataCircos({
                 name="samples"
                 id="samples"
               >
-                <option className="xs:text-sm sm:text-sm lg:text-xl">
-                  Select Sample
-                </option>
+                <option className="xs:text-sm sm:text-sm lg:text-xl">Select Sample</option>
                 {sampleListElements}
                 <option className="xs:text-sm lg:text-xl" value="all">
                   all
                 </option>
               </select>
             </div>
-            {/* <div className="element">
-                <button
-                  id="images"
-                  className='btn btnPrimary'
-                  onClick={oncoImagesClickFunction}
-                  disabled = {project_id !== undefined ? true:false}
-                >
-                  <FormattedMessage
-                      id="Pathological images"
-                      defaultMessage="Pathological images"
-                    />
-                </button>
-              </div>
-              <div className="element">
-                <button
-                  id="tables"
-                  className="btn btnPrimary"
-                  onClick={timelineGraphClickFunction}
-                  disabled= {project_id!== undefined ? true:false}
-                >
-                   <FormattedMessage id="F/U Timeline" defaultMessage="F/U Timeline" />
-                </button>
-              </div>
-              <div className="element">
-                <button
-                  id="reportData"
-                  className="btn btnPrimary"
-                  onClick={ReportDataFunction}
-                >
-                  <FormattedMessage
-                      id="Report"
-                      defaultMessage="Report"
-                    />
-                </button>
-              </div> */}
           </div>
 
           <div>
@@ -552,7 +449,14 @@ export default function DataCircos({
         </div>
       )}
       <div>
-        {noGeneData && <p><FormattedMessage id="PleaseSelecttheGeneSetData" defaultMessage="Please Select the Gene Set Data" /></p>}
+        {noGeneData && (
+          <p>
+            <FormattedMessage
+              id="PleaseSelecttheGeneSetData"
+              defaultMessage="Please Select the Gene Set Data"
+            />
+          </p>
+        )}
       </div>
       {showOncoImages && (
         <PagenationTableComponent
@@ -566,9 +470,7 @@ export default function DataCircos({
           closeShowTimelineTables={closeShowTimelineTables}
         />
       )}
-      {
-        showReportTable
-        &&
+      {showReportTable && (
         <Report
           sampleKey={circosSanpleRnidListData[sampleKey]}
           tableColumnsData={tableColumnsData}
@@ -578,20 +480,16 @@ export default function DataCircos({
           isReportClickedFunction={isReportClickedFunction}
           isReportClicked={isReportClicked}
         />
+      )}
 
-      }
-
-      {
-        showReportTable
-        && <PDFReport
+      {showReportTable && (
+        <PDFReport
           sampleKey={circosSanpleRnidListData[sampleKey]}
           tableColumnsData={tableColumnsData}
           tableData={tableData}
           basicInformationData={basicInformationData}
         />
-      }
-
+      )}
     </>
-
   );
 }

@@ -1,318 +1,318 @@
 .SurvivalSampleCount {
-    padding: 0.75rem 1.5rem;
-    margin-top: 0.25rem;
-    background-color: #DBEAFE;
-    text-align: center;
-    border-radius: 9999px;
+  padding: 0.75rem 1.5rem;
+  margin-top: 0.25rem;
+  background-color: #dbeafe;
+  text-align: center;
+  border-radius: 9999px;
 }
 
-
 .SurvivalSelectedCss {
-    display: flex;
-    padding: 1.25rem;
-    transition: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
-    color: white;
-    font-size: 0.75rem;
-    line-height: 0.75rem;
-    font-weight: 700;
-    justify-content: center;
-    width: 50%;
-    border-radius: 0.25rem;
-    /* border-top-right-radius: 0;
+  display: flex;
+  padding: 1.25rem;
+  transition:
+    background-color,
+    border-color,
+    color,
+    fill,
+    stroke,
+    opacity,
+    box-shadow,
+    transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  color: white;
+  font-size: 0.75rem;
+  line-height: 0.75rem;
+  font-weight: 700;
+  justify-content: center;
+  width: 50%;
+  border-radius: 0.25rem;
+  /* border-top-right-radius: 0;
     border-bottom-right-radius: 0; */
-    border-width: 1px;
-    border-color: #4B5563;
-    cursor: pointer;
+  border-width: 1px;
+  border-color: #4b5563;
+  cursor: pointer;
 }
 
 @media (min-width: 640px) {
-    .SurvivalSelectedCss {
-        font-size: 0.75rem;
-        line-height: 0.75rem
-    }
+  .SurvivalSelectedCss {
+    font-size: 0.75rem;
+    line-height: 0.75rem;
+  }
 }
 
 @media (min-width: 1024px) {
-    .SurvivalSelectedCss {
-        font-size: 0.75rem;
-        line-height: 0.75rem
-    }
+  .SurvivalSelectedCss {
+    font-size: 0.75rem;
+    line-height: 0.75rem;
+  }
 }
 
 @media (min-width: 1280px) {
-    .SurvivalSelectedCss {
-        font-size: 0.75rem;
-        line-height: 0.75rem
-    }
+  .SurvivalSelectedCss {
+    font-size: 0.75rem;
+    line-height: 0.75rem;
+  }
 }
 
 :hover {
-    --transform-scale-x: 1.1;
-    --transform-scale-y: 1.1;
+  --transform-scale-x: 1.1;
+  --transform-scale-y: 1.1;
 }
 
 .SurvivalSelectedCss:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
-
-
-
-
-
 .SurvivalNonSelectedCss {
-    display: flex;
-    padding: 1.25rem;
-    transition: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
-    color: black;
-    font-size: 0.75rem;
-    line-height: 0.75rem;
-    font-weight: 700;
-    justify-content: center;
-    width: 50%;
-    border-radius: 0.25rem;
-    border-width: 1px;
-    cursor: pointer;
+  display: flex;
+  padding: 1.25rem;
+  transition:
+    background-color,
+    border-color,
+    color,
+    fill,
+    stroke,
+    opacity,
+    box-shadow,
+    transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  color: black;
+  font-size: 0.75rem;
+  line-height: 0.75rem;
+  font-weight: 700;
+  justify-content: center;
+  width: 50%;
+  border-radius: 0.25rem;
+  border-width: 1px;
+  cursor: pointer;
 }
 
 @media (min-width: 640px) {
-    .SurvivalNonSelectedCss {
-        font-size: 0.75rem;
-        line-height: 0.75rem;
-    }
+  .SurvivalNonSelectedCss {
+    font-size: 0.75rem;
+    line-height: 0.75rem;
+  }
 }
 
 @media (min-width: 1024px) {
-    .SurvivalNonSelectedCss {
-        font-size: 0.75rem;
-        line-height: 0.75rem;
-    }
+  .SurvivalNonSelectedCss {
+    font-size: 0.75rem;
+    line-height: 0.75rem;
+  }
 }
 
 @media (min-width: 1280px) {
-    .SurvivalNonSelectedCss {
-        font-size: 0.75rem;
-        line-height: 0.75rem;
-    }
+  .SurvivalNonSelectedCss {
+    font-size: 0.75rem;
+    line-height: 0.75rem;
+  }
 }
 
 .SurvivalNonSelectedCss:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
-
 .SurvivalChooseModel {
-    margin-left: 0.25rem;
-    color:black;
-    margin:0rem 1rem;
-
+  margin-left: 0.25rem;
+  color: black;
+  margin: 0rem 1rem;
 }
 
 .SurvivalSampleCountCard {
-    padding: 0.25rem;
-    margin: 0.25rem;
-    border-width: 1px;
-    border-color: #000000;
-    border-style: dashed;
+  padding: 0.25rem;
+  margin: 0.25rem;
+  border-width: 1px;
+  border-color: #000000;
+  border-style: dashed;
 }
 
 @media (max-width: 640px) {
-    .SurvivalSmallScreen {
-        z-index: -10;
-        opacity: 0.95;
-        background-color: #ffffff;
-    }
+  .SurvivalSmallScreen {
+    z-index: -10;
+    opacity: 0.95;
+    background-color: #ffffff;
+  }
 }
 
-
 @media (max-width: 640px) {
-    .SurvivalSmallScreenHidden {
-        display: none;
-    }
+  .SurvivalSmallScreenHidden {
+    display: none;
+  }
 }
 
 .SurvivalChooseFilter {
-    padding: 1rem;
-    margin-top: 0.25rem;
-    margin-left: 0.25rem;
-    color:black;;
+  padding: 1rem;
+  margin-top: 0.25rem;
+  margin-left: 0.25rem;
+  color: black;
 }
 
 .SurvivalSelectDatabase {
-    color:black;;
-    font-size: 0.75rem;
-    line-height: 0.75rem;
-    font-weight: 700;
+  color: black;
+  font-size: 0.75rem;
+  line-height: 0.75rem;
+  font-weight: 700;
 }
 
-
-
-
 .SurvivalSelectDatabase {
-    width: 100%;
-    padding: 1rem;
-    border: 1px solid;
-    outline: none;
-    border-bottom-color: currentColor;
-    outline-offset: 2px;
-    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
-    transition-duration: 150ms;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid;
+  outline: none;
+  border-bottom-color: currentColor;
+  outline-offset: 2px;
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow,
+    transform;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .SurvivalSelectDatabase:focus {
-    box-shadow: 0 0 0 2px currentColor, 0 0 0 4px rgba(66, 153, 225, 0.5);
-    border-color: currentColor;
+  box-shadow:
+    0 0 0 2px currentColor,
+    0 0 0 4px rgba(66, 153, 225, 0.5);
+  border-color: currentColor;
 }
 
 .SurvivalSelectDatabase:active {
-    border-color: currentColor;
+  border-color: currentColor;
 }
 
-.SurvivalSelectDatabase+.mt-3 {
-    margin-top: 0.75rem;
+.SurvivalSelectDatabase + .mt-3 {
+  margin-top: 0.75rem;
 }
 
 .TextGray800 {
-    color: #1F2937;
+  color: #1f2937;
 }
 
-
 .SurvivalInput {
-    height: 1.5rem;
-    width: 1.5rem;
-    border: 1px solid #D1D5DB;
-    border-radius: 0.125rem;
-    background-color: #FFF;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    float: left;
-    margin-right: 0.5rem;
-    cursor: pointer;
-  }
-  
-  .SurvivalInput:checked {
-    background-color: #003177;
-    border-color: #003177;
-  }
-  
-  .SurvivalInput:focus {
-    outline: none;
-  }
-  
-  .SurvivalInput:checked:focus {
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
-  }
-  
-  .SurvivalInput:hover {
-    filter: brightness(90%);
-  }
-  
-  .SurvivalInput:checked:hover {
-    filter: brightness(110%);
-  }
-  
-  .SurvivalInput:active {
-    transform: translateY(1px);
-  }
-  
-  .SurvivalInput:checked:active {
-    transform: translateY(1px);
-  }
-  
-  .SurvivalInput:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  
-  .SurvivalInput.transition {
-    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
-    transition-duration: 200ms;
-  }
-  
+  height: 1.5rem;
+  width: 1.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.125rem;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  float: left;
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
 
+.SurvivalInput:checked {
+  background-color: #003177;
+  border-color: #003177;
+}
 
+.SurvivalInput:focus {
+  outline: none;
+}
 
+.SurvivalInput:checked:focus {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
 
+.SurvivalInput:hover {
+  filter: brightness(90%);
+}
+
+.SurvivalInput:checked:hover {
+  filter: brightness(110%);
+}
+
+.SurvivalInput:active {
+  transform: translateY(1px);
+}
+
+.SurvivalInput:checked:active {
+  transform: translateY(1px);
+}
+
+.SurvivalInput:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.SurvivalInput.transition {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow,
+    transform;
+  transition-duration: 200ms;
+}
+
+.SurvivalSubmit {
+  background: #003177;
+  color: #fff;
+  border: 1px solid #4d9aff;
+  border-radius: 0.25rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition-property: background-color, border-color, color;
+  transition-duration: 200ms;
+  transition-timing-function: ease-in-out;
+  margin-bottom: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-color: #4d9aff;
+  font-size: 1.25rem;
+}
+
+.SurvivalSubmit:hover,
+.SurvivalSubmit:focus {
+  background-color: #003177;
+}
+
+.SurvivalSubmit:hover {
+  border-color: #4d9aff;
+}
+
+.SurvivalSubmit:focus {
+  outline: none;
+  border-color: #4d9aff;
+}
+
+@media (max-width: 1024px) {
   .SurvivalSubmit {
-    background: #003177;
-    color: #FFF;
-    border: 1px solid #4D9AFF;
-    border-radius: 0.25rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition-property: background-color, border-color, color;
-    transition-duration: 200ms;
-    transition-timing-function: ease-in-out;
-    margin-bottom: 0.75rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    border-color: #4D9AFF;
+    width: 10rem; /* Adjust the width value based on the desired size */
+  }
+}
+
+@media (max-width: 640px) {
+  .SurvivalSubmit {
+    width: 20rem; /* Adjust the width value based on the desired size */
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .SurvivalSubmit {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .SurvivalSubmit {
     font-size: 1.25rem;
   }
-  
-  .SurvivalSubmit:hover,
-  .SurvivalSubmit:focus {
-    background-color: #003177;
-  }
-  
-  .SurvivalSubmit:hover {
-    border-color: #4D9AFF;
-  }
-  
-  .SurvivalSubmit:focus {
-    outline: none;
-    border-color: #4D9AFF;
-  }
-  
-  @media (max-width: 1024px) {
-    .SurvivalSubmit {
-      width: 10rem; /* Adjust the width value based on the desired size */
-    }
-  }
-  
-  @media (max-width: 640px) {
-    .SurvivalSubmit {
-      width: 20rem; /* Adjust the width value based on the desired size */
-      font-size: 0.875rem;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .SurvivalSubmit {
-      font-size: 1rem;
-    }
-  }
-  
-  @media (min-width: 1280px) {
-    .SurvivalSubmit {
-      font-size: 1.25rem;
-    }
-  }
-  
-  @media (min-width: 1536px) {
-    .SurvivalSubmit {
-      font-size: 1rem;
-    }
-  }
-  
+}
 
-  .SurvivalTableWhiteSpace{
-    word-break: break-word;
-    white-space: normal;
+@media (min-width: 1536px) {
+  .SurvivalSubmit {
+    font-size: 1rem;
   }
+}
 
+.SurvivalTableWhiteSpace {
+  word-break: break-word;
+  white-space: normal;
+}
 
+.FlexDirRowSurvivalFilter {
+  flex-direction: row;
+}
+
+@media screen and (max-width: 1045px) {
   .FlexDirRowSurvivalFilter {
-    flex-direction: row;
+    flex-direction: column;
   }
-  
-  @media screen and (max-width: 1045px) {
-    .FlexDirRowSurvivalFilter {
-      flex-direction: column;
-    }
-  }
-  
+}

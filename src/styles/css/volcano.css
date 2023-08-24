@@ -1,38 +1,38 @@
 .VolcanoContainer {
-    margin-top: 8px;
-    margin-left: 4px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 16px;
+  margin-top: 8px;
+  margin-left: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 16px;
 }
 
 .VolcanoText {
-    font-size: 18px;
+  font-size: 18px;
 }
 
 .VolcanoText strong {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .VolcanoButton {
-    display: flex;
-    align-items: center;
-    background-color: #4c51bf;
-    color: white;
-    font-weight: bold;
-    padding: 8px 12px;
-    border-radius: 4px;
+  display: flex;
+  align-items: center;
+  background-color: #4c51bf;
+  color: white;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 4px;
 }
 
 .VolcanoIcon {
-    fill: currentColor;
-    width: 18px;
-    height: 18px;
-    margin-right: 8px;
+  fill: currentColor;
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
 }
 
 .VolcanoDownloadText {
-    font-size: 14px;
+  font-size: 14px;
 }

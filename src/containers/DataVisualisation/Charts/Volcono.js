@@ -1,35 +1,29 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import VolcanoCmp from "../../Common/Volcano";
-import NoContentMessage from "../../Common/NoContentComponent";
-
-import {
-  getClinicalMaxMinInfo,
-  VolcanoPlotInfo
-} from "../../../actions/api_actions";
-import LoaderCmp from "../../Common/Loader";
-import { FormattedMessage } from "react-intl";
-import { useHistory, useParams } from "react-router-dom";
+import React, { useState, useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import VolcanoCmp from '../../Common/Volcano';
+import NoContentMessage from '../../Common/NoContentComponent';
+import { getClinicalMaxMinInfo, VolcanoPlotInfo } from '../../../actions/api_actions';
+import LoaderCmp from '../../Common/Loader';
+import { FormattedMessage } from 'react-intl';
+import { useHistory, useParams } from 'react-router-dom';
 
 export default function DataVolcono({
   width,
   inputData,
   screenCapture,
   setToFalseAfterScreenCapture,
-  VFData,
+  VFData
 }) {
   const reference = useRef();
   const dispatch = useDispatch();
-  const [volcanoJson, setVolcanoJson] = useState()
+  const [volcanoJson, setVolcanoJson] = useState();
   const clinicalMaxMinInfo = useSelector(
     (data) => data.dataVisualizationReducer.clinicalMaxMinInfo
   );
 
-
   const history = useHistory();
   let { project_id } = useParams();
-  const [watermarkCss, setWatermarkCSS] = useState("");
+  const [watermarkCss, setWatermarkCSS] = useState('');
   const [loader, setLoader] = useState(false);
   const [negativeData, setNegativeData] = useState();
   const [positiveData, setPositiveData] = useState();
@@ -37,19 +31,20 @@ export default function DataVolcono({
   const [showVolcano, setShowVolcano] = useState(false);
   const [noContent, setNoContent] = useState(false);
   const [sampleCount, setSampleCount] = useState({});
-  const [inputState, setInputState] = useState({})
+  const [inputState, setInputState] = useState({});
   const [groupFilters, setGroupFilters] = useState({});
-  const [volcanoType, setVolcanoType] = useState("transcriptome");
-  const [proteomeValue, setProteomeValue] = useState("N");
+  const [volcanoType, setVolcanoType] = useState('transcriptome');
+  const [proteomeValue, setProteomeValue] = useState('N');
 
   const [userDefienedFilter, setUserDefienedFilter] = useState(
-    project_id === undefined ? "static" : "dynamic"
+    project_id === undefined ? 'static' : 'dynamic'
   );
+
 
   useEffect(() => {
     if (!clinicalMaxMinInfo) {
       if (project_id === undefined) {
-        dispatch(getClinicalMaxMinInfo("GET", {}));
+        dispatch(getClinicalMaxMinInfo('GET', {}));
       }
     }
   }, []);
@@ -59,52 +54,56 @@ export default function DataVolcono({
       setInputState((prevState) => ({ ...prevState, ...inputData, ...VFData }));
     }
     if ('groupFilters' in VFData) {
-      setGroupFilters(VFData['groupFilters'])
+      setGroupFilters(VFData['groupFilters']);
     }
     if ('volcanoType' in VFData) {
-      setVolcanoType(VFData['volcanoType'])
+      setVolcanoType(VFData['volcanoType']);
     }
     if ('proteomeValue' in VFData) {
-      setProteomeValue(VFData['proteomeValue'])
+      setProteomeValue(VFData['proteomeValue']);
     }
     if ('setUserDefienedFilter' in VFData) {
-      setUserDefienedFilter(VFData['setUserDefienedFilter'])
+      setUserDefienedFilter(VFData['setUserDefienedFilter']);
     }
-  }, [inputData, VFData])
-
+  }, [inputData, VFData]);
 
   useEffect(() => {
     if (inputState && 'genes' in inputState) {
-      if (inputState.type !== "" && groupFilters && Object.keys(groupFilters).length > 0 && proteomeValue !== 'NT') {
+      if (
+        inputState.type !== '' &&
+        groupFilters &&
+        Object.keys(groupFilters).length > 0 &&
+        proteomeValue !== 'NT'
+      ) {
         setLoader(true);
-        if ("volcanoProteomeType" in inputState) {
-          delete inputState["volcanoProteomeType"];
+        if ('volcanoProteomeType' in inputState) {
+          delete inputState['volcanoProteomeType'];
         }
-        if (volcanoType === "proteome") {
-          inputState["volcanoProteomeType"] = proteomeValue;
+        if (volcanoType === 'proteome') {
+          inputState['volcanoProteomeType'] = proteomeValue;
         }
-        inputState["filterType"] = userDefienedFilter;
+        inputState['filterType'] = userDefienedFilter;
         if (project_id) {
-          inputState['project_id'] = parseInt(project_id)
+          inputState['project_id'] = parseInt(project_id);
         }
-        let return_data = VolcanoPlotInfo("POST", { ...inputState, filterGroup: groupFilters })
-        return_data.then((result) => {
-          const d = result
-          if (d.status === 200) {
-            let r_ = d["data"]
-            r_["status"] = 200
-            setVolcanoJson(r_)
-          } else {
-            setVolcanoJson()
-          }
-        })
-          .catch((e) => {
-            setVolcanoJson()
-            history.push('/notfound')
+        let return_data = VolcanoPlotInfo('POST', { ...inputState, filterGroup: groupFilters });
+        return_data
+          .then((result) => {
+            const d = result;
+            if (d.status === 200) {
+              let r_ = d['data'];
+              r_['status'] = 200;
+              setVolcanoJson(r_);
+            } else {
+              setVolcanoJson();
+            }
+          })
+          .catch(() => {
+            setVolcanoJson();
+            history.push('/notfound');
           });
-      }
-      else if (proteomeValue === 'NT') {
-        submitProteomeNT()
+      } else if (proteomeValue === 'NT') {
+        submitProteomeNT();
       }
     }
   }, [inputState]);
@@ -119,22 +118,22 @@ export default function DataVolcono({
       let positive = [];
       let negativeCount = 0;
       let positiveCount = 0;
-      if ("table_data" in volcanoJson) {
-        volcanoJson["table_data"].forEach((item, i) => {
-          let log2foldchange = parseFloat(item["log2(fold_change)"]);
+      if ('table_data' in volcanoJson) {
+        volcanoJson['table_data'].forEach((item) => {
+          let log2foldchange = parseFloat(item['log2(fold_change)']);
           if (log2foldchange <= -1.5) {
             negativeCount += 1;
             negative.push({
-              "Gene Name": item["gene"],
-              Log2FC: parseFloat(item["log2(fold_change)"]),
-              "-Log(Pvalue)": item["p_value"],
+              'Gene Name': item['gene'],
+              Log2FC: parseFloat(item['log2(fold_change)']),
+              '-Log(Pvalue)': item['p_value']
             });
           } else if (log2foldchange >= 1.5) {
             positiveCount += 1;
             positive.push({
-              "Gene Name": item["gene"],
-              Log2FC: parseFloat(item["log2(fold_change)"]),
-              "-Log(Pvalue)": item["p_value"],
+              'Gene Name': item['gene'],
+              Log2FC: parseFloat(item['log2(fold_change)']),
+              '-Log(Pvalue)': item['p_value']
             });
           }
         });
@@ -142,14 +141,13 @@ export default function DataVolcono({
 
       setTabCount({
         negative: negativeCount,
-        positive: positiveCount,
+        positive: positiveCount
       });
 
       setNegativeData(negative);
       setPositiveData(positive);
     }
   }, [volcanoJson]);
-
 
   useEffect(() => {
     if (volcanoJson && volcanoJson.status === 200) {
@@ -160,14 +158,16 @@ export default function DataVolcono({
         let sampleCountsCard_ = [];
 
         if (sampleCount && Object.keys(sampleCount).length > 0) {
-          Object.keys(sampleCount).map((e) => (
-            sampleCountsCard_.push(<div
-              key={e}
-              className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue"
-            >
-              Group {e} : {sampleCount[e]}
-            </div>)
-          ))
+          Object.keys(sampleCount).map((e) =>
+            sampleCountsCard_.push(
+              <div
+                key={e}
+                className="p-1 mt-1 bg-blue-100 rounded-full py-3 px-6 text-center text-blue"
+              >
+                Group {e} : {sampleCount[e]}
+              </div>
+            )
+          );
         }
       } else {
         setShowVolcano(false);
@@ -177,58 +177,58 @@ export default function DataVolcono({
       setShowVolcano(false);
       setNoContent(true);
     }
+    // transferCardData(sampleCountsCard)
   }, [volcanoJson]);
-
 
   useEffect(() => {
     if (screenCapture) {
-      setWatermarkCSS("watermark");
+      setWatermarkCSS('watermark');
     } else {
-      setWatermarkCSS("");
+      setWatermarkCSS('');
     }
 
-    if (watermarkCss !== "" && screenCapture) {
+    if (watermarkCss !== '' && screenCapture) {
       setToFalseAfterScreenCapture();
     }
   }, [screenCapture, watermarkCss]);
 
-
   const submitProteomeNT = () => {
     setLoader(true);
-    inputState["volcanoProteomeType"] = proteomeValue;
-    inputState["filterType"] = userDefienedFilter;
+    inputState['volcanoProteomeType'] = proteomeValue;
+    inputState['filterType'] = userDefienedFilter;
     if (project_id === undefined) {
-      let return_data = VolcanoPlotInfo("POST", { ...inputState, filterGroup: groupFilters })
-      return_data.then((result) => {
-        const d = result
-        if (d.status === 200) {
-          let r_ = d["data"]
-          r_["status"] = 200
-          setVolcanoJson(r_)
-        } else {
-          setVolcanoJson({ 'status': 204 })
-        }
-      })
-        .catch((e) => {
-          setVolcanoJson({ 'status': 204 })
-          history.push('/notfound')
+      let return_data = VolcanoPlotInfo('POST', { ...inputState, filterGroup: groupFilters });
+      return_data
+        .then((result) => {
+          const d = result;
+          if (d.status === 200) {
+            let r_ = d['data'];
+            r_['status'] = 200;
+            setVolcanoJson(r_);
+          } else {
+            setVolcanoJson({ status: 204 });
+          }
+        })
+        .catch(() => {
+          setVolcanoJson({ status: 204 });
+          history.push('/notfound');
         });
-    }
-    else {
-      let return_data = VolcanoPlotInfo("POST", { ...inputState, filterGroup: groupFilters })
-      return_data.then((result) => {
-        const d = result
-        if (d.status === 200) {
-          let r_ = d["data"]
-          r_["status"] = 200
-          setVolcanoJson(r_)
-        } else {
-          setVolcanoJson({ 'status': 204 })
-        }
-      })
-        .catch((e) => {
-          setVolcanoJson({ 'status': 204 })
-          history.push('/notfound')
+    } else {
+      let return_data = VolcanoPlotInfo('POST', { ...inputState, filterGroup: groupFilters });
+      return_data
+        .then((result) => {
+          const d = result;
+          if (d.status === 200) {
+            let r_ = d['data'];
+            r_['status'] = 200;
+            setVolcanoJson(r_);
+          } else {
+            setVolcanoJson({ status: 204 });
+          }
+        })
+        .catch(() => {
+          setVolcanoJson({ status: 204 });
+          history.push('/notfound');
         });
     }
   };
@@ -241,17 +241,33 @@ export default function DataVolcono({
         </div>
       ) : (
         <>
-          {noContent && <div className="MarginTop4"><NoContentMessage /></div>}
+          {noContent && (
+            <div className="MarginTop4">
+              <NoContentMessage />
+            </div>
+          )}
 
-          {
-            (inputData && inputData.genes.length === 0) &&
-            <p className="MarginTop4"> <FormattedMessage id="PleaseSelecttheGeneSetData" defaultMessage="Please Select the Gene Set Data" /> </p>
-          }
-
-          {groupFilters && Object.keys(groupFilters).length === 0 && proteomeValue && proteomeValue !== 'NT' &&
+          {inputData && inputData.genes.length === 0 && (
             <p className="MarginTop4">
-              <FormattedMessage id="PleaseSelectFilterData" defaultMessage="Please Select the Filter Data" />
-            </p>}
+              {' '}
+              <FormattedMessage
+                id="PleaseSelecttheGeneSetData"
+                defaultMessage="Please Select the Gene Set Data"
+              />{' '}
+            </p>
+          )}
+
+          {groupFilters &&
+            Object.keys(groupFilters).length === 0 &&
+            proteomeValue &&
+            proteomeValue !== 'NT' && (
+              <p className="MarginTop4">
+                <FormattedMessage
+                  id="PleaseSelectFilterData"
+                  defaultMessage="Please Select the Filter Data"
+                />
+              </p>
+            )}
 
           <div className="MarginTop20">
             <div className="OverFlowXHide">
@@ -260,11 +276,11 @@ export default function DataVolcono({
                   watermarkCss={watermarkCss}
                   ref={reference}
                   w={width}
-                  data={volcanoJson["d3_response"]}
+                  data={volcanoJson['d3_response']}
                   negative_data={negativeData}
                   positive_data={positiveData}
                   tab_count={tabCount}
-                  tableData={volcanoJson["table_data"]}
+                  tableData={volcanoJson['table_data']}
                 />
               )}
             </div>

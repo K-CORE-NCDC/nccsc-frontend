@@ -1,2 +1,0 @@
-(this["webpackJsonpncc-frontend"]=this["webpackJsonpncc-frontend"]||[]).push([[38],{673:function(e,n,c){"use strict";c.r(n);c(2);var t=c(4),o=c(8);n.default=function(){return localStorage.removeItem("ncc_access_token"),localStorage.removeItem("ncc_refresh_token"),window.location.href=t.a.basename+"login/",Object(o.jsx)(o.Fragment,{})}}}]);
-//# sourceMappingURL=38.9c9a4351.chunk.js.map

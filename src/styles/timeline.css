@@ -1,192 +1,190 @@
 .wraper-timeline-graph {
-    padding: 30px;
-    text-align: center;
-    font-family: sans-serif;
-    /* width: 500px; */
-    margin: 10px auto;
-    width: 100%;
-    overflow-x: scroll;
+  padding: 30px;
+  text-align: center;
+  font-family: sans-serif;
+  /* width: 500px; */
+  margin: 10px auto;
+  width: 100%;
+  overflow-x: scroll;
 }
 
 .container-timeline-graph {
-    border-top: 2px solid blue;
-    display: flex;
-    list-style: none;
-    padding: 0;
-    justify-content: space-between;
-    align-items: stretch;
-    align-content: stretch;
+  border-top: 2px solid blue;
+  display: flex;
+  list-style: none;
+  padding: 0;
+  justify-content: space-between;
+  align-items: stretch;
+  align-content: stretch;
 }
 
 .link-timeline-graph {
-    position: relative;
-    margin-top: 10px;
-    width: 100%;
-    text-align: left;
+  position: relative;
+  margin-top: 10px;
+  width: 100%;
+  text-align: left;
 }
 
 .link-timeline-graph a {
-    font-weight: bold;
-    text-decoration: none;
-    color: blue;
-    text-transform: uppercase;
-    font-size: 15px;
+  font-weight: bold;
+  text-decoration: none;
+  color: blue;
+  text-transform: uppercase;
+  font-size: 15px;
 }
 
 .line-timeline-graph {
-    position: relative;
-    margin-top: 10px;
-    width: 100%;
+  position: relative;
+  margin-top: 10px;
+  width: 100%;
 }
 
 .line-timeline-graph a {
-    font-weight: bold;
-    text-decoration: none;
-    color: blue;
-    text-transform: uppercase;
-    font-size: 15px;
-    text-align: left;
+  font-weight: bold;
+  text-decoration: none;
+  color: blue;
+  text-transform: uppercase;
+  font-size: 15px;
+  text-align: left;
 }
 
 .link-timeline-graph:first-child {
-    margin-left: -55px;
+  margin-left: -55px;
 }
 
 .link-timeline-graph:last-child {
-    margin-right: -55px;
+  margin-right: -55px;
 }
 
 .link-timeline-graph::after {
-    content: "";
-    width: 15px;
-    height: 15px;
-    background: #fff;
-    position: absolute;
-    border-radius: 50%;
-    top: -18px;
-    left: 0%;
-    transform: translatex(-0%);
-    border: 2px solid blue;
+  content: '';
+  width: 15px;
+  height: 15px;
+  background: #fff;
+  position: absolute;
+  border-radius: 50%;
+  top: -18px;
+  left: 0%;
+  transform: translatex(-0%);
+  border: 2px solid blue;
 }
 
 .active-timeline-graph::after,
 .link-timeline-graph:hover::after {
-    background: blue;
+  background: blue;
 }
 
 p.lead {
-    font-weight: 600;
-    margin: 50px auto;
-    line-height: 1.5;
+  font-weight: 600;
+  margin: 50px auto;
+  line-height: 1.5;
 }
 
 .tooltip-timeline-graph {
-    position: relative;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 .tooltip-timeline-graph .tooltiptext {
-    visibility: hidden;
-    width: 250px;
-    background-color: rgb(218, 216, 216);
-    color: #000;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    /* Position the tooltip-timeline-graph */
-    position: absolute;
-    z-index: 99999999;
+  visibility: hidden;
+  width: 250px;
+  background-color: rgb(218, 216, 216);
+  color: #000;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  /* Position the tooltip-timeline-graph */
+  position: absolute;
+  z-index: 99999999;
 }
 
 .tooltip-timeline-graph:hover .tooltiptext {
-    visibility: visible;
+  visibility: visible;
 }
 
-
 .link-timeline-graph-30 {
-    position: relative;
-    margin-top: 10px;
-    width: 100%;
-    text-align: left;
+  position: relative;
+  margin-top: 10px;
+  width: 100%;
+  text-align: left;
 }
 
 .link-timeline-graph-30 a {
-    font-weight: bold;
-    text-decoration: none;
-    color: blue;
-    text-transform: uppercase;
-    text-align: left;
-    font-size: 15px;
+  font-weight: bold;
+  text-decoration: none;
+  color: blue;
+  text-transform: uppercase;
+  text-align: left;
+  font-size: 15px;
 }
 
 .link-timeline-graph-30::after {
-    content: "";
-    width: 15px;
-    height: 15px;
-    background: #fff;
-    position: absolute;
-    border-radius: 50%;
-    top: -18px;
-    left: 30%;
-    transform: translatex(-0%);
-    border: 2px solid blue;
+  content: '';
+  width: 15px;
+  height: 15px;
+  background: #fff;
+  position: absolute;
+  border-radius: 50%;
+  top: -18px;
+  left: 30%;
+  transform: translatex(-0%);
+  border: 2px solid blue;
 }
 
-
 .link-timeline-graph-60 {
-    position: relative;
-    margin-top: 10px;
-    width: 100%;
-    text-align: left;
+  position: relative;
+  margin-top: 10px;
+  width: 100%;
+  text-align: left;
 }
 
 .link-timeline-graph-60 a {
-    font-weight: bold;
-    text-decoration: none;
-    color: blue;
-    text-transform: uppercase;
-    text-align: left;
-    font-size: 15px;
+  font-weight: bold;
+  text-decoration: none;
+  color: blue;
+  text-transform: uppercase;
+  text-align: left;
+  font-size: 15px;
 }
 
 .link-timeline-graph-60::after {
-    content: "";
-    width: 15px;
-    height: 15px;
-    background: #fff;
-    position: absolute;
-    border-radius: 50%;
-    top: -18px;
-    left: 60%;
-    transform: translatex(-0%);
-    border: 2px solid blue;
+  content: '';
+  width: 15px;
+  height: 15px;
+  background: #fff;
+  position: absolute;
+  border-radius: 50%;
+  top: -18px;
+  left: 60%;
+  transform: translatex(-0%);
+  border: 2px solid blue;
 }
 
 .link-timeline-graph-90 {
-    position: relative;
-    margin-top: 10px;
-    width: 100%;
-    text-align: left;
+  position: relative;
+  margin-top: 10px;
+  width: 100%;
+  text-align: left;
 }
 
 .link-timeline-graph-90 a {
-    font-weight: bold;
-    text-decoration: none;
-    color: blue;
-    text-transform: uppercase;
-    text-align: left;
-    font-size: 15px;
+  font-weight: bold;
+  text-decoration: none;
+  color: blue;
+  text-transform: uppercase;
+  text-align: left;
+  font-size: 15px;
 }
 
 .link-timeline-graph-90::after {
-    content: "";
-    width: 15px;
-    height: 15px;
-    background: #fff;
-    position: absolute;
-    border-radius: 50%;
-    top: -18px;
-    left: 90%;
-    transform: translatex(-0%);
-    border: 2px solid blue;
+  content: '';
+  width: 15px;
+  height: 15px;
+  background: #fff;
+  position: absolute;
+  border-radius: 50%;
+  top: -18px;
+  left: 90%;
+  transform: translatex(-0%);
+  border: 2px solid blue;
 }

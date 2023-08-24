@@ -111,16 +111,7 @@
     "reference": "https://myriad.com/product-services/precision-medicine/mychoice-cdx"
   },
   "tcell-exha-genes": {
-    "data": [
-      "PDCD1",
-      "CTLA4",
-      "LAG3",
-      "HAVCR2",
-      "CD244",
-      "CD160",
-      "TIGIT",
-      "BTLA"
-    ],
+    "data": ["PDCD1", "CTLA4", "LAG3", "HAVCR2", "CD244", "CD160", "TIGIT", "BTLA"],
     "reference": "John S Yi, Maureen A Cox, and Allan J Zajac. \"T-cell exhaustion: characteristics, causes and conversion\", 2010, Immunology, 129(4): 474-481"
   },
   "cdc-brst-genes": {
@@ -188,14 +179,7 @@
     "reference": "https://www.cbioportal.org"
   },
   "p53-signal": {
-    "data": [
-      "TP53",
-      "MDM2",
-      "MDM4",
-      "CDKN2A",
-      "CDKN2B",
-      "TP53BP1"
-    ],
+    "data": ["TP53", "MDM2", "MDM4", "CDKN2A", "CDKN2B", "TP53BP1"],
     "reference": "https://www.cbioportal.org"
   },
   "notch-signal": {
@@ -320,10 +304,7 @@
     "reference": "https://www.cbioportal.org"
   },
   "telo-mere-main": {
-    "data": [
-      "TERC",
-      "TERT"
-    ],
+    "data": ["TERC", "TERT"],
     "reference": "https://www.cbioportal.org"
   },
   "rtk-signal-family": {
@@ -415,24 +396,11 @@
     "reference": "https://www.cbioportal.org"
   },
   "angi-gene": {
-    "data": [
-      "VEGFA",
-      "VEGFB",
-      "KDR",
-      "CXCL8",
-      "CXCR1",
-      "CXCR2"
-    ],
+    "data": ["VEGFA", "VEGFB", "KDR", "CXCL8", "CXCR1", "CXCR2"],
     "reference": "https://www.cbioportal.org"
   },
   "fola-trans": {
-    "data": [
-      "SLC19A1",
-      "FOLR1",
-      "FOLR2",
-      "FOLR3",
-      "IZUMO1R"
-    ],
+    "data": ["SLC19A1", "FOLR1", "FOLR2", "FOLR3", "IZUMO1R"],
     "reference": "https://www.cbioportal.org"
   },
   "inva-meta": {
