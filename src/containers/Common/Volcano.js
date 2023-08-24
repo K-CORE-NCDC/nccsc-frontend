@@ -129,20 +129,9 @@ const VolcanoCmp = React.forwardRef(
               <strong>{'Expression Down Level'}</strong>
             </h2>
             <div>
-              <DataTable
-                pagination
+              <Table
                 columns={table_cols}
                 data={negative_data}
-                customStyles={{
-                  table: {
-                    border: '1px solid black'
-                  },
-                  pagination: {
-                    style: {
-                      gap: '10px'
-                    }
-                  }
-                }}
               />
               <div className="VolcanoContainer">
                 <h2 className="VolcanoText">
@@ -166,7 +155,6 @@ const VolcanoCmp = React.forwardRef(
               <strong>{'Expression Up Level'}</strong>
             </h2>
             <Table
-              pagination
               columns={table_cols}
               data={positive_data}
             />
