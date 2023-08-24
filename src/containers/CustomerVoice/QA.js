@@ -1,30 +1,28 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import DataTable from 'react-data-table-component';
-import { FormattedMessage } from 'react-intl';
+import { useIntl } from 'react-intl';
 import 'react-quill/dist/quill.snow.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getQaData } from '../../actions/api_actions';
 import config from '../../config';
 import '../../interceptor/interceptor';
+import Table from '../Common/Table/ReactTable';
+import LoaderComp from '../Common/Loader';
 
 function QAList() {
   const [tableData, setTableData] = useState([]);
-  const [totalRows, setTotalRows] = useState(0);
-  const [perPage, setPerPage] = useState(10);
+  const intl = useIntl();
   const [loading, setLoading] = useState(false);
-  const [redirState, setState] = useState(false);
-  const [shortName, setData] = useState('');
 
   const fetchUsers = async (page, method) => {
     setLoading(true);
     let response;
     if (method === 'GET') {
-      response = await axios.get(config.auth + `qa-api/?page=${page}&per_page=${perPage}&delay=1`);
+      response = await axios.get(config.auth + `qa-api/?page=${page}&per_page=${10}&delay=1`);
     } else {
       response = await axios.post(
-        config.auth + `qa-api/?page=${page}&per_page=${perPage}&delay=1&input`,
+        config.auth + `qa-api/?page=${page}&per_page=${10}&delay=1&input`,
         {
           type: 'title',
           searchTerm: ''
@@ -32,23 +30,10 @@ function QAList() {
       );
     }
     setTableData(response.data.data);
-    setTotalRows(response.data.total);
+    // setTotalRows(response.data.total);
     setLoading(false);
   };
 
-  const handlePageChange = (page) => {
-    fetchUsers(page, 'GET');
-  };
-
-  const handlePerRowsChange = async (newPerPage, page) => {
-    setLoading(true);
-    const response = await axios.get(
-      config.auth + `qa-api/?page=${page}&per_page=${perPage}&delay=1`
-    );
-    setTableData(response.data.data);
-    setPerPage(newPerPage);
-    setLoading(false);
-  };
 
   useEffect(() => {
     fetchUsers(1, 'GET'); // fetch page 1 of users
@@ -56,78 +41,45 @@ function QAList() {
 
   const columns = [
     {
-      name: <FormattedMessage id="Order" defaultMessage="Order" />,
-      selector: (row, index) => index + 1,
-      sortable: true
+      Header: intl.formatMessage({ id: "Order", defaultMessage: 'Order' }),
+      accessor: () => ' ',
+      Cell: ({ cell: { value, row } }) => (
+        < div title={value}>
+          {parseInt(row?.index) + parseInt(1)}</div>
+      ),
+
     },
     {
-      name: <FormattedMessage id="Title" defaultMessage="Title" />,
-      selector: (row) => row.title,
-      sortable: true
+      Header: intl.formatMessage({ id: "Title", defaultMessage: 'Title' }),
+      accessor: (row) => row.title,
     },
     {
-      name: <FormattedMessage id="Writer" defaultMessage="Writer" />,
-      selector: (row) => row.writer,
-      sortable: true
+      Header: intl.formatMessage({ id: "Writer", defaultMessage: 'Writer' }),
+      accessor: (row) => row.writer,
     },
     {
-      name: <FormattedMessage id="DateOfIssue" defaultMessage="Date Of Issue" />,
-      selector: (row) => row.created_on,
-      sortable: true
+      Header: intl.formatMessage({ id: "DateOfIssue", defaultMessage: 'Date Of Issue' }),
+      accessor: (row) => row.created_on,
     }
   ];
 
-  const customStyles = {
-    headCells: {
-      style: {
-        color: 'black',
-        backgroundColor: '#eee',
-        border: '1px solid rgba(0, 0, 0, 0.05)',
-        borderTop: '2px solid #4e4e4e!important',
-        borderBottom: '1px solid #4e4e4e!important'
-      }
-    },
-    pagination: {
-      style: {
-        gap: '10px'
-      }
-    }
-  };
 
-
-
-  let redirecting = redirState ? <Redirect push to={`/details/${shortName}/`} /> : '';
+  // let redirecting = redirState ? <Redirect push to={`/details/${shortName}/`} /> : '';
   return (
-    <div className="container mx-auto p-4">
-      <div className="contentsTable">
-        {tableData && (
-          <DataTable
-            columns={columns}
-            data={tableData}
-            customStyles={customStyles}
-            progressPending={loading}
-            pagination
-            paginationComponentOptions={{
-              rowsPerPageText: (
-                <FormattedMessage id="RowsPerPage" defaultMessage="Rows Per Page">
-                  {(msg) => msg}
-                </FormattedMessage>
-              )
-            }}
-            paginationServer
-            paginationTotalRows={totalRows}
-            onChangeRowsPerPage={handlePerRowsChange}
-            onChangePage={handlePageChange}
-            onRowClicked={(rowData) => {
-              setState(true);
-              setData(rowData.url_slug);
-            }}
-            pointerOnHover={true}
-            highlightOnHover={true}
-          />
-        )}
-        {redirecting}
-      </div>
+    <div >
+      {loading ?
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <LoaderComp /> </div> :
+        <div >
+          {tableData && (
+            <Table
+              columns={columns}
+              data={tableData}
+              width={"1075"}
+            />
+          )}
+          {/* {redirecting} */}
+        </div>}
     </div>
   );
 }
