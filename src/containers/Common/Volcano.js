@@ -1,30 +1,28 @@
 import { Chart, registerables } from 'chart.js';
 import zoomPlugin from 'chartjs-plugin-zoom';
 import React from 'react';
-import DataTable from 'react-data-table-component';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import '../../styles/volcano.css';
+import Table from './Table/ReactTable';
 import VolcanoPlotD3 from './VolcanoD3';
 
 Chart.register(...registerables, zoomPlugin);
 
 const VolcanoCmp = React.forwardRef(
   ({data, watermarkCss, negative_data, positive_data, tab_count, tableData }) => {
+    const intl = useIntl();
     const table_cols = [
       {
-        name: 'GENE NAME',
-        selector: (row) => row['Gene Name'],
-        sortable: true
+        Header: intl.formatMessage({ id: "GeneName", defaultMessage: 'Gene Name' }),
+        accessor: (row) => row['Gene Name'],
       },
       {
-        name: 'LOG2FC',
-        selector: (row) => row['Log2FC'],
-        sortable: true
+        Header: 'LOG2FC',
+        accessor: (row) => row['Log2FC'],
       },
       {
-        name: 'PVALUE',
-        selector: (row) => row['-Log(Pvalue)'],
-        sortable: true
+        Header: 'PVALUE',
+        accessor: (row) => row['-Log(Pvalue)'],
       }
     ];
 
@@ -167,20 +165,10 @@ const VolcanoCmp = React.forwardRef(
             <h2 className="text-left text-blue-800 mb-12 mt-12">
               <strong>{'Expression Up Level'}</strong>
             </h2>
-            <DataTable
+            <Table
               pagination
               columns={table_cols}
               data={positive_data}
-              customStyles={{
-                table: {
-                  border: '1px solid black'
-                },
-                pagination: {
-                  style: {
-                    gap: '10px'
-                  }
-                }
-              }}
             />
             <div className="VolcanoContainer">
               <h2 className="VolcanoText">

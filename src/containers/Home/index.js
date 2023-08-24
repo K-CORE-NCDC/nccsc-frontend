@@ -152,7 +152,7 @@ export default function Home(parentProps) {
 
   return (
     <>
-      {activeItem && <p style={{ position: 'absolute', bottom: '9999' }}>{activeItem.title}</p>}
+      {activeItem && <p style={{ position: 'absolute', top: '9999' }}>{activeItem.title}</p>}
       {/* don't delete this title */}
       {width > 1025 && height > 800 && (
         <>

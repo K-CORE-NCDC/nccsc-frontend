@@ -1,9 +1,9 @@
 /* eslint-disable no-loop-func */
 import React, { useEffect, useState } from 'react';
-import DataTable from 'react-data-table-component';
 import LineChart from 'react-linechart';
 import 'react-linechart/dist/styles.css';
 import '../../styles/survival.css';
+import Table from './Table/ReactTable';
 
 const SurvivalCmp = React.forwardRef(({ data, watermarkCss, pValue }, ref) => {
   const [survivalData, setSurvivalData] = useState([]);
@@ -26,29 +26,16 @@ const SurvivalCmp = React.forwardRef(({ data, watermarkCss, pValue }, ref) => {
       let tableHtmlData = [];
       for (const [key, value] of Object.entries(data.survivalJson.final)) {
         let columns = [
-          { name: 'X', selector: (row) => row.x },
-          { name: 'Y', selector: (row) => row.y },
-          { name: 'Sample', selector: (row) => row.sample }
+          { Header: 'X', accessor: (row) => row.x },
+          { Header: 'Y', accessor: (row) => row.y },
+          { Header: 'Sample', accessor: (row) => row.sample }
         ];
         tableHtmlData.push(
           <div className="p-3">
             <h3 className="mb-3 MultiUploadTextCenter">{key}</h3>
-            <DataTable
+            <Table
               data={value}
-              pagination
-              paginationPerPage={5}
-              paginationRowsPerPageOptions={[5, 15, 25, 50]}
               columns={columns}
-              customStyles={{
-                table: {
-                  border: '1px solid black'
-                },
-                pagination: {
-                  style: {
-                    gap: '10px'
-                  }
-                }
-              }}
             />
           </div>
         );

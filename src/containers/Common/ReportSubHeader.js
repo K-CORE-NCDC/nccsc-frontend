@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { QuestionMarkCircleIcon } from '@heroicons/react/outline';
 import ReactTooltip from 'react-tooltip';
+import { FormattedMessage } from 'react-intl';
 
 function ReportSubHeader({ tData, tableData }) {
   const [sm, setSm] = useState(0);
@@ -14,7 +15,7 @@ function ReportSubHeader({ tData, tableData }) {
         m = 0;
 
       if (document.getElementsByClassName('rdt_TableHeadRow')) {
-        let row = document.getElementsByClassName('rdt_TableHeadRow')[0];
+        let row = document.getElementsByClassName('rdt_TableHeadRow')[1];
         if (row && w === 0 && s === 0 && m === 0) {
           let r = row.childNodes;
           if (r.length > 0) {
@@ -46,16 +47,17 @@ function ReportSubHeader({ tData, tableData }) {
   return (
     <>
       {width > 0 && sm > 0 && md > 0 && (
-        <div className="flex" style={{ minWidth: width + 'px', minHeight: '15px' }}>
+        <div className="flex" style={{ minWidth: width-2 + 'px', minHeight: '15px' }}>
           <div
             style={{
               minWidth: sm + 'px',
               borderRight: '1px solid #6F7378',
-              borderLeft: '1px solid #fff'
+              borderLeft: '1px solid #fff',
+              padding:'20px 16px'
             }}
             className=" px-5 py-8 text-center Flex JustifyCenter"
           >
-            <h1 style={{ marginTop: '5px' }}> Cancer Major Genes</h1>
+            <h1 style={{ marginTop: '5px' }}> <FormattedMessage id="Genes" defaultMessage="Genes" /></h1>
           </div>
 
           {dataExist && tableData[0].hasOwnProperty('dna') && (
@@ -63,20 +65,27 @@ function ReportSubHeader({ tData, tableData }) {
               style={{
                 minWidth: md * 2 + 'px',
                 borderRight: '1px solid #6F7378',
-                borderLeft: '1px solid #fff'
+                borderLeft: '1px solid #fff',
+                padding:'20px 16px'
               }}
               className=" px-5 py-8 text-center Flex JustifyCenter "
             >
               <h1 style={{ marginTop: '5px' }}>DNA Mutation</h1>
               <span>
-                <QuestionMarkCircleIcon
-                  data-multiline={true}
-                  className="inline ml-2 mb-1"
-                  data-class="my-tooltip"
-                  data-tip="Yes : if occured mutation is one of the following variant <br>  <br/>types - Missense mutation, Nonsense mutation, Splice site, <br>  <br/>In frame insertion, In frame deletion, Frame-shift insertion, Frame-shift deletion"
-                  style={{ width: '20px', cursor: 'pointer' }}
-                ></QuestionMarkCircleIcon>
-                <ReactTooltip />
+                <FormattedMessage id='SankeyTableDNAMutationTooltip' defaultMessage="if occured mutation is one of the following variant">
+                  {(placeholder) => (
+                    <>
+                      <QuestionMarkCircleIcon
+                        data-multiline={true}
+                        className="inline ml-2 mb-1"
+                        data-class="my-tooltip"
+                        data-tip={`Yes :  ${placeholder} <br>  <br/>types - Missense mutation, Nonsense mutation, Splice site, <br>  <br/>In frame insertion, In frame deletion, Frame-shift insertion, Frame-shift deletion`}
+                        style={{ width: '20px', cursor: 'pointer' }}
+                      ></QuestionMarkCircleIcon>
+                      <ReactTooltip /></>
+                  )}
+                </FormattedMessage>
+
               </span>
             </div>
           )}
@@ -86,7 +95,8 @@ function ReportSubHeader({ tData, tableData }) {
               style={{
                 minWidth: md * 3 + 'px',
                 borderRight: '1px solid #6F7378',
-                borderLeft: '1px solid #fff'
+                borderLeft: '1px solid #fff',
+                padding:'20px 16px'
               }}
               className=" px-5 py-8 text-center Flex JustifyCenter "
             >
@@ -105,7 +115,7 @@ function ReportSubHeader({ tData, tableData }) {
 
           {dataExist && tableData[0].hasOwnProperty('proteome') && (
             <div
-              style={{ minWidth: md * 3 + 'px', borderLeft: '1px solid #fff' }}
+              style={{ minWidth: md * 3 + 'px', borderLeft: '1px solid #fff',padding:'20px 16px' }}
               className=" px-5 py-8 text-center Flex JustifyCenter "
             >
               <h1 style={{ marginTop: '5px' }}>Proteome</h1>
@@ -120,8 +130,9 @@ function ReportSubHeader({ tData, tableData }) {
               </span>
             </div>
           )}
-        </div>
-      )}
+        </div >
+      )
+      }
     </>
   );
 }

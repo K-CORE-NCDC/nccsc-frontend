@@ -108,7 +108,7 @@ const MultiDataVisualization = () => {
                 <p>
                   <b>CNV:</b> &nbsp;
                   <FormattedMessage
-                    id="Example_signle_CNV"
+                    id="Example_multi_CNV"
                     defaultMessage="visualize copy number variation data on integrated genome viewer"
                   />
                 </p>
@@ -207,7 +207,7 @@ const MultiDataVisualization = () => {
             </td>
           </tr>
           <tr>
-            <td>Dna Mutation</td>
+            <td>DNA Mutation</td>
             <td>
               <span className="material-icons">radio_button_unchecked</span>
             </td>

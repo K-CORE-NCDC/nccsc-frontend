@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import DataTable from 'react-data-table-component';
 import { useHistory } from 'react-router-dom';
 import { SankeyJson } from '../../../actions/api_actions';
 import LoaderCmp from '../../Common/Loader';
 import NoContentGene from '../../Common/NoContentGene';
 import Sankey from './NewSankey';
 import NewSankeyd3 from './NewSankeyd3';
+import Table from '../../Common/Table/ReactTable';
+import { useIntl } from 'react-intl';
 
 function SankeyIndex({ selectedGene, variants }) {
   const [gene, setGene] = useState('');
@@ -17,6 +18,7 @@ function SankeyIndex({ selectedGene, variants }) {
     nodes: [],
     links: []
   });
+  const intl = useIntl();
 
   const history = useHistory();
   const uniqiue_values = { dbsnp_rs: new Set(), diseasename: new Set() };
@@ -182,158 +184,49 @@ function SankeyIndex({ selectedGene, variants }) {
     generateTableColumnsData(detailGeneData);
   }, [detailGeneData]);
 
+
+
+
   const generateTableColumnsData = (detailGeneData) => {
     if (detailGeneData && detailGeneData.length > 0) {
       let tableColumnsData = [
         {
-          name: 'geneName',
-          selector: (row) => {
-            return row.hugo_symbol;
-          },
-          sortable: true,
-          classNames: ['report_sankey'],
-          style: {
-            borderLeft: '1px solid #fff',
-            borderRight: '1px solid #fff',
-            boxSizing: 'border-box',
-            textAlign: 'center',
-            lineHeight: '3.5',
-            display: 'flex',
-            justifyContent: 'center'
-          }
+          Header: intl.formatMessage({ id: "GeneName", defaultMessage: 'Gene Name' }),
+          accessor: (row) =>
+            row.hugo_symbol,
+          enableSorting: true
         }
+
       ];
 
       tableColumnsData.push({
-        name: 'Variant',
-        selector: (row) => {
-          return row.variant_classification;
-        },
-        sortable: true,
-        style: {
-          borderLeft: '1px solid #6F7378',
-          borderRight: '1px solid #fff',
-          boxSizing: 'border-box',
-          textAlign: 'center',
-          display: 'flex',
-          justifyContent: 'center',
-          lineHeight: '3.5'
-        }
+        Header: intl.formatMessage({ id: "VariantType", defaultMessage: 'Variant Type' }),
+        accessor: (row) =>
+          row.variant_classification
       });
 
       tableColumnsData.push({
-        name: 'Rsid',
-        selector: (row) => {
-          return row.dbsnp_rs;
-        },
-        sortable: true,
-        style: {
-          borderLeft: '1px solid #ABB0B8',
-          borderRight: '1px solid #fff',
-          boxSizing: 'border-box',
-          textAlign: 'center',
-          display: 'flex',
-          justifyContent: 'center',
-          lineHeight: '3.5'
-        }
+        Header: intl.formatMessage({ id: "rsid", defaultMessage: 'Variant ID(RS ID)' }),
+        accessor: (row) => row.dbsnp_rs,
       });
 
       tableColumnsData.push({
-        name: 'Disease',
-        selector: (row) => {
-          return row.diseasename;
-        },
-        sortable: true,
-        style: {
-          borderLeft: '1px solid #ABB0B8',
-          borderRight: '1px solid #fff',
-          boxSizing: 'border-box',
-          textAlign: 'center',
-          display: 'flex',
-          justifyContent: 'center',
-          lineHeight: '3.5'
-        }
+        Header: intl.formatMessage({ id: "Disease", defaultMessage: 'Disease' }),
+        accessor: (row) =>
+          row.diseasename,
       });
 
       tableColumnsData.push({
-        name: 'Drug',
-        selector: (row) => {
-          return row.drugname;
-        },
-        sortable: true,
-        style: {
-          borderLeft: '1px solid #ABB0B8',
-          borderRight: '1px solid #fff',
-          boxSizing: 'border-box',
-          textAlign: 'center',
-          display: 'flex',
-          justifyContent: 'center',
-          lineHeight: '3.5'
-        }
+        Header: intl.formatMessage({ id: "Drug", defaultMessage: 'Drug' }),
+        accessor: (row) =>
+          row.drugname
       });
 
       return tableColumnsData;
     } else return [];
+
   };
 
-  const customStyles = {
-    table: {
-      style: {
-        display: 'table',
-        width: '100%',
-        tableLayout: 'fixed',
-        border: '2px solid #2e2e2e',
-        borderCollapse: 'collapse',
-        fontSize: '16px',
-        color: '#8f8f8f',
-        fontWeight: '500',
-        textAlign: 'center !important'
-      }
-    },
-    thead: {
-      style: {
-        display: 'table-header-group',
-        fontWeight: '500',
-        borderBottom: '2px solid #2e2e2e'
-      }
-    },
-    td: {
-      style: {
-        display: 'table-cell',
-        verticalAlign: 'middle',
-        padding: '20px 16px',
-        position: 'relative',
-        width: '90px',
-        color: '#2e2e2e',
-        borderBottom: '1px solid #2e2e2e'
-      }
-    },
-    tr: {
-      style: {
-        display: 'table-row'
-      }
-    },
-    tbody: {
-      style: {
-        display: 'table-row-group'
-      }
-    },
-    headCells: {
-      classNames: ['report_sankey'],
-      style: {
-        textAlign: 'center',
-        display: 'flex',
-        justifyContent: 'center',
-        borderBottom: '1px solid #2e2e2e',
-        borderRight: '1px solid #2e2e2e'
-      }
-    },
-    pagination: {
-      style: {
-        gap: '10px'
-      }
-    }
-  };
 
   return (
     <>
@@ -358,16 +251,11 @@ function SankeyIndex({ selectedGene, variants }) {
                 <div>
                   {detailGeneData && detailGeneData.length > 0 && (
                     <div className="rounded-lg border border-gray-200">
-                      <h3 className="BasicInformationTitle" style={{ margin: '40px 0px' }}>
-                        Sankey Information
-                      </h3>
-                      <div className="report_table">
-                        <DataTable
-                          pagination
-                          responsive
+                      <div className="">
+                        <Table
                           columns={generateTableColumnsData(detailGeneData)}
                           data={detailGeneData}
-                          customStyles={customStyles}
+                          width="1100"
                         />
                       </div>
                     </div>

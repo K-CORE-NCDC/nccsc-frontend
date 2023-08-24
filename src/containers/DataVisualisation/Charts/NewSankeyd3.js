@@ -112,6 +112,7 @@ function NewSankeyd3({ SankeyJson, idName, forGene }) {
       .append('rect')
       .attr('height', function (d) {
         if (d['type'] === maxName) {
+          console.log(heigthCalc,d.dy)
           heigthCalc = heigthCalc + d.dy;
         }
         return d.dy;

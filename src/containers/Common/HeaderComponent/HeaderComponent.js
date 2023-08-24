@@ -94,12 +94,15 @@ function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
     }
     return null;
   };
-
+  if(document?.getElementById('imgBoxHead')){
+    let d = document?.getElementById('imgBoxHead')
+    d.style.transform = 'scale(1)';
+  }
   return (
     <div>
       {
         <div id="subVisual" className="subVisual">
-          <div className="imgBox" style={{ backgroundImage: `url(${background})` }}></div>
+          <div id="imgBoxHead" className="imgBox" style={{ backgroundImage: `url(${background})`, }}></div>
           <div className="txtBox">
             <div className="auto">
               <h2 className="main">

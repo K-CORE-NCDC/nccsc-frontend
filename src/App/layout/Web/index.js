@@ -67,6 +67,7 @@ export default function Web() {
   const [menuTabOpen, setMenuTabOpen] = useState(false);
   const [is_login, setIsLogin] = useState(false);
   const [mainPageInSmallScreen, setMainPageInSmallScreen] = useState(0);
+  const [headerHeight, setHeaderHeight] = useState(0)
 
 
   useEffect(() => {
@@ -332,13 +333,14 @@ export default function Web() {
     }
   }, [window.location.href]);
 
+  window.onscroll = function () {
+    setHeaderHeight(window.scrollY)
+  }
+
+
   let classes = '';
   if (window.innerWidth > 1025 && window.innerHeight > 870) {
-    if (
-      activeClassIndex === 0 &&
-      mouseEnterFlag &&
-      (window.location.pathname === '/k-core/' || window.location.pathname === '/')
-    ) {
+    if (activeClassIndex === 0 && mouseEnterFlag && (window.location.pathname === '/k-core/' || window.location.pathname === '/')) {
       classes = 'header rev';
     } else if (
       activeClassIndex === 0 &&
@@ -347,9 +349,17 @@ export default function Web() {
     ) {
       classes = 'header';
     } else if (activeClassIndex !== 0 && mouseEnterFlag) {
-      classes = 'header on rev';
+      classes = 'header on  rev';
     } else {
-      classes = 'header on';
+      if (window.location.pathname === '/k-core/' || window.location.pathname === '/') {
+        classes = 'header on'
+      } else {
+        if (headerHeight <= 150) {
+          classes = 'header'
+        } else {
+          classes = 'header on'
+        }
+      }
     }
   } else {
     if (
@@ -367,7 +377,15 @@ export default function Web() {
     } else if (mainPageInSmallScreen !== 0 && mouseEnterFlag) {
       classes = 'header on rev';
     } else {
-      classes = 'header on';
+      if (window.location.pathname === '/k-core/' || window.location.pathname === '/') {
+        classes = 'header on'
+      } else {
+        if (headerHeight <= 150) {
+          classes = 'header'
+        } else {
+          classes = 'header on'
+        }
+      }
     }
   }
 
@@ -719,7 +737,7 @@ export default function Web() {
                 setMainPageInSmallScreen={(data) => setMainPageInSmallScreen(data)}
                 mainPageInSmallScreen={mainPageInSmallScreen}
               />
-              <Route exact path="*" component={NotFound} />
+              <Route exact path="*" component={NotFound} lan={context.locale}/>
             </Switch>
           </Suspense>
           <div>{showPopup && <Popup toggleModal={toggleModal} />}</div>

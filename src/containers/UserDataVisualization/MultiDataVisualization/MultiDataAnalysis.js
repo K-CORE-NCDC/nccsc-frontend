@@ -15,7 +15,8 @@ import arrow_icon from '../../../assets/images/btnDetail-arrow-white.svg';
 import sample_img from '../../../assets/images/sample.webp';
 import HeaderComponent from '../../Common/HeaderComponent/HeaderComponent';
 import Filter from '../../Common/filter';
-import { Charts } from '../../DataVisualisation/Charts';
+import LoaderCmp from '../../Common/Loader';
+// import { Charts } from '../../DataVisualisation/Charts';
 import GeneSet from '../Components/MainComponents/GeneSet';
 import VolcanoFusionFilterComponent from '../Components/MainComponents/VolcanoFusionFilterComponent';
 
@@ -227,7 +228,7 @@ export default function DataVisualization() {
         element = 'CNV';
         desc = (
           <FormattedMessage
-            id="Example_signle_CNV"
+            id="Example_multi_CNV"
             defaultMessage="visualize copy number variation data on integrated genome viewer"
           >
             {(placeholder) => placeholder}
@@ -305,6 +306,7 @@ export default function DataVisualization() {
           >
             {(placeholder) => placeholder}
           </FormattedMessage>
+          
         );
       } else if (element === 'volcano') {
         desc = (
@@ -397,39 +399,48 @@ export default function DataVisualization() {
   }, [screenCapture]);
 
   const LoadChart = (w, type) => {
-    switch (type) {
-      case 'circos':
-        return Charts.circos(w, state, screenCapture, setToFalseAfterScreenCapture, toggle, state);
-      case 'OncoPrint':
-        return Charts.onco(w, state, screenCapture, setToFalseAfterScreenCapture);
-      case 'lollipop':
-        return Charts.lollipop(w, state, screenCapture, setToFalseAfterScreenCapture);
-      case 'volcano':
-        return Charts.volcano(w, state, screenCapture, setToFalseAfterScreenCapture, VFData);
-      case 'heatmap':
-        return Charts.heatmap(w, state, screenCapture, BrstKeys, setToFalseAfterScreenCapture);
-      case 'survival':
-        return Charts.survival(
-          w,
-          state,
-          screenCapture,
-          setToFalseAfterScreenCapture,
-          survialData,
-          trasnferSurvivalData
-        );
-      case 'correlation':
-        return Charts.scatter(w, state, screenCapture, setToFalseAfterScreenCapture);
-      case 'CNV':
-        return Charts.igv(w, state, screenCapture, setToFalseAfterScreenCapture);
-      case 'fusion':
-        return Charts.fusion(w, state, screenCapture, setToFalseAfterScreenCapture, VFData);
-      case 'box':
-        return Charts.box(w, state, screenCapture, setToFalseAfterScreenCapture);
-      case 'sankey':
-        return Charts.sankey(w, state, screenCapture, setToFalseAfterScreenCapture, toggle, state);
-      default:
-        return false;
-    }
+    let Chart = lazy(() => import('../../DataVisualisation/Charts'));
+
+    return (
+      <Suspense fallback={<LoaderCmp />}>
+        <Chart type={type} w={w} state={state} screenCapture={screenCapture} setToFalseAfterScreenCapture={setToFalseAfterScreenCapture} toggle={toggle} VFData={VFData} BrstKeys={BrstKeys}
+          trasnferSurvivalData={trasnferSurvivalData} survialData={survialData} />
+
+      </Suspense>
+    )
+    // switch (type) {
+    //   case 'circos':
+    //     return Charts.circos(w, state, screenCapture, setToFalseAfterScreenCapture, toggle, state);
+    //   case 'OncoPrint':
+    //     return Charts.onco(w, state, screenCapture, setToFalseAfterScreenCapture);
+    //   case 'lollipop':
+    //     return Charts.lollipop(w, state, screenCapture, setToFalseAfterScreenCapture);
+    //   case 'volcano':
+    //     return Charts.volcano(w, state, screenCapture, setToFalseAfterScreenCapture, VFData);
+    //   case 'heatmap':
+    //     return Charts.heatmap(w, state, screenCapture, BrstKeys, setToFalseAfterScreenCapture);
+    //   case 'survival':
+    //     return Charts.survival(
+    //       w,
+    //       state,
+    //       screenCapture,
+    //       setToFalseAfterScreenCapture,
+    //       survialData,
+    //       trasnferSurvivalData
+    //     );
+    //   case 'correlation':
+    //     return Charts.scatter(w, state, screenCapture, setToFalseAfterScreenCapture);
+    //   case 'CNV':
+    //     return Charts.igv(w, state, screenCapture, setToFalseAfterScreenCapture);
+    //   case 'fusion':
+    //     return Charts.fusion(w, state, screenCapture, setToFalseAfterScreenCapture, VFData);
+    //   case 'box':
+    //     return Charts.box(w, state, screenCapture, setToFalseAfterScreenCapture);
+    //   case 'sankey':
+    //     return Charts.sankey(w, state, screenCapture, setToFalseAfterScreenCapture, toggle, state);
+    //   default:
+    //     return false;
+    // }
   };
 
   const screen_call = useCallback(() => {

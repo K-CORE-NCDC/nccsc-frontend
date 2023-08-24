@@ -7,6 +7,7 @@ import LoaderCmp from '../../Common/Loader';
 import NoContentMessage from '../../Common/NoContentComponent';
 import SurvivalCmp from '../../Common/Survival';
 import inputJson from '../../Common/data';
+import Table from '../../Common/Table/ReactTable';
 
 export default function DataSurvival({
   width,
@@ -213,83 +214,88 @@ export default function DataSurvival({
 
       let tmp = [];
       let columns = survivalJson && 'columns' in survivalJson && survivalJson['columns'];
-      let thead = [<th key={'rows' + Math?.random()}></th>];
       let data = survivalJson && 'data' in survivalJson && JSON.parse(survivalJson['data']);
       let cf = survivalJson && 'clinical_filter' in survivalJson && survivalJson['clinical_filter'];
       let image = survivalJson && 'image' in survivalJson && survivalJson['image'];
       let trow = [];
-      if (columns) {
-        for (let c = 0; c < columns.length; c++) {
-          thead.push(
-            <th className="FontMedium TextGray900 P0625" key={`${c}'_'${columns[c]}`+Math.random()}>
-              {columns[c]}
-            </th>
-          );
-        }
-      }
+      let temptrow = []
       if (cf) {
         for (let c = 0; c < cf.length; c++) {
+          let obj = {}
           let col = cf[c];
-          let td = [];
-          td.push(
-            <td key={col +  Math.random()} className="TextGray900 P0625">
-              {col}
-            </td>
-          );
-          for (const key in data) {
-            let v = data[key][col];
-            v = parseFloat(v).toFixed(2);
-
-            td.push(
-              <td key={`${col + Math.random()}"_"${key}"_"${v}`} className="TextGray900 P0625">
-                {v}
-              </td>
-            );
-          }
-
-          trow.push(
-            <tr className="BorderBottom1 PY1" key={`coxtr_${c}` +Math.random()}>
-              {td}
-            </tr>
-          );
+          obj["name"] = col
+          temptrow.push(obj)
         }
       }
+
+      if (temptrow?.length > 0) {
+        let _sampleData = [...temptrow]
+        for (let rowname in _sampleData) {
+          let _obj = { ..._sampleData[rowname] }
+          Object.entries(data)?.forEach((key) => {
+            let _name = _obj["name"]
+            _obj[key[0]] = key[1][_name]?.toFixed(2)
+          })
+          trow.push({ ..._obj })
+        }
+      }
+
 
       tmp.push(
         <div className="Flex FlexDirCol" key={'cox'}>
           {/* Coefficient Table */}
-          <div className="Backgroundwhite  TextLeft  ShadowLarge" key={'co'}>
-            <h3 className="BorderBottom1 BorderGray200 P4">
-              <FormattedMessage id="Co-efficientTable" defaultMessage="Co-efficient Table" />
-            </h3>
-            <table className="Table WFull">
-              <thead className="BorderBottom1">
-                <tr key={Math.random()}>{thead}</tr>
-              </thead>
-              <tbody>{trow}</tbody>
-            </table>
-          </div>
+
+          <h3 className="BorderBottom1 BorderGray200 P4" style={{ textAlign: 'center' }}>
+            <FormattedMessage id="Co-efficientTable" defaultMessage="Co-efficient Table" />
+          </h3>
+          {columns?.length &&
+            <Table
+              columns={getColumns(columns)}
+              data={trow}
+              width={"1650"}
+            />}
+
 
           {/* Confidence Intreval Plot */}
-          <div
+          {/* <div
             key={'ci'}
             className="Flex FlexDirCol MarginTop20 Backgroundwhite  TextLeft  ShadowLarge WFull"
-          >
-            <h3 className="BorderBottom1 BorderGray200 P8">
-              <FormattedMessage
-                id="ConfidenceIntervalPlot"
-                defaultMessage="Confidence Interval Plot"
-              />
-            </h3>
-            <div className="WFull">
-              <img alt="box-plot" width="960" src={'data:image/png;base64,' + image} />
-            </div>
+          > */}
+          <h3 className="BorderBottom1 BorderGray200 P8" style={{textAlign:'center'}}>
+            <FormattedMessage
+              id="ConfidenceIntervalPlot"
+              defaultMessage="Confidence Interval Plot"
+            />
+          </h3>
+          <div className="WFull">
+            <img alt="box-plot" width="960" src={'data:image/png;base64,' + image} />
           </div>
         </div>
+        // </div>
       );
       setCoxTable(tmp);
     }
   }, [survivalJson]);
+
+  const getColumns = (columns) => {
+    if (columns) {
+      let _array = []
+      _array.push(
+        {
+          Header: "Name",
+          accessor: (row) => row?.name
+        }
+      )
+      for (let c = 0; c < columns.length; c++) {
+        let obj = {}
+        obj["Header"] = columns[c]
+        obj["accessor"] = columns[c]
+        _array.push(obj)
+      }
+
+      return _array
+    }
+  }
 
   return (
     <>

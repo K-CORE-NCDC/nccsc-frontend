@@ -1,5 +1,5 @@
 import { Popover, Transition } from '@headlessui/react';
-import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useRef, useState , Suspense , lazy } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory, useParams } from 'react-router-dom';
@@ -10,10 +10,10 @@ import {
   getUserDataProjectsTableData,
   samplesCount
 } from '../../../actions/api_actions';
+import LoaderCmp from '../../Common/Loader';
 import arrow_icon from '../../../assets/images/btnDetail-arrow-white.svg';
 import sample_img from '../../../assets/images/sample.webp';
 import HeaderComponent from '../../Common/HeaderComponent/HeaderComponent';
-import { Charts } from '../../DataVisualisation/Charts';
 import GeneSet from '../Components/MainComponents/GeneSet';
 
 export default function DataVisualization() {
@@ -66,41 +66,49 @@ export default function DataVisualization() {
   }, []);
 
   const LoadChart = (w, type) => {
-    switch (type) {
-      case 'circos':
-        return Charts.circos(
-          elementRef.current.getBoundingClientRect().width,
-          state,
-          screenCapture,
-          setToFalseAfterScreenCapture,
-          toggle
-        );
-      case 'lollipop':
-        return Charts.lollipop(
-          elementRef.current.getBoundingClientRect().width,
-          state,
-          screenCapture,
-          setToFalseAfterScreenCapture
-        );
-      case 'heatmap':
-        return Charts.heatmap(
-          elementRef.current.getBoundingClientRect().width,
-          state,
-          screenCapture,
-          BrstKeys,
-          setToFalseAfterScreenCapture
-        );
-      case 'CNV':
-        return Charts.igv(w, state, screenCapture, setToFalseAfterScreenCapture);
-      case 'box':
-        return Charts.box(w, state, screenCapture, setToFalseAfterScreenCapture);
-      case 'variant-summary':
-        return Charts.variant_summary(w, state, screenCapture, setToFalseAfterScreenCapture);
-      case 'survival':
-        return Charts.survival(w, state, screenCapture, setToFalseAfterScreenCapture);
-      default:
-        return false;
-    }
+    let Chart = lazy(() => import('../../DataVisualisation/Charts'));
+
+    return (
+      <Suspense fallback={<LoaderCmp />}>
+        <Chart type={type} w={elementRef?.current?.getBoundingClientRect()?.width} state={state} screenCapture={screenCapture} setToFalseAfterScreenCapture={setToFalseAfterScreenCapture} toggle={toggle} BrstKeys={BrstKeys} />
+
+      </Suspense>
+    )
+    // switch (type) {
+    //   case 'circos':
+    //     return Charts.circos(
+    //       elementRef.current.getBoundingClientRect().width,
+    //       state,
+    //       screenCapture,
+    //       setToFalseAfterScreenCapture,
+    //       toggle
+    //     );
+    //   case 'lollipop':
+    //     return Charts.lollipop(
+    //       elementRef.current.getBoundingClientRect().width,
+    //       state,
+    //       screenCapture,
+    //       setToFalseAfterScreenCapture
+    //     );
+    //   case 'heatmap':
+    //     return Charts.heatmap(
+    //       elementRef.current.getBoundingClientRect().width,
+    //       state,
+    //       screenCapture,
+    //       BrstKeys,
+    //       setToFalseAfterScreenCapture
+    //     );
+    //   case 'CNV':
+    //     return Charts.igv(w, state, screenCapture, setToFalseAfterScreenCapture);
+    //   case 'box':
+    //     return Charts.box(w, state, screenCapture, setToFalseAfterScreenCapture);
+    //   case 'variant-summary':
+    //     return Charts.variant_summary(w, state, screenCapture, setToFalseAfterScreenCapture);
+    //   case 'survival':
+    //     return Charts.survival(w, state, screenCapture, setToFalseAfterScreenCapture);
+    //   default:
+    //     return false;
+    // }
   };
 
   useEffect(() => {
@@ -372,9 +380,9 @@ export default function DataVisualization() {
         }
         breadCrumbs={
           breadCrumbs[
-            route.pathname.includes('/visualise-singledata/')
-              ? `/visualise-singledata/`
-              : `/visualizesingle-exampledata/`
+          route.pathname.includes('/visualise-singledata/')
+            ? `/visualise-singledata/`
+            : `/visualizesingle-exampledata/`
           ]
         }
         type="single"
@@ -403,9 +411,8 @@ export default function DataVisualization() {
                 <div className="mainContentsBox" style={{ marginTop: '50px' }}>
                   <div className="galleryList">
                     <ul
-                      className={`justify-content-${
-                        Object.keys(gridData).length > 2 ? 'start' : 'center'
-                      }`}
+                      className={`justify-content-${Object.keys(gridData).length > 2 ? 'start' : 'center'
+                        }`}
                     >
                       {gridData.map((item, index) => {
                         return (
@@ -417,41 +424,41 @@ export default function DataVisualization() {
                                   <div className="hvBox_links">
                                     {!exampleData && (
                                       <>
-                                       
-                                          <div className="textdiv ">
-                                            <span>
-                                              <FormattedMessage
-                                                id="DownloadManual"
-                                                defaultMessage="Download Manual"
-                                              />
-                                            </span>
-                                            <img src={arrow_icon} alt="arrow-icon" />
-                                          </div>
-                                      
-                                          <div className="textdiv">
-                                            <span>
-                                              <FormattedMessage
-                                                id="RunAnalysis"
-                                                defaultMessage="Run Analysis"
-                                              />
-                                            </span>
-                                            <img src={arrow_icon} alt="arrow-icon" />
-                                          </div> 
-                                      </>
-                                    )}
 
-                                    {exampleData && (
-                                    
-                                        <div className="textdiv">
+                                        <div className="textdiv ">
                                           <span>
                                             <FormattedMessage
-                                              id="Example"
-                                              defaultMessage="Examples"
+                                              id="DownloadManual"
+                                              defaultMessage="Download Manual"
                                             />
                                           </span>
                                           <img src={arrow_icon} alt="arrow-icon" />
                                         </div>
-                                      
+
+                                        <div className="textdiv">
+                                          <span>
+                                            <FormattedMessage
+                                              id="RunAnalysis"
+                                              defaultMessage="Run Analysis"
+                                            />
+                                          </span>
+                                          <img src={arrow_icon} alt="arrow-icon" />
+                                        </div>
+                                      </>
+                                    )}
+
+                                    {exampleData && (
+
+                                      <div className="textdiv">
+                                        <span>
+                                          <FormattedMessage
+                                            id="Example"
+                                            defaultMessage="Examples"
+                                          />
+                                        </span>
+                                        <img src={arrow_icon} alt="arrow-icon" />
+                                      </div>
+
                                     )}
                                   </div>
                                 </div>
@@ -483,9 +490,8 @@ export default function DataVisualization() {
                 </div>
                 <section>
                   <div
-                    className={`${
-                      tabName !== 'survival' ? 'single_viz' : 'single_viz_singleTab'
-                    } PopoverStyles `}
+                    className={`${tabName !== 'survival' ? 'single_viz' : 'single_viz_singleTab'
+                      } PopoverStyles `}
                   >
                     {tabName !== 'survival' && (
                       <Popover className="Relative gene_main_box">

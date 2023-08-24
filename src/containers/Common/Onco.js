@@ -1,6 +1,7 @@
 import { ZoomInIcon, ZoomOutIcon } from '@heroicons/react/outline';
-import $ from 'jquery';
 import _ from 'lodash';
+import $ from 'jquery';
+import "oncoprintjs";
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import inputJson from '../Common/data';

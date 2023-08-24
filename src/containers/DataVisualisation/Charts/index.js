@@ -1,90 +1,98 @@
-import DataCircos from './Circos';
-import DataOnco from './Onco';
-import DataLolipop from './Lolipop';
-import DataVolcono from './Volcono';
-import DataHeatmap from './Heatmap';
-import DataSurvival from './Survival';
-import Scatter from './Scatter';
-import DataIgv from './igv';
-import FusionPlot from './Fusion';
-import Box from './Box';
-import DataGenomic from './Genomic';
-import SankeyPlot from './SankeyPlot';
+import React, { Suspense, lazy } from 'react';
+
 function circos(width, inputData, screenCapture, setToFalseAfterScreenCapture, toggle, state) {
+  let DataCircos = lazy(() => import('./Circos'));
   return (
-    <DataCircos
-      key="circos"
-      width={width}
-      inputData={inputData}
-      screenCapture={screenCapture}
-      setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
-      toggle={toggle}
-      state={state}
-    />
+    <Suspense>
+      <DataCircos
+        key="circos"
+        width={width}
+        inputData={inputData}
+        screenCapture={screenCapture}
+        setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+        toggle={toggle}
+        state={state}
+      />
+    </Suspense>
   );
 }
 
 function sankey(width, inputData, screenCapture, setToFalseAfterScreenCapture, toggle, state) {
+  let SankeyPlot = lazy(() => import('./SankeyPlot'));
   return (
-    <SankeyPlot
-      key="sankey"
-      width={width}
-      inputData={inputData}
-      screenCapture={screenCapture}
-      setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
-      toggle={toggle}
-      state={state}
-    />
+    <Suspense>
+      <SankeyPlot
+        key="sankey"
+        width={width}
+        inputData={inputData}
+        screenCapture={screenCapture}
+        setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+        toggle={toggle}
+        state={state}
+      />
+    </Suspense>
   );
 }
 
 function onco(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
+  let DataOnco = lazy(() => import('./Onco'));
   return (
-    <DataOnco
-      key="onco"
-      width={width}
-      inputData={inputData}
-      screenCapture={screenCapture}
-      setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
-    />
+    <Suspense>
+      <DataOnco
+        key="onco"
+        width={width}
+        inputData={inputData}
+        screenCapture={screenCapture}
+        setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+      />
+    </Suspense>
   );
 }
 
 function lollipop(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
+  let DataLolipop = lazy(() => import('./Lolipop'));
   return (
-    <DataLolipop
-      key="lolipop"
-      width={width}
-      inputData={inputData}
-      screenCapture={screenCapture}
-      setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
-    />
+    <Suspense>
+      <DataLolipop
+        key="lolipop"
+        width={width}
+        inputData={inputData}
+        screenCapture={screenCapture}
+        setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+      />
+    </Suspense>
   );
 }
 
 function volcano(width, inputData, screenCapture, setToFalseAfterScreenCapture, VFData) {
+  let DataVolcono = lazy(() => import('./Volcono'));
   return (
-    <DataVolcono
-      key="volcano"
-      width={width}
-      inputData={inputData}
-      screenCapture={screenCapture}
-      setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
-      VFData={VFData}
-    />
+    <Suspense>
+      <DataVolcono
+        key="volcano"
+        width={width}
+        inputData={inputData}
+        screenCapture={screenCapture}
+        setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+        VFData={VFData}
+      />
+    </Suspense>
   );
 }
 
 function heatmap(width, inputData, screenCapture, BrstKeys, setToFalseAfterScreenCapture) {
+  let DataHeatmap = lazy(() => import('./Heatmap'));
   return (
-    <DataHeatmap
-      key="heatmap"
-      width={width}
-      inputData={inputData}
-      screenCapture={screenCapture}
-      brstKeys={BrstKeys}
-      setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
-    />
+    <Suspense>
+      <DataHeatmap
+        key="heatmap"
+        width={width}
+        inputData={inputData}
+        screenCapture={screenCapture}
+        brstKeys={BrstKeys}
+        setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+      />
+    </Suspense>
   );
 }
 
@@ -96,90 +104,144 @@ function survival(
   survialData,
   trasnferSurvivalData
 ) {
+  let DataSurvival = lazy(() => import('./Survival'));
   return (
-    <DataSurvival
-      key="survival"
-      width={width}
-      inputData={inputData}
-      screenCapture={screenCapture}
-      setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
-      survialData={survialData}
-      trasnferSurvivalData={trasnferSurvivalData}
-    />
+    <Suspense>
+      <DataSurvival
+        key="survival"
+        width={width}
+        inputData={inputData}
+        screenCapture={screenCapture}
+        setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+        survialData={survialData}
+        trasnferSurvivalData={trasnferSurvivalData}
+      />
+    </Suspense>
   );
 }
 
 function scatter(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
+  let Scatter = lazy(() => import('./Scatter'));
   return (
-    <Scatter
-      key="scatter"
-      width={width}
-      inputData={inputData}
-      screenCapture={screenCapture}
-      setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
-    />
+    <Suspense>
+      <Scatter
+        key="scatter"
+        width={width}
+        inputData={inputData}
+        screenCapture={screenCapture}
+        setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+      />
+    </Suspense>
   );
 }
 
 function igv(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
+  let DataIgv = lazy(() => import('./igv'));
   return (
-    <DataIgv
-      key="igv"
-      width={width}
-      inputData={inputData}
-      screenCapture={screenCapture}
-      setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
-    />
+    <Suspense>
+      <DataIgv
+        key="igv"
+        width={width}
+        inputData={inputData}
+        screenCapture={screenCapture}
+        setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+      />
+    </Suspense>
   );
 }
 
 function fusion(width, inputData, screenCapture, setToFalseAfterScreenCapture, VFData) {
+  let FusionPlot = lazy(() => import('./Fusion'));
   return (
-    <FusionPlot
-      key="fusion"
-      width={width}
-      inputData={inputData}
-      screenCapture={screenCapture}
-      setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
-      VFData={VFData}
-    />
+    <Suspense>
+      <FusionPlot
+        key="fusion"
+        width={width}
+        inputData={inputData}
+        screenCapture={screenCapture}
+        setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+        VFData={VFData}
+      />
+    </Suspense>
   );
 }
 
 function box(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
+  let Box = lazy(() => import('./Box'));
   return (
-    <Box
-      key="box"
-      width={width}
-      inputData={inputData}
-      screenCapture={screenCapture}
-      setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
-    />
+    <Suspense>
+      <Box
+        key="box"
+        width={width}
+        inputData={inputData}
+        screenCapture={screenCapture}
+        setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+      />
+    </Suspense>
+
   );
 }
 function variant_summary(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
+  let DataGenomic = lazy(() => import('./Genomic'));
   return (
-    <DataGenomic
-      key="genomic"
-      width={width}
-      inputData={inputData}
-      screenCapture={screenCapture}
-      setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
-    />
+    <Suspense>
+      <DataGenomic
+        key="genomic"
+        width={width}
+        inputData={inputData}
+        screenCapture={screenCapture}
+        setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+      />
+    </Suspense>
+
   );
 }
 
-export const Charts = {
-  circos,
-  onco,
-  lollipop,
-  volcano,
-  heatmap,
-  survival,
-  scatter,
-  igv,
-  fusion,
-  box,
-  variant_summary,
-  sankey
-};
+
+const Charts = ({ type, w, state, screenCapture, setToFalseAfterScreenCapture, toggle, VFData, BrstKeys, trasnferSurvivalData,survialData }) => {
+  const fetchData = () => {
+    switch (type) {
+      case 'circos':
+        return circos(w, state, screenCapture, setToFalseAfterScreenCapture, toggle, state);
+      case 'OncoPrint':
+        return onco(w, state, screenCapture, setToFalseAfterScreenCapture);
+      case 'lollipop':
+        return lollipop(w, state, screenCapture, setToFalseAfterScreenCapture);
+      case 'volcano':
+        return volcano(w, state, screenCapture, setToFalseAfterScreenCapture, VFData);
+      case 'heatmap':
+        return heatmap(w, state, screenCapture, BrstKeys, setToFalseAfterScreenCapture);
+      case 'survival':
+        return survival(
+          w,
+          state,
+          screenCapture,
+          setToFalseAfterScreenCapture,
+          survialData,
+          trasnferSurvivalData
+        );
+      case 'correlation':
+        return scatter(w, state, screenCapture, setToFalseAfterScreenCapture);
+      case 'CNV':
+        return igv(w, state, screenCapture, setToFalseAfterScreenCapture);
+      case 'fusion':
+        return fusion(w, state, screenCapture, setToFalseAfterScreenCapture, VFData);
+      case 'box':
+        return box(w, state, screenCapture, setToFalseAfterScreenCapture);
+      case 'sankey':
+        return sankey(w, state, screenCapture, setToFalseAfterScreenCapture, toggle, state);
+      case 'variant-summary':
+        return variant_summary(w, state, screenCapture, setToFalseAfterScreenCapture);
+      default:
+        return false;
+    }
+  }
+  return (
+    <>
+      {fetchData()}
+    </>
+  )
+}
+export default Charts;
+
+

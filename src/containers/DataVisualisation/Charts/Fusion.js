@@ -1,8 +1,7 @@
-import { EyeIcon } from '@heroicons/react/outline';
+// import { EyeIcon } from '@heroicons/react/outline';
 import html2canvas from 'html2canvas';
 import React, { useContext, useEffect, useState } from 'react';
-import DataTable from 'react-data-table-component';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { FusionVennDaigram } from '../../../actions/api_actions';
@@ -11,6 +10,8 @@ import FusionCustomPlot from '../../Common/FusionCustomPlot';
 import FusionVennCmp from '../../Common/FusionVenn';
 import LoaderCmp from '../../Common/Loader';
 import NoContentMessage from '../../Common/NoContentComponent';
+import Table from '../../Common/Table/ReactTable';
+import { EyeIcon } from '@heroicons/react/outline';
 
 export default function FusionPlot({
   width,
@@ -32,6 +33,7 @@ export default function FusionPlot({
   const [inputState, setInputState] = useState({});
   const [watermarkCss, setWatermarkCSS] = useState('');
   const [showDiv, setShowDiv] = useState(true);
+  const intl = useIntl();
 
   useEffect(() => {
     if (context['locale'] === 'kr-KO') {
@@ -86,8 +88,9 @@ export default function FusionPlot({
 
   const tableColumnsData = [
     {
-      name: <FormattedMessage id="SampleName" defaultMessage="Sample Name" />,
-      cell: (row) => {
+      Header: intl.formatMessage({ id: "SampleName", defaultMessage: 'Sample Name' }),
+      accessor: (row) => row?.sample_id?.join(','),
+      Cell: ({ cell: { row, value } }) => {
         let html = [];
         let check = false;
         if ('group 1' in row) {
@@ -127,111 +130,62 @@ export default function FusionPlot({
         let main_html = [];
         main_html.push(
           <div className="flex flex-col w-full text-left" style={{ gap: '10px' }}>
-            {html}
+            {value}
             <button onClick={(e) => generateFusion(e, row.id)} id={row.id}>
               <EyeIcon style={{ width: '15px' }} />
             </button>
           </div>
         );
         return main_html;
-      },
-      sortable: true,
-      minWidth: '12%'
+      }
     },
     {
-      name: <FormattedMessage id="LeftGeneName" defaultMessage="Left Gene Name" />,
-      selector: (row) => (
-        <div>
-          <span title={row.left_gene_name}>{row.left_gene_name}</span>
-        </div>
+      Header: intl.formatMessage({ id: "LeftGeneName", defaultMessage: 'Left Gene Name' }),
+      accessor: (original) => original?.left_gene_name,
+      Cell: ({ cell: { value } }) => (
+        < div title={value}>{value}</div>
       ),
-      sortable: true
+
     },
     {
-      name: <FormattedMessage id="LeftEnsemblId" defaultMessage="Left Ensembl Id" />,
-      selector: (row) => (
-        <div>
-          <span title={row.left_gene_ensmbl_id}>{row.left_gene_ensmbl_id}</span>
-        </div>
-      ),
-      sortable: true
+      Header: intl.formatMessage({ id: "LeftEnsemblId", defaultMessage: 'Left Ensembl Id' }),
+      accessor: (original) => original?.left_gene_ensmbl_id,
+      Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     },
     {
-      name: <FormattedMessage id="LeftBreakpoint" defaultMessage="Left Breakpoint" />,
-      cell: (row) => {
-        return (
-          <div>
-            <span title={row.left_gene_chr + ':' + row.left_hg38_pos}>
-              {row.left_gene_chr + ':' + row.left_hg38_pos}
-            </span>
-          </div>
-        );
-      },
-      sortable: true
+      Header: intl.formatMessage({ id: "LeftBreakpoint", defaultMessage: 'Left Breakpoint' }),
+      accessor: (original) => original?.left_hg38_pos,
+      Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     },
     {
-      name: <FormattedMessage id="RightGeneName" defaultMessage="Right Gene Name" />,
-      selector: (row) => (
-        <div>
-          <span title={row.right_gene_name}>{row.right_gene_name}</span>
-        </div>
-      ),
-      sortable: true
+      Header: intl.formatMessage({ id: "RightGeneName", defaultMessage: 'Right Gene Name' }),
+      accessor: (original) => original?.right_gene_name,
+      Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     },
     {
-      name: <FormattedMessage id="RightEnsemblId" defaultMessage="Right Ensembl Id" />,
-      selector: (row) => (
-        <div>
-          <span title={row.right_gene_ensmbl_id}>{row.right_gene_ensmbl_id}</span>
-        </div>
-      ),
-      sortable: true
+      Header: intl.formatMessage({ id: "RightEnsemblId", defaultMessage: 'Right Ensembl Id' }),
+      accessor: (original) => original?.right_gene_ensmbl_id,
+      Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     },
     {
-      name: <FormattedMessage id="RightBreakpoint" defaultMessage="Right Breakpoint" />,
-      cell: (row) => {
-        return (
-          <div>
-            <span title={row.right_gene_chr + ':' + row.right_hg38_pos}>
-              {row.right_gene_chr + ':' + row.right_hg38_pos}
-            </span>
-          </div>
-        );
-      },
-      sortable: true
+      Header: intl.formatMessage({ id: "RightBreakpoint", defaultMessage: 'Right Breakpoint' }),
+      accessor: (original) => original?.right_hg38_pos,
+      Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     },
     {
-      name: <FormattedMessage id="JunctionReadCount" defaultMessage="Junction Read Count" />,
-      selector: (row) => (
-        <div>
-          <span title={row.junction_read_count ? row.junction_read_count : 0}>
-            {row.junction_read_count ? row.junction_read_count : 0}
-          </span>
-        </div>
-      ),
-      sortable: true
+      Header: intl.formatMessage({ id: "JunctionReadCount", defaultMessage: 'Junction Read Count' }),
+      accessor: (original) => original?.junction_read_count,
+      Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     },
     {
-      name: <FormattedMessage id="SpanningFragCount" defaultMessage="Spanning Frag Count" />,
-      selector: (row) => (
-        <div>
-          <span title={row.spanning_frag_count ? row.spanning_frag_count : 0}>
-            {row.spanning_frag_count ? row.spanning_frag_count : 0}
-          </span>
-        </div>
-      ),
-      sortable: true
+      Header: intl.formatMessage({ id: "SpanningFragCount", defaultMessage: 'Spanning Frag Count' }),
+      accessor: (original) => original?.spanning_frag_count ? original?.spanning_frag_count : 0,
+      Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     },
     {
-      name: <FormattedMessage id="SpliceType" defaultMessage="Splice Type" />,
-      selector: (row) => (
-        <div>
-          <span title={row.splice_type ? row.splice_type : 'None'}>
-            {row.splice_type ? row.splice_type : 'None'}
-          </span>
-        </div>
-      ),
-      sortable: true
+      Header: intl.formatMessage({ id: "SpliceType", defaultMessage: 'Splice Type' }),
+      accessor: (original) => original?.splice_type ? original?.splice_type : 'None',
+      Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     }
   ];
 
@@ -385,21 +339,14 @@ export default function FusionPlot({
                     <div className="bg-white border-b border-gray-200 py-5 text-left px-5">
                       {groupName}
                     </div>
+                    {console.log('columns', tableColumnsData)}
                     {VennData && !noData && (
-                      <DataTable
+
+                      <Table
                         pagination
                         columns={tableColumnsData}
                         data={tableData}
-                        customStyles={{
-                          table: {
-                            border: '1px solid black'
-                          },
-                          pagination: {
-                            style: {
-                              gap: '10px'
-                            }
-                          }
-                        }}
+                        width="1650"
                       />
                     )}
                   </div>

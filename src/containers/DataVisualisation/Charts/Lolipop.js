@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { exportComponentAsJPEG } from 'react-component-export-image';
-import DataTable from 'react-data-table-component';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
@@ -9,6 +8,11 @@ import '../../../styles/css/lollipop.css';
 import LoaderCmp from '../../Common/Loader';
 import LollipopCmp from '../../Common/Lollipop';
 import NoContentMessage from '../../Common/NoContentComponent';
+import Table from '../../Common/Table/ReactTable';
+import { useIntl } from 'react-intl';
+
+
+
 
 export default function DataLolipop({
   width,
@@ -39,8 +43,10 @@ export default function DataLolipop({
   let { project_id } = useParams();
   const [activeTab, setActiveTab] = useState('1');
   const [btnClickNote, setBtnClickNote] = useState(false);
-
+  const intl = useIntl();
   const tabList = useSelector((data) => data.dataVisualizationReducer);
+
+
 
   useEffect(() => {
     if ('userProjectsDataTable' in tabList) {
@@ -165,7 +171,7 @@ export default function DataLolipop({
           });
       }
       setTableType(tableType);
-    } 
+    }
   }, [inputState]);
 
   const generateColor = () => {
@@ -255,19 +261,16 @@ export default function DataLolipop({
         if (tableType === 'Mutation') {
           table_cols = [
             {
-              name: <FormattedMessage id="sampleid" defaultMessage="Sample Id" />,
-              selector: (row) => row.sample,
-              sortable: true
+              Header: intl.formatMessage({ id: "sampleid", defaultMessage: 'Sample Id' }),
+              accessor: (row) => row.sample,
             },
             {
-              name: <FormattedMessage id="ProtienChange" defaultMessage="Protein Change" />,
-              selector: (row) => row.protein,
-              sortable: true
+              Header: intl.formatMessage({ id: "ProtienChange", defaultMessage: 'Protein Change' }),
+              accessor: (row) => row.protein,
             },
             {
-              name: <FormattedMessage id="MutationType" defaultMessage="Mutation Type" />,
-              selector: (row) => row.variant_classification,
-              sortable: true
+              Header: intl.formatMessage({ id: "MutationType", defaultMessage: 'Mutation Type' }),
+              accessor: (row) => row.variant_classification,
             }
           ];
 
@@ -309,19 +312,16 @@ export default function DataLolipop({
         } else {
           table_cols = [
             {
-              name: <FormattedMessage id="sampleid" defaultMessage="Sample Id" />,
-              selector: (row) => row.sample,
-              sortable: true
+              Header: intl.formatMessage({ id: "sampleid", defaultMessage: 'Sample Id' }),
+              accessor: (row) => row.sample
             },
             {
-              name: <FormattedMessage id="Site" defaultMessage="Site" />,
-              selector: (row) => row.site,
-              sortable: true
+              Header: intl.formatMessage({ id: "Site", defaultMessage: 'Site' }),
+              accessor: (row) => row.site,
             },
             {
-              name: <FormattedMessage id="Gene" defaultMessage="Gene" />,
-              selector: (row) => row.gene,
-              sortable: true
+              Header: intl.formatMessage({ id: "Gene", defaultMessage: 'Gene' }),
+              accessor: (row) => row.gene,
             }
           ];
           tmp.push(
@@ -512,6 +512,8 @@ export default function DataLolipop({
     }
   };
 
+
+
   return (
     <>
       {loader ? (
@@ -523,7 +525,8 @@ export default function DataLolipop({
             border: '1px solid #d6d6d6',
             boxShadow: '0 5px 10px rgba(0, 0, 0, 0.05)',
             position: 'relative',
-            padding: '5%'
+            padding: '5%',
+
           }}
         >
           {activeCmp && (
@@ -709,21 +712,11 @@ export default function DataLolipop({
                     </div>
 
                     {tableData.length > 0 && (
-                      <div className="contentsTable" style={{ marginTop: '30px' }}>
-                        <DataTable
-                          pagination
+                      <div style={{ marginTop: '30px' }}>
+                        <Table
                           columns={tableColumnsData}
                           data={tableData}
-                          customStyles={{
-                            table: {
-                              border: '1px solid black'
-                            },
-                            pagination: {
-                              style: {
-                                gap: '10px'
-                              }
-                            }
-                          }}
+
                         />
                       </div>
                     )}

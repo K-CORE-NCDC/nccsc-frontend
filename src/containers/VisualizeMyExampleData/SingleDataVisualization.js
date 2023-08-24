@@ -165,7 +165,7 @@ export const SingleDataVisualization = () => {
                     </td>
                   </tr>
                   <tr>
-                    <td>Dna Mutation</td>
+                    <td>DNA Mutation</td>
                     <td>
                       <span className="material-icons">radio_button_unchecked</span>
                     </td>
