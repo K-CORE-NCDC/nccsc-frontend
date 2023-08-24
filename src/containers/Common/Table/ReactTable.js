@@ -90,7 +90,7 @@ function Table({
     return (
         <div>
             <div style={{ width: '100%', overflowX: 'auto' }}>
-                <span style={{ display: 'flex', fontSize: '18px' }}><b>Total:</b> <div style={{ color: "blue", paddingLeft: '10px', fontSize: "18px" }}>{data?.length}</div></span>
+                <span style={{ display: 'flex', fontSize: '18px' }}><b>Total:</b> <div style={{ color: "#003177", paddingLeft: '10px', fontSize: "18px" }}>{data?.length}</div></span>
                 <table className={" boardList"} {...getTableProps()} style={{ width: width ? width + 'px' : '1000px' }}>
                     <thead className="boardHeader">
                         {headerGroups.map((headerGroup) => (
@@ -130,7 +130,7 @@ function Table({
                                         return (
                                             <td
                                                 className="boardCell"
-                                                {...cell.getCellProps()} style={{ textAlign: 'center' }}
+                                                {...cell.getCellProps()} style={{ textAlign: 'center' , fontWeight:'400' }}
                                             >
                                                 {cell.render("Cell")}
                                             </td>
