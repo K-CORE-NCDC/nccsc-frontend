@@ -1,15 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import HeaderComponent from "./HeaderComponent/HeaderComponent";
 
 export const CustomerServiceDetail = ({ tabName, rowTitle }) => {
   const title = { id: "details", defaultMessage: "Details" }
-  // const dispatch = useDispatch()
-  // const notice_data = useSelector((state) => state.homeReducer.dataQA)
-
-  // useEffect(() => {
-  //   console.log('QA Detail')
-  //   dispatch(getQaData(slug_id, ""))
-  // }, [])
 
   const breadCrumbs = {
     '/signup/': [

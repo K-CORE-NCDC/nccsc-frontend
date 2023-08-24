@@ -285,21 +285,7 @@ export const PreDefienedFilters = ({
     smok_yn: [
       { label: "No", value: "smok_yn||N" },
       { label: "Yes", value: "smok_yn||Y" },
-      // { label: "Current Smoking", value: "smok_curr_yn||Y" }
-    ],
-
-    // t_category: [
-    //     { label: "Tis", from: 'Tis', to: 'Tis',value: 'Tis' },
-    //     { label: "T1", from: 'T1', to: 'T1',value: 'T1' },
-    //     { label: "T2", from: 'T2', to: 'T2',value: 'T2' },
-    //     { label: "T3", from: 'T3', to: 'T3',value: 'T3' },
-    //     { label: "T4", from: 'T4', to: 'T4',value: 'T4' },
-    // ],
-    // n_category: [
-    //     { label: "N1", from: 'N1', to: 'N1' },
-    //     { label: "N2", from: 'N2', to: 'N2' },
-    //     { label: "N3", from: 'N3', to: 'N3' }
-    // ]
+    ]
   };
   useEffect(() => {
     if (volcanoType !== filterType) {
@@ -543,12 +529,12 @@ export const PreDefienedFilters = ({
         )}
       </div>
       <div className="P1 PY3 PX2 ColSpan2">{filterGroupsHtml}</div>
-      <div  className="FilterGeneSet">
+      <div className="FilterGeneSet">
         <div className="P1 PY3 PX2 W50">
           <button
             onClick={submitFilters}
             className="FilterLabelText FilterButton"
-            style={{backgroundColor:"rgb(0, 159, 226)", border: "1px solid white"}}
+            style={{ backgroundColor: "rgb(0, 159, 226)", border: "1px solid white" }}
           >
             <FormattedMessage id="Submit_volcano" defaultMessage="Submit" />
           </button>
@@ -687,7 +673,7 @@ export const PreDefienedFiltersSurvival = ({
   };
 
   const submitFilters = () => {
-    
+
     if (Object.keys(filters).length > 0) {
       parentCallback(filters);
     } else {
@@ -897,7 +883,7 @@ export const PreDefienedFiltersSurvival = ({
           <button
             onClick={() => submitFilters()}
             className="FilterLabelText FilterButton"
-            style={{backgroundColor: "rgb(0, 159, 226)", border: "1px solid white"}}
+            style={{ backgroundColor: "rgb(0, 159, 226)", border: "1px solid white" }}
           >
             <FormattedMessage
               id="Submit_volcano"
@@ -1005,12 +991,6 @@ export const GroupFilters = ({
           input: "number",
         },
         { type: "dropdown", name: "세포증식지수(Ki-67)", id: "ki67_score", input: "number" }
-        // {
-        //   type: "number",
-        //   name: "재발이 확인되기까지의 시간",
-        //   id: "rlps_cnfr_drtn",
-        //   input: "number",
-        // },
       ];
     }
     else {
@@ -1061,12 +1041,6 @@ export const GroupFilters = ({
           input: "number",
         },
         { type: "dropdown", name: "ki67", id: "ki67_score", input: "number" }
-        // {
-        //   type: "number",
-        //   name: "Relapse Duration(month)",
-        //   id: "rlps_cnfr_drtn",
-        //   input: "number",
-        // },
       ];
 
     }
@@ -1294,7 +1268,6 @@ export const GroupFilters = ({
       }
     }
     else {
-      console.log('-------------');
       if (isFilterResetHappened) {
         let send_response = true;
         if (userGivenInputValues['type'] === 'static') {
@@ -1388,7 +1361,6 @@ export const GroupFilters = ({
 
   const updateSelectedFilter = (e) => {
     setGroupsCounter(1);
-    // resetFilters();
     setIsFilterResetHappened(true);
     setFilterInputs([]);
     const targetValue = e.target.value;
@@ -1447,7 +1419,6 @@ export const GroupFilters = ({
         one_from_0.classList.remove("BorderRed400");
         one_to_0.classList.remove("Border2");
         one_to_0.classList.remove("BorderRed400");
-        // let is_valid = validate_fusion()
         setUserGivenInputValues((prevState) => ({
           ...prevState,
           [one_from_0.name]: one_from_0.value,
@@ -2340,7 +2311,7 @@ export const GroupFilters = ({
             <button
               onClick={submitFilters}
               className="FilterLabelText FilterButton"
-              style={{backgroundColor:"rgb(0, 159, 226)", border: "1px solid white"}}
+              style={{ backgroundColor: "rgb(0, 159, 226)", border: "1px solid white" }}
             >
               <FormattedMessage id="Submit_volcano" defaultMessage="Submit" />
             </button>
@@ -2358,7 +2329,7 @@ export const GroupFilters = ({
               />
             </button>
           </div>
-          
+
         )}
       </div>
     </div>
@@ -2750,7 +2721,6 @@ export const UserDefinedGroupFilters = ({
 
   const updateSelectedFilter = (e) => {
     setGroupsCounter(1);
-    // resetFilters()
     setIsFilterResetHappened(true);
     setFilterInputs([]);
     const targetValue = e.target.value;
@@ -2828,7 +2798,6 @@ export const UserDefinedGroupFilters = ({
     }
   };
 
-  // Chnage
   useEffect(() => {
     if (groupFilters && Object.keys(groupFilters).length > 0) {
       let filterType = groupFilters.type;
@@ -3671,7 +3640,7 @@ export const UserDefinedGroupFilters = ({
             <button
               onClick={submitFilters}
               className="FilterLabelText FilterButton"
-              style = {{backgroundColor:"rgb(0, 159, 226)", border: "1px solid white"}}
+              style={{ backgroundColor: "rgb(0, 159, 226)", border: "1px solid white" }}
             >
               <FormattedMessage
                 id="Submit_volcano"

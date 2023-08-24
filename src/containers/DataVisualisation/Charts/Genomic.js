@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { GeneInfo } from '../../../actions/api_actions'
-import { useParams, useHistory } from "react-router-dom";
+import useParams from "react-router-dom";
 import LoaderCmp from '../../Common/Loader';
 import chart_types from '../../DataSummary/genomicCharyTypes'
 
 
 
-export default function DataGenomic({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
+export default function DataGenomic() {
   const [loader, setLoader] = useState(false)
-  // const [genomicJson, setGenomicJson] = useState({ data: [], domains: [], status: 204 })
-  const history = useHistory();
   const [activeCmp, setActiveCmp] = useState(true)
   let { project_id } = useParams();
   const [summaryJson, setSummaryJson] = useState({})
@@ -19,7 +17,6 @@ export default function DataGenomic({ width, inputData, screenCapture, setToFals
 
   useEffect(() => {
     if (project_id && activeCmp) {
-      console.log('activeCmp ifff', project_id)
       let dataJson = { "project_id": project_id }
 
       let data = GeneInfo('POST', dataJson)
@@ -104,8 +101,6 @@ export default function DataGenomic({ width, inputData, screenCapture, setToFals
       {
         loader ?
           <LoaderCmp />
-
-
           :
           <div className="genomic ptn">
             <div className="auto">

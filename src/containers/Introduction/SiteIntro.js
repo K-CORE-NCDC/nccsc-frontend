@@ -1,24 +1,17 @@
 import React, { useEffect, useState } from "react";
-import logoNew from "../../assets/images/menu-logo-2.png";
-import bgimg from '../../assets/images/bg.png';
 import ServiceIntro from "./ServiceIntro";
 import Organization from "./Organization";
 import { FormattedMessage } from "react-intl";
-import menu_black from "../../assets/images/right_below_add.png";
-import AOS from 'aos';
 import introduce_img from '../../assets/images/introduce_logo.svg'
 import introduce_VisualContents from '../../assets/images/introduce-visualContents.jpg'
 import "aos/dist/aos.css"
 import { CBioPortal } from "./RelatedSites/CBioPortal";
 
 
-export const SiteIntro = ({ height, innerHeight , lan }) => {
+export const SiteIntro = ({ lan }) => {
   const [activeTab, setActiveTab] = useState('1')
-  const _height = innerHeight - height
-  const [addingStyle, setAddingStyle] = useState(false)
   const [selectedOption, setSelectedOption] = useState('')
 
-  console.log('site' , lan)
 
   return (
     <div className="auto">
@@ -125,9 +118,9 @@ export const SiteIntro = ({ height, innerHeight , lan }) => {
           <ServiceIntro lan={lan} />
         }
         {activeTab === '3' &&
-          <Organization lan={lan}/>
+          <Organization lan={lan} />
         }
-         {activeTab === '4' &&
+        {activeTab === '4' &&
           <CBioPortal />
         }
       </div>

@@ -13,47 +13,47 @@ import "slick-carousel/slick/slick-theme.css";
 
 export default function SlickSlider() {
     var settings = {
-      dots: true,
-      infinite: false,
-      speed: 500,
-      slidesToShow: 6,
-      slidesToScroll: 4,
-      initialSlide:0
+        dots: true,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 6,
+        slidesToScroll: 4,
+        initialSlide: 0
     };
     const img = {
-        objectFit:'scale-down',
-        width:"100%"
+        objectFit: 'scale-down',
+        width: "100%"
 
     }
     return (
-      
-      <div className="P5 Border BorderTop1 BorderGray200" style={{borderStyle:'solid'}}>
-        <Slider {...settings}>
-            <div>
-                <img src={f_ci1} alt="fc1" style={img}/>
-            </div>
-            <div>
-                <img src={f_ci2} alt="fc2" style={img}/>
-            </div>
-            <div>
-                <img src={f_ci3} alt="fc3" style={img}/>
-            </div>
-            <div>
-                <img src={f_ci4} alt="fc4" style={img}/>
-            </div>
-            <div>
-                <img src={f_ci5} alt="fc5" style={img}/>
-            </div>
-            <div>
-                <img src={f_ci6} alt="fc6" style={img}/>
-            </div>
-            <div>
-                <img src={f_ci7} alt="fc7" style={img}/>
-            </div>
-            <div>
-                <img src={f_ci8} alt="fc8" style={img}/>
-            </div>
-        </Slider>
-      </div>
+
+        <div className="P5 Border BorderTop1 BorderGray200" style={{ borderStyle: 'solid' }}>
+            <Slider {...settings}>
+                <div>
+                    <img src={f_ci1} alt="fc1" style={img} />
+                </div>
+                <div>
+                    <img src={f_ci2} alt="fc2" style={img} />
+                </div>
+                <div>
+                    <img src={f_ci3} alt="fc3" style={img} />
+                </div>
+                <div>
+                    <img src={f_ci4} alt="fc4" style={img} />
+                </div>
+                <div>
+                    <img src={f_ci5} alt="fc5" style={img} />
+                </div>
+                <div>
+                    <img src={f_ci6} alt="fc6" style={img} />
+                </div>
+                <div>
+                    <img src={f_ci7} alt="fc7" style={img} />
+                </div>
+                <div>
+                    <img src={f_ci8} alt="fc8" style={img} />
+                </div>
+            </Slider>
+        </div>
     );
-  }
+}

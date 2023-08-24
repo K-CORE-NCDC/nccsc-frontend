@@ -8,12 +8,6 @@ import icon3 from '../../assets/images/publicDataInfo-img03.svg'
 const HomeComponent = () => {
 
   const title = { id: "visualize_otherTools", defaultMessage: "Other Tools" }
-  let gridData = [
-    { title: 'Blast', image: require(`../../assets/images/Visualizations/circos.png`).default, link: `/newmultidataproject/`, description: 'Provides a visualization analysis service that can be implemented according to the uploaded user data.' },
-    { title: 'VCFMAF', image: require(`../../assets/images/Visualizations/circos.png`).default, link: `/multidataprojectview/`, description: 'Provides a visualization analysis service that can be implemented according to the uploaded user data.' },
-    { title: 'VCFMAF', image: require(`../../assets/images/Visualizations/circos.png`).default, link: `/multidataprojectview/`, description: 'Provides a visualization analysis service that can be implemented according to the uploaded user data.' },
-  ]
-
 
   const breadCrumbs = {
     '/tools/': [

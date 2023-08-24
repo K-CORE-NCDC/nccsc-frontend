@@ -9,7 +9,7 @@ import NoContentMessage from '../../Common/NoContentComponent';
 import { FormattedMessage } from 'react-intl';
 import '../../../styles/css/Scatter.css'
 
-export default function Scatter({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
+export default function Scatter({ inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef()
   const [scatterJson, setScatterJson] = useState({})
   const [watermarkCss, setWatermarkCSS] = useState("")

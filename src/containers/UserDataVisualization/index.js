@@ -1,47 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import FileUpload from './Components/MainComponents/NewClinicalFileUpload'
 import FileUploadDropdowncomponent from "./Components/MainComponents/FileUploadDropdowncomponent";
 import FileProjectDataTable from "./Components/MainComponents/FileProjectDataTable";
-import { useHistory } from "react-router-dom";
-import { getCookie } from "../../containers/getCookie";
+
 export default function DataVisualization() {
-  let history = useHistory();
   const [componentNumber, setComponentNumber] = useState()
   const hideupload = false
   const showLoginForm = false
   const fileUploadCallBack = (d_) => {
   }
-  
-  // useEffect(() => {
-  //   if(getCookie('is_login')){
-  //     setComponentNumber(0)
-  //   }
-  //   else{
-  //     history.push("/login")
-  //   }
-  // }, [history])
 
-
-  const updateComponentNumber = (num) =>{
+  const updateComponentNumber = (num) => {
     setComponentNumber(num)
   }
-  
+
   return (
     <div className="w-full">
       <div className="flex flex-row-reverse">
-        
+
       </div>
       {!showLoginForm && <div className="m-4 max-w-full">
         <div>
-          
-          { !hideupload && componentNumber === 0 && 
-            <FileUpload parentCallBack={fileUploadCallBack} updateComponentNumber ={updateComponentNumber}  />
-            }
-          { componentNumber === 1 && 
-            <FileUploadDropdowncomponent updateComponentNumber ={updateComponentNumber}  />
+
+          {!hideupload && componentNumber === 0 &&
+            <FileUpload parentCallBack={fileUploadCallBack} updateComponentNumber={updateComponentNumber} />
           }
-          { componentNumber === 2 && 
-            <FileProjectDataTable updateComponentNumber ={updateComponentNumber}  />
+          {componentNumber === 1 &&
+            <FileUploadDropdowncomponent updateComponentNumber={updateComponentNumber} />
+          }
+          {componentNumber === 2 &&
+            <FileProjectDataTable updateComponentNumber={updateComponentNumber} />
           }
         </div>
       </div>}

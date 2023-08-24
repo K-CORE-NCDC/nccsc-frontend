@@ -20,8 +20,8 @@ export default function Introduce() {
       setKoreanlanguage(false);
       setEnglishlanguage(true);
     }
-  },[context]);
-  return (    
+  }, [context]);
+  return (
     <section className="intro_wrap">
       <h1><FormattedMessage id={"Project for building a healthcare big data showcase"} defaultMessage={"Project for building a healthcare big data showcase"} /></h1>
       <ul className="intro_tab tab_title_main">

@@ -106,7 +106,7 @@ function Popup({ toggleModal }) {
                 onClick={changeDay}
               >
                 <FormattedMessage id='RemindAfter24hrs' defaultMessage="Remind after 24 hrs" />
-               
+
               </button>
               <button className="mainPopupClose" onClick={closeModal}> <FormattedMessage id='Close' defaultMessage="Close" /> </button>
             </div>

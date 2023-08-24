@@ -7,7 +7,6 @@ import NCCLogo from "../../styles/images/logo02.svg"
 import loginIcon1 from "../../styles/images/loginForm-icon01.svg"
 import loginIcon2 from "../../styles/images/loginForm-icon02.svg"
 import Swal from 'sweetalert2'
-import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { FormattedMessage } from "react-intl";
 
 const LoginComponent = () => {
@@ -16,7 +15,6 @@ const LoginComponent = () => {
     password: "",
   });
   let history = useHistory();
-  let location = useLocation();
   const [errorMessage, setErrorMessage] = useState([]);
   const [isError, setIsError] = useState(false)
   const title = { id: "Login", defaultMessage: "Login" }
@@ -30,8 +28,6 @@ const LoginComponent = () => {
   };
 
   const loginSuccess = () => {
-    // console.log('windows',windows);
-    // console.log('histpry',history);
     // id is LoginSuccess
     Swal.fire({
       title: 'Success',
@@ -91,11 +87,7 @@ const LoginComponent = () => {
       setErrorMessage([
         <p key="error" className="ErrorText">
           <FormattedMessage id="UserIdEmpty" defaultMessage="User ID cant be Empty" />
-        </p>,
-        // <h1 className="ErrorText" key="CountToEnterCredentials">
-        //   {" "}
-        //   <FormattedMessage id="login5try" defaultMessage="If an error in consecutive password input (5 times) occurs, the account is locked." />
-        // </h1>,
+        </p>
       ]);
     }
     else if (userFormData && userFormData.password === '') {
@@ -103,11 +95,7 @@ const LoginComponent = () => {
       setErrorMessage([
         <p key="error" className="ErrorText">
           <FormattedMessage id="PasswordEmpty" defaultMessage="Password cant be Empty" />
-        </p>,
-        // <h1 className="ErrorText" key="CountToEnterCredentials">
-        //   {" "}
-        //   <FormattedMessage id="login5try" defaultMessage="If an error in consecutive password input (5 times) occurs, the account is locked." />
-        // </h1>,
+        </p>
       ]);
     }
     else {
@@ -210,20 +198,6 @@ const LoginComponent = () => {
                   </FormattedMessage>
                 </div>
 
-
-                {/* Remember Id */}
-                {/* <div className="idSave">
-                  <div className="switcher">
-                    <input type="checkbox" id="id_save" name="saveIdYn" value="1" />
-                    <label htmlFor="id_save">
-                      <span></span>
-                    </label>
-                    <font style={{ verticalAlign: 'inherit' }}>
-                      <font style={{ verticalAlign: 'inherit' }}>Remember ID</font>
-                    </font>
-                  </div>
-                </div> */}
-
                 {/* Login Button  */}
                 <button type="button" className="btn btnPrimary" id="loginBtn" onClick={formSubmitAction}>
                   <font style={{ verticalAlign: 'inherit' }}>
@@ -259,7 +233,6 @@ const LoginComponent = () => {
               </form>
 
               <p style={{"marginTop":"30px"}}><FormattedMessage id="loginGuide" defaultMessage="The user should be responsible for using result." /></p>
-
 
             </div>
           </div>

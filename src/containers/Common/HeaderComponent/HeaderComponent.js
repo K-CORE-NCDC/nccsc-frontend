@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { getCookie } from '../../getCookie';
 function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
-  const { project_id, tab } = useParams()
+  const { project_id } = useParams()
   const history = useHistory()
   const viz_tabs = ["visualise-multidata", "visualise-singledata"]
   const upload_tabs = ["singledata-upload", "newmultidataproject", "multidataprojectview" , "multidatavisualization"]
@@ -17,7 +17,6 @@ function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
       if (project_id && window.location.pathname.includes(item)) {
         if (getCookie('is_login') && getCookie('is_login') === 'True') {
         } else {
-          console.log('elseee')
           history.push('/login')
         }
       }
@@ -80,7 +79,7 @@ function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
                   </li>
                 );
               }
-              else if(item.to === ''){
+              else if(item && item.to === ''){
                 return (
                   <li key={index} className={routeName === item.to ? 'on' : ''}>
                       <FormattedMessage

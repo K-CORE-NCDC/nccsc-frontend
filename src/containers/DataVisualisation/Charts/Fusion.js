@@ -13,7 +13,6 @@ import DataTable from "react-data-table-component";
 import { Context } from "../../../wrapper";
 import { EyeIcon } from "@heroicons/react/outline";
 import html2canvas from 'html2canvas';
-import $ from 'jquery'
 
 export default function FusionPlot({
   width,
@@ -46,12 +45,12 @@ export default function FusionPlot({
 
 
   let takeScreenshot = async () => {
-   
+
     const element = document.getElementById('venn')
     const clone = element.cloneNode(true);
     document.getElementById('preview').appendChild(clone);
     const element2 = document.getElementById('vennn')
- 
+
     if (element2) {
       const clone2 = element2.cloneNode(true);
       document.getElementById('preview').appendChild(clone2);
@@ -136,21 +135,20 @@ export default function FusionPlot({
           let s = row["sample_id"];
           s = [...new Set(s)]
           html.push(s.join(","));
-          // html.push(s);
         }
         let main_html = [];
         main_html.push(
-          <div className="flex flex-col w-full text-left" style={{gap:'10px'}}>
+          <div className="flex flex-col w-full text-left" style={{ gap: '10px' }}>
             {html}
             <button onClick={(e) => generateFusion(e, row.id)} id={row.id}>
-                  <EyeIcon style={{width:"15px"}} />
-              </button>
+              <EyeIcon style={{ width: "15px" }} />
+            </button>
           </div>
         );
         return main_html;
       },
       sortable: true,
-      minWidth:'12%'
+      minWidth: '12%'
     },
     {
       name: <FormattedMessage id="LeftGeneName" defaultMessage="Left Gene Name" />,
@@ -321,7 +319,6 @@ export default function FusionPlot({
                 />
               )}
 
-
               {VennData && !noData && fusionId !== 0 && (
                 <div className="mt-5 my-0 mx-auto h-auto w-11/12 shadow-lg">
                   <FusionCustomPlot fusionId={fusionId} />
@@ -358,9 +355,9 @@ export default function FusionPlot({
                         },
                         pagination: {
                           style: {
-                              gap:"10px"
+                            gap: "10px"
                           }
-                        }      
+                        }
                       }}
                     />
                     }
@@ -368,11 +365,7 @@ export default function FusionPlot({
                 </div>
               )}
             </div>
-
-
-
           }
-
         </>
       )}
 

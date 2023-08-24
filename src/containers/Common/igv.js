@@ -2,14 +2,14 @@ import React, { useEffect } from 'react'
 import igv from 'igv'
 
 
-const Igv = React.forwardRef(({width,data, watermarkCss}, ref) => {
+const Igv = React.forwardRef(({ width, data, watermarkCss }, ref) => {
 
 
-  const loadIgv = (data)=>{
+  const loadIgv = (data) => {
 
     var doc = document.getElementById('igv-div')
-    if(doc.hasChildNodes()){
-      document.getElementById('igv-div').innerHTML=''
+    if (doc.hasChildNodes()) {
+      document.getElementById('igv-div').innerHTML = ''
     }
 
     var igvDiv = document.getElementById("igv-div");
@@ -17,14 +17,14 @@ const Igv = React.forwardRef(({width,data, watermarkCss}, ref) => {
     const options =
     {
       genome: "hg19",
-      showNavigation:true,
-      showSampleNames:true,
+      showNavigation: true,
+      showSampleNames: true,
       tracks: [
         {
           name: "Copy number",
           type: "seg",
           displayMode: "EXPANDED",
-          features:data
+          features: data
         }
       ]
     };
@@ -33,20 +33,15 @@ const Igv = React.forwardRef(({width,data, watermarkCss}, ref) => {
     })
 
   }
-  useEffect(()=>{
-    if(data && data.length !== 0){
+  useEffect(() => {
+    if (data && data.length !== 0) {
       loadIgv(data)
     }
-  },[data])
+  }, [data])
 
   return (
-    <div ref={ref} className={watermarkCss +""}>
-      {/* <div className='ml-6 grid grid-cols-4'>
-        <div className='col-span-2'>
-
-        </div>
-      </div> */}
-      <div className='' id="igv-div" style={{"height":"500px","width":width+"px"}}>
+    <div ref={ref} className={watermarkCss + ""}>
+      <div className='' id="igv-div" style={{ "height": "500px", "width": width + "px" }}>
       </div>
     </div>
   )

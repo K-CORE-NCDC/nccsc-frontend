@@ -52,18 +52,18 @@ export const Notice = () => {
           </div>
         </div>
         {activeTab === '1' &&
-          <div style={{ height: '85vh' , paddingTop:'5%' }}>
+          <div style={{ height: '85vh', paddingTop: '5%' }}>
             <QA />
           </div>
         }
         {activeTab === '2' &&
-          <div style={{ height: '85vh' , paddingTop:'5%' }}>
+          <div style={{ height: '85vh', paddingTop: '5%' }}>
             <QA />
           </div>
         }
 
         {activeTab === '3' &&
-          <div style={{ height: '85vh' , paddingTop:'5%' }}>
+          <div style={{ height: '85vh', paddingTop: '5%' }}>
             <FaqList />
           </div>
 

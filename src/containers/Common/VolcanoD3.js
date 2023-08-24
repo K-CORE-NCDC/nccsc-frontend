@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import * as d3 from 'd3'
 import '../../styles/volcano.css'
-import {saveSvg} from 'save-svg-as-png'
+import { saveSvg } from 'save-svg-as-png'
 
-const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
+const VolcanoPlotD3 = ({ watermarkCss, dataProps }, ref) => {
     const [volcanoData, setVolcanoData] = useState([])
 
     function volcanoPlot() {
@@ -31,16 +31,16 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
             var innerWidth = width - margin.left - margin.right, // set the size of the chart within its container
                 innerHeight = height - margin.top - margin.bottom;
             document.getElementById('chart-d3-volcano').innerHTML = ''
-            
+
             selection.each(function (data) {
                 let max = 0
                 for (let idx = 0; idx < data.length; idx++) {
                     const element = data[idx];
-                    if(element.p_value>max){
+                    if (element.p_value > max) {
                         max = element.p_value
                     }
                 }
-                max = Math.round(max)+1
+                max = Math.round(max) + 1
                 // set up the scaling for the axes based on the inner width/height of the chart and also the range
                 // of value for the x and y axis variables. This range is defined by their min and max values as
                 // calculated by d3.extent()
@@ -82,7 +82,7 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
                 // add the axes
                 var xAxis = d3.axisBottom(xScale);
                 var yAxis = d3.axisLeft(yScale)
-                   
+
 
                 var gX = svg.append('g')
                     .attr('class', 'x axis')
@@ -127,28 +127,28 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
                     .on('mouseleave', function (d) {
                         return tooltip.style('visibility', 'hidden');
                     });
-                let dt = data.filter(function(xi){
-                    if(xi.color==='black'){
+                let dt = data.filter(function (xi) {
+                    if (xi.color === 'black') {
                         return xi
                     }
                     return null
                 })
-                
+
                 var gdots = circles.selectAll("g.dot")
                     .data(dt)
                     .enter().append('g');
-                gdots.attr('class','dot')
+                gdots.attr('class', 'dot')
                 gdots.append("text").text(function (d) {
-                    if(d.color === 'black'){
+                    if (d.color === 'black') {
                         return d.gene
                     }
                 })
-                .attr("x", function (d) {
-                    return xScale(d[xColumn]);
-                })
-                .attr("y", function (d) {
-                    return yScale(d[yColumn]);
-                });
+                    .attr("x", function (d) {
+                        return xScale(d[xColumn]);
+                    })
+                    .attr("y", function (d) {
+                        return yScale(d[yColumn]);
+                    });
 
                 var thresholdLines = svg.append('g')
                     .attr('class', 'thresholdLines');
@@ -336,11 +336,11 @@ const VolcanoPlotD3 = ({ watermarkCss,dataProps },ref) => {
                 .call(volcanoPlot1);
         }
     }, [volcanoData])
-    useEffect(()=>{
-        if(watermarkCss){
-            saveSvg(document.getElementById('svgVolcano'),'volcano.svg',{scale: 0.5,background:'#FFFFFF'})
+    useEffect(() => {
+        if (watermarkCss) {
+            saveSvg(document.getElementById('svgVolcano'), 'volcano.svg', { scale: 0.5, background: '#FFFFFF' })
         }
-    },[watermarkCss])
+    }, [watermarkCss])
     return (
         <div>
             <div className='MarginTop4'>Volcano plot</div>

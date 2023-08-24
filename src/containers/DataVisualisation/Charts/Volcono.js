@@ -46,8 +46,6 @@ export default function DataVolcono({
     project_id === undefined ? "static" : "dynamic"
   );
 
-  const smallScreen = false
-
   useEffect(() => {
     if (!clinicalMaxMinInfo) {
       if (project_id === undefined) {
@@ -131,7 +129,7 @@ export default function DataVolcono({
               Log2FC: parseFloat(item["log2(fold_change)"]),
               "-Log(Pvalue)": item["p_value"],
             });
-          } else if(log2foldchange >= 1.5) {
+          } else if (log2foldchange >= 1.5) {
             positiveCount += 1;
             positive.push({
               "Gene Name": item["gene"],
@@ -179,8 +177,6 @@ export default function DataVolcono({
       setShowVolcano(false);
       setNoContent(true);
     }
-    // transferCardData(sampleCountsCard)
-
   }, [volcanoJson]);
 
 

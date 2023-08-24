@@ -90,7 +90,6 @@ const GeneSet = ({ parentCallback, filterState }) => {
               value={geneData}
               onChange={(e) => {
                 const abc = document.getElementById('gene_type').value;
-                console.log('abc', abc);
                 if (abc === 'user-defined') {
                   let userGenes = document
                     .getElementById('genes')

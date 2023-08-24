@@ -12,7 +12,6 @@ import { SiteIntro } from "../Introduction/SiteIntro";
 import { VisualizeMyData } from "../VisualizeMyData/VisualizeMyData";
 import { SingleDataVisualization } from "../VisualizeMyExampleData/SingleDataVisualization";
 import Introduction from "./Introduction";
-// import "../../styles/swiper_cus.css"
 import SlickSlider from "./slickSlide";
 
 export default function Home(parentProps) {
@@ -123,7 +122,6 @@ export default function Home(parentProps) {
         if (urlSearchParams.toString() === 'activeSlide=0') {
           history.push("/")
         }
-        // window.history.pushState(null, null, `?${urlSearchParams.toString()}`);
       }
     };
     if (swiperRef.current && swiperRef.current.swiper) {

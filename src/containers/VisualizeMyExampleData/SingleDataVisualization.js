@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import MultiDataVisualization from "./MultiDataVisualization";
@@ -8,12 +8,6 @@ import { OtherTools } from "./OtherTools";
 export const SingleDataVisualization = ({ isLogin }) => {
   const [activeTab, setActiveTab] = useState('1')
   const history = useHistory()
-
-  // useEffect(() => {
-  //   if (width <= 1025 || height <= 800) {
-  //     setVariable(true)
-  //   }
-  // }, [])
   return (
     <div className="auto">
       <div className="mainContentsBox">
@@ -48,12 +42,10 @@ export const SingleDataVisualization = ({ isLogin }) => {
                     <p className="tit h5">Contents</p>
                     <div className="tit contentBtns">
                       <button className="btn" onClick={() => {
-                        // history.push({"/visualise-singledata/home/"})
                         history.push({
                           pathname: '/visualizesingle-exampledata/home/',
                           state: { example: true }
                         })
-                        // <Link to={`/visualizesingle-exampledata/home/`} />
                       }}>
                         <FormattedMessage id="ExamplePage" defaultMessage='Example Page' />
                       </button>

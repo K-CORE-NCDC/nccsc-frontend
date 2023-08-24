@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import fig from '../../assets/images/figure01.png'
+import React from "react";
 import { FormattedMessage } from "react-intl";
 import icon1 from '../../assets/images/publicDataInfo-img01.svg'
 import { Link } from "react-router-dom/cjs/react-router-dom.min";

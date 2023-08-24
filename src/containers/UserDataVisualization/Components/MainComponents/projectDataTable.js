@@ -21,7 +21,6 @@ const ProjectDataTable = () => {
     const [tableNavTabs, setTableNavTabs] = useState([])
     const [fileDataAsTableRendered, setFileDataAsTableRendered] = useState({})
     const [activeTableKey, setActiveTableKey] = useState("")
-    // const [fileDataAsTableAll, setFileDataAsTableAll] = useState({})
     const [tableHeaders, setTableHeaders] = useState([])
     const [show, setShow] = useState(false)
     const params = useParams()
@@ -119,20 +118,19 @@ const ProjectDataTable = () => {
                 <section >
                     <div id="tab-contents">
                         <div>
-                            {/* <ExampleUserTable tableData={fileDataAsTableRendered} /> */}
                             <DataTable pagination
                                 columns={tableHeaders}
                                 data={fileDataAsTableRendered}
                                 customStyles={{
                                     table: {
-                                      border: '1px solid black',
+                                        border: '1px solid black',
                                     },
                                     pagination: {
-                                      style: {
-                                          gap:"10px"
-                                      }
-                                    }      
-                                  }}
+                                        style: {
+                                            gap: "10px"
+                                        }
+                                    }
+                                }}
                             />
                         </div>
                     </div>

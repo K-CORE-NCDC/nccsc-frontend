@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.css";
 import bgimg from '../../assets/images/bk1.jpg';
-// import "../../styles/swiper_cus.css";
 import { FormattedMessage } from "react-intl";
 
 

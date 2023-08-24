@@ -14,18 +14,18 @@ function PrivacyActIndex() {
       setKoreanlanguage(false);
       setEnglishlanguage(true);
     }
-  },[context]);
+  }, [context]);
 
   return (
     <div>
       {koreanlanguage && (
         <div>
-           <Koreanprivacyact></Koreanprivacyact>
+          <Koreanprivacyact></Koreanprivacyact>
         </div>
       )}
       {Englishlanguage && (
         <div>
-         <EnglishPrivacyAct></EnglishPrivacyAct>
+          <EnglishPrivacyAct></EnglishPrivacyAct>
         </div>
       )}
     </div>

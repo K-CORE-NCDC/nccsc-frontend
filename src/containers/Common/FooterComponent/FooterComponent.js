@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import footer_img from "../../../assets/images/f_logo.png";
 import { FormattedMessage } from "react-intl";
 
 const FooterComponent = () => {
-  const [isFooter, setFooter] = useState(true)
+  const isFooter = true
 
   return (
 
@@ -37,10 +37,6 @@ const FooterComponent = () => {
           </div>
         </footer >}
     </>
-
-
-
-
   )
 
 }

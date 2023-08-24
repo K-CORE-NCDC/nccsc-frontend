@@ -21,11 +21,11 @@ function ResetPassword() {
   const [userFormData, setUserFormData] = useState({
     password: "",
     cnfmpassword: "",
-    uniqueKey:"",
+    uniqueKey: "",
     cp_type: "reset_password",
-    token:token
+    token: token
   });
-  
+
   const updateSetPassword = (e) => {
     setUserFormData((previousState) => ({
       ...previousState,
@@ -66,30 +66,30 @@ function ResetPassword() {
         </p>,
       ]);
     }
-    else if(status === 'SomethingWentWrong'){
+    else if (status === 'SomethingWentWrong') {
       setErrorMessage([
         <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
           <FormattedMessage id={status} defaultMessage="Something went wrong, Please try again or Contact Us" />
         </p>,
       ]);
     }
-    else if(status === 'UniqueKeyError'){
+    else if (status === 'UniqueKeyError') {
       setErrorMessage([
         <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
           <FormattedMessage id={status} defaultMessage="Unique Key is Incorrect, Please check" />
         </p>,
       ]);
     }
-    else{
+    else {
       setErrorMessage([
         <p key="error" className="ErrorText">
-        {status}
-      </p>,
-    ]);
-  }
+          {status}
+        </p>,
+      ]);
+    }
   };
 
- const formSubmitAction = (e) => {
+  const formSubmitAction = (e) => {
     setIsError(false)
 
     if (userFormData && userFormData.password === '') {
@@ -142,7 +142,7 @@ function ResetPassword() {
   };
 
 
-   const breadCrumbs = {
+  const breadCrumbs = {
     '/reset-password/': [
       { id: 'resetpassword', defaultMessage: 'ResetPassword', to: '' }
     ],
@@ -168,9 +168,9 @@ function ResetPassword() {
                 </span>
                 <font style={{ verticalAlign: 'inherit' }}>
                   <span className="colorPrimary">
-                    <font style={{ verticalAlign: 'inherit' }}><FormattedMessage id="Welcome" defaultMessage="Welcome"/></font>
+                    <font style={{ verticalAlign: 'inherit' }}><FormattedMessage id="Welcome" defaultMessage="Welcome" /></font>
                   </span>
-                  <font style={{ verticalAlign: 'inherit' }}> <FormattedMessage id="to" defaultMessage="to"/> </font>
+                  <font style={{ verticalAlign: 'inherit' }}> <FormattedMessage id="to" defaultMessage="to" /> </font>
                   <span className="colorSecondary">
                     <font style={{ verticalAlign: 'inherit' }}>NCDC .</font>
                   </span>
@@ -182,14 +182,14 @@ function ResetPassword() {
               <p className="sub">
                 <font style={{ verticalAlign: 'inherit' }}>
                   <font style={{ verticalAlign: 'inherit' }}>
-                    <FormattedMessage id="WelcomeNcdc" defaultMessage="Welcome to the National Cancer Data Center website."/>
+                    <FormattedMessage id="WelcomeNcdc" defaultMessage="Welcome to the National Cancer Data Center website." />
                     {' '}
                   </font>
                 </font>
                 <br />
                 <font style={{ verticalAlign: 'inherit' }}>
                   <font style={{ verticalAlign: 'inherit' }}>
-                  <FormattedMessage id="loginmessage" defaultMessage="Please enter the information below to log in."/>
+                    <FormattedMessage id="loginmessage" defaultMessage="Please enter the information below to log in." />
                   </font>
                 </font>
               </p>

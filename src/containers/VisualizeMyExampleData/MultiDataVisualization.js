@@ -90,7 +90,7 @@ const MultiDataVisualization = () => {
                       <FormattedMessage id="Example_multi_sankey" defaultMessage=' visualize drug relation information of the selected mutations' />
                     </p>
                   </li></>}
-              <button className="btnMore" style={{ float: 'right',marginTop:'25px' }} onClick={() => {
+              <button className="btnMore" style={{ float: 'right', marginTop: '25px' }} onClick={() => {
                 history.push("/visualise-multidata/home")
               }}><img src={!viewMoreData ? plusicon : minusicon} alt="" /></button>
             </ul>

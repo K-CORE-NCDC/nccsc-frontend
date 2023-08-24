@@ -1,5 +1,4 @@
 import React,{useEffect} from 'react';
-import config from '../../config'
 import { useHistory } from "react-router-dom";
 
 const LogOutComponent = () => {
@@ -13,7 +12,6 @@ const LogOutComponent = () => {
         deleteCookie('is_login')
         deleteCookie('username')
         deleteCookie('superuser')   
-        // window.location.href = config['basename']+"login/"
         history.push({
           pathname: '/login/',
           state: {

@@ -27,43 +27,11 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
     }
   ]
 
-  // const downloadTableAsCsv = (tableType) => {
-  //   let rows = [
-  //     ["GENE NAME", "LOG2FC", "LOG(PVALUE) negative"],
-  //   ];
-  //   if (tableType === "positive") {
-  //     tableData.forEach(element => {
-  //       if (element["log2(fold_change)"] <= -5) {
-  //         rows.push([element["gene"], element["log2(fold_change)"], element["p_value"]])
-  //       }
-
-  //     });
-  //   } else if (tableType === "negative") {
-  //     tableData.forEach(element => {
-  //       if (element["p_value"] >= 5) {
-  //         rows.push([element["gene"], element["log2(fold_change)"], element["p_value"]])
-  //       }
-  //     });
-  //   } else {
-  //     tableData.forEach(element => {
-  //       rows.push([element["gene"], element["log2(fold_change)"], element["p_value"]])
-  //     })
-  //   }
-  //   let csvContent = "data:text/csv;charset=utf-8,"
-  //     + rows.map(e => e.join(",")).join("\n");
-  //   const encodedUri = encodeURI(csvContent);
-  //   const link = document.createElement("a");
-  //   link.setAttribute("href", encodedUri);
-  //   link.setAttribute("download", `RNA-expression-${tableType}.csv`);
-  //   document.body.appendChild(link);
-  //   link.click();
-  // }
   const downloadTableAsCsv = (tableType) => {
-    console.log('tt',tableType);
     let rows = [
       ["GENE NAME", "LOG2FC", "LOG(PVALUE) negative"],
     ];
-  
+
     if (tableType === "negative") {
       tableData.forEach(element => {
         if (element["log2(fold_change)"] <= -1.5 && element["p_value"] <= 0.5) {
@@ -81,27 +49,27 @@ const VolcanoCmp = React.forwardRef(({ w, data, watermarkCss, negative_data, pos
         rows.push([element["gene"], element["log2(fold_change)"], element["p_value"]]);
       });
     }
-  
+
     // Create a CSV content string
     let csvContent = rows.map(row => row.join(",")).join("\n");
-  
+
     // Create a Blob with the CSV content
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8" });
-  
+
     // Create a URL for the Blob
     const url = URL.createObjectURL(blob);
-  
+
     // Create a download link
     const link = document.createElement("a");
     link.setAttribute("href", url);
     link.setAttribute("download", `RNA-expression-${tableType}.csv`);
     link.style.display = "none";
-  
+
     // Append the link to the body, click it, and remove it
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  
+
     // Revoke the URL to free up memory
     URL.revokeObjectURL(url);
   };

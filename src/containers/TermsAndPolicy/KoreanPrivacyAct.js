@@ -126,7 +126,6 @@ function Koreanprivacyact() {
                           <span className='div_64_box_text'>일반개인정보 수집</span>
                         </div>
                       </div>
-                      {/* <div></div> */}
                     </div>
                     <div className='' style={{ marginTop: '5%' }}>
                       <div >
@@ -210,12 +209,6 @@ function Koreanprivacyact() {
                       <span>①	 국립암센터(국가암데이터센터) K-CORE에서 처리하고 있는 개인정보는「개인정보보호법」제15조(개인정보의 수집ㆍ이용)에 따라서 관련 법률의 개인정보 보호 규정을 준수하여 처리하고 있습니다</span>
                       <div className='MarginTop10'>
                         <table className='ktable'>
-                          {/* <colgroup id="COLGROUP_138">
-                            <col id="COL_139" />
-                            <col id="COL_141" />
-                            <col id="COL_141" />
-                            <col id="COL_141" />
-                          </colgroup> */}
                           <tbody >
                             <tr >
                               <th className='kth'>

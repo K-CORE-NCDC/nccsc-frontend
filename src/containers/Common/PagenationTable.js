@@ -27,11 +27,11 @@ function PagenationTable({ imageData }) {
             for (let i = 0; i < totalPages; i++) {
                 pageNumbers.push(i + 1)
             }
-        } else if(currentActivePageNumber <= 3){
+        } else if (currentActivePageNumber <= 3) {
             pageNumbers = [1, 2, 3, 4, 5, '...', totalPages - 2, totalPages - 1, totalPages]
-        }else if(currentActivePageNumber >= (totalPages - 3)){
-            pageNumbers = [1, 2, 3,  '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages]
-        }else{
+        } else if (currentActivePageNumber >= (totalPages - 3)) {
+            pageNumbers = [1, 2, 3, '...', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages]
+        } else {
             pageNumbers = [1, 2, '...', currentActivePageNumber - 1, currentActivePageNumber, currentActivePageNumber + 1, '...', totalPages - 1, totalPages]
         }
         setPagenationPageNos(pageNumbers)
@@ -59,11 +59,11 @@ function PagenationTable({ imageData }) {
             generatePagesNumbersForCount()
             if ((sliceTo > totalImagesCount) && (sliceFrom > setTotalImagesCount)) {
                 setActiveDisplayImagesContent(imageData.slice(sliceFrom, sliceTo))
-            } else if(sliceTo <= totalImagesCount) {
+            } else if (sliceTo <= totalImagesCount) {
                 setActiveDisplayImagesContent(imageData.slice(sliceFrom, sliceTo))
-            }else if((sliceTo > totalImagesCount) && (sliceFrom < totalImagesCount)){
+            } else if ((sliceTo > totalImagesCount) && (sliceFrom < totalImagesCount)) {
                 setActiveDisplayImagesContent(imageData.slice(sliceFrom))
-            }else{
+            } else {
                 setActiveDisplayImagesContent([])
             }
         }
@@ -73,12 +73,11 @@ function PagenationTable({ imageData }) {
         <>
 
             {isDataFound ? <div >
-                <div className="grid max-auto grid-cols-5 gap-3 p-6 overflow-y-scroll" style={{"height":'50vh'}}>
+                <div className="grid max-auto grid-cols-5 gap-3 p-6 overflow-y-scroll" style={{ "height": '50vh' }}>
                     {activeDisplayImagesContent.map(e => {
-                        return <a key={e} target="_blank" rel='noreferrer' href={config['auth']+e}>
-                            <img alt='not' className='w-full block rounded' src={config['auth']+e} />
-                            {/* <h1 className='text-3xl p-6'>{e.split('/').at(-1)}</h1> */}
-                          </a>
+                        return <a key={e} target="_blank" rel='noreferrer' href={config['auth'] + e}>
+                            <img alt='not' className='w-full block rounded' src={config['auth'] + e} />
+                        </a>
                     })}
                 </div>
                 <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
@@ -88,11 +87,11 @@ function PagenationTable({ imageData }) {
                                 Showing <span className="font-medium">{totalImagesCount - activeDisplayImagesContent.length}</span> to <span className="font-medium">{totalImagesCount}</span> of{' '}
                                 <span className="font-medium">{totalImagesCount}</span> results
                             </p> :
-                            <p className="text-md text-gray-700">
-                            Showing <span className="font-medium">{(currentActivePageNumber - 1) * 20}</span> to <span className="font-medium">{currentActivePageNumber * 20}</span> of{' '}
-                            <span className="font-medium">{totalImagesCount}</span> results
-                        </p>
-                             }
+                                <p className="text-md text-gray-700">
+                                    Showing <span className="font-medium">{(currentActivePageNumber - 1) * 20}</span> to <span className="font-medium">{currentActivePageNumber * 20}</span> of{' '}
+                                    <span className="font-medium">{totalImagesCount}</span> results
+                                </p>
+                            }
                         </div>
                         <div>
                             <nav className="w-full inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">

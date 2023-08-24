@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
-
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import LoaderCmp from "../../Common/Loader";
@@ -9,10 +8,6 @@ import {
 } from "../../../actions/api_actions";
 import { FormattedMessage } from "react-intl";
 import { useParams } from "react-router-dom";
-
-import warningImage from '../../../assets/images/warning.png'
-
-
 
 function ModalDiv() {
 
@@ -109,7 +104,7 @@ function ModalDiv() {
 
 }
 
-function ErrorMessage(){
+function ErrorMessage() {
   const verificationResponse = useSelector(
     (data) => data.homeReducer.singleFileUploadData
   );
@@ -281,7 +276,7 @@ function SingleDataTable({ updateComponentNumber }) {
       {/* <ModalDiv /> */}
       <ErrorMessage />
 
-      <p style={{ justifyContent:'center', display:'flex' }}><FormattedMessage id="loginGuide" defaultMessage="The user should be responsible for using result." /></p>
+      <p style={{ justifyContent: 'center', display: 'flex' }}><FormattedMessage id="loginGuide" defaultMessage="The user should be responsible for using result." /></p>
 
       <div className="flex" style={{ justifyContent: 'space-between' }}>
 

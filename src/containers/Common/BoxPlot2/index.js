@@ -145,9 +145,9 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
         "translate(" + margin.left + "," + margin.top + ")");
 
     var tooltip = d3.select("#box2_tooltip")
-    // .append("div").attr('class', 'boxplot_tooltip')
+      // .append("div").attr('class', 'boxplot_tooltip')
       .style("opacity", 1)
-     
+
       .style('background-color', 'lavender')
       .style('padding', '1%')
     // Show the X scale
@@ -270,13 +270,12 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
           .attr("stroke", "black")
           .style("fill", "#fff")
           .on("mouseover", (d, i) => {
-            console.log('d', d)
             tooltip.transition()
               .duration(200)
               .style('opacity', 0.9);
             tooltip.html("Sample: &nbsp;" + BrstKeys[i.Sample] + `<br/>${view_type === "gene_vl" ? 'gene val' : 'z-score'} &nbsp;` + i.Sepal_Length)
-              .style('right', height -25 + 'px')
-              .style('top',  height -255 + 'px')
+              .style('right', height - 25 + 'px')
+              .style('top', height - 255 + 'px')
           })
           .on('mouseout', () => {
           });
@@ -360,14 +359,10 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
             tooltip.html("Sample: &nbsp;" + BrstKeys[i.Sample] + `<br/>${view_type === "gene_vl" ? 'gene val' : 'z-score'} &nbsp;` + i.Sepal_Length)
 
             if (document.getElementById('filterBoxCmp')) {
-              console.log('x', d.offsetX, 'y', d.offsetY)
               tooltip.style('left', d.pageX - 550 + 'px')
               tooltip.style('top', d.pageY - 150 + 'px');
             } else {
-              console.log('height' , height)
-              // tooltip.style('left', 50  + '%')
-              // tooltip.style('top', d.pageX + 'px');
-              tooltip.style('right', height -25 + 'px')
+              tooltip.style('right', height - 25 + 'px')
               tooltip.style('top', height - 255 + 'px');
             }
           })

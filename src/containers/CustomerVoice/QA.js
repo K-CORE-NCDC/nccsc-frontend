@@ -8,7 +8,6 @@ import { Redirect, useParams } from "react-router-dom";
 import { FormattedMessage } from 'react-intl';
 import { Context } from "../../wrapper";
 import { getQaData } from '../../actions/api_actions'
-import ReactQuill from "react-quill"
 import 'react-quill/dist/quill.snow.css'
 
 function QAList({ new_post }) {

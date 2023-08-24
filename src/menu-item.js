@@ -34,24 +34,7 @@ const superAdmin = {
 
 const childMenu = {
   social: {
-    items: [
-      // {
-      //   id: 'signup',
-      //   title: <FormattedMessage id="Signup" defaultMessage="Sign Up" />,
-      //   type: 'item',
-      //   icon: 'fa fa-dashboard',
-      //   url: '/signup/',
-      //   children: [],
-      // },
-      // {
-      //   id: 'api',
-      //   title: 'API',
-      //   type: 'item',
-      //   icon: 'fa fa-dashboard',
-      //   url: '/API/',
-      //   children: [],
-      // },
-    ],
+    items: []
   },
   mainmenu: {
     items: [

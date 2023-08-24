@@ -207,12 +207,6 @@ function EnglishPrivacyAct() {
                       <span>①	Personal information processed by the National Cancer Center (National Cancer Data Center) K-CORE is processed in accordance with Article 15 (collection and use of personal information) of the 「Personal Information Protection Act」 in compliance with the personal information protection regulations of the relevant laws.</span>
                       <div className='MarginTop10'>
                         <table className='ktable'>
-                          {/* <colgroup id="COLGROUP_138">
-                          <col id="COL_139" />
-                          <col id="COL_141" />
-                          <col id="COL_141" />
-                          <col id="COL_141" />
-                        </colgroup> */}
                           <tbody >
                             <tr >
                               <th className='kth'>
@@ -695,7 +689,7 @@ function EnglishPrivacyAct() {
                         alt='개인정보처리목적'
                         id="IMG_356" />
                     </h5>
-              
+
                     <div className='div_64' style={{ padding: '2%' }}>
                       <p >① This personal information processing policy will be applied from September 30, 2022.</p>
                     </div>
