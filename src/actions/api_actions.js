@@ -149,39 +149,6 @@ export function samplesCount(type, data) {
   };
 }
 
-export function sendEmail(method, data) {
-  return (dispatch) => {
-    const url = `${config.auth}send-mail/`;
-    sendRequest(url, method, data)
-      .then((result) => {
-        const d = result;
-        dispatch({
-          type: homeConstants.OTP_REQUEST,
-          payload: d.data,
-        });
-        dispatch({ type: homeConstants.REQUEST_DONE });
-      })
-
-      .catch(() => { });
-  };
-}
-export function verifyOTP(method, data) {
-  return (dispatch) => {
-    const url = `${config.auth}validate/`;
-    sendRequest(url, method, data)
-      .then((result) => {
-        const d = result;
-        dispatch({
-          type: homeConstants.OTP_VALIDATION,
-          payload: d.data,
-        });
-        dispatch({ type: homeConstants.REQUEST_DONE });
-      })
-
-      .catch(() => { });
-  };
-}
-
 
 export function interPro(method, data) {
   return (dispatch) => {
@@ -254,39 +221,6 @@ export function vcfmaf(method, data) {
   };
 }
 
-export function checkEmail(method, data) {
-  return (dispatch) => {
-    const url = `${config.auth}checkemail/`;
-    sendRequest(url, method, data)
-      .then((result) => {
-        const d = result;
-        dispatch({
-          type: homeConstants.CHECK_EMAIL,
-          payload: d.data,
-        });
-        dispatch({ type: homeConstants.REQUEST_DONE });
-      })
-
-      .catch(() => { });
-  };
-}
-
-export function checkMobile(method, data) {
-  return (dispatch) => {
-    const url = `${config.auth}checkMobile/`;
-    sendRequest(url, method, data)
-      .then((result) => {
-        const d = result;
-        dispatch({
-          type: homeConstants.CHECK_MOBILE,
-          payload: d.data,
-        });
-        dispatch({ type: homeConstants.REQUEST_DONE });
-      })
-
-      .catch(() => { });
-  };
-}
 
 export function changePassword(method, data) {
   const url = `${config.auth}change-password/`;
@@ -312,14 +246,7 @@ export function verifyEncodeData(method, data) {
 
 export function NoticeDetail(type) {
   const url = `${config.auth}notice-popup/`;
-  // let url = config.auth + `notice-api-get/${data.id}?id=${data.id}`;
   return sendRequest(url, type, '');
-}
-
-
-export function DashboardCount() {
-  const url = `${config.auth}data-count/`;
-  return sendRequest(url, 'GET', '');
 }
 
 export function SetCookie() {
@@ -441,40 +368,6 @@ export function LolipopInformation(type, data) {
   return sendRequest(url, type, data);
 }
 
-export function getFusionTable(type, data) {
-  return (dispatch) => {
-    const url = `${config.auth}getFusionTable/`;
-    sendRequest(url, type, data)
-      .then((result) => {
-        const d = result;
-        if (d.status === 200) {
-          dispatch({
-            type: dataVisualization.FUSIONTABLE_REQUEST,
-            payload: d,
-          });
-        }
-      })
-      .catch(() => { });
-  };
-}
-
-export function getFusionVennDaigram(type, data) {
-  return (dispatch) => {
-    const url = `${config.auth}getFusionVenn/`;
-    sendRequest(url, type, data)
-      .then((result) => {
-        const d = result;
-        if (d.status === 200) {
-          dispatch({
-            type: dataVisualization.FUSIONVENN_REQUEST,
-            payload: { res: { ...d.data }, status: 200 },
-          });
-        }
-      })
-      .catch(() => { });
-  };
-}
-
 export function FusionVennDaigram(type, data) {
   const url = `${config.auth}getFusionVenn/`;
   return sendRequest(url, type, data);
@@ -519,33 +412,6 @@ export function SankeyJson(type, data) {
 export function VolcanoPlotInfo(type, data) {
   const url = `${config.auth}volcano/`;
   return sendRequest(url, type, data);
-}
-export function userDefinedGetVolcanoPlotInfo(type, data) {
-  return (dispatch) => {
-    const url = `${config.auth}userdefined-volcano-info/`;
-    sendRequest(url, type, data)
-      .then((result) => {
-        const d = result;
-        if (d.status === 200) {
-          dispatch({
-            type: dataVisualization.USER_DEFINED_VOLCANO_REQUEST,
-            payload: { ...d.data, status: 200 },
-          });
-        } else {
-          dispatch({
-            type: dataVisualization.USER_DEFINED_VOLCANO_REQUEST,
-            payload: { status: 204 },
-          });
-        }
-        dispatch({ type: dataVisualization.REQUEST_DONE });
-      })
-      .catch(() => {
-        dispatch({
-          type: dataVisualization.USER_DEFINED_VOLCANO_REQUEST,
-          payload: { status: 204 },
-        });
-      });
-  };
 }
 
 export function getHeatmapInformation(type, data) {
@@ -1099,23 +965,6 @@ export function ScatterInformation(type, data) {
   return sendRequest(url, type, data);
 }
 
-export function getGeneFusionInformation(type, data) {
-  return (dispatch) => {
-    const url = `${config.auth}check-fusion-genes/`;
-    sendRequest(url, type, data)
-      .then((result) => {
-        const d = result;
-        dispatch({ type: dataVisualization.REQUEST_DONE });
-        dispatch({
-          type: dataVisualization.CHECK_GENE_FUSION_REQUEST,
-          payload: d.data,
-        });
-        dispatch({ type: dataVisualization.REQUEST_DONE });
-      })
-      .catch(() => { });
-  };
-}
-
 export function getFusionExons(type, data) {
   return (dispatch) => {
     const url = `${config.auth}getFusionExons/`;
@@ -1240,42 +1089,6 @@ export function getCircosTimelineTable(method, data) {
 export function CircosTimelineTable(method, data) {
   const url = `${config.auth}onco-age-diagram/`;
   return sendRequest(url, method, data);
-}
-
-export function getPassEncodeId(type, data) {
-  return (dispatch) => {
-    const url = `${config.auth}niceKey/`;
-    sendRequest(url, type, data)
-      .then((result) => {
-        const r = result.data;
-        if (result.status === 200) {
-          dispatch({ type: dataVisualization.REQUEST_DONE });
-          dispatch({
-            type: dataVisualization.PASS_ENCODE_ID,
-            payload: r,
-          });
-        }
-      })
-      .catch(() => { });
-  };
-}
-
-export function checkUserName(type, data) {
-  return (dispatch) => {
-    const url = `${config.auth}registration/?type=${data.type}&value=${data.value}`;
-    sendRequest(url, type, data)
-      .then((result) => {
-        const r = result.data;
-        if (result.status === 200) {
-          dispatch({ type: dataVisualization.REQUEST_DONE });
-          dispatch({
-            type: dataVisualization.CHECK_USER,
-            payload: r,
-          });
-        }
-      })
-      .catch(() => { });
-  };
 }
 
 export function userRegister(type, data) {

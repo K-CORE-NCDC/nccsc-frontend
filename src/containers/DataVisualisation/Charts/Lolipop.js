@@ -536,7 +536,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                               setActiveTab('2')
                               setBtnClickNote(false)
                             }
-                          }} name='type' >  <FormattedMessage id="Phospho" defaultMessage='Phospho' /> </button></li>}
+                          }} name='type' >  <FormattedMessage id="Phosphorylation" defaultMessage='Phosphorylation' /> </button></li>}
                       {project_id === undefined &&
                         <li className={activeTab === '2' ? 'on' : ''}> <button id='Phospho'
                           onClick={(e) => {
@@ -547,7 +547,7 @@ export default function DataLolipop({ width, inputData, screenCapture, setToFals
                               setActiveTab('2')
                               setBtnClickNote(false)
                             }
-                          }} name='type' >  <FormattedMessage id="Phospho" defaultMessage='Phospho' /> </button></li>}
+                          }} name='type' >  <FormattedMessage id="Phosphorylation" defaultMessage='Phosphorylation' /> </button></li>}
                     </ul>
                   </div>
                 </div>

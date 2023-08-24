@@ -901,8 +901,8 @@ export default function DataHeatmap({ width, inputData, screenCapture, brstKeys,
                     </div>
                   </div>
 
-                  <input type="range" className="custom-slider opacity-100"
-                    id="points" name="points" min="1" step={1} max={clusterRange} defaultValue={rangeValue} onChange={rangeCall} />
+                  {rangeValue && <input type="range" className="custom-slider opacity-100"
+                    id="points" name="points" min="1" step={1} max={clusterRange} defaultValue={rangeValue} onChange={rangeCall} />}
                   <ul className="" id='tickmarks'>
                     <li key="min-range" className=""><span className="absolute">1</span></li>
                     <li key="max-range" className=""><span className="absolute">{clusterRange}</span></li>

@@ -13,109 +13,159 @@ import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
 
 
 
-
-function ModalDiv() {
-
-  const verificationResponse = useSelector(
-    (data) => data.homeReducer.multiFileUploadData
-  );
-  return (verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] !== '' && <div className="MarginBottom4">
-    <div className="InsideModel">
-      {/*content*/}
-      <div className="ErrorModalDivHeader">
-        {/*header*/}
-        <div className="HeaderTitle" style={{ textAlign: 'center', fontSize: '20px' }}>
-          <h3>
-            Errors in the Columns of Uploaded Files
-          </h3>
-        </div>
-
-        {/* Render the error messages */}
-        {verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'allFileColumns' &&
-          verificationResponse['res'].map((item, index) => {
-            return (
-              <div key={index} style={{ margin: "20px", maxHeight: "400px", overflowY: "auto" }}>
-                <ul>
-                  {item['message'] !== "" && (
-                    <li style={{ textTransform: "uppercase", margin: "auto", fontSize: "15px", fontWeight: "500" }}>
-                      Error in File {item['tab']}:
-                      <p className="MarginTop4 MarginLeft4" style={{ fontSize: "12px", marginLeft: "3rem" }}>
-                        {item['message']}
-                      </p>
-                    </li>
-                  )}
-                </ul>
-              </div>
-            );
-          })}
-
-        {verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'clinicalInforamtionFile' && (
-          <div className="ClinicalInformationErrors">
-            <div>
-              <h2>
-                Clinical Information
-              </h2>
-              {Object.keys(verificationResponse["clinicalRows"]).map((filename) => {
-                return (
-                  <div key={Math.random} style={{ margin: "20px", maxHeight: "400px", overflowY: "auto" }}>
-                    <div className="uppercase" style={{ fontSize: "20px" }}>
-                      {filename}
-                    </div>
-                    <ul>
-                      {Object.keys(verificationResponse["clinicalRows"][filename]).map((item, index) => {
-                        return (
-                          <li style={{ textTransform: "uppercase", margin: "auto", fontSize: "15px", fontWeight: "500", marginLeft: "20px" }} key={Math.random}>
-                            <p style={{ fontSize: "12px" }}>{verificationResponse["clinicalRows"][filename][index]}</p>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'DataIssues' && (
-          <div style={{ margin: "20px", maxHeight: "400px", overflowY: "auto" }}>
-            {Object.entries(verificationResponse.result).map(([tabName, tabData]) => (
-              <div key={tabName} style={{ textTransform: "uppercase", margin: "auto" }}>
-                {tabData[0]['is_error'] && <h2 style={{ textTransform: "uppercase", margin: "auto", fontSize: "15px" }}>{tabData[0]['tab']}</h2>}
-                <ul>
-                  {tabData.slice(1).map((rowData) => {
-                    const rowNumber = Object.keys(rowData)[0];
-                    const rowValues = rowData[rowNumber];
-                    return Object.entries(rowValues).map(([columnName, columnData]) => {
-                      const { success, message, row } = columnData;
-
-                      if (success === "False") {
-                        return (
-                          <li key={columnName} className="MarginTop4 MarginLeft4">
-                            Row {row}: In {columnName} Column {message} but Found Something Else.
-                          </li>
-                        );
-                      }
-                      return null;
-                    });
-                  })}
-                </ul>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  </div>)
-
-}
-
 function ErrorMessage() {
   const verificationResponse = useSelector(
     (data) => data.homeReducer.multiFileUploadData
   );
   return verificationResponse && 'issue' in verificationResponse && (verificationResponse['issue'] === 'allFileColumns' || verificationResponse['issue'] === 'clinicalInforamtionFile' || verificationResponse['issue'] === 'DataIssues') &&
     <p className="h5 MultiUploadTextCenter"><FormattedMessage id="UserDataGuideMessage" defaultMessage="Red mark for invalid data." /></p>
+}
+
+function Modal({ showModal, toggleModal }) {
+
+  const verificationResponse = useSelector(
+    (data) => data.homeReducer.multiFileUploadData
+  );
+  return (
+    <>
+      {showModal ? (
+        <>
+          {verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] !== '' &&
+            <div className="Toolmodal-container">
+              <div className="Toolmodal-content" style={{ maxWidth: "60vw" }}>
+                {/*content*/}
+                <div className="Toolmodal-dialog">
+                  {/*header*/}
+                  <div className="Toolmodal-header">
+                    <h3 className="Toolmodal-title">Sample File Download</h3>
+                    <button
+                      className="Toolmodal-close-btn"
+                      onClick={() => toggleModal(false, '')}
+                    >
+                      ×
+                    </button>
+                  </div>
+                  {/*body*/}
+
+
+
+
+
+
+
+                  <div className="Toolmodal-body">
+
+                    <div className="MarginBottom4">
+                      <div className="InsideModel">
+                        {/*content*/}
+                        <div className="ErrorModalDivHeader">
+                          {/*header*/}
+                          <div className="HeaderTitle" style={{ textAlign: 'center', fontSize: '20px' }}>
+                            <h3>
+                              Errors in the Columns of Uploaded Files
+                            </h3>
+                          </div>
+
+                          {/* Render the error messages */}
+                          {verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'allFileColumns' &&
+                            verificationResponse['res'].map((item, index) => {
+                              return (
+                                <div key={index} style={{ margin: "20px", maxHeight: "400px", overflowY: "auto" }}>
+                                  <ul>
+                                    {item['message'] !== "" && (
+                                      <li style={{ textTransform: "uppercase", margin: "auto", fontSize: "15px", fontWeight: "500" }}>
+                                        Error in File {item['tab']}:
+                                        <p className="MarginTop4 MarginLeft4" style={{ fontSize: "12px", marginLeft: "3rem" }}>
+                                          {item['message']}
+                                        </p>
+                                      </li>
+                                    )}
+                                  </ul>
+                                </div>
+                              );
+                            })}
+
+                          {verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'clinicalInforamtionFile' && (
+                            <div className="ClinicalInformationErrors">
+                              <div>
+                                <h2>
+                                  Clinical Information
+                                </h2>
+                                {Object.keys(verificationResponse["clinicalRows"]).map((filename) => {
+                                  return (
+                                    <div key={Math.random} style={{ margin: "20px", maxHeight: "400px", overflowY: "auto" }}>
+                                      <div className="uppercase" style={{ fontSize: "20px" }}>
+                                        {filename}
+                                      </div>
+                                      <ul>
+                                        {Object.keys(verificationResponse["clinicalRows"][filename]).map((item, index) => {
+                                          return (
+                                            <li style={{ textTransform: "uppercase", margin: "auto", fontSize: "15px", fontWeight: "500", marginLeft: "20px" }} key={Math.random}>
+                                              <p style={{ fontSize: "12px" }}>{verificationResponse["clinicalRows"][filename][index]}</p>
+                                            </li>
+                                          );
+                                        })}
+                                      </ul>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          )}
+
+                          {verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'DataIssues' && (
+                            <div style={{ margin: "20px", maxHeight: "400px", overflowY: "auto" }}>
+                              {Object.entries(verificationResponse.result).map(([tabName, tabData]) => (
+                                <div key={tabName} style={{ textTransform: "uppercase", margin: "auto" }}>
+                                  {tabData[0]['is_error'] && <h2 style={{ textTransform: "uppercase", margin: "auto", fontSize: "15px" }}>{tabData[0]['tab']}</h2>}
+                                  <ul>
+                                    {tabData.slice(1).map((rowData) => {
+                                      const rowNumber = Object.keys(rowData)[0];
+                                      const rowValues = rowData[rowNumber];
+                                      return Object.entries(rowValues).map(([columnName, columnData]) => {
+                                        const { success, message, row } = columnData;
+                                        if (success === "False") {
+                                          return (
+                                            <li key={columnName} className="MarginTop4 MarginLeft4">
+                                              Row {row}: In {columnName} Column {message} but Found Something Else.
+                                            </li>
+                                          );
+                                        }
+                                        return null;
+                                      });
+                                    })}
+                                  </ul>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+                  {/*footer*/}
+                  <div className="Toolmodal-footer">
+                    <button
+                      className="Toolmodal-close-btn"
+                      onClick={() => toggleModal(false, '')}
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+          <div className="Toolmodal-overlay"></div>
+        </>
+      ) : null}
+    </>
+  );
 }
 
 function MultiDataTable({ updateComponentNumber }) {
@@ -126,8 +176,14 @@ function MultiDataTable({ updateComponentNumber }) {
   const [projectId, setProjectId] = useState(0);
   const [activeTableKey, setActiveTableKey] = useState("");
   const [navTabIs, setNavTabIs] = useState('circos')
+  const [showModal, setShowModal] = useState(false)
+
+  let toggleModal = (status) => {
+    setShowModal(status)
+  }
   let history = useHistory();
   let { tab } = useParams();
+
   const verificationResponse = useSelector(
     (data) => data.homeReducer.multiFileUploadData
   );
@@ -280,6 +336,14 @@ function MultiDataTable({ updateComponentNumber }) {
     ]
   }
 
+  const InforIcon = () => {
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" style={{ width: "1.5rem", height: "1.5rem" }} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+      </svg>
+    )
+  }
+
   return (
     <div>
       <HeaderComponent
@@ -301,10 +365,19 @@ function MultiDataTable({ updateComponentNumber }) {
           </h3>
         </div>
         <div className="auto">
+          {verificationResponse && 'issue' in verificationResponse && (verificationResponse['issue'] === 'allFileColumns' || verificationResponse['issue'] === 'clinicalInforamtionFile' || verificationResponse['issue'] === 'DataIssues') &&
+            <button onClick={() => toggleModal(true)} className="ToolModalBtn" style={{ float: "right" }}>
+              <InforIcon />
+            </button>
+          }
 
-          {/* <ModalDiv /> */}
+          <div>
+            {showModal && <Modal showModal={showModal} toggleModal={toggleModal} />}
+          </div>
 
           <ErrorMessage />
+
+          <p className="h5 MultiUploadTextCenter"><FormattedMessage id="loginGuide" defaultMessage="The user should be responsible for using result." /></p>
 
           <div className="flex" style={{ justifyContent: 'space-between' }}>
             {projectId === 0 ?
