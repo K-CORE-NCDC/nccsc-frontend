@@ -96,7 +96,7 @@ export function sendlogManagement(method, data) {
         dispatch({ type: homeConstants.REQUEST_DONE });
       })
 
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -167,7 +167,7 @@ export function interPro(method, data) {
           dispatch({ type: homeConstants.REQUEST_DONE });
         })
 
-        .catch(() => {});
+        .catch(() => { });
     } else {
       // formData.append('container_name',data['container_name'])
       url += `?container_name=${data.container_name}`;
@@ -181,7 +181,7 @@ export function interPro(method, data) {
           dispatch({ type: homeConstants.REQUEST_DONE });
         })
 
-        .catch(() => {});
+        .catch(() => { });
     }
   };
 }
@@ -202,7 +202,7 @@ export function vcfmaf(method, data) {
           dispatch({ type: homeConstants.REQUEST_DONE });
         })
 
-        .catch(() => {});
+        .catch(() => { });
     } else {
       // formData.append('container_name',data['container_name'])
       url += `?container_name=${data.container_name}`;
@@ -216,7 +216,7 @@ export function vcfmaf(method, data) {
           dispatch({ type: homeConstants.REQUEST_DONE });
         })
 
-        .catch(() => {});
+        .catch(() => { });
     }
   };
 }
@@ -239,7 +239,7 @@ export function verifyEncodeData(method, data) {
           payload: d.data
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -298,7 +298,7 @@ export function getUserFiles() {
           payload: d.data
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -396,7 +396,7 @@ export function getClinicalMaxMinInfo(type, data) {
           });
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -557,7 +557,7 @@ export function clearNewFileUploadState() {
 export function clearSingleFIleUploadState() {
   return (dispatch) =>
     dispatch({
-      type: homeConstants.CLEAR_SINGLE_USER_DATA_VISUALIZATION,
+      type: homeConstants.SINGLE_USERDATA_VISUALIZATION,
       payload: {}
     });
 }
@@ -565,11 +565,10 @@ export function clearSingleFIleUploadState() {
 export function clearMultiFIleUploadState() {
   return (dispatch) =>
     dispatch({
-      type: homeConstants.CLEAR_MULTI_USER_DATA_VISUALIZATION,
+      type: homeConstants.MULTI_USERDATA_VISUALIZATION,
       payload: {}
     });
 }
-
 export function clearUploadClinicalColumns() {
   return (dispatch) =>
     dispatch({
@@ -741,7 +740,7 @@ export function getBreastKeys(data_) {
         });
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -766,7 +765,7 @@ export function getCircosUserData(data_) {
           payload: d.data
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -791,7 +790,7 @@ export function getOncoUserData(data_) {
           payload: d.data
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -813,7 +812,7 @@ export function getVolcanoUserData(data_) {
           payload: d.data
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -897,7 +896,7 @@ export function sendReportData(type, data) {
           payload: d.data
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 export function clearPdfLink() {
@@ -920,7 +919,7 @@ export function getCircosSamplesRnidList() {
           payload: d.data
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -973,7 +972,7 @@ export function getFusionExons(type, data) {
         });
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -990,7 +989,7 @@ export function getFusionInformation(type, data) {
         });
         dispatch({ type: dataVisualization.REQUEST_DONE });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -1049,7 +1048,7 @@ export function getOncoImages(method, data) {
           payload
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -1077,7 +1076,7 @@ export function getCircosTimelineTable(method, data) {
           payload
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -1100,7 +1099,7 @@ export function userRegister(type, data) {
         });
         dispatch({ type: homeConstants.REQUEST_DONE });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -1175,7 +1174,7 @@ export function updateDownloadVisualizationPurpose(data) {
         });
         return result;
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -1200,7 +1199,7 @@ export function getFaqData(id) {
           payload: d.data
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -1219,7 +1218,7 @@ export function getProjectsData(id) {
           payload: d.data
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -1234,7 +1233,7 @@ export function getNoticeData(id) {
           payload: d.data
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 
@@ -1256,7 +1255,7 @@ export function getQaData(id, data) {
           payload: d.data
         });
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 }
 

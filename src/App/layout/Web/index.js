@@ -224,20 +224,29 @@ export default function Web() {
 
 
   useEffect(() => {
-    let date = new Date().toISOString().split('T')[0];
+
+    let noticeDate = new Date()
+    const options = { timeZone: "Asia/Seoul", year: 'numeric', month: 'numeric', day: 'numeric' };
+    noticeDate = noticeDate.toLocaleString("en-US", options);
+
     if (localStorage.getItem('ncc_notice_popup') === null) {
-      localStorage.setItem('ncc_notice_popup', JSON.stringify({ date: date, showpopup: true }));
+      localStorage.setItem('ncc_notice_popup', JSON.stringify({ date: noticeDate, showpopup: true }));
       setShowPopup(true);
     } else if (localStorage.getItem('ncc_notice_popup') !== null) {
+
       let check_popup = JSON.parse(localStorage.getItem('ncc_notice_popup'));
-      if (check_popup['date'] === date && check_popup['showpopup']) {
+
+      if (check_popup['date'] === noticeDate && check_popup['showpopup']) {
         setShowPopup(true);
-      } else if (check_popup['date'] === date && !check_popup['showpopup']) {
+      } else if (check_popup['date'] === noticeDate && !check_popup['showpopup']) {
         setShowPopup(false);
-      } else {
-        localStorage.setItem('ncc_notice_popup', JSON.stringify({ date: date, showpopup: true }));
-        setShowPopup(true);
+      } else if (new Date(noticeDate) > new Date(check_popup['date'])) {
+        localStorage.setItem('ncc_notice_popup', JSON.stringify({ date: noticeDate, showpopup: true }));
       }
+      else if (check_popup['date'] !== noticeDate) {
+        setShowPopup(false);
+      }
+
     }
     if (!sessionStorage.getItem('location')) {
       // updateLocation();
@@ -737,7 +746,7 @@ export default function Web() {
                 setMainPageInSmallScreen={(data) => setMainPageInSmallScreen(data)}
                 mainPageInSmallScreen={mainPageInSmallScreen}
               />
-              <Route exact path="*" component={NotFound} lan={context.locale}/>
+              <Route exact path="*" component={NotFound} lan={context.locale} />
             </Switch>
           </Suspense>
           <div>{showPopup && <Popup toggleModal={toggleModal} />}</div>

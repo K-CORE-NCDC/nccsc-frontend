@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import DataTable from "react-data-table-component";
 import { FormattedMessage } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -8,6 +7,7 @@ import {
 } from "../../../actions/api_actions";
 import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
 import LoaderCmp from "../../Common/Loader";
+import Table from '../../Common/Table/ReactTable';
 
 
 
@@ -35,7 +35,7 @@ function Modal({ showModal, toggleModal }) {
                 <div className="Toolmodal-dialog">
                   {/*header*/}
                   <div className="Toolmodal-header">
-                    <h3 className="Toolmodal-title">Sample File Download</h3>
+                    <h3 className="Toolmodal-title">Errors</h3>
                     <button
                       className="Toolmodal-close-btn"
                       onClick={() => toggleModal(false, '')}
@@ -173,7 +173,8 @@ function MultiDataTable({ updateComponentNumber }) {
   const [tableNavTabs, setTableNavTabs] = useState([]);
   const [projectId, setProjectId] = useState(0);
   const [activeTableKey, setActiveTableKey] = useState("");
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(true)
+  const [loading, setLoading] = useState(true)
 
   let toggleModal = (status) => {
     setShowModal(status)
@@ -190,6 +191,8 @@ function MultiDataTable({ updateComponentNumber }) {
   const tabDropdownTable = (tab) => {
     setActiveTableKey(tab);
   };
+
+
 
   useEffect(() => {
     if (verificationResponse && verificationResponse['project_details']) {
@@ -245,26 +248,29 @@ function MultiDataTable({ updateComponentNumber }) {
           for (let i = 0; i < columns.length; i++) {
             rowObject[columns[i]] = '';
             Tablecolumns.push({
-              name: columns[i],
-              selector: (row) => {
+              Header: columns[i],
+              accessor: (row) => {
                 let rdata = String(row[columns[i]]);
                 let v = rdata.split('||');
                 if (v.length > 1) {
                   return (
-                    <div className="boardCell" style={{ color: 'red' }}>
+                    <div className="" style={{ color: 'red' }}>
                       {v[1]}
                     </div>
                   );
                 } else {
-                  return <div className="boardCell">{String(row[columns[i]])}</div>;
+                  return <div className="">{String(row[columns[i]])}</div>;
                 }
-              },
-              className: 'boardCell',
-              sortable: true
+              }
             });
           }
-
           let tempRow = { ...rowObject };
+          Tablecolumns?.forEach(ele => {
+            if (ele?.Header === 'sample_id') {
+              ele["fixed"] = 'left'
+            }
+          })
+          console.log('Tablecolumns', Tablecolumns)
           setColData(Tablecolumns);
           // setting the row data
           let rawRowData = verificationResponse['result'][key];
@@ -285,6 +291,7 @@ function MultiDataTable({ updateComponentNumber }) {
             }
           }
           setRowData(rowdata);
+          setLoading(false)
         }
       }
       let projectResponse =
@@ -344,6 +351,7 @@ function MultiDataTable({ updateComponentNumber }) {
         breadCrumbs={breadCrumbs['/newmultidataproject/']}
         type="single"
       />
+
       <article id="subContents" className="subContents">
         <div className="contentsTitle">
           <h3>
@@ -366,10 +374,11 @@ function MultiDataTable({ updateComponentNumber }) {
             </button>
           }
 
-          <div>
-            {showModal && <Modal showModal={showModal} toggleModal={toggleModal} />}
-          </div>
-
+          {verificationResponse && 'issue' in verificationResponse && (verificationResponse['issue'] === 'allFileColumns' || verificationResponse['issue'] === 'clinicalInforamtionFile' || verificationResponse['issue'] === 'DataIssues') &&
+            <div>
+              {showModal && <Modal showModal={showModal} toggleModal={toggleModal} />}
+            </div>
+          }
           <ErrorMessage />
 
           <p className="h5 MultiUploadTextCenter"><FormattedMessage id="loginGuide" defaultMessage="The user should be responsible for using result." /></p>
@@ -415,27 +424,29 @@ function MultiDataTable({ updateComponentNumber }) {
             )}
           </div>
 
-          <div className="boardList">
-            {verificationResponse && (
-              <DataTable
-                title=""
-                columns={colData}
-                data={rowData}
-                defaultSortField="title"
-                pagination
-                conditionalRowStyles={conditionalRowStyles}
-                customStyles={{
-                  table: {
-                    border: '1px solid black'
-                  },
-                  pagination: {
-                    style: {
-                      gap: '10px'
-                    }
-                  }
-                }}
-              />
-            )}
+          <div className="boardList" style={{ width: '100%' }}>
+            {loading ?
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3%', flexDirection: 'column' }}>
+                <span style={{ textAlign: 'center' }}><LoaderCmp /></span>
+
+                <p className="text-center" style={{ marginTop: '3%', textAlign: 'center' }}>
+                  <FormattedMessage
+                    id="WaitMessage"
+                    defaultMessage=" It takes some time to process the data. Please wait ! (2 minutes per 100 samples)"
+                  />
+                </p>
+
+              </div>
+              :
+              <div style={{ marginTop: '3%' }}>
+                <Table
+                  title=""
+                  columns={colData}
+                  data={rowData}
+                  width="3300"
+                />
+              </div>
+            }
             {!verificationResponse && (
               <div className="MultiUploadTextCenter">
                 <LoaderCmp />

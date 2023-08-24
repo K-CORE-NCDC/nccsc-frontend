@@ -141,54 +141,6 @@ export default function FusionPlot({
     {
       Header: intl.formatMessage({ id: "SampleName", defaultMessage: 'Sample Name' }),
       accessor: (row) => row?.sample_id?.join(','),
-      // Cell: ({ cell: { row, value } }) => {
-      //   let html = [];
-      //   let check = false;
-      //   if ('group 1' in row) {
-      //     let s = row['group 1'];
-
-      //     html.push(
-      //       <p>
-      //         <strong>Group 1:</strong> {s.join(',')}
-      //       </p>
-      //     );
-      //     check = true;
-      //   }
-      //   if ('group 2' in row) {
-      //     let s = row['group 2'];
-      //     html.push(
-      //       <p>
-      //         <strong>Group 2:</strong> {s.join(',')}
-      //       </p>
-      //     );
-      //     check = true;
-      //   }
-      //   if ('group 3' in row) {
-      //     let s = row['group 3'];
-      //     html.push(
-      //       <p>
-      //         <strong>Group 3:</strong> {s.join(',')}
-      //       </p>
-      //     );
-      //     check = true;
-      //   }
-      //   if (!check) {
-      //     let s = row['sample_id'];
-      //     s = [...new Set(s)];
-      //     html.push(s.join(','));
-      //     // html.push(s);
-      //   }
-      //   let main_html = [];
-      //   main_html.push(
-      //     <div className="flex flex-col w-full text-left" style={{ gap: '10px' }}>
-      //       {value}
-      //       <button onClick={(e) => generateFusion(e, row.id)} id={row.id}>
-      //         <EyeIcon style={{ width: '15px' }} />
-      //       </button>
-      //     </div>
-      //   );
-      //   return main_html;
-      // }
     },
     {
       Header: intl.formatMessage({ id: "LeftGeneName", defaultMessage: 'Left Gene Name' }),
