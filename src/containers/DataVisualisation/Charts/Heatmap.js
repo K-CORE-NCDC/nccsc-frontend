@@ -362,6 +362,7 @@ export default function DataHeatmap({
   const changeType = (e, type) => {
     e.preventDefault();
     setTableType(type);
+    setRangeValue(5)
     let c = document.getElementsByName('type');
     setLoader(true);
     for (var i = 0; i < c.length; i++) {
@@ -1053,7 +1054,7 @@ export default function DataHeatmap({
                     min="1"
                     step={1}
                     max={clusterRange}
-                    defaultValue={rangeValue}
+                    value={rangeValue}
                     onChange={rangeCall}
                   />
                   <ul className="" id="tickmarks">
