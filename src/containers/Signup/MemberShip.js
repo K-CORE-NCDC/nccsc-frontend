@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import {checkEmail,checkMobile,checkUserName,getPassEncodeId, sendEmail, userRegister,verifyOTP} from '../../actions/api_actions';
+import { userRegister} from '../../actions/api_actions';
 import '../../styles/clustergram.css';
 import { Context } from '../../wrapper';
 
