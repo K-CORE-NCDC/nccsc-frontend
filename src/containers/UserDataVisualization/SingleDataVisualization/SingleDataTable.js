@@ -36,7 +36,7 @@ function Modal({ showModal, toggleModal }) {
                 <div className="Toolmodal-dialog">
                   {/*header*/}
                   <div className="Toolmodal-header">
-                    <h3 className="Toolmodal-title">Sample File Download</h3>
+                    <h3 className="Toolmodal-title">Errors</h3>
                     <button
                       className="Toolmodal-close-btn"
                       onClick={() => toggleModal(false, '')}
@@ -381,17 +381,26 @@ function SingleDataTable({ updateComponentNumber }) {
         )}
       </div>
 
-      <div className="boardList" style={{ textAlign: 'center' }}>
+      <div className="boardList" style={{ width: '100%' }}>
         {loading ?
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <LoaderCmp /> </div>
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3%', flexDirection: 'column' }}>
+            <span style={{ textAlign: 'center' }}><LoaderCmp /></span>
+
+            <p className="text-center" style={{ marginTop: '3%', textAlign: 'center' }}>
+              <FormattedMessage
+                id="WaitMessage"
+                defaultMessage=" It takes some time to process the data. Please wait ! (2 minutes per 100 samples)"
+              />
+            </p>
+
+          </div>
           :
           <div style={{ marginTop: '3%' }}>
             <Table
               title=""
               columns={colData}
               data={rowData}
-              width="3300"
+              width={"3300"}
             />
           </div>
         }

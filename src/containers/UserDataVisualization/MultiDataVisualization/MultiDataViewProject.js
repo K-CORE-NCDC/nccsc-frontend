@@ -103,7 +103,7 @@ function ProjectsList() {
       Header: intl.formatMessage({ id: "VisualizationColumn", defaultMessage: 'Visualization' }),
       accessor: (row) => row?.view,
       Cell: (row) => (
-        <div className="MultiDataTableViewDelete">
+        <div>
           <Link
             to={{
               pathname: `/visualise-multidata/home/${row?.row?.original?.project_id}`,
