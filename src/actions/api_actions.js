@@ -565,11 +565,10 @@ export function clearSingleFIleUploadState() {
 export function clearMultiFIleUploadState() {
   return (dispatch) =>
     dispatch({
-      type: homeConstants.CLEAR_MULTI_USER_DATA_VISUALIZATION,
+      type: homeConstants.MULTI_USERDATA_VISUALIZATION,
       payload: {}
     });
 }
-
 export function clearUploadClinicalColumns() {
   return (dispatch) =>
     dispatch({

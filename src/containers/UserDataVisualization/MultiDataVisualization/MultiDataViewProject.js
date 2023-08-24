@@ -11,6 +11,8 @@ import { MultiProjectsDelete, MultiProjectsView } from '../../../actions/api_act
 import config from '../../../config';
 import '../../../interceptor/interceptor';
 import HeaderComponent from '../../Common/HeaderComponent/HeaderComponent';
+import Table from '../../Common/Table/ReactTable';
+import { useIntl } from 'react-intl';
 
 function ProjectsList() {
   let history = useHistory();
@@ -19,6 +21,7 @@ function ProjectsList() {
   const [totalRows, setTotalRows] = useState(0);
   const [perPage, setPerPage] = useState(10);
   const [loading, setLoading] = useState(false);
+  const intl = useIntl();
   const selectInput = 'title'
   const searchInput = ''
 
@@ -53,14 +56,14 @@ function ProjectsList() {
     setLoading(false);
   };
 
+
   const deleteRow = async (projectId) => {
-    // const response = await axios.get(config.auth + `delete-user-project-data/${projectId}`);
-    let data = MultiProjectsDelete('GET', projectId);
-    data.then((response) => {
+    // const response = await axios.get(config.auth + `delete-user-project-data/${projectId}`);    
+    let data = MultiProjectsDelete('GET', projectId); data.then((response) => {
       if ('data' in response) {
-        setTableData(response.data.data);
-        setTotalRows(response.data.total);
-        setLoading(false);
+        if (response?.data?.message === 'File deleted Successfully') {
+          fetchUsers(1, 'GET')
+        }
       }
     });
   };
@@ -89,18 +92,22 @@ function ProjectsList() {
 
   const columns = [
     {
-      name: <FormattedMessage id="Number" defaultMessage="No" />,
-      selector: (_, index) => index + 1 + (currentPage - 1) * perPage,
-      sortable: true
+      Header: intl.formatMessage({ id: "Number", defaultMessage: 'No' }),
+      accessor: () => ' ',
+      Cell: ({ cell: { value, row } }) => (
+        < div title={value}>
+          {parseInt(row?.index) + parseInt(1) + (currentPage - 1) * perPage}</div>
+      ),
     },
     {
-      name: <FormattedMessage id="VisualizationColumn" defaultMessage="Visualization" />,
-      cell: (row) => (
+      Header: intl.formatMessage({ id: "VisualizationColumn", defaultMessage: 'Visualization' }),
+      accessor: (row) => row?.view,
+      Cell: (row) => (
         <div className="MultiDataTableViewDelete">
           <Link
             to={{
-              pathname: `/visualise-multidata/home/${row?.project_id}`,
-              state: { projectName: row.project_name }
+              pathname: `/visualise-multidata/home/${row?.row?.original?.project_id}`,
+              state: { projectName: row?.row?.original?.project_id }
             }}
           >
             <span style={{ color: 'blue' }}>
@@ -111,7 +118,9 @@ function ProjectsList() {
           <Link to="#">
             <span
               style={{ color: 'blue' }}
-              onClick={() => handleButtonClick('delete', row.project_id)}
+              onClick={() => 
+                handleButtonClick('delete', row?.row?.original?.project_id)
+              }
             >
               <FormattedMessage id="Delete" defaultMessage="Delete" />
             </span>
@@ -122,55 +131,41 @@ function ProjectsList() {
     },
 
     {
-      name: <FormattedMessage id="ProjectName" defaultMessage="Project Name" />,
-      cell: (row) => (
-        <div className="MultiDataTableViewDelete">
-          <div>{row.project_name}</div>
-        </div>
-      ),
-      sortable: true,
-      minWidth: '15%'
+      Header: intl.formatMessage({ id: "ProjectName", defaultMessage: 'Project Name' }),
+      accessor: (original) => original?.project_name,
     },
     {
-      name: <FormattedMessage id="clinicalInformation" defaultMessage="clinicalInformation" />,
-      selector: (row) => (row.clinical_information ? 'O' : ''),
-      sortable: true
+      Header: intl.formatMessage({ id: "clinicalInformation", defaultMessage: 'clinicalInformation' }),
+      accessor: (row) => (row.clinical_information ? 'O' : ''),
     },
     {
-      name: 'DNA Mutation',
-      selector: (row) => (row.dna_mutation ? 'O' : ''),
-      sortable: true
+      Header: 'DNA Mutation',
+      accessor: (row) => (row.dna_mutation ? 'O' : ''),
     },
     {
-      name: 'CNV',
-      selector: (row) => (row.cnv ? 'O' : ''),
-      sortable: true
+      Header: 'CNV',
+      accessor: (row) => (row.cnv ? 'O' : ''),
     },
     {
-      name: 'Methylation',
-      selector: (row) => (row.methylation ? 'O' : ''),
-      sortable: true
+      Header: 'Methylation',
+      accessor: (row) => (row.methylation ? 'O' : ''),
     },
     {
-      name: 'RNA',
-      selector: (row) => (row.rna ? 'O' : ''),
-      sortable: true
+      Header: 'RNA',
+      accessor: (row) => (row.rna ? 'O' : ''),
     },
     {
-      name: 'Fusion',
-      selector: (row) => (row.fusion ? 'O' : ''),
-      sortable: true
+      Header: 'Fusion',
+      accessor: (row) => (row.fusion ? 'O' : ''),
     },
 
     {
-      name: 'Proteome',
-      selector: (row) => (row.proteome ? 'O' : ''),
-      sortable: true
+      Header: 'Proteome',
+      accessor: (row) => (row.proteome ? 'O' : ''),
     },
     {
-      name: 'Phosphorylation',
-      selector: (row) => (row.phospho ? 'O' : ''),
-      sortable: true
+      Header: 'Phosphorylation',
+      accessor: (row) => (row.phospho ? 'O' : ''),
     }
   ];
   const customStyles = {
@@ -222,7 +217,7 @@ function ProjectsList() {
     }
   };
 
- 
+
 
 
   return (
@@ -255,23 +250,10 @@ function ProjectsList() {
       </div>
       <div className="">
         {tableData && (
-          <DataTable
+          <Table
             columns={columns}
             data={tableData}
-            customStyles={customStyles}
-            progressPending={loading}
-            pagination={true}
-            paginationComponentOptions={{
-              rowsPerPageText: (
-                <FormattedMessage id="RowsPerPage" defaultMessage="Rows Per Page">
-                  {(msg) => msg}
-                </FormattedMessage>
-              )
-            }}
-            paginationServer
-            paginationTotalRows={totalRows}
-            onChangeRowsPerPage={handlePerRowsChange}
-            onChangePage={handlePageChange}
+            width={"2300"}
           />
         )}
         {!tableData && <p className="MultiUploadTextCenter">No Records Found</p>}

@@ -85,8 +85,6 @@ function Table({
     }
 
 
-
-
     return (
         <div>
             <div style={{ width: '100%', overflowX: 'auto' }}>
@@ -100,9 +98,7 @@ function Table({
                             >
                                 {headerGroup.headers.map((column) => (
 
-                                    <th className="boardCell IconSpan" {...column.getHeaderProps(column.getSortByToggleProps())} style={{ textAlign: 'center', padding: '16px 24px' }} >
-
-
+                                    <th className={`${column?.fixed !== '' ? '' : ''} boardCell IconSpan`} {...column.getHeaderProps(column.getSortByToggleProps())} style={{ textAlign: 'center', padding: '16px 24px' }} >
                                         {column.render('Header')}
 
                                         <span className={`${column.isSorted ? 'Opacity1' : 'Opacity0'}`}>
@@ -129,8 +125,8 @@ function Table({
                                     {row.cells.map((cell) => {
                                         return (
                                             <td
-                                                className="boardCell"
-                                                {...cell.getCellProps()} style={{ textAlign: 'center' , fontWeight:'400' }}
+                                                className={`${cell?.column?.fixed !== '' ? '' : ''} boardCell`}
+                                                {...cell.getCellProps()} style={{ textAlign: 'center', fontWeight: '400' }}
                                             >
                                                 {cell.render("Cell")}
                                             </td>

@@ -2443,12 +2443,15 @@
 .bg-gray-100 {
   background-color: rgb(243 244 246);
 }
-.Color8F{
+
+.Color8F {
   color: #8f8f8f;
 }
-.IconSpan:hover span{
+
+.IconSpan:hover span {
   opacity: 1;
 }
+
 .rdt_Table {
   display: table !important;
   width: 100% !important;
@@ -2464,82 +2467,103 @@
   display: table-header-group;
   font-weight: 500;
 }
-.rdt_Table .rdt_TableHead .rdt_TableHeadRow{
+
+.rdt_Table .rdt_TableHead .rdt_TableHeadRow {
   border-bottom: 1px solid #2e2e2e;
   display: table-row;
 }
 
-.rdt_Table .rdt_TableHead .rdt_TableHeadRow .rdt_TableCol{
-  color:#2e2e2e;
+.rdt_Table .rdt_TableHead .rdt_TableHeadRow .rdt_TableCol {
+  color: #2e2e2e;
   display: table-cell;
   vertical-align: middle;
   padding: 20px 16px;
   position: relative;
-  font-size:16px;
-  font-weight:500;
+  font-size: 16px;
+  font-weight: 500;
   padding-left: 50px;
 }
+
 .rdt_Table .rdt_TableBody {
   display: table-row-group;
-  width:100%;
+  width: 100%;
 }
-.rdt_Table .rdt_TableBody .rdt_TableRow{
+
+.rdt_Table .rdt_TableBody .rdt_TableRow {
   display: table-row;
-  width:100%;
+  width: 100%;
 }
-.rdt_TableRow .rdt_TableCell{
+
+.rdt_TableRow .rdt_TableCell {
   display: table-cell;
   vertical-align: middle;
   padding: 20px 16px;
   position: relative;
-  text-align:left;
-  font-size:16px;
-  font-weight:500;
-  color:#8f8f8f;
+  text-align: left;
+  font-size: 16px;
+  font-weight: 500;
+  color: #8f8f8f;
   /* padding-left: 50px; */
 }
 
-.rdt_Pagination button{
+.rdt_Pagination button {
   width: 48px;
   height: 48px;
   margin: 0 5px;
   border: 1px solid #d6d6d6;
   border-radius: 0 !important;
 }
-.report_table .rdt_TableRow .rdt_TableCell:first-child,.report_table .rdt_TableHeadRow .rdt_TableCol:first-child{
+
+.report_table .rdt_TableRow .rdt_TableCell:first-child,
+.report_table .rdt_TableHeadRow .rdt_TableCol:first-child {
   border-left: 1px solid #2e2e2e;
   text-align: center;
 }
-.report_table .rdt_TableRow .rdt_TableCell, .report_table .rdt_TableHeadRow .rdt_TableCol{
+
+.report_table .rdt_TableRow .rdt_TableCell,
+.report_table .rdt_TableHeadRow .rdt_TableCol {
   border-right: 1px solid #2e2e2e;
   border-bottom: 1px solid #2e2e2e;
   text-align: center;
   justify-content: center;
 }
-.report_table header{
-  padding:0px;
+
+.report_table header {
+  padding: 0px;
   min-height: 70px;
-  border:1px solid #2e2e2e;
-  height:100%;
+  border: 1px solid #2e2e2e;
+  height: 100%;
 }
 
-.sankey_multi_table .boardHeader .boardTr:first-child .boardCell .Opacity0{
-  display:none;
-}
-.boardHeader .boardTr .boardCell{ 
-  border-right:1px solid #8f8f8f;
+.sankey_multi_table .boardHeader .boardTr:first-child .boardCell .Opacity0 {
+  display: none;
 }
 
-.boardHeader .boardTr .boardCell:last-child{
-  border-right:1px solid transparent;
-}
-.boardBody .boardTr .boardCell{
-  border-right:1px solid #8f8f8f;
+.boardHeader .boardTr .boardCell {
+  border-right: 1px solid #8f8f8f;
 }
 
-.boardBody .boardTr .boardCell:last-child{
-  border-right:1px solid transparent;
+.boardHeader .boardTr .boardCell:last-child {
+  border-right: 1px solid transparent;
 }
-.verticalend{
+
+.boardBody .boardTr .boardCell {
+  border-right: 1px solid #8f8f8f;
+}
+
+.boardBody .boardTr .boardCell:last-child {
+  border-right: 1px solid transparent;
+}
+
+.verticalend {
   vertical-align: bottom;
+}
+
+.fixed {
+  position: sticky !important;
+  border-left: 1px solid black;
+  z-index: 1;
+  left: 0;
+  background-color: white;
+  box-shadow: -5px 0px 5px 0px rgba(0, 0, 0, 0.2);
 }

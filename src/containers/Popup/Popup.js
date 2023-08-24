@@ -50,8 +50,13 @@ function Popup({ toggleModal }) {
   });
 
   let changeDay = () => {
-    let date = new Date().toISOString().split('T')[0];
-    localStorage.setItem('ncc_notice_popup', JSON.stringify({ date: date, showpopup: false }));
+    let noticeDate = new Date()
+    noticeDate.setDate(noticeDate.getDate() + 1);
+    noticeDate.setHours(0, 0, 0, 0);
+    // const options = { timeZone: "Asia/Seoul" , year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+    const options = { timeZone: "Asia/Seoul" , year: 'numeric', month: 'numeric', day: 'numeric'};
+    noticeDate = noticeDate.toLocaleString("en-US", options);
+    localStorage.setItem('ncc_notice_popup', JSON.stringify({ date: noticeDate, showpopup: false }));
     setIsOpen(false);
     toggleModal(false);
   };

@@ -8,6 +8,7 @@ import {
 } from "../../../actions/api_actions";
 import { FormattedMessage } from "react-intl";
 import { useParams } from "react-router-dom";
+import Table from '../../Common/Table/ReactTable';
 
 
 function ErrorMessage() {
@@ -173,6 +174,8 @@ function SingleDataTable({ updateComponentNumber }) {
   const [tableNavTabs, setTableNavTabs] = useState([]);
   const [projectId, setProjectId] = useState(0);
   const [activeTableKey, setActiveTableKey] = useState("");
+  const [loading, setLoading] = useState(true)
+  const [showModal, setShowModal] = useState(true)
 
   let toggleModal = (status) => {
     setShowModal(status)
@@ -246,8 +249,8 @@ function SingleDataTable({ updateComponentNumber }) {
           for (let i = 0; i < columns.length; i++) {
             rowObject[columns[i]] = '';
             Tablecolumns.push({
-              name: columns[i],
-              selector: (row) => {
+              Header: columns[i],
+              accessor: (row) => {
                 let rdata = String(row[columns[i]]);
                 let v = rdata.split('||');
                 if (v.length > 1) {
@@ -286,6 +289,7 @@ function SingleDataTable({ updateComponentNumber }) {
             }
           }
           setRowData(rowdata);
+          setLoading(false)
         }
       }
       let projectResponse =
@@ -330,9 +334,11 @@ function SingleDataTable({ updateComponentNumber }) {
         </button>
       }
 
-      <div>
-        {showModal && <Modal showModal={showModal} toggleModal={toggleModal} />}
-      </div>
+      {verificationResponse && 'issue' in verificationResponse && (verificationResponse['issue'] === 'allFileColumns' || verificationResponse['issue'] === 'clinicalInforamtionFile' || verificationResponse['issue'] === 'DataIssues') &&
+        <div>
+          {showModal && <Modal showModal={showModal} toggleModal={toggleModal} />}
+        </div>
+      }
 
       <ErrorMessage />
 
@@ -376,26 +382,20 @@ function SingleDataTable({ updateComponentNumber }) {
       </div>
 
       <div className="boardList" style={{ textAlign: 'center' }}>
-        {verificationResponse && (
-          <DataTable
-            title=""
-            columns={colData}
-            data={rowData}
-            defaultSortField="title"
-            pagination
-            conditionalRowStyles={conditionalRowStyles}
-            customStyles={{
-              table: {
-                border: '1px solid black'
-              },
-              pagination: {
-                style: {
-                  gap: '10px'
-                }
-              }
-            }}
-          />
-        )}
+        {loading ?
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <LoaderCmp /> </div>
+          :
+          <div style={{ marginTop: '3%' }}>
+            <Table
+              title=""
+              columns={colData}
+              data={rowData}
+              width="3300"
+            />
+          </div>
+        }
+
         {!verificationResponse && (
           <div>
             <LoaderCmp />
