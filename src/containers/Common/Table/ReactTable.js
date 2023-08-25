@@ -126,7 +126,7 @@ function Table({
                                         return (
                                             <td
                                                 className={`${(cell?.column?.fixed && cell?.column?.fixed === 'left') ? 'fixed' : ''} boardCell`}
-                                                {...cell.getCellProps()} style={{ textAlign: 'center', fontWeight: '400' }}
+                                                {...cell.getCellProps()} style={{ textAlign: 'center', fontWeight: '400' , padding: "16px 24px" }}
                                             >
                                                 {cell.render("Cell")}
                                             </td>

@@ -1,32 +1,25 @@
 import AOS from 'aos';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import DataTable from 'react-data-table-component';
 import Draggable from 'react-draggable';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom/cjs/react-router-dom';
 import Swal from 'sweetalert2';
 import { MultiProjectsDelete, MultiProjectsView } from '../../../actions/api_actions';
-import config from '../../../config';
 import '../../../interceptor/interceptor';
 import HeaderComponent from '../../Common/HeaderComponent/HeaderComponent';
 import Table from '../../Common/Table/ReactTable';
-import { useIntl } from 'react-intl';
 
 function ProjectsList() {
   let history = useHistory();
-  const [currentPage, setCurrentPage] = useState(1);
+  const currentPage = 1
   const [tableData, setTableData] = useState([]);
-  const [totalRows, setTotalRows] = useState(0);
-  const [perPage, setPerPage] = useState(10);
-  const [loading, setLoading] = useState(false);
+  const perPage = 10
   const intl = useIntl();
   const selectInput = 'title'
   const searchInput = ''
 
   const fetchUsers = async (page, method) => {
-    setLoading(true);
     let postData = {};
     postData['type'] = selectInput;
     postData['searchTerm'] = searchInput;
@@ -35,27 +28,9 @@ function ProjectsList() {
     data.then((response) => {
       if ('data' in response) {
         setTableData(response.data.data);
-        setTotalRows(response.data.total);
-        setLoading(false);
       }
     });
   };
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    fetchUsers(page, 'GET');
-  };
-
-  const handlePerRowsChange = async (newPerPage, page) => {
-    setLoading(true);
-    const response = await axios.get(
-      config.auth + `user-projects-data/?page=${page}&per_page=${perPage}&delay=1`
-    );
-    setTableData(response.data.data);
-    setPerPage(newPerPage);
-    setLoading(false);
-  };
-
 
   const deleteRow = async (projectId) => {
     // const response = await axios.get(config.auth + `delete-user-project-data/${projectId}`);    
@@ -118,7 +93,7 @@ function ProjectsList() {
           <Link to="#">
             <span
               style={{ color: 'blue' }}
-              onClick={() => 
+              onClick={() =>
                 handleButtonClick('delete', row?.row?.original?.project_id)
               }
             >
@@ -168,57 +143,6 @@ function ProjectsList() {
       accessor: (row) => (row.phospho ? 'O' : ''),
     }
   ];
-  const customStyles = {
-    table: {
-      style: {
-        display: 'table',
-        width: '100%',
-        tableLayout: 'fixed',
-        borderTop: '2px solid #2e2e2e',
-        borderCollapse: 'collapse',
-        fontSize: '16px',
-        color: '#8f8f8f',
-        fontWeight: '500',
-        textAlign: 'center !important'
-      }
-    },
-    thead: {
-      style: {
-        display: 'table-header-group',
-        fontWeight: '500'
-      }
-    },
-    td: {
-      style: {
-        display: 'table-cell',
-        verticalAlign: 'middle',
-        padding: '20px 16px',
-        position: 'relative',
-        width: '90px',
-        color: '#2e2e2e',
-        borderBottom: '1px solid #2e2e2e'
-      }
-    },
-    tr: {
-      style: {
-        display: 'table-row',
-        borderBottom: '1px solid #2e2e2e'
-      }
-    },
-    tbody: {
-      style: {
-        display: 'table-row-group'
-      }
-    },
-    pagination: {
-      style: {
-        gap: '10px'
-      }
-    }
-  };
-
-
-
 
   return (
     <div className="container mx-auto p-4">

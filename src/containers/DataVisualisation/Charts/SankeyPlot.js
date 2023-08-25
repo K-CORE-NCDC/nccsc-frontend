@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react';
-// import DataTable from 'react-data-table-component';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { RNIDetails } from '../../../actions/api_actions';
 import LoaderComp from '../../Common/Loader';
-// import ReportSubHeader from '../../Common/ReportSubHeader';
 import SankeyIndex from './SankeyIndex';
 import Table from '../../Common/Table/ReactTable';
 import { useIntl } from 'react-intl';
 import { QuestionMarkCircleIcon } from '@heroicons/react/outline';
 import ReactTooltip from 'react-tooltip';
-// import {createColumnHelper} from 'react-table';
+
+
+
 function SankeyPlot({ inputData }) {
-  // const basicTable = useRef();
   let { project_id } = useParams();
   const [samplesCount, setSamplesCount] = useState(0);
   const [tabName, setTabName] = useState('patientSummary');
@@ -23,7 +22,6 @@ function SankeyPlot({ inputData }) {
   const [tableData, setTableData] = useState([]);
   const [basicHtml, setBasicHtml] = useState([]);
   const [rnaData, setRnaData] = useState([]);
-  // const [tableRender, setTableRender] = useState(false);
   const [loader, setLoader] = useState(false);
   const [genesHtml, setGenesHtml] = useState([]);
   const [inputState, setInputState] = useState({});
