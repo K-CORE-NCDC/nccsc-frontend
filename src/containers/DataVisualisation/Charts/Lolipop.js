@@ -214,6 +214,7 @@ export default function DataLolipop({
               }
               if (data[i]['protein']) {
                 let protein = data[i]['protein'].replace(/[^\d]/g, '');
+                width.push(parseInt(protein));
                 let p_vc = protein + '||' + data[i]['variant_classification'];
                 if (p_vc in lollipopTmp) {
                   lollipopTmp[p_vc].push(data[i]['sample'] + '||' + data[i]['protein']);
@@ -228,6 +229,7 @@ export default function DataLolipop({
               });
               refseq_id?.push(data[i]['refseq_mrna_id']);
               enst_id?.push(data[i]['annotation_transcript']);
+              
             } else if (tableType === 'Phospho') {
               let site_sample = data[i]['site']?.split(' ');
               let regex = /\D/g;
@@ -412,6 +414,8 @@ export default function DataLolipop({
             }
           });
         }
+
+        console.log('domdomains',domains , width)
 
         // }
 
