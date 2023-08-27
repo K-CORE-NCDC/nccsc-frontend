@@ -304,7 +304,6 @@ function MultiDataTable({ updateComponentNumber }) {
     }
   }, [verificationResponse, activeTableKey]);
 
-
   useEffect(() => {
     return () => {
       dispatch(clearMultiFIleUploadState());

@@ -1065,7 +1065,7 @@ export default function DataHeatmap({
 
                   <input
                     type="range"
-                    className="custom-slider opacity-100"
+                    className="custom-slider"
                     id="points"
                     name="points"
                     min="1"
@@ -1073,6 +1073,7 @@ export default function DataHeatmap({
                     max={clusterRange}
                     value={rangeValue}
                     onChange={rangeCall}
+                    style={{zIndex:"0", important:"true"}}
                   />
                   <ul className="" id="tickmarks">
                     {/* {[...Array(clusterRange)].map((e, i) =>  */}

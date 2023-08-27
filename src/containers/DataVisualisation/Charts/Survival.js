@@ -134,6 +134,7 @@ export default function DataSurvival({
           setSurvivalJson({ status: 204 });
         });
     }
+
     if (
       renderNoContent ||
       (inputData && inputData.genes.length === 0) ||
@@ -261,7 +262,7 @@ export default function DataSurvival({
             key={'ci'}
             className="Flex FlexDirCol MarginTop20 Backgroundwhite  TextLeft  ShadowLarge WFull"
           > */}
-          <h3 className="BorderBottom1 BorderGray200 P8" style={{textAlign:'center'}}>
+          <h3 className="BorderBottom1 BorderGray200 P8" style={{ textAlign: 'center' }}>
             <FormattedMessage
               id="ConfidenceIntervalPlot"
               defaultMessage="Confidence Interval Plot"

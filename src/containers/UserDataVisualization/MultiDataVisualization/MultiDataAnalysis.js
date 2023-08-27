@@ -634,7 +634,7 @@ export default function DataVisualization() {
                                   overflowY: 'scroll',
                                   zIndex: '10',
                                   background: 'white',
-                                  width: '140%'
+                                  width: '120%'
                                 }}
                               >
                                 <Suspense >
@@ -746,7 +746,7 @@ export default function DataVisualization() {
                             leaveFrom="opacity-100 translate-y-0"
                             leaveTo="opacity-0 translate-y-1"
                           >
-                            <Popover.Panel className="GeneSetPopoverPanel" id="GeneSetPopverChild">
+                            <Popover.Panel className="GeneSetPopoverPanel" id="GeneSetPopverChild" style={{width:"100%"}}>
                               <GeneSet parentCallback={callback} filterState={state} />
                             </Popover.Panel>
                           </Transition>
@@ -756,7 +756,7 @@ export default function DataVisualization() {
                   }}
                 </Popover>
 
-                {project_id && (
+                {project_id && tab!== 'home' && (
                   <Popover className="relative gene_main_box capture">
                     {({ }) => {
                       return (

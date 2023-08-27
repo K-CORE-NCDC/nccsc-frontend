@@ -304,7 +304,6 @@ function SingleDataTable({ updateComponentNumber }) {
     }
   }, [verificationResponse, activeTableKey]);
 
-
   useEffect(() => {
     return () => {
       dispatch(clearSingleFIleUploadState());
