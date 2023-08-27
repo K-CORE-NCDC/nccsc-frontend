@@ -192,12 +192,14 @@ export default function DataHeatmap({
       console.log('t', t)
       setInputGene(t);
       setGenes(genes);
-      // setSelectedGene([genes[0]]);
+      console.log('initialGene' ,genes )
+      setSelectedGene(genes);
       if (inputData.type !== '' && inputData['genes'].length > 0) {
         setLoader(true);
         inputData['table_type'] = tableType;
         inputData['view'] = viewType;
         inputData['heat_type'] = mainTab;
+        inputData['cluster'] = rangeValue;
         inputData['cluster'] = rangeValue;
         let return_data = HeatmapInformation('POST', inputData);
         return_data
@@ -430,7 +432,8 @@ export default function DataHeatmap({
 
   const setGene = (e) => {
     let gene = e.target.value;
-    setSelectedGene([gene]);
+    setSelectedGene(gene?.split(","));
+    console.log('selectedGene' , [gene] , gene?.split(","))
     let dataJson = { ...inputData };
     if (tableType === 'rna') {
       dataJson['genes'] = genes;
@@ -561,6 +564,7 @@ export default function DataHeatmap({
     dataJson['heat_type'] = mainTab;
     dataJson['clinicalFilters'] = clinincalAttributesFil;
     dataJson['cluster'] = rangeValue;
+    dataJson['genes'] = selectedGene;
     if (inputData.type !== '' && inputData['genes'].length > 0) {
       let return_data = HeatmapInformation('POST', dataJson);
       return_data
@@ -598,6 +602,7 @@ export default function DataHeatmap({
   const changeCluster = () => {
     let cf = [];
     if (inputData.type !== '' && inputData['genes'].length > 0) {
+      console.log('clusterChange' , selectedGene)
       setLoader(true);
       let dataJson = { ...inputData };
       dataJson['clinicalFilters'] = cf;
@@ -605,6 +610,7 @@ export default function DataHeatmap({
       dataJson['type'] = viewType;
       dataJson['heat_type'] = mainTab;
       dataJson['cluster'] = rangeValue;
+      dataJson['genes'] = selectedGene;
       let return_data = HeatmapInformation('POST', dataJson);
       return_data
         .then((result) => {
@@ -973,7 +979,7 @@ export default function DataHeatmap({
                       <label>
                         <FormattedMessage id="Select Gene" defaultMessage="Select Gene" />
                       </label>
-                      <select value={selectedGene[0]} onChange={(e) => setGene(e)} className="">
+                      <select value={selectedGene} onChange={(e) => setGene(e)} className="">
                         <option key={"select"} value={genes}>Select All</option>
                         {genes?.map(((item, i) => (
                           <option key={i} value={item}>{item}</option>
