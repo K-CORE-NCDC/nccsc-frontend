@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import DataTable from 'react-data-table-component';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import LoaderCmp from '../../../Common/Loader';
-import { clearNewFileUploadState } from '../../../../actions/api_actions';
 import { FormattedMessage } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { clearNewFileUploadState } from '../../../../actions/api_actions';
+import LoaderCmp from '../../../Common/Loader';
 
 import warningImage from '../../../../assets/images/warning.png';
+import Table from '../../../Common/Table/ReactTable';
 
 function Modal({ showModal, setShowModal }) {
   const verificationResponse = useSelector((data) => data.homeReducer.uploadClinicalColumns);
@@ -144,8 +144,8 @@ function FileProjectDataTable({ updateComponentNumber }) {
           for (let i = 0; i < columns.length; i++) {
             rowObject[columns[i]] = '';
             Tablecolumns.push({
-              name: columns[i],
-              selector: (row) => {
+              Header: columns[i],
+              accessor: (row) => {
                 let rdata = String(row[columns[i]]);
                 let v = rdata.split('||');
                 if (v.length > 1) {
@@ -159,6 +159,9 @@ function FileProjectDataTable({ updateComponentNumber }) {
           }
 
           let tempRow = { ...rowObject };
+          // Tablecolumns?.forEach(ele =>{
+          //   ele[]
+          // })
           setColData(Tablecolumns);
           // setting the row data
           let rawRowData = verificationResponse['result'][key];
@@ -249,7 +252,7 @@ function FileProjectDataTable({ updateComponentNumber }) {
       </nav>
       <div className="App">
         {verificationResponse && (
-          <DataTable
+          <Table
             title=""
             columns={colData}
             data={rowData}
