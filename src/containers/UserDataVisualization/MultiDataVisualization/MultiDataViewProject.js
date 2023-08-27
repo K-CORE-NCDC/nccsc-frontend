@@ -12,9 +12,9 @@ import Table from '../../Common/Table/ReactTable';
 
 function ProjectsList() {
   let history = useHistory();
-  const currentPage = 1;
+  const currentPage = 1
   const [tableData, setTableData] = useState([]);
-  const perPage = 10;
+  const perPage = 10
   const intl = useIntl();
   const selectInput = 'title'
   const searchInput = ''
@@ -93,7 +93,7 @@ function ProjectsList() {
           <Link to="#">
             <span
               style={{ color: 'blue' }}
-              onClick={() => 
+              onClick={() =>
                 handleButtonClick('delete', row?.row?.original?.project_id)
               }
             >
@@ -143,7 +143,6 @@ function ProjectsList() {
       accessor: (row) => (row.phospho ? 'O' : ''),
     }
   ];
-  
 
   return (
     <div className="container mx-auto p-4">

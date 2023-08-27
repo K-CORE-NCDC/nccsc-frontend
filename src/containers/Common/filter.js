@@ -390,8 +390,9 @@ export default function Filter({ parentCallback, filterState, project_id }) {
     }
   };
 
-  const switchButton = (id) => {
-    setSelected(id);
+  const switchButton = (id, item, k) => {
+    console.log('id' , id, item, k)
+    setSelected(item);
     let myRadios = document.getElementsByName('tabs2');
     let setCheck;
     let x = 0;
@@ -521,15 +522,6 @@ export default function Filter({ parentCallback, filterState, project_id }) {
           <FormattedMessage id="Search" defaultMessage={' Search '} />
         </button>
       </div>
-      {/* <div className="m-2">
-        <button
-          className="FilterButtonClose"
-          onClick={() => set_screen(false)}
-          type="button"
-        >
-          close
-        </button>
-      </div> */}
       <div className="filter_sample">
         <label className="">
           <FormattedMessage id="filterCondition" defaultMessage={'Sample filter condition'} />:

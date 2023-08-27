@@ -189,14 +189,18 @@ export default function DataHeatmap({
           </option>
         );
       }
+      console.log('t', t)
       setInputGene(t);
       setGenes(genes);
-      setSelectedGene([genes[0]]);
+      console.log('initialGene' ,genes )
+      setSelectedGene(genes);
       if (inputData.type !== '' && inputData['genes'].length > 0) {
         setLoader(true);
         inputData['table_type'] = tableType;
         inputData['view'] = viewType;
         inputData['heat_type'] = mainTab;
+        inputData['cluster'] = rangeValue;
+        inputData['cluster'] = rangeValue;
         let return_data = HeatmapInformation('POST', inputData);
         return_data
           .then((result) => {
@@ -320,11 +324,11 @@ export default function DataHeatmap({
         }
       }
       let setStateTrue = false;
-      for (const  value of Object.entries(y)) {
+      for (const value of Object.entries(y)) {
         value[1].forEach((e) => {
-          if (e.length > 0) {
+          if (e?.length > 0) {
             setStateTrue = true;
-          
+
           }
         });
       }
@@ -359,10 +363,11 @@ export default function DataHeatmap({
     }
   }, [screenCapture, watermarkCss]);
 
+
+
   const changeType = (e, type) => {
     e.preventDefault();
     setTableType(type);
-    setRangeValue(5)
     let c = document.getElementsByName('type');
     setLoader(true);
     for (var i = 0; i < c.length; i++) {
@@ -403,6 +408,7 @@ export default function DataHeatmap({
       dataJson['table_type'] = tableType;
       dataJson['view'] = viewType;
       dataJson['heat_type'] = type;
+      dataJson['cluster'] = rangeValue;
       setLoader(true);
       let return_data = HeatmapInformation('POST', dataJson);
       return_data
@@ -426,23 +432,24 @@ export default function DataHeatmap({
 
   const setGene = (e) => {
     let gene = e.target.value;
-    setSelectedGene([gene]);
-
+    setSelectedGene(gene?.split(","));
+    console.log('selectedGene' , [gene] , gene?.split(","))
     let dataJson = { ...inputData };
     if (tableType === 'rna') {
       dataJson['genes'] = genes;
     } else if (tableType === 'methylation') {
-      dataJson['genes'] = [gene];
+      dataJson['genes'] = gene?.split(",")
     } else if (tableType === 'proteome') {
       dataJson['genes'] = genes;
     } else if (tableType === 'phospho') {
-      dataJson['genes'] = [gene];
+      dataJson['genes'] = gene?.split(",")
     }
 
     if (inputData.type !== '' && inputData['genes'].length > 0) {
       dataJson['table_type'] = tableType;
       dataJson['view'] = viewType;
       dataJson['heat_type'] = mainTab;
+      dataJson['cluster'] = rangeValue;
       setLoader(true);
       let return_data = HeatmapInformation('POST', dataJson);
       return_data
@@ -483,6 +490,7 @@ export default function DataHeatmap({
       }
       dataJson['heat_type'] = mainTab;
       dataJson['table_type'] = tableType;
+      dataJson['cluster'] = rangeValue;
       let return_data = HeatmapInformation('POST', dataJson);
       return_data
         .then((result) => {
@@ -516,6 +524,7 @@ export default function DataHeatmap({
       dataJson['clinicalFilters'] = items;
       dataJson['view'] = viewType;
       dataJson['heat_type'] = mainTab;
+      dataJson['cluster'] = rangeValue;
       // dataJson['genes'] = selectedGene
       if (tableType === 'methylation' || tableType === 'phospho') {
         dataJson['genes'] = selectedGene;
@@ -554,6 +563,8 @@ export default function DataHeatmap({
     dataJson['view'] = view;
     dataJson['heat_type'] = mainTab;
     dataJson['clinicalFilters'] = clinincalAttributesFil;
+    dataJson['cluster'] = rangeValue;
+    dataJson['genes'] = selectedGene;
     if (inputData.type !== '' && inputData['genes'].length > 0) {
       let return_data = HeatmapInformation('POST', dataJson);
       return_data
@@ -591,6 +602,7 @@ export default function DataHeatmap({
   const changeCluster = () => {
     let cf = [];
     if (inputData.type !== '' && inputData['genes'].length > 0) {
+      console.log('clusterChange' , selectedGene)
       setLoader(true);
       let dataJson = { ...inputData };
       dataJson['clinicalFilters'] = cf;
@@ -598,6 +610,7 @@ export default function DataHeatmap({
       dataJson['type'] = viewType;
       dataJson['heat_type'] = mainTab;
       dataJson['cluster'] = rangeValue;
+      dataJson['genes'] = selectedGene;
       let return_data = HeatmapInformation('POST', dataJson);
       return_data
         .then((result) => {
@@ -720,7 +733,7 @@ export default function DataHeatmap({
             </div>
             <div
               className="tabs_box W100"
-              style={btnClickNote === '' ? { paddingTop: '22px', width:'100%' } : { paddingTop: '0px' , width:'100%' }}
+              style={btnClickNote === '' ? { paddingTop: '22px', width: '100%' } : { paddingTop: '0px', width: '100%' }}
             >
               <div className="tab mainTab">
                 {btnClickNote !== '' && (
@@ -966,8 +979,12 @@ export default function DataHeatmap({
                       <label>
                         <FormattedMessage id="Select Gene" defaultMessage="Select Gene" />
                       </label>
-                      <select value={selectedGene[0]} onChange={(e) => setGene(e)} className="">
-                        {inputGene}
+                      <select value={selectedGene} onChange={(e) => setGene(e)} className="">
+                        <option key={"select"} value={genes}>Select All</option>
+                        {genes?.map(((item, i) => (
+                          <option key={i} value={item}>{item}</option>
+                        )))}
+                        {/* {inputGene} */}
                       </select>
                     </>
                   )}
@@ -1020,7 +1037,7 @@ export default function DataHeatmap({
           </div>
           <div className="Spectrumbtn">
             <button onClick={(e) => changeSepctrum(e)} className="btn btnPrimary">
-              <FormattedMessage id='apply' defaultMessage="Apply"/>
+              <FormattedMessage id='apply' defaultMessage="Apply" />
             </button>
           </div>
 
