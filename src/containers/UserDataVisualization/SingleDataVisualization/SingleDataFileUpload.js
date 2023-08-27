@@ -133,7 +133,7 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
   });
 
   let fileNames = {
-    clinica_information: 'ClinicalInformation',
+    clinical_information: 'ClinicalInformation',
     cnv: 'CNV',
     dna_mutation: 'DnaMutation',
     rna: 'RNA',
