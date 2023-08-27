@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import DataTable from "react-data-table-component";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import LoaderCmp from "../../Common/Loader";
@@ -305,16 +304,6 @@ function SingleDataTable({ updateComponentNumber }) {
       }
     }
   }, [verificationResponse, activeTableKey]);
-
-  const conditionalRowStyles = [
-    {
-      when: (row) => row.toggleSelected,
-      style: {
-        backgroundColor: 'green',
-        userSelect: 'none'
-      }
-    }
-  ];
 
   useEffect(() => {
     return () => {

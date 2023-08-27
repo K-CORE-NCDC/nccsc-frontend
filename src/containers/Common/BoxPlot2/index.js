@@ -216,7 +216,7 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
       .attr('dy', '1em')
       .style('text-anchor', 'middle')
       .text(function () {
-        if (chart_type === 'gene_vl') {
+        if (chart_type === 'proteome') {
           return 'Proteome expression';
         } else {
           return 'RNA expression';

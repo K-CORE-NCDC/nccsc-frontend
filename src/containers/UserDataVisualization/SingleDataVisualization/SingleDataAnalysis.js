@@ -498,12 +498,12 @@ export default function DataVisualization() {
                         {({ }) => {
                           return (
                             <>
-                              <div className="">
+                              <div>
                                 <Popover.Button
                                   className={'selectBox'}
                                   onClick={() => setIsGeneSetPopoverOpen(!isGeneSetPopoverOpen)}
                                 >
-                                  <div className="GeneSetgeneSetButton">
+                                  <div className="GeneSetgeneSetButton" >
                                     <div className="flex-1">
                                       <FormattedMessage
                                         id="GeneSetRe-filtering"
@@ -530,6 +530,7 @@ export default function DataVisualization() {
                                   <Popover.Panel
                                     className="GeneSetPopoverPanel"
                                     id="GeneSetPopverChild"
+                                    style={{width:"100%"}}
                                   >
                                     <GeneSet parentCallback={callback} filterState={state} />
                                   </Popover.Panel>

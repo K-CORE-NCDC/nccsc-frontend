@@ -304,16 +304,6 @@ function MultiDataTable({ updateComponentNumber }) {
     }
   }, [verificationResponse, activeTableKey]);
 
-  const conditionalRowStyles = [
-    {
-      when: (row) => row.toggleSelected,
-      style: {
-        backgroundColor: 'green',
-        userSelect: 'none'
-      }
-    }
-  ];
-
   useEffect(() => {
     return () => {
       dispatch(clearMultiFIleUploadState());

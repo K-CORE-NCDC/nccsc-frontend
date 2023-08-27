@@ -95,7 +95,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
         }
         setCoxFilter(tmpe);
       }
-    } else {
+    } else if (survivalModel === 'cox' && project_id === undefined) {
       let tmp = [
         'BodyMassIndex',
         'AlcoholConsumption',
@@ -266,8 +266,8 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
             </h3>
           </div>
 
-          <div className="m-1 tab ">
-            <ul>
+          <div className="m-1 tab">
+            <ul className="FlexDirCol">
               <li className={survivalModel === 'recurrence' ? ' on ' : ''}>
                 <button
                   onClick={(e) => {
@@ -303,22 +303,21 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
           {(survivalModel === 'recurrence' || survivalModel === 'survival') && (
             <>
               <div
-                className={`Flex FlexDirCol Border Backgroundwhite ${
-                  smallScreen ? ' Flex FlexDirRow SurvivalSmallScreen' : 'SurvivalSmallScreenHidden'
-                }`}
+                className={`Flex FlexDirCol Border Backgroundwhite ${smallScreen ? ' Flex FlexDirRow SurvivalSmallScreen' : 'SurvivalSmallScreenHidden'
+                  }`}
               >
                 {sampleCountsCard && sampleCountsCard.length > 0 && (
                   <div className="SurvivalSampleCountCard">{sampleCountsCard}</div>
                 )}
 
                 {project_id === undefined && (
-                    <h3 className="SurvivalChooseModel TextLeft">
-                      <FormattedMessage
-                        id="Choose Filter group"
-                        defaultMessage="Choose Filter group"
-                      />
-                    </h3>
-                  ) && (
+                  <h3 className="SurvivalChooseModel TextLeft">
+                    <FormattedMessage
+                      id="Choose Filter group"
+                      defaultMessage="Choose Filter group"
+                    />
+                  </h3>
+                ) && (
                     <div className="m-1 tab Gap2">
                       <ul>
                         <li className={userDefienedFilter === 'static' ? ' on W50' : 'W50'}>
@@ -352,7 +351,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
                   <ul>
                     <li className={filterTypeButton === 'clinical' ? 'on W50' : 'W50'}>
                       <button
-                        onClick={() => setFilterTypeButton('clinical')}
+                        onClick={() => { setFilterTypeButton('clinical'); setGroupFilters({}); }}
                         id="Mutation"
                         name="type"
                       >
@@ -383,7 +382,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
                     <select
                       id="dropdown-gene"
                       onChange={(e) => setFilteredGene(e.target.value)}
-                      defaultValue={fileredGene}
+                      value={fileredGene}
                       className="SurvivalSelectDatabase"
                     >
                       <option
@@ -495,12 +494,15 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
                       <button
                         onClick={submitFitersAndFetchData}
                         className="FilterLabelText FilterButton"
+                        style={{ backgroundColor: 'rgb(0, 159, 226)', border: '1px solid white' }}
                       >
                         <FormattedMessage id="Submit_volcano" defaultMessage="Submit" />
                       </button>
                     </div>
                     <div className="P1 PY3 PX2 W50">
-                      <button className="FilterLabelText FilterButton">
+                      <button className="FilterLabelText FilterButton"
+                        onClick={() => { setFilteredGene(''); }}
+                      >
                         <FormattedMessage id="Reset_volcano" defaultMessage="Reset" />
                       </button>
                     </div>
@@ -513,9 +515,8 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
           {survivalModel === 'cox' && (
             <>
               <div
-                className={`Flex FlexDirCol border Backgroundwhite ${
-                  smallScreen ? ' Flex FlexDirRow SurvivalSmallScreen' : 'SurvivalSmallScreenHidden'
-                }`}
+                className={`Flex FlexDirCol border Backgroundwhite ${smallScreen ? ' Flex FlexDirRow SurvivalSmallScreen' : 'SurvivalSmallScreenHidden'
+                  }`}
               >
                 <h3 className="SurvivalChooseModel TextLeft">
                   <FormattedMessage id="Choose Filter group" defaultMessage="Choose Filter group" />
@@ -536,8 +537,8 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
                               type="checkbox"
                               name={element}
                               id={'flexCheckChecked_' + index}
-                              checked={coxFilter[element]}
-                              value={element}
+                              checked={coxFilter[element] || false}
+                              defaultValue={element}
                               style={{ marginRight: '5px' }}
                             />
                             <FormattedMessage id={element} defaultMessage={element} />
@@ -547,6 +548,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
                       <div className="Flex FlexDirRow Gap5">
                         <button
                           onClick={(e) => selectAllCox(e, 'select')}
+                          style={{ backgroundColor: "rgb(0, 159, 226)", border: "1px solid white", color: "black" }}
                           className={
                             survivalModel === 'cox'
                               ? 'SurvivalSelectedCss btn btnPrimary'
@@ -564,7 +566,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
                         </button>
                       </div>
                       <div className="Flex FlexDirRow Gap5 PY2">
-                        <button onClick={(e) => submitCox(e, 'cox')} className="SubmitButtonFilter">
+                        <button onClick={(e) => submitCox(e, 'cox')} className="FilterLabelText FilterButton" style={{ backgroundColor: "rgb(0, 159, 226)", border: "1px solid white" }}>
                           <FormattedMessage id="Submit_volcano" defaultMessage="Submit" />
                         </button>
                       </div>
@@ -576,7 +578,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survivalCardData
           )}
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
