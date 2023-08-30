@@ -260,7 +260,7 @@ export default function Filter({ parentCallback, filterState, project_id }) {
             id={'from_' + d.id}
             className="HFull FilterNumberStyle Rounded"
             onKeyDown={(e) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault()}
-            value={selectState['from_' + d.id]}
+            defaultValue={selectState[`from_${d.id}`] || ''}
             onChange={(e) => selectFn(e)}
             placeholder={d.min}
             min={d.min}
@@ -278,7 +278,7 @@ export default function Filter({ parentCallback, filterState, project_id }) {
             id={'to_' + d.id}
             className="HFull FilterNumberStyle"
             onKeyDown={(e) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault()}
-            value={selectState['to_' + d.id]}
+            defaultValue={selectState[`to_${d.id}`] || ''}
             onChange={(e) => selectFn(e)}
             placeholder={d.max}
             min={d.min}

@@ -54,7 +54,7 @@ function SankeyPlot({ inputData }) {
     let returnedData = RNIDetails('POST', {
       rnid: sampleId,
       project_id: project_id,
-      genes: inputData['genes']
+      genes: inputState['genes']
     });
     returnedData.then((result) => {
       setLoader(false)
@@ -76,9 +76,6 @@ function SankeyPlot({ inputData }) {
     }
   ]
 
-
-
-
   const generateTableColumnsData = (rnaData) => {
 
     if (rnaData && 'genomic_summary' in rnaData) {
@@ -86,51 +83,51 @@ function SankeyPlot({ inputData }) {
       let tableColumnsData = [
         {
           Header: 'Gene Name',
-          accessor: (row) =>row.gene,
+          accessor: (row) => row.gene,
         },
       ]
       if (rnaData.genomic_summary[0].hasOwnProperty('rna')) {
         tableColumnsData.push({
-          id:'dna_mutation',
-          Header:<dt>DNA Mutation <span className='InlineFlex '>
-                 
-                <FormattedMessage id='SankeyTableDNAMutationTooltip' defaultMessage="if occured mutation is one of the following variant">
-                  {(placeholder) => (
-                    <>
-                      <QuestionMarkCircleIcon
-                        data-multiline={true}
-                        className="inline ml-2 mb-1"
-                        data-class="my-tooltip"
-                        data-tip={`Yes :  ${placeholder} <br>  <br/>Missense mutation, Nonsense mutation, Splice site, <br>  <br/>In frame insertion, In frame deletion, Frame-shift insertion, Frame-shift deletion`}
-                        style={{ width: '20px', cursor: 'pointer' }}
-                      ></QuestionMarkCircleIcon>
-                      <ReactTooltip /></>
-                  )}
-                </FormattedMessage>
+          id: 'dna_mutation',
+          Header: <dt>DNA Mutation <span className='InlineFlex '>
 
-              </span></dt>,
-          style:{
-            borderRight:'1px solid #8f8f8f'
+            <FormattedMessage id='SankeyTableDNAMutationTooltip' defaultMessage="if occured mutation is one of the following variant">
+              {(placeholder) => (
+                <>
+                  <QuestionMarkCircleIcon
+                    data-multiline={true}
+                    className="inline ml-2 mb-1"
+                    data-class="my-tooltip"
+                    data-tip={`Yes :  ${placeholder} <br>  <br/>Missense mutation, Nonsense mutation, Splice site, <br>  <br/>In frame insertion, In frame deletion, Frame-shift insertion, Frame-shift deletion`}
+                    style={{ width: '20px', cursor: 'pointer' }}
+                  ></QuestionMarkCircleIcon>
+                  <ReactTooltip /></>
+              )}
+            </FormattedMessage>
+
+          </span></dt>,
+          style: {
+            borderRight: '1px solid #8f8f8f'
           },
-          columns:[
+          columns: [
             {
-              
-              Header:"Yes",
+
+              Header: "Yes",
               accessor: (row) => {
                 if (row.dna === 'YES') {
                   if (row.gene in rnaData['variant_info']) {
-                    return  'O  (' + rnaData['variant_info'][row.gene].length + ')' 
+                    return 'O  (' + rnaData['variant_info'][row.gene].length + ')'
                   } else {
                     return row.dna;
                   }
                 } else '';
               },
-            },{
-              Header:"No",
+            }, {
+              Header: "No",
               accessor: (row) => {
                 if (row.dna === 'NO') {
                   if (row.gene in rnaData['variant_info']) {
-                    return  'O  (' + rnaData['variant_info'][row.gene].length + ')' 
+                    return 'O  (' + rnaData['variant_info'][row.gene].length + ')'
                   } else {
                     return row.dna;
                   }
@@ -142,28 +139,28 @@ function SankeyPlot({ inputData }) {
       }
       if (rnaData.genomic_summary[0].hasOwnProperty('rna')) {
         tableColumnsData.push({
-          id:'rna',
+          id: 'rna',
 
-          Header:<dt>
+          Header: <dt>
             RNA <span className='InlineFlex '>
-                <QuestionMarkCircleIcon
-                  data-multiline="true"
-                  className="inline ml-2 mb-1"
-                  data-tip="RNA high : z-score ≥ 1,<br>  <br/>RNA low : z-score ≤ -1 "
-                  style={{ width: '20px', cursor: 'pointer' }}
-                ></QuestionMarkCircleIcon>
-                <ReactTooltip />
-              </span></dt>,
-          columns:[
+              <QuestionMarkCircleIcon
+                data-multiline="true"
+                className="inline ml-2 mb-1"
+                data-tip="RNA high : z-score ≥ 1,<br>  <br/>RNA low : z-score ≤ -1 "
+                style={{ width: '20px', cursor: 'pointer' }}
+              ></QuestionMarkCircleIcon>
+              <ReactTooltip />
+            </span></dt>,
+          columns: [
             {
-              Header:"High",
+              Header: "High",
               accessor: (row) => {
                 if (row.rna === 'HIGH') {
                   return 'O '
-                } else  return ''
+                } else return ''
               },
-            },{
-              Header:"Intermediate",
+            }, {
+              Header: "Intermediate",
               accessor: (row) => {
                 if (row.rna !== 'HIGH' && row.rna !== 'LOW') {
                   return 'O '
@@ -183,30 +180,30 @@ function SankeyPlot({ inputData }) {
       }
       if (rnaData.genomic_summary[0].hasOwnProperty('proteome')) {
         tableColumnsData.push({
-          id:'proteome',
-          Header:<dt>
+          id: 'proteome',
+          Header: <dt>
             Proteome <span className='InlineFlex '>
-                <QuestionMarkCircleIcon
-                  data-multiline="true"
-                  className="inline ml-2 mb-1"
-                  data-tip="Proteome high : z-score ≥ 1.5,<br>  <br/>Proteome low : z-score ≤ 0.5"
-                  style={{ width: '20px', cursor: 'pointer' }}
-                ></QuestionMarkCircleIcon>
-                <ReactTooltip />
-              </span>
+              <QuestionMarkCircleIcon
+                data-multiline="true"
+                className="inline ml-2 mb-1"
+                data-tip="Proteome high : z-score ≥ 1.5,<br>  <br/>Proteome low : z-score ≤ 0.5"
+                style={{ width: '20px', cursor: 'pointer' }}
+              ></QuestionMarkCircleIcon>
+              <ReactTooltip />
+            </span>
           </dt>,
-          columns:[
+          columns: [
             {
-              id:'pHigh',
-              Header:"High",
+              id: 'pHigh',
+              Header: "High",
               accessor: (row) => {
                 if (row.proteome === 'HIGH') {
                   return 'O '
-                } else  return ''
+                } else return ''
               },
-            },{
-              id:'pIntermediate',
-              Header:"Intermediate",
+            }, {
+              id: 'pIntermediate',
+              Header: "Intermediate",
               accessor: (row) => {
                 if (row.proteome !== 'HIGH' && row.proteome !== 'LOW') {
                   return 'O '
@@ -214,7 +211,7 @@ function SankeyPlot({ inputData }) {
               }
             },
             {
-              id:'pLow',
+              id: 'pLow',
               Header: 'Low',
               accessor: (row) => {
                 if (row.proteome === 'LOW') {
@@ -225,7 +222,7 @@ function SankeyPlot({ inputData }) {
           ]
         })
       }
-      
+
       return tableColumnsData;
     } else return [];
   };
@@ -235,13 +232,17 @@ function SankeyPlot({ inputData }) {
   const loadGenesDropdown = (genes) => {
     let t = [];
     let firstGene = true;
+    let atleastOneGene = false;
     if (rnaData && 'variant_info' in rnaData) {
       for (var i = 0; i < genes.length; i++) {
         if (genes[i] in rnaData['variant_info']) {
-          console.log(genes[i], rnaData['variant_info'])
           if (firstGene) {
             setSelectGene(genes[i]);
             firstGene = false;
+          }
+          if ('variant_info' in rnaData && genes[i] in rnaData['variant_info']) {
+            atleastOneGene = true;
+            loadVarinatClassificationDropdown(rnaData['variant_info'][genes[i]]);
           }
           t.push(
             <option key={i + '_' + genes[i]} value={genes[i]}>
@@ -250,6 +251,11 @@ function SankeyPlot({ inputData }) {
           );
         }
       }
+    }
+    if (!atleastOneGene) {
+      setSelectGene('');
+      setSelectVariantClassification('');
+      setVariantClassificationHtml([])
     }
     setGenesHtml(t);
   };
@@ -456,7 +462,7 @@ function SankeyPlot({ inputData }) {
                     </div>
                     <div>
                       <select
-                        defaultValue={selectedGene}
+                        value={selectedGene}
                         onChange={(e) => setSelectGene(e.target.value)}
                       >
                         {genesHtml}
@@ -477,7 +483,7 @@ function SankeyPlot({ inputData }) {
                     </div>
                     <div>
                       <select
-                        defaultValue={variantClassification}
+                        value={variantClassification}
                         onChange={(e) => setSelectVariantClassification(e.target.value)}
                       >
                         {variantClassificationHtml}

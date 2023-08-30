@@ -358,6 +358,7 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
                   onChange={file_Upload_}
                   ref={inputRef}
                 />
+                <FormattedMessage id="Selectfile" defaultMessage="Select file" />
               </label>
             </dd>
           </dl>

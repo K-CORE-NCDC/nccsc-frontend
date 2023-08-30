@@ -20,7 +20,7 @@ const VolcanoPlotD3 = ({ watermarkCss, dataProps }) => {
       yTicks,
       sampleID = 'Gene',
       significanceThreshold = 0.05, // significance threshold to colour by
-      foldChangeThreshold = 1.0, // fold change level to colour by
+      foldChangeThreshold = 1.5, // fold change level to colour by
       colorRange, // colour range to use in the plot
       xScale = d3.scaleLinear(), // the values for the axes will be continuous
       yScale = d3.scaleLinear();
@@ -171,6 +171,8 @@ const VolcanoPlotD3 = ({ watermarkCss, dataProps }) => {
 
         // add vertical line(s) at fold-change threshold (and negative fold-change)
         [foldChangeThreshold, -1 * foldChangeThreshold].forEach(function (threshold) {
+          console.log('foldChangeThreshold',foldChangeThreshold);
+          console.log('xScaled',xScale(threshold));
           thresholdLines
             .append('svg:line')
             .attr('class', 'threshold')
@@ -180,7 +182,13 @@ const VolcanoPlotD3 = ({ watermarkCss, dataProps }) => {
             .attr('y2', innerHeight);
         });
 
-        var tooltip = d3.select('body').append('div').attr('class', 'tooltip');
+        // var tooltip = d3.select('body').append('div').attr('class', 'tooltip');
+        var tooltip = d3
+        .select('#volcano_tooltip')
+        .style('opacity', 1)
+
+        .style('background-color', 'lavender')
+        .style('padding', '1%');
 
         function tipEnter(d) {
           tooltip
@@ -348,7 +356,7 @@ const VolcanoPlotD3 = ({ watermarkCss, dataProps }) => {
       var volcanoPlot1 = volcanoPlot()
         .xAxisLabel(xLabel)
         .yAxisLabel(yLabel)
-        .foldChangeThreshold(2.0)
+        .foldChangeThreshold(1.5)
         .sampleID('gene')
         .xColumn('log2(fold_change)')
         .yColumn('p_value');
@@ -365,7 +373,10 @@ const VolcanoPlotD3 = ({ watermarkCss, dataProps }) => {
   }, [watermarkCss]);
   return (
     <div>
-      <div className="MarginTop4">Volcano plot</div>
+      <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+      <div className="MarginTop4" style={{flexGrow:'1',textAlign:'center'}}>Volcano plot</div>
+      <div id='volcano_tooltip'></div>
+      </div>
       <div id="chart-d3-volcano" className="chart-d3-volcano"></div>
     </div>
   );

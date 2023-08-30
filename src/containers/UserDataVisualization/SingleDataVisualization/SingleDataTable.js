@@ -270,7 +270,6 @@ function SingleDataTable({ updateComponentNumber }) {
               ele["fixed"] = 'left'
             }
           })
-          console.log('Tablecolumns', Tablecolumns)
           setColData(Tablecolumns);
           // setting the row data
           let rawRowData = verificationResponse['result'][key];
@@ -364,7 +363,8 @@ function SingleDataTable({ updateComponentNumber }) {
                   dispatch(clearSingleFIleUploadState());
                   history.push(`/visualise-singledata/${tab}/${projectId}`);
                 }}
-                className="btn btnPrimary"
+                className="btn"
+                style={{backgroundColor:"#009fe2"}}
               >
                 <FormattedMessage id="Visualize" defaultMessage="Visualize" />
               </button>

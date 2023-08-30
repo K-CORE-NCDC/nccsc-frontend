@@ -11,7 +11,6 @@ import Table from '../../Common/Table/ReactTable';
 
 export default function DataSurvival({
   width,
-  inputData,
   screenCapture,
   setToFalseAfterScreenCapture,
   survialData
@@ -70,7 +69,8 @@ export default function DataSurvival({
     staticSurvivalData['gene_database'] = 'dna_mutation';
     staticSurvivalData['group_filters'] = {};
     staticSurvivalData['clinical'] = true;
-    setInputState((prevState) => ({ ...prevState, ...inputData, ...staticSurvivalData }));
+    staticSurvivalData['project_id'] = project_id;
+    setInputState((prevState) => ({ ...prevState, ...staticSurvivalData }));
   };
 
   let check = (d) => {
@@ -84,18 +84,12 @@ export default function DataSurvival({
   };
 
   useEffect(() => {
-    if (inputData && 'genes' in inputData) {
-      setInputState((prevState) => ({ ...prevState, ...inputData, ...survialData }));
-    }
-  }, [inputData, survialData]);
+    let projectdata = {"project_id":project_id}
+    setInputState((prevState) => ({ ...prevState, ...survialData, ...projectdata }));
+  }, [survialData]);
 
   useEffect(() => {
-    if (
-      inputState &&
-      'genes' in inputState &&
-      ((vizType !== 'single' && inputState['genes'].length > 0) || vizType === 'single') &&
-      'survival_type' in inputState
-    ) {
+    if (((vizType !== 'single' || vizType === 'single') && 'survival_type' in inputState)) {
       let return_data = SurvivalInformation('POST', inputState);
       return_data
         .then((result) => {
@@ -136,18 +130,13 @@ export default function DataSurvival({
     }
 
     if (
-      renderNoContent ||
-      (inputData && inputData.genes.length === 0) ||
-      (vizType !== 'single' &&
-        inputState &&
-        ('group_filters' in inputState === false ||
-          (inputState['survival_type'] === 'cox' && 'coxFilter' in inputState === false)))
+      renderNoContent || (vizType !== 'single' && inputState &&
+        ('group_filters' in inputState === false || (inputState['survival_type'] === 'cox' &&
+          'coxFilter' in inputState === false)))
     ) {
       setRenderSurvival(false);
     } else if (
-      vizType === 'single' &&
-      (renderNoContent || (inputData && inputData.genes.length === 0))
-    ) {
+      vizType === 'single' && (renderNoContent)) {
       setRenderSurvival(false);
     }
   }, [inputState]);
@@ -317,16 +306,6 @@ export default function DataSurvival({
             <div className="MarginTop4">
               <NoContentMessage />
             </div>
-          )}
-
-          {inputData && vizType !== 'single' && inputData.genes.length === 0 && (
-            <p className="MarginTop4">
-              {' '}
-              <FormattedMessage
-                id="PleaseSelecttheGeneSetData"
-                defaultMessage="Please Select the Gene Set Data"
-              />{' '}
-            </p>
           )}
 
           {vizType !== 'single' &&

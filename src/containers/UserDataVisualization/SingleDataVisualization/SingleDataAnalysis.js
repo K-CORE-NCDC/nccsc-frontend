@@ -1,5 +1,5 @@
 import { Popover, Transition } from '@headlessui/react';
-import React, { Fragment, useCallback, useEffect, useRef, useState , Suspense , lazy } from 'react';
+import React, { Fragment, useCallback, useEffect, useRef, useState, Suspense, lazy } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory, useParams } from 'react-router-dom';
@@ -71,44 +71,8 @@ export default function DataVisualization() {
     return (
       <Suspense fallback={<LoaderCmp />}>
         <Chart type={type} w={elementRef?.current?.getBoundingClientRect()?.width} state={state} screenCapture={screenCapture} setToFalseAfterScreenCapture={setToFalseAfterScreenCapture} toggle={toggle} BrstKeys={BrstKeys} />
-
       </Suspense>
     )
-    // switch (type) {
-    //   case 'circos':
-    //     return Charts.circos(
-    //       elementRef.current.getBoundingClientRect().width,
-    //       state,
-    //       screenCapture,
-    //       setToFalseAfterScreenCapture,
-    //       toggle
-    //     );
-    //   case 'lollipop':
-    //     return Charts.lollipop(
-    //       elementRef.current.getBoundingClientRect().width,
-    //       state,
-    //       screenCapture,
-    //       setToFalseAfterScreenCapture
-    //     );
-    //   case 'heatmap':
-    //     return Charts.heatmap(
-    //       elementRef.current.getBoundingClientRect().width,
-    //       state,
-    //       screenCapture,
-    //       BrstKeys,
-    //       setToFalseAfterScreenCapture
-    //     );
-    //   case 'CNV':
-    //     return Charts.igv(w, state, screenCapture, setToFalseAfterScreenCapture);
-    //   case 'box':
-    //     return Charts.box(w, state, screenCapture, setToFalseAfterScreenCapture);
-    //   case 'variant-summary':
-    //     return Charts.variant_summary(w, state, screenCapture, setToFalseAfterScreenCapture);
-    //   case 'survival':
-    //     return Charts.survival(w, state, screenCapture, setToFalseAfterScreenCapture);
-    //   default:
-    //     return false;
-    // }
   };
 
   useEffect(() => {
@@ -280,27 +244,9 @@ export default function DataVisualization() {
         projectAvailableSteps = userProjectDetails.available_steps;
       }
 
-      // let tabList = [];
       if (projectAvailableSteps === undefined) {
         dispatch(getUserDataProjectsTableData(project_id));
       }
-      //  else {
-      //   Object.keys(projectAvailableSteps).forEach((stepName) => {
-      //     if (stepName === 'lollypop') {
-      //       tabList.push('lollipop');
-      //     } else if (stepName === 'oncoprint') {
-      //       tabList.push('onco');
-      //     } else if (stepName === 'igv') {
-      //       tabList.push('CNV');
-      //     } else if (stepName === 'scatter') {
-      //       tabList.push('correlation');
-      //     } else if (stepName === 'variant_summary') {
-      //       tabList.push('variant_summary');
-      //     } else {
-      //       tabList.push(stepName);
-      //     }
-      //   });
-      // }
     }
   }, [project_id, userProjectDetails, project_id_status]);
 
@@ -530,7 +476,7 @@ export default function DataVisualization() {
                                   <Popover.Panel
                                     className="GeneSetPopoverPanel"
                                     id="GeneSetPopverChild"
-                                    style={{width:"100%"}}
+                                    style={{ width: "100%" }}
                                   >
                                     <GeneSet parentCallback={callback} filterState={state} />
                                   </Popover.Panel>
@@ -604,7 +550,7 @@ export default function DataVisualization() {
                         </button>
                       </div>
                     )}
-                    {tabName && tabName !== 'home' && !boolChartState && tabName !== 'survival' && (
+                    {tabName && (tabName !== 'home' && tabName !== 'survival' && tabName !== 'fusion') && !boolChartState && (
                       <div className="p-1 text-base sm:text-sm md:text-md lg:text-base xl:text-2xl  2xl:text-md">
                         <FormattedMessage
                           id="PleaseSelectGenes"

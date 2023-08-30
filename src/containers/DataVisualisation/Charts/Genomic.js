@@ -1,22 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { GeneInfo } from '../../../actions/api_actions';
 import LoaderCmp from '../../Common/Loader';
 import chart_types from '../../DataSummary/genomicCharyTypes';
+import html2canvas from 'html2canvas';
 
-export default function DataGenomic() {
+export default function DataGenomic({
+  inputData,
+  screenCapture,
+  setToFalseAfterScreenCapture
+}) {
   const [loader, setLoader] = useState(false);
   const [activeCmp, setActiveCmp] = useState(true);
   let { project_id } = useParams();
   const [summaryJson, setSummaryJson] = useState({});
   const [summaryJsonStatus, setSummaryJsonStatus] = useState(204);
   const [state, setState] = useState({ charts: [] });
+  const downloadContainerRef = useRef(null);
+  const liRefs = useRef({});
 
   useEffect(() => {
     if (project_id && activeCmp) {
-      let dataJson = { project_id: project_id };
-
-      let data = GeneInfo('POST', dataJson);
+      let data = GeneInfo('POST', inputData);
       data.then((result) => {
         if (result.status === 200) {
           setSummaryJson(result.data);
@@ -29,7 +34,7 @@ export default function DataGenomic() {
       setActiveCmp(false);
     } else {
       if (activeCmp) {
-        let data = GeneInfo('POST');
+        let data = GeneInfo('POST', inputData);
         data.then((result) => {
           if (result.status === 200) {
             setSummaryJson(result.data);
@@ -42,7 +47,38 @@ export default function DataGenomic() {
         setActiveCmp(false);
       }
     }
-  }, [project_id, activeCmp]);
+  }, [project_id, activeCmp, inputData]);
+
+  useEffect(() => {
+    if (screenCapture) {
+      handleCapture();
+    }
+  }, [screenCapture]);
+
+  const handleCapture = async () => {
+    if (screenCapture) {
+      let nameList = ["Variant Classification", "Variant Type", "Top 10 Mutated Genes", "Variant Classification Summary"]
+      Object.values(liRefs.current).forEach(async (ref, index) => {
+        const canvas = await html2canvas(ref.current);
+        const image = canvas.toDataURL('image/png');
+
+        // Create a download anchor
+        const link = document.createElement('a');
+        link.href = image;
+        link.download = `${nameList[index]}.png`; // Set a unique name for each download
+        link.style.display = 'none';
+
+        // Trigger a click on the anchor to start the download
+        document.body.appendChild(link);
+        link.click();
+
+        // Clean up
+        document.body.removeChild(link);
+      });
+
+      setToFalseAfterScreenCapture();
+    }
+  };
 
   let visual_type = {
     'Variant Classification': 'Bar',
@@ -63,11 +99,13 @@ export default function DataGenomic() {
         } else {
           comp = chart_types(type, summaryJson[item], '');
         }
+        liRefs.current['omics' + k] = React.createRef();
 
         html.push(
           <li
             key={'omics_' + k}
             className="max-w bg-white rounded overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border"
+            ref={liRefs.current['omics' + k]}
           >
             <div className="px-6 py-4">
               <div className="font-bold lg:text-2xl sm:text-xl md:text-xl mb-2">{item}</div>
@@ -96,7 +134,7 @@ export default function DataGenomic() {
         <div className="genomic ptn">
           <div className="auto">
             {state['charts'] && (
-              <div className="dataList singleDataViz">
+              <div ref={downloadContainerRef} className="dataList singleDataViz">
                 <ul>{state['charts']}</ul>
               </div>
             )}

@@ -8,6 +8,7 @@ import '../../../styles/css/heatmap.css';
 import { Context } from '../../../wrapper';
 import LoaderCmp from '../../Common/Loader';
 import NoContentMessage from '../../Common/NoContentComponent';
+import { exportComponentAsPNG } from 'react-component-export-image';
 import inputJson from '../../Common/data';
 import HeatmapNewCmp from '../../Common/testH';
 
@@ -26,6 +27,7 @@ export default function DataHeatmap({
   const [data_, setData] = useState('');
   const [inputGene, setInputGene] = useState([]);
   const [heatmapJson, setHeatmapJson] = useState([]);
+  const [inputState, setInputState] = useState({});
   const [heatmapSummaryStatusCode, setHeatmapSummaryStatusCode] = useState({
     status: 0,
     loader: true
@@ -179,8 +181,14 @@ export default function DataHeatmap({
   }, [koreanlanguage, filterData, project_id]);
 
   useEffect(() => {
-    if (inputData && tableType !== '') {
-      let genes = inputData['genes'];
+    if (inputData) {
+      setInputState((prevState) => ({ ...prevState, ...inputData }));
+    }
+  }, [inputData])
+
+  useEffect(() => {
+    if (inputState && tableType !== '') {
+      let genes = inputState['genes'];
       let t = [];
       for (var i = 0; i < genes.length; i++) {
         t.push(
@@ -189,19 +197,21 @@ export default function DataHeatmap({
           </option>
         );
       }
-      console.log('t', t)
       setInputGene(t);
       setGenes(genes);
-      console.log('initialGene' ,genes )
+      console.log('initialGene', genes)
+      console.log('inputState', inputState);
       setSelectedGene(genes);
-      if (inputData.type !== '' && inputData['genes'].length > 0) {
+      if (inputState && 'type' in inputState && inputState.type !== '' && inputState['genes'].length > 0) {
+
+        console.log(tableType, viewType, mainTab, rangeValue);
+        let postData = { ...inputState }
         setLoader(true);
-        inputData['table_type'] = tableType;
-        inputData['view'] = viewType;
-        inputData['heat_type'] = mainTab;
-        inputData['cluster'] = rangeValue;
-        inputData['cluster'] = rangeValue;
-        let return_data = HeatmapInformation('POST', inputData);
+        postData['table_type'] = tableType;
+        postData['view'] = viewType;
+        postData['heat_type'] = mainTab;
+        postData['cluster'] = rangeValue;
+        let return_data = HeatmapInformation('POST', postData);
         return_data
           .then((result) => {
             const d = result;
@@ -225,7 +235,7 @@ export default function DataHeatmap({
         setNoGeneData(true);
       }
     }
-  }, [inputData, tableType]);
+  }, [inputState, tableType]);
 
   useEffect(() => {
     if (heatmapJson?.data?.length > 0 && brstKeys) {
@@ -360,6 +370,7 @@ export default function DataHeatmap({
 
     if (watermarkCss !== '' && screenCapture) {
       setToFalseAfterScreenCapture();
+      exportComponentAsPNG(reference);
     }
   }, [screenCapture, watermarkCss]);
 
@@ -376,7 +387,7 @@ export default function DataHeatmap({
       classList.add('text-teal-700', 'hover:bg-teal-200', 'bg-teal-100');
     }
     e.target.classList.add('hover:bg-main-blue', 'bg-main-blue', 'text-white');
-    let dataJson = { ...inputData };
+    let dataJson = { ...inputState };
     if (type === 'rna') {
       dataJson['genes'] = genes;
     } else if (type === 'methylation') {
@@ -390,8 +401,6 @@ export default function DataHeatmap({
   };
 
   const changeMainType = (e, type) => {
-    // setTableType('rna')
-    // setActiveTab('1')
     let c = document.getElementsByName('maintype');
     for (var i = 0; i < c.length; i++) {
       let classList = c[i].classList;
@@ -401,8 +410,8 @@ export default function DataHeatmap({
     e.target.classList.add('hover:bg-main-blue', 'bg-main-blue', 'text-white');
     setMainTab(type);
     setOption([]);
-    let dataJson = { ...inputData };
-    if (inputData.type !== '' && inputData['genes'].length > 0) {
+    let dataJson = { ...inputState };
+    if (inputState.type !== '' && inputState['genes'].length > 0) {
       setClusterRange(dataJson['genes'].length);
       setLoader(true);
       dataJson['table_type'] = tableType;
@@ -433,8 +442,8 @@ export default function DataHeatmap({
   const setGene = (e) => {
     let gene = e.target.value;
     setSelectedGene(gene?.split(","));
-    console.log('selectedGene' , [gene] , gene?.split(","))
-    let dataJson = { ...inputData };
+    console.log('selectedGene', [gene], gene?.split(","))
+    let dataJson = { ...inputState };
     if (tableType === 'rna') {
       dataJson['genes'] = genes;
     } else if (tableType === 'methylation') {
@@ -445,7 +454,7 @@ export default function DataHeatmap({
       dataJson['genes'] = gene?.split(",")
     }
 
-    if (inputData.type !== '' && inputData['genes'].length > 0) {
+    if (inputState.type !== '' && inputState['genes'].length > 0) {
       dataJson['table_type'] = tableType;
       dataJson['view'] = viewType;
       dataJson['heat_type'] = mainTab;
@@ -479,9 +488,9 @@ export default function DataHeatmap({
       cf.push(item['id']);
     });
     setClinicalAttributesFil(cf);
-    if (inputData.type !== '' && inputData['genes'].length > 0) {
+    if (inputState.type !== '' && inputState['genes'].length > 0) {
       setLoader(true);
-      let dataJson = { ...inputData };
+      let dataJson = { ...inputState };
       dataJson['clinicalFilters'] = cf;
       dataJson['view'] = viewType;
 
@@ -518,14 +527,13 @@ export default function DataHeatmap({
       items.push(item['id']);
     });
     setClinicalAttributesFil(items);
-    if (inputData.type !== '' && inputData['genes'].length > 0) {
+    if (inputState.type !== '' && inputState['genes'].length > 0) {
       setLoader(true);
-      let dataJson = { ...inputData };
+      let dataJson = { ...inputState };
       dataJson['clinicalFilters'] = items;
       dataJson['view'] = viewType;
       dataJson['heat_type'] = mainTab;
       dataJson['cluster'] = rangeValue;
-      // dataJson['genes'] = selectedGene
       if (tableType === 'methylation' || tableType === 'phospho') {
         dataJson['genes'] = selectedGene;
       }
@@ -559,13 +567,13 @@ export default function DataHeatmap({
     }
     e.target.classList.add('hover:bg-main-blue', 'bg-main-blue', 'text-white');
     setViewType(view);
-    let dataJson = { ...inputData };
+    let dataJson = { ...inputState };
     dataJson['view'] = view;
     dataJson['heat_type'] = mainTab;
     dataJson['clinicalFilters'] = clinincalAttributesFil;
     dataJson['cluster'] = rangeValue;
     dataJson['genes'] = selectedGene;
-    if (inputData.type !== '' && inputData['genes'].length > 0) {
+    if (inputState.type !== '' && inputState['genes'].length > 0) {
       let return_data = HeatmapInformation('POST', dataJson);
       return_data
         .then((result) => {
@@ -601,10 +609,10 @@ export default function DataHeatmap({
 
   const changeCluster = () => {
     let cf = [];
-    if (inputData.type !== '' && inputData['genes'].length > 0) {
-      console.log('clusterChange' , selectedGene)
+    if (inputState.type !== '' && inputState['genes'].length > 0) {
+      console.log('clusterChange', selectedGene)
       setLoader(true);
-      let dataJson = { ...inputData };
+      let dataJson = { ...inputState };
       dataJson['clinicalFilters'] = cf;
       dataJson['view'] = viewType;
       dataJson['type'] = viewType;
@@ -639,6 +647,7 @@ export default function DataHeatmap({
       ['colorSpectrumBreaks']: [parseInt(spectrumMin), parseInt(spectrumMax)]
     }));
   };
+
   const changeTheme = (e) => {
     setLoader(true);
     let theme_name = e.target.value;
@@ -1073,7 +1082,7 @@ export default function DataHeatmap({
                     max={clusterRange}
                     value={rangeValue}
                     onChange={rangeCall}
-                    style={{zIndex:"0", important:"true"}}
+                    style={{ zIndex: "0", important: "true" }}
                   />
                   <ul className="" id="tickmarks">
                     {/* {[...Array(clusterRange)].map((e, i) =>  */}

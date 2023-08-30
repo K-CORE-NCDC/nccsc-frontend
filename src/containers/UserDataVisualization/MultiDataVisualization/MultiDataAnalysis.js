@@ -16,7 +16,6 @@ import sample_img from '../../../assets/images/sample.webp';
 import HeaderComponent from '../../Common/HeaderComponent/HeaderComponent';
 import Filter from '../../Common/filter';
 import LoaderCmp from '../../Common/Loader';
-// import { Charts } from '../../DataVisualisation/Charts';
 import GeneSet from '../Components/MainComponents/GeneSet';
 import VolcanoFusionFilterComponent from '../Components/MainComponents/VolcanoFusionFilterComponent';
 
@@ -50,6 +49,11 @@ export default function DataVisualization() {
   const [filterApplied, setfilterApplied] = useState(false);
   const [title, setTitle] = useState({});
 
+  const [isGeneSetPopoverOpen, setIsGeneSetPopoverOpen] = useState(false);
+  const [isFilterPopoverOpen, setFilterPopoverOpen] = useState(false);
+  const [isSurvivalFilterPopoverOpen, setSurvivalFilterPopoverOpen] = useState(false);
+  const [isVolFusFilterPopoverOpen, setVolFusFilterPopoverOpen] = useState(false);
+
   const setToFalseAfterScreenCapture = (param = false) => {
     if (param === false) {
       setScreenCapture(false);
@@ -66,9 +70,17 @@ export default function DataVisualization() {
         viz: chartx
       }));
     }
+    else if (tabName === 'fusion' || tabName === 'survival') {
+      let chartx = LoadChart(width, tabName);
+      setCharts((prevState) => ({
+        ...prevState,
+        viz: chartx
+      }));
+    }
   };
 
   const callback = useCallback(({ filter, value, genes }) => {
+    console.log('filter, value, genes ' , filter, value, genes )
     let g = [];
     if (genes?.includes(' ')) {
       g = genes?.split(' ');
@@ -166,6 +178,9 @@ export default function DataVisualization() {
     setTabName(tab === 'home' ? undefined : tab);
     setChartName(tabName);
     if (chartName && state?.genes?.length > 0) {
+      submitFilter();
+    }
+    else if ((tabName == 'survival' || tabName === 'fusion')) {
       submitFilter();
     }
     let t = ['volcano', 'survival', 'fusion'];
@@ -306,7 +321,7 @@ export default function DataVisualization() {
           >
             {(placeholder) => placeholder}
           </FormattedMessage>
-          
+
         );
       } else if (element === 'volcano') {
         desc = (
@@ -338,34 +353,25 @@ export default function DataVisualization() {
 
   useEffect(() => {
     if (project_id !== undefined) {
-      if (state.genes.length > 0) {
+      // if (state.genes.length > 0) {
         dispatch(samplesCount('POST', { project_id: project_id }));
         dispatch(getBreastKeys(state));
-      }
+      // }
+      // else if ((tabName == 'survival' || tabName === 'fusion')) {
+      //   dispatch(samplesCount('POST', { project_id: project_id }));
+      //   dispatch(getBreastKeys(state));
+      // }
     } else {
-      if (state.genes.length > 0) {
+      // if (state.genes.length > 0) {
         dispatch(samplesCount('POST', {}));
         dispatch(getBreastKeys(state));
-      }
+      // }
+      // else if ((tabName == 'survival' || tabName === 'fusion')) {
+      //   dispatch(samplesCount('POST', { project_id: project_id }));
+      //   dispatch(getBreastKeys(state));
+      // }
     }
-  }, [state]);
-  // const checkPopup = (event) => {
-  //   if (event.target.id === 'clinicalFilterPopover') {
-  //     setFilterPopoverOpen(!isFilterPopoverOpen);
-  //   } else if (event.target.id === 'geneFilterPopover') {
-  //     setIsGeneSetPopoverOpen(!isGeneSetPopoverOpen);
-  //   }
-  //   if (isFilterPopoverOpen) {
-  //     setFilterPopoverOpen(false);
-  //   }
-  //   if (isGeneSetPopoverOpen) {
-  //     setIsGeneSetPopoverOpen(false);
-  //   }
-  //   event.stopPropagation();
-  // };
-  // useEffect(() => {
-  //   document.body.addEventListener('click', checkPopup);
-  // }, []);
+  }, [state, tabName]);
 
   useEffect(() => {
     if (BrstKeys) {
@@ -388,6 +394,9 @@ export default function DataVisualization() {
     if (tabName !== 'home' && state?.genes?.length === 0) {
       setBoolChartState(false);
     }
+    if (tabName === 'fusion' || tabName === 'survival') {
+      setBoolChartState(true);
+    }
   }, [chart, tabName, state]);
 
   useEffect(() => {
@@ -405,42 +414,8 @@ export default function DataVisualization() {
       <Suspense fallback={<LoaderCmp />}>
         <Chart type={type} w={w} state={state} screenCapture={screenCapture} setToFalseAfterScreenCapture={setToFalseAfterScreenCapture} toggle={toggle} VFData={VFData} BrstKeys={BrstKeys}
           trasnferSurvivalData={trasnferSurvivalData} survialData={survialData} />
-
       </Suspense>
     )
-    // switch (type) {
-    //   case 'circos':
-    //     return Charts.circos(w, state, screenCapture, setToFalseAfterScreenCapture, toggle, state);
-    //   case 'OncoPrint':
-    //     return Charts.onco(w, state, screenCapture, setToFalseAfterScreenCapture);
-    //   case 'lollipop':
-    //     return Charts.lollipop(w, state, screenCapture, setToFalseAfterScreenCapture);
-    //   case 'volcano':
-    //     return Charts.volcano(w, state, screenCapture, setToFalseAfterScreenCapture, VFData);
-    //   case 'heatmap':
-    //     return Charts.heatmap(w, state, screenCapture, BrstKeys, setToFalseAfterScreenCapture);
-    //   case 'survival':
-    //     return Charts.survival(
-    //       w,
-    //       state,
-    //       screenCapture,
-    //       setToFalseAfterScreenCapture,
-    //       survialData,
-    //       trasnferSurvivalData
-    //     );
-    //   case 'correlation':
-    //     return Charts.scatter(w, state, screenCapture, setToFalseAfterScreenCapture);
-    //   case 'CNV':
-    //     return Charts.igv(w, state, screenCapture, setToFalseAfterScreenCapture);
-    //   case 'fusion':
-    //     return Charts.fusion(w, state, screenCapture, setToFalseAfterScreenCapture, VFData);
-    //   case 'box':
-    //     return Charts.box(w, state, screenCapture, setToFalseAfterScreenCapture);
-    //   case 'sankey':
-    //     return Charts.sankey(w, state, screenCapture, setToFalseAfterScreenCapture, toggle, state);
-    //   default:
-    //     return false;
-    // }
   };
 
   const screen_call = useCallback(() => {
@@ -490,10 +465,6 @@ export default function DataVisualization() {
     ]
   };
 
-  const [isGeneSetPopoverOpen, setIsGeneSetPopoverOpen] = useState(false);
-  const [isFilterPopoverOpen, setFilterPopoverOpen] = useState(false);
-  const [isSurvivalFilterPopoverOpen, setSurvivalFilterPopoverOpen] = useState(false);
-  const [isVolFusFilterPopoverOpen, setVolFusFilterPopoverOpen] = useState(false);
 
   return (
     <div>
@@ -537,7 +508,7 @@ export default function DataVisualization() {
         <div className="ptn">
           <div className="auto">
             <section>
-              <div className="PopoverStyles">
+              <div className={`PopoverStyles ${(project_id && tab !== 'home') ? 'JustifySpaceBetween' : ''}`} style={(!project_id && tabName === 'survival') ? {gap:'40px'}:{}}>
                 {toggle && (
                   <Popover className="Relative" id="clinicalFilterPopover2">
                     {({ }) => {
@@ -601,9 +572,7 @@ export default function DataVisualization() {
                           <div className="w-full">
                             <Popover.Button
                               className={'selectBox'}
-                              onClick={() =>
-                                setSurvivalFilterPopoverOpen(!isSurvivalFilterPopoverOpen)
-                              }
+                              onClick={() => setSurvivalFilterPopoverOpen(!isSurvivalFilterPopoverOpen)}
                             >
                               <div className="GeneSetgeneSetButton">
                                 <div className="flex-1">
@@ -617,7 +586,8 @@ export default function DataVisualization() {
                                 </div>
                               </div>
                             </Popover.Button>
-                            <Transition
+
+                            {isSurvivalFilterPopoverOpen && <Transition
                               show={isSurvivalFilterPopoverOpen}
                               as={Fragment}
                               enter="transition ease-out duration-200"
@@ -630,7 +600,7 @@ export default function DataVisualization() {
                               <Popover.Panel
                                 className="SurvivalFilter W100 BorderstyleVizAbs"
                                 style={{
-                                  maxHeight: '450px',
+                                  maxHeight: '350px',
                                   overflowY: 'scroll',
                                   zIndex: '10',
                                   background: 'white',
@@ -647,6 +617,7 @@ export default function DataVisualization() {
 
                               </Popover.Panel>
                             </Transition>
+                            }
                           </div>
                         </>
                       );
@@ -659,7 +630,7 @@ export default function DataVisualization() {
                     {({ }) => {
                       return (
                         <>
-                          <div className="w-full">
+                          <div className="w-full" style={{ width: `${tabName === "fusion" ? "120%" : ""}` }}>
                             <Popover.Button
                               className={'selectBox'}
                               onClick={() => setVolFusFilterPopoverOpen(!isVolFusFilterPopoverOpen)}
@@ -691,7 +662,7 @@ export default function DataVisualization() {
                                 style={{
                                   width: '120%',
                                   position: 'absolute',
-                                  maxHeight: '450px',
+                                  maxHeight: '350px',
                                   overflowY: 'scroll',
                                   zIndex: '10',
                                   background: 'white'
@@ -710,7 +681,7 @@ export default function DataVisualization() {
                   </Popover>
                 )}
 
-                <Popover className="Relative gene_main_box" id="geneFilterPopover">
+                {tab !== 'fusion' && <Popover className="Relative gene_main_box" id="geneFilterPopover">
                   {({ }) => {
                     return (
                       <>
@@ -746,7 +717,7 @@ export default function DataVisualization() {
                             leaveFrom="opacity-100 translate-y-0"
                             leaveTo="opacity-0 translate-y-1"
                           >
-                            <Popover.Panel className="GeneSetPopoverPanel" id="GeneSetPopverChild" style={{width:"100%"}}>
+                            <Popover.Panel className="GeneSetPopoverPanel" id="GeneSetPopverChild" style={{ width: "100%" }}>
                               <GeneSet parentCallback={callback} filterState={state} />
                             </Popover.Panel>
                           </Transition>
@@ -755,8 +726,10 @@ export default function DataVisualization() {
                     );
                   }}
                 </Popover>
+                }
 
-                {project_id && tab!== 'home' && (
+
+                {project_id && tab !== 'home' && (
                   <Popover className="relative gene_main_box capture">
                     {({ }) => {
                       return (
@@ -781,6 +754,7 @@ export default function DataVisualization() {
                     }}
                   </Popover>
                 )}
+
               </div>
             </section>
             {gridData && !tabName && (
@@ -872,7 +846,7 @@ export default function DataVisualization() {
                 </div>
               )}
 
-              {tabName && tabName !== 'home' && !boolChartState && (
+              {tabName && (tabName !== 'home' && tabName !== 'survival' && tabName !== 'fusion') && !boolChartState && (
                 <div className="MultiDataVizErrorMessage">
                   <FormattedMessage id="PleaseSelectGenes" defaultMessage="Please Select Genes" />
                 </div>

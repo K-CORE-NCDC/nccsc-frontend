@@ -1,24 +1,26 @@
-// import { EyeIcon } from '@heroicons/react/outline';
+import { EyeIcon } from '@heroicons/react/outline';
 import html2canvas from 'html2canvas';
 import React, { useContext, useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import { FusionVennDaigram } from '../../../actions/api_actions';
 import { Context } from '../../../wrapper';
 import FusionCustomPlot from '../../Common/FusionCustomPlot';
 import FusionVennCmp from '../../Common/FusionVenn';
 import LoaderCmp from '../../Common/Loader';
 import NoContentMessage from '../../Common/NoContentComponent';
+import { useParams } from 'react-router-dom';
+
 import Table from '../../Common/Table/ReactTable';
 
 export default function FusionPlot({
   width,
-  inputData,
   screenCapture,
   setToFalseAfterScreenCapture,
   VFData
 }) {
+
+  let { project_id } = useParams();
   const context = useContext(Context);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -79,8 +81,6 @@ export default function FusionPlot({
       setToFalseAfterScreenCapture();
     }
   }, [screenCapture, watermarkCss]);
-  let { project_id } = useParams();
-  const userDefienedFilter = project_id === undefined ? 'static' : 'dynamic'
   const clinicalMaxMinInfo = useSelector(
     (data) => data.dataVisualizationReducer.clinicalMaxMinInfo
   );
@@ -128,15 +128,16 @@ export default function FusionPlot({
         }
         let main_html = [];
         main_html.push(
-          <div className="flex flex-col w-full text-left" style={{ gap: '10px', justifyContent:'center' }}>
+          <div className="flex flex-col w-full text-left" style={{ gap: '10px', justifyContent: 'center' }}>
             {value}
-            <button onClick={(e) => generateFusion(e, row.id)} id={row.id} style={{border:'1px solid black' , padding:'5px'}}>
-              <FormattedMessage id="View" defaultMessage="View"/>
+            <button onClick={(e) => generateFusion(e, row.id)} id={row.id} style={{ padding: '5px', cursor: 'pointer' }}>
+              <EyeIcon style={{width:"26px" }} />
             </button>
           </div>
         );
         return main_html;
-      }
+      },
+      width:60
     },
     {
       Header: intl.formatMessage({ id: "SampleName", defaultMessage: 'Sample Name' }),
@@ -197,13 +198,13 @@ export default function FusionPlot({
   };
 
   useEffect(() => {
-    if (inputData && 'genes' in inputData) {
-      setInputState((prevState) => ({ ...prevState, ...inputData, ...VFData }));
-    }
+      let projectdata = {"project_id":project_id}
+      setInputState((prevState) => ({ ...prevState, ...VFData, ...projectdata }));
+
     if ('groupFilters' in VFData) {
       setGroupFilters(VFData['groupFilters']);
     }
-  }, [inputData, VFData, userDefienedFilter]);
+  }, [VFData]);
 
   useEffect(() => {
     setVennData({});
@@ -211,12 +212,9 @@ export default function FusionPlot({
     setTableData([]);
     if (inputState) {
       if (
-        inputState.type !== '' &&
-        Object.keys(groupFilters).length > 0 &&
-        inputState['genes'].length > 0
+        Object.keys(groupFilters).length > 0
       ) {
         setLoader(true);
-        inputState['filterType'] = userDefienedFilter;
         let return_data = FusionVennDaigram('POST', { ...inputState, filterGroup: groupFilters });
         return_data
           .then((result) => {
@@ -287,16 +285,6 @@ export default function FusionPlot({
             </div>
           )}
 
-          {inputData && inputData.genes.length === 0 && (
-            <p className="MarginTop4">
-              {' '}
-              <FormattedMessage
-                id="PleaseSelecttheGeneSetData"
-                defaultMessage="Please Select the Gene Set Data"
-              />{' '}
-            </p>
-          )}
-
           {groupFilters && Object.keys(groupFilters).length === 0 && (
             <p className="MarginTop4">
               <FormattedMessage
@@ -339,10 +327,9 @@ export default function FusionPlot({
                   </div>
 
                   <div className="mt-20 my-0 mx-auto  w-11/12 shadow-lg">
-                    <div className="bg-white border-b border-gray-200 py-5 text-left px-5" style={{fontSize:'18px'}}>
+                    <div className="bg-white border-b border-gray-200 py-5 text-left px-5" style={{ fontSize: '18px' }}>
                       {groupName}
                     </div>
-                    {console.log('columns', tableColumnsData)}
                     {VennData && !noData && (
 
                       <Table
