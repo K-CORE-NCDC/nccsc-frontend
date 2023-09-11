@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { GroupFilters, PreDefienedFilters, UserDefinedGroupFilters } from '../../../Common/SurvivalFusionVolcanoFilters';
+import { getClinicalMaxMinInfo } from '../../../../actions/api_actions';
 
 let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
+
+  const tabList = useSelector((data) => data.dataVisualizationReducer);
+  const clinicalMaxMinInfo = useSelector((data) => data.dataVisualizationReducer.clinicalMaxMinInfo);
+
+  const dispatch = useDispatch();
   let { project_id } = useParams();
+  
   const [groupFilters, setGroupFilters] = useState({});
   const [volcanoType, setVolcanoType] = useState('transcriptome');
   const [proteomeValue, setProteomeValue] = useState('N');
-  const [userDefienedFilter, setUserDefienedFilter] = useState(
-    project_id === undefined ? 'static' : 'dynamic'
-  );
-  const tabList = useSelector((data) => data.dataVisualizationReducer);
+  const [userDefienedFilter, setUserDefienedFilter] = useState(project_id ? 'dynamic' : 'static');
   const [alltabList, setAllTabList] = useState({});
+
   // fusion
   const smallScreen = false
   const sampleCount = {};
@@ -60,6 +65,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
       volcanoFusionFilterData['volcanoType'] = volcanoType;
       volcanoFusionFilterData['proteomeValue'] = proteomeValue;
       volcanoFusionFilterData['userDefienedFilter'] = userDefienedFilter;
+      
 
       if (!project_id) {
         if (groupFilters && 'group_1' in groupFilters) groupFilters.group_a = groupFilters.group_1;
@@ -90,11 +96,20 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
     } else if (tab === 'fusion') {
       let volcanoFusionFilterData = {};
       volcanoFusionFilterData['groupFilters'] = groupFilters;
+      volcanoFusionFilterData['filterType'] = userDefienedFilter;
       if (groupFilters && Object.keys(groupFilters).length) {
         parentCallback({ volcanoFusionFilterData: volcanoFusionFilterData });
       }
     }
   }, [groupFilters]);
+
+  useEffect(() => {
+    if (!clinicalMaxMinInfo) {
+      if (project_id === undefined) {
+        dispatch(getClinicalMaxMinInfo('GET', {}));
+      }
+    }
+  }, []);
 
   return (
     <div>

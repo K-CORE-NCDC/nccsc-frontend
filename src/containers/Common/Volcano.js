@@ -26,47 +26,18 @@ const VolcanoCmp = React.forwardRef(
       }
     ];
 
-    // const downloadTableAsCsv = (tableType) => {
-    //   let rows = [
-    //     ["GENE NAME", "LOG2FC", "LOG(PVALUE) negative"],
-    //   ];
-    //   if (tableType === "positive") {
-    //     tableData.forEach(element => {
-    //       if (element["log2(fold_change)"] <= -5) {
-    //         rows.push([element["gene"], element["log2(fold_change)"], element["p_value"]])
-    //       }
-
-    //     });
-    //   } else if (tableType === "negative") {
-    //     tableData.forEach(element => {
-    //       if (element["p_value"] >= 5) {
-    //         rows.push([element["gene"], element["log2(fold_change)"], element["p_value"]])
-    //       }
-    //     });
-    //   } else {
-    //     tableData.forEach(element => {
-    //       rows.push([element["gene"], element["log2(fold_change)"], element["p_value"]])
-    //     })
-    //   }
-    //   let csvContent = "data:text/csv;charset=utf-8,"
-    //     + rows.map(e => e.join(",")).join("\n");
-    //   const encodedUri = encodeURI(csvContent);
-    //   const link = document.createElement("a");
-    //   link.setAttribute("href", encodedUri);
-    //   link.setAttribute("download", `RNA-expression-${tableType}.csv`);
-    //   document.body.appendChild(link);
-    //   link.click();
-    // }
     const downloadTableAsCsv = (tableType) => {
-      let rows = [['GENE NAME', 'LOG2FC', 'LOG(PVALUE) negative']];
+      let rows = [['GENE NAME', 'LOG2FC', 'LOG(PVALUE)']];
 
       if (tableType === 'negative') {
+        rows = [['GENE NAME', 'LOG2FC', 'LOG(PVALUE) negative']];
         tableData.forEach((element) => {
           if (element['log2(fold_change)'] <= -1.5 && element['p_value'] <= 0.5) {
             rows.push([element['gene'], element['log2(fold_change)'], element['p_value']]);
           }
         });
       } else if (tableType === 'positive') {
+        rows = [['GENE NAME', 'LOG2FC', 'LOG(PVALUE) positive']];
         tableData.forEach((element) => {
           if (element['log2(fold_change)'] >= 1.5 && element['p_value'] <= 0.5) {
             rows.push([element['gene'], element['log2(fold_change)'], element['p_value']]);
@@ -110,11 +81,11 @@ const VolcanoCmp = React.forwardRef(
         <div className="VolcanoCardText">
           <p className="TextBlue">
             <FormattedMessage id="Blue" defaultMessage="Blue :" />
-            {`Log2FC <= -1.5 & pvalue <= 0.05`}
+            {`Log2FC ≤ -1.5 & pvalue ≤ 0.05`}
           </p>
           <p className="TextRed">
             <FormattedMessage id="Red" defaultMessage="Red :" />
-            {`Log2FC >= 1.5 & pvalue <= 0.05`}
+            {`Log2FC ≥ 1.5 & pvalue ≥ 0.05`}
           </p>
           <p className="TextGrey">
             <FormattedMessage id="Grey" defaultMessage="Grey :" /> Not significant gene

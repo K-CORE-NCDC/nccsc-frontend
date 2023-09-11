@@ -19,7 +19,9 @@ const Igv = React.forwardRef(({ width, data, watermarkCss }, ref) => {
           name: 'Copy number',
           type: 'seg',
           displayMode: 'EXPANDED',
-          features: data
+          features: data,
+          order: 9, // Set the Z-index to 9
+
         }
       ]
     };

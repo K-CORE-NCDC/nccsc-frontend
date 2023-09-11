@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
 
-export default function BarChartComp({ data }) {
+export default function BarChartComp({ data, key }) {
   const chartRef = useRef(null);
   const drawGraph = (labels, data_) => {
     if (chartRef.current) {
@@ -77,7 +77,7 @@ export default function BarChartComp({ data }) {
 
   return (
     <div>
-      <canvas ref={chartRef} id="myChart" height="200"></canvas>
+      <canvas ref={chartRef} id={key} height="200"></canvas>
     </div>
   );
 }

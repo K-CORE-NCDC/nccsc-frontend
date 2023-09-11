@@ -76,8 +76,10 @@ function NewSankeyd3({ SankeyJson, idName, forGene }) {
         d.id = i;
         return 'link-' + i;
       })
-      .style('stroke-width', function (d) {
-        return Math.max(1, d.dy);
+      // .style('stroke-width', function (d) {
+        // return Math.max(1, d.dy);
+      .style('stroke-width', function () {
+        return Math.max(1, 10);
       })
       .sort(function (a, b) {
         return b.dy - a.dy;
@@ -112,8 +114,7 @@ function NewSankeyd3({ SankeyJson, idName, forGene }) {
       .append('rect')
       .attr('height', function (d) {
         if (d['type'] === maxName) {
-          console.log(heigthCalc,d.dy)
-          heigthCalc = heigthCalc + d.dy;
+          heigthCalc = heigthCalc + 20;
         }
         return d.dy;
       })

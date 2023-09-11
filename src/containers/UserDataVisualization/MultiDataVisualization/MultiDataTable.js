@@ -405,7 +405,8 @@ function MultiDataTable({ updateComponentNumber }) {
                         state: { projectName: verificationResponse?.project_details?.name }
                       });
                     }}
-                    className="btn btnPrimary"
+                    className="btn"
+                    style={{backgroundColor:"#009fe2"}}
                   >
                     <FormattedMessage id="Visualize" defaultMessage="Visualize" />
                   </button>

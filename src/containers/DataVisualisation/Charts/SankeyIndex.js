@@ -54,6 +54,11 @@ function SankeyIndex({ selectedGene, variants }) {
           history.push('/notfound');
         });
     }
+    else {
+      setLoader(false);
+      setShowNoContent(true);
+      setSankeyJson([]);
+    }
   }, [selectedGene, variants]);
 
   useEffect(() => {
