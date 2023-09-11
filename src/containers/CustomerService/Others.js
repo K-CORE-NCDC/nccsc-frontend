@@ -18,6 +18,7 @@ export const Others = () => {
       <div className="publicDataInfo" style={style.mainBox}>
         <ul style={style.wrapper}>
           <li>
+            <Link to="/organoid/">
             <img src={icon1} alt="" />
             <dl>
               <dt>
@@ -32,6 +33,7 @@ export const Others = () => {
                 </span>
               </dd>
             </dl>
+            </Link>
           </li>
         </ul>
       </div>

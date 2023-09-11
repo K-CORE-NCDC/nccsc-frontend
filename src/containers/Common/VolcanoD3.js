@@ -208,7 +208,7 @@ const VolcanoPlotD3 = ({ watermarkCss, dataProps }) => {
                 '<strong>' +
                 yColumn +
                 '</strong>: ' +
-                d.target.__data__.p_value
+                d.target.__data__.original_p_value
             );
         }
 

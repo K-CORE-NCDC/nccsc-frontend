@@ -64,7 +64,16 @@ export default function DataVisualization() {
       setIsGeneSetPopoverOpen(false);
     }
   }, []);
-  
+
+  const submitFilter = () => {
+    setBoolChartState(false);
+    let chartx = LoadChart(width, tabName);
+    setCharts((prevState) => ({
+      ...prevState,
+      viz: chartx
+    }));
+  };
+
   useEffect(() => {
     return () => {
       dispatch({
@@ -84,50 +93,73 @@ export default function DataVisualization() {
     )
   };
 
-  // First UseEffect
   useEffect(() => {
-    setCharts({ viz: [] });
-    dispatch(getBreastKeys(state));
-  }, [state, tab])
+    if (project_id !== undefined) {
+      if (state.genes.length > 0) {
+        dispatch(samplesCount('POST', { project_id: project_id }));
+        dispatch(getBreastKeys(state));
+        setBoolChartState(false);
+      }
+      if (tabName === 'survival') {
+        setBoolChartState(true);
+      }
+    } else {
+      if (state.genes.length > 0) {
+        dispatch(samplesCount('POST', {}));
+        dispatch(getBreastKeys(state));
+      }
+    }
+  }, [state]);
 
-  //Second UseEffect 
   useEffect(() => {
-    setTabName(tab === 'home' ? undefined : tab);
-    setChartName(tab);
-    const t = ['survival'];
-    setToggle(t.indexOf(tab) === -1);
-
-  }, [tab]);
-
-  // 3rd UseEffect
-  useEffect(() => {
-
-    if (chart['viz']) {
-      setBoolChartState(true);
-      if (tabName !== 'home' && state?.genes?.length === 0) {
+    if (chart) {
+      if (tabName !== 'home' && state?.genes?.length > 0) {
+        setBoolChartState(true);
+      } else {
         setBoolChartState(false);
       }
       if (tabName === 'survival') {
         setBoolChartState(true);
       }
     }
-
-  }, [chart]);
+  }, [chart, tabName]);
 
   useEffect(() => {
     if (BrstKeys) {
-      if (project_id) {
-        dispatch(samplesCount('POST', { project_id: project_id }));
-      } else {
-        dispatch(samplesCount('POST', {}));
+      let tmp = [];
+      for (const [key, value] of Object.entries(BrstKeys)) {
+        tmp.push(
+          <option key={key} value={key + '_' + value}>
+            {value}
+          </option>
+        );
       }
-      let chartx = LoadChart(width, tabName);
-      setCharts((prevState) => ({
-        ...prevState,
-        viz: chartx
-      }));
     }
   }, [BrstKeys]);
+
+
+
+  useEffect(() => {
+    let chartx = LoadChart(width, tabName);
+    setCharts((prevState) => ({
+      ...prevState,
+      viz: chartx
+    }));
+  }, [screenCapture]);
+
+  useEffect(() => {
+    setTabName(tab === 'home' ? undefined : tab);
+    setChartName(tabName);
+    if (chartName) {
+      submitFilter();
+    }
+    let t = ['volcano', 'survival', 'fusion'];
+    if (t.indexOf(tabName) !== -1) {
+      setToggle(false);
+    } else {
+      setToggle(true);
+    }
+  }, [tab, tabName, chartName, BrstKeys]);
 
   useEffect(() => {
     let w = elementRef?.current?.getBoundingClientRect().width;
@@ -248,16 +280,6 @@ export default function DataVisualization() {
       setTitle({ id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' });
     }
   }, [route.pathname]);
-
-
-  useEffect(() => {
-    let chartx = LoadChart(width, tabName);
-    setCharts((prevState) => ({
-      ...prevState,
-      viz: chartx
-    }));
-  }, [screenCapture]);
-
 
   const breadCrumbs = {
     '/visualise-singledata/': [

@@ -4,6 +4,6 @@ module.exports = {
   // extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:react-hooks/recommended'],
   rules: {
     // ...other rules...
-    'no-unused-vars': 'error'
+    // 'no-unused-vars': 'error'
   }
 };

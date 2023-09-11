@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import React, { useState, useContext, useEffect } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { Link, useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { login } from '../../actions/api_actions';
@@ -7,6 +7,7 @@ import loginIcon1 from '../../styles/images/loginForm-icon01.svg';
 import loginIcon2 from '../../styles/images/loginForm-icon02.svg';
 import NCCLogo from '../../styles/images/logo02.svg';
 import HeaderComponent from '../Common/HeaderComponent/HeaderComponent';
+import { Context } from '../../wrapper';
 
 const LoginComponent = () => {
   const [userFormData, setUserFormData] = useState({
@@ -17,7 +18,9 @@ const LoginComponent = () => {
   const [errorMessage, setErrorMessage] = useState([]);
   const [isError, setIsError] = useState(false);
   const title = { id: 'Login', defaultMessage: 'Login' };
-
+  const intl = useIntl();
+  const context = useContext(Context);
+  
   const updateUserNamePassword = (e) => {
     setUserFormData((previousState) => ({
       ...previousState,
@@ -28,11 +31,11 @@ const LoginComponent = () => {
   const loginSuccess = () => {
     // id is LoginSuccess
     Swal.fire({
-      title: 'Success',
-      text: 'Login Success',
+      title: intl.formatMessage({ id: "Success", defaultMessage: 'Success' }),
+      text: intl.formatMessage({ id: "LoginSuccess", defaultMessage: 'Login Success' }),
       icon: 'success',
       confirmButtonColor: '#003177',
-      confirmButtonText: 'Ok',
+      confirmButtonText: intl.formatMessage({ id: "Ok", defaultMessage: 'Ok' }),
       allowOutsideClick: false
     }).then((result) => {
       if (result.value) {
@@ -141,22 +144,22 @@ const LoginComponent = () => {
                 <span className="colorSecondary">
                   <font style={{ verticalAlign: 'inherit' }}></font>
                 </span>
+
                 <font style={{ verticalAlign: 'inherit' }}>
+
                   <span className="colorPrimary">
                     <font style={{ verticalAlign: 'inherit' }}>
-                      <FormattedMessage id=" " defaultMessage="Welcome" />
+                      <FormattedMessage id="WelcomTo" defaultMessage="Welcome to" />
                     </font>
                   </span>
-
-                  <font style={{ verticalAlign: 'inherit' }}>
-                    {' '}
-                    <FormattedMessage id=" " defaultMessage="to" />{' '}
-                  </font>
-                  <span className="colorSecondary">
-                    <font style={{ verticalAlign: 'inherit' }}>
-                      <FormattedMessage id="WelCome" defaultMessage="K-Core Portal" />
-                    </font>
-                  </span>
+                  {' '}
+                  {context.locale === 'en-US' &&
+                    <span className="colorSecondary">
+                      <font style={{ verticalAlign: 'inherit' }}>
+                        <FormattedMessage id="K-Core Portal" defaultMessage="K-Core Portal" />
+                      </font>
+                    </span>
+                  }
                 </font>
                 <span className="colorPrimary">
                   <font style={{ verticalAlign: 'inherit' }}></font>

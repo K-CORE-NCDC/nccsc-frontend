@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { findPassword } from '../../actions/api_actions';
@@ -12,14 +12,15 @@ function FindPassword() {
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState([]);
   let history = useHistory();
+  const intl = useIntl();
 
   const findPasswordSuccess = () => {
     Swal.fire({
-      title: 'Success',
-      text: 'Password Reset Link is sent to your Email',
+      title: intl.formatMessage({ id: "Success", defaultMessage: 'Success' }),
+      text: intl.formatMessage({ id: "PasswordResetLink", defaultMessage: "Password Reset Link is sent to your Email" }),
       icon: 'success',
       confirmButtonColor: '#003177',
-      confirmButtonText: 'Ok',
+      confirmButtonText: intl.formatMessage({ id: "Ok", defaultMessage: 'Ok' }),
       allowOutsideClick: false
     }).then((result) => {
       if (result.value) {

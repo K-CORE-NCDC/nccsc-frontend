@@ -215,16 +215,6 @@ const route = [
     component: Home
   },
   {
-    path: '/home/faq/',
-    exact: true,
-    type: 'unauth',
-    category: 'visualizeData',
-    name: <FormattedMessage id="CustomerService" defaultMessage="CustomerService" />,
-    childname: <FormattedMessage id="CustomerService" defaultMessage="CustomerService" />,
-    component: Home
-  },
-
-  {
     path: '/newmultidataproject/',
     exact: true,
     type: 'unauth',
@@ -305,7 +295,15 @@ const route = [
     childname: <FormattedMessage id="Signup" defaultMessage="Signup" />,
     component: UserDataTable
   },
-
+  {
+    path: '/home/faq/',
+    exact: true,
+    type: 'unauth',
+    category: 'visualizeData',
+    name: <FormattedMessage id="CustomerService" defaultMessage="CustomerService" />,
+    childname: <FormattedMessage id="CustomerService" defaultMessage="CustomerService" />,
+    component: Home
+  },
   {
     path: '/faq/:slug?/',
     exact: true,
@@ -323,7 +321,7 @@ const route = [
     component: Notice
   },
   {
-    path: '/qa/:slug?/',
+    path: '/qa/:id?/',
     exact: true,
     type: 'unauth',
     name: <FormattedMessage id="CustomerVoice" defaultMessage="Customer Voice" />,

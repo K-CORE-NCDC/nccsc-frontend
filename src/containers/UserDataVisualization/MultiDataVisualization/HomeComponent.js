@@ -68,18 +68,18 @@ const HomeComponent = () => {
                 className="popupBody  introduceWrap"
                 style={{ padding: '0px', border: '1px solid #ddd' }}
               >
-                <div className="introduceBox03" style={{ width: '100%' }}>
+                <div className="introduceBox03" style={{ width: '100%', backgroundColor: "rgb(254, 196, 11)" }}>
                   <ul>
-                    <li>
-                      <p>
+                    <li style={{borderBottom:"1px solid black", color:'black' }}>
+                      <p style={{ color: "black"}}>
                         <FormattedMessage
                           id="projectCountGuide1"
                           defaultMessage="It is possible to create 5 projects on a account."
                         />
                       </p>
                     </li>
-                    <li>
-                      <p>
+                    <li style={{color:'black'}}>
+                      <p style={{color:'black'}}>
                         <FormattedMessage
                           id="projectCountGuide2"
                           defaultMessage="The period to check each project is 2 weeks from the date of creation. After 2 weeks, the project will be deleted."

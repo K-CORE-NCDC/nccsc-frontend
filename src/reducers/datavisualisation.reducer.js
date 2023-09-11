@@ -88,11 +88,6 @@ const dataVisualizationReducer = (state = { data: 'data' }, { type, payload }) =
         ...state,
         fusionGenes: payload
       };
-    case dataVisualization.FUSION_REQUEST:
-      return {
-        ...state,
-        fusionData: payload
-      };
     case dataVisualization.BOX_REQUEST:
       return {
         ...state,
@@ -149,11 +144,6 @@ const dataVisualizationReducer = (state = { data: 'data' }, { type, payload }) =
       state = remaining;
       return state;
     }
-    case dataVisualization.FUSION_EXON_REQUEST:
-      return {
-        ...state,
-        ExonData: payload
-      };
     case dataVisualization.FUSIONVENN_RNID:
       return {
         ...state,

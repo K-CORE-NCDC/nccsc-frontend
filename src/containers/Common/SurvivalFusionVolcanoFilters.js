@@ -103,6 +103,49 @@ const filterChoicesCustom = [
   { type: 'number', name: 'PR Test', id: 'pr_score', input: 'number' }
 ];
 
+const filterChoicesCustomKorean = [
+  { type: 'static', name: '성별', id: 'sex_cd', options: ['Male', 'Female'] },
+  {
+    type: 'number',
+    name: '진단 시 나이',
+    id: 'diag_age',
+    input: 'number'
+  },
+  { type: 'number', id: 'bmi_vl', name: '체질량지수(BMI)', input: 'number' },
+  {
+    type: 'boolean',
+    id: 'bila_cncr_yn',
+    name: '양측성 유방암 여부'
+  },
+  { type: 'boolean', name: '흡연 정보', id: 'smok_yn' },
+  { type: 'boolean', name: '음주 정보', id: 'drnk_yn', value: 'Yes' },
+  {
+    type: 'boolean',
+    name: '유방암 가족력',
+    id: 'fmhs_brst_yn',
+    value: 'Yes'
+  },
+  { type: 'number', name: '초경 나이', id: 'mena_age', input: 'number' },
+  { type: 'boolean', name: '폐경 여부', id: 'meno_yn' },
+  { type: 'boolean', name: '출산 여부', id: 'delv_yn' },
+  { type: 'boolean', name: '모유수유경험 유무', id: 'feed_yn' },
+  {
+    type: 'number',
+    name: '수유기간',
+    id: 'feed_drtn_mnth',
+    input: 'number'
+  },
+  { type: 'boolean', name: '경구피임약 사용 유무', id: 'oc_yn' },
+  { type: 'boolean', name: '호르몬대체요법(HRT) 유무', id: 'hrt_yn' },
+  { type: 'number', name: 'T Stage', id: 't_category', input: 'number' },
+  { type: 'number', name: 'N Category', id: 'n_category', input: 'number' },
+  { type: 'number', name: 'HER2 점수', id: 'her2_score', input: 'text' },
+  { type: 'number', name: '세포증식지수(Ki-67)', id: 'ki67_score', input: 'text' },
+  { type: 'boolean', name: '재발 유무', id: 'rlps_yn' },
+  { type: 'number', name: 'ER 검사 결과', id: 'er_score', input: 'number' },
+  { type: 'number', name: 'PR 검사 결과', id: 'pr_score', input: 'number' }
+];
+
 let preDefienedGroups = {
   diag_age: [
     { label: '21-35', from: 21, to: 35 },
@@ -164,53 +207,11 @@ let preDefienedGroups = {
   ]
 };
 
-const filterChoicesCustomKorean = [
-  { type: 'static', name: '성별', id: 'sex_cd', options: ['Male', 'Female'] },
-  {
-    type: 'number',
-    name: '진단 시 나이',
-    id: 'diag_age',
-    input: 'number'
-  },
-  { type: 'number', id: 'bmi_vl', name: '체질량지수(BMI)', input: 'number' },
-  {
-    type: 'boolean',
-    id: 'bila_cncr_yn',
-    name: '양측성 유방암 여부'
-  },
-  { type: 'boolean', name: '흡연 정보', id: 'smok_yn' },
-  { type: 'boolean', name: '음주 정보', id: 'drnk_yn', value: 'Yes' },
-  {
-    type: 'boolean',
-    name: '유방암 가족력',
-    id: 'fmhs_brst_yn',
-    value: 'Yes'
-  },
-  { type: 'number', name: '초경 나이', id: 'mena_age', input: 'number' },
-  { type: 'boolean', name: '폐경 여부', id: 'meno_yn' },
-  { type: 'boolean', name: '출산 여부', id: 'delv_yn' },
-  { type: 'boolean', name: '모유수유경험 유무', id: 'feed_yn' },
-  {
-    type: 'number',
-    name: '수유기간',
-    id: 'feed_drtn_mnth',
-    input: 'number'
-  },
-  { type: 'boolean', name: '경구피임약 사용 유무', id: 'oc_yn' },
-  { type: 'boolean', name: '호르몬대체요법(HRT) 유무', id: 'hrt_yn' },
-  { type: 'number', name: 'T Stage', id: 't_category', input: 'number' },
-  { type: 'number', name: 'N Category', id: 'n_category', input: 'number' },
-  { type: 'text', name: 'HER2 점수', id: 'her2_score', input: 'text' },
-  { type: 'number', name: '세포증식지수(Ki-67)', id: 'ki67_score', input: 'text' },
-  { type: 'boolean', name: '재발 유무', id: 'rlps_yn' },
-  { type: 'number', name: 'ER 검사 결과', id: 'er_score', input: 'number' },
-  { type: 'number', name: 'PR 검사 결과', id: 'pr_score', input: 'number' }
-];
 
-export const PreDefienedFilters = ({ volcanoType, parentCallback, groupFilters }) => {
+
+export const PreDefienedFilters = ({ volcanoType, parentCallback, groupFilters, viz_type }) => {
   const context = useContext(Context);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
-  // const [Englishlanguage, setEnglishlanguage] = useState(true);
   const [selectedFilterType, setSelectedFilterType] = useState({});
   const [filterGroupsHtml, setFilterGroupsHtml] = useState([]);
   const [filters, setFilters] = useState({});
@@ -225,6 +226,7 @@ export const PreDefienedFilters = ({ volcanoType, parentCallback, groupFilters }
       setKoreanlanguage(false);
     }
   }, [context]);
+
   const preDefienedGroups1 = {
     diag_age: [
       { label: '21-35', from: 21, to: 35 },
@@ -249,20 +251,6 @@ export const PreDefienedFilters = ({ volcanoType, parentCallback, groupFilters }
     n_category: [
       { label: 'Nx-N2', from: 'Nx', to: 'N2' },
       { label: 'N3', from: 'N3', to: '' }
-    ],
-    her2_score: [
-      {
-        label: 'negative(0-1+)',
-        from: 'negative(0-1+)',
-        to: 'negative(0, 0~1, 1+)',
-        value: 'negative(0-1+)'
-      },
-      {
-        label: 'positive(2+-3+)',
-        from: 'positive(2+-3+)',
-        to: 'positive(2+,3+)',
-        value: 'positive(2+-3+)'
-      }
     ],
     pr_score: [
       { label: 'Positive', from: 0, to: 1 },
@@ -295,6 +283,38 @@ export const PreDefienedFilters = ({ volcanoType, parentCallback, groupFilters }
     //     { label: "N3", from: 'N3', to: 'N3' }
     // ]
   };
+  if (viz_type === 'volcono') {
+    preDefienedGroups1['her2_score'] = [
+      {
+        label: 'negative(0-1+)',
+        from: 'negative(0-1+)',
+        to: 'negative(0, 0~1, 1+)',
+        value: 'negative(0-1+)'
+      },
+      {
+        label: 'positive(2+-3+)',
+        from: 'positive(2+-3+)',
+        to: 'positive(2+,3+)',
+        value: 'positive(2+-3+)'
+      }
+    ]
+  }
+  else if (viz_type === 'fusion') {
+    preDefienedGroups1['her2_score'] = [
+      {
+        label: 'negative (0-2+)',
+        from: 'negative (0-2+)',
+        to: 'negative (0-2+)',
+        value: 'negative(0-1+)'
+      },
+      {
+        label: 'positive (3+)',
+        from: 'positive (3+)',
+        to: 'positive (3+)',
+        value: 'positive (3+)'
+      }
+    ]
+  }
   useEffect(() => {
     if (volcanoType !== filterType) {
       setFilterType(volcanoType);
@@ -544,30 +564,15 @@ export const PreDefienedFilters = ({ volcanoType, parentCallback, groupFilters }
 
 export const PreDefienedFiltersSurvival = ({
   parentCallback,
-  groupFilters,
-  survivalModel
 }) => {
   const [selectedFilterType, setSelectedFilterType] = useState({});
   const [filterGroupsHtml, setFilterGroupsHtml] = useState([]);
   const [filters, setFilters] = useState({});
-  // const [resetClicked, setResetClicked] = useState(false);
-  // const [isGroupFilterProp, setIsGroupFilterProp] = useState(false);
   const context = useContext(Context);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const [Englishlanguage, setEnglishlanguage] = useState(true);
-  useEffect(() => {
-    if (context['locale'] === 'kr-KO') {
-      setKoreanlanguage(true);
-      setEnglishlanguage(false);
-    } else {
-      setKoreanlanguage(false);
-      setEnglishlanguage(true);
-    }
-  });
-
-  useEffect(() => {
-    resetFilters();
-  }, [survivalModel]);
+  const [attributeName, setAttributeName] = useState({});
+  let filterGroupsHtmlTemp = []
 
   let preDefienedGroups1 = {
     diag_age: [
@@ -654,97 +659,20 @@ export const PreDefienedFiltersSurvival = ({
     ]
   };
 
-  const submitFilters = () => {
-    if (Object.keys(filters).length > 0) {
-      parentCallback(filters);
-    } else {
-      parentCallback(groupFilters);
-    }
-  };
-  const resetFilters = () => {
-    const selectElement = document.getElementById('ClinicalAttributeSelect');
-
-    if (selectElement) {
-      selectElement.value = "-1";
-    }
-
-    setSelectedFilterType({});
-    setFilterGroupsHtml([]);
-    setFilters({});
-    // setResetClicked(true);
-    // setIsGroupFilterProp(false);
-  };
 
   useEffect(() => {
-    let filterGroupsHtmlTemp = [];
-    if (groupFilters && groupFilters.type) {
-      // if (resetClicked === false) {
-      //   setIsGroupFilterProp(true);
-      // }
-      if (groupFilters.type === 'boolean') {
-        filterGroupsHtmlTemp.push(
-          <div key="bool">
-            <div className="flex flex-row">
-              <h5 className="TextBase MarginTop2">Group 1 : </h5>
-              <h5 className="TextBase MarginTop2">Yes</h5>
-            </div>
-            <div className="flex flex-row">
-              <h5 className="TextBase MarginTop2">Group 2 : </h5>
-              <h5 className="TextBase MarginTop2">No</h5>
-            </div>
-          </div>
-        );
-      }
-
-      if (groupFilters.type === 'static') {
-        filterGroupsHtmlTemp.push(
-          <div key="bool">
-            <div className="flex flex-row">
-              <h5 className="xs:text-xl">Group 1 : </h5>
-              <h5 className="text-bold xs:text-xl text-blue-700">Male</h5>
-            </div>
-            <div className="flex flex-row">
-              <h5 className="xs:text-xl">Group 2 : </h5>
-              <h5 className="text-bold xs:text-xl text-blue-700">Female</h5>
-            </div>
-          </div>
-        );
-      }
-      if (groupFilters.type === 'number' || groupFilters.type === 'text') {
-        filterGroupsHtmlTemp.push(
-          <div key="drop-user">
-            {preDefienedGroups1[groupFilters.column].map((element, index) => (
-              <div className="TextLG" key={`${element.label}-${index}-grp-a`}>
-                <div className="flex flex-row justify-around">
-                  <h5 className="P4 xs:text-xl">
-                    Group {index + 1} : {element.label}
-                  </h5>
-                </div>
-              </div>
-            ))}
-          </div>
-        );
-      }
-      setFilterGroupsHtml(filterGroupsHtmlTemp);
-    }
-  }, [groupFilters]);
-
-  const filterTypeDropdownSelection = (event) => {
-    const key = event.target.value;
-    if (key !== "-1") {
-      setSelectedFilterType({
-        details: koreanlanguage
-          ? filterChoicesCustomKorean[parseInt(key)]
-          : filterChoicesCustom[parseInt(key)],
-        index: key,
-      });
+    if (context['locale'] === 'kr-KO') {
+      setKoreanlanguage(true);
+      setEnglishlanguage(false);
     } else {
-      setSelectedFilterType({});
+      setKoreanlanguage(false);
+      setEnglishlanguage(true);
     }
-  };
+  }, [context]);
 
   useEffect(() => {
-    let filterGroupsHtmlTemp = [];
+    // let filterGroupsHtmlTemp = [];
+    console.log('selectedFilterType', selectedFilterType);
     if (selectedFilterType && selectedFilterType.details) {
       if (selectedFilterType.details.type === 'boolean') {
         setFilters({
@@ -766,8 +694,7 @@ export const PreDefienedFiltersSurvival = ({
           </div>
         );
       }
-
-      if (selectedFilterType.details.type === 'static') {
+      else if (selectedFilterType.details.type === 'static') {
         setFilters({
           group_a: 'F',
           group_b: 'M',
@@ -787,11 +714,7 @@ export const PreDefienedFiltersSurvival = ({
           </div>
         );
       }
-
-      if (
-        selectedFilterType.details.type === 'number' ||
-        selectedFilterType.details.type === 'text'
-      ) {
+      else if (selectedFilterType.details.type === 'number' || selectedFilterType.details.type === 'text') {
         const colName = selectedFilterType.details.id;
         let filtersTemp = {
           type: selectedFilterType.details.type,
@@ -819,10 +742,44 @@ export const PreDefienedFiltersSurvival = ({
           </div>
         );
       }
-
       setFilterGroupsHtml(filterGroupsHtmlTemp);
     }
+    else {
+      setFilterGroupsHtml([])
+    }
   }, [selectedFilterType]);
+
+  const submitFilters = () => {
+    if (Object.keys(filters).length > 0) {
+      parentCallback(filters);
+      resetFilters()
+    }
+  };
+
+  const resetFilters = () => {
+    setSelectedFilterType({});
+    setFilterGroupsHtml([]);
+    setFilters({});
+    setAttributeName({})
+  };
+
+
+  const filterTypeDropdownSelection = (event) => {
+    const key = event.target.value;
+    if (key !== "-1") {
+      setSelectedFilterType({
+        details: koreanlanguage
+          ? filterChoicesCustomKorean[parseInt(key)]
+          : filterChoicesCustom[parseInt(key)],
+        index: key,
+      });
+      setAttributeName(koreanlanguage ? filterChoicesCustomKorean[parseInt(key)] : filterChoicesCustom[parseInt(key)])
+    } else {
+      setSelectedFilterType({});
+      setAttributeName({})
+    }
+  };
+
 
   return (
     <div className="m-1 PY3 PX2 BGGray100">
@@ -834,7 +791,7 @@ export const PreDefienedFiltersSurvival = ({
           onChange={filterTypeDropdownSelection}
           value={selectedFilterType.index ?? "-1"}
           className="WFull lg:P4 xs:p-2 Border lg:text-xl xs:text-sm focus:outline-none Border-b-color focus:ring focus:Border-b-color active:Border-b-color mt-3"
-          id="ClinicalAttributeSelect"
+          id="ClinicalAttributeSelectPredefinedSurvival"
         >
           <option value="-1"></option>
 
@@ -851,22 +808,13 @@ export const PreDefienedFiltersSurvival = ({
               </option>
             ))}
         </select>
-        <h6 className="Border P4">
-          {Englishlanguage &&
-            filterChoicesCustom.forEach((e) => {
-              if (groupFilters.column === e.id) {
-                return e.name;
-              }
-            })}
-          {koreanlanguage &&
-            filterChoicesCustomKorean.forEach((e) => {
-              if (groupFilters.column === e.id) {
-                return e.name;
-              }
-            })}
-        </h6>
       </div>
-      <div className="P1 PY3 PX2 ColSpan2">{filterGroupsHtml}</div>
+
+      {attributeName && Object.keys(attributeName).length > 0 && <h3 className="Border" style={{ textAlign: "center", margin: "4px" }}> {attributeName.name}</h3>}
+
+      {filterGroupsHtml && <div className="P1 PY3 PX2 ColSpan2">{filterGroupsHtml}</div>}
+      {filterGroupsHtmlTemp && <div className="P1 PY3 PX2 ColSpan2">{filterGroupsHtmlTemp}</div>}
+
       <div className="FilterGeneSet">
         <div className="P1 PY3 PX2 W50">
           <button
@@ -888,28 +836,24 @@ export const PreDefienedFiltersSurvival = ({
 };
 
 export const GroupFilters = ({
-  // volcanoType,
   parentCallback,
-  groupFilters,
   viz_type,
 }) => {
   const clinicalMaxMinInfo = useSelector(
     (data) => data.dataVisualizationReducer.clinicalMaxMinInfo
   );
+
   const context = useContext(Context);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
-  const [filterSelected, setFilterSelected] = useState('');
   const [selectedFilterDetails, setSelectedFilterDetails] = useState({});
   const [filterInputs, setFilterInputs] = useState([]);
   const [userGivenInputValues, setUserGivenInputValues] = useState({});
   const [showAddGroupButton, setShowAddGroupButton] = useState(false);
   const [groupsCounter, setGroupsCounter] = useState(2);
-  const [prevStateFilters, setPrevStateFilters] = useState([]);
-  // const [isFilterResetHappened, setIsFilterResetHappened] = useState(false);
+  const [inputType, setInputType] = useState('');
   const [multipleInputs, setMultipleInputs] = useState({});
-  // const [filterType, setFilterType] = useState('transcriptome');
-  const [selectDefaultValue, setSelectDefaultValue] = useState('0');
-  const preDefienedGroups1 = preDefienedGroups;
+  const [selectDefaultValue, setSelectDefaultValue] = useState('-1');
+  let preDefienedGroups1 = preDefienedGroups;
 
   useEffect(() => {
     if (context['locale'] === 'kr-KO') {
@@ -919,13 +863,6 @@ export const GroupFilters = ({
     }
   }, [context]);
 
-
-  // useEffect(() => {
-  //   if (volcanoType !== filterType) {
-  //     setFilterType(volcanoType);
-  //     resetFilters();
-  //   }
-  // }, [volcanoType]);
 
   if (viz_type === 'volcono' || viz_type === 'survival' || viz_type === 'fusion') {
     if (koreanlanguage) {
@@ -974,14 +911,9 @@ export const GroupFilters = ({
           input: 'number'
         },
         { type: 'dropdown', name: '세포증식지수(Ki-67)', id: 'ki67_score', input: 'number' }
-        // {
-        //   type: "number",
-        //   name: "재발이 확인되기까지의 시간",
-        //   id: "rlps_cnfr_drtn",
-        //   input: "number",
-        // },
       ];
-    } else {
+    }
+    else {
       filterChoices = [
         {
           type: 'number',
@@ -1027,12 +959,6 @@ export const GroupFilters = ({
           input: 'number'
         },
         { type: 'dropdown', name: 'ki67', id: 'ki67_score', input: 'number' }
-        // {
-        //   type: "number",
-        //   name: "Relapse Duration(month)",
-        //   id: "rlps_cnfr_drtn",
-        //   input: "number",
-        // },
       ];
     }
 
@@ -1042,7 +968,8 @@ export const GroupFilters = ({
         { label: '과거 흡연자', value: 'smok_yn||Y' },
         { label: '현재 흡연자', value: 'smok_curr_yn||Y' }
       ];
-    } else {
+    }
+    else {
       preDefienedGroups1['smok_yn'] = [
         { label: 'No Smoking', value: 'smok_yn||N' },
         { label: 'Past Smoking', value: 'smok_yn||Y' },
@@ -1085,613 +1012,34 @@ export const GroupFilters = ({
       }
     ];
 
-    if (viz_type === 'volcono') {
-      preDefienedGroups1['ki67_score'] = [
-        { label: 'low(≤15%)', value: 'low', from: '0', to: '15' },
-        {
-          label: 'intermediate(<15-30%≤)',
-          value: 'intermediate',
-          from: '15',
-          to: '30'
-        },
-        { label: 'high(30%<)', value: 'high', from: '30', to: '100' }
-      ];
-    }
+    preDefienedGroups1['ki67_score'] = [
+      { label: 'low(≤15%)', value: 'low', from: '0', to: '15' },
+      {
+        label: 'intermediate(<15-30%≤)',
+        value: 'intermediate',
+        from: '15',
+        to: '30'
+      },
+      { label: 'high(30%<)', value: 'high', from: '30', to: '100' }
+    ];
   }
 
 
-
-  preDefienedGroups1['smok_yn'] = [
-    { label: 'No Smoking', value: 'smok_yn||N' },
-    { label: 'Past Smoking', value: 'smok_yn||Y' },
-    { label: 'Current Smoking', value: 'smok_curr_yn||Y' }
-  ];
-
-  preDefienedGroups1['t_category'] = [
-    { label: 'Tis', from: 'Tis', to: 'Tis', value: 'Tis' },
-    { label: 'T1', from: 'T1', to: 'T1', value: 'T1' },
-    { label: 'T2', from: 'T2', to: 'T2', value: 'T2' },
-    { label: 'T3', from: 'T3', to: 'T3', value: 'T3' },
-    { label: 'T4', from: 'T4', to: 'T4', value: 'T4' }
-  ];
-
-  preDefienedGroups1['n_category'] = [
-    { label: 'Nx', from: 'Nx', to: 'Nx', value: 'Nx' },
-    { label: 'N0', from: 'N0', to: 'N0', value: 'N0' },
-    { label: 'N1', from: 'N1', to: 'N1', value: 'N1' },
-    { label: 'N2', from: 'N2', to: 'N2', value: 'N2' },
-    { label: 'N3', from: 'N3', to: 'N3', value: 'N3' }
-  ];
-
-  preDefienedGroups1['her2_score'] = [
-    {
-      value: 'negative (0-1+)',
-      label: 'negative (0-1+)',
-      from: '0',
-      to: '(0-1+)'
-    },
-    { value: 'equivocal (2+)', label: 'equivocal (2+)', from: '2', to: '(2+)' },
-    { value: 'positive (3+)', label: 'positive (3+)', from: '2+', to: '(3+)' }
-  ];
-
-  preDefienedGroups1['ki67_score'] = [
-    { label: 'low(≤15%)', value: 'low', from: '0', to: '15' },
-    {
-      label: 'intermediate(<15-30%≤)',
-      value: 'intermediate',
-      from: '15',
-      to: '30'
-    },
-    { label: 'high(30%<)', value: 'high', from: '30', to: '100' }
-  ];
-
-  const submitFilters = () => {
-
-    const isVolcano = viz_type === 'volcono';
-    const isFusion = viz_type === 'fusion';
-    const isSurvival = viz_type === 'survival';
-    if (userGivenInputValues && Object.keys(userGivenInputValues).length > 0) {
-
-      if (isVolcano) {
-        let send_response = true;
-        if (userGivenInputValues['type'] === 'static') {
-          const groupKeys = Object.keys(userGivenInputValues).filter(key => key.startsWith('group_'));
-          const totalGroups = groupKeys.length;
-          const hasAtLeastTwoNonEmptyGroups = groupKeys.reduce((count, key) => {
-            return count + (userGivenInputValues[key].length > 0 ? 1 : 0);
-          }, 0) >= 2;
-
-          send_response = totalGroups >= 2 && hasAtLeastTwoNonEmptyGroups;
-        }
-        else {
-          const inputs = [
-            ...document.querySelectorAll('[name="1_from"]'),
-            ...document.querySelectorAll('[name="1_to"]'),
-            ...document.querySelectorAll('[name="2_from"]'),
-            ...document.querySelectorAll('[name="2_to"]')
-          ];
-          console.log('inputs', inputs);
-
-          send_response = inputs.every(input =>
-            !(input.classList && (input.classList.contains('Border2') || input.classList.contains('BorderRed400'))) && input.value !== '');
-
-          if (send_response) {
-            const final_payload = { ...userGivenInputValues };
-            final_payload['1_from'] = Math.min(...inputs.filter(input => input.name === '1_from').map(input => +input.value));
-            final_payload['1_to'] = Math.max(...inputs.filter(input => input.name === '1_to').map(input => +input.value));
-            final_payload['2_from'] = Math.min(...inputs.filter(input => input.name === '2_from').map(input => +input.value));
-            final_payload['2_to'] = Math.max(...inputs.filter(input => input.name === '2_to').map(input => +input.value));
-            setUserGivenInputValues(final_payload);
-          }
-        }
-
-        if (send_response === true) {
-          parentCallback(userGivenInputValues);
-        }
-      }
-      else {
-        let final_payload = { ...userGivenInputValues };
-
-        if (isFusion) {
-          // Fusion specific logic
-          if ("group_a" in final_payload) {
-            final_payload["group_1"] = final_payload["group_a"];
-            delete final_payload["group_a"];
-          }
-          if ("group_b" in final_payload) {
-            final_payload["group_2"] = final_payload["group_b"];
-            delete final_payload["group_b"];
-          }
-          if ("group_c" in final_payload) {
-            final_payload["group_3"] = final_payload["group_c"];
-            delete final_payload["group_c"];
-          }
-        }
-
-        let send_response = true;
-
-        if (userGivenInputValues['type'] === 'static') {
-
-          if ((isSurvival && countNonEmptyGroupsWithPrefix('group_', final_payload) < 1) ||
-            (isFusion && countNonEmptyGroupsWithPrefix('group_', final_payload) < 2)) {
-            send_response = false;
-          }
-
-          let countNonEmptyGroupsWithPrefix = (prefix, payload) => {
-            let count = 0;
-            for (const key in payload) {
-              if (key.startsWith(prefix) && payload[key].length > 0) {
-                count++;
-              }
-            }
-            return count;
-          }
-
-          if (send_response === true) {
-            parentCallback(final_payload);
-            setGroupsCounter(1);
-          }
-        }
-        else {
-          let minValues = Array(groupsCounter).fill(Number.MAX_VALUE);
-          let maxValues = Array(groupsCounter).fill(Number.MIN_VALUE);
-
-          for (let i = 1; i < groupsCounter; i++) {
-            const min_1_from = document.querySelectorAll(`[name="${i}_from"]`);
-            const max_1_to = document.querySelectorAll(`[name="${i}_to"]`);
-            let min_1_num, max_1_num;
-
-            min_1_from.forEach((input) => {
-              if (input) {
-                const isValid = !(input.classList &&
-                  (input.classList.contains('Border2') ||
-                    input.classList.contains('BorderRed400'))) &&
-                  input.value !== '';
-                if (!isValid) {
-                  send_response = false;
-                } else {
-                  min_1_num = Math.min(min_1_num || +input.value, +input.value);
-                }
-              }
-            });
-
-            max_1_to.forEach((input) => {
-              if (input) {
-                const isValid = !(input.classList &&
-                  (input.classList.contains('Border2') ||
-                    input.classList.contains('BorderRed400'))) &&
-                  input.value !== '';
-                if (!isValid) {
-                  send_response = false;
-                } else {
-                  max_1_num = Math.max(max_1_num || +input.value, +input.value);
-                }
-              }
-            });
-
-            minValues[i] = min_1_num;
-            maxValues[i] = max_1_num;
-          }
-          if (send_response === true) {
-            setGroupsCounter(1);
-            for (let i = 1; i < groupsCounter; i++) {
-              final_payload[`${i}_from`] = minValues[i];
-              final_payload[`${i}_to`] = maxValues[i];
-            }
-            setUserGivenInputValues(final_payload);
-            parentCallback(final_payload);
-          }
-
-        }
-      }
-    }
-  };
-
-
-  const resetFilters = () => {
-    if (
-      document.getElementById('ClinicalAttributeSelect') &&
-      document.getElementById('ClinicalAttributeSelect').value
-    ) {
-      document.getElementById('ClinicalAttributeSelect').value = 0;
-    }
-    setFilterSelected('');
-    setSelectDefaultValue('0');
-    setSelectedFilterDetails({});
-    setFilterInputs([]);
-    setUserGivenInputValues({});
-    setShowAddGroupButton(false);
-    setGroupsCounter(1);
-    // setIsFilterResetHappened(true);
-    setPrevStateFilters([]);
-  };
-
-
-  const updateSelectedFilter = (e) => {
-    setGroupsCounter(1);
-    // setIsFilterResetHappened(true);
-    setFilterInputs([]);
-    const targetValue = e.target.value;
-    if (targetValue !== '') {
-      setFilterSelected(filterChoices[parseInt(targetValue)].name);
-      setSelectDefaultValue(String(targetValue));
-      setSelectedFilterDetails(filterChoices[parseInt(targetValue)]);
-    } else {
-      setFilterSelected('');
-      setSelectDefaultValue('0');
-      setSelectedFilterDetails({});
-    }
-  };
-
-  const onChangeFilterInput = (e) => {
-    if (e.target.type === 'number') {
-      let id = e.target.name;
-      let ids = id.split('_');
-      let one_to_0, one_to, one_max_value, one_from_0, one_from, one_min_value;
-      if (ids.includes('from')) {
-        one_from_0 = e.target;
-        one_from = one_from_0 ? +one_from_0.value : +one_from_0.min;
-        one_min_value = one_from_0 ? +one_from_0.min : 0;
-        one_to_0 = one_from_0.nextSibling;
-        one_to = one_to_0 ? +one_to_0.value : one_from_0.max;
-        one_max_value = one_from_0 ? +one_from_0.max : 0;
-      } else if (ids.includes('to')) {
-        one_to_0 = e.target;
-        one_to = one_to_0 ? +one_to_0.value : +one_to_0.max;
-        one_max_value = one_to_0 ? +one_to_0.max : 0;
-        one_from_0 = one_to_0.previousElementSibling;
-        one_from = one_from_0 ? +one_from_0.value : one_from_0.min;
-        one_min_value = one_from_0 ? +one_from_0.min : 0;
-      }
-
-      if (one_from > one_max_value || one_from < one_min_value || one_from > one_to) {
-        one_from_0.classList.add('Border2');
-        one_from_0.classList.add('BorderRed400');
-        one_to_0.classList.add('Border2');
-        one_to_0.classList.add('BorderRed400');
-      } else if (one_to > one_max_value || one_to < one_min_value || one_to < one_from) {
-        one_from_0.classList.add('Border2');
-        one_from_0.classList.add('BorderRed400');
-        one_to_0.classList.add('Border2');
-        one_to_0.classList.add('BorderRed400');
-      } else {
-        one_from_0.classList.remove('Border2');
-        one_from_0.classList.remove('BorderRed400');
-        one_to_0.classList.remove('Border2');
-        one_to_0.classList.remove('BorderRed400');
-        // let is_valid = validate_fusion()
-        setUserGivenInputValues((prevState) => ({
-          ...prevState,
-          [one_from_0.name]: one_from_0.value
-        }));
-        setUserGivenInputValues((prevState) => ({
-          ...prevState,
-          [one_to_0.name]: one_to_0.value
-        }));
-      }
-    } else {
-      setUserGivenInputValues((prevState) => ({
-        ...prevState,
-        [e.target.name]: e.target.value
-      }));
-    }
-  };
-
   useEffect(() => {
-    if (groupFilters && Object.keys(groupFilters).length > 0) {
-      let filterType = groupFilters.type;
-      setUserGivenInputValues(groupFilters);
-      let targetNumber = 0;
-      filterChoices.forEach((e, index) => {
-        if (e.id === groupFilters.column) {
-          targetNumber = index;
-        }
-      });
-      setFilterSelected(filterChoices[targetNumber].name);
-      setSelectDefaultValue(String(targetNumber));
-      setSelectedFilterDetails(filterChoices[targetNumber]);
-      let valsArray = [];
-      let counter = 1;
-      for (let i = 1; i < Object.keys(groupFilters).length; i++) {
-        if (i in groupFilters || `${i}` in groupFilters) {
-          counter += 1;
-          valsArray.push(
-            <div key={`${i}-text-${Math.random()}`} className="MarginBottom4">
-              <div>
-                <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
-                  {`Group ${i}`}
-                </div>
-                <div>
-                  <input
-                    value={groupFilters[i]}
-                    onChange={onChangeFilterInput}
-                    className="CheckBoxCss"
-                    name={`${i}`}
-                    type="text"
-                    placeholder="Enter Text"
-                  ></input>
-                </div>
-              </div>
-            </div>
-          );
-        } else if (`${i}_from` in groupFilters) {
-          counter += 1;
-          valsArray.push(
-            <div key={`number-${i}${Math.random()}`} className="MarginBottom4">
-              <div>
-                <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
-                  {`Group ${i}`}
-                </div>
-                <div className='Flex'>
-                  <input
-                    defaultValue={groupFilters[`${i}_from`]}
-                    onChange={onChangeFilterInput}
-                    className="NumberInputCss"
-                    name={`${i}_from`}
-                    type="number"
-                    placeholder="from"
-                  ></input>
-                  <input
-                    defaultValue={groupFilters[`${i}_to`]}
-                    onChange={onChangeFilterInput}
-                    className="NumberInputCss"
-                    name={`${i}_to`}
-                    type="number"
-                    placeholder="to"
-                  ></input>
-                </div>
-              </div>
-            </div>
-          );
-        }
-      }
-      if (filterType === 'text' || filterType === 'number') {
-        setPrevStateFilters(valsArray);
-        setGroupsCounter(counter);
-      }
-    }
-  }, []);
-
-  const componetSwitch = (compCase, groupLabels = null) => {
-    let max = 'to';
-    let min = 'from';
-    if (clinicalMaxMinInfo) {
-      let clinicalMaxMinInfoData = clinicalMaxMinInfo['data'];
-      let clinicalInfoId = selectedFilterDetails['id'];
-      if (clinicalInfoId + '_min' in clinicalMaxMinInfoData) {
-        min = clinicalMaxMinInfoData[clinicalInfoId + '_min'];
-      }
-      if (clinicalInfoId + '_max' in clinicalMaxMinInfoData) {
-        max = clinicalMaxMinInfoData[clinicalInfoId + '_max'];
-      }
-    }
-    switch (compCase) {
-      case 'static':
-        return (
-          <div key={compCase} className="MarginBottom4">
-            {['A Group', 'B Group'].map((e, index) => (
-              <div key={index} className="Border MarginTop4 P1">
-                <div
-                  key={e}
-                  className="Block  TextBlue700 TextLG  FontBold MB2 TextLeft"
-                  htmlFor="yes"
-                >
-                  {e}
-                </div>
-                <h1 id="yes" className="MultiUploadTextCenter MarginTop2">
-                  {groupLabels[index]}
-                </h1>
-              </div>
-            ))}
-          </div>
-        );
-
-      case 'number':
-        if (viz_type === 'volcono') {
-          return (
-            <div key={`${compCase}-${Math.random()}`}>
-              <div key={`${compCase}-1${Math.random()}`} className="MarginBottom4">
-                <div>
-                  <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
-                    Group 1
-                  </div>
-                  <div className='Flex'>
-                    <input
-                      onChange={onChangeFilterInput}
-                      className="NumberInputCss"
-                      name="1_from"
-                      type="number"
-                      id="1_from"
-                      onKeyDown={(e) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault()}
-                      placeholder={min}
-                      min={min}
-                      max={max}
-                    ></input>
-                    <input
-                      onChange={onChangeFilterInput}
-                      className="NumberInputCss"
-                      name="1_to"
-                      id="1_to"
-                      type="number"
-                      onKeyDown={(e) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault()}
-                      placeholder={max}
-                      min={min}
-                      max={max}
-                    ></input>
-                  </div>
-                </div>
-              </div>
-              <div key={`${compCase}-2${Math.random()}`} className="MarginBottom4">
-                <div>
-                  <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
-                    Group 2
-                  </div>
-                  <div className='Flex'>
-                    <input
-                      onChange={onChangeFilterInput}
-                      className="NumberInputCss"
-                      name={`2_from`}
-                      id={`2_from`}
-                      type="number"
-                      onKeyDown={(e) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault()}
-                      placeholder={min}
-                      min={min}
-                      max={max}
-                    ></input>
-                    <input
-                      onChange={onChangeFilterInput}
-                      className="NumberInputCss"
-                      name={`2_to`}
-                      id={`2_to`}
-                      type="number"
-                      onKeyDown={(e) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault()}
-                      placeholder={max}
-                      min={min}
-                      max={max}
-                    ></input>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        } else {
-          return (
-            <div key={`${compCase}-${groupsCounter}${Math.random()}`} className="MarginBottom4">
-              <div>
-                <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
-                  {`Group ${groupsCounter}`}
-                </div>
-                <div className='Flex'>
-                  <input
-                    onChange={onChangeFilterInput}
-                    className="NumberInputCss"
-                    name={`${groupsCounter}_from`}
-                    type="number"
-                    placeholder={min}
-                    min={min}
-                    max={max}
-                  ></input>
-                  <input
-                    onChange={onChangeFilterInput}
-                    className="NumberInputCss"
-                    name={`${groupsCounter}_to`}
-                    type="number"
-                    placeholder={max}
-                    min={min}
-                    max={max}
-                  ></input>
-                </div>
-              </div>
-            </div>
-          );
-        }
-      case 'text':
-        if (viz_type === 'volcono') {
-          return (
-            <div key={`${compCase}--${Math.random()}`}>
-              <div key={`${compCase}-1-${Math.random()}`} className="MarginBottom4">
-                <div>
-                  <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
-                    Group 1
-                  </div>
-                  <div>
-                    <input
-                      onChange={onChangeFilterInput}
-                      className="CheckBoxCss"
-                      name="1"
-                      type="text"
-                      placeholder="Enter Text"
-                    ></input>
-                  </div>
-                </div>
-              </div>
-
-              <div key={`${compCase}-2-${Math.random()}`} className="MarginBottom4">
-                <div>
-                  <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
-                    Group 2
-                  </div>
-                  <div>
-                    <input
-                      onChange={onChangeFilterInput}
-                      className="CheckBoxCss"
-                      name="2"
-                      type="text"
-                      placeholder="Enter Text"
-                    ></input>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        } else {
-          return (
-            <div key={`${compCase}-${groupsCounter}-${Math.random()}`} className="MarginBottom4">
-              <div>
-                <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
-                  {`Group ${groupsCounter}`}
-                </div>
-                <div>
-                  <input
-                    onChange={onChangeFilterInput}
-                    className="CheckBoxCss"
-                    name={`${groupsCounter}`}
-                    type="text"
-                    placeholder="Enter Text"
-                  ></input>
-                </div>
-              </div>
-            </div>
-          );
-        }
-      default:
-        return;
-    }
-  };
-
-  const dropDownChange = (event) => {
-    const eventObject = JSON.parse(event.target.value);
-    const filterData = preDefienedGroups1[eventObject.colName][eventObject.index];
-
-    let tmp = multipleInputs;
-    if (eventObject.group in tmp) {
-      tmp[eventObject.group].push(filterData.value);
-    } else {
-      tmp[eventObject.group] = [filterData.value];
-    }
-
-    let group = eventObject['group'];
-    let value = filterData['value'];
-    let shouldExist = event.target.checked;
-
-    if (shouldExist === false) {
-      event.target.checked = false;
-      event.target.removeAttribute('checked');
-      let newTmp = tmp[group].filter((e) => e !== value);
-      tmp[group] = newTmp;
-    }
-
-    setMultipleInputs(tmp, filterData);
-
-    if ('value' in filterData) {
-      setUserGivenInputValues((prevState) => ({
-        ...prevState,
-        ...{
-          [eventObject.group]: tmp[eventObject.group],
-          column: selectedFilterDetails.id,
-          type: 'static'
-        }
-      }));
-    }
-  };
-
-  useEffect(() => {
-    if (viz_type === 'survival' || viz_type === 'fusion' || viz_type === 'volcono') {
+    setMultipleInputs((prevState) => ({
+      column: prevState.column,
+      type: prevState.type,
+    }));
+    setUserGivenInputValues((prevState) => ({
+      column: prevState.column,
+      type: prevState.type,
+    }));
+    console.log('selectedFilterDetails',selectedFilterDetails);
+    if (selectedFilterDetails && 'type' in selectedFilterDetails && 'id' in selectedFilterDetails) {
       let filterType = selectedFilterDetails.type;
       let colName = selectedFilterDetails.id;
       if (filterType) {
         let componentData = [];
-
         if (filterType === 'boolean' || filterType === 'static') {
           setShowAddGroupButton(false);
           let options = ['Yes', 'No'];
@@ -2002,233 +1350,484 @@ export const GroupFilters = ({
             );
           }
         }
+        console.log('componentData',componentData);
+        setFilterInputs(componentData);
+        setGroupsCounter((prevState) => prevState + 1);
+      }
+    }
+    else {
+      setFilterInputs([])
+    }
 
-        if (prevStateFilters.length > 0) {
-          setFilterInputs([...prevStateFilters]);
-        } else {
-          setFilterInputs([...componentData]);
-          setGroupsCounter((prevState) => prevState + 1);
-        }
+  }, [selectedFilterDetails]);
+
+
+  const updateSelectedFilter = (e) => {
+    setGroupsCounter(1);
+    setMultipleInputs((prevState) => ({
+      column: prevState.column,
+      type: prevState.type,
+    }));
+    setUserGivenInputValues((prevState) => ({
+      column: prevState.column,
+      type: prevState.type,
+    }));
+    const targetValue = e.target.value;
+    if (targetValue !== '-1') {
+      setSelectedFilterDetails(filterChoices[parseInt(targetValue)]);
+      setInputType(filterChoices[parseInt(targetValue)]['type'])
+      setSelectDefaultValue(String(targetValue));
+    }
+    else {
+      setSelectedFilterDetails({});
+      setInputType('')
+      setSelectDefaultValue('-1');
+    }
+  };
+
+
+  useEffect(() => {
+    console.log('filterInputs', filterInputs);
+  }, [filterInputs])
+
+
+  const onChangeFilterInput = (e) => {
+    if (e.target.type === 'number') {
+      let id = e.target.name;
+      let ids = id.split('_');
+      let one_to_0, one_to, one_max_value, one_from_0, one_from, one_min_value;
+      if (ids.includes('from')) {
+        one_from_0 = e.target;
+        one_from = one_from_0 ? +one_from_0.value : +one_from_0.min;
+        one_min_value = one_from_0 ? +one_from_0.min : 0;
+        one_to_0 = one_from_0.nextSibling;
+        one_to = one_to_0 ? +one_to_0.value : one_from_0.max;
+        one_max_value = one_from_0 ? +one_from_0.max : 0;
+      } else if (ids.includes('to')) {
+        one_to_0 = e.target;
+        one_to = one_to_0 ? +one_to_0.value : +one_to_0.max;
+        one_max_value = one_to_0 ? +one_to_0.max : 0;
+        one_from_0 = one_to_0.previousElementSibling;
+        one_from = one_from_0 ? +one_from_0.value : one_from_0.min;
+        one_min_value = one_from_0 ? +one_from_0.min : 0;
+      }
+
+      if (one_from > one_max_value || one_from < one_min_value || one_from > one_to) {
+        one_from_0.classList.add('Border2');
+        one_from_0.classList.add('BorderRed400');
+        one_to_0.classList.add('Border2');
+        one_to_0.classList.add('BorderRed400');
+      } else if (one_to > one_max_value || one_to < one_min_value || one_to < one_from) {
+        one_from_0.classList.add('Border2');
+        one_from_0.classList.add('BorderRed400');
+        one_to_0.classList.add('Border2');
+        one_to_0.classList.add('BorderRed400');
+      } else {
+        one_from_0.classList.remove('Border2');
+        one_from_0.classList.remove('BorderRed400');
+        one_to_0.classList.remove('Border2');
+        one_to_0.classList.remove('BorderRed400');
+        setUserGivenInputValues((prevState) => ({
+          ...prevState,
+          [one_from_0.name]: one_from_0.value,
+          [one_to_0.name]: one_to_0.value
+        }));
+
       }
     } else {
-      let filterType = selectedFilterDetails.type;
-      let colName = selectedFilterDetails.id;
-      if (filterType) {
-        let componentData = [];
+      setUserGivenInputValues((prevState) => ({
+        ...prevState,
+        [e.target.name]: e.target.value
+      }));
+    }
+  };
 
-        if (filterType === 'boolean' || filterType === 'static') {
-          setShowAddGroupButton(false);
-          let options = ['Yes', 'No'];
-          if (filterType === 'static') {
-            options = [selectedFilterDetails.options[0], selectedFilterDetails.options[1]];
-            setUserGivenInputValues({
-              group_a: 'M',
-              group_b: 'F',
-              column: selectedFilterDetails.id,
-              type: filterType
-            });
-          } else {
-            setUserGivenInputValues({
-              group_a: true,
-              group_b: false,
-              column: selectedFilterDetails.id,
-              type: filterType
-            });
-          }
-          componentData = [componetSwitch('static', options)];
-        } else if (filterType === 'number') {
-          if (viz_type !== 'volcono') {
-            setShowAddGroupButton(true);
-          }
-          setUserGivenInputValues({
-            column: selectedFilterDetails.id,
-            type: filterType
-          });
-          componentData.push(componetSwitch('number'));
-        } else if (filterType === 'text') {
-          setShowAddGroupButton(true);
-          setUserGivenInputValues({
-            column: selectedFilterDetails.id,
-            type: selectedFilterDetails.type
-          });
-          componentData.push(componetSwitch('text'));
-        } else if (filterType === 'dropdown') {
-          setShowAddGroupButton(false);
-          let tr = [];
-          if (Object.keys(groupFilters).length > 0 && groupFilters['type'] === 'static') {
-            if (
-              groupFilters &&
-              groupFilters['column'] === colName &&
-              'group_1' in groupFilters &&
-              groupFilters['group_1'].length > 0 &&
-              'group_2' in groupFilters &&
-              groupFilters['group_2'].length > 0 &&
-              'group_3' in groupFilters &&
-              groupFilters['group_3'].length > 0
-            ) {
-              preDefienedGroups1[colName].forEach((element, index) => {
-                let group_a = false;
-                let group_b = false;
-                let group_c = false;
-                if (groupFilters['group_1'].indexOf(element.value) > -1) {
-                  group_a = true;
-                }
-                if (groupFilters['group_2'].indexOf(element.value) > -1) {
-                  group_b = true;
-                }
-                if (groupFilters['group_3'].indexOf(element.value) > -1) {
-                  group_c = true;
-                }
-                tr.push(
-                  <tr key={colName + index} className="Border-b">
-                    <td className=" PX6Y4 CheckBoxRow">{element.label}</td>
-                    <td className="PX6Y4">
-                      <input
-                        type="checkbox"
-                        checked={group_a}
-                        onChange={dropDownChange}
-                        value={JSON.stringify({
-                          index: index,
-                          colName: colName,
-                          group: 'group_1'
-                        })}
-                      />
-                    </td>
-                    <td className="PX6Y4">
-                      <input
-                        type="checkbox"
-                        checked={group_b}
-                        onChange={dropDownChange}
-                        value={JSON.stringify({
-                          index: index,
-                          colName: colName,
-                          group: 'group_2'
-                        })}
-                      />
-                    </td>
-                    <td className="PX6Y4">
-                      <input
-                        type="checkbox"
-                        checked={group_c}
-                        onChange={dropDownChange}
-                        value={JSON.stringify({
-                          index: index,
-                          colName: colName,
-                          group: 'group_3'
-                        })}
-                      />
-                    </td>
-                  </tr>
-                );
-              });
-            } else {
-              preDefienedGroups1[colName].map((element, index) =>
-                tr.push(
-                  <tr key={colName + index} className="Border-b">
-                    <td className=" PX6Y4 CheckBoxRow">{element.label}</td>
-                    <td className="PX6Y4">
-                      <input
-                        type="checkbox"
-                        onChange={dropDownChange}
-                        value={JSON.stringify({
-                          index: index,
-                          colName: colName,
-                          group: 'group_1'
-                        })}
-                      />
-                    </td>
-                    <td className="PX6Y4">
-                      <input
-                        type="checkbox"
-                        onChange={dropDownChange}
-                        value={JSON.stringify({
-                          index: index,
-                          colName: colName,
-                          group: 'group_2'
-                        })}
-                      />
-                    </td>
-                    <td className="PX6Y4">
-                      <input
-                        type="checkbox"
-                        onChange={dropDownChange}
-                        value={JSON.stringify({
-                          index: index,
-                          colName: colName,
-                          group: 'group_3'
-                        })}
-                      />
-                    </td>
-                  </tr>
-                )
-              );
-            }
-          } else {
-            preDefienedGroups1[colName].map((element, index) =>
-              tr.push(
-                <tr key={colName + index} className="Border-b">
-                  <td className=" PX6Y4 CheckBoxRow">{element.label}</td>
-                  <td className="PX6Y4">
+
+  const componetSwitch = (compCase, groupLabels = null) => {
+    let max = 'to';
+    let min = 'from';
+    if (clinicalMaxMinInfo) {
+      let clinicalMaxMinInfoData = clinicalMaxMinInfo['data'];
+      let clinicalInfoId = selectedFilterDetails['id'];
+      if (clinicalInfoId + '_min' in clinicalMaxMinInfoData) {
+        min = clinicalMaxMinInfoData[clinicalInfoId + '_min'];
+      }
+      if (clinicalInfoId + '_max' in clinicalMaxMinInfoData) {
+        max = clinicalMaxMinInfoData[clinicalInfoId + '_max'];
+      }
+    }
+    switch (compCase) {
+      case 'static':
+        return (
+          <div key={compCase} className="MarginBottom4">
+            {['A Group', 'B Group'].map((e, index) => (
+              <div key={index} className="Border MarginTop4 P1">
+                <div
+                  key={e}
+                  className="Block  TextBlue700 TextLG  FontBold MB2 TextLeft"
+                  htmlFor="yes"
+                >
+                  {e}
+                </div>
+                <h1 id="yes" className="MultiUploadTextCenter MarginTop2">
+                  {groupLabels[index]}
+                </h1>
+              </div>
+            ))}
+          </div>
+        );
+
+      case 'number':
+        if (viz_type === 'volcono') {
+          return (
+            <div key={`${compCase}-${Math.random()}`}>
+              <div key={`${compCase}-1${Math.random()}`} className="MarginBottom4">
+                <div>
+                  <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
+                    Group 1
+                  </div>
+                  <div className='Flex'>
                     <input
-                      type="checkbox"
-                      onChange={dropDownChange}
-                      value={JSON.stringify({
-                        index: index,
-                        colName: colName,
-                        group: 'group_1'
-                      })}
-                    />
-                  </td>
-                  <td className="PX6Y4">
+                      onChange={onChangeFilterInput}
+                      className="NumberInputCss"
+                      name="1_from"
+                      type="number"
+                      id="1_from"
+                      onKeyDown={(e) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault()}
+                      placeholder={min}
+                      min={min}
+                      max={max}
+                    ></input>
                     <input
-                      type="checkbox"
-                      onChange={dropDownChange}
-                      value={JSON.stringify({
-                        index: index,
-                        colName: colName,
-                        group: 'group_2'
-                      })}
-                    />
-                  </td>
-                  <td className="PX6Y4">
+                      onChange={onChangeFilterInput}
+                      className="NumberInputCss"
+                      name="1_to"
+                      id="1_to"
+                      type="number"
+                      onKeyDown={(e) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault()}
+                      placeholder={max}
+                      min={min}
+                      max={max}
+                    ></input>
+                  </div>
+                </div>
+              </div>
+              <div key={`${compCase}-2${Math.random()}`} className="MarginBottom4">
+                <div>
+                  <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
+                    Group 2
+                  </div>
+                  <div className='Flex'>
                     <input
-                      type="checkbox"
-                      onChange={dropDownChange}
-                      value={JSON.stringify({
-                        index: index,
-                        colName: colName,
-                        group: 'group_3'
-                      })}
-                    />
-                  </td>
-                </tr>
-              )
-            );
-          }
-          componentData.push(
-            <table className="table" key={'group_table'}>
-              <thead className="Border-b WFull" key={'group_thead'}>
-                <tr>
-                  <th></th>
-                  <th className="GroupNamesFilter PX6Y4">Group A</th>
-                  <th className="GroupNamesFilter PX6Y4">Group B</th>
-                  <th className="GroupNamesFilter PX6Y4">Group C</th>
-                </tr>
-              </thead>
-              <tbody key={'group_tbody'}>{tr}</tbody>
-            </table>
+                      onChange={onChangeFilterInput}
+                      className="NumberInputCss"
+                      name={`2_from`}
+                      id={`2_from`}
+                      type="number"
+                      onKeyDown={(e) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault()}
+                      placeholder={min}
+                      min={min}
+                      max={max}
+                    ></input>
+                    <input
+                      onChange={onChangeFilterInput}
+                      className="NumberInputCss"
+                      name={`2_to`}
+                      id={`2_to`}
+                      type="number"
+                      onKeyDown={(e) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault()}
+                      placeholder={max}
+                      min={min}
+                      max={max}
+                    ></input>
+                  </div>
+                </div>
+              </div>
+            </div>
           );
         }
+        else {
+          return (
+            <div key={`${compCase}-${groupsCounter}${Math.random()}`} className="MarginBottom4">
+              <div>
+                <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
+                  {`Group ${groupsCounter}`}
+                </div>
+                <div className='Flex'>
+                  <input
+                    onChange={onChangeFilterInput}
+                    className="NumberInputCss"
+                    name={`${groupsCounter}_from`}
+                    type="number"
+                    placeholder={min}
+                    min={min}
+                    max={max}
+                  ></input>
+                  <input
+                    onChange={onChangeFilterInput}
+                    className="NumberInputCss"
+                    name={`${groupsCounter}_to`}
+                    type="number"
+                    placeholder={max}
+                    min={min}
+                    max={max}
+                  ></input>
+                </div>
+              </div>
+            </div>
+          );
+        }
+      case 'text':
+        if (viz_type === 'volcono') {
+          return (
+            <div key={`${compCase}--${Math.random()}`}>
+              <div key={`${compCase}-1-${Math.random()}`} className="MarginBottom4">
+                <div>
+                  <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
+                    Group 1
+                  </div>
+                  <div>
+                    <input
+                      onChange={onChangeFilterInput}
+                      className="CheckBoxCss"
+                      name="1"
+                      type="text"
+                      placeholder="Enter Text"
+                    ></input>
+                  </div>
+                </div>
+              </div>
 
-        if (prevStateFilters.length > 0) {
-          setFilterInputs([...prevStateFilters]);
+              <div key={`${compCase}-2-${Math.random()}`} className="MarginBottom4">
+                <div>
+                  <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
+                    Group 2
+                  </div>
+                  <div>
+                    <input
+                      onChange={onChangeFilterInput}
+                      className="CheckBoxCss"
+                      name="2"
+                      type="text"
+                      placeholder="Enter Text"
+                    ></input>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
         } else {
-          setFilterInputs([...componentData]);
-          setGroupsCounter((prevState) => prevState + 1);
+          return (
+            <div key={`${compCase}-${groupsCounter}-${Math.random()}`} className="MarginBottom4">
+              <div>
+                <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
+                  {`Group ${groupsCounter}`}
+                </div>
+                <div>
+                  <input
+                    onChange={onChangeFilterInput}
+                    className="CheckBoxCss"
+                    name={`${groupsCounter}`}
+                    type="text"
+                    placeholder="Enter Text"
+                  ></input>
+                </div>
+              </div>
+            </div>
+          );
+        }
+      default:
+        return;
+    }
+  };
+
+
+
+  const dropDownChange = (event) => {
+    const eventObject = JSON.parse(event.target.value);
+    const filterData = preDefienedGroups1[eventObject.colName][eventObject.index];
+
+    let tmp = multipleInputs;
+    if (eventObject.group in tmp) {
+      tmp[eventObject.group].push(filterData.value);
+    } else {
+      tmp[eventObject.group] = [filterData.value];
+    }
+
+    let group = eventObject['group'];
+    let value = filterData['value'];
+    let shouldExist = event.target.checked;
+
+    if (shouldExist === false) {
+      event.target.checked = false;
+      event.target.removeAttribute('checked');
+      let newTmp = tmp[group].filter((e) => e !== value);
+      tmp[group] = newTmp;
+    }
+    setMultipleInputs(tmp, filterData);
+
+    if ('value' in filterData) {
+      setUserGivenInputValues((prevState) => ({
+        ...prevState,
+        [eventObject.group]: tmp[eventObject.group],
+        column: selectedFilterDetails.id,
+        type: 'static'
+      }));
+    }
+  };
+
+  useEffect(() => {
+    console.log('usergiven after', userGivenInputValues);
+  }, [userGivenInputValues])
+
+  const submitFilters = () => {
+
+    const isVolcano = viz_type === 'volcono';
+    const isFusion = viz_type === 'fusion';
+    const isSurvival = viz_type === 'survival';
+
+    let countNonEmptyGroupsWithPrefix = (prefix, payload) => {
+      let count = 0;
+      for (const key in payload) {
+        if (key.startsWith(prefix) && payload[key].length > 0) {
+          count++;
+        }
+      }
+      return count;
+    }
+
+    if (userGivenInputValues && Object.keys(userGivenInputValues).length > 0) {
+      let final_payload = { ...userGivenInputValues };
+      if (isVolcano) {
+        let send_response = true;
+        if (final_payload['type'] === 'static') {
+          const groupKeys = Object.keys(final_payload).filter(key => key.startsWith('group_'));
+          const totalGroups = groupKeys.length;
+          const hasAtLeastTwoNonEmptyGroups = groupKeys.reduce((count, key) => {
+            return count + (final_payload[key].length > 0 ? 1 : 0);
+          }, 0) >= 2;
+
+          send_response = totalGroups >= 2 && hasAtLeastTwoNonEmptyGroups;
+        }
+        else {
+          const inputs = [
+            ...document.querySelectorAll('[name="1_from"]'),
+            ...document.querySelectorAll('[name="1_to"]'),
+            ...document.querySelectorAll('[name="2_from"]'),
+            ...document.querySelectorAll('[name="2_to"]')
+          ];
+
+          send_response = inputs.every(input =>
+            !(input.classList && (input.classList.contains('Border2') || input.classList.contains('BorderRed400'))) && input.value !== '');
+
+          if (send_response) {
+            final_payload['1_from'] = Math.min(...inputs.filter(input => input.name === '1_from').map(input => +input.value));
+            final_payload['1_to'] = Math.max(...inputs.filter(input => input.name === '1_to').map(input => +input.value));
+            final_payload['2_from'] = Math.min(...inputs.filter(input => input.name === '2_from').map(input => +input.value));
+            final_payload['2_to'] = Math.max(...inputs.filter(input => input.name === '2_to').map(input => +input.value));
+          }
+        }
+
+        if (send_response === true) {
+          parentCallback(final_payload);
+        }
+      }
+      else {
+        if (isFusion) {
+          // Fusion specific logic
+          if ("group_a" in final_payload) {
+            final_payload["group_1"] = final_payload["group_a"];
+            delete final_payload["group_a"];
+          }
+          if ("group_b" in final_payload) {
+            final_payload["group_2"] = final_payload["group_b"];
+            delete final_payload["group_b"];
+          }
+          if ("group_c" in final_payload) {
+            final_payload["group_3"] = final_payload["group_c"];
+            delete final_payload["group_c"];
+          }
+        }
+
+        let send_response = true;
+
+        if (final_payload['type'] === 'static') {
+
+          if ((isSurvival && countNonEmptyGroupsWithPrefix('group_', final_payload) < 1) ||
+            (isFusion && countNonEmptyGroupsWithPrefix('group_', final_payload) < 2)) {
+            send_response = false;
+          }
+
+
+          if (send_response === true) {
+            setGroupsCounter(1);
+            parentCallback(final_payload);
+          }
+        }
+        else {
+          let minValues = Array(groupsCounter).fill(Number.MAX_VALUE);
+          let maxValues = Array(groupsCounter).fill(Number.MIN_VALUE);
+
+          for (let i = 1; i < groupsCounter; i++) {
+            const min_1_from = document.querySelectorAll(`[name="${i}_from"]`);
+            const max_1_to = document.querySelectorAll(`[name="${i}_to"]`);
+            let min_1_num, max_1_num;
+
+            min_1_from.forEach((input) => {
+              if (input) {
+                const isValid = !(input.classList &&
+                  (input.classList.contains('Border2') ||
+                    input.classList.contains('BorderRed400'))) &&
+                  input.value !== '';
+                if (!isValid) {
+                  send_response = false;
+                } else {
+                  min_1_num = Math.min(min_1_num || +input.value, +input.value);
+                }
+              }
+            });
+
+            max_1_to.forEach((input) => {
+              if (input) {
+                const isValid = !(input.classList &&
+                  (input.classList.contains('Border2') ||
+                    input.classList.contains('BorderRed400'))) &&
+                  input.value !== '';
+                if (!isValid) {
+                  send_response = false;
+                } else {
+                  max_1_num = Math.max(max_1_num || +input.value, +input.value);
+                }
+              }
+            });
+
+            minValues[i] = min_1_num;
+            maxValues[i] = max_1_num;
+          }
+          if (send_response === true) {
+            for (let i = 1; i < groupsCounter; i++) {
+              final_payload[`${i}_from`] = minValues[i];
+              final_payload[`${i}_to`] = maxValues[i];
+            }
+            setGroupsCounter(1);
+            parentCallback(final_payload);
+          }
+
         }
       }
     }
-  }, [selectedFilterDetails, koreanlanguage]);
+  };
+
+
+  const resetFilters = () => {
+    setSelectDefaultValue('-1');
+    setSelectedFilterDetails({});
+    setFilterInputs([]);
+    setUserGivenInputValues({});
+    setShowAddGroupButton(false);
+    setGroupsCounter(1);
+  };
+
 
   const AppendNewGroup = () => {
     if (viz_type === 'fusion') {
@@ -2255,6 +1854,7 @@ export const GroupFilters = ({
     }
   };
 
+
   return (
     <div className="m-1 PY3 PX2  BGGray100">
       <div className="P1 PY3 PX2 ColSpan2">
@@ -2262,16 +1862,15 @@ export const GroupFilters = ({
           <FormattedMessage id="Clinical Filters" defaultMessage="Clinical Attribute" />
         </div>
         <select
-          defaultValue={selectDefaultValue}
+          value={selectDefaultValue}
           onChange={updateSelectedFilter}
           name="selectOptions"
           className="SelectDiv"
           id="ClinicalAttributeSelect"
         >
-          <option value="0"></option>
+          <option value="-1"></option>
           {filterChoices.map((type, index) => (
             <option
-              defaultValue={filterSelected === type.name}
               className="FilterOptionText"
               key={type.id}
               value={index}
@@ -2281,7 +1880,7 @@ export const GroupFilters = ({
           ))}
         </select>
       </div>
-      {userGivenInputValues['type'] === 'number' && (
+      {inputType && inputType === 'number' && (
         <p className="P1 PY3 PX2 TextBase TextLeft">
           Max and Min Values are based on Clinincal Information File
         </p>
@@ -2292,34 +1891,29 @@ export const GroupFilters = ({
         </div>
       )}
 
-      <div className="P1 PY3 PX2 ColSpan2" style={{ overflowX: 'auto' }}>
+      {<div className="P1 PY3 PX2 ColSpan2" style={{ overflowX: 'auto' }} id="UserInputs">
         {filterInputs}
-      </div>
+      </div>}
+
       <div className="FilterGeneSet">
-        {filterSelected && (
-          <div className="P1 PY3 PX2 W50">
-            <button
-              onClick={submitFilters}
-              className="FilterLabelText FilterButton"
-              style={{ backgroundColor: 'rgb(0, 159, 226)', border: '1px solid white' }}
-            >
-              <FormattedMessage id="Submit_volcano" defaultMessage="Submit" />
-            </button>
-          </div>
-        )}
-        {filterSelected && (
-          <div className="P1 PY3 PX2 W50">
-            <button onClick={resetFilters} className="FilterLabelText FilterButton">
-              <FormattedMessage id="Reset_volcano" defaultMessage="Reset" />
-            </button>
-          </div>
-        )}
+        <div className="P1 PY3 PX2 W50">
+          <button
+            onClick={submitFilters}
+            className="FilterLabelText FilterButton"
+            style={{ backgroundColor: 'rgb(0, 159, 226)', border: '1px solid white' }}
+          >
+            <FormattedMessage id="Submit_volcano" defaultMessage="Submit" />
+          </button>
+        </div>
+        <div className="P1 PY3 PX2 W50">
+          <button onClick={resetFilters} className="FilterLabelText FilterButton">
+            <FormattedMessage id="Reset_volcano" defaultMessage="Reset" />
+          </button>
+        </div>
       </div>
     </div>
   );
 };
-
-
 
 export const UserDefinedGroupFilters = ({
   // volcanoType,
@@ -2330,7 +1924,6 @@ export const UserDefinedGroupFilters = ({
 }) => {
   const [clinicalMaxMinInfo, setClinicalMaxMinInfo] = useState({});
   const userDefinedFilter = useSelector((data) => data.dataVisualizationReducer.userDefinedFilter);
-
   useEffect(() => {
     if (
       userDefinedFilter &&
@@ -2380,10 +1973,8 @@ export const UserDefinedGroupFilters = ({
   const [showAddGroupButton, setShowAddGroupButton] = useState(false);
   const [groupsCounter, setGroupsCounter] = useState(2);
   const [prevStateFilters, setPrevStateFilters] = useState([]);
-  // const [isFilterResetHappened, setIsFilterResetHappened] = useState(false);
   const [multipleInputs, setMultipleInputs] = useState({});
-  // const [filterType, setFilterType] = useState('transcriptome');
-  const [selectDefaultValue, setSelectDefaultValue] = useState('0');
+  const [selectDefaultValue, setSelectDefaultValue] = useState('-1');
   const [preDefienedGroups1, setPreDefienedGroups1] = useState({});
   const [filterChoices, setFilterChoices] = useState([]);
   const [booleanColumns, setBooleanColumns] = useState([]);
@@ -2465,15 +2056,25 @@ export const UserDefinedGroupFilters = ({
     const isVolcano = viz_type === 'volcono';
     const isFusion = viz_type === 'fusion';
     const isSurvival = viz_type === 'survival';
-    if (userGivenInputValues && Object.keys(userGivenInputValues).length > 0) {
+    let countNonEmptyGroupsWithPrefix = (prefix, payload) => {
+      let count = 0;
+      for (const key in payload) {
+        if (key.startsWith(prefix) && payload[key].length > 0) {
+          count++;
+        }
+      }
+      return count;
+    }
 
+    if (userGivenInputValues && Object.keys(userGivenInputValues).length > 0) {
+      let final_payload = { ...userGivenInputValues };
       if (isVolcano) {
         let send_response = true;
-        if (userGivenInputValues['type'] === 'static') {
-          const groupKeys = Object.keys(userGivenInputValues).filter(key => key.startsWith('group_'));
+        if (final_payload['type'] === 'static') {
+          const groupKeys = Object.keys(final_payload).filter(key => key.startsWith('group_'));
           const totalGroups = groupKeys.length;
           const hasAtLeastTwoNonEmptyGroups = groupKeys.reduce((count, key) => {
-            return count + (userGivenInputValues[key].length > 0 ? 1 : 0);
+            return count + (final_payload[key].length > 0 ? 1 : 0);
           }, 0) >= 2;
 
           send_response = totalGroups >= 2 && hasAtLeastTwoNonEmptyGroups;
@@ -2492,17 +2093,15 @@ export const UserDefinedGroupFilters = ({
           );
 
           if (send_response) {
-            const final_payload = { ...userGivenInputValues };
             final_payload['1_from'] = Math.min(...inputs.filter(input => input.name === '1_from').map(input => +input.value));
             final_payload['1_to'] = Math.max(...inputs.filter(input => input.name === '1_to').map(input => +input.value));
             final_payload['2_from'] = Math.min(...inputs.filter(input => input.name === '2_from').map(input => +input.value));
             final_payload['2_to'] = Math.max(...inputs.filter(input => input.name === '2_to').map(input => +input.value));
-            setUserGivenInputValues(final_payload);
           }
         }
 
         if (send_response === true) {
-          parentCallback(userGivenInputValues);
+          parentCallback(final_payload);
         }
       }
       else {
@@ -2526,21 +2125,11 @@ export const UserDefinedGroupFilters = ({
 
         let send_response = true;
 
-        if (userGivenInputValues['type'] === 'static') {
+        if (final_payload['type'] === 'static') {
 
           if ((isSurvival && countNonEmptyGroupsWithPrefix('group_', final_payload) < 1) ||
             (isFusion && countNonEmptyGroupsWithPrefix('group_', final_payload) < 2)) {
             send_response = false;
-          }
-
-          let countNonEmptyGroupsWithPrefix = (prefix, payload) => {
-            let count = 0;
-            for (const key in payload) {
-              if (key.startsWith(prefix) && payload[key].length > 0) {
-                count++;
-              }
-            }
-            return count;
           }
 
           if (send_response === true) {
@@ -2595,7 +2184,6 @@ export const UserDefinedGroupFilters = ({
               final_payload[`${i}_from`] = minValues[i];
               final_payload[`${i}_to`] = maxValues[i];
             }
-            setUserGivenInputValues(final_payload);
             parentCallback(final_payload);
           }
 
@@ -2606,36 +2194,34 @@ export const UserDefinedGroupFilters = ({
 
 
   const resetFilters = () => {
-    if (
-      document.getElementById('ClinicalAttributeSelect') &&
-      document.getElementById('ClinicalAttributeSelect').value
-    ) {
-      document.getElementById('ClinicalAttributeSelect').value = 0;
-    }
     setFilterSelected('');
-    setSelectDefaultValue('');
+    setSelectDefaultValue('-1');
     setSelectedFilterDetails({});
     setFilterInputs([]);
     setUserGivenInputValues({});
     setShowAddGroupButton(false);
     setGroupsCounter(1);
-    // setIsFilterResetHappened(true);
     setPrevStateFilters([]);
   };
 
   const updateSelectedFilter = (e) => {
     setGroupsCounter(1);
-    // setIsFilterResetHappened(true);
-    setFilterInputs([]);
+    setMultipleInputs((prevState) => ({
+      column: prevState.column,
+      type: prevState.type,
+    }));
+    setUserGivenInputValues((prevState) => ({
+      column: prevState.column,
+      type: prevState.type,
+    }));
     const targetValue = e.target.value;
-
-    if (targetValue !== '') {
+    if (targetValue !== '-1') {
       setFilterSelected(filterChoices[parseInt(targetValue)].name);
       setSelectDefaultValue(String(targetValue));
       setSelectedFilterDetails(filterChoices[parseInt(targetValue)]);
     } else {
       setFilterSelected('');
-      setSelectDefaultValue('0');
+      setSelectDefaultValue('-1');
       setSelectedFilterDetails({});
     }
   };
@@ -3001,6 +2587,14 @@ export const UserDefinedGroupFilters = ({
   };
 
   useEffect(() => {
+    setMultipleInputs((prevState) => ({
+      column: prevState.column,
+      type: prevState.type,
+    }));
+    setUserGivenInputValues((prevState) => ({
+      column: prevState.column,
+      type: prevState.type,
+    }));
     if (selectedFilterDetails && 'type' in selectedFilterDetails && 'id' in selectedFilterDetails) {
       let filterType = selectedFilterDetails.type;
       let colName = selectedFilterDetails.id;
@@ -3410,6 +3004,9 @@ export const UserDefinedGroupFilters = ({
         }
       }
     }
+    else {
+      setFilterInputs([])
+    }
   }, [selectedFilterDetails]);
 
   const AppendNewGroup = () => {
@@ -3444,13 +3041,13 @@ export const UserDefinedGroupFilters = ({
           <FormattedMessage id="Clinical Filters" defaultMessage="Clinical Attribute" />
         </div>
         <select
-          defaultValue={selectDefaultValue}
+          value={selectDefaultValue}
           onChange={updateSelectedFilter}
           name="selectOptions"
           className="SelectDiv"
           id="ClinicalAttributeSelect"
         >
-          <option value="0"></option>
+          <option value="-1"></option>
           {filterChoices.map((type, index) => (
             <option
               defaultValue={filterSelected === type.name}

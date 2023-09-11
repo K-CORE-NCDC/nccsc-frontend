@@ -98,7 +98,7 @@ function Popup({ toggleModal }) {
             }}
           >
             <div className="mainPopup">
-              <div className="popupHeader">
+              <div className="popupHeader" style={{backgroundColor:"rgb(0, 75, 155)"}}>
                 <h3 className="TextAlignCenter">
                   <FormattedMessage id="NoticePopup" defaultMessage="Notice Popup" />
                 </h3>
@@ -115,7 +115,7 @@ function Popup({ toggleModal }) {
                 noticedetails &&
                 noticedetails.data &&
                 Object.keys(noticedetails['data']).length > 0 && (
-                  <div className="popupBody" dangerouslySetInnerHTML={{ __html: content }}></div>
+                  <div className="popupBody" style={{backgroundColor:"rgb(240, 242, 246)"}} dangerouslySetInnerHTML={{ __html: content }}></div>
                 )}
               <div className="popupFooter">
                 <button className="mainPopupClose" type="button" onClick={changeDay}>

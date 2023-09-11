@@ -4,8 +4,9 @@ import LineChart from 'react-linechart';
 import 'react-linechart/dist/styles.css';
 import '../../styles/survival.css';
 import Table from './Table/ReactTable';
+import { useIntl } from 'react-intl';
 
-const SurvivalCmp = React.forwardRef(({ data, watermarkCss, pValue }, ref) => {
+const SurvivalCmp = React.forwardRef(({ data, watermarkCss, pValue,survialType }, ref) => {
   const [survivalData, setSurvivalData] = useState([]);
   const [lineChartData, setLineChartData] = useState([]);
   const [offsetWidth, setOffsetWidth] = useState(900);
@@ -14,7 +15,7 @@ const SurvivalCmp = React.forwardRef(({ data, watermarkCss, pValue }, ref) => {
   const [chartTable, setChartTable] = useState([]);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const colorArray = ['#4285F4', '#DB4437', '#F4B400', '#0F9D58', '#000', '#1f0cf2', '#1f0cf2'];
-
+  const intl = useIntl();
   useEffect(() => {
     if (data.survivalJson && data.survivalJson.all) {
       setSurvivalData(data.survivalJson.all);
@@ -26,8 +27,8 @@ const SurvivalCmp = React.forwardRef(({ data, watermarkCss, pValue }, ref) => {
       let tableHtmlData = [];
       for (const [key, value] of Object.entries(data.survivalJson.final)) {
         let columns = [
-          { Header: 'X', accessor: (row) => row.x },
-          { Header: 'Y', accessor: (row) => row.y },
+          { Header: intl.formatMessage({ id: "TimeInMonth", defaultMessage: 'Time(in month)' }), accessor: (row) => row.x },
+          { Header: survialType === 'recurrence' ? intl.formatMessage({ id: "Recurrence", defaultMessage: 'Recurrence' }) : intl.formatMessage({ id: "Survival", defaultMessage: 'Survival' }), accessor: (row) => row.y },
           { Header: 'Sample', accessor: (row) => row.sample }
         ];
         tableHtmlData.push(

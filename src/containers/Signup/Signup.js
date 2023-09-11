@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { signin } from '../../actions/api_actions';
 import nameIcon from '../../styles/images/icon-text.svg';
 import HeaderComponent from '../Common/HeaderComponent/HeaderComponent';
+import KcoreFinalLogo from '../../assets/images/K-coreFinalLogo.png';
 const SignupComponent = () => {
   const [userFormData, setUserFormData] = useState({
     emailId: ''
   });
   let history = useHistory();
+  const intl = useIntl();
   const [errorMessage, setErrorMessage] = useState([]);
   const title = { id: 'Signup', defaultMessage: 'Sign Up' };
 
@@ -27,11 +29,11 @@ const SignupComponent = () => {
   const registerSuccess = () => {
     //Id is SignupSuccess
     Swal.fire({
-      title: 'Success',
-      text: 'ID Sent to Your Email',
+      title: intl.formatMessage({ id: "Success", defaultMessage: 'Success' }),
+      text: intl.formatMessage({ id: "SignupMail", defaultMessage: "ID Sent to Your Email" }),
       icon: 'success',
       confirmButtonColor: '#003177',
-      confirmButtonText: 'Ok',
+      confirmButtonText: intl.formatMessage({ id: "Ok", defaultMessage: 'Ok' }),
       allowOutsideClick: false
     }).then((result) => {
       if (result.value) {
@@ -108,22 +110,18 @@ const SignupComponent = () => {
       <HeaderComponent title={title} breadCrumbs={breadCrumbs['/signup/']} type="single" />
       <article id="subContents" className="subContents">
         <div>
-          <div className="contentsTitle">
-            <div className="auto">
-              <h3 className="colorSecondary">
-                <span className="colorPrimary">
-                  <FormattedMessage id="Sign" defaultMessage="Sign" />
-                  &nbsp;
-                </span>
-                <FormattedMessage id="up" defaultMessage="up" />
-              </h3>
-            </div>
+          <div className="MarginBottom5">
+            <h1 className="logo">
+              <a>
+                <img src={KcoreFinalLogo} alt="logo" className="logo Block MAuto W10" />
+              </a>
+            </h1>
           </div>
           <div className="ptn">
             <div className="auto">
               <div className="pwSearch tac">
                 <p className="h5">
-                  <FormattedMessage
+                    <FormattedMessage
                     id="SignupMsg1"
                     defaultMessage="Please use the service after Signing Up"
                   />

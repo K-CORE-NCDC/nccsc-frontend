@@ -1,14 +1,10 @@
 import React, { useState, useEffect, useRef, } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getFusionInformation, getFusionExons } from '../../actions/api_actions'
+import { FusionInformation, FusionExons } from '../../actions/api_actions'
 import LoaderCmp from "./Loader";
 import { useParams } from "react-router-dom";
 
 export default function FusionCustomPlot({ fusionId }) {
   const listRef = useRef();
-  const dispatch = useDispatch()
-  const fusionJson = useSelector((data) => data.dataVisualizationReducer.fusionData);
-  const exonJson = useSelector((data) => data.dataVisualizationReducer.ExonData);
   const [loader, setLoader] = useState(false)
   const [html, setHtml] = useState([])
   const [leftTranscriptsHtml, setLeftTranscriptsHtml] = useState([])
@@ -19,19 +15,11 @@ export default function FusionCustomPlot({ fusionId }) {
   const [exonData, setExonData] = useState([])
   const [fromGene, setFromGene] = useState('')
   const [renderPlot, setRenderPlot] = useState(false)
+  const [fusionJson, setFusionJson] = useState({})
   let { project_id } = useParams();
-  useEffect(() => {
-    if (exonJson) {
-      setExonData(exonJson)
-    }
-  }, [exonJson])
 
-  useEffect(() => {
-    if (exonData && fromGene !== '') {
-      fusionPlotJson['exons'][fromGene] = exonData
-      setFusionPlotJson({ ...fusionPlotJson })
-    }
-  }, [exonData])
+
+
 
   useEffect(() => {
     if (fusionId) {
@@ -41,14 +29,32 @@ export default function FusionCustomPlot({ fusionId }) {
       if (project_id !== undefined) {
         dataJson['project_id'] = parseInt(project_id)
       }
-      dispatch(getFusionInformation('POST', dataJson))
+      let data = FusionInformation('POST', dataJson);
+      data
+        .then((result) => {
+          if (
+            'data' in result &&
+            'status' in result.data &&
+            result.data.status
+          ) {
+            setFusionJson(result.data)
+          }
+          else {
+            setFusionJson({})
+          }
+        })
+        .catch(() => {
+          setFusionJson({})
+        });
+
       setLoader(true)
     }
   }, [fusionId])
 
   useEffect(() => {
-
-    if (fusionPlotJson.status) {
+    setLoader(true)
+    if (fusionPlotJson.status && 'exons' in fusionPlotJson && Object.keys(fusionPlotJson.exons).length >= 0
+      && 'transcripts' in fusionPlotJson && Object.keys(fusionPlotJson.transcripts).length >= 0) {
       let h = []
       let i = 0
       let z = 0
@@ -68,137 +74,139 @@ export default function FusionCustomPlot({ fusionId }) {
       }
       let tg = []
       for (const key in fusionPlotJson['exons']) {
-        tg.push(key)
-        let r = fusionPlotJson['exons'][key]
-        let pos = fusionPlotJson['pos'][key].split(':')
-        let exon_pos = parseInt(pos[1])
+        if (key) {
+          tg.push(key)
+          let r = fusionPlotJson['exons'][key]
+          let pos = fusionPlotJson['pos'][key].split(':')
+          let exon_pos = parseInt(pos[1])
 
-        let htmlExons = []
-        let htmlExons1 = []
-        let htmlExons2 = []
-        let f_w = 0
-        let left_w = false
-        let right_w = false
-        let name = 'FusionNameRE'
-        let gene_type = 'exon1 leftGene'
-        let id = 'leftGene'
-        if (i === 1) {
-          name = 'FusionNameLS'
-          gene_type = 'exon2 rightGene'
-          right_w = true
-          id = 'rightGene'
-        } else {
-          name = 'FusionNameRE'
-          gene_type = 'exon1 leftGene'
-          left_w = true
-          id = 'leftGene'
-        }
-        let direction = 'right_arrow'
-        let leftSecondRow = true
-        let RightSecondRow = false
-        for (let index = 0; index < r.length; index++) {
-
-          const element = r[index];
-          if (exon_pos > element.startCodon) {
-            direction = 'right_arrow'
+          let htmlExons = []
+          let htmlExons1 = []
+          let htmlExons2 = []
+          let f_w = 0
+          let left_w = false
+          let right_w = false
+          let name = 'FusionNameRE'
+          let gene_type = 'exon1 leftGene'
+          let id = 'leftGene'
+          if (i === 1) {
+            name = 'FusionNameLS'
+            gene_type = 'exon2 rightGene'
+            right_w = true
+            id = 'rightGene'
           } else {
-            direction = 'left_arrow'
+            name = 'FusionNameRE'
+            gene_type = 'exon1 leftGene'
+            left_w = true
+            id = 'leftGene'
           }
-          let w = element.endCodon - element.startCodon
-          w = (w / r.length)
-          if (w > 500) {
-            w = 500
-          }
-          if (id === 'leftGene' && leftSecondRow) {
-            htmlExons1.push(
-              <div title={"exon -" + (index + 1) + " " + element.startCodon} key={index} style={{ width: w + 'px', backgroundColor: element.color, marginRight: '5px', marginLeft: '5px', height: '20px', borderRight: '1px solid ' + element.color }}>
-              </div>
-            )
-            htmlExons2.push(
-              <div title={"exon -" + (index + 1) + " " + element.startCodon} key={index} style={{ width: w + 'px', backgroundColor: element.color, height: '20px', border: '1px solid #333' }}>
-              </div>
-            )
-          }
-          if (id === 'rightGene' && RightSecondRow) {
-            htmlExons1.push(
-              <div title={"exon -" + (index + 1) + " " + element.startCodon} key={index} style={{ width: w + 'px', backgroundColor: element.color, marginRight: '5px', marginLeft: '5px', height: '20px', borderRight: '1px solid ' + element.color }}>
-              </div>
-            )
-            htmlExons2.push(
-              <div title={"exon -" + (index + 1) + " " + element.startCodon} key={index} style={{ width: w + 'px', backgroundColor: element.color, height: '20px', border: '1px solid #333' }}>
-              </div>
-            )
-          }
-          if ((exon_pos === element.endCodon || exon_pos === element.startCodon) || (exon_pos >= element.startCodon && exon_pos <= element.endCodon)) {
-            htmlExons.push(
-              <div title={"exon -" + (index + 1) + " " + element.startCodon} id={id} key={index} style={{ width: w + 'px', marginRight: '5px', marginLeft: '5px', height: '80px', borderRight: '1px solid ' + element.color }}>
-                <div style={{ backgroundColor: element.color, height: '20px', marginTop: '60px' }}>
+          let direction = 'right_arrow'
+          let leftSecondRow = true
+          let RightSecondRow = false
+          for (let index = 0; index < r.length; index++) {
+
+            const element = r[index];
+            if (exon_pos > element.startCodon) {
+              direction = 'right_arrow'
+            } else {
+              direction = 'left_arrow'
+            }
+            let w = element.endCodon - element.startCodon
+            w = (w / r.length)
+            if (w > 500) {
+              w = 500
+            }
+            if (id === 'leftGene' && leftSecondRow) {
+              htmlExons1.push(
+                <div title={"exon -" + (index + 1) + " " + element.startCodon} key={index} style={{ width: w + 'px', backgroundColor: element.color, marginRight: '5px', marginLeft: '5px', height: '20px', borderRight: '1px solid ' + element.color }}>
                 </div>
-              </div>
-            )
-            if (left_w) {
-              f_w = f_w + w + 20
+              )
+              htmlExons2.push(
+                <div title={"exon -" + (index + 1) + " " + element.startCodon} key={index} style={{ width: w + 'px', backgroundColor: element.color, height: '20px', border: '1px solid #333' }}>
+                </div>
+              )
             }
-            leftSecondRow = false
-            RightSecondRow = true
-            if (right_w) {
+            if (id === 'rightGene' && RightSecondRow) {
+              htmlExons1.push(
+                <div title={"exon -" + (index + 1) + " " + element.startCodon} key={index} style={{ width: w + 'px', backgroundColor: element.color, marginRight: '5px', marginLeft: '5px', height: '20px', borderRight: '1px solid ' + element.color }}>
+                </div>
+              )
+              htmlExons2.push(
+                <div title={"exon -" + (index + 1) + " " + element.startCodon} key={index} style={{ width: w + 'px', backgroundColor: element.color, height: '20px', border: '1px solid #333' }}>
+                </div>
+              )
+            }
+            if ((exon_pos === element.endCodon || exon_pos === element.startCodon) || (exon_pos >= element.startCodon && exon_pos <= element.endCodon)) {
+              htmlExons.push(
+                <div title={"exon -" + (index + 1) + " " + element.startCodon} id={id} key={index} style={{ width: w + 'px', marginRight: '5px', marginLeft: '5px', height: '80px', borderRight: '1px solid ' + element.color }}>
+                  <div style={{ backgroundColor: element.color, height: '20px', marginTop: '60px' }}>
+                  </div>
+                </div>
+              )
+              if (left_w) {
+                f_w = f_w + w + 20
+              }
+              leftSecondRow = false
+              RightSecondRow = true
+              if (right_w) {
+
+              }
+            } else {
+              htmlExons.push(
+                <div title={"exon -" + (index + 1) + " " + element.startCodon} key={index} style={{ width: w + 'px', backgroundColor: element.color, marginRight: '5px', marginLeft: '5px', height: '20px', borderRight: '1px solid ' + element.color }}>
+                </div>
+              )
 
             }
-          } else {
-            htmlExons.push(
-              <div title={"exon -" + (index + 1) + " " + element.startCodon} key={index} style={{ width: w + 'px', backgroundColor: element.color, marginRight: '5px', marginLeft: '5px', height: '20px', borderRight: '1px solid ' + element.color }}>
-              </div>
-            )
 
           }
 
+
+          h.push(
+            <div key={key} className='ChromosomeFusionPlotDivision'>
+              <h3 style={{ color: fusionJson['exons'][key][0].color }}>{key} -- {fusionPlotJson['pos'][key]}</h3>
+
+              <div id={'row_' + i} className={'grid_row Flex JustifyCenter AlignItemsFlexEnd  MarginTop10 Relative ' + id + ' ' + direction} style={{ color: fusionJson['exons'][key][0].color, height: '100px', borderBottom: '1px solid ' + fusionJson['exons'][key][0].color, borderColor: fusionJson['exons'][key][0].color }}>
+                {htmlExons}
+                <div id={id + "1"} className={gene_type} style={{ borderColor: fusionJson['exons'][key][0].color, width: f_w, position: 'absolute', }}></div>
+              </div>
+              <div className={'grid_row Flex  AlignItemsFlexEnd  MarginTop10 Relative ' + id + ' ' + name + " " + direction} style={{ height: '60px', borderBottom: '1px solid ' + fusionJson['exons'][key][0].color, color: fusionJson['exons'][key][0].color }}>
+                {htmlExons1}
+              </div>
+              <div className={'grid_row flex  AlignItemsFlexEnd  MarginTop10 Relative ' + id + ' ' + name + " " + direction} style={{ height: '60px', borderBottom: '1px solid ' + fusionJson['exons'][key][0].color, color: fusionJson['exons'][key][0].color }}>
+                {htmlExons2}
+              </div>
+
+            </div>
+          )
+
+          i = i + 1
         }
-
-
+        setGene(tg.join('-'))
         h.push(
-          <div key={key} className='ChromosomeFusionPlotDivision'>
-            <h3 style={{ color: fusionJson['exons'][key][0].color }}>{key} -- {fusionPlotJson['pos'][key]}</h3>
-
-            <div id={'row_' + i} className={'grid_row Flex JustifyCenter AlignItemsFlexEnd  MarginTop10 Relative ' + id + ' ' + direction} style={{ color: fusionJson['exons'][key][0].color, height: '100px', borderBottom: '1px solid ' + fusionJson['exons'][key][0].color, borderColor: fusionJson['exons'][key][0].color }}>
-              {htmlExons}
-              <div id={id + "1"} className={gene_type} style={{ borderColor: fusionJson['exons'][key][0].color, width: f_w, position: 'absolute', }}></div>
-            </div>
-            <div className={'grid_row Flex  AlignItemsFlexEnd  MarginTop10 Relative ' + id + ' ' + name + " " + direction} style={{ height: '60px', borderBottom: '1px solid ' + fusionJson['exons'][key][0].color, color: fusionJson['exons'][key][0].color }}>
-              {htmlExons1}
-            </div>
-            <div className={'grid_row flex  AlignItemsFlexEnd  MarginTop10 Relative ' + id + ' ' + name + " " + direction} style={{ height: '60px', borderBottom: '1px solid ' + fusionJson['exons'][key][0].color, color: fusionJson['exons'][key][0].color }}>
-              {htmlExons2}
-            </div>
-
+          <div key={`horizontalLine${key}`} style={{ height: "210px", borderRight: '1px solid red', width: '1px', left: '50%', top: '49.5%', position: 'absolute' }}>
           </div>
         )
-
-        i = i + 1
+        setHtml(h)
+        setLoader(false)
+        setRenderPlot(true)
       }
-      setGene(tg.join('-'))
-      h.push(
-        <div key='horizontalLine' style={{ height: "210px", borderRight: '1px solid red', width: '1px', left: '50%', top: '49.5%', position: 'absolute' }}>
-        </div>
-      )
-      setHtml(h)
-      setLoader(false)
-      setRenderPlot(true)
     }
 
   }, [fusionPlotJson])
 
   useEffect(() => {
     if (fusionJson) {
-      if (fusionJson.status) {
+      if (fusionJson.status && 'exons' in fusionJson && Object.keys(fusionJson.exons).length >= 0
+        && 'transcripts' in fusionJson && Object.keys(fusionJson.transcripts).length >= 0) {
         setErrorHtml('')
         setLoader(true)
         setFusionPlotJson(fusionJson)
-
       }
       else {
         setHtml([])
         setLoader(false)
-        setErrorHtml(fusionJson.msg)
+        setErrorHtml('abcd')
       }
     }
   }, [fusionJson])
@@ -238,7 +246,33 @@ export default function FusionCustomPlot({ fusionId }) {
       'transcript_id': e.target.value
 
     }
-    dispatch(getFusionExons('POST', dataJson))
+
+    let data = FusionExons('POST', dataJson);
+    data
+      .then((result) => {
+        if (
+          'data' in result &&
+          result.data.length > 0
+        ) {
+          setExonData(result.data)
+          setFusionPlotJson(prevState => ({
+            ...prevState,
+            exons: {
+              ...prevState.exons,
+              [fromGene]: exonData
+            }
+          }));
+        }
+        else {
+          setExonData([])
+          setFusionPlotJson({})
+        }
+      })
+      .catch(() => {
+        setExonData([])
+        setFusionPlotJson({})
+      });
+
   }
 
   return (
@@ -246,6 +280,7 @@ export default function FusionCustomPlot({ fusionId }) {
       {loader ? (
         <LoaderCmp />
       ) : (
+
         <div className="bg-white p-3">
           {html.length > 0 &&
             <>
@@ -275,6 +310,8 @@ export default function FusionCustomPlot({ fusionId }) {
           }
           {errorHtml && <div className="p-4 ">{errorHtml}</div>}
         </div>
+
+
       )}</>
   )
 

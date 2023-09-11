@@ -9,16 +9,6 @@ import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
 import LoaderCmp from "../../Common/Loader";
 import Table from '../../Common/Table/ReactTable';
 
-
-
-function ErrorMessage() {
-  const verificationResponse = useSelector(
-    (data) => data.homeReducer.multiFileUploadData
-  );
-  return verificationResponse && 'issue' in verificationResponse && (verificationResponse['issue'] === 'allFileColumns' || verificationResponse['issue'] === 'clinicalInforamtionFile' || verificationResponse['issue'] === 'DataIssues') &&
-    <p className="h5 MultiUploadTextCenter"><FormattedMessage id="UserDataGuideMessage" defaultMessage="Red mark for invalid data." /></p>
-}
-
 function Modal({ showModal, toggleModal }) {
 
   const verificationResponse = useSelector(
@@ -35,7 +25,7 @@ function Modal({ showModal, toggleModal }) {
                 <div className="Toolmodal-dialog">
                   {/*header*/}
                   <div className="Toolmodal-header">
-                    <h3 className="Toolmodal-title">Errors</h3>
+                    <h3 className="Toolmodal-title"><FormattedMessage id="Errors" defaultMessage="Errors" /></h3>
                     <button
                       className="Toolmodal-close-btn"
                       onClick={() => toggleModal(false, '')}
@@ -44,12 +34,6 @@ function Modal({ showModal, toggleModal }) {
                     </button>
                   </div>
                   {/*body*/}
-
-
-
-
-
-
 
                   <div className="Toolmodal-body">
 
@@ -60,7 +44,7 @@ function Modal({ showModal, toggleModal }) {
                           {/*header*/}
                           <div className="HeaderTitle" style={{ textAlign: 'center', fontSize: '20px' }}>
                             <h3>
-                              Errors in the Columns of Uploaded Files
+                              <FormattedMessage id="ErrorsUploadedFile" defaultMessage="Errors in the Uploaded Files" />
                             </h3>
                           </div>
 
@@ -72,9 +56,18 @@ function Modal({ showModal, toggleModal }) {
                                   <ul>
                                     {item['message'] !== "" && (
                                       <li style={{ textTransform: "uppercase", margin: "auto", fontSize: "15px", fontWeight: "500" }}>
-                                        Error in File {item['tab']}:
+                                        <FormattedMessage id="ErrorinFile" defaultMessage="Error in File" /> {item['tab']}:
                                         <p className="MarginTop4 MarginLeft4" style={{ fontSize: "12px", marginLeft: "3rem" }}>
-                                          {item['message']}
+                                          {/* {item['message']} */}
+                                          {verificationResponse && 'specific_issue' in verificationResponse && verificationResponse['specific_issue'] === 'allFileColumns1' &&
+                                            <FormattedMessage id="allFileColumns1" defaultMessage="Please insert all the Mandatory columns, Click on the Help Icon to see the required columns" />
+                                          }
+                                          {verificationResponse && 'specific_issue' in verificationResponse && verificationResponse['specific_issue'] === 'allFileColumns2' &&
+                                            <FormattedMessage id="allFileColumns2" defaultMessage="Clinical Information File should have less than or equal to 17 columns, more than 17 found" />
+                                          }
+                                          {verificationResponse && 'specific_issue' in verificationResponse && verificationResponse['specific_issue'] === 'allFileColumns3' &&
+                                            <FormattedMessage id="allFileColumns3" defaultMessage="Error: Please Read Instructions" />
+                                          }
                                         </p>
                                       </li>
                                     )}
@@ -87,23 +80,43 @@ function Modal({ showModal, toggleModal }) {
                             <div className="ClinicalInformationErrors">
                               <div>
                                 <h2>
-                                  Clinical Information
+                                  <FormattedMessage id="임상정보" defaultMessage="Clinical Information" />
                                 </h2>
-                                {Object.keys(verificationResponse["clinicalRows"]).map((filename) => {
+                                {Object.keys(verificationResponse["clinicalRows"]).map((columnName) => {
                                   return (
                                     <div key={Math.random} style={{ margin: "20px", maxHeight: "400px", overflowY: "auto" }}>
                                       <div className="uppercase" style={{ fontSize: "20px" }}>
-                                        {filename}
+                                        {columnName}
                                       </div>
                                       <ul>
-                                        {Object.keys(verificationResponse["clinicalRows"][filename]).map((item, index) => {
-                                          return (
-                                            <li style={{ textTransform: "uppercase", margin: "auto", fontSize: "15px", fontWeight: "500", marginLeft: "20px" }} key={Math.random}>
-                                              <p style={{ fontSize: "12px" }}>{verificationResponse["clinicalRows"][filename][index]}</p>
-                                            </li>
-                                          );
-                                        })}
+                                        {'type1' in verificationResponse["clinicalRows"][columnName] && verificationResponse["clinicalRows"][columnName]['type1'] &&
+                                          <li style={{ textTransform: "uppercase", margin: "auto", fontSize: "15px", fontWeight: "500", marginLeft: "20px" }} key={Math.random}>
+
+                                            <p style={{ fontSize: "12px" }}>
+                                              <FormattedMessage id="Row" defaultMessage="In Row " />
+                                              {verificationResponse["clinicalRows"][columnName]["error_rows"]}:
+
+                                              {`${columnName} `}
+
+                                              <FormattedMessage id="DataTypeIncorrect" defaultMessage="The data type of the column is incorrect. Correct data type is " />
+
+                                              {`${verificationResponse["clinicalRows"][columnName]["expected_type"]} `}
+
+                                              <FormattedMessage id="ButFound" defaultMessage="But Found " />
+
+                                              {`${verificationResponse["clinicalRows"][columnName]["current_type"]} `}
+                                            </p>
+
+                                          </li>
+                                        }
+                                        {'type2' in verificationResponse["clinicalRows"][columnName] && verificationResponse["clinicalRows"][columnName]['type2'] &&
+                                          <li style={{ textTransform: "uppercase", margin: "auto", fontSize: "15px", fontWeight: "500", marginLeft: "20px" }} key={Math.random}>
+                                            <p style={{ fontSize: "12px" }}><FormattedMessage id="5Columns" defaultMessage="The column has more than 5 unique values" /></p>
+                                          </li>
+                                        }
+
                                       </ul>
+
                                     </div>
                                   );
                                 })}
@@ -121,11 +134,17 @@ function Modal({ showModal, toggleModal }) {
                                       const rowNumber = Object.keys(rowData)[0];
                                       const rowValues = rowData[rowNumber];
                                       return Object.entries(rowValues).map(([columnName, columnData]) => {
-                                        const { success, message, row } = columnData;
+                                        const { success, row, expected } = columnData;
                                         if (success === "False") {
                                           return (
                                             <li key={columnName} className="MarginTop4 MarginLeft4">
-                                              Row {row}: In {columnName} Column {message} but Found Something Else.
+                                              <p style={{ fontSize: "12px" }}>
+                                                <FormattedMessage id="Row" defaultMessage="In Row " />
+                                                {`${row} : `}
+                                                {`${columnName} `}
+                                                <FormattedMessage id="DataTypeIncorrect" defaultMessage="The data type of the column is incorrect. Correct data type is " />
+                                                {`${expected} `}
+                                              </p>
                                             </li>
                                           );
                                         }
@@ -142,17 +161,13 @@ function Modal({ showModal, toggleModal }) {
                       </div>
                     </div>
                   </div>
-
-
-
-
                   {/*footer*/}
                   <div className="Toolmodal-footer">
                     <button
                       className="Toolmodal-close-btn"
                       onClick={() => toggleModal(false, '')}
                     >
-                      Close
+                      <FormattedMessage id="Close" defaultMessage="Close" />
                     </button>
                   </div>
                 </div>
@@ -175,6 +190,7 @@ function MultiDataTable({ updateComponentNumber }) {
   const [activeTableKey, setActiveTableKey] = useState("");
   const [showModal, setShowModal] = useState(true)
   const [loading, setLoading] = useState(true)
+  const [FalseData, setFalseData] = useState(false)
 
   let toggleModal = (status) => {
     setShowModal(status)
@@ -302,6 +318,11 @@ function MultiDataTable({ updateComponentNumber }) {
         setProjectId(0);
       }
     }
+
+    if (verificationResponse && 'issue' in verificationResponse && (verificationResponse['issue'] === 'allFileColumns' || verificationResponse['issue'] === 'clinicalInforamtionFile')) {
+      setFalseData(true)
+      setLoading(false)
+    }
   }, [verificationResponse, activeTableKey]);
 
   useEffect(() => {
@@ -358,20 +379,36 @@ function MultiDataTable({ updateComponentNumber }) {
           </h3>
         </div>
         <div className="auto">
-          {verificationResponse && 'issue' in verificationResponse && (verificationResponse['issue'] === 'allFileColumns' || verificationResponse['issue'] === 'clinicalInforamtionFile' || verificationResponse['issue'] === 'DataIssues') &&
+
+          {verificationResponse && 'issue' in verificationResponse && (verificationResponse['issue'] !== '') &&
             <button onClick={() => toggleModal(true)} className="ToolModalBtn" style={{ float: "right" }}>
               <InforIcon />
             </button>
           }
 
-          {verificationResponse && 'issue' in verificationResponse && (verificationResponse['issue'] === 'allFileColumns' || verificationResponse['issue'] === 'clinicalInforamtionFile' || verificationResponse['issue'] === 'DataIssues') &&
+          {verificationResponse && 'issue' in verificationResponse && (verificationResponse['issue'] !== '') &&
             <div>
               {showModal && <Modal showModal={showModal} toggleModal={toggleModal} />}
             </div>
           }
-          <ErrorMessage />
 
-          <p className="h5 MultiUploadTextCenter"><FormattedMessage id="loginGuide" defaultMessage="The user should be responsible for using result." /></p>
+          {/* Error and Success Messages */}
+
+          <div style={{ width: "fit-content", margin: "auto" }}>
+
+            {verificationResponse && 'issue' in verificationResponse && <p style={{ textAlign: "start" }} className="h5 MultiUploadTextCenter"><FormattedMessage id="UploadDefault1" defaultMessage="QC is completed for all the data, and the top 10 data are displayed." /></p>}
+
+            {verificationResponse && 'issue' in verificationResponse && (verificationResponse['issue'] !== '') && <p style={{ textAlign: "start" }} className="h5 MultiUploadTextCenter"><FormattedMessage id="FilesErrorRed" defaultMessage="For files with data errors, the invalid data among the entire data is displayed in red." /></p>}
+            {verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] !== '' && <p style={{ textAlign: "start" }} className="h5 MultiUploadTextCenter"><FormattedMessage id="ErrorDataHelpIcon" defaultMessage="Click on the help icon to see detailed error information." /></p>}
+
+            {verificationResponse && 'issue' in verificationResponse && <p style={{ textAlign: "start" }} className="h5 MultiUploadTextCenter"><FormattedMessage id="UploadDefault2" defaultMessage="Please be advised that the user is responsible for using the results." /></p>}
+
+          </div>
+
+
+
+
+
 
           <div className="flex" style={{ justifyContent: 'space-between' }}>
             {projectId === 0 ? (
@@ -379,6 +416,7 @@ function MultiDataTable({ updateComponentNumber }) {
                 <div style={{ marginBottom: '10px' }}>
                   <button
                     className="btn btnGray bdBtn"
+                    style={{ marginBottom: "10px" }}
                     type="button"
                     onClick={() => {
                       updateComponentNumber(0);
@@ -406,7 +444,7 @@ function MultiDataTable({ updateComponentNumber }) {
                       });
                     }}
                     className="btn"
-                    style={{backgroundColor:"#009fe2"}}
+                    style={{ backgroundColor: "#009fe2" }}
                   >
                     <FormattedMessage id="Visualize" defaultMessage="Visualize" />
                   </button>
@@ -429,14 +467,19 @@ function MultiDataTable({ updateComponentNumber }) {
 
               </div>
               :
-              <div style={{ marginTop: '3%' }}>
-                <Table
-                  title=""
-                  columns={colData}
-                  data={rowData}
-                  width="3300"
-                />
-              </div>
+              <>
+                {!FalseData &&
+                  <div style={{ marginTop: '3%' }}>
+                    <Table
+                      title=""
+                      columns={colData}
+                      data={rowData}
+                      width={"3300"}
+                    />
+                  </div>
+                }
+                {FalseData && <h2 style={{ textAlign: "center", color: "black", marginTop: "20px" }}><FormattedMessage id="NoRecords" defaultMessage="No Records Found" /></h2>}
+              </>
             }
             {!verificationResponse && (
               <div className="MultiUploadTextCenter">

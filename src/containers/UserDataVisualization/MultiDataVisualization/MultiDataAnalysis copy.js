@@ -45,6 +45,7 @@ export default function DataVisualization() {
   const [screenCapture, setScreenCapture] = useState(false);
   const [availableTabsForProject, setavailableTabsForProject] = useState([]);
   const [toggle, setToggle] = useState(true);
+  const [filterApplied, setfilterApplied] = useState(false);
   const [title, setTitle] = useState({});
 
   const [isGeneSetPopoverOpen, setIsGeneSetPopoverOpen] = useState(false);
@@ -62,6 +63,7 @@ export default function DataVisualization() {
 
 
   const callback = useCallback(({ filter, value, genes }) => {
+    console.log('-a', filter, genes, value);
     let g = [];
     if (genes?.includes(' ')) {
       g = genes?.split(' ');
@@ -73,6 +75,7 @@ export default function DataVisualization() {
         ...prevState,
         filter: filter
       }));
+      setfilterApplied(true);
       setFilterPopoverOpen(false);
     } else if (value && genes) {
       setState((prevState) => ({
@@ -82,7 +85,6 @@ export default function DataVisualization() {
       }));
       setIsGeneSetPopoverOpen(false);
     }
-
     setChartName(tabName);
   }, []);
 
@@ -98,58 +100,63 @@ export default function DataVisualization() {
     setSurvivalFilterPopoverOpen(false);
   }, []);
 
-
   useEffect(() => {
-    if (project_id) {
-      dispatch(getUserDefinedFilter({ project_id: project_id }));
-    }
-  }, [project_id])
 
-  // First UseEffect
-  useEffect(() => {
-    setCharts({ viz: [] });
-    dispatch(getBreastKeys(state));
-  }, [state, survialData, VFData, tab])
-
-  //Second UseEffect 
-  useEffect(() => {
-    setTabName(tab === 'home' ? undefined : tab);
-    setChartName(tab);
-    setVFData({})
-    setSurvivalData({})
-    const t = ['volcano', 'survival', 'fusion'];
-    setToggle(t.indexOf(tab) === -1);
-
-  }, [tab]);
-
-  // 3rd UseEffect
-  useEffect(() => {
-    if (chart['viz']) {
-      setBoolChartState(true);
-      if (tabName !== 'home' && state?.genes?.length === 0) {
-        setBoolChartState(false);
-      }
-      if (tabName === 'fusion' || tabName === 'survival') {
-        setBoolChartState(true);
-      }
-    }
-
-  }, [chart]);
-
-  useEffect(() => {
     if (BrstKeys) {
-      if (project_id) {
-        dispatch(samplesCount('POST', { project_id: project_id }));
-      } else {
-        dispatch(samplesCount('POST', {}));
-      }
       let chartx = LoadChart(width, tabName);
       setCharts((prevState) => ({
         ...prevState,
         viz: chartx
       }));
     }
-  }, [BrstKeys]);
+  }, [state, BrstKeys, survialData, VFData]);
+
+  useEffect(() => {
+    setTabName(tab === 'home' ? undefined : tab);
+    setChartName(tabName);
+    if (chartName && state?.genes?.length > 0) {
+      submitFilter();
+    }
+    else if ((tabName == 'survival' || tabName === 'fusion')) {
+      submitFilter();
+    }
+    let t = ['volcano', 'survival', 'fusion'];
+    if (t.indexOf(tabName) !== -1) {
+      setToggle(false);
+    } else {
+      setToggle(true);
+    }
+  }, [tab, tabName, chartName, state, BrstKeys]);
+
+  useEffect(() => {
+    if (project_id !== undefined) {
+      dispatch(samplesCount('POST', { project_id: project_id }));
+      dispatch(getBreastKeys(state));
+    } else {
+      dispatch(samplesCount('POST', {}));
+      dispatch(getBreastKeys(state));
+    }
+  }, [state, tabName]);
+
+  useEffect(() => {
+    if (chart) {
+      setBoolChartState(true);
+    }
+
+    if (tabName !== 'home' && state?.genes?.length === 0) {
+      setBoolChartState(false);
+    }
+    if (tabName === 'fusion' || tabName === 'survival') {
+      setBoolChartState(true);
+    }
+  }, [chart, tabName, state]);
+
+  useEffect(() => {
+    if (filterApplied) {
+      setfilterApplied(false);
+      submitFilter();
+    }
+  }, [filterApplied]);
 
   useEffect(() => {
     if (project_id !== undefined) {
@@ -187,6 +194,14 @@ export default function DataVisualization() {
     }
   }, [project_id, userProjectDetails, project_id_status]);
 
+
+  useEffect(() => {
+    dispatch(
+      getUserDefinedFilter({
+        project_id: project_id
+      })
+    );
+  }, [project_id]);
 
   useEffect(() => {
     let w = elementRef.current.getBoundingClientRect().width;
@@ -341,6 +356,19 @@ export default function DataVisualization() {
   }, [availableTabsForProject, chartName]);
 
   useEffect(() => {
+    if (BrstKeys) {
+      let tmp = [];
+      for (const [key, value] of Object.entries(BrstKeys)) {
+        tmp.push(
+          <option key={key} value={key + '_' + value}>
+            {value}
+          </option>
+        );
+      }
+    }
+  }, [BrstKeys]);
+
+  useEffect(() => {
     let chartx = LoadChart(width, tabName);
     setCharts((prevState) => ({
       ...prevState,
@@ -353,6 +381,25 @@ export default function DataVisualization() {
       dispatch(clearDataVisualizationState());
     };
   }, []);
+
+
+
+  const submitFilter = () => {
+    if (BrstKeys) {
+      let chartx = LoadChart(width, tabName);
+      setCharts((prevState) => ({
+        ...prevState,
+        viz: chartx
+      }));
+    }
+    else if (tabName === 'fusion' || tabName === 'survival') {
+      let chartx = LoadChart(width, tabName);
+      setCharts((prevState) => ({
+        ...prevState,
+        viz: chartx
+      }));
+    }
+  };
 
   const LoadChart = (w, type) => {
     let Chart = lazy(() => import('../../DataVisualisation/Charts'));

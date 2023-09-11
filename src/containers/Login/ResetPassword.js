@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { changePassword } from '../../actions/api_actions';
 import NCCLogo from '../../styles/images/logo02.svg';
 import HeaderComponent from '../Common/HeaderComponent/HeaderComponent';
+import KcoreFinalLogo from '../../assets/images/K-coreFinalLogo.png';
 
 function ResetPassword() {
   let history = useHistory();
@@ -153,115 +154,107 @@ function ResetPassword() {
   };
 
   const breadCrumbs = {
-    '/reset-password/': [{ id: 'resetpassword', defaultMessage: 'ResetPassword', to: '' }]
+    '/resetpassword/': [{ id: 'ResetPassword', defaultMessage: 'Reset Password', to: '' }]
   };
 
   return (
     <div>
-      <HeaderComponent title={title} breadCrumbs={breadCrumbs['/set-password/']} type="single" />
+      <HeaderComponent title={title} breadCrumbs={breadCrumbs['/resetpassword/']} type="single" />
       <article id="subContents" className="subContents">
-        <div className="ptn">
-          <div className="auto">
-            <div className="loginWrap">
-              <img src={NCCLogo} alt="" />
-              <p className="main">
-                <span className="colorSecondary">
-                  <font style={{ verticalAlign: 'inherit' }}></font>
-                </span>
-                <font style={{ verticalAlign: 'inherit' }}>
-                  <span className="colorPrimary">
-                    <font style={{ verticalAlign: 'inherit' }}>
-                      <FormattedMessage id="Welcome" defaultMessage="Welcome" />
-                    </font>
-                  </span>
-                  <font style={{ verticalAlign: 'inherit' }}>
-                    {' '}
-                    <FormattedMessage id="to" defaultMessage="to" />{' '}
-                  </font>
-                  <span className="colorSecondary">
-                    <font style={{ verticalAlign: 'inherit' }}>NCDC .</font>
-                  </span>
-                </font>
-                <span className="colorPrimary">
-                  <font style={{ verticalAlign: 'inherit' }}></font>
-                </span>
-              </p>
-              <p className="sub">
-                <font style={{ verticalAlign: 'inherit' }}>
-                  <font style={{ verticalAlign: 'inherit' }}>
+        <div>
+          <div className="MarginBottom5">
+            <h1 className="logo">
+              <a>
+                <img src={KcoreFinalLogo} alt="logo" className="logo Block MAuto W10" />
+              </a>
+            </h1>
+          </div>
+
+          <div className="ptn">
+            <div className="auto">
+              <div className="pwSearch tac">
+                <p className="h5">
+                  <FormattedMessage id="SignupWelcome" defaultMessage="Please set the password you want to use." />
+                </p>
+
+                <form className="formBox" id="frm" method="post">
+                  {/*  error messages */}
+                  {isError && errorMessage && <div className="ErrorText">{errorMessage}</div>}
+
+                  {/* Input unique Key */}
+                  <div className="inputText MarginBottom5">
                     <FormattedMessage
-                      id="WelcomeNcdc"
-                      defaultMessage="Welcome to the National Cancer Data Center website."
-                    />{' '}
-                  </font>
-                </font>
-                <br />
-                <font style={{ verticalAlign: 'inherit' }}>
-                  <font style={{ verticalAlign: 'inherit' }}>
+                      id="ResetEnterPin"
+                      defaultMessage="Please enter your PIN number."
+                    >
+                      {(placeholder) => (
+                        <input
+                          type="text"
+                          value={userFormData.uniqueKey}
+                          onChange={updateSetPassword}
+                          id="uniqueKey"
+                          name="uniqueKey"
+                          placeholder={placeholder}
+                          autoComplete="off"
+                        />
+                      )}
+                    </FormattedMessage>
+                  </div>
+
+                  {/* Input Password */}
+                  <div className="inputText MarginBottom5">
                     <FormattedMessage
-                      id="loginmessage"
-                      defaultMessage="Please enter the information below to log in."
-                    />
-                  </font>
-                </font>
-              </p>
+                      id="PasswordConfirm1"
+                      defaultMessage="Please Enter New Password."
+                    >
+                      {(placeholder) => (
+                        <input
+                          className={isError == true ? 'ErrorInput' : ''}
+                          type="password"
+                          value={userFormData.password}
+                          onChange={updateSetPassword}
+                          id="password"
+                          name="password"
+                          placeholder={placeholder}
+                          autoComplete="off"
+                        />
+                      )}
+                    </FormattedMessage>
+                  </div>
 
-              <form className="loginForm" id="frm" method="post">
-                {/*  error messages */}
-                {isError && errorMessage && <div className="ErrorText">{errorMessage}</div>}
+                  {/* Input ConfirmPassword */}
+                  <div className="inputText">
+                    <FormattedMessage
+                      id="PasswordConfirm2"
+                      defaultMessage="Renter New Password."
+                    >
+                      {(placeholder) => (
+                        <input
+                          className={isError ? 'ErrorInput' : ''}
+                          type="password"
+                          id="cnfmpassword"
+                          name="cnfmpassword"
+                          placeholder={placeholder}
+                          value={userFormData.cnfmpassword}
+                          onChange={updateSetPassword}
+                        />
+                      )}
+                    </FormattedMessage>
+                  </div>
+                </form>
 
-                {/* Input unique Key */}
-                <div className="inputText">
-                  <input
-                    type="text"
-                    value={userFormData.uniqueKey}
-                    onChange={updateSetPassword}
-                    id="uniqueKey"
-                    name="uniqueKey"
-                    placeholder="Please Enter the 4 digit Unique Key."
-                    autoComplete="off"
-                  />
+              </div>
+
+              {/* Reset Password Button  */}
+              <div className="bottomBtns" style={{marginTop:"20px"}}>
+                <div className="flex">
+                  <button id="setPasswordBtn" onClick={formSubmitAction} className="btn btnPrimary">
+                    <span>
+                      <FormattedMessage id="ResetPassword" defaultMessage="Reset Password" />
+                    </span>
+                  </button>
                 </div>
-
-                {/* Input Password */}
-                <div className="inputText">
-                  <input
-                    className={isError == true ? 'ErrorInput' : ''}
-                    type="password"
-                    value={userFormData.password}
-                    onChange={updateSetPassword}
-                    id="password"
-                    name="password"
-                    placeholder="Please Enter New Password."
-                    autoComplete="off"
-                  />
-                </div>
-
-                {/* Input ConfirmPassword */}
-                <div className="inputText">
-                  <input
-                    className={isError ? 'ErrorInput' : ''}
-                    type="password"
-                    id="cnfmpassword"
-                    name="cnfmpassword"
-                    placeholder="Renter New Password."
-                    value={userFormData.cnfmpassword}
-                    onChange={updateSetPassword}
-                  />
-                </div>
-
-                {/* Set Password Button  */}
-                <button
-                  type="button"
-                  className="btn btnPrimary"
-                  id="setPasswordBtn"
-                  onClick={formSubmitAction}
-                >
-                  <font style={{ verticalAlign: 'inherit' }}>
-                    <font style={{ verticalAlign: 'inherit' }}>Reset Password</font>
-                  </font>
-                </button>
-              </form>
+              </div>
             </div>
           </div>
         </div>
