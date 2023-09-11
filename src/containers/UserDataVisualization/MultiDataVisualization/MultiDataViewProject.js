@@ -50,12 +50,12 @@ function ProjectsList() {
   let handleButtonClick = async (type, projectId) => {
     if (type === 'delete') {
       Swal.fire({
-        text: 'Are you sure you want to Delete this Project?',
+        text: intl.formatMessage({ id: "DeleteProject", defaultMessage: "Are you sure you want to Delete this Project?" }),
         icon: 'error',
         confirmButtonColor: '#003177',
-        confirmButtonText: 'Ok',
+        confirmButtonText: intl.formatMessage({ id: "Ok", defaultMessage: 'Ok' }),
         showCancelButton: true,
-        cancelButtonText: 'Cancel',
+        cancelButtonText: intl.formatMessage({ id: "Cancel", defaultMessage: 'Cancel' }),
         allowOutsideClick: false
       }).then((result) => {
         if (result.value) {
@@ -110,7 +110,7 @@ function ProjectsList() {
       accessor: (original) => original?.project_name,
     },
     {
-      Header: intl.formatMessage({ id: "clinicalInformation", defaultMessage: 'clinicalInformation' }),
+      Header: intl.formatMessage({ id: "clinicalInformation", defaultMessage: 'clinical Information' }),
       accessor: (row) => (row.clinical_information ? 'O' : ''),
     },
     {
@@ -180,7 +180,7 @@ function ProjectsList() {
             width={"2300"}
           />
         )}
-        {!tableData && <p className="MultiUploadTextCenter">No Records Found</p>}
+        {!tableData && <p className="MultiUploadTextCenter"><FormattedMessage id="NoRecords" defaultMessage="No Records Found" /></p>}
       </div>
     </div>
   );
@@ -250,18 +250,18 @@ export default function MultiDataViewProject() {
                 className="popupBody  introduceWrap"
                 style={{ padding: '0px', border: '1px solid #ddd' }}
               >
-                <div className="introduceBox03" style={{ width: '100%' }}>
-                  <ul>
-                    <li>
-                      <p>
+                <div className="introduceBox03" style={{ width: '100%', backgroundColor: "rgb(254, 196, 11)" }}>
+                  <ul >
+                    <li style={{borderBottom:"1px solid black", color:'black' }}>
+                      <p style={{ color: "black"}}>
                         <FormattedMessage
                           id="ViewProjectUploadGuidepopUp1"
                           defaultMessage="It is possible to create 5 projects on a account."
                         />
                       </p>
                     </li>
-                    <li>
-                      <p>
+                    <li style={{color:'black'}}>
+                      <p style={{ color: "black" }}>
                         <FormattedMessage
                           id="ViewProjectUploadGuidepopUp2"
                           defaultMessage="The period to check each project is 2 weeks from the date of creation. After 2 weeks, the project will be deleted."

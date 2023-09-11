@@ -5,7 +5,7 @@ import {
   UserDataProjectsCount
 } from '../../../actions/api_actions';
 import { useDispatch } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import Swal from 'sweetalert2';
 import HeaderComponent from '../../Common/HeaderComponent/HeaderComponent';
 import Draggable from 'react-draggable';
@@ -95,6 +95,7 @@ const Table = ({ updateComponentNumber }) => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(true);
   const history = useHistory();
+  const intl = useIntl();
 
   useEffect(() => {
     dispatch(clearMultiFIleUploadState());
@@ -147,11 +148,11 @@ const Table = ({ updateComponentNumber }) => {
       updateComponentNumber(1);
     } else if (projectName === '') {
       Swal.fire({
-        title: 'Warning',
-        text: 'Enter Project Name',
+        title: intl.formatMessage({ id: "Warning", defaultMessage: 'Warning' }),
+        text: intl.formatMessage({ id: "EnterProjectName", defaultMessage: 'Enter Project Name' }),
         icon: 'warning',
         confirmButtonColor: '#003177',
-        confirmButtonText: 'Ok',
+        confirmButtonText: intl.formatMessage({ id: "Ok", defaultMessage: 'Ok' }),
         allowOutsideClick: false
       }).then((result) => {
         if (result.value) {
@@ -159,11 +160,11 @@ const Table = ({ updateComponentNumber }) => {
       });
     } else if (!filesData['clinical_information']) {
       Swal.fire({
-        title: 'Warning',
-        text: 'Upload Clinical Information.',
+        title: intl.formatMessage({ id: "Warning", defaultMessage: 'Warning' }),
+        text: intl.formatMessage({ id: "UploadClinical", defaultMessage: 'Upload Clinical Information File' }),
         icon: 'warning',
         confirmButtonColor: '#003177',
-        confirmButtonText: 'Ok',
+        confirmButtonText: intl.formatMessage({ id: "Ok", defaultMessage: 'Ok' }),
         allowOutsideClick: false
       }).then((result) => {
         if (result.value) {
@@ -257,10 +258,10 @@ const Table = ({ updateComponentNumber }) => {
                 className="popupBody  introduceWrap"
                 style={{ padding: '0px', border: '1px solid #ddd' }}
               >
-                <div className="introduceBox03" style={{ width: '100%' }}>
+                <div className="introduceBox03" style={{ width: '100%', backgroundColor: "rgb(254, 196, 11)" }}>
                   <ul>
-                    <li>
-                      <p>
+                    <li style={{borderBottom:"1px solid black", color:'black' }}>
+                      <p style={{ color: "black"}}>
                         <FormattedMessage
                           id="uploadGuide1"
                           defaultMessage="Provides visualization results only for plots related to the uploaded data."
@@ -268,7 +269,7 @@ const Table = ({ updateComponentNumber }) => {
                       </p>
                     </li>
                     <li>
-                      <p>
+                      <p style={{ color: "black"}}>
                         <FormattedMessage
                           id="uploadGuide2"
                           defaultMessage="For omics data information required for each plot, please refer to the [Visualize Example Data] page."

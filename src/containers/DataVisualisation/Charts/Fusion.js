@@ -131,13 +131,13 @@ export default function FusionPlot({
           <div className="flex flex-col w-full text-left" style={{ gap: '10px', justifyContent: 'center' }}>
             {value}
             <button onClick={(e) => generateFusion(e, row.id)} id={row.id} style={{ padding: '5px', cursor: 'pointer' }}>
-              <EyeIcon style={{width:"26px" }} />
+              <EyeIcon style={{ width: "26px" }} />
             </button>
           </div>
         );
         return main_html;
       },
-      width:60
+      width: 60
     },
     {
       Header: intl.formatMessage({ id: "SampleName", defaultMessage: 'Sample Name' }),
@@ -198,8 +198,8 @@ export default function FusionPlot({
   };
 
   useEffect(() => {
-      let projectdata = {"project_id":project_id}
-      setInputState((prevState) => ({ ...prevState, ...VFData, ...projectdata }));
+    let projectdata = { "project_id": project_id }
+    setInputState((prevState) => ({ ...prevState, ...VFData, ...projectdata }));
 
     if ('groupFilters' in VFData) {
       setGroupFilters(VFData['groupFilters']);
@@ -293,57 +293,33 @@ export default function FusionPlot({
               />
             </p>
           )}
-
-          {showFusion && (
-            <div className="MarginTop4 BorderstyleViz OverFlowXHide">
-              {VennData && !noData && (
-                <FusionVennCmp parentCallback={getVennIds} VennData={VennData} width={width} />
-              )}
-
-              {VennData && !noData && fusionId !== 0 && (
-                <div className="mt-5 my-0 mx-auto h-auto w-11/12 shadow-lg">
-                  <FusionCustomPlot fusionId={fusionId} />
+          {
+            showFusion && (
+              <div className="BorderstyleViz">
+                <div className="MarginTop4 OverFlowXHide">
+                  {VennData && !noData && <FusionVennCmp parentCallback={getVennIds} VennData={VennData} width={width} />}
+                  {VennData && !noData && fusionId !== 0 && <FusionCustomPlot fusionId={fusionId} />}
                 </div>
-              )}
-
-              {VennData && !noData && tableData.length > 0 && (
-                <div>
-                  <div className="FusionCardText">
-                    <p>
-                      {koreanlanguage
-                        ? '환자군에서 적어도 1명의 환자에게 검출된 융합 유전자의 수를 센다.'
-                        : 'Fusion gene detected in at least 1 patient in a paitent group is counted'}
-                    </p>
-                    <p>
-                      {koreanlanguage
-                        ? 'Core: Group1과 Group2 모두에서 발견되는 융합 유전자'
-                        : 'Core : Fusion genes found in both Group 1 and Group 2'}
-                    </p>
-                    <p>
-                      {koreanlanguage
-                        ? 'Unique: 특정 환자군에서 발견된 융합 유전자'
-                        : 'Unique : Fusion genes found in certain patient group.'}
-                    </p>
-                  </div>
-
-                  <div className="mt-20 my-0 mx-auto  w-11/12 shadow-lg">
-                    <div className="bg-white border-b border-gray-200 py-5 text-left px-5" style={{ fontSize: '18px' }}>
-                      {groupName}
+                {tableData.length > 0 && (
+                  <div>
+                    <div className="FusionCardText">
+                      <p>{koreanlanguage ? '환자군에서 적어도 1명의 환자에게 검출된 융합 유전자의 수를 센다.' : 'Fusion gene detected in at least 1 patient in a patient group is counted'}</p>
+                      <p>{koreanlanguage ? 'Core: Group1과 Group2 모두에서 발견되는 융합 유전자' : 'Core : Fusion genes found in both Group 1 and Group 2'}</p>
+                      <p>{koreanlanguage ? 'Unique: 특정 환자군에서 발견된 융합 유전자' : 'Unique : Fusion genes found in a certain patient group.'}</p>
                     </div>
-                    {VennData && !noData && (
-
-                      <Table
-                        pagination
-                        columns={tableColumnsData}
-                        data={tableData}
-                        width="2650"
-                      />
-                    )}
+                    <div className="mt-20 my-0 mx-auto w-11/12 shadow-lg">
+                      <div className="bg-white border-b border-gray-200 py-5 text-left px-5" style={{ fontSize: '18px' }}>
+                        {groupName}
+                      </div>
+                      {VennData && !noData && (
+                        <Table pagination columns={tableColumnsData} data={tableData} width="2650" />
+                      )}
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
-          )}
+                )}
+              </div>
+            )
+          }
         </>
       )}
 

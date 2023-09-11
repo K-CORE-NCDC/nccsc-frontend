@@ -30,7 +30,6 @@ function QAList() {
       );
     }
     setTableData(response.data.data);
-    // setTotalRows(response.data.total);
     setLoading(false);
   };
 
@@ -47,11 +46,12 @@ function QAList() {
         < div title={value}>
           {parseInt(row?.index) + parseInt(1)}</div>
       ),
-
+      width:"80"
     },
     {
       Header: intl.formatMessage({ id: "Title", defaultMessage: 'Title' }),
       accessor: (row) => row.title,
+      width:"200"
     },
     {
       Header: intl.formatMessage({ id: "Writer", defaultMessage: 'Writer' }),
@@ -59,12 +59,11 @@ function QAList() {
     },
     {
       Header: intl.formatMessage({ id: "DateOfIssue", defaultMessage: 'Date Of Issue' }),
-      accessor: (row) => row.created_on,
+      accessor: (row) => row.created_on.slice(0, 19).replace("T", " "),
     }
   ];
 
 
-  // let redirecting = redirState ? <Redirect push to={`/details/${shortName}/`} /> : '';
   return (
     <div >
       {loading ?
@@ -78,7 +77,6 @@ function QAList() {
               width={"1075"}
             />
           )}
-          {/* {redirecting} */}
         </div>}
     </div>
   );
@@ -94,7 +92,6 @@ function QaDetail({ slug_id }) {
 
   return (
     <div className="" style={{ color: 'black', border: '1px solid black' }}>
-      "sushma"
       {notice_data && (
         <div className="">
         </div>
@@ -106,11 +103,7 @@ function QaDetail({ slug_id }) {
 function QaCreate() {
   const dispatch = useDispatch();
   const writer = ''
-
-
-
-
-
+  
   function createQA() {
     let temp = {
       title: title,
@@ -192,7 +185,7 @@ export default function QA() {
   };
 
   useEffect(() => { }, [postCreate]);
-
+  
   const qa_comp = () => {
     if (slug) {
       return <QaDetail slug_id={slug} />;

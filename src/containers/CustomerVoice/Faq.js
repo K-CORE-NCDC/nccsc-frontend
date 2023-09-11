@@ -53,7 +53,7 @@ function FaqList() {
         < div title={value}>
           {parseInt(row?.index) + parseInt(1)}</div>
       ),
-
+      width:"80"
     },
     {
       Header: intl.formatMessage({ id: "Title", defaultMessage: 'Title' }),
@@ -65,7 +65,7 @@ function FaqList() {
     },
     {
       Header: intl.formatMessage({ id: "DateOfIssue", defaultMessage: 'Date Of Issue' }),
-      accessor: (row) => row.created_on,
+      accessor: (row) => row.created_on.slice(0, 19).replace("T", " "),
     }
   ];
 

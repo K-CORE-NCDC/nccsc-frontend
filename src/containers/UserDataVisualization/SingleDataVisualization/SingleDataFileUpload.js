@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -69,6 +69,7 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
   const [formSbubmitButtonText, setFormSubmitButtonText] = useState('upload');
   const [initialInputState, setInitialInputState] = useState(undefined);
   let { tab } = useParams();
+  const intl = useIntl();
   const inputRef = useRef(null);
   const allowedTabs = [
     'circos',
@@ -358,7 +359,6 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
                   onChange={file_Upload_}
                   ref={inputRef}
                 />
-                <FormattedMessage id="Selectfile" defaultMessage="Select file" />
               </label>
             </dd>
           </dl>
@@ -401,11 +401,11 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
       }
     } else {
       Swal.fire({
-        title: 'Warning',
-        text: 'Select File.',
+        title: intl.formatMessage({ id: "Warning", defaultMessage: 'Warning' }),
+        text: intl.formatMessage({ id: "SelectFile", defaultMessage: 'Upload File' }),
         icon: 'warning',
         confirmButtonColor: '#003177',
-        confirmButtonText: 'Ok',
+        confirmButtonText: intl.formatMessage({ id: "Ok", defaultMessage: 'Ok' }),
         allowOutsideClick: false
       });
     }

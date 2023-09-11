@@ -89,7 +89,7 @@ function Table({
         <div>
             <div style={{ width: '100%', overflowX: 'auto' }}>
                 <span style={{ display: 'flex', fontSize: '18px' }}><b>Total:</b> <div style={{ color: "#003177", paddingLeft: '10px', fontSize: "18px" }}>{data?.length}</div></span>
-                <table className={" boardList"} {...getTableProps()} style={{ width: width ? width + 'px' : '1000px' }}>
+                <table className={" boardList"} {...getTableProps()} style={{ width:'1075px' }}>
                     <thead className="boardHeader">
                         {headerGroups.map((headerGroup) => (
                             <tr

@@ -959,38 +959,13 @@ export function ScatterInformation(type, data) {
   return sendRequest(url, type, data);
 }
 
-export function getFusionExons(type, data) {
-  return (dispatch) => {
+export function FusionExons(type, data) {
     const url = `${config.auth}getFusionExons/`;
-    sendRequest(url, type, data)
-      .then((result) => {
-        const d = result;
-        dispatch({ type: dataVisualization.REQUEST_DONE });
-        dispatch({
-          type: dataVisualization.FUSION_EXON_REQUEST,
-          payload: d.data
-        });
-        dispatch({ type: dataVisualization.REQUEST_DONE });
-      })
-      .catch(() => { });
-  };
+    return sendRequest(url, type, data)
 }
-
-export function getFusionInformation(type, data) {
-  return (dispatch) => {
+export function FusionInformation(type, data) {
     const url = `${config.auth}fusion-plot/`;
-    sendRequest(url, type, data)
-      .then((result) => {
-        const d = result;
-        dispatch({ type: dataVisualization.REQUEST_DONE });
-        dispatch({
-          type: dataVisualization.FUSION_REQUEST,
-          payload: d.data
-        });
-        dispatch({ type: dataVisualization.REQUEST_DONE });
-      })
-      .catch(() => { });
-  };
+    return sendRequest(url, type, data)
 }
 
 export function getBoxInformation(type, data) {

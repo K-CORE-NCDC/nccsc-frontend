@@ -102,7 +102,6 @@ function survival(
   screenCapture,
   setToFalseAfterScreenCapture,
   survialData,
-  trasnferSurvivalData
 ) {
   let DataSurvival = lazy(() => import('./Survival'));
   return (
@@ -114,7 +113,6 @@ function survival(
         screenCapture={screenCapture}
         setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
         survialData={survialData}
-        trasnferSurvivalData={trasnferSurvivalData}
       />
     </Suspense>
   );
@@ -198,7 +196,7 @@ function variant_summary(width, inputData, screenCapture, setToFalseAfterScreenC
 }
 
 
-const Charts = ({ type, w, state, screenCapture, setToFalseAfterScreenCapture, toggle, VFData, BrstKeys, trasnferSurvivalData,survialData }) => {
+const Charts = ({ type, w, state, screenCapture, setToFalseAfterScreenCapture, toggle, VFData, BrstKeys, survialData }) => {
   const fetchData = () => {
     switch (type) {
       case 'circos':
@@ -218,7 +216,6 @@ const Charts = ({ type, w, state, screenCapture, setToFalseAfterScreenCapture, t
           screenCapture,
           setToFalseAfterScreenCapture,
           survialData,
-          trasnferSurvivalData
         );
       case 'correlation':
         return scatter(w, state, screenCapture, setToFalseAfterScreenCapture);

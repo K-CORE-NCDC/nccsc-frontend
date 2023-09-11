@@ -226,44 +226,8 @@ function NewSankeyd3({ SankeyJson, idName, forGene }) {
       if (document.getElementById(idName)) {
         document.getElementById(idName).innerHTML = '';
       }
-      let j = SankeyJson;
 
-      const maxDbsnpRsCount = 20; // Maximum dbsnp_rs nodes
-      const maxDrugnameCount = 20; // Maximum drugname nodes
-
-      let dbsnpRsCounter = 0; // Counter for dbsnp_rs nodes
-      let drugnameCounter = 0; // Counter for drugname nodes
-
-      const filteredNodes = j.nodes.filter((node) => {
-        if (
-          (node.type === 'dbsnp_rs' && dbsnpRsCounter < maxDbsnpRsCount) ||
-          (node.type === 'drugname' && drugnameCounter < maxDrugnameCount) ||
-          (node.type !== 'dbsnp_rs' && node.type !== 'drugname')
-        ) {
-          if (node.type === 'dbsnp_rs') {
-            dbsnpRsCounter++;
-          } else if (node.type === 'drugname') {
-            drugnameCounter++;
-          }
-          return true;
-        }
-        return false;
-      });
-
-      // Create a set of valid node names for efficient lookup
-      const validNodeNames = new Set(filteredNodes.map((node) => node.name));
-
-      // Filter links to only include those that connect valid nodes
-      const filteredLinks = j.links.filter(
-        (link) => validNodeNames.has(link.source) && validNodeNames.has(link.target)
-      );
-
-      const filteredSankeyJson = {
-        nodes: filteredNodes,
-        links: filteredLinks
-      };
-
-      drawChart(filteredSankeyJson);
+      drawChart(SankeyJson);
     }
   }, [SankeyJson]);
 

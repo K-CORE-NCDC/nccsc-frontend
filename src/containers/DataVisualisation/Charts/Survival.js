@@ -27,6 +27,7 @@ export default function DataSurvival({
   const [watermarkCss, setWatermarkCSS] = useState('');
   const [vizType, setVizType] = useState('');
   const [singelSurvialType, setSingelSurvialType] = useState('recurrence');
+  const [survialType, setSurvialType] = useState('recurrence');
 
   let { project_id } = useParams();
 
@@ -62,6 +63,7 @@ export default function DataSurvival({
 
   let callSingleSurvial = (survivalType) => {
     setSingelSurvialType(survivalType);
+    setSurvialType(survivalType)
     let staticSurvivalData = {};
     staticSurvivalData['filterType'] = 'dynamic';
     staticSurvivalData['survival_type'] = survivalType;
@@ -84,8 +86,12 @@ export default function DataSurvival({
   };
 
   useEffect(() => {
-    let projectdata = {"project_id":project_id}
+    let projectdata = { "project_id": project_id }
     setInputState((prevState) => ({ ...prevState, ...survialData, ...projectdata }));
+
+    if (survialData && 'survival_type' in survialData) {
+      setSurvialType(survialData['survival_type'])
+    }
   }, [survialData]);
 
   useEffect(() => {
@@ -367,6 +373,7 @@ export default function DataSurvival({
                         survivalJson: survivalJson
                       }}
                       pValue={pValueData}
+                      survialType={survialType}
                     />
                   </>
                 )}

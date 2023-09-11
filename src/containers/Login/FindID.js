@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { findID } from '../../actions/api_actions';
@@ -10,14 +10,15 @@ function FindID() {
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState([]);
   let history = useHistory();
+  const intl = useIntl();
 
   const findIdSuccess = () => {
     Swal.fire({
-      title: 'Success',
-      text: 'ID Sent to Your Email',
+      title: intl.formatMessage({ id: "Success", defaultMessage: "Success" }),
+      text: intl.formatMessage({ id: "FindIdSuccess", defaultMessage: "ID sent to your email" }),
       icon: 'success',
       confirmButtonColor: '#003177',
-      confirmButtonText: 'Ok',
+      confirmButtonText: intl.formatMessage({ id: "Ok", defaultMessage: 'Ok' }),
       allowOutsideClick: false
     }).then((result) => {
       if (result.value) {
