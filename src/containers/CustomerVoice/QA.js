@@ -1,6 +1,6 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
+import axios from 'axios';
 import 'react-quill/dist/quill.snow.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -9,10 +9,12 @@ import config from '../../config';
 import '../../interceptor/interceptor';
 import Table from '../Common/Table/ReactTable';
 import LoaderComp from '../Common/Loader';
+import { Link } from 'react-router-dom/cjs/react-router-dom';
+
 
 function QAList() {
-  const [tableData, setTableData] = useState([]);
   const intl = useIntl();
+  const [tableData, setTableData] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const fetchUsers = async (page, method) => {
@@ -29,7 +31,12 @@ function QAList() {
         }
       );
     }
-    setTableData(response.data.data);
+    if (response.data.data) {
+      setTableData(response.data.data);
+    }
+    else {
+      setTableData([])
+    }
     setLoading(false);
   };
 
@@ -46,12 +53,22 @@ function QAList() {
         < div title={value}>
           {parseInt(row?.index) + parseInt(1)}</div>
       ),
-      width:"80"
+      width: "80"
     },
     {
       Header: intl.formatMessage({ id: "Title", defaultMessage: 'Title' }),
       accessor: (row) => row.title,
-      width:"200"
+      Cell: ({ cell: { _, row } }) => {
+        console.log('row',row);
+        console.log('row original',row.original);
+        console.log('row writer',row.writer);
+        return <div>
+          <Link to={`/qa/${row?.original?.id}`}>
+            <span>{row.original.title}</span>
+          </Link>
+        </div>
+      },
+      width: "200"
     },
     {
       Header: intl.formatMessage({ id: "Writer", defaultMessage: 'Writer' }),
@@ -64,19 +81,21 @@ function QAList() {
   ];
 
 
+
   return (
     <div >
       {loading ?
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <LoaderComp /> </div> :
         <div >
-          {tableData && (
+          {tableData && tableData.length > 0 && (
             <Table
               columns={columns}
               data={tableData}
               width={"1075"}
             />
           )}
+          {tableData && tableData.length === 0 && <h1 className="MultiUploadTextCenter">{intl.formatMessage({ id: "NoRecords", defaultMessage: 'No Records Found' })}</h1>}
         </div>}
     </div>
   );
@@ -100,81 +119,81 @@ function QaDetail({ slug_id }) {
   );
 }
 
-function QaCreate() {
-  const dispatch = useDispatch();
-  const writer = ''
-  
-  function createQA() {
-    let temp = {
-      title: title,
-      writer: writer,
-      content: convertedText,
-      new: true
-    };
-    dispatch(getQaData('', temp));
-  }
+// function QaCreate() {
+//   const dispatch = useDispatch();
+//   const writer = ''
 
-  return (
-    <div className="">
-      <div className="">
-        <div className="">
-          <label htmlFor="">Title</label>
-        </div>
-        <div className="">
-          <input
-            value={title}
-            type="text"
-            name="name"
-            onChange={(e) => setTitle(e.target.value)}
-            className=""
-          />
-          {message ? <h4 className="mt-4" style={{ color: "red" }}>{message}</h4> : ""}
-        </div>
-        <div className="">
-          <label htmlFor="Name">Writer</label>
-        </div>
-        <div className="">
-          <input
-            type="text"
-            value={writer}
-            name="name"
-            onChange={(e) => setWriter(e.target.value)}
-            className=""
-          />
-        </div>
-        <div className="">
-          <label htmlFor="Name">Content</label>
-        </div>
-        <div className="">
-          <ReactQuill
-            theme='snow'
-            value={convertedText}
-            onChange={setConvertedText}
-            style={{ minHeight: '300px' }}
-          />
-        </div>
-        <div className="">
-          <button
-            className=""
-            type="button"
-            onClick={() => new_post(false)}
-            style={{ backgroundColor: "#b5b5b5", color: "#fff" }}
-          >
-            Cancel
-          </button>
-          <button
-            className=""
-            type="button"
-            onClick={createQA}
-            style={{ backgroundColor: "#2957cc" }}
-          >
-            Save
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
+//   function createQA() {
+//     let temp = {
+//       title: title,
+//       writer: writer,
+//       content: convertedText,
+//       new: true
+//     };
+//     dispatch(getQaData('', temp));
+//   }
+
+//   return (
+//     <div className="">
+//       <div className="">
+//         <div className="">
+//           <label htmlFor="">Title</label>
+//         </div>
+//         <div className="">
+//           <input
+//             value={title}
+//             type="text"
+//             name="name"
+//             onChange={(e) => setTitle(e.target.value)}
+//             className=""
+//           />
+//           {message ? <h4 className="mt-4" style={{ color: "red" }}>{message}</h4> : ""}
+//         </div>
+//         <div className="">
+//           <label htmlFor="Name">Writer</label>
+//         </div>
+//         <div className="">
+//           <input
+//             type="text"
+//             value={writer}
+//             name="name"
+//             onChange={(e) => setWriter(e.target.value)}
+//             className=""
+//           />
+//         </div>
+//         <div className="">
+//           <label htmlFor="Name">Content</label>
+//         </div>
+//         <div className="">
+//           <ReactQuill
+//             theme='snow'
+//             value={convertedText}
+//             onChange={setConvertedText}
+//             style={{ minHeight: '300px' }}
+//           />
+//         </div>
+//         <div className="">
+//           <button
+//             className=""
+//             type="button"
+//             onClick={() => new_post(false)}
+//             style={{ backgroundColor: "#b5b5b5", color: "#fff" }}
+//           >
+//             Cancel
+//           </button>
+//           <button
+//             className=""
+//             type="button"
+//             onClick={createQA}
+//             style={{ backgroundColor: "#2957cc" }}
+//           >
+//             Save
+//           </button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
 
 export default function QA() {
   let { slug } = useParams();
@@ -185,7 +204,7 @@ export default function QA() {
   };
 
   useEffect(() => { }, [postCreate]);
-  
+
   const qa_comp = () => {
     if (slug) {
       return <QaDetail slug_id={slug} />;

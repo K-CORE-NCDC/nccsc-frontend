@@ -29,8 +29,8 @@ const SignupComponent = () => {
   const registerSuccess = () => {
     //Id is SignupSuccess
     Swal.fire({
-      title: intl.formatMessage({ id: "Success", defaultMessage: 'Success' }),
-      text: intl.formatMessage({ id: "SignupMail", defaultMessage: "ID Sent to Your Email" }),
+      title: intl.formatMessage({ id: "EmailSentSuccess", defaultMessage: 'Email sent completed' }),
+      text: intl.formatMessage({ id: "SignupMail", defaultMessage: "Registration number Sent to Your Email" }),
       icon: 'success',
       confirmButtonColor: '#003177',
       confirmButtonText: intl.formatMessage({ id: "Ok", defaultMessage: 'Ok' }),
@@ -139,13 +139,13 @@ const SignupComponent = () => {
                   <dl>
                     <dt>
                       <img src={nameIcon} alt="" />
-                      <FormattedMessage id="EmailId" defaultMessage="Email Id" />
+                      <FormattedMessage id="EmailId" defaultMessage="E-mail" />
                     </dt>
                     <dd>
                       <div className="inputText">
                         <FormattedMessage
                           id="PleaseEnterYourEmailId"
-                          defaultMessage="Please enter your Email Id"
+                          defaultMessage="Please enter your E-mail address"
                         >
                           {(placeholder) => (
                             <input
@@ -169,7 +169,7 @@ const SignupComponent = () => {
                 <div className="flex">
                   <button onClick={formSubmitAction} className="btn btnPrimary">
                     <span>
-                      <FormattedMessage id="Signup" defaultMessage="Signup" />
+                      <FormattedMessage id="Signup" defaultMessage="Sign up" />
                     </span>
                   </button>
                 </div>

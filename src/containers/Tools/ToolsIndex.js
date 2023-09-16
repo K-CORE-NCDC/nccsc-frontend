@@ -12,7 +12,8 @@ const HomeComponent = () => {
   const breadCrumbs = {
     '/tools/': [
       { id: 'Home', defaultMessage: 'Home', to: '/' },
-      { id: 'Tools', defaultMessage: 'Tools', to: '/tools/' }
+      {id: 'MyDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/'},
+      { id: 'Tools', defaultMessage: 'Other Tools', to: '/tools/' }
     ]
   };
 
@@ -25,15 +26,19 @@ const HomeComponent = () => {
         type="single"
       />
       <article id="subContents" className="subContents">
+        
         <div className="contentsTitle">
-          <h3>
-            <font>
-              <font>
-                <FormattedMessage id="Tools" defaultMessage="Tools" />
-              </font>
-            </font>
+        <div className="auto">
+          <h3 className="colorSecondary">
+            <span className="colorPrimary">
+            <FormattedMessage id="Other" defaultMessage="Other" />
+              &nbsp;
+            </span>
+            <FormattedMessage id="Tools" defaultMessage="Tools" />
           </h3>
         </div>
+      </div>
+      
         <div className="ptn">
           <div className="auto">
             <div className="publicDataInfo" style={{ padding: '0px' }}>

@@ -189,10 +189,8 @@ export default function DataHeatmap({
           </option>
         );
       }
-      console.log('t', t)
       setInputGene(t);
       setGenes(genes);
-      console.log('initialGene' ,genes )
       setSelectedGene(genes);
       if (inputData.type !== '' && inputData['genes'].length > 0) {
         setLoader(true);
@@ -409,6 +407,7 @@ export default function DataHeatmap({
       dataJson['view'] = viewType;
       dataJson['heat_type'] = type;
       dataJson['cluster'] = rangeValue;
+      dataJson['genes'] = selectedGene;
       setLoader(true);
       let return_data = HeatmapInformation('POST', dataJson);
       return_data
@@ -433,7 +432,6 @@ export default function DataHeatmap({
   const setGene = (e) => {
     let gene = e.target.value;
     setSelectedGene(gene?.split(","));
-    console.log('selectedGene' , [gene] , gene?.split(","))
     let dataJson = { ...inputData };
     if (tableType === 'rna') {
       dataJson['genes'] = genes;
@@ -602,7 +600,6 @@ export default function DataHeatmap({
   const changeCluster = () => {
     let cf = [];
     if (inputData.type !== '' && inputData['genes'].length > 0) {
-      console.log('clusterChange' , selectedGene)
       setLoader(true);
       let dataJson = { ...inputData };
       dataJson['clinicalFilters'] = cf;

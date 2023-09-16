@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import inputJson from './data';
+import {samplesCount} from '../../actions/api_actions'
 
 export default function Filter({ parentCallback, filterState, project_id }) {
   const [state, setState] = useState({ html: [] });
@@ -11,10 +12,24 @@ export default function Filter({ parentCallback, filterState, project_id }) {
   const [filtersUi, setFiltersUi] = useState({});
   const [filterHtml, setFilterHtml] = useState([]);
   const userDefinedFilter = useSelector((data) => data.dataVisualizationReducer.userDefinedFilter);
-  const [totalSamples, setTotalSamples] = useState(0);
+  const [filteredSamples, setFilteredSamples] = useState(0);
+  const [totalSamplesCount, setTotalSamplesCount] = useState(0);
   const [filterJson, setFilterJson] = useState({});
-  const totalSamplesS = useSelector((data) => data.dataVisualizationReducer.samplesCount);
+  const SampleRnidListData = useSelector((data) => data.dataVisualizationReducer.Keys);
   const [filterCondition, setFilterCondition] = useState('and');
+
+  useEffect(()=>{
+    let returnedData = samplesCount("POST",{project_id:project_id})
+    returnedData
+        .then((result) => {
+          if (result.status === 200 && result.data && 'no_of_samples' in result.data) {
+            setTotalSamplesCount(result.data.no_of_samples);
+          }
+        })
+        .catch(() => {
+          setTotalSamplesCount(0);
+        });
+  },[])
 
   useEffect(() => {
     if (Object.keys(filterState).length !== 0) {
@@ -24,18 +39,10 @@ export default function Filter({ parentCallback, filterState, project_id }) {
   }, [filterState]);
 
   useEffect(() => {
-    if (totalSamplesS && 'no_of_samples' in totalSamplesS) {
-      setTotalSamples(totalSamplesS['no_of_samples']);
+    if (SampleRnidListData) {
+      setFilteredSamples(Object.keys(SampleRnidListData).length);
     }
-  }, [totalSamplesS]);
-
-  const totalCount = useSelector((state) => {
-    if ('Keys' in state.dataVisualizationReducer) {
-      return Object.keys(state.dataVisualizationReducer.Keys).length || 0;
-    } else {
-      return 0;
-    }
-  });
+  }, [SampleRnidListData]);
 
   useEffect(() => {
     if (project_id !== undefined) {
@@ -58,7 +65,6 @@ export default function Filter({ parentCallback, filterState, project_id }) {
               }
             });
           });
-          // setFilterKeyandValues(obj_dict)
         }
       }
     } else {
@@ -391,7 +397,7 @@ export default function Filter({ parentCallback, filterState, project_id }) {
   };
 
   const switchButton = (id, item, k) => {
-    console.log('id' , id, item, k)
+    console.log('id', id, item, k)
     setSelected(item);
     let myRadios = document.getElementsByName('tabs2');
     let setCheck;
@@ -586,11 +592,11 @@ export default function Filter({ parentCallback, filterState, project_id }) {
         {filterHtml && filterHtml.length ? (
           <>
             <div className="MarginBottom5">
-              <h6>Total Number of Samples : {totalSamples}</h6>
+              <h6>Total Number of Samples : {totalSamplesCount}</h6>
             </div>
             {filterHtml}
             <div className="mt-5">
-              <h6>Number of Filtered Samples: {totalCount}</h6>
+              <h6>Number of Filtered Samples: {filteredSamples}</h6>
             </div>
           </>
         ) : (

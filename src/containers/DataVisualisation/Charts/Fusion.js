@@ -300,13 +300,19 @@ export default function FusionPlot({
                   {VennData && !noData && <FusionVennCmp parentCallback={getVennIds} VennData={VennData} width={width} />}
                   {VennData && !noData && fusionId !== 0 && <FusionCustomPlot fusionId={fusionId} />}
                 </div>
-                {tableData.length > 0 && (
-                  <div>
-                    <div className="FusionCardText">
-                      <p>{koreanlanguage ? '환자군에서 적어도 1명의 환자에게 검출된 융합 유전자의 수를 센다.' : 'Fusion gene detected in at least 1 patient in a patient group is counted'}</p>
-                      <p>{koreanlanguage ? 'Core: Group1과 Group2 모두에서 발견되는 융합 유전자' : 'Core : Fusion genes found in both Group 1 and Group 2'}</p>
-                      <p>{koreanlanguage ? 'Unique: 특정 환자군에서 발견된 융합 유전자' : 'Unique : Fusion genes found in a certain patient group.'}</p>
+                <div>
+                  <div className="FusionCardText">
+                    <p>{koreanlanguage ? '환자군에서 적어도 1명의 환자에게 검출된 융합 유전자의 수를 센다.' : 'Fusion gene detected in at least 1 patient in a patient group is counted'}</p>
+                    <p>{koreanlanguage ? 'Core: Group1과 Group2 모두에서 발견되는 융합 유전자' : 'Core : Fusion genes found in both Group 1 and Group 2'}</p>
+                    <p>{koreanlanguage ? 'Unique: 특정 환자군에서 발견된 융합 유전자' : 'Unique : Fusion genes found in a certain patient group.'}</p>
+                  </div>
+                  {
+                    tableData.length <= 0 &&
+                    <div>
+                      <p>{koreanlanguage ? '데이터가 없습니다.' : 'No Data Found. '}</p>
                     </div>
+                  }
+                  {tableData.length > 0 && (
                     <div className="mt-20 my-0 mx-auto w-11/12 shadow-lg">
                       <div className="bg-white border-b border-gray-200 py-5 text-left px-5" style={{ fontSize: '18px' }}>
                         {groupName}
@@ -315,8 +321,8 @@ export default function FusionPlot({
                         <Table pagination columns={tableColumnsData} data={tableData} width="2650" />
                       )}
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             )
           }

@@ -47,7 +47,7 @@ export default function VerticalStackBarChartComp({ data, key }) {
 
   return (
     <div>
-      <canvas ref={chartRef_1} id={key} height="200"></canvas>
+      <canvas ref={chartRef_1} id={key} height="300"></canvas>
     </div>
   );
 }

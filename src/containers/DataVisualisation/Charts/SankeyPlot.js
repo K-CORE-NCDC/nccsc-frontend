@@ -116,7 +116,8 @@ function SankeyPlot({ inputData }) {
               accessor: (row) => {
                 if (row.dna === 'YES') {
                   if (row.gene in rnaData['variant_info']) {
-                    return 'O  (' + rnaData['variant_info'][row.gene].length + ')'
+                    // return 'O  (' + rnaData['variant_info'][row.gene].length + ')'
+                    return 'O'
                   } else {
                     return row.dna;
                   }
@@ -127,7 +128,8 @@ function SankeyPlot({ inputData }) {
               accessor: (row) => {
                 if (row.dna === 'NO') {
                   if (row.gene in rnaData['variant_info']) {
-                    return 'O  (' + rnaData['variant_info'][row.gene].length + ')'
+                    // return 'O  (' + rnaData['variant_info'][row.gene].length + ')'
+                    return 'O'
                   } else {
                     return row.dna;
                   }
@@ -356,6 +358,7 @@ function SankeyPlot({ inputData }) {
 
   useEffect(() => {
     if (SampleRnidListData) {
+      setSamplesCount(Object.keys(SampleRnidListData).length);
       let sampleListElementsTemp = [];
       let brstKeysObject = {};
       Object.keys(SampleRnidListData).forEach((e) => {
@@ -373,12 +376,6 @@ function SankeyPlot({ inputData }) {
         );
       });
       setSampleListElements(sampleListElementsTemp);
-    }
-  }, [SampleRnidListData]);
-
-  useEffect(() => {
-    if (SampleRnidListData) {
-      setSamplesCount(Object.keys(SampleRnidListData).length);
     }
   }, [SampleRnidListData]);
 
@@ -536,7 +533,7 @@ function SankeyPlot({ inputData }) {
                           </span>
                         </h3>
                       </div>
-                      <div className=" report_table sankey_multi_table">
+                      <div className="report_table sankey_multi_table">
                         <Table
                           columns={tableColumnsData}
                           data={tableData}

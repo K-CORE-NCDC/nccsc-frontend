@@ -48,7 +48,7 @@ export default function StackBarChartComp({ data, key }) {
 
   return (
     <div>
-      <canvas ref={chartRef} id={key} height="200"></canvas>
+      <canvas ref={chartRef} id={key} height="300"></canvas>
     </div>
   );
 }

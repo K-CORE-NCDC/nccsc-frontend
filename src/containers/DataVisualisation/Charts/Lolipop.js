@@ -68,6 +68,7 @@ export default function DataLolipop({
   }, [tabList]);
 
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
+
   let mutation_colors = {
     In_Frame_Del: '#1b4879',
     In_Frame_Ins: '#c74951',
@@ -230,7 +231,7 @@ export default function DataLolipop({
               refseq_id?.push(data[i]['refseq_mrna_id']);
               enst_id?.push(data[i]['annotation_transcript']);
               
-            } else if (tableType === 'Phospho') {
+            } else if (tableType === 'phospho') {
               let site_sample = data[i]['site']?.split(' ');
               let regex = /\D/g;
               for (var k = 0; k < site_sample.length; k++) {
@@ -415,7 +416,7 @@ export default function DataLolipop({
           });
         }
 
-        console.log('domdomains',domains , width)
+        // console.log('domdomains',domains , width)
 
         // }
 
@@ -598,7 +599,7 @@ export default function DataLolipop({
                               if (alltabList['phospho'] === null) {
                                 setBtnClickNote(true);
                               } else {
-                                changeType(e, 'Phospho');
+                                changeType(e, 'phospho');
                                 setActiveTab('2');
                                 setBtnClickNote(false);
                               }
@@ -619,7 +620,7 @@ export default function DataLolipop({
                               if (alltabList['phospho'] === null) {
                                 setBtnClickNote(true);
                               } else {
-                                changeType(e, 'Phospho');
+                                changeType(e, 'phospho');
                                 setActiveTab('2');
                                 setBtnClickNote(false);
                               }

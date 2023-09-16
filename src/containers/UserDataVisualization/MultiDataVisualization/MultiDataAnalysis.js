@@ -9,7 +9,6 @@ import {
   getBreastKeys,
   getUserDataProjectsTableData,
   getUserDefinedFilter,
-  samplesCount
 } from '../../../actions/api_actions';
 import arrow_icon from '../../../assets/images/btnDetail-arrow-white.svg';
 import sample_img from '../../../assets/images/sample.webp';
@@ -20,28 +19,28 @@ import GeneSet from '../Components/MainComponents/GeneSet';
 import VolcanoFusionFilterComponent from '../Components/MainComponents/VolcanoFusionFilterComponent';
 
 export default function DataVisualization() {
-  const elementRef = useRef(null);
+  let { tab, project_id } = useParams();
   const dispatch = useDispatch();
+  const history = useHistory();
+  const elementRef = useRef(null);
+  const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
+  const project_id_status = useSelector((data) => data.homeReducer.project_id_status);
+  const userProjectDetails = useSelector(
+    (data) => data.dataVisualizationReducer.userProjectsDataTable
+  );
+
+  let SurvivalFilterComponent;
   const [width, setWidth] = useState(0);
   const [chart, setCharts] = useState({ viz: [] });
   const [boolChartState, setBoolChartState] = useState(true);
   const [state, setState] = useState({ genes: [], filter: {}, type: '' });
   const [survialData, setSurvivalData] = useState({});
   const [VFData, setVFData] = useState({});
-  const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
+  const [SVFState, setSVFState] = useState(project_id ? 'dynamic' : 'static');
   const [gridData, setGridData] = useState([]);
-  const history = useHistory();
-  const project_id_status = useSelector((data) => data.homeReducer.project_id_status);
-  const userProjectDetails = useSelector(
-    (data) => data.dataVisualizationReducer.userProjectsDataTable
-  );
-  let { tab, project_id } = useParams();
-  let SurvivalFilterComponent;
-  if (tab === 'survival') {
-    SurvivalFilterComponent = lazy(() => import('../Components/MainComponents/SurvivalFilterComponent'));
-  }
   const [chartName, setChartName] = useState(tab === 'home' ? undefined : tab);
   const [tabName, setTabName] = useState(tab === 'home' ? undefined : tab);
+
   const [screenCapture, setScreenCapture] = useState(false);
   const [availableTabsForProject, setavailableTabsForProject] = useState([]);
   const [toggle, setToggle] = useState(true);
@@ -51,6 +50,11 @@ export default function DataVisualization() {
   const [isFilterPopoverOpen, setFilterPopoverOpen] = useState(false);
   const [isSurvivalFilterPopoverOpen, setSurvivalFilterPopoverOpen] = useState(false);
   const [isVolFusFilterPopoverOpen, setVolFusFilterPopoverOpen] = useState(false);
+
+
+  if (tab === 'survival') {
+    SurvivalFilterComponent = lazy(() => import('../Components/MainComponents/SurvivalFilterComponent'));
+  }
 
   const setToFalseAfterScreenCapture = (param = false) => {
     if (param === false) {
@@ -88,12 +92,14 @@ export default function DataVisualization() {
 
   const volcanoFusionFilterCallback = useCallback(({ volcanoFusionFilterData }) => {
     setVFData(volcanoFusionFilterData);
+    setSVFState(volcanoFusionFilterData?.filterType || 'static')
     setChartName(tabName);
     setVolFusFilterPopoverOpen(false);
   }, []);
 
   const survivalCallback = useCallback(({ updatedState }) => {
     setSurvivalData(updatedState);
+    setSVFState(updatedState?.filterType || 'static')
     setChartName(tabName);
     setSurvivalFilterPopoverOpen(false);
   }, []);
@@ -138,11 +144,6 @@ export default function DataVisualization() {
 
   useEffect(() => {
     if (BrstKeys) {
-      if (project_id) {
-        dispatch(samplesCount('POST', { project_id: project_id }));
-      } else {
-        dispatch(samplesCount('POST', {}));
-      }
       let chartx = LoadChart(width, tabName);
       setCharts((prevState) => ({
         ...prevState,
@@ -327,7 +328,7 @@ export default function DataVisualization() {
         image: require(`../../../assets/images/Visualizations/${element}.png`).default,
         link: project_id
           ? `/visualise-multidata/${element}/${project_id} `
-          : `/visualise-multidata/${element}/`,
+          : `/visualizemulti-exampledata/${element}/`,
         description: desc || ''
       };
       gridData.push(gridobj);
@@ -386,7 +387,12 @@ export default function DataVisualization() {
       {
         id: 'MultiDataVisualization',
         defaultMessage: 'Multi Data Visualization',
-        to: project_id ? `/visualise-multidata/home/${project_id}` : `/visualise-multidata/home/`
+        to: project_id ? `/visualise-multidata/home/${project_id}` : `/visualizemulti-exampledata/home/`
+      },
+      {
+        id: 'MultiDataProjectView',
+        defaultMessage: 'Multi Data Project View',
+        to: '/MultiDataProjectView/'
       },
       project_id && {
         id: '  ',
@@ -394,14 +400,14 @@ export default function DataVisualization() {
           0,
           userProjectDetails?.name.lastIndexOf('_')
         ),
-        to: project_id ? `/visualise-multidata/home/${project_id}` : `/visualise-multidata/home/`
+        to: project_id ? `/visualise-multidata/home/${project_id}` : `/visualizemulti-exampledata/home/`
       },
       {
         id: tab !== 'home' ? tab : 'Null',
         defaultMessage: tab !== 'home' ? tab : 'Null',
         to: project_id
           ? `/visualise-multidata/${tabName}/${project_id}`
-          : `/visualise-multidata/${tabName}`
+          : `/visualizemulti-exampledata/${tabName}`
       }
     ]
   };
@@ -552,6 +558,8 @@ export default function DataVisualization() {
                                   <SurvivalFilterComponent
                                     parentCallback={survivalCallback}
                                     filterState={state}
+                                    survialData={survialData}
+                                    SVFState={SVFState}
                                   />
                                 </Suspense>
 
@@ -611,6 +619,8 @@ export default function DataVisualization() {
                                 <VolcanoFusionFilterComponent
                                   parentCallback={volcanoFusionFilterCallback}
                                   tab={tabName}
+                                  VFData={VFData}
+                                  SVFState={SVFState}
                                 />
                               </Popover.Panel>
                             </Transition>
@@ -778,7 +788,7 @@ export default function DataVisualization() {
                     onClick={() =>
                       project_id
                         ? history.push(`/visualise-multidata/home/${project_id}`)
-                        : history.push(`/visualise-multidata/home/`)
+                        : history.push(`/visualizemulti-exampledata/home/`)
                     }
                   >
                     <FormattedMessage id="Back" defaultMessage="Back" />

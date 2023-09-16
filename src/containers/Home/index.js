@@ -71,7 +71,8 @@ export default function Home(parentProps) {
     { id: 2, title: 'Slide 2' },
     { id: 3, title: 'Slide 3' },
     { id: 4, title: 'Slide 4' },
-    { id: 5, title: 'Slide 5' }
+    { id: 5, title: 'Slide 5' },
+    { id: 6, title: 'Slide 6' },
   ];
 
   const goToSlide = (index) => {
@@ -114,6 +115,7 @@ export default function Home(parentProps) {
       if (swiperRef.current && swiperRef.current.swiper) {
         const activeSlide = swiperRef.current.swiper.activeIndex;
         const activeItem = items[activeSlide];
+        console.log('activeItem',activeItem);
         const urlSearchParams = new URLSearchParams();
         urlSearchParams.set('activeSlide', activeSlide.toString());
         localStorage.setItem('activeSlideIndex', activeSlide.toString());

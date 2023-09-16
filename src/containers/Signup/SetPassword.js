@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useHistory, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { changePassword } from '../../actions/api_actions';
@@ -7,6 +7,7 @@ import HeaderComponent from '../Common/HeaderComponent/HeaderComponent';
 import KcoreFinalLogo from '../../assets/images/K-coreFinalLogo.png';
 
 function SetPassword() {
+  const intl = useIntl();
   const { token } = useParams();
   let history = useHistory();
   const [errorMessage, setErrorMessage] = useState([]);
@@ -27,17 +28,16 @@ function SetPassword() {
   };
 
   const setPasswordSuccess = () => {
-    //id is PasswordUpdateSuccess
     Swal.fire({
-      title: 'Success',
-      text: 'Password Set Success',
+      title: intl.formatMessage({ id: "PasswordSetSuccess0", defaultMessage: 'Password Set Success' }),
+      text: intl.formatMessage({ id: "PasswordSetSuccess", defaultMessage: "You can use registration number after administrator's approval."}),
       icon: 'success',
       confirmButtonColor: '#003177',
       confirmButtonText: 'Ok',
       allowOutsideClick: false
     }).then((result) => {
       if (result.value) {
-        history.push('/login/');
+        history.push('/');
       }
     });
   };

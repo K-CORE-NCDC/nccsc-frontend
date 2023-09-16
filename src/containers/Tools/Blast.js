@@ -6,7 +6,8 @@ function Blast() {
   const breadCrumbs = {
     '/blast/': [
       { id: 'Home', defaultMessage: 'Home', to: '/' },
-      { id: 'Tools', defaultMessage: 'Tools', to: '/tools/' },
+      {id: 'MyDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/'},
+      { id: 'Tools', defaultMessage: 'Other Tools', to: '/tools/' },
       { id: 'Blast', defaultMessage: 'Blast', to: '/blast/' }
     ]
   };

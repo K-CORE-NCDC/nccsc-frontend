@@ -6,6 +6,7 @@ import LoaderCmp from '../../Common/Loader';
 import NoContentMessage from '../../Common/NoContentComponent';
 import PagenationTableComponent from '../../Common/PagenationTable';
 import GraphsModal from '../../Common/circostimelineGraph';
+import { useLocation } from 'react-router-dom';
 
 import html2canvas from 'html2canvas';
 import { FormattedMessage } from 'react-intl';
@@ -15,6 +16,7 @@ import Report from '../../Common/Report';
 
 export default function DataCircos({ width, inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef();
+  const route = useLocation();
   const [sampleKey, setSampleKey] = useState('');
   const [circosJson, setCircosJson] = useState({ status: 0 });
   const oncoImageJson = null;
@@ -34,6 +36,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   const [noGeneData, setNoGeneData] = useState(true);
   const [basicInformationData, setBasicInformationData] = useState([]);
   const [isReportClicked, setIsReportClicked] = useState(false);
+  const [vizType, setVizType] = useState(1);
   const tableColumnsData = [
     {
       name: 'geneName',
@@ -199,6 +202,17 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
       }
     }
   ];
+
+  useEffect(() => {
+    console.log(route.pathname);
+    if (
+      route.pathname.includes('visualizesingle-exampledata') || route.pathname.includes('visualizemulti-exampledata')
+    ) {
+      setVizType(1);
+    } else {
+      setVizType(2);
+    }
+  }, [route.pathname]);
 
   const closeShowOncoImages = () => {
     setShowOncoImages(false);
@@ -441,6 +455,7 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
                   width={w}
                   data={circosJson}
                   selectedGenes={inputData.genes}
+                  vizType={vizType}
                 />
               )}
               {showNoContent && <NoContentMessage />}

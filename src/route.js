@@ -49,9 +49,12 @@ const FileProjectDataTable = React.lazy(() =>
 
 const Pipeline = React.lazy(() => import('./containers/Home/pipeline'));
 
-const Faq = React.lazy(() => import('./containers/CustomerVoice/Faq'));
 const Notice = React.lazy(() => import('./containers/CustomerVoice/Notice'));
+const NoticeDetails = React.lazy(() => import('./containers/CustomerVoice/NoticeDetails'));
+const Faq = React.lazy(() => import('./containers/CustomerVoice/Faq'));
+const FaqDetails = React.lazy(() => import('./containers/CustomerVoice/FaqDetails'));
 const Qa = React.lazy(() => import('./containers/CustomerVoice/QA'));
+const QaDetails = React.lazy(() => import('./containers/CustomerVoice/QADetails'));
 
 const ToolsIndex = React.lazy(() => import('./containers/Tools/ToolsIndex'));
 const InterPro = React.lazy(() => import('./containers/Tools/InterPro'));
@@ -158,6 +161,17 @@ const route = [
   },
   {
     path: '/visualise-multidata/:tab?/:project_id?/',
+    exact: true,
+    type: 'unauth',
+    name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
+    childname: (
+      <FormattedMessage id="MultiDataVisualization" defaultMessage="Multi Data Visualization" />
+    ),
+    component: MultiDataAnalysis
+  },
+
+  {
+    path: '/visualizemulti-exampledata/:tab?/',
     exact: true,
     type: 'unauth',
     name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
@@ -305,7 +319,7 @@ const route = [
     component: Home
   },
   {
-    path: '/faq/:slug?/',
+    path: '/faq/',
     exact: true,
     type: 'unauth',
     name: <FormattedMessage id="CustomerVoice" defaultMessage="Customer Voice" />,
@@ -313,7 +327,15 @@ const route = [
     component: Faq
   },
   {
-    path: '/notice/:slug?/',
+    path: '/faq/:slug?/',
+    exact: true,
+    type: 'unauth',
+    name: <FormattedMessage id="CustomerVoice" defaultMessage="Customer Voice" />,
+    childname: <FormattedMessage id="FAQ" defaultMessage="FAQ" />,
+    component: FaqDetails
+  },
+  {
+    path: '/notice/',
     exact: true,
     type: 'unauth',
     name: <FormattedMessage id="CustomerVoice" defaultMessage="Customer Voice" />,
@@ -321,12 +343,28 @@ const route = [
     component: Notice
   },
   {
-    path: '/qa/:id?/',
+    path: '/notice/:slug?/',
+    exact: true,
+    type: 'unauth',
+    name: <FormattedMessage id="CustomerVoice" defaultMessage="Customer Voice" />,
+    childname: <FormattedMessage id="Notice" defaultMessage="Notice" />,
+    component: NoticeDetails
+  },
+  {
+    path: '/qa/',
     exact: true,
     type: 'unauth',
     name: <FormattedMessage id="CustomerVoice" defaultMessage="Customer Voice" />,
     childname: <FormattedMessage id="QA" defaultMessage="Q&A" />,
     component: Qa
+  },
+  {
+    path: '/qa/:slug?/',
+    exact: true,
+    type: 'unauth',
+    name: <FormattedMessage id="CustomerVoice" defaultMessage="Customer Voice" />,
+    childname: <FormattedMessage id="QA" defaultMessage="Q&A" />,
+    component: QaDetails
   },
   {
     path: '/details/:slug?/',
@@ -361,11 +399,11 @@ const route = [
     component: PrivacyPolicy
   },
   {
-    path: '/findid/',
+    path: '/findregistrationnumber/',
     exact: true,
     type: 'unauth',
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
-    childname: <FormattedMessage id="FindID" defaultMessage="Find ID" />,
+    childname: <FormattedMessage id="FindRegistrationNumber" defaultMessage="Find Registration Number" />,
     component: FindIndex
   },
   {

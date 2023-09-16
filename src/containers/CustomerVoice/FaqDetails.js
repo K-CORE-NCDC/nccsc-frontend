@@ -5,14 +5,14 @@ import { useParams } from 'react-router-dom';
 import { getDetailPageInfo } from '../../actions/api_actions'
 import config from '../../config';
 
-function QADetails() {
+function FaqDetails() {
     let { slug } = useParams();
-    const title = { id: 'QA', defaultMessage: 'QA' };
+    const title = { id: 'FAQ', defaultMessage: 'FAQ' };
     const [DetailData, setDetailData] = useState({})
     const breadCrumbs = {
-        '/QA/': [
+        '/FAQ/': [
             { id: 'Home', defaultMessage: 'Home', to: '/' },
-            { id: `QA`, defaultMessage: `Q&A`, to: `` },
+            { id: `FAQ`, defaultMessage: `FAQ`, to: `` },
 
         ]
     }
@@ -38,7 +38,7 @@ function QADetails() {
     };
     useEffect(() => {
         if (slug) {
-            let url = config.auth + `qa-api/?page=${slug}&per_page=${10}&delay=1&id=${slug}`;
+            let url = config.auth + `faq-api/?page=${slug}&per_page=${10}&delay=1&id=${slug}`;
             let data = { id: slug }
             let method = "GET"
             let returnedData = getDetailPageInfo(url, method, data);
@@ -59,7 +59,7 @@ function QADetails() {
                 <HeaderComponent
                     title={title}
                     routeName="/QA/"
-                    breadCrumbs={breadCrumbs["/QA/"]}
+                    breadCrumbs={breadCrumbs["/FAQ/"]}
                     type="single"
                 />
                 <article id="subContents" className="subContents">
@@ -71,7 +71,7 @@ function QADetails() {
                                         <font>
                                             <font>
                                                 {' '}
-                                                <FormattedMessage id="QA" defaultMessage="QA" />{' '}
+                                                <FormattedMessage id="FAQ" defaultMessage="FAQ" />{' '}
                                             </font>
                                         </font>
                                     </h3>
@@ -103,4 +103,4 @@ function QADetails() {
     )
 }
 
-export default QADetails
+export default FaqDetails

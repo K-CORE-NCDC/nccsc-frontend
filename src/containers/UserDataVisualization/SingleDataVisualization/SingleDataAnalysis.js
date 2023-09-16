@@ -8,7 +8,6 @@ import { userdataVisualization } from '../../../actions/Constants';
 import {
   getBreastKeys,
   getUserDataProjectsTableData,
-  samplesCount
 } from '../../../actions/api_actions';
 import LoaderCmp from '../../Common/Loader';
 import arrow_icon from '../../../assets/images/btnDetail-arrow-white.svg';
@@ -116,11 +115,6 @@ export default function DataVisualization() {
 
   useEffect(() => {
     if (BrstKeys) {
-      if (project_id) {
-        dispatch(samplesCount('POST', { project_id: project_id }));
-      } else {
-        dispatch(samplesCount('POST', {}));
-      }
       let chartx = LoadChart(width, tabName);
       setCharts((prevState) => ({
         ...prevState,
