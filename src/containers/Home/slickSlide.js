@@ -49,7 +49,7 @@ export default function SlickSlider() {
           <img src={f_ci7} alt="fc7" style={img} />
         </div>
         <div>
-          <img src={f_ci8} alt="fc8" style={img} />
+          <img src={f_ci8} alt="fc8" style={{width:"120px", objectFit: 'scale-down', width: '100%', marginLeft:"20px", marginTop:"8px"}} />
         </div>
       </Slider>
     </div>

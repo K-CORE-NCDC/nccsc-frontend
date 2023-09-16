@@ -1,42 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
+import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getFaqData, getFaqPageData } from '../../actions/api_actions';
+import { getFaqData } from '../../actions/api_actions';
 import config from '../../config';
 import '../../interceptor/interceptor';
 import Table from '../Common/Table/ReactTable';
 import LoaderComp from '../Common/Loader';
+import { Link } from 'react-router-dom/cjs/react-router-dom';
 
 function FaqList() {
-  // const [koreanlanguage, setKoreanlanguage] = useState(false);
-  const [tableData, setTableData] = useState([]);
-  // const [totalRows, setTotalRows] = useState(0);
-  const [loading, setLoading] = useState(false);
   const intl = useIntl();
-
+  const [tableData, setTableData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const fetchUsers = async (page, method) => {
     setLoading(true);
-    let url = config.auth + `faq-api/?page=${page}&per_page=${10}&delay=1`;
+    let response;
     if (method === 'GET') {
-      let data = getFaqPageData(url, 'GET');
-      data.then((response) => {
-        setTableData(response.data.data);
-        setLoading(false);
-      });
+      response = await axios.get(config.auth + `faq-api/?page=${page}&per_page=${10}&delay=1`);
     } else {
-      url = config.auth + `faq-api/?page=${page}&per_page=${10}&delay=1&input`;
-      let body = {
-        type: 'title',
-        searchTerm: ''
-      };
-      let data = getFaqPageData(url, 'POST', body);
-      data.then((response) => {
-        setTableData(response.data.data);
-        setTotalRows(response.data.total);
-        setLoading(false);
-      });
+      response = await axios.post(
+        config.auth + `faq-api/?page=${page}&per_page=${10}&delay=1&input`,
+        {
+          type: 'title',
+          searchTerm: ''
+        }
+      );
     }
+    if (response.data.data) {
+      setTableData(response.data.data);
+    }
+    else {
+      setTableData([])
+    }
+    setLoading(false);
   };
 
 
@@ -53,11 +51,22 @@ function FaqList() {
         < div title={value}>
           {parseInt(row?.index) + parseInt(1)}</div>
       ),
-      width:"80"
+      width: "80"
     },
     {
       Header: intl.formatMessage({ id: "Title", defaultMessage: 'Title' }),
       accessor: (row) => row.title,
+      Cell: ({ cell: { _, row } }) => {
+        console.log('row',row);
+        console.log('row original',row.original);
+        console.log('row writer',row.writer);
+        return <div>
+          <Link to={`/faq/${row?.original?.id}`}>
+            <span>{row.original.title}</span>
+          </Link>
+        </div>
+      },
+      width: "200"
     },
     {
       Header: intl.formatMessage({ id: "Writer", defaultMessage: 'Writer' }),
@@ -69,24 +78,20 @@ function FaqList() {
     }
   ];
 
-
-
-  // let redirecting = redirState ? <Redirect push to={`/faq/${shortName}/`} /> : '';
-
   return (
     <div >
       {loading ?
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <LoaderComp /> </div> :
         <div >
-          {tableData && (
+          {tableData && tableData.length > 0 && (
             <Table
               columns={columns}
               data={tableData}
               width={"1075"}
             />
           )}
-          {/* {redirecting} */}
+          {tableData && tableData.length === 0 && <h1 className="MultiUploadTextCenter">{intl.formatMessage({ id: "NoRecords", defaultMessage: 'No Records Found' })}</h1>}
         </div>}
     </div>
   );
@@ -137,8 +142,25 @@ function FaqDetail({ slug_id }) {
   );
 }
 
-export default function Notice() {
-  let { slug } = useParams();
 
-  return <>{slug ? <FaqDetail slug_id={slug} /> : <FaqList />}</>;
+export default function Faq() {
+  console.log('a');
+  let { slug } = useParams();
+  const [postCreate, setPostCreate] = useState(false);
+  console.log('slug', slug);
+  const callback = (count) => {
+    setPostCreate(count);
+  };
+
+  useEffect(() => { }, [postCreate]);
+
+  const faq_comp = () => {
+    if (slug) {
+      return <FaqDetail slug_id={slug} />;
+    } else {
+      return <FaqList />;
+    }
+  };
+
+  return <>{faq_comp()}</>;
 }

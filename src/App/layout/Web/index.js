@@ -13,8 +13,6 @@ import Swal from 'sweetalert2';
 import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.css';
 import { SetCookie, sendlogManagement } from '../../../actions/api_actions';
-import logoNew from '../../../assets/images/Left_up.png';
-import menu_black from '../../../assets/images/right_below_add.png';
 import config from '../../../config';
 import NotFound from '../../../containers/404NotFound';
 import FooterComponent from '../../../containers/Common/FooterComponent/FooterComponent';
@@ -24,6 +22,8 @@ import childMenu from '../../../menu-item';
 import route from '../../../route';
 import icon_home from '../../../styles/images/icon-home02.svg';
 import icon_lang from '../../../styles/images/icon-language.svg';
+import mainLogo from '../../../assets/images/mainLogo.png';
+import mainLogowhite from '../../../assets/images/mainLogowhite.png';
 import icon_user04 from '../../../styles/images/icon-user04.svg';
 import { Context } from '../../../wrapper';
 import Loader from '../Loader';
@@ -405,8 +405,9 @@ export default function Web() {
           <div className="auto fullsize">
             <h1 className="logo">
               <a href="/">
-                <img src={menu_black} alt="logo" className="logo02" />
-                <img src={logoNew} alt="logo" className="logo01" />
+                {/* <img src={logoNew} alt="logo" className="logo01" /> */}
+                <img src={mainLogowhite} alt="logo" className="logo01" style={{width:"108px"}} />
+                <img src={mainLogo} alt="logo" className="logo02" style={{width:"108px"}}/>
               </a>
             </h1>
             <div className="headerUtils">

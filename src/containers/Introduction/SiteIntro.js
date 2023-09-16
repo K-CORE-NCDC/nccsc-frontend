@@ -2,7 +2,7 @@ import 'aos/dist/aos.css';
 import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import introduce_VisualContents from '../../assets/images/introduce-visualContents.jpg';
-import introduce_img from '../../assets/images/introduce_logo.svg';
+import mainLogo from '../../assets/images/mainLogo.png';
 import Organization from './Organization';
 import { CBioPortal } from './RelatedSites/CBioPortal';
 import ServiceIntro from './ServiceIntro';
@@ -64,7 +64,7 @@ export const SiteIntro = ({ lan }) => {
             <div className=" introduceWrap" style={{ paddingTop: '0px', height: '100%' }}>
               <div className="introduceBox01">
                 <div className="logoBox">
-                  <img src={introduce_img} alt="img" />
+                  <img src={mainLogo} alt="img" />
                 </div>
                 <div className="txtBox">
                   <p>

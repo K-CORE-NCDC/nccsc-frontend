@@ -7,6 +7,7 @@ import minusicon from '../../assets/images/icons8-minus-24.png';
 const MultiDataVisualization = () => {
   const history = useHistory();
   const viewMoreData = false
+  console.log('------------------MultiDataVisualization');
   return (
     <div className="tabContents " style={{ height: '85vh' }}>
       <div className="dataSearchWrap">
@@ -17,7 +18,7 @@ const MultiDataVisualization = () => {
               <button
                 className="btn"
                 onClick={() => {
-                  history.push('/visualise-multidata/home');
+                  history.push('/visualizemulti-exampledata/home');
                 }}
               >
                 <FormattedMessage id="ExamplePage" defaultMessage="Example Page" />
@@ -151,7 +152,7 @@ const MultiDataVisualization = () => {
                 className="btnMore"
                 style={{ float: 'right', marginTop: '25px' }}
                 onClick={() => {
-                  history.push('/visualise-multidata/home');
+                  history.push('/visualizemulti-exampledata/home');
                 }}
               >
                 <img src={!viewMoreData ? plusicon : minusicon} alt="" />

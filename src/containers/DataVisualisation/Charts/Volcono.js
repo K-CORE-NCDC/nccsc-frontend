@@ -36,11 +36,6 @@ export default function DataVolcono({
   const [volcanoType, setVolcanoType] = useState('transcriptome');
   const [proteomeValue, setProteomeValue] = useState('N');
 
-  const [userDefienedFilter, setUserDefienedFilter] = useState(
-    project_id === undefined ? 'static' : 'dynamic'
-  );
-
-
   useEffect(() => {
     if (!clinicalMaxMinInfo) {
       if (project_id === undefined) {
@@ -82,7 +77,6 @@ export default function DataVolcono({
         if (volcanoType === 'proteome') {
           inputState['volcanoProteomeType'] = proteomeValue;
         }
-        inputState['filterType'] = userDefienedFilter;
         if (project_id) {
           inputState['project_id'] = parseInt(project_id);
         }
@@ -195,7 +189,6 @@ export default function DataVolcono({
   const submitProteomeNT = () => {
     setLoader(true);
     inputState['volcanoProteomeType'] = proteomeValue;
-    inputState['filterType'] = userDefienedFilter;
     if (project_id === undefined) {
       let return_data = VolcanoPlotInfo('POST', { ...inputState, filterGroup: groupFilters });
       return_data

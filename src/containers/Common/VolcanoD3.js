@@ -116,270 +116,308 @@ const VolcanoPlotD3 = ({ watermarkCss, dataProps }) => {
         //     .attr('width', innerWidth);
 
         var circles = svg.append('g').attr('class', 'circlesContainer');
+        var div = d3
+          .select('#volcano_tooltip')
+          .append('div')
+          .attr('class', 'volcano_tooltip')
+          .style('opacity', 1)
+          .style('background-color', 'lavender')
+          .style('padding', '1%');
 
-        circles
-          .selectAll('.dot')
-          .data(data)
-          .enter()
-          .append('circle')
-          .attr('r', 3)
-          .attr('cx', function (d) {
-            return xScale(d[xColumn]);
-          })
-          .attr('cy', function (d) {
-            return yScale(d[yColumn]);
-          })
-          .attr('class', circleClass)
-          .on('mouseenter', tipEnter)
-          .on('mousemove', tipMove)
-          .on('mouseleave', function () {
-            return tooltip.style('visibility', 'hidden');
-          });
-        let dt = data.filter(function (xi) {
-          if (xi.color === 'black') {
-            return xi;
+      circles
+        .selectAll('.dot')
+        .data(data)
+        .enter()
+        .append('circle')
+        .attr('r', 3)
+        .attr('cx', function (d) {
+          return xScale(d[xColumn]);
+        })
+        .attr('cy', function (d) {
+          return yScale(d[yColumn]);
+        })
+        .attr('class', circleClass)
+        .on('mouseenter', tipEnter)
+        .on('mousemove', tipMove)
+        .on('mouseleave', function () {
+          // return tooltip.style('visibility', 'hidden');
+          // div.style('opacity', 0);
+        });
+      let dt = data.filter(function (xi) {
+        if (xi.color === 'black') {
+          return xi;
+        }
+        return null;
+      });
+
+      var gdots = circles.selectAll('g.dot').data(dt).enter().append('g');
+      gdots.attr('class', 'dot');
+      gdots
+        .append('text')
+        .text(function (d) {
+          if (d.color === 'black') {
+            return d.gene;
           }
-          return null;
+        })
+        .attr('x', function (d) {
+          return xScale(d[xColumn]);
+        })
+        .attr('y', function (d) {
+          return yScale(d[yColumn]);
         });
 
-        var gdots = circles.selectAll('g.dot').data(dt).enter().append('g');
-        gdots.attr('class', 'dot');
-        gdots
-          .append('text')
-          .text(function (d) {
-            if (d.color === 'black') {
-              return d.gene;
-            }
-          })
-          .attr('x', function (d) {
-            return xScale(d[xColumn]);
-          })
-          .attr('y', function (d) {
-            return yScale(d[yColumn]);
-          });
+      var thresholdLines = svg.append('g').attr('class', 'thresholdLines');
 
-        var thresholdLines = svg.append('g').attr('class', 'thresholdLines');
+      // add horizontal line at significance threshold
+      thresholdLines
+        .append('svg:line')
+        .attr('class', 'threshold')
+        .attr('x1', 0)
+        .attr('x2', innerWidth)
+        .attr('y1', yScale(significanceThreshold))
+        .attr('y2', yScale(significanceThreshold));
 
-        // add horizontal line at significance threshold
+      // add vertical line(s) at fold-change threshold (and negative fold-change)
+      [foldChangeThreshold, -1 * foldChangeThreshold].forEach(function (threshold) {
         thresholdLines
           .append('svg:line')
           .attr('class', 'threshold')
-          .attr('x1', 0)
-          .attr('x2', innerWidth)
-          .attr('y1', yScale(significanceThreshold))
-          .attr('y2', yScale(significanceThreshold));
-
-        // add vertical line(s) at fold-change threshold (and negative fold-change)
-        [foldChangeThreshold, -1 * foldChangeThreshold].forEach(function (threshold) {
-          console.log('foldChangeThreshold',foldChangeThreshold);
-          console.log('xScaled',xScale(threshold));
-          thresholdLines
-            .append('svg:line')
-            .attr('class', 'threshold')
-            .attr('x1', xScale(threshold))
-            .attr('x2', xScale(threshold))
-            .attr('y1', 0)
-            .attr('y2', innerHeight);
-        });
-
-        // var tooltip = d3.select('body').append('div').attr('class', 'tooltip');
-        var tooltip = d3
-        .select('#volcano_tooltip')
-        .style('opacity', 1)
-
-        .style('background-color', 'lavender')
-        .style('padding', '1%');
-
-        function tipEnter(d) {
-          tooltip
-            .style('visibility', 'visible')
-            .style('font-size', '11px')
-            .html(
-              '<strong>' +
-                sampleID +
-                '</strong>: ' +
-                d.target.__data__.gene +
-                '<br/>' +
-                '<strong>' +
-                xColumn +
-                '</strong>: ' +
-                d3.format('.2f')(d.target.__data__['log2(fold_change)']) +
-                '<br/>' +
-                '<strong>' +
-                yColumn +
-                '</strong>: ' +
-                d.target.__data__.original_p_value
-            );
-        }
-
-        function tipMove(event) {
-          tooltip.style('top', event.pageY - 5 + 'px').style('left', event.pageX + 20 + 'px');
-        }
-        function zoomFunction(event) {
-          var transform = d3.zoomTransform(this);
-          d3.selectAll('.dot')
-            .attr('transform', transform)
-            .attr('r', 3 / Math.sqrt(transform.k));
-          gX.call(xAxis.scale(event.transform.rescaleX(xScale)));
-          gY.call(yAxis.scale(event.transform.rescaleY(yScale)));
-          svg
-            .selectAll('.threshold')
-            .attr('transform', transform)
-            .attr('stroke-width', 1 / transform.k);
-        }
-
-        function circleClass(d) {
-          if (d['color'] === 'red') return 'dot red';
-          else if (d['color'] === 'blue') return 'dot blue';
-          else if (d['color'] === 'black') return 'dot black';
-          else return 'dot grey';
-        }
-
-        function reset() {
-          var ease = d3.easePolyIn.exponent(4.0);
-          svg.transition().duration(750).ease(ease).call(zoom.transform, d3.zoomIdentity);
-        }
+          .attr('x1', xScale(threshold))
+          .attr('x2', xScale(threshold))
+          .attr('y1', 0)
+          .attr('y2', innerHeight);
       });
-    }
 
-    chart.width = function (value) {
-      if (!arguments.length) return width;
-      width = value;
-      return chart;
-    };
+      // var tooltip = d3.select('body').append('div').attr('class', 'tooltip');
+      // var tooltip = d3
+      //   .select('#volcano_tooltip')
+      //   .style('opacity', 1)
 
-    chart.height = function (value) {
-      if (!arguments.length) return height;
-      height = value;
-      return chart;
-    };
+      //   .style('background-color', 'lavender')
+      //   .style('padding', '1%');
 
-    chart.margin = function (value) {
-      if (!arguments.length) return margin;
-      margin = value;
-      return chart;
-    };
+      function tipEnter(d) {
+        var html = '';
+        html += '<strong>' +
+          sampleID +
+          '</strong>: ' +
+          d.target.__data__.gene +
+          '<br/>' +
+          '<strong>' +
+          xColumn +
+          '</strong>: ' +
+          d3.format('.2f')(d.target.__data__['log2(fold_change)']) +
+          '<br/>' +
+          '<strong>' +
+          yColumn +
+          '</strong>: ' +
+          d.target.__data__.original_p_value
+        div.html(html).style('left', '50px').style('top', '0px').style('opacity', 1);
+        // tooltip
+        //   .style('visibility', 'visible')
+        //   .style('font-size', '11px')
+        //   .html(
+        //     '<strong>' +
+        //     sampleID +
+        //     '</strong>: ' +
+        //     d.target.__data__.gene +
+        //     '<br/>' +
+        //     '<strong>' +
+        //     xColumn +
+        //     '</strong>: ' +
+        //     d3.format('.2f')(d.target.__data__['log2(fold_change)']) +
+        //     '<br/>' +
+        //     '<strong>' +
+        //     yColumn +
+        //     '</strong>: ' +
+        //     d.target.__data__.original_p_value
+        //   );
+      }
 
-    chart.xColumn = function (value) {
-      if (!arguments.length) return xColumn;
-      xColumn = value;
-      return chart;
-    };
+      function tipMove(d) {
+        var html = '';
+        html += '<strong>' +
+          sampleID +
+          '</strong>: ' +
+          d.target.__data__.gene +
+          '<br/>' +
+          '<strong>' +
+          xColumn +
+          '</strong>: ' +
+          d3.format('.2f')(d.target.__data__['log2(fold_change)']) +
+          '<br/>' +
+          '<strong>' +
+          yColumn +
+          '</strong>: ' +
+          d.target.__data__.original_p_value
+        div.html(html).style('left', '50px').style('top', '0px').style('opacity', 1);
+        // tooltip.style('top', event.pageY - 5 + 'px').style('left', event.pageX + 20 + 'px');
+      }
+      function zoomFunction(event) {
+        var transform = d3.zoomTransform(this);
+        d3.selectAll('.dot')
+          .attr('transform', transform)
+          .attr('r', 3 / Math.sqrt(transform.k));
+        gX.call(xAxis.scale(event.transform.rescaleX(xScale)));
+        gY.call(yAxis.scale(event.transform.rescaleY(yScale)));
+        svg
+          .selectAll('.threshold')
+          .attr('transform', transform)
+          .attr('stroke-width', 1 / transform.k);
+      }
 
-    chart.yColumn = function (value) {
-      if (!arguments.length) return yColumn;
-      yColumn = value;
-      return chart;
-    };
+      function circleClass(d) {
+        if (d['color'] === 'red') return 'dot red';
+        else if (d['color'] === 'blue') return 'dot blue';
+        else if (d['color'] === 'black') return 'dot black';
+        else return 'dot grey';
+      }
 
-    chart.xAxisLabel = function (value) {
-      if (!arguments.length) return xAxisLabel;
-      xAxisLabel = value;
-      return chart;
-    };
-
-    chart.yAxisLabel = function (value) {
-      if (!arguments.length) return yAxisLabel;
-      yAxisLabel = value;
-      return chart;
-    };
-
-    chart.xAxisLabelOffset = function (value) {
-      if (!arguments.length) return xAxisLabelOffset;
-      xAxisLabelOffset = value;
-      return chart;
-    };
-
-    chart.yAxisLabelOffset = function (value) {
-      if (!arguments.length) return yAxisLabelOffset;
-      yAxisLabelOffset = value;
-      return chart;
-    };
-
-    chart.xTicks = function (value) {
-      if (!arguments.length) return xTicks;
-      xTicks = value;
-      return chart;
-    };
-
-    chart.yTicks = function (value) {
-      if (!arguments.length) return yTicks;
-      yTicks = value;
-      return chart;
-    };
-
-    chart.significanceThreshold = function (value) {
-      if (!arguments.length) return significanceThreshold;
-      significanceThreshold = value;
-      return chart;
-    };
-
-    chart.foldChangeThreshold = function (value) {
-      if (!arguments.length) return foldChangeThreshold;
-      foldChangeThreshold = value;
-      return chart;
-    };
-
-    chart.colorRange = function (value) {
-      if (!arguments.length) return colorRange;
-      colorRange = value;
-      return chart;
-    };
-
-    chart.sampleID = function (value) {
-      if (!arguments.length) return sampleID;
-      sampleID = value;
-      return chart;
-    };
-
-    return chart;
+      function reset() {
+        var ease = d3.easePolyIn.exponent(4.0);
+        svg.transition().duration(750).ease(ease).call(zoom.transform, d3.zoomIdentity);
+      }
+    });
   }
 
-  useEffect(() => {
-    if (dataProps && dataProps.length > 0) {
-      setVolcanoData(dataProps);
-    }
-  }, [dataProps]);
+  chart.width = function (value) {
+    if (!arguments.length) return width;
+    width = value;
+    return chart;
+  };
 
-  useEffect(() => {
-    if (volcanoData.length > 0) {
-      let arr = volcanoData;
-      arr.forEach(function (part, index, theArray) {
-        theArray[index] = {
-          ...part,
-          p_value: parseFloat(part.p_value),
-          'log2(fold_change)': parseFloat(part['log2(fold_change)'])
-        };
-      });
-      var yLabel = '-log<tspan baseline-shift="sub">10</tspan>P-Value',
-        xLabel = 'log<tspan baseline-shift="sub">2</tspan>Fold-change';
-      var volcanoPlot1 = volcanoPlot()
-        .xAxisLabel(xLabel)
-        .yAxisLabel(yLabel)
-        .foldChangeThreshold(1.5)
-        .sampleID('gene')
-        .xColumn('log2(fold_change)')
-        .yColumn('p_value');
-      d3.select('#chart-d3-volcano').data([arr]).call(volcanoPlot1);
-    }
-  }, [volcanoData]);
-  useEffect(() => {
-    if (watermarkCss) {
-      saveSvg(document.getElementById('svgVolcano'), 'volcano.svg', {
-        scale: 0.5,
-        background: '#FFFFFF'
-      });
-    }
-  }, [watermarkCss]);
-  return (
-    <div>
-      <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
-      <div className="MarginTop4" style={{flexGrow:'1',textAlign:'center'}}>Volcano plot</div>
+  chart.height = function (value) {
+    if (!arguments.length) return height;
+    height = value;
+    return chart;
+  };
+
+  chart.margin = function (value) {
+    if (!arguments.length) return margin;
+    margin = value;
+    return chart;
+  };
+
+  chart.xColumn = function (value) {
+    if (!arguments.length) return xColumn;
+    xColumn = value;
+    return chart;
+  };
+
+  chart.yColumn = function (value) {
+    if (!arguments.length) return yColumn;
+    yColumn = value;
+    return chart;
+  };
+
+  chart.xAxisLabel = function (value) {
+    if (!arguments.length) return xAxisLabel;
+    xAxisLabel = value;
+    return chart;
+  };
+
+  chart.yAxisLabel = function (value) {
+    if (!arguments.length) return yAxisLabel;
+    yAxisLabel = value;
+    return chart;
+  };
+
+  chart.xAxisLabelOffset = function (value) {
+    if (!arguments.length) return xAxisLabelOffset;
+    xAxisLabelOffset = value;
+    return chart;
+  };
+
+  chart.yAxisLabelOffset = function (value) {
+    if (!arguments.length) return yAxisLabelOffset;
+    yAxisLabelOffset = value;
+    return chart;
+  };
+
+  chart.xTicks = function (value) {
+    if (!arguments.length) return xTicks;
+    xTicks = value;
+    return chart;
+  };
+
+  chart.yTicks = function (value) {
+    if (!arguments.length) return yTicks;
+    yTicks = value;
+    return chart;
+  };
+
+  chart.significanceThreshold = function (value) {
+    if (!arguments.length) return significanceThreshold;
+    significanceThreshold = value;
+    return chart;
+  };
+
+  chart.foldChangeThreshold = function (value) {
+    if (!arguments.length) return foldChangeThreshold;
+    foldChangeThreshold = value;
+    return chart;
+  };
+
+  chart.colorRange = function (value) {
+    if (!arguments.length) return colorRange;
+    colorRange = value;
+    return chart;
+  };
+
+  chart.sampleID = function (value) {
+    if (!arguments.length) return sampleID;
+    sampleID = value;
+    return chart;
+  };
+
+  return chart;
+}
+
+useEffect(() => {
+  if (dataProps && dataProps.length > 0) {
+    setVolcanoData(dataProps);
+  }
+}, [dataProps]);
+
+useEffect(() => {
+  if (volcanoData.length > 0) {
+    let arr = volcanoData;
+    arr.forEach(function (part, index, theArray) {
+      theArray[index] = {
+        ...part,
+        p_value: parseFloat(part.p_value),
+        'log2(fold_change)': parseFloat(part['log2(fold_change)'])
+      };
+    });
+    var yLabel = '-log<tspan baseline-shift="sub">10</tspan>P-Value',
+      xLabel = 'log<tspan baseline-shift="sub">2</tspan>Fold-change';
+    var volcanoPlot1 = volcanoPlot()
+      .xAxisLabel(xLabel)
+      .yAxisLabel(yLabel)
+      .foldChangeThreshold(1.5)
+      .sampleID('gene')
+      .xColumn('log2(fold_change)')
+      .yColumn('p_value');
+    d3.select('#chart-d3-volcano').data([arr]).call(volcanoPlot1);
+  }
+}, [volcanoData]);
+useEffect(() => {
+  if (watermarkCss) {
+    saveSvg(document.getElementById('svgVolcano'), 'volcano.svg', {
+      scale: 0.5,
+      background: '#FFFFFF'
+    });
+  }
+}, [watermarkCss]);
+return (
+  <div>
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div className="MarginTop4" style={{ flexGrow: '1', textAlign: 'center' }}>Volcano plot</div>
       <div id='volcano_tooltip'></div>
-      </div>
-      <div id="chart-d3-volcano" className="chart-d3-volcano"></div>
     </div>
-  );
+    <div id="chart-d3-volcano" className="chart-d3-volcano"></div>
+  </div>
+);
 };
 
 export default VolcanoPlotD3;

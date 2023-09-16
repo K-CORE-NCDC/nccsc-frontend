@@ -112,41 +112,9 @@ export function MultiProjectsDelete(method, projectId) {
   return sendRequest(url, method, data);
 }
 
-// export function projectIdStatus(type,data) {
-//   return (dispatch) => {
-//     dispatch({
-//       type: homeConstants.PROJECT_ID,
-//       payload: { 'status':data},
-//     });
-//     dispatch({ type: homeConstants.REQUEST_DONE });
-//   };
-// }
-
 export function samplesCount(type, data) {
-  return (dispatch) => {
-    const url = `${config.auth}samplescount/`;
-    sendRequest(url, type, data)
-      .then((result) => {
-        const d = result;
-        if (d.status === 200) {
-          dispatch({
-            type: dataVisualization.SAMPLES_COUNT,
-            payload: { ...d.data, status: 200 }
-          });
-        } else {
-          dispatch({
-            type: dataVisualization.SAMPLES_COUNT,
-            payload: { status: d.status }
-          });
-        }
-      })
-      .catch(() => {
-        dispatch({
-          type: dataVisualization.SAMPLES_COUNT,
-          payload: { status: 204 }
-        });
-      });
-  };
+  const url = `${config.auth}samplescount/`;
+  return sendRequest(url, type, data)
 }
 
 
@@ -960,12 +928,12 @@ export function ScatterInformation(type, data) {
 }
 
 export function FusionExons(type, data) {
-    const url = `${config.auth}getFusionExons/`;
-    return sendRequest(url, type, data)
+  const url = `${config.auth}getFusionExons/`;
+  return sendRequest(url, type, data)
 }
 export function FusionInformation(type, data) {
-    const url = `${config.auth}fusion-plot/`;
-    return sendRequest(url, type, data)
+  const url = `${config.auth}fusion-plot/`;
+  return sendRequest(url, type, data)
 }
 
 export function getBoxInformation(type, data) {
@@ -1003,56 +971,6 @@ export function BoxInformation(type, data) {
   //   dispatch({ type: homeConstants.DATA_SUMMARY });
   const url = `${config.auth}box-plot/`;
   return sendRequest(url, type, data);
-}
-export function getOncoImages(method, data) {
-  return (dispatch) => {
-    const url = `${config.auth}onco-sample-images/`;
-    dispatch({
-      type: dataVisualization.ONCO_IMAGES_INFORMATION,
-      payload: null
-    });
-    sendRequest(url, method, data)
-      .then((result) => {
-        const d = result;
-        let payload = [];
-        if (d.status === 200) {
-          payload = d.data;
-        }
-        dispatch({
-          type: dataVisualization.ONCO_IMAGES_INFORMATION,
-          payload
-        });
-      })
-      .catch(() => { });
-  };
-}
-
-export function OncoImages(method, data) {
-  const url = `${config.auth}onco-sample-images/`;
-  return sendRequest(url, method, data);
-}
-
-export function getCircosTimelineTable(method, data) {
-  return (dispatch) => {
-    const url = `${config.auth}onco-age-diagram/`;
-    dispatch({
-      type: dataVisualization.CIRCOS_TIMELINE_GRAPH,
-      payload: null
-    });
-    sendRequest(url, method, data)
-      .then((result) => {
-        const d = result;
-        let payload = [];
-        if (d.status === 200) {
-          payload = d.data;
-        }
-        dispatch({
-          type: dataVisualization.CIRCOS_TIMELINE_GRAPH,
-          payload
-        });
-      })
-      .catch(() => { });
-  };
 }
 
 export function CircosTimelineTable(method, data) {
@@ -1176,6 +1094,10 @@ export function getFaqData(id) {
       })
       .catch(() => { });
   };
+}
+
+export function getDetailPageInfo(url, method, data) {
+  return sendRequest(url, method, data);
 }
 
 export function getFaqPageData(url, method, data) {

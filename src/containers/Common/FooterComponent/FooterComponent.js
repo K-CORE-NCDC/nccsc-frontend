@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-import footer_img from '../../../assets/images/f_logo.png';
+import mainLogo from '../../../assets/images/mainLogo.png';
 
 const FooterComponent = () => {
 
@@ -32,7 +32,7 @@ const FooterComponent = () => {
             <p>Copyright ⓒ 2021 by NCC. All rights reserved.</p>
           </div>
           <div>
-            <img src={footer_img} alt="footer_img"></img>
+            <img src={mainLogo} alt="footer_img" className="logo01" style={{width:'150px'}}></img>
           </div>
         </div>
       </footer>

@@ -1,16 +1,18 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { findID } from '../../actions/api_actions';
 import nameIcon from '../../styles/images/icon-text.svg';
+import { Context } from '../../wrapper';
 
-function FindID() {
+function FindRegistrationNumber() {
   const EmailId = useRef(null);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState([]);
   let history = useHistory();
   const intl = useIntl();
+  const context = useContext(Context);
 
   const findIdSuccess = () => {
     Swal.fire({
@@ -100,13 +102,24 @@ function FindID() {
     <div>
       <div className="contentsTitle">
         <div className="auto">
-          <h3 className="colorSecondary">
-            <span className="colorPrimary">
+          {context.locale === 'kr-KO' &&
+            <h3 className="colorSecondary">
+              <span className="colorPrimary">
+                <FormattedMessage id="RegistrationNumber" defaultMessage="Registration Number" />
+                &nbsp;
+              </span>
               <FormattedMessage id="HeadFind" defaultMessage="Find" />
-              &nbsp;
-            </span>
-            <FormattedMessage id="HeadID" defaultMessage="ID" />
-          </h3>
+            </h3>
+          }
+          {context.locale !== 'kr-KO' &&
+            <h3 className="colorSecondary">
+              <span className="colorPrimary">
+                <FormattedMessage id="HeadFind" defaultMessage="Find" />
+                &nbsp;
+              </span>
+              <FormattedMessage id="RegistrationNumber" defaultMessage="Registration Number" />
+            </h3>
+          }
         </div>
       </div>
 
@@ -114,7 +127,7 @@ function FindID() {
         <div className="auto">
           <div className="pwSearch tac">
             <p className="h5">
-              <FormattedMessage id="FindYourID" defaultMessage="Find Your ID" />
+              <FormattedMessage id="FindRegistrationNumber" defaultMessage="Find Your Registration Number" />
               <br />
               <FormattedMessage
                 id="EnterInfo"
@@ -127,13 +140,13 @@ function FindID() {
               <dl>
                 <dt>
                   <img src={nameIcon} alt="" />
-                  <FormattedMessage id="EmailId" defaultMessage="Email Id" />
+                  <FormattedMessage id="EmailId" defaultMessage="E-mail" />
                 </dt>
                 <dd>
                   <div className="inputText">
                     <FormattedMessage
                       id="PleaseEnterYourEmailId"
-                      defaultMessage="Please enter your Emain ID"
+                      defaultMessage="Please enter the E-mail address registered to us"
                     >
                       {(placeholder) => (
                         <input
@@ -168,4 +181,4 @@ function FindID() {
   );
 }
 
-export default FindID;
+export default FindRegistrationNumber;

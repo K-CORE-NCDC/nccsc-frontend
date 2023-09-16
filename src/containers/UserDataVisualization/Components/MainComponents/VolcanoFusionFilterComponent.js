@@ -5,19 +5,22 @@ import { useParams } from 'react-router-dom';
 import { GroupFilters, PreDefienedFilters, UserDefinedGroupFilters } from '../../../Common/SurvivalFusionVolcanoFilters';
 import { getClinicalMaxMinInfo } from '../../../../actions/api_actions';
 
-let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
+let VolcanoFusionFilterComponent = ({ parentCallback, tab, VFData, SVFState }) => {
 
   const tabList = useSelector((data) => data.dataVisualizationReducer);
   const clinicalMaxMinInfo = useSelector((data) => data.dataVisualizationReducer.clinicalMaxMinInfo);
 
   const dispatch = useDispatch();
   let { project_id } = useParams();
-  
-  const [groupFilters, setGroupFilters] = useState({});
+
+  const [groupFilters, setGroupFilters] = useState(VFData?.groupFilters || {});
   const [volcanoType, setVolcanoType] = useState('transcriptome');
   const [proteomeValue, setProteomeValue] = useState('N');
-  const [userDefienedFilter, setUserDefienedFilter] = useState(project_id ? 'dynamic' : 'static');
+  const [userDefienedFilter, setUserDefienedFilter] = useState(SVFState);
   const [alltabList, setAllTabList] = useState({});
+  const [updateFiltersFlag, setUpdateFiltersFlag] = useState(false);
+  const [initialUserDefiendRender, setInitialUserDefiendRender] = useState(true);
+
 
   // fusion
   const smallScreen = false
@@ -34,75 +37,82 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
     setGroupFilters({ ...d });
   };
 
-  const updateGroupFilters = (filtersObject) => {
-    if (tab === 'volcano') {
-      if (filtersObject && proteomeValue !== 'NT') {
-        setGroupFilters(filtersObject);
-      } else {
-        setGroupFilters(filtersObject);
-      }
-    } else if (tab === 'fusion') {
-      setGroupFilters(filtersObject);
-    }
-  };
-
   useEffect(() => {
     if ('userProjectsDataTable' in tabList) {
       setAllTabList(tabList.userProjectsDataTable);
     }
   }, [tabList]);
 
-  useEffect(() => {
+
+  const updateGroupFilters = (filtersObject) => {
     if (tab === 'volcano') {
-      let volcanoFusionFilterData = {};
-
-      volcanoFusionFilterData['groupFilters'] = groupFilters;
-
-      if (proteomeValue === 'NT') {
-        volcanoFusionFilterData['groupFilters'] = {};
-      }
-
-      volcanoFusionFilterData['volcanoType'] = volcanoType;
-      volcanoFusionFilterData['proteomeValue'] = proteomeValue;
-      volcanoFusionFilterData['userDefienedFilter'] = userDefienedFilter;
-      
-
-      if (!project_id) {
-        if (groupFilters && 'group_1' in groupFilters) groupFilters.group_a = groupFilters.group_1;
-
-        if (groupFilters && 'group_2' in groupFilters) groupFilters.group_b = groupFilters.group_2;
-
-        if (groupFilters && 'group_3' in groupFilters) groupFilters.group_c = groupFilters.group_3;
-
-        if (groupFilters && 'group_1' in groupFilters) delete groupFilters.group_1;
-
-        if (groupFilters && 'group_2' in groupFilters) delete groupFilters.group_2;
-
-        if (groupFilters && 'group_3' in groupFilters) delete groupFilters.group_3;
-      }
-
-      if (volcanoType === 'transcriptome' && groupFilters && Object.keys(groupFilters).length) {
-        parentCallback({ volcanoFusionFilterData: volcanoFusionFilterData });
-      } else if (
-        volcanoType === 'proteome' &&
-        (proteomeValue === 'N' || proteomeValue === 'T') &&
-        groupFilters &&
-        Object.keys(groupFilters).length
-      ) {
-        parentCallback({ volcanoFusionFilterData: volcanoFusionFilterData });
-      } else if (volcanoType === 'proteome' && proteomeValue === 'NT') {
-        parentCallback({ volcanoFusionFilterData: volcanoFusionFilterData });
+      if (filtersObject && proteomeValue !== 'NT') {
+        setGroupFilters(filtersObject);
+        setUpdateFiltersFlag(true);
+      } else {
+        setGroupFilters(filtersObject);
+        setUpdateFiltersFlag(true);
       }
     } else if (tab === 'fusion') {
-      let volcanoFusionFilterData = {};
-      volcanoFusionFilterData['groupFilters'] = groupFilters;
-      volcanoFusionFilterData['filterType'] = userDefienedFilter;
-      if (groupFilters && Object.keys(groupFilters).length) {
-        parentCallback({ volcanoFusionFilterData: volcanoFusionFilterData });
-      }
+      setGroupFilters(filtersObject);
+      setUpdateFiltersFlag(true);
     }
-  }, [groupFilters]);
+  };
 
+  let resetFiltersData = () => {
+    parentCallback({ volcanoFusionFilterData: {} });
+  }
+
+  useEffect(() => {
+    if (updateFiltersFlag) {
+
+      if (tab === 'volcano') {
+        let volcanoFusionFilterData = {};
+
+        volcanoFusionFilterData['groupFilters'] = groupFilters;
+
+        if (proteomeValue === 'NT') {
+          volcanoFusionFilterData['groupFilters'] = {};
+        }
+
+        volcanoFusionFilterData['volcanoType'] = volcanoType;
+        volcanoFusionFilterData['proteomeValue'] = proteomeValue;
+        volcanoFusionFilterData['filterType'] = userDefienedFilter;
+
+        if (volcanoType === 'transcriptome' && groupFilters && Object.keys(groupFilters).length) {
+          parentCallback({ volcanoFusionFilterData: volcanoFusionFilterData });
+        } else if (
+          volcanoType === 'proteome' &&
+          (proteomeValue === 'N' || proteomeValue === 'T') &&
+          groupFilters &&
+          Object.keys(groupFilters).length
+        ) {
+          parentCallback({ volcanoFusionFilterData: volcanoFusionFilterData });
+        } else if (volcanoType === 'proteome' && proteomeValue === 'NT') {
+          parentCallback({ volcanoFusionFilterData: volcanoFusionFilterData });
+        }
+      }
+      else if (tab === 'fusion') {
+        let volcanoFusionFilterData = {};
+        volcanoFusionFilterData['groupFilters'] = groupFilters;
+        volcanoFusionFilterData['filterType'] = userDefienedFilter;
+        if (groupFilters && Object.keys(groupFilters).length) {
+          parentCallback({ volcanoFusionFilterData: volcanoFusionFilterData });
+        }
+      }
+      setUpdateFiltersFlag(false)
+    }
+
+  }, [updateFiltersFlag, groupFilters]);
+
+  useEffect(() => {
+    if (initialUserDefiendRender) {
+      setInitialUserDefiendRender(false);
+      return;
+    }
+    setUpdateFiltersFlag(false);
+  }, [userDefienedFilter]);
+  
   useEffect(() => {
     if (!clinicalMaxMinInfo) {
       if (project_id === undefined) {
@@ -241,26 +251,29 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
                 )}
               {userDefienedFilter === 'static' && project_id === undefined && (
                 <PreDefienedFilters
-                  volcanoType={volcanoType}
                   viz_type="volcono"
-                  parentCallback={updateGroupFilters}
                   groupFilters={groupFilters}
+                  parentCallback={updateGroupFilters}
+                  resetFiltersData={resetFiltersData}
                 />
+
               )}
               {userDefienedFilter === 'dynamic' && project_id === undefined && (
                 <GroupFilters
                   volcanoType={volcanoType}
                   viz_type="volcono"
-                  parentCallback={updateGroupFilters}
                   groupFilters={groupFilters}
+                  parentCallback={updateGroupFilters}
+                  resetFiltersData={resetFiltersData}
                 />
               )}
               {project_id !== undefined && (
                 <UserDefinedGroupFilters
                   volcanoType={volcanoType}
                   viz_type="volcono"
-                  parentCallback={updateGroupFilters}
                   groupFilters={groupFilters}
+                  parentCallback={updateGroupFilters}
+                  resetFiltersData={resetFiltersData}
                 />
               )}
             </>
@@ -329,22 +342,25 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab }) => {
             {userDefienedFilter === 'static' && project_id === undefined && (
               <PreDefienedFilters
                 viz_type="fusion"
-                parentCallback={updateGroupFilters}
                 groupFilters={groupFilters}
+                parentCallback={updateGroupFilters}
+                resetFiltersData={resetFiltersData}
               />
             )}
             {userDefienedFilter === 'dynamic' && project_id === undefined && (
               <GroupFilters
                 viz_type="fusion"
-                parentCallback={updateGroupFilters}
                 groupFilters={groupFilters}
+                parentCallback={updateGroupFilters}
+                resetFiltersData={resetFiltersData}
               />
             )}
             {project_id !== undefined && (
               <UserDefinedGroupFilters
                 viz_type="fusion"
-                parentCallback={updateGroupFilters}
                 groupFilters={groupFilters}
+                parentCallback={updateGroupFilters}
+                resetFiltersData={resetFiltersData}
               />
             )}
           </div>

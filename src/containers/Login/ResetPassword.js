@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useHistory, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { changePassword } from '../../actions/api_actions';
@@ -8,6 +8,7 @@ import HeaderComponent from '../Common/HeaderComponent/HeaderComponent';
 import KcoreFinalLogo from '../../assets/images/K-coreFinalLogo.png';
 
 function ResetPassword() {
+  const intl = useIntl();
   let history = useHistory();
   const [errorMessage, setErrorMessage] = useState([]);
   const [isError, setIsError] = useState(false);
@@ -30,8 +31,8 @@ function ResetPassword() {
 
   const setPasswordSuccess = () => {
     Swal.fire({
-      title: 'Success',
-      text: 'Password Reset Success, use your new Password to Login',
+      title: intl.formatMessage({ id: "PasswordSetSuccess0", defaultMessage: 'Password Reset Success' }),
+      text: intl.formatMessage({ id: "PasswordResetSuccess", defaultMessage: "Password Reset Success, use your new Password to Login."}),
       icon: 'success',
       confirmButtonColor: '#003177',
       confirmButtonText: 'Ok',

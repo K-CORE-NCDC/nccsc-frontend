@@ -7,7 +7,7 @@ import placeholder from '../../assets/images/circosImage.png';
 import cytobands from './cytobands.csv';
 
 const CircosCmp = React.forwardRef(
-  ({ width, data, watermarkCss, fusionJson, selectedGenes }, ref) => {
+  ({ width, data, watermarkCss, fusionJson, selectedGenes, vizType }, ref) => {
     let selectedGenesObject = {};
     selectedGenes.forEach((e) => {
       selectedGenesObject[e] = true;
@@ -469,7 +469,7 @@ const CircosCmp = React.forwardRef(
             }
           },
           events: {
-            'mouseover.demo': function () {}
+            'mouseover.demo': function () { }
           },
           labels: {
             display: true,
@@ -560,29 +560,35 @@ const CircosCmp = React.forwardRef(
     }, [state, data, fusionJson]);
 
     return (
-      <div className="grid grid-cols-12" style={{ overflowY: 'auto', height: 'auto' }}>
-        <div className="col-span-10 p-5">
-          <div ref={ref} className={`circos block ${watermarkCss}`} id="circos"></div>
-        </div>
-
-        <div className="col-span-2 pl-8">
-          <p>
-            <FormattedMessage id="ClickToZoomIn" defaultMessage="Click to zoom in !" />
-          </p>
-          <span
-            onClick={() => {
-              setOpenModal(true);
-            }}
-          >
-            <img
-              alt="placeholder"
-              src={placeholder}
-              width="150"
-              className="mt-10 object-contain h-2/5"
-            />
-          </span>
+      <div>
+        {vizType && vizType === 2 && <p>
+          <FormattedMessage id="OnlyUploadedOmics" defaultMessage="Only uploaded omics data layers are drawn." />
+        </p>}
+        <div className="Flex JustifyEnd">
+          <div>
+            <p>
+              <FormattedMessage id="ClickToZoomIn" defaultMessage="Click to zoom in !" />
+            </p>
+            <span
+              onClick={() => {
+                setOpenModal(true);
+              }}
+            >
+              <img
+                alt="placeholder"
+                src={placeholder}
+                width="150"
+                className="mt-10 object-contain h-2/5"
+              />
+            </span>
+          </div>
         </div>
         {openModal && <ModalComponent setOpenModal={(data) => setOpenModal(data)} />}
+        <div style={{ overflowY: 'auto', height: 'auto' }}>
+          <div className="p-5">
+            <div ref={ref} className={`circos block ${watermarkCss}`} id="circos"></div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -592,12 +598,12 @@ export default CircosCmp;
 
 export const ModalComponent = ({ setOpenModal }) => {
   return (
-    <div className="CircosModal">
+    <div className="CircosModal" style={{ position: 'fixed', top: 40, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 999 }}>
       <div className="CircosModalHeader">
         <div className="CircosModalBody">
           <div className="Flex JustifyEnd">
             <XCircleIcon
-              style={{ width: '15px', height: '15px' }}
+              style={{ width: '40px', height: '20px', margin: '20px' }}
               onClick={() => setOpenModal(false)}
             />
           </div>

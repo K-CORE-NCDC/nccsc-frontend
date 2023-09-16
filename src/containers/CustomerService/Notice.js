@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import FaqList from '../../containers/CustomerVoice/Faq';
+import Faq from '../../containers/CustomerVoice/Faq';
 import QA from '../CustomerVoice/QA';
+import NoticeMain from '../CustomerVoice/Notice';
 import { Others } from './Others';
 
 export const Notice = () => {
@@ -57,7 +58,7 @@ export const Notice = () => {
         </div>
         {activeTab === '1' && (
           <div style={{ height: '85vh', paddingTop: '5%' }}>
-            <QA />
+            <NoticeMain />
           </div>
         )}
         {activeTab === '2' && (
@@ -68,7 +69,7 @@ export const Notice = () => {
 
         {activeTab === '3' && (
           <div style={{ height: '85vh', paddingTop: '5%' }}>
-            <FaqList />
+            <Faq />
           </div>
         )}
         {activeTab === '4' && (

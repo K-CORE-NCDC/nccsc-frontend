@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage,useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import { getClinicalMaxMinInfo } from '../../../../actions/api_actions';
@@ -8,36 +8,33 @@ import {
   GroupFilters,
   UserDefinedGroupFilters,
 } from '../../../Common/SurvivalFusionVolcanoFilters';
+import { QuestionMarkCircleIcon } from '@heroicons/react/outline';
+import ReactTooltip from 'react-tooltip';
 
-const SurvivalFilterComponent = ({ parentCallback, filterState }) => {
+const SurvivalFilterComponent = ({ parentCallback, filterState, survialData, SVFState }) => {
   const route = useLocation();
   const dispatch = useDispatch();
   const { project_id } = useParams();
+  const intl = useIntl();
 
   const tabList = useSelector((data) => data.dataVisualizationReducer);
   const clinicalMaxMinInfo = useSelector((data) => data.dataVisualizationReducer.clinicalMaxMinInfo);
   const userDefinedFilterColumns = useSelector((data) => data.dataVisualizationReducer.userDefinedFilter);
 
-  const [fileredGene, setFilteredGene] = useState('');
-  const [groupFilters, setGroupFilters] = useState({});
-  const [geneDatabase, setGeneDatabase] = useState('dna_mutation');
-  const [filterTypeButton, setFilterTypeButton] = useState('clinical');
+  const [groupFilters, setGroupFilters] = useState(survialData?.group_filters || {});
+  const [fileredGene, setFilteredGene] = useState(survialData?.filter_gene || '');
+  const [geneDatabase, setGeneDatabase] = useState(survialData?.gene_database || 'dna_mutation');
+  const [filterTypeButton, setFilterTypeButton] = useState(survialData && survialData.clinical ? 'clinical' : 'omics');
+  const [survivalModel, setSurvivalModel] = useState(survialData?.survival_type || 'recurrence');
+  const [coxFilter, setCoxFilter] = useState(survialData?.coxFilter || {});
+  const [coxUserDefinedFilter, setCoxUserDefinedFilter] = useState(survialData?.coxUserDefinedFilter || {});
+  const [userDefienedFilter, setUserDefienedFilter] = useState(SVFState);
   const [vizType, setVizType] = useState('single');
-  const [userDefienedFilter, setUserDefienedFilter] = useState('static');
   const [alltabList, setAllTabList] = useState({});
-  const [coxUserDefinedFilter, setCoxUserDefinedFilter] = useState({});
-  const [survivalModel, setSurvivalModel] = useState('recurrence');
-  const [coxFilter, setCoxFilter] = useState({});
+  const [initialUserDefiendRender, setInitialUserDefiendRender] = useState(true);
   const smallScreen = false;
 
-  useEffect(() => {
-    if (project_id) {
-      setUserDefienedFilter('dynamic')
-    }
-    else {
-      setUserDefienedFilter('static')
-    }
-  }, [])
+  const [updateFiltersFlag, setUpdateFiltersFlag] = useState(false);
 
   useEffect(() => {
     if (!clinicalMaxMinInfo && project_id === undefined) {
@@ -58,7 +55,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState }) => {
   useEffect(() => {
     if (userDefinedFilterColumns && userDefinedFilterColumns['filterJson'] && userDefinedFilterColumns['filterJson']['Clinical Information']) {
       const columns = userDefinedFilterColumns['filterJson']['Clinical Information'];
-      console.log('columns',columns);
+      console.log('columns', columns);
       delete columns['death_yn'];
       delete columns['death_cnfr_drtn'];
       setCoxUserDefinedFilter(columns);
@@ -67,16 +64,25 @@ const SurvivalFilterComponent = ({ parentCallback, filterState }) => {
 
   useEffect(() => {
     if (survivalModel === 'cox') {
-      const tmp = {};
-      if (project_id !== undefined) {
-        for (let a in coxUserDefinedFilter) {
-          if (a !== 'rlps_yn' && a !== 'rlps_cnfr_drtn') {
-            // if (coxUserDefinedFilter[a][0]?.value === 'yes' && coxUserDefinedFilter[a][0]?.value === 'no') {
-            // if (coxUserDefinedFilter[a][0]?.value) {
-              tmp[a] = false;
-            // }
+      let tmp = {};
+      console.log('project_id ->',project_id);
+      if (project_id) {
+        console.log('coxFilter ->',coxFilter);
+        console.log('coxUserDefinedFilter ->',coxUserDefinedFilter);
+        Object.entries(coxUserDefinedFilter).forEach(([item, _]) => {
+          // console.log('coxFilter', coxFilter[item]);
+          // console.log('item',item);
+          if (item !== 'rlps_yn' && item !== 'rlps_cnfr_drtn') {
+            // Use bracket notation to access coxFilter properties with dynamic keys
+            if (coxFilter && item in coxFilter && coxFilter[item] === true) {
+              tmp[item] = true;
+              // console.log('tmp true', tmp);
+            } else {
+              tmp[item] = false;
+              // console.log('tmp false', tmp);
+            }
           }
-        }
+        });
       } else {
         const tmpArray = [
           'BodyMassIndex',
@@ -93,12 +99,17 @@ const SurvivalFilterComponent = ({ parentCallback, filterState }) => {
           'Ki67Index',
           'AgeOfDiagnosis'
         ];
-        tmpArray.forEach((item) => (tmp[item] = false));
+
+        tmpArray.forEach((item) => {
+          // Use bracket notation to access coxFilter properties with dynamic keys
+          tmp[item] = coxFilter && item in coxFilter && coxFilter[item] === true ? true : false;
+        });
       }
-      console.log('tmpppppp',tmp);
+
       setCoxFilter(tmp);
     }
   }, [survivalModel, coxUserDefinedFilter, project_id]);
+
 
   useEffect(() => {
     if (Object.keys(groupFilters).length > 0) {
@@ -106,11 +117,25 @@ const SurvivalFilterComponent = ({ parentCallback, filterState }) => {
     }
   }, [groupFilters]);
 
+  useEffect(() => {
+    if (initialUserDefiendRender) {
+      setInitialUserDefiendRender(false);
+      return;
+    }
+    setUpdateFiltersFlag(false);
+  }, [userDefienedFilter]);
+
   const updateGroupFilters = (filtersObject) => {
     if (filtersObject) {
+      setUpdateFiltersFlag(true);
       setGroupFilters(filtersObject);
     }
   };
+
+
+  let resetFiltersData = () => {
+    parentCallback({ updatedState: {} });
+  }
 
   const selectCoxFiler = (e) => {
     const val_ = e.target.value;
@@ -133,17 +158,19 @@ const SurvivalFilterComponent = ({ parentCallback, filterState }) => {
     };
     if (type === 'cox' && Object.values(coxFilter).some((value) => value === true)) {
       parentCallback({ updatedState: copyState });
+      setUpdateFiltersFlag(false)
     }
   };
 
   const selectAllCox = (type) => {
-    console.log('coxFilter',coxFilter);
     const tmp = { ...coxFilter };
-    console.log('tmp', tmp);
     for (const key in tmp) {
       tmp[key] = type === 'select';
     }
     setCoxFilter(tmp);
+    if (type === 'reset') {
+      parentCallback({ updatedState: {} });
+    }
   };
 
   const ChangeGeneDataBase = (geneDB) => {
@@ -159,8 +186,13 @@ const SurvivalFilterComponent = ({ parentCallback, filterState }) => {
       gene_database: geneDatabase,
       clinical: filterTypeButton === 'clinical',
     };
-
-    if (filterTypeButton === 'omics') {
+    if (updateFiltersFlag && filterTypeButton !== 'omics') {
+      if (filterTypeButton === 'clinical' && Object.keys(groupFilters).length > 0) {
+        parentCallback({ updatedState: copyState });
+      }
+      setUpdateFiltersFlag(false)
+    }
+    else if (filterTypeButton === 'omics') {
       if (project_id === undefined) {
         copyState.gene_database = geneDatabase;
         parentCallback({ updatedState: copyState });
@@ -168,32 +200,9 @@ const SurvivalFilterComponent = ({ parentCallback, filterState }) => {
         copyState.gene_database = geneDatabase;
         parentCallback({ updatedState: copyState });
       }
-    } else if (filterTypeButton === 'clinical' && Object.keys(groupFilters).length > 0) {
-      parentCallback({ updatedState: copyState });
+
     }
   };
-
-  const tmp =
-    project_id !== undefined
-      ? Object.keys(coxUserDefinedFilter).filter(
-        // (a) => a !== 'rlps_yn' && a !== 'rlps_cnfr_drtn' && (!coxUserDefinedFilter[a][0].value || coxUserDefinedFilter[a][0].value === 'yes' || coxUserDefinedFilter[a][0].value === 'no')
-        (a) => a !== 'rlps_yn' && a !== 'rlps_cnfr_drtn')
-      : [
-        'BodyMassIndex',
-        'AlcoholConsumption',
-        'FamilyHistoryofBreastCancer',
-        'IntakeOfContraceptivePill',
-        'HormoneReplaceTherapy',
-        'Menopause',
-        'Childbirth',
-        'DiagnosisofBilateralBreastCancer',
-        'FirstMenstrualAge',
-        'ERTestResults',
-        'PRTestResults',
-        'Ki67Index',
-        'AgeOfDiagnosis',
-      ];
-
 
   return (
     <div>
@@ -248,14 +257,14 @@ const SurvivalFilterComponent = ({ parentCallback, filterState }) => {
                 </h3>
                 <div className="m-1 tab Gap2 MarginTop2">
                   <ul>
-                    <li className={filterTypeButton === 'clinical' ? 'on W50' : 'W50'}>
-                      <button onClick={() => setFilterTypeButton('clinical')} id="Mutation" name="type">
-                        <FormattedMessage id="Clinical" defaultMessage="Clinical" />
-                      </button>
-                    </li>
                     <li className={filterTypeButton === 'omics' ? 'on W50' : 'W50'}>
                       <button onClick={() => setFilterTypeButton('omics')} id="Phospho" name="type">
                         <FormattedMessage id="Omics" defaultMessage="Omics" />
+                      </button>
+                    </li>
+                    <li className={filterTypeButton === 'clinical' ? 'on W50' : 'W50'}>
+                      <button onClick={() => setFilterTypeButton('clinical')} id="Mutation" name="type">
+                        <FormattedMessage id="Clinical" defaultMessage="Clinical" />
                       </button>
                     </li>
                   </ul>
@@ -264,7 +273,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState }) => {
                 {filterTypeButton && filterTypeButton === 'omics' && (
                   <div className="M1 P1">
                     {filterState && filterState.genes && filterState.genes.length === 0 && (
-                      <h6 className="MB2 TextLeft TextBase">
+                      <h6 className="MB2 TextLeft TextBase" style={{ color: 'red' }}>
                         <FormattedMessage id="SelectGenesOmics" defaultMessage="Please Select Genes from Gene Set Filter" />
                       </h6>
                     )}
@@ -293,9 +302,46 @@ const SurvivalFilterComponent = ({ parentCallback, filterState }) => {
                         <FormattedMessage id="UploadGeneDB" defaultMessage={`Please Upload ${geneDatabase} file to use the ${geneDatabase} Database`} />
                       </p>
                     )}
-                    <h6 className=" MB1 TextLeft TextBase" htmlFor="dropdown-database">
-                      <FormattedMessage id="SelectDatabase" defaultMessage="Select Database" />
-                    </h6>
+
+                    <div className='Flex'>
+                      <h6 className=" MB1 TextLeft TextBase" htmlFor="dropdown-database">
+                        <FormattedMessage id="SelectDatabase" defaultMessage="Select Database" />
+                      </h6>
+                      {geneDatabase === 'dna_mutation' && <h6>
+                        <FormattedMessage id='SurvivalDNAMutationTooltip1' defaultMessage="When there are 7 major mutation types for the selected gene ">
+                          {(placeholder) => (
+                            <>
+                              <QuestionMarkCircleIcon
+                                data-multiline={true}
+                                className="inline ml-2 mb-1"
+                                data-class="my-tooltip"
+                                data-tip={`DNA Mutation:  ${placeholder} <br>  <br/>Missense mutation, Nonsense mutation, Splice site, <br>  <br/>In frame insertion, In frame deletion, Frame-shift insertion, Frame-shift deletion 
+                                          <br>No Mutation:${intl.formatMessage({ id: "SurvivalDNAMutationTooltip2", defaultMessage: 'When there are no major 7 mutation types for the selected gene' })}`}
+                                style={{ width: '20px', cursor: 'pointer' }} />
+                              <ReactTooltip />
+                            </>
+                          )}
+                        </FormattedMessage>
+                      </h6>}
+                      {geneDatabase === 'rna' && <h6>
+                        <QuestionMarkCircleIcon
+                          data-multiline="true"
+                          className="inline ml-2 mb-1"
+                          data-tip="RNA high : z-score ≥ 1,<br>  <br/>RNA low : z-score ≤ -1 "
+                          style={{ width: '20px', cursor: 'pointer' }}
+                        ></QuestionMarkCircleIcon>
+                        <ReactTooltip />
+                      </h6>}
+                      {geneDatabase === 'proteome' && <h6>
+                        <QuestionMarkCircleIcon
+                          data-multiline="true"
+                          className="inline ml-2 mb-1"
+                          data-tip="Proteome high : z-score ≥ 1.5,<br>  <br/>Proteome low : z-score ≤ 0.5"
+                          style={{ width: '20px', cursor: 'pointer' }}
+                        ></QuestionMarkCircleIcon>
+                        <ReactTooltip />
+                      </h6>}
+                    </div>
                     <select
                       id="dropdown-database"
                       onChange={(e) => ChangeGeneDataBase(e.target.value)}
@@ -312,19 +358,20 @@ const SurvivalFilterComponent = ({ parentCallback, filterState }) => {
                         Global Proteome
                       </option>
                     </select>
+
                   </div>
                 )}
 
                 {filterTypeButton === 'clinical' && userDefienedFilter === 'static' && project_id === undefined && (
-                  <PreDefienedFiltersSurvival type="survival" viz_type="survival" parentCallback={updateGroupFilters} survivalModel={survivalModel} />
+                  <PreDefienedFiltersSurvival type="survival" viz_type="survival" parentCallback={updateGroupFilters} groupFilters={groupFilters} resetFiltersData={resetFiltersData} />
                 )}
 
                 {filterTypeButton === 'clinical' && userDefienedFilter === 'dynamic' && project_id === undefined && (
-                  <GroupFilters viz_type="survival" parentCallback={updateGroupFilters} />
+                  <GroupFilters viz_type="survival" parentCallback={updateGroupFilters} resetFiltersData={resetFiltersData} groupFilters={groupFilters} />
                 )}
 
                 {filterTypeButton === 'clinical' && project_id !== undefined && (
-                  <UserDefinedGroupFilters viz_type="survival" parentCallback={updateGroupFilters} groupFilters={groupFilters} survivalModel={survivalModel} />
+                  <UserDefinedGroupFilters viz_type="survival" parentCallback={updateGroupFilters} groupFilters={groupFilters} survivalModel={survivalModel} resetFiltersData={resetFiltersData} />
                 )}
 
                 {filterTypeButton === 'omics' && (
@@ -359,20 +406,20 @@ const SurvivalFilterComponent = ({ parentCallback, filterState }) => {
                 <div className="m-1 Flex FlexDirRow JustifyContent WMax">
                   <div className="Flex JustifyCenter">
                     <div>
-                      {tmp.map((element, index) => (
+                      {Object.entries(coxFilter).map(([key, value], index) => (
                         <div className="form-check Flex MB4" key={'cox' + index}>
                           <label className="form-check-label TextLeft Inline TextGray800 TextBase" htmlFor={'flexCheckChecked_' + index}>
                             <input
                               onChange={(e) => selectCoxFiler(e)}
                               className="form-check-input SurvivalInputBackgroundwhite"
                               type="checkbox"
-                              name={element}
+                              name={key} // Use the key as the name
                               id={'flexCheckChecked_' + index}
-                              checked={coxFilter[element] || false}
-                              defaultValue={element}
+                              checked={value}
+                              defaultValue={key}
                               style={{ marginRight: '5px' }}
                             />
-                            <FormattedMessage id={element} defaultMessage={element} />
+                            <FormattedMessage id={key} defaultMessage={key} /> {/* Use 'value' as the default message */}
                           </label>
                         </div>
                       ))}

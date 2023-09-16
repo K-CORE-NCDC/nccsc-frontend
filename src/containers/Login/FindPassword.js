@@ -113,6 +113,7 @@ function FindPassword() {
 
   return (
     <div>
+
       <div className="contentsTitle">
         <div className="auto">
           <h3 className="colorSecondary">
@@ -124,9 +125,11 @@ function FindPassword() {
           </h3>
         </div>
       </div>
+
       <div className="ptn">
         <div className="auto">
           <div className="pwSearch tac">
+
             <p className="h5">
               <FormattedMessage
                 id="FindPasswordmsg1"
@@ -138,19 +141,20 @@ function FindPassword() {
                 defaultMessage="Please enter the information below."
               />
             </p>
+
             <form className="formBox" id="frm" method="post" name="frm">
               {isError && errorMessage && <div className="ErrorText">{errorMessage}</div>}
 
               <dl>
-                <dt style={{ width: '180px' }}>
+                <dt style={{ width: '250px' }}>
                   <img src={nameIcon} alt="" />
-                  <FormattedMessage id="UserId" defaultMessage="User Id" />
+                  <FormattedMessage id="RegistrationNumber" defaultMessage="Registration Number" />
                 </dt>
                 <dd>
                   <div className="inputText">
                     <FormattedMessage
-                      id="PleaseEnterYourUserId"
-                      defaultMessage="Please enter your User Id"
+                      id="PleaseEnterYourRegistationNumber"
+                      defaultMessage="Please enter your Registration number"
                     >
                       {(placeholder) => (
                         <input
@@ -167,8 +171,9 @@ function FindPassword() {
                   </div>
                 </dd>
               </dl>
+
               <dl>
-                <dt style={{ width: '180px' }}>
+                <dt style={{ width: '250px' }}>
                   <img src={idIcon} alt="" />
                   <FormattedMessage id="RegistrationPin" defaultMessage="Registration Pin" />
                 </dt>
@@ -194,6 +199,8 @@ function FindPassword() {
                 </dd>
               </dl>
             </form>
+
+
           </div>
           <div className="bottomBtns">
             <div className="flex">
