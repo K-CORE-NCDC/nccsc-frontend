@@ -270,10 +270,10 @@ export function getUserFiles() {
   };
 }
 
-export function DashboardDsummaryData() {
-  const url = `${config.auth}data-summary/`;
-  return sendRequest(url, 'GET', '');
-}
+// export function DashboardDsummaryData() {
+//   const url = `${config.auth}data-summary/`;
+//   return sendRequest(url, 'GET', '');
+// }
 
 export function GenomicInformation(type, data) {
   //   dispatch({ type: homeConstants.DATA_SUMMARY });

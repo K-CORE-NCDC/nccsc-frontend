@@ -3,11 +3,11 @@ import { FormattedMessage } from 'react-intl';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import MultiDataVisualization from './MultiDataVisualization';
 import { OtherTools } from './OtherTools';
+import SingleDataManual from '../../assets/files/DownloadbleFiles/SingleDataVis/SingleDataVis_Manual.pdf';
 
 export const SingleDataVisualization = () => {
   const [activeTab, setActiveTab] = useState('1');
   const history = useHistory();
-
   return (
     <div className="auto">
       <div className="mainContentsBox">
@@ -56,7 +56,9 @@ export const SingleDataVisualization = () => {
                         <FormattedMessage id="ExamplePage" defaultMessage="Example Page" />
                       </button>
                       <button className="btn">
-                        <FormattedMessage id="DownloadManual" defaultMessage="Download Manual" />
+                        <a href={SingleDataManual} download>
+                          <FormattedMessage id="DownloadManual" defaultMessage="Download Manual" />
+                        </a>
                       </button>
                     </div>
                   </div>

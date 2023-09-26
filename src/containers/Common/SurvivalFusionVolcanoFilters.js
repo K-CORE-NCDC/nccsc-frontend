@@ -493,7 +493,7 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters, viz_type, res
     resetFiltersData()
   };
 
- 
+
 
 
   return (
@@ -720,7 +720,7 @@ export const PreDefienedFiltersSurvival = ({
           column: selectedFilterType.details.id,
           type: 'boolean',
           index: selectedFilterType.index
-          
+
         });
         filterGroupsHtmlTemp.push(
           <div key="bool">
@@ -2214,6 +2214,9 @@ export const UserDefinedGroupFilters = ({
             let thead = [];
             let boxes = d.length;
             for (let sv = 0; sv < d.length; sv++) {
+              if (sv >= 5) {
+                break;
+              }
               const element = d[sv];
               thead.push(
                 <th key={sv} className="GroupNamesFilter PX6Y4 ">
@@ -2224,6 +2227,9 @@ export const UserDefinedGroupFilters = ({
               let group_i = 0;
 
               for (let index = 0; index < boxes; index++) {
+                if (index >= 5) {
+                  break;
+                }
                 let name = 'group_' + abc[index] + '_' + element.value;
                 if (Object.keys(userGivenInputValues).length > 0) {
                   let group_check = false;
@@ -2300,6 +2306,9 @@ export const UserDefinedGroupFilters = ({
             let d = preDefienedGroups1[colName];
             let thead = [];
             for (let sv = 0; sv < d.length; sv++) {
+              if (sv >= 3) {
+                break;
+              }
               const element = d[sv];
               thead.push(
                 <th key={sv} className="GroupNamesFilter PX6Y4 ">
@@ -2310,6 +2319,9 @@ export const UserDefinedGroupFilters = ({
               let group_i = 0;
 
               for (let index = 0; index < d.length; index++) {
+                if (index >= 3) {
+                  break;
+                }
                 let name = 'group_' + abc[index] + '_' + element.value;
                 if (Object.keys(userGivenInputValues).length > 0 && Object.keys(userGivenInputValues).some(key => ['group_a', 'group_b', 'group_c'].includes(key))) {
                   let group_check = false;

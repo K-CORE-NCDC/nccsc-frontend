@@ -38,6 +38,15 @@ export default function DataVisualization() {
   const route = useLocation();
   const [exampleData, setExampleData] = useState(false);
 
+  function downloadFile(url, fileName) {
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
   const setToFalseAfterScreenCapture = (param = false) => {
     if (param === false) {
       setScreenCapture(false);
@@ -63,7 +72,7 @@ export default function DataVisualization() {
       setIsGeneSetPopoverOpen(false);
     }
   }, []);
-  
+
   useEffect(() => {
     return () => {
       dispatch({
@@ -210,6 +219,7 @@ export default function DataVisualization() {
       let gridobj = {
         title: element === 'variant-summary' ? 'Variant Summary' : element,
         image: require(`../../../assets/images/Visualizations/${element}.png`).default,
+        manual: require(`../../../assets/files/DownloadbleFiles/SingleDataVis/${element}.pdf`).default,
         link: `/singledata-upload/${element}/`,
         viewLink: `/visualizesingle-exampledata/${element}`,
         description: desc || ''
@@ -338,7 +348,8 @@ export default function DataVisualization() {
                       {gridData.map((item, index) => {
                         return (
                           <li key={index} className="listitems">
-                            <Link to={!exampleData ? item.link : item.viewLink}>
+                            <Link to={route.pathname}>
+
                               <div className="thumb">
                                 <img src={item.image} alt="img" />
                                 <div className="hvBox">
@@ -346,7 +357,7 @@ export default function DataVisualization() {
                                     {!exampleData && (
                                       <>
 
-                                        <div className="textdiv ">
+                                        <div className="textdiv" onClick={() => downloadFile(item.manual, `${item.title}.pdf`)}>
                                           <span>
                                             <FormattedMessage
                                               id="DownloadManual"
@@ -356,14 +367,17 @@ export default function DataVisualization() {
                                           <img src={arrow_icon} alt="arrow-icon" />
                                         </div>
 
+
                                         <div className="textdiv">
-                                          <span>
-                                            <FormattedMessage
-                                              id="RunAnalysis"
-                                              defaultMessage="Run Analysis"
-                                            />
-                                          </span>
-                                          <img src={arrow_icon} alt="arrow-icon" />
+                                          <Link to={item.link}>
+                                            <span>
+                                              <FormattedMessage
+                                                id="RunAnalysis"
+                                                defaultMessage="Run Analysis"
+                                              />
+                                            </span>
+                                            <img src={arrow_icon} alt="arrow-icon" />
+                                          </Link>
                                         </div>
                                       </>
                                     )}
@@ -371,13 +385,12 @@ export default function DataVisualization() {
                                     {exampleData && (
 
                                       <div className="textdiv">
-                                        <span>
-                                          <FormattedMessage
-                                            id="Example"
-                                            defaultMessage="Examples"
-                                          />
-                                        </span>
-                                        <img src={arrow_icon} alt="arrow-icon" />
+                                        <Link to={item.link}>
+                                          <span>
+                                            <FormattedMessage id="Example" defaultMessage="Example" />
+                                          </span>
+                                          <img src={arrow_icon} alt="arrow-icon" />
+                                        </Link>
                                       </div>
 
                                     )}

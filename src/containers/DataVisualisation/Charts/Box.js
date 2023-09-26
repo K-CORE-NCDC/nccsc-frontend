@@ -140,12 +140,6 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
     }
   }, [screenCapture, watermarkCss]);
 
-  // useEffect(() => {
-  //   setTimeout(function () {
-  //     setLoader(false);
-  //   }, 1000);
-  // }, [boxJson]);
-
   useEffect(() => {
     if (boxJson) {
       if (boxJson.status === 200) {

@@ -3,11 +3,11 @@ import { FormattedMessage } from 'react-intl';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import plusicon from '../../assets/images/icon-plus-primary.svg';
 import minusicon from '../../assets/images/icons8-minus-24.png';
+import MultiDataManual from '../../assets/files/DownloadbleFiles/MultiDataVis/MultiDatavis_Manual.pdf';
 
 const MultiDataVisualization = () => {
   const history = useHistory();
   const viewMoreData = false
-  console.log('------------------MultiDataVisualization');
   return (
     <div className="tabContents " style={{ height: '85vh' }}>
       <div className="dataSearchWrap">
@@ -24,7 +24,9 @@ const MultiDataVisualization = () => {
                 <FormattedMessage id="ExamplePage" defaultMessage="Example Page" />
               </button>
               <button className="btn">
-                <FormattedMessage id="DownloadManual" defaultMessage="Download Manual" />
+                <a href={MultiDataManual} download>
+                  <FormattedMessage id="DownloadManual" defaultMessage="Download Manual" />
+                </a>
               </button>
             </div>
           </div>

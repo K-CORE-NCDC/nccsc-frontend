@@ -167,15 +167,6 @@ const LoginComponent = () => {
                   </span>
                 </h1>
                 <h1 className="sub">
-                  {/* <font style={{ verticalAlign: 'inherit' }}>
-                  <font style={{ verticalAlign: 'inherit' }}>
-                    <FormattedMessage
-                      id="WelcomeNcdc"
-                      defaultMessage="Welcome to K-Cancer Omics Research Portal."
-                    />{' '}
-                  </font>
-                </font>
-                <br /> */}
                   <font style={{ verticalAlign: 'inherit' }}>
                     <font style={{ verticalAlign: 'inherit' }}>
                       <FormattedMessage
@@ -284,7 +275,9 @@ const LoginComponent = () => {
                       defaultMessage="The user should be responsible for using result."
                     />
                   </p>
+                  
                 </form>
+
                 <div className="bottomBtns MarginTop4">
                   <div className="flex">
 

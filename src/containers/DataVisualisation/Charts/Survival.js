@@ -152,9 +152,8 @@ export default function DataSurvival({
       setLoader(false);
     }, 1000);
     if (
-      inputState['survival_type'] === 'recurrence' ||
-      inputState['survival_type'] === 'survival'
-    ) {
+      inputState['survival_type'] === 'recurrence' || inputState['survival_type'] === 'survival') {
+
       if (survivalJson && survivalJson.sample_counts) {
         const sampleCountsObject = survivalJson.sample_counts;
         // let totalCount = 0;
@@ -179,97 +178,106 @@ export default function DataSurvival({
           }
         }
       }
-    } else if (inputState['survival_type'] === 'cox') {
-      let inputDataJson = {};
-      if (project_id) {
-        if (
-          inputState['coxUserDefinedFilter'] &&
-          Object.keys(inputState['coxUserDefinedFilter']).length > 0
-        ) {
-          for (const a in inputState['coxUserDefinedFilter']) {
-            if (a !== 'rlps_yn' && a !== 'rlps_cnfr_drtn') {
-              if (
-                'value' in inputState['coxUserDefinedFilter'][a][0] &&
-                inputState['coxUserDefinedFilter'][a][0]['value'] !== 'yes' &&
-                'value' in inputState['coxUserDefinedFilter'][a][0] &&
-                inputState['coxUserDefinedFilter'][a][0]['value'] !== 'no'
-              ) {
-                continue;
-              } else {
-                inputDataJson[a] = a;
+    }
+    else if (inputState['survival_type'] === 'cox') {
+      if (survivalJson && 'errorMessage' in survivalJson === false) {
+        let inputDataJson = {};
+        if (project_id) {
+          if (
+            inputState['coxUserDefinedFilter'] &&
+            Object.keys(inputState['coxUserDefinedFilter']).length > 0
+          ) {
+            for (const a in inputState['coxUserDefinedFilter']) {
+              if (a !== 'rlps_yn' && a !== 'rlps_cnfr_drtn') {
+                if (
+                  'value' in inputState['coxUserDefinedFilter'][a][0] &&
+                  inputState['coxUserDefinedFilter'][a][0]['value'] !== 'yes' &&
+                  'value' in inputState['coxUserDefinedFilter'][a][0] &&
+                  inputState['coxUserDefinedFilter'][a][0]['value'] !== 'no'
+                ) {
+                  continue;
+                } else {
+                  inputDataJson[a] = a;
+                }
               }
             }
           }
+        } else {
+          for (let z = 0; z < inputJson['filterChoices'].length; z++) {
+            inputDataJson[inputJson['filterChoices'][z]['id']] =
+              inputJson['filterChoices'][z]['name'];
+          }
         }
-      } else {
-        for (let z = 0; z < inputJson['filterChoices'].length; z++) {
-          inputDataJson[inputJson['filterChoices'][z]['id']] =
-            inputJson['filterChoices'][z]['name'];
+
+        let tmp = [];
+        let columns = survivalJson && 'columns' in survivalJson && survivalJson['columns'];
+        let data = survivalJson && 'data' in survivalJson && JSON.parse(survivalJson['data']);
+        let cf = survivalJson && 'clinical_filter' in survivalJson && survivalJson['clinical_filter'];
+        let image = survivalJson && 'image' in survivalJson && survivalJson['image'];
+        let trow = [];
+        let temptrow = []
+        if (cf) {
+          for (let c = 0; c < cf.length; c++) {
+            let obj = {}
+            let col = cf[c];
+            obj["name"] = col
+            temptrow.push(obj)
+          }
         }
-      }
 
-      let tmp = [];
-      let columns = survivalJson && 'columns' in survivalJson && survivalJson['columns'];
-      let data = survivalJson && 'data' in survivalJson && JSON.parse(survivalJson['data']);
-      let cf = survivalJson && 'clinical_filter' in survivalJson && survivalJson['clinical_filter'];
-      let image = survivalJson && 'image' in survivalJson && survivalJson['image'];
-      let trow = [];
-      let temptrow = []
-      if (cf) {
-        for (let c = 0; c < cf.length; c++) {
-          let obj = {}
-          let col = cf[c];
-          obj["name"] = col
-          temptrow.push(obj)
+        if (temptrow?.length > 0) {
+          let _sampleData = [...temptrow]
+          for (let rowname in _sampleData) {
+            let _obj = { ..._sampleData[rowname] }
+            Object.entries(data)?.forEach((key) => {
+              let _name = _obj["name"]
+              _obj[key[0]] = key[1][_name]?.toFixed(2)
+            })
+            trow.push({ ..._obj })
+          }
         }
-      }
-
-      if (temptrow?.length > 0) {
-        let _sampleData = [...temptrow]
-        for (let rowname in _sampleData) {
-          let _obj = { ..._sampleData[rowname] }
-          Object.entries(data)?.forEach((key) => {
-            let _name = _obj["name"]
-            _obj[key[0]] = key[1][_name]?.toFixed(2)
-          })
-          trow.push({ ..._obj })
-        }
-      }
 
 
-      tmp.push(
-        <div className="Flex FlexDirCol" key={'cox'}>
-          {/* Coefficient Table */}
+        tmp.push(
+          <div className="Flex FlexDirCol" key={'cox'}>
+            {/* Coefficient Table */}
 
-          <h3 className="BorderBottom1 BorderGray200 P4" style={{ textAlign: 'center' }}>
-            <FormattedMessage id="Co-efficientTable" defaultMessage="Co-efficient Table" />
-          </h3>
-          {columns?.length &&
-            <Table
-              columns={getColumns(columns)}
-              data={trow}
-              width={"1650"}
-            />}
+            <h3 className="BorderBottom1 BorderGray200 P4" style={{ textAlign: 'center' }}>
+              <FormattedMessage id="Co-efficientTable" defaultMessage="Co-efficient Table" />
+            </h3>
+            {columns?.length &&
+              <Table
+                columns={getColumns(columns)}
+                data={trow}
+                width={"1650"}
+              />}
 
 
-          {/* Confidence Intreval Plot */}
-          {/* <div
-            key={'ci'}
-            className="Flex FlexDirCol MarginTop20 Backgroundwhite  TextLeft  ShadowLarge WFull"
-          > */}
-          <h3 className="BorderBottom1 BorderGray200 P8" style={{ textAlign: 'center' }}>
-            <FormattedMessage
-              id="ConfidenceIntervalPlot"
-              defaultMessage="Confidence Interval Plot"
-            />
-          </h3>
-          <div className="WFull">
-            <img alt="box-plot" width="960" src={'data:image/png;base64,' + image} />
+            {/* Confidence Intreval Plot */}
+            <h3 className="BorderBottom1 BorderGray200 P8" style={{ textAlign: 'center' }}>
+              <FormattedMessage
+                id="ConfidenceIntervalPlot"
+                defaultMessage="Confidence Interval Plot"
+              />
+            </h3>
+            <div className="WFull">
+              <img alt="box-plot" width="960" src={'data:image/png;base64,' + image} />
+            </div>
           </div>
-        </div>
-        // </div>
-      );
-      setCoxTable(tmp);
+        );
+        setCoxTable(tmp);
+      }
+      else {
+        let tmp = [];
+        tmp.push(
+          <div className="Flex FlexDirCol" key={'cox'}>
+            <h3 className="BorderBottom1 BorderGray200 P4" style={{ textAlign: 'center' }}>
+              {survivalJson['errorMessage']}
+            </h3>
+          </div>
+        )
+        setCoxTable(tmp);
+      }
     }
   }, [survivalJson]);
 

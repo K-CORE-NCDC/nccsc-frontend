@@ -4,6 +4,7 @@ import React, { Fragment, useCallback, useEffect, useRef, useState, lazy, Suspen
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import {
   clearDataVisualizationState,
   getBreastKeys,
@@ -20,6 +21,7 @@ import VolcanoFusionFilterComponent from '../Components/MainComponents/VolcanoFu
 
 export default function DataVisualization() {
   let { tab, project_id } = useParams();
+  const route = useLocation();
   const dispatch = useDispatch();
   const history = useHistory();
   const elementRef = useRef(null);
@@ -51,6 +53,14 @@ export default function DataVisualization() {
   const [isSurvivalFilterPopoverOpen, setSurvivalFilterPopoverOpen] = useState(false);
   const [isVolFusFilterPopoverOpen, setVolFusFilterPopoverOpen] = useState(false);
 
+  function downloadFile(url, fileName) {
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 
   if (tab === 'survival') {
     SurvivalFilterComponent = lazy(() => import('../Components/MainComponents/SurvivalFilterComponent'));
@@ -195,7 +205,7 @@ export default function DataVisualization() {
     if (project_id !== undefined) {
       setState((prevState) => ({
         ...prevState,
-        project_id: project_id
+        "project_id": project_id
       }));
     }
     let l = [];
@@ -326,6 +336,7 @@ export default function DataVisualization() {
       let gridobj = {
         title: element,
         image: require(`../../../assets/images/Visualizations/${element}.png`).default,
+        manual: require(`../../../assets/files/DownloadbleFiles/MultiDataVis/${element}.pdf`).default,
         link: project_id
           ? `/visualise-multidata/${element}/${project_id} `
           : `/visualizemulti-exampledata/${element}/`,
@@ -456,8 +467,9 @@ export default function DataVisualization() {
           <div className="auto">
             <section>
               <div className={`PopoverStyles ${(project_id && tab !== 'home') ? 'JustifySpaceBetween' : ''}`} style={(!project_id && tabName === 'survival') ? { gap: '40px' } : {}}>
+
                 {toggle && (
-                  <Popover className="Relative" id="clinicalFilterPopover2">
+                  <Popover className="Relative filter_main_box" id="clinicalFilterPopover2">
                     {({ }) => {
                       return (
                         <>
@@ -470,10 +482,10 @@ export default function DataVisualization() {
                               }}
                             >
                               <div className="GeneSetgeneSetButton">
-                                <div className="flex-1">
+                                <div className="flex-1" style={{whiteSpace:"nowrap"}}>
                                   <FormattedMessage
                                     id="ClinicalInfoReFiltering"
-                                    defaultMessage="Clinical info. Re-filtering"
+                                    defaultMessage="Clinical info Re-filtering"
                                   />
                                 </div>
                                 <div className="w-20">
@@ -510,6 +522,53 @@ export default function DataVisualization() {
                     }}
                   </Popover>
                 )}
+
+                {tab !== 'fusion' && <Popover className="Relative gene_main_box" id="geneFilterPopover">
+                  {({ }) => {
+                    return (
+                      <>
+                        <div className="">
+                          <Popover.Button
+                            className={'selectBox'}
+                            onClick={(e) => {
+                              setIsGeneSetPopoverOpen(!isGeneSetPopoverOpen);
+                              e.stopPropagation();
+                            }}
+                          >
+                            <div className="GeneSetgeneSetButton">
+                              <div className="flex-1">
+                                <FormattedMessage
+                                  id="GeneSetRe-filtering"
+                                  defaultMessage="Gene set Re-filtering"
+                                />{' '}
+                              </div>
+                              <div className="w-20" style={{ backgroundColor: 'white' }}>
+                                <span className="filter-icon">
+                                  <img src={sample_img} alt="img" />
+                                </span>
+                              </div>
+                            </div>
+                          </Popover.Button>
+                          <Transition
+                            show={isGeneSetPopoverOpen}
+                            as={Fragment}
+                            enter="transition ease-out duration-200"
+                            enterFrom="opacity-0 translate-y-1"
+                            enterTo="opacity-100 translate-y-0"
+                            leave="transition ease-in duration-150"
+                            leaveFrom="opacity-100 translate-y-0"
+                            leaveTo="opacity-0 translate-y-1"
+                          >
+                            <Popover.Panel className="GeneSetPopoverPanel" id="GeneSetPopverChild" style={{ width: "100%" }}>
+                              <GeneSet parentCallback={callback} filterState={state} />
+                            </Popover.Panel>
+                          </Transition>
+                        </div>
+                      </>
+                    );
+                  }}
+                </Popover>
+                }
 
                 {!toggle && tabName === 'survival' && (
                   <Popover className="Relative gene_main_box">
@@ -631,54 +690,6 @@ export default function DataVisualization() {
                   </Popover>
                 )}
 
-                {tab !== 'fusion' && <Popover className="Relative gene_main_box" id="geneFilterPopover">
-                  {({ }) => {
-                    return (
-                      <>
-                        <div className="">
-                          <Popover.Button
-                            className={'selectBox'}
-                            onClick={(e) => {
-                              setIsGeneSetPopoverOpen(!isGeneSetPopoverOpen);
-                              e.stopPropagation();
-                            }}
-                          >
-                            <div className="GeneSetgeneSetButton">
-                              <div className="flex-1">
-                                <FormattedMessage
-                                  id="GeneSetRe-filtering"
-                                  defaultMessage="Gene set Re-filtering"
-                                />{' '}
-                              </div>
-                              <div className="w-20" style={{ backgroundColor: 'white' }}>
-                                <span className="filter-icon">
-                                  <img src={sample_img} alt="img" />
-                                </span>
-                              </div>
-                            </div>
-                          </Popover.Button>
-                          <Transition
-                            show={isGeneSetPopoverOpen}
-                            as={Fragment}
-                            enter="transition ease-out duration-200"
-                            enterFrom="opacity-0 translate-y-1"
-                            enterTo="opacity-100 translate-y-0"
-                            leave="transition ease-in duration-150"
-                            leaveFrom="opacity-100 translate-y-0"
-                            leaveTo="opacity-0 translate-y-1"
-                          >
-                            <Popover.Panel className="GeneSetPopoverPanel" id="GeneSetPopverChild" style={{ width: "100%" }}>
-                              <GeneSet parentCallback={callback} filterState={state} />
-                            </Popover.Panel>
-                          </Transition>
-                        </div>
-                      </>
-                    );
-                  }}
-                </Popover>
-                }
-
-
                 {project_id && tab !== 'home' && (
                   <Popover className="relative gene_main_box capture">
                     {({ }) => {
@@ -717,14 +728,15 @@ export default function DataVisualization() {
                     {gridData.map((item, index) => {
                       return (
                         <li key={index} className="listitems">
-                          <Link to={item.link}>
+                          <Link to={route?.pathname}>
+
                             <div className="thumb">
                               <img src={item.image} alt="img" />
                               <div className="hvBox">
                                 <div className="hvBox_links">
                                   {project_id ? (
                                     <>
-                                      <div className="textdiv">
+                                      <div className="textdiv" onClick={() => downloadFile(item.manual, `${item.title}.pdf`)}>
                                         <span>
                                           <FormattedMessage
                                             id="DownloadManual"
@@ -733,22 +745,27 @@ export default function DataVisualization() {
                                         </span>
                                         <img src={arrow_icon} alt="arrow-icon" />
                                       </div>
+
                                       <div className="textdiv">
-                                        <span>
-                                          <FormattedMessage
-                                            id="RunAnalysis"
-                                            defaultMessage="Run Analysis"
-                                          />
-                                        </span>
-                                        <img src={arrow_icon} alt="arrow-icon" />
+                                        <Link to={item.link}>
+                                          <span>
+                                            <FormattedMessage
+                                              id="RunAnalysis"
+                                              defaultMessage="Run Analysis"
+                                            />
+                                          </span>
+                                          <img src={arrow_icon} alt="arrow-icon" />
+                                        </Link>
                                       </div>{' '}
                                     </>
                                   ) : (
-                                    <div className="textdiv">
-                                      <span>
-                                        <FormattedMessage id="Example" defaultMessage="Example" />
-                                      </span>
-                                      <img src={arrow_icon} alt="arrow-icon" />
+                                    <div className="textdiv" >
+                                      <Link to={item.link}>
+                                        <span>
+                                          <FormattedMessage id="Example" defaultMessage="Example" />
+                                        </span>
+                                        <img src={arrow_icon} alt="arrow-icon" />
+                                      </Link>
                                     </div>
                                   )}
                                 </div>
@@ -761,6 +778,7 @@ export default function DataVisualization() {
                                 <dd className="p1">{item.description}</dd>
                               </dl>
                             </div>
+
                           </Link>
                         </li>
                       );

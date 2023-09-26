@@ -52,6 +52,22 @@ export default function FusionCustomPlot({ fusionId }) {
   }, [fusionId])
 
   useEffect(() => {
+    if (fusionJson) {
+      if (fusionJson.status && 'exons' in fusionJson && Object.keys(fusionJson.exons).length >= 0
+        && 'transcripts' in fusionJson && Object.keys(fusionJson.transcripts).length >= 0) {
+        setErrorHtml('')
+        setLoader(true)
+        setFusionPlotJson(fusionJson)
+      }
+      else {
+        setHtml([])
+        setLoader(false)
+        setErrorHtml('No Data')
+      }
+    }
+  }, [fusionJson])
+
+  useEffect(() => {
     setLoader(true)
     if (fusionPlotJson.status && 'exons' in fusionPlotJson && Object.keys(fusionPlotJson.exons).length >= 0
       && 'transcripts' in fusionPlotJson && Object.keys(fusionPlotJson.transcripts).length >= 0) {
@@ -195,21 +211,6 @@ export default function FusionCustomPlot({ fusionId }) {
 
   }, [fusionPlotJson])
 
-  useEffect(() => {
-    if (fusionJson) {
-      if (fusionJson.status && 'exons' in fusionJson && Object.keys(fusionJson.exons).length >= 0
-        && 'transcripts' in fusionJson && Object.keys(fusionJson.transcripts).length >= 0) {
-        setErrorHtml('')
-        setLoader(true)
-        setFusionPlotJson(fusionJson)
-      }
-      else {
-        setHtml([])
-        setLoader(false)
-        setErrorHtml('abcd')
-      }
-    }
-  }, [fusionJson])
 
   useEffect(() => {
     if (renderPlot && html.length > 0) {

@@ -54,9 +54,11 @@ function InterPro() {
   const [interProFile, setInterProFile] = useState();
   const [loader, setLoader] = useState(false);
   const [msg, setMsg] = useState('');
+  const [startInterval, setStartInterval] = useState(false)
   const [html, setHtml] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [loop,setLoop] = useState(null)
   const interproResponse = useSelector((data) => data.homeReducer.interpro);
   const dispatch = useDispatch();
   let backend_url = config['auth'];
@@ -83,10 +85,16 @@ function InterPro() {
   useEffect(() => {
     if (interproResponse) {
       if (interproResponse['status'] === 'running') {
-        setLoader(true);
-        setMsg('File Uploaded, Conversion Started.....');
+        setLoader(true)
+        setStartInterval(true)
+        setMsg('File Uploaded, Conversion Started.....')
       } else {
-        setLoader(false);
+        setLoader(false)
+        setStartInterval(false)
+        setLoop(interval => {
+            clearInterval(interval);
+            return null;
+        });
         let h = [];
         h.push(
           <>
@@ -111,6 +119,14 @@ function InterPro() {
       }
     }
   }, [interproResponse]);
+
+  useEffect(() => {
+    if (startInterval) {
+        setLoop(setInterval(() => {
+            dispatch(interPro("GET", { "container_name": interproResponse['container_name'] }))
+        }, 10000));
+    }
+}, [startInterval])
 
   const InforIcon = () => {
     return (

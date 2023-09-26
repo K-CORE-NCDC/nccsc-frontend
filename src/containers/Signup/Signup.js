@@ -75,34 +75,38 @@ const SignupComponent = () => {
 
   const formSubmitAction = (e) => {
     e.preventDefault();
-    let data = signin('POST', userFormData);
-    data
-      .then((result) => {
-        if (
-          result.status === 200 &&
-          'status' in result.data &&
-          result.data.status === 'Registered Successfully'
-        ) {
-          registerSuccess(data);
-        } else if (
-          'data' in result &&
-          'status' in result.data &&
-          result.data.status === 'User already exists'
-        ) {
-          registerFailure('SignupAlreadyExist');
-        } else if (
-          'data' in result &&
-          'status' in result.data &&
-          result.data.status === 'Error in sending mail'
-        ) {
-          registerFailure('SignupEmailError');
-        } else if ('data' in result && 'status' in result.data) {
-          registerFailure(result.data.status);
-        }
-      })
-      .catch(() => {
-        registerFailure('SignupContact');
-      });
+    console.log('userFormData',userFormData);
+    console.log('ssdsds',userFormData['emailId']);
+    // if(userFormData['emailId']){
+    // let data = signin('POST', userFormData);
+    // data
+    //   .then((result) => {
+    //     if (
+    //       result.status === 200 &&
+    //       'status' in result.data &&
+    //       result.data.status === 'Registered Successfully'
+    //     ) {
+    //       registerSuccess(data);
+    //     } else if (
+    //       'data' in result &&
+    //       'status' in result.data &&
+    //       result.data.status === 'User already exists'
+    //     ) {
+    //       registerFailure('SignupAlreadyExist');
+    //     } else if (
+    //       'data' in result &&
+    //       'status' in result.data &&
+    //       result.data.status === 'Error in sending mail'
+    //     ) {
+    //       registerFailure('SignupEmailError');
+    //     } else if ('data' in result && 'status' in result.data) {
+    //       registerFailure(result.data.status);
+    //     }
+    //   })
+    //   .catch(() => {
+    //     registerFailure('SignupContact');
+    //   });
+    // }
   };
 
   return (

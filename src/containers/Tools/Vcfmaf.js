@@ -79,7 +79,8 @@ function Vcfmaf() {
   const setShowModalFunction = (stateData) => {
     setShowModal(stateData);
   };
-
+  const [startInterval, setStartInterval] = useState(false)
+  const [loop, setLoop] = useState(null)
   const InforIcon = () => {
     return (
       <svg
@@ -115,15 +116,27 @@ function Vcfmaf() {
     }
   };
 
-
+  useEffect(() => {
+    if (startInterval) {
+      setLoop(setInterval(() => {
+        dispatch(vcfmaf("GET", { "container_name": vcf2mafResponse['container_name'] }))
+      }, 10000));
+    }
+  }, [startInterval])
 
   useEffect(() => {
     if (vcf2mafResponse) {
       if (vcf2mafResponse['status'] === 'running') {
         setLoader(true);
+        setStartInterval(true)
         setMsg('File Uploaded, Conversion Started.....');
       } else {
         setLoader(false);
+        setStartInterval(false)
+        setLoop(interval => {
+          clearInterval(interval);
+          return null;
+        });
         let h = [];
         h.push(
           <>

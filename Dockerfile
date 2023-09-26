@@ -34,9 +34,77 @@ EXPOSE 80
 RUN service nginx start
 
 
-
 # docker run -it -v /mnt/d/React-WorkSpace/nccsc-frontend:/home/nccsc-frontend  -p 3002:8282  nccsc-frontend:0.1 bash 
 
 
 
 
+
+# New code
+# # Use an appropriate base image with Node.js 16 for the builder stage
+# FROM node:16.12-alpine as builder
+
+# # Set the working directory
+# WORKDIR /app
+
+# # Copy package files to the container
+# COPY package.json .
+# COPY package-lock.json .
+
+# # Install 'btoa' package using npm
+# RUN npm install btoa
+
+# # Install 'vim' using apk (Alpine package manager)
+# RUN apk update && apk add --no-cache vim
+
+# # Install 'serve' globally using npm
+# RUN npm install -g serve
+
+# # Clean npm cache
+# RUN npm cache clean --force
+
+# # Install project dependencies
+# RUN npm install --legacy-peer-deps
+
+# # Copy the rest of the application files
+# COPY . .
+
+# # Copy the oncoprint bundle.js into the specified folder
+# COPY oncoprint.bundle.js node_modules/oncoprintjs/dist/
+
+# # Build the application
+# RUN npm run build
+
+# # Use Nginx as the web server for the second stage
+# FROM nginx:1.23-alpine
+
+# # Remove the default Nginx configuration
+# RUN rm -rf /etc/nginx/conf.d
+
+# # Copy custom Nginx configuration
+# COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# # Copy the built React app from the builder stage
+# COPY --from=builder /app/build /var/www/html/ncc/build/;
+
+# # Set the working directory for Nginx
+# WORKDIR /var/www/html/ncc/build/;
+
+# # Create a directory and move some files
+# RUN mkdir k-core
+# RUN mv static/ k-core/
+# RUN mv favicon.ico k-core/
+# RUN mv manifest.json k-core/
+
+# # Expose port 80
+# EXPOSE 80
+
+# # Set environment variables if needed
+# ENV REACT_APP_BACKEND_URL=http://3bigs.co.kr/k-corev/
+
+# # Start Nginx in daemon mode
+# CMD ["nginx", "-g", "daemon off;"]
+
+
+# # inside container to start nginx command just type
+# # nginx
