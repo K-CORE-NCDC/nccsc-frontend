@@ -673,6 +673,8 @@ export default function DataHeatmap({
                 <li className={mainTab === 'heatmap' ? 'on' : ''}>
                   <button
                     type="button"
+                    id="tab_heatmap"
+
                     name="maintype"
                     onClick={(e) => {
                       setMainTab('heatmap');

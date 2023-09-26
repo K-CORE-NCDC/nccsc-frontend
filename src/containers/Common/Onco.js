@@ -167,6 +167,8 @@ const OncoCmp = React.forwardRef(
       var global_mut_datum = clinicalData['globalMutCnt'];
       var mut_datum = clinicalData['mutCnt'];
       var custom_datum = clinicalData['custom'];
+      
+      
 
       if (custom_datum.length > 0) {
         for (let i = 0; i < custom_datum.length; i++) {
@@ -175,9 +177,10 @@ const OncoCmp = React.forwardRef(
             customName[originDatum.displayName];
           clinical_custom_track_params['label'] = customName[originDatum.displayName];
           clinical_custom_track_params['description'] = customName[originDatum.displayName];
-
+          console.log(clinical_custom_track_params)
           var track_id = oncoprint.addTracks([_.clone(clinical_custom_track_params)])[0];
           oncoprint.setTrackInfo(track_id, '');
+          // console.log(custom_datum[i]['data'])
           oncoprint.setTrackData(track_id, custom_datum[i]['data'], 'sample');
           oncoprint.setTrackTooltipFn(track_id, function (data) {
             return '<b>Sample: ' + BrstKeys[data.sample] + ' (' + data.category + ')</b>';
@@ -298,6 +301,7 @@ const OncoCmp = React.forwardRef(
     useEffect(() => {
       if (data) {
         let custom_name = {};
+        
         if (customFilterJson && project_id) {
           for (let cn = 0; cn < customFilterJson.length; cn++) {
             custom_name[customFilterJson[cn]['id']] = customFilterJson[cn]['name'];

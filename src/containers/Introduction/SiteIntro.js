@@ -70,7 +70,7 @@ export const SiteIntro = ({ lan }) => {
                   <p>
                     <FormattedMessage
                       id="siteIntro_text"
-                      defaultMessage=" K-Core Portal is a web-based analysis portal that provides visualizations of cancer genomic data, and it is a sub-service portal of the National Cancer Data Cancer website."
+                      defaultMessage=" K-CORE Portal is a web-based analysis portal that provides visualizations of cancer genomic data, and it is a sub-service portal of the National Cancer Data Cancer website."
                     />
                   </p>
                 </div>

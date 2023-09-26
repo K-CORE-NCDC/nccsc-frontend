@@ -1,10 +1,27 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.css';
 import bgimg from '../../assets/images/bk1.jpg';
+import UserGuidePDF from '../../assets/files/DownloadbleFiles/UserGuide.pdf';
 import { FormattedMessage } from 'react-intl';
+import logo1 from '../../assets/images/right_below_add.png';
+import logo2 from '../../assets/images/f_ci6.png';
 
-const Introduction = ({setActiveClassIndex, lan }) => {
+const Introduction = ({ setActiveClassIndex, lan }) => {
+
+  const img_div = {
+    display:"flex",
+    justifyContent:"flex-end",
+    width:"80%",
+    marginTop:"-20px"
+
+  };
+  const big_img1 = {
+    objectFit: 'scale-down',
+    width: '20%',
+    marginTop:'12px'
+  };
+
   return (
     <div
       style={{
@@ -15,10 +32,10 @@ const Introduction = ({setActiveClassIndex, lan }) => {
       className="mainVisual"
     >
       <div className="mask">
-        <div className="visual">
+        <div className="visual" style={{display:"flex", flexDirection:"columns"}}>
           <div className="txtBox main_box" data-aos="fade-in">
             <div className="txtBox_child1">
-              <p className="d2">K-Core Cancer Omics Research Portal</p>
+              <p className="d2">K-CORE (Cancer Omics Research) Portal</p>
               <br />
               <p className="h6" style={{ textAlign: 'center' }}>
                 {lan !== 'en-US' ? (
@@ -35,8 +52,14 @@ const Introduction = ({setActiveClassIndex, lan }) => {
             <div className="mainDataStatusWrap">
               <div className="mainDataStatus">
                 <dl style={{ background: 'transparent', columnGap: '50px' }}>
-                  <dt>
-                    <FormattedMessage id="UserGuide" defaultMessage="User Guide" />
+                  <dt
+                    onClick={() => {
+                      setActiveClassIndex(0);
+                    }}
+                    style={{ cursor: 'pointer' }}>
+                    <a href={UserGuidePDF} download>
+                      <FormattedMessage id="UserGuide" defaultMessage="User Guide" />
+                    </a>
                   </dt>
                   <dt
                     onClick={() => {

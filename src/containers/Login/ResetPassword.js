@@ -32,7 +32,7 @@ function ResetPassword() {
   const setPasswordSuccess = () => {
     Swal.fire({
       title: intl.formatMessage({ id: "PasswordSetSuccess0", defaultMessage: 'Password Reset Success' }),
-      text: intl.formatMessage({ id: "PasswordResetSuccess", defaultMessage: "Password Reset Success, use your new Password to Login."}),
+      text: intl.formatMessage({ id: "PasswordResetSuccess", defaultMessage: "Password Reset Success, use your new Password to Login." }),
       icon: 'success',
       confirmButtonColor: '#003177',
       confirmButtonText: 'Ok',
@@ -163,91 +163,126 @@ function ResetPassword() {
       <HeaderComponent title={title} breadCrumbs={breadCrumbs['/resetpassword/']} type="single" />
       <article id="subContents" className="subContents">
         <div>
-          <div className="MarginBottom5">
-            <h1 className="logo">
-              <a>
-                <img src={KcoreFinalLogo} alt="logo" className="logo Block MAuto W10" />
-              </a>
-            </h1>
+
+          <div className="contentsTitle">
+            <div className="auto">
+              <h1 className="logo MarginBottom5">
+                <a>
+                  <img src={KcoreFinalLogo} alt="logo" className="logo Block MAuto W10" />
+                </a>
+              </h1>
+              <div className="MultiUploadTextCenter">
+                <h1 className="main">
+                  <font style={{ verticalAlign: 'inherit' }}>
+                    <span>
+                      <font style={{ verticalAlign: 'inherit' }}>
+                        <FormattedMessage id="SignupWelcome" defaultMessage="Please set the password you want to use." />
+                      </font>
+                    </span>
+                    {' '}
+                  </font>
+                </h1>
+
+              </div>
+            </div>
           </div>
 
           <div className="ptn">
             <div className="auto">
               <div className="pwSearch tac">
-                <p className="h5">
-                  <FormattedMessage id="SignupWelcome" defaultMessage="Please set the password you want to use." />
-                </p>
 
-                <form className="formBox" id="frm" method="post">
+                <form className="formBox" id="frm" method="post" name="frm">
                   {/*  error messages */}
                   {isError && errorMessage && <div className="ErrorText">{errorMessage}</div>}
 
                   {/* Input unique Key */}
-                  <div className="inputText MarginBottom5">
-                    <FormattedMessage
-                      id="ResetEnterPin"
-                      defaultMessage="Please enter your PIN number."
-                    >
-                      {(placeholder) => (
-                        <input
-                          type="text"
-                          value={userFormData.uniqueKey}
-                          onChange={updateSetPassword}
-                          id="uniqueKey"
-                          name="uniqueKey"
-                          placeholder={placeholder}
-                          autoComplete="off"
-                        />
-                      )}
-                    </FormattedMessage>
-                  </div>
+                  <dl>
+                    <dt style={{ width: "250px", display: "flex" }}>
+                      <FormattedMessage id="PinNumber" defaultMessage="PIN Number" />
+                    </dt>
+                    <dd>
+                      <div className="inputText">
+                        <FormattedMessage
+                          id="ResetEnterPin"
+                          defaultMessage="Please enter your PIN number."
+                        >
+                          {(placeholder) => (
+                            <input
+                              type="text"
+                              value={userFormData.uniqueKey}
+                              onChange={updateSetPassword}
+                              id="uniqueKey"
+                              name="uniqueKey"
+                              placeholder={placeholder}
+                              autoComplete="off"
+                            />
+                          )}
+                        </FormattedMessage>
+                      </div>
+                    </dd>
+                  </dl>
 
                   {/* Input Password */}
-                  <div className="inputText MarginBottom5">
-                    <FormattedMessage
-                      id="PasswordConfirm1"
-                      defaultMessage="Please Enter New Password."
-                    >
-                      {(placeholder) => (
-                        <input
-                          className={isError == true ? 'ErrorInput' : ''}
-                          type="password"
-                          value={userFormData.password}
-                          onChange={updateSetPassword}
-                          id="password"
-                          name="password"
-                          placeholder={placeholder}
-                          autoComplete="off"
-                        />
-                      )}
-                    </FormattedMessage>
-                  </div>
+                  <dl>
+                    <dt style={{ width: "250px", display: "flex" }}>
+                      <FormattedMessage id="NewPassword" defaultMessage="New Password" />
+                    </dt>
+                    <dd>
+                      <div className="inputText">
+                        <FormattedMessage
+                          id="PasswordConfirm1"
+                          defaultMessage="Please Enter New Password."
+                        >
+                          {(placeholder) => (
+                            <input
+                              className={isError == true ? 'ErrorInput' : ''}
+                              type="password"
+                              value={userFormData.password}
+                              onChange={updateSetPassword}
+                              id="password"
+                              name="password"
+                              placeholder={placeholder}
+                              autoComplete="off"
+                            />
+                          )}
+                        </FormattedMessage>
+                      </div>
+                    </dd>
+                  </dl>
 
                   {/* Input ConfirmPassword */}
-                  <div className="inputText">
-                    <FormattedMessage
-                      id="PasswordConfirm2"
-                      defaultMessage="Renter New Password."
-                    >
-                      {(placeholder) => (
-                        <input
-                          className={isError ? 'ErrorInput' : ''}
-                          type="password"
-                          id="cnfmpassword"
-                          name="cnfmpassword"
-                          placeholder={placeholder}
-                          value={userFormData.cnfmpassword}
-                          onChange={updateSetPassword}
-                        />
-                      )}
-                    </FormattedMessage>
-                  </div>
+                  
+                  <dl>
+                    <dt style={{ width: "250px", display: "flex" }}>
+                      <FormattedMessage id="ConfirmPassword" defaultMessage="Confirm Password" />
+                    </dt>
+                    <dd>
+                      <div className="inputText">
+                        <FormattedMessage
+                          id="PasswordConfirm2"
+                          defaultMessage="Re-enter New Password."
+                        >
+                          {(placeholder) => (
+                            <input
+                              className={isError ? 'ErrorInput' : ''}
+                              type="password"
+                              id="cnfmpassword"
+                              name="cnfmpassword"
+                              placeholder={placeholder}
+                              value={userFormData.cnfmpassword}
+                              onChange={updateSetPassword}
+                            />
+                          )}
+                        </FormattedMessage>
+                      </div>
+                    </dd>
+                  </dl>
                 </form>
 
               </div>
 
               {/* Reset Password Button  */}
-              <div className="bottomBtns" style={{marginTop:"20px"}}>
+              <div className="bottomBtns" style={{ marginTop: "20px" }}>
                 <div className="flex">
                   <button id="setPasswordBtn" onClick={formSubmitAction} className="btn btnPrimary">
                     <span>

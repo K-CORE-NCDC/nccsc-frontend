@@ -161,7 +161,7 @@ export default function Web() {
     let userid = '';
     let category = 'Others';
     if (window.location.href.substring(window.location.href.lastIndexOf('/') + 1)) {
-      category = 'User DataVisualization';
+      category = 'Visualize My Data';
     } else if (
       [
         'circos',
@@ -176,7 +176,7 @@ export default function Web() {
         'fusion'
       ].some((r) => window.location.href.split('/').indexOf(r) >= 0)
     ) {
-      category = 'DataVisualization';
+      category = 'Example Data Visualization';
     }
 
     if (getCookie('is_login') && getCookie('is_login') !== null) {
@@ -256,7 +256,7 @@ export default function Web() {
     let category = 'Others';
 
     if (window.location.href.substring(window.location.href.lastIndexOf('/') + 1)) {
-      category = 'User DataVisualization';
+      category = 'Visualize My Data';
     } else if (
       [
         'circos',
@@ -271,7 +271,7 @@ export default function Web() {
         'fusion'
       ].some((r) => window.location.href.split('/').indexOf(r) >= 0)
     ) {
-      category = 'DataVisualization';
+      category = 'Example Data Visualization';
     }
 
     if (getCookie('sessionId')) {
@@ -404,7 +404,7 @@ export default function Web() {
         <div className="headerTop">
           <div className="auto fullsize">
             <h1 className="logo">
-              <a href="/">
+              <a href="/k-core/">
                 {/* <img src={logoNew} alt="logo" className="logo01" /> */}
                 <img src={mainLogowhite} alt="logo" className="logo01" style={{width:"108px"}} />
                 <img src={mainLogo} alt="logo" className="logo02" style={{width:"108px"}}/>

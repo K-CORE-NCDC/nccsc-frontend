@@ -115,25 +115,27 @@ function SankeyPlot({ inputData }) {
               Header: "Yes",
               accessor: (row) => {
                 if (row.dna === 'YES') {
-                  if (row.gene in rnaData['variant_info']) {
-                    // return 'O  (' + rnaData['variant_info'][row.gene].length + ')'
-                    return 'O'
-                  } else {
-                    return row.dna;
-                  }
-                } else '';
+                  // if (row.gene in rnaData['variant_info']) {
+                  //   // return 'O  (' + rnaData['variant_info'][row.gene].length + ')'
+                  //   return 'O'
+                  // } else {
+                  //   return "YES";
+                  // }
+                  return 'O'
+                }
               },
             }, {
               Header: "No",
               accessor: (row) => {
                 if (row.dna === 'NO') {
-                  if (row.gene in rnaData['variant_info']) {
-                    // return 'O  (' + rnaData['variant_info'][row.gene].length + ')'
-                    return 'O'
-                  } else {
-                    return row.dna;
-                  }
-                } else '';
+                  // if (row.gene in rnaData['variant_info']) {
+                  //   // return 'O  (' + rnaData['variant_info'][row.gene].length + ')'
+                  //   return 'O'
+                  // } else {
+                  //   return "NO";
+                  // }
+                    return "O";
+                }
               },
             }
           ]

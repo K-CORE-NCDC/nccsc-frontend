@@ -1,9 +1,23 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-import mainLogo from '../../../assets/images/mainLogo.png';
+import logo1 from '../../../assets/images/right_below_add.png';
+import logo2 from '../../../assets/images/f_ci6.png';
 
 const FooterComponent = () => {
+  const img_div = {
+    display:"flex",
+    justifyContent:"flex-end",
+    width:"60%",
+    marginTop:"-20px",
+    gap:"20px"
+
+  };
+  const big_img1 = {
+    objectFit: 'scale-down',
+    width: '20%',
+    marginTop:'12px'
+  };
 
   return (
     <>
@@ -31,8 +45,9 @@ const FooterComponent = () => {
             <p>경기도 고양시 일산동구 일산로 323 국립암센터</p>
             <p>Copyright ⓒ 2021 by NCC. All rights reserved.</p>
           </div>
-          <div>
-            <img src={mainLogo} alt="footer_img" className="logo01" style={{width:'150px'}}></img>
+          <div style={img_div}>
+            <img src={logo1} alt="fc1" className="logo01" style={big_img1} />
+            <img src={logo2} alt="fc1" className="logo01" style={big_img1} />
           </div>
         </div>
       </footer>

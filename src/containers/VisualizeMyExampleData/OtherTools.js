@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-
+import OtherToolsManual from '../../assets/files/DownloadbleFiles/OtherTools/OtherTools_Manual.pdf';
 export const OtherTools = () => {
   return (
     <div className="tabContents " style={{ height: '85vh' }}>
@@ -10,7 +10,9 @@ export const OtherTools = () => {
             <p className="tit h5">Contents</p>
             <div className="tit contentBtns">
               <button className="btn">
-                <FormattedMessage id="DownloadManual" defaultMessage="Download Manual" />
+                <a href={OtherToolsManual} download>
+                  <FormattedMessage id="DownloadManual" defaultMessage="Download Manual" />
+                </a>
               </button>
             </div>
           </div>

@@ -77,9 +77,6 @@ export default function DataVolcono({
         if (volcanoType === 'proteome') {
           inputState['volcanoProteomeType'] = proteomeValue;
         }
-        if (project_id) {
-          inputState['project_id'] = parseInt(project_id);
-        }
         let return_data = VolcanoPlotInfo('POST', { ...inputState, filterGroup: groupFilters });
         return_data
           .then((result) => {
@@ -171,7 +168,6 @@ export default function DataVolcono({
       setShowVolcano(false);
       setNoContent(true);
     }
-    // transferCardData(sampleCountsCard)
   }, [volcanoJson]);
 
   useEffect(() => {

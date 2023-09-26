@@ -237,12 +237,20 @@
   text-align: end;
 }
 
-.capture {
-  margin-left: 25%;
-}
-
 .gene_main_box .selectBox {
   width: 100%;
+}
+
+.filter_main_box {
+  width: 280px;
+}
+
+.filter_main_box .selectBox {
+  width: 100%;
+}
+
+.capture {
+  margin-left: 25%;
 }
 
 .WFull {
@@ -559,16 +567,27 @@
   .gene_main_box:last-child {
     margin-left: 10%;
   }
+  .filter_main_box:last-child {
+    margin-left: 10%;
+  }
 }
 
 @media (min-width: 1183px) and (max-width: 1199px) {
   .gene_main_box:last-child {
     margin-left: 20%;
   }
+
+  .filter_main_box:last-child {
+    margin-left: 20%;
+  }
 }
 
 @media (max-width: 1060px) {
   .gene_main_box:last-child {
+    margin-left: 2%;
+  }
+
+  .filter_main_box:last-child {
     margin-left: 2%;
   }
 
@@ -579,9 +598,6 @@
 
 @media (min-width: 769px) and (max-width: 979px) {
 
-  /* .gene_main_box:last-child{
-   margin-left: 2%;
-  } */
   .PopoverStyles {
     justify-content: center;
   }

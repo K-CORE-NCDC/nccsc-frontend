@@ -55,7 +55,6 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survialData, SVF
   useEffect(() => {
     if (userDefinedFilterColumns && userDefinedFilterColumns['filterJson'] && userDefinedFilterColumns['filterJson']['Clinical Information']) {
       const columns = userDefinedFilterColumns['filterJson']['Clinical Information'];
-      console.log('columns', columns);
       delete columns['death_yn'];
       delete columns['death_cnfr_drtn'];
       setCoxUserDefinedFilter(columns);
@@ -65,21 +64,14 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survialData, SVF
   useEffect(() => {
     if (survivalModel === 'cox') {
       let tmp = {};
-      console.log('project_id ->',project_id);
       if (project_id) {
-        console.log('coxFilter ->',coxFilter);
-        console.log('coxUserDefinedFilter ->',coxUserDefinedFilter);
         Object.entries(coxUserDefinedFilter).forEach(([item, _]) => {
-          // console.log('coxFilter', coxFilter[item]);
-          // console.log('item',item);
           if (item !== 'rlps_yn' && item !== 'rlps_cnfr_drtn') {
             // Use bracket notation to access coxFilter properties with dynamic keys
             if (coxFilter && item in coxFilter && coxFilter[item] === true) {
               tmp[item] = true;
-              // console.log('tmp true', tmp);
             } else {
               tmp[item] = false;
-              // console.log('tmp false', tmp);
             }
           }
         });
