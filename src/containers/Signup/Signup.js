@@ -75,38 +75,36 @@ const SignupComponent = () => {
 
   const formSubmitAction = (e) => {
     e.preventDefault();
-    console.log('userFormData',userFormData);
-    console.log('ssdsds',userFormData['emailId']);
-    // if(userFormData['emailId']){
-    // let data = signin('POST', userFormData);
-    // data
-    //   .then((result) => {
-    //     if (
-    //       result.status === 200 &&
-    //       'status' in result.data &&
-    //       result.data.status === 'Registered Successfully'
-    //     ) {
-    //       registerSuccess(data);
-    //     } else if (
-    //       'data' in result &&
-    //       'status' in result.data &&
-    //       result.data.status === 'User already exists'
-    //     ) {
-    //       registerFailure('SignupAlreadyExist');
-    //     } else if (
-    //       'data' in result &&
-    //       'status' in result.data &&
-    //       result.data.status === 'Error in sending mail'
-    //     ) {
-    //       registerFailure('SignupEmailError');
-    //     } else if ('data' in result && 'status' in result.data) {
-    //       registerFailure(result.data.status);
-    //     }
-    //   })
-    //   .catch(() => {
-    //     registerFailure('SignupContact');
-    //   });
-    // }
+    if (userFormData['emailId']) {
+      let data = signin('POST', userFormData);
+      data
+        .then((result) => {
+          if (
+            result.status === 200 &&
+            'status' in result.data &&
+            result.data.status === 'Registered Successfully'
+          ) {
+            registerSuccess(data);
+          } else if (
+            'data' in result &&
+            'status' in result.data &&
+            result.data.status === 'User already exists'
+          ) {
+            registerFailure('SignupAlreadyExist');
+          } else if (
+            'data' in result &&
+            'status' in result.data &&
+            result.data.status === 'Error in sending mail'
+          ) {
+            registerFailure('SignupEmailError');
+          } else if ('data' in result && 'status' in result.data) {
+            registerFailure(result.data.status);
+          }
+        })
+        .catch(() => {
+          registerFailure('SignupContact');
+        });
+    }
   };
 
   return (
@@ -125,7 +123,7 @@ const SignupComponent = () => {
             <div className="auto">
               <div className="pwSearch tac">
                 <p className="h5">
-                    <FormattedMessage
+                  <FormattedMessage
                     id="SignupMsg1"
                     defaultMessage="Please use the service after Signing Up"
                   />
@@ -171,7 +169,7 @@ const SignupComponent = () => {
               </div>
               <div className="bottomBtns">
                 <div className="flex">
-                  <button onClick={formSubmitAction} className="btn btnPrimary">
+                  <button onClick={formSubmitAction} className="btn btnPrimary" id="SignUpButton">
                     <span>
                       <FormattedMessage id="Signup" defaultMessage="Sign up" />
                     </span>

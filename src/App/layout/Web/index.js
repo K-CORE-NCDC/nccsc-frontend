@@ -413,7 +413,7 @@ export default function Web() {
             <div className="headerUtils">
               {is_login ? (
                 <>
-                  <Link to="/logout/">
+                  <Link to="/logout/" id="Logout">
                     <FormattedMessage id="Logout" defaultMessage="Logout" />
                   </Link>
                   {getCookie('superuser') && (
@@ -424,16 +424,16 @@ export default function Web() {
                 </>
               ) : (
                 <>
-                  <Link to="/signup/">
+                  <Link to="/signup/" id="GenerateRegistrationNumber">
                     <FormattedMessage
                       id="GenerateRegistrationNumber"
                       defaultMessage="Generate registration number"
                     />
                   </Link>
-                  <Link to="/login/">
+                  <Link to="/login/" id="Login">
                     <FormattedMessage id="Login" defaultMessage="Login" />
                   </Link>
-                  <Link to="/findpassword/">
+                  <Link to="/findpassword/" id="FindPassword">
                     <FormattedMessage id="FindPassword" defaultMessage="Find Password" />
                   </Link>{' '}
                 </>

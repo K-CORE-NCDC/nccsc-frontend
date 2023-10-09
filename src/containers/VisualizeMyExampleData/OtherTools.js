@@ -9,7 +9,7 @@ export const OtherTools = () => {
           <div className="subHeader">
             <p className="tit h5">Contents</p>
             <div className="tit contentBtns">
-              <button className="btn">
+              <button className="btn" id="DownloadManual">
                 <a href={OtherToolsManual} download>
                   <FormattedMessage id="DownloadManual" defaultMessage="Download Manual" />
                 </a>

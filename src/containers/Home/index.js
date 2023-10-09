@@ -67,12 +67,12 @@ export default function Home(parentProps) {
   };
 
   const items = [
-    { id: 1, title: 'Slide 1' },
-    { id: 2, title: 'Slide 2' },
-    { id: 3, title: 'Slide 3' },
-    { id: 4, title: 'Slide 4' },
-    { id: 5, title: 'Slide 5' },
-    { id: 6, title: 'Slide 6' },
+    { id: 1, title: 'loading...' },
+    { id: 2, title: 'loading...' },
+    { id: 3, title: 'loading...' },
+    { id: 4, title: 'loading...' },
+    { id: 5, title: 'loading...' },
+    { id: 6, title: 'loading...' },
   ];
 
   const goToSlide = (index) => {

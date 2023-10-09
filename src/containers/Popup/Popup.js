@@ -118,10 +118,10 @@ function Popup({ toggleModal }) {
                   <div className="popupBody" style={{backgroundColor:"rgb(240, 242, 246)"}} dangerouslySetInnerHTML={{ __html: content }}></div>
                 )}
               <div className="popupFooter">
-                <button className="mainPopupClose" type="button" onClick={changeDay}>
+                <button className="mainPopupClose" type="button" onClick={changeDay} id="RemindAfter24hrsButton">
                   <FormattedMessage id="RemindAfter24hrs" defaultMessage="Remind after 24 hrs" />
                 </button>
-                <button className="mainPopupClose" onClick={closeModal}>
+                <button className="mainPopupClose" onClick={closeModal} id="CloseButton">
                   {' '}
                   <FormattedMessage id="Close" defaultMessage="Close" />{' '}
                 </button>

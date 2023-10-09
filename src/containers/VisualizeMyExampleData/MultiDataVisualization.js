@@ -17,13 +17,14 @@ const MultiDataVisualization = () => {
             <div className="tit contentBtns">
               <button
                 className="btn"
+                id="ExamplePage"
                 onClick={() => {
                   history.push('/visualizemulti-exampledata/home');
                 }}
               >
                 <FormattedMessage id="ExamplePage" defaultMessage="Example Page" />
               </button>
-              <button className="btn">
+              <button className="btn" id="DownloadManual">
                 <a href={MultiDataManual} download>
                   <FormattedMessage id="DownloadManual" defaultMessage="Download Manual" />
                 </a>

@@ -260,6 +260,7 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
           })
           .attr('stroke', 'black')
           .attr('class', 'pvalue');
+
         p.selectAll('medianLines')
           .data([key])
           .enter()
@@ -313,14 +314,14 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
             tooltip
               .html(
                 'Sample: &nbsp;' +
-                  BrstKeys[i.Sample] +
-                  `<br/>${view_type === 'gene_vl' ? 'gene val' : 'z-score'} &nbsp;` +
-                  i.Sepal_Length
+                BrstKeys[i.Sample] +
+                `<br/>${view_type === 'gene_vl' ? 'gene val' : 'z-score'} &nbsp;` +
+                i.Sepal_Length
               )
               .style('right', height - 25 + 'px')
               .style('top', height - 255 + 'px');
           })
-          .on('mouseout', () => {});
+          .on('mouseout', () => { });
 
         p.selectAll('medianLines')
           .data(vl[z])
@@ -358,6 +359,7 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
           })
           .attr('stroke', 'black')
           .attr('class', 'black');
+          
         p.selectAll('medianLines')
           .data(vl[z])
           .enter()
@@ -406,9 +408,9 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
             tooltip.transition().duration(200).style('opacity', 1);
             tooltip.html(
               'Sample: &nbsp;' +
-                BrstKeys[i.Sample] +
-                `<br/>${view_type === 'gene_vl' ? 'gene val' : 'z-score'} &nbsp;` +
-                i.Sepal_Length
+              BrstKeys[i.Sample] +
+              `<br/>${view_type === 'gene_vl' ? 'gene val' : 'z-score'} &nbsp;` +
+              i.Sepal_Length
             );
 
             if (document.getElementById('filterBoxCmp')) {

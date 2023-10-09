@@ -14,7 +14,7 @@ export const SingleDataVisualization = () => {
         <div className="tab visualizeExampleData">
           <ul>
             <li className={activeTab === '1' ? 'on' : ''}>
-              <button type="button" onClick={() => setActiveTab('1')}>
+              <button type="button" onClick={() => setActiveTab('1')} id="SingleDataVisualizationGuidelinesButton">
                 <FormattedMessage
                   id="Example_tab_01"
                   defaultMessage="Single Data Visualization Guidelines"
@@ -22,7 +22,7 @@ export const SingleDataVisualization = () => {
               </button>
             </li>
             <li className={activeTab === '2' ? 'on' : ''}>
-              <button type="button" onClick={() => setActiveTab('2')}>
+              <button type="button" onClick={() => setActiveTab('2')} id="MultiDataVisualizationGuidelinesButton">
                 <FormattedMessage
                   id="Example_tab_02"
                   defaultMessage="Multi Data Visualization Guidelines"
@@ -30,7 +30,7 @@ export const SingleDataVisualization = () => {
               </button>
             </li>
             <li className={activeTab === '3' ? 'on' : ''}>
-              <button type="button" onClick={() => setActiveTab('3')}>
+              <button type="button" onClick={() => setActiveTab('3')} id="OtherToolsGuidelinesButton">
                 <FormattedMessage id="Example_tab_03" defaultMessage="Other Tools Guidelines" />
               </button>
             </li>
@@ -45,6 +45,7 @@ export const SingleDataVisualization = () => {
                     <p className="tit h5">Contents</p>
                     <div className="tit contentBtns">
                       <button
+                      id="ExamplePage"
                         className="btn"
                         onClick={() => {
                           history.push({
@@ -55,7 +56,7 @@ export const SingleDataVisualization = () => {
                       >
                         <FormattedMessage id="ExamplePage" defaultMessage="Example Page" />
                       </button>
-                      <button className="btn">
+                      <button className="btn" id="DownloadManual">
                         <a href={SingleDataManual} download>
                           <FormattedMessage id="DownloadManual" defaultMessage="Download Manual" />
                         </a>

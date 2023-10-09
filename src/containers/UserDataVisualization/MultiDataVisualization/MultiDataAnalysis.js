@@ -400,11 +400,13 @@ export default function DataVisualization() {
         defaultMessage: 'Multi Data Visualization',
         to: project_id ? `/visualise-multidata/home/${project_id}` : `/visualizemulti-exampledata/home/`
       },
+      project_id &&
       {
         id: 'MultiDataProjectView',
         defaultMessage: 'Multi Data Project View',
         to: '/MultiDataProjectView/'
       },
+
       project_id && {
         id: '  ',
         defaultMessage: userProjectDetails?.name?.substr(
@@ -482,7 +484,7 @@ export default function DataVisualization() {
                               }}
                             >
                               <div className="GeneSetgeneSetButton">
-                                <div className="flex-1" style={{whiteSpace:"nowrap"}}>
+                                <div className="flex-1" style={{ whiteSpace: "nowrap" }}>
                                   <FormattedMessage
                                     id="ClinicalInfoReFiltering"
                                     defaultMessage="Clinical info Re-filtering"
@@ -801,6 +803,7 @@ export default function DataVisualization() {
               {tabName && (
                 <div style={{ marginTop: '50px' }}>
                   <button
+                    id="BackButton"
                     className="btn btnPrimary"
                     style={{ float: 'right', margin: '10px 0px 10px 0px' }}
                     onClick={() =>
