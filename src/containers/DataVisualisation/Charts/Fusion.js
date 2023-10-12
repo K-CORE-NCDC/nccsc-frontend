@@ -89,6 +89,7 @@ export default function FusionPlot({
     {
       // Header: intl.formatMessage({ id: "View", defaultMessage: 'View' }),
       Header: "View Fusion plot",
+      wordBreak:"initial",
       accessor: (row) => row?.view,
       Cell: ({ cell: { row, value } }) => {
         let html = [];
@@ -143,6 +144,7 @@ export default function FusionPlot({
     {
       // Header: intl.formatMessage({ id: "SampleName", defaultMessage: 'Sample Name' }),
       Header: "Sample Name",
+      wordBreak:"initial",
       accessor: (original) => {
         let samples = '';
 
@@ -155,7 +157,7 @@ export default function FusionPlot({
           if (original && 'group 2' in original) {
             if (samples) {
               samples += ',';
-            } 
+            }
             samples += original['group 2'].join(',');
           }
           if (original && 'group 3' in original) {
@@ -172,57 +174,66 @@ export default function FusionPlot({
     {
       // Header: intl.formatMessage({ id: "LeftGeneName", defaultMessage: 'Left Gene Name' }),
       Header: "Left Gene Name",
+      wordBreak:"initial",
       accessor: (original) => original?.left_gene_name,
       Cell: ({ cell: { value } }) => (
-        < div title={value}>{value}</div>
+        <div title={value}>{value}</div>
       ),
 
     },
     {
       // Header: intl.formatMessage({ id: "LeftEnsemblId", defaultMessage: 'Left Ensembl Id' }),
       Header: "Left Ensembl Id",
+      wordBreak:"initial",
       accessor: (original) => original?.left_gene_ensmbl_id,
       Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     },
     {
       // Header: intl.formatMessage({ id: "LeftBreakpoint", defaultMessage: 'Left Breakpoint' }),
       Header: "Left Breakpoint",
+      wordBreak:"initial",
       accessor: (original) => original?.left_hg38_pos,
       Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     },
     {
       // Header: intl.formatMessage({ id: "RightGeneName", defaultMessage: 'Right Gene Name' }),
       Header: "Right Gene Name",
+      wordBreak:"initial",
       accessor: (original) => original?.right_gene_name,
       Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     },
     {
       // Header: intl.formatMessage({ id: "RightEnsemblId", defaultMessage: 'Right Ensembl Id' }),
       Header: "Right Ensembl Id",
+      wordBreak:"initial",
       accessor: (original) => original?.right_gene_ensmbl_id,
       Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     },
     {
       // Header: intl.formatMessage({ id: "RightBreakpoint", defaultMessage: 'Right Breakpoint' }),
       Header: "Right Breakpoint",
+      wordBreak:"initial",
       accessor: (original) => original?.right_hg38_pos,
       Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     },
     {
       // Header: intl.formatMessage({ id: "JunctionReadCount", defaultMessage: 'Junction Read Count' }),
       Header: "Junction Read Count",
+      wordBreak:"initial",
       accessor: (original) => original?.junction_read_count,
       Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     },
     {
       // Header: intl.formatMessage({ id: "SpanningFragCount", defaultMessage: 'Spanning Frag Count' }),
       Header: "Spanning Frag Count",
+      wordBreak:"initial",
       accessor: (original) => original?.spanning_frag_count ? original?.spanning_frag_count : 0,
       Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     },
     {
       // Header: intl.formatMessage({ id: "SpliceType", defaultMessage: 'Splice Type' }),
       Header: "Splice Type",
+      wordBreak:"initial",
       accessor: (original) => original?.splice_type ? original?.splice_type : 'None',
       Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     }

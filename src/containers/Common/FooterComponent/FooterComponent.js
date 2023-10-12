@@ -2,21 +2,26 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import logo1 from '../../../assets/images/right_below_add.png';
-import logo2 from '../../../assets/images/f_ci6.png';
+import logo2 from '../../../assets/images/FooterFinal.png';
 
 const FooterComponent = () => {
   const img_div = {
-    display:"flex",
-    justifyContent:"flex-end",
-    width:"60%",
-    marginTop:"-20px",
-    gap:"20px"
+    display: "flex",
+    justifyContent: "flex-end",
+    width: "60%",
+    marginTop: "-20px",
+    gap: "20px"
 
   };
   const big_img1 = {
     objectFit: 'scale-down',
     width: '20%',
-    marginTop:'12px'
+    marginTop: '12px'
+  };
+  const big_img2 = {
+    objectFit: 'scale-down',
+    width: '15%',
+    marginTop: '12px'
   };
 
   return (
@@ -47,7 +52,7 @@ const FooterComponent = () => {
           </div>
           <div style={img_div}>
             <img src={logo1} alt="fc1" className="logo01" style={big_img1} />
-            <img src={logo2} alt="fc1" className="logo01" style={big_img1} />
+            <img src={logo2} alt="fc1" className="logo01" style={big_img2} />
           </div>
         </div>
       </footer>

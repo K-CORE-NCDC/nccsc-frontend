@@ -12,6 +12,7 @@ function NoticeDetails() {
     const breadCrumbs = {
         '/Notice/': [
             { id: 'Home', defaultMessage: 'Home', to: '/' },
+            { id: `CustomerService`, defaultMessage: `Customer Service`, to: `` },
             { id: `Notice`, defaultMessage: `Notice`, to: `` },
 
         ]

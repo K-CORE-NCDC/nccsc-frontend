@@ -12,6 +12,7 @@ function FaqDetails() {
     const breadCrumbs = {
         '/FAQ/': [
             { id: 'Home', defaultMessage: 'Home', to: '/' },
+            { id: `CustomerService`, defaultMessage: `Customer Service`, to: `` },
             { id: `FAQ`, defaultMessage: `FAQ`, to: `` },
 
         ]

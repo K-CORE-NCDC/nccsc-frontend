@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useRef } from 'react';
+import React, { createRef, useEffect, useRef, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
@@ -13,12 +13,24 @@ import { VisualizeMyData } from '../VisualizeMyData/VisualizeMyData';
 import { SingleDataVisualization } from '../VisualizeMyExampleData/SingleDataVisualization';
 import Introduction from './Introduction';
 import SlickSlider from './slickSlide';
+import { Context } from '../../wrapper';
 
 export default function Home(parentProps) {
   const swiperRef = useRef(null);
   const menuHeightRef = useRef(null);
   const containerRef = useRef(null);
-  const sections = [
+  const context = useContext(Context);
+  const [language, setLanguage] = useState("kr")
+  useEffect(() => {
+    if (context.locale === 'en-US') {
+      setLanguage('en')
+    }
+    else {
+      setLanguage('kr')
+    }
+
+  }, [context])
+  const sectionsE = [
     'MAIN',
     'INTRODUCTION',
     'VISUALIZE EXAMPLE DATA',
@@ -26,6 +38,16 @@ export default function Home(parentProps) {
     'CUSTOMER SERVICE',
     'FOOTER'
   ];
+
+  const sectionsK = [
+    '메인',
+    '사이트 소개',
+    '데이터 분석 예시',
+    '사용자 데이터 분석',
+    '고객의 소리',
+    '카피라이트'
+  ];
+
   const resultRef = useRef([]);
   const history = useHistory();
 
@@ -115,7 +137,7 @@ export default function Home(parentProps) {
       if (swiperRef.current && swiperRef.current.swiper) {
         const activeSlide = swiperRef.current.swiper.activeIndex;
         const activeItem = items[activeSlide];
-        console.log('activeItem',activeItem);
+        console.log('activeItem', activeItem);
         const urlSearchParams = new URLSearchParams();
         urlSearchParams.set('activeSlide', activeSlide.toString());
         localStorage.setItem('activeSlideIndex', activeSlide.toString());
@@ -159,10 +181,10 @@ export default function Home(parentProps) {
       {width > 1025 && height > 800 && (
         <>
           <div
-            className={`${
-              parentProps?.parentProps?.activeClassIndex !== 0 ? 'on' : ''
-            } pagination `}
+            className={`${parentProps?.parentProps?.activeClassIndex !== 0 ? 'on' : ''
+              } pagination `}
           ></div>
+
           <SwiperComponent
             id="sushma"
             ref={swiperRef}
@@ -180,9 +202,8 @@ export default function Home(parentProps) {
               el: '.pagination',
               clickable: true,
               renderBullet: function (index, className) {
-                return `<div class="${
-                  parentProps?.parentProps?.activeClassIndex === index ? 'circle ' : ' '
-                } ${className} "><span>  ${sections[index]} </span></div>`;
+                return `<div class="${parentProps?.parentProps?.activeClassIndex === index ? 'circle ' : ' '
+                  } ${className} "><span>  ${sectionsE[index]} </span></div>`;
               }
             }}
             height={window.innerHeight}
@@ -226,7 +247,10 @@ export default function Home(parentProps) {
               <SlickSlider />
               <FooterComponent />
             </SwiperSlide>
-          </SwiperComponent>{' '}
+          </SwiperComponent>
+
+
+          {' '}
         </>
       )}
 

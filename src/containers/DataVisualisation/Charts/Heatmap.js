@@ -40,7 +40,7 @@ export default function DataHeatmap({
   const [option, setOption] = useState([]);
   const [viewType, setViewType] = useState('gene_vl');
   const [mainTab, setMainTab] = useState('heatmap');
-  const [clusterRange, setClusterRange] = useState('');
+  const [clusterRange, setClusterRange] = useState(0);
   const inSufficientData = false;
   const [renderNoContent, setRenderNoContent] = useState(false);
   let { project_id } = useParams();
@@ -192,21 +192,37 @@ export default function DataHeatmap({
       setInputGene(t);
       setGenes(genes);
       setSelectedGene(genes);
+
+      let dataJson = { ...inputData };
+      if (tableType === 'rna') {
+        dataJson['genes'] = genes;
+      } else if (tableType === 'methylation') {
+        dataJson['genes'] = genes[0]?.split(",");
+      } else if (tableType === 'proteome') {
+        dataJson['genes'] = genes;
+      } else if (tableType === 'phospho') {
+        dataJson['genes'] = genes[0]?.split(",");
+      }
+
       if (inputData.type !== '' && inputData['genes'].length > 0) {
         setLoader(true);
-        inputData['table_type'] = tableType;
-        inputData['view'] = viewType;
-        inputData['heat_type'] = mainTab;
-        inputData['cluster'] = rangeValue;
-        inputData['cluster'] = rangeValue;
-        let return_data = HeatmapInformation('POST', inputData);
+        dataJson['table_type'] = tableType;
+        dataJson['view'] = viewType;
+        dataJson['heat_type'] = mainTab;
+        dataJson['cluster'] = rangeValue;
+        dataJson['cluster'] = rangeValue;
+        let return_data = HeatmapInformation('POST', dataJson);
         return_data
           .then((result) => {
             const d = result;
             if (d.status === 200) {
               let r_ = d['data'];
               if (r_) {
+                if (d["data"]?.max_spectrum_value) {
+                  setSpectrumMax(d["data"]?.max_spectrum_value)
+                }
                 setHeatmapJson(r_);
+                changeSpectrum(0, d["data"]?.max_spectrum_value);
                 setHeatmapSummaryStatusCode({ status: 200 });
               }
             } else {
@@ -388,8 +404,6 @@ export default function DataHeatmap({
   };
 
   const changeMainType = (e, type) => {
-    // setTableType('rna')
-    // setActiveTab('1')
     let c = document.getElementsByName('maintype');
     for (var i = 0; i < c.length; i++) {
       let classList = c[i].classList;
@@ -400,14 +414,25 @@ export default function DataHeatmap({
     setMainTab(type);
     setOption([]);
     let dataJson = { ...inputData };
+
+    if (tableType === 'rna') {
+      dataJson['genes'] = selectedGene;
+    } else if (tableType === 'methylation') {
+      dataJson['genes'] = selectedGene[0]?.split(",");
+    } else if (tableType === 'proteome') {
+      dataJson['genes'] = selectedGene;
+    } else if (tableType === 'phospho') {
+      dataJson['genes'] = selectedGene[0]?.split(",");
+    }
+
     if (inputData.type !== '' && inputData['genes'].length > 0) {
-      setClusterRange(dataJson['genes'].length);
+      setClusterRange(genes?.length);
       setLoader(true);
       dataJson['table_type'] = tableType;
       dataJson['view'] = viewType;
       dataJson['heat_type'] = type;
       dataJson['cluster'] = rangeValue;
-      dataJson['genes'] = selectedGene;
+
       setLoader(true);
       let return_data = HeatmapInformation('POST', dataJson);
       return_data
@@ -415,7 +440,11 @@ export default function DataHeatmap({
           const d = result;
           if (d.status === 200) {
             let r_ = d['data'];
+            if (d["data"]?.max_spectrum_value) {
+              setSpectrumMax(d["data"]?.max_spectrum_value)
+            }
             setHeatmapJson(r_);
+            changeSpectrum(0, d["data"]?.max_spectrum_value);
             setHeatmapSummaryStatusCode({ status: 200 });
           } else {
             setHeatmapJson([]);
@@ -443,6 +472,8 @@ export default function DataHeatmap({
       dataJson['genes'] = gene?.split(",")
     }
 
+
+
     if (inputData.type !== '' && inputData['genes'].length > 0) {
       dataJson['table_type'] = tableType;
       dataJson['view'] = viewType;
@@ -456,6 +487,9 @@ export default function DataHeatmap({
 
           if (d.status === 200) {
             let r_ = d['data'];
+            if (d["data"]?.max_spectrum_value) {
+              setSpectrumMax(d["data"]?.max_spectrum_value)
+            }
             setHeatmapJson(r_);
             setHeatmapSummaryStatusCode({ status: 200 });
           } else {
@@ -533,6 +567,9 @@ export default function DataHeatmap({
           const d = result;
           if (d.status === 200) {
             let r_ = d['data'];
+            if (d["data"]?.max_spectrum_value) {
+              setSpectrumMax(d["data"]?.max_spectrum_value)
+            }
             setHeatmapJson(r_);
             setHeatmapSummaryStatusCode({ status: 200 });
           } else {
@@ -570,6 +607,9 @@ export default function DataHeatmap({
           const d = result;
           if (d.status === 200) {
             let r_ = d['data'];
+            if (d["data"]?.max_spectrum_value) {
+              setSpectrumMax(d["data"]?.max_spectrum_value)
+            }
             setHeatmapJson(r_);
             setHeatmapSummaryStatusCode({ status: 200 });
           } else {
@@ -599,21 +639,35 @@ export default function DataHeatmap({
 
   const changeCluster = () => {
     let cf = [];
+    let dataJson = { ...inputData };
+
+    if (tableType === 'rna') {
+      dataJson['genes'] = selectedGene;
+    } else if (tableType === 'methylation') {
+      dataJson['genes'] = selectedGene[0]?.split(",");
+    } else if (tableType === 'proteome') {
+      dataJson['genes'] = selectedGene;
+    } else if (tableType === 'phospho') {
+      dataJson['genes'] = selectedGene[0]?.split(",");
+    }
+
     if (inputData.type !== '' && inputData['genes'].length > 0) {
       setLoader(true);
-      let dataJson = { ...inputData };
       dataJson['clinicalFilters'] = cf;
       dataJson['view'] = viewType;
       dataJson['type'] = viewType;
       dataJson['heat_type'] = mainTab;
       dataJson['cluster'] = rangeValue;
-      dataJson['genes'] = selectedGene;
+      dataJson['table_type'] = tableType;
       let return_data = HeatmapInformation('POST', dataJson);
       return_data
         .then((result) => {
           const d = result;
           if (d.status === 200) {
             let r_ = d['data'];
+            if (d["data"]?.max_spectrum_value) {
+              setSpectrumMax(d["data"]?.max_spectrum_value)
+            }
             setHeatmapJson(r_);
             setHeatmapSummaryStatusCode({ status: 200 });
           } else {
@@ -628,12 +682,14 @@ export default function DataHeatmap({
     }
   };
 
-  const changeSepctrum = () => {
+  const changeSpectrum = (min, max) => {
     setLoader(true);
+    console.log("spectrumMin", min);
+    console.log("spectrumMax", max);
     // eslint-disable-next-line no-useless-computed-key
     setConfigVis((prevState) => ({
       ...prevState,
-      ['colorSpectrumBreaks']: [parseInt(spectrumMin), parseInt(spectrumMax)]
+      ['colorSpectrumBreaks']: [parseInt(min), parseInt(max)]
     }));
   };
   const changeTheme = (e) => {
@@ -655,6 +711,20 @@ export default function DataHeatmap({
   useEffect(() => {
     setLoader(false);
   }, [configVis, noData]);
+
+
+
+  function renderGeneOptions() {
+    const geneOptions = (genes || []).map((item, i) => (
+      <option key={i} value={item}>{item}</option>
+    ));
+    // if (genes.length > 0) {
+    //   geneOptions.push(<option key="Select All" id="selectall" value={genes.join(',')}>Select All</option>);
+    // }
+    return geneOptions;
+  }
+
+
 
   return (
     <div
@@ -979,16 +1049,14 @@ export default function DataHeatmap({
                         <FormattedMessage id="Select Gene" defaultMessage="Select Gene" />
                       </label>
                       <select value={selectedGene} onChange={(e) => setGene(e)} className="">
-                        <option key={"select"} value={genes}>Select All</option>
-                        {genes?.map(((item, i) => (
-                          <option key={i} value={item}>{item}</option>
-                        )))}
-                        {/* {inputGene} */}
+                        {renderGeneOptions()}
                       </select>
                     </>
                   )}
                 </div>
               )}
+
+
             </div>
           </div>
         </div>
@@ -1035,7 +1103,7 @@ export default function DataHeatmap({
             </div>
           </div>
           <div className="Spectrumbtn">
-            <button onClick={(e) => changeSepctrum(e)} className="btn btnPrimary">
+            <button onClick={(e) => changeSpectrum(spectrumMin, spectrumMax)} className="btn btnPrimary">
               <FormattedMessage id='apply' defaultMessage="Apply" />
             </button>
           </div>
@@ -1047,7 +1115,7 @@ export default function DataHeatmap({
                   <div className="ClusterBtn">
                     <span>
                       <label htmlFor="points">
-                        <strong className="">No. Of Cluster: {rangeValue}</strong>
+                        <strong className="">No Of Cluster: {rangeValue}</strong>
                       </label>
                     </span>
                     <div className="">
@@ -1072,7 +1140,7 @@ export default function DataHeatmap({
                     max={clusterRange}
                     value={rangeValue}
                     onChange={rangeCall}
-                    style={{zIndex:"0", important:"true"}}
+                    style={{ zIndex: "0", important: "true" }}
                   />
                   <ul className="" id="tickmarks">
                     {/* {[...Array(clusterRange)].map((e, i) =>  */}
