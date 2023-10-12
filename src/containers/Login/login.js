@@ -36,7 +36,7 @@ const LoginComponent = () => {
       icon: 'success',
       confirmButtonColor: '#003177',
       confirmButtonText: intl.formatMessage({ id: "Ok", defaultMessage: 'Ok' }),
-      allowOutsideClick: false
+      allowOutsideClick: false,
     }).then((result) => {
       if (result.value) {
         if (history?.location?.pathname === '/login/') {
@@ -186,10 +186,10 @@ const LoginComponent = () => {
                 <form className="formBox" id="frm" method="post" name="frm">
                   {/*  error messages */}
                   {isError && errorMessage && <div className="ErrorText">{errorMessage}</div>}
-                  
+
                   {/* Input Username */}
                   <dl>
-                    <dt style={{ width: "250px", display:"flex" }}>
+                    <dt style={{ width: "250px", display: "flex" }}>
                       <img src={loginIcon1} alt="" />
                       <FormattedMessage id="RegistrationNumber" defaultMessage="Registration Number" />
                     </dt>
@@ -215,7 +215,7 @@ const LoginComponent = () => {
 
                   {/* Input Password */}
                   <dl>
-                    <dt style={{ width: "250px", display:"flex" }}>
+                    <dt style={{ width: "250px", display: "flex" }}>
                       <img src={loginIcon2} alt="" />
                       <FormattedMessage id="Password" defaultMessage="Password" />
                     </dt>
@@ -247,7 +247,7 @@ const LoginComponent = () => {
                     <div>
                       {/* Find ID Button */}
                       <div className="flex Gap5 idPwSearch">
-                        <Link to="/findregistrationnumber/">
+                        <Link to="/findregistrationnumber/" id="FindRegistrationNumberLink">
                           <img src={loginIcon1} alt="" />
                           <font style={{ verticalAlign: 'inherit' }}>
                             <font style={{ verticalAlign: 'inherit' }}>
@@ -257,7 +257,7 @@ const LoginComponent = () => {
                         </Link>
 
                         {/* Find Password Button */}
-                        <Link to="/findpassword/">
+                        <Link to="/findpassword/" id="FindPasswordLink">
                           <img src={loginIcon2} alt="" />
                           <font style={{ verticalAlign: 'inherit' }}>
                             <font style={{ verticalAlign: 'inherit' }}>
@@ -275,7 +275,7 @@ const LoginComponent = () => {
                       defaultMessage="The user should be responsible for using result."
                     />
                   </p>
-                  
+
                 </form>
 
                 <div className="bottomBtns MarginTop4">
@@ -284,7 +284,7 @@ const LoginComponent = () => {
                     <button
                       type="button"
                       className="btn btnPrimary"
-                      id="loginBtn"
+                      id="LoginButton"
                       onClick={formSubmitAction}
                     >
                       <font style={{ verticalAlign: 'inherit' }}>

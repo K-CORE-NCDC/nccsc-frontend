@@ -12,7 +12,8 @@ function QADetails() {
     const breadCrumbs = {
         '/QA/': [
             { id: 'Home', defaultMessage: 'Home', to: '/' },
-            { id: `QA`, defaultMessage: `Q&A`, to: `` },
+            { id: `CustomerService`, defaultMessage: `Customer Service`, to: `` },
+            { id: `Archive`, defaultMessage: `Archive`, to: `` },
 
         ]
     }
@@ -71,7 +72,7 @@ function QADetails() {
                                         <font>
                                             <font>
                                                 {' '}
-                                                <FormattedMessage id="QA" defaultMessage="QA" />{' '}
+                                                <FormattedMessage id="Archive" defaultMessage="Archive" />{' '}
                                             </font>
                                         </font>
                                     </h3>

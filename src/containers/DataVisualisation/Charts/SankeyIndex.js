@@ -153,16 +153,14 @@ function SankeyIndex({ selectedGene, variants }) {
         }
         if (element['diseasename'] && element['drugname']) {
           let k = nodes[element['diseasename']] + '_' + nodes[element['drugname']];
-          if (drugToDisease <= 15) {
-            if (!(k in fn)) {
-              fn[k] = '';
-              final_links.push({
-                source: element['diseasename'],
-                target: element['drugname'],
-                value: 10
-              });
-              drugToDisease += 1;
-            }
+          if (!(k in fn)) {
+            fn[k] = '';
+            final_links.push({
+              source: element['diseasename'],
+              target: element['drugname'],
+              value: 10
+            });
+            drugToDisease += 1;
           }
         }
       });

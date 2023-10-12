@@ -11,7 +11,11 @@ import { style } from 'd3';
 function Organoid() {
   const title = { id: 'Organoid', defaultMessage: 'Oragnoid' };
   const breadCrumbs = {
-    '/Home/': [{ id: 'Home', defaultMessage: 'Home', to: '/' }]
+    '/Home/': [{ id: 'Home', defaultMessage: 'Home', to: '/' },
+    { id: `CustomerService`, defaultMessage: `Customer Service`, to: `` },
+    { id: `OtherServices`, defaultMessage: `Others`, to: `` },
+    { id: `Organoid`, defaultMessage: `Organoid Service`, to: `` }
+    ]
   };
   const styles = {
     h1: {

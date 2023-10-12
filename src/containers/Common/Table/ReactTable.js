@@ -99,7 +99,7 @@ function Table({
                                 {headerGroup.headers.map((column) => (
 
                                     <th className={`${(column?.fixed && column?.fixed === 'left') ? 'fixed' : ''} boardCell IconSpan`} {...column.getHeaderProps(column.getSortByToggleProps())}
-                                        style={column?.width && column?.width !== '' ? { width: column?.width + 'px', textAlign: 'center', padding: '16px 24px' } : { textAlign: 'center', padding: '16px 24px' }} >
+                                        style={column?.width && column?.width !== '' ? { width: column?.width + 'px', textAlign: 'center', padding: '16px 24px' , wordBreak:column?.wordBreak } : { textAlign: 'center', padding: '16px 24px' }} >
                                         {column.render('Header')}
 
                                         <span className={`${column.isSorted ? 'Opacity1' : 'Opacity0'}`}>

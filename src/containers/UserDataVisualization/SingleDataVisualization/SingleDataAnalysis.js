@@ -385,7 +385,7 @@ export default function DataVisualization() {
                                     {exampleData && (
 
                                       <div className="textdiv">
-                                        <Link to={item.link}>
+                                        <Link to={item.viewLink} id={`Example${item.title}`}>
                                           <span>
                                             <FormattedMessage id="Example" defaultMessage="Example" />
                                           </span>
@@ -524,6 +524,7 @@ export default function DataVisualization() {
                     {tabName && tabName !== 'home' && (
                       <div style={{ marginTop: '50px' }}>
                         <button
+                        id="BackButton"
                           className="btn btnPrimary"
                           style={{ float: 'right', margin: '10px 0px 10px 0px' }}
                           onClick={() => {
