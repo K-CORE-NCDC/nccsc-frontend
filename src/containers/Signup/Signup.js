@@ -74,7 +74,7 @@ const SignupComponent = () => {
   };
 
   const formSubmitAction = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     if (userFormData['emailId']) {
       let data = signin('POST', userFormData);
       data

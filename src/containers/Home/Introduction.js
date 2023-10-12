@@ -94,12 +94,12 @@ const Introduction = ({ setActiveClassIndex, lan }) => {
                 </div>
               </div>
             </div>
-            <div className="MainPageLogos" style={mainDataStatusWrap}>
+            {/* <div className="MainPageLogos" style={mainDataStatusWrap}>
               <div >
                 <img src={logo1} alt="fc1" className="logo01" style={big_img_1} />
                 <img src={logo2} alt="fc1" className="logo01" style={big_img_2} />
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
