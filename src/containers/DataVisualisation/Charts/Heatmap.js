@@ -15,9 +15,9 @@ export default function DataHeatmap({
   width,
   inputData,
   screenCapture,
-  brstKeys,
   setToFalseAfterScreenCapture
 }) {
+
   const route = useLocation();
   const context = useContext(Context);
   const [koreanlanguage, setKoreanlanguage] = useState(false);
@@ -31,6 +31,7 @@ export default function DataHeatmap({
     loader: true
   });
   const filterData = useSelector((data) => data.dataVisualizationReducer.userDefinedFilter);
+  const brstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
   const [watermarkCss, setWatermarkCSS] = useState('');
   const [rangeValue, setRangeValue] = useState(5);
   const [loader, setLoader] = useState(false);
@@ -59,6 +60,9 @@ export default function DataHeatmap({
   const _width = width - width * (3 / 100);
   const [noData, setNoData] = useState(false);
   const [vizType, setVizType] = useState('');
+
+  // const [SC, SetSC] = useState(screenCapture);
+
 
   const tabList = useSelector((data) => data.dataVisualizationReducer);
 
@@ -365,17 +369,18 @@ export default function DataHeatmap({
     }
   }, [heatmapJson, brstKeys]);
 
-  useEffect(() => {
-    if (screenCapture) {
-      setWatermarkCSS('watermark');
-    } else {
-      setWatermarkCSS('');
-    }
+  // useEffect(() => {
+  //   console.log("screenCapture", screenCapture);
+  //   // if (screenCapture) {
+  //   //   setWatermarkCSS('watermark');
+  //   // } else {
+  //   //   setWatermarkCSS('');
+  //   // }
 
-    if (watermarkCss !== '' && screenCapture) {
-      setToFalseAfterScreenCapture();
-    }
-  }, [screenCapture, watermarkCss]);
+  //   // if (watermarkCss !== '' && screenCapture) {
+  //   //   setToFalseAfterScreenCapture();
+  //   // }
+  // }, [screenCapture, watermarkCss]);
 
 
 
@@ -726,11 +731,33 @@ export default function DataHeatmap({
     const geneOptions = (genes || []).map((item, i) => (
       <option key={i} value={item}>{item}</option>
     ));
-    // if (genes.length > 0) {
-    //   geneOptions.push(<option key="Select All" id="selectall" value={genes.join(',')}>Select All</option>);
-    // }
     return geneOptions;
   }
+
+  // function saveAs(uri, filename) {
+  //   var link = document.createElement('a');
+  //   link.className = 'watermark';
+  //   if (typeof link.download === 'string') {
+  //     link.href = uri;
+  //     link.download = filename;
+  //     //Firefox requires the link to be in the body
+  //     document.body.appendChild(link);
+  //     //simulate click
+  //     link.click();
+  //     //remove the link when done
+  //     document.body.removeChild(link);
+  //   } else {
+  //     window.open(uri);
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   if (watermarkCss) {
+  //     html2canvas(document.querySelector('#canvas')).then(function (canvas) {
+  //       saveAs(canvas.toDataURL(), 'heatmap.png');
+  //     });
+  //   }
+  // }, [watermarkCss]);
 
 
 
@@ -1184,7 +1211,7 @@ export default function DataHeatmap({
               clinicalFilter={optionChoices}
               inputData={data_}
               type={mainTab}
-              watermarkCss={watermarkCss}
+              // watermarkCss={watermarkCss}
               ref={reference}
               width={_width}
             />

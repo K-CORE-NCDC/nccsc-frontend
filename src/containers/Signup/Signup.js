@@ -128,7 +128,7 @@ const SignupComponent = () => {
                     defaultMessage="Please use the service after Signing Up"
                   />
                 </p>
-                <form className="formBox" id="frm" method="post" name="frm">
+                <div className="formBox" id="frm" name="frm">
                   {errorMessage && <div className="ErrorText">{errorMessage}</div>}
 
                   <p style={{ marginBottom: '30px', textAlign: 'center' }}>
@@ -165,7 +165,7 @@ const SignupComponent = () => {
                       </div>
                     </dd>
                   </dl>
-                </form>
+                </div>
               </div>
               <div className="bottomBtns">
                 <div className="flex">

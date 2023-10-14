@@ -36,6 +36,7 @@ function sankey(width, inputData, screenCapture, setToFalseAfterScreenCapture, t
 
 function onco(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
   let DataOnco = lazy(() => import('./Onco'));
+  console.log("inputData onco", inputData);
   return (
     <Suspense>
       <DataOnco
@@ -80,7 +81,7 @@ function volcano(width, inputData, screenCapture, setToFalseAfterScreenCapture, 
   );
 }
 
-function heatmap(width, inputData, screenCapture, BrstKeys, setToFalseAfterScreenCapture) {
+function heatmap(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
   let DataHeatmap = lazy(() => import('./Heatmap'));
   return (
     <Suspense>
@@ -89,7 +90,6 @@ function heatmap(width, inputData, screenCapture, BrstKeys, setToFalseAfterScree
         width={width}
         inputData={inputData}
         screenCapture={screenCapture}
-        brstKeys={BrstKeys}
         setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
       />
     </Suspense>

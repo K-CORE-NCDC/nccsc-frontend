@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FormattedMessage,useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import { getClinicalMaxMinInfo } from '../../../../actions/api_actions';
@@ -66,7 +66,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survialData, SVF
       let tmp = {};
       if (project_id) {
         Object.entries(coxUserDefinedFilter).forEach(([item, _]) => {
-          if (item !== 'rlps_yn' && item !== 'rlps_cnfr_drtn') {
+          if (item !== 'rlps_yn' && item !== 'rlps_cnfr_drtn' && (coxUserDefinedFilter[item][0]?.type !== "checkbox" || ["yes", "y", "no", "n", "true", "false"].includes(coxUserDefinedFilter[item][0]?.value?.toLowerCase()))) {
             // Use bracket notation to access coxFilter properties with dynamic keys
             if (coxFilter && item in coxFilter && coxFilter[item] === true) {
               tmp[item] = true;
