@@ -14,7 +14,7 @@ import arrow_icon from '../../../assets/images/btnDetail-arrow-white.svg';
 import sample_img from '../../../assets/images/sample.webp';
 import HeaderComponent from '../../Common/HeaderComponent/HeaderComponent';
 import GeneSet from '../Components/MainComponents/GeneSet';
-
+import CaptureScreenshot from "../Components/CaptureScreenshot"
 export default function DataVisualization() {
   const history = useHistory();
   const elementRef = useRef(null);
@@ -48,11 +48,19 @@ export default function DataVisualization() {
   }
 
   const setToFalseAfterScreenCapture = (param = false) => {
-    if (param === false) {
-      setScreenCapture(false);
-    } else {
-      setScreenCapture(true);
+
+    if (tab !== 'heatmap') {
+
+      if (param === false) {
+        setScreenCapture(false);
+      } else {
+        setScreenCapture(true);
+      }
     }
+    else {
+      CaptureScreenshot(tab)
+    }
+
   };
 
   const callback = useCallback(({ filters, filterKeyandValues, value, genes }) => {
@@ -524,7 +532,7 @@ export default function DataVisualization() {
                     {tabName && tabName !== 'home' && (
                       <div style={{ marginTop: '50px' }}>
                         <button
-                        id="BackButton"
+                          id="BackButton"
                           className="btn btnPrimary"
                           style={{ float: 'right', margin: '10px 0px 10px 0px' }}
                           onClick={() => {

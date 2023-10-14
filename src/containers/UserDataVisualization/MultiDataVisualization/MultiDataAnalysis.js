@@ -18,7 +18,7 @@ import Filter from '../../Common/filter';
 import LoaderCmp from '../../Common/Loader';
 import GeneSet from '../Components/MainComponents/GeneSet';
 import VolcanoFusionFilterComponent from '../Components/MainComponents/VolcanoFusionFilterComponent';
-
+import CaptureScreenshot from "../Components/CaptureScreenshot"
 export default function DataVisualization() {
   let { tab, project_id } = useParams();
   const route = useLocation();
@@ -67,11 +67,19 @@ export default function DataVisualization() {
   }
 
   const setToFalseAfterScreenCapture = (param = false) => {
-    if (param === false) {
-      setScreenCapture(false);
-    } else {
-      setScreenCapture(true);
+
+    if (tab !== 'heatmap') {
+
+      if (param === false) {
+        setScreenCapture(false);
+      } else {
+        setScreenCapture(true);
+      }
     }
+    else {
+      CaptureScreenshot(tab)
+    }
+
   };
 
 
@@ -371,7 +379,7 @@ export default function DataVisualization() {
 
     return (
       <Suspense fallback={<LoaderCmp />}>
-        <Chart type={type} w={w} state={state} screenCapture={screenCapture} setToFalseAfterScreenCapture={setToFalseAfterScreenCapture} toggle={toggle} VFData={VFData} BrstKeys={BrstKeys}
+        <Chart type={type} w={w} state={state} screenCapture={screenCapture} setToFalseAfterScreenCapture={setToFalseAfterScreenCapture} toggle={toggle} VFData={VFData}
           survialData={survialData} />
       </Suspense>
     )
