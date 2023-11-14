@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { vcfmaf } from '../../actions/api_actions';
+import { vcfmaf, clearToolsData } from '../../actions/api_actions';
 import Attachments from '../../assets/files/TkExMjg3OC5FVkEuMTAwLnZjZg.vcf';
 import AttachmentsImage from '../../assets/images/vcftomafexample_File.png';
 import config from '../../config';
@@ -158,6 +158,12 @@ function Vcfmaf() {
       }
     }
   }, [vcf2mafResponse]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearToolsData());
+    };
+  }, []);
 
   const breadCrumbs = {
     '/vcfmaf/': [

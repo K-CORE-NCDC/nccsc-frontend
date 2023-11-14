@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { interPro } from '../../actions/api_actions';
+import { interPro, clearToolsData } from '../../actions/api_actions';
 import Attachments from '../../assets/files/insulin.fasta';
 import config from '../../config';
 import HeaderComponent from '../Common/HeaderComponent/HeaderComponent';
 import LoaderCmp from '../Common/Loader';
 
-function Modal({ showModal, setShowModal}) {
+function Modal({ showModal, setShowModal }) {
   return (
     <>
       {showModal ? (
@@ -58,7 +58,7 @@ function InterPro() {
   const [html, setHtml] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [loop,setLoop] = useState(null)
+  const [loop, setLoop] = useState(null)
   const interproResponse = useSelector((data) => data.homeReducer.interpro);
   const dispatch = useDispatch();
   let backend_url = config['auth'];
@@ -76,7 +76,7 @@ function InterPro() {
       setIsError(false);
       setLoader(true);
       dispatch(interPro('POST', { file: interProFile, filename: interProFile['name'] }));
-      setMsg({id:'FileUplodPlsWait', defaultMessage:'File Uploading, Please Wait......'});
+      setMsg({ id: 'FileUplodPlsWait', defaultMessage: 'File Uploading, Please Wait......' });
     } else {
       setIsError(true);
     }
@@ -87,13 +87,13 @@ function InterPro() {
       if (interproResponse['status'] === 'running') {
         setLoader(true)
         setStartInterval(true)
-        setMsg({id:'FileUploadConverSt', defaultMessage:'File Uploaded, Conversion Started.....'});
+        setMsg({ id: 'FileUploadConverSt', defaultMessage: 'File Uploaded, Conversion Started.....' });
       } else {
         setLoader(false)
         setStartInterval(false)
         setLoop(interval => {
-            clearInterval(interval);
-            return null;
+          clearInterval(interval);
+          return null;
         });
         let h = [];
         h.push(
@@ -122,11 +122,17 @@ function InterPro() {
 
   useEffect(() => {
     if (startInterval) {
-        setLoop(setInterval(() => {
-            dispatch(interPro("GET", { "container_name": interproResponse['container_name'] }))
-        }, 10000));
+      setLoop(setInterval(() => {
+        dispatch(interPro("GET", { "container_name": interproResponse['container_name'] }))
+      }, 10000));
     }
-}, [startInterval])
+  }, [startInterval])
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearToolsData());
+    };
+  }, []);
 
   const InforIcon = () => {
     return (
@@ -150,7 +156,7 @@ function InterPro() {
   const breadCrumbs = {
     '/interpro/': [
       { id: 'Home', defaultMessage: 'Home', to: '/' },
-      {id: 'MyDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/'},
+      { id: 'MyDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
       { id: 'Tools', defaultMessage: 'Other Tools', to: '/tools/' },
       { id: 'Interpro', defaultMessage: 'Interpro', to: '/interpro/' }
     ]

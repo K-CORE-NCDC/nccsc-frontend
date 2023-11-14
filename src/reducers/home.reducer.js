@@ -169,6 +169,13 @@ const homeReducer = (state = { home: 'home' }, { type, payload }) => {
         ...state,
         refverconverter: payload
       };
+
+    case homeConstants.CLEARTOOLSDATA: {
+      const { mafmerger, refverconverter, vcfmaf, interpro, ...removedtoolsdata} = state;
+      /* eslint-disable no-param-reassign */
+      state = removedtoolsdata;
+      return state;
+    }
     case homeConstants.LOGMANAGEMENT:
       return {
         ...state,
