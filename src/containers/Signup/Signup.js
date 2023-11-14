@@ -82,23 +82,26 @@ const SignupComponent = () => {
           if (
             result.status === 200 &&
             'status' in result.data &&
-            result.data.status === 'Registered Successfully'
+            result.data.status === 'Success'
           ) {
             registerSuccess(data);
           } else if (
             'data' in result &&
             'status' in result.data &&
-            result.data.status === 'User already exists'
+            result.data.status === 'SignupAlreadyExist'
           ) {
             registerFailure('SignupAlreadyExist');
           } else if (
             'data' in result &&
             'status' in result.data &&
-            result.data.status === 'Error in sending mail'
+            result.data.status === 'SignupEmailError'
           ) {
             registerFailure('SignupEmailError');
           } else if ('data' in result && 'status' in result.data) {
             registerFailure(result.data.status);
+          }
+          else{
+            registerFailure('SignupContact');
           }
         })
         .catch(() => {

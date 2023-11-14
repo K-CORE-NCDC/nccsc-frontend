@@ -153,6 +153,20 @@ export function interPro(method, data) {
     }
   };
 }
+
+export function sendCaptureScreenshot(method, data) {
+  const url = `${config.auth}download-capture-info/`;
+  console.log('data', data);
+  const formData = new FormData();
+  if (method === 'POST') {
+    formData.append('chart_name', data?.chart_name);
+    formData.append('project_id', data?.project_id);
+    const dataLocation = data?.location || '';
+    const category = dataLocation.includes('multidata') ? 'Multi Data Visualization' : 'Single Data Visualization';
+    formData.append('location', category);
+    sendRequest(url, method, formData)
+  }
+}
 export function vcfmaf(method, data) {
   return (dispatch) => {
     let url = `${config.auth}vcfmaf/`;
@@ -190,25 +204,94 @@ export function vcfmaf(method, data) {
 }
 
 
+export function mafmerger(method, data) {
+  return (dispatch) => {
+    let url = `${config.auth}mafmerger/`;
+    const formdata = new FormData();
+    if (method === 'POST') {
+      console.log("data", data);
+      Object.keys(data).forEach((element) => {
+        console.log("element", element);
+        if (data[element] !== undefined) {
+          formdata.append(element, data[element].file);
+        }
+      });
+      formdata.set('csrftoken', getCookie('csrftoken'));
+      sendRequest(url, method, formdata)
+        .then((result) => {
+          const d = result;
+          dispatch({
+            type: homeConstants.MAFMERGER,
+            payload: d.data
+          });
+          dispatch({ type: homeConstants.REQUEST_DONE });
+        })
+
+        .catch(() => { });
+    } else {
+      // formData.append('container_name',data['container_name'])
+      url += `?container_name=${data.container_name}`;
+      sendRequest(url, method, formdata)
+        .then((result) => {
+          const d = result;
+          dispatch({
+            type: homeConstants.MAFMERGER,
+            payload: d.data
+          });
+          dispatch({ type: homeConstants.REQUEST_DONE });
+        })
+
+        .catch(() => { });
+    }
+  };
+}
+
+export function refverconverter(method, data) {
+  return (dispatch) => {
+    let url = `${config.auth}refverconverter/`;
+    const formdata = new FormData();
+    if (method === 'POST') {
+      Object.keys(data?.refVerConverterFiles).forEach((element) => {
+        console.log("element", element);
+        if (data?.refVerConverterFiles[element] !== undefined) {
+          formdata.append(element, data?.refVerConverterFiles[element].file);
+        }
+      });
+      formdata.set('hg19', data.hg19);
+      formdata.set('hg38', data.hg38);
+      formdata.set('csrftoken', getCookie('csrftoken'));
+      sendRequest(url, method, formdata)
+        .then((result) => {
+          const d = result;
+          dispatch({
+            type: homeConstants.REFVERCONVERTER,
+            payload: d.data
+          });
+          dispatch({ type: homeConstants.REQUEST_DONE });
+        })
+
+        .catch(() => { });
+    } else {
+      // formData.append('container_name',data['container_name'])
+      url += `?container_name=${data.container_name}`;
+      sendRequest(url, method, formdata)
+        .then((result) => {
+          const d = result;
+          dispatch({
+            type: homeConstants.REFVERCONVERTER,
+            payload: d.data
+          });
+          dispatch({ type: homeConstants.REQUEST_DONE });
+        })
+
+        .catch(() => { });
+    }
+  };
+}
+
 export function changePassword(method, data) {
   const url = `${config.auth}change-password/`;
   return sendRequest(url, method, data);
-}
-
-export function verifyEncodeData(method, data) {
-  return (dispatch) => {
-    const url = `${config.auth}checkplus_success/?${data}`;
-
-    sendRequest(encodeURI(url), method, data)
-      .then((result) => {
-        const d = result;
-        dispatch({
-          type: homeConstants.VERIFY_ENCODE,
-          payload: d.data
-        });
-      })
-      .catch(() => { });
-  };
 }
 
 export function NoticeDetail(type) {
@@ -1055,21 +1138,7 @@ export function getUserDefinedFilter(data) {
   };
 }
 
-export function updateDownloadVisualizationPurpose(data) {
-  return (dispatch) => {
-    const url = `${config.auth}download-capture-info/`;
-    sendRequest(url, 'POST', data)
-      .then((result) => {
-        // let res = result
-        dispatch({
-          type: userdataVisualization.UPDATE_DOWNLOAD_VISUALIZATION_PURPOSE,
-          payload: result
-        });
-        return result;
-      })
-      .catch(() => { });
-  };
-}
+
 
 export function languageChange(data) {
   return (dispatch) => {

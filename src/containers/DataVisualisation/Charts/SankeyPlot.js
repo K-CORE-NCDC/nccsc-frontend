@@ -115,13 +115,11 @@ function SankeyPlot({ inputData }) {
               Header: "Yes",
               accessor: (row) => {
                 if (row.dna === 'YES') {
-                  // if (row.gene in rnaData['variant_info']) {
-                  //   // return 'O  (' + rnaData['variant_info'][row.gene].length + ')'
-                  //   return 'O'
-                  // } else {
-                  //   return "YES";
-                  // }
-                  return 'O'
+                  if (row.gene in rnaData['dna_mutation_variant_info']) {
+                    return 'O  (' + rnaData['dna_mutation_variant_info'][row.gene].length + ')'
+                  } else {
+                    return "";
+                  }
                 }
               },
             }, {
@@ -129,12 +127,13 @@ function SankeyPlot({ inputData }) {
               accessor: (row) => {
                 if (row.dna === 'NO') {
                   // if (row.gene in rnaData['variant_info']) {
-                  //   // return 'O  (' + rnaData['variant_info'][row.gene].length + ')'
-                  //   return 'O'
-                  // } else {
-                  //   return "NO";
+                  //   return 'O  (' + rnaData['variant_info'][row.gene].length + ')'
                   // }
-                    return "O";
+                  return 'O'
+                  //  else {
+                  //   return "O";
+                  // }
+                  // return "O";
                 }
               },
             }

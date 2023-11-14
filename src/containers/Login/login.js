@@ -62,7 +62,16 @@ const LoginComponent = () => {
           <FormattedMessage id={status} defaultMessage="Login Failed. Invalid Registration number and Password." />
         </p>
       ]);
-    } else {
+    }
+    else if (status === 'InActive') {
+      setErrorMessage([
+        <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
+          <FormattedMessage id={status} defaultMessage="Account is Inactive" />
+        </p>
+      ]);
+    }
+
+    else {
       setErrorMessage([
         <p key="error" className="ErrorText">
           {status}
@@ -103,22 +112,30 @@ const LoginComponent = () => {
           if (
             'data' in result &&
             'status' in result.data &&
-            result.data.status === 'Login Successfull'
+            result.data.status === 'Success'
           ) {
             loginSuccess();
           } else if (
             'data' in result &&
             'status' in result.data &&
-            result.data.status === "User Doesn't Exist"
+            result.data.status === "UserDoesntExist"
           ) {
             loginFailure('UserDoesntExist');
           } else if (
             'data' in result &&
             'status' in result.data &&
-            result.data.status === 'Login Failed, Invalid username/Password'
+            result.data.status === 'LoginFailed'
           ) {
             loginFailure('InvalidUsernamePass');
-          } else if ('data' in result && 'status' in result.data) {
+          }
+          else if (
+            'data' in result &&
+            'status' in result.data &&
+            result.data.status === 'InActive'
+          ) {
+            loginFailure('InActive');
+          }
+          else if ('data' in result && 'status' in result.data) {
             loginFailure(result.data.status);
           }
         })

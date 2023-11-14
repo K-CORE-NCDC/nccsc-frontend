@@ -1,5 +1,5 @@
 import html2canvas from 'html2canvas';
-
+import {sendCaptureScreenshot} from '../../../actions/api_actions'
 
 function saveAs(uri, filename) {
     var link = document.createElement('a');
@@ -18,11 +18,12 @@ function saveAs(uri, filename) {
     }
 }
 
-function CaptureScreenshot(tab) {
+function CaptureScreenshot(tab, project_id,pathname) {
     if (tab === "heatmap") {
         html2canvas(document.querySelector('#canvas')).then(function (canvas) {
             saveAs(canvas.toDataURL(), 'heatmap.png');
         });
+        sendCaptureScreenshot('POST', {'chart_name':tab, 'project_id':project_id,'location':pathname});
     }
 
 }

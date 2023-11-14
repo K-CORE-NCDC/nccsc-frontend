@@ -60,6 +60,8 @@ const ToolsIndex = React.lazy(() => import('./containers/Tools/ToolsIndex'));
 const InterPro = React.lazy(() => import('./containers/Tools/InterPro'));
 const Blast = React.lazy(() => import('./containers/Tools/Blast'));
 const VcfMaf = React.lazy(() => import('./containers/Tools/Vcfmaf'));
+const MAFMerger = React.lazy(() => import('./containers/Tools/MAFMerger'));
+const RefVerConverter = React.lazy(() => import('./containers/Tools/RefVerConverter'));
 
 const genefusion = React.lazy(() => import('./containers/Common/genefusion'));
 const UserDataTable = React.lazy(() =>
@@ -74,7 +76,8 @@ const RelatedSites = React.lazy(() =>
 const Refresh = React.lazy(() => import('./containers/Refresh'));
 const SankeyPlot = React.lazy(() => import('./containers/DataVisualisation/Charts/SankeyPlot'));
 
-const NotFound = React.lazy(() => import('./containers/404NotFound/index'));
+const NotFound = React.lazy(() => import('./containers/ErrorPages/index'));
+const ServerError = React.lazy(() => import('./containers/ErrorPages/ServerError'));
 const route = [
   // {
   //   path: '/mobile_verify/',
@@ -472,6 +475,22 @@ const route = [
     component: VcfMaf
   },
   {
+    path: '/mafmerger/',
+    exact: true,
+    type: 'unauth',
+    name: <FormattedMessage id="Tools" defaultMessage="Tools" />,
+    childname: <FormattedMessage id="MAFMerger" defaultMessage="MAF Merger" />,
+    component: MAFMerger
+  },
+  {
+    path: '/refverconverter/',
+    exact: true,
+    type: 'unauth',
+    name: <FormattedMessage id="Tools" defaultMessage="Tools" />,
+    childname: <FormattedMessage id="REFVERCONVERTER" defaultMessage="RefVer Converter" />,
+    component: RefVerConverter
+  },
+  {
     path: '/organoid/',
     exact: true,
     type: 'unauth',
@@ -510,6 +529,14 @@ const route = [
     name: <FormattedMessage id="Home" defaultMessage="Home" />,
     childname: <FormattedMessage id="notfound" defaultMessage="notfound" />,
     component: NotFound
+  },
+  {
+    path: '/server-error/',
+    exact: true,
+    type: 'unauth',
+    name: <FormattedMessage id="Home" defaultMessage="Home" />,
+    childname: <FormattedMessage id="serverError" defaultMessage="Server Error" />,
+    component: ServerError
   }
 ];
 

@@ -8,6 +8,7 @@ import { userdataVisualization } from '../../../actions/Constants';
 import {
   getBreastKeys,
   getUserDataProjectsTableData,
+  sendCaptureScreenshot
 } from '../../../actions/api_actions';
 import LoaderCmp from '../../Common/Loader';
 import arrow_icon from '../../../assets/images/btnDetail-arrow-white.svg';
@@ -47,6 +48,7 @@ export default function DataVisualization() {
     document.body.removeChild(link);
   }
 
+
   const setToFalseAfterScreenCapture = (param = false) => {
 
     if (tab !== 'heatmap') {
@@ -54,14 +56,14 @@ export default function DataVisualization() {
       if (param === false) {
         setScreenCapture(false);
       } else {
+        sendCaptureScreenshot('POST', { 'chart_name': tab, 'project_id': project_id, 'location': route?.pathname });
         setScreenCapture(true);
       }
     }
-    else {
-      CaptureScreenshot(tab)
+    else if (tab === 'heatmap') {
+      CaptureScreenshot(tab, project_id, route?.pathname)
     }
-
-  };
+  }
 
   const callback = useCallback(({ filters, filterKeyandValues, value, genes }) => {
     if (filters && filterKeyandValues) {
@@ -425,7 +427,7 @@ export default function DataVisualization() {
                   <h3>
                     <font>
                       <span className="colorSecondary">
-                        <font>{tabName[0]?.toUpperCase() + tabName?.slice(1)}</font>
+                        <font>{tabName === "variant-summary" ? "Variant Summary" : tabName[0]?.toUpperCase() + tabName?.slice(1)}</font>
                       </span>
                     </font>
                   </h3>

@@ -478,7 +478,7 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters, viz_type, res
   };
 
   const submitFilters = () => {
-    if (Object.keys(filters).length > 0) {
+    if (Object.keys(filters)?.length > 0) {
       parentCallback(filters);
     } else {
       parentCallback(groupFilters);
@@ -807,7 +807,7 @@ export const PreDefienedFiltersSurvival = ({
   };
 
   const submitFilters = () => {
-    if (Object.keys(filters).length > 0) {
+    if (Object.keys(filters)?.length > 0) {
       parentCallback(filters);
     } else {
       parentCallback(groupFilters);
@@ -1070,7 +1070,7 @@ export const GroupFilters = ({
 
   useEffect(() => {
     let filterType = ''
-    if (groupFilters && Object.keys(groupFilters).length > 0) {
+    if (groupFilters && Object.keys(groupFilters)?.length > 0) {
       setUserGivenInputValues(groupFilters);
       let targetNumber = 0;
       filterChoices.forEach((e, index) => {
@@ -1091,7 +1091,6 @@ export const GroupFilters = ({
       }
       else {
         setMultipleInputs(groupFilters);
-
       }
       setSelectDefaultValue(String(targetNumber));
 
@@ -1105,7 +1104,7 @@ export const GroupFilters = ({
       let colName = selectedFilterDetails.id;
       let booleanType;
       let booleanColumns = []
-      if (booleanColumns.length > 0) {
+      if (booleanColumns?.length > 0) {
         booleanType = booleanColumns.includes(selectedFilterDetails['name']) ? 'yes' : 'no';
       }
       if (filterType) {
@@ -1161,11 +1160,11 @@ export const GroupFilters = ({
           setShowAddGroupButton(false);
           if (viz_type === 'volcono') {
             if (
-              Object.keys(userGivenInputValues).length > 0 &&
+              Object.keys(userGivenInputValues)?.length > 0 &&
               userGivenInputValues['type'] === 'static') {
               if (
-                'group_a' in userGivenInputValues && userGivenInputValues['group_a'].length > 0 &&
-                'group_b' in userGivenInputValues && userGivenInputValues['group_b'].length > 0
+                'group_a' in userGivenInputValues && userGivenInputValues['group_a']?.length > 0 &&
+                'group_b' in userGivenInputValues && userGivenInputValues['group_b']?.length > 0
               ) {
                 preDefienedGroups1[colName].forEach((element, index) => {
                   let group_a = false;
@@ -1254,8 +1253,8 @@ export const GroupFilters = ({
           else if (viz_type === 'survival') {
             let d = preDefienedGroups1[colName];
             let thead = [];
-            let boxes = d.length;
-            for (let sv = 0; sv < d.length; sv++) {
+            let boxes = d?.length;
+            for (let sv = 0; sv < d?.length; sv++) {
               const element = d[sv];
               thead.push(
                 <th key={sv} className="GroupNamesFilter PX6Y4 ">
@@ -1267,15 +1266,15 @@ export const GroupFilters = ({
 
               for (let index = 0; index < boxes; index++) {
                 let name = 'group_' + abc[index] + '_' + element.value;
-                if (Object.keys(userGivenInputValues).length > 0) {
+                if (Object.keys(userGivenInputValues)?.length > 0) {
                   let group_check = false;
                   if (
                     'group_' + abc[index] in userGivenInputValues &&
-                    userGivenInputValues['group_' + abc[index]].length > 0
+                    userGivenInputValues['group_' + abc[index]]?.length > 0
                   ) {
                     if (userGivenInputValues['group_' + abc[index]].indexOf(element.value) > -1) {
                       let gi_val = userGivenInputValues['group_' + abc[index]];
-                      for (let gi = 0; gi < gi_val.length; gi++) {
+                      for (let gi = 0; gi < gi_val?.length; gi++) {
                         let n = gi_val[gi];
                         if ('group_' + abc[index] + '_' + n === name) {
                           group_check = true;
@@ -1354,15 +1353,15 @@ export const GroupFilters = ({
 
               for (let index = 0; index < 3; index++) {
                 let name = 'group_' + abc[index] + '_' + element.value;
-                if (Object.keys(userGivenInputValues).length > 0 && Object.keys(userGivenInputValues).some(key => ['group_a', 'group_b', 'group_c'].includes(key))) {
+                if (Object.keys(userGivenInputValues)?.length > 0 && Object.keys(userGivenInputValues)?.some(key => ['group_a', 'group_b', 'group_c'].includes(key))) {
                   let group_check = false;
                   if (
                     'group_' + abc[index] in userGivenInputValues &&
-                    userGivenInputValues['group_' + abc[index]].length > 0
+                    userGivenInputValues['group_' + abc[index]]?.length > 0
                   ) {
                     if (userGivenInputValues['group_' + abc[index]].indexOf(element.value) > -1) {
                       let gi_val = userGivenInputValues['group_' + abc[index]];
-                      for (let gi = 0; gi < gi_val.length; gi++) {
+                      for (let gi = 0; gi < gi_val?.length; gi++) {
                         let n = gi_val[gi];
                         if ('group_' + abc[index] + '_' + n === name) {
                           group_check = true;
@@ -1642,37 +1641,39 @@ export const GroupFilters = ({
 
 
   const dropDownChange = (event) => {
+    let shouldExist = event.target.checked;
     const eventObject = JSON.parse(event.target.value);
+    let group = eventObject['group'];
     const filterData = preDefienedGroups1[eventObject.colName][eventObject.index];
+    let value = filterData['value'];
     let tmp = multipleInputs;
-    if (eventObject.group in tmp) {
+
+    if (tmp[eventObject.group]) {
       tmp[eventObject.group].push(filterData.value);
     } else {
       tmp[eventObject.group] = [filterData.value];
     }
 
-    let group = eventObject['group'];
-    let value = filterData['value'];
-    let shouldExist = event.target.checked;
-
+    let newTmpGroup = []
     if (shouldExist === false) {
       event.target.checked = false;
       event.target.removeAttribute('checked');
-      let newTmp = tmp[group].filter((e) => e !== value);
-      if (newTmp.length > 0) {
-        tmp[group] = newTmp;
+      newTmpGroup = tmp[group].filter((e) => e !== value);
+      if (newTmpGroup.length > 0) {
+        tmp[group] = newTmpGroup;
       }
       else {
         delete tmp[group]
       }
     }
+
     setMultipleInputs(tmp);
 
     if ('value' in filterData) {
       setUserGivenInputValues((prevState) => ({
         ...prevState,
         [eventObject.group]: tmp[eventObject.group],
-        column: selectedFilterDetails.id,
+        column: selectedFilterDetails?.id,
         type: 'static'
       }));
     }
@@ -1687,21 +1688,21 @@ export const GroupFilters = ({
     let countNonEmptyGroupsWithPrefix = (prefix, payload) => {
       let count = 0;
       for (let key in payload) {
-        if (key.startsWith(prefix) && Array.isArray(payload[key]) && payload[key].length > 0) {
+        if (key.startsWith(prefix) && Array.isArray(payload[key]) && payload[key]?.length > 0) {
           count++;
         }
       }
       return count;
     }
 
-    if (userGivenInputValues && Object.keys(userGivenInputValues).length > 0) {
+    if (userGivenInputValues && Object.keys(userGivenInputValues)?.length > 0) {
       let final_payload = { ...userGivenInputValues };
       if (isVolcano) {
         if (final_payload['type'] === 'static') {
           let groupKeys = Object.keys(final_payload).filter(key => key.startsWith('group_'));
-          let totalGroups = groupKeys.length;
+          let totalGroups = groupKeys?.length;
           let hasAtLeastTwoNonEmptyGroups = groupKeys.reduce((count, key) => {
-            if (Array.isArray(final_payload[key]) && final_payload[key].length > 0) {
+            if (Array.isArray(final_payload[key]) && final_payload[key]?.length > 0) {
               return count + 1;
             }
             return count;
@@ -1722,7 +1723,7 @@ export const GroupFilters = ({
             ...document.querySelectorAll('[name="2_to"]')
           ];
 
-          let send_response = inputs.length > 0 && inputs.every(input =>
+          let send_response = inputs?.length > 0 && inputs?.every(input =>
             !(input.classList && (input.classList.contains('Border2') || input.classList.contains('BorderRed400'))) && input.value !== '');
 
           if (send_response) {
@@ -1948,14 +1949,14 @@ export const UserDefinedGroupFilters = ({
       const bool_cols = [];
 
       Object.keys(clinicalInfo).forEach((val) => {
-        if (clinicalInfo[val].length === 1 && clinicalInfo[val][0].type === 'number') {
+        if (clinicalInfo[val]?.length === 1 && clinicalInfo[val][0]?.type === 'number') {
           const max = clinicalInfo[val][0].max;
           const min = clinicalInfo[val][0].min;
           minmax[`${val}_max`] = max;
           minmax[`${val}_min`] = min;
         }
 
-        clinicalInfo[val].forEach((item) => {
+        clinicalInfo[val]?.forEach((item) => {
           if ('id' in item) {
             const bool_include = item.id;
             if (bool_include.slice(-3) === 'yes' || bool_include.slice(-2) === 'no') {
@@ -2032,7 +2033,7 @@ export const UserDefinedGroupFilters = ({
 
   useEffect(() => {
     let filterType = ''
-    if (groupFilters && Object.keys(groupFilters).length > 0 && filterChoices.length > 0) {
+    if (groupFilters && Object.keys(groupFilters)?.length > 0 && filterChoices?.length > 0) {
       setUserGivenInputValues(groupFilters);
       let targetNumber = 0;
       filterChoices.forEach((e, index) => {
@@ -2042,8 +2043,8 @@ export const UserDefinedGroupFilters = ({
         }
       });
       if (filterType === 'number') {
-        const maxNumber = Object.entries(groupFilters).reduce((max, [key]) => {
-          if (key.endsWith("_from") || key.endsWith("_to")) {
+        const maxNumber = Object.entries(groupFilters)?.reduce((max, [key]) => {
+          if (key?.endsWith("_from") || key?.endsWith("_to")) {
             const number = parseInt(key.replace("_from", "").replace("_to", ""));
             return (!isNaN(number) && number > max) ? number : max;
           }
@@ -2119,11 +2120,11 @@ export const UserDefinedGroupFilters = ({
           setShowAddGroupButton(false);
           if (viz_type === 'volcono') {
             if (
-              Object.keys(userGivenInputValues).length > 0 &&
+              Object.keys(userGivenInputValues)?.length > 0 &&
               userGivenInputValues['type'] === 'static') {
               if (
-                'group_a' in userGivenInputValues && userGivenInputValues['group_a'].length > 0 &&
-                'group_b' in userGivenInputValues && userGivenInputValues['group_b'].length > 0
+                'group_a' in userGivenInputValues && userGivenInputValues['group_a']?.length > 0 &&
+                'group_b' in userGivenInputValues && userGivenInputValues['group_b']?.length > 0
               ) {
                 preDefienedGroups1[colName].forEach((element, index) => {
                   let group_a = false;
@@ -2212,8 +2213,8 @@ export const UserDefinedGroupFilters = ({
           else if (viz_type === 'survival') {
             let d = preDefienedGroups1[colName];
             let thead = [];
-            let boxes = d.length;
-            for (let sv = 0; sv < d.length; sv++) {
+            let boxes = d?.length;
+            for (let sv = 0; sv < d?.length; sv++) {
               if (sv >= 5) {
                 break;
               }
@@ -2231,15 +2232,15 @@ export const UserDefinedGroupFilters = ({
                   break;
                 }
                 let name = 'group_' + abc[index] + '_' + element.value;
-                if (Object.keys(userGivenInputValues).length > 0) {
+                if (Object.keys(userGivenInputValues)?.length > 0) {
                   let group_check = false;
                   if (
                     'group_' + abc[index] in userGivenInputValues &&
-                    userGivenInputValues['group_' + abc[index]].length > 0
+                    userGivenInputValues['group_' + abc[index]]?.length > 0
                   ) {
                     if (userGivenInputValues['group_' + abc[index]].indexOf(element.value) > -1) {
                       let gi_val = userGivenInputValues['group_' + abc[index]];
-                      for (let gi = 0; gi < gi_val.length; gi++) {
+                      for (let gi = 0; gi < gi_val?.length; gi++) {
                         let n = gi_val[gi];
                         if ('group_' + abc[index] + '_' + n === name) {
                           group_check = true;
@@ -2305,7 +2306,7 @@ export const UserDefinedGroupFilters = ({
           else if (viz_type === 'fusion') {
             let d = preDefienedGroups1[colName];
             let thead = [];
-            for (let sv = 0; sv < d.length; sv++) {
+            for (let sv = 0; sv < d?.length; sv++) {
               if (sv >= 3) {
                 break;
               }
@@ -2318,20 +2319,20 @@ export const UserDefinedGroupFilters = ({
               let checkbox = [];
               let group_i = 0;
 
-              for (let index = 0; index < d.length; index++) {
+              for (let index = 0; index < d?.length; index++) {
                 if (index >= 3) {
                   break;
                 }
                 let name = 'group_' + abc[index] + '_' + element.value;
-                if (Object.keys(userGivenInputValues).length > 0 && Object.keys(userGivenInputValues).some(key => ['group_a', 'group_b', 'group_c'].includes(key))) {
+                if (Object.keys(userGivenInputValues)?.length > 0 && Object.keys(userGivenInputValues).some(key => ['group_a', 'group_b', 'group_c'].includes(key))) {
                   let group_check = false;
                   if (
                     'group_' + abc[index] in userGivenInputValues &&
-                    userGivenInputValues['group_' + abc[index]].length > 0
+                    userGivenInputValues['group_' + abc[index]]?.length > 0
                   ) {
                     if (userGivenInputValues['group_' + abc[index]].indexOf(element.value) > -1) {
                       let gi_val = userGivenInputValues['group_' + abc[index]];
-                      for (let gi = 0; gi < gi_val.length; gi++) {
+                      for (let gi = 0; gi < gi_val?.length; gi++) {
                         let n = gi_val[gi];
                         if ('group_' + abc[index] + '_' + n === name) {
                           group_check = true;
@@ -2611,37 +2612,39 @@ export const UserDefinedGroupFilters = ({
   };
 
   const dropDownChange = (event) => {
+    let shouldExist = event.target.checked;
     const eventObject = JSON.parse(event.target.value);
+    let group = eventObject['group'];
     const filterData = preDefienedGroups1[eventObject.colName][eventObject.index];
+    let value = filterData['value'];
     let tmp = multipleInputs;
-    if (eventObject.group in tmp) {
+
+    if (tmp[eventObject.group]) {
       tmp[eventObject.group].push(filterData.value);
     } else {
       tmp[eventObject.group] = [filterData.value];
     }
 
-    let group = eventObject['group'];
-    let value = filterData['value'];
-    let shouldExist = event.target.checked;
-
+    let newTmpGroup = []
     if (shouldExist === false) {
       event.target.checked = false;
       event.target.removeAttribute('checked');
-      let newTmp = tmp[group].filter((e) => e !== value);
-      if (newTmp.length > 0) {
-        tmp[group] = newTmp;
+      newTmpGroup = tmp[group].filter((e) => e !== value);
+      if (newTmpGroup.length > 0) {
+        tmp[group] = newTmpGroup;
       }
       else {
         delete tmp[group]
       }
     }
+
     setMultipleInputs(tmp);
 
     if ('value' in filterData) {
       setUserGivenInputValues((prevState) => ({
         ...prevState,
         [eventObject.group]: tmp[eventObject.group],
-        column: selectedFilterDetails.id,
+        column: selectedFilterDetails?.id,
         type: 'static'
       }));
     }
@@ -2656,21 +2659,21 @@ export const UserDefinedGroupFilters = ({
     let countNonEmptyGroupsWithPrefix = (prefix, payload) => {
       let count = 0;
       for (let key in payload) {
-        if (key.startsWith(prefix) && Array.isArray(payload[key]) && payload[key].length > 0) {
+        if (key.startsWith(prefix) && Array.isArray(payload[key]) && payload[key]?.length > 0) {
           count++;
         }
       }
       return count;
     }
 
-    if (userGivenInputValues && Object.keys(userGivenInputValues).length > 0) {
+    if (userGivenInputValues && Object.keys(userGivenInputValues)?.length > 0) {
       let final_payload = { ...userGivenInputValues };
       if (isVolcano) {
         if (final_payload['type'] === 'static') {
           let groupKeys = Object.keys(final_payload).filter(key => key.startsWith('group_'));
-          let totalGroups = groupKeys.length;
+          let totalGroups = groupKeys?.length;
           let hasAtLeastTwoNonEmptyGroups = groupKeys.reduce((count, key) => {
-            if (Array.isArray(final_payload[key]) && final_payload[key].length > 0) {
+            if (Array.isArray(final_payload[key]) && final_payload[key]?.length > 0) {
               return count + 1;
             }
             return count;
@@ -2691,7 +2694,7 @@ export const UserDefinedGroupFilters = ({
             ...document.querySelectorAll('[name="2_to"]')
           ];
 
-          let send_response = inputs.length > 0 && inputs.every(input =>
+          let send_response = inputs?.length > 0 && inputs.every(input =>
             !(input.classList && (input.classList.contains('Border2') || input.classList.contains('BorderRed400'))) && input.value !== '');
 
           if (send_response) {

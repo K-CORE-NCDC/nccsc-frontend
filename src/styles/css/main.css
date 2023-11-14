@@ -56,6 +56,10 @@
   align-items: center;
 }
 
+.logo_visual {
+  height: 90vh !important;
+}
+
 .mainVisual .visual::after {
   content: '';
   position: absolute;
@@ -347,7 +351,7 @@
   /* background-image: url("/images/ncdc/mainSection07-bg.jpg"); */
 }
 
-.mainContents .section.section07 > img {
+.mainContents .section.section07>img {
   position: absolute;
   top: 0;
   left: 0;
@@ -583,7 +587,7 @@
   }
 }
 
-.mainContents .section04 .dataTypeWrap dt > span img {
+.mainContents .section04 .dataTypeWrap dt>span img {
   margin-top: -2px;
 }
 
@@ -596,7 +600,7 @@
   color: #2e2e2e;
 }
 
-.mainContents .section04 .dataTypeWrap dt .switcher input[type='checkbox']:checked + label {
+.mainContents .section04 .dataTypeWrap dt .switcher input[type='checkbox']:checked+label {
   background-color: #003177;
 }
 
@@ -610,7 +614,7 @@
   right: 12px;
 }
 
-.mainContents .section04 .dataTypeWrap .checkbox input:checked + label:before {
+.mainContents .section04 .dataTypeWrap .checkbox input:checked+label:before {
   background-color: rgba(255, 255, 255, 0.2);
   border: none;
 }
@@ -1009,7 +1013,7 @@
   width: 100%;
 }
 
-.mainContents .section06 .btnMore > span {
+.mainContents .section06 .btnMore>span {
   display: none;
 }
 
@@ -1049,7 +1053,7 @@
   margin-bottom: 12px;
 }
 
-.mainContents .section06 .galleryList02 .btnMore > span {
+.mainContents .section06 .galleryList02 .btnMore>span {
   display: none;
 }
 
@@ -1105,7 +1109,7 @@
   margin-bottom: 28px;
 }
 
-.mainContents .section07 .btns > a {
+.mainContents .section07 .btns>a {
   display: flex;
   align-items: center;
   color: rgb(255, 255, 255);
@@ -1203,6 +1207,10 @@
   right: 0;
   margin: 15px 40px 0px 0px;
   column-gap: 10px;
+}
+
+.dataSearchWrap .popularBox .contentBtns_smallScreen {
+  display: none;
 }
 
 .dataSearchWrap .popularBox .btn {
@@ -1450,7 +1458,7 @@
   top: -48px;
 }
 
-.mainContents .section06 .tabContents > ol > li {
+.mainContents .section06 .tabContents>ol>li {
   position: relative;
 }
 

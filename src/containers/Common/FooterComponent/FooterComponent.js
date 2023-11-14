@@ -50,9 +50,9 @@ const FooterComponent = () => {
             <p>경기도 고양시 일산동구 일산로 323 국립암센터</p>
             <p>Copyright ⓒ 2021 by NCC. All rights reserved.</p>
           </div>
-          <div style={img_div}>
-            <img src={logo1} alt="fc1" className="logo01" style={big_img1} />
-            <img src={logo2} alt="fc1" className="logo01" style={big_img2} />
+          <div style={img_div} className='footer_img_div'>
+            <img src={logo1} alt="fc1" className="logo01 mobile_logo" style={big_img1} />
+            <img src={logo2} alt="fc1" className="logo01 mobile_logo" style={big_img2} />
           </div>
         </div>
       </footer>

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { GeneInfo } from '../../../actions/api_actions';
 import LoaderCmp from '../../Common/Loader';
+import NoContentMessage from '../../Common/NoContentComponent';
 import chart_types from '../../DataSummary/genomicCharyTypes';
 import html2canvas from 'html2canvas';
 
@@ -14,7 +15,7 @@ export default function DataGenomic({
   const [activeCmp, setActiveCmp] = useState(true);
   let { project_id } = useParams();
   const [summaryJson, setSummaryJson] = useState({});
-  const [summaryJsonStatus, setSummaryJsonStatus] = useState(204);
+  const [summaryJsonStatus, setSummaryJsonStatus] = useState(200);
   const [state, setState] = useState({ charts: [] });
   const downloadContainerRef = useRef(null);
   const liRefs = useRef({});
@@ -131,15 +132,19 @@ export default function DataGenomic({
       {loader ? (
         <LoaderCmp />
       ) : (
-        <div className="genomic ptn">
-          <div className="auto">
-            {state['charts'] && (
-              <div ref={downloadContainerRef} className="dataList singleDataViz">
-                <ul>{state['charts']}</ul>
-              </div>
-            )}
+        summaryJsonStatus === 200 ? (
+          <div className="genomic ptn">
+            <div className="auto">
+              {state['charts'] && (
+                <div ref={downloadContainerRef} className="dataList singleDataViz">
+                  <ul>{state['charts']}</ul>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        ) : (
+          <NoContentMessage />
+        )
       )}
     </>
   );

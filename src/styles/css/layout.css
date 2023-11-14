@@ -1367,9 +1367,7 @@ table tbody tr {
     text-align: left !important;
   }
 
-  .boardList .boardHeader {
-    display: none;
-  }
+
 
   .boardList .boardBody {
     display: block;

@@ -74,13 +74,13 @@ function FindRegistrationNumber() {
           if (
             'data' in result &&
             'status' in result.data &&
-            result.data.status === 'ID Sent to Your Email'
+            result.data.status === 'Success'
           ) {
             findIdSuccess();
           } else if (
             'data' in result &&
             'status' in result.data &&
-            result.data.status === 'Email Not Registered'
+            result.data.status === 'EmailNotRegistered'
           ) {
             findIdFailure('EmailNotRegistered');
           } else if ('data' in result && 'status' in result.data) {

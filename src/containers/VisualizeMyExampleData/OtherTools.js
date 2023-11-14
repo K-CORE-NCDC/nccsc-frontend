@@ -15,6 +15,15 @@ export const OtherTools = () => {
                 </a>
               </button>
             </div>
+            <div className="tit contentBtns_smallScreen">
+              <button className="btn" id="DownloadManual">
+                <a href={OtherToolsManual} download>
+                  <span className="material-icons">
+                    download
+                  </span>
+                </a>
+              </button>
+            </div>
           </div>
 
           <div className="contentBox">

@@ -55,7 +55,7 @@ function SetPassword() {
         <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
           <FormattedMessage
             id={status}
-            defaultMessage="Password Set link expired, Please try again after sometime"
+            defaultMessage="Password Set link expired, Please Register again"
           />
         </p>
       ]);
@@ -116,19 +116,19 @@ function SetPassword() {
           if (
             'data' in result &&
             'status' in result.data &&
-            result.data.status === 'Password Updated Successfully'
+            result.data.status === 'Success'
           ) {
             setPasswordSuccess();
           } else if (
             'data' in result &&
             'status' in result.data &&
-            result.data.status === "User Doesn't Exist"
+            result.data.status === "UserDoesntExist"
           ) {
             setPasswordFailure('UserDoesntExist');
           } else if (
             'data' in result &&
             'status' in result.data &&
-            result.data.status === 'Password Set link expired'
+            result.data.status === 'PasswordSetLinkExpire'
           ) {
             setPasswordFailure('PasswordSetLinkExpire');
           } else if ('data' in result && 'status' in result.data) {

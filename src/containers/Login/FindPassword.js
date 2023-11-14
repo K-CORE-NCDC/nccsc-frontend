@@ -4,11 +4,10 @@ import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { findPassword } from '../../actions/api_actions';
 import nameIcon from '../../styles/images/icon-text.svg';
-import idIcon from '../../styles/images/icon-user.svg';
+// import idIcon from '../../styles/images/icon-user.svg';
 
 function FindPassword() {
   const UserId = useRef(null);
-  const RegistrationPin = useRef(null);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState([]);
   let history = useHistory();
@@ -57,8 +56,6 @@ function FindPassword() {
 
   let findPasswordfunction = () => {
     let user_id = UserId.current.value;
-    let registration_pin = RegistrationPin.current.value;
-
     setIsError(false);
 
     if (user_id === '') {
@@ -68,31 +65,21 @@ function FindPassword() {
         </p>
       ]);
       setIsError(true);
-    } else if (registration_pin === '') {
-      setErrorMessage([
-        <p className="ErrorText">
-          <FormattedMessage
-            id="UniquePinNotEmpty"
-            defaultMessage="Registration Pin cant be Empty"
-          />
-        </p>
-      ]);
-      setIsError(true);
     } else {
       setIsError(false);
-      let data = findPassword('POST', { username: user_id, registration_pin: registration_pin });
+      let data = findPassword('POST', { username: user_id });
       data
         .then((result) => {
           if (
             'data' in result &&
             'status' in result.data &&
-            result.data.status === 'Password Reset Link is sent to your Email'
+            result.data.status === 'Success'
           ) {
             findPasswordSuccess();
           } else if (
             'data' in result &&
             'status' in result.data &&
-            result.data.status === 'Email Not Registered'
+            result.data.status === 'EmailNotRegistered'
           ) {
             findPasswordFailure('EmailNotRegistered');
           } else if ('data' in result && 'status' in result.data) {
@@ -108,7 +95,6 @@ function FindPassword() {
   let cancelfunction = () => {
     setIsError(false);
     UserId.current.value = '';
-    RegistrationPin.current.value = '';
   };
 
   return (
@@ -171,8 +157,7 @@ function FindPassword() {
                   </div>
                 </dd>
               </dl>
-
-              <dl>
+              {/* <dl>
                 <dt style={{ width: '250px' }}>
                   <img src={idIcon} alt="" />
                   <FormattedMessage id="RegistrationPin" defaultMessage="Registration Pin" />
@@ -197,7 +182,7 @@ function FindPassword() {
                     </FormattedMessage>
                   </div>
                 </dd>
-              </dl>
+              </dl> */}
             </form>
 
 

@@ -580,6 +580,7 @@
 
   .mainVisual .visual .txtBox .d2 {
     font-size: 30px;
+    text-align: center;
   }
 
   .mainVisual .visual .txtBox .btn {
@@ -619,6 +620,7 @@
   .mainDataStatusWrap .mainDataStatus dl dt {
     padding: 12px 16px;
     justify-content: flex-start;
+    margin-bottom: 15px;
   }
 
   .mainDataStatusWrap .mainDataStatus:not(.service) dl dd {

@@ -30,6 +30,29 @@ const MultiDataVisualization = () => {
                 </a>
               </button>
             </div>
+            <div className="tit contentBtns_smallScreen">
+              <button
+                id="ExamplePage"
+                className="btn"
+                onClick={() => {
+                  history.push({
+                    pathname: '/visualizesingle-exampledata/home/',
+                    state: { example: true }
+                  });
+                }}
+              >
+                <span className="material-icons">
+                  lightbulb
+                </span>
+              </button>
+              <button className="btn" id="DownloadManual">
+                <a href={MultiDataManual} download>
+                  <span className="material-icons">
+                    download
+                  </span>
+                </a>
+              </button>
+            </div>
           </div>
 
           <div className="contentBox">

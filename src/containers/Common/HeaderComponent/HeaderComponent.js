@@ -15,7 +15,12 @@ function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
     'singledata-upload',
     'newmultidataproject',
     'multidataprojectview',
-    'multidatavisualization'
+    'multidatavisualization',
+    'blast',
+    'vcfmaf',
+    'interpro',
+    'mafmerger',
+    'refverconverter'
   ];
 
   useEffect(() => {
