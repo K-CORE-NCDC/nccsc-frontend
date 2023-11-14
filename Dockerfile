@@ -11,6 +11,7 @@ WORKDIR /var/www/html/ncc/
 RUN export NODE_OPTIONS=--openssl-legacy-provider
 RUN node -v
 # RUN apt-get install -y npm
+# RUN npm install -g npm@6.14.18
 RUN npm install -g npm
 RUN node -v
 RUN npm install btoa
