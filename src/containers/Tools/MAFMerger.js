@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { mafmerger } from '../../actions/api_actions';
+import { mafmerger, clearToolsData } from '../../actions/api_actions';
 import Attachment1 from '../../assets/files/YBC_1.maf';
 import Attachment2 from '../../assets/files/YBC_2.maf';
 import AttachmentsImage from '../../assets/images/mafmerger.png';
@@ -176,7 +176,6 @@ function MAFMerger() {
         }
     };
 
-
     useEffect(() => {
         if (startInterval) {
             setLoop(setInterval(() => {
@@ -213,7 +212,7 @@ function MAFMerger() {
                                     <a
                                         className="ToolResultsReady"
                                         href={
-                                            backend_url + 'media/MafMerger/files/' + mafMergerResponse['container_name'] + '.maf'
+                                            backend_url + mafMergerResponse['user_project_directory'] + mafMergerResponse['container_name'] + '.maf'
                                         }
                                         download={mafMergerResponse['container_name'] + '.maf'}
                                     >
@@ -226,7 +225,7 @@ function MAFMerger() {
                                     <a
                                         className="ToolResultsReady"
                                         href={
-                                            backend_url + 'media/MafMerger/files/' + mafMergerResponse['container_name'] + '.tsv'
+                                            backend_url + mafMergerResponse['user_project_directory'] + mafMergerResponse['container_name'] + '.tsv'
                                         }
                                         download={mafMergerResponse['container_name'] + '.tsv'}
                                     >
@@ -244,6 +243,12 @@ function MAFMerger() {
             }
         }
     }, [mafMergerResponse]);
+
+    useEffect(() => {
+        return () => {
+            dispatch(clearToolsData());
+        };
+    }, []);
 
     const breadCrumbs = {
         '/mafmerger/': [
@@ -325,7 +330,7 @@ function MAFMerger() {
                                                         <div>
                                                             {Object.keys(mafMergerFiles)?.map((filename, index) => (
                                                                 <div
-                                                                    key={index}
+                                                                    key={filename}
                                                                     style={{
                                                                         display: 'flex',
                                                                         justifyContent: 'space-between',

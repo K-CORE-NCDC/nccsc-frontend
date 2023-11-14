@@ -156,7 +156,6 @@ export function interPro(method, data) {
 
 export function sendCaptureScreenshot(method, data) {
   const url = `${config.auth}download-capture-info/`;
-  console.log('data', data);
   const formData = new FormData();
   if (method === 'POST') {
     formData.append('chart_name', data?.chart_name);
@@ -209,9 +208,7 @@ export function mafmerger(method, data) {
     let url = `${config.auth}mafmerger/`;
     const formdata = new FormData();
     if (method === 'POST') {
-      console.log("data", data);
       Object.keys(data).forEach((element) => {
-        console.log("element", element);
         if (data[element] !== undefined) {
           formdata.append(element, data[element].file);
         }
@@ -246,13 +243,20 @@ export function mafmerger(method, data) {
   };
 }
 
+export function clearToolsData() {
+  return (dispatch) =>
+    dispatch({
+      type: homeConstants.CLEARTOOLSDATA,
+      payload: {}
+    });
+}
+
 export function refverconverter(method, data) {
   return (dispatch) => {
     let url = `${config.auth}refverconverter/`;
     const formdata = new FormData();
     if (method === 'POST') {
       Object.keys(data?.refVerConverterFiles).forEach((element) => {
-        console.log("element", element);
         if (data?.refVerConverterFiles[element] !== undefined) {
           formdata.append(element, data?.refVerConverterFiles[element].file);
         }

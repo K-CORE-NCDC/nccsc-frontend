@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { refverconverter } from '../../actions/api_actions';
+import { refverconverter,clearToolsData } from '../../actions/api_actions';
 import Attachments from '../../assets/files/vcftest19to38.vcf';
 import AttachmentsImage from '../../assets/images/refver2.png';
 import config from '../../config';
@@ -73,7 +73,6 @@ function RefVerConverter() {
     const [isError, setIsError] = useState(false);
     const dispatch = useDispatch();
     const refVerConverterResponse = useSelector((data) => data.homeReducer.refverconverter);
-    console.log("refVerConverterResponse", refVerConverterResponse);
     const title = { id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' };
 
     const [hg19, sethg19] = useState(true);
@@ -190,7 +189,7 @@ function RefVerConverter() {
                                 <a
                                     className="ToolResultsReady"
                                     href={
-                                        backend_url + 'media/RefVerConverter/files/' + refVerConverterResponse['container_name'] + '.vcf'
+                                        backend_url + mafMergerResponse['user_project_directory'] + refVerConverterResponse['container_name'] + '.vcf'
                                     }
                                     download={refVerConverterResponse['container_name'] + '.vcf'}
                                 >
@@ -205,6 +204,12 @@ function RefVerConverter() {
             }
         }
     }, [refVerConverterResponse]);
+
+    useEffect(() => {
+        return () => {
+            dispatch(clearToolsData());
+        };
+    }, []);
 
     const breadCrumbs = {
         '/refverconverter/': [
@@ -302,7 +307,7 @@ function RefVerConverter() {
                                                         <div>
                                                             {Object.keys(refVerConverterFiles)?.map((filename, index) => (
                                                                 <div
-                                                                    key={index}
+                                                                    key={filename}
                                                                     style={{
                                                                         display: 'flex',
                                                                         justifyContent: 'space-between',
