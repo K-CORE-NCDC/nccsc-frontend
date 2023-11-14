@@ -5,14 +5,15 @@ import { FormattedMessage } from 'react-intl';
 import icon1 from '../../assets/images/publicDataInfo-img01.svg';
 import icon2 from '../../assets/images/publicDataInfo-img02.svg';
 import icon3 from '../../assets/images/publicDataInfo-img03.svg';
+import arrow_icon from '../../assets/images/btnDetail-arrow-white.svg';
 const HomeComponent = () => {
-  const title = { id: 'visualize_otherTools', defaultMessage: 'Other Tools' };
+  const title = { id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' };
 
 
   const breadCrumbs = {
     '/tools/': [
       { id: 'Home', defaultMessage: 'Home', to: '/' },
-      {id: 'MyDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/'},
+      { id: 'MyDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
       { id: 'Tools', defaultMessage: 'Other Tools', to: '/tools/' }
     ]
   };
@@ -26,72 +27,198 @@ const HomeComponent = () => {
         type="single"
       />
       <article id="subContents" className="subContents">
-        
-        <div className="contentsTitle">
-        <div className="auto">
-          <h3 className="colorSecondary">
-            <span className="colorPrimary">
-            <FormattedMessage id="Other" defaultMessage="Other" />
-              &nbsp;
-            </span>
-            <FormattedMessage id="Tools" defaultMessage="Tools" />
-          </h3>
-        </div>
-      </div>
-      
-        <div className="ptn">
-          <div className="auto">
-            <div className="publicDataInfo" style={{ padding: '0px' }}>
-              <ul>
-                <li>
-                  <Link to="/blast/">
-                    <img src={icon1} alt="" />
-                    <dl>
-                      <dt>Blast</dt>
-                      <dd>
-                        <FormattedMessage
-                          id="BlastDesc"
-                          defaultMessage="BLAST stands for Basic Local Alignment Search Tool. BLAST is a powerful tool for analyzing biological sequence data."
-                        />
-                      </dd>
-                    </dl>
-                  </Link>
-                </li>
 
-                <li>
-                  <Link to="/vcfmaf/">
-                    <img src={icon2} alt="" />
-                    <dl>
-                      <dt>VCF to MAF</dt>
-                      <dd>
-                        <FormattedMessage
-                          id="VCFMAFDesc"
-                          defaultMessage="Vcf2maf is a tool for converting files in Variant Call Format (VCF) to MAF format. "
-                        />
-                      </dd>
-                    </dl>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/interpro/">
-                    <img src={icon3} alt="" />
-                    <dl>
-                      <dt>Interpro</dt>
-                      <dd>
-                        <FormattedMessage
-                          id="InterproDesc"
-                          defaultMessage="InterPro is a database of protein families, protein domains in which identifiable features found in known proteins can be applied to new protein sequences"
-                        />
-                      </dd>
-                    </dl>
-                  </Link>
-                </li>
-              </ul>
-            </div>
+        <div className="contentsTitle">
+          <div className="auto">
+            <h3 className="colorSecondary">
+              <span className="colorPrimary">
+                <FormattedMessage id="OtherTools1" defaultMessage="Other" />
+                &nbsp;
+              </span>
+              <FormattedMessage id="OtherTools2" defaultMessage="Tools" />
+            </h3>
           </div>
         </div>
-      </article>
-    </div>
+
+        <div className="ptn">
+          <div className="auto">
+            {/* <div className="publicDataInfo" style={{ padding: '0px' }}> */}
+            <div className="mainContentsBox">
+              <div className="galleryList">
+
+                <ul className={`justify-content-start`}>
+
+                  <li className='listitems'>
+                    <Link to="/blast/">
+                      <div className="thumb">
+                        <img src={icon1} alt="img" />
+                        <div className="hvBox">
+                          <div className="hvBox_links">
+                            <div className="textdiv" >
+                              <Link to="/blast/">
+                                <span>
+                                  <FormattedMessage id="RunAnalysis" defaultMessage="Run Analysis" />
+                                </span>
+                                <img src={arrow_icon} alt="arrow-icon" />
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="txtBox txtBoxpadding tac Relative">
+                        <dl className="MarginTop8">
+                          <dt className="h4 Capitalize">Blast</dt>
+                          <dd className="p1">
+                            <FormattedMessage
+                              id="BlastDesc"
+                              defaultMessage="BLAST stands for Basic Local Alignment Search Tool. BLAST is a powerful tool for analyzing biological sequence data"
+                            /></dd>
+                        </dl>
+                      </div>
+                    </Link>
+                  </li>
+
+                  <li className='listitems'>
+                    <Link to="/vcfmaf/">
+                      <div className="thumb">
+                        <img src={icon3} alt="img" />
+                        <div className="hvBox">
+                          <div className="hvBox_links">
+                            <div className="textdiv" >
+                              <Link to="/vcfmaf/">
+                                <span>
+                                  <FormattedMessage id="RunAnalysis" defaultMessage="Run Analysis" />
+                                </span>
+                                <img src={arrow_icon} alt="arrow-icon" />
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="txtBox txtBoxpadding tac Relative">
+                        <dl className="MarginTop8">
+                          <dt className="h4 Capitalize">VCF to MAF</dt>
+                          <dd className="p1">
+                            <FormattedMessage
+                              id="VCFMAFDesc"
+                              defaultMessage="Vcf2maf is a tool for converting files in Variant Call Format (VCF) to MAF format "
+                            /></dd>
+                        </dl>
+                      </div>
+                    </Link>
+                  </li>
+
+                  <li className='listitems'>
+                    <Link to="/interpro/">
+                      <div className="thumb">
+                        <img src={icon1} alt="img" />
+                        <div className="hvBox">
+                          <div className="hvBox_links">
+                            <div className="textdiv" >
+                              <Link to="/interpro/">
+                                <span>
+                                  <FormattedMessage id="RunAnalysis" defaultMessage="Run Analysis" />
+                                </span>
+                                <img src={arrow_icon} alt="arrow-icon" />
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="txtBox txtBoxpadding tac Relative">
+                        <dl className="MarginTop8">
+                          <dt className="h4 Capitalize">Interpro</dt>
+                          <dd className="p1">
+                            <FormattedMessage
+                              id="InterproDesc"
+                              defaultMessage="InterPro is a database of protein families, protein domains in which identifiable features found in known proteins can be applied to new protein sequences "
+                            /></dd>
+                        </dl>
+                      </div>
+                    </Link>
+                  </li>
+
+
+                  <li className='listitems'>
+                    <Link to="/mafmerger/">
+                      <div className="thumb">
+                        <img src={icon2} alt="img" />
+                        <div className="hvBox">
+                          <div className="hvBox_links">
+                            <div className="textdiv" >
+                              <Link to="/mafmerger/">
+                                <span>
+                                  <FormattedMessage id="RunAnalysis" defaultMessage="Run Analysis" />
+                                </span>
+                                <img src={arrow_icon} alt="arrow-icon" />
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="txtBox txtBoxpadding tac Relative">
+                        <dl className="MarginTop8">
+                          <dt className="h4 Capitalize">MAF Merger</dt>
+                          <dd className="p1">
+                            <FormattedMessage
+                              id="MAFMergerDesc1"
+                              defaultMessage="By entering multiple MAF files "
+                            />
+                            <br />
+                            <FormattedMessage
+                              id="MAFMergerDesc2"
+                              defaultMessage="Analysis tool to merge into 1 file"
+                            />
+                          </dd>
+                        </dl>
+                      </div>
+                    </Link>
+                  </li>
+
+                  <li className='listitems'>
+                    <Link to="/refverconverter/">
+                      <div className="thumb">
+                        <img src={icon1} alt="img" />
+                        <div className="hvBox">
+                          <div className="hvBox_links">
+                            <div className="textdiv" >
+                              <Link to="/refverconverter/">
+                                <span>
+                                  <FormattedMessage id="RunAnalysis" defaultMessage="Run Analysis" />
+                                </span>
+                                <img src={arrow_icon} alt="arrow-icon" />
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="txtBox txtBoxpadding tac Relative">
+                        <dl className="MarginTop8">
+                          <dt className="h4 Capitalize">RefVer Converter</dt>
+                          <dd className="p1">
+                            <FormattedMessage
+                              id="RefverDesc1"
+                              defaultMessage="Convert reference genome version of VCF file (hg19 ↔ hg38) "
+                            />
+                            <br />
+                            <FormattedMessage
+                              id="RefverDesc2"
+                              defaultMessage=" VCF file (hg19 ↔ hg38) "
+                            />
+                          </dd>
+                        </dl>
+                      </div>
+                    </Link>
+                  </li>
+
+                </ul>
+              </div>
+            </div>
+            {/* </div> */}
+          </div>
+        </div>
+      </article >
+    </div >
   );
 };
 

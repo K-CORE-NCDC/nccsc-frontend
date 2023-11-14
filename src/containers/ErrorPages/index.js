@@ -26,8 +26,7 @@ function NotFound() {
                   </div>
                   <h2 className="">OOPS! NOTHING WAS FOUND</h2>
                   <h3 className="">
-                    The page you are looking for might have been removed, had it changed or is
-                    temporarily unavailable.
+                    Please go back to the page and refresh
                   </h3>
                   <div className="">
                     <Link className="" style={{ color: 'rgb(249 115 22)' }} to={`/`}>

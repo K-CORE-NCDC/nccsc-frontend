@@ -10,6 +10,7 @@ import {
   getBreastKeys,
   getUserDataProjectsTableData,
   getUserDefinedFilter,
+  sendCaptureScreenshot
 } from '../../../actions/api_actions';
 import arrow_icon from '../../../assets/images/btnDetail-arrow-white.svg';
 import sample_img from '../../../assets/images/sample.webp';
@@ -73,14 +74,15 @@ export default function DataVisualization() {
       if (param === false) {
         setScreenCapture(false);
       } else {
+        sendCaptureScreenshot('POST', { 'chart_name': tab, 'project_id': project_id, 'location':route?.pathname });
         setScreenCapture(true);
       }
     }
-    else {
-      CaptureScreenshot(tab)
+    else if (tab === 'heatmap') {
+      CaptureScreenshot(tab, project_id,route?.pathname)
     }
+  }
 
-  };
 
 
   const callback = useCallback(({ filter, value, genes }) => {
@@ -444,6 +446,7 @@ export default function DataVisualization() {
       />
 
       <article id="subContents" className="subContents">
+
         {gridData && !tabName ? (
           <div className="contentsTitle">
             <h3>
@@ -475,6 +478,7 @@ export default function DataVisualization() {
 
         <div className="ptn">
           <div className="auto">
+
             <section>
               <div className={`PopoverStyles ${(project_id && tab !== 'home') ? 'JustifySpaceBetween' : ''}`} style={(!project_id && tabName === 'survival') ? { gap: '40px' } : {}}>
 
@@ -728,6 +732,7 @@ export default function DataVisualization() {
 
               </div>
             </section>
+
             {gridData && !tabName && (
               <div className="mainContentsBox" style={{ marginTop: '50px' }}>
                 <div className="galleryList">
@@ -797,6 +802,7 @@ export default function DataVisualization() {
                 </div>
               </div>
             )}
+
           </div>
 
           <section className="auto">
@@ -832,6 +838,7 @@ export default function DataVisualization() {
               )}
             </div>
           </section>
+
         </div>
       </article>
     </div>

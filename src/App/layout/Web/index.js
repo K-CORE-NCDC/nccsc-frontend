@@ -14,7 +14,7 @@ import 'swiper/swiper-bundle.min.css';
 import 'swiper/swiper.css';
 import { SetCookie, sendlogManagement } from '../../../actions/api_actions';
 import config from '../../../config';
-import NotFound from '../../../containers/404NotFound';
+import NotFound from '../../../containers/ErrorPages';
 import FooterComponent from '../../../containers/Common/FooterComponent/FooterComponent';
 import Popup from '../../../containers/Popup/Popup';
 import { getCookie } from '../../../containers/getCookie';
@@ -406,8 +406,8 @@ export default function Web() {
             <h1 className="logo">
               <a href="/k-core/">
                 {/* <img src={logoNew} alt="logo" className="logo01" /> */}
-                <img src={mainLogowhite} alt="logo" className="logo01" style={{width:"108px"}} />
-                <img src={mainLogo} alt="logo" className="logo02" style={{width:"108px"}}/>
+                <img src={mainLogowhite} alt="logo" className="logo01" style={{ width: "108px" }} />
+                <img src={mainLogo} alt="logo" className="logo02" style={{ width: "108px" }} />
               </a>
             </h1>
             <div className="headerUtils">
@@ -750,7 +750,7 @@ export default function Web() {
               <Route exact path="*" component={NotFound} lan={context.locale} />
             </Switch>
           </Suspense>
-          <div>{showPopup && <Popup toggleModal={toggleModal} />}</div>
+          <div>{showPopup && activeClassIndex === 0 && <Popup toggleModal={toggleModal} />}</div>
         </div>
         <FooterComponent />
       </div>

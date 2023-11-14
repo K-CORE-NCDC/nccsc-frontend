@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { exportComponentAsJPEG } from 'react-component-export-image';
-import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { LolipopInformation } from '../../../actions/api_actions';
@@ -9,7 +8,7 @@ import LoaderCmp from '../../Common/Loader';
 import LollipopCmp from '../../Common/Lollipop';
 import NoContentMessage from '../../Common/NoContentComponent';
 import Table from '../../Common/Table/ReactTable';
-import { useIntl } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 
 
@@ -230,7 +229,7 @@ export default function DataLolipop({
               });
               refseq_id?.push(data[i]['refseq_mrna_id']);
               enst_id?.push(data[i]['annotation_transcript']);
-              
+
             } else if (tableType === 'phospho') {
               let site_sample = data[i]['site']?.split(' ');
               let regex = /\D/g;
@@ -264,7 +263,7 @@ export default function DataLolipop({
         if (tableType === 'Mutation') {
           table_cols = [
             {
-              Header: intl.formatMessage({ id: "sampleid", defaultMessage: 'Sample Id' }),
+              Header: intl.formatMessage({ id: "sampleid", defaultMessage: 'Sample Idssss' }),
               accessor: (row) => row.sample,
             },
             {
@@ -416,10 +415,6 @@ export default function DataLolipop({
           });
         }
 
-        // console.log('domdomains',domains , width)
-
-        // }
-
         let w = 300;
         let h = 10;
         if (width.length > 0) w = Math.max(...width);
@@ -450,6 +445,40 @@ export default function DataLolipop({
       setNoContent(true);
     }
   }, [lolipopJson]);
+
+  const tableColumnsDatas = tableType === 'Mutation'
+    ? [
+      {
+        Header: intl.formatMessage({ id: "sampleid", defaultMessage: 'Sample Id' }),
+        accessor: (row) => row.sample,
+      },
+      {
+        Header: intl.formatMessage({ id: "ProtienChange", defaultMessage: 'Protein Change' }),
+        accessor: (row) => row.protein,
+      },
+      {
+        Header: intl.formatMessage({ id: "MutationType", defaultMessage: 'Mutation Type' }),
+        accessor: (row) => row.variant_classification,
+      }
+    ] : tableType === 'phospho'
+      ? [
+        {
+          Header: intl.formatMessage({ id: "sampleid", defaultMessage: 'Sample Id' }),
+          accessor: (row) => row.sample,
+        },
+        {
+          Header: intl.formatMessage({ id: "Site", defaultMessage: 'Site' }),
+          accessor: (row) => row.site,
+        },
+        {
+          Header: intl.formatMessage({ id: "Gene", defaultMessage: 'Gene' }),
+          accessor: (row) => row.gene,
+        }
+      ]
+      : [];
+
+  // You can add additional conditions as needed or provide a default value if none of the conditions match.
+
 
   useEffect(() => {
     if (activeCmp) {
@@ -719,7 +748,7 @@ export default function DataLolipop({
                     {tableData.length > 0 && (
                       <div style={{ marginTop: '30px' }}>
                         <Table
-                          columns={tableColumnsData}
+                          columns={tableColumnsDatas}
                           data={tableData}
 
                         />

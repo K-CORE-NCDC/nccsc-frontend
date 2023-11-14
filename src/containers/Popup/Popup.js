@@ -106,6 +106,7 @@ function Popup({ toggleModal }) {
                   className="material-icons mainPopupClose"
                   id="mainPopupClose"
                   onClick={closeModal}
+                  onTouchStart={closeModal}
                 >
                   close
                 </span>
@@ -121,7 +122,7 @@ function Popup({ toggleModal }) {
                 <button className="mainPopupClose" type="button" onClick={changeDay} id="RemindAfter24hrsButton">
                   <FormattedMessage id="RemindAfter24hrs" defaultMessage="Remind after 24 hrs" />
                 </button>
-                <button className="mainPopupClose" onClick={closeModal} id="CloseButton">
+                <button className="mainPopupClose" onTouchStart={closeModal} onClick={closeModal} id="CloseButton">
                   {' '}
                   <FormattedMessage id="Close" defaultMessage="Close" />{' '}
                 </button>

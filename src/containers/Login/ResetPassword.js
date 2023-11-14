@@ -57,7 +57,7 @@ function ResetPassword() {
         <p key="error" className="p-1 font-bold text-3xl text-red-500 italic">
           <FormattedMessage
             id={status}
-            defaultMessage="Password Set link expired, Please try again after sometime"
+            defaultMessage="Password Reset link expired"
           />
         </p>
       ]);
@@ -123,25 +123,25 @@ function ResetPassword() {
           if (
             'data' in result &&
             'status' in result.data &&
-            result.data.status === 'Password Updated Successfully'
+            result.data.status === 'Success'
           ) {
             setPasswordSuccess();
           } else if (
             'data' in result &&
             'status' in result.data &&
-            result.data.status === "User Doesn't Exist"
+            result.data.status === "UserDoesntExist"
           ) {
             setPasswordFailure('UserDoesntExist');
           } else if (
             'data' in result &&
             'status' in result.data &&
-            result.data.status === 'Password Reset link expired'
+            result.data.status === 'PasswordResetLinkExpire'
           ) {
             setPasswordFailure('PasswordResetLinkExpire');
           } else if (
             'data' in result &&
             'status' in result.data &&
-            result.data.status === 'Unique Key is Incorrect, Please check'
+            result.data.status === 'UniqueKeyError'
           ) {
             setPasswordFailure('UniqueKeyError');
           } else if ('data' in result && 'status' in result.data) {

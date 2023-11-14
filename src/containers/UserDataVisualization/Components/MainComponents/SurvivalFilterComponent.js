@@ -185,6 +185,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survialData, SVF
       setUpdateFiltersFlag(false)
     }
     else if (filterTypeButton === 'omics') {
+      delete copyState.group_filters;
       if (project_id === undefined) {
         copyState.gene_database = geneDatabase;
         parentCallback({ updatedState: copyState });

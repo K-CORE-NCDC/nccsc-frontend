@@ -65,7 +65,7 @@ function InterPro() {
   let InterProTool = (event) => {
     setInterProFile(event.target.files[0]);
   };
-  const title = { id: 'Interpro', defaultMessage: 'Interpro' };
+  const title = { id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' };
 
   const setShowModalFunction = (stateData) => {
     setShowModal(stateData);
@@ -76,7 +76,7 @@ function InterPro() {
       setIsError(false);
       setLoader(true);
       dispatch(interPro('POST', { file: interProFile, filename: interProFile['name'] }));
-      setMsg('File Uploading, Please Wait......');
+      setMsg({id:'FileUplodPlsWait', defaultMessage:'File Uploading, Please Wait......'});
     } else {
       setIsError(true);
     }
@@ -87,7 +87,7 @@ function InterPro() {
       if (interproResponse['status'] === 'running') {
         setLoader(true)
         setStartInterval(true)
-        setMsg('File Uploaded, Conversion Started.....')
+        setMsg({id:'FileUploadConverSt', defaultMessage:'File Uploaded, Conversion Started.....'});
       } else {
         setLoader(false)
         setStartInterval(false)

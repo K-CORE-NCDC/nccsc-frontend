@@ -14,8 +14,6 @@ import HeatmapNewCmp from '../../Common/testH';
 export default function DataHeatmap({
   width,
   inputData,
-  screenCapture,
-  setToFalseAfterScreenCapture
 }) {
 
   const route = useLocation();
@@ -32,8 +30,7 @@ export default function DataHeatmap({
   });
   const filterData = useSelector((data) => data.dataVisualizationReducer.userDefinedFilter);
   const brstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
-  const [watermarkCss, setWatermarkCSS] = useState('');
-  const [rangeValue, setRangeValue] = useState(5);
+  const [rangeValue, setRangeValue] = useState(1);
   const [loader, setLoader] = useState(false);
   const [genes, setGenes] = useState([]);
   const [selectedGene, setSelectedGene] = useState([]);
@@ -221,14 +218,15 @@ export default function DataHeatmap({
             const d = result;
             if (d.status === 200) {
               let r_ = d['data'];
-              if (r_) {
-                if (d["data"]?.max_spectrum_value) {
-                  setSpectrumMax(d["data"]?.max_spectrum_value)
-                }
-                setHeatmapJson(r_);
-                changeSpectrum(0, d["data"]?.max_spectrum_value);
-                setHeatmapSummaryStatusCode({ status: 200 });
+              if (d["data"]?.max_spectrum_value !== null) {
+                setSpectrumMax(d["data"]?.max_spectrum_value)
               }
+              if (d["data"]?.min_spectrum_value !== null) {
+                setSpectrumMin(d["data"]?.min_spectrum_value)
+              }
+              setHeatmapJson(r_);
+              changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
+              setHeatmapSummaryStatusCode({ status: 200 });
             } else {
               setHeatmapJson([]);
               setHeatmapSummaryStatusCode({ status: 204 });
@@ -369,19 +367,6 @@ export default function DataHeatmap({
     }
   }, [heatmapJson, brstKeys]);
 
-  // useEffect(() => {
-  //   console.log("screenCapture", screenCapture);
-  //   // if (screenCapture) {
-  //   //   setWatermarkCSS('watermark');
-  //   // } else {
-  //   //   setWatermarkCSS('');
-  //   // }
-
-  //   // if (watermarkCss !== '' && screenCapture) {
-  //   //   setToFalseAfterScreenCapture();
-  //   // }
-  // }, [screenCapture, watermarkCss]);
-
 
 
   const changeType = (e, type) => {
@@ -445,11 +430,14 @@ export default function DataHeatmap({
           const d = result;
           if (d.status === 200) {
             let r_ = d['data'];
-            if (d["data"]?.max_spectrum_value) {
+            if (d["data"]?.max_spectrum_value !== null) {
               setSpectrumMax(d["data"]?.max_spectrum_value)
             }
+            if (d["data"]?.min_spectrum_value !== null) {
+              setSpectrumMin(d["data"]?.min_spectrum_value)
+            }
             setHeatmapJson(r_);
-            changeSpectrum(0, d["data"]?.max_spectrum_value);
+            changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
             setHeatmapSummaryStatusCode({ status: 200 });
           } else {
             setHeatmapJson([]);
@@ -484,6 +472,7 @@ export default function DataHeatmap({
       dataJson['view'] = viewType;
       dataJson['heat_type'] = mainTab;
       dataJson['cluster'] = rangeValue;
+      dataJson['clinicalFilters'] = clinincalAttributesFil;
       setLoader(true);
       let return_data = HeatmapInformation('POST', dataJson);
       return_data
@@ -492,11 +481,14 @@ export default function DataHeatmap({
 
           if (d.status === 200) {
             let r_ = d['data'];
-            if (d["data"]?.max_spectrum_value) {
+            if (d["data"]?.max_spectrum_value !== null) {
               setSpectrumMax(d["data"]?.max_spectrum_value)
             }
+            if (d["data"]?.min_spectrum_value !== null) {
+              setSpectrumMin(d["data"]?.min_spectrum_value)
+            }
             setHeatmapJson(r_);
-            changeSpectrum(0, d["data"]?.max_spectrum_value);
+            changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
             setHeatmapSummaryStatusCode({ status: 200 });
           } else {
             setHeatmapJson([]);
@@ -522,9 +514,14 @@ export default function DataHeatmap({
       let dataJson = { ...inputData };
       dataJson['clinicalFilters'] = cf;
       dataJson['view'] = viewType;
-
-      if (tableType === 'methylation' || tableType === 'phospho') {
+      if (tableType === 'rna') {
         dataJson['genes'] = selectedGene;
+      } else if (tableType === 'methylation') {
+        dataJson['genes'] = selectedGene[0]?.split(",");
+      } else if (tableType === 'proteome') {
+        dataJson['genes'] = selectedGene;
+      } else if (tableType === 'phospho') {
+        dataJson['genes'] = selectedGene[0]?.split(",");
       }
       dataJson['heat_type'] = mainTab;
       dataJson['table_type'] = tableType;
@@ -535,11 +532,14 @@ export default function DataHeatmap({
           const d = result;
           if (d.status === 200) {
             let r_ = d['data'];
-            if (d["data"]?.max_spectrum_value) {
+            if (d["data"]?.max_spectrum_value !== null) {
               setSpectrumMax(d["data"]?.max_spectrum_value)
             }
+            if (d["data"]?.min_spectrum_value !== null) {
+              setSpectrumMin(d["data"]?.min_spectrum_value)
+            }
             setHeatmapJson(r_);
-            changeSpectrum(0, d["data"]?.max_spectrum_value);
+            changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
             setHeatmapSummaryStatusCode({ status: 200 });
           } else {
             setHeatmapJson([]);
@@ -569,8 +569,14 @@ export default function DataHeatmap({
       dataJson['cluster'] = rangeValue;
       dataJson['table_type'] = tableType;
       // dataJson['genes'] = selectedGene
-      if (tableType === 'methylation' || tableType === 'phospho') {
+      if (tableType === 'rna') {
         dataJson['genes'] = selectedGene;
+      } else if (tableType === 'methylation') {
+        dataJson['genes'] = selectedGene[0]?.split(",");
+      } else if (tableType === 'proteome') {
+        dataJson['genes'] = selectedGene;
+      } else if (tableType === 'phospho') {
+        dataJson['genes'] = selectedGene[0]?.split(",");
       }
       let return_data = HeatmapInformation('POST', dataJson);
       return_data
@@ -578,11 +584,14 @@ export default function DataHeatmap({
           const d = result;
           if (d.status === 200) {
             let r_ = d['data'];
-            if (d["data"]?.max_spectrum_value) {
+            if (d["data"]?.max_spectrum_value !== null) {
               setSpectrumMax(d["data"]?.max_spectrum_value)
             }
-            changeSpectrum(0, d["data"]?.max_spectrum_value);
+            if (d["data"]?.min_spectrum_value !== null) {
+              setSpectrumMin(d["data"]?.min_spectrum_value)
+            }
             setHeatmapJson(r_);
+            changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
             setHeatmapSummaryStatusCode({ status: 200 });
           } else {
             setHeatmapJson([]);
@@ -620,11 +629,14 @@ export default function DataHeatmap({
           const d = result;
           if (d.status === 200) {
             let r_ = d['data'];
-            if (d["data"]?.max_spectrum_value) {
+            if (d["data"]?.max_spectrum_value !== null) {
               setSpectrumMax(d["data"]?.max_spectrum_value)
             }
+            if (d["data"]?.min_spectrum_value !== null) {
+              setSpectrumMin(d["data"]?.min_spectrum_value)
+            }
             setHeatmapJson(r_);
-            changeSpectrum(0, d["data"]?.max_spectrum_value);
+            changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
             setHeatmapSummaryStatusCode({ status: 200 });
           } else {
             setHeatmapJson([]);
@@ -679,11 +691,14 @@ export default function DataHeatmap({
           const d = result;
           if (d.status === 200) {
             let r_ = d['data'];
-            if (d["data"]?.max_spectrum_value) {
+            if (d["data"]?.max_spectrum_value !== null) {
               setSpectrumMax(d["data"]?.max_spectrum_value)
             }
+            if (d["data"]?.min_spectrum_value !== null) {
+              setSpectrumMin(d["data"]?.min_spectrum_value)
+            }
             setHeatmapJson(r_);
-            changeSpectrum(0, d["data"]?.max_spectrum_value);
+            changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
             setHeatmapSummaryStatusCode({ status: 200 });
           } else {
             setHeatmapJson([]);

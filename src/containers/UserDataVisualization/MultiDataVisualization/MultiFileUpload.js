@@ -250,6 +250,7 @@ const Table = ({ updateComponentNumber }) => {
                   className="material-icons mainPopupClose"
                   id="mainPopupClose"
                   onClick={closeModal}
+                  onTouchStart={closeModal}
                 >
                   close
                 </span>

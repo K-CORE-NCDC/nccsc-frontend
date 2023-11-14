@@ -4,30 +4,25 @@ import 'swiper/swiper.css';
 import bgimg from '../../assets/images/bk1.jpg';
 import UserGuidePDF from '../../assets/files/DownloadbleFiles/UserGuide.pdf';
 import { FormattedMessage } from 'react-intl';
-import logo1 from '../../assets/images/right_below_add.png';
-import logo2 from '../../assets/images/f_ci6.png';
+import logo1 from '../../assets/images/introimg1 (2).png';
+import logo2 from '../../assets/images/introImg2 (2).png';
 
 const Introduction = ({ setActiveClassIndex, lan }) => {
-
-  const mainDataStatusWrap = {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    zIndex: 1,
-    bottom: '-100%',
-    padding: '0 40px',
-    display: 'flex',
-    flexDirection: 'column',
-  }
-
-  const big_img_1 = {
-    objectFit: 'scale-down',
-    width: '20%',
-    marginTop: '12px'
+  const img_div = {
+    display: "flex",
+    justifyContent: "flex-end",
+    // marginTop: "-20px",
+    gap: "20px",
+    marginRight: '1%',
   };
-  const big_img_2 = {
+  const big_img1 = {
     objectFit: 'scale-down',
     width: '15%',
+    marginTop: '10px'
+  };
+  const big_img2 = {
+    objectFit: 'scale-down',
+    width: '10%',
     marginTop: '12px'
   };
 
@@ -42,7 +37,7 @@ const Introduction = ({ setActiveClassIndex, lan }) => {
     >
       <div className="mask">
         <div>
-          <div className="visual" style={{ display: "flex", flexDirection: "columns" }}>
+          <div className="visual logo_visual" style={{ display: "flex", flexDirection: "columns" }}>
             <div className="txtBox main_box" data-aos="fade-in">
               <div className="txtBox_child1">
                 <p className="d2">K-CORE (Cancer Omics Research) Portal</p>
@@ -94,12 +89,10 @@ const Introduction = ({ setActiveClassIndex, lan }) => {
                 </div>
               </div>
             </div>
-            {/* <div className="MainPageLogos" style={mainDataStatusWrap}>
-              <div >
-                <img src={logo1} alt="fc1" className="logo01" style={big_img_1} />
-                <img src={logo2} alt="fc1" className="logo01" style={big_img_2} />
-              </div>
-            </div> */}
+          </div>
+          <div style={img_div} className='img_div'>
+            <img src={logo1} alt="fc1" className="logo01" style={big_img1} />
+            <img src={logo2} alt="fc1" className="logo01" style={big_img2} />
           </div>
         </div>
       </div>

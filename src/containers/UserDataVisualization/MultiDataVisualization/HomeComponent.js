@@ -60,6 +60,7 @@ const HomeComponent = () => {
                   className="material-icons mainPopupClose"
                   id="mainPopupClose"
                   onClick={closeModal}
+                  onTouchStart={closeModal}
                 >
                   close
                 </span>
@@ -70,19 +71,27 @@ const HomeComponent = () => {
               >
                 <div className="introduceBox03" style={{ width: '100%', backgroundColor: "rgb(254, 196, 11)" }}>
                   <ul>
-                    <li style={{borderBottom:"1px solid black", color:'black' }}>
-                      <p style={{ color: "black"}}>
+                    <li style={{ borderBottom: "1px solid black", color: 'black' }}>
+                      <p style={{ color: "black" }}>
                         <FormattedMessage
                           id="projectCountGuide1"
                           defaultMessage="It is possible to create 5 projects on a account."
                         />
                       </p>
                     </li>
-                    <li style={{color:'black'}}>
-                      <p style={{color:'black'}}>
+                    <li style={{ color: 'black' }}>
+                      <p style={{ color: 'black' }}>
                         <FormattedMessage
                           id="projectCountGuide2"
                           defaultMessage="The period to check each project is 2 weeks from the date of creation. After 2 weeks, the project will be deleted."
+                        />
+                      </p>
+                    </li>
+                    <li style={{ color: 'black' }}>
+                      <p style={{ color: 'black' }}>
+                        <FormattedMessage
+                          id="projectCountGuide3"
+                          defaultMessage="Please delete the project and create a new project."
                         />
                       </p>
                     </li>

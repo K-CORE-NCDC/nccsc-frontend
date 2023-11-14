@@ -2,7 +2,7 @@ import React from 'react';
 import HeaderComponent from '../Common/HeaderComponent/HeaderComponent';
 import { FormattedMessage } from 'react-intl';
 function Blast() {
-  const title = { id: 'Blast', defaultMessage: 'Blast' };
+  const title = { id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' };
   const breadCrumbs = {
     '/blast/': [
       { id: 'Home', defaultMessage: 'Home', to: '/' },

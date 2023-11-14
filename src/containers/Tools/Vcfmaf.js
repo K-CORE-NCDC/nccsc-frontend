@@ -68,13 +68,13 @@ function Modal({ showModal, setShowModal }) {
 function Vcfmaf() {
   const [vcfMafFile, setVcfMafFile] = useState();
   const [loader, setLoader] = useState(false);
-  const [msg, setMsg] = useState('');
+  const [msg, setMsg] = useState({});
   const [html, setHtml] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [isError, setIsError] = useState(false);
   const dispatch = useDispatch();
   const vcf2mafResponse = useSelector((data) => data.homeReducer.vcfmaf);
-  const title = { id: 'VCFMAF', defaultMessage: 'VCF To MAF' };
+  const title = { id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' };
 
   const setShowModalFunction = (stateData) => {
     setShowModal(stateData);
@@ -110,7 +110,7 @@ function Vcfmaf() {
       setIsError(false);
       setLoader(true);
       dispatch(vcfmaf('POST', { file: vcfMafFile, filename: vcfMafFile['name'] }));
-      setMsg('File Uploading, Please Wait......');
+      setMsg({ id: 'FileUplodPlsWait', defaultMessage: 'File Uploading, Please Wait......' });
     } else {
       setIsError(true);
     }
@@ -129,7 +129,7 @@ function Vcfmaf() {
       if (vcf2mafResponse['status'] === 'running') {
         setLoader(true);
         setStartInterval(true)
-        setMsg('File Uploaded, Conversion Started.....');
+        setMsg({ id: 'FileUploadConverSt', defaultMessage: 'File Uploaded, Conversion Started.....' });
       } else {
         setLoader(false);
         setStartInterval(false)
@@ -145,7 +145,7 @@ function Vcfmaf() {
               <a
                 className="ToolResultsReady"
                 href={
-                  backend_url + 'media/VcfMap/files/' + vcf2mafResponse['container_name'] + '.maf'
+                  backend_url + 'media/VcfMaf/files/' + vcf2mafResponse['container_name'] + '.maf'
                 }
                 download={vcf2mafResponse['container_name'] + '.maf'}
               >
@@ -162,7 +162,7 @@ function Vcfmaf() {
   const breadCrumbs = {
     '/vcfmaf/': [
       { id: 'Home', defaultMessage: 'Home', to: '/' },
-      {id: 'MyDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/'},
+      { id: 'MyDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
       { id: 'Tools', defaultMessage: 'Other Tools', to: '/tools/' },
       { id: 'VCFMAF', defaultMessage: 'VCF To MAF', to: '/vcfmaf/' }
     ]
@@ -236,8 +236,12 @@ function Vcfmaf() {
                   </section>
                 ) : (
                   <>
-                    <LoaderCmp />
-                    <p className="MultiUploadTextCenter">{msg}</p>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+                      <LoaderCmp />
+                      <p className="MultiUploadTextCenter">
+                        <FormattedMessage id={msg?.id} defaultMessage={msg?.defaultMessage} />
+                      </p>
+                    </div>
                   </>
                 )}
               </div>

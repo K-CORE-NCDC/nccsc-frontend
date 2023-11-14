@@ -158,6 +158,17 @@ const homeReducer = (state = { home: 'home' }, { type, payload }) => {
         vcfmaf: payload
       };
 
+    case homeConstants.MAFMERGER:
+      return {
+        ...state,
+        mafmerger: payload
+      };
+
+    case homeConstants.REFVERCONVERTER:
+      return {
+        ...state,
+        refverconverter: payload
+      };
     case homeConstants.LOGMANAGEMENT:
       return {
         ...state,
