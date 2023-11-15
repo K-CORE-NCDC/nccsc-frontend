@@ -2,9 +2,11 @@ import React from 'react';
 import HeaderComponent from '../Common/HeaderComponent/HeaderComponent';
 import { Link } from 'react-router-dom/cjs/react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import icon1 from '../../assets/images/publicDataInfo-img01.svg';
-import icon2 from '../../assets/images/publicDataInfo-img02.svg';
-import icon3 from '../../assets/images/publicDataInfo-img03.svg';
+import icon1 from '../../assets/images/toolsImages/blast_pic.png';
+import icon2 from '../../assets/images/toolsImages/vcf2maf_pic.png';
+import icon3 from '../../assets/images/toolsImages/interpro_pic.png';
+import icon4 from '../../assets/images/toolsImages/mafmerger_pic.png';
+import icon5 from '../../assets/images/toolsImages/refverconverter_pic.png';
 import arrow_icon from '../../assets/images/btnDetail-arrow-white.svg';
 const HomeComponent = () => {
   const title = { id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' };
@@ -81,7 +83,7 @@ const HomeComponent = () => {
                   <li className='listitems'>
                     <Link to="/vcfmaf/">
                       <div className="thumb">
-                        <img src={icon3} alt="img" />
+                        <img src={icon2} alt="img" />
                         <div className="hvBox">
                           <div className="hvBox_links">
                             <div className="textdiv" >
@@ -111,7 +113,7 @@ const HomeComponent = () => {
                   <li className='listitems'>
                     <Link to="/interpro/">
                       <div className="thumb">
-                        <img src={icon1} alt="img" />
+                        <img src={icon3} alt="img" />
                         <div className="hvBox">
                           <div className="hvBox_links">
                             <div className="textdiv" >
@@ -142,7 +144,7 @@ const HomeComponent = () => {
                   <li className='listitems'>
                     <Link to="/mafmerger/">
                       <div className="thumb">
-                        <img src={icon2} alt="img" />
+                        <img src={icon4} alt="img" />
                         <div className="hvBox">
                           <div className="hvBox_links">
                             <div className="textdiv" >
@@ -178,7 +180,7 @@ const HomeComponent = () => {
                   <li className='listitems'>
                     <Link to="/refverconverter/">
                       <div className="thumb">
-                        <img src={icon1} alt="img" />
+                        <img src={icon5} alt="img" />
                         <div className="hvBox">
                           <div className="hvBox_links">
                             <div className="textdiv" >

@@ -252,7 +252,7 @@ function InterPro() {
                                       className="w100"
                                       accept=".fasta, .fna, .ffn, .faa, .frn, .fa"
                                       data-title={msg}
-                                      id="FastaFile"
+                                      // id="FastaFile"
                                       onChange={(e) => InterProTool(e)}
                                       placeholder="Please Select the File"
                                       autoComplete="off"
