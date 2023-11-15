@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { refverconverter,clearToolsData } from '../../actions/api_actions';
+import { refverconverter, clearToolsData } from '../../actions/api_actions';
 import Attachments from '../../assets/files/vcftest19to38.vcf';
 import AttachmentsImage from '../../assets/images/refver2.png';
 import config from '../../config';
@@ -168,6 +168,16 @@ function RefVerConverter() {
                 setStartInterval(true)
                 setMsg({ id: 'RefverConversion', defaultMessage: 'File Uploaded, Conversion Started.....' });
             } else {
+                let Conversion = ''
+                const logLines = refVerConverterResponse['msg']?.split('\r\n');
+                logLines.forEach(line => {
+                    if (line.includes('Reference conversion')) {
+                        // Extract the container ID value
+                        Conversion = line.split('->')[1].trim();
+                    }
+
+                    // You can add similar logic for other information you want to extract
+                });
                 setLoader(false);
                 setStartInterval(false)
                 setLoop(interval => {
@@ -184,14 +194,10 @@ function RefVerConverter() {
                                 className="Flex"
                             >
                                 <FormattedMessage id='RefverResult1' defaultMessage='Your Results are Ready here.' />
-
-
                                 <a
                                     className="ToolResultsReady"
-                                    href={
-                                        backend_url + mafMergerResponse['user_project_directory'] + refVerConverterResponse['container_name'] + '.vcf'
-                                    }
-                                    download={refVerConverterResponse['container_name'] + '.vcf'}
+                                    href={`${backend_url}${refVerConverterResponse['user_project_directory']}hg${Conversion}${refVerConverterResponse['container_name']}/${refVerConverterResponse['container_name']}.vcf`}
+                                    download={`${refVerConverterResponse['container_name']}.vcf`}
                                 >
                                     {` (${refVerConverterResponse['container_name']}) `}
                                 </a>
