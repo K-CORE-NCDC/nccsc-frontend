@@ -51,7 +51,7 @@ function Modal({ showModal, setShowModal }) {
 }
 
 function InterPro() {
-  const [interProFile, setInterProFile] = useState();
+  const [interProFile, setInterProFile] = useState({});
   const [loader, setLoader] = useState(false);
   const [msg, setMsg] = useState('');
   const [startInterval, setStartInterval] = useState(false)
@@ -289,8 +289,12 @@ function InterPro() {
                   </section>
                 ) : (
                   <>
-                    <LoaderCmp />
-                    <p className="MultiUploadTextCenter">{msg}</p>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
+                      <LoaderCmp />
+                      <p className="MultiUploadTextCenter">
+                        <FormattedMessage id={msg?.id} defaultMessage={msg?.defaultMessage} />
+                      </p>
+                    </div>
                   </>
                 )}
               </div>
