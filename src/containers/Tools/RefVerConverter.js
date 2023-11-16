@@ -196,7 +196,7 @@ function RefVerConverter() {
                                 <FormattedMessage id='RefverResult1' defaultMessage='Your Results are Ready here.' />
                                 <a
                                     className="ToolResultsReady"
-                                    href={`${backend_url}${refVerConverterResponse['user_project_directory']}hg${Conversion}${refVerConverterResponse['container_name']}/${refVerConverterResponse['container_name']}.vcf`}
+                                    href={`${backend_url}${refVerConverterResponse['user_project_directory']}outputfile${refVerConverterResponse['container_name']}.vcf`}
                                     download={`${refVerConverterResponse['container_name']}.vcf`}
                                 >
                                     {` (${refVerConverterResponse['container_name']}) `}

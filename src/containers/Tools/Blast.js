@@ -33,7 +33,8 @@ function Blast() {
             <div>
               <iframe
                 title="blast search"
-                src="http://3.144.127.180:4567/"
+                // src="http://3.144.127.180:4567/"
+                src="https://www.cancerdata.re.kr:8686/"
                 width={'100%'}
                 height={'600px'}
               ></iframe>
