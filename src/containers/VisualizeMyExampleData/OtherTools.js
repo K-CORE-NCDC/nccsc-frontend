@@ -57,6 +57,28 @@ export const OtherTools = () => {
                   />
                 </p>
               </li>
+              <li className="" tabIndex="-1">
+                <p>
+                  <b>MAF merger :</b> &nbsp;
+                  <FormattedMessage
+                    id="MAFMergerDesc1"
+                    defaultMessage="by entering multiple MAF files "
+                  />
+                  <FormattedMessage
+                    id="MAFMergerDesc2"
+                    defaultMessage="Analysis tool to merge into 1 file"
+                  />
+                </p>
+              </li>
+              <li className="" tabIndex="-1">
+                <p>
+                  <b>RefVer converter :</b> &nbsp;
+                  <FormattedMessage
+                    id="RefverDescFull"
+                    defaultMessage="convert reference genome version of VCF file (hg19 ↔ hg38) "
+                  />
+                </p>
+              </li>
             </ul>
           </div>
         </div>

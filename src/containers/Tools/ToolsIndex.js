@@ -8,9 +8,23 @@ import icon3 from '../../assets/images/toolsImages/interpro_pic.png';
 import icon4 from '../../assets/images/toolsImages/mafmerger_pic.png';
 import icon5 from '../../assets/images/toolsImages/refverconverter_pic.png';
 import arrow_icon from '../../assets/images/btnDetail-arrow-white.svg';
+import BlastAttachment from '../../assets/files/ToolsAttachments/Blast_file.pdf';
+import VcfMafAttachment from '../../assets/files/ToolsAttachments/Vcfmaf_file.pdf';
+import InterproAttachment from '../../assets/files/ToolsAttachments/Interpro_file.pdf';
+import MafmergerAttachment from '../../assets/files/ToolsAttachments/Mafmerger_file.pdf';
+import RefverconverterAttachment from '../../assets/files/ToolsAttachments/Refverconverter_file.pdf';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 const HomeComponent = () => {
   const title = { id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' };
-
+  const route = useLocation();
+  function downloadFile(url, fileName) {
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 
   const breadCrumbs = {
     '/tools/': [
@@ -51,7 +65,7 @@ const HomeComponent = () => {
                 <ul className={`justify-content-start`}>
 
                   <li className='listitems'>
-                    <Link to="/blast/">
+                    <Link to={route?.pathname}>
                       <div className="thumb">
                         <img src={icon1} alt="img" />
                         <div className="hvBox">
@@ -64,6 +78,17 @@ const HomeComponent = () => {
                                 <img src={arrow_icon} alt="arrow-icon" />
                               </Link>
                             </div>
+                            <div className="textdiv" onClick={() => downloadFile(BlastAttachment, `Blast_Attachment.pdf`)}>
+                              <Link to={route?.pathname}>
+                                <span>
+                                  <FormattedMessage
+                                    id="DownloadManual"
+                                    defaultMessage="Download Manual"
+                                  />
+                                </span>
+                                <img src={arrow_icon} alt="arrow-icon" />
+                              </Link>
+                            </div>{' '}
                           </div>
                         </div>
                       </div>
@@ -81,7 +106,7 @@ const HomeComponent = () => {
                   </li>
 
                   <li className='listitems'>
-                    <Link to="/vcfmaf/">
+                    <Link to={route?.pathname}>
                       <div className="thumb">
                         <img src={icon2} alt="img" />
                         <div className="hvBox">
@@ -94,6 +119,17 @@ const HomeComponent = () => {
                                 <img src={arrow_icon} alt="arrow-icon" />
                               </Link>
                             </div>
+                            <div className="textdiv" onClick={() => downloadFile(VcfMafAttachment, `VCFMAF_Attachment.pdf`)}>
+                              <Link to={route?.pathname}>
+                                <span>
+                                  <FormattedMessage
+                                    id="DownloadManual"
+                                    defaultMessage="Download Manual"
+                                  />
+                                </span>
+                                <img src={arrow_icon} alt="arrow-icon" />
+                              </Link>
+                            </div>{' '}
                           </div>
                         </div>
                       </div>
@@ -111,7 +147,7 @@ const HomeComponent = () => {
                   </li>
 
                   <li className='listitems'>
-                    <Link to="/interpro/">
+                    <Link to={route?.pathname}>
                       <div className="thumb">
                         <img src={icon3} alt="img" />
                         <div className="hvBox">
@@ -124,6 +160,17 @@ const HomeComponent = () => {
                                 <img src={arrow_icon} alt="arrow-icon" />
                               </Link>
                             </div>
+                            <div className="textdiv" onClick={() => downloadFile(InterproAttachment, `Interpro_Attachment.pdf`)}>
+                              <Link to={route?.pathname}>
+                                <span>
+                                  <FormattedMessage
+                                    id="DownloadManual"
+                                    defaultMessage="Download Manual"
+                                  />
+                                </span>
+                                <img src={arrow_icon} alt="arrow-icon" />
+                              </Link>
+                            </div>{' '}
                           </div>
                         </div>
                       </div>
@@ -142,7 +189,7 @@ const HomeComponent = () => {
 
 
                   <li className='listitems'>
-                    <Link to="/mafmerger/">
+                    <Link to={route?.pathname}>
                       <div className="thumb">
                         <img src={icon4} alt="img" />
                         <div className="hvBox">
@@ -155,6 +202,17 @@ const HomeComponent = () => {
                                 <img src={arrow_icon} alt="arrow-icon" />
                               </Link>
                             </div>
+                            <div className="textdiv" onClick={() => downloadFile(MafmergerAttachment, `MAFMERGER_Attachment.pdf`)}>
+                              <Link to={route?.pathname}>
+                                <span>
+                                  <FormattedMessage
+                                    id="DownloadManual"
+                                    defaultMessage="Download Manual"
+                                  />
+                                </span>
+                                <img src={arrow_icon} alt="arrow-icon" />
+                              </Link>
+                            </div>{' '}
                           </div>
                         </div>
                       </div>
@@ -164,7 +222,7 @@ const HomeComponent = () => {
                           <dd className="p1">
                             <FormattedMessage
                               id="MAFMergerDesc1"
-                              defaultMessage="By entering multiple MAF files "
+                              defaultMessage="by entering multiple MAF files "
                             />
                             <br />
                             <FormattedMessage
@@ -178,7 +236,7 @@ const HomeComponent = () => {
                   </li>
 
                   <li className='listitems'>
-                    <Link to="/refverconverter/">
+                    <Link to={route?.pathname}>
                       <div className="thumb">
                         <img src={icon5} alt="img" />
                         <div className="hvBox">
@@ -191,6 +249,17 @@ const HomeComponent = () => {
                                 <img src={arrow_icon} alt="arrow-icon" />
                               </Link>
                             </div>
+                            <div className="textdiv" onClick={() => downloadFile(RefverconverterAttachment, `REFVERConverter_Attachment.pdf`)}>
+                              <Link to={route?.pathname}>
+                                <span>
+                                  <FormattedMessage
+                                    id="DownloadManual"
+                                    defaultMessage="Download Manual"
+                                  />
+                                </span>
+                                <img src={arrow_icon} alt="arrow-icon" />
+                              </Link>
+                            </div>{' '}
                           </div>
                         </div>
                       </div>
@@ -200,12 +269,12 @@ const HomeComponent = () => {
                           <dd className="p1">
                             <FormattedMessage
                               id="RefverDesc1"
-                              defaultMessage="Convert reference genome version of VCF file (hg19 ↔ hg38) "
+                              defaultMessage="convert reference genome version "
                             />
                             <br />
                             <FormattedMessage
                               id="RefverDesc2"
-                              defaultMessage=" VCF file (hg19 ↔ hg38) "
+                              defaultMessage=" of VCF file (hg19 ↔ hg38) "
                             />
                           </dd>
                         </dl>

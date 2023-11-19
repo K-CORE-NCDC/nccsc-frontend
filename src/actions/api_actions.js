@@ -154,6 +154,43 @@ export function interPro(method, data) {
   };
 }
 
+export function blast(method, data) {
+  return (dispatch) => {
+    let url = `${config.auth}blast/`;
+    const formData = new FormData();
+    if (method === 'POST') {
+      formData.append('file', data.file);
+      formData.append('filename', data.filename);
+      formData.append('database',data.database)
+      sendRequest(url, method, formData)
+        .then((result) => {
+          const d = result;
+          dispatch({
+            type: homeConstants.BLAST,
+            payload: d.data
+          });
+          dispatch({ type: homeConstants.REQUEST_DONE });
+        })
+
+        .catch(() => { });
+    } else {
+      // formData.append('container_name',data['container_name'])
+      url += `?container_name=${data.container_name}`;
+      sendRequest(url, method, formData)
+        .then((result) => {
+          const d = result;
+          dispatch({
+            type: homeConstants.BLAST,
+            payload: d.data
+          });
+          dispatch({ type: homeConstants.REQUEST_DONE });
+        })
+
+        .catch(() => { });
+    }
+  };
+}
+
 export function sendCaptureScreenshot(method, data) {
   const url = `${config.auth}download-capture-info/`;
   const formData = new FormData();

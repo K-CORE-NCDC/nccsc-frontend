@@ -62,13 +62,15 @@ function InterPro() {
   const interproResponse = useSelector((data) => data.homeReducer.interpro);
   const dispatch = useDispatch();
   let backend_url = config['auth'];
-  let InterProTool = (event) => {
-    setInterProFile(event.target.files[0]);
-  };
+
+  const [selectedOption, setSelectedOption] = useState('textarea'); // Default selected option
   const title = { id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' };
 
   const setShowModalFunction = (stateData) => {
     setShowModal(stateData);
+  };
+  const handleOptionChange = (option) => {
+    setSelectedOption(option);
   };
 
   let uploadFile = () => {
@@ -133,6 +135,23 @@ function InterPro() {
       dispatch(clearToolsData());
     };
   }, []);
+
+
+  const handleTextAreaChange = (e) => {
+    const sequence = e.target.value;
+    makeInterproFile(sequence);
+  };
+
+  const makeInterproFile = (sequence) => {
+    const fileName = 'user_input.fasta'; // You can customize the file name here
+    const blob = new Blob([`${sequence}`], { type: 'text/plain' });
+    setInterProFile(new File([blob], fileName, { type: 'text/plain' }));
+  };
+
+  const InterProTool = (event) => {
+    setInterProFile(event.target.files[0]);
+  };
+
 
   const InforIcon = () => {
     return (
@@ -208,62 +227,112 @@ function InterPro() {
                         </div>
                       </div>
                       <div className="Flex FlexDirCol ItemsCenter" style={{ gap: '10px' }}>
+
+                        {selectedOption === 'textarea' && (
+                          <div>
+                            <dl>
+                              <dt>
+                                <FormattedMessage
+                                  id="SequenceInFormat"
+                                  defaultMessage="Sequence, in FASTA format"
+                                />
+                              </dt>
+                              <dd>
+                                <div className="">
+                                  <FormattedMessage
+                                    id="EnterYourSequence"
+                                    defaultMessage="Enter your sequence"
+                                  >
+                                    {(msg) => (
+                                      <textarea
+                                        type="file"
+                                        className="w100"
+                                        id="message"
+                                        rows="4"
+                                        placeholder={msg}
+                                        autoComplete="off"
+                                        style={{ padding: '10px' }}
+                                        onChange={handleTextAreaChange}
+                                      />
+                                    )}
+                                  </FormattedMessage>
+                                </div>
+                              </dd>
+                            </dl>
+                          </div>
+                        )}
+
+                        {selectedOption === 'file' && (
+                          <div>
+                            <dl>
+                              <dt>
+                                <FormattedMessage id="UploadFile" defaultMessage="Upload File" />
+                              </dt>
+                              <dd>
+                                <div className="inputText">
+                                  <FormattedMessage id="NoFileChosen" defaultMessage="No File Chosen">
+                                    {(msg) => (
+                                      <input
+                                        type="file"
+                                        className="w100"
+                                        accept=".fasta, .fna, .ffn, .faa, .frn, .fa"
+                                        data-title={msg}
+                                        // id="FastaFile"
+                                        onChange={InterProTool}
+                                        placeholder="Please Select the File"
+                                        autoComplete="off"
+                                        style={{ padding: '10px' }}
+                                      />
+                                    )}
+                                  </FormattedMessage>
+                                </div>
+                              </dd>
+                            </dl>
+                          </div>
+                        )}
+
                         <div>
                           <dl>
                             <dt>
                               <FormattedMessage
-                                id="SequenceInFormat"
-                                defaultMessage="Sequence, in FASTA format"
+                                id="SelectOption"
+                                defaultMessage="Select one Option"
                               />
                             </dt>
                             <dd>
-                              <div className="">
-                                <FormattedMessage
-                                  id="EnterYourSequence"
-                                  defaultMessage="Enter your sequence"
-                                >
-                                  {(msg) => (
-                                    <textarea
-                                      type="file"
-                                      className="w100"
-                                      id="message"
-                                      rows="4"
-                                      placeholder={msg}
-                                      autoComplete="off"
-                                      style={{ padding: '10px' }}
-                                    />
-                                  )}
-                                </FormattedMessage>
+                              <div className="Flex">
+                                <label>
+                                  <FormattedMessage
+                                    id="Sequence"
+                                    defaultMessage="Sequence"
+                                  />
+                                  <input
+                                    type="checkbox"
+                                    value="textarea"
+                                    checked={selectedOption === 'textarea'}
+                                    onChange={() => handleOptionChange('textarea')}
+                                    className="M4"
+                                  />
+                                </label>
+                                <label>
+                                  <FormattedMessage
+                                    id="File"
+                                    defaultMessage="File"
+                                  />
+                                  <input
+                                    type="checkbox"
+                                    value="file"
+                                    checked={selectedOption === 'file'}
+                                    onChange={() => handleOptionChange('file')}
+                                    className="M4"
+                                  />
+                                </label>
                               </div>
                             </dd>
                           </dl>
                         </div>
-                        <div>
-                          <dl>
-                            <dt>
-                              <FormattedMessage id="UploadFile" defaultMessage="Upload File" />
-                            </dt>
-                            <dd>
-                              <div className="inputText">
-                                <FormattedMessage id="NoFileChosen" defaultMessage="No File Chosen">
-                                  {(msg) => (
-                                    <input
-                                      type="file"
-                                      className="w100"
-                                      accept=".fasta, .fna, .ffn, .faa, .frn, .fa"
-                                      data-title={msg}
-                                      // id="FastaFile"
-                                      onChange={(e) => InterProTool(e)}
-                                      placeholder="Please Select the File"
-                                      autoComplete="off"
-                                      style={{ padding: '10px' }}
-                                    />
-                                  )}
-                                </FormattedMessage>
-                              </div>
-                            </dd>
-                          </dl>
-                        </div>
+
+
                         <div>
                           <button className="btn btnPrimary SubmitButton" onClick={uploadFile}>
                             <FormattedMessage id="Submit" defaultMessage="Submit" />
