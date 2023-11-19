@@ -152,6 +152,12 @@ const homeReducer = (state = { home: 'home' }, { type, payload }) => {
         ...state,
         interpro: payload
       };
+    case homeConstants.BLAST:
+      return {
+        ...state,
+        blast: payload
+      };
+
     case homeConstants.VCFMAF:
       return {
         ...state,
@@ -171,7 +177,7 @@ const homeReducer = (state = { home: 'home' }, { type, payload }) => {
       };
 
     case homeConstants.CLEARTOOLSDATA: {
-      const { mafmerger, refverconverter, vcfmaf, interpro, ...removedtoolsdata} = state;
+      const { mafmerger, refverconverter, vcfmaf, interpro, blast, ...removedtoolsdata} = state;
       /* eslint-disable no-param-reassign */
       state = removedtoolsdata;
       return state;

@@ -14,7 +14,7 @@ axios.interceptors.response.use(
   },
   (error) => {
     if (error.response.status === 500) {
-      window.location.href = '/server-error/';
+      // window.location.href = '/server-error/';
     }
     return Promise.reject(error);
   }
