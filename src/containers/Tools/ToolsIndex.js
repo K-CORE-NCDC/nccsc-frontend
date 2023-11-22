@@ -64,14 +64,15 @@ const HomeComponent = () => {
 
                 <ul className={`justify-content-start`}>
 
-                  <li className='listitems'>
+                  <li className='listitems' >
                     <Link to={route?.pathname}>
-                      <div className="thumb">
+                      <div className="thumb" style={{ background: '#f0efef' }}>
                         <img src={icon1} alt="img" />
                         <div className="hvBox">
                           <div className="hvBox_links">
                             <div className="textdiv" >
-                              <Link to="/blast/">
+                              {/* <Link to="/blast/"> */}
+                              <Link to={route?.pathname}>
                                 <span>
                                   <FormattedMessage id="RunAnalysis" defaultMessage="Run Analysis" />
                                 </span>
@@ -92,7 +93,7 @@ const HomeComponent = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="txtBox txtBoxpadding tac Relative">
+                      <div className="txtBox txtBoxpadding tac Relative" style={{ background: '#f0efef' }}>
                         <dl className="MarginTop8">
                           <dt className="h4 Capitalize">Blast</dt>
                           <dd className="p1">
