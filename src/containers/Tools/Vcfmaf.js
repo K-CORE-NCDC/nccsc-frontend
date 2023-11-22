@@ -7,6 +7,7 @@ import AttachmentsImage from '../../assets/images/vcftomafexample_File.png';
 import config from '../../config';
 import HeaderComponent from '../Common/HeaderComponent/HeaderComponent';
 import LoaderCmp from '../Common/Loader';
+import { useHistory } from 'react-router-dom';
 
 function Modal({ showModal, setShowModal }) {
   return (
@@ -29,16 +30,12 @@ function Modal({ showModal, setShowModal }) {
                   <div className="Toolmodal-text">
                     <ul style={{ margin: '10px' }}>
                       <li>
-                        VCF(Variant Call Format) is a text file format for variant information.
+                        본 분석도구는 VCF 형식 파일을 MAF 형식 파일로 변환하는 도구입니다.
                       </li>
                       <li>
-                        It contains meta-information lines, a headerline, and then data lines each
-                        containing information about a position in the genome.
+                        본 분석도구는 VCF 형식 파일을 MAF 형식 파일로 변환하는 도구입니다.
                       </li>
-                      <li>
-                        The format also has the ability to contain genotype information on samples
-                        for each position.
-                      </li>
+
                     </ul>
                     <img src={AttachmentsImage} alt="ExampleFileImage" />
                     <div className="Flex FlexDirRow" style={{ marginTop: '20px', gap: '10px' }}>
@@ -75,6 +72,7 @@ function Vcfmaf() {
   const dispatch = useDispatch();
   const vcf2mafResponse = useSelector((data) => data.homeReducer.vcfmaf);
   const title = { id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' };
+  const history = useHistory();
 
   const setShowModalFunction = (stateData) => {
     setShowModal(stateData);
@@ -109,6 +107,7 @@ function Vcfmaf() {
     if (vcfMafFile['name'].includes('.vcf')) {
       setIsError(false);
       setLoader(true);
+      setHtml([])
       dispatch(vcfmaf('POST', { file: vcfMafFile, filename: vcfMafFile['name'] }));
       setMsg({ id: 'FileUplodPlsWait', defaultMessage: 'File Uploading, Please Wait......' });
     } else {
@@ -259,6 +258,18 @@ function Vcfmaf() {
                 </section>
               )}
             </div>
+
+            <div style={{ marginTop: '50px' }}>
+              <button
+                id="BackButton"
+                className="btn btnPrimary"
+                style={{ float: 'right', margin: '10px 0px 10px 0px' }}
+                onClick={() => history.push(`/tools/`)}
+              >
+                <FormattedMessage id="Back" defaultMessage="Back" />
+              </button>
+            </div>
+
           </div>
         </div>
       </article>

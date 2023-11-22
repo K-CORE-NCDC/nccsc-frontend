@@ -8,6 +8,7 @@ import AttachmentsImage from '../../assets/images/mafmerger.png';
 import config from '../../config';
 import HeaderComponent from '../Common/HeaderComponent/HeaderComponent';
 import LoaderCmp from '../Common/Loader';
+import { useHistory } from 'react-router-dom';
 
 function Modal({ showModal, setShowModal }) {
     return (
@@ -75,6 +76,7 @@ function MAFMerger() {
     const dispatch = useDispatch();
     const mafMergerResponse = useSelector((data) => data.homeReducer.mafmerger);
     const title = { id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' };
+    const history = useHistory();
 
     const setShowModalFunction = (stateData) => {
         setShowModal(stateData);
@@ -167,6 +169,7 @@ function MAFMerger() {
         if (areAllFilesMaf && Object.keys(mafMergerFiles)?.length > 0) {
             setIsError(false);
             setLoader(true);
+            setHtml([])
             dispatch(mafmerger('POST', mafMergerFiles));
             setMsg({ id: 'FileUplodPlsWait', defaultMessage: 'File Uploading, Please Wait......' });
         } else {
@@ -207,30 +210,37 @@ function MAFMerger() {
                                 <div style={{ marginBottom: "20px" }}>
                                     <FormattedMessage id='MAFMergerResult1' defaultMessage='Your results are ready.' />
                                 </div>
-                                <div className='Flex FlexDirRow'>
-                                    <FormattedMessage id='MAFMergerResult2' defaultMessage='Kindly click link to download' />
-                                    <a
-                                        className="ToolResultsReady"
-                                        href={
-                                            backend_url + mafMergerResponse['user_project_directory'] + mafMergerResponse['container_name'] + '.maf'
-                                        }
-                                        download={mafMergerResponse['container_name'] + '.maf'}
-                                    >
-                                        {mafMergerResponse['container_name'] + '.maf'}
-                                    </a>
+                                <div className='Flex FlexDirCol' style={{ marginBottom: '20px' }}>
+                                    <div>
+                                        <FormattedMessage id='MAFMergerResult2' defaultMessage='Click to download merged TSV : ' />
+                                        <a
+                                            className="ToolResultsReady"
+                                            href={
+                                                backend_url + mafMergerResponse['user_project_directory'] + mafMergerResponse['container_name'] + '.tsv'
+                                            }
+                                            download={mafMergerResponse['container_name'] + '.tsv'}
+                                        >
+                                            {mafMergerResponse['container_name'] + '.tsv'}
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <FormattedMessage id='MAFMergerResult3' defaultMessage='* You can use merged TSV as DNA mutation input in visualization services.' />
+                                    </div>
                                 </div>
-                                <FormattedMessage id='MAFMergerResult3' defaultMessage='This file is used as an input file of DNA mutation in Visualize My Data service.' />
+
                                 <div className='Flex FlexDirRow'>
-                                    <FormattedMessage id='MAFMergerResult4' defaultMessage='In order to download in MAF format, please click on' />
-                                    <a
-                                        className="ToolResultsReady"
-                                        href={
-                                            backend_url + mafMergerResponse['user_project_directory'] + mafMergerResponse['container_name'] + '.tsv'
-                                        }
-                                        download={mafMergerResponse['container_name'] + '.tsv'}
-                                    >
-                                        {mafMergerResponse['container_name'] + '.tsv'}
-                                    </a>
+                                    <div>
+                                        <FormattedMessage id='MAFMergerResult4' defaultMessage='Click to download merged MAF : ' />
+                                        <a
+                                            className="ToolResultsReady"
+                                            href={
+                                                backend_url + mafMergerResponse['user_project_directory'] + mafMergerResponse['container_name'] + '.maf'
+                                            }
+                                            download={mafMergerResponse['container_name'] + '.maf'}
+                                        >
+                                            {mafMergerResponse['container_name'] + '.maf'}
+                                        </a>
+                                    </div>
                                 </div>
                                 <div>
 
@@ -385,6 +395,17 @@ function MAFMerger() {
                                 </section>
                             )}
                         </div>
+                        <div style={{ marginTop: '50px' }}>
+                            <button
+                                id="BackButton"
+                                className="btn btnPrimary"
+                                style={{ float: 'right', margin: '10px 0px 10px 0px' }}
+                                onClick={() => history.push(`/tools/`)}
+                            >
+                                <FormattedMessage id="Back" defaultMessage="Back" />
+                            </button>
+                        </div>
+
                     </div>
                 </div>
             </article>

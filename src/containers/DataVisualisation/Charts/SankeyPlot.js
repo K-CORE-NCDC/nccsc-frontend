@@ -12,7 +12,7 @@ import ReactTooltip from 'react-tooltip';
 
 
 
-function SankeyPlot({ inputData }) {
+function SankeyPlot({ inputData, screenCapture, setToFalseAfterScreenCapture }) {
   let { project_id } = useParams();
   const [samplesCount, setSamplesCount] = useState(0);
   const [tabName, setTabName] = useState('patientSummary');
@@ -556,6 +556,8 @@ function SankeyPlot({ inputData }) {
             selectedGene={selectedGene}
             variants={variantClassificationList}
             allVariants={rnaData['variant_info']}
+            screenCapture={screenCapture}
+            setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
           />
         </div>
       )}

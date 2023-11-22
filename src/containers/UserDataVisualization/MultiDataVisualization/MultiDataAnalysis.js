@@ -74,12 +74,12 @@ export default function DataVisualization() {
       if (param === false) {
         setScreenCapture(false);
       } else {
-        sendCaptureScreenshot('POST', { 'chart_name': tab, 'project_id': project_id, 'location':route?.pathname });
+        sendCaptureScreenshot('POST', { 'chart_name': tab, 'project_id': project_id, 'location': route?.pathname });
         setScreenCapture(true);
       }
     }
     else if (tab === 'heatmap') {
-      CaptureScreenshot(tab, project_id,route?.pathname)
+      CaptureScreenshot(tab, project_id, route?.pathname)
     }
   }
 

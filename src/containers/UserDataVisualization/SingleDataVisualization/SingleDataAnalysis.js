@@ -276,35 +276,30 @@ export default function DataVisualization() {
   const breadCrumbs = {
     '/visualise-singledata/': [
       { id: 'Home', defaultMessage: 'Home', to: '/' },
-      { id: `VisualizeMyData`, defaultMessage: `Visualize My Data`, to: `/home/visualizeMyData/` },
+      project_id
+        ? { id: `VisualizeMyData`, defaultMessage: `Visualize My Data`, to: `/home/visualizeMyData/` }
+        : {
+          id: `VisualizeExampleData`,
+          defaultMessage: `Visualize Example Data`,
+          to: `/home/visualizeMyExampleData/`
+        },
       {
         id: `SingleDataVisualization`,
         defaultMessage: `Single Data Visualization`,
-        to: project_id ? `/visualise-singledata/home/${project_id}` : `/visualise-singledata/home/`
+        to: project_id ? `/visualise-singledata/home/${project_id}` : `/visualizesingle-exampledata/home/`
       },
-      {
-        id: tab !== 'home' ? tab : 'Null',
-        defaultMessage: tab !== 'home' ? tab : 'Null',
-        to: `/visualise-singledata/${tabName}/${project_id}`
-      }
-    ],
-    '/visualizesingle-exampledata/': [
-      { id: 'Home', defaultMessage: 'Home', to: '/' },
-      {
-        id: `VisualizeExampleData`,
-        defaultMessage: `Visualize Example Data`,
-        to: `/home/visualizeMyExampleData/`
-      },
-      {
-        id: 'SingleDataVisualization',
-        defaultMessage: `Single Data Visualization`,
-        to: `/visualizesingle-exampledata/home/`
-      },
-      {
-        id: tab !== 'home' ? tab : 'Null',
-        defaultMessage: tab !== 'home' ? tab : 'Null',
-        to: `/visualise-singledata/${tabName}/`
-      }
+      project_id ?
+        {
+          id: tab !== 'home' ? tab : 'Null',
+          defaultMessage: tab !== 'home' ? tab : 'Null',
+          to: `/visualise-singledata/${tabName}/${project_id}`
+        }
+        :
+        {
+          id: tab !== 'home' ? tab : 'Null',
+          defaultMessage: tab !== 'home' ? tab : 'Null',
+          to: `/visualizesingle-exampledata/${tabName}/`
+        }
     ]
   };
 
@@ -319,13 +314,7 @@ export default function DataVisualization() {
             ? `/visualise-singledata/`
             : `/visualizesingle-exampledata/`
         }
-        breadCrumbs={
-          breadCrumbs[
-          route.pathname.includes('/visualise-singledata/')
-            ? `/visualise-singledata/`
-            : `/visualizesingle-exampledata/`
-          ]
-        }
+        breadCrumbs={breadCrumbs[`/visualise-singledata/`]}
         type="single"
       />
       <article id="subContents" className="subContents">
@@ -364,6 +353,7 @@ export default function DataVisualization() {
                                 <img src={item.image} alt="img" />
                                 <div className="hvBox">
                                   <div className="hvBox_links">
+
                                     {!exampleData && (
                                       <>
 
@@ -563,7 +553,7 @@ export default function DataVisualization() {
             )}
           </div>
         </div>
-      </article>
-    </div>
+      </article >
+    </div >
   );
 }

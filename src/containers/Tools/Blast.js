@@ -6,6 +6,7 @@ import Attachments from '../../assets/files/insulin.fasta';
 import config from '../../config';
 import HeaderComponent from '../Common/HeaderComponent/HeaderComponent';
 import LoaderCmp from '../Common/Loader';
+import { useHistory } from 'react-router-dom';
 
 function Modal({ showModal, setShowModal }) {
   return (
@@ -62,6 +63,7 @@ function Blast() {
   const [dbtype, setDBType] = useState('blastn')
   const blastResponse = useSelector((data) => data.homeReducer.blast);
   const dispatch = useDispatch();
+  const history = useHistory();
   let backend_url = config['auth'];
 
   const [selectedOption, setSelectedOption] = useState('textarea'); // Default selected option
@@ -71,14 +73,16 @@ function Blast() {
     setShowModal(stateData);
   };
   const handleOptionChange = (option) => {
+    dispatch(clearToolsData());
+    setHtml([])
     setSelectedOption(option);
   };
 
   let uploadFile = () => {
-    console.log('->blastFile',blastFile);
     if (blastFile['name'].includes('.fasta')) {
       setIsError(false);
       setLoader(true);
+      setHtml([]);
       dispatch(blast('POST', { file: blastFile, filename: blastFile['name'], database: dbtype }));
       setMsg({ id: 'FileUplodPlsWait', defaultMessage: 'File Uploading, Please Wait......' });
     } else {
@@ -91,7 +95,7 @@ function Blast() {
       if (blastResponse['status'] === 'running') {
         setLoader(true)
         setStartInterval(true)
-        setMsg({ id: 'FileUploadConverSt', defaultMessage: 'File Uploaded, Conversion Started.....' });
+        setMsg({ id: 'FileUplaodAnalysisSt', defaultMessage: 'File Uploaded, Analysis Started.....' });
       } else {
         setLoader(false)
         setStartInterval(false)
@@ -134,6 +138,7 @@ function Blast() {
   useEffect(() => {
     return () => {
       dispatch(clearToolsData());
+      setHtml([])
     };
   }, []);
 
@@ -298,7 +303,7 @@ function Blast() {
                             <dt>
                               <FormattedMessage
                                 id="SelectOption"
-                                defaultMessage="Select one Option"
+                                defaultMessage="Select one"
                               />
                             </dt>
                             <dd>
@@ -394,7 +399,7 @@ function Blast() {
                       >
                         <FormattedMessage
                           id="blastNote"
-                          defaultMessage="Note: protein or nucleotide sequence in .fasta format"
+                          defaultMessage="Note: nucleotide sequence in .fasta format"
                         />
                       </span>
                     </div>
@@ -417,6 +422,16 @@ function Blast() {
                   </div>
                 </section>
               )}
+            </div>
+            <div style={{ marginTop: '50px' }}>
+              <button
+                id="BackButton"
+                className="btn btnPrimary"
+                style={{ float: 'right', margin: '10px 0px 10px 0px' }}
+                onClick={() => history.push(`/tools/`)}
+              >
+                <FormattedMessage id="Back" defaultMessage="Back" />
+              </button>
             </div>
           </div>
         </div>

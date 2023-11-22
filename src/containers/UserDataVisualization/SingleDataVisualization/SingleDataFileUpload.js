@@ -32,6 +32,17 @@ function Modal({ showModal, toggleModal, fileName }) {
                   <div className="Toolmodal-text">
                     <img src={fileNameImage} alt="ExampleFileImage" />
                     <DataOfFiles fileName={fileName} />
+                    {fileName === 'DnaMutation'
+                      &&
+                      <div>
+                        <p>
+                          <FormattedMessage
+                            id="clinicalInformationGuideinnerp5"
+                            defaultMessage="In survival analysis, if 'recur_yn', 'death_yn' are left blank, they are automatically treated as 'FALSE'"
+                          />
+                        </p>
+                      </div>
+                    }
                     <div className="Flex FlexDirRow" style={{ marginTop: '20px', gap: '10px' }}>
                       <p>Click on the link to download the sample file</p>
                       <a className="Tooldownload-link" href={fileNameFile} download>
@@ -491,6 +502,14 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
               </button>
             </div>
           </div>
+          <button
+            id="BackButton"
+            className="btn btnPrimary"
+            style={{ float: 'right', margin: '10px 0px 10px 0px' }}
+            onClick={() => history.push(`/visualise-singledata/home/`)}
+          >
+            <FormattedMessage id="Back" defaultMessage="Back" />
+          </button>
         </div>
       )}
       {showFileDataTable && (

@@ -1,9 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import d3 from 'd3v3/d3';
 import '../../../styles/sankey.css';
+import { exportComponentAsJPEG } from 'react-component-export-image';
 
-function NewSankeyd3({ SankeyJson, idName, forGene }) {
+function NewSankeyd3({ SankeyJson, idName, forGene, screenCapture, setToFalseAfterScreenCapture }) {
   const svgRef = useRef(null);
+  const [watermarkCss, setWatermarkCSS] = useState('');
 
   var margin = { top: 1, right: 1, bottom: 6, left: 1 },
     width = 960 - margin.left - margin.right,
@@ -77,7 +79,7 @@ function NewSankeyd3({ SankeyJson, idName, forGene }) {
         return 'link-' + i;
       })
       // .style('stroke-width', function (d) {
-        // return Math.max(1, d.dy);
+      // return Math.max(1, d.dy);
       .style('stroke-width', function () {
         return Math.max(1, 10);
       })
@@ -230,6 +232,25 @@ function NewSankeyd3({ SankeyJson, idName, forGene }) {
       drawChart(SankeyJson);
     }
   }, [SankeyJson]);
+
+  useEffect(() => {
+    if (screenCapture) {
+      setWatermarkCSS('watermark');
+    } else {
+      setWatermarkCSS('');
+    }
+
+    if (watermarkCss !== '' && screenCapture) {
+      if (svgRef !== null) {
+        exportComponentAsJPEG(svgRef, {
+          fileName: 'Sankey',
+          html2CanvasOptions: {}
+        });
+      }
+      setToFalseAfterScreenCapture();
+    }
+
+  }, [screenCapture, watermarkCss]);
 
   return (
     <div className="randomclass">
