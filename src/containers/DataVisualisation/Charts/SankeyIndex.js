@@ -8,7 +8,7 @@ import NewSankeyd3 from './NewSankeyd3';
 import Table from '../../Common/Table/ReactTable';
 import { useIntl } from 'react-intl';
 
-function SankeyIndex({ selectedGene, variants }) {
+function SankeyIndex({ selectedGene, variants, screenCapture, setToFalseAfterScreenCapture }) {
   const [gene, setGene] = useState('');
   const [loader, setLoader] = useState(false);
   const [detailGeneData, setDetailGeneData] = useState([]);
@@ -250,7 +250,10 @@ function SankeyIndex({ selectedGene, variants }) {
             SankeyJsonData['links'].length > 0 && (
               <>
                 <Sankey></Sankey>
-                <NewSankeyd3 SankeyJson={SankeyJsonData} idName="chart"></NewSankeyd3>
+                <NewSankeyd3 SankeyJson={SankeyJsonData} idName="chart"
+                  screenCapture={screenCapture}
+                  setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+                ></NewSankeyd3>
                 <div>
                   {detailGeneData && detailGeneData.length > 0 && (
                     <div className="rounded-lg border border-gray-200">

@@ -37,11 +37,12 @@ export default function FusionVennCmp({ parentCallback, width, VennData = null }
       document.getElementById('venn').innerHTML = '';
       let sets = data;
       var chart = venn.VennDiagram().width(600);
-      var div1 = d3.select('#venn').datum(sets).call(chart);
-      div1.select('svg').attr('class', 'inline');
+      // var div1 = d3.select('#venn').datum(sets).call(chart);
+      // div1.select('svg').attr('class', 'inline');
+      // div1.selectAll('path').style('stroke-opacity', 0).style('stroke', '#fff');
+
       var tooltip = d3.select('#venn').append('div').attr('class', 'venntooltip');
 
-      div1.selectAll('path').style('stroke-opacity', 0).style('stroke', '#fff');
 
       let colors = {
         'group 1': '#f18532',
@@ -51,7 +52,6 @@ export default function FusionVennCmp({ parentCallback, width, VennData = null }
         'group 2_group 3': '#b49cd6',
         'group 3_group 2': '#b49cd6',
         'group 1_group 3': '#3777af',
-
         'group 1_group 2_group 3': '#fffebc'
       };
 

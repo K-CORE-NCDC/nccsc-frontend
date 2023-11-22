@@ -749,33 +749,6 @@ export default function DataHeatmap({
     return geneOptions;
   }
 
-  // function saveAs(uri, filename) {
-  //   var link = document.createElement('a');
-  //   link.className = 'watermark';
-  //   if (typeof link.download === 'string') {
-  //     link.href = uri;
-  //     link.download = filename;
-  //     //Firefox requires the link to be in the body
-  //     document.body.appendChild(link);
-  //     //simulate click
-  //     link.click();
-  //     //remove the link when done
-  //     document.body.removeChild(link);
-  //   } else {
-  //     window.open(uri);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   if (watermarkCss) {
-  //     html2canvas(document.querySelector('#canvas')).then(function (canvas) {
-  //       saveAs(canvas.toDataURL(), 'heatmap.png');
-  //     });
-  //   }
-  // }, [watermarkCss]);
-
-
-
   return (
     <div
       style={{
@@ -797,7 +770,7 @@ export default function DataHeatmap({
 
                     name="maintype"
                     onClick={(e) => {
-                      setMainTab('heatmap');
+                      // setMainTab('heatmap');
                       changeMainType(e, 'heatmap');
                     }}
                   >
@@ -809,7 +782,7 @@ export default function DataHeatmap({
                     type="button"
                     name="maintype"
                     onClick={(e) => {
-                      setMainTab('k-mean');
+                      // setMainTab('k-mean');
                       changeMainType(e, 'k-mean');
                     }}
                   >

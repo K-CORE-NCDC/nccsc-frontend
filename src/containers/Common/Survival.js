@@ -6,9 +6,11 @@ import '../../styles/survival.css';
 import Table from './Table/ReactTable';
 import { useIntl } from 'react-intl';
 
+
 const SurvivalCmp = React.forwardRef(({ data, watermarkCss, pValue,survialType }, ref) => {
   const [survivalData, setSurvivalData] = useState([]);
   const [lineChartData, setLineChartData] = useState([]);
+  const [changeLegend, setChangeLegend] = useState(true);
   const [offsetWidth, setOffsetWidth] = useState(900);
   const [yMinValue, setYMinValue] = useState(0);
   const [xMaxValue, setXmaxValue] = useState(100);
@@ -18,6 +20,7 @@ const SurvivalCmp = React.forwardRef(({ data, watermarkCss, pValue,survialType }
   const intl = useIntl();
   useEffect(() => {
     if (data.survivalJson && data.survivalJson.all) {
+      // setChangeLegend(true)
       setSurvivalData(data.survivalJson.all);
       setOffsetWidth(document.getElementById('survival').offsetWidth);
       let lineChartDataTemp = [];
@@ -28,7 +31,7 @@ const SurvivalCmp = React.forwardRef(({ data, watermarkCss, pValue,survialType }
       for (const [key, value] of Object.entries(data.survivalJson.final)) {
         let columns = [
           { Header: intl.formatMessage({ id: "TimeInMonth", defaultMessage: 'Time(in month)' }), accessor: (row) => row.x },
-          { Header: survialType === 'recurrence' ? intl.formatMessage({ id: "Recurrence", defaultMessage: 'Recurrence' }) : intl.formatMessage({ id: "Survival", defaultMessage: 'Survival' }), accessor: (row) => row.y },
+          { Header: survialType === 'recurrence' ? intl.formatMessage({ id: "Recurrence", defaultMessage: 'Recurrence-free' }) : intl.formatMessage({ id: "Survival", defaultMessage: 'Survival' }), accessor: (row) => row.y },
           { Header: 'Sample', accessor: (row) => row.sample }
         ];
         tableHtmlData.push(
@@ -65,13 +68,50 @@ const SurvivalCmp = React.forwardRef(({ data, watermarkCss, pValue,survialType }
       setYMinValue(minValue - 1); //previously it was minvalue-3
       setLineChartData(lineChartDataTemp);
       setChartTable(tableHtmlData);
+      changeLegendFunc()
     }
   }, [data]);
+  // useEffect(()=>{
+  //   if(chartTable.length>0){
+  //     setChangeLegend(true)
+  //   }
+  // },[chartTable])
+
 
   const handleMouseMove = (event) => {
     const { clientX, clientY } = event;
     setMousePosition({ x: clientX, y: clientY });
+    
   };
+
+  const changeLegendFunc = ()=>{
+      var svg = document.getElementsByClassName('legend')
+      if(svg.length>0 && changeLegend){
+        for (let index = 0; index < svg.length; index++) {
+          const element = svg[index];
+          var rectNode = element.childNodes[0]
+          var textNode = element.childNodes[1]
+          var l =  textNode.textContent.length
+          
+          
+          let rectTransform = rectNode.getAttribute('transform').split(",")
+          let rectTransformx = parseInt(rectTransform[0].replace(/^\D+/g, ''))
+          rectTransformx = rectTransformx - l - 20
+          let rectTransformy = rectTransform[1].replace(/^\D+/g, '')
+          rectTransformy = parseInt(rectTransformy.replace(')',''))
+          rectNode.setAttribute('transform','translate('+rectTransformx+','+rectTransformy+')')
+
+          let textNodeTransform = textNode.getAttribute('transform').split(",")
+          let textNodeTransformx = parseInt(textNodeTransform[0].replace(/^\D+/g, ''))
+          textNodeTransformx = textNodeTransformx - l -20
+          let textNodeTransformy = textNodeTransform[1].replace(/^\D+/g, '')
+          textNodeTransformy = parseInt(textNodeTransformy.replace(')',''))
+          textNode.setAttribute('transform','translate('+textNodeTransformx+','+textNodeTransformy+')')
+        }
+        setChangeLegend(false)
+      }
+  }
+  
 
   return (
     <div
@@ -81,12 +121,13 @@ const SurvivalCmp = React.forwardRef(({ data, watermarkCss, pValue,survialType }
       onMouseMove={handleMouseMove}
     >
       <div className="TextLeft M4">{pValue}</div>
-      {survivalData.length > 1 && (
+      {survivalData.length > 1  && (
         <LineChart
           name={pValue}
+          id='my_dataviz'
           xLabel="Time (in month)"
           showLegends={true}
-          legendPosition="top-center"
+          legendPosition="top-right"
           yLabel="Survival(%)"
           interpolate="step-before"
           pointRadius={1}
@@ -100,7 +141,7 @@ const SurvivalCmp = React.forwardRef(({ data, watermarkCss, pValue,survialType }
             top: ${mousePosition.y + 20}px;
             background:#fff;
           `;
-
+            
             return `<div style='${tooltipStyle}'><b>duration: </b>${e.x}<br /><b>Survival Rate: </b>${e.y}<br /><b>Sample: </b>${e.sample}</div>`;
           }}
           margin={{ top: 50, right: 100, bottom: 50, left: 55 }}
@@ -111,8 +152,9 @@ const SurvivalCmp = React.forwardRef(({ data, watermarkCss, pValue,survialType }
           height={700}
           data={lineChartData}
           tooltipClass="svg-line-chart-tooltip-custom"
+          
         />
-      )}
+      ) }
       {chartTable.length > 0 && (
         <div style={{ gap: '100px' }} className={'M4 PopoverStyles'}>
           {chartTable}

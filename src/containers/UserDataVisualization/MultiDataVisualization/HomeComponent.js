@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom/cjs/react-router-dom';
 import icon1 from '../../../assets/images/publicDataInfo-img01.svg';
 import icon2 from '../../../assets/images/publicDataInfo-img02.svg';
 import HeaderComponent from '../../Common/HeaderComponent/HeaderComponent';
+import { useDispatch } from 'react-redux';
+import {
+  UserDataProjectsCount
+} from '../../../actions/api_actions';
 
 import Draggable from 'react-draggable';
 const HomeComponent = () => {
@@ -12,6 +16,8 @@ const HomeComponent = () => {
   const location = useLocation();
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(true);
+  const [showOverloadMessage, setShowOverloadMessage] = useState(false)
+  const dispatch = useDispatch();
 
   let closeModal = () => {
     setIsOpen(false);
@@ -38,6 +44,24 @@ const HomeComponent = () => {
       }
     ]
   };
+
+
+  useEffect(() => {
+    let return_data = UserDataProjectsCount('GET', {});
+    return_data.then((result) => {
+      const d = result;
+      if (d.status === 200 && result.data.data >= 5) {
+        // location.push({
+        //   pathname: '/multidatavisualization/',
+        //   state: { redirected: true }
+        // });
+        setShowOverloadMessage(true)
+      }
+      else {
+        setShowOverloadMessage(false)
+      }
+    });
+  }, []);
 
   return (
     <div>
@@ -129,8 +153,9 @@ const HomeComponent = () => {
           <div className="auto">
             <div className="publicDataInfo" style={{ padding: '60px 230px', marginBottom: '0px' }}>
               <ul style={{ marginTop: '-40px', gap: '40px' }}>
-                <Link to="/newmultidataproject/">
-                  <li>
+
+                <Link to={showOverloadMessage ? location?.pathname : "/newmultidataproject/"}>
+                  <li style={showOverloadMessage ? { background: '#f0efef' } : {}}>
                     <img src={icon1} alt="" />
                     <dl>
                       <dt>
@@ -162,7 +187,9 @@ const HomeComponent = () => {
                     </dl>
                   </li>
                 </Link>
+
               </ul>
+              {showOverloadMessage && <p style={{ color: "red", paddingTop: '10px', textAlign: 'center' }}><FormattedMessage id='5ProjectsMessage' defaultMessage='You cannot create more than 5 projects. Please delete some projects to create new projects.' /></p>}
             </div>
           </div>
         </div>

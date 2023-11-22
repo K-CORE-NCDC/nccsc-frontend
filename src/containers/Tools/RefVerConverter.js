@@ -7,6 +7,7 @@ import AttachmentsImage from '../../assets/images/refver2.png';
 import config from '../../config';
 import HeaderComponent from '../Common/HeaderComponent/HeaderComponent';
 import LoaderCmp from '../Common/Loader';
+import { useHistory } from 'react-router-dom';
 
 function Modal({ showModal, setShowModal }) {
     return (
@@ -39,8 +40,14 @@ function Modal({ showModal, setShowModal }) {
                                             </li>
                                         </ul>
                                         <img src={AttachmentsImage} alt="ExampleFileImage" />
+                                        <div className='MarginTop2'>
+                                            <ul style={{ listStyle: 'disc', margin: '18px' }}>
+                                                <li>본 분석도구는 CrossMap(https://doi.org/10.1093/bioinformatics/btt730) 에 의존적이며, 버전 변환 시 일부 소실되는 변이 항목이 있을 수 있음.</li>
+                                                <li>입력 파일의 게놈 버전을 잘못 선택할 시 부정확한 결과를 얻을 수 있음</li>
+                                            </ul>
+                                        </div>
                                         <div className="Flex FlexDirRow" style={{ marginTop: '20px', gap: '10px' }}>
-                                            <p>Click on the link to download the sample file</p>
+                                            <p>Click on the link to download the sample file(hg19 VCF)</p>
                                             <a className="Tooldownload-link" href={Attachments} download>
                                                 Download
                                             </a>
@@ -74,6 +81,7 @@ function RefVerConverter() {
     const dispatch = useDispatch();
     const refVerConverterResponse = useSelector((data) => data.homeReducer.refverconverter);
     const title = { id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' };
+    const history = useHistory();
 
     const [hg19, sethg19] = useState(true);
     const [hg38, sethg38] = useState(false);
@@ -144,6 +152,7 @@ function RefVerConverter() {
         if (areAllFilesVcf) {
             setIsError(false);
             setLoader(true);
+            setHtml([])
             dispatch(refverconverter('POST', { refVerConverterFiles: refVerConverterFiles, hg19: hg19, hg38: hg38 }));
             setMsg({ id: 'FileUplodPlsWait', defaultMessage: 'File Uploading, Please Wait......' });
         } else {
@@ -199,8 +208,8 @@ function RefVerConverter() {
                                     href={
                                         backend_url +
                                         'media/RefVerConverter/output/' +
-                                        'outputfile'+refVerConverterResponse['container_name'] + '.vcf'
-                                      }
+                                        'outputfile' + refVerConverterResponse['container_name'] + '.vcf'
+                                    }
                                     download={`${refVerConverterResponse['container_name']}.vcf`}
                                 >
                                     {` (${refVerConverterResponse['container_name']}) `}
@@ -373,6 +382,17 @@ function RefVerConverter() {
                                 </section>
                             )}
                         </div>
+                        <div style={{ marginTop: '50px' }}>
+                            <button
+                                id="BackButton"
+                                className="btn btnPrimary"
+                                style={{ float: 'right', margin: '10px 0px 10px 0px' }}
+                                onClick={() => history.push(`/tools/`)}
+                            >
+                                <FormattedMessage id="Back" defaultMessage="Back" />
+                            </button>
+                        </div>
+
                     </div>
                 </div>
             </article>

@@ -5,15 +5,17 @@ import rootReducer from '../reducers';
 
 const loggerMiddleware = createLogger();
 
-// const middlewares = [thunk];
-if (process.env.NODE_ENV === 'development') {
+const middlewares = [thunk];
+
+if (process.env.REACT_APP_PRODUCTION === 'False') {
   // const { logger } = require('redux-logger');
   // middlewares.push(logger);
+  middlewares.push(loggerMiddleware);
 }
 
 const initialState = {};
 export const store = createStore(
   rootReducer,
   initialState,
-  applyMiddleware(thunk, loggerMiddleware)
+  applyMiddleware(...middlewares)
 );

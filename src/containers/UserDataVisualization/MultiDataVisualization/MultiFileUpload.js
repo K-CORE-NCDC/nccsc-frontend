@@ -54,6 +54,17 @@ function Modal({ showModal, toggleModal, fileName }) {
                 <div className="Toolmodal-body">
                   <div className="Toolmodal-text">
                     <DataOfFiles fileName={fileName} />
+                    {fileName === 'DnaMutation'
+                      &&
+                      <div>
+                        <p>
+                          <FormattedMessage
+                            id="clinicalInformationGuideinnerp5"
+                            defaultMessage="* In survival analysis, if 'recur_yn', 'death_yn' are left blank, they are automatically treated as 'FALSE'"
+                          />
+                        </p>
+                      </div>
+                    }
                     <div className="Flex FlexDirRow" style={{ marginTop: '20px', gap: '10px' }}>
                       <p>
                         <FormattedMessage
@@ -261,8 +272,8 @@ const Table = ({ updateComponentNumber }) => {
               >
                 <div className="introduceBox03" style={{ width: '100%', backgroundColor: "rgb(254, 196, 11)" }}>
                   <ul>
-                    <li style={{borderBottom:"1px solid black", color:'black' }}>
-                      <p style={{ color: "black"}}>
+                    <li style={{ borderBottom: "1px solid black", color: 'black' }}>
+                      <p style={{ color: "black" }}>
                         <FormattedMessage
                           id="uploadGuide1"
                           defaultMessage="Provides visualization results only for plots related to the uploaded data."
@@ -270,7 +281,7 @@ const Table = ({ updateComponentNumber }) => {
                       </p>
                     </li>
                     <li>
-                      <p style={{ color: "black"}}>
+                      <p style={{ color: "black" }}>
                         <FormattedMessage
                           id="uploadGuide2"
                           defaultMessage="For omics data information required for each plot, please refer to the [Visualize Example Data] page."
@@ -652,6 +663,15 @@ const Table = ({ updateComponentNumber }) => {
                 </button>
               </div>
             </div>
+
+            <button
+              id="BackButton"
+              className="btn btnPrimary"
+              style={{ float: 'right', margin: '10px 0px 10px 0px' }}
+              onClick={() => history.push(`/multidatavisualization`)}
+            >
+              <FormattedMessage id="Back" defaultMessage="Back" />
+            </button>
           </div>
         </div>
       </article>
@@ -729,7 +749,7 @@ export const DataOfFiles = ({ fileName }) => {
                   <b></b> &nbsp;
                   <FormattedMessage
                     id="RNAGuideP2"
-                    defaultMessage="Leave the “None” value empty."
+                    defaultMessage="Leave the “None” value empty"
                   />
                 </p>
               </li>
@@ -741,29 +761,53 @@ export const DataOfFiles = ({ fileName }) => {
             fileName === 'Methylation' ||
             fileName === 'Fusion' ||
             fileName === 'Phospho') && (
-            <ul className="" style={{ paddingTop: '10px' }}>
-              <li className="" tabIndex="0">
-                <p style={{ color: 'black' }}>
-                  {' '}
-                  <b></b> &nbsp;
-                  <FormattedMessage
-                    id="DNAMutationGuideP1"
-                    defaultMessage="Each column configuration of omics data must be same to the sample format. "
-                  />
-                </p>
-              </li>
-              <li tabIndex="-1" style={{ paddingTop: '10px' }}>
-                <p style={{ color: 'black' }}>
-                  {' '}
-                  <b></b> &nbsp;
-                  <FormattedMessage
-                    id="DNAMutationGuideP2"
-                    defaultMessage="Leave the “None” value empty."
-                  />
-                </p>
-              </li>
-            </ul>
-          )}
+              <ul className="" style={{ paddingTop: '10px' }}>
+                <li className="" tabIndex="0">
+                  <p style={{ color: 'black' }}>
+                    {' '}
+                    <b></b> &nbsp;
+                    <FormattedMessage
+                      id="DNAMutationGuideP1"
+                      defaultMessage="Each column configuration of omics data must be same to the sample format. "
+                    />
+                  </p>
+                </li>
+                <li tabIndex="-1" style={{ paddingTop: '10px' }}>
+                  <p style={{ color: 'black' }}>
+                    {' '}
+                    <b></b> &nbsp;
+                    <FormattedMessage
+                      id="DNAMutationGuideP2"
+                      defaultMessage="Leave the “None” value empty."
+                    />
+                  </p>
+                </li>
+                {fileName === 'DnaMutation' &&
+                  <li tabIndex="-1" style={{ paddingTop: '10px' }}>
+                    <p style={{ color: 'black' }}>
+                      {' '}
+                      <b></b> &nbsp;
+                      <FormattedMessage
+                        id="DNAMutationGuideP3"
+                        defaultMessage="DNA mutation input format contains DNA mutations of multiple samples."
+                      />
+                    </p>
+                  </li>
+                }
+                {fileName === 'DnaMutation' &&
+                  <li tabIndex="-1" style={{ paddingTop: '10px' }}>
+                    <p style={{ color: 'black' }}>
+                      {' '}
+                      <b></b> &nbsp;
+                      <FormattedMessage
+                        id="DNAMutationGuideP4  "
+                        defaultMessage="By using [MAF merger] service of [Other Tools], user can merge multiple MAF files into a single TSV file, then use it as input file of this visualization service."
+                      />
+                    </p>
+                  </li>
+                }
+              </ul>
+            )}
           {(fileName === 'RNA' || fileName === 'Proteome') && (
             <ul className="" style={{ paddingTop: '10px' }}>
               <li className="" tabIndex="0">
@@ -800,22 +844,6 @@ export const DataOfFiles = ({ fileName }) => {
           )}
         </div>
       </div>
-      {/* <ul>
-        {fileName !== 'ClinicalInformation' ?
-          <li style={{ paddingLeft: '5%', paddingTop: '10px' }}> 1. &nbsp; &nbsp; Each column configuration of omics data must be same to the sample format. </li>
-          :
-          <>
-            <li style={{ paddingLeft: '5%', paddingTop: '10px' }}>1. &nbsp; &nbsp; [sample_id] column is essential. Other columns except [sample_id] are userdata. </li>
-            <li style={{ paddingLeft: '5%', paddingTop: '10px' }}>2. &nbsp; &nbsp; For survival plot, [rlps_yn], [rlps_cnfr_drtn], [death_yn], [death_cnfr_drtn] are essential. Recurrence or survival plot is composed of [rlps_yn], [rlps_cnfr_drtn], and Survival of survival plot is composed of [death_yn], [death_cnfr_drtn].
-              <ul>
-                <li style={{ paddingLeft: '5%', paddingTop: '10px' }}> - &nbsp; &nbsp; rlps_yn : &nbsp; &nbsp;recurrence yes or no (TRUE / FALSE) </li>
-                <li style={{ paddingLeft: '5%' }}> - &nbsp; &nbsp; rlps_cnfr_drtn : &nbsp; &nbsp;recurrence confirmation duration (numeric data)</li>
-                <li style={{ paddingLeft: '5%' }}>- &nbsp; &nbsp; death_yn : &nbsp; &nbsp;death yes or no (TRUE / FALSE)</li>
-                <li style={{ paddingLeft: '5%' }}>- &nbsp; &nbsp; death_cnfr_drtn : &nbsp; &nbsp; death confirmation duration (numeric data) </li>
-              </ul>
-            </li> </>
-        }
-      </ul> */}
     </ul>
   );
 };

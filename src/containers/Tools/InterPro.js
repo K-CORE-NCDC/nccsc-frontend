@@ -6,6 +6,7 @@ import Attachments from '../../assets/files/insulin.fasta';
 import config from '../../config';
 import HeaderComponent from '../Common/HeaderComponent/HeaderComponent';
 import LoaderCmp from '../Common/Loader';
+import { useHistory } from 'react-router-dom';
 
 function Modal({ showModal, setShowModal }) {
   return (
@@ -61,6 +62,7 @@ function InterPro() {
   const [loop, setLoop] = useState(null)
   const interproResponse = useSelector((data) => data.homeReducer.interpro);
   const dispatch = useDispatch();
+  const history = useHistory();
   let backend_url = config['auth'];
 
   const [selectedOption, setSelectedOption] = useState('textarea'); // Default selected option
@@ -77,6 +79,7 @@ function InterPro() {
     if (interProFile['name'].includes('.fasta')) {
       setIsError(false);
       setLoader(true);
+      setHtml([])
       dispatch(interPro('POST', { file: interProFile, filename: interProFile['name'] }));
       setMsg({ id: 'FileUplodPlsWait', defaultMessage: 'File Uploading, Please Wait......' });
     } else {
@@ -89,7 +92,7 @@ function InterPro() {
       if (interproResponse['status'] === 'running') {
         setLoader(true)
         setStartInterval(true)
-        setMsg({ id: 'FileUploadConverSt', defaultMessage: 'File Uploaded, Conversion Started.....' });
+        setMsg({ id: 'InterproFileUploadAnalysisSt', defaultMessage: 'File Uploaded, Analysis Started.....' });
       } else {
         setLoader(false)
         setStartInterval(false)
@@ -296,7 +299,7 @@ function InterPro() {
                             <dt>
                               <FormattedMessage
                                 id="SelectOption"
-                                defaultMessage="Select one Option"
+                                defaultMessage="Select one"
                               />
                             </dt>
                             <dd>
@@ -375,6 +378,17 @@ function InterPro() {
                 </section>
               )}
             </div>
+            <div style={{ marginTop: '50px' }}>
+              <button
+                id="BackButton"
+                className="btn btnPrimary"
+                style={{ float: 'right', margin: '10px 0px 10px 0px' }}
+                onClick={() => history.push(`/tools/`)}
+              >
+                <FormattedMessage id="Back" defaultMessage="Back" />
+              </button>
+            </div>
+
           </div>
         </div>
       </article>
