@@ -2,9 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import d3 from 'd3v3/d3';
 import '../../../styles/sankey.css';
 import { exportComponentAsJPEG } from 'react-component-export-image';
+import { FormattedMessage, useIntl } from 'react-intl';
+import Swal from 'sweetalert2';
 
 function NewSankeyd3({ SankeyJson, idName, forGene, screenCapture, setToFalseAfterScreenCapture }) {
   const svgRef = useRef(null);
+  const intl = useIntl();
   const [watermarkCss, setWatermarkCSS] = useState('');
 
   var margin = { top: 1, right: 1, bottom: 6, left: 1 },
@@ -241,16 +244,27 @@ function NewSankeyd3({ SankeyJson, idName, forGene, screenCapture, setToFalseAft
     }
 
     if (watermarkCss !== '' && screenCapture) {
-      if (svgRef !== null) {
-        exportComponentAsJPEG(svgRef, {
-          fileName: 'Sankey',
-          html2CanvasOptions: {}
-        });
-      }
+      // if (svgRef !== null) {
+      //   exportComponentAsJPEG(svgRef, {
+      //     fileName: 'Sankey',
+      //     html2CanvasOptions: {}
+      //   });
+      // }
+      comingSoon()
       setToFalseAfterScreenCapture();
     }
 
   }, [screenCapture, watermarkCss]);
+
+  let comingSoon = () => {
+    Swal.fire({
+      title: intl.formatMessage({ id: "Comingsoon", defaultMessage: 'Coming soon' }),
+      icon: 'info',
+      confirmButtonColor: '#003177',
+      confirmButtonText: intl.formatMessage({ id: "Ok", defaultMessage: 'Ok' }),
+      allowOutsideClick: false,
+    })
+  }
 
   return (
     <div className="randomclass">

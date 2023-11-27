@@ -321,18 +321,44 @@ export default function DataSurvival({
               <NoContentMessage />
             </div>
           )}
-
+          {/* 
           {vizType !== 'single' &&
             inputState &&
-            ((inputState['survival_type'] !== 'cox' && 'group_filters' in inputState === false) ||
-              (inputState['survival_type'] === 'cox' && 'coxFilter' in inputState === false)) && (
+            (inputState['survival_type'] === 'cox' && !inputState['coxFilter']) && (
               <p className="MarginTop4">
                 <FormattedMessage
                   id="PleaseSelectFilterData"
                   defaultMessage="Please Select Filter Data"
                 />
               </p>
-            )}
+            )} */}
+
+          {
+            vizType !== 'single' &&
+            inputState &&
+            (
+              Object.keys(inputState)?.length === 1 ||
+              (
+                (inputState['survival_type'] === 'cox' && !inputState['coxFilter']) ||
+                (
+                  inputState['survival_type'] !== 'cox' &&
+                  (
+                    (inputState['clinical'] === true && !inputState['group_filters']) ||
+                    (inputState['clinical'] === false && inputState['filter_gene'] === '')
+                  )
+                )
+              )
+            ) && (
+              <p className="MarginTop4">
+                <FormattedMessage
+                  id="PleaseSelectFilterData"
+                  defaultMessage="Please Select Filter Data"
+                />
+              </p>
+            )
+          }
+
+
 
           {vizType && vizType === 'single' && (
             <div className="Flex Gap2 FitContent M4">
