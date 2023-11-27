@@ -716,10 +716,17 @@ export default function DataVisualization() {
                                   onClick={() => setToFalseAfterScreenCapture(true)}
                                   className="btn btnPrimary"
                                 >
-                                  <FormattedMessage
-                                    id="Capture_screen"
-                                    defaultMessage="Capture Screenshot"
-                                  />
+                                  {
+                                    tab === "sankey" ? <FormattedMessage
+                                      id="Report"
+                                      defaultMessage="Report"
+                                    /> : <FormattedMessage
+                                      id="Capture_screen"
+                                      defaultMessage="Capture Screenshot"
+                                    />
+                                  }
+
+
                                 </button>
                               </div>
                             </Popover.Button>

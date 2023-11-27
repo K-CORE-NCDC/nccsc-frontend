@@ -34,6 +34,7 @@
   "RefverDesc2": "변환 (hg19 ↔ hg38)",
   "RefverDescFull": "VCF 파일의 참조 유전체 버전을 변환 (hg19 ↔ hg38)",
   "5ProjectsMessage":"프로젝트는 5개까지 생성 가능합니다. 신규 프로젝트 생성을 원하실 경우, 기존 프로젝트를 삭제해주시기 바랍니다.",
+  "Comingsoon":"서비스 오픈 준비중입니다.",
   "Sequence": "서열",
   "File": "입력 파일",
   "SelectOption": "입력 방식 선택",

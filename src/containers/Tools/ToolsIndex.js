@@ -1,7 +1,8 @@
 import React from 'react';
+import Swal from 'sweetalert2';
 import HeaderComponent from '../Common/HeaderComponent/HeaderComponent';
 import { Link } from 'react-router-dom/cjs/react-router-dom';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import icon1 from '../../assets/images/toolsImages/blast_pic.png';
 import icon2 from '../../assets/images/toolsImages/vcf2maf_pic.png';
 import icon3 from '../../assets/images/toolsImages/interpro_pic.png';
@@ -15,6 +16,7 @@ import MafmergerAttachment from '../../assets/files/ToolsAttachments/Mafmerger_f
 import RefverconverterAttachment from '../../assets/files/ToolsAttachments/Refverconverter_file.pdf';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 const HomeComponent = () => {
+  const intl = useIntl();
   const title = { id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' };
   const route = useLocation();
   function downloadFile(url, fileName) {
@@ -33,6 +35,16 @@ const HomeComponent = () => {
       { id: 'Tools', defaultMessage: 'Other Tools', to: '/tools/' }
     ]
   };
+
+  let comingSoon = () => {
+    Swal.fire({
+      title: intl.formatMessage({ id: "Comingsoon", defaultMessage: 'Coming soon' }),
+      icon: 'info',
+      confirmButtonColor: '#003177',
+      confirmButtonText: intl.formatMessage({ id: "Ok", defaultMessage: 'Ok' }),
+      allowOutsideClick: false,
+    })
+  }
 
   return (
     <div>
@@ -72,7 +84,7 @@ const HomeComponent = () => {
                           <div className="hvBox_links">
                             <div className="textdiv" >
                               {/* <Link to="/blast/"> */}
-                              <Link to={route?.pathname}>
+                              <Link to={route?.pathname} onClick={comingSoon}>
                                 <span>
                                   <FormattedMessage id="RunAnalysis" defaultMessage="Run Analysis" />
                                 </span>
