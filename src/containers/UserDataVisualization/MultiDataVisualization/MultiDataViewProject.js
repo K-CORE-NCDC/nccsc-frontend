@@ -104,7 +104,20 @@ function ProjectsList() {
       ),
       minWidth: '10%'
     },
-
+    {
+      Header: intl.formatMessage({ id: "CreatedDate", defaultMessage: 'Created On' }),
+      accessor: (original) => {
+        const date = new Date(original?.uploaded_date);
+        return date.toLocaleDateString(); // Format the date part only
+      },
+    },
+    {
+      Header: intl.formatMessage({ id: "ExpirationDate", defaultMessage: 'Expiry Date' }),
+      accessor: (original) => {
+        const date = new Date(original?.expiration_date);
+        return date.toLocaleDateString(); // Format the date part only
+      },
+    },
     {
       Header: intl.formatMessage({ id: "ProjectName", defaultMessage: 'Project Name' }),
       accessor: (original) => original?.project_name,
@@ -253,15 +266,15 @@ export default function MultiDataViewProject() {
               >
                 <div className="introduceBox03" style={{ width: '100%', backgroundColor: "rgb(254, 196, 11)" }}>
                   <ul >
-                    <li style={{borderBottom:"1px solid black", color:'black' }}>
-                      <p style={{ color: "black"}}>
+                    <li style={{ borderBottom: "1px solid black", color: 'black' }}>
+                      <p style={{ color: "black" }}>
                         <FormattedMessage
                           id="ViewProjectUploadGuidepopUp1"
                           defaultMessage="It is possible to create 5 projects on a account."
                         />
                       </p>
                     </li>
-                    <li style={{color:'black'}}>
+                    <li style={{ color: 'black' }}>
                       <p style={{ color: "black" }}>
                         <FormattedMessage
                           id="ViewProjectUploadGuidepopUp2"

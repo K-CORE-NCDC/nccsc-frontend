@@ -47,9 +47,8 @@ function Modal({ showModal, setShowModal }) {
                                             </ul>
                                         </div>
                                         <div className="Flex FlexDirRow" style={{ marginTop: '20px', gap: '10px' }}>
-                                            <p>Click on the link to download the sample file(hg19 VCF)</p>
                                             <a className="Tooldownload-link" href={Attachments} download>
-                                                Download
+                                            <FormattedMessage  id='DownloadFileRefVer' defaultMessage="Click on the link to download the sample file (hg19 VCF)"/>
                                             </a>
                                         </div>
                                     </div>

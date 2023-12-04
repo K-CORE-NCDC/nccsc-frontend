@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import d3 from 'd3v3/d3';
 import '../../../styles/sankey.css';
 import { exportComponentAsJPEG } from 'react-component-export-image';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import Swal from 'sweetalert2';
 
-function NewSankeyd3({ SankeyJson, idName, forGene, screenCapture, setToFalseAfterScreenCapture }) {
+function NewSankeyd3({ SankeyJson, idName, forGene, screenCapture, setToFalseAfterScreenCapture, tabName }) {
   const svgRef = useRef(null);
   const intl = useIntl();
   const [watermarkCss, setWatermarkCSS] = useState('');
@@ -237,21 +237,24 @@ function NewSankeyd3({ SankeyJson, idName, forGene, screenCapture, setToFalseAft
   }, [SankeyJson]);
 
   useEffect(() => {
-    if (screenCapture) {
-      setWatermarkCSS('watermark');
-    } else {
-      setWatermarkCSS('');
-    }
+    if (tabName === 'drugRelation') {
 
-    if (watermarkCss !== '' && screenCapture) {
-      // if (svgRef !== null) {
-      //   exportComponentAsJPEG(svgRef, {
-      //     fileName: 'Sankey',
-      //     html2CanvasOptions: {}
-      //   });
-      // }
-      comingSoon()
-      setToFalseAfterScreenCapture();
+      if (screenCapture) {
+        setWatermarkCSS('watermark');
+      } else {
+        setWatermarkCSS('');
+      }
+
+      if (watermarkCss !== '' && screenCapture) {
+        // if (svgRef !== null) {
+        //   exportComponentAsJPEG(svgRef, {
+        //     fileName: 'Sankey',
+        //     html2CanvasOptions: {}
+        //   });
+        // }
+        comingSoon()
+        setToFalseAfterScreenCapture();
+      }
     }
 
   }, [screenCapture, watermarkCss]);

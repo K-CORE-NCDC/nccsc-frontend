@@ -44,9 +44,8 @@ function Modal({ showModal, toggleModal, fileName }) {
                       </div>
                     }
                     <div className="Flex FlexDirRow" style={{ marginTop: '20px', gap: '10px' }}>
-                      <p>Click on the link to download the sample file</p>
                       <a className="Tooldownload-link" href={fileNameFile} download>
-                        Download
+                        <FormattedMessage id='DownloadFile' defaultMessage="Click on the link to download the sample file" />
                       </a>
                     </div>
                   </div>
@@ -491,6 +490,7 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
           )}
 
           <div className="formBox">{initialInputState}</div>
+
           <div className="bottomBtns">
             <div className="flex">
               <button onClick={resetStates} className="btn btnGray bdBtn">

@@ -47,9 +47,7 @@ const Introduction = ({ setActiveClassIndex, lan }) => {
                     <FormattedMessage id="home_child_title" />
                   ) : (
                     <>
-                      A cancer data platform that provides a variety of visualized analysis results{' '}
-                      <br /> by combining high quality clinical and proteogenomic information of
-                      domestic cancer patients.
+                      The data platform integrates clinical data and proteogenomic information from cancer patients to visually display various analysis results.
                     </>
                   )}
                 </p>

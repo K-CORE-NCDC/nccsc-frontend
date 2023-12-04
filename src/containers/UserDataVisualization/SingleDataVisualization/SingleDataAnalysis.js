@@ -276,7 +276,7 @@ export default function DataVisualization() {
   const breadCrumbs = {
     '/visualise-singledata/': [
       { id: 'Home', defaultMessage: 'Home', to: '/' },
-      project_id
+      route?.pathname.includes('visualise-singledata')
         ? { id: `VisualizeMyData`, defaultMessage: `Visualize My Data`, to: `/home/visualizeMyData/` }
         : {
           id: `VisualizeExampleData`,

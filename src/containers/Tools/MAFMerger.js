@@ -39,12 +39,12 @@ function Modal({ showModal, setShowModal }) {
                                         </ul>
                                         <img src={AttachmentsImage} alt="ExampleFileImage" />
                                         <div className="Flex FlexDirRow" style={{ marginTop: '20px', gap: '10px' }}>
-                                            <p>Click on the link to download the sample files</p>
+                                            <p><FormattedMessage id='DownloadFile' defaultMessage="Click on the link to download the sample file" /></p>
                                             <a className="Tooldownload-link" href={Attachment1} download>
-                                                Download File 1
+                                                File 1
                                             </a>
                                             <a className="Tooldownload-link" href={Attachment2} download>
-                                                Download File 2
+                                                File 2
                                             </a>
                                         </div>
                                     </div>
@@ -106,8 +106,8 @@ function MAFMerger() {
     const handleFileChange = (e) => {
         const newFiles = Array.from(e.target.files);
 
-        if (newFiles.length + Object.keys(mafMergerFiles).length > 5) {
-            alert("You can upload a maximum of 5 files at once.");
+        if (newFiles.length + Object.keys(mafMergerFiles).length > 50) {
+            alert("You can upload a maximum of 50 files at once.");
             return;
         }
 
@@ -124,8 +124,8 @@ function MAFMerger() {
             newFilesSize += newFiles[i].size;
         }
 
-        // Check if the total number of files does not exceed 5 and the total size is less than or equal to 500MB
-        if (newFiles.length + Object.keys(mafMergerFiles).length <= 5 && totalSize + newFilesSize <= 500 * 1024 * 1024) {
+        // Check if the total number of files does not exceed 50 and the total size is less than or equal to 500MB
+        if (newFiles.length + Object.keys(mafMergerFiles).length <= 50 && totalSize + newFilesSize <= 500 * 1024 * 1024) {
             const newFormData = { ...mafMergerFiles };
 
             for (let i = 0; i < newFiles.length; i++) {
@@ -144,7 +144,7 @@ function MAFMerger() {
         } else if (totalSize + newFilesSize > 500 * 1024 * 1024) {
             alert("The total file size should not exceed 500MB.");
         } else {
-            alert("Maximum 5 files are allowed.");
+            alert("Maximum 50 files are allowed.");
         }
     };
 

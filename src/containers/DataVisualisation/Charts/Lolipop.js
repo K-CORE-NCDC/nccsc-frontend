@@ -213,7 +213,8 @@ export default function DataLolipop({
                 unique_sample.push(data[i].sample);
               }
               if (data[i]['protein']) {
-                let protein = data[i]['protein'].replace(/[^\d]/g, '');
+                let protein = data[i]['protein']?.match(/[^\d]+(\d+)/g)?.[0];
+                protein = protein.replace(/[^\d]/g, '');
                 width.push(parseInt(protein));
                 let p_vc = protein + '||' + data[i]['variant_classification'];
                 if (p_vc in lollipopTmp) {

@@ -8,7 +8,7 @@ import NewSankeyd3 from './NewSankeyd3';
 import Table from '../../Common/Table/ReactTable';
 import { useIntl } from 'react-intl';
 
-function SankeyIndex({ selectedGene, variants, screenCapture, setToFalseAfterScreenCapture }) {
+function SankeyIndex({ selectedGene, variants, screenCapture, setToFalseAfterScreenCapture,tabName }) {
   const [gene, setGene] = useState('');
   const [loader, setLoader] = useState(false);
   const [detailGeneData, setDetailGeneData] = useState([]);
@@ -253,6 +253,7 @@ function SankeyIndex({ selectedGene, variants, screenCapture, setToFalseAfterScr
                 <NewSankeyd3 SankeyJson={SankeyJsonData} idName="chart"
                   screenCapture={screenCapture}
                   setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+                  tabName={tabName}
                 ></NewSankeyd3>
                 <div>
                   {detailGeneData && detailGeneData.length > 0 && (
