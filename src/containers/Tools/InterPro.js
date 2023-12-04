@@ -28,9 +28,8 @@ function Modal({ showModal, setShowModal }) {
                 <div className="Toolmodal-body">
                   <div className="Toolmodal-text">
                     <div className="Flex FlexDirRow" style={{ marginTop: '20px', gap: '10px' }}>
-                      <p>Click on the link to download the sample file</p>
                       <a className="Tooldownload-link" href={Attachments} download>
-                        Download
+                      <FormattedMessage  id='DownloadFile' defaultMessage="Click on the link to download the sample file"/>
                       </a>
                     </div>
                   </div>

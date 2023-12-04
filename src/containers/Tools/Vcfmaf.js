@@ -39,9 +39,8 @@ function Modal({ showModal, setShowModal }) {
                     </ul>
                     <img src={AttachmentsImage} alt="ExampleFileImage" />
                     <div className="Flex FlexDirRow" style={{ marginTop: '20px', gap: '10px' }}>
-                      <p>Click on the link to download the sample file</p>
                       <a className="Tooldownload-link" href={Attachments} download>
-                        Download
+                        <FormattedMessage  id='DownloadFile' defaultMessage="Click on the link to download the sample file"/>
                       </a>
                     </div>
                   </div>
@@ -258,7 +257,59 @@ function Vcfmaf() {
                 </section>
               )}
             </div>
-
+            
+            {/* <>
+              <dl>
+                <dt>&nbsp;</dt>
+                <dd>
+                  <button
+                    onClick={() => toggleModal(true, fileName)}
+                    className="ToolModalBtn"
+                    style={{ float: 'right' }}
+                  >
+                    <InforIcon />
+                  </button>
+                </dd>
+              </dl>
+              <dl key={'dl1-' + key} className="boardSearchBox">
+                <dt>
+                  {' '}
+                  <FormattedMessage id="selectType" defaultMessage="Select Type" />
+                </dt>
+                <dd className="selectBox select Flex">
+                  <select
+                    onChange={updateFileTypeOnChange}
+                    name={key}
+                    defaultChecked={selectedFileSampleType[key]}
+                    value={selectedFileSampleType[key]}
+                    className="select-color w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3"
+                  >
+                    {Object.keys(dropdownOptionsSelected[key]).map((type) => (
+                      <option className="text-gray-900" key={type} value={type}>
+                        {dropdownOptionsSelected[key][type]}
+                      </option>
+                    ))}
+                  </select>
+                </dd>
+              </dl>
+              <dl key={'dl2-' + key}>
+                <dt>&nbsp;</dt>
+                <dd className="inputText" style={{ paddingTop: '2%' }}>
+                  <label className="select-color w-full block text-right border focus:outline-none border-b-color focus:ring focus:border-blue-300 p-4 mt-3">
+                    <input
+                      type="file"
+                      className="w-full"
+                      data={key}
+                      name={selectedFileSampleType[key]}
+                      id="user-file-input"
+                      filename={key}
+                      onChange={file_Upload_}
+                      ref={inputRef}
+                    />
+                  </label>
+                </dd>
+              </dl>
+            </> */}
             <div style={{ marginTop: '50px' }}>
               <button
                 id="BackButton"

@@ -57,6 +57,7 @@ export default function DataHeatmap({
   const _width = width - width * (3 / 100);
   const [noData, setNoData] = useState(false);
   const [vizType, setVizType] = useState('');
+  const [singleGene, setSingleGene] = useState(false)
 
   // const [SC, SetSC] = useState(screenCapture);
 
@@ -182,6 +183,10 @@ export default function DataHeatmap({
   useEffect(() => {
     if (inputData && tableType !== '') {
       let genes = inputData['genes'];
+
+      if (genes?.length === 1) {
+        setSingleGene(true)
+      }
       let t = [];
       for (var i = 0; i < genes.length; i++) {
         t.push(
@@ -1193,7 +1198,7 @@ export default function DataHeatmap({
               : { paddingBottom: '10%' }
           }
         >
-          {data_ && configVis && inSufficientData !== true && (
+          {data_ && configVis && inSufficientData !== true && !singleGene && (
             <HeatmapNewCmp
               settings={configVis}
               clinicalFilter={optionChoices}
@@ -1204,6 +1209,18 @@ export default function DataHeatmap({
               width={_width}
             />
           )}
+
+          {data_ && configVis && inSufficientData !== true && singleGene && (tableType === 'phospho' || tableType === 'methylation') &&
+            <HeatmapNewCmp
+              settings={configVis}
+              clinicalFilter={optionChoices}
+              inputData={data_}
+              type={mainTab}
+              // watermarkCss={watermarkCss}
+              ref={reference}
+              width={_width}
+            />
+          }
           {(inSufficientData || renderNoContent || noData) && <NoContentMessage />}
           {noGeneData && (
             <p>
@@ -1213,6 +1230,13 @@ export default function DataHeatmap({
               />
             </p>
           )}
+          {singleGene && (tableType !== 'phospho' && tableType !== 'methylation') &&
+            <p>
+              <FormattedMessage
+                id="Please select multiple genes"
+                defaultMessage="Please select multiple genes"
+              />
+            </p>}
         </div>
       )}
     </div>

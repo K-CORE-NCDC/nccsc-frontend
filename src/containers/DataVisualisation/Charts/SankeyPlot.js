@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { RNIDetails } from '../../../actions/api_actions';
 import LoaderComp from '../../Common/Loader';
 import SankeyIndex from './SankeyIndex';
 import Table from '../../Common/Table/ReactTable';
-import { useIntl } from 'react-intl';
 import { QuestionMarkCircleIcon } from '@heroicons/react/outline';
 import ReactTooltip from 'react-tooltip';
+import { FormattedMessage, useIntl } from 'react-intl';
+import Swal from 'sweetalert2';
 
 
 
@@ -29,6 +29,7 @@ function SankeyPlot({ inputData, screenCapture, setToFalseAfterScreenCapture }) 
   const [variantClassificationHtml, setVariantClassificationHtml] = useState();
   const [variantClassification, setVariantClassification] = useState('');
   const [variantClassificationList, setVariantClassificationList] = useState([]);
+  const [watermarkCss, setWatermarkCSS] = useState('');
   const intl = useIntl();
 
   const SampleRnidListData = useSelector((data) => data.dataVisualizationReducer.Keys);
@@ -380,6 +381,32 @@ function SankeyPlot({ inputData, screenCapture, setToFalseAfterScreenCapture }) 
     }
   }, [SampleRnidListData]);
 
+  useEffect(() => {
+    if (tabName === 'patientSummary') {
+
+      if (screenCapture) {
+        setWatermarkCSS('watermark');
+      } else {
+        setWatermarkCSS('');
+      }
+
+      if (watermarkCss !== '' && screenCapture) {
+        comingSoon()
+        setToFalseAfterScreenCapture();
+      }
+    }
+
+  }, [screenCapture, watermarkCss]);
+
+  let comingSoon = () => {
+    Swal.fire({
+      title: intl.formatMessage({ id: "Comingsoon", defaultMessage: 'Coming soon' }),
+      icon: 'info',
+      confirmButtonColor: '#003177',
+      confirmButtonText: intl.formatMessage({ id: "Ok", defaultMessage: 'Ok' }),
+      allowOutsideClick: false,
+    })
+  }
   return (
     <div style={{
       marginTop: '5%',
@@ -558,6 +585,7 @@ function SankeyPlot({ inputData, screenCapture, setToFalseAfterScreenCapture }) 
             allVariants={rnaData['variant_info']}
             screenCapture={screenCapture}
             setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+            tabName={tabName}
           />
         </div>
       )}

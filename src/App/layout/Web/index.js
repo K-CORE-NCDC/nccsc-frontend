@@ -299,8 +299,11 @@ export default function Web() {
     if (mm < 10) mm = '0' + mm;
     const formattedToday = dd + '/' + mm + '/' + yyyy;
     var currentTime = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
-    if (idNumber in logDataIs) logDataIs[idNumber]['endTime'] = currentTime;
-    idNumber++;
+    if(logDataIs?.length > 0){
+      if (idNumber in logDataIs) logDataIs[idNumber]['endTime'] = currentTime;
+      idNumber++;
+    }
+    
 
     let object = {
       id: idNumber,

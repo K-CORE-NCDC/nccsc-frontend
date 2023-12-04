@@ -66,14 +66,8 @@ function Modal({ showModal, toggleModal, fileName }) {
                       </div>
                     }
                     <div className="Flex FlexDirRow" style={{ marginTop: '20px', gap: '10px' }}>
-                      <p>
-                        <FormattedMessage
-                          id="Click on the link to download the sample file Download"
-                          defaultMessage="Click on the link to download the sample file."
-                        />
-                      </p>
                       <a className="Tooldownload-link" href={fileNameFile} download>
-                        <FormattedMessage id="Download" defaultMessage="Download" />
+                        <FormattedMessage id='DownloadFile' defaultMessage="Click on the link to download the sample file" />
                       </a>
                     </div>
                   </div>
