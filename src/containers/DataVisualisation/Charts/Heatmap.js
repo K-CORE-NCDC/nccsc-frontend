@@ -232,6 +232,7 @@ export default function DataHeatmap({
               setHeatmapJson(r_);
               changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
               setHeatmapSummaryStatusCode({ status: 200 });
+              setClusterRange(d["data"]?.clusters?.length);
             } else {
               setHeatmapJson([]);
               setHeatmapSummaryStatusCode({ status: 204 });
@@ -421,7 +422,6 @@ export default function DataHeatmap({
     }
 
     if (inputData.type !== '' && inputData['genes'].length > 0) {
-      setClusterRange(genes?.length);
       setLoader(true);
       dataJson['table_type'] = tableType;
       dataJson['view'] = viewType;
@@ -444,6 +444,7 @@ export default function DataHeatmap({
             setHeatmapJson(r_);
             changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
             setHeatmapSummaryStatusCode({ status: 200 });
+            setClusterRange(d["data"]?.clusters?.length);
           } else {
             setHeatmapJson([]);
             setHeatmapSummaryStatusCode({ status: 204 });
@@ -495,6 +496,7 @@ export default function DataHeatmap({
             setHeatmapJson(r_);
             changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
             setHeatmapSummaryStatusCode({ status: 200 });
+            setClusterRange(d["data"]?.clusters?.length);
           } else {
             setHeatmapJson([]);
             setHeatmapSummaryStatusCode({ status: 204 });
@@ -546,6 +548,7 @@ export default function DataHeatmap({
             setHeatmapJson(r_);
             changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
             setHeatmapSummaryStatusCode({ status: 200 });
+            setClusterRange(d["data"]?.clusters?.length);
           } else {
             setHeatmapJson([]);
             setHeatmapSummaryStatusCode({ status: 204 });
@@ -598,6 +601,7 @@ export default function DataHeatmap({
             setHeatmapJson(r_);
             changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
             setHeatmapSummaryStatusCode({ status: 200 });
+            setClusterRange(d["data"]?.clusters?.length);
           } else {
             setHeatmapJson([]);
             setHeatmapSummaryStatusCode({ status: 204 });
@@ -643,6 +647,7 @@ export default function DataHeatmap({
             setHeatmapJson(r_);
             changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
             setHeatmapSummaryStatusCode({ status: 200 });
+            setClusterRange(d["data"]?.clusters?.length);
           } else {
             setHeatmapJson([]);
             setHeatmapSummaryStatusCode({ status: 204 });
@@ -705,6 +710,7 @@ export default function DataHeatmap({
             setHeatmapJson(r_);
             changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
             setHeatmapSummaryStatusCode({ status: 200 });
+            setClusterRange(d["data"]?.clusters?.length);
           } else {
             setHeatmapJson([]);
             setHeatmapSummaryStatusCode({ status: 204 });
@@ -1152,6 +1158,7 @@ export default function DataHeatmap({
                         onClick={(e) => {
                           changeCluster(e);
                         }}
+                        style={{ cursor: 'pointer' }}
                       >
                         add_task
                       </span>

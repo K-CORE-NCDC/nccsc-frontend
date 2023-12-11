@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, } from "react";
 import { FusionInformation, FusionExons } from '../../actions/api_actions'
 import LoaderCmp from "./Loader";
 import { useParams } from "react-router-dom";
+import { FormattedMessage } from 'react-intl';
 
 export default function FusionCustomPlot({ fusionId }) {
   const listRef = useRef();
@@ -10,7 +11,7 @@ export default function FusionCustomPlot({ fusionId }) {
   const [leftTranscriptsHtml, setLeftTranscriptsHtml] = useState([])
   const [rightTranscriptsHtml, setRightTranscriptsHtml] = useState([])
   const [gene, setGene] = useState('')
-  const [errorHtml, setErrorHtml] = useState([])
+  const [errorHtml, setErrorHtml] = useState('')
   const [fusionPlotJson, setFusionPlotJson] = useState({})
   const [exonData, setExonData] = useState([])
   const [fromGene, setFromGene] = useState('')
@@ -309,7 +310,7 @@ export default function FusionCustomPlot({ fusionId }) {
               </div>
             </>
           }
-          {errorHtml && <div className="p-4 ">{errorHtml}</div>}
+          {errorHtml && <div className="p-4 "><FormattedMessage id="FusionNoExonData" defaultMessage="No data match found in human genome database" /></div>}
         </div>
 
 
