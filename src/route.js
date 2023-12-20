@@ -487,7 +487,7 @@ const route = [
     exact: true,
     type: 'unauth',
     name: <FormattedMessage id="Tools" defaultMessage="Tools" />,
-    childname: <FormattedMessage id="REFVERCONVERTER" defaultMessage="RefVer Converter" />,
+    childname: <FormattedMessage id="REFVERCONVERTER" defaultMessage="RefVer Converter (Liftover)" />,
     component: RefVerConverter
   },
   {

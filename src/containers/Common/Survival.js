@@ -28,7 +28,8 @@ const SurvivalCmp = React.forwardRef(({ data, watermarkCss, pValue,survialType }
       let minValue = 100;
       let maxXvalue = 0;
       let tableHtmlData = [];
-      for (const [key, value] of Object.entries(data.survivalJson.final)) {
+      for (let [key, value] of Object.entries(data.survivalJson.final)) {
+        let filteredValue = value.filter(obj => obj.sample !== "");
         let columns = [
           { Header: intl.formatMessage({ id: "TimeInMonth", defaultMessage: 'Time(in month)' }), accessor: (row) => row.x },
           { Header: survialType === 'recurrence' ? intl.formatMessage({ id: "Recurrence", defaultMessage: 'Recurrence-free' }) : intl.formatMessage({ id: "Survival", defaultMessage: 'Survival' }), accessor: (row) => row.y },
@@ -38,7 +39,7 @@ const SurvivalCmp = React.forwardRef(({ data, watermarkCss, pValue,survialType }
           <div className="p-3">
             <h3 className="mb-3 MultiUploadTextCenter">{key}</h3>
             <Table
-              data={value}
+              data={filteredValue}
               columns={columns}
             />
           </div>

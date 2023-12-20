@@ -54,7 +54,7 @@ function Popup({ toggleModal }) {
     noticeDate.setDate(noticeDate.getDate() + 1);
     noticeDate.setHours(0, 0, 0, 0);
     // const options = { timeZone: "Asia/Seoul" , year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
-    const options = { timeZone: "Asia/Seoul" , year: 'numeric', month: 'numeric', day: 'numeric'};
+    const options = { timeZone: "Asia/Seoul", year: 'numeric', month: 'numeric', day: 'numeric' };
     noticeDate = noticeDate.toLocaleString("en-US", options);
     localStorage.setItem('ncc_notice_popup', JSON.stringify({ date: noticeDate, showpopup: true }));
     setIsOpen(false);
@@ -85,6 +85,11 @@ function Popup({ toggleModal }) {
   return (
     <>
       {isOpen && isOpen === true && (
+        noticeStatus === 200 &&
+        noticedetails &&
+        noticedetails?.data &&
+        Object.keys(noticedetails['data']).length > 0
+        &&
         <Draggable disabled={!isOpen} onDrag={handleDrag}>
           <div
             style={{
@@ -98,7 +103,7 @@ function Popup({ toggleModal }) {
             }}
           >
             <div className="mainPopup">
-              <div className="popupHeader" style={{backgroundColor:"rgb(0, 75, 155)"}}>
+              <div className="popupHeader" style={{ backgroundColor: "rgb(0, 75, 155)" }}>
                 <h3 className="TextAlignCenter">
                   <FormattedMessage id="NoticePopup" defaultMessage="Notice Popup" />
                 </h3>
@@ -114,9 +119,9 @@ function Popup({ toggleModal }) {
 
               {noticeStatus === 200 &&
                 noticedetails &&
-                noticedetails.data &&
+                noticedetails?.data &&
                 Object.keys(noticedetails['data']).length > 0 && (
-                  <div className="popupBody" style={{backgroundColor:"rgb(240, 242, 246)"}} dangerouslySetInnerHTML={{ __html: content }}></div>
+                  <div className="popupBody" style={{ backgroundColor: "rgb(240, 242, 246)" }} dangerouslySetInnerHTML={{ __html: content }}></div>
                 )}
               <div className="popupFooter">
                 <button className="mainPopupClose" type="button" onClick={changeDay} id="RemindAfter24hrsButton">

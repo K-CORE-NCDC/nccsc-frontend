@@ -30,7 +30,7 @@ function Modal({ showModal, setShowModal }) {
                                     <div className="Toolmodal-text">
                                         <ul style={{ margin: '10px' }}>
                                             <li>
-                                                RefVer converter는 VCF 파일의 참조 유전체 버전 GRCh37(hg19) 과 버전 GRCh38(hg38) 간의 양방향 변환 기능을 지원합니다.
+                                                RefVer converter (Liftover) 는 VCF 파일의 참조 유전체 버전 GRCh37(hg19) 과 버전 GRCh38(hg38) 간의 양방향 변환 기능을 지원합니다.
                                             </li>
                                             <li>
                                                 게놈 버전 hg19 VCF 파일을 입력하면 게놈 버전 hg38 VCF 파일로 변환합니다.
@@ -234,7 +234,7 @@ function RefVerConverter() {
             { id: 'Home', defaultMessage: 'Home', to: '/' },
             { id: 'MyDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
             { id: 'Tools', defaultMessage: 'Other Tools', to: '/tools/' },
-            { id: 'REFVERCONVERTER', defaultMessage: 'RefVer Converter', to: '/refverconverter/' }
+            { id: 'REFVERCONVERTER', defaultMessage: 'RefVer Converter (Liftover)', to: '/refverconverter/' }
         ]
     };
 
@@ -256,7 +256,7 @@ function RefVerConverter() {
                 <div className="contentsTitle">
                     <div className="auto">
                         <h3 className="colorSecondary">
-                            <span className="colorPrimary">RefVer </span>Converter
+                            <span className="colorPrimary">RefVer </span>Converter (Liftover)
                         </h3>
                     </div>
                 </div>

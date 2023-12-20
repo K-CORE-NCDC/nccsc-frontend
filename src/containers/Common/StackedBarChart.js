@@ -1,10 +1,11 @@
 import { Chart, registerables } from 'chart.js';
-import React, { useEffect, useRef } from 'react';
-
+import React, { useState, useEffect, useRef } from 'react';
+import NoContentMessage from '../Common/NoContentComponent';
 Chart.register(...registerables);
 
 export default function StackBarChartComp({ data, key }) {
   const chartRef = useRef(null);
+  const [drawChart, setDrawChart] = useState(true)
 
   let option = {
     plugins: {
@@ -43,12 +44,24 @@ export default function StackBarChartComp({ data, key }) {
   useEffect(() => {
     let datasets = data['datasets'];
     let labels = data['labels'];
-    drawGraph(labels, datasets);
+    if (labels?.length > 0) {
+      drawGraph(labels, datasets);
+      setDrawChart(true);
+    }
+    else {
+      setDrawChart(false);
+    }
   }, []);
 
   return (
     <div>
-      <canvas ref={chartRef} id={key} height="300"></canvas>
+      {drawChart ?
+        <canvas ref={chartRef} id={key} height="300"></canvas>
+        :
+        <div className='noData' style={{ marginTop: "150px" }}>
+          <NoContentMessage />
+        </div>
+      }
     </div>
   );
 }

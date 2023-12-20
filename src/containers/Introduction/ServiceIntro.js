@@ -6,8 +6,8 @@ import icon3 from '../../assets/images/publicDataInfo-img03.svg';
 
 const ServiceIntro = () => {
   return (
-    <div className="auto">
-      <div className="publicDataInfo ">
+    <div className="auto tabContents" style={{ height: '80vh' }}>
+      <div className="publicDataInfo" style={{ padding: "9px 54px" }}>
         <div className="mainDataStatusWrap Relative">
           <div className="mainDataStatus">
             <dl className="serviceIntroBox">
