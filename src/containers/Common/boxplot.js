@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from 'react';
 
 export default function Boxplot({ data }) {
   let maxNumber = 0
-
+  let maxQuantile = 0
   function findMaxNumber(arr) {
     return Math.max(...arr);
   }
@@ -13,8 +13,6 @@ export default function Boxplot({ data }) {
     let currentMax = findMaxNumber(obj.data);
     maxNumber = Math.max(maxNumber, currentMax);
   }
-
-  console.log('maxnumbwr', maxNumber)
   const elementRef = useRef(null);
 
   const drawChart = (w, dt) => {
@@ -73,6 +71,7 @@ export default function Boxplot({ data }) {
         var interQuantileRange = q3 - q1;
         var min = q1 - 1.5 * interQuantileRange;
         var max = q3 + 1.5 * interQuantileRange;
+        maxQuantile = Math.max(max, maxQuantile)
         if (min < 1) {
           min = 2;
         }
@@ -95,7 +94,7 @@ export default function Boxplot({ data }) {
       .attr('transform', 'rotate(60)')
       .style('text-anchor', 'start');
 
-    var y = d3.scaleLinear().domain([0, maxNumber]).range([height, 0]);
+    var y = d3.scaleLinear().domain([0, maxQuantile * 1.5]).range([height, 0]);
     svg.append('g').call(d3.axisLeft(y));
 
     for (let i = 0; i < sumstat.length; i++) {
@@ -122,7 +121,7 @@ export default function Boxplot({ data }) {
         .style('width', 40);
 
       let boxWidth = Math.round(width / data?.length) - 10;
-      console.log('width', width, data?.length, Math.floor(width / data?.length))
+      // console.log('width', width, data?.length, Math.floor(width / data?.length))
       p.selectAll('boxes')
         .data([sumstat[i]])
         .enter()
@@ -134,7 +133,7 @@ export default function Boxplot({ data }) {
           return y(d.value.q3);
         })
         .attr('height', function (d) {
-          return y(d.value.q1) - y(d.value.q3) -2 ;
+          return y(d.value.q1) - y(d.value.q3) - 2;
         })
         .attr('width', boxWidth)
         .attr('stroke', function (d) {
@@ -229,7 +228,7 @@ export default function Boxplot({ data }) {
   }, [data]);
   return (
     <>
-      <div id="my_dataviz" className="relative" ref={elementRef}></div>
+      <div id="my_dataviz" className="relative" style={{ marginTop: "20%" }} ref={elementRef}></div>
     </>
   );
 }

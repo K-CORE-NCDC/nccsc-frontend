@@ -9,7 +9,7 @@ const Organization = ({ lan }) => {
 
 
   return (
-    <div className="auto">
+    <div className="auto tabContents" style={{ height: '80vh' }}>
       <div className="publicDataInfo center" align="center">
         {lan === 'kr-KO' ? (
           <img src={fig} alt="" style={{ height: '590px' }} />

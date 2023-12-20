@@ -11,7 +11,7 @@ import { TCGA } from './TCGA';
 export const CBioPortal = () => {
   const [activeTab, setActiveTab] = useState('1');
   return (
-    <div className="auto">
+    <div className="auto tabContents" style={{ height: '80vh' }}>
       <div className="mainContentsBox">
         <div className="tab">
           <div className="tab_main">

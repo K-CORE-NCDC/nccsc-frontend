@@ -25,7 +25,7 @@
   "BlastDesc": "생물학적 서열 데이터를 입력하여 database 에서 유사 서열 검색 ",
   "VCFMAFDesc": "VCF 파일을 MAF 형식으로 변환 ",
   "MAFMerger": "MAF Merger",
-  "REFVERCONVERTER": "REFVER Converter",
+  "REFVERCONVERTER": "REFVER Converter (Liftover)",
   "InterproDesc": "사용자의 단백질 서열을 입력하여 interpro 데이터베이스로부터 domain 및 familly 분석 ",
   "MAFMergerDesc1": "여러 개의 MAF 파일을 입력하여",
   "MAFMergerDesc2": " 1 개 파일로 병합하는 분석 도구 ",

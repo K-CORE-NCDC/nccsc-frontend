@@ -6,13 +6,14 @@ import mainLogo from '../../assets/images/mainLogo.png';
 import Organization from './Organization';
 import { CBioPortal } from './RelatedSites/CBioPortal';
 import ServiceIntro from './ServiceIntro';
+import ServiceIntroPage from './SiteIntroPage';
 
 export const SiteIntro = ({ lan }) => {
   const [activeTab, setActiveTab] = useState('1');
 
   return (
     <div className="auto">
-      <div className="mainContentsBox">
+      <div className="mainContentsBox" style={{marginTop:"45px"}}>
         <div className="tab">
           <div className="tab_main">
             <ul>
@@ -59,62 +60,11 @@ export const SiteIntro = ({ lan }) => {
             </ul>
           </div>
         </div>
-        {activeTab === '1' && (
-          <div className="tabContents ">
-            <div className=" introduceWrap" style={{ paddingTop: '0px', height: '100%' }}>
-              <div className="introduceBox01">
-                <div className="logoBox">
-                  <img src={mainLogo} alt="img" />
-                </div>
-                <div className="txtBox">
-                  <p>
-                    <FormattedMessage
-                      id="siteIntro_text"
-                      defaultMessage=" K-CORE Portal is a web-based analysis portal that provides visualizations of cancer genomic data, and it is a sub-service portal of the National Cancer Data Cancer website."
-                    />
-                  </p>
-                </div>
-              </div>
-              <div className="introduceBox02">
-                <div className="imgBox">
-                  <img className="w100" src={introduce_VisualContents} alt="img" />
-                </div>
-              </div>
-              <div className="introduceBox03">
-                <ul>
-                  <li>
-                    <p>
-                      <FormattedMessage
-                        id="siteIntro_list_1"
-                        defaultMessage="Analyze single data or multi-omics data in relation to clinical data"
-                      />
-                    </p>
-                  </li>
-                  <li>
-                    <p>
-                      <FormattedMessage
-                        id="siteIntro_list_2"
-                        defaultMessage="Download visualization results"
-                      />
-                    </p>
-                  </li>
-                  <li>
-                    <p>
-                      <FormattedMessage
-                        id="siteIntro_list_3"
-                        defaultMessage="Provide drug relation information"
-                      />
-                    </p>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        )}
-        {activeTab === '2' && <ServiceIntro lan={lan} />}
-        {activeTab === '3' && <Organization lan={lan} />}
-        {activeTab === '4' && <CBioPortal />}
       </div>
+      {activeTab === '1' && <ServiceIntroPage />}
+      {activeTab === '2' && <ServiceIntro lan={lan} />}
+      {activeTab === '3' && <Organization lan={lan} />}
+      {activeTab === '4' && <CBioPortal />}
     </div>
   );
 };

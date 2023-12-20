@@ -72,7 +72,7 @@ export const OtherTools = () => {
               </li>
               <li className="" tabIndex="-1">
                 <p>
-                  <b>RefVer converter :</b> &nbsp;
+                  <b>RefVer converter (Liftover) :</b> &nbsp;
                   <FormattedMessage
                     id="RefverDescFull"
                     defaultMessage="convert reference genome version of VCF file (hg19 ↔ hg38) "

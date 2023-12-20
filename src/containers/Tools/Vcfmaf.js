@@ -32,10 +32,6 @@ function Modal({ showModal, setShowModal }) {
                       <li>
                         본 분석도구는 VCF 형식 파일을 MAF 형식 파일로 변환하는 도구입니다.
                       </li>
-                      <li>
-                        본 분석도구는 VCF 형식 파일을 MAF 형식 파일로 변환하는 도구입니다.
-                      </li>
-
                     </ul>
                     <img src={AttachmentsImage} alt="ExampleFileImage" />
                     <div className="Flex FlexDirRow" style={{ marginTop: '20px', gap: '10px' }}>

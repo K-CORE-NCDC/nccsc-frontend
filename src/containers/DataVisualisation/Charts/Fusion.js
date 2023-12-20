@@ -34,6 +34,7 @@ export default function FusionPlot({
   const [inputState, setInputState] = useState({});
   const [watermarkCss, setWatermarkCSS] = useState('');
   const [showDiv, setShowDiv] = useState(true);
+  const [selectedGroup, setSelectedGroup] = useState('');
   const intl = useIntl();
 
   useEffect(() => {
@@ -89,7 +90,7 @@ export default function FusionPlot({
     {
       // Header: intl.formatMessage({ id: "View", defaultMessage: 'View' }),
       Header: "View Fusion plot",
-      wordBreak:"initial",
+      wordBreak: "initial",
       accessor: (row) => row?.view,
       Cell: ({ cell: { row, value } }) => {
         let html = [];
@@ -144,7 +145,7 @@ export default function FusionPlot({
     {
       // Header: intl.formatMessage({ id: "SampleName", defaultMessage: 'Sample Name' }),
       Header: "Sample Name",
-      wordBreak:"initial",
+      wordBreak: "initial",
       accessor: (original) => {
         let samples = '';
 
@@ -174,7 +175,7 @@ export default function FusionPlot({
     {
       // Header: intl.formatMessage({ id: "LeftGeneName", defaultMessage: 'Left Gene Name' }),
       Header: "Left Gene Name",
-      wordBreak:"initial",
+      wordBreak: "initial",
       accessor: (original) => original?.left_gene_name,
       Cell: ({ cell: { value } }) => (
         <div title={value}>{value}</div>
@@ -184,56 +185,56 @@ export default function FusionPlot({
     {
       // Header: intl.formatMessage({ id: "LeftEnsemblId", defaultMessage: 'Left Ensembl Id' }),
       Header: "Left Ensembl Id",
-      wordBreak:"initial",
+      wordBreak: "initial",
       accessor: (original) => original?.left_gene_ensmbl_id,
       Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     },
     {
       // Header: intl.formatMessage({ id: "LeftBreakpoint", defaultMessage: 'Left Breakpoint' }),
       Header: "Left Breakpoint",
-      wordBreak:"initial",
+      wordBreak: "initial",
       accessor: (original) => original?.left_hg38_pos,
       Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     },
     {
       // Header: intl.formatMessage({ id: "RightGeneName", defaultMessage: 'Right Gene Name' }),
       Header: "Right Gene Name",
-      wordBreak:"initial",
+      wordBreak: "initial",
       accessor: (original) => original?.right_gene_name,
       Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     },
     {
       // Header: intl.formatMessage({ id: "RightEnsemblId", defaultMessage: 'Right Ensembl Id' }),
       Header: "Right Ensembl Id",
-      wordBreak:"initial",
+      wordBreak: "initial",
       accessor: (original) => original?.right_gene_ensmbl_id,
       Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     },
     {
       // Header: intl.formatMessage({ id: "RightBreakpoint", defaultMessage: 'Right Breakpoint' }),
       Header: "Right Breakpoint",
-      wordBreak:"initial",
+      wordBreak: "initial",
       accessor: (original) => original?.right_hg38_pos,
       Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     },
     {
       // Header: intl.formatMessage({ id: "JunctionReadCount", defaultMessage: 'Junction Read Count' }),
       Header: "Junction Read Count",
-      wordBreak:"initial",
+      wordBreak: "initial",
       accessor: (original) => original?.junction_read_count,
       Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     },
     {
       // Header: intl.formatMessage({ id: "SpanningFragCount", defaultMessage: 'Spanning Frag Count' }),
       Header: "Spanning Frag Count",
-      wordBreak:"initial",
+      wordBreak: "initial",
       accessor: (original) => original?.spanning_frag_count ? original?.spanning_frag_count : 0,
       Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     },
     {
       // Header: intl.formatMessage({ id: "SpliceType", defaultMessage: 'Splice Type' }),
       Header: "Splice Type",
-      wordBreak:"initial",
+      wordBreak: "initial",
       accessor: (original) => original?.splice_type ? original?.splice_type : 'None',
       Cell: ({ cell: { value } }) => (< div title={value}>{value}</div>),
     }
@@ -297,6 +298,7 @@ export default function FusionPlot({
   }, []);
 
   const getVennIds = (key) => {
+    setSelectedGroup(key)
     if (key.length > 0) {
       setFusionId(0);
       let name = key.split('_');
@@ -353,9 +355,15 @@ export default function FusionPlot({
                     <p>{koreanlanguage ? 'Unique: 특정 환자군에서 발견된 융합 유전자' : 'Unique : Fusion genes found in a certain patient group.'}</p>
                   </div>
                   {
-                    tableData.length <= 0 &&
+                    tableData.length <= 0 && selectedGroup.length > 0 &&
                     <div>
                       <p>{koreanlanguage ? '데이터가 없습니다.' : 'No Data Found. '}</p>
+                    </div>
+                  }
+                  {
+                    selectedGroup?.length === 0 &&
+                    <div>
+                      <p>{koreanlanguage ? '벤다이어그램 영역을 클릭하여 해당하는 fusion gene 을 확인하세요.' : 'Click on area of Venn diagram to view the corresponding fusion genes.'}</p>
                     </div>
                   }
                   {tableData.length > 0 && (
