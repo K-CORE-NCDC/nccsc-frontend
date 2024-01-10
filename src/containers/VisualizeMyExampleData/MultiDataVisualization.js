@@ -399,7 +399,7 @@ const MultiDataVisualization = () => {
         <ul className="contentBox_right" style={{ marginTop: "10px" }}>
           <li className="" tabIndex="-1">
             <p>
-              <b>*{"  "}</b> &nbsp;
+              <b>* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> &nbsp;
               <FormattedMessage
                 id="Required"
                 defaultMessage="Required"
@@ -408,7 +408,7 @@ const MultiDataVisualization = () => {
           </li>
           <li className="" tabIndex="-1">
             <p>
-              <b>V{"  "}</b> &nbsp;
+              <b>V &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> &nbsp;
               <FormattedMessage
                 id="AtleastOne"
                 defaultMessage="At least one of the displayed data required"
@@ -417,7 +417,7 @@ const MultiDataVisualization = () => {
           </li>
           <li className="" tabIndex="-1" style={{}}>
             <p>
-              <b>O{"  "}</b> &nbsp;
+              <b>O &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> &nbsp;
               <FormattedMessage
                 id="Optional"
                 defaultMessage="Optional"
