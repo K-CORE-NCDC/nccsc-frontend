@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { logout } from '../../actions/api_actions';
 
 const LogOutComponent = () => {
   const history = useHistory();
@@ -12,6 +13,7 @@ const LogOutComponent = () => {
     deleteCookie('is_login');
     deleteCookie('username');
     deleteCookie('superuser');
+    let _ = logout('POST', {});
     history.push({
       pathname: '/login/',
       state: {

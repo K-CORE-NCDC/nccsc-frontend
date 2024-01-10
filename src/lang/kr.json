@@ -610,5 +610,8 @@
   "Selectfile": "파일선택",
   "SelectGenesOmics": "유전자 세트 필터에서 유전자를 선택하세요",
   "RegistrationNumber": "분석접수번호",
-  "Please select multiple genes": "다수의 유전자를 선택하세요"
+  "Please select multiple genes": "다수의 유전자를 선택하세요",
+  "Required":"필수 입력",
+  "AtleastOne":"표시된 데이터 중 최소 한 가지는 입력 필요",
+  "Optional":"옵션 (없어도 시각화 가능)"
 }
