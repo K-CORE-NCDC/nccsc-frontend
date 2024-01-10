@@ -207,67 +207,79 @@ const MultiDataVisualization = () => {
         <tbody>
           <tr>
             <td>Clinical Information</td>
-            <td></td>
             <td>
-              <span className="material-icons">radio_button_unchecked</span>
-            </td>
-            <td></td>
-            <td>
-              <span className="material-icons">radio_button_unchecked</span>
+              <span className="material-icons">*</span>
             </td>
             <td>
-              <span className="material-icons">radio_button_unchecked</span>
+              <span className="material-icons">*</span>
             </td>
             <td>
-              <span className="material-icons">radio_button_unchecked</span>
-            </td>
-            <td></td>
-            <td>
-              <span className="material-icons">radio_button_unchecked</span>{' '}
-            </td>
-            <td></td>
-            <td>
-              <span className="material-icons">radio_button_unchecked</span>{' '}
+              <span className="material-icons">*</span>
             </td>
             <td>
-              <span className="material-icons">radio_button_unchecked</span>{' '}
+              <span className="material-icons">*</span>
+            </td>
+            <td>
+              <span className="material-icons">*</span>
+            </td>
+            <td>
+              <span className="material-icons">*</span>
+            </td>
+            <td>
+              <span className="material-icons">*</span>
+            </td>
+            <td>
+              <span className="material-icons">*</span>{' '}
+            </td>
+            <td>
+              <span className="material-icons">*</span>{' '}
+            </td>
+            <td>
+              <span className="material-icons">*</span>{' '}
+            </td>
+            <td>
+              <span className="material-icons">*</span>{' '}
             </td>
           </tr>
           <tr>
             <td>DNA Mutation</td>
             <td>
-              <span className="material-icons">radio_button_unchecked</span>
+              <span className="material-icons">V</span>
             </td>
             <td>
-              <span className="material-icons">radio_button_unchecked</span>
+              <span className="material-icons">*</span>
             </td>
             <td>
-              <span className="material-icons">radio_button_unchecked</span>
+              <span className="material-icons">V</span>
             </td>
             <td></td>
             <td></td>
             <td>
-              <span className="material-icons">radio_button_unchecked</span>
+              <span className="material-icons">O</span>
             </td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
+            <td>
+              <span className="material-icons">V</span>
+            </td>
           </tr>
           <tr>
             <td>CNV</td>
             <td>
-              <span className="material-icons">radio_button_unchecked</span>
+              <span className="material-icons">V</span>
+            </td>
+            <td>
+              <span className="material-icons">*</span>
             </td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
             <td>
-              <span className="material-icons">radio_button_unchecked</span>
+              <span className="material-icons">*</span>
             </td>
             <td></td>
             <td></td>
@@ -276,43 +288,45 @@ const MultiDataVisualization = () => {
           <tr>
             <td>Methylation</td>
             <td>
-              <span className="material-icons">radio_button_unchecked</span>
+              <span className="material-icons">V</span>
             </td>
             <td></td>
             <td></td>
             <td></td>
             <td>
-              <span className="material-icons">radio_button_unchecked</span>
+              <span className="material-icons">V</span>
             </td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
-            <td></td>
+            <td>
+              <span className="material-icons">V</span>
+            </td>
           </tr>
           <tr>
             <td>RNA</td>
             <td>
-              <span className="material-icons">radio_button_unchecked</span>
+              <span className="material-icons">V</span>
             </td>
-            <td></td>
-            <td></td>
-            <td>
-              <span className="material-icons">radio_button_unchecked</span>
-            </td>
-            <td>
-              <span className="material-icons">radio_button_unchecked</span>
-            </td>
-            <td>
-              <span className="material-icons">radio_button_unchecked</span>
-            </td>
-            <td>
-              <span className="material-icons">radio_button_unchecked</span>
-            </td>
+            <td><span className="material-icons">*</span></td>
             <td></td>
             <td>
-              <span className="material-icons">radio_button_unchecked</span>
+              <span className="material-icons">V</span>
+            </td>
+            <td>
+              <span className="material-icons">V</span>
+            </td>
+            <td>
+              <span className="material-icons">O</span>
+            </td>
+            <td>
+              <span className="material-icons">*</span>
+            </td>
+            <td></td>
+            <td>
+              <span className="material-icons">V</span>
             </td>
             <td></td>
             <td></td>
@@ -320,9 +334,9 @@ const MultiDataVisualization = () => {
           <tr>
             <td>Fusion</td>
             <td>
-              <span className="material-icons">radio_button_unchecked</span>
+              <span className="material-icons">V</span>
             </td>
-            <td></td>
+            <td><span className="material-icons">*</span></td>
             <td></td>
             <td></td>
             <td></td>
@@ -331,46 +345,46 @@ const MultiDataVisualization = () => {
             <td></td>
             <td></td>
             <td>
-              <span className="material-icons">radio_button_unchecked</span>
+              <span className="material-icons">*</span>
             </td>
             <td></td>
           </tr>
           <tr>
             <td>Proteome</td>
             <td>
-              <span className="material-icons">radio_button_unchecked</span>
+              <span className="material-icons">V</span>
             </td>
-            <td></td>
-            <td></td>
-            <td>
-              <span className="material-icons">radio_button_unchecked</span>
-            </td>
-            <td>
-              <span className="material-icons">radio_button_unchecked</span>
-            </td>
-            <td>
-              <span className="material-icons">radio_button_unchecked</span>
-            </td>
-            <td>
-              <span className="material-icons">radio_button_unchecked</span>
-            </td>
+            <td><span className="material-icons">*</span></td>
             <td></td>
             <td>
-              <span className="material-icons">radio_button_unchecked</span>
+              <span className="material-icons">V</span>
+            </td>
+            <td>
+              <span className="material-icons">V</span>
+            </td>
+            <td>
+              <span className="material-icons">O</span>
+            </td>
+            <td>
+              <span className="material-icons">*</span>
             </td>
             <td></td>
+            <td>
+              <span className="material-icons">V</span>
+            </td>
             <td></td>
+            <td><span className="material-icons">V</span></td>
           </tr>
           <tr>
             <td>Phosphorylation</td>
             <td></td>
             <td></td>
             <td>
-              <span className="material-icons">radio_button_unchecked</span>
+              <span className="material-icons">V</span>
             </td>
             <td></td>
             <td>
-              <span className="material-icons">radio_button_unchecked</span>
+              <span className="material-icons">V</span>
             </td>
             <td></td>
             <td></td>
@@ -381,6 +395,37 @@ const MultiDataVisualization = () => {
           </tr>
         </tbody>
       </table>
+      <div>
+        <ul className="contentBox_right" style={{ marginTop: "10px" }}>
+          <li className="" tabIndex="-1">
+            <p>
+              <b>*{"  "}</b> &nbsp;
+              <FormattedMessage
+                id="Required"
+                defaultMessage="Required"
+              />
+            </p>
+          </li>
+          <li className="" tabIndex="-1">
+            <p>
+              <b>V{"  "}</b> &nbsp;
+              <FormattedMessage
+                id="AtleastOne"
+                defaultMessage="At least one of the displayed data required"
+              />
+            </p>
+          </li>
+          <li className="" tabIndex="-1" style={{}}>
+            <p>
+              <b>O{"  "}</b> &nbsp;
+              <FormattedMessage
+                id="Optional"
+                defaultMessage="Optional"
+              />
+            </p>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 };

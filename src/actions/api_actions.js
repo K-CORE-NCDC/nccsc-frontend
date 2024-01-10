@@ -56,22 +56,10 @@ export function login(method, data) {
   return sendRequest(url, method, data);
 }
 
-// export function logout(method, data) {
-//   return (dispatch) => {
-//     const url = `${config.auth}logout/`;
-//     sendRequest(url, method, data)
-//     .then((result) => {
-//       const d = result;
-//       dispatch({
-//         type: homeConstants.CLEAR_LOGIN_DATA,
-//         payload: d.data,
-//       });
-//       dispatch({ type: homeConstants.REQUEST_DONE });
-//     })
-
-//     .catch(() => {});
-// };
-// }
+export function logout(method, data) {
+  const url = `${config.auth}logout/`;
+  return sendRequest(url, method, data);
+}
 
 export function findID(method, data) {
   const url = `${config.auth}findid/`;
