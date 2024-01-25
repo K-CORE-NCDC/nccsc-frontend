@@ -366,7 +366,7 @@ export default function Web() {
       if (window.location.pathname === '/k-core/' || window.location.pathname === '/') {
         classes = 'header on'
       } else {
-        if (headerHeight <= 150) {
+        if (headerHeight <= 10) {
           classes = 'header'
         } else {
           classes = 'header on'

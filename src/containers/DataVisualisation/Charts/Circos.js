@@ -204,7 +204,6 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
   ];
 
   useEffect(() => {
-    console.log(route.pathname);
     if (
       route.pathname.includes('visualizesingle-exampledata') || route.pathname.includes('visualizemulti-exampledata')
     ) {

@@ -137,7 +137,6 @@ export default function Home(parentProps) {
       if (swiperRef.current && swiperRef.current.swiper) {
         const activeSlide = swiperRef.current.swiper.activeIndex;
         const activeItem = items[activeSlide];
-        console.log('activeItem', activeItem);
         const urlSearchParams = new URLSearchParams();
         urlSearchParams.set('activeSlide', activeSlide.toString());
         localStorage.setItem('activeSlideIndex', activeSlide.toString());

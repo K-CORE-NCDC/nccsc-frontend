@@ -36,7 +36,6 @@ function sankey(width, inputData, screenCapture, setToFalseAfterScreenCapture, t
 
 function onco(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
   let DataOnco = lazy(() => import('./Onco'));
-  console.log("inputData onco", inputData);
   return (
     <Suspense>
       <DataOnco

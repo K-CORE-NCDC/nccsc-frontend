@@ -45,30 +45,47 @@ export default function FusionPlot({
     }
   }, [context]);
 
-  let takeScreenshot = async () => {
+  const takeScreenshot = async () => {
+    const previewContainer = document.getElementById('preview');
+
+    // Clear the 'preview' container before appending new clones
+    while (previewContainer.firstChild) {
+      previewContainer.removeChild(previewContainer.firstChild);
+    }
+
     const element = document.getElementById('venn');
     const clone = element.cloneNode(true);
-    document.getElementById('preview').appendChild(clone);
-    const element2 = document.getElementById('vennn');
+    previewContainer.appendChild(clone);
 
+    const element2 = document.getElementById('vennn');
     if (element2) {
       const clone2 = element2.cloneNode(true);
-      document.getElementById('preview').appendChild(clone2);
+      previewContainer.appendChild(clone2);
     }
-    const ctx = document.getElementById('preview');
-    let imgData;
-    await html2canvas(ctx).then((canvas) => {
-      imgData = canvas.toDataURL('image/jpeg', 1.0);
-    });
-    let link = document.createElement('a');
-    link.href = imgData;
-    link.download = 'downloaded-image.jpg';
 
-    document.body.appendChild(link);
-    link.click();
-    setShowDiv(false);
-    document.body.removeChild(link);
+    const ctx = previewContainer;
+
+    // Use html2canvas on the correct element (ctx) not the container
+    await html2canvas(ctx, { logging: true }).then((canvas) => {
+      let imgData = canvas.toDataURL('image/jpeg', 1.0);
+
+      // Create a link element to download the image
+      let link = document.createElement('a');
+      link.href = imgData;
+      link.download = 'downloaded-image.jpg';
+
+      // Append the link to the body, trigger a click, and remove the link
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // Clear the 'preview' container after taking the screenshot
+      while (previewContainer.firstChild) {
+        previewContainer.removeChild(previewContainer.firstChild);
+      }
+    });
   };
+
 
   useEffect(() => {
     if (screenCapture) {

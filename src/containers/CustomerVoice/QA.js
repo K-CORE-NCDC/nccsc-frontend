@@ -59,9 +59,6 @@ function QAList() {
       Header: intl.formatMessage({ id: "Title", defaultMessage: 'Title' }),
       accessor: (row) => row.title,
       Cell: ({ cell: { _, row } }) => {
-        console.log('row',row);
-        console.log('row original',row.original);
-        console.log('row writer',row.writer);
         return <div>
           <Link to={`/qa/${row?.original?.id}`}>
             <span>{row.original.title}</span>
