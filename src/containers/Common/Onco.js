@@ -329,36 +329,28 @@ const OncoCmp = React.forwardRef(
       }
     }, [state, inputRule]);
 
-    document.addEventListener('click', (e) => {
-      const elem = e.target.closest('.legends');
+    useEffect(() => {
+      $(document).on('click', '.legends', (e) => {
+        const $element = $(e.currentTarget); // Use jQuery to access the clicked element
+        // console.log(e.target);
+        // console.log($element[0]); // Log the clicked element
+        // console.log('name', $element.attr('data-text')); // Use attr method to get data-text
 
-      if (elem) {
-        if (!elem.hasAttribute('clicked')) {
-          elem.setAttribute('clicked', '');
-          const name = elem.getAttribute('data-text');
-          if (name in names_variant) {
-            setClickType((prevClickType) => {
-              // Check if the name already exists:
-              const nameExists = prevClickType.includes(names_variant[name]);
+        const name = $element.attr('data-text');
+        if (name in names_variant) {
+          setClickType((prevClickType) => {
+            // Check if the name already exists:
+            const nameExists = prevClickType.includes(names_variant[name]);
 
-              // Construct the new array based on existence:
-              return nameExists
-                ? prevClickType.filter((existingName) => existingName !== names_variant[name]) // Remove if it exists
-                : [...prevClickType, names_variant[name]]; // Add if it doesn't exist
-            });
-            setName(name);
-          }
+            // Construct the new array based on existence:
+            return nameExists
+              ? prevClickType.filter((existingName) => existingName !== names_variant[name]) // Remove if it exists
+              : [...prevClickType, names_variant[name]]; // Add if it doesn't exist
+          });
+          setName(name);
         }
-      }
-
-    });
-
-    // Reset the "clicked" attribute for future clicks:
-    document.querySelectorAll('.legends').forEach((elem) => {
-      elem.addEventListener('click', () => {
-        elem.removeAttribute('clicked');
-      });
-    });
+      })
+    }, [])
 
     useEffect(() => {
       if (name) {

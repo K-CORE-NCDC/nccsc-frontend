@@ -286,7 +286,6 @@ function MultiDataTable({ updateComponentNumber }) {
               ele["fixed"] = 'left'
             }
           })
-          console.log('Tablecolumns', Tablecolumns)
           setColData(Tablecolumns);
           // setting the row data
           let rawRowData = verificationResponse['result'][key];

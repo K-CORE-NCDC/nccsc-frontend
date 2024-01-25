@@ -57,9 +57,6 @@ function FaqList() {
       Header: intl.formatMessage({ id: "Title", defaultMessage: 'Title' }),
       accessor: (row) => row.title,
       Cell: ({ cell: { _, row } }) => {
-        console.log('row',row);
-        console.log('row original',row.original);
-        console.log('row writer',row.writer);
         return <div>
           <Link to={`/faq/${row?.original?.id}`}>
             <span>{row.original.title}</span>
@@ -144,10 +141,8 @@ function FaqDetail({ slug_id }) {
 
 
 export default function Faq() {
-  console.log('a');
   let { slug } = useParams();
   const [postCreate, setPostCreate] = useState(false);
-  console.log('slug', slug);
   const callback = (count) => {
     setPostCreate(count);
   };

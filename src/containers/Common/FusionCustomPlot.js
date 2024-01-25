@@ -70,7 +70,7 @@ export default function FusionCustomPlot({ fusionId }) {
 
   useEffect(() => {
     setLoader(true)
-    if (fusionPlotJson.status && 'exons' in fusionPlotJson && Object.keys(fusionPlotJson.exons).length >= 0
+    if (fusionPlotJson?.status && 'exons' in fusionPlotJson && Object.keys(fusionPlotJson.exons).length >= 0
       && 'transcripts' in fusionPlotJson && Object.keys(fusionPlotJson.transcripts).length >= 0) {
       let h = []
       let i = 0
@@ -78,6 +78,10 @@ export default function FusionCustomPlot({ fusionId }) {
       for (const key in fusionPlotJson['transcripts']) {
         let transcripts = fusionPlotJson['transcripts'][key]
         let tmp = []
+        // transcripts?.unshift('');
+        // transcripts?.sort();
+        // z === 0 ? leftFirstCall = transcripts.length > 0 ? transcripts[0] : '' : rightFirstCall = transcripts.length > 0 ? transcripts[0] : '';
+
         for (let index = 0; index < transcripts.length; index++) {
           const element = transcripts[index];
           tmp.push(<option key={element} value={element}>{element}</option>)
@@ -94,7 +98,7 @@ export default function FusionCustomPlot({ fusionId }) {
         if (key) {
           tg.push(key)
           let r = fusionPlotJson['exons'][key]
-          let pos = fusionPlotJson['pos'][key].split(':')
+          let pos = fusionPlotJson['pos'][key]?.split(':')
           let exon_pos = parseInt(pos[1])
 
           let htmlExons = []
@@ -231,7 +235,7 @@ export default function FusionCustomPlot({ fusionId }) {
     }
   }, [renderPlot])
 
-  const transcriptChange = (e, from) => {
+  const transcriptChange = (value, from) => {
     let g = ''
 
     if (from === 'left') {
@@ -245,7 +249,7 @@ export default function FusionCustomPlot({ fusionId }) {
     let dataJson = {
       'gene': g,
       'type': from,
-      'transcript_id': e.target.value
+      'transcript_id': value
 
     }
 
@@ -254,25 +258,27 @@ export default function FusionCustomPlot({ fusionId }) {
       .then((result) => {
         if (
           'data' in result &&
-          result.data.length > 0
+          result?.data?.length > 0
         ) {
-          setExonData(result.data)
+          setExonData(result?.data)
           setFusionPlotJson(prevState => ({
             ...prevState,
             exons: {
               ...prevState.exons,
-              [fromGene]: exonData
+              [g]: result?.data
             }
           }));
         }
         else {
           setExonData([])
           setFusionPlotJson({})
+          setLoader(false)
         }
       })
       .catch(() => {
         setExonData([])
         setFusionPlotJson({})
+        setLoader(false)
       });
 
   }
@@ -293,18 +299,19 @@ export default function FusionCustomPlot({ fusionId }) {
               <div className="FusionChromosome" >
                 <div className="text-left">
                   <label>Left Transcript Id</label>
-                  <select onChange={e => transcriptChange(e, 'left')} className="w-full lg:p-4 xs:p-2 border xs:text-sm lg:text-lg focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3">
+                  <select onChange={e => transcriptChange(e.target.value, 'left')} className="w-full lg:p-4 xs:p-2 border xs:text-sm lg:text-lg focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3">
                     {leftTranscriptsHtml}
                   </select>
                 </div>
 
                 <div className="text-left">
                   <label>Right Transcript Id</label>
-                  <select onChange={e => transcriptChange(e, 'right')} className="w-full lg:p-4 xs:p-2 border xs:text-sm lg:text-lg focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3">
+                  <select onChange={e => transcriptChange(e.target.value, 'right')} className="w-full lg:p-4 xs:p-2 border xs:text-sm lg:text-lg focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3">
                     {rightTranscriptsHtml}
                   </select>
                 </div>
               </div>
+
               <div className="ChromosomeFusionPlot" ref={listRef} id="vennn">
                 {html}
               </div>

@@ -397,7 +397,6 @@ export default function Filter({ parentCallback, filterState, project_id }) {
   };
 
   const switchButton = (id, item, k) => {
-    console.log('id', id, item, k)
     setSelected(item);
     let myRadios = document.getElementsByName('tabs2');
     let setCheck;
