@@ -9,7 +9,7 @@ import VolcanoPlotD3 from './VolcanoD3';
 Chart.register(...registerables, zoomPlugin);
 
 const VolcanoCmp = React.forwardRef(
-  ({data, watermarkCss, negative_data, positive_data, tab_count, tableData }) => {
+  ({ data, watermarkCss, negative_data, positive_data, tab_count, tableData }) => {
     const intl = useIntl();
     const table_cols = [
       {
@@ -85,7 +85,7 @@ const VolcanoCmp = React.forwardRef(
           </p>
           <p className="TextRed">
             <FormattedMessage id="Red" defaultMessage="Red :" />
-            {`Log2FC ≥ 1.5 & pvalue ≥ 0.05`}
+            {`Log2FC ≥ 1.5 & pvalue ≤ 0.05`}
           </p>
           <p className="TextGrey">
             <FormattedMessage id="Grey" defaultMessage="Grey :" /> Not significant gene
