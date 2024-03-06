@@ -39,6 +39,25 @@ export default function FusionCustomPlot({ fusionId }) {
             result.data.status
           ) {
             setFusionJson(result.data)
+            let transcriptdata = result?.data?.transcripts
+            let z = 0
+            let tg = []
+            for (const key in transcriptdata) {
+              tg.push(key)
+              let transcripts = transcriptdata[key]
+              let tmp = []
+
+              for (let index = 0; index < transcripts.length; index++) {
+                const element = transcripts[index];
+                tmp.push(<option key={element} value={element}>{element}</option>)
+              }
+              if (z === 0) {
+                setLeftTranscriptsHtml([tmp])
+                z = z + 1
+              } else {
+                setRightTranscriptsHtml([tmp])
+              }
+            }
           }
           else {
             setFusionJson({})
@@ -74,25 +93,6 @@ export default function FusionCustomPlot({ fusionId }) {
       && 'transcripts' in fusionPlotJson && Object.keys(fusionPlotJson.transcripts).length >= 0) {
       let h = []
       let i = 0
-      let z = 0
-      for (const key in fusionPlotJson['transcripts']) {
-        let transcripts = fusionPlotJson['transcripts'][key]
-        let tmp = []
-        // transcripts?.unshift('');
-        // transcripts?.sort();
-        // z === 0 ? leftFirstCall = transcripts.length > 0 ? transcripts[0] : '' : rightFirstCall = transcripts.length > 0 ? transcripts[0] : '';
-
-        for (let index = 0; index < transcripts.length; index++) {
-          const element = transcripts[index];
-          tmp.push(<option key={element} value={element}>{element}</option>)
-        }
-        if (z === 0) {
-          setLeftTranscriptsHtml([tmp])
-          z = z + 1
-        } else {
-          setRightTranscriptsHtml([tmp])
-        }
-      }
       let tg = []
       for (const key in fusionPlotJson['exons']) {
         if (key) {
@@ -185,16 +185,16 @@ export default function FusionCustomPlot({ fusionId }) {
 
           h.push(
             <div key={key} className='ChromosomeFusionPlotDivision'>
-              <h3 style={{ color: fusionJson['exons'][key][0].color }}>{key} -- {fusionPlotJson['pos'][key]}</h3>
+              <h3 style={{ color: fusionPlotJson['exons'][key][0].color }}>{key} -- {fusionPlotJson['pos'][key]}</h3>
 
-              <div id={'row_' + i} className={'grid_row Flex JustifyCenter AlignItemsFlexEnd  MarginTop10 Relative ' + id + ' ' + direction} style={{ color: fusionJson['exons'][key][0].color, height: '100px', borderBottom: '1px solid ' + fusionJson['exons'][key][0].color, borderColor: fusionJson['exons'][key][0].color }}>
+              <div id={'row_' + i} className={'grid_row Flex JustifyCenter AlignItemsFlexEnd  MarginTop10 Relative ' + id + ' ' + direction} style={{ color: fusionPlotJson['exons'][key][0].color, height: '100px', borderBottom: '1px solid ' + fusionPlotJson['exons'][key][0].color, borderColor: fusionPlotJson['exons'][key][0].color }}>
                 {htmlExons}
-                <div id={id + "1"} className={gene_type} style={{ borderColor: fusionJson['exons'][key][0].color, width: f_w, position: 'absolute', }}></div>
+                <div id={id + "1"} className={gene_type} style={{ borderColor: fusionPlotJson['exons'][key][0].color, width: f_w, position: 'absolute', }}></div>
               </div>
-              <div className={'grid_row Flex  AlignItemsFlexEnd  MarginTop10 Relative ' + id + ' ' + name + " " + direction} style={{ height: '60px', borderBottom: '1px solid ' + fusionJson['exons'][key][0].color, color: fusionJson['exons'][key][0].color }}>
+              <div className={'grid_row Flex  AlignItemsFlexEnd  MarginTop10 Relative ' + id + ' ' + name + " " + direction} style={{ height: '60px', borderBottom: '1px solid ' + fusionPlotJson['exons'][key][0].color, color: fusionPlotJson['exons'][key][0].color }}>
                 {htmlExons1}
               </div>
-              <div className={'grid_row flex  AlignItemsFlexEnd  MarginTop10 Relative ' + id + ' ' + name + " " + direction} style={{ height: '60px', borderBottom: '1px solid ' + fusionJson['exons'][key][0].color, color: fusionJson['exons'][key][0].color }}>
+              <div className={'grid_row flex  AlignItemsFlexEnd  MarginTop10 Relative ' + id + ' ' + name + " " + direction} style={{ height: '60px', borderBottom: '1px solid ' + fusionPlotJson['exons'][key][0].color, color: fusionPlotJson['exons'][key][0].color }}>
                 {htmlExons2}
               </div>
 
