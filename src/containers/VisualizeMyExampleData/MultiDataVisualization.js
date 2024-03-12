@@ -336,7 +336,7 @@ const MultiDataVisualization = () => {
             <td>
               <span className="material-icons">V</span>
             </td>
-            <td><span className="material-icons">*</span></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>

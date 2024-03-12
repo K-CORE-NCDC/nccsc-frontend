@@ -4,7 +4,8 @@ import organoid03 from '../../../assets/images/organoid_flow_chart_2.png';
 import organoid04 from '../../../assets/images/cbottle.png';
 import organoid05 from '../../../assets/images/petridish.png';
 import organoid06 from '../../../assets/images/flowchart_02.png';
-import Attachments from '../../../assets/files/organoid_application_document.zip';
+import organoid07 from '../../../assets/images/organoid_flow_chart_new.png';
+import Attachments from '../../../assets/files/organoid_document.docx';
 import HeaderComponent from '../../Common/HeaderComponent/HeaderComponent';
 import { style } from 'd3';
 
@@ -35,6 +36,12 @@ function Organoid() {
       border: '1px solid #000'
     }
   };
+
+  const flowchartStyles = {
+    img: {
+      padding: '10%',
+    }
+  }
   return (
     <div>
       <HeaderComponent title={title} breadCrumbs={breadCrumbs['/Home/']} type="single" />
@@ -114,7 +121,12 @@ function Organoid() {
                       오가노이드 제공방법
                     </h1>
                     <div className="ml-32 my-16">
-                      <div
+
+                      <div class="flex items-center justify-center h-full">
+                        <img src={organoid07} alt="organoid" class="max-w-full h-auto" style={flowchartStyles.img} />
+                      </div>
+
+                      {/* <div
                         className="flex my-20 Border BorderstyleViz MarginBottom5"
                         style={{ marginTop: '0%' }}
                       >
@@ -158,7 +170,8 @@ function Organoid() {
                             <li className="ml-12 mb-4">- 매주 화요일 오후 3시, 직접분양만 가능</li>
                           </ul>
                         </div>
-                      </div>
+                      </div> */}
+
                     </div>
                   </li>
 
@@ -315,7 +328,7 @@ function Organoid() {
                     </li>
                   </ul>
 
-                  <li className="m-12">
+                  {/* <li className="m-12">
                     <h1 className="m-5 text-3xl font-bold my-5 mt-24">오가노이드 서비스 신청</h1>
                     <ul>
                       <li>
@@ -328,7 +341,7 @@ function Organoid() {
                         ></img>
                       </li>
                     </ul>
-                  </li>
+                  </li> */}
 
                   <li className="m-12">
                     <h1 className="m-5 text-3xl font-bold my-5 ">신청자 구비서류</h1>
@@ -379,7 +392,7 @@ function Organoid() {
                   <a
                     className="m-5 text-3xl font-normal my-5 block"
                     href={Attachments}
-                    download="organoid_application_document"
+                    download="[국립암센터]_오가노이드_제공신청서_v.3.docx"
                   >
                     신청서류 다운로드
                   </a>
