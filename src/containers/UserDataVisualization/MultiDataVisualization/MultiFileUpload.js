@@ -684,27 +684,24 @@ export const DataOfFiles = ({ fileName }) => {
         <div className="contentBox">
           {fileName === 'ClinicalInformation' && (
             <ul className="" style={{ paddingTop: '10px' }}>
-              <li className="" tabIndex="0">
-                <p style={{ color: 'black' }}>
-                  {' '}
-                  <b></b> &nbsp;
-                  <FormattedMessage
-                    id="clinicalInformationGuidep1"
-                    defaultMessage="[sample_id] columns is essential. Other columns except [sample_id] are userdata."
-                  />
-                </p>
-              </li>
               <li tabIndex="-1" style={{ paddingTop: '10px' }}>
                 <p style={{ color: 'black' }}>
-                  {' '}
-                  <b></b> &nbsp;
+                  <b></b> 
                   <FormattedMessage
                     id="clinicalInformationGuidep2"
-                    defaultMessage=" For survival plot, [rlps_yn], [rlps_cnfr_drtn], [death_yn], [death_cnfr_drtn] are essential. Recurrence or survival plot is composed of [rlps_yn], [rlps_cnfr_drtn], and Survival of survival plot is composed of [death_yn], [death_cnfr_drtn]."
+                    defaultMessage="Sample ID (sample_id) column and
+                    the four variable columns below (rlps_yn, rlps_cnfr_drtn, death_yn, death_cnfr_drtn) are required regardless of whether there is data, and the variable names must not be changed."
                   />
                 </p>
 
                 <ul>
+                  <li style={{ paddingLeft: '5%', paddingTop: '10px' }}>
+                    {' '}
+                    <FormattedMessage
+                      id="clinicalInformationGuidep3"
+                      defaultMessage="* However, if there is no data on recurrence and death variables, some functions in the Survival plot are limited."
+                    />{' '}
+                  </li>
                   <li style={{ paddingLeft: '5%', paddingTop: '10px' }}>
                     {' '}
                     -{' '}
@@ -742,8 +739,18 @@ export const DataOfFiles = ({ fileName }) => {
                   {' '}
                   <b></b> &nbsp;
                   <FormattedMessage
+                    id="clinicalOnly15"
+                    defaultMessage="Up to 15 clinical variables can be entered, including the 5 required input variables above."
+                  />
+                </p>
+              </li>
+              <li tabIndex="-1" style={{ paddingTop: '10px' }}>
+                <p style={{ color: 'black' }}>
+                  {' '}
+                  <b></b> &nbsp;
+                  <FormattedMessage
                     id="RNAGuideP2"
-                    defaultMessage="Leave the “None” value empty"
+                    defaultMessage="The 'None' value can be left blank."
                   />
                 </p>
               </li>

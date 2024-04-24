@@ -43,6 +43,7 @@ export default function Boxplot({ data }) {
 
     var domains = [];
     var max_d = [];
+    // console.log('data',data);
     for (var i = 0; i < data.length; i++) {
       domains.push(data[i].label);
       max_d.push(...data[i].data);

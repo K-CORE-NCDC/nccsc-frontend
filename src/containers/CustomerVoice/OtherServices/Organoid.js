@@ -5,7 +5,7 @@ import organoid04 from '../../../assets/images/cbottle.png';
 import organoid05 from '../../../assets/images/petridish.png';
 import organoid06 from '../../../assets/images/flowchart_02.png';
 import organoid07 from '../../../assets/images/organoid_flow_chart_new.png';
-import Attachments from '../../../assets/files/organoid_document.docx';
+import Attachments from '../../../assets/files/Organoid_v.4.docx';
 import HeaderComponent from '../../Common/HeaderComponent/HeaderComponent';
 import { style } from 'd3';
 
@@ -392,7 +392,7 @@ function Organoid() {
                   <a
                     className="m-5 text-3xl font-normal my-5 block"
                     href={Attachments}
-                    download="[국립암센터]_오가노이드_제공신청서_v.3.docx"
+                    download="[국립암센터] 오가노이드 제공신청서_v.4.docx"
                   >
                     신청서류 다운로드
                   </a>

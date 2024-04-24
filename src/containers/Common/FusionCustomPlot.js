@@ -89,8 +89,11 @@ export default function FusionCustomPlot({ fusionId }) {
 
   useEffect(() => {
     setLoader(true)
+    let main_width = listRef?.current?.getBoundingClientRect()?.width
+    console.log(listRef?.current)
     if (fusionPlotJson?.status && 'exons' in fusionPlotJson && Object.keys(fusionPlotJson.exons).length >= 0
       && 'transcripts' in fusionPlotJson && Object.keys(fusionPlotJson.transcripts).length >= 0) {
+      // main_width = main_width/2
       let h = []
       let i = 0
       let tg = []
@@ -134,6 +137,7 @@ export default function FusionCustomPlot({ fusionId }) {
             }
             let w = element.endCodon - element.startCodon
             w = (w / r.length)
+            // console.log('w',w);
             if (w > 500) {
               w = 500
             }
@@ -216,16 +220,31 @@ export default function FusionCustomPlot({ fusionId }) {
 
   }, [fusionPlotJson])
 
+  useEffect(()=>{
+    if(html.length>0){
+      
+    }
+  },[html])
 
   useEffect(() => {
     if (renderPlot && html.length > 0) {
+      let main_div = document.getElementById('vennn').offsetWidth/2
       let row = document.getElementById('row_1')
       let rowLine = document.getElementById('leftGene')
       let rightrowLine = document.getElementById('rightGene')
+      console.log(main_div)
       if (row !== null && rowLine !== null) {
+        
         let t = rowLine.offsetLeft - rowLine.offsetWidth;
-        document.getElementById('leftGene1').style.width = row.offsetWidth - t + "px"
-        document.getElementById('leftGene1').style.left = rowLine.offsetWidth + rowLine.offsetLeft + "px"
+      
+        console.log(t,rowLine.offsetLeft,rowLine.offsetWidth)
+        document.getElementById('leftGene1').style.width =  main_div  - t + "px"
+        document.getElementById('leftGene1').style.left = rowLine.offsetWidth+rowLine.offsetLeft + "px"  
+        
+        if(document.getElementById('row_0').offsetWidth>main_div){
+          document.getElementById('leftGene1').style.left = rowLine.offsetLeft + "px"  
+          document.getElementById('row_0').style.width = main_div-20  +"px"
+        }
       }
       if (rightrowLine !== null) {
         document.getElementById('rightGene1').style.width = rightrowLine.offsetLeft + rightrowLine.offsetWidth + "px"
@@ -289,8 +308,8 @@ export default function FusionCustomPlot({ fusionId }) {
         <LoaderCmp />
       ) : (
 
-        <div className="bg-white p-3">
-          {html.length > 0 &&
+        <div className="bg-white p-3" ref={listRef}>
+          {html.length > 0 && 
             <>
               <div className="text-left py-5 px-5 border-b border-gray-200">
                 <h3 className="text-3xl">{gene} Fusion Gene Plot</h3>
@@ -312,11 +331,11 @@ export default function FusionCustomPlot({ fusionId }) {
                 </div>
               </div>
 
-              <div className="ChromosomeFusionPlot" ref={listRef} id="vennn">
+              <div className="ChromosomeFusionPlot"  id="vennn">
                 {html}
               </div>
             </>
-          }
+          } 
           {errorHtml && <div className="p-4 "><FormattedMessage id="FusionNoExonData" defaultMessage="No data match found in human genome database" /></div>}
         </div>
 
