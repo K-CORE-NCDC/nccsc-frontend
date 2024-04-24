@@ -64,12 +64,13 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
     var min_vl = 0; //d_['min']
     var domains = [];
     var sumstat = nest()
-      .key(function (d) {
+      .key(function (d) {    
         return d.Species;
       })
       .rollup(function (d) {
         var t = [];
         var n = [];
+        // console.log('data',d);
         for (var i = 0; i < d.length; i++) {
           if (domains.includes(d[i]['Species']) === false) {
             domains.push(d[i]['Species']);
@@ -103,6 +104,7 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
             let interQuantileRange = q3 - q1;
             let min = q1 - 1.5 * interQuantileRange;
             let max = q3 + 1.5 * interQuantileRange;
+
             t.push({
               q1: q1,
               median: median,
@@ -149,6 +151,8 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
             let interQuantileRange = q3 - q1;
             let min = q1 - 1.5 * interQuantileRange;
             let max = q3 + 1.5 * interQuantileRange;
+            // let min = q1 - interQuantileRange;
+            // let max = q3 - interQuantileRange;
             n.push({
               q1: q1,
               median: median,
@@ -274,24 +278,8 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
           .text('P-value:' + p_value);
       }
       for (var z = 0; z < vl.length; z++) {
-        p.selectAll('vertLines')
-          .data(vl[z])
-          .enter()
-          .append('line')
-          .attr('x1', function () {
-            return key;
-          })
-          .attr('x2', function () {
-            return key;
-          })
-          .attr('y1', function (d) {
-            return y(d.min);
-          })
-          .attr('y2', function (d) {
-            return y(d.max);
-          })
-          .attr('stroke', 'black');
 
+        // First the boxes should render, so the scatter points will not overide the boxes.
         var boxWidth = 50;
         p.selectAll('boxes')
           .data(vl[z])
@@ -323,71 +311,32 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
           })
           .on('mouseout', () => { });
 
-        p.selectAll('medianLines')
-          .data(vl[z])
-          .enter()
-          .append('line')
-          .attr('x1', function () {
-            return key - boxWidth / 2;
-          })
-          .attr('x2', function () {
-            return key + boxWidth / 2;
-          })
-          .attr('y1', function (d) {
-            return y(d.median);
-          })
-          .attr('y2', function (d) {
-            return y(d.median);
-          })
-          .attr('stroke', 'black');
-
-        p.selectAll('medianLines')
-          .data(vl[z])
-          .enter()
-          .append('line')
-          .attr('x1', function () {
-            return key - boxWidth / 2;
-          })
-          .attr('x2', function () {
-            return key + boxWidth / 2;
-          })
-          .attr('y1', function (d) {
-            return y(d.max);
-          })
-          .attr('y2', function (d) {
-            return y(d.max);
-          })
-          .attr('stroke', 'black')
-          .attr('class', 'black');
-          
-        p.selectAll('medianLines')
-          .data(vl[z])
-          .enter()
-          .append('line')
-          .attr('x1', function () {
-            return key - boxWidth / 2;
-          })
-          .attr('x2', function () {
-            return key + boxWidth / 2;
-          })
-          .attr('y1', function (d) {
-            return y(d.min);
-          })
-          .attr('y2', function (d) {
-            return y(d.min);
-          })
-          .attr('stroke', 'black');
 
         var jitterWidth = 50;
+        let maxCx = 0;
+        let minCx = 0;
         p.selectAll('indPoints')
           .data(vl[z])
           .enter()
           .append('circle')
           .attr('cx', function () {
-            return key - jitterWidth / 2 + Math.random() * jitterWidth;
+            let pos = key - jitterWidth / 2 + Math.random() * jitterWidth;
+
+            return pos;
           })
           .attr('cy', function (d) {
-            return y(d.Sepal_Length);
+
+            let pos = y(d.Sepal_Length)
+            if (minCx == 0) {
+              minCx = pos
+            }
+            if (pos > maxCx) {
+              maxCx = pos;
+            }
+            else if (pos < minCx) {
+              minCx = pos
+            }
+            return pos;
           })
           .attr('r', 2)
           .style('fill', function (d) {
@@ -424,6 +373,93 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
           .on('mouseout', () => {
             tooltip.transition().duration(500).style('opacity', 1);
           });
+        console.log('min', minCx);
+        console.log('max', maxCx);
+
+
+        p.selectAll('vertLines')
+          .data(vl[z])
+          .enter()
+          .append('line')
+          .attr('x1', function () {
+            return key;
+          })
+          .attr('x2', function () {
+            return key;
+          })
+          .attr('y1', function (d) {
+            // return minCx
+            // console.log(y(d.min), minCx)
+            // return y(d.min)+10;
+            return maxCx
+          })
+          .attr('y2', function (d) {
+            // return y(d.max)-10;
+            return minCx
+          })
+          .attr('stroke', 'black');
+
+
+        p.selectAll('medianLines')
+          .data(vl[z])
+          .enter()
+          .append('line')
+          .attr('x1', function () {
+            return key - boxWidth / 2;
+          })
+          .attr('x2', function () {
+            return key + boxWidth / 2;
+          })
+          .attr('y1', function (d) {
+            return y(d.median);
+          })
+          .attr('y2', function (d) {
+            return y(d.median);
+          })
+          .attr('class', 'black')
+          .attr('stroke', 'black');
+        p.selectAll('medianLines')
+          .data(vl[z])
+          .enter()
+          .append('line')
+          .attr('x1', function () {
+            return key - boxWidth / 2;
+          })
+          .attr('x2', function () {
+            return key + boxWidth / 2;
+          })
+          .attr('y1', function (d) {
+            // return y(d.max);
+            return minCx
+          })
+          .attr('y2', function (d) {
+            // return y(d.max);
+            return minCx
+          })
+          .attr('stroke', 'black')
+          .attr('class', 'red black');
+
+        p.selectAll('medianLines')
+          .data(vl[z])
+          .enter()
+          .append('line')
+          .attr('x1', function () {
+            return key - boxWidth / 2;
+          })
+          .attr('x2', function () {
+            return key + boxWidth / 2;
+          })
+          .attr('y1', function (d) {
+            // return y(d.min);
+            return maxCx
+          })
+          .attr('y2', function (d) {
+            // return y(d.min);
+            return maxCx
+          })
+          .attr('class', 'grey black')
+          .attr('stroke', 'black');
+
         key = key + 80;
       }
       setLoader(false);

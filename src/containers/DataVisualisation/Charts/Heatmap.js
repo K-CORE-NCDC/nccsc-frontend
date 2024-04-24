@@ -210,13 +210,13 @@ export default function DataHeatmap({
         dataJson['genes'] = genes[0]?.split(",");
       }
 
-      if (inputData.type !== '' && inputData['genes'].length > 0) {
+      if (inputData?.type !== '' && inputData['genes'].length > 0) {
         setLoader(true);
         dataJson['table_type'] = tableType;
         dataJson['view'] = viewType;
         dataJson['heat_type'] = mainTab;
         dataJson['cluster'] = rangeValue;
-        dataJson['cluster'] = rangeValue;
+        // dataJson['cluster'] = rangeValue;
         let return_data = HeatmapInformation('POST', dataJson);
         return_data
           .then((result) => {
@@ -354,6 +354,13 @@ export default function DataHeatmap({
           }
         });
       }
+      // if(y?.data?.length > 0){
+      //   y?.data.push(y.data[0])
+      // }
+      // if(y?.vars?.length > 0){
+      //   y?.vars.push(y.vars[0])
+      // }
+
       if (setStateTrue) {
         setRenderNoContent(false);
         setData({ z: tmp, x: x, y: y });
@@ -1215,6 +1222,7 @@ export default function DataHeatmap({
               ref={reference}
               width={_width}
             />
+            // <h1>Error here</h1>
           )}
 
           {data_ && configVis && inSufficientData !== true && singleGene && (tableType === 'phospho' || tableType === 'methylation') &&

@@ -8,15 +8,26 @@ const HeatmapCmp = React.forwardRef(
     const [configVis, setConfigVis] = useState({});
     let target = 'canvas';
 
+
+    let c = {
+      "colorSpectrum": ["navy", "white", "firebrick3"],
+      "graphType": "Heatmap",
+      "title": "Simple Heatmap",
+      "graphOrientation": "horizontal"
+    }
+
     let config = {
       colorSpectrum: settings['colorSpectrum'],
       graphType: 'Heatmap',
+      graphOrientation: "horizontal",
       heatmapCellBoxColor: 'rgb(255,255,255)',
       overlayScaleFontFactor: 2,
       samplesClustered: true,
-
       showTransition: false,
-      variablesClustered: true,
+
+      // Causing issue when there is only sample
+      // variablesClustered: true,
+
       showVarOverlaysLegend: true,
       events: false,
       info: false,
@@ -54,7 +65,7 @@ const HeatmapCmp = React.forwardRef(
         };
         config['varOverlays'].push(clinicalFilter[i].name);
       }
-      config['variablesClustered'] = true;
+      // config['variablesClustered'] = true;
     }
 
     if (type === 'k-mean') {
@@ -144,11 +155,12 @@ const HeatmapCmp = React.forwardRef(
           <div className=""></div>
         </div>
 
-        {dataLoaded && (
+        {dataLoaded && configVis && (
           <CanvasXpressReact
             target={target}
             data={data}
             config={configVis}
+            // config={c}
             width={width}
             height={'700px'}
             style={{ color: 'red' }}

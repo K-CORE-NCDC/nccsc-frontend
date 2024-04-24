@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import plusicon from '../../assets/images/icon-plus-primary.svg';
 import minusicon from '../../assets/images/icons8-minus-24.png';
-import MultiDataManual from '../../assets/files/DownloadbleFiles/MultiDataVis/MultiDatavis_Manual.pdf';
+import MultiDataManual from '../../assets/files/DownloadbleFiles/MultiDataVis/MultiDatavis_ManualV3.4.pdf';
 
 const MultiDataVisualization = () => {
   const history = useHistory();
