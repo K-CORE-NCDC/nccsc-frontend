@@ -15,7 +15,7 @@ function FindPassword() {
 
   const findPasswordSuccess = () => {
     Swal.fire({
-      title: intl.formatMessage({ id: "Success", defaultMessage: 'Success' }),
+      title: intl.formatMessage({ id: "ResetSuccess", defaultMessage: 'Success' }),
       text: intl.formatMessage({ id: "PasswordResetLink", defaultMessage: "Password Reset Link is sent to your Email" }),
       icon: 'success',
       confirmButtonColor: '#003177',

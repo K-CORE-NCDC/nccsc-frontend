@@ -13,7 +13,8 @@ const LogOutComponent = () => {
     deleteCookie('is_login');
     deleteCookie('username');
     deleteCookie('superuser');
-    let _ = logout('POST', {});
+    deleteCookie('expiry');
+    // let _ = logout('POST', {});
     history.push({
       pathname: '/login/',
       state: {

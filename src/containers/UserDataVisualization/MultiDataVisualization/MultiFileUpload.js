@@ -148,7 +148,8 @@ const Table = ({ updateComponentNumber }) => {
   };
 
   const handleUpload = () => {
-    if (filesData['clinical_information'] && projectName !== '') {
+    // if (filesData['clinical_information'] && projectName !== '') {
+      if (projectName !== '') {
       dispatch(multiFileUpload(filesData, projectName));
       updateComponentNumber(1);
     } else if (projectName === '') {
@@ -163,19 +164,20 @@ const Table = ({ updateComponentNumber }) => {
         if (result.value) {
         }
       });
-    } else if (!filesData['clinical_information']) {
-      Swal.fire({
-        title: intl.formatMessage({ id: "Warning", defaultMessage: 'Warning' }),
-        text: intl.formatMessage({ id: "UploadClinical", defaultMessage: 'Upload Clinical Information File' }),
-        icon: 'warning',
-        confirmButtonColor: '#003177',
-        confirmButtonText: intl.formatMessage({ id: "Ok", defaultMessage: 'Ok' }),
-        allowOutsideClick: false
-      }).then((result) => {
-        if (result.value) {
-        }
-      });
     }
+    // else if (!filesData['clinical_information']) {
+    //   Swal.fire({
+    //     title: intl.formatMessage({ id: "Warning", defaultMessage: 'Warning' }),
+    //     text: intl.formatMessage({ id: "UploadClinical", defaultMessage: 'Upload Clinical Information File' }),
+    //     icon: 'warning',
+    //     confirmButtonColor: '#003177',
+    //     confirmButtonText: intl.formatMessage({ id: "Ok", defaultMessage: 'Ok' }),
+    //     allowOutsideClick: false
+    //   }).then((result) => {
+    //     if (result.value) {
+    //     }
+    //   });
+    // }
   };
 
   const handleReset = () => {
@@ -338,7 +340,8 @@ const Table = ({ updateComponentNumber }) => {
               <tbody>
                 <tr className="MultiUploadBGGray">
                   <td className="MultiUploadTDHeader MultiUploadTextCenter" colSpan="2">
-                    Clinical Information file <span style={{ color: 'red' }}> (Required) </span>
+                    Clinical Information file
+                    {/* <span style={{ color: 'red' }}> (Required) </span> */}
                   </td>
                 </tr>
                 <tr>
@@ -686,7 +689,7 @@ export const DataOfFiles = ({ fileName }) => {
             <ul className="" style={{ paddingTop: '10px' }}>
               <li tabIndex="-1" style={{ paddingTop: '10px' }}>
                 <p style={{ color: 'black' }}>
-                  <b></b> 
+                  <b></b>
                   <FormattedMessage
                     id="clinicalInformationGuidep2"
                     defaultMessage="Sample ID (sample_id) column and
