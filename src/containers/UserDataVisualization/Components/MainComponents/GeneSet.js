@@ -44,6 +44,7 @@ const GeneSet = ({ parentCallback, filterState }) => {
                 <FormattedMessage id="UserDefinedList" defaultMessage="User-Defined List" />
               </option>
               <option value="major-genes"> Cancer major genes (28 genes) </option>
+              <option value="onco-genes"> OncoKB cancer genes (1148 genes) </option>
               <option value="brst-major-genes">Breast cancer major genes (20 genes)</option>
               <option value="hrd-genes">HRD genes (15 genes)</option>
               <option value="hrd-asso-brst">HRD association breast (26 genes)</option>
