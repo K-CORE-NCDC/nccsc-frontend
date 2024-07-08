@@ -100,6 +100,20 @@ export function MultiProjectsDelete(method, projectId) {
   return sendRequest(url, method, data);
 }
 
+export function MultiProjectsExtend(method, projectId,reasonForExtension) {
+  let url = '';
+  let data = {reason: reasonForExtension};
+
+  url = config.auth + `extend-user-project-data/${projectId}/`;
+  return sendRequest(url, method, data);
+}
+
+export function getProject(projectId) {
+  let url = '';
+  url = config.auth + `user-projects-data/?id=${projectId}`;
+  return sendRequest(url, 'GET','');
+}
+
 export function samplesCount(type, data) {
   const url = `${config.auth}samplescount/`;
   return sendRequest(url, type, data)
@@ -408,6 +422,16 @@ export function MultiProjectsView(method, data, page, perPage) {
     url = config.auth + `user-projects-data/?page=${page}&per_page=${perPage}&delay=1`;
   } else {
     url = config.auth + `user-projects-data/?page=${page}&per_page=${perPage}&delay=1&input`;
+  }
+  return sendRequest(url, method, data);
+}
+
+export function MultiDeletedProjectsView(method, data, page, perPage) {
+  let url = '';
+  if (method === 'GET') {
+    url = config.auth + `user-deleted-data/?page=${page}&per_page=${perPage}&delay=1`;
+  } else {
+    url = config.auth + `user-deleted-data/?page=${page}&per_page=${perPage}&delay=1&input`;
   }
   return sendRequest(url, method, data);
 }

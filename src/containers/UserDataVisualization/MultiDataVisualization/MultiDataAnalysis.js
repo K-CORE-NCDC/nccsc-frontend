@@ -137,7 +137,7 @@ export default function DataVisualization() {
     dispatch(getBreastKeys(state));
   }, [state, survialData, VFData, tab])
 
-  //Second UseEffect 
+  //Second UseEffect
   useEffect(() => {
     setTabName(tab === 'home' ? undefined : tab);
     setChartName(tab);
@@ -520,7 +520,7 @@ export default function DataVisualization() {
                             >
                               <Popover.Panel
                                 className="GeneSetPopoverPanel"
-                                style={{ height: '450px', overflowY: 'auto' }}
+                                style={{ height: '450px', overflowY: 'auto', width:'-webkit-fill-available' }}
                               >
                                 <Filter
                                   parentCallback={callback}

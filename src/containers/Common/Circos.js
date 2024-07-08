@@ -177,7 +177,7 @@ const CircosCmp = React.forwardRef(
           });
         }
       }
-      // console.log(api_data)
+
       let chord_data = api_data['fusion_genes_data'];
 
       if ('sv_data' in api_data) {
@@ -213,43 +213,71 @@ const CircosCmp = React.forwardRef(
 
       // console.log(`DNA Exists: ${dnaExists}, RNA Exists: ${rnaExists},Methyl Exists: ${methylExists},Prot Exists: ${protExists},cnv Exists: ${cnvExists}, chord Exists: ${chordExists}`);
 
-      const calculateRadius = (dataExist) => {
-        let confInner = newWidth / 2 - 100;
-        let confOuter = newWidth / 2 - 50;
-        let innerRadius = 0.98;
-        let outerRadius = 1.09;
+      // const calculateRadius = (dataExist) => {
+      //   let innerRadius = 0.98;
+      //   let outerRadius = 1.09;
 
-        dataExist.forEach(exist => {
-          if (exist) {
-            innerRadius -= 0.11;
-            outerRadius -= 0.12;
+      //   dataExist.forEach(exist => {
+      //     if (exist) {
+      //       innerRadius -= 0.11;
+      //       outerRadius -= 0.12;
 
-          }
-          // if (!exist){
-          //   confInner -= 35
-          //   confOuter -= 35
-          // }
+      //     }
+      //   });
 
-        });
-        // console.log(` aaaaa confInner= ${confInner}`)
+      //   return { innerRadius, outerRadius};
+      // };
 
-        return { innerRadius, outerRadius,confInner, confOuter };
-      };
+      const chordCount = [rnaExists, methylExists, protExists, cnvExists].filter(exists => exists).length;
+      const dnaCount = [dnaExists,rnaExists, methylExists, protExists, cnvExists].filter(exists => exists).length;
+      const rnaCount = [rnaExists,methylExists, protExists, cnvExists].filter(exists => exists).length;
+      const methylCount = [methylExists,protExists, cnvExists].filter(exists => exists).length;
+      const protCount = [protExists,cnvExists].filter(exists => exists).length;
 
-      const dnaRadius = calculateRadius([dnaExists]);
-      const rnaRadius = calculateRadius([dnaExists, rnaExists]);
-      const methylRadius = calculateRadius([dnaExists, rnaExists, methylExists]);
-      const protRadius = calculateRadius([dnaExists, rnaExists, methylExists, protExists]);
-      const cnvRadius = calculateRadius([dnaExists, rnaExists, methylExists, protExists, cnvExists]);
-      const chordRadius = calculateRadius([dnaExists, rnaExists, methylExists, protExists, cnvExists, chordExists]);
+      const chordOuterRadius = dnaExists
+        ? (chordCount === 4
+          ? 0.15:
+          chordCount === 3
+            ? 0.45
+            : chordCount === 2
+              ? 0.50
+              : chordCount === 1
+                ? 0.55
+                : 0.40)
+        : 0.35;
+      const rnaInnerRadius = rnaExists ? (
+        dnaExists
+          ? (rnaCount === 2 ? 0.70
+              : rnaCount === 1 ? 0.60
+              : 0.50)
+          :
+          (rnaCount === 2 ? 0.75
+              : rnaCount === 1 ? 0.30
+              : 0.30)
+      ) : 0;
+
+      const rnaOuterRadius = rnaExists ? (
+        dnaExists
+          ? 0.75
+          : 0.95
+      ) : 0;
+
+      // const methylInnerRadius = methylExists ? (
+      //   dnaExists && rnaExists && !protExists && !cnvExists ? 0.35
+      //   : dnaExists && !rnaExists && !(otherLayersExist) ? 0.55
+      //   : dnaExists && rnaExists ? 0.50
+      //   : 0
+      // ) : 0;
+
+      console.log(`rnaOuterRadius= ${rnaOuterRadius}, rnaInnerRadius= ${rnaInnerRadius}, rnaCount = ${rnaCount}`)
+      console.log(`dnaCount= ${dnaCount}`)
+      console.log(`chordCount = ${chordCount}, chordOuterRadius= ${chordOuterRadius}`)
+
 
       let conf = {
-        // innerRadius: if all data types exist, stay this size, otherwise decrement size
 
         innerRadius: newWidth / 2 - 100,
         outerRadius: newWidth / 2 - 50,
-        // innerRadius: chordRadius.confInner,
-        // outerRadius: chordRadius.confOuter,
         labels: {
           position: 'center',
           display: true,
@@ -270,8 +298,6 @@ const CircosCmp = React.forwardRef(
       let circosPlot = circosHighlight.layout(GRCh37, conf).highlight('cytobands-1', data, {
         innerRadius: newWidth / 2 - 100,
         outerRadius: newWidth / 2 - 50,
-        // innerRadius: chordRadius.confInner,
-        // outerRadius: chordRadius.confOuter,
         opacity: 0.5,
         color: function (d) {
           return gieStainColor[d.gieStain];
@@ -282,18 +308,18 @@ const CircosCmp = React.forwardRef(
         circosPlot.scatter('dna-mutation', mutationData, {
           // innerRadius: 0.89,
           // outerRadius: 0.99,
-          innerRadius: dnaRadius.innerRadius,
-          outerRadius: dnaRadius.outerRadius,
+          innerRadius: 0.75,
+          outerRadius: 0.98,
           color: function (d) {
             if (mutationData) {
               if (d.name) {
                 if (d.name in selectedGenesObject) {
                   return selectedGeneColor;
                 } else {
-                  return 'grey';
+                  return '#7d7878';
                 }
               } else {
-                return 'rgba(0,0,0,0)';
+                return '#000';
               }
             }
           },
@@ -311,9 +337,9 @@ const CircosCmp = React.forwardRef(
           min: 0,
           max: 1,
           axes: [
-            { spacing: 0.1, thickness: 1, color: '#f44336', opacity: 0.2 },
-            { spacing: 0.2, thickness: 4, color: '#f44336', opacity: 0.2 },
-            { spacing: 0.3, thickness: 5, color: '#f44336', opacity: 0.2 }
+            { spacing: 0.1, thickness: 3, color: '#f44336', opacity: 0.2 },
+            { spacing: 0.2, thickness: 3, color: '#f44336', opacity: 0.2 },
+            { spacing: 0.3, thickness: 3, color: '#f44336', opacity: 0.2 }
           ],
 
           tooltipContent: function (d) {
@@ -325,24 +351,24 @@ const CircosCmp = React.forwardRef(
 
       if (rna_expression_up.length > 24) {
         circosPlot.scatter('rna-up', rna_expression_up, {
-          // innerRadius: dna_mutation_data ? 0.74 : rna ? '' : jsds ? :,
-          // innerRadius: dnaExists ? 0.74 : 0.89,
-          // outerRadius: dnaExists ? 0.84 : 0.99,
+
           // innerRadius: 0.74,
           // outerRadius: 0.84,
-          innerRadius: rnaRadius.innerRadius,
-          outerRadius: rnaRadius.outerRadius,
+          innerRadius: rnaInnerRadius,
+          outerRadius: rnaOuterRadius,
           color: function (d) {
             if (d.name in selectedGenesObject) {
               return selectedGeneColor;
             } else {
+
               if (d.value >= 1) {
-                return '#d2352b';
+                return '#f22316';
               }
               if (d.value <= -1) {
-                return '#3777af';
+
+                return '#115ff0';
               }
-              return '#d3d3d3';
+              return '#e0dede';
             }
           },
           strokeColor: function (d) {
@@ -359,10 +385,10 @@ const CircosCmp = React.forwardRef(
           min: -2,
           max: 1,
           axes: [
-            { spacing: 0.1, thickness: 1, color: '#ffffff', opacity: 0.2 },
-            { spacing: 0.2, thickness: 3, color: '#ffffff', opacity: 0.2 },
-            { spacing: 0.3, thickness: 1, color: '#3777af', opacity: 0.3 },
-            // { spacing: 0.4, thickness: 1, color: '#3777af', opacity: 0.4 }
+            { spacing: 0.1, thickness: 1, color: '#c8d4c5', opacity: 0.2 },
+            { spacing: 0.2, thickness: 3, color: '#c8d4c5', opacity: 0.2 },
+            { spacing: 0.3, thickness: 2, color: '#77b2e6', opacity: 0.3 },
+            { spacing: 0.4, thickness: 4, color: '#77b2e6', opacity: 0.4 }
           ],
           tooltipContent: function (d) {
             return `<h4>RNA gene: ${d.name} ➤ ${d.block_id} | z score: ${d.value}</h3>`;
@@ -372,12 +398,12 @@ const CircosCmp = React.forwardRef(
       if (dna_methylation.length > 24) {
         circosPlot.scatter('snp-250-4', dna_methylation, {
 
-          // innerRadius: 0.59,
-          // outerRadius: 0.69,
+          innerRadius: 0.50,
+          outerRadius: 0.70,
           // innerRadius: dnaExists ? (rnaExists ? 0.59 : 0.74) : (rnaExists ? 0.74 : 0.89),
           // outerRadius: dnaExists ? (rnaExists ? 0.69 : 0.84) : (rnaExists ? 0.84 : 0.99),
-          innerRadius: methylRadius.innerRadius,
-          outerRadius: methylRadius.outerRadius,
+          // innerRadius: methylRadius.innerRadius,
+          // outerRadius: methylRadius.outerRadius,
           showAxesTooltip: false,
           color: function (d) {
             if (dna_methylation) {
@@ -388,7 +414,7 @@ const CircosCmp = React.forwardRef(
                   return '#000';
                 }
               } else {
-                return 'rgba(0,0,0,0)';
+                return '#c9c5c5';
               }
             }
           },
@@ -407,9 +433,9 @@ const CircosCmp = React.forwardRef(
           min: 0,
           max: 1,
           axes: [
-            { spacing: 0.1, thickness: 1, color: '#ffffff', opacity: 0.2 },
-            { spacing: 0.2, thickness: 3, color: '#ffffff', opacity: 0.2 },
-            { spacing: 0.3, thickness: 1, color: '#529d3f', opacity: 0.3 }
+            { spacing: 0.1, thickness: 3, color: '#c8d4c5', opacity: 0.3 },
+            { spacing: 0.2, thickness: 3, color: '#c8d4c5', opacity: 0.3 },
+            { spacing: 0.3, thickness: 3, color: '#529d3f', opacity: 0.3 }
           ],
 
           tooltipContent: function (d) {
@@ -424,16 +450,14 @@ const CircosCmp = React.forwardRef(
 
       if (global_proteome_up.length > 24) {
         circosPlot.scatter('snp-250-5', global_proteome_up, {
-          // innerRadius: 0.47,
-          // outerRadius: 0.57,
-          innerRadius: protRadius.innerRadius,
-          outerRadius: protRadius.outerRadius,
+          innerRadius: 0.3,
+          outerRadius: 0.45,
           showAxesTooltip: false,
           color: function (d) {
             if (d.name in selectedGenesObject) {
               return selectedGeneColor;
             } else {
-              return '#4285F4';
+              return '#42f4eb';
             }
           },
           strokeColor: function (d) {
@@ -450,9 +474,9 @@ const CircosCmp = React.forwardRef(
           max: 2,
 
           axes: [
-            { spacing: 0.1, thickness: 1, color: '#f18532', opacity: 0.2 },
-            { spacing: 0.3, thickness: 6, color: '#ffffff', opacity: 0.2 },
-            { spacing: 0.2, thickness: 1, color: '#644195', opacity: 0.3 }
+            { spacing: 0.1, thickness: 1, color: '#ed781f', opacity: 0.2 },
+            { spacing: 0.3, thickness: 6, color: '#c8d4c5', opacity: 0.2 },
+            { spacing: 0.2, thickness: 1, color: '#8335f0', opacity: 0.3 }
           ],
 
           tooltipContent: function (d) {
@@ -463,10 +487,8 @@ const CircosCmp = React.forwardRef(
 
       if (cnvData.length > 24) {
         circosPlot.scatter('snp-250-6', cnvData, {
-          // innerRadius: 0.36,
-          // outerRadius: 0.45,
-          innerRadius: cnvRadius.innerRadius,
-          outerRadius: cnvRadius.outerRadius,
+          innerRadius: 0.15,
+          outerRadius: 0.25,
           color: function (d) {
             if (d.name in selectedGenesObject) {
               return selectedGeneColor;
@@ -493,8 +515,8 @@ const CircosCmp = React.forwardRef(
           direction: 'center',
           showAxesTooltip: false,
           axes: [
-            { spacing: 0.1, thickness: 1, color: 'grey', opacity: 0.1 },
-            { spacing: 0.3, thickness: 3, color: '#ffffff', opacity: 0.2 }
+            { spacing: 0.3, thickness: 3, color: '#abadaa', opacity: 0.2 },
+            { spacing: 0.3, thickness: 1, color: '#bad4b4', opacity: 0.2 }
           ],
 
           tooltipContent: function (d) {
@@ -507,8 +529,11 @@ const CircosCmp = React.forwardRef(
         circosPlot.highlight('cytobands', data, {
           // innerRadius: 0.3,
           // outerRadius: 0.35,
-          innerRadius: chordRadius.innerRadius,
-          outerRadius: chordRadius.outerRadius,
+
+          // innerRadius: dnaExists ? 0.30 : 0.70,
+          // outerRadius: dnaExists ? 0.65 : 0.98,
+          innerRadius:0.4,
+          outerRadius:chordOuterRadius,
           opacity: 0.5,
           color: function (d) {
             return gieStainColor[d.gieStain];
@@ -519,8 +544,7 @@ const CircosCmp = React.forwardRef(
         });
 
         circosPlot.chords('l1', chord_data, {
-          // radius: 0.3,
-          radius: chordRadius.innerRadius,
+          radius: 0.4,
           logScale: false,
           opacity: 0.9,
           color: '#ffce44',
@@ -554,7 +578,7 @@ const CircosCmp = React.forwardRef(
           },
           ticks: {
             display: true,
-            color: 'grey',
+            color: '#a3a6a2',
             spacing: 10000000,
             labels: true,
             labelSpacing: 10,
@@ -602,6 +626,8 @@ const CircosCmp = React.forwardRef(
 
     useEffect(() => {
       if (state['cytobands'].length > 0) {
+        // console.log(`state= ${JSON.stringify(state['cytobands'])}`)
+
         let d = [
           { id: 'chr1', label: 'chr1', color: '#996600', len: 249250621 },
           { id: 'chr2', label: 'chr2', color: '#666600', len: 243199373 },

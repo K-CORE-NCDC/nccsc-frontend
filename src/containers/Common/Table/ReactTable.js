@@ -16,7 +16,10 @@ function Table({
     data,
     getRowProps = defaultPropGetter,
     skipReset,
-    width
+    width,
+    TotalCount,
+    paramObj,
+    setParamObj
     // columnFil,
     // tooltips = false,
 
@@ -50,18 +53,20 @@ function Table({
     );
     const [rangeArray, setRangeArray] = useState([]);
     const [pageNumber, setPageNumber] = useState(1)
-    const totalCount = data?.length
+    const totalCount = TotalCount || data?.length
+    const PageSize = paramObj?.perPage //PageSize
     const [pageSetArray, setPageSetArray] = useState(0)
+    const totalPages = Math.ceil(parseInt(totalCount) / parseInt(PageSize));
 
     useEffect(() => {
         let allPages = []
-        for (let i = 0; i < Math.ceil(parseInt(totalCount) / parseInt(pageSize)); i++) {
+        for (let i = 0; i < Math.ceil(parseInt(totalCount) / parseInt(paramObj?.perPage)); i++) {
             allPages.push(i + 1)
         }
-        const curentSet = getPageSet(allPages, pageNumber || 1)
+        const curentSet = getPageSet(allPages, paramObj?.pageNumber || 1)
         setRangeArray(curentSet)
         // setSearchItem(paramObj?.query);
-    }, [data?.length, pageNumber]);
+    }, [data?.length, paramObj]);
 
 
     const chunkIntoN = (arr, n) => {
@@ -72,12 +77,13 @@ function Table({
     }
 
     const getPageSet = (allpages, pageNumber) => {
-        let _num = Math.ceil(parseInt(totalCount) / parseInt(pageSize))
+        let _num = Math.ceil(parseInt(totalCount) / parseInt(paramObj?.perPage))
         let pagesetNum = Math.ceil(parseInt(_num) / parseInt(5))
         let pageSets = chunkIntoN(allpages, pagesetNum)
         setPageSetArray(pageSets[0]?.length)
         for (const pageset of pageSets) {
-            if (pageset.includes(pageNumber)) {
+            if (pageset.includes(paramObj?.pageNumber)) {
+                // console.log('pageset', pageset)
                 return pageset
             }
         }
@@ -88,8 +94,8 @@ function Table({
     return (
         <div>
             <div style={{ width: '100%', overflowX: 'auto' }}>
-                <span style={{ display: 'flex', fontSize: '18px' }}><b>Total:</b> <div style={{ color: "#003177", paddingLeft: '10px', fontSize: "18px" }}>{data?.length}</div></span>
-                <table className={" boardList"} {...getTableProps()} style={{ width:'1075px' }}>
+                <span style={{ display: 'flex', fontSize: '18px' }}><b>Total:</b> <div style={{ color: "#003177", paddingLeft: '10px', fontSize: "18px" }}>{TotalCount}</div></span>
+                <table className={" boardList"} {...getTableProps()} style={{ width: '1075px' }}>
                     <thead className="boardHeader">
                         {headerGroups.map((headerGroup) => (
                             <tr
@@ -99,7 +105,7 @@ function Table({
                                 {headerGroup.headers.map((column) => (
 
                                     <th className={`${(column?.fixed && column?.fixed === 'left') ? 'fixed' : ''} boardCell IconSpan`} {...column.getHeaderProps(column.getSortByToggleProps())}
-                                        style={column?.width && column?.width !== '' ? { width: column?.width + 'px', textAlign: 'center', padding: '16px 24px' , wordBreak:column?.wordBreak } : { textAlign: 'center', padding: '16px 24px' }} >
+                                        style={column?.width && column?.width !== '' ? { width: column?.width + 'px', textAlign: 'center', padding: '16px 24px', wordBreak: column?.wordBreak } : { textAlign: 'center', padding: '16px 24px' }} >
                                         {column.render('Header')}
 
                                         <span className={`${column.isSorted ? 'Opacity1' : 'Opacity0'}`}>
@@ -143,19 +149,28 @@ function Table({
 
 
                 <div className="paging" id="paging">
-                    <button
-                        className={` 
-                   ${pageNumber <= pageSetArray ? "on" : ""}`
+                <button
+                    className={`${pageNumber > 1 ? "on" : ""}`}
+                    onClick={() => {
+                        if (pageNumber > 1) {
+                            const newPageNumber = 1; // Move directly to the first page
+                            console.log(`newPageNumber= ${newPageNumber}`);
+
+                            setPageNumber(newPageNumber);
+                            setParamObj((prevState) => ({
+                                ...prevState,
+                                pageNumber: newPageNumber,
+                            }));
+                            gotoPage(newPageNumber - 1); // Adjust index if gotoPage expects 0-based index
                         }
-                        onClick={() => {
-                            if (pageNumber > pageSetArray) {
-                                setPageNumber(rangeArray[0] - pageSetArray)
-                                gotoPage(rangeArray[0] - (pageSetArray + 1))
-                            }
-                        }}
-                    >
-                        {'<<'}
-                    </button>
+                        // else {
+                        //     console.log(`Already at the first page`);
+                        // }
+                    }}
+                >
+                    {'<<'}
+                </button>
+
                     <button
                         className={` ${pageNumber === 1
                             ? "on"
@@ -164,6 +179,10 @@ function Table({
                         onClick={() => {
                             if (pageNumber !== 1) {
                                 setPageNumber(pageNumber - 1)
+                                setParamObj((prevState) => ({
+                                    ...prevState,
+                                    pageNumber: pageNumber - 1,
+                                }));
                                 gotoPage(pageNumber - 2)
                             }
                         }}
@@ -174,6 +193,7 @@ function Table({
                         {rangeArray?.length > 0 &&
                             rangeArray?.map((n, i) => (
                                 <li
+                                    style={{ cursor: 'pointer' }}
                                     className={`${pageNumber === rangeArray[i]
                                         ? "on"
                                         : ""
@@ -181,6 +201,10 @@ function Table({
                                     key={i}
                                     onClick={() => {
                                         setPageNumber(n)
+                                        setParamObj((prevState) => ({
+                                            ...prevState,
+                                            pageNumber: n,
+                                        }));
                                         gotoPage(n - 1)
                                     }}
                                 >
@@ -192,7 +216,7 @@ function Table({
                     <button
                         className={` ${pageNumber >=
                             Math.ceil(
-                                parseInt(totalCount) / parseInt(pageSize)
+                                parseInt(totalCount) / parseInt(PageSize)
                             )
                             ? "on"
                             : ""
@@ -201,10 +225,14 @@ function Table({
                             if (
                                 pageNumber <
                                 Math.ceil(
-                                    parseInt(totalCount) / parseInt(pageSize)
+                                    parseInt(totalCount) / parseInt(PageSize)
                                 )
                             ) {
                                 setPageNumber(pageNumber + 1)
+                                setParamObj((prevState) => ({
+                                    ...prevState,
+                                    pageNumber: pageNumber+1,
+                                }));
                                 gotoPage(pageNumber)
                             }
                         }}
@@ -212,26 +240,23 @@ function Table({
                         {">"}
                     </button>
                     <button
-                        className={` ${rangeArray && rangeArray[rangeArray.length - 1] >=
-                            Math.ceil(
-                                parseInt(totalCount) / parseInt(pageSize)
-                            )
-                            ? "on"
-                            : ""
-                            }`}
+                        className={`${pageNumber < totalPages ? "on" : ""}`}
                         onClick={() => {
-                            if (
-                                rangeArray[rangeArray.length - 1] <
-                                Math.ceil(
-                                    parseInt(totalCount) / parseInt(pageSize)
-                                )
-                            ) {
-                                setPageNumber(rangeArray[rangeArray.length - 1] + 1)
-                                gotoPage(rangeArray[rangeArray.length - 1])
+                            if (pageNumber < totalPages) {
+                                const pageNumber = totalPages; // Move directly to the last page
+                                setPageNumber(pageNumber);
+                                setParamObj((prevState) => ({
+                                    ...prevState,
+                                    pageNumber: pageNumber,
+                                }));
+                                gotoPage(pageNumber - 1);
                             }
+                            //  else {
+                            //     console.log(`Cannot go beyond the total number of pages`);
+                            // }
                         }}
                     >
-                        {">>"}
+                        {'>>'}
                     </button>
                 </div>
 

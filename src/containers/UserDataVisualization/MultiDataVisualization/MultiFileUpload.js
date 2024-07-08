@@ -11,15 +11,21 @@ import HeaderComponent from '../../Common/HeaderComponent/HeaderComponent';
 import Draggable from 'react-draggable';
 import AOS from 'aos';
 import { useHistory } from 'react-router-dom';
+import FileUploadModal from './FileUploadModal';
+// import FileModal from './FileModal';
 
 function Modal({ showModal, toggleModal, fileName }) {
   let fileNameImage = require(`../../../assets/images/FileScreenshots/${fileName}.png`).default;
   let fileNameFile = require(`../../../assets/files/20_samples/${fileName}.tsv`).default;
-
+  const setShowModalFunction = (stateData) => {
+    setShowModal(stateData);
+};
   return (
     <>
       {showModal ? (
+
         <>
+
           <div className="Toolmodal-container">
             <div className="Toolmodal-content" style={{ maxWidth: '60vw' }}>
               {/*content*/}
@@ -97,10 +103,14 @@ const Table = ({ updateComponentNumber }) => {
   const [projectName, setProjectName] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [fileName, setFileName] = useState('');
+  const [isModal, setIsModal] = useState(false);
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(true);
   const history = useHistory();
   const intl = useIntl();
+  const setIsModalFunction = (stateData) => {
+    setIsModal(stateData);
+};
 
   useEffect(() => {
     dispatch(clearMultiFIleUploadState());
@@ -165,19 +175,11 @@ const Table = ({ updateComponentNumber }) => {
         }
       });
     }
-    // else if (!filesData['clinical_information']) {
-    //   Swal.fire({
-    //     title: intl.formatMessage({ id: "Warning", defaultMessage: 'Warning' }),
-    //     text: intl.formatMessage({ id: "UploadClinical", defaultMessage: 'Upload Clinical Information File' }),
-    //     icon: 'warning',
-    //     confirmButtonColor: '#003177',
-    //     confirmButtonText: intl.formatMessage({ id: "Ok", defaultMessage: 'Ok' }),
-    //     allowOutsideClick: false
-    //   }).then((result) => {
-    //     if (result.value) {
-    //     }
-    //   });
-    // }
+  };
+
+  const handleFileUpload = (fileType, files) => {
+    // Handle the file upload based on the fileType and files
+    console.log(`fileType = ${fileType}, files= ${files}`);
   };
 
   const handleReset = () => {
@@ -284,6 +286,14 @@ const Table = ({ updateComponentNumber }) => {
                         />
                       </p>
                     </li>
+                    {/* <li>
+                      <p style={{ color: "black" }}>
+                        <FormattedMessage
+                          id="uploadGuide3"
+                          defaultMessage="Please make sure that sample ids in all files match."
+                        />
+                      </p>
+                    </li> */}
                   </ul>
                 </div>
               </div>
@@ -414,17 +424,33 @@ const Table = ({ updateComponentNumber }) => {
                           <FormattedMessage id="Reset" defaultMessage="Reset" />
                         </button>
                       </>
-                    ) : (
-                      <>
-                        <input
+                    )
+                    :
+                    (
+                    <>
+                        {/* <input
                           type="file"
                           onChange={(event) => handleFileChange(event, 'dna_mutation')}
                         />
                         <button className="MultiUploadBgGrayButton" disabled>
                           <FormattedMessage id="Reset" defaultMessage="Reset" />
+                        </button> */}
+
+                        <button
+                          className="MultiUploadTDHeader MultiUploadTD"
+                          type="button"
+                          onClick={setIsModalFunction}
+                        >
+                          <FormattedMessage id="ChooseFile" defaultMessage="Choose File" />
                         </button>
+
+                        {isModal && <FileUploadModal isModal={isModal} setIsModal={setIsModalFunction} />}
+                            <button className="MultiUploadBgGrayButton" disabled>
+                              <FormattedMessage id="Reset" defaultMessage="Reset" />
+                            </button>
                       </>
-                    )}
+                    )
+                      }
                   </td>
                 </tr>
                 <tr>

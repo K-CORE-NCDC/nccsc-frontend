@@ -50,11 +50,12 @@ const HomeComponent = () => {
     let return_data = UserDataProjectsCount('GET', {});
     return_data.then((result) => {
       const d = result;
-      if (d.status === 200 && result.data.data >= 5) {
-        // location.push({
-        //   pathname: '/multidatavisualization/',
-        //   state: { redirected: true }
-        // });
+      // console.log(`d=${d.data}`)
+      if (d.status === 200 && d.data.data >= 5) {
+        history.push({
+          pathname: '/multidatavisualization/',
+          state: { redirected: true }
+        });
         setShowOverloadMessage(true)
       }
       else {

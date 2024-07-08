@@ -68,6 +68,9 @@ function Modal({ showModal, toggleModal }) {
                                           {verificationResponse && 'specific_issue' in verificationResponse && verificationResponse['specific_issue'] === 'allFileColumns3' &&
                                             <FormattedMessage id="allFileColumns3" defaultMessage="Error: Please Read Instructions" />
                                           }
+                                          {verificationResponse && 'specific_issue' in verificationResponse && verificationResponse['specific_issue'] === 'SampleMismatch' &&
+                                            <FormattedMessage id="SampleMismatch" defaultMessage="Samples didn't match properly. Please recheck the files and try uploading again." />
+                                          }
                                         </p>
                                       </li>
                                     )}
@@ -75,6 +78,17 @@ function Modal({ showModal, toggleModal }) {
                                 </div>
                               );
                             })}
+
+                          {verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'SampleMismatch' && (
+                            <div className="ClinicalInformationErrors">
+                              <div>
+                                <h2>
+                                  <FormattedMessage id="SampleMismatch" defaultMessage="Samples didn't match properly. Please recheck the files and try uploading again." />
+                                </h2>
+                              </div>
+                            </div>
+                          )}
+
 
                           {verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'clinicalInforamtionFile' && (
                             <div className="ClinicalInformationErrors">

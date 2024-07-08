@@ -42,8 +42,13 @@
   "CustomerVoice": "고객의 소리",
   "UserGuide": "사용자 가이드",
   "FAQ": "FAQ",
+  "ArchivedProjects":"보관된 프로젝트",
+  "CurrentProjects":"현재 프로젝트",
   "CreatedDate": "생성 일자",
   "ExpirationDate": "만료 일자",
+  "ExtendedDate": "연장된 날짜",
+  "DeletedDate": "삭제된 날짜",
+  "ReasonForExtension": "연장 이유",
   "OnlyUploadedOmics": "업로드 된 오믹스 정보만을 레이어 상에 보여줍니다.",
   "QA": "Q&A",
   "Notice": "공지사항",
@@ -99,6 +104,7 @@
   "DataTypeIncorrect": "컬럼의 데이터 타입이 바르지 않습니다. 올바른 데이터 타입 :",
   "CorrectDataType": "올바른 데이터 타입",
   "FoundSomethingElse": "다른 것을 발견했습니다",
+  "ExtendReason":"프로젝트 연장 사유 입력",
   "DeleteProject": "이 프로젝트를 삭제하시겠습니까?",
   "PasswordsMatch": "비밀번호와 비밀번호 확인이 모두 일치해야 합니다.",
   "PasswordUpdateSuccess": "비밀번호가 성공적으로 업데이트되었습니다.",
@@ -511,6 +517,8 @@
   "ClinicalInfoReFiltering": "대상자 선택",
   "View": "보기",
   "Delete": "삭제",
+  "Extend": "연장",
+  "NoExtend":"이 프로젝트를 다시 연장할 수 없습니다",
   "VcfToMafNote": "참고: .vcf 파일만 허용되며 게놈 버전 hg38을 사용하여 생성된 파일만 허용됩니다.",
   "MAFMergerNote": "참고 : 입력하는 MAF 파일 이름은 샘플 이름이어야 하며, 공백은 없어야 합니다.",
   "REFVERCONVERTERNote": "참고 : VCF 파일의 GRCh37(hg19) 과 GRCh38(hg38) 버전 간의 양방향 변환 기능 지원",
@@ -616,5 +624,6 @@
   "Please select multiple genes": "다수의 유전자를 선택하세요",
   "Required":"필수 입력",
   "AtleastOne":"표시된 데이터 중 최소 한 가지는 입력 필요",
-  "Optional":"옵션 (없어도 시각화 가능)"
+  "Optional":"옵션 (없어도 시각화 가능)",
+  "No Clinical Data":"임상 정보 없음"
 }

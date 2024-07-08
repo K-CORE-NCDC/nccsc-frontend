@@ -68,7 +68,7 @@ function SankeyPlot({ inputData, screenCapture, setToFalseAfterScreenCapture }) 
     {
       Header: intl.formatMessage({ id: "ClinicalAttribute", defaultMessage: 'Clinical Attribute' }),
       accessor: (row) =>
-        row.clinicalArrtibute,
+        row.clinicalAttribute,
     },
     {
       Header: intl.formatMessage({ id: "value", defaultMessage: 'Value' }),
@@ -339,13 +339,18 @@ function SankeyPlot({ inputData, screenCapture, setToFalseAfterScreenCapture }) 
   useEffect(() => {
     setLoader(true);
     if (basicInformationData.length > 0) {
+      const emptyKeys = ['pt_sbst_no', 'rlps_yn', 'rlps_cnfr_drtn', 'death_yn', 'death_cnfr_drtn'];
+      const dataKeys = basicInformationData.some(row =>
+        Object.keys(row).some(key => !emptyKeys.includes(key))
+      );
+      if (dataKeys) {
       const tmp = [];
       for (let i = 0; i < basicInformationData.length; i++) {
         const row = basicInformationData[i];
         for (const key in row) {
           let obj = {}
           if (key !== 'Sample') {
-            obj["clinicalArrtibute"] = key
+            obj["clinicalAttribute"] = key
             obj["Value"] = row[key]
             tmp.push(
               obj
@@ -355,6 +360,7 @@ function SankeyPlot({ inputData, screenCapture, setToFalseAfterScreenCapture }) 
       }
       setBasicHtml(tmp);
     }
+  }
     setLoader(false);
   }, [basicInformationData]);
 
@@ -542,11 +548,19 @@ function SankeyPlot({ inputData, screenCapture, setToFalseAfterScreenCapture }) 
                         </span>
                       </h3>
                     </div>
+                    {basicHtml.length > 0 ? (
                     <Table
                       columns={ColumnNames}
                       data={basicHtml}
                       width={"1075"}
                     />
+                    ) : (
+                      <Table
+                      columns={ColumnNames}
+                      data={[{ clinicalAttribute: <FormattedMessage id="No Clinical Data" defaultMessage="No Clinical Data" />, Value: <FormattedMessage id="No Clinical Data" defaultMessage="No Clinical Data" /> }]}
+                      width={"1075"}
+                    />
+                      )}
                   </div>
                 )}
 

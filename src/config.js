@@ -26,4 +26,10 @@ const config = isProduction ? {
     auth: 'http://3bigs.co.kr/k-corev/',
     media: 'http://3bigs.co.kr/k-corev/media/',
   }
+  // {
+  //   defaultPath: "/k-core/",
+  //   basename: "/k-core/",
+  //   auth: "http://kcorep-django-service.t2021-0011.tanzu.ncdc.ncc.re.kr/",
+  //   media: "http://kcorep-django-service.t2021-0011.tanzu.ncdc.ncc.re.kr/media/"
+  // }
 export default config;

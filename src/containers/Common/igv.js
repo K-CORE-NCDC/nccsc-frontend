@@ -1,4 +1,4 @@
-import igv from 'igv';
+  import igv from 'igv';
 import React, { useEffect } from 'react';
 
 const Igv = React.forwardRef(({ width, data, watermarkCss }, ref) => {
@@ -26,7 +26,9 @@ const Igv = React.forwardRef(({ width, data, watermarkCss }, ref) => {
       ]
     };
 
-    igv.createBrowser(igvDiv, options).then(function () {});
+    igv.createBrowser(igvDiv, options).then(function () {
+      console.log("Created IGV browser")
+    });
   };
   useEffect(() => {
     if (data && data.length !== 0) {

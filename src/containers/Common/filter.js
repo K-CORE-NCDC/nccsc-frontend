@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import inputJson from './data';
-import {samplesCount} from '../../actions/api_actions'
+import { samplesCount } from '../../actions/api_actions'
 
 export default function Filter({ parentCallback, filterState, project_id }) {
   const [state, setState] = useState({ html: [] });
@@ -18,18 +18,18 @@ export default function Filter({ parentCallback, filterState, project_id }) {
   const SampleRnidListData = useSelector((data) => data.dataVisualizationReducer.Keys);
   const [filterCondition, setFilterCondition] = useState('and');
 
-  useEffect(()=>{
-    let returnedData = samplesCount("POST",{project_id:project_id})
+  useEffect(() => {
+    let returnedData = samplesCount("POST", { project_id: project_id })
     returnedData
-        .then((result) => {
-          if (result.status === 200 && result.data && 'no_of_samples' in result.data) {
-            setTotalSamplesCount(result.data.no_of_samples);
-          }
-        })
-        .catch(() => {
-          setTotalSamplesCount(0);
-        });
-  },[])
+      .then((result) => {
+        if (result.status === 200 && result.data && 'no_of_samples' in result.data) {
+          setTotalSamplesCount(result.data.no_of_samples);
+        }
+      })
+      .catch(() => {
+        setTotalSamplesCount(0);
+      });
+  }, [])
 
   useEffect(() => {
     if (Object.keys(filterState).length !== 0) {
@@ -124,6 +124,7 @@ export default function Filter({ parentCallback, filterState, project_id }) {
 
     setFilterHtml(html);
   }, [filtersUi]);
+
 
   // for rendering the filter // inputs and checkboxes all html store in state
   const leftSide = (filterBoxes) => {
@@ -511,79 +512,81 @@ export default function Filter({ parentCallback, filterState, project_id }) {
     tmp['filterCondition'] = val;
     setSelectState(tmp);
   };
-
   return (
     <div id="filterBoxCmp">
-      <div className="FilterMainDiv">
-        <button className="FilterLabelText FilterButton" onClick={reset}>
-          <FormattedMessage id="Reset" defaultMessage={' Reset '} />
-        </button>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <button
-          className="FilterLabelText FilterButton"
-          style={{ backgroundColor: '#009fe2', border: '1px solid white' }}
-          onClick={sendFilter}
-        >
-          <FormattedMessage id="Search" defaultMessage={' Search '} />
-        </button>
-      </div>
-      <div className="filter_sample">
-        <label className="">
-          <FormattedMessage id="filterCondition" defaultMessage={'Sample filter condition'} />:
-        </label>
-        <div className="Radiobtns" style={{ marginTop: '5px' }}>
-          <div className="Flex ItemsCenter MarginLeft4">
-            {filterCondition === 'and' ? (
-              <input
-                id="default-radio-1"
-                type="radio"
-                value="and"
-                name="condition"
-                checked
-                onChange={(e) => changeFilterCondition(e)}
-                className="FilterCondition"
-              />
-            ) : (
-              <input
-                id="default-radio-1"
-                type="radio"
-                value="and"
-                name="condition"
-                onChange={(e) => changeFilterCondition(e)}
-                className="FilterCondition"
-              />
-            )}
+      {Object.keys(filterJson).length !== 0 && <>
+        <div className="FilterMainDiv">
+          <button className="FilterLabelText FilterButton" onClick={reset}>
+            <FormattedMessage id="Reset" defaultMessage={' Reset '} />
+          </button>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <button
+            className="FilterLabelText FilterButton"
+            style={{ backgroundColor: '#009fe2', border: '1px solid white' }}
+            onClick={sendFilter}
+          >
+            <FormattedMessage id="Search" defaultMessage={' Search '} />
+          </button>
+        </div>
+        <div className="filter_sample">
+          <label className="">
+            <FormattedMessage id="filterCondition" defaultMessage={'Sample filter condition'} />:
+          </label>
+          <div className="Radiobtns" style={{ marginTop: '5px' }}>
+            <div className="Flex ItemsCenter MarginLeft4">
+              {filterCondition === 'and' ? (
+                <input
+                  id="default-radio-1"
+                  type="radio"
+                  value="and"
+                  name="condition"
+                  checked
+                  onChange={(e) => changeFilterCondition(e)}
+                  className="FilterCondition"
+                />
+              ) : (
+                <input
+                  id="default-radio-1"
+                  type="radio"
+                  value="and"
+                  name="condition"
+                  onChange={(e) => changeFilterCondition(e)}
+                  className="FilterCondition"
+                />
+              )}
 
-            <label htmlFor="default-radio-1" className="MarginLeft2 ConditionLabel">
-              And
-            </label>
-          </div>
-          <div className="Flex ItemsCenter MarginLeft4">
-            {filterCondition === 'or' ? (
-              <input
-                id="default-radio-2"
-                type="radio"
-                value="or"
-                name="condition"
-                onChange={(e) => changeFilterCondition(e)}
-                className="FilterCondition"
-              />
-            ) : (
-              <input
-                id="default-radio-2"
-                type="radio"
-                value="or"
-                name="condition"
-                onChange={(e) => changeFilterCondition(e)}
-                className="FilterCondition"
-              />
-            )}
-            <label htmlFor="default-radio-2" className="MarginLeft2 ConditionLabel">
-              Or
-            </label>
+              <label htmlFor="default-radio-1" className="MarginLeft2 ConditionLabel">
+                And
+              </label>
+            </div>
+            <div className="Flex ItemsCenter MarginLeft4">
+              {filterCondition === 'or' ? (
+                <input
+                  id="default-radio-2"
+                  type="radio"
+                  value="or"
+                  name="condition"
+                  onChange={(e) => changeFilterCondition(e)}
+                  className="FilterCondition"
+                />
+              ) : (
+                <input
+                  id="default-radio-2"
+                  type="radio"
+                  value="or"
+                  name="condition"
+                  onChange={(e) => changeFilterCondition(e)}
+                  className="FilterCondition"
+                />
+              )}
+              <label htmlFor="default-radio-2" className="MarginLeft2 ConditionLabel">
+                Or
+              </label>
+            </div>
           </div>
         </div>
-      </div>
+      </>
+      }
       <div className="MarginTop4" id="all_checkboxes">
         {state['html']}
       </div>
@@ -601,6 +604,8 @@ export default function Filter({ parentCallback, filterState, project_id }) {
         ) : (
           ''
         )}
+        {Object.keys(filterJson).length === 0 &&
+          <span style={{ display: 'flex', justifyContent: 'center', alignContent: 'center', alignItems: 'center', height: '300px', fontSize: '15px' }}><FormattedMessage id="No Clinical Data" defaultMessage="No Clinical Data" /></span>}
       </div>
     </div>
   );

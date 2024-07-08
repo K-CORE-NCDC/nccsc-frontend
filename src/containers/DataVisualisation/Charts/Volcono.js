@@ -116,15 +116,17 @@ export default function DataVolcono({
             negativeCount += 1;
             negative.push({
               'Gene Name': item['gene'],
-              Log2FC: parseFloat(item['log2(fold_change)']),
-              '-Log(Pvalue)': item['p_value']
+              'Log2FC': parseFloat(item['log2(fold_change)']),
+              '-Log(Pvalue)': item['p_value'],
+              'FDR': item['fdr']
             });
           } else if (log2foldchange >= 1.5) {
             positiveCount += 1;
             positive.push({
               'Gene Name': item['gene'],
-              Log2FC: parseFloat(item['log2(fold_change)']),
-              '-Log(Pvalue)': item['p_value']
+              'Log2FC': parseFloat(item['log2(fold_change)']),
+              '-Log(Pvalue)': item['p_value'],
+              'FDR': item['fdr']
             });
           }
         });

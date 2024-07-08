@@ -209,13 +209,7 @@ const Charts = ({ type, w, state, screenCapture, setToFalseAfterScreenCapture, t
       case 'heatmap':
         return heatmap(w, state, screenCapture, BrstKeys, setToFalseAfterScreenCapture);
       case 'survival':
-        return survival(
-          w,
-          state,
-          screenCapture,
-          setToFalseAfterScreenCapture,
-          survialData,
-        );
+        return survival(w, state, screenCapture, setToFalseAfterScreenCapture,survialData);
       case 'correlation':
         return scatter(w, state, screenCapture, setToFalseAfterScreenCapture);
       case 'CNV':

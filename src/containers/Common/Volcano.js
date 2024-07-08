@@ -23,29 +23,33 @@ const VolcanoCmp = React.forwardRef(
       {
         Header: 'PVALUE',
         accessor: (row) => row['-Log(Pvalue)'],
+      },
+      {
+        Header: 'FDR',
+        accessor: (row) => row['FDR'],
       }
     ];
 
     const downloadTableAsCsv = (tableType) => {
-      let rows = [['GENE NAME', 'LOG2FC', 'LOG(PVALUE)']];
+      let rows = [['GENE NAME', 'LOG2FC', 'LOG(PVALUE)','FDR']];
 
       if (tableType === 'negative') {
-        rows = [['GENE NAME', 'LOG2FC', 'LOG(PVALUE) negative']];
+        rows = [['GENE NAME', 'LOG2FC', 'LOG(PVALUE) negative','FDR']];
         tableData.forEach((element) => {
           if (element['log2(fold_change)'] <= -1.5 && element['p_value'] <= 0.5) {
-            rows.push([element['gene'], element['log2(fold_change)'], element['p_value']]);
+            rows.push([element['gene'], element['log2(fold_change)'], element['p_value'],element['fdr']]);
           }
         });
       } else if (tableType === 'positive') {
-        rows = [['GENE NAME', 'LOG2FC', 'LOG(PVALUE) positive']];
+        rows = [['GENE NAME', 'LOG2FC', 'LOG(PVALUE) positive','FDR']];
         tableData.forEach((element) => {
           if (element['log2(fold_change)'] >= 1.5 && element['p_value'] <= 0.5) {
-            rows.push([element['gene'], element['log2(fold_change)'], element['p_value']]);
+            rows.push([element['gene'], element['log2(fold_change)'], element['p_value'],element['fdr']]);
           }
         });
       } else {
         tableData.forEach((element) => {
-          rows.push([element['gene'], element['log2(fold_change)'], element['p_value']]);
+          rows.push([element['gene'], element['log2(fold_change)'], element['p_value'],element['fdr']]);
         });
       }
 

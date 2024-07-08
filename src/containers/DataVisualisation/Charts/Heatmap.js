@@ -58,6 +58,7 @@ export default function DataHeatmap({
   const [noData, setNoData] = useState(false);
   const [vizType, setVizType] = useState('');
   const [singleGene, setSingleGene] = useState(false)
+  const noOptionsMessage = () => "No clinical data";
 
   // const [SC, SetSC] = useState(screenCapture);
 
@@ -1043,6 +1044,7 @@ export default function DataHeatmap({
                     onSelect={onSelect} // Function will trigger on select event
                     onRemove={onRemove} // Function will trigger on remove event
                     displayValue="name" // Property name to display in the dropdown options
+                    emptyRecordMsg={<FormattedMessage id="No Clinical Data" defaultMessage="No Clinical Data"/>} // Custom message when no options are available
                   />
                 </div>
               )}

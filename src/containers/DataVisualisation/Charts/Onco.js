@@ -1,4 +1,5 @@
 import Multiselect from 'multiselect-react-dropdown';
+import { Popover, Transition } from '@headlessui/react';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
@@ -299,7 +300,8 @@ export default function DataOnco({
                 onSelect={onSelect} // Function will trigger on select event
                 onRemove={onRemove} // Function will trigger on remove event
                 displayValue="name" // Property name to display in the dropdown options
-              />{' '}
+                emptyRecordMsg={<FormattedMessage id="No Clinical Data" defaultMessage="No Clinical Data"/>} // Custom message when no options are available
+              />
             </>
           )}
         </div>

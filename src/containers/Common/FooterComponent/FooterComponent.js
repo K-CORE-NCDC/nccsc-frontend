@@ -37,12 +37,12 @@ const FooterComponent = () => {
                 />
               </span>
             </Link>
-            <p style={{ paddingLeft: '25px' }}> | </p>
+            {/* <p style={{ paddingLeft: '25px' }}> | </p>
             <Link to="/privacypolicy/">
               <span style={{ paddingLeft: '25px' }}>
                 <FormattedMessage id="PrivacyPolicy" defaultMessage="Privacy Policy" />
               </span>
-            </Link>
+            </Link> */}
           </div>
         </div>
         <div className="footerBottom">
