@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { mafmerger} from '../../../actions/api_actions';
-import config from '../../../config';
-import LoaderCmp from '../../Common/Loader';
+import {TrashIcon}  from '@heroicons/react/outline';
 
-  const FileUploadModal = ({ isModal, setIsModal, handleFileUpload }) => {
+  const FileUploadModal = ({ isModal, setIsModal, handleFileUpload,mafType }) => {
   const [isError, setIsError] = useState(false);
   const [mafMergerFiles, setMafMergerFiles] = useState({});
   const [mafMergerFilesName, setMafMergerFilesName] = useState([]);
@@ -17,7 +16,6 @@ import LoaderCmp from '../../Common/Loader';
   const [loader, setLoader] = useState(false);
   const [loop, setLoop] = useState(null)
   const dispatch = useDispatch();
-  let backend_url = config['auth'];
   useEffect(() => {
     if (startInterval) {
         setLoop(setInterval(() => {
@@ -27,6 +25,7 @@ import LoaderCmp from '../../Common/Loader';
 }, [startInterval])
 useEffect(() => {
   if (mafMergerResponse) {
+    console.log(mafMergerResponse)
       if (mafMergerResponse['status'] === 'running') {
           setLoader(true);
           setStartInterval(true)
@@ -34,45 +33,15 @@ useEffect(() => {
       } else {
           setLoader(false);
           setStartInterval(false)
+          clearInterval(loop);
           setLoop(interval => {
               clearInterval(interval);
               return null;
           });
           setMafMergerFiles({})
           setMafMergerFilesName([])
-          let h = [];
-          h.push(
-              <>
-                  <span style={{ fontSize: '1rem', lineHeight: '1.5rem', justifyContent: 'center' }} className="Flex">
-                      <div className="" key={0}>
-                          <div style={{ marginBottom: "20px" }}>
-                              <FormattedMessage id='MAFMergerResult1' defaultMessage='Your results are ready.' />
-                          </div>
-                          <div className='Flex FlexDirCol' style={{ marginBottom: '20px' }}>
-                              <div>
-                                  <FormattedMessage id='MAFMergerResult2' defaultMessage='Click to download merged TSV : ' />
-                                  <a
-                                      className="ToolResultsReady"
-                                      href={
-                                          backend_url + mafMergerResponse['user_project_directory'] + mafMergerResponse['container_name'] + '.tsv'
-                                      }
-                                      download={mafMergerResponse['container_name'] + '.tsv'}
-                                  >
-                                      {mafMergerResponse['container_name'] + '.tsv'}
-                                  </a>
-                              </div>
-                              <div>
-                                  <FormattedMessage id='MAFMergerResult3' defaultMessage='* You can use merged TSV as DNA mutation input in visualization services.' />
-                              </div>
-                          </div>
-                          <div>
-
-                          </div>
-                      </div>
-                  </span>
-              </>
-          );
-          setHtml(h);
+          mafType(mafMergerResponse['container_name']+'.tsv')
+          setIsModal(false)
       }
   }
 }, [mafMergerResponse]);
@@ -82,8 +51,8 @@ useEffect(() => {
 
     if (areAllFilesMaf && Object.keys(mafMergerFiles)?.length > 0) {
         setIsError(false);
-        // setLoader(true);
-        setHtml([])
+        setLoader(true);
+
         dispatch(mafmerger('POST', mafMergerFiles));
         setMsg({ id: 'FileUplodPlsWait', defaultMessage: 'File Uploading, Please Wait......' });
     } else {
@@ -156,6 +125,7 @@ const handleFileRemove = (fileName) => {
   const updatedFileNames = mafMergerFilesName.filter((name) => name !== fileName);
 
   setMafMergerFilesName(updatedFileNames);
+  console.log(mafMergerFiles)
 };
 
 return (
@@ -163,17 +133,17 @@ return (
     {isModal ? (
       <>
 
-<div className="Toolmodal-container">
+<div className="Toolmodal-container" style={{"background":"rgba(0,0,0,0.8)"}}>
             <div className="Toolmodal-content" style={{ maxWidth: '60vw' }}>
               {/*content*/}
-              <div className="Toolmodal-dialog">
+              <div className="Toolmodal-dialog" style={{borderRadius:'5px',width:'35vw'}}>
                 {/*header*/}
                 <div className="Toolmodal-header">
-                  <h5 className="Toolmodal-title" style={{ fontSize: '20px' }}>
+                  <h5 className="Toolmodal-title toolModal-header" style={{ fontSize: '20px', }}>
                     {' '}
                     <FormattedMessage
-                      id="Select File"
-                      defaultMessage="Select DNA File"
+                      id="SelectFile"
+                      defaultMessage="Select A File"
                     />
                   </h5>
                   <button className="Toolmodal-close-btn" onClick={() => setIsModal(false)}>
@@ -195,20 +165,21 @@ return (
                     {/* <DataOfFiles fileName={fileName} /> */}
 
                     {/* <div className="Flex FlexDirRow" style={{ marginTop: '20px', gap: '10px' }}> */}
-                    <div className="Flex FlexDirRow" >
+                    <div className="Flex FlexDirRow modelFileType" >
                       <FormattedMessage id="FileType" defaultMessage="Select File Type" />
                       </div>
                       <div>
-                      <label className="mr-4">
+                      <label className="mr-4 textClass">
                         <input
                           type="radio"
                           name="fileType"
                           value="tsv"
                           checked={fileType === 'tsv'}
                           onChange={(e) => setFileType(e.target.value)}
+
                         /> Mutation(.tsv)
                       </label>
-                      <label>
+                      <label className='textClass'>
                         <input
                           type="radio"
                           name="fileType"
@@ -221,11 +192,11 @@ return (
                     {fileType === 'tsv' && (
                       <div>
                         <label htmlFor="tsv-upload">
-                          {/* <FormattedMessage id="ChooseFile" defaultMessage="Choose File" /> */}
                           <input
                             type="file"
                             id="tsv-upload"
-                            onChange={(e) => handleFileUpload(e, 'tsv')}
+                            // onChange={(e) => handleFileUpload(e, 'tsv')}
+                            onChange={(event) => handleFileUpload(event, 'dna_mutation')}
                             className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
                             accept=".tsv"
                           />
@@ -236,6 +207,7 @@ return (
                       <div>
                         <label htmlFor="MAFFiles">
                           <FormattedMessage id="SelectMultipleFiles" defaultMessage="Select Multiple Files" />
+                          <br/>
                           <input
                             type="file"
                             id="MAFFiles"
@@ -245,13 +217,27 @@ return (
                             accept=".maf"
                           />
                         </label>
-                        <p>{mafMergerFilesName.length > 0 ? mafMergerFilesName.length : ""}</p>
-                        {Object.keys(mafMergerFiles).map((filename) => (
-                          <div key={filename} className="flex justify-between items-center p-2 border-b">
-                            <div>{filename} - {mafMergerFiles[filename].size} bytes</div>
-                            <button onClick={() => handleFileRemove(filename)}>X</button>
-                          </div>
-                        ))}
+
+                        {mafMergerFilesName.length > 0  &&
+                          <table className='contentsTable'>
+                            <thead>
+                              <tr>
+                                <th style={{width:'10%'}}>S.No</th>
+                                <th><FormattedMessage id="FileName" defaultMessage="File Name" /></th>
+                                <th style={{width:'20%'}}><FormattedMessage id="Action" defaultMessage="Action" /></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                          {Object.keys(mafMergerFiles).map((filename,i) => (
+                            <tr key={filename} className="">
+                              <td>{i+1}</td>
+                              <td>{filename} - {formatFileSize(mafMergerFiles[filename].file.size)}</td>
+                              <td><button onClick={() => handleFileRemove(filename)}><TrashIcon className='trashIconSize'/></button></td>
+                            </tr>
+                          ))}
+                          </tbody>
+                          </table>
+                        }
                         {isError && <p className="text-red-600">Upload only .maf extension files</p>}
                       </div>
                     )}
@@ -266,9 +252,11 @@ return (
                   >
                     <FormattedMessage id="Close" defaultMessage="Close" />
                   </button>
-                  <button className="btn btnPrimary SubmitButton" style={{ fontSize: '20px' }} onClick={uploadFile}>
-                  <FormattedMessage id="Submit" defaultMessage="Submit" />
-                </button>
+                  {loader ?'Loading..':''}
+                  {!loader &&  <button className="btn btnPrimary SubmitButton" style={{ fontSize: '20px' }} onClick={uploadFile}>
+                    <FormattedMessage id="Submit" defaultMessage="Submit" />
+                  </button>
+                  }
                 </div>
               </div>
             </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import CanvasXpressReact from 'canvasxpress-react';
 
 const HeatmapCmp = React.forwardRef(
-  ({ settings, inputData, type, watermarkCss, width, clinicalFilter }, ref) => {
+  ({ settings, inputData, type, watermarkCss, width, clinicalFilter,kmeanType }, ref) => {
     const [data, setData] = useState({});
     const [dataLoaded, setDataLoaded] = useState(false);
     const [configVis, setConfigVis] = useState({});
@@ -68,7 +68,7 @@ const HeatmapCmp = React.forwardRef(
       // config['variablesClustered'] = true;
     }
 
-    if (type === 'k-mean') {
+    if (type === 'k-mean' && kmeanType=='gene' ) {
       config['smpOverlayProperties'] = {
         Treatment: {
           position: 'right',
@@ -126,11 +126,76 @@ const HeatmapCmp = React.forwardRef(
       config['smpOverlays'] = ['Cluster', 'Treatment', 'Dose'];
       config['samplesClustered'] = false;
       config['variablesClustered'] = false;
+      
+
+      config['sortData'] = [['cat', 'smp', 'Cluster']];
+      config['sortDir'] = 'ascending';
+      
+    }
+    if (type === 'k-mean' && kmeanType==='sample' ) {
+      config['varOverlayProperties']={
+        Treatment: {
+          position: 'right',
+          type: 'Default',
+          color: 'rgb(254,41,108)',
+          spectrum: [
+            'rgb(255,0,255)',
+            'rgb(0,0,255)',
+            'rgb(0,0,0)',
+            'rgb(255,0,0)',
+            'rgb(255,215,0)'
+          ],
+          scheme: 'User',
+          showLegend: true,
+          showName: true,
+          showBox: true,
+          rotate: false
+        },
+        Cluster: {
+          position: 'bottom',
+          type: 'Default',
+          color: 'rgb(72,126,182)',
+          spectrum: [
+            'rgb(244,67,54)',
+            'rgb(225,101,25)',
+            'rgb(202,206,23)',
+            'rgb(4,115,49)',
+            'rgb(98,183,247)'
+          ],
+          scheme: 'User',
+          showLegend: false,
+          showName: true,
+          showBox: false,
+          rotate: false
+        },
+        Dose: {
+          thickness: 50,
+          type: 'Dotplot',
+          position: 'right',
+          color: 'rgb(167,206,49)',
+          spectrum: [
+            'rgb(255,0,255)',
+            'rgb(0,0,255)',
+            'rgb(0,0,0)',
+            'rgb(255,0,0)',
+            'rgb(255,215,0)'
+          ],
+          scheme: 'User',
+          showLegend: true,
+          showName: true,
+          showBox: false,
+          rotate: false
+        }
+      }
+      config['varOverlays'] = [ 'Treatment','Cluster','Dose'];
+      config['samplesClustered'] = false;
+      config['variablesClustered'] = true;
+      
 
       config['sortData'] = [['cat', 'smp', 'Cluster']];
       config['sortDir'] = 'ascending';
     }
-
+    console.log(config)
 
     useEffect(() => {
       setConfigVis(config);

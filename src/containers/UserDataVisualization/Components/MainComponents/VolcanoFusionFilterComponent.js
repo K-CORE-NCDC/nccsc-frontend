@@ -16,7 +16,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab, VFData, SVFState }) =
   const [groupFilters, setGroupFilters] = useState(VFData?.groupFilters || {});
   const [volcanoType, setVolcanoType] = useState('transcriptome');
   const [proteomeValue, setProteomeValue] = useState('N');
-  const [userDefienedFilter, setUserDefienedFilter] = useState(SVFState);
+  const [userDefinedFilter, setUserDefienedFilter] = useState(SVFState);
   const [alltabList, setAllTabList] = useState({});
   const [updateFiltersFlag, setUpdateFiltersFlag] = useState(false);
   const [initialUserDefiendRender, setInitialUserDefiendRender] = useState(true);
@@ -50,6 +50,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab, VFData, SVFState }) =
         setGroupFilters(filtersObject);
         setUpdateFiltersFlag(true);
       } else {
+        console.log(filtersObject,proteomeValue)
         setGroupFilters(filtersObject);
         setUpdateFiltersFlag(true);
       }
@@ -76,9 +77,12 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab, VFData, SVFState }) =
         }
 
         volcanoFusionFilterData['volcanoType'] = volcanoType;
-        volcanoFusionFilterData['proteomeValue'] = proteomeValue;
-        volcanoFusionFilterData['filterType'] = userDefienedFilter;
-
+        volcanoFusionFilterData['volcanoTranscriptomeType'] = proteomeValue;
+        volcanoFusionFilterData['filterType'] = userDefinedFilter;
+        console.log(volcanoFusionFilterData)
+        if (volcanoType === 'transcriptome' && proteomeValue==="NT"){
+          parentCallback({ volcanoFusionFilterData: volcanoFusionFilterData });
+        }
         if (volcanoType === 'transcriptome' && groupFilters && Object.keys(groupFilters).length) {
           parentCallback({ volcanoFusionFilterData: volcanoFusionFilterData });
         } else if (
@@ -95,7 +99,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab, VFData, SVFState }) =
       else if (tab === 'fusion') {
         let volcanoFusionFilterData = {};
         volcanoFusionFilterData['groupFilters'] = groupFilters;
-        volcanoFusionFilterData['filterType'] = userDefienedFilter;
+        volcanoFusionFilterData['filterType'] = userDefinedFilter;
         if (groupFilters && Object.keys(groupFilters).length) {
           parentCallback({ volcanoFusionFilterData: volcanoFusionFilterData });
         }
@@ -111,8 +115,8 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab, VFData, SVFState }) =
       return;
     }
     setUpdateFiltersFlag(false);
-  }, [userDefienedFilter]);
-  
+  }, [userDefinedFilter]);
+
   useEffect(() => {
     if (!clinicalMaxMinInfo) {
       if (project_id === undefined) {
@@ -151,7 +155,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab, VFData, SVFState }) =
             </ul>
           </div>
 
-          {volcanoType === 'proteome' && (
+          {(volcanoType === 'proteome' ||volcanoType === 'transcriptome') && (
             <>
               <h6 className="MarginLeft4 Block  TextBlue700 TextBase  FontBold MB2 TextLeft">
                 <FormattedMessage id="Choose sample type" defaultMessage="Choose sample type" />
@@ -225,7 +229,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab, VFData, SVFState }) =
                   <div className="m-1   tab" style={{ gap: '15px' }}>
                     <ul>
                       {
-                        <li className={userDefienedFilter === 'static' ? ' on W50' : ' W50'}>
+                        <li className={userDefinedFilter === 'static' ? ' on W50' : ' W50'}>
                           <button
                             onClick={() => {
                               setUserDefienedFilter('static');
@@ -236,7 +240,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab, VFData, SVFState }) =
                           </button>
                         </li>
                       }
-                      <li className={userDefienedFilter === 'dynamic' ? 'on W50' : ' W50'}>
+                      <li className={userDefinedFilter === 'dynamic' ? 'on W50' : ' W50'}>
                         <button
                           onClick={() => {
                             setUserDefienedFilter('dynamic');
@@ -249,7 +253,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab, VFData, SVFState }) =
                     </ul>
                   </div>
                 )}
-              {userDefienedFilter === 'static' && project_id === undefined && (
+              {userDefinedFilter === 'static' && project_id === undefined && (
                 <PreDefienedFilters
                   viz_type="volcono"
                   groupFilters={groupFilters}
@@ -258,7 +262,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab, VFData, SVFState }) =
                 />
 
               )}
-              {userDefienedFilter === 'dynamic' && project_id === undefined && (
+              {userDefinedFilter === 'dynamic' && project_id === undefined && (
                 <GroupFilters
                   volcanoType={volcanoType}
                   viz_type="volcono"
@@ -315,7 +319,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab, VFData, SVFState }) =
             {project_id === undefined && (
               <div className="m-1 tab" style={{ gap: '10px' }}>
                 <ul>
-                  <li className={userDefienedFilter === 'static' ? ' on W50' : ' W50 '}>
+                  <li className={userDefinedFilter === 'static' ? ' on W50' : ' W50 '}>
                     <button
                       onClick={() => {
                         setUserDefienedFilter('static');
@@ -325,7 +329,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab, VFData, SVFState }) =
                       <FormattedMessage id="Static_volcano" defaultMessage="Static" />
                     </button>
                   </li>
-                  <li className={userDefienedFilter === 'dynamic' ? ' on W50' : 'W50'}>
+                  <li className={userDefinedFilter === 'dynamic' ? ' on W50' : 'W50'}>
                     <button
                       onClick={() => {
                         setUserDefienedFilter('dynamic');
@@ -339,7 +343,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab, VFData, SVFState }) =
               </div>
             )}
 
-            {userDefienedFilter === 'static' && project_id === undefined && (
+            {userDefinedFilter === 'static' && project_id === undefined && (
               <PreDefienedFilters
                 viz_type="fusion"
                 groupFilters={groupFilters}
@@ -347,7 +351,7 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab, VFData, SVFState }) =
                 resetFiltersData={resetFiltersData}
               />
             )}
-            {userDefienedFilter === 'dynamic' && project_id === undefined && (
+            {userDefinedFilter === 'dynamic' && project_id === undefined && (
               <GroupFilters
                 viz_type="fusion"
                 groupFilters={groupFilters}

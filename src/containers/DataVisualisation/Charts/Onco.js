@@ -37,6 +37,15 @@ export default function DataOnco({
   const [optionChoices, setOptionChoices] = useState([]);
   const [option, setOption] = useState([]);
   let { project_id } = useParams();
+  const [Filter,setFilter] =useState({
+    "z_score_up_prot": 1.5,
+    "z_score_down_prot": 0.5,
+    "z_score_up_rna": 1,
+    "z_score_down_rna": -1,
+    "cn_up_value": 1,
+    "cn_equal_value": 2,
+    "cn_down_value": 3,
+  })
   const [customFilterJson, setCustomFilterJson] = useState([]);
 
   useEffect(() => {
@@ -274,6 +283,19 @@ export default function DataOnco({
     }
   }
 
+  const handleFilter =(e)=>{
+    if(e.target.value){
+      const {name,value} = e.target
+      setFilter(prevState=>({
+        ...prevState,
+        [name]:parseFloat(value)
+      }))
+    }
+  }
+  const ChangeFilter = ()=>{
+    setInputState((prevState) => ({ ...prevState, ...Filter }));
+  }
+  
   return (
     <div
       style={{
@@ -284,28 +306,121 @@ export default function DataOnco({
         padding: '5%'
       }}
     >
-      {optionChoices && (
-        <div className="gene_selctionBox">
-          {!noGeneData && (
-            <>
-              <label>
-                <FormattedMessage
-                  id="Clinical_Filters_heatmap"
-                  defaultMessage="Clinical Attribute annotation"
+      <div className='flex Gap5'>
+        {optionChoices && (
+          <div className="gene_selctionBox">
+            {!noGeneData && (
+              <>
+                <label>
+                  <FormattedMessage
+                    id="Clinical_Filters_heatmap"
+                    defaultMessage="Clinical Attribute annotation"
+                  />
+                </label>
+                <Multiselect
+                  options={optionChoices} // Options to display in the dropdown
+                  selectedValues={option} // Preselected value to persist in dropdown
+                  onSelect={onSelect} // Function will trigger on select event
+                  onRemove={onRemove} // Function will trigger on remove event
+                  displayValue="name" // Property name to display in the dropdown options
+                  emptyRecordMsg={<FormattedMessage id="No Clinical Data" defaultMessage="No Clinical Data"/>} // Custom message when no options are available
                 />
-              </label>
-              <Multiselect
-                options={optionChoices} // Options to display in the dropdown
-                selectedValues={option} // Preselected value to persist in dropdown
-                onSelect={onSelect} // Function will trigger on select event
-                onRemove={onRemove} // Function will trigger on remove event
-                displayValue="name" // Property name to display in the dropdown options
-                emptyRecordMsg={<FormattedMessage id="No Clinical Data" defaultMessage="No Clinical Data"/>} // Custom message when no options are available
-              />
-            </>
-          )}
-        </div>
-      )}
+              </>
+            )}
+          </div>
+        )}
+        {showOnco && chartData['types'].length>0 && <div className='TextLeft MarginBottom4' style={{width:'50%'}}>
+          <label>Filter</label>
+          {showOnco && chartData['types'].includes('rna') && <div className="relative flex  oncoBorder">
+            <span
+              className="border oncoWidth TextAlignCenter oncoBoxesLabel" 
+              >mRNA &gt;=</span>
+              
+                <input
+                  type="number"
+                  aria-label="From"
+                  placeholder='From'
+                  value={Filter['z_score_up_rna']}
+                  onChange={handleFilter}
+                  name='z_score_up_rna'
+                  className="oncoBorderLeft oncoBoxes oncoWidth" />
+                  <span
+              className="border oncoWidth TextAlignCenter oncoBoxesLabel" 
+              >mRNA &lt;=</span>
+                <input
+                  type="number"
+                  aria-label="To"
+                  placeholder='To'
+                  value={Filter['z_score_down_rna']}
+                  onChange={handleFilter}
+                  name='z_score_down_rna'
+                  className="oncoBorderLeft oncoBoxes oncoWidth" />
+              
+          </div>}
+          {showOnco && chartData['types'].includes('cnv') && <div className="relative flex  oncoBorder">
+            <span
+              className="border oncoWidth TextAlignCenter oncoBoxesLabel" 
+              >CNV  &lt;= </span>
+            <input
+              type="number"
+              aria-label="From"
+              placeholder='From'
+              value={Filter['cn_up_value']}
+              name='cn_up_value'
+              onChange={handleFilter}
+              className="oncoBorderLeft oncoBoxes oncoWidth" />
+              <span
+              className="border oncoWidth TextAlignCenter oncoBoxesLabel" 
+              >CNV  = </span>
+            <input
+              type="number"
+              aria-label="equal"
+              placeholder='equal'
+              value={Filter['cn_equal_value']}
+              name='cn_equal_value'
+              onChange={handleFilter}
+              className="oncoBorderLeft oncoBoxes oncoWidth" />
+              <span
+              className="border oncoWidth TextAlignCenter oncoBoxesLabel" 
+              >CNV  &gt;= </span>
+            <input
+              type="number"
+              aria-label="To"
+              placeholder='To'
+              value={Filter['cn_down_value']}
+              name='cn_down_value'
+              onChange={handleFilter}
+              className="oncoBorderLeft oncoBoxes oncoWidth" />
+          </div> }
+          {showOnco && chartData['types'].includes('proteome') && <div className="relative flex  oncoBorder">
+            <span
+              className="border oncoWidth TextAlignCenter oncoBoxesLabel" 
+              >PROTEIN &gt;=</span>
+              
+            <input
+              type="number"
+              aria-label="From"
+              placeholder='From'
+              value={Filter['z_score_up_prot']}
+              onChange={handleFilter}
+              name='z_score_up_prot'
+              className="oncoBorderLeft oncoBoxes oncoWidth" />
+              <span
+              className="border oncoWidth TextAlignCenter oncoBoxesLabel" 
+              >PROTEIN &lt;=</span>
+            <input
+              type="number"
+              aria-label="To"
+              placeholder='To'
+              value={Filter['z_score_down_prot']}
+              onChange={handleFilter}
+              name='z_score_down_prot'
+              className="oncoBorderLeft oncoBoxes oncoWidth" />
+          </div>}
+          <button onClick={ChangeFilter} className='btn btnPrimary MarginTop2 FusionNameRE'>Submit</button>
+          
+        </div>}
+      </div>
       {loader ? (
         <LoaderCmp />
       ) : (
@@ -365,6 +480,7 @@ export default function DataOnco({
                       table_count={tableCount}
                       customFilterJson={customFilterJson}
                       project_id={project_id}
+                      filter={Filter}
                     />
                   </div>
                 )}

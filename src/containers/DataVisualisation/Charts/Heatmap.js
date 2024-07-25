@@ -31,6 +31,7 @@ export default function DataHeatmap({
   const filterData = useSelector((data) => data.dataVisualizationReducer.userDefinedFilter);
   const brstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
   const [rangeValue, setRangeValue] = useState(1);
+  // const [clusteringType, setClusteringType] = useState('');
   const [loader, setLoader] = useState(false);
   const [genes, setGenes] = useState([]);
   const [selectedGene, setSelectedGene] = useState([]);
@@ -58,6 +59,7 @@ export default function DataHeatmap({
   const [noData, setNoData] = useState(false);
   const [vizType, setVizType] = useState('');
   const [singleGene, setSingleGene] = useState(false)
+  const [activeKmeanType,setActiveKmeanType] = useState('sample')
   const noOptionsMessage = () => "No clinical data";
 
   // const [SC, SetSC] = useState(screenCapture);
@@ -218,6 +220,7 @@ export default function DataHeatmap({
         dataJson['heat_type'] = mainTab;
         dataJson['cluster'] = rangeValue;
         // dataJson['cluster'] = rangeValue;
+        dataJson['clustering_type'] = activeKmeanType
         let return_data = HeatmapInformation('POST', dataJson);
         return_data
           .then((result) => {
@@ -303,11 +306,18 @@ export default function DataHeatmap({
         vars: [],
         data: []
       };
-
+      let tmp = {};
       let x = {};
-      if (mainTab === 'k-mean') {
+      if (mainTab === 'k-mean' && activeKmeanType==="gene") {
         if (heatmapJson && 'clusters' in heatmapJson) {
           x = {
+            Cluster: heatmapJson['clusters']
+          };
+        }
+      }
+      if (mainTab === 'k-mean' && activeKmeanType==="sample") {
+        if (heatmapJson && 'clusters' in heatmapJson) {
+          tmp = {
             Cluster: heatmapJson['clusters']
           };
         }
@@ -329,7 +339,7 @@ export default function DataHeatmap({
         }
       });
 
-      let tmp = {};
+      
       for (const key in z) {
         if (key in optn) {
           if (key.slice(-3) === '_yn') {
@@ -361,7 +371,7 @@ export default function DataHeatmap({
       // if(y?.vars?.length > 0){
       //   y?.vars.push(y.vars[0])
       // }
-
+      console.log({ z: tmp, x: x, y: y })
       if (setStateTrue) {
         setRenderNoContent(false);
         setData({ z: tmp, x: x, y: y });
@@ -407,6 +417,23 @@ export default function DataHeatmap({
     setOption([]);
   };
 
+  // const changeClusterType = (e, type) => {
+  //   let c = document.getElementsByName('clustering_type');
+  //   for (var i = 0; i < c.length; i++) {
+  //     let classList = c[i].classList;
+  //     classList.remove('hover:bg-main-blue', 'bg-main-blue', 'text-white', 'border-gray-600');
+  //     classList.add('text-teal-700', 'hover:bg-teal-200', 'bg-teal-100');
+  //   }
+  //   e.target.classList.add('hover:bg-main-blue', 'bg-main-blue', 'text-white');
+  //   let dataJson = { ...inputData };
+  //   if (dataJson['heat_type'] === 'k-mean') {
+  //     dataJson['clustering_type'] = type;
+
+  // }
+  //   setClusteringType(dataJson['clustering_type']);
+  //   setOption([]);
+  // };
+
   const changeMainType = (e, type) => {
     let c = document.getElementsByName('maintype');
     for (var i = 0; i < c.length; i++) {
@@ -435,7 +462,7 @@ export default function DataHeatmap({
       dataJson['view'] = viewType;
       dataJson['heat_type'] = type;
       dataJson['cluster'] = rangeValue;
-
+      dataJson['clustering_type'] = activeKmeanType
       setLoader(true);
       let return_data = HeatmapInformation('POST', dataJson);
       return_data
@@ -453,6 +480,9 @@ export default function DataHeatmap({
             changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
             setHeatmapSummaryStatusCode({ status: 200 });
             setClusterRange(d["data"]?.clusters?.length);
+            // if (dataJson['heat_type']=='k-mean'){
+            //   setClusteringType(d["data"]?.clustering_type);
+            // }
           } else {
             setHeatmapJson([]);
             setHeatmapSummaryStatusCode({ status: 204 });
@@ -487,6 +517,7 @@ export default function DataHeatmap({
       dataJson['heat_type'] = mainTab;
       dataJson['cluster'] = rangeValue;
       dataJson['clinicalFilters'] = clinincalAttributesFil;
+      dataJson['clustering_type'] = activeKmeanType
       setLoader(true);
       let return_data = HeatmapInformation('POST', dataJson);
       return_data
@@ -541,6 +572,7 @@ export default function DataHeatmap({
       dataJson['heat_type'] = mainTab;
       dataJson['table_type'] = tableType;
       dataJson['cluster'] = rangeValue;
+      dataJson['clustering_type'] = activeKmeanType
       let return_data = HeatmapInformation('POST', dataJson);
       return_data
         .then((result) => {
@@ -594,6 +626,7 @@ export default function DataHeatmap({
       } else if (tableType === 'phospho') {
         dataJson['genes'] = selectedGene[0]?.split(",");
       }
+      dataJson['clustering_type'] = activeKmeanType
       let return_data = HeatmapInformation('POST', dataJson);
       return_data
         .then((result) => {
@@ -639,6 +672,7 @@ export default function DataHeatmap({
     dataJson['cluster'] = rangeValue;
     dataJson['genes'] = selectedGene;
     dataJson['table_type'] = tableType;
+    dataJson['clustering_type'] = activeKmeanType
     if (inputData.type !== '' && inputData['genes'].length > 0) {
       let return_data = HeatmapInformation('POST', dataJson);
       return_data
@@ -703,6 +737,7 @@ export default function DataHeatmap({
       dataJson['heat_type'] = mainTab;
       dataJson['cluster'] = rangeValue;
       dataJson['table_type'] = tableType;
+      dataJson['clustering_type'] = activeKmeanType
       let return_data = HeatmapInformation('POST', dataJson);
       return_data
         .then((result) => {
@@ -760,6 +795,47 @@ export default function DataHeatmap({
   }, [configVis, noData]);
 
 
+  const changeKmeanType = (e)=>{
+    const {name} = e.target
+    console.log(name)
+    setActiveKmeanType(name)
+    let dataJson = {...inputData}
+    if (inputData.type !== '' && inputData['genes'].length > 0) {
+      dataJson['table_type'] = tableType;
+      dataJson['view'] = viewType;
+      dataJson['heat_type'] = mainTab;
+      dataJson['cluster'] = rangeValue;
+      dataJson['clinicalFilters'] = clinincalAttributesFil;
+      dataJson['clustering_type'] = activeKmeanType
+      setLoader(true);
+      let return_data = HeatmapInformation('POST', dataJson);
+      return_data
+        .then((result) => {
+          const d = result;
+
+          if (d.status === 200) {
+            let r_ = d['data'];
+            if (d["data"]?.max_spectrum_value !== null) {
+              setSpectrumMax(d["data"]?.max_spectrum_value)
+            }
+            if (d["data"]?.min_spectrum_value !== null) {
+              setSpectrumMin(d["data"]?.min_spectrum_value)
+            }
+            setHeatmapJson(r_);
+            changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
+            setHeatmapSummaryStatusCode({ status: 200 });
+            setClusterRange(d["data"]?.clusters?.length);
+          } else {
+            setHeatmapJson([]);
+            setHeatmapSummaryStatusCode({ status: 204 });
+          }
+        })
+        .catch(() => {
+          setHeatmapJson([]);
+          setHeatmapSummaryStatusCode({ status: 204 });
+        });
+    }
+  }
 
   function renderGeneOptions() {
     const geneOptions = (genes || []).map((item, i) => (
@@ -1103,7 +1179,41 @@ export default function DataHeatmap({
             </div>
           </div>
         </div>
+          {(mainTab === 'k-mean') &&(
+          <div className="">
+            <div
+              className="tabs_box W100"
+              style={btnClickNote === '' ? { paddingTop: '22px', width: '100%' } : { paddingTop: '0px', width: '100%' }}
+            >
+              <div className="tab mainTab">
 
+                <div className="tab_main">
+                  <ul>
+                  
+                    <li className={activeKmeanType === 'gene' ? 'on' : ''}>
+                      <button
+                      type='button'
+                      name='gene'
+                      onClick={e=>changeKmeanType(e)}
+                      >Gene</button>
+                    </li>
+                    
+                    <li className={activeKmeanType === 'sample' ? 'on' : ''}>
+                      <button
+                      type='button'
+                      name='sample'
+                        onClick={e=>changeKmeanType(e)}
+                        
+                      >
+                        Sample
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          )}
         <div className="GeneFilteringBox">
           <div className="">
             <label id="listbox-label" style={{ textAlign: 'left' }}>
@@ -1117,6 +1227,7 @@ export default function DataHeatmap({
               ))}
             </select>
           </div>
+          <div className="SpectrumSection">
           <div className="">
             <label className="">Spectrum</label>
             <div className="Spectrum">
@@ -1150,7 +1261,7 @@ export default function DataHeatmap({
               <FormattedMessage id='apply' defaultMessage="Apply" />
             </button>
           </div>
-
+          </div>
           {mainTab === 'k-mean' ? (
             <div className="ClusterBox">
               <div className="">
@@ -1161,16 +1272,10 @@ export default function DataHeatmap({
                         <strong className="">No Of Cluster: {rangeValue}</strong>
                       </label>
                     </span>
-                    <div className="">
-                      <span
-                        className="material-icons"
-                        onClick={(e) => {
-                          changeCluster(e);
-                        }}
-                        style={{ cursor: 'pointer' }}
-                      >
-                        add_task
-                      </span>
+                    <div className="Spectrumbtn">
+                      <button onClick={(e) => {changeCluster(e);}} className="btn btnPrimary">
+                        <FormattedMessage id='apply' defaultMessage="Apply" />
+                      </button>
                     </div>
                   </div>
 
@@ -1187,14 +1292,12 @@ export default function DataHeatmap({
                     style={{ zIndex: "0", important: "true" }}
                   />
                   <ul className="" id="tickmarks">
-                    {/* {[...Array(clusterRange)].map((e, i) =>  */}
                     <li key="min-range" className="">
                       <span className="absolute">1</span>
                     </li>
                     <li key="max-range" className="">
                       <span className="absolute">{clusterRange}</span>
                     </li>
-                    {/*} */}
                   </ul>
                 </div>
               </div>
@@ -1223,6 +1326,7 @@ export default function DataHeatmap({
               // watermarkCss={watermarkCss}
               ref={reference}
               width={_width}
+              kmeanType={activeKmeanType}
             />
             // <h1>Error here</h1>
           )}

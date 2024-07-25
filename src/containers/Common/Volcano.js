@@ -9,7 +9,7 @@ import VolcanoPlotD3 from './VolcanoD3';
 Chart.register(...registerables, zoomPlugin);
 
 const VolcanoCmp = React.forwardRef(
-  ({ data, watermarkCss, negative_data, positive_data, tab_count, tableData }) => {
+  ({ data, watermarkCss, negative_data, positive_data, tab_count, tableData,log2fc,pValue }) => {
     const intl = useIntl();
     const table_cols = [
       {
@@ -31,17 +31,17 @@ const VolcanoCmp = React.forwardRef(
     ];
 
     const downloadTableAsCsv = (tableType) => {
-      let rows = [['GENE NAME', 'LOG2FC', 'LOG(PVALUE)','FDR']];
+      let rows = [['GENE NAME', 'LOG2FC', 'PVALUE','FDR']];
 
       if (tableType === 'negative') {
-        rows = [['GENE NAME', 'LOG2FC', 'LOG(PVALUE) negative','FDR']];
+        rows = [['GENE NAME', 'LOG2FC', 'PVALUE negative','FDR']];
         tableData.forEach((element) => {
           if (element['log2(fold_change)'] <= -1.5 && element['p_value'] <= 0.5) {
             rows.push([element['gene'], element['log2(fold_change)'], element['p_value'],element['fdr']]);
           }
         });
       } else if (tableType === 'positive') {
-        rows = [['GENE NAME', 'LOG2FC', 'LOG(PVALUE) positive','FDR']];
+        rows = [['GENE NAME', 'LOG2FC', 'PVALUE positive','FDR']];
         tableData.forEach((element) => {
           if (element['log2(fold_change)'] >= 1.5 && element['p_value'] <= 0.5) {
             rows.push([element['gene'], element['log2(fold_change)'], element['p_value'],element['fdr']]);
@@ -85,11 +85,11 @@ const VolcanoCmp = React.forwardRef(
         <div className="VolcanoCardText">
           <p className="TextBlue">
             <FormattedMessage id="Blue" defaultMessage="Blue :" />
-            {`Log2FC ≤ -1.5 & pvalue ≤ 0.05`}
+            {`Log2FC ≤ -${log2fc} & pvalue ≤ ${pValue}`}
           </p>
           <p className="TextRed">
             <FormattedMessage id="Red" defaultMessage="Red :" />
-            {`Log2FC ≥ 1.5 & pvalue ≤ 0.05`}
+            {`Log2FC ≥ ${log2fc} & pvalue ≤ ${pValue}`}
           </p>
           <p className="TextGrey">
             <FormattedMessage id="Grey" defaultMessage="Grey :" /> Not significant gene

@@ -35,6 +35,8 @@ export default function DataVolcono({
   const [groupFilters, setGroupFilters] = useState({});
   const [volcanoType, setVolcanoType] = useState('transcriptome');
   const [proteomeValue, setProteomeValue] = useState('N');
+  const [logValue,setLogValue] = useState(1.5)
+  const [pValue,setPValue] = useState(0.05)
 
   useEffect(() => {
     if (!clinicalMaxMinInfo) {
@@ -45,6 +47,7 @@ export default function DataVolcono({
   }, []);
 
   useEffect(() => {
+    console.log(VFData)
     if (inputData && 'genes' in inputData) {
       setInputState((prevState) => ({ ...prevState, ...inputData, ...VFData }));
     }
@@ -53,6 +56,9 @@ export default function DataVolcono({
     }
     if ('volcanoType' in VFData) {
       setVolcanoType(VFData['volcanoType']);
+    }
+    if ('volcanoTranscriptomeType' in VFData) {
+      setProteomeValue(VFData['volcanoTranscriptomeType']);
     }
     if ('proteomeValue' in VFData) {
       setProteomeValue(VFData['proteomeValue']);
@@ -64,6 +70,7 @@ export default function DataVolcono({
 
   useEffect(() => {
     if (inputState && 'genes' in inputState) {
+      
       if (
         inputState.type !== '' &&
         groupFilters &&
@@ -77,6 +84,9 @@ export default function DataVolcono({
         if (volcanoType === 'proteome') {
           inputState['volcanoProteomeType'] = proteomeValue;
         }
+        inputState['pval'] = pValue
+        inputState['log2fc'] = logValue
+        
         let return_data = VolcanoPlotInfo('POST', { ...inputState, filterGroup: groupFilters });
         return_data
           .then((result) => {
@@ -93,7 +103,12 @@ export default function DataVolcono({
             setVolcanoJson();
             history.push('/notfound');
           });
-      } else if (proteomeValue === 'NT') {
+      }else if(inputState.type !== '' && inputState['volcanoTranscriptomeType'] === 'NT'){
+        submitProteomeNT();
+      } 
+      
+      else if (proteomeValue === 'NT') {
+        
         submitProteomeNT();
       }
     }
@@ -142,6 +157,28 @@ export default function DataVolcono({
     }
   }, [volcanoJson]);
 
+  const submitFilter = ()=>{
+    setLoader(true);
+    inputState['pval'] = pValue
+    inputState['log2fc'] = logValue
+    let return_data = VolcanoPlotInfo('POST', { ...inputState, filterGroup: groupFilters });
+    return_data
+      .then((result) => {
+        const d = result;
+        if (d.status === 200) {
+          let r_ = d['data'];
+          r_['status'] = 200;
+          setVolcanoJson(r_);
+        } else {
+          setVolcanoJson();
+        }
+      })
+      .catch(() => {
+        setVolcanoJson();
+        history.push('/notfound');
+      });
+  }
+
   useEffect(() => {
     if (volcanoJson && volcanoJson.status === 200) {
       if (volcanoJson && Object.keys(volcanoJson).length > 0) {
@@ -186,7 +223,13 @@ export default function DataVolcono({
 
   const submitProteomeNT = () => {
     setLoader(true);
-    inputState['volcanoProteomeType'] = proteomeValue;
+    console.log(inputState)
+    if(inputState['volcanoType']==="transcriptome"){
+      inputState['volcanoTranscriptomeType'] = proteomeValue;
+    }else{
+
+      inputState['volcanoProteomeType'] = proteomeValue;
+    }
     if (project_id === undefined) {
       let return_data = VolcanoPlotInfo('POST', { ...inputState, filterGroup: groupFilters });
       return_data
@@ -262,6 +305,20 @@ export default function DataVolcono({
 
           <div className="MarginTop20">
             <div className="OverFlowXHide">
+            {showVolcano && (
+              <div className='flex' style={{gap:'30px'}}>
+                <div className='flexRow'>
+                  <label>Log2FoldChange</label>
+                  <input type='number' onChange={(e)=>setLogValue(parseFloat(e.target.value))} value={logValue} className='volcanoInputText'/>
+                </div>
+                <div className='flexRow'>
+                  <label>pValue</label>
+                  <input type='number' onChange={(e)=>setPValue(parseFloat(e.target.value))} value={pValue} className='volcanoInputText'/>
+                </div>
+                <div className='flexRow' style={{justifyContent:'end'}}>
+                  <button onClick={submitFilter} className='btn btnPrimary' style={{margin:'0px'}}>Submit</button>
+                </div>
+              </div>)}
               {showVolcano && (
                 <VolcanoCmp
                   watermarkCss={watermarkCss}
@@ -272,6 +329,8 @@ export default function DataVolcono({
                   positive_data={positiveData}
                   tab_count={tabCount}
                   tableData={volcanoJson['table_data']}
+                  pValue={pValue}
+                  log2fc = {logValue}
                 />
               )}
             </div>

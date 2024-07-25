@@ -12,14 +12,11 @@ import Draggable from 'react-draggable';
 import AOS from 'aos';
 import { useHistory } from 'react-router-dom';
 import FileUploadModal from './FileUploadModal';
-// import FileModal from './FileModal';
 
 function Modal({ showModal, toggleModal, fileName }) {
   let fileNameImage = require(`../../../assets/images/FileScreenshots/${fileName}.png`).default;
   let fileNameFile = require(`../../../assets/files/20_samples/${fileName}.tsv`).default;
-  const setShowModalFunction = (stateData) => {
-    setShowModal(stateData);
-};
+
   return (
     <>
       {showModal ? (
@@ -32,7 +29,7 @@ function Modal({ showModal, toggleModal, fileName }) {
               <div className="Toolmodal-dialog">
                 {/*header*/}
                 <div className="Toolmodal-header">
-                  <h5 className="Toolmodal-title" style={{ fontSize: '20px' }}>
+                  <h5 className="Toolmodal-title toolModal-header" style={{ marginTop:'5px',fontSize: '20px' }}>
                     {' '}
                     <FormattedMessage
                       id="SampleFileDownload"
@@ -101,6 +98,7 @@ function Modal({ showModal, toggleModal, fileName }) {
 const Table = ({ updateComponentNumber }) => {
   const [filesData, setFilesData] = useState({});
   const [projectName, setProjectName] = useState('');
+  const [mutationType, setMutationType] = useState('dna');
   const [showModal, setShowModal] = useState(false);
   const [fileName, setFileName] = useState('');
   const [isModal, setIsModal] = useState(false);
@@ -108,9 +106,32 @@ const Table = ({ updateComponentNumber }) => {
   const [isOpen, setIsOpen] = useState(true);
   const history = useHistory();
   const intl = useIntl();
+  const [mafDetails,setMafDetails] = useState('')
+
   const setIsModalFunction = (stateData) => {
     setIsModal(stateData);
 };
+
+const style={
+  dna_button:{
+    background:'#efefef',
+    border:"1px solid #767676",
+    padding:'3px 10px',
+    color:"#000",
+    fontSize:'12px',
+    margin:'0px',
+    fontFamily:'sans-serif',
+    letterSpacing:'0.1px',
+    borderRadius:'2px'
+  },
+  span_text:{
+    fontSize: '14px',
+    marginLeft: '5px',
+    letterSpacing: '0.1px',
+    color: 'rgb(97, 97, 97)',
+    fontFamily: 'sans-serif',
+  }
+}
 
   useEffect(() => {
     dispatch(clearMultiFIleUploadState());
@@ -143,24 +164,37 @@ const Table = ({ updateComponentNumber }) => {
         type: type
       }
     }));
+    console.log(filesData)
   };
+
+  const getMafName = (name)=>{
+    setMutationType('maf')
+    setMafDetails(name)
+  }
 
   const handleInputChange = (event) => {
     setProjectName(event.target.value);
   };
 
   const handleClearFile = (name) => {
-    setFilesData((prevFormData) => {
-      const updatedFormData = { ...prevFormData };
-      delete updatedFormData[name];
-      return updatedFormData;
-    });
+    if(name==='mutation_file_name'){
+      setMutationType('dna')
+      setMafDetails('')
+    }else{
+      setFilesData((prevFormData) => {
+        const updatedFormData = { ...prevFormData };
+        delete updatedFormData[name];
+        return updatedFormData;
+      });
+    }
+
   };
 
   const handleUpload = () => {
     // if (filesData['clinical_information'] && projectName !== '') {
       if (projectName !== '') {
-      dispatch(multiFileUpload(filesData, projectName));
+
+      dispatch(multiFileUpload(filesData, projectName,mafDetails,mutationType));
       updateComponentNumber(1);
     } else if (projectName === '') {
       Swal.fire({
@@ -177,10 +211,6 @@ const Table = ({ updateComponentNumber }) => {
     }
   };
 
-  const handleFileUpload = (fileType, files) => {
-    // Handle the file upload based on the fileType and files
-    console.log(`fileType = ${fileType}, files= ${files}`);
-  };
 
   const handleReset = () => {
     setFilesData({});
@@ -411,46 +441,61 @@ const Table = ({ updateComponentNumber }) => {
                     </div>
                   </td>
                   <td className="MultiUploadTDHeader MultiUploadTD">
-                    {filesData['dna_mutation'] ? (
+                  {mutationType==='maf'?<>
+                    {mafDetails ? (
                       <>
                         <span>
-                          {filesData['dna_mutation'] && filesData['dna_mutation'].file.name}
+                          {mafDetails}
                         </span>
                         <button
                           className="MultiUploadBgGrayButton"
                           type="button"
-                          onClick={() => handleClearFile('dna_mutation')}
+                          onClick={() => handleClearFile('mutation_file_name')}
                         >
                           <FormattedMessage id="Reset" defaultMessage="Reset" />
                         </button>
                       </>
-                    )
-                    :
-                    (
-                    <>
-                        {/* <input
-                          type="file"
-                          onChange={(event) => handleFileChange(event, 'dna_mutation')}
-                        />
-                        <button className="MultiUploadBgGrayButton" disabled>
-                          <FormattedMessage id="Reset" defaultMessage="Reset" />
-                        </button> */}
+                    ) :''}</>:''}
+                    {mutationType==='dna'?<>
+                      {filesData['dna_mutation'] ? (
+                        <>
+                          <span>
+                            {filesData['dna_mutation'] && filesData['dna_mutation'].file.name}
+                          </span>
+                          <button
+                            className="MultiUploadBgGrayButton"
+                            type="button"
+                            onClick={() => handleClearFile('dna_mutation')}
+                          >
+                            <FormattedMessage id="Reset" defaultMessage="Reset" />
+                          </button>
+                        </>
+                      )
+                      :
+                      (
+                      <>
 
-                        <button
-                          className="MultiUploadTDHeader MultiUploadTD"
-                          type="button"
-                          onClick={setIsModalFunction}
-                        >
-                          <FormattedMessage id="ChooseFile" defaultMessage="Choose File" />
-                        </button>
-
-                        {isModal && <FileUploadModal isModal={isModal} setIsModal={setIsModalFunction} />}
-                            <button className="MultiUploadBgGrayButton" disabled>
-                              <FormattedMessage id="Reset" defaultMessage="Reset" />
+                          <div>
+                            <button
+                              style={style.dna_button}
+                              type="button"
+                              onClick={setIsModalFunction}
+                            >
+                              <FormattedMessage id="ChooseFile" defaultMessage="Choose File" />
                             </button>
-                      </>
-                    )
+                            <span style={style.span_text}>
+                            No file chosen
+                            </span>
+                          </div>
+
+                          {isModal && <FileUploadModal isModal={isModal} setIsModal={setIsModalFunction} handleFileUpload={handleFileChange} mafType={getMafName} />}
+                              <button className="MultiUploadBgGrayButton" disabled>
+                                <FormattedMessage id="Reset" defaultMessage="Reset" />
+                              </button>
+                        </>
+                      )
                       }
+                    </>:''}
                   </td>
                 </tr>
                 <tr>

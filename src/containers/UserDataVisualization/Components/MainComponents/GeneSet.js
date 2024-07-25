@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import genes from '../../../Common/gene.json';
 
-const GeneSet = ({ parentCallback, filterState }) => {
+const GeneSet = ({ parentCallback, filterState,variantSummary }) => {
   const geneValue = useRef(null);
   const [value, setValue] = useState(filterState['type'] ? filterState['type'] : 'user-defined');
   const [geneData, setGeneData] = useState(
@@ -44,7 +44,7 @@ const GeneSet = ({ parentCallback, filterState }) => {
                 <FormattedMessage id="UserDefinedList" defaultMessage="User-Defined List" />
               </option>
               <option value="major-genes"> Cancer major genes (28 genes) </option>
-              <option value="onco-genes"> OncoKB cancer genes (1148 genes) </option>
+              {variantSummary && <option value="onco-genes"> OncoKB cancer genes (1148 genes) </option> }
               <option value="brst-major-genes">Breast cancer major genes (20 genes)</option>
               <option value="hrd-genes">HRD genes (15 genes)</option>
               <option value="hrd-asso-brst">HRD association breast (26 genes)</option>

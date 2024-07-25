@@ -68,9 +68,6 @@ function Modal({ showModal, toggleModal }) {
                                           {verificationResponse && 'specific_issue' in verificationResponse && verificationResponse['specific_issue'] === 'allFileColumns3' &&
                                             <FormattedMessage id="allFileColumns3" defaultMessage="Error: Please Read Instructions" />
                                           }
-                                          {verificationResponse && 'specific_issue' in verificationResponse && verificationResponse['specific_issue'] === 'SampleMismatch' &&
-                                            <FormattedMessage id="SampleMismatch" defaultMessage="Samples didn't match properly. Please recheck the files and try uploading again." />
-                                          }
                                         </p>
                                       </li>
                                     )}

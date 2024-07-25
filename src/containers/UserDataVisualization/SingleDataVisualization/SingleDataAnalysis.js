@@ -48,6 +48,10 @@ export default function DataVisualization() {
     document.body.removeChild(link);
   }
 
+  let variant_summary_gene = false
+  if (tabName === 'variant-summary') {
+    variant_summary_gene = true
+  }
 
   const setToFalseAfterScreenCapture = (param = false) => {
 
@@ -108,7 +112,7 @@ export default function DataVisualization() {
     dispatch(getBreastKeys(state));
   }, [state, tab])
 
-  //Second UseEffect 
+  //Second UseEffect
   useEffect(() => {
     setTabName(tab === 'home' ? undefined : tab);
     setChartName(tab);
@@ -466,7 +470,7 @@ export default function DataVisualization() {
                                     id="GeneSetPopverChild"
                                     style={{ width: "100%" }}
                                   >
-                                    <GeneSet parentCallback={callback} filterState={state} />
+                                    <GeneSet parentCallback={callback} filterState={state} variantSummary={variant_summary_gene} />
                                   </Popover.Panel>
                                 </Transition>
                               </div>

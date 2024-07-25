@@ -1521,3 +1521,46 @@
 }
 
 /* Existing CSS code */
+.toolModal-header{
+  margin:0px;
+  align-content: center;
+
+}
+.modelFileType{
+  margin-bottom:5px;
+}
+.textClass{
+  margin-right:15px;
+}
+.selectTable{
+  align-items: center;
+  justify-content: space-evenly;
+  border: 1px solid;
+}
+.trashIconSize{
+  width:20px;
+  height:20px;
+}
+.oncoWidth{
+  width: 20% !important;
+  padding:10px;
+  align-items: center;
+  border-radius:0px !important;
+}
+.oncoBorder{
+  border:1px solid #ddd;
+  border-radius:0px;
+  align-items: center;
+  margin-bottom:10px;
+}
+.oncoBoxesLabel{
+  background:#dbdbdb;
+}
+.oncoBoxes{
+  height:30px !important;
+  padding:15px 10px;
+}
+.oncoBorderLeft{
+  border:0;
+  
+}

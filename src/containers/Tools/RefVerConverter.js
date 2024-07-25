@@ -72,6 +72,7 @@ function Modal({ showModal, setShowModal }) {
 function RefVerConverter() {
     const fileInputRef = useRef(null);
     const [refVerConverterFiles, setRefVerConverterFiles] = useState({});
+    const [refVerConverterFilesName, setRefVerConverterFilesName] = useState([]);
     const [loader, setLoader] = useState(false);
     const [msg, setMsg] = useState({});
     const [html, setHtml] = useState([]);
@@ -111,17 +112,50 @@ function RefVerConverter() {
 
     let backend_url = config['auth'];
 
-    let handleFileChange = (e) => {
-        const newFileName = e.target.files[0].name;
-        setRefVerConverterFiles(() => ({
-            [newFileName]: {
-                file: e.target.files[0],
-                fileName: newFileName
+    const handleFileChange = (e) => {
+        const newFiles = Array.from(e.target.files);
+
+        if (newFiles.length + Object.keys(refVerConverterFiles).length > 5) {
+            alert("You can upload a maximum of 5 files at once.");
+            return;
+        }
+
+        let totalSize = 0;
+
+        // Calculate the total size of already selected files
+        for (const fileKey in refVerConverterFiles) {
+            totalSize += refVerConverterFiles[fileKey].file.size;
+        }
+
+        // Calculate the total size of the new files
+        let newFilesSize = 0;
+        for (let i = 0; i < newFiles.length; i++) {
+            newFilesSize += newFiles[i].size;
+        }
+
+        // Check if the total number of files does not exceed 50 and the total size is less than or equal to 500MB
+        if (newFiles.length + Object.keys(refVerConverterFiles).length <= 5 && totalSize + newFilesSize <= 500 * 1024 * 1024) {
+            const newFormData = { ...refVerConverterFiles };
+
+            for (let i = 0; i < newFiles.length; i++) {
+                const newFile = newFiles[i];
+                const newFileName = newFile.name;
+                newFormData[newFileName] = {
+                    file: newFile,
+                    fileName: newFileName,
+                };
             }
-        }));
-    }
 
+            setRefVerConverterFiles(newFormData);
 
+            const newFileNames = newFiles.map((file) => file.name);
+            setRefVerConverterFilesName([...refVerConverterFilesName, ...newFileNames]);
+        } else if (totalSize + newFilesSize > 500 * 1024 * 1024) {
+            alert("The total file size should not exceed 500MB.");
+        } else {
+            alert("Maximum 50 files are allowed.");
+        }
+    };
     const handleHg19Change = () => {
         sethg19(true);
         sethg38(false);
@@ -140,8 +174,9 @@ function RefVerConverter() {
             return updatedFormData;
         });
 
+        const updatedFileNames = refVerConverterFilesName.filter((name) => name !== fileName);
 
-        fileInputRef.current.value = "";
+        setRefVerConverterFilesName(updatedFileNames);
     };
 
     let uploadFile = () => {
@@ -168,6 +203,7 @@ function RefVerConverter() {
             }, 10000));
         }
     }, [startInterval])
+
 
     useEffect(() => {
         if (refVerConverterResponse) {
@@ -202,17 +238,19 @@ function RefVerConverter() {
                                 className="Flex"
                             >
                                 <FormattedMessage id='RefverResult1' defaultMessage='Your Results are Ready here.' />
-                                <a
-                                    className="ToolResultsReady"
-                                    href={
-                                        backend_url +
-                                        'media/RefVerConverter/output/' +
-                                        'outputfile' + refVerConverterResponse['container_name'] + '.vcf'
-                                    }
-                                    download={`${refVerConverterResponse['container_name']}.vcf`}
-                                >
-                                    {` (${refVerConverterResponse['container_name']}) `}
-                                </a>
+                                {refVerConverterResponse.zip_file_url ? (
+                                    <a
+                                        className="ToolResultsReady"
+                                        href={
+                                            backend_url +
+                                             'media/RefVerConverter/output/' + refVerConverterResponse.zip_file_url}
+                                        download
+                                    >
+                                        {` (${refVerConverterResponse.zip_file_url}) `}
+                                    </a>
+                                ) : (
+                                    <span>{` (${refVerConverterResponse['container_name']}) `}</span>
+                                )}
                                 <FormattedMessage id='RefverResult2' defaultMessage='Click on the Link to download' />
                             </span>
                         </div>
@@ -281,20 +319,27 @@ function RefVerConverter() {
                                                     <div>
                                                         <dl>
                                                             <dt>
-                                                                <FormattedMessage id="UploadFile" defaultMessage="Upload File" />
+                                                                <FormattedMessage id="UploadFile" defaultMessage="Upload Files" />
                                                             </dt>
                                                             <dd>
-                                                                <div className="inputText">
+                                                                <div className="inputText flex">
                                                                     <input
                                                                         type="file"
-                                                                        className="w100"
+                                                                        className="w100 maf-merger-file-input"
                                                                         accept=".vcf, "
                                                                         id="VCFFiles"
                                                                         onChange={(e) => handleFileChange(e)}
                                                                         autoComplete="off"
                                                                         style={{ padding: '10px' }}
                                                                         ref={fileInputRef}
+                                                                        multiple={true}
                                                                     />
+                                                                    <label className='maf-merger-label' htmlFor="VCFFiles">
+                                                                        <FormattedMessage id='SelectMultipleFiles' defaultMessage='Select Multiple Files' />
+                                                                    </label>
+                                                                    <p style={{ marginTop: '10px' }}>
+                                                                        {refVerConverterFilesName?.length > 0 ? refVerConverterFilesName?.length : ""}
+                                                                    </p>
                                                                 </div>
                                                             </dd>
                                                         </dl>

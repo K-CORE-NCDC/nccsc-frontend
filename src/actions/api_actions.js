@@ -314,19 +314,25 @@ export function refverconverter(method, data) {
         })
 
         .catch(() => { });
-    } else {
-      // formData.append('container_name',data['container_name'])
-      url += `?container_name=${data.container_name}`;
-      sendRequest(url, method, formdata)
-        .then((result) => {
-          const d = result;
-          dispatch({
-            type: homeConstants.REFVERCONVERTER,
-            payload: d.data
+    }
+    else {
+      const containerNames = data.container_name;
+      const requests = containerNames.map((containerName) => {
+        const container_url = `${url}?container_name=${containerName}`;
+        return sendRequest(container_url, method, formdata);
+      });
+
+      Promise.all(requests)
+        .then((results) => {
+          results.forEach((result) => {
+            const d = result;
+            dispatch({
+              type: homeConstants.REFVERCONVERTER,
+              payload: d.data
+            });
           });
           dispatch({ type: homeConstants.REQUEST_DONE });
         })
-
         .catch(() => { });
     }
   };
@@ -622,7 +628,7 @@ export function SingleFileUpload(fileData, projectName) {
   };
 }
 
-export function multiFileUpload(fileData, projectName) {
+export function multiFileUpload(fileData, projectName,mafDetails,mutationType) {
   return (dispatch) => {
     const data = new FormData();
     Object.keys(fileData).forEach((element) => {
@@ -632,6 +638,9 @@ export function multiFileUpload(fileData, projectName) {
     });
     data.set('project_name', projectName);
     data.set('csrftoken', getCookie('csrftoken'));
+    data.set('mutation_file_name', mafDetails);
+    data.set('mutation_type',mutationType)
+
     const url = `${config.auth}multi-new-user-data-visualization/`;
     sendRequest(url, 'POST', data)
       .then((result) => {

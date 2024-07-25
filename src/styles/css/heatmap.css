@@ -29,6 +29,13 @@
   display: flex;
 }
 
+.SpectrumSection {
+  border: 1px solid #3533c0;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+}
+
 .FilterBox {
   display: flex !important;
   gap: 3% !important;

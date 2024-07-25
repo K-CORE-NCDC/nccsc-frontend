@@ -21,7 +21,10 @@ var VAR_CLS_FRAME_SHIFT_INS = '#8B00C9';
 var VAR_CLS_FRAME_SHIFT_DEL = '#070ffa';
 var VAR_CLS_GERMLINE = '#fa0707';
 
-var non_mutation_rule_params = {
+
+
+
+window.non_mutation_rule_params = {
   // Default: gray rectangle
   '*': {
     shapes: [
@@ -52,7 +55,7 @@ var non_mutation_rule_params = {
           z: 3
         }
       ],
-      legend_label: 'mRNA Upregulation (z-score >= 1)'
+      legend_label: `mRNA Upregulation (z-score >= 1)`
     },
     // Light blue outline for downregulation
     down: {
@@ -69,7 +72,7 @@ var non_mutation_rule_params = {
           z: 3
         }
       ],
-      legend_label: 'mRNA Downregulation (z-score <= -1)'
+      legend_label: `mRNA Downregulation (z-score <= -1)`
     }
   },
   // protein expression regulation
@@ -89,7 +92,7 @@ var non_mutation_rule_params = {
           z: 4
         }
       ],
-      legend_label: 'Protein Upregulation (value >= 1.5)'
+      legend_label: `Protein Upregulation (value >= 1.5)`
     },
     // small down arrow for upregulated
     down: {
@@ -106,7 +109,7 @@ var non_mutation_rule_params = {
           z: 4
         }
       ],
-      legend_label: 'Protein Downregulation (value <= 0.5)'
+      legend_label: `Protein Downregulation (value <= 0.5 )`
     }
   },
   cnv: {
@@ -125,7 +128,7 @@ var non_mutation_rule_params = {
           z: 4
         }
       ],
-      legend_label: 'Cnv (value <= 1)'
+      legend_label: `Cnv (value <= 1)`
     },
     // small down arrow for upregulated
     white: {
@@ -142,7 +145,7 @@ var non_mutation_rule_params = {
           z: 4
         }
       ],
-      legend_label: 'Cnv (value = 2)'
+      legend_label: `Cnv (value = 2)`
     },
     red: {
       shapes: [
@@ -158,7 +161,7 @@ var non_mutation_rule_params = {
           z: 4
         }
       ],
-      legend_label: 'Cnv (value >= 3)'
+      legend_label: `Cnv (value >= 3)`
     }
   },
   // fusion
