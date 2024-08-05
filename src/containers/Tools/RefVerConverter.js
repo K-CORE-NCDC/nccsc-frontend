@@ -119,7 +119,6 @@ function RefVerConverter() {
             alert("You can upload a maximum of 5 files at once.");
             return;
         }
-
         let totalSize = 0;
 
         // Calculate the total size of already selected files
@@ -153,7 +152,7 @@ function RefVerConverter() {
         } else if (totalSize + newFilesSize > 500 * 1024 * 1024) {
             alert("The total file size should not exceed 500MB.");
         } else {
-            alert("Maximum 50 files are allowed.");
+            alert("Maximum 5 files are allowed.");
         }
     };
     const handleHg19Change = () => {
@@ -165,7 +164,10 @@ function RefVerConverter() {
         sethg19(false);
         sethg38(true);
     };
-
+    function isAlphanumeric(str) {
+        // Check if the string contains only alphanumeric characters
+        return /^[a-zA-Z0-9_.-]+$/.test(str);
+    }
     const handleFileRemove = (fileName) => {
 
         setRefVerConverterFiles((prevFormData) => {
@@ -180,18 +182,28 @@ function RefVerConverter() {
     };
 
     let uploadFile = () => {
-        // Check if all files in the object have the ".maf" extension
+        // Check if all files in the object have the ".vcf" extension
         const areAllFilesVcf = Object.keys(refVerConverterFiles).every(file => file.endsWith('.vcf'));
+        const alphanum= Object.keys(refVerConverterFiles).every(file => {
+            let fileNameWithoutExtension = file.split('.').slice(0, -1).join('.');
+            return isAlphanumeric(fileNameWithoutExtension);
+        });
 
-        if (areAllFilesVcf) {
+        if (areAllFilesVcf && alphanum) {
             setIsError(false);
             setLoader(true);
             setHtml([])
             dispatch(refverconverter('POST', { refVerConverterFiles: refVerConverterFiles, hg19: hg19, hg38: hg38 }));
             setMsg({ id: 'FileUplodPlsWait', defaultMessage: 'File Uploading, Please Wait......' });
         } else {
+            if (!alphanum) {
+                // setIsError(true);
+                // setMsg({ id: 'RefverInvalid', defaultMessage: 'Invalid file name. Only alphanumeric characters are allowed.' });
+                alert("Invalid file name. Only alphanumeric characters are allowed.");
+            }
+            else if (!areAllFilesVcf){
             setIsError(true);
-            setMsg({ id: 'RefverInvalid', defaultMessage: 'Invalid file format. Please select VCF files only.' });
+            setMsg({ id: 'RefverInvalid', defaultMessage: 'Invalid file format. Please select VCF files only.' });}
         }
     };
 

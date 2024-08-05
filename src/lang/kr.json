@@ -629,5 +629,9 @@
   "Required":"필수 입력",
   "AtleastOne":"표시된 데이터 중 최소 한 가지는 입력 필요",
   "Optional":"옵션 (없어도 시각화 가능)",
-  "No Clinical Data":"임상 정보 없음"
+  "No Clinical Data":"임상 정보 없음",
+  "tsvaccepted":"참고: .tsv 파일만 허용됩니다.",
+  "MatrixToMeltedInfo":"본 분석 도구는 매트릭스 형식의 파일을 멜트 형식의 파일로 변환하는 도구입니다.",
+  "DfDesc1":"매트릭스 형식 파일 변환",
+  "DfDesc2":"녹은 형식의 파일에"
 }

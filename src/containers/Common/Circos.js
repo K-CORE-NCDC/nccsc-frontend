@@ -58,7 +58,7 @@ const CircosCmp = React.forwardRef(
       chrY: 59373566
     };
 
-    
+
 
     const drawCircos = (width, GRCh37, cytobands, api_data) => {
       let childnode = document.getElementById('circos');
@@ -75,15 +75,15 @@ const CircosCmp = React.forwardRef(
         height: newWidth
       });
 
-      
+
 
 
       let data = cytobands;
       let all_chr = [];
-     
+
       for (var i = 0; i < GRCh37.length; i++) {
-        
-        
+
+
           all_chr.push({
             block_id: GRCh37[i]['id'],
             position: 0,
@@ -94,7 +94,7 @@ const CircosCmp = React.forwardRef(
 
       var mutationData = [...all_chr];
       let total_scatter = []
-      
+
       if ('dna_mutation' in api_data) {
         if(api_data['dna_mutation'].length>0){
           total_scatter.push('dna_mutation')
@@ -103,7 +103,7 @@ const CircosCmp = React.forwardRef(
         let iter = 1;
         let dna_mutation_data = api_data['dna_mutation'];
         for (let i = 0; i < dna_mutation_data.length; i++) {
-          
+
           const startPos = staticPositionValues[dna_mutation_data[i].chromosome];
           let position = Math.floor(Math.random() * startPos);
           mutationData.push({
@@ -112,7 +112,7 @@ const CircosCmp = React.forwardRef(
             value: dna_mutation_data[i].value,
             name: dna_mutation_data[i].hugo_symbol
           });
-          
+
           if (iter === 10) {
             iter = 1;
             strchr = iter + parseFloat((strchr + 3.5).toFixed(3));
@@ -235,10 +235,10 @@ const CircosCmp = React.forwardRef(
 
       let total_scatter_length = total_scatter.length
       let tmpOuterRadius = 1.0
-      
-      
+
+
       let pos = []
-      
+
       for(i=1;i<=total_scatter_length;i++){
         let tmp_pos = 1/total_scatter_length
         if(i!=1){
@@ -246,7 +246,7 @@ const CircosCmp = React.forwardRef(
         }
         pos.push(tmp_pos)
       }
-      
+
       let tmpInnerRadius = pos.pop()-0.1;
       if (total_scatter_length==1){
         tmpInnerRadius = 0.2
@@ -267,41 +267,41 @@ const CircosCmp = React.forwardRef(
       if(total_scatter.indexOf('dna_mutation')>-1){
         mutationInnerRadius = tmpInnerRadius
         mutationOuterRadius = tmpOuterRadius
-        tmpOuterRadius = tmpInnerRadius 
+        tmpOuterRadius = tmpInnerRadius
         tmpInnerRadius = pos.pop();
       }
       if(total_scatter.indexOf('rna_expression')>-1){
         rnaInnerRadius = tmpInnerRadius
         rnaOuterRadius = tmpOuterRadius
-        tmpOuterRadius = tmpInnerRadius 
+        tmpOuterRadius = tmpInnerRadius
         tmpInnerRadius = pos.pop();
       }
       if(total_scatter.indexOf('dna_methylation')>-1){
         methylationInnerRadius = tmpInnerRadius
         methylationOuterRadius = tmpOuterRadius
-        tmpOuterRadius = tmpInnerRadius 
+        tmpOuterRadius = tmpInnerRadius
         tmpInnerRadius = pos.pop();
       }
-      
+
       if(total_scatter.indexOf('global_proteome')>-1){
         proteomeInnerRadius = tmpInnerRadius
         proteomeOuterRadius = tmpOuterRadius
-        tmpOuterRadius = tmpInnerRadius 
+        tmpOuterRadius = tmpInnerRadius
         tmpInnerRadius = pos.pop();
       }
       if(total_scatter.indexOf('cnv')>-1){
         cnvInnerRadius = tmpInnerRadius
         cnvOuterRadius = tmpOuterRadius
-        tmpOuterRadius = tmpInnerRadius 
+        tmpOuterRadius = tmpInnerRadius
         tmpInnerRadius = pos.pop();
       }
       if(total_scatter.indexOf('sv_data')>-1){
         svInnerRadius = tmpInnerRadius
         svOuterRadius = tmpOuterRadius
-        tmpOuterRadius = tmpInnerRadius 
+        tmpOuterRadius = tmpInnerRadius
         tmpInnerRadius = pos.pop();
       }
-      
+
 
       let conf = {
 
@@ -426,7 +426,7 @@ const CircosCmp = React.forwardRef(
 
           innerRadius: methylationInnerRadius,
           outerRadius: methylationOuterRadius,
-          
+
           showAxesTooltip: false,
           color: function (d) {
             if (dna_methylation) {
@@ -476,13 +476,29 @@ const CircosCmp = React.forwardRef(
           innerRadius: proteomeInnerRadius,
           outerRadius: proteomeOuterRadius,
           showAxesTooltip: false,
+          // color: function (d) {
+          //   if (d.name in selectedGenesObject) {
+          //     return selectedGeneColor;
+          //   } else {
+          //     return '#42f4eb';
+          //   }
+          // }
           color: function (d) {
             if (d.name in selectedGenesObject) {
               return selectedGeneColor;
             } else {
-              return '#42f4eb';
+
+              if (d.value >= 1.5) {
+                return '#f22316';
+              }
+              if (d.value <= 0.5) {
+
+                return '#115ff0';
+              }
+              return '#a8a5a5';
             }
-          },
+          }
+          ,
           strokeColor: function (d) {
             if (d.name) {
               return 1;
@@ -552,7 +568,7 @@ const CircosCmp = React.forwardRef(
         circosPlot.highlight('cytobands', data, {
           innerRadius: svInnerRadius,
           outerRadius: svOuterRadius,
-          
+
           opacity: 0.5,
           color: function (d) {
             return gieStainColor[d.gieStain];
@@ -615,9 +631,9 @@ const CircosCmp = React.forwardRef(
           }
         });
       }
-      
+
       circosPlot.render();
-      
+
       let tmp_html = {
         'cytoband':'',
         'dna_mutation':'',
@@ -656,15 +672,15 @@ const CircosCmp = React.forwardRef(
       .each(function(d,i){
         tmp_html['cytobands'] = d.firstChild.innerHTML
       });
-      
+
       var cyt = d3.selectAll('.l1')
       .each(function(d,i){
-        
+
         tmp_html['l1'] = '<path class="chord" d="M2.392349916866057,-99.97137921362929A100,100,0,0,1,3.423641560698617,-99.94137620857468Q0,0,2.3923511202095233,-99.97137918483286A100,100,0,0,1,3.4236427636809625,-99.94137616736471Q0,0,2.392349916866057,-99.97137921362929Z" opacity="0.9" fill="red"></path>'
       });
-      
-      
-      
+
+
+
       setLegendData(tmp_html)
     };
 
@@ -781,13 +797,13 @@ export const ModalComponent = ({ setOpenModal,legendData }) => {
       dt = legendData['dna_mutation'].split('</path>')[0]
       dt = dt.split('M')[1].split(',')
       dtx1 = dt[0].split('.')[1]
-    
+
     }
     if(legendData['rna_up']){
       rt = legendData['rna_up'].split('</path>')[0]
       rt = rt.split('M')[1].split(',')
       rtx1 = rt[0].split('.')[1]
-      
+
     }
     if(legendData['snp-250-4']){
       sp4t = legendData['snp-250-4'].split('</path>')[0]
@@ -800,7 +816,7 @@ export const ModalComponent = ({ setOpenModal,legendData }) => {
       sp5t = legendData['snp-250-5'].split('</path>')[0]
       sp5t = sp5t.split('M')[1].split(',')
       sp5x1 = sp5t[0].split('.')[1]
-      
+
     }
     if (legendData['snp-250-6']){
       sp6t = legendData['snp-250-6'].split('</path>')[0]
@@ -816,76 +832,90 @@ export const ModalComponent = ({ setOpenModal,legendData }) => {
       console.log(cybt)
       cybx1 = cybt[0].split('.')[1]
     }
-    
-    let html_= `<div><svg   width="600" height="600"  style="transform:rotate(-12deg)">
-                <g class='all' transform='translate(100,400)'>`
-      if(legendData['cytoband']){
-        html_ += `<g class='cytobands-1'>
-          ${legendData['cytoband']}
-        </g>
-        <g>
-          <text x="84" y="-${(ct[2]-50)}" style='transform:rotate(12deg)'>-->Chromosome Band</text>
-        </g>`
-      }         
-      if(legendData['dna_mutation']){
-        html_ +=`<g class='dna-mutation'>
-          ${legendData['dna_mutation']}
-        </g>
-        <g>
-          <text x="84" y="-${(dt[2])}" style='transform:rotate(12deg)'>-->DNA Mutation\nGrey:mutated genes</text>
-        </g>`
-      }
-      if(legendData['rna_up']){
-        html_ += `<g class='rna-up'>
+
+            let html_= `<div><svg width="700" height="475" style="transform:rotate(-12deg)">
+          <g class='all' transform='translate(100,400)'>`;
+
+        if(legendData['cytoband']){
+          html_ += `<g class='cytobands-1'>
+            ${legendData['cytoband']}
+          </g>
+          <g>
+            <text x="84" y="-${(ct[2]-50)}" style='transform:rotate(12deg)'>
+              <tspan font-weight="bold">Chromosome Band</tspan>
+            </text>
+          </g>`;
+        }
+        if(legendData['dna_mutation']){
+          html_ += `<g class='dna-mutation'>
+            ${legendData['dna_mutation']}
+          </g>
+          <g>
+            <text x="84" y="-${(dt[2])}" style='transform:rotate(12deg)'>
+              <tspan font-weight="bold">DNA Mutation - </tspan> Grey:mutated genes
+            </text>
+          </g>`;
+        }
+        if(legendData['rna_up']){
+          html_ += `<g class='rna-up'>
             ${legendData['rna_up']}
           </g>
           <g>
-            <text x="84" y="-${(rt[2])}" style='transform:rotate(12deg)'>-->RNA Expression\nRed:z-score > 1.5\nBlue:z-score < 1.5</text>
-          </g>`
-      }
-      if(legendData['snp-250-4']){
-        html_ +=`<g class='snp-250-4'>
+            <text x="84" y="-${(rt[2])}" style='transform:rotate(12deg)'>
+              <tspan font-weight="bold">RNA Expression - </tspan> Red:z-score > 1.5 | Blue:z-score < 1.5
+            </text>
+          </g>`;
+        }
+        if(legendData['snp-250-4']){
+          html_ += `<g class='snp-250-4'>
             ${legendData['snp-250-4']}
           </g>
           <g>
-            <text x="84" y="-${(sp4t[2])}" style='transform:rotate(12deg)'>-->DNA Methylation\Grey:methylated genes</text>
-          </g>`
-      }
-      if(legendData['snp-250-5']){
-        html_ +=`<g class='snp-250-5'>
-          ${legendData['snp-250-5']}
-        </g>
-        <g>
-          <text x="84" y="-${(sp5t[2])}" style='transform:rotate(12deg)'>-->Global Proteome\nRed:z-score > 1.5\nBlue:z-score < 0.5</text>
-        </g>`
-      }
-      if(legendData['snp-250-6']){
-        
-        html_+=`<g class='snp-250-6'>
-                      ${legendData['snp-250-6']}
-                    </g>
-                    <g>
-                      <text x="84" y="-${(sp6t[2])}" style='transform:rotate(12deg)'>-->Copy Number Variation \nYellow:cn >= 1.5\white:cn = 2| Green:cn <= 1 < 0.5</text>
-                    </g>`
-      }
-      if(legendData['cytobands']){
-        html_ +=`<g class='cytobands'>
+            <text x="84" y="-${(sp4t[2])}" style='transform:rotate(12deg)'>
+              <tspan font-weight="bold">DNA Methylation - </tspan> Grey:methylated genes
+            </text>
+          </g>`;
+        }
+        if(legendData['snp-250-5']){
+          html_ += `<g class='snp-250-5'>
+            ${legendData['snp-250-5']}
+          </g>
+          <g>
+            <text x="84" y="-${(sp5t[2])}" style='transform:rotate(12deg)'>
+              <tspan font-weight="bold">Global Proteome - </tspan> Red:z-score > 1.5 | Blue:z-score < 0.5
+            </text>
+          </g>`;
+        }
+        if(legendData['snp-250-6']){
+          html_ += `<g class='snp-250-6'>
+            ${legendData['snp-250-6']}
+          </g>
+          <g>
+            <text x="84" y="-${(sp6t[2])}" style='transform:rotate(12deg)'>
+              <tspan font-weight="bold">Copy Number Variation - </tspan> Yellow:cnv >= 3| White:cn = 2| Green:cn <= 1
+            </text>
+          </g>`;
+        }
+        if(legendData['cytobands']){
+          html_ += `<g class='cytobands'>
             ${legendData['cytobands']}
           </g>
           <g class='l1'>
             ${legendData['l1']}
           </g>
           <g>
-            <text x="84" y="-${cybt[9]}" style='transform:rotate(12deg)'>-->Structural Variation \nRed: Deletion | Green: Insertion</text>
+            <text x="84" y="-${cybt[9]}" style='transform:rotate(12deg)'>
+              <tspan font-weight="bold">Structural Variation - </tspan> Red: Deletion | Green: Insertion
+            </text>
           </g>`
       }
-                  
+
       html_ +=`</g></svg></div>`
 
-    
+
     setHtml(html_)
   },[legendData])
-  
+
   return (
     <div className="CircosModal" style={{ position: 'fixed', top: 40, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 999 }}>
       <div className="CircosModalHeader">
@@ -898,7 +928,7 @@ export const ModalComponent = ({ setOpenModal,legendData }) => {
           </div>
           <div>
             <iframe id='circos_legend' allow='allow-same-origin' style={{width:'800px',height:'500px'}} srcDoc={html}>
-            
+
             </iframe>
             {/* <img alt="placeholder" src={placeholder} className="mt-10 object-contain h-2/5" /> */}
           </div>

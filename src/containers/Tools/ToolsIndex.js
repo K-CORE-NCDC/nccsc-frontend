@@ -295,6 +295,52 @@ const HomeComponent = () => {
                     </Link>
                   </li>
 
+                  <li className='listitems'>
+                    <Link to={route?.pathname}>
+                      <div className="thumb">
+                        <img src={icon5} alt="img" />
+                        <div className="hvBox">
+                          <div className="hvBox_links">
+                            <div className="textdiv" >
+                              <Link to="/dataframereconstruction/">
+                                <span>
+                                  <FormattedMessage id="RunAnalysis" defaultMessage="Run Analysis" />
+                                </span>
+                                <img src={arrow_icon} alt="arrow-icon" />
+                              </Link>
+                            </div>
+                            {/* <div className="textdiv" onClick={() => downloadFile(RefverconverterAttachment, `REFVERConverter_Attachment.pdf`)}>
+                              <Link to={route?.pathname}>
+                                <span>
+                                  <FormattedMessage
+                                    id="DownloadManual"
+                                    defaultMessage="Download Manual"
+                                  />
+                                </span>
+                                <img src={arrow_icon} alt="arrow-icon" />
+                              </Link>
+                            </div>{' '} */}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="txtBox txtBoxpadding tac Relative">
+                        <dl className="MarginTop8">
+                          <dt className="h4 Capitalize">DataFrame Reconstruction</dt>
+                          <dd className="p1">
+                            <FormattedMessage
+                              id="DfDesc1"
+                              defaultMessage="Convert matrix format files"
+                            />
+                            <br />
+                            <FormattedMessage
+                              id="DfDesc2"
+                              defaultMessage="to melted format files"
+                            />
+                          </dd>
+                        </dl>
+                      </div>
+                    </Link>
+                  </li>
                 </ul>
               </div>
             </div>

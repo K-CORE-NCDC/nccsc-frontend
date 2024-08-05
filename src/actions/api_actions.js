@@ -108,9 +108,9 @@ export function MultiProjectsExtend(method, projectId,reasonForExtension) {
   return sendRequest(url, method, data);
 }
 
-export function getProject(projectId) {
+export function getProject(projectId, projectType='active') {
   let url = '';
-  url = config.auth + `user-projects-data/?id=${projectId}`;
+  url = config.auth + `user-projects-data/?id=${projectId}&project_type=${projectType}`;
   return sendRequest(url, 'GET','');
 }
 
@@ -205,9 +205,9 @@ export function sendCaptureScreenshot(method, data) {
     sendRequest(url, method, formData)
   }
 }
-export function vcfmaf(method, data) {
+export function matrixMelt(method, data) {
   return (dispatch) => {
-    let url = `${config.auth}vcfmaf/`;
+    let url = `${config.auth}dfrecon/`;
     const formData = new FormData();
     if (method === 'POST') {
       formData.append('file', data.file);
@@ -216,7 +216,7 @@ export function vcfmaf(method, data) {
         .then((result) => {
           const d = result;
           dispatch({
-            type: homeConstants.VCFMAF,
+            type: homeConstants.DATAFRAME_RECON,
             payload: d.data
           });
           dispatch({ type: homeConstants.REQUEST_DONE });
@@ -230,7 +230,7 @@ export function vcfmaf(method, data) {
         .then((result) => {
           const d = result;
           dispatch({
-            type: homeConstants.VCFMAF,
+            type: homeConstants.DATAFRAME_RECON,
             payload: d.data
           });
           dispatch({ type: homeConstants.REQUEST_DONE });
@@ -241,6 +241,50 @@ export function vcfmaf(method, data) {
   };
 }
 
+export function vcfmaf(method, data) {
+  return (dispatch) => {
+    let url = `${config.auth}vcfmaf/`;
+    const formData = new FormData();
+    if (method === 'POST') {
+      Object.keys(data?.vcfMafFiles).forEach((element) => {
+        if (data?.vcfMafFiles[element] !== undefined) {
+          formData.append(element, data?.vcfMafFiles[element].file);
+        }
+      });
+      sendRequest(url, method, formData)
+        .then((result) => {
+          const d = result;
+          dispatch({
+            type: homeConstants.VCFMAF,
+            payload: d.data
+          });
+          dispatch({ type: homeConstants.REQUEST_DONE });
+        })
+
+        .catch(() => { });
+    }
+    else {
+      const containerNames = data.container_name;
+      const requests = containerNames.map((containerName) => {
+        const container_url = `${url}?container_name=${containerName}`;
+        return sendRequest(container_url, method, formData);
+      });
+
+      Promise.all(requests)
+        .then((results) => {
+          results.forEach((result) => {
+            const d = result;
+            dispatch({
+              type: homeConstants.VCFMAF,
+              payload: d.data
+            });
+          });
+          dispatch({ type: homeConstants.REQUEST_DONE });
+        })
+        .catch(() => { });
+    }
+  };
+}
 
 export function mafmerger(method, data) {
   return (dispatch) => {
@@ -422,25 +466,17 @@ export function OncoInformation(type, data) {
   return sendRequest(url, type, data);
 }
 
-export function MultiProjectsView(method, data, page, perPage) {
+export function MultiProjectsView(method, data, page, perPage,projectType) {
   let url = '';
+
   if (method === 'GET') {
-    url = config.auth + `user-projects-data/?page=${page}&per_page=${perPage}&delay=1`;
+    url = config.auth + `user-projects-data/?page=${page}&per_page=${perPage}&project_type=${projectType}&delay=1`;
   } else {
     url = config.auth + `user-projects-data/?page=${page}&per_page=${perPage}&delay=1&input`;
   }
   return sendRequest(url, method, data);
 }
 
-export function MultiDeletedProjectsView(method, data, page, perPage) {
-  let url = '';
-  if (method === 'GET') {
-    url = config.auth + `user-deleted-data/?page=${page}&per_page=${perPage}&delay=1`;
-  } else {
-    url = config.auth + `user-deleted-data/?page=${page}&per_page=${perPage}&delay=1&input`;
-  }
-  return sendRequest(url, method, data);
-}
 
 export function getLolipopInformation(type, data) {
   return (dispatch) => {
@@ -1235,9 +1271,9 @@ export function getFaqPageData(url, method, data) {
   return sendRequest(url, method, data);
 }
 
-export function getProjectsData(id) {
+export function getProjectsData(id,projectType = 'active') {
   return (dispatch) => {
-    const url = `${config.auth}user-projects-data/?id=${id}`;
+    const url = `${config.auth}user-projects-data/?id=${id}&project_type=${projectType}`;
     sendRequest(url, 'GET', '')
       .then((result) => {
         const d = result;

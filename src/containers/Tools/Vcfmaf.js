@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { vcfmaf, clearToolsData } from '../../actions/api_actions';
@@ -58,7 +58,9 @@ function Modal({ showModal, setShowModal }) {
 }
 
 function Vcfmaf() {
-  const [vcfMafFile, setVcfMafFile] = useState();
+  const fileInputRef = useRef(null);
+  const [vcfMafFiles, setVcfMafFiles] = useState({});
+  const [vcfMafFilesName, setVcfMafFilesName] = useState([]);
   const [loader, setLoader] = useState(false);
   const [msg, setMsg] = useState({});
   const [html, setHtml] = useState([]);
@@ -94,21 +96,106 @@ function Vcfmaf() {
   };
 
   let backend_url = config['auth'];
-  let VcfMafTool = (event) => {
-    setVcfMafFile(event.target.files[0]);
-  };
+  // let VcfMafTool = (event) => {
+  //   setVcfMafFiles(event.target.files[0]);
+  // };
+  const handleFileChange = (e) => {
+    const newFiles = Array.from(e.target.files);
 
-  let uploadFile = () => {
-    if (vcfMafFile['name'].includes('.vcf')) {
+    if (newFiles.length + Object.keys(vcfMafFiles).length > 5) {
+        alert("You can upload a maximum of 5 files at once.");
+        return;
+    }
+    let totalSize = 0;
+
+    // Calculate the total size of already selected files
+    for (const fileKey in vcfMafFiles) {
+        totalSize += vcfMafFiles[fileKey].file.size;
+    }
+
+    // Calculate the total size of the new files
+    let newFilesSize = 0;
+    for (let i = 0; i < newFiles.length; i++) {
+        newFilesSize += newFiles[i].size;
+    }
+
+    // Check if the total number of files does not exceed 50 and the total size is less than or equal to 500MB
+    if (newFiles.length + Object.keys(vcfMafFiles).length <= 5 && totalSize + newFilesSize <= 500 * 1024 * 1024) {
+        const newFormData = { ...vcfMafFiles };
+
+        for (let i = 0; i < newFiles.length; i++) {
+            const newFile = newFiles[i];
+            const newFileName = newFile.name;
+            newFormData[newFileName] = {
+                file: newFile,
+                fileName: newFileName,
+            };
+        }
+
+        setVcfMafFiles(newFormData);
+
+        const newFileNames = newFiles.map((file) => file.name);
+        setVcfMafFilesName([...vcfMafFilesName, ...newFileNames]);
+    } else if (totalSize + newFilesSize > 500 * 1024 * 1024) {
+        alert("The total file size should not exceed 500MB.");
+    } else {
+        alert("Maximum 5 files are allowed.");
+    }
+};
+const handleFileRemove = (fileName) => {
+
+  setVcfMafFiles((prevFormData) => {
+      const updatedFormData = { ...prevFormData };
+      delete updatedFormData[fileName];
+      return updatedFormData;
+  });
+
+  const updatedFileNames = vcfMafFilesName.filter((name) => name !== fileName);
+
+  setVcfMafFilesName(updatedFileNames);
+};
+
+function isAlphanumeric(str) {
+  // Check if the string contains only alphanumeric characters
+  return /^[a-zA-Z0-9_.-]+$/.test(str);
+}
+
+let uploadFile = () => {
+  // Check if all files in the object have the ".vcf" extension
+  const areAllFilesVcf = Object.keys(vcfMafFiles).every(file => file.endsWith('.vcf'));
+  const alphanum= Object.keys(vcfMafFiles).every(file => {
+      let fileNameWithoutExtension = file.split('.').slice(0, -1).join('.');
+      return isAlphanumeric(fileNameWithoutExtension);
+  });
+
+  if (areAllFilesVcf && alphanum) {
+      console.log(vcfMafFiles)
+      console.log(vcfMafFiles['fileName'])
       setIsError(false);
       setLoader(true);
       setHtml([])
-      dispatch(vcfmaf('POST', { file: vcfMafFile, filename: vcfMafFile['name'] }));
+      dispatch(vcfmaf('POST', { vcfMafFiles: vcfMafFiles}));
       setMsg({ id: 'FileUplodPlsWait', defaultMessage: 'File Uploading, Please Wait......' });
-    } else {
+  } else {
+      if (!alphanum) {
+          alert("Invalid file name. Only alphanumeric characters are allowed.");
+      }
+      else if (!areAllFilesVcf){
       setIsError(true);
-    }
-  };
+      setMsg({ id: 'RefverInvalid', defaultMessage: 'Invalid file format. Please select VCF files only.' });}
+  }
+};
+  // let uploadFile = () => {
+  //   if (vcfMafFiles['name'].includes('.vcf')) {
+  //     setIsError(false);
+  //     setLoader(true);
+  //     setHtml([])
+  //     dispatch(vcfmaf('POST', { file: vcfMafFiles, filename: vcfMafFiles['name'] }));
+  //     setMsg({ id: 'FileUplodPlsWait', defaultMessage: 'File Uploading, Please Wait......' });
+  //   } else {
+  //     setIsError(true);
+  //   }
+  // };
 
   useEffect(() => {
     if (startInterval) {
@@ -135,7 +222,12 @@ function Vcfmaf() {
         h.push(
           <>
             <div className="Flex FlexDirRow">
-              <p>Your Results are ready kindly click link to download &nbsp;</p>
+            <span
+              style={{ fontSize: '1rem', lineHeight: '1.5rem', justifyContent: 'center' }}
+              className="Flex"
+              >
+                   <FormattedMessage id='RefverResult1' defaultMessage='Your Results are Ready here.' />
+              {/* <p>Your Results are ready kindly click link to download &nbsp;</p>
               <a
                 className="ToolResultsReady"
                 href={
@@ -144,7 +236,22 @@ function Vcfmaf() {
                 download={vcf2mafResponse['container_name'] + '.maf'}
               >
                 {vcf2mafResponse['container_name']}
-              </a>
+              </a> */}
+              {vcf2mafResponse.zip_file_url ? (
+                <a
+                    className="ToolResultsReady"
+                    href={
+                        backend_url +
+                          'media/VcfMaf/output/' + vcf2mafResponse.zip_file_url}
+                    download
+                >
+                    {` (${vcf2mafResponse.zip_file_url}) `}
+                </a>
+                  ) : (
+                      <span>{` (${vcf2mafResponse['container_name']}) `}</span>
+                  )}
+                  <FormattedMessage id='RefverResult2' defaultMessage='Click on the Link to download' />
+              </span>
             </div>
           </>
         );
@@ -167,6 +274,15 @@ function Vcfmaf() {
       { id: 'VCFMAF', defaultMessage: 'VCF To MAF', to: '/vcfmaf/' }
     ]
   };
+  function formatFileSize(size) {
+    if (size < 1024) {
+        return size + " B";
+    } else if (size < 1024 * 1024) {
+        return (size / 1024).toFixed(2) + " KB";
+    } else {
+        return (size / (1024 * 1024)).toFixed(2) + " MB";
+    }
+  }
 
   return (
     <div>
@@ -198,24 +314,52 @@ function Vcfmaf() {
                         </div>
                         <div>
                           <div>
+                          <div style={{ marginTop: '20px' }}>
                             <dl>
                               <dt>
-                                <FormattedMessage id="UploadFile" defaultMessage="Upload File" />
+                                <FormattedMessage id="UploadFile" defaultMessage="Upload Files" />
                               </dt>
                               <dd>
-                                <div className="inputText">
+                                <div className="inputText flex">
                                   <input
                                     type="file"
-                                    className="w100"
+                                    className="w100 maf-merger-file-input"
                                     accept=".vcf, "
-                                    id="VcfMafFile"
-                                    onChange={(e) => VcfMafTool(e)}
+                                    id="vcfMafFiles"
+                                    // onChange={(e) => VcfMafTool(e)}
+                                    onChange={(e) => handleFileChange(e)}
                                     autoComplete="off"
                                     style={{ padding: '10px' }}
+                                    multiple={true}
+                                    ref={fileInputRef}
                                   />
+                                  <label className='maf-merger-label' htmlFor="vcfMafFiles">
+                                  <FormattedMessage id='SelectMultipleFiles' defaultMessage='Select Multiple Files' />
+                                  </label>
                                 </div>
                               </dd>
                             </dl>
+                            </div>
+                            <div>
+                              {Object.keys(vcfMafFiles)?.map((filename, index) => (
+                                  <div
+                                      key={filename}
+                                      style={{
+                                          display: 'flex',
+                                          justifyContent: 'space-between',
+                                          alignItems: 'center',
+                                          padding: '10px',
+                                          border: '1px solid #ccc',
+                                          margin: '5px 0',
+                                      }}
+                                  >
+                                      <div>
+                                          {filename} - {formatFileSize(vcfMafFiles[filename].file.size)}
+                                      </div>
+                                      <button onClick={() => handleFileRemove(filename)}>X</button>
+                                  </div>
+                              ))}
+                            </div>
                             <button className="btn btnPrimary SubmitButton" onClick={uploadFile}>
                               <FormattedMessage id="Submit" defaultMessage="Submit" />
                             </button>
@@ -253,7 +397,7 @@ function Vcfmaf() {
                 </section>
               )}
             </div>
-            
+
             {/* <>
               <dl>
                 <dt>&nbsp;</dt>

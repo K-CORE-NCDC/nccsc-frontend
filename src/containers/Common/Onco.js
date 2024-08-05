@@ -16,7 +16,6 @@ const OncoCmp = React.forwardRef(
     const [state, setState] = useState({});
     const [name, setName] = useState('');
     const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
-    
     let names_variant = {
       'Missense Mutation': 'variant_classification||Missense_Mutation||4',
       'Nonsense Mutation': 'variant_classification||Nonsense_Mutation||6',
@@ -30,13 +29,13 @@ const OncoCmp = React.forwardRef(
       'Protein Upregulation (value >= 1.5)': 'protein||up||4',
       'mRNA Downregulation (z-score <= -1)': 'regulation||down||3',
       'mRNA Upregulation (z-score >= 1)': 'regulation||up||3',
-      'Cnv (value = 2)': 'cnv||white',
-      'Cnv (value <= 1)': 'cnv||blue',
-      'Cnv (value >= 3)': 'cnv||red'
+      'Cnv (value <= 1)': 'cnv||red',
+      'Cnv (value = 2)': 'cnv||blue',
+      'Cnv (value >= 3)': 'cnv||purple'
     };
-    
-    console.log(filter)
-    
+
+    // console.log(filter)
+
     let z_score_up_rna = filter['z_score_up_rna']
     let z_score_down_rna = filter['z_score_down_rna']
     let z_score_up_prot = filter['z_score_up_prot']
@@ -46,14 +45,14 @@ const OncoCmp = React.forwardRef(
     let cnv_down = filter['cn_down_value']
     non_mutation_rule_params['regulation']['up']['legend_label'] = `mRNA Upregulation (z-score >= ${z_score_up_rna})`
     non_mutation_rule_params['regulation']['down']['legend_label'] =  `mRNA Downregulation (z-score <= ${z_score_down_rna})`
-    
-    non_mutation_rule_params['protein']['up']['legend_label'] = `Protein Upregulation (value >= ${z_score_up_prot} )`
-    non_mutation_rule_params['protein']['down']['legend_label'] = `Protein Downregulation (value <= ${z_score_down_prot} )`
-    
-    non_mutation_rule_params['cnv']['blue']['legend_label'] = `Cnv (value <= ${cnv_up})`
-    non_mutation_rule_params['cnv']['red']['legend_label'] = `Cnv (value = ${cnv_equal})`
-    non_mutation_rule_params['cnv']['white']['legend_label'] = `Cnv (value <= ${cnv_down})`
-    
+
+    non_mutation_rule_params['protein']['up']['legend_label'] = `Protein Upregulation (value >= ${z_score_up_prot})`
+    non_mutation_rule_params['protein']['down']['legend_label'] = `Protein Downregulation (value <= ${z_score_down_prot})`
+
+    non_mutation_rule_params['cnv']['red']['legend_label'] = `Cnv (value <= ${cnv_down})`
+    non_mutation_rule_params['cnv']['blue']['legend_label'] = `Cnv (value = ${cnv_equal})`
+    non_mutation_rule_params['cnv']['purple']['legend_label'] = `Cnv (value >= ${cnv_up})`
+
     const drawChart = (w, gData, cData, rule_types, inputRule) => {
       var oncoprint;
       if ($('#oncoprint-glyphmap').length > 0) {
@@ -358,6 +357,7 @@ const OncoCmp = React.forwardRef(
 
         const name = $element.attr('data-text');
         if (name in names_variant) {
+          // console.log('name = ', name)
           setClickType((prevClickType) => {
             // Check if the name already exists:
             const nameExists = prevClickType.includes(names_variant[name]);
@@ -408,7 +408,7 @@ const OncoCmp = React.forwardRef(
 
     return (
       <div>
-        
+
         <div className="">
           <button className="" onClick={(e) => makezoom(e, 'fa-plus')}>
             <ZoomInIcon className="h-7 w-7" />

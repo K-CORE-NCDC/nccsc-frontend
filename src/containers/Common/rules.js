@@ -113,7 +113,7 @@ window.non_mutation_rule_params = {
     }
   },
   cnv: {
-    // small up arrow for upregulated
+     // small down arrow for downregulated
     blue: {
       shapes: [
         {
@@ -124,24 +124,7 @@ window.non_mutation_rule_params = {
           y2: '66.66%',
           x3: '0%',
           y3: '66.66%',
-          fill: 'rgba(255,0,0,1)',
-          z: 4
-        }
-      ],
-      legend_label: `Cnv (value <= 1)`
-    },
-    // small down arrow for upregulated
-    white: {
-      shapes: [
-        {
-          type: 'triangle',
-          x1: '50%',
-          y1: '100%',
-          x2: '100%',
-          y2: '66.66%',
-          x3: '0%',
-          y3: '66.66%',
-          fill: 'rgba(0,206,209,1)',
+          fill: 'rgba(0,206,209,1)', //this is blue
           z: 4
         }
       ],
@@ -152,17 +135,37 @@ window.non_mutation_rule_params = {
         {
           type: 'triangle',
           x1: '50%',
+          y1: '100%',
+          x2: '100%',
+          y2: '66.66%',
+          x3: '0%',
+          y3: '66.66%',
+          fill: 'rgba(255,0,0,1)',//this is red
+          z: 4
+        }
+      ],
+      legend_label: `Cnv (value <= 1)`
+    },
+
+    // small up arrow for upregulated
+    purple: {
+      shapes: [
+        {
+          type: 'triangle',
+          x1: '50%',
           y1: '0%',
           x2: '100%',
           y2: '33.33%',
           x3: '0%',
           y3: '33.33%',
-          fill: 'rgba(139,0,139,1)',
+
+          fill: 'rgba(139,0,139,1)',//this is purple
           z: 4
         }
       ],
-      legend_label: `Cnv (value >= 3)`
+      legend_label: `Cnv (value >=3)`
     }
+
   },
   // fusion
   fusion: {

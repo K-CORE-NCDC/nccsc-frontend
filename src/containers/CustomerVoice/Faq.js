@@ -6,22 +6,27 @@ import { useParams } from 'react-router-dom';
 import { getFaqData } from '../../actions/api_actions';
 import config from '../../config';
 import '../../interceptor/interceptor';
-import Table from '../Common/Table/ReactTable';
 import LoaderComp from '../Common/Loader';
 import { Link } from 'react-router-dom/cjs/react-router-dom';
+import PaginateTable from '../Common/Table/ReactTablePagination';
 
 function FaqList() {
   const intl = useIntl();
-  const [tableData, setTableData] = useState([]);
+  const [tableData, setTableData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [paramObj, setParamObj] = useState({
+    perPage: 5,
+    pageNumber: 1
+  })
+  const currentPage = paramObj?.pageNumber
   const fetchUsers = async (page, method) => {
     setLoading(true);
     let response;
     if (method === 'GET') {
-      response = await axios.get(config.auth + `faq-api/?page=${page}&per_page=${10}&delay=1`);
+      response = await axios.get(config.auth + `faq-api/?page=${paramObj?.pageNumber}&per_page=${paramObj.perPage}&delay=1`);
     } else {
       response = await axios.post(
-        config.auth + `faq-api/?page=${page}&per_page=${10}&delay=1&input`,
+        config.auth + `faq-api/?page=${paramObj?.pageNumber}&per_page=${paramObj.perPage}&delay=1&input`,
         {
           type: 'title',
           searchTerm: ''
@@ -29,10 +34,10 @@ function FaqList() {
       );
     }
     if (response.data.data) {
-      setTableData(response.data.data);
+      setTableData(response.data);
     }
     else {
-      setTableData([])
+      setTableData(null)
     }
     setLoading(false);
   };
@@ -41,15 +46,17 @@ function FaqList() {
 
   useEffect(() => {
     fetchUsers(1, 'GET'); // fetch page 1 of users
-  }, []);
+    setParamObj(paramObj)
+  }, [paramObj]);
 
   const columns = [
     {
       Header: intl.formatMessage({ id: "Order", defaultMessage: 'Order' }),
       accessor: () => ' ',
       Cell: ({ cell: { value, row } }) => (
-        < div title={value}>
-          {parseInt(row?.index) + parseInt(1)}</div>
+        <div title={value}>
+          {parseInt(row?.index) + parseInt(1) + (currentPage - 1) * paramObj?.perPage}
+        </div>
       ),
       width: "80"
     },
@@ -81,11 +88,15 @@ function FaqList() {
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <LoaderComp /> </div> :
         <div >
-          {tableData && tableData.length > 0 && (
-            <Table
+          {tableData  && (
+            <PaginateTable
               columns={columns}
-              data={tableData}
+              data={tableData.data}
               width={"1075"}
+              TotalCount={tableData?.total}
+              PageSize={paramObj?.perPage}
+              paramObj={paramObj}
+              setParamObj={(data) => setParamObj(data)}
             />
           )}
           {tableData && tableData.length === 0 && <h1 className="MultiUploadTextCenter">{intl.formatMessage({ id: "NoRecords", defaultMessage: 'No Records Found' })}</h1>}

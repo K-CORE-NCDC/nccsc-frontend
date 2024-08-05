@@ -7,43 +7,52 @@ import { useParams } from 'react-router-dom';
 import { getQaData } from '../../actions/api_actions';
 import config from '../../config';
 import '../../interceptor/interceptor';
-import Table from '../Common/Table/ReactTable';
+import PaginateTable from '../Common/Table/ReactTablePagination';
 import LoaderComp from '../Common/Loader';
 import { Link } from 'react-router-dom/cjs/react-router-dom';
 
 
 function QAList() {
   const intl = useIntl();
-  const [tableData, setTableData] = useState([]);
+  const [tableData, setTableData] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const [paramObj, setParamObj] = useState({
+    perPage: 5,
+    pageNumber: 1
+  })
+  const currentPage = paramObj?.pageNumber
   const fetchUsers = async (page, method) => {
     setLoading(true);
     let response;
     if (method === 'GET') {
-      response = await axios.get(config.auth + `qa-api/?page=${page}&per_page=${10}&delay=1`);
+      response = await axios.get(config.auth + `qa-api/?page=${paramObj?.pageNumber}&per_page=${paramObj.perPage}&delay=1`);
     } else {
       response = await axios.post(
-        config.auth + `qa-api/?page=${page}&per_page=${10}&delay=1&input`,
+        config.auth + `qa-api/?page=${paramObj?.pageNumber}&per_page=${paramObj.perPage}&delay=1&input`,
         {
           type: 'title',
           searchTerm: ''
         }
       );
     }
-    if (response.data.data) {
-      setTableData(response.data.data);
+    if ('data' in response) {
+      setTableData(response.data);
     }
     else {
-      setTableData([])
+      setTableData(null)
     }
     setLoading(false);
   };
 
 
+  // useEffect(() => {
+  //   fetchUsers(1, 'GET'); // fetch page 1 of users
+  // }, []);
+
   useEffect(() => {
-    fetchUsers(1, 'GET'); // fetch page 1 of users
-  }, []);
+    fetchUsers(1, 'GET'); 
+    setParamObj(paramObj)
+  }, [paramObj]);
 
   const columns = [
     {
@@ -51,7 +60,8 @@ function QAList() {
       accessor: () => ' ',
       Cell: ({ cell: { value, row } }) => (
         < div title={value}>
-          {parseInt(row?.index) + parseInt(1)}</div>
+          {parseInt(row?.index) + parseInt(1) + (currentPage - 1) * paramObj?.perPage}
+          </div>
       ),
       width: "80"
     },
@@ -85,14 +95,19 @@ function QAList() {
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <LoaderComp /> </div> :
         <div >
-          {tableData && tableData.length > 0 && (
-            <Table
+          {tableData && (
+            <PaginateTable
               columns={columns}
-              data={tableData}
+              data={tableData?.data}
               width={"1075"}
+              TotalCount={tableData?.total}
+              PageSize={paramObj?.perPage}
+              paramObj={paramObj}
+              setParamObj={(data) => setParamObj(data)}
+          
             />
           )}
-          {tableData && tableData.length === 0 && <h1 className="MultiUploadTextCenter">{intl.formatMessage({ id: "NoRecords", defaultMessage: 'No Records Found' })}</h1>}
+          {(tableData === null) && <h1 className="MultiUploadTextCenter">{intl.formatMessage({ id: "NoRecords", defaultMessage: 'No Records Found' })}</h1>}
         </div>}
     </div>
   );

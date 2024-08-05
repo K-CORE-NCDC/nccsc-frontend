@@ -133,26 +133,8 @@ const HeatmapCmp = React.forwardRef(
       
     }
     if (type === 'k-mean' && kmeanType==='sample' ) {
-      config['varOverlayProperties']={
-        Treatment: {
-          position: 'right',
-          type: 'Default',
-          color: 'rgb(254,41,108)',
-          spectrum: [
-            'rgb(255,0,255)',
-            'rgb(0,0,255)',
-            'rgb(0,0,0)',
-            'rgb(255,0,0)',
-            'rgb(255,215,0)'
-          ],
-          scheme: 'User',
-          showLegend: true,
-          showName: true,
-          showBox: true,
-          rotate: false
-        },
-        Cluster: {
-          position: 'bottom',
+      config['varOverlayProperties']['Cluster']={
+          position: 'top',
           type: 'Default',
           color: 'rgb(72,126,182)',
           spectrum: [
@@ -162,40 +144,22 @@ const HeatmapCmp = React.forwardRef(
             'rgb(4,115,49)',
             'rgb(98,183,247)'
           ],
-          scheme: 'User',
+          scheme: 'GGPlot',
           showLegend: false,
           showName: true,
           showBox: false,
           rotate: false
-        },
-        Dose: {
-          thickness: 50,
-          type: 'Dotplot',
-          position: 'right',
-          color: 'rgb(167,206,49)',
-          spectrum: [
-            'rgb(255,0,255)',
-            'rgb(0,0,255)',
-            'rgb(0,0,0)',
-            'rgb(255,0,0)',
-            'rgb(255,215,0)'
-          ],
-          scheme: 'User',
-          showLegend: true,
-          showName: true,
-          showBox: false,
-          rotate: false
-        }
       }
-      config['varOverlays'] = [ 'Treatment','Cluster','Dose'];
-      config['samplesClustered'] = false;
-      config['variablesClustered'] = true;
+      
+      config['varOverlays'].push('Cluster');
+      config['samplesClustered'] = true;
+      config['variablesClustered'] = false;
       
 
-      config['sortData'] = [['cat', 'smp', 'Cluster']];
-      config['sortDir'] = 'ascending';
+      // config['sortData'] = [['Treatment']];
+      // config['sortDir'] = 'ascending';
     }
-    console.log(config)
+    // console.log(config)
 
     useEffect(() => {
       setConfigVis(config);

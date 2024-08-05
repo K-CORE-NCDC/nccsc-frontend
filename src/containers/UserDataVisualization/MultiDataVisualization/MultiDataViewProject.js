@@ -5,10 +5,11 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom/cjs/react-router-dom';
 import Swal from 'sweetalert2';
-import { MultiProjectsDelete, MultiProjectsView, MultiProjectsExtend, getProject,MultiDeletedProjectsView } from '../../../actions/api_actions';
+import { MultiProjectsDelete, MultiProjectsView, MultiProjectsExtend, getProject} from '../../../actions/api_actions';
 import '../../../interceptor/interceptor';
 import HeaderComponent from '../../Common/HeaderComponent/HeaderComponent';
 import Table from '../../Common/Table/ReactTable';
+import PaginateTable from '../../Common/Table/ReactTablePagination';
 
 function ProjectsList() {
   let history = useHistory();
@@ -31,7 +32,7 @@ function ProjectsList() {
     postData['type'] = selectInput;
     postData['searchTerm'] = searchInput;
 
-    let data = MultiProjectsView(method, postData, paramObj?.pageNumber, paramObj?.perPage);
+    let data = MultiProjectsView(method, postData, paramObj?.pageNumber, paramObj?.perPage,'active');
     data.then((response) => {
       if ('data' in response) {
         // console.log('response', response.data)
@@ -105,7 +106,7 @@ function ProjectsList() {
     }
     else if (type === 'extend') {
       const extendResult = await extendConfirmation(projectId);
-      // console.log(extendResult); // Debugging
+      console.log(extendResult); // Debugging
       if (extendResult === 'extend') {
         Swal.fire({
           title: intl.formatMessage({ id: "ExtendReason", defaultMessage: "Enter Reason For Project Extension" }),
@@ -360,10 +361,10 @@ function DeletedProjectsList() {
     postData['type'] = selectInput;
     postData['searchTerm'] = searchInput;
 
-    let data = MultiDeletedProjectsView(method, postData, paramObj?.pageNumber, paramObj?.perPage);
+    let data = MultiProjectsView(method, postData, paramObj?.pageNumber, paramObj?.perPage,'deleted');
     data.then((response) => {
       if ('data' in response) {
-        // console.log('response', response.data)
+
         setTableData(response.data);
       }
     });
@@ -521,8 +522,9 @@ function DeletedProjectsList() {
         </>
       </div>
       <div className="">
+
         {tableData && (
-          <Table
+          <PaginateTable
             columns={columns}
             data={tableData?.data}
             width={"2300"}

@@ -11,7 +11,7 @@ import {
 import { QuestionMarkCircleIcon } from '@heroicons/react/outline';
 import ReactTooltip from 'react-tooltip';
 
-const SurvivalFilterComponent = ({ parentCallback, filterState, survialData, SVFState }) => {
+const SurvivalFilterComponent = ({ parentCallback, filterState, survialData, SVFState,SurvivalType }) => {
   const route = useLocation();
   const dispatch = useDispatch();
   const { project_id } = useParams();
@@ -41,6 +41,10 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survialData, SVF
       dispatch(getClinicalMaxMinInfo('GET', {}));
     }
   }, [clinicalMaxMinInfo, dispatch, project_id]);
+
+  useEffect(()=>{
+    setFilterTypeButton('clinical')
+  },[SurvivalType])
 
   useEffect(() => {
     if ('userProjectsDataTable' in tabList) {
@@ -148,6 +152,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survialData, SVF
       coxUserDefinedFilter,
       viz_type: vizType,
     };
+    console.log(copyState)
     if (type === 'cox' && Object.values(coxFilter).some((value) => value === true)) {
       parentCallback({ updatedState: copyState });
       setUpdateFiltersFlag(false)
@@ -215,6 +220,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survialData, SVF
               <li className={survivalModel === 'survival' ? 'on' : ''}>
                 <button onClick={() => survivalModelFun('survival')}>Survival</button>
               </li>
+              
               <li className={survivalModel === 'cox' ? 'on' : ''}>
                 <button onClick={() => survivalModelFun('cox')}>Cox Regression</button>
               </li>
@@ -224,12 +230,12 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survialData, SVF
           {(survivalModel === 'recurrence' || survivalModel === 'survival') && (
             <>
               <div className={`Flex FlexDirCol Border Backgroundwhite ${smallScreen ? 'Flex FlexDirRow SurvivalSmallScreen' : 'SurvivalSmallScreenHidden'}`}>
-                {project_id === undefined && (
+                {project_id === undefined && SurvivalType!=='single' &&  (
                   <h3 className="SurvivalChooseModel TextLeft">
                     <FormattedMessage id="Choose Filter group" defaultMessage="Choose Filter group" />
                   </h3>
                 )}
-                {project_id === undefined && (
+                {project_id === undefined && SurvivalType!=='single' && (
                   <div className="m-1 tab Gap2">
                     <ul>
                       <li className={userDefienedFilter === 'static' ? 'on W50' : 'W50'}>
@@ -245,6 +251,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survialData, SVF
                     </ul>
                   </div>
                 )}
+                {SurvivalType!=='single' && (<>
                 <h3 className="SurvivalChooseModel TextLeft">
                   <FormattedMessage id="ChooseFilterType" defaultMessage="Choose Filter Type" />
                 </h3>
@@ -261,9 +268,9 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survialData, SVF
                       </button>
                     </li>
                   </ul>
-                </div>
+                </div></>)}
 
-                {filterTypeButton && filterTypeButton === 'omics' && (
+                {filterTypeButton && filterTypeButton === 'omics' && SurvivalType!=='single'&& (
                   <div className="M1 P1">
                     {filterState && filterState.genes && filterState.genes.length === 0 && (
                       <h6 className="MB2 TextLeft TextBase" style={{ color: 'red' }}>
@@ -288,7 +295,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survialData, SVF
                     </select>
                   </div>
                 )}
-                {filterTypeButton && filterTypeButton === 'omics' && (
+                {filterTypeButton && filterTypeButton === 'omics' && SurvivalType!=='single' && (
                   <div className="M1 P1">
                     {project_id !== undefined && !alltabList[geneDatabase] && (
                       <p className="ErrorText MB1 MultiUploadTextCenter" style={{ textTransform: 'capitalize' }}>

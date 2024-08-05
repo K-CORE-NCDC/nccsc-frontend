@@ -164,6 +164,12 @@ const homeReducer = (state = { home: 'home' }, { type, payload }) => {
         vcfmaf: payload
       };
 
+    case homeConstants.DATAFRAME_RECON:
+      return {
+        ...state,
+        dataframe_recon: payload
+      };
+
     case homeConstants.MAFMERGER:
       return {
         ...state,

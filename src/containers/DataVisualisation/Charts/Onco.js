@@ -42,9 +42,9 @@ export default function DataOnco({
     "z_score_down_prot": 0.5,
     "z_score_up_rna": 1,
     "z_score_down_rna": -1,
-    "cn_up_value": 1,
+    "cn_up_value": 3,
     "cn_equal_value": 2,
-    "cn_down_value": 3,
+    "cn_down_value": 1,
   })
   const [customFilterJson, setCustomFilterJson] = useState([]);
 
@@ -295,7 +295,7 @@ export default function DataOnco({
   const ChangeFilter = ()=>{
     setInputState((prevState) => ({ ...prevState, ...Filter }));
   }
-  
+
   return (
     <div
       style={{
@@ -333,9 +333,9 @@ export default function DataOnco({
           <label>Filter</label>
           {showOnco && chartData['types'].includes('rna') && <div className="relative flex  oncoBorder">
             <span
-              className="border oncoWidth TextAlignCenter oncoBoxesLabel" 
+              className="border oncoWidth TextAlignCenter oncoBoxesLabel"
               >mRNA &gt;=</span>
-              
+
                 <input
                   type="number"
                   aria-label="From"
@@ -345,7 +345,7 @@ export default function DataOnco({
                   name='z_score_up_rna'
                   className="oncoBorderLeft oncoBoxes oncoWidth" />
                   <span
-              className="border oncoWidth TextAlignCenter oncoBoxesLabel" 
+              className="border oncoWidth TextAlignCenter oncoBoxesLabel"
               >mRNA &lt;=</span>
                 <input
                   type="number"
@@ -355,12 +355,12 @@ export default function DataOnco({
                   onChange={handleFilter}
                   name='z_score_down_rna'
                   className="oncoBorderLeft oncoBoxes oncoWidth" />
-              
+
           </div>}
           {showOnco && chartData['types'].includes('cnv') && <div className="relative flex  oncoBorder">
             <span
-              className="border oncoWidth TextAlignCenter oncoBoxesLabel" 
-              >CNV  &lt;= </span>
+              className="border oncoWidth TextAlignCenter oncoBoxesLabel"
+              >CNV &gt;= </span>
             <input
               type="number"
               aria-label="From"
@@ -370,7 +370,7 @@ export default function DataOnco({
               onChange={handleFilter}
               className="oncoBorderLeft oncoBoxes oncoWidth" />
               <span
-              className="border oncoWidth TextAlignCenter oncoBoxesLabel" 
+              className="border oncoWidth TextAlignCenter oncoBoxesLabel"
               >CNV  = </span>
             <input
               type="number"
@@ -381,8 +381,8 @@ export default function DataOnco({
               onChange={handleFilter}
               className="oncoBorderLeft oncoBoxes oncoWidth" />
               <span
-              className="border oncoWidth TextAlignCenter oncoBoxesLabel" 
-              >CNV  &gt;= </span>
+              className="border oncoWidth TextAlignCenter oncoBoxesLabel"
+              >CNV &lt;= </span>
             <input
               type="number"
               aria-label="To"
@@ -394,9 +394,9 @@ export default function DataOnco({
           </div> }
           {showOnco && chartData['types'].includes('proteome') && <div className="relative flex  oncoBorder">
             <span
-              className="border oncoWidth TextAlignCenter oncoBoxesLabel" 
+              className="border oncoWidth TextAlignCenter oncoBoxesLabel"
               >PROTEIN &gt;=</span>
-              
+
             <input
               type="number"
               aria-label="From"
@@ -406,7 +406,7 @@ export default function DataOnco({
               name='z_score_up_prot'
               className="oncoBorderLeft oncoBoxes oncoWidth" />
               <span
-              className="border oncoWidth TextAlignCenter oncoBoxesLabel" 
+              className="border oncoWidth TextAlignCenter oncoBoxesLabel"
               >PROTEIN &lt;=</span>
             <input
               type="number"
@@ -418,7 +418,7 @@ export default function DataOnco({
               className="oncoBorderLeft oncoBoxes oncoWidth" />
           </div>}
           <button onClick={ChangeFilter} className='btn btnPrimary MarginTop2 FusionNameRE'>Submit</button>
-          
+
         </div>}
       </div>
       {loader ? (

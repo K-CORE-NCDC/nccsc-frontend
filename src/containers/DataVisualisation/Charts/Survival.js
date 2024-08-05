@@ -1,20 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Fragment,useEffect, useRef,useCallback, useState,lazy,Suspense } from 'react';
 import { exportComponentAsJPEG } from 'react-component-export-image';
 import { FormattedMessage } from 'react-intl';
 import { useLocation, useParams } from 'react-router-dom';
-import { SurvivalInformation } from '../../../actions/api_actions';
+import { SurvivalInformation,getUserDefinedFilter } from '../../../actions/api_actions';
 import LoaderCmp from '../../Common/Loader';
 import NoContentMessage from '../../Common/NoContentComponent';
 import SurvivalCmp from '../../Common/Survival';
 import inputJson from '../../Common/data';
 import Table from '../../Common/Table/ReactTable';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { Popover, Transition } from '@headlessui/react';
+import { UserCircleIcon } from '@heroicons/react/outline';
 export default function DataSurvival({
   width,
   screenCapture,
   setToFalseAfterScreenCapture,
   survialData
 }) {
+  const dispatch = useDispatch();
   const route = useLocation();
   const reference = useRef();
   const [inputState, setInputState] = useState({});
@@ -28,8 +31,16 @@ export default function DataSurvival({
   const [vizType, setVizType] = useState('');
   const [singelSurvialType, setSingelSurvialType] = useState('recurrence');
   const [survialType, setSurvialType] = useState('recurrence');
-
+  const [isSurvivalFilterPopoverOpen, setSurvivalFilterPopoverOpen] = useState(false);
   let { project_id } = useParams();
+
+  const [SVFState, setSVFState] = useState(project_id ? 'dynamic' : 'static');
+  let SurvivalFilterComponent;
+
+
+  if (vizType === 'single'){
+    SurvivalFilterComponent = lazy(() => import('../../UserDataVisualization/Components/MainComponents/SurvivalFilterComponent'));
+  }
 
   useEffect(() => {
     if (screenCapture) {
@@ -61,7 +72,7 @@ export default function DataSurvival({
     }
   }, [route.pathname]);
 
-  let callSingleSurvial = (survivalType) => {
+  let callSingleSurvial = (survivalType,groupFilter) => {
     setSingelSurvialType(survivalType);
     setSurvialType(survivalType)
     let staticSurvivalData = {};
@@ -69,9 +80,10 @@ export default function DataSurvival({
     staticSurvivalData['survival_type'] = survivalType;
     staticSurvivalData['filter_gene'] = '';
     staticSurvivalData['gene_database'] = 'dna_mutation';
-    staticSurvivalData['group_filters'] = {};
+    staticSurvivalData['group_filters'] = groupFilter;
     staticSurvivalData['clinical'] = true;
     staticSurvivalData['project_id'] = project_id;
+    console.log(staticSurvivalData,'----')
     setInputState((prevState) => ({ ...prevState, ...staticSurvivalData }));
   };
 
@@ -281,6 +293,14 @@ export default function DataSurvival({
     }
   }, [survivalJson]);
 
+
+  useEffect(() => {
+    if (project_id ) {
+      dispatch(getUserDefinedFilter({ project_id: project_id }));
+    }
+  }, [project_id])
+
+
   const getColumns = (columns) => {
     if (columns) {
       let _array = []
@@ -301,6 +321,19 @@ export default function DataSurvival({
     }
   }
 
+  const survivalCallback = useCallback(({ updatedState }) => {
+    console.log(updatedState)
+    // callSingleSurvial(updatedState)
+    if(updatedState['survival_type']==='cox'){
+      setInputState((prevState)=>({...prevState,...updatedState}))
+    }else{
+      callSingleSurvial(updatedState['survival_type'],updatedState['group_filters'])
+    }
+    // setSurvivalData(updatedState);
+    setSVFState(updatedState?.filterType || 'static')
+    // setChartName(tabName);
+    setSurvivalFilterPopoverOpen(false);
+  },[])
   return (
     <>
       {loader ? (
@@ -321,7 +354,7 @@ export default function DataSurvival({
               <NoContentMessage />
             </div>
           )}
-          {/* 
+          {/*
           {vizType !== 'single' &&
             inputState &&
             (inputState['survival_type'] === 'cox' && !inputState['coxFilter']) && (
@@ -333,9 +366,7 @@ export default function DataSurvival({
               </p>
             )} */}
 
-          {
-            vizType !== 'single' &&
-            inputState &&
+          {inputState &&
             (
               Object.keys(inputState)?.length === 1 ||
               (
@@ -362,31 +393,66 @@ export default function DataSurvival({
 
           {vizType && vizType === 'single' && (
             <div className="Flex Gap2 FitContent M4">
-              <button
-                onClick={() => {
-                  callSingleSurvial('recurrence');
-                }}
-                className={
-                  singelSurvialType === 'recurrence'
-                    ? 'SurvivalSelectedCss btn btnPrimary MAuto on'
-                    : 'SurvivalNonSelectedCss btn MAuto'
-                }
-              >
-                Recurrence
-              </button>
+              <Popover className="Relative gene_main_box">
+                {({ }) => {
+                  return (
+                    <>
+                      <div className="w-full">
+                        <Popover.Button
+                          className={'selectBox'}
+                          onClick={() => setSurvivalFilterPopoverOpen(!isSurvivalFilterPopoverOpen)}
+                        >
+                          <div className="GeneSetgeneSetButton">
+                            <div className="flex-1">
+                              <FormattedMessage
+                                id="Clinical Grouping"
+                                defaultMessage="Clinical Grouping"
+                              />
+                            </div>
+                            <div className="w-20">
+                              <UserCircleIcon className="filter-icon" />
+                            </div>
+                          </div>
+                        </Popover.Button>
 
-              <button
-                onClick={() => {
-                  callSingleSurvial('survival');
+                        {isSurvivalFilterPopoverOpen && <Transition
+                          show={isSurvivalFilterPopoverOpen}
+                          as={Fragment}
+                          enter="transition ease-out duration-200"
+                          enterFrom="opacity-0 translate-y-1"
+                          enterTo="opacity-100 translate-y-0"
+                          leave="transition ease-in duration-150"
+                          leaveFrom="opacity-100 translate-y-0"
+                          leaveTo="opacity-0 translate-y-1"
+                        >
+                          <Popover.Panel
+                            className="SurvivalFilter W100 BorderstyleVizAbs"
+                            style={{
+                              maxHeight: '350px',
+                              overflowY: 'scroll',
+                              zIndex: '10',
+                              background: 'white',
+                              width: '120%'
+                            }}
+                          >
+                            <Suspense >
+                              <SurvivalFilterComponent
+                                parentCallback={survivalCallback}
+                                filterState={inputState}
+                                survialData={survialData}
+                                SVFState={SVFState}
+                                SurvivalType = 'single'
+                              />
+                            </Suspense>
+
+                          </Popover.Panel>
+                        </Transition>
+                        }
+                      </div>
+                    </>
+                  );
                 }}
-                className={
-                  singelSurvialType === 'survival'
-                    ? 'SurvivalSelectedCss btn btnPrimary MAuto on'
-                    : 'SurvivalNonSelectedCss btn MAuto'
-                }
-              >
-                Survival
-              </button>
+              </Popover>
             </div>
           )}
 
@@ -424,3 +490,4 @@ export default function DataSurvival({
     </>
   );
 }
+

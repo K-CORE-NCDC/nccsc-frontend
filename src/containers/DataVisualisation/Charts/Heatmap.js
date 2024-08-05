@@ -61,7 +61,7 @@ export default function DataHeatmap({
   const [singleGene, setSingleGene] = useState(false)
   const [activeKmeanType,setActiveKmeanType] = useState('sample')
   const noOptionsMessage = () => "No clinical data";
-
+  
   // const [SC, SetSC] = useState(screenCapture);
 
 
@@ -220,32 +220,34 @@ export default function DataHeatmap({
         dataJson['heat_type'] = mainTab;
         dataJson['cluster'] = rangeValue;
         // dataJson['cluster'] = rangeValue;
+        dataJson['clinicalFilters'] = clinincalAttributesFil;
         dataJson['clustering_type'] = activeKmeanType
-        let return_data = HeatmapInformation('POST', dataJson);
-        return_data
-          .then((result) => {
-            const d = result;
-            if (d.status === 200) {
-              let r_ = d['data'];
-              if (d["data"]?.max_spectrum_value !== null) {
-                setSpectrumMax(d["data"]?.max_spectrum_value)
-              }
-              if (d["data"]?.min_spectrum_value !== null) {
-                setSpectrumMin(d["data"]?.min_spectrum_value)
-              }
-              setHeatmapJson(r_);
-              changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
-              setHeatmapSummaryStatusCode({ status: 200 });
-              setClusterRange(d["data"]?.clusters?.length);
-            } else {
-              setHeatmapJson([]);
-              setHeatmapSummaryStatusCode({ status: 204 });
-            }
-          })
-          .catch(() => {
-            setHeatmapJson([]);
-            setHeatmapSummaryStatusCode({ status: 204 });
-          });
+        callHeatmapData(dataJson)
+        // let return_data = HeatmapInformation('POST', dataJson);
+        // return_data
+        //   .then((result) => {
+        //     const d = result;
+        //     if (d.status === 200) {
+        //       let r_ = d['data'];
+        //       if (d["data"]?.max_spectrum_value !== null) {
+        //         setSpectrumMax(d["data"]?.max_spectrum_value)
+        //       }
+        //       if (d["data"]?.min_spectrum_value !== null) {
+        //         setSpectrumMin(d["data"]?.min_spectrum_value)
+        //       }
+        //       setHeatmapJson(r_);
+        //       changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
+        //       setHeatmapSummaryStatusCode({ status: 200 });
+        //       setClusterRange(d["data"]?.clusters?.length);
+        //     } else {
+        //       setHeatmapJson([]);
+        //       setHeatmapSummaryStatusCode({ status: 204 });
+        //     }
+        //   })
+        //   .catch(() => {
+        //     setHeatmapJson([]);
+        //     setHeatmapSummaryStatusCode({ status: 204 });
+        //   });
         setNoGeneData(false);
       } else {
         setNoGeneData(true);
@@ -255,6 +257,7 @@ export default function DataHeatmap({
 
   useEffect(() => {
     if (heatmapJson?.data?.length > 0 && brstKeys) {
+      
       setNoData(false);
       let genes = [];
       let unique_sample_values = {};
@@ -270,10 +273,11 @@ export default function DataHeatmap({
       }
 
       let d_ = heatmapJson['data'];
-
+      
       if (d_ !== '' && d_ !== undefined) {
         d_ &&
           d_.forEach((item) => {
+            
             if (tableType === 'phospho' || tableType === 'methylation') {
               if (!genes.includes(item['gene_name_site'])) {
                 genes.push(item['gene_name_site']);
@@ -283,18 +287,21 @@ export default function DataHeatmap({
                 genes.push(item['gene_name']);
               }
             }
-
+            // console.log(brstKeys  )
             let breast_key = brstKeys[item['pt_sbst_no']];
-            if (breast_key in unique_sample_values) {
-              unique_sample_values[breast_key].push(item['gene_vl']);
-            } else {
-              unique_sample_values[breast_key] = [];
-              unique_sample_values[breast_key].push(item['gene_vl']);
-            }
-            if (option.length > 0) {
-              for (let opt = 0; opt < option.length; opt++) {
-                if (!(breast_key in unique_cf[option[opt].id])) {
-                  unique_cf[option[opt].id][breast_key] = item[option[opt].id];
+            if(breast_key!==undefined){
+              
+              if (breast_key in unique_sample_values) {
+                unique_sample_values[breast_key].push(item['gene_vl']);
+              } else {
+                unique_sample_values[breast_key] = [item['gene_vl']];
+                // unique_sample_values[breast_key].push();
+              }
+              if (option.length > 0) {
+                for (let opt = 0; opt < option.length; opt++) {
+                  if (!(breast_key in unique_cf[option[opt].id])) {
+                    unique_cf[option[opt].id][breast_key] = item[option[opt].id];
+                  }
                 }
               }
             }
@@ -322,7 +329,7 @@ export default function DataHeatmap({
           };
         }
       }
-
+      
       Object.keys(unique_sample_values).forEach((key) => {
         y['vars'].push(key);
         y['data'].push(unique_sample_values[key]);
@@ -371,7 +378,7 @@ export default function DataHeatmap({
       // if(y?.vars?.length > 0){
       //   y?.vars.push(y.vars[0])
       // }
-      console.log({ z: tmp, x: x, y: y })
+      
       if (setStateTrue) {
         setRenderNoContent(false);
         setData({ z: tmp, x: x, y: y });
@@ -414,7 +421,8 @@ export default function DataHeatmap({
     } else if (type === 'phospho') {
       dataJson['genes'] = selectedGene;
     }
-    setOption([]);
+    dataJson['clinicalFilters'] = clinincalAttributesFil;
+    // setOption([]);
   };
 
   // const changeClusterType = (e, type) => {
@@ -434,18 +442,24 @@ export default function DataHeatmap({
   //   setOption([]);
   // };
 
-  const changeMainType = (e, type) => {
+  const changeMainType = (e, type_) => {
+    
     let c = document.getElementsByName('maintype');
     for (var i = 0; i < c.length; i++) {
       let classList = c[i].classList;
       classList.remove('hover:bg-main-blue', 'bg-main-blue', 'text-white', 'border-gray-600');
       classList.add('text-teal-700', 'hover:bg-teal-200', 'bg-teal-100');
     }
+    
     e.target.classList.add('hover:bg-main-blue', 'bg-main-blue', 'text-white');
-    setMainTab(type);
-    setOption([]);
-    let dataJson = { ...inputData };
-
+    setMainTab(type_);
+    
+    // setOption([]);
+    let dataJson = {...inputData};
+    
+    // let d = {'heat_type':e.target.dataset.type,}
+    // dataJson['type'] = viewType
+    // dataJson['filter'] = {...inputData['filter']}
     if (tableType === 'rna') {
       dataJson['genes'] = selectedGene;
     } else if (tableType === 'methylation') {
@@ -460,38 +474,42 @@ export default function DataHeatmap({
       setLoader(true);
       dataJson['table_type'] = tableType;
       dataJson['view'] = viewType;
-      dataJson['heat_type'] = type;
+      dataJson['heat_type'] = e.target.dataset.type
       dataJson['cluster'] = rangeValue;
       dataJson['clustering_type'] = activeKmeanType
+      dataJson['clinicalFilters'] = clinincalAttributesFil;
       setLoader(true);
-      let return_data = HeatmapInformation('POST', dataJson);
-      return_data
-        .then((result) => {
-          const d = result;
-          if (d.status === 200) {
-            let r_ = d['data'];
-            if (d["data"]?.max_spectrum_value !== null) {
-              setSpectrumMax(d["data"]?.max_spectrum_value)
-            }
-            if (d["data"]?.min_spectrum_value !== null) {
-              setSpectrumMin(d["data"]?.min_spectrum_value)
-            }
-            setHeatmapJson(r_);
-            changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
-            setHeatmapSummaryStatusCode({ status: 200 });
-            setClusterRange(d["data"]?.clusters?.length);
-            // if (dataJson['heat_type']=='k-mean'){
-            //   setClusteringType(d["data"]?.clustering_type);
-            // }
-          } else {
-            setHeatmapJson([]);
-            setHeatmapSummaryStatusCode({ status: 204 });
-          }
-        })
-        .catch(() => {
-          setHeatmapJson([]);
-          setHeatmapSummaryStatusCode({ status: 204 });
-        });
+      
+      setHeatmapJson([])
+      callHeatmapData(dataJson)
+      // let return_data = HeatmapInformation('POST', dataJson);
+      // return_data
+      //   .then((result) => {
+      //     const d = result;
+      //     if (d.status === 200) {
+      //       let r_ = d['data'];
+      //       if (d["data"]?.max_spectrum_value !== null) {
+      //         setSpectrumMax(d["data"]?.max_spectrum_value)
+      //       }
+      //       if (d["data"]?.min_spectrum_value !== null) {
+      //         setSpectrumMin(d["data"]?.min_spectrum_value)
+      //       }
+      //       setHeatmapJson(r_);
+      //       changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
+      //       setHeatmapSummaryStatusCode({ status: 200 });
+      //       setClusterRange(d["data"]?.clusters?.length);
+      //       // if (dataJson['heat_type']=='k-mean'){
+      //       //   setClusteringType(d["data"]?.clustering_type);
+      //       // }
+      //     } else {
+      //       setHeatmapJson([]);
+      //       setHeatmapSummaryStatusCode({ status: 204 });
+      //     }
+      //   })
+      //   .catch(() => {
+      //     setHeatmapJson([]);
+      //     setHeatmapSummaryStatusCode({ status: 204 });
+      //   });
     }
   };
 
@@ -508,7 +526,7 @@ export default function DataHeatmap({
     } else if (tableType === 'phospho') {
       dataJson['genes'] = gene?.split(",")
     }
-
+    // setOption([]);
 
 
     if (inputData.type !== '' && inputData['genes'].length > 0) {
@@ -519,36 +537,38 @@ export default function DataHeatmap({
       dataJson['clinicalFilters'] = clinincalAttributesFil;
       dataJson['clustering_type'] = activeKmeanType
       setLoader(true);
-      let return_data = HeatmapInformation('POST', dataJson);
-      return_data
-        .then((result) => {
-          const d = result;
+      callHeatmapData(dataJson)
+      // let return_data = HeatmapInformation('POST', dataJson);
+      // return_data
+      //   .then((result) => {
+      //     const d = result;
 
-          if (d.status === 200) {
-            let r_ = d['data'];
-            if (d["data"]?.max_spectrum_value !== null) {
-              setSpectrumMax(d["data"]?.max_spectrum_value)
-            }
-            if (d["data"]?.min_spectrum_value !== null) {
-              setSpectrumMin(d["data"]?.min_spectrum_value)
-            }
-            setHeatmapJson(r_);
-            changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
-            setHeatmapSummaryStatusCode({ status: 200 });
-            setClusterRange(d["data"]?.clusters?.length);
-          } else {
-            setHeatmapJson([]);
-            setHeatmapSummaryStatusCode({ status: 204 });
-          }
-        })
-        .catch(() => {
-          setHeatmapJson([]);
-          setHeatmapSummaryStatusCode({ status: 204 });
-        });
+      //     if (d.status === 200) {
+      //       let r_ = d['data'];
+      //       if (d["data"]?.max_spectrum_value !== null) {
+      //         setSpectrumMax(d["data"]?.max_spectrum_value)
+      //       }
+      //       if (d["data"]?.min_spectrum_value !== null) {
+      //         setSpectrumMin(d["data"]?.min_spectrum_value)
+      //       }
+      //       setHeatmapJson(r_);
+      //       changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
+      //       setHeatmapSummaryStatusCode({ status: 200 });
+      //       setClusterRange(d["data"]?.clusters?.length);
+      //     } else {
+      //       setHeatmapJson([]);
+      //       setHeatmapSummaryStatusCode({ status: 204 });
+      //     }
+      //   })
+      //   .catch(() => {
+      //     setHeatmapJson([]);
+      //     setHeatmapSummaryStatusCode({ status: 204 });
+      //   });
     }
   };
 
   function onSelect(selectedList) {
+    console.log(optionChoices,option)
     let cf = [];
     setOption(selectedList);
     selectedList.forEach((item) => {
@@ -558,6 +578,7 @@ export default function DataHeatmap({
     if (inputData.type !== '' && inputData['genes'].length > 0) {
       setLoader(true);
       let dataJson = { ...inputData };
+      // let d = {"clinicalFilters":cd}
       dataJson['clinicalFilters'] = cf;
       dataJson['view'] = viewType;
       if (tableType === 'rna') {
@@ -573,31 +594,32 @@ export default function DataHeatmap({
       dataJson['table_type'] = tableType;
       dataJson['cluster'] = rangeValue;
       dataJson['clustering_type'] = activeKmeanType
-      let return_data = HeatmapInformation('POST', dataJson);
-      return_data
-        .then((result) => {
-          const d = result;
-          if (d.status === 200) {
-            let r_ = d['data'];
-            if (d["data"]?.max_spectrum_value !== null) {
-              setSpectrumMax(d["data"]?.max_spectrum_value)
-            }
-            if (d["data"]?.min_spectrum_value !== null) {
-              setSpectrumMin(d["data"]?.min_spectrum_value)
-            }
-            setHeatmapJson(r_);
-            changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
-            setHeatmapSummaryStatusCode({ status: 200 });
-            setClusterRange(d["data"]?.clusters?.length);
-          } else {
-            setHeatmapJson([]);
-            setHeatmapSummaryStatusCode({ status: 204 });
-          }
-        })
-        .catch(() => {
-          setHeatmapJson([]);
-          setHeatmapSummaryStatusCode({ status: 204 });
-        });
+      callHeatmapData(dataJson)
+      // let return_data = HeatmapInformation('POST', dataJson);
+      // return_data
+      //   .then((result) => {
+      //     const d = result;
+      //     if (d.status === 200) {
+      //       let r_ = d['data'];
+      //       if (d["data"]?.max_spectrum_value !== null) {
+      //         setSpectrumMax(d["data"]?.max_spectrum_value)
+      //       }
+      //       if (d["data"]?.min_spectrum_value !== null) {
+      //         setSpectrumMin(d["data"]?.min_spectrum_value)
+      //       }
+      //       setHeatmapJson(r_);
+      //       changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
+      //       setHeatmapSummaryStatusCode({ status: 200 });
+      //       setClusterRange(d["data"]?.clusters?.length);
+      //     } else {
+      //       setHeatmapJson([]);
+      //       setHeatmapSummaryStatusCode({ status: 204 });
+      //     }
+      //   })
+      //   .catch(() => {
+      //     setHeatmapJson([]);
+      //     setHeatmapSummaryStatusCode({ status: 204 });
+      //   });
     }
   }
 
@@ -627,35 +649,37 @@ export default function DataHeatmap({
         dataJson['genes'] = selectedGene[0]?.split(",");
       }
       dataJson['clustering_type'] = activeKmeanType
-      let return_data = HeatmapInformation('POST', dataJson);
-      return_data
-        .then((result) => {
-          const d = result;
-          if (d.status === 200) {
-            let r_ = d['data'];
-            if (d["data"]?.max_spectrum_value !== null) {
-              setSpectrumMax(d["data"]?.max_spectrum_value)
-            }
-            if (d["data"]?.min_spectrum_value !== null) {
-              setSpectrumMin(d["data"]?.min_spectrum_value)
-            }
-            setHeatmapJson(r_);
-            changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
-            setHeatmapSummaryStatusCode({ status: 200 });
-            setClusterRange(d["data"]?.clusters?.length);
-          } else {
-            setHeatmapJson([]);
-            setHeatmapSummaryStatusCode({ status: 204 });
-          }
-        })
-        .catch(() => {
-          setHeatmapJson([]);
-          setHeatmapSummaryStatusCode({ status: 204 });
-        });
+      callHeatmapData(dataJson)
+      // let return_data = HeatmapInformation('POST', dataJson);
+      // return_data
+      //   .then((result) => {
+      //     const d = result;
+      //     if (d.status === 200) {
+      //       let r_ = d['data'];
+      //       if (d["data"]?.max_spectrum_value !== null) {
+      //         setSpectrumMax(d["data"]?.max_spectrum_value)
+      //       }
+      //       if (d["data"]?.min_spectrum_value !== null) {
+      //         setSpectrumMin(d["data"]?.min_spectrum_value)
+      //       }
+      //       setHeatmapJson(r_);
+      //       changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
+      //       setHeatmapSummaryStatusCode({ status: 200 });
+      //       setClusterRange(d["data"]?.clusters?.length);
+      //     } else {
+      //       setHeatmapJson([]);
+      //       setHeatmapSummaryStatusCode({ status: 204 });
+      //     }
+      //   })
+      //   .catch(() => {
+      //     setHeatmapJson([]);
+      //     setHeatmapSummaryStatusCode({ status: 204 });
+      //   });
     }
   }
 
   const changeView = (e, view) => {
+    // setOption([]);
     let c = document.getElementsByName('view');
     setLoader(true);
     for (var i = 0; i < c.length; i++) {
@@ -665,6 +689,7 @@ export default function DataHeatmap({
     }
     e.target.classList.add('hover:bg-main-blue', 'bg-main-blue', 'text-white');
     setViewType(view);
+    
     let dataJson = { ...inputData };
     dataJson['view'] = view;
     dataJson['heat_type'] = mainTab;
@@ -673,33 +698,35 @@ export default function DataHeatmap({
     dataJson['genes'] = selectedGene;
     dataJson['table_type'] = tableType;
     dataJson['clustering_type'] = activeKmeanType
-    if (inputData.type !== '' && inputData['genes'].length > 0) {
-      let return_data = HeatmapInformation('POST', dataJson);
-      return_data
-        .then((result) => {
-          const d = result;
-          if (d.status === 200) {
-            let r_ = d['data'];
-            if (d["data"]?.max_spectrum_value !== null) {
-              setSpectrumMax(d["data"]?.max_spectrum_value)
-            }
-            if (d["data"]?.min_spectrum_value !== null) {
-              setSpectrumMin(d["data"]?.min_spectrum_value)
-            }
-            setHeatmapJson(r_);
-            changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
-            setHeatmapSummaryStatusCode({ status: 200 });
-            setClusterRange(d["data"]?.clusters?.length);
-          } else {
-            setHeatmapJson([]);
-            setHeatmapSummaryStatusCode({ status: 204 });
-          }
-        })
-        .catch(() => {
-          setHeatmapJson([]);
-          setHeatmapSummaryStatusCode({ status: 204 });
-        });
-    }
+    callHeatmapData(dataJson)
+    // if (inputData.type !== '' && inputData['genes'].length > 0) {
+
+      // let return_data = HeatmapInformation('POST', dataJson);
+      // return_data
+      //   .then((result) => {
+      //     const d = result;
+      //     if (d.status === 200) {
+      //       let r_ = d['data'];
+      //       if (d["data"]?.max_spectrum_value !== null) {
+      //         setSpectrumMax(d["data"]?.max_spectrum_value)
+      //       }
+      //       if (d["data"]?.min_spectrum_value !== null) {
+      //         setSpectrumMin(d["data"]?.min_spectrum_value)
+      //       }
+      //       setHeatmapJson(r_);
+      //       changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
+      //       setHeatmapSummaryStatusCode({ status: 200 });
+      //       setClusterRange(d["data"]?.clusters?.length);
+      //     } else {
+      //       setHeatmapJson([]);
+      //       setHeatmapSummaryStatusCode({ status: 204 });
+      //     }
+      //   })
+      //   .catch(() => {
+      //     setHeatmapJson([]);
+      //     setHeatmapSummaryStatusCode({ status: 204 });
+      //   });
+    // }
   };
 
   let style = {
@@ -716,7 +743,7 @@ export default function DataHeatmap({
   }
 
   const changeCluster = () => {
-    let cf = [];
+    
     let dataJson = { ...inputData };
 
     if (tableType === 'rna') {
@@ -731,38 +758,39 @@ export default function DataHeatmap({
 
     if (inputData.type !== '' && inputData['genes'].length > 0) {
       setLoader(true);
-      dataJson['clinicalFilters'] = cf;
+      dataJson['clinicalFilters'] =  clinincalAttributesFil;;
       dataJson['view'] = viewType;
       dataJson['type'] = viewType;
       dataJson['heat_type'] = mainTab;
       dataJson['cluster'] = rangeValue;
       dataJson['table_type'] = tableType;
       dataJson['clustering_type'] = activeKmeanType
-      let return_data = HeatmapInformation('POST', dataJson);
-      return_data
-        .then((result) => {
-          const d = result;
-          if (d.status === 200) {
-            let r_ = d['data'];
-            if (d["data"]?.max_spectrum_value !== null) {
-              setSpectrumMax(d["data"]?.max_spectrum_value)
-            }
-            if (d["data"]?.min_spectrum_value !== null) {
-              setSpectrumMin(d["data"]?.min_spectrum_value)
-            }
-            setHeatmapJson(r_);
-            changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
-            setHeatmapSummaryStatusCode({ status: 200 });
-            setClusterRange(d["data"]?.clusters?.length);
-          } else {
-            setHeatmapJson([]);
-            setHeatmapSummaryStatusCode({ status: 204 });
-          }
-        })
-        .catch(() => {
-          setHeatmapJson([]);
-          setHeatmapSummaryStatusCode({ status: 204 });
-        });
+      callHeatmapData(dataJson)
+      // let return_data = HeatmapInformation('POST', dataJson);
+      // return_data
+      //   .then((result) => {
+      //     const d = result;
+      //     if (d.status === 200) {
+      //       let r_ = d['data'];
+      //       if (d["data"]?.max_spectrum_value !== null) {
+      //         setSpectrumMax(d["data"]?.max_spectrum_value)
+      //       }
+      //       if (d["data"]?.min_spectrum_value !== null) {
+      //         setSpectrumMin(d["data"]?.min_spectrum_value)
+      //       }
+      //       setHeatmapJson(r_);
+      //       changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
+      //       setHeatmapSummaryStatusCode({ status: 200 });
+      //       setClusterRange(d["data"]?.clusters?.length);
+      //     } else {
+      //       setHeatmapJson([]);
+      //       setHeatmapSummaryStatusCode({ status: 204 });
+      //     }
+      //   })
+      //   .catch(() => {
+      //     setHeatmapJson([]);
+      //     setHeatmapSummaryStatusCode({ status: 204 });
+      //   });
     }
   };
 
@@ -795,19 +823,18 @@ export default function DataHeatmap({
   }, [configVis, noData]);
 
 
-  const changeKmeanType = (e)=>{
-    const {name} = e.target
-    console.log(name)
-    setActiveKmeanType(name)
-    let dataJson = {...inputData}
+  const callHeatmapData = (dataJson)=>{
     if (inputData.type !== '' && inputData['genes'].length > 0) {
-      dataJson['table_type'] = tableType;
-      dataJson['view'] = viewType;
-      dataJson['heat_type'] = mainTab;
-      dataJson['cluster'] = rangeValue;
-      dataJson['clinicalFilters'] = clinincalAttributesFil;
-      dataJson['clustering_type'] = activeKmeanType
+
+      // d['clinicalFilters'] = {...clinincalAttributesFil};
+      // dataJson['table_type'] = tableType;
+      // dataJson['view'] = viewType;
+      // dataJson['heat_type'] = ...mainTab;
+      // dataJson['cluster'] = rangeValue;
+      // dataJson['clinicalFilters'] = clinincalAttributesFil;
+      // dataJson['clustering_type'] = activeKmeanType
       setLoader(true);
+      setClusterRange(0)
       let return_data = HeatmapInformation('POST', dataJson);
       return_data
         .then((result) => {
@@ -825,15 +852,44 @@ export default function DataHeatmap({
             changeSpectrum(d["data"]?.min_spectrum_value, d["data"]?.max_spectrum_value);
             setHeatmapSummaryStatusCode({ status: 200 });
             setClusterRange(d["data"]?.clusters?.length);
+            setLoader(false)
           } else {
             setHeatmapJson([]);
             setHeatmapSummaryStatusCode({ status: 204 });
           }
+          // console.log(configVis,'---configVis',optionChoices,'---optionChoices',data_,'---data',mainTab,'---mainTab',activeKmeanType,'---')
         })
         .catch(() => {
           setHeatmapJson([]);
           setHeatmapSummaryStatusCode({ status: 204 });
         });
+    }
+  }
+
+
+  const changeKmeanType = (e)=>{
+    const {name} = e.target
+    
+    setActiveKmeanType(name)
+    let dataJson = {...inputData}
+    if (inputData.type !== '' && inputData['genes'].length > 0) {
+      if (tableType === 'rna') {
+        dataJson['genes'] = selectedGene;
+      } else if (tableType === 'methylation') {
+        dataJson['genes'] = selectedGene[0]?.split(",");
+      } else if (tableType === 'proteome') {
+        dataJson['genes'] = selectedGene;
+      } else if (tableType === 'phospho') {
+        dataJson['genes'] = selectedGene[0]?.split(",");
+      }
+      dataJson['table_type'] = tableType;
+      dataJson['view'] = viewType;
+      dataJson['heat_type'] = mainTab;
+      dataJson['cluster'] = rangeValue;
+      dataJson['clinicalFilters'] = clinincalAttributesFil;
+      dataJson['clustering_type'] = name
+      setLoader(true);
+      callHeatmapData(dataJson)
     }
   }
 
@@ -862,7 +918,7 @@ export default function DataHeatmap({
                   <button
                     type="button"
                     id="tab_heatmap"
-
+                    data-type='heatmap'
                     name="maintype"
                     onClick={(e) => {
                       // setMainTab('heatmap');
@@ -876,6 +932,7 @@ export default function DataHeatmap({
                   <button
                     type="button"
                     name="maintype"
+                    data-type='k-mean'
                     onClick={(e) => {
                       // setMainTab('k-mean');
                       changeMainType(e, 'k-mean');
@@ -1114,6 +1171,7 @@ export default function DataHeatmap({
                     :
                   </label>
                   <Multiselect
+                  multiple={true}
                     style={style}
                     options={optionChoices} // Options to display in the dropdown
                     selectedValues={option} // Preselected value to persist in dropdown
@@ -1262,7 +1320,7 @@ export default function DataHeatmap({
             </button>
           </div>
           </div>
-          {mainTab === 'k-mean' ? (
+          {(mainTab === 'k-mean' && clusterRange!==0 && rangeValue!==0) ? (
             <div className="ClusterBox">
               <div className="">
                 <div className="">
@@ -1278,27 +1336,29 @@ export default function DataHeatmap({
                       </button>
                     </div>
                   </div>
-
-                  <input
-                    type="range"
-                    className="custom-slider"
-                    id="points"
-                    name="points"
-                    min="1"
-                    step={1}
-                    max={clusterRange}
-                    value={rangeValue}
-                    onChange={rangeCall}
-                    style={{ zIndex: "0", important: "true" }}
-                  />
-                  <ul className="" id="tickmarks">
-                    <li key="min-range" className="">
-                      <span className="absolute">1</span>
-                    </li>
-                    <li key="max-range" className="">
-                      <span className="absolute">{clusterRange}</span>
-                    </li>
-                  </ul>
+                  
+                    <input
+                      type="range"
+                      className="custom-slider"
+                      id="points"
+                      name="points"
+                      min="1"
+                      step={1}
+                      max={clusterRange}
+                      value={rangeValue}
+                      onChange={rangeCall}
+                      style={{ zIndex: "0", important: "true" }}
+                    />
+                    <ul className="" id="tickmarks">
+                      <li key="min-range" className="">
+                        <span className="absolute">1</span>
+                      </li>
+                      <li key="max-range" className="">
+                        <span className="absolute">{clusterRange}</span>
+                      </li>
+                    </ul>
+                    
+                  
                 </div>
               </div>
             </div>

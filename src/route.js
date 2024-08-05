@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { CustomerServiceDetail } from './containers/Common/CusomerSeviceDetail';
 import Home from './containers/Home';
 import MultiDataViewProject from './containers/UserDataVisualization/MultiDataVisualization/MultiDataViewProject';
+import DataframeRecon from './containers/Tools/DataframeRecon';
 const DataSummary = React.lazy(() => import('./containers/DataSummary'));
 const Login = React.lazy(() => import('./containers/Login/login'));
 
@@ -457,6 +458,14 @@ const route = [
     name: <FormattedMessage id="Tools" defaultMessage="Tools" />,
     childname: <FormattedMessage id="blast" defaultMessage="Blast" />,
     component: Blast
+  },
+  {
+    path: '/dataframereconstruction/',
+    exact: true,
+    type: 'unauth',
+    name: <FormattedMessage id="Tools" defaultMessage="Tools" />,
+    childname: <FormattedMessage id="dataframereconstruction" defaultMessage="Dataframe Reconstruction" />,
+    component: DataframeRecon
   },
   {
     path: '/interpro/',
