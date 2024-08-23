@@ -25,16 +25,14 @@ const OncoCmp = React.forwardRef(
       'Frame Shift Ins': 'variant_classification||Frame_Shift_Ins||6',
       'Frame Shift Del': 'variant_classification||Frame_Shift_Del||6',
       'Germline': 'variant_classification||Missense_Mutation||6',
-      'Protein Downregulation (value <= 0.5)': 'protein||down||4',
-      'Protein Upregulation (value >= 1.5)': 'protein||up||4',
+      'Proteome Down regulation (value <= 0.5)': 'protein||down||4',
+      'Proteome Up regulation (value >= 1.5)': 'protein||up||4',
       'mRNA Downregulation (z-score <= -1)': 'regulation||down||3',
       'mRNA Upregulation (z-score >= 1)': 'regulation||up||3',
       'Cnv (value <= 1)': 'cnv||red',
       'Cnv (value = 2)': 'cnv||blue',
       'Cnv (value >= 3)': 'cnv||purple'
     };
-
-    // console.log(filter)
 
     let z_score_up_rna = filter['z_score_up_rna']
     let z_score_down_rna = filter['z_score_down_rna']
@@ -46,8 +44,8 @@ const OncoCmp = React.forwardRef(
     non_mutation_rule_params['regulation']['up']['legend_label'] = `mRNA Upregulation (z-score >= ${z_score_up_rna})`
     non_mutation_rule_params['regulation']['down']['legend_label'] =  `mRNA Downregulation (z-score <= ${z_score_down_rna})`
 
-    non_mutation_rule_params['protein']['up']['legend_label'] = `Protein Upregulation (value >= ${z_score_up_prot})`
-    non_mutation_rule_params['protein']['down']['legend_label'] = `Protein Downregulation (value <= ${z_score_down_prot})`
+    non_mutation_rule_params['protein']['up']['legend_label'] = `Proteome Up regulation (value >= ${z_score_up_prot})`
+    non_mutation_rule_params['protein']['down']['legend_label'] = `Proteome Down regulation (value <= ${z_score_down_prot})`
 
     non_mutation_rule_params['cnv']['red']['legend_label'] = `Cnv (value <= ${cnv_down})`
     non_mutation_rule_params['cnv']['blue']['legend_label'] = `Cnv (value = ${cnv_equal})`
@@ -351,13 +349,9 @@ const OncoCmp = React.forwardRef(
     useEffect(() => {
       $(document).on('click', '.legends', (e) => {
         const $element = $(e.currentTarget); // Use jQuery to access the clicked element
-        // console.log(e.target);
-        // console.log($element[0]); // Log the clicked element
-        // console.log('name', $element.attr('data-text')); // Use attr method to get data-text
 
         const name = $element.attr('data-text');
         if (name in names_variant) {
-          // console.log('name = ', name)
           setClickType((prevClickType) => {
             // Check if the name already exists:
             const nameExists = prevClickType.includes(names_variant[name]);

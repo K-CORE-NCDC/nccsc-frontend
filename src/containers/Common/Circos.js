@@ -3,7 +3,7 @@ import * as Circos from 'circos';
 import * as d3 from 'd3';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import placeholder from '../../assets/images/circosImage.png';
+import placeholder from '../../assets/images/circosLegend.png';
 import cytobands from './cytobands.csv';
 var gieStainColor = {
   gpos100: 'rgb(0,0,0)',
@@ -532,10 +532,13 @@ const CircosCmp = React.forwardRef(
             if (d.name in selectedGenesObject) {
               return selectedGeneColor;
             } else {
-              if (d.value > 1) {
+              if (d.value == 2) {
                 return '#F4B400';
-              } else {
+              } else if (d.value >=3){
                 return '#0F9D58';
+              }
+              else if (d.value <=1) {
+                return '#fffcfc';
               }
             }
           },
@@ -588,10 +591,10 @@ const CircosCmp = React.forwardRef(
               if (d.source.svtype === 'Deletion') {
                 return 'red';
               } else {
-                return 'yellow';
+                return '#ebff1c';
               }
             } else {
-              return '#0F9D58';
+              return 'green';
             }
           },
           tooltipContent: function (d) {
@@ -711,7 +714,6 @@ const CircosCmp = React.forwardRef(
 
     useEffect(() => {
       if (state['cytobands'].length > 0) {
-        // console.log(`state= ${JSON.stringify(state['cytobands'])}`)
 
         let d = [
           { id: 'chr1', label: 'chr1', color: '#996600', len: 249250621 },
@@ -784,7 +786,6 @@ export default CircosCmp;
 export const ModalComponent = ({ setOpenModal,legendData }) => {
   const [html,setHtml] = useState('')
   useEffect(()=>{
-    console.log(legendData)
     let ct = legendData['cytoband'].split('</path>')[0]
     let ctx1
     if (ct.length>0){
@@ -827,9 +828,7 @@ export const ModalComponent = ({ setOpenModal,legendData }) => {
     }
     if (legendData['cytobands']){
       cybt = legendData['cytobands'].split('</path>')[0]
-      console.log(cybt)
       cybt = cybt.split('M')[1].split(',')
-      console.log(cybt)
       cybx1 = cybt[0].split('.')[1]
     }
 
@@ -927,10 +926,8 @@ export const ModalComponent = ({ setOpenModal,legendData }) => {
             />
           </div>
           <div>
-            <iframe id='circos_legend' allow='allow-same-origin' style={{width:'800px',height:'500px'}} srcDoc={html}>
 
-            </iframe>
-            {/* <img alt="placeholder" src={placeholder} className="mt-10 object-contain h-2/5" /> */}
+             <img alt="placeholder" src={placeholder} className="mt-10 object-contain h-2/5" />
           </div>
         </div>
       </div>

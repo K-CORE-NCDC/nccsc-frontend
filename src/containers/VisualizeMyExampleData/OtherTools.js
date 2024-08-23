@@ -62,11 +62,11 @@ export const OtherTools = () => {
                   <b>MAF merger :</b> &nbsp;
                   <FormattedMessage
                     id="MAFMergerDesc1"
-                    defaultMessage="by entering multiple MAF files "
+                    defaultMessage="Analysis tool to merge into 1 file"
                   />
                   <FormattedMessage
                     id="MAFMergerDesc2"
-                    defaultMessage="Analysis tool to merge into 1 file"
+                    defaultMessage="by entering multiple MAF files "
                   />
                 </p>
               </li>
@@ -75,7 +75,7 @@ export const OtherTools = () => {
                   <b>RefVer converter (Liftover) :</b> &nbsp;
                   <FormattedMessage
                     id="RefverDescFull"
-                    defaultMessage="convert reference genome version of VCF file (hg19 ↔ hg38) "
+                    defaultMessage="Convert reference genome version of VCF file (hg19 ↔ hg38) "
                   />
                 </p>
               </li>

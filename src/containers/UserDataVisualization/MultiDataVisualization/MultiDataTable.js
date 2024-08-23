@@ -77,7 +77,7 @@ function Modal({ showModal, toggleModal }) {
                             })}
 
                           {verificationResponse && 'issue' in verificationResponse && verificationResponse['issue'] === 'SampleMismatch' && (
-                            <div className="ClinicalInformationErrors">
+                            <div style={{ margin: "20px", maxHeight: "400px", overflowY: "auto" }}>
                               <div>
                                 <h2>
                                   <FormattedMessage id="SampleMismatch" defaultMessage="Samples didn't match properly. Please recheck the files and try uploading again." />
@@ -329,11 +329,17 @@ function MultiDataTable({ updateComponentNumber }) {
       }
     }
 
-    if (verificationResponse && 'issue' in verificationResponse && (verificationResponse['issue'] === 'allFileColumns' || verificationResponse['issue'] === 'clinicalInforamtionFile')) {
+    if (verificationResponse && 'issue' in verificationResponse && (verificationResponse['issue'] === 'allFileColumns' || verificationResponse['issue'] === 'clinicalInforamtionFile' || verificationResponse['issue'] === 'SampleMismatch' )) {
       setFalseData(true)
       setLoading(false)
     }
-  }, [verificationResponse, activeTableKey]);
+
+
+  }, [verificationResponse, activeTableKey]
+
+);
+
+
 
   useEffect(() => {
     return () => {

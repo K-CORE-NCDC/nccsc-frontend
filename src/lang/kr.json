@@ -632,6 +632,7 @@
   "No Clinical Data":"임상 정보 없음",
   "tsvaccepted":"참고: .tsv 파일만 허용됩니다.",
   "MatrixToMeltedInfo":"본 분석 도구는 매트릭스 형식의 파일을 멜트 형식의 파일로 변환하는 도구입니다.",
-  "DfDesc1":"매트릭스 형식 파일 변환",
-  "DfDesc2":"녹은 형식의 파일에"
+  "DfDesc1":"매트릭스 형태의 파일을 멜팅 형태로 변환",
+  "DfDesc2":" ",
+  "dataframeconverter":"데이터프레임 변환기"
 }

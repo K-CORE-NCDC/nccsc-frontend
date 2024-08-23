@@ -70,7 +70,7 @@ export default function DataVolcono({
 
   useEffect(() => {
     if (inputState && 'genes' in inputState) {
-      
+
       if (
         inputState.type !== '' &&
         groupFilters &&
@@ -86,7 +86,7 @@ export default function DataVolcono({
         }
         inputState['pval'] = pValue
         inputState['log2fc'] = logValue
-        
+
         let return_data = VolcanoPlotInfo('POST', { ...inputState, filterGroup: groupFilters });
         return_data
           .then((result) => {
@@ -105,10 +105,10 @@ export default function DataVolcono({
           });
       }else if(inputState.type !== '' && inputState['volcanoTranscriptomeType'] === 'NT'){
         submitProteomeNT();
-      } 
-      
+      }
+
       else if (proteomeValue === 'NT') {
-        
+
         submitProteomeNT();
       }
     }
@@ -309,11 +309,11 @@ export default function DataVolcono({
               <div className='flex' style={{gap:'30px'}}>
                 <div className='flexRow'>
                   <label>Log2FoldChange</label>
-                  <input type='number' onChange={(e)=>setLogValue(parseFloat(e.target.value))} value={logValue} className='volcanoInputText'/>
+                  <input type='number' onChange={(e)=>setLogValue(parseFloat(e.target.value))} value={logValue} max={'10'} className='volcanoInputText'/>
                 </div>
                 <div className='flexRow'>
                   <label>pValue</label>
-                  <input type='number' onChange={(e)=>setPValue(parseFloat(e.target.value))} value={pValue} className='volcanoInputText'/>
+                  <input type='number' onChange={(e)=>setPValue(parseFloat(e.target.value))} value={pValue} min={0} className='volcanoInputText'/>
                 </div>
                 <div className='flexRow' style={{justifyContent:'end'}}>
                   <button onClick={submitFilter} className='btn btnPrimary' style={{margin:'0px'}}>Submit</button>

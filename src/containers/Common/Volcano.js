@@ -34,16 +34,16 @@ const VolcanoCmp = React.forwardRef(
       let rows = [['GENE NAME', 'LOG2FC', 'PVALUE','FDR']];
 
       if (tableType === 'negative') {
-        rows = [['GENE NAME', 'LOG2FC', 'PVALUE negative','FDR']];
+        rows = [['GENE NAME', 'LOG2FC (negative)', 'PVALUE','FDR']];
         tableData.forEach((element) => {
-          if (element['log2(fold_change)'] <= -1.5 && element['p_value'] <= 0.5) {
+          if (element['log2(fold_change)'] <= -(log2fc) && element['p_value'] <= pValue) {
             rows.push([element['gene'], element['log2(fold_change)'], element['p_value'],element['fdr']]);
           }
         });
       } else if (tableType === 'positive') {
-        rows = [['GENE NAME', 'LOG2FC', 'PVALUE positive','FDR']];
+        rows = [['GENE NAME', 'LOG2FC (positive)', 'PVALUE','FDR']];
         tableData.forEach((element) => {
-          if (element['log2(fold_change)'] >= 1.5 && element['p_value'] <= 0.5) {
+          if (element['log2(fold_change)'] >= log2fc && element['p_value'] <= pValue) {
             rows.push([element['gene'], element['log2(fold_change)'], element['p_value'],element['fdr']]);
           }
         });
@@ -80,7 +80,7 @@ const VolcanoCmp = React.forwardRef(
     return (
       <div className="BorderstyleViz">
         <div id="scatter_parent">
-          <VolcanoPlotD3 watermarkCss={watermarkCss} dataProps={data} />
+          <VolcanoPlotD3 watermarkCss={watermarkCss} dataProps={data} log2fc={log2fc} pValue={pValue} />
         </div>
         <div className="VolcanoCardText">
           <p className="TextBlue">

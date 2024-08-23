@@ -92,7 +92,7 @@ window.non_mutation_rule_params = {
           z: 4
         }
       ],
-      legend_label: `Protein Upregulation (value >= 1.5)`
+      legend_label: `Proteome Up regulation (value >= 1.5)`
     },
     // small down arrow for upregulated
     down: {
@@ -109,7 +109,7 @@ window.non_mutation_rule_params = {
           z: 4
         }
       ],
-      legend_label: `Protein Downregulation (value <= 0.5 )`
+      legend_label: `Proteome Down regulation (value <= 0.5 )`
     }
   },
   cnv: {

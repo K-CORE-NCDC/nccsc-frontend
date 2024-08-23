@@ -16,22 +16,18 @@ function Modal({ showModal, setShowModal }) {
         <>
           <div className="Toolmodal-container">
             <div className="Toolmodal-content">
-              {/*content*/}
               <div className="Toolmodal-dialog">
-                {/*header*/}
                 <div className="Toolmodal-header">
                   <h3 className="Toolmodal-title">Matrix to Melted Sample File</h3>
                   <button className="Toolmodal-close-btn" onClick={() => setShowModal(false)}>
                     ×
                   </button>
                 </div>
-                {/*body*/}
                 <div className="Toolmodal-body">
                   <div className="Toolmodal-text">
                     <ul style={{ margin: '10px' }}>
                       <li>
                       <FormattedMessage  id='MatrixToMeltedInfo' defaultMessage="This analysis tool is a tool that converts matrix format files to melted format files."/>
-                      {/* 본 분석 도구는 매트릭스 형식의 파일을 멜트 형식의 파일로 변환하는 도구입니다. */}
                       </li>
                     </ul>
                     <img src={AttachmentsImage} alt="ExampleFileImage" />
@@ -42,7 +38,6 @@ function Modal({ showModal, setShowModal }) {
                     </div>
                   </div>
                 </div>
-                {/*footer*/}
                 <div className="Toolmodal-footer">
                   <button className="Toolmodal-close-btn" onClick={() => setShowModal(false)}>
                     Close
@@ -161,22 +156,22 @@ function DataframeRecon() {
   }, []);
 
   const breadCrumbs = {
-    '/dataframereconstruction/': [
+    '/dataframeconverter/': [
       { id: 'Home', defaultMessage: 'Home', to: '/' },
       { id: 'MyDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
       { id: 'Tools', defaultMessage: 'Other Tools', to: '/tools/' },
-      { id: 'DataframeRecon', defaultMessage: 'Dataframe Reconstruction', to: '/dataframereconstruction/' }
+      { id: 'DataframeRecon', defaultMessage: 'Dataframe Converter', to: '/dataframeconverter/' }
     ]
   };
 
   return (
     <div>
-      <HeaderComponent title={title} breadCrumbs={breadCrumbs['/dataframereconstruction/']} type="single" />
+      <HeaderComponent title={title} breadCrumbs={breadCrumbs['/dataframeconverter/']} type="single" />
       <article id="subContents" className="subContents">
         <div className="contentsTitle">
           <div className="auto">
             <h3 className="colorSecondary">
-              <span className="colorPrimary">DataFrame</span> Reconstruction
+              <span className="colorPrimary">Dataframe</span> Converter
             </h3>
           </div>
         </div>

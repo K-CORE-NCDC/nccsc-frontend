@@ -70,7 +70,6 @@ const HomeComponent = () => {
 
         <div className="ptn">
           <div className="auto">
-            {/* <div className="publicDataInfo" style={{ padding: '0px' }}> */}
             <div className="mainContentsBox">
               <div className="galleryList">
 
@@ -235,12 +234,12 @@ const HomeComponent = () => {
                           <dd className="p1">
                             <FormattedMessage
                               id="MAFMergerDesc1"
-                              defaultMessage="by entering multiple MAF files "
+                              defaultMessage="Analysis tool to merge into 1 file"
                             />
                             <br />
                             <FormattedMessage
                               id="MAFMergerDesc2"
-                              defaultMessage="Analysis tool to merge into 1 file"
+                              defaultMessage="by entering multiple MAF files "
                             />
                           </dd>
                         </dl>
@@ -282,7 +281,7 @@ const HomeComponent = () => {
                           <dd className="p1">
                             <FormattedMessage
                               id="RefverDesc1"
-                              defaultMessage="convert reference genome version "
+                              defaultMessage="Convert reference genome version "
                             />
                             <br />
                             <FormattedMessage
@@ -302,39 +301,28 @@ const HomeComponent = () => {
                         <div className="hvBox">
                           <div className="hvBox_links">
                             <div className="textdiv" >
-                              <Link to="/dataframereconstruction/">
+                              <Link to="/dataframeconverter/">
                                 <span>
                                   <FormattedMessage id="RunAnalysis" defaultMessage="Run Analysis" />
                                 </span>
                                 <img src={arrow_icon} alt="arrow-icon" />
                               </Link>
                             </div>
-                            {/* <div className="textdiv" onClick={() => downloadFile(RefverconverterAttachment, `REFVERConverter_Attachment.pdf`)}>
-                              <Link to={route?.pathname}>
-                                <span>
-                                  <FormattedMessage
-                                    id="DownloadManual"
-                                    defaultMessage="Download Manual"
-                                  />
-                                </span>
-                                <img src={arrow_icon} alt="arrow-icon" />
-                              </Link>
-                            </div>{' '} */}
                           </div>
                         </div>
                       </div>
                       <div className="txtBox txtBoxpadding tac Relative">
                         <dl className="MarginTop8">
-                          <dt className="h4 Capitalize">DataFrame Reconstruction</dt>
+                          <dt className="h4 Capitalize">Dataframe Converter</dt>
                           <dd className="p1">
                             <FormattedMessage
                               id="DfDesc1"
-                              defaultMessage="Convert matrix format files"
+                              defaultMessage="Convert matrix format file"
                             />
                             <br />
                             <FormattedMessage
                               id="DfDesc2"
-                              defaultMessage="to melted format files"
+                              defaultMessage="to melted format file"
                             />
                           </dd>
                         </dl>
@@ -344,7 +332,6 @@ const HomeComponent = () => {
                 </ul>
               </div>
             </div>
-            {/* </div> */}
           </div>
         </div>
       </article >

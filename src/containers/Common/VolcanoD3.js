@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { saveSvg } from 'save-svg-as-png';
 import '../../styles/volcano.css';
 
-const VolcanoPlotD3 = ({ watermarkCss, dataProps }) => {
+const VolcanoPlotD3 = ({ watermarkCss, dataProps,log2fc,pValue }) => {
   const [volcanoData, setVolcanoData] = useState([]);
 
   function volcanoPlot() {
@@ -19,8 +19,8 @@ const VolcanoPlotD3 = ({ watermarkCss, dataProps }) => {
       xTicks, // number of ticks on the axis
       yTicks,
       sampleID = 'Gene',
-      significanceThreshold = 0.05, // significance threshold to colour by
-      foldChangeThreshold = 1.5, // fold change level to colour by
+      significanceThreshold = pValue, // significance threshold to colour by
+      foldChangeThreshold = log2fc, // fold change level to colour by
       colorRange, // colour range to use in the plot
       xScale = d3.scaleLinear(), // the values for the axes will be continuous
       yScale = d3.scaleLinear();
@@ -108,13 +108,6 @@ const VolcanoPlotD3 = ({ watermarkCss, dataProps }) => {
           .style('text-anchor', 'middle')
           .html(yAxisLabel || yColumn);
 
-        // this rect acts as a layer so that zooming works anywhere in the svg. otherwise, if zoom is called on
-        // just svg, zoom functionality will only work when the pointer is over a circle.
-        // var zoomBox = svg.append('rect')
-        //     .attr('class', 'zoom')
-        //     .attr('height', innerHeight)
-        //     .attr('width', innerWidth);
-
         var circles = svg.append('g').attr('class', 'circlesContainer');
         var div = d3
           .select('#volcano_tooltip')
@@ -140,8 +133,6 @@ const VolcanoPlotD3 = ({ watermarkCss, dataProps }) => {
         .on('mouseenter', tipEnter)
         .on('mousemove', tipMove)
         .on('mouseleave', function () {
-          // return tooltip.style('visibility', 'hidden');
-          // div.style('opacity', 0);
         });
       let dt = data.filter(function (xi) {
         if (xi.color === 'black') {
@@ -188,14 +179,6 @@ const VolcanoPlotD3 = ({ watermarkCss, dataProps }) => {
           .attr('y2', innerHeight);
       });
 
-      // var tooltip = d3.select('body').append('div').attr('class', 'tooltip');
-      // var tooltip = d3
-      //   .select('#volcano_tooltip')
-      //   .style('opacity', 1)
-
-      //   .style('background-color', 'lavender')
-      //   .style('padding', '1%');
-
       function tipEnter(d) {
         var html = '';
         html += '<strong>' +
@@ -213,25 +196,6 @@ const VolcanoPlotD3 = ({ watermarkCss, dataProps }) => {
           '</strong>: ' +
           d.target.__data__.original_p_value
         div.html(html).style('left', '50px').style('top', '0px').style('opacity', 1);
-        // tooltip
-        //   .style('visibility', 'visible')
-        //   .style('font-size', '11px')
-        //   .html(
-        //     '<strong>' +
-        //     sampleID +
-        //     '</strong>: ' +
-        //     d.target.__data__.gene +
-        //     '<br/>' +
-        //     '<strong>' +
-        //     xColumn +
-        //     '</strong>: ' +
-        //     d3.format('.2f')(d.target.__data__['log2(fold_change)']) +
-        //     '<br/>' +
-        //     '<strong>' +
-        //     yColumn +
-        //     '</strong>: ' +
-        //     d.target.__data__.original_p_value
-        //   );
       }
 
       function tipMove(d) {
@@ -251,7 +215,6 @@ const VolcanoPlotD3 = ({ watermarkCss, dataProps }) => {
           '</strong>: ' +
           d.target.__data__.original_p_value
         div.html(html).style('left', '50px').style('top', '0px').style('opacity', 1);
-        // tooltip.style('top', event.pageY - 5 + 'px').style('left', event.pageX + 20 + 'px');
       }
       function zoomFunction(event) {
         var transform = d3.zoomTransform(this);
@@ -394,7 +357,7 @@ useEffect(() => {
     var volcanoPlot1 = volcanoPlot()
       .xAxisLabel(xLabel)
       .yAxisLabel(yLabel)
-      .foldChangeThreshold(1.5)
+      .foldChangeThreshold(log2fc)
       .sampleID('gene')
       .xColumn('log2(fold_change)')
       .yColumn('p_value');

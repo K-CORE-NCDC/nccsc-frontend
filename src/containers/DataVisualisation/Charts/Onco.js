@@ -1,5 +1,4 @@
 import Multiselect from 'multiselect-react-dropdown';
-import { Popover, Transition } from '@headlessui/react';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
@@ -148,7 +147,7 @@ export default function DataOnco({
         d_.forEach((item) => {
           let s_id = item['sample'];
           let regulation = item['regulation'];
-          let protein = item['protein'];
+          let proteome = item['protein'];
           if (s_id in final) {
             if ('mRNA Upregulation' in final[s_id]) {
               if (regulation === 'up') {
@@ -159,33 +158,33 @@ export default function DataOnco({
                 final[s_id]['mRNA Downregulation'] += 1;
               }
 
-              if (protein === 'up') {
-                final[s_id]['Protein Upregulation'] += 1;
-                final[s_id]['Protein Downregulation'] = 0;
+              if (proteome === 'up') {
+                final[s_id]['Proteome Up regulation'] += 1;
+                final[s_id]['Proteome Downregulation'] = 0;
               } else {
-                final[s_id]['Protein Upregulation'] = 0;
-                final[s_id]['Protein Downregulation'] += 1;
+                final[s_id]['Proteome Up regulation'] = 0;
+                final[s_id]['Proteome Downregulation'] += 1;
               }
             } else {
               if (regulation === 'up') {
-                final[s_id]['mRNA Upregulation'] = 1;
-                final[s_id]['mRNA Downregulation'] = 0;
+                final[s_id]['mRNA Up regulation'] = 1;
+                final[s_id]['mRNA Down regulation'] = 0;
               } else if (regulation === 'down') {
-                final[s_id]['mRNA Upregulation'] = 0;
-                final[s_id]['mRNA Downregulation'] = 1;
+                final[s_id]['mRNA Up regulation'] = 0;
+                final[s_id]['mRNA Down regulation'] = 1;
               } else {
-                final[s_id]['mRNA Upregulation'] = 0;
-                final[s_id]['mRNA Downregulation'] = 0;
+                final[s_id]['mRNA Up regulation'] = 0;
+                final[s_id]['mRNA Down regulation'] = 0;
               }
-              if (protein === 'up') {
-                final[s_id]['Protein Upregulation'] = 1;
-                final[s_id]['Protein Downregulation'] = 0;
-              } else if (protein === 'down') {
-                final[s_id]['Protein Upregulation'] = 0;
-                final[s_id]['Protein Downregulation'] = 1;
+              if (proteome === 'up') {
+                final[s_id]['Proteome Up regulation'] = 1;
+                final[s_id]['Proteome Down regulation'] = 0;
+              } else if (proteome === 'down') {
+                final[s_id]['Proteome Up regulation'] = 0;
+                final[s_id]['Proteome Down regulation'] = 1;
               } else {
-                final[s_id]['Protein Upregulation'] = 0;
-                final[s_id]['Protein Downregulation'] = 0;
+                final[s_id]['Proteome Up regulation'] = 0;
+                final[s_id]['Proteome Down regulation'] = 0;
               }
             }
           }
@@ -395,7 +394,7 @@ export default function DataOnco({
           {showOnco && chartData['types'].includes('proteome') && <div className="relative flex  oncoBorder">
             <span
               className="border oncoWidth TextAlignCenter oncoBoxesLabel"
-              >PROTEIN &gt;=</span>
+              >PROTEOME &gt;=</span>
 
             <input
               type="number"
@@ -407,7 +406,7 @@ export default function DataOnco({
               className="oncoBorderLeft oncoBoxes oncoWidth" />
               <span
               className="border oncoWidth TextAlignCenter oncoBoxesLabel"
-              >PROTEIN &lt;=</span>
+              >PROTEOME &lt;=</span>
             <input
               type="number"
               aria-label="To"
@@ -434,43 +433,49 @@ export default function DataOnco({
                       <h3>
                         <FormattedMessage
                           id="GlobalMutationDistribution"
-                          defaultMessage="Global Mutation Distribution :distribution of total mutation"
+                          defaultMessage="Global Mutation Distribution : Distribution of total mutation"
                         />
                       </h3>
+                      <br></br>
                       <h3>
                         <FormattedMessage
                           id="GlobalMutationCount"
-                          defaultMessage="Global Mutation Count :count of total somatic mutation"
+                          defaultMessage="Global Mutation Count : Count of total somatic mutation"
                         />
                       </h3>
+                      <br></br>
                       <h3>
                         <FormattedMessage
                           id="MutationDistribution"
-                          defaultMessage="Mutation Distribution :distribution of selected mutation"
+                          defaultMessage="Mutation Distribution : Distribution of selected mutation"
                         />
                       </h3>
+                      <br></br>
                       {Englishlanguage && (
-                        <h3>Mutation count: count of selected somatic mutation</h3>
+                        <h3>Mutation Count : Count of selected somatic mutation</h3>
                       )}
 
                       {Englishlanguage && (
                         <h3>
+                          <br></br>
+                          <br></br>
                           {' '}
-                          You can activate or deactivate each variant classification legend by
-                          clicking on each item. (Maximum 4 items)
+                          You can ACTIVATE or DEACTIVATE each VARIANT CLASSIFICATION legend by
+                          CLICKING on each item. (Maximum 4 items)
                         </h3>
                       )}
 
-                      {koreanlanguage && <h3>Mutation count: 선택된 체세포 변이의 수</h3>}
+                      {koreanlanguage && <h3>Mutation Count : 선택된 체세포 변이의 수</h3>}
 
                       {koreanlanguage && (
                         <h3>
+                          <br></br>
+                          <br></br>
                           각 항목을 클릭하여 각 변이 분류 범례를 활성화 또는 비활성화 할 수
                           있습니다.(최대 4개)
                         </h3>
                       )}
                     </div>
-                    {/* <div className="pl-10"><FormattedMessage  id = "oncoplot_total_samples" defaultMessage={`No of samples :${chartData['geneData']&&chartData['geneData'].length?chartData['geneData'][0].data.length:0}`}/></div> */}
                     <OncoCmp
                       watermarkCss={watermarkCss}
                       ref={reference}

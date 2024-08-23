@@ -25,7 +25,6 @@ import {TrashIcon}  from '@heroicons/react/outline';
 }, [startInterval])
 useEffect(() => {
   if (mafMergerResponse) {
-    console.log(mafMergerResponse)
       if (mafMergerResponse['status'] === 'running') {
           setLoader(true);
           setStartInterval(true)
@@ -46,7 +45,6 @@ useEffect(() => {
   }
 }, [mafMergerResponse]);
   let uploadFile = () => {
-    // Check if all files in the object have the ".maf" extension
     const areAllFilesMaf = Object.keys(mafMergerFiles).every(file => file.endsWith('.maf'));
 
     if (areAllFilesMaf && Object.keys(mafMergerFiles)?.length > 0) {
@@ -150,7 +148,6 @@ return (
                     ×
                   </button>
                 </div>
-                {/*body*/}
                 <div
                   style={{
                     border: '1px solid black',
@@ -162,9 +159,6 @@ return (
                 </div>
                 <div className="Toolmodal-body">
                   <div className="Toolmodal-text">
-                    {/* <DataOfFiles fileName={fileName} /> */}
-
-                    {/* <div className="Flex FlexDirRow" style={{ marginTop: '20px', gap: '10px' }}> */}
                     <div className="Flex FlexDirRow modelFileType" >
                       <FormattedMessage id="FileType" defaultMessage="Select File Type" />
                       </div>
@@ -195,7 +189,6 @@ return (
                           <input
                             type="file"
                             id="tsv-upload"
-                            // onChange={(e) => handleFileUpload(e, 'tsv')}
                             onChange={(event) => handleFileUpload(event, 'dna_mutation')}
                             className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
                             accept=".tsv"
@@ -243,7 +236,6 @@ return (
                     )}
                   </div>
                 </div>
-                {/*footer*/}
                 <div className="Toolmodal-footer">
                   <button
                     className="Toolmodal-close-btn"

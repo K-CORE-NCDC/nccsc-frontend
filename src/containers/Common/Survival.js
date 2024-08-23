@@ -4,7 +4,7 @@ import LineChart from 'react-linechart';
 import 'react-linechart/dist/styles.css';
 import '../../styles/survival.css';
 import Table from './Table/ReactTable';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 
 const SurvivalCmp = React.forwardRef(({ data, watermarkCss, pValue, survialType }, ref) => {
@@ -62,19 +62,30 @@ const SurvivalCmp = React.forwardRef(({ data, watermarkCss, pValue, survialType 
       for (let [key, value] of Object.entries(data.survivalJson.final)) {
         let filteredValue = value.filter(obj => obj.sample !== "");
         let columns = [
-          { Header: intl.formatMessage({ id: "TimeInMonth", defaultMessage: 'Time(in month)' }), accessor: (row) => row.x },
+          { Header: intl.formatMessage({ id: "TimeInMonth", defaultMessage: 'Time (in month)' }), accessor: (row) => row.x },
           { Header: survialType === 'recurrence' ? intl.formatMessage({ id: "Recurrence", defaultMessage: 'Recurrence-free' }) : intl.formatMessage({ id: "Survival", defaultMessage: 'Survival' }), accessor: (row) => row.y },
           { Header: 'Sample', accessor: (row) => row.sample }
         ];
-        tableHtmlData.push(
-          <div className="p-3">
-            <h3 className="mb-3 MultiUploadTextCenter">{key}</h3>
-            <Table
-              data={filteredValue}
-              columns={columns}
-            />
-          </div>
-        );
+        if (filteredValue.length === 0) {
+          console.log(`filteredValue = ${JSON.stringify(filteredValue)}, key = ${key}`);
+          tableHtmlData.push(
+            <div className="p-3 SurvivalNoData" key={key}>
+              <h3 className="NoData">{key}</h3>
+              <p>No data found</p>
+            </div>
+          );
+        }
+        else {
+          tableHtmlData.push(
+            <div className="p-3" key={key}>
+              <h3 className="mb-3 MultiUploadTextCenter">{key}</h3>
+              <Table
+                data={filteredValue}
+                columns={columns}
+              />
+            </div>
+          );
+        }
         setChartTable(tableHtmlData);
       }
     }
@@ -134,9 +145,6 @@ const SurvivalCmp = React.forwardRef(({ data, watermarkCss, pValue, survialType 
             yLabel="Survival(%)"
             interpolate="step-before"
             pointRadius={1}
-            // onPointHover={(e) => {
-            //   return `<div style='position:absolute'><b>duration: </b>${e.x}<br /><b>Survival Rate: </b>${e.y}<br /><b>Sample: </b>${e.sample}</div>`;
-            // }}
             onPointHover={(e) => {
               const tooltipStyle = `
             position: fixed;

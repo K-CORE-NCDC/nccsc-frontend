@@ -713,6 +713,7 @@ export function clearSingleFIleUploadState() {
 
 export function clearMultiFIleUploadState() {
   return (dispatch) =>
+    // console.log('Dispatching clearMultiFIleUploadState action')
     dispatch({
       type: homeConstants.MULTI_USERDATA_VISUALIZATION,
       payload: {}

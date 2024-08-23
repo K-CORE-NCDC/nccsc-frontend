@@ -31,7 +31,6 @@ const GeneSet = React.lazy(() =>
 
 const Logout = React.lazy(() => import('./containers/Login/logout'));
 const Terms = React.lazy(() => import('./containers/Signup/TermsandConditions'));
-// const Join = React.lazy(() => import('./containers/Signup/MemberShip'));
 const Signup = React.lazy(() => import('./containers/Signup/Signup'));
 const TermsandConditions = React.lazy(() =>
   import('./containers/TermsAndPolicy/TermsAndConditionsIndex')
@@ -68,7 +67,6 @@ const genefusion = React.lazy(() => import('./containers/Common/genefusion'));
 const UserDataTable = React.lazy(() =>
   import('./containers/UserDataVisualization/Components/MainComponents/projectDataTable')
 );
-// const MobileSuccess = React.lazy(() => import('./containers/Signup/MobileVerify'));
 
 const Organoid = React.lazy(() => import('./containers/CustomerVoice/OtherServices/Organoid'));
 const RelatedSites = React.lazy(() =>
@@ -80,13 +78,6 @@ const SankeyPlot = React.lazy(() => import('./containers/DataVisualisation/Chart
 const NotFound = React.lazy(() => import('./containers/ErrorPages/index'));
 const ServerError = React.lazy(() => import('./containers/ErrorPages/ServerError'));
 const route = [
-  // {
-  //   path: '/mobile_verify/',
-  //   exact: true,
-  //   type: 'unauth',
-  //   name: '',
-  //   component: MobileSuccess
-  // },
   {
     path: '/summary/:tab?/',
     exact: true,
@@ -96,16 +87,6 @@ const route = [
     childname: <FormattedMessage id="DataSummary" defaultMessage="Data Summary" />,
     component: DataSummary
   },
-
-  // {
-  //   path: '/visualise/:tab?/:project_id?/',
-  //   exact: true,
-  //   type: 'unauth',
-  //   category: 'visualize',
-  //   name: <FormattedMessage id="Visualization" defaultMessage="Visualization" />,
-  //   childname: <FormattedMessage id="DataVisualization" defaultMessage="DataVisualization" />,
-  //   component: DataVisualization,
-  // },
 
   {
     path: '/sankey/',
@@ -288,14 +269,7 @@ const route = [
     childname: <FormattedMessage id="Signup" defaultMessage="Terms" />,
     component: Terms
   },
-  // {
-  //   path: '/member/',
-  //   exact: true,
-  //   type: 'unauth',
-  //   name: <FormattedMessage id="Home" defaultMessage="Home" />,
-  //   childname: <FormattedMessage id="Signup" defaultMessage="Join" />,
-  //   component: Join
-  // },
+
 
   {
     path: '/genefusion/',
@@ -460,11 +434,11 @@ const route = [
     component: Blast
   },
   {
-    path: '/dataframereconstruction/',
+    path: '/dataframeconverter/',
     exact: true,
     type: 'unauth',
     name: <FormattedMessage id="Tools" defaultMessage="Tools" />,
-    childname: <FormattedMessage id="dataframereconstruction" defaultMessage="Dataframe Reconstruction" />,
+    childname: <FormattedMessage id="dataframeconverter" defaultMessage="Dataframe Converter" />,
     component: DataframeRecon
   },
   {

@@ -179,7 +179,7 @@ const style={
   const handleClearFile = (name) => {
     if(name==='mutation_file_name'){
       setMutationType('dna')
-      setMafDetails('')
+      setMafDetails(null)
     }else{
       setFilesData((prevFormData) => {
         const updatedFormData = { ...prevFormData };
@@ -190,9 +190,43 @@ const style={
 
   };
 
+
+const countFiles = () => {
+  let count = 0;
+
+  for (const key in filesData) {
+    if (filesData[key]) {
+      count++;
+    }
+  }
+
+  if (mutationType === 'maf' && mafDetails) {
+    count++;
+  } else if (mutationType === 'dna' && filesData['dna_mutation']) {
+    count++;
+  }
+
+  return count;
+};
   const handleUpload = () => {
-    // if (filesData['clinical_information'] && projectName !== '') {
-      if (projectName !== '') {
+    const noOfFiles = countFiles();
+    console.log(noOfFiles)
+    if (noOfFiles < 2) {
+      Swal.fire({
+        title: intl.formatMessage({ id: "Warning", defaultMessage: 'Warning' }),
+        text: intl.formatMessage({ id: "EnterProjectName", defaultMessage: 'Upload at least Two Files' }),
+        icon: 'warning',
+        confirmButtonColor: '#003177',
+        confirmButtonText: intl.formatMessage({ id: "Ok", defaultMessage: 'Ok' }),
+        allowOutsideClick: false
+      }).then((result) => {
+        if (result.value) {
+        }
+      });
+      return;
+    }
+
+    if (projectName !== '') {
 
       dispatch(multiFileUpload(filesData, projectName,mafDetails,mutationType));
       updateComponentNumber(1);
@@ -316,14 +350,6 @@ const style={
                         />
                       </p>
                     </li>
-                    {/* <li>
-                      <p style={{ color: "black" }}>
-                        <FormattedMessage
-                          id="uploadGuide3"
-                          defaultMessage="Please make sure that sample ids in all files match."
-                        />
-                      </p>
-                    </li> */}
                   </ul>
                 </div>
               </div>
@@ -381,7 +407,6 @@ const style={
                 <tr className="MultiUploadBGGray">
                   <td className="MultiUploadTDHeader MultiUploadTextCenter" colSpan="2">
                     Clinical Information file
-                    {/* <span style={{ color: 'red' }}> (Required) </span> */}
                   </td>
                 </tr>
                 <tr>
@@ -752,7 +777,6 @@ export default Table;
 export const DataOfFiles = ({ fileName }) => {
   return (
     <ul style={{ margin: '10px' }}>
-      {/* <li> <FormattedMessage id="CommonGuideMsg" defaultMessage='This is a Sample Example File for ' />{` ${fileName}`}</li> */}
 
       <div className="popularBox">
         <div className="contentBox">
