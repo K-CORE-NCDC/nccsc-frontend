@@ -328,12 +328,12 @@ export default function DataOnco({
             )}
           </div>
         )}
-        {showOnco && chartData['types'].length>0 && <div className='TextLeft MarginBottom4' style={{width:'50%'}}>
+        {showOnco && chartData['types'].length>0 && <div className='TextLeft MarginBottom4' style={{width:'43%'}}>
           <label>Filter</label>
           {showOnco && chartData['types'].includes('rna') && <div className="relative flex  oncoBorder">
             <span
               className="border oncoWidth TextAlignCenter oncoBoxesLabel"
-              >mRNA &gt;=</span>
+              >mRNA &gt;= (z-score)</span>
 
                 <input
                   type="number"
@@ -345,7 +345,7 @@ export default function DataOnco({
                   className="oncoBorderLeft oncoBoxes oncoWidth" />
                   <span
               className="border oncoWidth TextAlignCenter oncoBoxesLabel"
-              >mRNA &lt;=</span>
+              >mRNA &lt;= (z-score)</span>
                 <input
                   type="number"
                   aria-label="To"
@@ -394,7 +394,7 @@ export default function DataOnco({
           {showOnco && chartData['types'].includes('proteome') && <div className="relative flex  oncoBorder">
             <span
               className="border oncoWidth TextAlignCenter oncoBoxesLabel"
-              >PROTEOME &gt;=</span>
+              >PROTEOME &gt;= (z-score)</span>
 
             <input
               type="number"
@@ -406,7 +406,7 @@ export default function DataOnco({
               className="oncoBorderLeft oncoBoxes oncoWidth" />
               <span
               className="border oncoWidth TextAlignCenter oncoBoxesLabel"
-              >PROTEOME &lt;=</span>
+              >PROTEOME &lt;= (z-score)</span>
             <input
               type="number"
               aria-label="To"

@@ -202,9 +202,10 @@ const countFiles = () => {
 
   if (mutationType === 'maf' && mafDetails) {
     count++;
-  } else if (mutationType === 'dna' && filesData['dna_mutation']) {
-    count++;
   }
+  // else if (mutationType === 'dna' && filesData['dna_mutation']) {
+  //   count==count;
+  // }
 
   return count;
 };

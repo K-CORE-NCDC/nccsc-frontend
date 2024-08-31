@@ -220,7 +220,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survialData, SVF
               <li className={survivalModel === 'survival' ? 'on' : ''}>
                 <button onClick={() => survivalModelFun('survival')}>Survival</button>
               </li>
-              
+
               <li className={survivalModel === 'cox' ? 'on' : ''}>
                 <button onClick={() => survivalModelFun('cox')}>Cox Regression</button>
               </li>
@@ -308,14 +308,14 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survialData, SVF
                         <FormattedMessage id="SelectDatabase" defaultMessage="Select Database" />
                       </h6>
                       {geneDatabase === 'dna_mutation' && <h6>
-                        <FormattedMessage id='SurvivalDNAMutationTooltip1' defaultMessage="When there are 7 major mutation types for the selected gene ">
+                        <FormattedMessage id='SurvivalDNAMutationTooltip1' defaultMessage="Samples with 7 major mutations for the selected genes that belong to the Mutation group.">
                           {(placeholder) => (
                             <>
                               <QuestionMarkCircleIcon
                                 data-multiline={true}
                                 className="inline ml-2 mb-1"
                                 data-class="my-tooltip"
-                                data-tip={`DNA Mutation:  ${placeholder} <br>  <br/>Missense mutation, Nonsense mutation, Splice site, <br>  <br/>In frame insertion, In frame deletion, Frame-shift insertion, Frame-shift deletion 
+                                data-tip={`DNA Mutation:  ${placeholder} <br>  <br/>  ${intl.formatMessage({ id: "SurvivalDNAMutationTooltip3", defaultMessage: '7 major mutations: ' })}Missense mutation, Nonsense mutation, Splice site, <br>  <br/>In frame insertion, In frame deletion, Frame-shift insertion, Frame-shift deletion
                                           <br>No Mutation:${intl.formatMessage({ id: "SurvivalDNAMutationTooltip2", defaultMessage: 'When there are no major 7 mutation types for the selected gene' })}`}
                                 style={{ width: '20px', cursor: 'pointer' }} />
                               <ReactTooltip />

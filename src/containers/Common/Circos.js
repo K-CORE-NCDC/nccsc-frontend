@@ -363,8 +363,8 @@ const CircosCmp = React.forwardRef(
           strokeWidth: 2.0,
           shape: 'circle',
           size: 7,
-          min: 0,
-          max: 1,
+          // min: 0,
+          // max: 1,
           axes: [
             { spacing: 0.1, thickness: 3, color: '#f44336', opacity: 0.2 },
             { spacing: 0.2, thickness: 3, color: '#f44336', opacity: 0.2 },
@@ -372,7 +372,7 @@ const CircosCmp = React.forwardRef(
           ],
 
           tooltipContent: function (d) {
-            return `<h4> DNA mutation: ${d.name} ➤ ${d.block_id}:${Math.round(d.position)}</h3>`;
+            return `<h4> DNA mutation: ${d.name} ➤ ${d.block_id}:${Math.round(d.position)}</h4>`;
           }
         });
       }
@@ -394,7 +394,7 @@ const CircosCmp = React.forwardRef(
 
                 return '#115ff0';
               }
-              return '#e0dede';
+              return '#a8a5a5';
             }
           },
           strokeColor: function (d) {
@@ -408,16 +408,16 @@ const CircosCmp = React.forwardRef(
           strokeWidth: 2.0,
           shape: 'circle',
           size: 7,
-          min: -2,
-          max: 1,
+          min: -3,
+          max: 3,
           axes: [
             { spacing: 0.1, thickness: 1, color: '#c8d4c5', opacity: 0.2 },
-            { spacing: 0.2, thickness: 3, color: '#c8d4c5', opacity: 0.2 },
-            { spacing: 0.3, thickness: 2, color: '#77b2e6', opacity: 0.3 },
-            { spacing: 0.4, thickness: 4, color: '#77b2e6', opacity: 0.4 }
+            { spacing: 0.2, thickness: 6, color: '#c8d4c5', opacity: 0.2 },
+            { spacing: 0.3, thickness: 1, color: '#77b2e6', opacity: 0.3 },
+            { spacing: 0.3, thickness: 1, color: '#77b2e6', opacity: 0.4 }
           ],
           tooltipContent: function (d) {
-            return `<h4>RNA gene: ${d.name} ➤ ${d.block_id} | z score: ${d.value}</h3>`;
+            return `<h4>RNA gene: ${d.name} ➤ ${d.block_id} | z score: ${d.value}</h4>`;
           }
         });
       }
@@ -463,7 +463,7 @@ const CircosCmp = React.forwardRef(
 
           tooltipContent: function (d) {
             if (dna_methylation) {
-              return `<h4> Methylation gene: ${d.name} ➤ ${d.block_id} | value: ${d.value}</h3>`;
+              return `<h4> Methylation gene: ${d.name} ➤ ${d.block_id} | value: ${d.value}</h4>`;
             } else {
               return null;
             }
@@ -476,13 +476,6 @@ const CircosCmp = React.forwardRef(
           innerRadius: proteomeInnerRadius,
           outerRadius: proteomeOuterRadius,
           showAxesTooltip: false,
-          // color: function (d) {
-          //   if (d.name in selectedGenesObject) {
-          //     return selectedGeneColor;
-          //   } else {
-          //     return '#42f4eb';
-          //   }
-          // }
           color: function (d) {
             if (d.name in selectedGenesObject) {
               return selectedGeneColor;
@@ -497,8 +490,7 @@ const CircosCmp = React.forwardRef(
               }
               return '#a8a5a5';
             }
-          }
-          ,
+          },
           strokeColor: function (d) {
             if (d.name) {
               return 1;
@@ -509,17 +501,17 @@ const CircosCmp = React.forwardRef(
           strokeWidth: 2.0,
           shape: 'circle',
           size: 7,
-          min: 0,
-          max: 2,
+          max: 3,
+          // min: -2,
 
           axes: [
             { spacing: 0.1, thickness: 1, color: '#ed781f', opacity: 0.2 },
-            { spacing: 0.3, thickness: 6, color: '#c8d4c5', opacity: 0.2 },
-            { spacing: 0.2, thickness: 1, color: '#8335f0', opacity: 0.3 }
+            { spacing: 0.1, thickness: 3, color: '#c8d4c5', opacity: 0.2 },
+            { spacing: 0.1, thickness: 1, color: '#8335f0', opacity: 0.3 }
           ],
 
           tooltipContent: function (d) {
-            return `<h4> proteome gene: ${d.name} ➤ ${d.block_id} | value: ${d.value} </h3>`;
+            return `<h4> Proteome gene: ${d.name} ➤ ${d.block_id} | value: ${d.value} </h4>`;
           }
         });
       }
@@ -562,7 +554,7 @@ const CircosCmp = React.forwardRef(
           ],
 
           tooltipContent: function (d) {
-            return `<h4> CNV gene: ${d.name} ➤ ${d.block_id} | CN value: ${d.value} </h3>`;
+            return `<h4> CNV gene: ${d.name} ➤ ${d.block_id} | CN value: ${d.value} </h4>`;
           }
         });
       }
@@ -599,9 +591,9 @@ const CircosCmp = React.forwardRef(
           },
           tooltipContent: function (d) {
             if (d.source.svtype) {
-              return `<h4> SV Type : ${d.source.svtype} | source : ${d.source.id} | ${d.source.name}  ➤ target: ${d.target.id} | ${d.target.name} </h3>`;
+              return `<h4> SV Type : ${d.source.svtype} | source : ${d.source.id} | ${d.source.name}  ➤ target: ${d.target.id} | ${d.target.name} </h4>`;
             } else {
-              return `<h4> Fusion source : ${d.source.id} | ${d.source.name}  ➤ target: ${d.target.id} | ${d.target.name} </h3>`;
+              return `<h4> Fusion source : ${d.source.id} | ${d.source.name}  ➤ target: ${d.target.id} | ${d.target.name} </h4>`;
             }
           },
           events: {
