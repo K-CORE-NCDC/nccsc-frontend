@@ -412,9 +412,9 @@ const CircosCmp = React.forwardRef(
           max: 3,
           axes: [
             { spacing: 0.1, thickness: 1, color: '#c8d4c5', opacity: 0.2 },
-            { spacing: 0.2, thickness: 6, color: '#c8d4c5', opacity: 0.2 },
-            { spacing: 0.3, thickness: 1, color: '#77b2e6', opacity: 0.3 },
-            { spacing: 0.3, thickness: 1, color: '#77b2e6', opacity: 0.4 }
+            { spacing: 0.2, thickness: 3, color: '#c8d4c5', opacity: 0.2 },
+            { spacing: 0.3, thickness: 2, color: '#77b2e6', opacity: 0.3 },
+            { spacing: 0.4, thickness: 4, color: '#77b2e6', opacity: 0.4 }
           ],
           tooltipContent: function (d) {
             return `<h4>RNA gene: ${d.name} ➤ ${d.block_id} | z score: ${d.value}</h4>`;
@@ -505,9 +505,9 @@ const CircosCmp = React.forwardRef(
           // min: -2,
 
           axes: [
-            { spacing: 0.1, thickness: 1, color: '#ed781f', opacity: 0.2 },
-            { spacing: 0.1, thickness: 3, color: '#c8d4c5', opacity: 0.2 },
-            { spacing: 0.1, thickness: 1, color: '#8335f0', opacity: 0.3 }
+            { spacing: 0.6, thickness: 3, color: '#ed781f', opacity: 0.2 },
+            { spacing: 0.6, thickness: 3, color: '#c8d4c5', opacity: 0.2 },
+            { spacing: 0.6, thickness: 3, color: '#8335f0', opacity: 0.3 }
           ],
 
           tooltipContent: function (d) {
