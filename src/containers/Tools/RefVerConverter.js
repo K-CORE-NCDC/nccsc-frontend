@@ -182,6 +182,10 @@ function RefVerConverter() {
     };
 
     let uploadFile = () => {
+        if (Object.keys(refVerConverterFiles).length === 0) {
+            alert("No files uploaded. Please select files to upload.");
+            return;
+        }
         // Check if all files in the object have the ".vcf" extension
         const areAllFilesVcf = Object.keys(refVerConverterFiles).every(file => file.endsWith('.vcf'));
         const alphanum= Object.keys(refVerConverterFiles).every(file => {
@@ -189,7 +193,7 @@ function RefVerConverter() {
             return isAlphanumeric(fileNameWithoutExtension);
         });
 
-        if (areAllFilesVcf && alphanum) {
+        if (areAllFilesVcf && alphanum && Object.keys(refVerConverterFiles)?.length > 0) {
             setIsError(false);
             setLoader(true);
             setHtml([])
@@ -249,7 +253,8 @@ function RefVerConverter() {
                                 style={{ fontSize: '1rem', lineHeight: '1.5rem', justifyContent: 'center' }}
                                 className="Flex"
                             >
-                                <FormattedMessage id='RefverResult1' defaultMessage='Your Results are Ready here.' />
+                                <FormattedMessage id='RefverResult1' defaultMessage='Your results are ready.' />
+                                <FormattedMessage id='RefverResult2' defaultMessage=' Click on the link to download' />
                                 {refVerConverterResponse.zip_file_url ? (
                                     <a
                                         className="ToolResultsReady"
@@ -263,7 +268,6 @@ function RefVerConverter() {
                                 ) : (
                                     <span>{` (${refVerConverterResponse['container_name']}) `}</span>
                                 )}
-                                <FormattedMessage id='RefverResult2' defaultMessage='Click on the Link to download' />
                             </span>
                         </div>
                     </>
@@ -399,23 +403,38 @@ function RefVerConverter() {
                                                                 </div>
                                                             ))}
                                                         </div>
+                                                        {!refVerConverterResponse &&
                                                         <button className="btn btnPrimary SubmitButton" onClick={uploadFile}>
                                                             <FormattedMessage id="Submit" defaultMessage="Submit" />
                                                         </button>
+                                                        }
                                                     </div>
+                                                    {refVerConverterResponse &&
+                                                        <span
+                                                        style={{ fontSize: '1rem', lineHeight: '5.5rem', justifyContent: 'center' }}
+                                                        className="Flex"
+                                                        >(
+                                                        <FormattedMessage
+                                                            id="VcfToMafRefresh"
+                                                            defaultMessage="Please refresh page to upload and convert again"
+                                                        />)
+                                                        </span>
+                                                    }
 
                                                     {isError && <p>Upload only .vcf extension files</p>}
                                                 </div>
                                             </div>
-                                            <span
-                                                style={{ fontSize: '1rem', lineHeight: '1.5rem', justifyContent: 'center' }}
-                                                className="Flex"
-                                            >
-                                                <FormattedMessage
-                                                    id="REFVERCONVERTERNote"
-                                                    defaultMessage="Note: Bidirectional conversion functionality is supported for VCF files between GRCh37 (hg19) and GRCh38 (hg38) versions."
-                                                />
-                                            </span>
+                                            {!refVerConverterResponse &&
+                                                <span
+                                                    style={{ fontSize: '1rem', lineHeight: '1.5rem', justifyContent: 'center' }}
+                                                    className="Flex"
+                                                >
+                                                    <FormattedMessage
+                                                        id="REFVERCONVERTERNote"
+                                                        defaultMessage="Note: Bidirectional conversion functionality is supported for VCF files between GRCh37 (hg19) and GRCh38 (hg38) versions."
+                                                    />
+                                                </span>
+                                            }
                                         </div>
                                     </section>
                                 ) : (

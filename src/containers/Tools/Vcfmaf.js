@@ -161,6 +161,10 @@ function isAlphanumeric(str) {
 }
 
 let uploadFile = () => {
+  if (Object.keys(vcfMafFiles).length === 0) {
+    alert("No files uploaded. Please select files to upload.");
+    return;
+  }
   // Check if all files in the object have the ".vcf" extension
   const areAllFilesVcf = Object.keys(vcfMafFiles).every(file => file.endsWith('.vcf'));
   const alphanum= Object.keys(vcfMafFiles).every(file => {
@@ -168,7 +172,7 @@ let uploadFile = () => {
       return isAlphanumeric(fileNameWithoutExtension);
   });
 
-  if (areAllFilesVcf && alphanum) {
+  if (areAllFilesVcf && Object.keys(vcfMafFiles)?.length > 0 && alphanum) {
       console.log(vcfMafFiles)
       console.log(vcfMafFiles['fileName'])
       setIsError(false);
@@ -185,17 +189,7 @@ let uploadFile = () => {
       setMsg({ id: 'RefverInvalid', defaultMessage: 'Invalid file format. Please select VCF files only.' });}
   }
 };
-  // let uploadFile = () => {
-  //   if (vcfMafFiles['name'].includes('.vcf')) {
-  //     setIsError(false);
-  //     setLoader(true);
-  //     setHtml([])
-  //     dispatch(vcfmaf('POST', { file: vcfMafFiles, filename: vcfMafFiles['name'] }));
-  //     setMsg({ id: 'FileUplodPlsWait', defaultMessage: 'File Uploading, Please Wait......' });
-  //   } else {
-  //     setIsError(true);
-  //   }
-  // };
+
 
   useEffect(() => {
     if (startInterval) {
@@ -226,17 +220,9 @@ let uploadFile = () => {
               style={{ fontSize: '1rem', lineHeight: '1.5rem', justifyContent: 'center' }}
               className="Flex"
               >
-                   <FormattedMessage id='RefverResult1' defaultMessage='Your Results are Ready here.' />
-              {/* <p>Your Results are ready kindly click link to download &nbsp;</p>
-              <a
-                className="ToolResultsReady"
-                href={
-                  backend_url + 'media/VcfMaf/files/' + vcf2mafResponse['container_name'] + '.maf'
-                }
-                download={vcf2mafResponse['container_name'] + '.maf'}
-              >
-                {vcf2mafResponse['container_name']}
-              </a> */}
+              <FormattedMessage id='RefverResult1' defaultMessage='Your results are ready.' />
+              <FormattedMessage id='RefverResult2' defaultMessage=' Click on the link to download' />
+
               {vcf2mafResponse.zip_file_url ? (
                 <a
                     className="ToolResultsReady"
@@ -250,7 +236,6 @@ let uploadFile = () => {
                   ) : (
                       <span>{` (${vcf2mafResponse['container_name']}) `}</span>
                   )}
-                  <FormattedMessage id='RefverResult2' defaultMessage='Click on the Link to download' />
               </span>
             </div>
           </>
@@ -314,68 +299,63 @@ let uploadFile = () => {
                         </div>
                         <div>
                           <div>
-                          <div style={{ marginTop: '20px' }}>
-                            <dl>
-                              <dt>
-                                <FormattedMessage id="UploadFile" defaultMessage="Upload Files" />
-                              </dt>
-                              <dd>
-                                <div className="inputText flex">
-                                  <input
-                                    type="file"
-                                    className="w100 maf-merger-file-input"
-                                    accept=".vcf, "
-                                    id="vcfMafFiles"
-                                    // onChange={(e) => VcfMafTool(e)}
-                                    onChange={(e) => handleFileChange(e)}
-                                    autoComplete="off"
-                                    style={{ padding: '10px' }}
-                                    multiple={true}
-                                    ref={fileInputRef}
-                                  />
-                                  <label className='maf-merger-label' htmlFor="vcfMafFiles">
-                                  <FormattedMessage id='SelectMultipleFiles' defaultMessage='Select Multiple Files' />
-                                  </label>
-                                </div>
-                              </dd>
-                            </dl>
+                            <div style={{ marginTop: '20px' }}>
+                              <dl>
+                                <dt>
+                                  <FormattedMessage id="UploadFile" defaultMessage="Upload Files" />
+                                </dt>
+                                <dd>
+                                  <div className="inputText flex">
+                                    <input type="file" className="w100 maf-merger-file-input" accept=".vcf" id="vcfMafFiles" onChange={(e) => handleFileChange(e)} autoComplete="off" style={{ padding: '10px' }} multiple={true} ref={fileInputRef}/>
+                                    <label className='maf-merger-label' htmlFor="vcfMafFiles">
+                                      <FormattedMessage id='SelectMultipleFiles' defaultMessage='Select Multiple Files' />
+                                    </label>
+                                  </div>
+                                </dd>
+                              </dl>
                             </div>
                             <div>
                               {Object.keys(vcfMafFiles)?.map((filename, index) => (
-                                  <div
-                                      key={filename}
-                                      style={{
-                                          display: 'flex',
-                                          justifyContent: 'space-between',
-                                          alignItems: 'center',
-                                          padding: '10px',
-                                          border: '1px solid #ccc',
-                                          margin: '5px 0',
-                                      }}
-                                  >
-                                      <div>
-                                          {filename} - {formatFileSize(vcfMafFiles[filename].file.size)}
-                                      </div>
-                                      <button onClick={() => handleFileRemove(filename)}>X</button>
+                                <div key={filename} style={{display: 'flex', justifyContent: 'space-between',alignItems: 'center',padding: '10px',border: '1px solid #ccc',margin: '5px 0'}}>
+                                  <div>
+                                      {filename} - {formatFileSize(vcfMafFiles[filename].file.size)}
                                   </div>
+                                    <button onClick={() => handleFileRemove(filename)}>X</button>
+                                </div>
                               ))}
                             </div>
-                            <button className="btn btnPrimary SubmitButton" onClick={uploadFile}>
-                              <FormattedMessage id="Submit" defaultMessage="Submit" />
-                            </button>
+
+                            {!(vcf2mafResponse) &&
+                              <button className="btn btnPrimary SubmitButton" onClick={uploadFile}>
+                                <FormattedMessage id="Submit" defaultMessage="Submit" />
+                              </button>
+                            }
                           </div>
                           {isError && <p>Upload only .vcf extension files</p>}
                         </div>
                       </div>
-                      <span
+                      {!(vcf2mafResponse) &&
+                        <span
+                          style={{ fontSize: '1rem', lineHeight: '1.5rem', justifyContent: 'center' }}
+                          className="Flex"
+                        >
+                          <FormattedMessage
+                            id="VcfToMafNote"
+                            defaultMessage=" Note: only .vcf file accepted and files which are generated using genome version hg38"
+                          />
+                        </span>
+                      }
+                      {vcf2mafResponse &&
+                        <span
                         style={{ fontSize: '1rem', lineHeight: '1.5rem', justifyContent: 'center' }}
                         className="Flex"
-                      >
-                        <FormattedMessage
-                          id="VcfToMafNote"
-                          defaultMessage=" Note: only .vcf file accepted and files which are generated using genome version hg38"
-                        />
-                      </span>
+                        >(
+                          <FormattedMessage
+                            id="VcfToMafRefresh"
+                            defaultMessage="Please refresh page to upload and convert again"
+                          />)
+                        </span>
+                      }
                     </div>
                   </section>
                 ) : (

@@ -163,6 +163,10 @@ function MAFMerger() {
 
 
     let uploadFile = () => {
+        if (Object.keys(mafMergerFiles).length === 0) {
+            alert("No files uploaded. Please select files to upload.");
+            return;
+          }
         // Check if all files in the object have the ".maf" extension
         const areAllFilesMaf = Object.keys(mafMergerFiles).every(file => file.endsWith('.maf'));
 
@@ -208,7 +212,7 @@ function MAFMerger() {
                         <span style={{ fontSize: '1rem', lineHeight: '1.5rem', justifyContent: 'center' }} className="Flex">
                             <div className="" key={0}>
                                 <div style={{ marginBottom: "20px" }}>
-                                    <FormattedMessage id='MAFMergerResult1' defaultMessage='Your results are ready.' />
+                                    <FormattedMessage id='MAFMergerResult1' defaultMessage='Your merged results are ready.' />
                                 </div>
                                 <div className='Flex FlexDirCol' style={{ marginBottom: '20px' }}>
                                     <div>
@@ -357,23 +361,38 @@ function MAFMerger() {
                                                                 </div>
                                                             ))}
                                                         </div>
-                                                        <button className="btn btnPrimary SubmitButton" onClick={uploadFile}>
-                                                            <FormattedMessage id="Submit" defaultMessage="Submit" />
-                                                        </button>
+                                                        {!mafMergerResponse &&
+                                                            <button className="btn btnPrimary SubmitButton" onClick={uploadFile}>
+                                                                <FormattedMessage id="Submit" defaultMessage="Submit" />
+                                                            </button>
+                                                        }
+                                                        {mafMergerResponse &&
+                                                            <span
+                                                            style={{ fontSize: '1rem', lineHeight: '1.5rem', justifyContent: 'center' }}
+                                                            className="Flex"
+                                                            >(
+                                                            <FormattedMessage
+                                                                id="MafMergerRefresh"
+                                                                defaultMessage="Please refresh page to upload and merge again"
+                                                            />)
+                                                            </span>
+                                                        }
                                                     </div>
 
                                                     {isError && <p>Upload only .maf extension files</p>}
                                                 </div>
                                             </div>
-                                            <span
-                                                style={{ fontSize: '1rem', lineHeight: '1.5rem', justifyContent: 'center' }}
-                                                className="Flex"
-                                            >
-                                                <FormattedMessage
-                                                    id="MAFMergerNote"
-                                                    defaultMessage="Note: The MAF file name you input should be the sample name and should not contain any spaces."
-                                                />
-                                            </span>
+                                            {!mafMergerResponse &&
+                                                <span
+                                                    style={{ fontSize: '1rem', lineHeight: '1.5rem', justifyContent: 'center' }}
+                                                    className="Flex"
+                                                >
+                                                    <FormattedMessage
+                                                        id="MAFMergerNote"
+                                                        defaultMessage="Note: The MAF file name you input should be the sample name and should not contain any spaces."
+                                                    />
+                                                </span>
+                                            }
                                         </div>
                                     </section>
                                 ) : (

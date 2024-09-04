@@ -74,15 +74,33 @@ function InterPro() {
     setSelectedOption(option);
   };
 
+  // let uploadFile = () => {
+  //   if (interProFile['name'].includes('.fasta')) {
+  //     setIsError(false);
+  //     setLoader(true);
+  //     setHtml([])
+  //     dispatch(interPro('POST', { file: interProFile, filename: interProFile['name'] }));
+  //     setMsg({ id: 'FileUplodPlsWait', defaultMessage: 'File Uploading, Please Wait......' });
+  //   } else {
+  //     setIsError(true);
+  //   }
+  // };
   let uploadFile = () => {
-    if (interProFile['name'].includes('.fasta')) {
-      setIsError(false);
-      setLoader(true);
-      setHtml([])
-      dispatch(interPro('POST', { file: interProFile, filename: interProFile['name'] }));
-      setMsg({ id: 'FileUplodPlsWait', defaultMessage: 'File Uploading, Please Wait......' });
+    // Check if interProFile is defined and has a name property
+    if (interProFile && interProFile['name']) {
+      if (interProFile['name'].endsWith('.fasta')) {
+        setIsError(false);
+        setLoader(true);
+        setHtml([]);
+        dispatch(interPro('POST', { file: interProFile, filename: interProFile['name'] }));
+        setMsg({ id: 'FileUplodPlsWait', defaultMessage: 'File Uploading, Please Wait......' });
+      } else {
+        setIsError(true);
+        setMsg({ id: 'InvalidFileType', defaultMessage: 'Invalid file type. Please upload a .fasta file.' });
+      }
     } else {
       setIsError(true);
+      alert("No files uploaded. Please select files to upload.");
     }
   };
 
@@ -103,7 +121,8 @@ function InterPro() {
         h.push(
           <>
             <div className="Flex FlexDirRow">
-              <p>Your Results are ready kindly click link to download &nbsp;</p>
+              <FormattedMessage id='RefverResult1' defaultMessage='Your results are ready.' />
+              <FormattedMessage id='RefverResult2' defaultMessage=' Click on the link to download' />
               <a
                 className="ToolResultsReady"
                 href={
@@ -114,7 +133,7 @@ function InterPro() {
                 }
                 download={interproResponse['container_name'] + '.tsv'}
               >
-                {interproResponse['container_name']}
+                {interproResponse['container_name']+'.tsv'}
               </a>
             </div>
           </>
@@ -336,26 +355,41 @@ function InterPro() {
 
 
                         <div>
-                          <button className="btn btnPrimary SubmitButton" onClick={uploadFile}>
-                            <FormattedMessage id="Submit" defaultMessage="Submit" />
-                          </button>
+                          {!interproResponse &&
+                            <button className="btn btnPrimary SubmitButton" onClick={uploadFile}>
+                              <FormattedMessage id="Submit" defaultMessage="Submit" />
+                            </button>
+                          }
                         </div>
                         {isError && <p>Upload only .fasta extension files</p>}
                       </div>
-                      <span
-                        style={{
-                          fontSize: '1rem',
-                          lineHeight: '1.5rem',
-                          justifyContent: 'center',
-                          marginTop: '40px'
-                        }}
+                      {!interproResponse &&
+                        <span
+                          style={{
+                            fontSize: '1rem',
+                            lineHeight: '1.5rem',
+                            justifyContent: 'center',
+                            marginTop: '40px'
+                          }}
+                          className="Flex"
+                        >
+                          <FormattedMessage
+                            id="interProNote"
+                            defaultMessage="Note: protein sequence should be present in .fasta format"
+                          />
+                        </span>
+                      }
+                      {interproResponse &&
+                        <span
+                        style={{ fontSize: '1rem', lineHeight: '1.5rem', justifyContent: 'center' }}
                         className="Flex"
-                      >
-                        <FormattedMessage
-                          id="interProNote"
-                          defaultMessage="Note: protein sequence in .fasta format"
-                        />
-                      </span>
+                        >(
+                          <FormattedMessage
+                            id="VcfToMafRefresh"
+                            defaultMessage="Please refresh page to upload and convert again"
+                          />)
+                        </span>
+                      }
                     </div>
                   </section>
                 ) : (

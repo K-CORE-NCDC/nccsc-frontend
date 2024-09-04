@@ -95,6 +95,7 @@ function DataframeRecon() {
   };
 
   let uploadFile = () => {
+    if (matrixFile && matrixFile['name']) {
     if (matrixFile['name'].includes('.tsv')) {
       setIsError(false);
       setLoader(true);
@@ -104,6 +105,10 @@ function DataframeRecon() {
     } else {
       setIsError(true);
     }
+  }
+  else{
+    alert("No files uploaded. Please select files to upload.");
+  }
   };
 
   useEffect(() => {
@@ -131,7 +136,8 @@ function DataframeRecon() {
         h.push(
           <>
             <div className="Flex FlexDirRow">
-              <p>Your Results are ready, kindly click the link to download : &nbsp;</p>
+              <FormattedMessage id='RefverResult1' defaultMessage='Your results are ready.' />
+              <FormattedMessage id='RefverResult2' defaultMessage=' Click on the link to download' />
               <a
                 className="ToolResultsReady"
                 href={
@@ -212,22 +218,37 @@ function DataframeRecon() {
                                 </div>
                               </dd>
                             </dl>
-                            <button className="btn btnPrimary SubmitButton" onClick={uploadFile}>
-                              <FormattedMessage id="Submit" defaultMessage="Submit" />
-                            </button>
+                            {!matrixResponse &&
+                              <button className="btn btnPrimary SubmitButton" onClick={uploadFile}>
+                                <FormattedMessage id="Submit" defaultMessage="Submit" />
+                              </button>
+                            }
                           </div>
                           {isError && <p>Upload only .tsv extension files</p>}
                         </div>
                       </div>
-                      <span
+                      {!matrixResponse &&
+                        <span
+                          style={{ fontSize: '1rem', lineHeight: '1.5rem', justifyContent: 'center' }}
+                          className="Flex"
+                        >
+                          <FormattedMessage
+                            id="tsvaccepted"
+                            defaultMessage=" Note: only .tsv file accepted"
+                          />
+                        </span>
+                      }
+                      {matrixResponse &&
+                        <span
                         style={{ fontSize: '1rem', lineHeight: '1.5rem', justifyContent: 'center' }}
                         className="Flex"
-                      >
-                        <FormattedMessage
-                          id="tsvaccepted"
-                          defaultMessage=" Note: only .tsv file accepted"
-                        />
-                      </span>
+                        >(
+                          <FormattedMessage
+                            id="VcfToMafRefresh"
+                            defaultMessage="Please refresh page to upload and convert again"
+                          />)
+                        </span>
+                      }
                     </div>
                   </section>
                 ) : (
