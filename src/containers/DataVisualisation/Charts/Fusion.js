@@ -95,8 +95,10 @@ export default function FusionPlot({
     }
 
     if (watermarkCss !== '' && screenCapture) {
-      takeScreenshot();
-      setToFalseAfterScreenCapture();
+      if(document.getElementById('venn')){
+        takeScreenshot();
+        setToFalseAfterScreenCapture();
+      }
     }
   }, [screenCapture, watermarkCss]);
   const clinicalMaxMinInfo = useSelector(

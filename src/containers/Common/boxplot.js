@@ -43,7 +43,6 @@ export default function Boxplot({ data }) {
 
     var domains = [];
     var max_d = [];
-    // console.log('data',data);
     for (var i = 0; i < data.length; i++) {
       domains.push(data[i].label);
       max_d.push(...data[i].data);
@@ -122,7 +121,6 @@ export default function Boxplot({ data }) {
         .style('width', 40);
 
       let boxWidth = Math.round(width / data?.length) - 10;
-      // console.log('width', width, data?.length, Math.floor(width / data?.length))
       p.selectAll('boxes')
         .data([sumstat[i]])
         .enter()

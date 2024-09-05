@@ -152,7 +152,6 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survialData, SVF
       coxUserDefinedFilter,
       viz_type: vizType,
     };
-    console.log(copyState)
     if (type === 'cox' && Object.values(coxFilter).some((value) => value === true)) {
       parentCallback({ updatedState: copyState });
       setUpdateFiltersFlag(false)
@@ -311,14 +310,25 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survialData, SVF
                         <FormattedMessage id='SurvivalDNAMutationTooltip1' defaultMessage="Samples with 7 major mutations for the selected genes that belong to the Mutation group.">
                           {(placeholder) => (
                             <>
-                              <QuestionMarkCircleIcon
-                                data-multiline={true}
-                                className="inline ml-2 mb-1"
-                                data-class="my-tooltip"
-                                data-tip={`DNA Mutation:  ${placeholder} <br>  <br/>  ${intl.formatMessage({ id: "SurvivalDNAMutationTooltip3", defaultMessage: '7 major mutations: ' })}Missense mutation, Nonsense mutation, Splice site, <br>  <br/>In frame insertion, In frame deletion, Frame-shift insertion, Frame-shift deletion
-                                          <br>No Mutation:${intl.formatMessage({ id: "SurvivalDNAMutationTooltip2", defaultMessage: 'When there are no major 7 mutation types for the selected gene' })}`}
-                                style={{ width: '20px', cursor: 'pointer' }} />
-                              <ReactTooltip />
+                            <QuestionMarkCircleIcon
+                              data-multiline={true}
+                              className="inline ml-2 mb-1"
+                              data-class="my-tooltip-survival"
+                              data-tip={`Mutation group:
+                                ${intl.formatMessage({ id: "SurvivalDNAMutationTooltip1", defaultMessage: 'Samples with 7 major mutations for <br> the selected genes that belong to the mutation group.' })}
+                                <br>
+                                <br>No Mutation group:
+                                ${intl.formatMessage({ id: "SurvivalDNAMutationTooltip2", defaultMessage: 'There are no 7 major mutation <br> types for the selected gene.' })}
+                                <br>(7 major mutations: Missense, Nonsense, Splice site,
+                                <br>
+                                 In frame insertion, In frame deletion, Frame-shift <br> insertion, Frame-shift deletion)
+                              `}
+                              style={{ width: '20px', cursor: 'pointer', display: 'flex !important',
+                                flex: '1 1 auto !important',
+                                flexDirection:'column !important',
+                                alignItems: 'flex-start !important' }}
+                            />
+                            <ReactTooltip />
                             </>
                           )}
                         </FormattedMessage>

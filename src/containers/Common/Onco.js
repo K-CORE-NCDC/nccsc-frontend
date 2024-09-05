@@ -194,10 +194,8 @@ const OncoCmp = React.forwardRef(
             customName[originDatum.displayName];
           clinical_custom_track_params['label'] = customName[originDatum.displayName];
           clinical_custom_track_params['description'] = customName[originDatum.displayName];
-          // console.log(clinical_custom_track_params)
           var track_id = oncoprint.addTracks([_.clone(clinical_custom_track_params)])[0];
           oncoprint.setTrackInfo(track_id, '');
-          // console.log(custom_datum[i]['data'])
           oncoprint.setTrackData(track_id, custom_datum[i]['data'], 'sample');
           oncoprint.setTrackTooltipFn(track_id, function (data) {
             return '<b>Sample: ' + BrstKeys[data.sample] + ' (' + data.category + ')</b>';

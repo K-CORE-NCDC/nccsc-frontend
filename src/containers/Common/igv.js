@@ -27,7 +27,6 @@ const Igv = React.forwardRef(({ width, data, watermarkCss }, ref) => {
     };
 
     igv.createBrowser(igvDiv, options).then(function () {
-      console.log("Created IGV browser")
     });
   };
   useEffect(() => {

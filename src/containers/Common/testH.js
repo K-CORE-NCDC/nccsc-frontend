@@ -126,11 +126,11 @@ const HeatmapCmp = React.forwardRef(
       config['smpOverlays'] = ['Cluster', 'Treatment', 'Dose'];
       config['samplesClustered'] = false;
       config['variablesClustered'] = false;
-      
+
 
       config['sortData'] = [['cat', 'smp', 'Cluster']];
       config['sortDir'] = 'ascending';
-      
+
     }
     if (type === 'k-mean' && kmeanType==='sample' ) {
       config['varOverlayProperties']['Cluster']={
@@ -150,16 +150,13 @@ const HeatmapCmp = React.forwardRef(
           showBox: false,
           rotate: false
       }
-      
+
       config['varOverlays'].push('Cluster');
       config['samplesClustered'] = true;
       config['variablesClustered'] = false;
-      
 
-      // config['sortData'] = [['Treatment']];
-      // config['sortDir'] = 'ascending';
     }
-    // console.log(config)
+
 
     useEffect(() => {
       setConfigVis(config);

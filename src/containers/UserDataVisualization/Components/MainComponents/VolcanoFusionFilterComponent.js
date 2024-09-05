@@ -50,7 +50,6 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab, VFData, SVFState }) =
         setGroupFilters(filtersObject);
         setUpdateFiltersFlag(true);
       } else {
-        console.log(filtersObject,proteomeValue)
         setGroupFilters(filtersObject);
         setUpdateFiltersFlag(true);
       }
@@ -79,7 +78,6 @@ let VolcanoFusionFilterComponent = ({ parentCallback, tab, VFData, SVFState }) =
         volcanoFusionFilterData['volcanoType'] = volcanoType;
         volcanoFusionFilterData['volcanoTranscriptomeType'] = proteomeValue;
         volcanoFusionFilterData['filterType'] = userDefinedFilter;
-        console.log(volcanoFusionFilterData)
         if (volcanoType === 'transcriptome' && proteomeValue==="NT"){
           parentCallback({ volcanoFusionFilterData: volcanoFusionFilterData });
         }

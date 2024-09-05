@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import {
   multiFileUpload,
   clearMultiFIleUploadState,
-  UserDataProjectsCount
+  UserDataProjectsCount,
+  clearMafMerger,
+  clearToolsData
 } from '../../../actions/api_actions';
 import { useDispatch } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -110,7 +112,7 @@ const Table = ({ updateComponentNumber }) => {
 
   const setIsModalFunction = (stateData) => {
     setIsModal(stateData);
-};
+  };
 
 const style={
   dna_button:{
@@ -177,6 +179,9 @@ const style={
   };
 
   const handleClearFile = (name) => {
+    alert(name)
+    clearMafMerger()
+    clearToolsData()
     if(name==='mutation_file_name'){
       setMutationType('dna')
       setMafDetails(null)
@@ -298,7 +303,7 @@ const countFiles = () => {
     setIsOpen(false);
     toggleModal(false);
   };
-
+  console.log(mutationType,'-------mutationType')
   return (
     <div>
       {isOpen && isOpen === true && (
@@ -467,6 +472,7 @@ const countFiles = () => {
                     </div>
                   </td>
                   <td className="MultiUploadTDHeader MultiUploadTD">
+                    <button onClick={() => handleClearFile('mutation_file_name')}>clear</button>
                   {mutationType==='maf'?<>
                     {mafDetails ? (
                       <>

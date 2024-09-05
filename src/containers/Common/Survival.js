@@ -67,7 +67,6 @@ const SurvivalCmp = React.forwardRef(({ data, watermarkCss, pValue, survialType 
           { Header: 'Sample', accessor: (row) => row.sample }
         ];
         if (filteredValue.length === 0) {
-          console.log(`filteredValue = ${JSON.stringify(filteredValue)}, key = ${key}`);
           tableHtmlData.push(
             <div className="p-3 SurvivalNoData" key={key}>
               <h3 className="NoData">{key}</h3>

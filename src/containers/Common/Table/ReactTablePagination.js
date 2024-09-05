@@ -80,7 +80,6 @@ function PaginateTable({
         setPageSetArray(pageSets[0]?.length)
         for (const pageset of pageSets) {
             if (pageset.includes(paramObj?.pageNumber)) {
-                // console.log('pageset', pageset)
                 return pageset
             }
         }
@@ -92,7 +91,7 @@ function PaginateTable({
         <div>
             <div style={{ width: '100%', overflowX: 'auto' }}>
                 <span style={{ display: 'flex', fontSize: '18px' }}><b>Total:</b> <div style={{ color: "#003177", paddingLeft: '10px', fontSize: "18px" }}>{TotalCount}</div></span>
-                
+
                 <table className={" boardList"} {...getTableProps()} style={{ width: '1075px' }}>
                     <thead className="boardHeader">
                         {headerGroups.map((headerGroup) => (
@@ -149,19 +148,14 @@ function PaginateTable({
                         className={`${pageNumber > 1 ? "on" : ""}`}
                         onClick={() => {
                             if (pageNumber > 1) {
-                                const newPageNumber = 1; // Move directly to the first page
-                                console.log(`newPageNumber= ${newPageNumber}`);
-
+                                const newPageNumber = 1;
                                 setPageNumber(newPageNumber);
                                 setParamObj((prevState) => ({
                                     ...prevState,
                                     pageNumber: newPageNumber,
                                 }));
-                                gotoPage(newPageNumber - 1); // Adjust index if gotoPage expects 0-based index
+                                gotoPage(newPageNumber - 1);
                             }
-                            // else {
-                            //     console.log(`Already at the first page`);
-                            // }
                         }}
                     >
                         {'<<'}
@@ -239,7 +233,7 @@ function PaginateTable({
                         className={`${pageNumber < totalPages ? "on" : ""}`}
                         onClick={() => {
                             if (pageNumber < totalPages) {
-                                const pageNumber = totalPages; // Move directly to the last page
+                                const pageNumber = totalPages;
                                 setPageNumber(pageNumber);
                                 setParamObj((prevState) => ({
                                     ...prevState,
@@ -247,9 +241,7 @@ function PaginateTable({
                                 }));
                                 gotoPage(pageNumber - 1);
                             }
-                            //  else {
-                            //     console.log(`Cannot go beyond the total number of pages`);
-                            // }
+
                         }}
                     >
                         {'>>'}

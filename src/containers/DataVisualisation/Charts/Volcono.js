@@ -47,7 +47,6 @@ export default function DataVolcono({
   }, []);
 
   useEffect(() => {
-    console.log(VFData)
     if (inputData && 'genes' in inputData) {
       setInputState((prevState) => ({ ...prevState, ...inputData, ...VFData }));
     }
@@ -223,7 +222,6 @@ export default function DataVolcono({
 
   const submitProteomeNT = () => {
     setLoader(true);
-    console.log(inputState)
     if(inputState['volcanoType']==="transcriptome"){
       inputState['volcanoTranscriptomeType'] = proteomeValue;
     }else{

@@ -46,6 +46,17 @@ export function clearNotice() {
   };
 }
 
+export function clearMafMerger(){
+  console.log('---df')
+  return (dispatch)=>{
+    dispatch({
+      type: homeConstants.CLEARMAFMERGER,
+    });
+    dispatch({ type: homeConstants.REQUEST_DONE });
+  }
+
+}
+
 export function signin(method, data) {
   const url = `${config.auth}new-registration/`;
   return sendRequest(url, method, data);
@@ -713,7 +724,6 @@ export function clearSingleFIleUploadState() {
 
 export function clearMultiFIleUploadState() {
   return (dispatch) =>
-    // console.log('Dispatching clearMultiFIleUploadState action')
     dispatch({
       type: homeConstants.MULTI_USERDATA_VISUALIZATION,
       payload: {}

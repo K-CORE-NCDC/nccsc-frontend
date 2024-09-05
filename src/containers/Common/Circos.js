@@ -484,11 +484,12 @@ const CircosCmp = React.forwardRef(
               if (d.value >= 1.5) {
                 return '#f22316';
               }
-              if (d.value <= 0.5) {
-
+              else if (d.value <= 0.5) {
                 return '#115ff0';
               }
-              return '#a8a5a5';
+              else {
+                return '#a8a5a5';
+              }
             }
           },
           strokeColor: function (d) {

@@ -75,3 +75,6 @@ $selection: #edf8ff;
   shape-rendering: crispEdges;
   pointer-events: none;
 }
+.__react_component_tooltip .multi-line{
+  text-align: left !important;
+}

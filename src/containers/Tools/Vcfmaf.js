@@ -173,8 +173,6 @@ let uploadFile = () => {
   });
 
   if (areAllFilesVcf && Object.keys(vcfMafFiles)?.length > 0 && alphanum) {
-      console.log(vcfMafFiles)
-      console.log(vcfMafFiles['fileName'])
       setIsError(false);
       setLoader(true);
       setHtml([])

@@ -48,15 +48,13 @@ export default function DataSurvival({
     } else {
       setWatermarkCSS('');
     }
-
     if (watermarkCss !== '' && screenCapture) {
-      if (reference !== null) {
+      if (reference !== null && 'current' in reference && reference['current']!==undefined) {
         exportComponentAsJPEG(reference, {
           fileName: 'Survival',
           html2CanvasOptions: {}
         });
       }
-      setToFalseAfterScreenCapture();
     }
   }, [screenCapture, watermarkCss]);
 
@@ -83,7 +81,6 @@ export default function DataSurvival({
     staticSurvivalData['group_filters'] = groupFilter;
     staticSurvivalData['clinical'] = true;
     staticSurvivalData['project_id'] = project_id;
-    console.log(staticSurvivalData,'----')
     setInputState((prevState) => ({ ...prevState, ...staticSurvivalData }));
   };
 
@@ -168,11 +165,9 @@ export default function DataSurvival({
 
       if (survivalJson && survivalJson.sample_counts) {
         const sampleCountsObject = survivalJson.sample_counts;
-        // let totalCount = 0;
         let htmlArray = [];
         if (Object.keys(sampleCountsObject).length > 0) {
           Object.keys(sampleCountsObject).forEach((e) => {
-            // totalCount += sampleCountsObject[e];
             htmlArray.push(
               <div key={e} className="SurvivalSampleCount">
                 <FormattedMessage id={e} defaultMessage={e} /> {`: ${sampleCountsObject[e]}`}
@@ -322,16 +317,12 @@ export default function DataSurvival({
   }
 
   const survivalCallback = useCallback(({ updatedState }) => {
-    console.log(updatedState)
-    // callSingleSurvial(updatedState)
     if(updatedState['survival_type']==='cox'){
       setInputState((prevState)=>({...prevState,...updatedState}))
     }else{
       callSingleSurvial(updatedState['survival_type'],updatedState['group_filters'])
     }
-    // setSurvivalData(updatedState);
     setSVFState(updatedState?.filterType || 'static')
-    // setChartName(tabName);
     setSurvivalFilterPopoverOpen(false);
   },[])
   return (

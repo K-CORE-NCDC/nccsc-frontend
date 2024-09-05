@@ -64,13 +64,12 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
     var min_vl = 0; //d_['min']
     var domains = [];
     var sumstat = nest()
-      .key(function (d) {    
+      .key(function (d) {
         return d.Species;
       })
       .rollup(function (d) {
         var t = [];
         var n = [];
-        // console.log('data',d);
         for (var i = 0; i < d.length; i++) {
           if (domains.includes(d[i]['Species']) === false) {
             domains.push(d[i]['Species']);
@@ -373,8 +372,6 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
           .on('mouseout', () => {
             tooltip.transition().duration(500).style('opacity', 1);
           });
-        console.log('min', minCx);
-        console.log('max', maxCx);
 
 
         p.selectAll('vertLines')
@@ -388,13 +385,9 @@ const BoxPlot = React.forwardRef(({ view_type, box_data, chart_type, watermarkCs
             return key;
           })
           .attr('y1', function (d) {
-            // return minCx
-            // console.log(y(d.min), minCx)
-            // return y(d.min)+10;
             return maxCx
           })
           .attr('y2', function (d) {
-            // return y(d.max)-10;
             return minCx
           })
           .attr('stroke', 'black');
