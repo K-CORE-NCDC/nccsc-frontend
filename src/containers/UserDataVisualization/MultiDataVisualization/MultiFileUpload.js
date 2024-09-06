@@ -3,8 +3,7 @@ import {
   multiFileUpload,
   clearMultiFIleUploadState,
   UserDataProjectsCount,
-  clearMafMerger,
-  clearToolsData
+  clearMafMerger
 } from '../../../actions/api_actions';
 import { useDispatch } from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -27,9 +26,7 @@ function Modal({ showModal, toggleModal, fileName }) {
 
           <div className="Toolmodal-container">
             <div className="Toolmodal-content" style={{ maxWidth: '60vw' }}>
-              {/*content*/}
               <div className="Toolmodal-dialog">
-                {/*header*/}
                 <div className="Toolmodal-header">
                   <h5 className="Toolmodal-title toolModal-header" style={{ marginTop:'5px',fontSize: '20px' }}>
                     {' '}
@@ -42,7 +39,6 @@ function Modal({ showModal, toggleModal, fileName }) {
                     ×
                   </button>
                 </div>
-                {/*body*/}
                 <div
                   style={{
                     border: '1px solid black',
@@ -77,7 +73,6 @@ function Modal({ showModal, toggleModal, fileName }) {
                     </div>
                   </div>
                 </div>
-                {/*footer*/}
                 <div className="Toolmodal-footer">
                   <button
                     className="Toolmodal-close-btn"
@@ -179,10 +174,8 @@ const style={
   };
 
   const handleClearFile = (name) => {
-    alert(name)
-    clearMafMerger()
-    clearToolsData()
     if(name==='mutation_file_name'){
+      dispatch(clearMafMerger())
       setMutationType('dna')
       setMafDetails(null)
     }else{
@@ -303,7 +296,7 @@ const countFiles = () => {
     setIsOpen(false);
     toggleModal(false);
   };
-  console.log(mutationType,'-------mutationType')
+
   return (
     <div>
       {isOpen && isOpen === true && (
@@ -472,7 +465,7 @@ const countFiles = () => {
                     </div>
                   </td>
                   <td className="MultiUploadTDHeader MultiUploadTD">
-                    <button onClick={() => handleClearFile('mutation_file_name')}>clear</button>
+
                   {mutationType==='maf'?<>
                     {mafDetails ? (
                       <>

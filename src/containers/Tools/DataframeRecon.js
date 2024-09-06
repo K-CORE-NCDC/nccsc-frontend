@@ -134,21 +134,19 @@ function DataframeRecon() {
         });
         let h = [];
         h.push(
-          <>
-            <div className="Flex FlexDirRow">
-              <FormattedMessage id='RefverResult1' defaultMessage='Your results are ready.' />
-              <FormattedMessage id='RefverResult2' defaultMessage=' Click on the link to download' />
-              <a
-                className="ToolResultsReady"
-                href={
-                  backend_url + 'media/DfReconstruction/files/' + matrixResponse['output_file']
-                }
-                download={matrixResponse['output_file']}
-              >
-                {matrixResponse['output_file']}
-              </a>
-            </div>
-          </>
+          <div key={matrixResponse['output_file']} className="Flex FlexDirRow">
+            <FormattedMessage id='RefverResult1' defaultMessage='Your results are ready.' />
+            <FormattedMessage id='RefverResult2' defaultMessage=' Click on the link to download' />
+            <a
+              className="ToolResultsReady"
+              href={
+                backend_url + 'media/DfReconstruction/files/' + matrixResponse['output_file']
+              }
+              download={matrixResponse['output_file']}
+            >
+              {matrixResponse['output_file']}
+            </a>
+          </div>
         );
         setHtml(h);
       }

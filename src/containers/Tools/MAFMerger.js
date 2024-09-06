@@ -193,70 +193,64 @@ function MAFMerger() {
 
     useEffect(() => {
         if (mafMergerResponse) {
-            if (mafMergerResponse['status'] === 'running') {
-                setLoader(true);
-                setStartInterval(true)
-                setMsg({ id: 'MAFMergerConversion', defaultMessage: 'File Uploaded, Conversion Started.....' });
-            } else {
-                setLoader(false);
-                setStartInterval(false)
-                setLoop(interval => {
-                    clearInterval(interval);
-                    return null;
-                });
-                setMafMergerFiles({})
-                setMafMergerFilesName([])
-                let h = [];
-                h.push(
-                    <>
-                        <span style={{ fontSize: '1rem', lineHeight: '1.5rem', justifyContent: 'center' }} className="Flex">
-                            <div className="" key={0}>
-                                <div style={{ marginBottom: "20px" }}>
-                                    <FormattedMessage id='MAFMergerResult1' defaultMessage='Your merged results are ready.' />
-                                </div>
-                                <div className='Flex FlexDirCol' style={{ marginBottom: '20px' }}>
-                                    <div>
-                                        <FormattedMessage id='MAFMergerResult2' defaultMessage='Click to download merged TSV : ' />
-                                        <a
-                                            className="ToolResultsReady"
-                                            href={
-                                                backend_url + mafMergerResponse['user_project_directory'] + mafMergerResponse['container_name'] + '.tsv'
-                                            }
-                                            download={mafMergerResponse['container_name'] + '.tsv'}
-                                        >
-                                            {mafMergerResponse['container_name'] + '.tsv'}
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <FormattedMessage id='MAFMergerResult3' defaultMessage='* You can use merged TSV as DNA mutation input in visualization services.' />
-                                    </div>
-                                </div>
+          if (mafMergerResponse['status'] === 'running') {
+            setLoader(true);
+            setStartInterval(true)
+            setMsg({ id: 'MAFMergerConversion', defaultMessage: 'File Uploaded, Conversion Started.....' });
+          } else {
+            setLoader(false);
+            setStartInterval(false)
+            setLoop(interval => {
+              clearInterval(interval);
+              return null;
+            });
+            setMafMergerFiles({})
+            setMafMergerFilesName([])
 
-                                <div className='Flex FlexDirRow'>
-                                    <div>
-                                        <FormattedMessage id='MAFMergerResult4' defaultMessage='Click to download merged MAF : ' />
-                                        <a
-                                            className="ToolResultsReady"
-                                            href={
-                                                backend_url + mafMergerResponse['user_project_directory'] + mafMergerResponse['container_name'] + '.maf'
-                                            }
-                                            download={mafMergerResponse['container_name'] + '.maf'}
-                                        >
-                                            {mafMergerResponse['container_name'] + '.maf'}
-                                        </a>
-                                    </div>
-                                </div>
-                                <div>
+            let h = [];
+            h.push(
+              <div key={mafMergerResponse['container_name']} className="Flex FlexDirCol">
+                <div style={{ marginBottom: "20px" }}>
+                  <FormattedMessage id='MAFMergerResult1' defaultMessage='Your merged results are ready.' />
+                </div>
+                <div className="Flex FlexDirCol" style={{ marginBottom: '20px' }}>
+                  <div key={`tsv_${mafMergerResponse['container_name']}`}>
+                    <FormattedMessage id='MAFMergerResult2' defaultMessage='Click to download merged TSV : ' />
+                    <a
+                      className="ToolResultsReady"
+                      href={
+                        backend_url + mafMergerResponse['user_project_directory'] + mafMergerResponse['container_name'] + '.tsv'
+                      }
+                      download={mafMergerResponse['container_name'] + '.tsv'}
+                    >
+                      {mafMergerResponse['container_name'] + '.tsv'}
+                    </a>
+                  </div>
+                  <div key={`message_${mafMergerResponse['container_name']}`}>
+                    <FormattedMessage id='MAFMergerResult3' defaultMessage='* You can use merged TSV as DNA mutation input in visualization services.' />
+                  </div>
+                </div>
 
-                                </div>
-                            </div>
-                        </span>
-                    </>
-                );
-                setHtml(h);
-            }
+                <div className="Flex FlexDirRow" key={`maf_${mafMergerResponse['container_name']}`}>
+                  <div>
+                    <FormattedMessage id='MAFMergerResult4' defaultMessage='Click to download merged MAF : ' />
+                    <a
+                      className="ToolResultsReady"
+                      href={
+                        backend_url + mafMergerResponse['user_project_directory'] + mafMergerResponse['container_name'] + '.maf'
+                      }
+                      download={mafMergerResponse['container_name'] + '.maf'}
+                    >
+                      {mafMergerResponse['container_name'] + '.maf'}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            );
+            setHtml(h);
+          }
         }
-    }, [mafMergerResponse]);
+      }, [mafMergerResponse]);
 
     useEffect(() => {
         return () => {

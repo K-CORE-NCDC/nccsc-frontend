@@ -26,10 +26,7 @@ export const Others = () => {
               </dt>
               <dd>
                 <span>
-                  <Link to="/organoid/">
-                    {' '}
                     <FormattedMessage id="Organoid2" defaultMessage="Organoid Service" />
-                  </Link>
                 </span>
               </dd>
             </dl>

@@ -74,17 +74,6 @@ function InterPro() {
     setSelectedOption(option);
   };
 
-  // let uploadFile = () => {
-  //   if (interProFile['name'].includes('.fasta')) {
-  //     setIsError(false);
-  //     setLoader(true);
-  //     setHtml([])
-  //     dispatch(interPro('POST', { file: interProFile, filename: interProFile['name'] }));
-  //     setMsg({ id: 'FileUplodPlsWait', defaultMessage: 'File Uploading, Please Wait......' });
-  //   } else {
-  //     setIsError(true);
-  //   }
-  // };
   let uploadFile = () => {
     // Check if interProFile is defined and has a name property
     if (interProFile && interProFile['name']) {
@@ -119,8 +108,7 @@ function InterPro() {
         });
         let h = [];
         h.push(
-          <>
-            <div className="Flex FlexDirRow">
+            <div key={interproResponse['container_name']} className="Flex FlexDirRow">
               <FormattedMessage id='RefverResult1' defaultMessage='Your results are ready.' />
               <FormattedMessage id='RefverResult2' defaultMessage=' Click on the link to download' />
               <a
@@ -136,7 +124,6 @@ function InterPro() {
                 {interproResponse['container_name']+'.tsv'}
               </a>
             </div>
-          </>
         );
         setHtml(h);
       }

@@ -47,13 +47,12 @@ export function clearNotice() {
 }
 
 export function clearMafMerger(){
-  console.log('---df')
   return (dispatch)=>{
     dispatch({
       type: homeConstants.CLEARMAFMERGER,
+      payload: {}
     });
-    dispatch({ type: homeConstants.REQUEST_DONE });
-  }
+  };
 
 }
 

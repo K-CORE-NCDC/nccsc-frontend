@@ -122,8 +122,8 @@ function Organoid() {
                     </h1>
                     <div className="ml-32 my-16">
 
-                      <div class="flex items-center justify-center h-full">
-                        <img src={organoid07} alt="organoid" class="max-w-full h-auto" style={flowchartStyles.img} />
+                      <div className="flex items-center justify-center h-full">
+                        <img src={organoid07} alt="organoid" className="max-w-full h-auto" style={flowchartStyles.img} />
                       </div>
 
                       {/* <div

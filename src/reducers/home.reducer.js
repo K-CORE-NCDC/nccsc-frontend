@@ -182,13 +182,13 @@ const homeReducer = (state = { home: 'home' }, { type, payload }) => {
         refverconverter: payload
       };
     case homeConstants.CLEARMAFMERGER:
-      console.log(state)
-      return {
-        ...state,
-        mafmerger:{}
-      }
+      const next = {...state}
+      delete next['mafmerger']
+      let t = {...next}
+      // console.log(t)
+      return t
     case homeConstants.CLEARTOOLSDATA: {
-      const { mafmerger, refverconverter, vcfmaf, interpro, blast, ...removedtoolsdata} = state;
+      const { mafmerger, refverconverter, vcfmaf, interpro, blast, dataframe_recon, ...removedtoolsdata} = state;
       /* eslint-disable no-param-reassign */
       state = removedtoolsdata;
       return state;

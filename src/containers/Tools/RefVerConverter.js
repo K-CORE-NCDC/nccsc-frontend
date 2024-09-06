@@ -247,8 +247,7 @@ function RefVerConverter() {
                 setRefVerConverterFiles({})
                 let h = [];
                 h.push(
-                    <>
-                        <div className="Flex FlexDirRow">
+                        <div key={refVerConverterResponse['container_name']} className="Flex FlexDirRow">
                             <span
                                 style={{ fontSize: '1rem', lineHeight: '1.5rem', justifyContent: 'center' }}
                                 className="Flex"
@@ -270,7 +269,6 @@ function RefVerConverter() {
                                 )}
                             </span>
                         </div>
-                    </>
                 );
                 setHtml(h);
             }

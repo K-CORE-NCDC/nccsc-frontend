@@ -3,7 +3,7 @@ import * as Circos from 'circos';
 import * as d3 from 'd3';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import placeholder from '../../assets/images/circosLegend.png';
+import placeholder from '../../assets/images/circosLegend1.png';
 import cytobands from './cytobands.csv';
 var gieStainColor = {
   gpos100: 'rgb(0,0,0)',
@@ -79,6 +79,7 @@ const CircosCmp = React.forwardRef(
 
 
       let data = cytobands;
+      console.log(data)
       let all_chr = [];
 
       for (var i = 0; i < GRCh37.length; i++) {
@@ -408,7 +409,7 @@ const CircosCmp = React.forwardRef(
           strokeWidth: 2.0,
           shape: 'circle',
           size: 7,
-          min: -3,
+          // min: -3,
           max: 3,
           axes: [
             { spacing: 0.1, thickness: 1, color: '#c8d4c5', opacity: 0.2 },
@@ -453,8 +454,8 @@ const CircosCmp = React.forwardRef(
           strokeWidth: 2.0,
           shape: 'circle',
           size: 7,
-          min: 0,
-          max: 1,
+          // min: 0,
+          // max: 1,
           axes: [
             { spacing: 0.1, thickness: 3, color: '#c8d4c5', opacity: 0.3 },
             { spacing: 0.2, thickness: 3, color: '#c8d4c5', opacity: 0.3 },
@@ -482,13 +483,16 @@ const CircosCmp = React.forwardRef(
             } else {
 
               if (d.value >= 1.5) {
-                return '#f22316';
+                return '#f22316'; //red
               }
               else if (d.value <= 0.5) {
-                return '#115ff0';
+                return '#115ff0'; // blue
+              }
+              else if (d.value== 0){
+                return '#8335f0';
               }
               else {
-                return '#a8a5a5';
+                return '#a8a5a5'; //grey
               }
             }
           },
@@ -502,13 +506,13 @@ const CircosCmp = React.forwardRef(
           strokeWidth: 2.0,
           shape: 'circle',
           size: 7,
-          max: 3,
-          // min: -2,
+          max: 4,
+          // // min: -2,
 
           axes: [
-            { spacing: 0.6, thickness: 3, color: '#ed781f', opacity: 0.2 },
-            { spacing: 0.6, thickness: 3, color: '#c8d4c5', opacity: 0.2 },
-            { spacing: 0.6, thickness: 3, color: '#8335f0', opacity: 0.3 }
+            { spacing: 0.7, thickness: 3, color: '#ed781f', opacity: 0.2 },
+            { spacing: 0.7, thickness: 3, color: '#c8d4c5', opacity: 0.2 },
+            { spacing: 0.7, thickness: 3, color: '#8335f0', opacity: 0.3 }
           ],
 
           tooltipContent: function (d) {
@@ -545,13 +549,13 @@ const CircosCmp = React.forwardRef(
           strokeWidth: 2.0,
           shape: 'circle',
           size: 7,
-          min: -1,
-          max: 7,
+          // min: -1,
+          // max: 7,
           direction: 'center',
           showAxesTooltip: false,
           axes: [
-            { spacing: 0.3, thickness: 3, color: '#abadaa', opacity: 0.2 },
-            { spacing: 0.3, thickness: 1, color: '#bad4b4', opacity: 0.2 }
+            { spacing: 1, thickness: 3, color: '#abadaa', opacity: 0.5 },
+            { spacing: 1, thickness: 1, color: '#bad4b4', opacity: 0.5 }
           ],
 
           tooltipContent: function (d) {
