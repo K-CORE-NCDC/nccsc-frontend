@@ -156,7 +156,7 @@ export default function DataVisualization() {
         project_id: project_id
       }));
     }
-    let l = ['variant_summary', 'circos', 'lollipop', 'cnv', 'heatmap', 'box', 'survival'];
+    let l = ['variant_summary', 'circos', 'lollipop', 'cnv', 'heatmap', 'box', 'survival','pca'];
     let gridData = [];
 
     l.forEach((element) => {
@@ -228,12 +228,25 @@ export default function DataVisualization() {
             {(placeholder) => placeholder}
           </FormattedMessage>
         );
+      } else if (element === 'pca') {
+        desc = (
+          <FormattedMessage
+            id="Example_single_pca"
+            defaultMessage="Example pca"
+          >
+            {(placeholder) => placeholder}
+          </FormattedMessage>
+        );
       }
 
       let gridobj = {
-        title: element === 'variant-summary' ? 'Variant Summary' : element,
+        title: element === 'variant-summary' ? 'Variant Summary'
+        : element === 'pca' ? 'PCA Analysis'
+        : element,
         image: require(`../../../assets/images/Visualizations/${element}.png`).default,
-        manual: require(`../../../assets/files/DownloadbleFiles/SingleDataVis/${element}.pdf`).default,
+        // manual: require(`../../../assets/files/DownloadbleFiles/SingleDataVis/${element}.pdf`).default,
+        manual: element !== 'pca' ? require(`../../../assets/files/DownloadbleFiles/SingleDataVis/${element}.pdf`).default
+        : undefined,
         link: `/singledata-upload/${element}/`,
         viewLink: `/visualizesingle-exampledata/${element}`,
         description: desc || ''

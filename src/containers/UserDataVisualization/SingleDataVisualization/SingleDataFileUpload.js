@@ -88,7 +88,8 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
     'heatmap',
     'box',
     'survival',
-    'variant-summary'
+    'variant-summary',
+    'pca'
   ];
 
   const charts = {
@@ -122,6 +123,10 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
     },
     'variant-summary': {
       dna_mutation: 'DNA Mutation'
+    },
+    'pca':{
+      rna: 'RNA',
+      proteome: 'proteome',
     }
   };
 

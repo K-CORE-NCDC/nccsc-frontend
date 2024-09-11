@@ -131,7 +131,20 @@ function scatter(width, inputData, screenCapture, setToFalseAfterScreenCapture) 
     </Suspense>
   );
 }
-
+function pca(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
+  let Pca = lazy(() => import('./pca'));
+  return (
+    <Suspense>
+      <Pca
+        key="pca"
+        width={width}
+        inputData={inputData}
+        screenCapture={screenCapture}
+        setToFalseAfterScreenCapture={setToFalseAfterScreenCapture}
+      />
+    </Suspense>
+  );
+}
 function igv(width, inputData, screenCapture, setToFalseAfterScreenCapture) {
   let DataIgv = lazy(() => import('./igv'));
   return (
@@ -212,6 +225,8 @@ const Charts = ({ type, w, state, screenCapture, setToFalseAfterScreenCapture, t
         return survival(w, state, screenCapture, setToFalseAfterScreenCapture,survialData);
       case 'correlation':
         return scatter(w, state, screenCapture, setToFalseAfterScreenCapture);
+      case 'pca':
+        return pca(w, state, screenCapture, setToFalseAfterScreenCapture);
       case 'CNV':
         return igv(w, state, screenCapture, setToFalseAfterScreenCapture);
       case 'fusion':

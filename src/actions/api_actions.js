@@ -1118,6 +1118,11 @@ export function ScatterInformation(type, data) {
   return sendRequest(url, type, data);
 }
 
+export function PcaInformation(type, data) {
+  const url = `${config.auth}pca-plot/`;
+  return sendRequest(url, type, data);
+}
+
 export function FusionExons(type, data) {
   const url = `${config.auth}getFusionExons/`;
   return sendRequest(url, type, data)
