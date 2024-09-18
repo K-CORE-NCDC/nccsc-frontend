@@ -574,7 +574,7 @@ export default function DataVisualization() {
                             leaveTo="opacity-0 translate-y-1"
                           >
                             <Popover.Panel className="GeneSetPopoverPanel" id="GeneSetPopverChild" style={{ width: "100%" }}>
-                              <GeneSet parentCallback={callback} filterState={state} variantSummary={false} />
+                              <GeneSet parentCallback={callback} filterState={state} variantSummary={false} pca={false}/>
                             </Popover.Panel>
                           </Transition>
                         </div>
@@ -712,7 +712,7 @@ export default function DataVisualization() {
                           <div className="">
                             <Popover.Button style={{float:'right'}} className="btn btnPrimary" onClick={() => setToFalseAfterScreenCapture(true)}>
                               <div>
-                                
+
                                   {
                                     tab === "sankey" ? <FormattedMessage
                                       id="Report"

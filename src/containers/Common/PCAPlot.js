@@ -7,6 +7,9 @@ var myChart;
 const PcaPlot = React.forwardRef(({ pca_data, watermarkCss }, ref) => {
   const BrstKeys = useSelector((data) => data.dataVisualizationReducer.Keys);
   const pca_plot = useRef(null);
+  let ratio = pca_data.ratio
+  const xPercent = (ratio[0] * 100).toFixed(2) || "0.00";  // Default to 0.00%
+  const yPercent = (ratio[1] * 100).toFixed(2) || "0.00";
   let option = {
     plugins: {
       tooltip: {
@@ -30,13 +33,13 @@ const PcaPlot = React.forwardRef(({ pca_data, watermarkCss }, ref) => {
         position: 'bottom',
         title: {
           display: true,
-          text: 'PCA Component 1'
+          text: `PCA Component 1: ${xPercent}%`
         }
       },
       y: {
         title: {
           display: true,
-          text: 'PCA Component 2'
+          text: `PCA Component 2: ${yPercent}%`
         }
       }
     },

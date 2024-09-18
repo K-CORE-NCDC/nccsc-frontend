@@ -637,5 +637,6 @@
   "MatrixToMeltedInfo":"본 분석 도구는 매트릭스 형식의 파일을 멜트 형식의 파일로 변환하는 도구입니다.",
   "DfDesc1":"매트릭스 형태의 파일을 멜팅 형태로 변환",
   "DfDesc2":" ",
-  "dataframeconverter":"데이터프레임 변환기"
+  "dataframeconverter":"데이터프레임 변환기",
+  "DataError": "데이터가 충분하지 않습니다. 다른 유전자(유전자 2개 이상)를 선택해 주세요."
 }

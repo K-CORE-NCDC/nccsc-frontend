@@ -161,7 +161,6 @@ const style={
         type: type
       }
     }));
-    console.log(filesData)
   };
 
   const getMafName = (name)=>{

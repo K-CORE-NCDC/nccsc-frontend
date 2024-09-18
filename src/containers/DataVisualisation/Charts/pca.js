@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { exportComponentAsPNG } from 'react-component-export-image';
+import { exportComponentAsJPEG } from 'react-component-export-image';
 import { FormattedMessage,useIntl } from 'react-intl';
 import { PcaInformation } from '../../../actions/api_actions';
 import '../../../assets/css/style.css';
@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 
 export default function Pca({inputData, screenCapture, setToFalseAfterScreenCapture }) {
-  const reference = useRef();
+  const reference = useRef(null);
   const [pcaJson, setPcaJson] = useState({});
   const [watermarkCss, setWatermarkCSS] = useState('');
   const [loader, setLoader] = useState(false);
@@ -21,6 +21,8 @@ export default function Pca({inputData, screenCapture, setToFalseAfterScreenCapt
   const [noGeneData, setNoGeneData] = useState(true);
   const [tableType, setTableType] = useState('');
   const [projectId, setProjectId] = useState(false);
+  const [isTakingScreenshot, setIsTakingScreenshot] = useState(false);
+
   const intl = useIntl();
 
   const tabList = useSelector((data) => data.dataVisualizationReducer);
@@ -61,6 +63,9 @@ export default function Pca({inputData, screenCapture, setToFalseAfterScreenCapt
         if (tableType === 'proteome' || tableType === 'rna') {
           dataJson['genes'] = g;
         }
+        if (inputState.type == 'all-genes'){
+          dataJson['genes'] = ['all-genes'];
+        }
         if (inputState.type !== '' && inputState['genes'].length > 0) {
           setLoader(true);
           dataJson['table_type'] = tableType;
@@ -75,7 +80,8 @@ export default function Pca({inputData, screenCapture, setToFalseAfterScreenCapt
     }
   }, [inputState, tableType]);
 
-  const callPca = (dataJson)=>{
+  const callPca = (dataJson) => {
+    setLoader(true);
     let return_data = PcaInformation('POST', dataJson);
     return_data
       .then((result) => {
@@ -88,21 +94,21 @@ export default function Pca({inputData, screenCapture, setToFalseAfterScreenCapt
         else {
           setPcaJson({ status: 204 });
         }
+        setLoader(false);
       })
       .catch(() => {
         Swal.fire({
           title: intl.formatMessage({ id: "Warning", defaultMessage: 'Warning' }),
-          text: intl.formatMessage({ id: "EnterProjectName", defaultMessage: 'Not enough data. Please select other genes (atleast 2).' }),
+          text: intl.formatMessage({ id: "DataError", defaultMessage: 'Not enough data. Please select other genes (at least 2 genes).' }),
           icon: 'warning',
           confirmButtonColor: '#003177',
           confirmButtonText: intl.formatMessage({ id: "Ok", defaultMessage: 'Ok' }),
           allowOutsideClick: false
         })
         setPcaJson({ status: 204 });
-        return;
+        setLoader(false);
       });
   }
-
 
   useEffect(() => {
     if (screenCapture) {
@@ -110,17 +116,35 @@ export default function Pca({inputData, screenCapture, setToFalseAfterScreenCapt
     } else {
       setWatermarkCSS('');
     }
+
     if (watermarkCss !== '' && screenCapture) {
-      exportComponentAsPNG(reference);
-      setToFalseAfterScreenCapture();
+      if (reference?.current) {
+        setIsTakingScreenshot(true);
+        exportComponentAsJPEG(reference, {
+          fileName: 'PCA',
+          html2CanvasOptions: {}
+        }).then(() => {
+          setIsTakingScreenshot(false);
+          setToFalseAfterScreenCapture();
+        }).catch((err) => {
+          console.error('Screenshot error:', err);
+          setIsTakingScreenshot(false);
+        });
+      }
+      // else {
+      //   Swal.fire({
+      //     title: intl.formatMessage({ id: "Warning", defaultMessage: 'Warning' }),
+      //     text: intl.formatMessage({ id: "EnterProjectName", defaultMessage: 'No plot generated yet!' }),
+      //     icon: 'warning',
+      //     confirmButtonColor: '#003177',
+      //     confirmButtonText: intl.formatMessage({ id: "Ok", defaultMessage: 'Ok' }),
+      //     allowOutsideClick: false
+      //   });
+      //   setToFalseAfterScreenCapture();
+      // }
     }
   }, [screenCapture, watermarkCss]);
 
-  useEffect(() => {
-    setTimeout(function () {
-      setLoader(false);
-    }, 3000);
-  }, [pcaJson]);
 
   useEffect(() => {
     if (!noGeneData) {
@@ -183,16 +207,18 @@ export default function Pca({inputData, screenCapture, setToFalseAfterScreenCapt
             </div>
           </div>
       </>}
-      {loader ? (
-        <LoaderCmp />
-      ) : (
-        <>
-          {showPca && (
-            <PcaPlot watermarkCss={watermarkCss} ref={reference} pca_data={pcaJson} />
-          )}
-          {noContent && <NoContentMessage />}
-        </>
-      )}
+      {loader || isTakingScreenshot ?
+        (
+          <LoaderCmp />
+        ) : (
+          <>
+            {showPca && (
+              <PcaPlot watermarkCss={watermarkCss} ref={reference} pca_data={pcaJson} />
+            )}
+            {noContent && <NoContentMessage />}
+          </>
+        )
+      }
       {inputData.genes.length === 0 && (
         <p>
           <FormattedMessage

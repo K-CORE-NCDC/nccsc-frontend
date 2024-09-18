@@ -32,6 +32,8 @@ export default function DataSurvival({
   const [singelSurvialType, setSingelSurvialType] = useState('recurrence');
   const [survialType, setSurvialType] = useState('recurrence');
   const [isSurvivalFilterPopoverOpen, setSurvivalFilterPopoverOpen] = useState(false);
+  const [isTakingScreenshot, setIsTakingScreenshot] = useState(false);
+
   let { project_id } = useParams();
 
   const [SVFState, setSVFState] = useState(project_id ? 'dynamic' : 'static');
@@ -48,11 +50,19 @@ export default function DataSurvival({
     } else {
       setWatermarkCSS('');
     }
+
     if (watermarkCss !== '' && screenCapture) {
-      if (reference !== null && 'current' in reference && reference['current']!==undefined) {
+      if (reference?.current) {
+        setIsTakingScreenshot(true);
         exportComponentAsJPEG(reference, {
           fileName: 'Survival',
           html2CanvasOptions: {}
+        }).then(() => {
+          setIsTakingScreenshot(false);
+          setToFalseAfterScreenCapture();
+        }).catch((err) => {
+          console.error('Screenshot error:', err);
+          setIsTakingScreenshot(false);
         });
       }
     }
@@ -327,7 +337,7 @@ export default function DataSurvival({
   },[])
   return (
     <>
-      {loader ? (
+      {loader || isTakingScreenshot ? (
         <div className="MarginTop20 Flex JustifyCenter" style={{ margin: 'auto' }}>
           <LoaderCmp
             style={{

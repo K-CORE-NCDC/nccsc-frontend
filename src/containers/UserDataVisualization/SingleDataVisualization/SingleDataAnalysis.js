@@ -49,10 +49,13 @@ export default function DataVisualization() {
   }
 
   let variant_summary_gene = false
+  let pca = false
   if (tabName === 'variant-summary') {
     variant_summary_gene = true
   }
-
+  else if (tabName === 'pca') {
+    pca = true
+  }
   const setToFalseAfterScreenCapture = (param = false) => {
 
     if (tab !== 'heatmap') {
@@ -259,6 +262,13 @@ export default function DataVisualization() {
   useEffect(() => {
     if (project_id) {
       let projectAvailableSteps = undefined;
+      if (
+        userProjectDetails &&
+        'key' in userProjectDetails &&
+        userProjectDetails.key === 'NotFound'
+      ) {
+        history.push('/login');
+      }
       if (userProjectDetails && 'available_steps' in userProjectDetails) {
         projectAvailableSteps = userProjectDetails.available_steps;
       }
@@ -483,7 +493,7 @@ export default function DataVisualization() {
                                     id="GeneSetPopverChild"
                                     style={{ width: "100%" }}
                                   >
-                                    <GeneSet parentCallback={callback} filterState={state} variantSummary={variant_summary_gene} />
+                                    <GeneSet parentCallback={callback} filterState={state} variantSummary={variant_summary_gene} pca={pca} />
                                   </Popover.Panel>
                                 </Transition>
                               </div>

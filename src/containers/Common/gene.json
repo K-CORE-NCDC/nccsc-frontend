@@ -1187,6 +1187,9 @@
     ],
     "reference": "https://oncokb.org/cancer-genes"
   },
+  "all-genes": {
+    "data": []
+  },
   "brst-major-genes": {
     "data": [
       "BRCA1",

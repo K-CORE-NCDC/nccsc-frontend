@@ -25,7 +25,6 @@ import {TrashIcon}  from '@heroicons/react/outline';
     }
   }, [startInterval])
   useEffect(() => {
-    console.log(mafMergerResponse)
     if (mafMergerResponse) {
         if (mafMergerResponse['status'] === 'running') {
             setLoader(true);
