@@ -212,7 +212,7 @@ const countFiles = () => {
     if (noOfFiles < 2) {
       Swal.fire({
         title: intl.formatMessage({ id: "Warning", defaultMessage: 'Warning' }),
-        text: intl.formatMessage({ id: "EnterProjectName", defaultMessage: 'Upload at least Two Files' }),
+        text: intl.formatMessage({ id: "UploadTwo", defaultMessage: 'Upload at least Two Files' }),
         icon: 'warning',
         confirmButtonColor: '#003177',
         confirmButtonText: intl.formatMessage({ id: "Ok", defaultMessage: 'Ok' }),

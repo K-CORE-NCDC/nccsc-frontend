@@ -79,7 +79,6 @@ const CircosCmp = React.forwardRef(
 
 
       let data = cytobands;
-      console.log(data)
       let all_chr = [];
 
       for (var i = 0; i < GRCh37.length; i++) {
@@ -205,11 +204,15 @@ const CircosCmp = React.forwardRef(
       }
 
       let chord_data = api_data['fusion_genes_data'];
+      if ('fusion_genes_data' in api_data){
+        if(api_data['fusion_genes_data'].length>0){
+          total_scatter.push('fusion_genes_data')
+          }
+      }
 
       if ('sv_data' in api_data) {
         if(api_data['sv_data'].length>0){
           total_scatter.push('sv_data')
-          total_scatter.push('chord')
         }
         let svData = api_data['sv_data'];
         if (Object.keys(svData).length) {
@@ -246,8 +249,10 @@ const CircosCmp = React.forwardRef(
           tmp_pos = tmp_pos*i
         }
         pos.push(tmp_pos)
+
       }
 
+      // console.log('pos,', pos)
       let tmpInnerRadius = pos.pop()-0.1;
       if (total_scatter_length==1){
         tmpInnerRadius = 0.2
@@ -293,6 +298,12 @@ const CircosCmp = React.forwardRef(
       if(total_scatter.indexOf('cnv')>-1){
         cnvInnerRadius = tmpInnerRadius
         cnvOuterRadius = tmpOuterRadius
+        tmpOuterRadius = tmpInnerRadius
+        tmpInnerRadius = pos.pop();
+      }
+      if(total_scatter.indexOf('fusion_genes_data')>-1){
+        svInnerRadius = tmpInnerRadius
+        svOuterRadius = tmpOuterRadius
         tmpOuterRadius = tmpInnerRadius
         tmpInnerRadius = pos.pop();
       }
@@ -364,8 +375,8 @@ const CircosCmp = React.forwardRef(
           strokeWidth: 2.0,
           shape: 'circle',
           size: 7,
-          // min: 0,
-          // max: 1,
+          min: 0,
+          max: 1,
           axes: [
             { spacing: 0.1, thickness: 3, color: '#f44336', opacity: 0.2 },
             { spacing: 0.2, thickness: 3, color: '#f44336', opacity: 0.2 },
