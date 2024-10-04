@@ -1,4 +1,4 @@
-  import igv from 'igv';
+import igv from 'igv';
 import React, { useEffect } from 'react';
 
 const Igv = React.forwardRef(({ width, data, watermarkCss }, ref) => {
@@ -11,7 +11,7 @@ const Igv = React.forwardRef(({ width, data, watermarkCss }, ref) => {
     var igvDiv = document.getElementById('igv-div');
 
     const options = {
-      genome: 'hg19',
+      genome: 'hg38',
       showNavigation: true,
       showSampleNames: true,
       tracks: [

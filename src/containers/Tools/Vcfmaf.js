@@ -96,16 +96,14 @@ function Vcfmaf() {
   };
 
   let backend_url = config['auth'];
-  // let VcfMafTool = (event) => {
-  //   setVcfMafFiles(event.target.files[0]);
-  // };
+
   const handleFileChange = (e) => {
     const newFiles = Array.from(e.target.files);
 
-    if (newFiles.length + Object.keys(vcfMafFiles).length > 5) {
-        alert("You can upload a maximum of 5 files at once.");
-        return;
-    }
+    // if (newFiles.length + Object.keys(vcfMafFiles).length > 5) {
+    //     alert("You can upload a maximum of 5 files at once.");
+    //     return;
+    // }
     let totalSize = 0;
 
     // Calculate the total size of already selected files
@@ -119,8 +117,9 @@ function Vcfmaf() {
         newFilesSize += newFiles[i].size;
     }
 
-    // Check if the total number of files does not exceed 50 and the total size is less than or equal to 500MB
-    if (newFiles.length + Object.keys(vcfMafFiles).length <= 5 && totalSize + newFilesSize <= 500 * 1024 * 1024) {
+    // Check if the total number of files does not exceed 50 and the total size is less than or equal to 2GB
+    if (totalSize + newFilesSize <= 2000 * 1024 * 1024) {
+      // if (totalSize + newFilesSize <= 5 * 1024) {
         const newFormData = { ...vcfMafFiles };
 
         for (let i = 0; i < newFiles.length; i++) {
@@ -136,11 +135,14 @@ function Vcfmaf() {
 
         const newFileNames = newFiles.map((file) => file.name);
         setVcfMafFilesName([...vcfMafFilesName, ...newFileNames]);
-    } else if (totalSize + newFilesSize > 500 * 1024 * 1024) {
-        alert("The total file size should not exceed 500MB.");
-    } else {
-        alert("Maximum 5 files are allowed.");
     }
+     else if (totalSize + newFilesSize > 2000 * 1024 * 1024) {
+      // else if (totalSize + newFilesSize > 5 * 1024) {
+        alert("The total file size should not exceed 2GB.");
+    }
+    // else {
+    //     alert("Maximum 5 files are allowed.");
+    // }
 };
 const handleFileRemove = (fileName) => {
 

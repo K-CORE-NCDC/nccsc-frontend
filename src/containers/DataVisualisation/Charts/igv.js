@@ -81,7 +81,7 @@ export default function DataIgv({ inputData, screenCapture, setToFalseAfterScree
                 <div>
                   <button
                     className="cnvBtn"
-                    style={{ backgroundColor: 'red', border: '3px solid gray' }}
+                    style={{ backgroundColor: '#FFA6A6', border: '3px solid gray' }}
                   ></button>
                   <h3>
                     <strong className="">Gain (&gt;=3) </strong>
@@ -90,7 +90,7 @@ export default function DataIgv({ inputData, screenCapture, setToFalseAfterScree
                 <div>
                   <button
                     className="cnvBtn"
-                    style={{ backgroundColor: 'white', border: '3px solid gray' }}
+                    style={{ backgroundColor: '#FFFFFF', border: '3px solid gray' }}
                   ></button>
                   <h3>
                     <strong className="">Normal (=2)</strong>
@@ -99,7 +99,7 @@ export default function DataIgv({ inputData, screenCapture, setToFalseAfterScree
                 <div>
                   <button
                     className="cnvBtn"
-                    style={{ backgroundColor: 'cornflowerblue', border: '3px solid gray' }}
+                    style={{ backgroundColor: '#5B5BFF', border: '3px solid gray' }}
                   ></button>
                   <h3>
                     <strong className="">Loss (&lt;=1)</strong>

@@ -96,17 +96,6 @@ export default function Scatter({inputData, screenCapture, setToFalseAfterScreen
           setIsTakingScreenshot(false);
         });
       }
-      // else {
-      //   Swal.fire({
-      //     title: intl.formatMessage({ id: "Warning", defaultMessage: 'Warning' }),
-      //     text: intl.formatMessage({ id: "EnterProjectName", defaultMessage: 'No plot generated yet!' }),
-      //     icon: 'warning',
-      //     confirmButtonColor: '#003177',
-      //     confirmButtonText: intl.formatMessage({ id: "Ok", defaultMessage: 'Ok' }),
-      //     allowOutsideClick: false
-      //   });
-      //   setToFalseAfterScreenCapture();
-      // }
     }
   }, [screenCapture, watermarkCss]);
 
