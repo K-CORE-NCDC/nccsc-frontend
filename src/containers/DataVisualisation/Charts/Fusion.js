@@ -72,7 +72,7 @@ export default function FusionPlot({
       // Create a link element to download the image
       let link = document.createElement('a');
       link.href = imgData;
-      link.download = 'downloaded-image.jpg';
+      link.download = 'fusion-screenshot.jpg';
 
       // Append the link to the body, trigger a click, and remove the link
       document.body.appendChild(link);

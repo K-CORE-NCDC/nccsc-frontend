@@ -12,7 +12,7 @@ const ServiceIntro = () => {
           <div className="mainDataStatus">
             <dl className="serviceIntroBox">
               <dt>
-                <img src={icon1} alt="" />
+                <img src={icon1} alt="singledata" />
                 <strong>
                   <FormattedMessage
                     id="serviceIntro_h1"
@@ -29,7 +29,7 @@ const ServiceIntro = () => {
             </dl>
             <dl className="serviceIntroBox">
               <dt>
-                <img src={icon2} alt="" />
+                <img src={icon2} alt="multidata" />
                 <strong>
                   <FormattedMessage
                     id="serviceIntro_h2"
@@ -46,7 +46,7 @@ const ServiceIntro = () => {
             </dl>
             <dl className="serviceIntroBox">
               <dt>
-                <img src={icon3} alt="" />
+                <img src={icon3} alt="othertools" />
                 <strong>
                   <FormattedMessage id="serviceIntro_h3" defaultMessage="Other Tools" />
                 </strong>

@@ -9,7 +9,7 @@ const chart_types = (type, payload, axis) => {
     case 'Bar':
       return <BarChartComp data={payload} key={"GenmomicBarChart"} />;
     case 'stack_bar':
-      return <StackBarChartComp data={payload} axis={axis} key={"GenmomicStackBar"} />;
+      return <StackBarChartComp data={payload} axis={axis} chart_key={"GenmomicStackBar"} />;
     case 'box_plot':
       return <Boxplot data={payload} />;
     case 'vertical_stack_bar':

@@ -82,7 +82,7 @@ const MultiDataVisualization = () => {
                   {' '}
                   <b>Lollipop:</b> &nbsp;
                   <FormattedMessage
-                    id="Example_signle_Lollipop"
+                    id="Example_single_Lollipop"
                     defaultMessage=" visualize mutation or phosphorylation of certain gene on a sequence"
                   />
                 </p>
@@ -144,7 +144,7 @@ const MultiDataVisualization = () => {
                 <p>
                   <b>Box (Tumor vs Normal):</b> &nbsp;
                   <FormattedMessage
-                    id="Example_signle_box"
+                    id="Example_single_box"
                     defaultMessage="visualize the genetic information statistics of the selected gene(s) in the form of boxes"
                   />
                 </p>
@@ -181,27 +181,28 @@ const MultiDataVisualization = () => {
                   history.push('/visualizemulti-exampledata/home');
                 }}
               >
-                <img src={!viewMoreData ? plusicon : minusicon} alt="" />
+                <img src={!viewMoreData ? plusicon : minusicon} alt="plusicon" />
               </button>
             </ul>
           </div>
         </div>
       </div>
-      <table className="contentsTable" style={{ marginTop: '15px' }}>
+      <table className="contentsTable" style={{ marginTop: '15px' }}summary='shows file types which are required for the vizualization'>
+        <caption></caption>
         <thead>
           <tr>
-            <th style={{ width: '160px' }}>Data Type</th>
-            <th>Circos </th>
-            <th>Oncoprint</th>
-            <th>Lollipop</th>
-            <th>Volcano </th>
-            <th>Heatmap</th>
-            <th>Survival </th>
-            <th>Correlation</th>
-            <th>CNV</th>
-            <th>Box</th>
-            <th>Fusion </th>
-            <th>Sankey</th>
+            <th scope="col" style={{ width: '160px' }}>Data Type</th>
+            <th scope="col">Circos </th>
+            <th scope="col">Oncoprint</th>
+            <th scope="col">Lollipop</th>
+            <th scope="col">Volcano </th>
+            <th scope="col">Heatmap</th>
+            <th scope="col">Survival </th>
+            <th scope="col">Correlation</th>
+            <th scope="col">CNV</th>
+            <th scope="col">Box</th>
+            <th scope="col">Fusion </th>
+            <th scope="col">Sankey</th>
           </tr>
         </thead>
         <tbody>
@@ -394,6 +395,7 @@ const MultiDataVisualization = () => {
             <td></td>
           </tr>
         </tbody>
+        <tfoot></tfoot>
       </table>
       <div>
         <ul className="contentBox_right" style={{ marginTop: "10px" }}>

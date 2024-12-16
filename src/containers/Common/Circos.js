@@ -3,7 +3,7 @@ import * as Circos from 'circos';
 import * as d3 from 'd3';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import placeholder from '../../assets/images/circosLegend1.png';
+import placeholder from '../../assets/images/circosLegend2.png';
 import cytobands from './cytobands.csv';
 var gieStainColor = {
   gpos100: 'rgb(0,0,0)',

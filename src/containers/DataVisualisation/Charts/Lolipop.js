@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
-import { exportComponentAsJPEG } from 'react-component-export-image';
+import { exportComponentAsPNG } from 'react-component-export-image';
 import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { LolipopInformation } from '../../../actions/api_actions';
@@ -264,16 +264,19 @@ export default function DataLolipop({
         if (tableType === 'Mutation') {
           table_cols = [
             {
-              Header: intl.formatMessage({ id: "sampleid", defaultMessage: 'Sample Idssss' }),
+              Header: intl.formatMessage({ id: "sampleid", defaultMessage: 'Sample Id' }),
               accessor: (row) => row.sample,
+              headerProps: { scope: 'col' }
             },
             {
               Header: intl.formatMessage({ id: "ProtienChange", defaultMessage: 'Protein Change' }),
               accessor: (row) => row.protein,
+              headerProps: { scope: 'col' }
             },
             {
               Header: intl.formatMessage({ id: "MutationType", defaultMessage: 'Mutation Type' }),
               accessor: (row) => row.variant_classification,
+              headerProps: { scope: 'col' }
             }
           ];
 
@@ -316,15 +319,18 @@ export default function DataLolipop({
           table_cols = [
             {
               Header: intl.formatMessage({ id: "sampleid", defaultMessage: 'Sample Id' }),
-              accessor: (row) => row.sample
+              accessor: (row) => row.sample,
+              headerProps: { scope: 'col' }
             },
             {
               Header: intl.formatMessage({ id: "Site", defaultMessage: 'Site' }),
               accessor: (row) => row.site,
+              headerProps: { scope: 'col' }
             },
             {
               Header: intl.formatMessage({ id: "Gene", defaultMessage: 'Gene' }),
               accessor: (row) => row.gene,
+              headerProps: { scope: 'col' }
             }
           ];
           tmp.push(
@@ -452,33 +458,38 @@ export default function DataLolipop({
       {
         Header: intl.formatMessage({ id: "sampleid", defaultMessage: 'Sample Id' }),
         accessor: (row) => row.sample,
+        headerProps: { scope: 'col' }
       },
       {
         Header: intl.formatMessage({ id: "ProtienChange", defaultMessage: 'Protein Change' }),
         accessor: (row) => row.protein,
+        headerProps: { scope: 'col' }
       },
       {
         Header: intl.formatMessage({ id: "MutationType", defaultMessage: 'Mutation Type' }),
         accessor: (row) => row.variant_classification,
+        headerProps: { scope: 'col' }
       }
     ] : tableType === 'phospho'
       ? [
         {
           Header: intl.formatMessage({ id: "sampleid", defaultMessage: 'Sample Id' }),
           accessor: (row) => row.sample,
+          headerProps: { scope: 'col' }
         },
         {
           Header: intl.formatMessage({ id: "Site", defaultMessage: 'Site' }),
           accessor: (row) => row.site,
+          headerProps: { scope: 'col' }
         },
         {
           Header: intl.formatMessage({ id: "Gene", defaultMessage: 'Gene' }),
           accessor: (row) => row.gene,
+          headerProps: { scope: 'col' }
         }
       ]
       : [];
 
-  // You can add additional conditions as needed or provide a default value if none of the conditions match.
 
 
   useEffect(() => {
@@ -502,7 +513,7 @@ export default function DataLolipop({
       setWatermarkCSS('');
     }
     if (watermarkCss !== '' && screenCapture) {
-      exportComponentAsJPEG(reference, { fileName: 'Lollipop' });
+      exportComponentAsPNG(reference, { fileName: 'Lollipop' });
       setToFalseAfterScreenCapture();
     }
   }, [screenCapture, watermarkCss]);
@@ -669,10 +680,10 @@ export default function DataLolipop({
               <div className="selectionGenes">
                 <div>
                   <div>
-                    <FormattedMessage id="Selected Gene" defaultMessage="Selected Gene Is" />
-                  </div>
-                  <div>
-                    <select defaultValue={gene} onChange={(e) => geneSet(e)}>
+                    <label htmlFor="genes" className="">
+                      <FormattedMessage id="Selected Gene Is" defaultMessage="Selected Gene Is" />
+                    </label>
+                    <select id="genes" defaultValue={gene} onChange={(e) => geneSet(e)}>
                       {genesHtml}
                     </select>
                   </div>
@@ -694,16 +705,17 @@ export default function DataLolipop({
                       {tableType === 'Mutation' && (
                         <div className="id_lists">
                           <div className="box">
-                            <label>Enst Id List</label>
-                            <textarea
+                            <label htmlFor='enst'>Enst Id List</label>
+                            <textarea id='enst'
                               defaultValue={enstId.join('\n')}
                               className=""
                               rows="4"
                             ></textarea>
                           </div>
                           <div className="box">
-                            <label>Refseq MRNA Id List</label>
+                            <label htmlFor='refseq'>Refseq MRNA Id List</label>
                             <textarea
+                            id='refseq'
                               defaultValue={refSeqId.join('\n')}
                               className=""
                               rows="4"
@@ -751,7 +763,6 @@ export default function DataLolipop({
                         <Table
                           columns={tableColumnsDatas}
                           data={tableData}
-
                         />
                       </div>
                     )}

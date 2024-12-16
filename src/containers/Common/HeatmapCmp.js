@@ -9,13 +9,6 @@ const HeatmapCmp = React.forwardRef(
     let target = 'canvas';
 
 
-    let c = {
-      "colorSpectrum": ["navy", "white", "firebrick3"],
-      "graphType": "Heatmap",
-      "title": "Simple Heatmap",
-      "graphOrientation": "horizontal"
-    }
-
     let config = {
       colorSpectrum: settings['colorSpectrum'],
       graphType: 'Heatmap',
@@ -39,6 +32,7 @@ const HeatmapCmp = React.forwardRef(
       disableConfigurator: false,
       disableToolbar: true
     };
+    // console.log(settings)
     if (!isNaN(settings['colorSpectrumBreaks'][0]) && !isNaN(settings['colorSpectrumBreaks'][1])) {
       config['colorSpectrumBreaks'] = settings['colorSpectrumBreaks'];
     }
@@ -157,7 +151,7 @@ const HeatmapCmp = React.forwardRef(
 
     }
 
-
+    // console.log(config,'=====160')
     useEffect(() => {
       setConfigVis(config);
     }, [settings?.colorSpectrum]);
@@ -167,13 +161,16 @@ const HeatmapCmp = React.forwardRef(
         setData(inputData);
         setConfigVis(config);
       }
+      console.log(inputData)
     }, [inputData]);
 
     useEffect(() => {
+      console.log(data)
       if (Object.keys(data).length > 0) {
         setDataLoaded(true);
       }
     }, [data]);
+
 
     return (
       <div ref={ref} className={`heatmap ${watermarkCss}`}>

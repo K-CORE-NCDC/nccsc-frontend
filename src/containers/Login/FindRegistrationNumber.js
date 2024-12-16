@@ -139,11 +139,12 @@ function FindRegistrationNumber() {
 
               <dl>
                 <dt>
-                  <img src={nameIcon} alt="" />
+                  <img src={nameIcon} alt="nameIcon" />
                   <FormattedMessage id="EmailId" defaultMessage="E-mail" />
                 </dt>
                 <dd>
                   <div className="inputText">
+                    <label htmlFor="Email"></label>
                     <FormattedMessage
                       id="PleaseEnterYourEmailId"
                       defaultMessage="Please enter the E-mail address registered to us"

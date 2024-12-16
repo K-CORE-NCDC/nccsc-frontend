@@ -19,7 +19,7 @@ export const Others = () => {
         <ul style={style.wrapper}>
           <li>
             <Link to="/organoid/">
-            <img src={icon1} alt="" />
+            <img src={icon1} alt="organoid" />
             <dl>
               <dt>
                 <FormattedMessage id="Organoid" defaultMessage="Organoid Service" />

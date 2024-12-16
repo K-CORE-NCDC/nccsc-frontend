@@ -460,12 +460,10 @@ function SankeyPlot({ inputData, screenCapture, setToFalseAfterScreenCapture }) 
 
       <div className="Flex JustifySpaceBetween">
         <div className="TextLeft InlineFlex FlexDirCol " style={{ marginLeft: 'auto', width: '250px' }}>
-          {
-            <div htmlFor="samples">
-              <FormattedMessage id="Cir_choose_sample" defaultMessage="Choose a Sample" />: (
-              {samplesCount}){' '}
-            </div>
-          }
+          <label htmlFor="samples">
+          <FormattedMessage id="Cir_choose_sample" defaultMessage="Choose a Sample" />: (
+            {samplesCount})
+          </label>
           <select
             className="selectBox"
             value={sampleKey}
@@ -475,7 +473,7 @@ function SankeyPlot({ inputData, screenCapture, setToFalseAfterScreenCapture }) 
             name="samples"
             id="samples"
           >
-            <option>--Select Sample--</option>
+            {/* <option>Select Sample</option> */}
             {sampleListElements}
             <option value="all">all</option>
           </select>
@@ -488,11 +486,15 @@ function SankeyPlot({ inputData, screenCapture, setToFalseAfterScreenCapture }) 
               <div style={{ maxWidth: 'fit-content', marginLeft: '15px' }}>
                 <div className="selectionGenes" style={{ maxWidth: 'fit-content' }}>
                   <div>
-                    <div>
-                      <FormattedMessage id="Selected Gene" defaultMessage="Selected Gene Is" />
-                    </div>
+                    {/* <div>
+                      <FormattedMessage id="Selected Gene Is" defaultMessage="Selected Gene Is" />
+                    </div> */}
+                    <label htmlFor="genes" className="">
+                      <FormattedMessage id="Selected Gene Is" defaultMessage="Selected Gene Is" />
+                    </label>
                     <div>
                       <select
+                        id="genes"
                         value={selectedGene}
                         onChange={(e) => setSelectGene(e.target.value)}
                       >
@@ -506,14 +508,14 @@ function SankeyPlot({ inputData, screenCapture, setToFalseAfterScreenCapture }) 
               <div style={{ maxWidth: 'fit-content' }}>
                 <div className="selectionGenes" style={{ maxWidth: 'fit-content', textAlign: 'left' }}>
                   <div>
-                    <div>
+                    <label htmlFor='variant_classification'>
                       <FormattedMessage
                         id="Selected Variant Classification is"
                         defaultMessage="Selected Variant Classification Is"
                       />
-                    </div>
+                    </label>
                     <div>
-                      <select
+                      <select id='variant_classification'
                         value={variantClassification}
                         onChange={(e) => setSelectVariantClassification(e.target.value)}
                       >

@@ -132,22 +132,30 @@ function DataframeRecon() {
           clearInterval(interval);
           return null;
         });
+        // Check if file exists in the response
         let h = [];
+        if (matrixResponse['msg'] && matrixResponse['msg'].includes("The sample type information could not be found")) {
+          h.push(
+          <div key={matrixResponse['output_file']} className="Flex FlexDirRow">
+            <FormattedMessage id='RefverError1' defaultMessage='The sample type information could not be found.' />
+            <FormattedMessage id='RefverError2' defaultMessage='Please check if your input file is in matrix format!' />
+          </div>);
+        }
+        else{
         h.push(
           <div key={matrixResponse['output_file']} className="Flex FlexDirRow">
             <FormattedMessage id='RefverResult1' defaultMessage='Your results are ready.' />
             <FormattedMessage id='RefverResult2' defaultMessage=' Click on the link to download' />
             <a
               className="ToolResultsReady"
-              href={
-                backend_url + 'media/DfReconstruction/files/' + matrixResponse['output_file']
-              }
+              href={backend_url + 'media/DfReconstruction/files/' + matrixResponse['output_file']}
               download={matrixResponse['output_file']}
             >
               {matrixResponse['output_file']}
             </a>
           </div>
         );
+      }
         setHtml(h);
       }
     }
@@ -191,31 +199,38 @@ function DataframeRecon() {
                   <section className="Section">
                     <div>
                       <div className="BG">
+                      {!matrixResponse &&
                         <div className="ModalBtn" style={{ marginBottom: '20px' }}>
                           <button onClick={() => setShowModal(true)} className="ToolModalBtn">
                             <InforIcon />
                           </button>
                         </div>
+                      }
                         <div>
                           <div>
-                            <dl>
-                              <dt>
-                                <FormattedMessage id="UploadFile" defaultMessage="Upload File" />
-                              </dt>
-                              <dd>
-                                <div className="inputText">
-                                  <input
-                                    type="file"
-                                    className="w100"
-                                    accept=".tsv, "
-                                    id="MatrixFile"
-                                    onChange={(e) => MatrixToMeltConvert(e)}
-                                    autoComplete="off"
-                                    style={{ padding: '10px' }}
-                                  />
-                                </div>
-                              </dd>
-                            </dl>
+                            {!matrixResponse &&
+                              <dl>
+                                <br></br>
+                                <dt>
+                                  <FormattedMessage id="UploadFile" defaultMessage="Upload File" />
+                                </dt>
+                                <dd>
+                                <label htmlFor='MatrixFile'></label>
+
+                                  <div className="inputText">
+                                    <input
+                                      type="file"
+                                      className="w100"
+                                      accept=".tsv, "
+                                      id="MatrixFile"
+                                      onChange={(e) => MatrixToMeltConvert(e)}
+                                      autoComplete="off"
+                                      style={{ padding: '10px' }}
+                                    />
+                                  </div>
+                                </dd>
+                              </dl>
+                            }
                             {!matrixResponse &&
                               <button className="btn btnPrimary SubmitButton" onClick={uploadFile}>
                                 <FormattedMessage id="Submit" defaultMessage="Submit" />
@@ -236,7 +251,7 @@ function DataframeRecon() {
                           />
                         </span>
                       }
-                      {matrixResponse &&
+                      {/* {matrixResponse &&
                         <span
                         style={{ fontSize: '1rem', lineHeight: '1.5rem', justifyContent: 'center' }}
                         className="Flex"
@@ -246,7 +261,7 @@ function DataframeRecon() {
                             defaultMessage="Please refresh page to upload and convert again"
                           />)
                         </span>
-                      }
+                      } */}
                     </div>
                   </section>
                 ) : (

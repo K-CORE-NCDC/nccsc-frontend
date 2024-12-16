@@ -124,7 +124,7 @@ function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
           <div className="auto">
             <ul>
               <li key="key0">
-                <img src={homeIcon} alt="" />
+                <img src={homeIcon} alt="home" />
               </li>
               {renderBreadcrumbs()}
             </ul>

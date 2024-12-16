@@ -79,6 +79,15 @@ export const OtherTools = () => {
                   />
                 </p>
               </li>
+              <li className="" tabIndex="-1">
+                <p>
+                  <b>Dataframe Converter:</b> &nbsp;
+                  <FormattedMessage
+                    id="DataframeDescFull"
+                    defaultMessage="A tool that converts matrix type expression files into melted format"
+                  />
+                </p>
+              </li>
             </ul>
           </div>
         </div>

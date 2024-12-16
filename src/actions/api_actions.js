@@ -1002,6 +1002,26 @@ export function getVolcanoData() {
   };
 }
 
+export function checkProjectStatus(project) {
+  return (dispatch)=>{
+    sendRequest(`${config.auth}check_project_status/${project}/`, 'GET', '')
+    .then((result)=>{
+      let d = result
+      console.log(result,'from-api action-00000000000000')
+      dispatch({
+        type: homeConstants.MULTI_USERDATA_VISUALIZATION,
+        payload: d.data
+      });
+    }).catch(() => {
+      dispatch({
+        type: homeConstants.USERDATA_VISUALIZATION_ERROR,
+        payload: { status: 'failed' }
+      });
+    });
+  }
+}
+
+
 export function getUserDataProjectsTableData(project = false) {
   return (dispatch) => {
     let url = '';

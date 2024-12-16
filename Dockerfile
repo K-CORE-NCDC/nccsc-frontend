@@ -35,7 +35,7 @@
 # RUN service nginx start
 
 
-# # docker run -it -v /mnt/d/React-WorkSpace/nccsc-frontend:/home/nccsc-frontend  -p 3002:8282  nccsc-frontend:0.1 bash
+# docker run -it -v /mnt/d/React-WorkSpace/nccsc-frontend:/home/nccsc-frontend  -p 3002:8282  nccsc-frontend:0.1 bash
 
 
 
@@ -79,13 +79,12 @@ RUN npm run build
 
 # Use Nginx as the web server for the second stage
 FROM nginx:1.23-alpine
-
 # Copy custom Nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Set the working directory
-WORKDIR /usr/share/nginx/html
-# WORKDIR /var/www/html/ncc/build
+# WORKDIR /usr/share/nginx/html
+WORKDIR /var/www/html/ncc/build
 # WORKDIR /home/node/app
 
 # Copy built files from the builder stage to the nginx server directory

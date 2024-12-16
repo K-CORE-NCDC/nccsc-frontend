@@ -143,10 +143,11 @@ const SignupComponent = () => {
 
                   <dl>
                     <dt>
-                      <img src={nameIcon} alt="" />
+                      <img src={nameIcon} alt="nameIcon" />
                       <FormattedMessage id="EmailId" defaultMessage="E-mail" />
                     </dt>
                     <dd>
+                      <label htmlFor="emailId"></label>
                       <div className="inputText">
                         <FormattedMessage
                           id="PleaseEnterYourEmailId"

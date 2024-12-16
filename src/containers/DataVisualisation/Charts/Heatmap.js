@@ -9,7 +9,7 @@ import { Context } from '../../../wrapper';
 import LoaderCmp from '../../Common/Loader';
 import NoContentMessage from '../../Common/NoContentComponent';
 import inputJson from '../../Common/data';
-import HeatmapNewCmp from '../../Common/testH';
+import HeatmapNewCmp from '../../Common/HeatmapCmp';
 
 export default function DataHeatmap({
   width,
@@ -39,7 +39,7 @@ export default function DataHeatmap({
   const [viewType, setViewType] = useState('gene_vl');
   const [mainTab, setMainTab] = useState('heatmap');
   const [clusterRange, setClusterRange] = useState(0);
-  const inSufficientData = false;
+  let inSufficientData = false;
   const [renderNoContent, setRenderNoContent] = useState(false);
   let { project_id } = useParams();
   const [configVis, setConfigVis] = useState({
@@ -247,35 +247,96 @@ export default function DataHeatmap({
       let d_ = heatmapJson['data'];
 
       if (d_ !== '' && d_ !== undefined) {
+        console.log('brst key', brstKeys)
+        // d_ &&
+        //   d_.forEach((item) => {
+
+        //     if (tableType === 'phospho' || tableType === 'methylation') {
+        //       if (!genes.includes(item['gene_name_site'])) {
+        //         genes.push(item['gene_name_site']);
+        //       }
+        //     } else {
+        //       if (!genes.includes(item['gene_name'])) {
+        //         genes.push(item['gene_name']);
+        //       }
+        //     }
+        //   })
+        //   console.log(brstKeys)
+        //   for (const key in brstKeys) {
+        //     const zeroArray = new Array(genes.length).fill(undefined);
+        //     unique_sample_values[key] = zeroArray
+        //   }
+        //   d_.forEach((item) => {
+        //     let gene_name = ''
+        //     if (tableType === 'phospho' || tableType === 'methylation') {
+        //       gene_name = item['gene_name_site']
+        //     }else{
+        //       gene_name = item['gene_name']
+        //     }
+        //     let index = genes.indexOf(gene_name)
+        //     let breast_key = brstKeys[item['pt_sbst_no']];
+        //     if(breast_key!==undefined){
+        //       // unique_sample_values[breast_key] = zeroArray
+        //       unique_sample_values[breast_key][index] = item['gene_vl']
+        //       // if (unique_sample_values.hasOwnProperty(breast_key)) {
+        //       //   unique_sample_values[breast_key].push(item['gene_vl']);
+        //       // } else {
+        //       //   unique_sample_values[breast_key] = [];
+        //       //   unique_sample_values[breast_key].push(item['gene_vl']);
+        //       //   // unique_sample_values[breast_key] = [item['gene_vl']];
+        //       // }
+        //       if (option.length > 0) {
+        //         for (let opt = 0; opt < option.length; opt++) {
+        //           if (!(breast_key in unique_cf[option[opt].id])) {
+        //             unique_cf[option[opt].id][breast_key] = item[option[opt].id];
+        //           }
+        //         }
+        //       }
+        //     }
+
+        //   });
+        // console.log('brst key', brstKeys)
         d_ &&
           d_.forEach((item) => {
-
-            if (tableType === 'phospho' || tableType === 'methylation') {
-              if (!genes.includes(item['gene_name_site'])) {
-                genes.push(item['gene_name_site']);
-              }
-            } else {
-              if (!genes.includes(item['gene_name'])) {
-                genes.push(item['gene_name']);
-              }
-            }
-            let breast_key = brstKeys[item['pt_sbst_no']];
-            if(breast_key!==undefined){
-
-              if (breast_key in unique_sample_values) {
-                unique_sample_values[breast_key].push(item['gene_vl']);
+            if (item['pt_sbst_no'] && !item['pt_sbst_no'].endsWith('_N')) {
+              if (tableType === 'phospho' || tableType === 'methylation') {
+                if (!genes.includes(item['gene_name_site'])) {
+                  genes.push(item['gene_name_site']);
+                }
               } else {
-                unique_sample_values[breast_key] = [item['gene_vl']];
-              }
-              if (option.length > 0) {
-                for (let opt = 0; opt < option.length; opt++) {
-                  if (!(breast_key in unique_cf[option[opt].id])) {
-                    unique_cf[option[opt].id][breast_key] = item[option[opt].id];
-                  }
+                if (!genes.includes(item['gene_name'])) {
+                  genes.push(item['gene_name']);
                 }
               }
             }
           });
+        // console.log(brstKeys)
+        for (const key in brstKeys) {
+          if (!key.endsWith('_N')) {
+            const zeroArray = new Array(genes.length).fill(undefined);
+            unique_sample_values[key] = zeroArray;
+          }
+        }
+        d_.forEach((item) => {
+          let gene_name = '';
+          if (tableType === 'phospho' || tableType === 'methylation') {
+            gene_name = item['gene_name_site'];
+          } else {
+            gene_name = item['gene_name'];
+          }
+          let index = genes.indexOf(gene_name);
+          let breast_key = brstKeys[item['pt_sbst_no']];
+          if (breast_key !== undefined) {
+            unique_sample_values[breast_key][index] = item['gene_vl'];
+            if (option.length > 0) {
+              for (let opt = 0; opt < option.length; opt++) {
+                if (!(breast_key in unique_cf[option[opt].id])) {
+                  unique_cf[option[opt].id][breast_key] = item[option[opt].id];
+                }
+              }
+            }
+          }
+        });
       }
 
       let y = {
@@ -342,7 +403,12 @@ export default function DataHeatmap({
           }
         });
       }
-
+      if(genes.length==1){
+        setNoData(true)
+        setStateTrue = false
+        setRenderNoContent(true);
+        setData('')
+      }
       if (setStateTrue) {
         setRenderNoContent(false);
         setData({ z: tmp, x: x, y: y });
@@ -454,7 +520,9 @@ export default function DataHeatmap({
     }
   };
 
+
   function onSelect(selectedList) {
+    if (selectedList.length === 0) return;
     let cf = [];
     setOption(selectedList);
     selectedList.forEach((item) => {
@@ -478,13 +546,12 @@ export default function DataHeatmap({
       dataJson['heat_type'] = mainTab;
       dataJson['table_type'] = tableType;
       dataJson['cluster'] = rangeValue;
-      dataJson['clustering_type'] = activeKmeanType
-      callHeatmapData(dataJson)
-
+      dataJson['clustering_type'] = activeKmeanType;
+      callHeatmapData(dataJson);
     }
-  }
-
+}
   function onRemove(selectedList) {
+    if (selectedList.length === 0) return;
     let items = [];
     setOption(selectedList);
     selectedList.forEach((item) => {
@@ -936,7 +1003,7 @@ export default function DataHeatmap({
             <div className="GeneSelectionBox">
               {vizType !== 'single' && (
                 <div className="selectionBox">
-                  <label>
+                  <label htmlFor="clinical_filters_input">
                     <FormattedMessage
                       id="Clinical_Filters_heatmap"
                       defaultMessage="Clinical Attribute"
@@ -944,12 +1011,21 @@ export default function DataHeatmap({
                     :
                   </label>
                   <Multiselect
+                  id="clinical_filters"
                   multiple={true}
                     style={style}
                     options={optionChoices} // Options to display in the dropdown
                     selectedValues={option} // Preselected value to persist in dropdown
-                    onSelect={onSelect} // Function will trigger on select event
-                    onRemove={onRemove} // Function will trigger on remove event
+                    onSelect={(selectedList) => {
+                      console.log("Selected:", selectedList); // Debugging line
+                      onSelect(selectedList); // Ensure this function does not cause a loop
+                    }}
+                    onRemove={(selectedList) => {
+                      console.log("Removed:", selectedList); // Debugging line
+                      onRemove(selectedList); // Ensure this function does not cause a loop
+                    }}
+                    // onSelect={onSelect} // Function will trigger on select event
+                    // onRemove={onRemove} // Function will trigger on remove event
                     displayValue="name" // Property name to display in the dropdown options
                     emptyRecordMsg={<FormattedMessage id="No Clinical Data" defaultMessage="No Clinical Data"/>} // Custom message when no options are available
                   />
@@ -995,10 +1071,10 @@ export default function DataHeatmap({
                 <div className="selectionBox">
                   {inputGene && (
                     <>
-                      <label>
+                      <label htmlFor='test'>
                         <FormattedMessage id="Select Gene" defaultMessage="Select Gene" />
                       </label>
-                      <select value={selectedGene} onChange={(e) => setGene(e)} className="">
+                      <select id='test'value={selectedGene[0] || ''} onChange={(e) => setGene(e)} className="">
                         {renderGeneOptions()}
                       </select>
                     </>
@@ -1047,10 +1123,10 @@ export default function DataHeatmap({
           )}
         <div className="GeneFilteringBox">
           <div className="">
-            <label id="listbox-label" style={{ textAlign: 'left' }}>
+            <label htmlFor="color" id="listbox-label" style={{ textAlign: 'left' }}>
               Color
             </label>
-            <select onChange={(e) => changeTheme(e)} className="">
+            <select id="color" onChange={(e) => changeTheme(e)} className="">
               {themes.map((row) => (
                 <option key={row['name']} value={row['name']}>
                   {row['name']}
@@ -1060,15 +1136,19 @@ export default function DataHeatmap({
           </div>
           <div className="SpectrumSection">
           <div className="">
-            <label className="">Spectrum</label>
+            <label htmlFor="spectrum"  className="">Spectrum</label>
             <div className="Spectrum">
               <div className="">
+                <label htmlFor="specturm_from" className="sr-only"style={{ position: 'absolute', width: '1px', height: '1px', padding: '0', margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: '0' }}>Spectrum Minimum Value</label>
                 <input
                   type="number"
                   id="specturm_from"
+                  name="specturm_from"
                   value={spectrumMin}
                   onChange={(e) => setSpectrumMin(e.target.value)}
                   className=""
+                  aria-label="Spectrum minimum value"
+                  aria-describedby="spectrum-range-description"
                 />
               </div>
               <div className="">
@@ -1077,14 +1157,21 @@ export default function DataHeatmap({
                 </div>
               </div>
               <div className="">
+                <label htmlFor="specturm_to" className="sr-only"style={{ position: 'absolute', width: '1px', height: '1px', padding: '0', margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: '0' }}>Spectrum Maximum Value</label>
                 <input
                   type="number"
                   id="specturm_to"
+                  name="specturm_to"
                   value={spectrumMax}
                   onChange={(e) => setSpectrumMax(e.target.value)}
                   className=""
+                  aria-label="Spectrum maximum value"
+                  aria-describedby="spectrum-range-description"
                 />
               </div>
+            </div>
+            <div id="spectrum-range-description" className="sr-only"style={{ position: 'absolute', width: '1px', height: '1px', padding: '0', margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: '0' }}>
+              Enter minimum and maximum values to set the spectrum range for the heatmap visualization
             </div>
           </div>
           <div className="Spectrumbtn">

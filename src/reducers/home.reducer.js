@@ -42,6 +42,11 @@ const homeReducer = (state = { home: 'home' }, { type, payload }) => {
         ...state,
         multiFileUploadData: payload
       };
+    case homeConstants.CHECK_PROJECT_STATUS:
+      return {
+        ...state,
+        checkProject: payload
+      };
 
     case homeConstants.UPLOAD_CLININCAL_COLUMNS:
       return {
@@ -152,6 +157,7 @@ const homeReducer = (state = { home: 'home' }, { type, payload }) => {
         ...state,
         interpro: payload
       };
+
     case homeConstants.BLAST:
       return {
         ...state,

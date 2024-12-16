@@ -105,6 +105,7 @@ export default function DataGenomic({
         html.push(
           <li
             key={'omics_' + k}
+            // chartkey={'omics_' + k}
             className="max-w bg-white rounded overflow-hidden shadow-lg px-4 py-3 mb-5 mx-3 card-border"
             ref={liRefs.current['omics' + k]}
           >

@@ -251,11 +251,12 @@ export default function Scatter({inputData, screenCapture, setToFalseAfterScreen
       <div>
         <div className="maintabs_box">
           <div className="selctionBox">
-            <div style={{ paddingTop: '1%' }}>
+            <label htmlFor="genes_input" className="" style={{ paddingTop: '1%' }}>
               <FormattedMessage id="Selected Gene Is" defaultMessage="Selected Gene Is" />
-            </div>
+            </label>
             <div style={{ paddingLeft: '1%' }}>
               <Multiselect
+                id="genes"
                 options={genesHtml} // Options to display in the dropdown
                 selectedValues={selectedValue} // Preselected value to persist in dropdown
                 onSelect={onSelect} // Function will trigger on select event

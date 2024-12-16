@@ -126,6 +126,8 @@ function FaqDetail({ slug_id }) {
           </div>
           <div className="shadow-sm">
             <table className="border-slate-300 table-auto">
+              <caption></caption>
+
               <tbody>
                 <tr className="h-8">
                   <td className="p-4">Title</td>
@@ -142,6 +144,8 @@ function FaqDetail({ slug_id }) {
                   </td>
                 </tr>
               </tbody>
+              <tfoot>
+              </tfoot>
             </table>
           </div>
         </div>

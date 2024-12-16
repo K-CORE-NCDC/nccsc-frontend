@@ -81,18 +81,20 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survialData, SVF
         });
       } else {
         const tmpArray = [
-          'BodyMassIndex',
+          // 'BodyMassIndex',
           'AlcoholConsumption',
-          'FamilyHistoryofBreastCancer',
-          'IntakeOfContraceptivePill',
-          'HormoneReplaceTherapy',
-          'Menopause',
-          'Childbirth',
-          'DiagnosisofBilateralBreastCancer',
-          'FirstMenstrualAge',
-          'ERTestResults',
-          'PRTestResults',
-          'Ki67Index',
+          'DiabetesHistory',
+          'HypertensionHistory',
+          // 'FamilyHistoryofBreastCancer',
+          // 'IntakeOfContraceptivePill',
+          // 'HormoneReplaceTherapy',
+          // 'Menopause',
+          // 'Childbirth',
+          // 'DiagnosisofBilateralBreastCancer',
+          // 'FirstMenstrualAge',
+          // 'ERTestResults',
+          // 'PRTestResults',
+          // 'Ki67Index',
           'AgeOfDiagnosis'
         ];
 
@@ -104,6 +106,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survialData, SVF
 
       setCoxFilter(tmp);
     }
+    console.log('coxUserDefinedFilter = ', coxUserDefinedFilter)
   }, [survivalModel, coxUserDefinedFilter, project_id]);
 
 
@@ -279,6 +282,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survialData, SVF
                     <h6 className="MB2 TextLeft TextBase" htmlFor="dropdown-gene">
                       <FormattedMessage id="Select Gene" defaultMessage="Select Gene" />
                     </h6>
+                    <label htmlFor="dropdown-gene"></label>
                     <select
                       id="dropdown-gene"
                       onChange={(e) => setFilteredGene(e.target.value)}
@@ -306,6 +310,7 @@ const SurvivalFilterComponent = ({ parentCallback, filterState, survialData, SVF
                       <h6 className=" MB1 TextLeft TextBase" htmlFor="dropdown-database">
                         <FormattedMessage id="SelectDatabase" defaultMessage="Select Database" />
                       </h6>
+                      <label htmlFor="dropdown-database"></label>
                       {geneDatabase === 'dna_mutation' && <h6>
                         <FormattedMessage id='SurvivalDNAMutationTooltip1' defaultMessage="Samples with 7 major mutations for the selected genes that belong to the Mutation group.">
                           {(placeholder) => (

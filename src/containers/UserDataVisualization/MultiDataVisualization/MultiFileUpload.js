@@ -5,7 +5,8 @@ import {
   UserDataProjectsCount,
   clearMafMerger
 } from '../../../actions/api_actions';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 import { FormattedMessage, useIntl } from 'react-intl';
 import Swal from 'sweetalert2';
 import HeaderComponent from '../../Common/HeaderComponent/HeaderComponent';
@@ -200,9 +201,6 @@ const countFiles = () => {
   if (mutationType === 'maf' && mafDetails) {
     count++;
   }
-  // else if (mutationType === 'dna' && filesData['dna_mutation']) {
-  //   count==count;
-  // }
 
   return count;
 };
@@ -401,12 +399,13 @@ const countFiles = () => {
             </div>
 
             <table className="MultiUploadTableHead">
-              <tbody>
+            <caption></caption>
+              <thead>
                 <tr className="MultiUploadBGGray">
-                  <td className="MultiUploadTDHeader MultiUploadTextCenter" colSpan="2">
-                    Clinical Information file
-                  </td>
+                  <th className="MultiUploadTDHeader MultiUploadTextCenter" style={{ fontWeight: 'normal' }} colSpan="2" scope="col">Clinical Information File</th>
                 </tr>
+              </thead>
+              <tbody>
                 <tr>
                   <td className="MultiUploadTDHeader MultiUploadW208" style={{ width: '31vw' }}>
                     <div className="Flex JustifySpaceBetween">
@@ -416,6 +415,7 @@ const countFiles = () => {
                       </button>
                     </div>
                   </td>
+
                   <td className="MultiUploadTDHeader MultiUploadTD">
                     {filesData['clinical_information'] ? (
                       <>
@@ -433,7 +433,9 @@ const countFiles = () => {
                       </>
                     ) : (
                       <>
+                        <label htmlFor="clinical_information_file"></label>
                         <input
+                          id="clinical_information_file"
                           type="file"
                           onChange={(event) => handleFileChange(event, 'clinical_information')}
                         />
@@ -445,15 +447,17 @@ const countFiles = () => {
                   </td>
                 </tr>
               </tbody>
+              <tfoot></tfoot>
             </table>
 
             <table className="MultiUploadTableHead">
+            <caption></caption>
+              <thead>
+                  <tr className="MultiUploadBGYellow">
+                    <th className="MultiUploadTDHeader MultiUploadTextCenter" style={{ fontWeight: 'normal' }} colSpan="2" scope="col">DNA File</th>
+                  </tr>
+              </thead>
               <tbody>
-                <tr className="MultiUploadBGYellow">
-                  <td className="MultiUploadTDHeader MultiUploadTextCenter" colSpan="2">
-                    DNA File
-                  </td>
-                </tr>
                 <tr>
                   <td className="MultiUploadTDHeader MultiUploadW208">
                     <div className="Flex JustifySpaceBetween">
@@ -463,6 +467,7 @@ const countFiles = () => {
                       </button>
                     </div>
                   </td>
+
                   <td className="MultiUploadTDHeader MultiUploadTD">
 
                   {mutationType==='maf'?<>
@@ -531,6 +536,7 @@ const countFiles = () => {
                       </button>
                     </div>
                   </td>
+
                   <td className="MultiUploadTDHeader MultiUploadTD">
                     {filesData['cnv'] ? (
                       <>
@@ -545,7 +551,8 @@ const countFiles = () => {
                       </>
                     ) : (
                       <>
-                        <input type="file" onChange={(event) => handleFileChange(event, 'cnv')} />
+                        <label htmlFor="cnv_file"></label>
+                        <input id="cnv_file" type="file" onChange={(event) => handleFileChange(event, 'cnv')} />
                         <button className="MultiUploadBgGrayButton" disabled>
                           <FormattedMessage id="Reset" defaultMessage="Reset" />
                         </button>
@@ -556,12 +563,13 @@ const countFiles = () => {
                 <tr>
                   <td className="MultiUploadTDHeader">
                     <div className="Flex JustifySpaceBetween">
-                      <span>methylation</span>
+                      <span>Methylation</span>
                       <button onClick={() => toggleModal(true, 'Methylation')}>
                         <InforIcon />
                       </button>
                     </div>
                   </td>
+
                   <td className="MultiUploadTDHeader MultiUploadTD">
                     {filesData['methylation'] ? (
                       <>
@@ -578,7 +586,9 @@ const countFiles = () => {
                       </>
                     ) : (
                       <>
+                      <label htmlFor="methylation_file"></label>
                         <input
+                          id="methylation_file"
                           type="file"
                           onChange={(event) => handleFileChange(event, 'methylation')}
                         />
@@ -590,15 +600,22 @@ const countFiles = () => {
                   </td>
                 </tr>
               </tbody>
+              <tfoot></tfoot>
             </table>
 
             <table className="MultiUploadTableHead">
-              <tbody>
+            <caption></caption>
+              <thead>
                 <tr className="MultiUploadBGOrange">
+                  <th className="MultiUploadTDHeader MultiUploadTextCenter" colSpan="2" style={{ fontWeight: 'normal' }}scope="col">RNA File</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* <tr className="MultiUploadBGOrange">
                   <td className="MultiUploadTDHeader MultiUploadTextCenter" colSpan="2">
                     RNA File
                   </td>
-                </tr>
+                </tr> */}
                 <tr>
                   <td className="MultiUploadTDHeader MultiUploadW208">
                     <div className="Flex JustifySpaceBetween">
@@ -608,6 +625,7 @@ const countFiles = () => {
                       </button>
                     </div>
                   </td>
+
                   <td className="MultiUploadTDHeader MultiUploadTD">
                     {filesData['rna'] ? (
                       <>
@@ -622,7 +640,8 @@ const countFiles = () => {
                       </>
                     ) : (
                       <>
-                        <input type="file" onChange={(event) => handleFileChange(event, 'rna')} />
+                        <label htmlFor="rna_file"></label>
+                        <input id="rna_file" type="file" onChange={(event) => handleFileChange(event, 'rna')} />
                         <button className="MultiUploadBgGrayButton" disabled>
                           <FormattedMessage id="Reset" defaultMessage="Reset" />
                         </button>
@@ -639,6 +658,7 @@ const countFiles = () => {
                       </button>
                     </div>
                   </td>
+
                   <td className="MultiUploadTDHeader MultiUploadTD">
                     {filesData['fusion'] ? (
                       <>
@@ -653,7 +673,9 @@ const countFiles = () => {
                       </>
                     ) : (
                       <>
+                        <label htmlFor="fusion_file"></label>
                         <input
+                          id="fusion_file"
                           type="file"
                           onChange={(event) => handleFileChange(event, 'fusion')}
                         />
@@ -665,15 +687,22 @@ const countFiles = () => {
                   </td>
                 </tr>
               </tbody>
+              <tfoot></tfoot>
             </table>
 
             <table className="MultiUploadTableHead">
-              <tbody>
+              <caption></caption>
+              <thead>
                 <tr className="MultiUploadBGBlue">
+                  <th className="MultiUploadTDHeader MultiUploadTextCenter" colSpan="2" scope="col" style={{ fontWeight: 'normal' }}>Protein File</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* <tr className="MultiUploadBGBlue">
                   <td className="MultiUploadTDHeader MultiUploadTextCenter" colSpan="2">
                     Protein File
                   </td>
-                </tr>
+                </tr> */}
                 <tr>
                   <td className="MultiUploadTDHeader MultiUploadW208">
                     <div className="Flex JustifySpaceBetween">
@@ -683,6 +712,7 @@ const countFiles = () => {
                       </button>
                     </div>
                   </td>
+
                   <td className="MultiUploadTDHeader MultiUploadTD">
                     {filesData['proteome'] ? (
                       <>
@@ -697,7 +727,9 @@ const countFiles = () => {
                       </>
                     ) : (
                       <>
+                        <label htmlFor="proteome_file"></label>
                         <input
+                          id="proteome_file"
                           type="file"
                           onChange={(event) => handleFileChange(event, 'proteome')}
                         />
@@ -717,6 +749,7 @@ const countFiles = () => {
                       </button>
                     </div>
                   </td>
+
                   <td className="MultiUploadTDHeader MultiUploadTD">
                     {filesData['phospho'] ? (
                       <>
@@ -731,7 +764,9 @@ const countFiles = () => {
                       </>
                     ) : (
                       <>
+                        <label htmlFor="phospho_file"></label>
                         <input
+                          id="phospho_file"
                           type="file"
                           onChange={(event) => handleFileChange(event, 'phospho')}
                         />
@@ -743,6 +778,7 @@ const countFiles = () => {
                   </td>
                 </tr>
               </tbody>
+              <tfoot></tfoot>
             </table>
 
             <div className="bottomBtns">

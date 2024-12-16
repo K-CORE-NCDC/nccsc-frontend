@@ -76,7 +76,7 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [uploadFile, setUploadFile] = useState({});
   const projectName = 'Project_name';
-  const [formSbubmitButtonText, setFormSubmitButtonText] = useState('upload');
+  const [formSubmitButtonText, setFormSubmitButtonText] = useState('upload');
   const [initialInputState, setInitialInputState] = useState(undefined);
   let { tab } = useParams();
   const intl = useIntl();
@@ -193,7 +193,7 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
   }, [context]);
 
   useEffect(() => {
-    if (formSbubmitButtonText === 'upload' || formSbubmitButtonText === '업로드') {
+    if (formSubmitButtonText === 'upload' || formSubmitButtonText === '업로드') {
       if (koreanlanguage) {
         setFormSubmitButtonText('업로드');
       } else {
@@ -345,7 +345,9 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
               <FormattedMessage id="selectType" defaultMessage="Select Type" />
             </dt>
             <dd className="selectBox select Flex">
+              <label htmlFor={`selectType-${key}`}></label>
               <select
+                id={`selectType-${key}`}
                 onChange={updateFileTypeOnChange}
                 name={key}
                 defaultChecked={selectedFileSampleType[key]}
@@ -428,13 +430,13 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
 
   const formSubmitButtonActions = () => {
     if (projectName.length > 0) {
-      if (formSbubmitButtonText === 'upload' || formSbubmitButtonText === '업로드') {
+      if (formSubmitButtonText === 'upload' || formSubmitButtonText === '업로드') {
         on_upload();
       }
-      if (formSbubmitButtonText === 'retry' || formSbubmitButtonText === '다시 해 보다') {
+      if (formSubmitButtonText === 'retry' || formSubmitButtonText === '다시 해 보다') {
         on_upload();
       }
-      if (formSbubmitButtonText === 'visualize') {
+      if (formSubmitButtonText === 'visualize') {
         history.push(`/visualise-singledata/circos/${response['serializer'].id}`);
       }
     } else {
@@ -503,7 +505,7 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
               </button>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <button className="btn btnPrimary" onClick={formSubmitButtonActions}>
-                {formSbubmitButtonText}
+                {formSubmitButtonText}
               </button>
             </div>
           </div>

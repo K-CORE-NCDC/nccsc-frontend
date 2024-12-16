@@ -315,15 +315,15 @@ export default function FusionCustomPlot({ fusionId }) {
 
               <div className="FusionChromosome" >
                 <div className="text-left">
-                  <label>Left Transcript Id</label>
-                  <select onChange={e => transcriptChange(e.target.value, 'left')} className="w-full lg:p-4 xs:p-2 border xs:text-sm lg:text-lg focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3">
+                  <label htmlFor='left_transcript_id'>Left Transcript Id</label>
+                  <select id='left_transcript_id' onChange={e => transcriptChange(e.target.value, 'left')} className="w-full lg:p-4 xs:p-2 border xs:text-sm lg:text-lg focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3">
                     {leftTranscriptsHtml}
                   </select>
                 </div>
 
                 <div className="text-left">
-                  <label>Right Transcript Id</label>
-                  <select onChange={e => transcriptChange(e.target.value, 'right')} className="w-full lg:p-4 xs:p-2 border xs:text-sm lg:text-lg focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3">
+                  <label htmlFor='right_transcript_id'>Right Transcript Id</label>
+                  <select id='right_transcript_id' onChange={e => transcriptChange(e.target.value, 'right')} className="w-full lg:p-4 xs:p-2 border xs:text-sm lg:text-lg focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3">
                     {rightTranscriptsHtml}
                   </select>
                 </div>

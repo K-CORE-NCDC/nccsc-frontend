@@ -12,7 +12,8 @@ export default function DataVolcono({
   inputData,
   screenCapture,
   setToFalseAfterScreenCapture,
-  VFData
+  VFData,
+  // log2fc,pValue
 }) {
   const reference = useRef();
   const dispatch = useDispatch();
@@ -126,7 +127,7 @@ export default function DataVolcono({
       if ('table_data' in volcanoJson) {
         volcanoJson['table_data'].forEach((item) => {
           let log2foldchange = parseFloat(item['log2(fold_change)']);
-          if (log2foldchange <= -1.5) {
+            if (log2foldchange <= -logValue) {
             negativeCount += 1;
             negative.push({
               'Gene Name': item['gene'],
@@ -134,7 +135,7 @@ export default function DataVolcono({
               '-Log(Pvalue)': item['p_value'],
               'FDR': item['fdr']
             });
-          } else if (log2foldchange >= 1.5) {
+          } else if (log2foldchange >= logValue) {
             positiveCount += 1;
             positive.push({
               'Gene Name': item['gene'],
@@ -306,12 +307,12 @@ export default function DataVolcono({
             {showVolcano && (
               <div className='flex' style={{gap:'30px'}}>
                 <div className='flexRow'>
-                  <label>Log2FoldChange</label>
-                  <input type='number' onChange={(e)=>setLogValue(parseFloat(e.target.value))} value={logValue} max={'10'} className='volcanoInputText'/>
+                  <label htmlFor='log2fc_input'>Log2FoldChange</label>
+                  <input id='log2fc_input' type='number' onChange={(e)=>setLogValue(parseFloat(e.target.value))} value={logValue} max={'10'} className='volcanoInputText'/>
                 </div>
                 <div className='flexRow'>
-                  <label>pValue</label>
-                  <input type='number' onChange={(e)=>setPValue(parseFloat(e.target.value))} value={pValue} min={0} className='volcanoInputText'/>
+                  <label htmlFor='pvalue_input'>pValue</label>
+                  <input id='pvalue_input' type='number' onChange={(e)=>setPValue(parseFloat(e.target.value))} value={pValue} min={0} className='volcanoInputText'/>
                 </div>
                 <div className='flexRow' style={{justifyContent:'end'}}>
                   <button onClick={submitFilter} className='btn btnPrimary' style={{margin:'0px'}}>Submit</button>

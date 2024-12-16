@@ -196,23 +196,24 @@ function Organoid() {
                         <div className="flex ml-8">
                           <div className="w-86per">
                             <table className="min-w-full " style={style.tableBorder} border="1">
+                              <caption></caption>
                               <thead className="border border-black">
                                 <tr
                                   className="h-20 MultiUploadTextCenter TextWhite"
                                   style={{ background: '#0c3c6a' }}
                                 >
-                                  <th className="text165rem lineHeightInitial font-medium text-white PX6Y4 border border-black">
+                                  <th className="text165rem lineHeightInitial font-medium text-white PX6Y4 border border-black" scope='col'>
                                     연계 임상정보
                                   </th>
                                   <th
                                     className="text165rem lineHeightInitial font-medium text-white PX6Y4 border border-black"
-                                    style={{ width: '20%' }}
+                                    style={{ width: '20%' }} scope='col'
                                   >
                                     기본정보
                                   </th>
                                   <th
                                     className="text165rem lineHeightInitial font-medium text-white PX6Y4 border border-black"
-                                    style={{ width: '20%' }}
+                                    style={{ width: '20%' }} scope='col'
                                   >
                                     상세정보
                                   </th>
@@ -301,6 +302,7 @@ function Organoid() {
                                   </td>
                                 </tr>
                               </tbody>
+                              <tfoot></tfoot>
                             </table>
                           </div>
                         </div>
@@ -383,6 +385,7 @@ function Organoid() {
                   </li>
                 </ul>
               </div>
+
               <div
                 className="flex container m-12 justify-between"
                 style={{ margin: '3%', display: 'flex', justifyContent: 'space-between' }}
@@ -402,18 +405,25 @@ function Organoid() {
               {/* table */}
               <div className="">
                 <table
-                  className="table-auto  border border-black mx-auto ml-16 w-86per"
-                  style={{ border: '1px solid #ddd' }}
+                  className="table-auto border border-black mx-auto ml-16 w-86per"
+                  style={{ borderTop: 'none', border: '1px solid #ddd' }}
                 >
+                  <caption></caption>
+                  <thead>
+                    <tr>
+                      <th scope="col" style={{ width: '20%' }}></th>
+                      <th scope="col" style={{ width: '80%' }}></th>
+                    </tr>
+                  </thead>
                   <tbody>
                     <tr className=" border border-black bg-gray-100">
                       <td
-                        className=" border border-black m-20 p-7 w-80 MultiUploadTextCenter"
-                        style={{ borderRightStyle: 'groove', width: '300px' }}
+                        className=" border border-black m-20 p-7 MultiUploadTextCenter"
+                        style={{ borderRightStyle: 'groove', width: '20%' }}
                       >
                         신청자 정보
                       </td>
-                      <td>
+                      <td style={{ width: '80%' }}>
                         <div
                           style={{
                             display: 'flex',
@@ -422,7 +432,7 @@ function Organoid() {
                             margin: '20px 10px 20px 20px'
                           }}
                         >
-                          <p>◦성명________ </p>
+                          <p>◦ 성명________ </p>
                           <p>◦ 연락처________ </p>
                           <p>◦ E-mail________ </p>
                         </div>
@@ -434,7 +444,7 @@ function Organoid() {
                             gap: '24%'
                           }}
                         >
-                          <p>◦소속기관________ </p>
+                          <p>◦ 소속기관________ </p>
                           <p>◦ 기관유형________ </p>
                           <p>◦ 직위________ </p>
                         </div>
@@ -444,11 +454,11 @@ function Organoid() {
                     <tr className=" border border-black">
                       <td
                         className=" border border-black m-5 p-7 MultiUploadTextCenter"
-                        style={{ borderRightStyle: 'groove' }}
+                        style={{ borderRightStyle: 'groove', width: '20%' }}
                       >
                         제공유형
                       </td>
-                      <td className="">
+                      <td style={{ width: '80%' }}>
                         <div
                           style={{
                             display: 'flex',
@@ -457,7 +467,7 @@ function Organoid() {
                             gap: '32%'
                           }}
                         >
-                          <p>◦단순제공</p>
+                          <p>◦ 단순제공</p>
                           <p>◦ 공동협력 연구</p>
                         </div>
                       </td>
@@ -465,11 +475,11 @@ function Organoid() {
                     <tr className=" border border-black bg-gray-100">
                       <td
                         className=" border border-black m-5 p-7 MultiUploadTextCenter "
-                        style={{ borderRightStyle: 'groove' }}
+                        style={{ borderRightStyle: 'groove', width: '20%' }}
                       >
                         기본검색
                       </td>
-                      <td className="">
+                      <td style={{ width: '80%' }}>
                         <div
                           style={{
                             display: 'flex',
@@ -478,7 +488,7 @@ function Organoid() {
                             gap: '28%'
                           }}
                         >
-                          <p>◦암종 _______ </p>
+                          <p>◦ 암종 _______ </p>
                           <p>◦ 조직 (오가노이드 기원) _______</p>
                         </div>
                       </td>
@@ -486,11 +496,11 @@ function Organoid() {
                     <tr>
                       <td
                         className=" border border-black m-20 p-7 w-80 MultiUploadTextCenter"
-                        style={{ borderRightStyle: 'groove' }}
+                        style={{ borderRightStyle: 'groove', width: '20%' }}
                       >
                         심화검색
                       </td>
-                      <td>
+                      <td style={{ width: '80%' }}>
                         <div
                           style={{
                             display: 'flex',
@@ -499,9 +509,9 @@ function Organoid() {
                             margin: '20px 0px 20px 20px'
                           }}
                         >
-                          <p>◦면역병리</p>
+                          <p>◦ 면역병리</p>
                           <p>◦ 조직병리</p>
-                          <p>◦치료반응성</p>
+                          <p>◦ 치료반응성</p>
                         </div>
                         <div
                           style={{
@@ -520,11 +530,11 @@ function Organoid() {
                     <tr className=" border border-black bg-gray-100">
                       <td
                         className=" border border-black m-5 p-7 MultiUploadTextCenter"
-                        style={{ borderRightStyle: 'groove' }}
+                        style={{ borderRightStyle: 'groove', width: '20%' }}
                       >
                         특화서비스
                       </td>
-                      <td className="">
+                      <td style={{ width: '80%' }}>
                         <div
                           style={{
                             display: 'flex',
@@ -532,15 +542,23 @@ function Organoid() {
                             margin: '20px 0px 20px 20px'
                           }}
                         >
-                          <p>◦교육</p>
+                          <p>◦ 교육</p>
                           <p style={{ marginLeft: '36%' }}>◦ 연구컨설팅 </p>
                           <p style={{ marginLeft: '30%' }}>◦ STR analysis</p>
                         </div>
                       </td>
                     </tr>
                   </tbody>
+                  <tfoot>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </tfoot>
                 </table>
               </div>
+
+
 
               <div>
                 <h1

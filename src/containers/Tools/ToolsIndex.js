@@ -14,6 +14,7 @@ import VcfMafAttachment from '../../assets/files/ToolsAttachments/Vcfmaf_file.pd
 import InterproAttachment from '../../assets/files/ToolsAttachments/Interpro_file.pdf';
 import MafmergerAttachment from '../../assets/files/ToolsAttachments/Mafmerger_file.pdf';
 import RefverconverterAttachment from '../../assets/files/ToolsAttachments/Refverconverter_file.pdf';
+import DataframeAttachment from '../../assets/files/ToolsAttachments/OtherTools_DataframeConverter.pdf';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 const HomeComponent = () => {
   const intl = useIntl();
@@ -308,6 +309,17 @@ const HomeComponent = () => {
                                 <img src={arrow_icon} alt="arrow-icon" />
                               </Link>
                             </div>
+                            <div className="textdiv" onClick={() => downloadFile(DataframeAttachment, `DataframeConverter_Attachment.pdf`)}>
+                              <Link to={route?.pathname}>
+                                <span>
+                                  <FormattedMessage
+                                    id="DownloadManual"
+                                    defaultMessage="Download Manual"
+                                  />
+                                </span>
+                                <img src={arrow_icon} alt="arrow-icon" />
+                              </Link>
+                            </div>{' '}
                           </div>
                         </div>
                       </div>

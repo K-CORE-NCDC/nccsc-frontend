@@ -157,7 +157,7 @@ const HomeComponent = () => {
 
                 <Link to={showOverloadMessage ? location?.pathname : "/newmultidataproject/"}>
                   <li style={showOverloadMessage ? { background: '#f0efef' } : {}}>
-                    <img src={icon1} alt="" />
+                    <img src={icon1} alt="icon1" />
                     <dl>
                       <dt>
                         <FormattedMessage id="CreateProjects" defaultMessage="Create Project" />
@@ -174,7 +174,7 @@ const HomeComponent = () => {
 
                 <Link to="/multidataprojectview/">
                   <li>
-                    <img src={icon2} alt="" />
+                    <img src={icon2} alt="icon2" />
                     <dl>
                       <dt>
                         <FormattedMessage id="ViewProjects" defaultMessage="View Projects" />

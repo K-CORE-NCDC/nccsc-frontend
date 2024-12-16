@@ -31,8 +31,9 @@ const GeneSet = ({ parentCallback, filterState,variantSummary,pca }) => {
   return (
     <div className="GeneSetcontainer">
       <div className="GeneSetgeneItem">
-        <FormattedMessage id="EnterYourGenes" defaultMessage="Enter Your Genes">
-          {(placeholder) => (
+        <label htmlFor="gene_type" className="ItemsCenter"></label>
+          <FormattedMessage id="EnterYourGenes" defaultMessage="Enter Your Genes">
+            {(placeholder) => (
             <select
               id="gene_type"
               value={value}
@@ -84,6 +85,8 @@ const GeneSet = ({ parentCallback, filterState,variantSummary,pca }) => {
         </FormattedMessage>
       </div>
       <div className="GeneSetgeneItem inputText" style={{ height: '100%' }}>
+        <label htmlFor="genes" className="ItemsCenter"></label>
+
         <FormattedMessage id="EnterYourGenes" defaultMessage="Enter Your Genes">
           {(placeholder) => (
             <textarea

@@ -281,7 +281,7 @@ export default function DataVisualization() {
       } else if (element === 'lollipop') {
         desc = (
           <FormattedMessage
-            id="Example_signle_Lollipop"
+            id="Example_single_Lollipop"
             defaultMessage=" visualize mutation or phosphorylation of certain gene on a sequence"
           >
             {(placeholder) => placeholder}
@@ -308,7 +308,7 @@ export default function DataVisualization() {
       } else if (element === 'box') {
         desc = (
           <FormattedMessage
-            id="Example_signle_box"
+            id="Example_single_box"
             defaultMessage="visualize the genetic information statistics of the selected gene(s) in the form of boxes"
           >
             {(placeholder) => placeholder}
@@ -405,17 +405,18 @@ export default function DataVisualization() {
           defaultMessage: `Visualize Example Data`,
           to: `/home/visualizeMyExampleData/`
         },
+        project_id &&
+        {
+          id: 'MultiDataProjectView',
+          defaultMessage: 'Multi Data Project View',
+          to: '/MultiDataProjectView/'
+        },
       {
         id: 'MultiDataVisualization',
         defaultMessage: 'Multi Data Visualization',
         to: project_id ? `/visualise-multidata/home/${project_id}` : `/visualizemulti-exampledata/home/`
       },
-      project_id &&
-      {
-        id: 'MultiDataProjectView',
-        defaultMessage: 'Multi Data Project View',
-        to: '/MultiDataProjectView/'
-      },
+
 
       project_id && {
         id: '  ',
@@ -423,6 +424,7 @@ export default function DataVisualization() {
           0,
           userProjectDetails?.name.lastIndexOf('_')
         ),
+        // defaultMessage: userProjectDetails?.name,
         to: project_id ? `/visualise-multidata/home/${project_id}` : `/visualizemulti-exampledata/home/`
       },
       {

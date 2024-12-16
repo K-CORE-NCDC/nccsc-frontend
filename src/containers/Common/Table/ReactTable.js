@@ -16,7 +16,9 @@ function Table({
     data,
     getRowProps = defaultPropGetter,
     skipReset,
-    width
+    width,
+    caption,
+    summary
     // columnFil,
     // tooltips = false,
 
@@ -90,6 +92,7 @@ function Table({
             <div style={{ width: '100%', overflowX: 'auto' }}>
                 <span style={{ display: 'flex', fontSize: '18px' }}><b>Total:</b> <div style={{ color: "#003177", paddingLeft: '10px', fontSize: "18px" }}>{data?.length}</div></span>
                 <table className={" boardList"} {...getTableProps()} style={{ width:'1075px' }}>
+                    <caption></caption>
                     <thead className="boardHeader">
                         {headerGroups.map((headerGroup) => (
                             <tr
@@ -99,7 +102,7 @@ function Table({
                                 {headerGroup.headers.map((column) => (
 
                                     <th className={`${(column?.fixed && column?.fixed === 'left') ? 'fixed' : ''} boardCell IconSpan`} {...column.getHeaderProps(column.getSortByToggleProps())}
-                                        style={column?.width && column?.width !== '' ? { width: column?.width + 'px', textAlign: 'center', padding: '16px 24px' , wordBreak:column?.wordBreak } : { textAlign: 'center', padding: '16px 24px' }} >
+                                        style={column?.width && column?.width !== '' ? { width: column?.width + 'px', textAlign: 'center', padding: '16px 24px' , wordBreak:column?.wordBreak } : { textAlign: 'center', padding: '16px 24px' }} scope='col' >
                                         {column.render('Header')}
 
                                         <span className={`${column.isSorted ? 'Opacity1' : 'Opacity0'}`}>
@@ -137,6 +140,8 @@ function Table({
                             );
                         })}
                     </tbody>
+                    <tfoot>
+                    </tfoot>
                 </table>
             </div>
             <div >
@@ -144,7 +149,7 @@ function Table({
 
                 <div className="paging" id="paging">
                     <button
-                        className={` 
+                        className={`
                    ${pageNumber <= pageSetArray ? "on" : ""}`
                         }
                         onClick={() => {

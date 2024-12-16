@@ -207,11 +207,16 @@ const LoginComponent = () => {
                   {/* Input Username */}
                   <dl>
                     <dt style={{ width: "250px", display: "flex" }}>
-                      <img src={loginIcon1} alt="" />
+                      <img src={loginIcon1} alt="loginIcon1" />
                       <FormattedMessage id="RegistrationNumber" defaultMessage="Registration Number" />
                     </dt>
                     <dd>
                       <div className="inputText">
+                        {/* Option 1: Using sr-only class (Bootstrap's approach) */}
+                        <label htmlFor="password" className="sr-only" style={{ position: 'absolute', width: '1px', height: '1px', padding: '0', margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: '0' }}>
+                          <FormattedMessage id="RegistrationNumber" defaultMessage="Registration Number" />
+                        </label>
+
                         <FormattedMessage id="PleaseEnterYourRegistrationNumber" defaultMessage="Please enter your Registration number.">
                           {(placeholder) => (
                             <input
@@ -233,11 +238,14 @@ const LoginComponent = () => {
                   {/* Input Password */}
                   <dl>
                     <dt style={{ width: "250px", display: "flex" }}>
-                      <img src={loginIcon2} alt="" />
+                      <img src={loginIcon2} alt="loginIcon2" />
                       <FormattedMessage id="Password" defaultMessage="Password" />
                     </dt>
                     <dd>
                       <div className="inputText">
+                      <label htmlFor="userId" className="sr-only" style={{ position: 'absolute', width: '1px', height: '1px', padding: '0', margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: '0' }}>
+                          <FormattedMessage id="Password" defaultMessage="Password" />
+                        </label>
                         <FormattedMessage
                           id="PleaseEnterAPassword"
                           defaultMessage="Please enter a password"
@@ -265,7 +273,7 @@ const LoginComponent = () => {
                       {/* Find ID Button */}
                       <div className="flex Gap5 idPwSearch">
                         <Link to="/findregistrationnumber/" id="FindRegistrationNumberLink">
-                          <img src={loginIcon1} alt="" />
+                          <img src={loginIcon1} alt="loginIcon1" />
                           <font style={{ verticalAlign: 'inherit' }}>
                             <font style={{ verticalAlign: 'inherit' }}>
                               <FormattedMessage id="FindRegistrationNumber" defaultMessage="Find Registration Number" />
@@ -275,7 +283,7 @@ const LoginComponent = () => {
 
                         {/* Find Password Button */}
                         <Link to="/findpassword/" id="FindPasswordLink">
-                          <img src={loginIcon2} alt="" />
+                          <img src={loginIcon2} alt="loginIcon2" />
                           <font style={{ verticalAlign: 'inherit' }}>
                             <font style={{ verticalAlign: 'inherit' }}>
                               <FormattedMessage id="FindPassword" defaultMessage="Find Password" />

@@ -12,9 +12,9 @@ const Organization = ({ lan }) => {
     <div className="auto tabContents" style={{ height: '80vh' }}>
       <div className="publicDataInfo center" align="center">
         {lan === 'kr-KO' ? (
-          <img src={fig} alt="" style={{ height: '590px' }} />
+          <img src={fig} alt="organization" style={{ height: '590px' }} />
         ) : (
-          <img src={fig2} alt="" style={{ height: '590px' }} />
+          <img src={fig2} alt="organization" style={{ height: '590px' }} />
         )}
       </div>
     </div>

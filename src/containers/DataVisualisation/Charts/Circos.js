@@ -310,19 +310,33 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
     };
   }, []);
 
+  // let takeScreenshot = async () => {
+  //   const element = document.getElementById('circos');
+  //   let imgData;
+  //   await html2canvas(element).then((canvas) => {
+  //     imgData = canvas.toDataURL('image/jpeg', 1.0);
+  //   });
+  //   let link = document.createElement('a');
+  //   link.href = imgData;
+  //   link.download = 'circos-screenshot.jpg';
+
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
+
   let takeScreenshot = async () => {
     const element = document.getElementById('circos');
-    let imgData;
-    await html2canvas(element).then((canvas) => {
-      imgData = canvas.toDataURL('image/jpeg', 1.0);
-    });
-    let link = document.createElement('a');
-    link.href = imgData;
-    link.download = 'downloaded-image.jpg';
-
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    var xml = new XMLSerializer().serializeToString(element);
+    var svg64 = btoa(unescape(encodeURIComponent(xml))); //for utf8: btoa(unescape(encodeURIComponent(xml)))
+    var b64start = 'data:image/svg+xml;base64,';
+    var image64 = b64start + svg64;
+    const downloadLink = document.createElement('a');
+    document.body.appendChild(downloadLink);
+    downloadLink.href = image64;
+    downloadLink.target = '_self';
+    downloadLink.download = 'circos-screenshot.svg';
+    downloadLink.click();
   };
 
   useEffect(() => {
@@ -423,25 +437,22 @@ export default function DataCircos({ width, inputData, screenCapture, setToFalse
         >
           <div className="flex visualGrid">
             <div>
-              {
-                <div htmlFor="samples" className="lg:text-2xl sm:text-xl xs:text-sm">
-                  <FormattedMessage id="Cir_choose_sample" defaultMessage="Choose a Sample" />: (
-                  {samplesCount}){' '}
-                </div>
-              }
-              <select
-                className="selectBox"
-                value={sampleKey}
-                onChange={(e) => setSampleKey(e.target.value)}
-                name="samples"
-                id="samples"
-              >
-                <option className="xs:text-sm sm:text-sm lg:text-xl">Select Sample</option>
-                {sampleListElements}
-                <option className="xs:text-sm lg:text-xl" value="all">
-                  all
-                </option>
-              </select>
+                <label htmlFor="samples" className="lg:text-2xl sm:text-xl xs:text-sm">
+                  <FormattedMessage id="Cir_choose_sample" defaultMessage="Choose a Sample" />: ({samplesCount})
+                </label>
+                <select
+                  className="selectBox"
+                  value={sampleKey}
+                  onChange={(e) => setSampleKey(e.target.value)}
+                  name="samples"
+                  id="samples"
+                >
+                  <option className="xs:text-sm sm:text-sm lg:text-xl">Select Sample</option>
+                  {sampleListElements}
+                  <option className="xs:text-sm lg:text-xl" value="all">
+                    all
+                  </option>
+                </select>
             </div>
           </div>
 

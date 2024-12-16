@@ -152,7 +152,7 @@ export default function Filter({ parentCallback, filterState, project_id }) {
           let id = item.split(' ').join('');
           t.push(
             <div className=" PaddingT10 PaddingB10 Relative ZIndex10" key={'div_mb_' + c}>
-              <label htmlFor="toogleA" className="Flex ItemsCenter CursorPointer">
+              <div htmlFor="toogleA" className="Flex ItemsCenter CursorPointer">
                 <div className="Toggle FilterLabelText">
                   {childelm in chart_names ? (
                     <FormattedMessage id={childelm} defaultMessage={chart_names[childelm]} />
@@ -165,6 +165,7 @@ export default function Filter({ parentCallback, filterState, project_id }) {
                   style={{ paddingRight: '0.5rem' }}
                   onClick={(e) => checkBoxFn(e, 'md_' + id + '_' + c)}
                 >
+                  <label htmlFor={'md_' + id + '_' + c}></label>
                   <input
                     type="checkbox"
                     id={'md_' + id + '_' + c}
@@ -180,7 +181,7 @@ export default function Filter({ parentCallback, filterState, project_id }) {
                   ></div>
                   <div className="Absolute FilterDot" style={{ backgroundColor: '#fff' }}></div>
                 </div>
-              </label>
+              </div>
               <div className="py-5" id={'child_md_' + id + '_' + c}>
                 {inputHtml}
               </div>
@@ -223,13 +224,13 @@ export default function Filter({ parentCallback, filterState, project_id }) {
     'Clinical Information': <BeakerIcon className="IconClass" />,
     'Follow-up Observation': <SearchIcon className="IconClass" />
   };
-
+  // sample_id	Age	Sex	ath_Stage_T	ath_Stage_N	Stage	BMI	Tobacco_smoking_history	Alcohol_history	Hypertension_history	Diabetes_history	rlps_yn	rlps_cnfr_drtn	death_yn	death_cnfr_drtn
   let chart_names = {
-    'Age Of Daignosis': 'Age of Diagnosis (20-40 Y)',
+    'Age Of Diagnosis': 'Age of Diagnosis (20-40 Y)',
     'Body Mass Index': 'Body Mass Index (15.82-36.33 kg/㎡)',
-    'First Menstrual Age': 'First Menstrual Age (10-17 Y)',
-    'Duration of Breastfeeding': 'Duration of Breastfeeding (1-24 M)',
-    'Ki-67 Index': 'Ki-67 Index(1-95 %)',
+    // 'First Menstrual Age': 'First Menstrual Age (10-17 Y)',
+    // 'Duration of Breastfeeding': 'Duration of Breastfeeding (1-24 M)',
+    // 'Ki-67 Index': 'Ki-67 Index(1-95 %)',
     'Time until relapse is confirmed': 'Time until relapse is confirmed (1-16 Y)'
   };
 
@@ -240,7 +241,7 @@ export default function Filter({ parentCallback, filterState, project_id }) {
     }
     return (
       <div key={d.id} className="PX10">
-        <label className="ItemsCenter">
+        <label htmlFor={d.id} className="ItemsCenter">
           <input
             type="checkbox"
             id={d.id}
@@ -262,6 +263,7 @@ export default function Filter({ parentCallback, filterState, project_id }) {
     return (
       <div key={d.id} className="FilterInputGrid">
         <div className="">
+          <label htmlFor={'from_' + d.id}></label>
           <input
             type="number"
             id={'from_' + d.id}
@@ -280,6 +282,7 @@ export default function Filter({ parentCallback, filterState, project_id }) {
           </div>
         </div>
         <div className="">
+          <label htmlFor={'to_' + d.id}></label>
           <input
             type="number"
             id={'to_' + d.id}

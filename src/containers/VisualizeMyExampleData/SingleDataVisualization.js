@@ -94,7 +94,7 @@ export const SingleDataVisualization = () => {
                           {' '}
                           <b>Variant Summary : </b> &nbsp;
                           <FormattedMessage
-                            id="Example_signle_variantSummary"
+                            id="Example_single_variantSummary"
                             defaultMessage="visualize summary information of major variant types"
                           />
                         </p>
@@ -104,7 +104,7 @@ export const SingleDataVisualization = () => {
                           {' '}
                           <b>Circos:</b> &nbsp;
                           <FormattedMessage
-                            id="Example_signle_circos"
+                            id="Example_single_circos"
                             defaultMessage=" visualize one of the seven omics data as a circular layer on a circular chromosome map"
                           />
                         </p>
@@ -114,7 +114,7 @@ export const SingleDataVisualization = () => {
                           {' '}
                           <b>Lollipop:</b> &nbsp;
                           <FormattedMessage
-                            id="Example_signle_Lollipop"
+                            id="Example_single_Lollipop"
                             defaultMessage=" visualize mutation or phosphorylation of certain gene on a sequence"
                           />
                         </p>
@@ -123,7 +123,7 @@ export const SingleDataVisualization = () => {
                         <p>
                           <b>CNV:</b> &nbsp;
                           <FormattedMessage
-                            id="Example_signle_CNV"
+                            id="Example_single_CNV"
                             defaultMessage="visualize copy number variation data on integrated genome viewer"
                           />
                         </p>
@@ -135,7 +135,7 @@ export const SingleDataVisualization = () => {
                           {' '}
                           <b>Heatmap:</b> &nbsp;
                           <FormattedMessage
-                            id="Example_signle_heatMap"
+                            id="Example_single_heatMap"
                             defaultMessage="represent genomic/proteomic data in the form of a map or diagram in which data values are represented as colors(heats)"
                           />
                         </p>
@@ -144,7 +144,7 @@ export const SingleDataVisualization = () => {
                         <p>
                           <b>Box (Tumor vs Normal):</b> &nbsp;
                           <FormattedMessage
-                            id="Example_signle_box"
+                            id="Example_single_box"
                             defaultMessage="visualize the genetic information statistics of the selected gene(s) in the form of boxes"
                           />
                         </p>
@@ -155,8 +155,18 @@ export const SingleDataVisualization = () => {
                           {' '}
                           <b>Survival:</b> &nbsp;
                           <FormattedMessage
-                            id="Example_signle_sirvival"
+                            id="Example_single_survival"
                             defaultMessage="visualize the recurrence/survival probability of patients according to clinical variable conditions"
+                          />
+                        </p>
+                      </li>
+                      <li className="" tabIndex="-1" style={{}}>
+                        <p>
+                          {' '}
+                          <b>PCA:</b> &nbsp;
+                          <FormattedMessage
+            id="Example_pca_small"
+            defaultMessage="Tumor and Normal sample visualization for selected gene sets"
                           />
                         </p>
                       </li>
@@ -164,17 +174,19 @@ export const SingleDataVisualization = () => {
                   </div>
                 </div>
               </div>
-              <table className="contentsTable" style={{ marginTop: '15px' }}>
+              <table className="contentsTable" style={{ marginTop: '15px' }}summary='shows file types which are required for the vizualization'>
+              <caption></caption>
                 <thead>
                   <tr>
-                    <th>Data Type</th>
-                    <th style={{ width: '150px' }}>Variant Summary</th>
-                    <th>Circos </th>
-                    <th>Lollipop</th>
-                    <th>CNV </th>
-                    <th>Heatmap</th>
-                    <th>Box </th>
-                    <th>Survival </th>
+                    <th scope="col">Data Type</th>
+                    <th style={{ width: '150px' }}scope="col">Variant Summary</th>
+                    <th scope="col">Circos </th>
+                    <th scope="col">Lollipop</th>
+                    <th scope="col">CNV </th>
+                    <th scope="col">Heatmap</th>
+                    <th scope="col">Box </th>
+                    <th scope="col">Survival </th>
+                    <th scope="col">PCA</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -189,6 +201,8 @@ export const SingleDataVisualization = () => {
                     <td>
                       <span className="material-icons">radio_button_unchecked</span>
                     </td>
+                    <td></td>
+
                   </tr>
                   <tr>
                     <td>DNA Mutation</td>
@@ -201,6 +215,7 @@ export const SingleDataVisualization = () => {
                     <td>
                       <span className="material-icons">radio_button_unchecked</span>
                     </td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -219,6 +234,7 @@ export const SingleDataVisualization = () => {
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
                   </tr>
                   <tr>
                     <td>Methylation</td>
@@ -231,6 +247,7 @@ export const SingleDataVisualization = () => {
                     <td>
                       <span className="material-icons">radio_button_unchecked</span>
                     </td>
+                    <td></td>
                     <td></td>
                     <td></td>
                   </tr>
@@ -249,6 +266,9 @@ export const SingleDataVisualization = () => {
                       <span className="material-icons">radio_button_unchecked</span>
                     </td>
                     <td></td>
+                    <td>
+                      <span className="material-icons">radio_button_unchecked</span>
+                    </td>
                   </tr>
                   <tr>
                     <td>Fusion</td>
@@ -256,6 +276,7 @@ export const SingleDataVisualization = () => {
                     <td>
                       <span className="material-icons">radio_button_unchecked</span>
                     </td>
+                    <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -277,6 +298,9 @@ export const SingleDataVisualization = () => {
                       <span className="material-icons">radio_button_unchecked</span>
                     </td>
                     <td></td>
+                    <td>
+                      <span className="material-icons">radio_button_unchecked</span>
+                    </td>
                   </tr>
                   <tr>
                     <td>Phosphorylation</td>
@@ -291,8 +315,11 @@ export const SingleDataVisualization = () => {
                     </td>
                     <td></td>
                     <td></td>
+                    <td></td>
                   </tr>
                 </tbody>
+                <tfoot>
+                </tfoot>
               </table>
             </div>
           </>

@@ -7,6 +7,7 @@ import '../../../styles/css/cnv.css';
 import LoaderCmp from '../../Common/Loader';
 import NoContentMessage from '../../Common/NoContentComponent';
 import Igv from '../../Common/igv';
+import html2canvas from 'html2canvas';
 
 export default function DataIgv({ inputData, screenCapture, setToFalseAfterScreenCapture }) {
   const reference = useRef();
@@ -64,10 +65,13 @@ export default function DataIgv({ inputData, screenCapture, setToFalseAfterScree
     }
 
     if (watermarkCss !== '' && screenCapture) {
-      exportComponentAsPNG(reference);
+      // exportComponentAsPNG(reference);
+      exportComponentAsPNG(reference, { fileName: 'cnv-screenshot' });
+      // takeScreenshot();
       setToFalseAfterScreenCapture();
     }
   }, [screenCapture, watermarkCss]);
+
 
   return (
     <>

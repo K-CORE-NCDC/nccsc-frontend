@@ -167,7 +167,7 @@ export default function DataVisualization() {
       if (element === 'heatmap') {
         desc = (
           <FormattedMessage
-            id="Example_signle_heatMap"
+            id="Example_single_heatMap"
             defaultMessage="represent genomic/proteomic data in the form of a map or diagram in which data values are represented as colors(heats)"
           >
             {(placeholder) => placeholder}
@@ -177,7 +177,7 @@ export default function DataVisualization() {
         element = 'CNV';
         desc = (
           <FormattedMessage
-            id="Example_signle_CNV"
+            id="Example_single_CNV"
             defaultMessage="visualize copy number variation data on integrated genome viewer"
           >
             {(placeholder) => placeholder}
@@ -189,7 +189,7 @@ export default function DataVisualization() {
         element = 'variant-summary';
         desc = (
           <FormattedMessage
-            id="Example_signle_variantSummary"
+            id="Example_single_variantSummary"
             defaultMessage="visualize summary information of major variant types"
           >
             {(placeholder) => placeholder}
@@ -198,7 +198,7 @@ export default function DataVisualization() {
       } else if (element === 'box') {
         desc = (
           <FormattedMessage
-            id="Example_signle_box"
+            id="Example_single_box"
             defaultMessage="visualize the genetic information statistics of the selected gene(s) in the form of boxes"
           >
             {(placeholder) => placeholder}
@@ -207,7 +207,7 @@ export default function DataVisualization() {
       } else if (element === 'lollipop') {
         desc = (
           <FormattedMessage
-            id="Example_signle_Lollipop"
+            id="Example_single_Lollipop"
             defaultMessage=" visualize mutation or phosphorylation of certain gene on a sequence"
           >
             {(placeholder) => placeholder}
@@ -216,7 +216,7 @@ export default function DataVisualization() {
       } else if (element === 'circos') {
         desc = (
           <FormattedMessage
-            id="Example_signle_circos"
+            id="Example_single_circos"
             defaultMessage=" visualize one of the seven omics data as a circular layer on a circular chromosome map"
           >
             {(placeholder) => placeholder}
@@ -225,7 +225,7 @@ export default function DataVisualization() {
       } else if (element === 'survival') {
         desc = (
           <FormattedMessage
-            id="Example_signle_sirvival"
+            id="Example_single_survival"
             defaultMessage="visualize the recurrence/survival probability of patients according to clinical variable conditions"
           >
             {(placeholder) => placeholder}
@@ -234,8 +234,8 @@ export default function DataVisualization() {
       } else if (element === 'pca') {
         desc = (
           <FormattedMessage
-            id="Example_single_pca"
-            defaultMessage="Example pca"
+            id="Example_pca_small"
+            defaultMessage="Tumor and Normal sample visualization for selected gene sets"
           >
             {(placeholder) => placeholder}
           </FormattedMessage>
@@ -247,9 +247,9 @@ export default function DataVisualization() {
         : element === 'pca' ? 'PCA Analysis'
         : element,
         image: require(`../../../assets/images/Visualizations/${element}.png`).default,
-        // manual: require(`../../../assets/files/DownloadbleFiles/SingleDataVis/${element}.pdf`).default,
-        manual: element !== 'pca' ? require(`../../../assets/files/DownloadbleFiles/SingleDataVis/${element}.pdf`).default
-        : undefined,
+        manual: require(`../../../assets/files/DownloadbleFiles/SingleDataVis/${element}.pdf`).default,
+        // manual: element !== 'pca' ? require(`../../../assets/files/DownloadbleFiles/SingleDataVis/${element}.pdf`).default
+        // : undefined,
         link: `/singledata-upload/${element}/`,
         viewLink: `/visualizesingle-exampledata/${element}`,
         description: desc || ''
@@ -397,6 +397,7 @@ export default function DataVisualization() {
 
                                         <div className="textdiv">
                                           <Link to={item.link}>
+                                          {/* <div onClick={() => history.push(item.link)}></div> */}
                                             <span>
                                               <FormattedMessage
                                                 id="RunAnalysis"
@@ -405,6 +406,7 @@ export default function DataVisualization() {
                                             </span>
                                             <img src={arrow_icon} alt="arrow-icon" />
                                           </Link>
+                                          {/* <div></div> */}
                                         </div>
                                       </>
                                     )}
@@ -511,7 +513,7 @@ export default function DataVisualization() {
                               <div className="">
                                 <Popover.Button className={'button'}>
                                   <div>
-                                    <button
+                                    <span
                                       onClick={() => setToFalseAfterScreenCapture(true)}
                                       className="btn btnPrimary"
                                     >
@@ -519,7 +521,7 @@ export default function DataVisualization() {
                                         id="Capture_screen"
                                         defaultMessage="Capture Screenshot"
                                       />
-                                    </button>
+                                    </span>
                                   </div>
                                 </Popover.Button>
                               </div>

@@ -133,11 +133,12 @@ function FindPassword() {
 
               <dl>
                 <dt style={{ width: '250px' }}>
-                  <img src={nameIcon} alt="" />
+                  <img src={nameIcon} alt="nameIcon" />
                   <FormattedMessage id="RegistrationNumber" defaultMessage="Registration Number" />
                 </dt>
                 <dd>
                   <div className="inputText">
+                    <label htmlFor="userName"></label>
                     <FormattedMessage
                       id="PleaseEnterYourRegistationNumber"
                       defaultMessage="Please enter your Registration number"
@@ -159,7 +160,7 @@ function FindPassword() {
               </dl>
               {/* <dl>
                 <dt style={{ width: '250px' }}>
-                  <img src={idIcon} alt="" />
+                  <img src={idIcon} alt="idIcon" />
                   <FormattedMessage id="RegistrationPin" defaultMessage="Registration Pin" />
                 </dt>
                 <dd>

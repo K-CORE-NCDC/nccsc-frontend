@@ -21,7 +21,7 @@ function NoticeList() {
         pageNumber: 1
       })
       const currentPage = paramObj?.pageNumber
-    
+
       const fetchUsers = async (page, method) => {
         setLoading(true);
         let response;
@@ -60,7 +60,8 @@ function NoticeList() {
                     {parseInt(row?.index) + parseInt(1) + (currentPage - 1) * paramObj?.perPage}
                 </div>
             ),
-            width: "80"
+            width: "80",
+            headerProps: { scope: 'col' }
         },
         {
             Header: intl.formatMessage({ id: "Title", defaultMessage: 'Title' }),
@@ -72,11 +73,13 @@ function NoticeList() {
                     </Link>
                 </div>
             ),
-            width: "200"
+            width: "200",
+            headerProps: { scope: 'col' }
         },
         {
             Header: intl.formatMessage({ id: "Writer", defaultMessage: 'Writer' }),
             accessor: (row) => row.writer,
+            headerProps: { scope: 'col' }
         },
     ];
 
@@ -88,15 +91,36 @@ function NoticeList() {
                     <LoaderComp /> </div> :
                 <div >
                     {tableData  && (
-                        <PaginateTable
-                            columns={columns}
-                            data={tableData.data}
-                            width={"1075"}
-                            TotalCount={tableData?.total}
-                            PageSize={paramObj?.perPage}
-                            paramObj={paramObj}
-                            setParamObj={(data) => setParamObj(data)}
-                        />
+                        <>
+                            <div className="sr-only">
+                                {/* {intl.formatMessage({
+                                    id: "NoticeTableCaption",
+                                    defaultMessage: 'List of notices with order, title, and writer information'
+                                })} */}
+                            </div>
+                            <PaginateTable
+                                columns={columns}
+                                data={tableData.data}
+                                width={"1075"}
+                                TotalCount={tableData?.total}
+                                PageSize={paramObj?.perPage}
+                                paramObj={paramObj}
+                                setParamObj={(data) => setParamObj(data)}
+                                // tableSummary={intl.formatMessage({
+                                //     id: "NoticeTableSummary",
+                                //     defaultMessage: 'Notice board entries with pagination'
+                                // })}
+                                footerGroups={[
+                                    {
+                                        cells: [
+                                            {
+                                                content: `Total Entries: ${tableData?.total || 0}`
+                                            }
+                                        ]
+                                    }
+                                ]}
+                            />
+                        </>
                     )}
                     {tableData && tableData.length === 0 && <h1 className="MultiUploadTextCenter">{intl.formatMessage({ id: "NoRecords", defaultMessage: 'No Records Found' })}</h1>}
                 </div>}

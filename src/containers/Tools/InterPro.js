@@ -246,6 +246,7 @@ function InterPro() {
                                 />
                               </dt>
                               <dd>
+                                <label htmlFor='message'></label>
                                 <div className="">
                                   <FormattedMessage
                                     id="EnterYourSequence"
@@ -277,10 +278,11 @@ function InterPro() {
                                 <FormattedMessage id="UploadFile" defaultMessage="Upload File" />
                               </dt>
                               <dd>
+                              <label htmlFor='interpro_file_input'></label>
                                 <div className="inputText">
                                   <FormattedMessage id="NoFileChosen" defaultMessage="No File Chosen">
                                     {(msg) => (
-                                      <input
+                                      <input id='interpro_file_input'
                                         type="file"
                                         className="w100"
                                         accept=".fasta, .fna, .ffn, .faa, .frn, .fa"

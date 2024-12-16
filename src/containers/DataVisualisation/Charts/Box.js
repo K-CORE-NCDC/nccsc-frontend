@@ -124,7 +124,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
     document.body.appendChild(downloadLink);
     downloadLink.href = image64;
     downloadLink.target = '_self';
-    downloadLink.download = 'box.svg';
+    downloadLink.download = 'box-screenshot.svg';
     downloadLink.click();
   };
 
@@ -395,19 +395,18 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
 
         <div className="box_gap">
           <div className="">
-            <>
-              <label className="">
-                <FormattedMessage id="Selected Gene Is" defaultMessage="Selected Gene Is" />
-              </label>
-              <Multiselect
-                options={genesHtml} // Options to display in the dropdown
-                selectedValues={selectedValue} // Preselected value to persist in dropdown
-                onSelect={onSelect} // Function will trigger on select event
-                onRemove={onRemove} // Function will trigger on remove event
-                displayValue="name" // Property name to display in the dropdown options
-                style={style}
-              />{' '}
-            </>
+            <label htmlFor="genes_input" className="">
+              <FormattedMessage id="Selected Gene Is" defaultMessage="Selected Gene Is" />
+            </label>
+            <Multiselect
+              id="genes"
+              options={genesHtml} // Options to display in the dropdown
+              selectedValues={selectedValue} // Preselected value to persist in dropdown
+              onSelect={onSelect} // Function will trigger on select event
+              onRemove={onRemove} // Function will trigger on remove event
+              displayValue="name" // Property name to display in the dropdown options
+              style={style}
+            />{' '}
           </div>
           <div className="">
             <FormattedMessage id="View_By_heatmap" defaultMessage="View By" />:
@@ -454,7 +453,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
               className="boxplot_tooltip"
               id="box2_tooltip"
               style={{ width: '150px', float: 'right' }}
-            ></div>
+            >
             {tableType && (
               <p className="text_align" style={{ marginBottom: '30px' }}>
                 {tableType === 'proteome' ? (
@@ -470,6 +469,7 @@ export default function Box({ width, inputData, screenCapture, setToFalseAfterSc
                 )}
               </p>
             )}
+            </div>
             {showBoxPlot && (
               <BoxPlot
                 view_type={viewType}

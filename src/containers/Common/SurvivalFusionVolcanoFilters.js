@@ -3,166 +3,152 @@ import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Context } from '../../wrapper';
-let abc = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'];
+let groupNames = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'];
 
 let filterChoices = [
   { type: 'static', name: 'sex', id: 'sex_cd', options: ['Male', 'Female'] },
-  {
-    type: 'number',
-    name: 'Age Of Diaganosis',
-    id: 'diag_age',
-    input: 'number'
-  },
+  { type: 'number', name: 'Age Of Diagnosis', id: 'diag_age', input: 'number'},
   { type: 'number', id: 'bmi_vl', name: 'Body Mass Index', input: 'number' },
-  {
-    type: 'boolean',
-    id: 'bila_cncr_yn',
-    name: 'Diagnosis of Bilateral Breast Cancer'
-  },
+  // {
+  //   type: 'boolean',
+  //   id: 'bila_cncr_yn',
+  //   name: 'Diagnosis of Bilateral Breast Cancer'
+  // },
   { type: 'boolean', name: 'Smoking Status', id: 'smok_curr_yn' },
   { type: 'boolean', name: 'Former Smoker', id: 'smok_yn' },
+  // { type: 'static', name: 'Tobacco Smoking Status', id: 'smoker', options: ['Current Smoker', 'Past Smoker', 'Non Smoker'] },
+  { type: 'dropdown', name: 'Stage', id: 'stage', options: ['Stage_I', 'Stage_II', 'Stage_III', 'Stage_IV'] },
   { type: 'boolean', name: 'Alcohol Consumption', id: 'drnk_yn', value: 'Yes' },
-  {
-    type: 'boolean',
-    name: 'Family History of Breast Cancer',
-    id: 'fmhs_brst_yn',
-    value: 'Yes'
-  },
-  {
-    type: 'number',
-    name: 'First Menstural Age',
-    id: 'mena_age',
-    input: 'number'
-  },
-  { type: 'boolean', name: 'Menopause', id: 'meno_yn' },
-  { type: 'boolean', name: 'childbirth', id: 'delv_yn' },
-  { type: 'boolean', name: 'Experience of Breastfeeding', id: 'feed_yn' },
-  {
-    type: 'number',
-    name: 'Duration of Breastfeeding',
-    id: 'feed_drtn_mnth',
-    input: 'number'
-  },
-  { type: 'boolean', name: 'Intake of Oral Contraceptive Pill', id: 'oc_yn' },
-  { type: 'boolean', name: 'Hormone Replacement Therapy', id: 'hrt_yn' },
+  { type: 'boolean', name: 'Diabetes History', id: 'diabetes_yn', value: 'Yes'},
+  { type: 'boolean', name: 'Hypertension History', id: 'hyp_yn', value: 'Yes'},
+  // {
+  //   type: 'boolean',
+  //   name: 'First Menstural Age',
+  //   id: 'mena_age',
+  //   input: 'number'
+  // },
+  // { type: 'boolean', name: 'Menopause', id: 'meno_yn' },
+  // { type: 'boolean', name: 'childbirth', id: 'delv_yn' },
+  // { type: 'boolean', name: 'Experience of Breastfeeding', id: 'feed_yn' },
+  // {
+  //   type: 'number',
+  //   name: 'Duration of Breastfeeding',
+  //   id: 'feed_drtn_mnth',
+  //   input: 'number'
+  // },
+  // { type: 'boolean', name: 'Intake of Oral Contraceptive Pill', id: 'oc_yn' },
+  // { type: 'boolean', name: 'Hormone Replacement Therapy', id: 'hrt_yn' },
   { type: 'number', name: 'T Category', id: 't_category', input: 'number' },
   { type: 'number', name: 'N Category', id: 'n_category', input: 'number' },
-  { type: 'text', name: 'HER2 Score', id: 'her2_score', input: 'text' },
-  { type: 'text', name: 'ki67', id: 'ki67_score', input: 'text' },
-  {
-    type: 'number',
-    name: 'Relapse Duration',
-    id: 'rlps_cnfr_drtn',
-    input: 'number'
+  // { type: 'text', name: 'HER2 Score', id: 'her2_score', input: 'text' },
+  // { type: 'text', name: 'ki67', id: 'ki67_score', input: 'text' },
+  { type: 'number', name: 'Relapse Duration', id: 'rlps_cnfr_drtn', input: 'number'
   },
   { type: 'boolean', name: 'Relapse Yes or No', id: 'rlps_yn' },
-  { type: 'number', name: 'ER Test', id: 'er_score', input: 'number' },
-  { type: 'number', name: 'PR Test', id: 'pr_score', input: 'number' }
+  // { type: 'number', name: 'ER Test', id: 'er_score', input: 'number' },
+  // { type: 'number', name: 'PR Test', id: 'pr_score', input: 'number' }
 ];
 
 const filterChoicesCustom = [
   { type: 'static', name: 'Sex', id: 'sex_cd', options: ['Male', 'Female'] },
-  {
-    type: 'number',
-    name: 'Age Of Diagonosis',
-    id: 'diag_age',
-    input: 'number'
-  },
+  { type: 'number', name: 'Age Of Diagnosis', id: 'diag_age', input: 'number'},
   { type: 'number', id: 'bmi_vl', name: 'BMI', input: 'number' },
-  {
-    type: 'boolean',
-    id: 'bila_cncr_yn',
-    name: 'Diagnosis of Bilateral Breast Cancer'
-  },
+  // {
+  //   type: 'boolean',
+  //   id: 'bila_cncr_yn',
+  //   name: 'Diagnosis of Bilateral Breast Cancer'
+  // },
   { type: 'boolean', name: 'Smoking Status', id: 'smok_yn' },
+
+  // { type: 'static', name: 'Tobacco Smoking Status', id: 'smoker', options: ['Current Smoker', 'Past Smoker', 'Non Smoker'] },
+  // { type: 'dropdown', name: 'Stage', id: 'stage', options: ['Stage_I', 'Stage_II', 'Stage_III', 'Stage_IV'] },
   { type: 'boolean', name: 'Alcohol Consumption', id: 'drnk_yn', value: 'Yes' },
-  {
-    type: 'boolean',
-    name: 'Breast cancer family history',
-    id: 'fmhs_brst_yn',
-    value: 'Yes'
-  },
-  { type: 'number', name: 'Menarche age', id: 'mena_age', input: 'number' },
-  { type: 'boolean', name: 'Menopause', id: 'meno_yn' },
-  { type: 'boolean', name: 'childbirth', id: 'delv_yn' },
-  { type: 'boolean', name: 'Breastfeeding Experience', id: 'feed_yn' },
-  {
-    type: 'number',
-    name: 'Duration of Breastfeeding',
-    id: 'feed_drtn_mnth',
-    input: 'number'
-  },
-  { type: 'boolean', name: 'Intake of Oral Contraceptive Pill', id: 'oc_yn' },
-  { type: 'boolean', name: 'Hormone Replace Therapy', id: 'hrt_yn' },
+  { type: 'boolean', name: 'Diabetes History', id: 'diabetes_yn', value: 'Yes'},
+  { type: 'boolean', name: 'Hypertension History', id: 'hyp_yn', value: 'Yes'},
+  // { type: 'number', name: 'Menarche age', id: 'mena_age', input: 'number' },
+  // { type: 'boolean', name: 'Menopause', id: 'meno_yn' },
+  // { type: 'boolean', name: 'childbirth', id: 'delv_yn' },
+  // { type: 'boolean', name: 'Breastfeeding Experience', id: 'feed_yn' },
+  // {
+  //   type: 'number',
+  //   name: 'Duration of Breastfeeding',
+  //   id: 'feed_drtn_mnth',
+  //   input: 'number'
+  // },
+  // { type: 'boolean', name: 'Intake of Oral Contraceptive Pill', id: 'oc_yn' },
+  // { type: 'boolean', name: 'Hormone Replace Therapy', id: 'hrt_yn' },
   { type: 'number', name: 'T Category', id: 't_category', input: 'number' },
   { type: 'number', name: 'N Category', id: 'n_category', input: 'number' },
-  { type: 'number', name: 'HER2 Score', id: 'her2_score', input: 'text' },
-  { type: 'number', name: 'ki67', id: 'ki67_score', input: 'text' },
-  { type: 'boolean', name: 'Recurance Yes or No', id: 'rlps_yn' },
-  { type: 'number', name: 'ER Test', id: 'er_score', input: 'number' },
-  { type: 'number', name: 'PR Test', id: 'pr_score', input: 'number' }
+  // { type: 'number', name: 'HER2 Score', id: 'her2_score', input: 'text' },
+  // { type: 'number', name: 'ki67', id: 'ki67_score', input: 'text' },
+  { type: 'boolean', name: 'Recurrence Yes or No', id: 'rlps_yn' },
+  // { type: 'number', name: 'ER Test', id: 'er_score', input: 'number' },
+  // { type: 'number', name: 'PR Test', id: 'pr_score', input: 'number' }
 ];
 
 const filterChoicesCustomKorean = [
   { type: 'static', name: '성별', id: 'sex_cd', options: ['Male', 'Female'] },
-  {
-    type: 'number',
-    name: '진단 시 나이',
-    id: 'diag_age',
-    input: 'number'
-  },
+  // { type: 'static', name: '담배 흡연 상태', id: 'smoker', options: ['Current Smoker', 'Past Smoker', 'Non Smoker'] },
+  // { type: 'dropdown', name: '단계', id: 'stage', options: ['Stage_I', 'Stage_II', 'Stage_III', 'Stage_IV'] },
+  { type: 'number', name: '진단 시 나이', id: 'diag_age', input: 'number'},
   { type: 'number', id: 'bmi_vl', name: '체질량지수(BMI)', input: 'number' },
-  {
-    type: 'boolean',
-    id: 'bila_cncr_yn',
-    name: '양측성 유방암 여부'
-  },
+  // {
+  //   type: 'boolean',
+  //   id: 'bila_cncr_yn',
+  //   name: '양측성 유방암 여부'
+  // },
   { type: 'boolean', name: '흡연 정보', id: 'smok_yn' },
+
   { type: 'boolean', name: '음주 정보', id: 'drnk_yn', value: 'Yes' },
-  {
-    type: 'boolean',
-    name: '유방암 가족력',
-    id: 'fmhs_brst_yn',
-    value: 'Yes'
-  },
-  { type: 'number', name: '초경 나이', id: 'mena_age', input: 'number' },
-  { type: 'boolean', name: '폐경 여부', id: 'meno_yn' },
-  { type: 'boolean', name: '출산 여부', id: 'delv_yn' },
-  { type: 'boolean', name: '모유수유경험 유무', id: 'feed_yn' },
-  {
-    type: 'number',
-    name: '수유기간',
-    id: 'feed_drtn_mnth',
-    input: 'number'
-  },
-  { type: 'boolean', name: '경구피임약 사용 유무', id: 'oc_yn' },
-  { type: 'boolean', name: '호르몬대체요법(HRT) 유무', id: 'hrt_yn' },
+  { type: 'boolean', name: '고혈압 병력', id: 'hyp_yn', value: 'Yes' },
+  { type: 'boolean', name: '당뇨병의 역사', id: 'diabetes_yn', value: 'Yes' },
+  // {
+  //   type: 'boolean',
+  //   name: '유방암 가족력',
+  //   id: 'fmhs_brst_yn',
+  //   value: 'Yes'
+  // },
+  // { type: 'number', name: '초경 나이', id: 'mena_age', input: 'number' },
+  // { type: 'boolean', name: '폐경 여부', id: 'meno_yn' },
+  // { type: 'boolean', name: '출산 여부', id: 'delv_yn' },
+  // { type: 'boolean', name: '모유수유경험 유무', id: 'feed_yn' },
+  // {
+  //   type: 'number',
+  //   name: '수유기간',
+  //   id: 'feed_drtn_mnth',
+  //   input: 'number'
+  // },
+  // { type: 'boolean', name: '경구피임약 사용 유무', id: 'oc_yn' },
+  // { type: 'boolean', name: '호르몬대체요법(HRT) 유무', id: 'hrt_yn' },
   { type: 'number', name: 'T Stage', id: 't_category', input: 'number' },
   { type: 'number', name: 'N Category', id: 'n_category', input: 'number' },
-  { type: 'number', name: 'HER2 점수', id: 'her2_score', input: 'text' },
-  { type: 'number', name: '세포증식지수(Ki-67)', id: 'ki67_score', input: 'text' },
+  // { type: 'number', name: 'HER2 점수', id: 'her2_score', input: 'text' },
+  // { type: 'number', name: '세포증식지수(Ki-67)', id: 'ki67_score', input: 'text' },
   { type: 'boolean', name: '재발 유무', id: 'rlps_yn' },
-  { type: 'number', name: 'ER 검사 결과', id: 'er_score', input: 'number' },
-  { type: 'number', name: 'PR 검사 결과', id: 'pr_score', input: 'number' }
+  // { type: 'number', name: 'ER 검사 결과', id: 'er_score', input: 'number' },
+  // { type: 'number', name: 'PR 검사 결과', id: 'pr_score', input: 'number' }
 ];
 
 let preDefienedGroups = {
   diag_age: [
-    { label: '21-35', from: 21, to: 35 },
-    { label: '35-40', from: 35, to: 40 }
+    { label: '25-40', from: 25, to: 40 },
+    { label: '41-55', from: 41, to: 55 },
+    { label: '56-70', from: 56, to: 70 },
+    { label: '71-90', from: 71, to: 90 }
   ],
   bmi_vl: [
+    { label: '< 18.5', from: 1, to: 18.5 },
     { label: '18.5~24.9', from: 18.5, to: 24.9 },
     { label: '25-', from: 25, to: 100 }
   ],
-  mena_age: [
-    { label: '10-13', from: 10, to: 13 },
-    { label: '14-17', from: 14, to: 17 }
-  ],
-  feed_drtn_mnth: [
-    { label: '> 1 Year', from: 12, to: 24 },
-    { label: '1year ≤', from: 1, to: 11 }
-  ],
+  // mena_age: [
+  //   { label: '10-13', from: 10, to: 13 },
+  //   { label: '14-17', from: 14, to: 17 }
+  // ],
+  // feed_drtn_mnth: [
+  //   { label: '> 1 Year', from: 12, to: 24 },
+  //   { label: '1year ≤', from: 1, to: 11 }
+  // ],
   t_category: [
     { label: 'Tis-T2', from: 'Tis', to: 'T2' },
     { label: 'T3-T4', from: 'T3', to: 'T4' }
@@ -171,36 +157,48 @@ let preDefienedGroups = {
     { label: 'Nx-N2', from: 'Nx', to: 'N2' },
     { label: 'N3', from: 'N3', to: 'N3' }
   ],
-  her2_score: [
-    {
-      label: 'negative(0-1+)',
-      from: 'negative(0, 0~1, 1+)',
-      to: 'negative(0, 0~1, 1+)',
-      value: 'negative(0, 0~1, 1+)'
-    },
-    {
-      label: 'positive(2+-3+)',
-      from: 'positive(2+,3+)',
-      to: 'positive(2+,3+)',
-      value: 'positive(2+,3+)'
-    }
+  drnk_yn: [
+    { label: 'No', value: 'drnk_yn||N' },
+    { label: 'Yes', value: 'drnk_yn||Y' }
   ],
-  pr_score: [
-    { label: 'Positive', from: 0, to: 1 },
-    { label: 'Negative', from: 1, to: 2 }
+  hyp_yn: [
+    { label: 'No', value: 'hyp_yn||N' },
+    { label: 'Yes', value: 'hyp_yn||Y' }
   ],
-  er_score: [
-    { label: 'Positive', from: 0, to: 1 },
-    { label: 'Negative', from: 1, to: 2 }
+  diabetes_yn: [
+    { label: 'No', value: 'diabetes_yn||N' },
+    { label: 'Yes', value: 'diabetes_yn||Y' }
   ],
-  ki67_score: [
-    { label: 'low(≤15%)', from: 'Positive 0%', to: 'Positive 15%' },
-    {
-      label: 'intermediate, high(15%<)',
-      from: 'Positive 15%',
-      to: 'Positive 100%'
-    }
-  ],
+  // her2_score: [
+  //   {
+  //     label: 'negative(0-1+)',
+  //     from: 'negative(0, 0~1, 1+)',
+  //     to: 'negative(0, 0~1, 1+)',
+  //     value: 'negative(0, 0~1, 1+)'
+  //   },
+  //   {
+  //     label: 'positive(2+-3+)',
+  //     from: 'positive(2+,3+)',
+  //     to: 'positive(2+,3+)',
+  //     value: 'positive(2+,3+)'
+  //   }
+  // ],
+  // pr_score: [
+  //   { label: 'Positive', from: 0, to: 1 },
+  //   { label: 'Negative', from: 1, to: 2 }
+  // ],
+  // er_score: [
+  //   { label: 'Positive', from: 0, to: 1 },
+  //   { label: 'Negative', from: 1, to: 2 }
+  // ],
+  // ki67_score: [
+  //   { label: 'low(≤15%)', from: 'Positive 0%', to: 'Positive 15%' },
+  //   {
+  //     label: 'intermediate, high(15%<)',
+  //     from: 'Positive 15%',
+  //     to: 'Positive 100%'
+  //   }
+  // ],
   smok_yn: [
     { label: 'No', value: 'smok_yn||N' },
     { label: 'Yes', value: 'smok_yn||Y' }
@@ -219,21 +217,31 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters, viz_type, res
 
   const preDefienedGroups1 = {
     diag_age: [
-      { label: '21-35', from: 21, to: 35 },
-      { label: '36-40', from: 36, to: 40 }
+      { label: '25-40', from: 25, to: 40 },
+      { label: '41-55', from: 41, to: 55 },
+      { label: '56-70', from: 56, to: 70 },
+      { label: '71-90', from: 71, to: 90 }
     ],
     bmi_vl: [
-      { label: '18.5~24.9', from: 18.5, to: 24.9 },
-      { label: '25-100', from: 25, to: 100 }
+      { label: '<18.5', from: 0, to: 18.5 },
+      { label: '18.6-24.9', from: 18.6, to: 25 },
+      { label: '25.0-29.9', from: 25.1, to: 30 },
+      { label: '30.0≤', from: 30.1, to: 100 }
     ],
-    mena_age: [
-      { label: '10-13', from: 10, to: 13 },
-      { label: '14-17', from: 14, to: 17 }
-    ],
-    feed_drtn_mnth: [
-      { label: '> 1 Year', from: 12, to: 24 },
-      { label: '1year ≤', from: 1, to: 11 }
-    ],
+    // smoker: [
+    //   { label: 'Past Smoker', from: 'Past Smoker', to: 'Past Smoker' },
+    //   { label: 'Current Smoker', from: 'Current Smoker', to: 'Current Smoker' },
+    //   { label: 'Non Smoker', from: 'Non Smoker', to: 'Non Smoker' }
+
+    // ],
+    // mena_age: [
+    //   { label: '10-13', from: 10, to: 13 },
+    //   { label: '14-17', from: 14, to: 17 }
+    // ],
+    // feed_drtn_mnth: [
+    //   { label: '> 1 Year', from: 12, to: 24 },
+    //   { label: '1year ≤', from: 1, to: 11 }
+    // ],
     t_category: [
       { label: 'Tis-T2', from: 'Tis', to: 'T2' },
       { label: 'T3-T4', from: 'T3', to: 'T4' }
@@ -242,23 +250,35 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters, viz_type, res
       { label: 'Nx-N2', from: 'Nx', to: 'N2' },
       { label: 'N3', from: 'N3', to: '' }
     ],
-    pr_score: [
-      { label: 'Positive', from: 0, to: 1 },
-      { label: 'Negative', from: 1, to: 2 }
-    ],
-    er_score: [
-      { label: 'Positive', from: 0, to: 1 },
-      { label: 'Negative', from: 1, to: 2 }
-    ],
-    ki67_score: [
-      { label: 'low(≤15%)', from: '0', to: '15' },
-      { label: 'intermediate, high(15%<)', from: '15', to: '100' }
-    ],
+    // pr_score: [
+    //   { label: 'Positive', from: 0, to: 1 },
+    //   { label: 'Negative', from: 1, to: 2 }
+    // ],
+    // er_score: [
+    //   { label: 'Positive', from: 0, to: 1 },
+    //   { label: 'Negative', from: 1, to: 2 }
+    // ],
+    // ki67_score: [
+    //   { label: 'low(≤15%)', from: '0', to: '15' },
+    //   { label: 'intermediate, high(15%<)', from: '15', to: '100' }
+    // ],
     smok_yn: [
       { label: 'No', value: 'smok_yn||N' },
       { label: 'Yes', value: 'smok_yn||Y' }
       // { label: "Current Smoking", value: "smok_curr_yn||Y" }
-    ]
+    ],
+    drnk_yn: [
+      { label: 'No', value: 'drnk_yn||N' },
+      { label: 'Yes', value: 'drnk_yn||Y' }
+    ],
+    hyp_yn: [
+      { label: 'No', value: 'hyp_yn||N' },
+      { label: 'Yes', value: 'hyp_yn||Y' }
+    ],
+    diabetes_yn: [
+      { label: 'No', value: 'diabetes_yn||N' },
+      { label: 'Yes', value: 'diabetes_yn||Y' }
+    ],
 
     // t_category: [
     //     { label: "Tis", from: 'Tis', to: 'Tis',value: 'Tis' },
@@ -274,38 +294,38 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters, viz_type, res
     // ]
   };
 
-  if (viz_type === 'volcono') {
-    preDefienedGroups1['her2_score'] = [
-      {
-        label: 'negative(0-1+)',
-        from: 'negative(0-1+)',
-        to: 'negative(0, 0~1, 1+)',
-        value: 'negative(0-1+)'
-      },
-      {
-        label: 'positive(2+-3+)',
-        from: 'positive(2+-3+)',
-        to: 'positive(2+,3+)',
-        value: 'positive(2+-3+)'
-      }
-    ]
-  }
-  else if (viz_type === 'fusion') {
-    preDefienedGroups1['her2_score'] = [
-      {
-        label: 'negative (0-2+)',
-        from: 'negative (0-2+)',
-        to: 'negative (0-2+)',
-        value: 'negative(0-1+)'
-      },
-      {
-        label: 'positive (3+)',
-        from: 'positive (3+)',
-        to: 'positive (3+)',
-        value: 'positive (3+)'
-      }
-    ]
-  }
+  // if (viz_type === 'volcono') {
+  //   preDefienedGroups1['her2_score'] = [
+  //     {
+  //       label: 'negative(0-1+)',
+  //       from: 'negative(0-1+)',
+  //       to: 'negative(0, 0~1, 1+)',
+  //       value: 'negative(0-1+)'
+  //     },
+  //     {
+  //       label: 'positive(2+-3+)',
+  //       from: 'positive(2+-3+)',
+  //       to: 'positive(2+,3+)',
+  //       value: 'positive(2+-3+)'
+  //     }
+  //   ]
+  // }
+  // else if (viz_type === 'fusion') {
+  //   preDefienedGroups1['her2_score'] = [
+  //     {
+  //       label: 'negative (0-2+)',
+  //       from: 'negative (0-2+)',
+  //       to: 'negative (0-2+)',
+  //       value: 'negative(0-1+)'
+  //     },
+  //     {
+  //       label: 'positive (3+)',
+  //       from: 'positive (3+)',
+  //       to: 'positive (3+)',
+  //       value: 'positive (3+)'
+  //     }
+  //   ]
+  // }
 
 
   useEffect(() => {
@@ -407,8 +427,11 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters, viz_type, res
           </div>
         );
       }
-
+      console.log('selectedFilterType.details.id =',selectedFilterType.details.id)
+      console.log('selectedFilterType.details.type =',selectedFilterType.details.type)
       if (selectedFilterType.details.type === 'static') {
+
+        if (selectedFilterType.details.id=='sex_cd'){
         setFilters({
           group_a: 'F',
           group_b: 'M',
@@ -428,6 +451,7 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters, viz_type, res
             </div>
           </div>
         );
+      }
       }
 
       if (
@@ -499,10 +523,11 @@ export const PreDefienedFilters = ({ parentCallback, groupFilters, viz_type, res
   return (
     <div className="M1 PY3 PX2 BGGray100">
       <div className="P1 PY3 PX2 ColSpan2">
-        <div className="Block  TextBase  FontBold MB2 TextLeft">
+        <label htmlFor="filterSelect" className="Block TextBase FontBold MB2 TextLeft">
           <FormattedMessage id="Clinical Filters" defaultMessage="Clinical Attribute" />
-        </div>
+        </label>
         <select
+          id="filterSelect"
           onChange={filterTypeDropdownSelection}
           value={selectDefaultValue}
           className="WFull lg:P4 xs:p-2 Border lg:text-xl xs:text-sm focus:outline-none Border-b-color focus:ring focus:Border-b-color active:Border-b-color mt-3"
@@ -563,10 +588,10 @@ export const PreDefienedFiltersSurvival = ({
 
   let preDefienedGroups1 = {
     diag_age: [
-      { label: '21-25', from: 21, to: 25 },
-      { label: '26-30', from: 26, to: 30 },
-      { label: '31-35', from: 31, to: 35 },
-      { label: '36-40', from: 36, to: 40 }
+      { label: '25-40', from: 25, to: 40 },
+      { label: '41-55', from: 41, to: 55 },
+      { label: '56-70', from: 56, to: 70 },
+      { label: '71-90', from: 71, to: 90 }
     ],
     bmi_vl: [
       { label: '<18.5', from: 0, to: 18.5 },
@@ -574,71 +599,86 @@ export const PreDefienedFiltersSurvival = ({
       { label: '25.0-29.9', from: 25.1, to: 30 },
       { label: '30.0≤', from: 30.1, to: 100 }
     ],
-    mena_age: [
-      { label: '10-13', from: 10, to: 13 },
-      { label: '14-17', from: 14, to: 17 }
-    ],
-    feed_drtn_mnth: [
-      { label: '< 1year', from: 1, to: 11 },
-      { label: '1year ≤', from: 12, to: 24 }
-    ],
+    // smoker: [
+    //   { label: 'Past Smoker', from: 'Past Smoker', to: 'Past Smoker' },
+    //   { label: 'Current Smoker', from: 'Current Smoker', to: 'Curren Smoker' },
+    //   { label: 'Non Smoker', from: 'Non Smoker', to: 'Non Smoker' },
+    // ],
+    // mena_age: [
+    //   { label: '10-13', from: 10, to: 13 },
+    //   { label: '14-17', from: 14, to: 17 }
+    // ],
+    // feed_drtn_mnth: [
+    //   { label: '< 1year', from: 1, to: 11 },
+    //   { label: '1year ≤', from: 12, to: 24 }
+    // ],
     t_category: [
-      { label: 'Tis', from: 'Tis', to: 'Tis' },
+      // { label: 'Tis', from: 'Tis', to: 'Tis' },
       { label: 'T1', from: 'T1', to: 'T1' },
       { label: 'T2', from: 'T2', to: 'T2' },
       { label: 'T3', from: 'T3', to: 'T3' },
       { label: 'T4', from: 'T4', to: 'T4' }
     ],
     n_category: [
-      { label: 'Nx', from: 'Nx', to: 'Nx' },
+      // { label: 'Nx', from: 'Nx', to: 'Nx' },
       { label: 'N0', from: 'N0', to: 'N0' },
       { label: 'N1', from: 'N1', to: 'N1' },
       { label: 'N2', from: 'N2', to: 'N2' },
       { label: 'N3', from: 'N3', to: 'N3' }
     ],
-    her2_score: [
-      {
-        from: 'negative (0-1+)',
-        to: 'negative (0-1+)',
-        label: 'negative (0-1+)',
-        value: 'negative (0-1+)'
-      },
-      {
-        from: 'equivocal (2+)',
-        to: 'equivocal (2+)',
-        label: 'equivocal (2+)',
-        value: 'equivocal (2+)'
-      },
-      {
-        from: 'positive (3+)',
-        to: 'positive (3+)',
-        label: 'positive (3+)',
-        value: 'positive (3+)'
-      }
+    stage: [
+      // { label: 'stage I', from: 'Stage_I', to: 'Stage_I' },
+      // { label: 'stage II', from: 'Stage_II', to: 'Stage_II' },
+      // { label: 'stage III', from: 'Stage_III', to: 'Stage_III' },
+      // { label: 'stage IV', from: 'Stage_IV', to: 'Stage_IV' }
+      { label: 'Stage I', value: 'Stage_I' },
+      { label: 'Stage II', value: 'Stage_II' },
+      { label: 'Stage III', value: 'Stage_III' },
+      { label: 'Stage IV', value: 'Stage_IV' }
     ],
-    pr_score: [
-      { label: 'Positive', from: 1, to: 1 },
-      { label: 'Negative', from: 2, to: 2 }
-    ],
-    er_score: [
-      { label: 'Positive', from: 1, to: 1 },
-      { label: 'Negative', from: 2, to: 2 }
-    ],
-    ki67_score: [
-      { label: 'low(≤15%)', value: 'low(≤15%)', from: 'low', to: 'low' },
-      {
-        label: 'intermediate(<15-30%≤)',
-        value: 'intermediate(<15-30%≤)',
-        from: 'intermediate',
-        to: 'intermediate'
-      },
-      {
-        label: 'high(30%<)',
-        value: 'high(30%<)',
-        from: 'high',
-        to: 'high'
-      }
-    ],
+    // her2_score: [
+    //   {
+    //     from: 'negative (0-1+)',
+    //     to: 'negative (0-1+)',
+    //     label: 'negative (0-1+)',
+    //     value: 'negative (0-1+)'
+    //   },
+    //   {
+    //     from: 'equivocal (2+)',
+    //     to: 'equivocal (2+)',
+    //     label: 'equivocal (2+)',
+    //     value: 'equivocal (2+)'
+    //   },
+    //   {
+    //     from: 'positive (3+)',
+    //     to: 'positive (3+)',
+    //     label: 'positive (3+)',
+    //     value: 'positive (3+)'
+    //   }
+    // ],
+    // pr_score: [
+    //   { label: 'Positive', from: 1, to: 1 },
+    //   { label: 'Negative', from: 2, to: 2 }
+    // ],
+    // er_score: [
+    //   { label: 'Positive', from: 1, to: 1 },
+    //   { label: 'Negative', from: 2, to: 2 }
+    // ],
+    // ki67_score: [
+    //   { label: 'low(≤15%)', value: 'low(≤15%)', from: 'low', to: 'low' },
+    //   {
+    //     label: 'intermediate(<15-30%≤)',
+    //     value: 'intermediate(<15-30%≤)',
+    //     from: 'intermediate',
+    //     to: 'intermediate'
+    //   },
+    //   {
+    //     label: 'high(30%<)',
+    //     value: 'high(30%<)',
+    //     from: 'high',
+    //     to: 'high'
+    //   }
+    // ],
     smok_yn: [
       { label: 'No Smoking', value: 'no' },
       { label: 'Past Smoking', value: 'past' },
@@ -736,6 +776,8 @@ export const PreDefienedFiltersSurvival = ({
         );
       }
       else if (selectedFilterType.details.type === 'static') {
+        // console.log('static 765 = ',selectedFilterType.index)
+        if(selectedFilterType.details.name == 'sex_cd'){
         setFilters({
           group_a: 'F',
           group_b: 'M',
@@ -755,6 +797,31 @@ export const PreDefienedFiltersSurvival = ({
             </div>
           </div>
         );
+      }
+      // else if (selectedFilterType.details.id == 'stage'){
+      //   console.log('static 765 = ',selectedFilterType.details.name)
+      //   setFilters({
+      //     group_a: 'Stage_I',
+      //     group_b: 'Stage_II',
+      //     group_c: 'Stage_III',
+      //     group_d: 'Stage_IV',
+      //     column: selectedFilterType.details.id,
+      //     type: 'static',
+      //     index: selectedFilterType.index
+      //   });
+      //   filterGroupsHtmlTemp.push(
+      //     <div key="gender">
+      //       <div className="flex Border mb-1 flex-row JustifyCenter gap10px">
+      //         <h5 className="TextBase MarginTop2">Group 1 : </h5>
+      //         <h5 className="TextBase MarginTop2">Male</h5>
+      //       </div>
+      //       <div className="flex Border mb-1 flex-row JustifyCenter gap10px">
+      //         <h5 className="TextBase MarginTop2">Group 2 : </h5>
+      //         <h5 className="TextBase MarginTop2">Female</h5>
+      //       </div>
+      //     </div>
+      //   );
+      // }
       }
       else if (selectedFilterType.details.type === 'number' || selectedFilterType.details.type === 'text') {
         const colName = selectedFilterType.details.id;
@@ -827,10 +894,11 @@ export const PreDefienedFiltersSurvival = ({
   return (
     <div className="m-1 PY3 PX2 BGGray100">
       <div className="P1 PY3 PX2 ColSpan2">
-        <div className="Block  TextBlue700 TextLG  FontBold MB2 TextLeft">
+        <label htmlFor="clinicalAttributeSelect" className="Block TextBlue700 TextLG FontBold MB2 TextLeft">
           <FormattedMessage id="Clinical Filters" defaultMessage="Clinical Attribute" />
-        </div>
+        </label>
         <select
+          id="clinicalAttributeSelect"
           onChange={filterTypeDropdownSelection}
           value={selectDefaultValue}
           className="WFull lg:P4 xs:p-2 Border lg:text-xl xs:text-sm focus:outline-none Border-b-color focus:ring focus:Border-b-color active:Border-b-color mt-3"
@@ -924,18 +992,19 @@ export const GroupFilters = ({
           input: 'number'
         },
         { type: 'dropdown', name: '흡연 정보', id: 'smok_yn' },
-        {
-          type: 'number',
-          name: '초경 나이',
-          id: 'mena_age',
-          input: 'number'
-        },
-        {
-          type: 'number',
-          name: '수유기간',
-          id: 'feed_drtn_mnth',
-          input: 'number'
-        },
+        { type: 'dropdown', name: 'Stage', id: 'stage' },
+        // {
+        //   type: 'number',
+        //   name: '초경 나이',
+        //   id: 'mena_age',
+        //   input: 'number'
+        // },
+        // {
+        //   type: 'number',
+        //   name: '수유기간',
+        //   id: 'feed_drtn_mnth',
+        //   input: 'number'
+        // },
         {
           type: 'dropdown',
           name: 'T Stage',
@@ -948,13 +1017,13 @@ export const GroupFilters = ({
           id: 'n_category',
           input: 'number'
         },
-        {
-          type: 'dropdown',
-          name: 'HER2 점수',
-          id: 'her2_score',
-          input: 'number'
-        },
-        { type: 'dropdown', name: '세포증식지수(Ki-67)', id: 'ki67_score', input: 'number' }
+        // {
+        //   type: 'dropdown',
+        //   name: 'HER2 점수',
+        //   id: 'her2_score',
+        //   input: 'number'
+        // },
+        // { type: 'dropdown', name: '세포증식지수(Ki-67)', id: 'ki67_score', input: 'number' }
       ];
     }
     else {
@@ -972,18 +1041,19 @@ export const GroupFilters = ({
           input: 'number'
         },
         { type: 'dropdown', name: 'Smoking Status', id: 'smok_yn' },
-        {
-          type: 'number',
-          name: 'First Menstural Age',
-          id: 'mena_age',
-          input: 'number'
-        },
-        {
-          type: 'number',
-          name: 'Duration of Breastfeeding(month)',
-          id: 'feed_drtn_mnth',
-          input: 'number'
-        },
+        { type: 'dropdown', name: 'Stage', id: 'stage' },
+        // {
+        //   type: 'number',
+        //   name: 'First Menstural Age',
+        //   id: 'mena_age',
+        //   input: 'number'
+        // },
+        // {
+        //   type: 'number',
+        //   name: 'Duration of Breastfeeding(month)',
+        //   id: 'feed_drtn_mnth',
+        //   input: 'number'
+        // },
         {
           type: 'dropdown',
           name: 'T Category',
@@ -996,13 +1066,13 @@ export const GroupFilters = ({
           id: 'n_category',
           input: 'number'
         },
-        {
-          type: 'dropdown',
-          name: 'HER2 Score',
-          id: 'her2_score',
-          input: 'number'
-        },
-        { type: 'dropdown', name: 'ki67', id: 'ki67_score', input: 'number' }
+        // {
+        //   type: 'dropdown',
+        //   name: 'HER2 Score',
+        //   id: 'her2_score',
+        //   input: 'number'
+        // },
+        // { type: 'dropdown', name: 'ki67', id: 'ki67_score', input: 'number' }
       ];
     }
 
@@ -1022,50 +1092,57 @@ export const GroupFilters = ({
     }
 
     preDefienedGroups1['t_category'] = [
-      { label: 'Tis', from: 'Tis', to: 'Tis', value: 'Tis' },
+      // { label: 'Tis', from: 'Tis', to: 'Tis', value: 'Tis' },
       { label: 'T1', from: 'T1', to: 'T1', value: 'T1' },
       { label: 'T2', from: 'T2', to: 'T2', value: 'T2' },
       { label: 'T3', from: 'T3', to: 'T3', value: 'T3' },
       { label: 'T4', from: 'T4', to: 'T4', value: 'T4' }
     ];
     preDefienedGroups1['n_category'] = [
-      { label: 'Nx', from: 'Nx', to: 'Nx', value: 'Nx' },
+      // { label: 'Nx', from: 'Nx', to: 'Nx', value: 'Nx' },
       { label: 'N0', from: 'N0', to: 'N0', value: 'N0' },
       { label: 'N1', from: 'N1', to: 'N1', value: 'N1' },
       { label: 'N2', from: 'N2', to: 'N2', value: 'N2' },
       { label: 'N3', from: 'N3', to: 'N3', value: 'N3' }
     ];
-    preDefienedGroups1['her2_score'] = [
-      {
-        value: 'negative (0-1+)',
-        label: 'negative (0-1+)',
-        from: '0',
-        to: '(0-1+)'
-      },
-      {
-        value: 'equivocal (2+)',
-        label: 'equivocal (2+)',
-        from: '2',
-        to: '(2+)'
-      },
-      {
-        value: 'positive (3+)',
-        label: 'positive (3+)',
-        from: '2+',
-        to: '(3+)'
-      }
+    preDefienedGroups1['stage'] = [
+      // { label: 'Tis', from: 'Tis', to: 'Tis', value: 'Tis' },
+      { label: 'Stage I', value: 'Stage_I' },
+      { label: 'Stage II', value: 'Stage_II' },
+      { label: 'Stage III', value: 'Stage_III' },
+      { label: 'Stage IV', value: 'Stage_IV' }
     ];
+    // preDefienedGroups1['her2_score'] = [
+    //   {
+    //     value: 'negative (0-1+)',
+    //     label: 'negative (0-1+)',
+    //     from: '0',
+    //     to: '(0-1+)'
+    //   },
+    //   {
+    //     value: 'equivocal (2+)',
+    //     label: 'equivocal (2+)',
+    //     from: '2',
+    //     to: '(2+)'
+    //   },
+    //   {
+    //     value: 'positive (3+)',
+    //     label: 'positive (3+)',
+    //     from: '2+',
+    //     to: '(3+)'
+    //   }
+    // ];
 
-    preDefienedGroups1['ki67_score'] = [
-      { label: 'low(≤15%)', value: 'low', from: '0', to: '15' },
-      {
-        label: 'intermediate(<15-30%≤)',
-        value: 'intermediate',
-        from: '15',
-        to: '30'
-      },
-      { label: 'high(30%<)', value: 'high', from: '30', to: '100' }
-    ];
+    // preDefienedGroups1['ki67_score'] = [
+    //   { label: 'low(≤15%)', value: 'low', from: '0', to: '15' },
+    //   {
+    //     label: 'intermediate(<15-30%≤)',
+    //     value: 'intermediate',
+    //     from: '15',
+    //     to: '30'
+    //   },
+    //   { label: 'high(30%<)', value: 'high', from: '30', to: '100' }
+    // ];
   }
 
   useEffect(() => {
@@ -1113,7 +1190,7 @@ export const GroupFilters = ({
         if (filterType === 'boolean' || filterType === 'static' || booleanType === 'yes') {
           setShowAddGroupButton(false);
           let options = ['Yes', 'No'];
-          if (filterType === 'static') {
+          if (filterType === 'static') { //to edit
             options = [selectedFilterDetails.options[0], selectedFilterDetails.options[1]];
             setUserGivenInputValues({
               group_a: 'M',
@@ -1157,6 +1234,7 @@ export const GroupFilters = ({
 
         else if (filterType === 'dropdown') {
           let tr = [];
+          console.log(Object.keys(userGivenInputValues)?.length)
           setShowAddGroupButton(false);
           if (viz_type === 'volcono') {
             if (
@@ -1179,7 +1257,9 @@ export const GroupFilters = ({
                     <tr key={colName + index} className="Border-b">
                       <td className=" PX6Y4 CheckBoxRow">{element.label}</td>
                       <td className="PX6Y4">
+                        <label htmlFor='group_a'></label>
                         <input
+                        id='group_a'
                           type="checkbox"
                           defaultChecked={group_a}
                           onChange={dropDownChange}
@@ -1191,7 +1271,9 @@ export const GroupFilters = ({
                         />
                       </td>
                       <td className="PX6Y4">
+                      <label htmlFor='group_b'></label>
                         <input
+                        id='group_b'
                           type="checkbox"
                           defaultChecked={group_b}
                           onChange={dropDownChange}
@@ -1212,7 +1294,9 @@ export const GroupFilters = ({
                   <tr key={colName + index} className="Border-b">
                     <td className=" PX6Y4 CheckBoxRow">{element.label}</td>
                     <td className="PX6Y4">
+                    <label htmlFor='grp_a'></label>
                       <input
+                      id='grp_a'
                         type="checkbox"
                         onChange={dropDownChange}
                         value={JSON.stringify({
@@ -1223,7 +1307,9 @@ export const GroupFilters = ({
                       />
                     </td>
                     <td className="PX6Y4">
+                      <label htmlFor='grp_b'></label>
                       <input
+                      id='grp_b'
                         type="checkbox"
                         onChange={dropDownChange}
                         value={JSON.stringify({
@@ -1239,14 +1325,16 @@ export const GroupFilters = ({
             }
             componentData.push(
               <table className="table" key={'group_table'}>
+                <caption></caption>
                 <thead className="Border-b WFull" key={'group_thead'}>
                   <tr>
-                    <th></th>
-                    <th className="GroupNamesFilter PX6Y4">Group A</th>
-                    <th className="GroupNamesFilter PX6Y4">Group B</th>
+                    <th scope='col'></th>
+                    <th className="GroupNamesFilter PX6Y4" scope='col'>Group A</th>
+                    <th className="GroupNamesFilter PX6Y4" scope='col'>Group B</th>
                   </tr>
                 </thead>
                 <tbody key={'group_tbody'}>{tr}</tbody>
+                <tfoot></tfoot>
               </table>
             );
           }
@@ -1257,26 +1345,26 @@ export const GroupFilters = ({
             for (let sv = 0; sv < d?.length; sv++) {
               const element = d[sv];
               thead.push(
-                <th key={sv} className="GroupNamesFilter PX6Y4 ">
-                  Group {abc[sv]}:
+                <th scope='col' key={sv} className="GroupNamesFilter PX6Y4">
+                  Group {groupNames[sv]}:
                 </th>
               );
               let checkbox = [];
               let group_i = 0;
 
               for (let index = 0; index < boxes; index++) {
-                let name = 'group_' + abc[index] + '_' + element.value;
+                let name = 'group_' + groupNames[index] + '_' + element.value;
                 if (Object.keys(userGivenInputValues)?.length > 0) {
                   let group_check = false;
                   if (
-                    'group_' + abc[index] in userGivenInputValues &&
-                    userGivenInputValues['group_' + abc[index]]?.length > 0
+                    'group_' + groupNames[index] in userGivenInputValues &&
+                    userGivenInputValues['group_' + groupNames[index]]?.length > 0
                   ) {
-                    if (userGivenInputValues['group_' + abc[index]].indexOf(element.value) > -1) {
-                      let gi_val = userGivenInputValues['group_' + abc[index]];
+                    if (userGivenInputValues['group_' + groupNames[index]].indexOf(element.value) > -1) {
+                      let gi_val = userGivenInputValues['group_' + groupNames[index]];
                       for (let gi = 0; gi < gi_val?.length; gi++) {
                         let n = gi_val[gi];
-                        if ('group_' + abc[index] + '_' + n === name) {
+                        if ('group_' + groupNames[index] + '_' + n === name) {
                           group_check = true;
                           break;
                         }
@@ -1284,17 +1372,19 @@ export const GroupFilters = ({
                     }
                   }
                   checkbox.push(
-                    <td className="PX6Y4" key={index + '_' + sv + abc[sv] + '_' + element.label}>
+                    <td className="PX6Y4" key={index + '_' + sv + groupNames[sv] + '_' + element.label}>
+                      <label htmlFor={groupNames[index]}></label>
                       <input
+                        id={groupNames[index]}
                         data-type={element.label}
-                        data-name={abc[index]}
+                        data-name={groupNames[index]}
                         type="checkbox"
                         defaultChecked={group_check}
                         onChange={dropDownChange}
                         value={JSON.stringify({
                           index: sv,
                           colName: colName,
-                          group: 'group_' + abc[index]
+                          group: 'group_' + groupNames[index]
                         })}
                         key={element.label}
                       />
@@ -1303,14 +1393,16 @@ export const GroupFilters = ({
                   group_i = group_i + 1;
                 } else {
                   checkbox.push(
-                    <td className="PX6Y4" key={index + '_' + sv + abc[sv] + '_' + element.label}>
+                    <td className="PX6Y4" key={index + '_' + sv + groupNames[sv] + '_' + element.label}>
+                      <label htmlFor={'group_' + groupNames[index]}></label>
                       <input
+                      id={'group_' + groupNames[index]}
                         type="checkbox"
                         onChange={dropDownChange}
                         value={JSON.stringify({
                           index: sv,
                           colName: colName,
-                          group: 'group_' + abc[index]
+                          group: 'group_' + groupNames[index]
                         })}
                         key={element.label}
                       />
@@ -1327,13 +1419,15 @@ export const GroupFilters = ({
             }
             componentData.push(
               <table className="table" key={'group_table'}>
+                <caption></caption>
                 <thead className="Border-b WFull" key={'group_thead'}>
                   <tr>
-                    <th></th>
+                    <th scope='col'></th>
                     {thead}
                   </tr>
                 </thead>
                 <tbody key={'group_tbody'}>{tr}</tbody>
+                <tfoot></tfoot>
               </table>
             );
           }
@@ -1344,26 +1438,26 @@ export const GroupFilters = ({
             for (let sv = 0; sv < 3; sv++) {
               const element = d[sv];
               thead.push(
-                <th key={sv} className="GroupNamesFilter PX6Y4 ">
-                  Group {abc[sv]}:
+                <th key={sv} className="GroupNamesFilter PX6Y4" scope='col'>
+                  Group {groupNames[sv]}:
                 </th>
               );
               let checkbox = [];
               let group_i = 0;
 
               for (let index = 0; index < 3; index++) {
-                let name = 'group_' + abc[index] + '_' + element.value;
+                let name = 'group_' + groupNames[index] + '_' + element.value;
                 if (Object.keys(userGivenInputValues)?.length > 0 && Object.keys(userGivenInputValues)?.some(key => ['group_a', 'group_b', 'group_c'].includes(key))) {
                   let group_check = false;
                   if (
-                    'group_' + abc[index] in userGivenInputValues &&
-                    userGivenInputValues['group_' + abc[index]]?.length > 0
+                    'group_' + groupNames[index] in userGivenInputValues &&
+                    userGivenInputValues['group_' + groupNames[index]]?.length > 0
                   ) {
-                    if (userGivenInputValues['group_' + abc[index]].indexOf(element.value) > -1) {
-                      let gi_val = userGivenInputValues['group_' + abc[index]];
+                    if (userGivenInputValues['group_' + groupNames[index]].indexOf(element.value) > -1) {
+                      let gi_val = userGivenInputValues['group_' + groupNames[index]];
                       for (let gi = 0; gi < gi_val?.length; gi++) {
                         let n = gi_val[gi];
-                        if ('group_' + abc[index] + '_' + n === name) {
+                        if ('group_' + groupNames[index] + '_' + n === name) {
                           group_check = true;
                           // break;
                         }
@@ -1371,17 +1465,18 @@ export const GroupFilters = ({
                     }
                   }
                   checkbox.push(
-                    <td className="PX6Y4" key={index + '_' + sv + abc[sv] + '_' + element.label}>
-                      <input
+                    <td className="PX6Y4" key={index + '_' + sv + groupNames[sv] + '_' + element.label}>
+                      <label htmlFor={'group' + groupNames[index]}></label>
+                      <input id={'group' + groupNames[index]}
                         data-type={element.label}
-                        data-name={abc[index]}
+                        data-name={groupNames[index]}
                         type="checkbox"
                         defaultChecked={group_check}
                         onChange={dropDownChange}
                         value={JSON.stringify({
                           index: sv,
                           colName: colName,
-                          group: 'group_' + abc[index]
+                          group: 'group_' + groupNames[index]
                         })}
                         key={element.label}
                       />
@@ -1390,14 +1485,15 @@ export const GroupFilters = ({
                   group_i = group_i + 1;
                 } else {
                   checkbox.push(
-                    <td className="PX6Y4" key={index + '_' + sv + abc[sv] + '_' + element.label}>
-                      <input
+                    <td className="PX6Y4" key={index + '_' + sv + groupNames[sv] + '_' + element.label}>
+                      <label htmlFor={'grp' + groupNames[index]}></label>
+                      <input id={'grp' + groupNames[index]}
                         type="checkbox"
                         onChange={dropDownChange}
                         value={JSON.stringify({
                           index: sv,
                           colName: colName,
-                          group: 'group_' + abc[index]
+                          group: 'group_' + groupNames[index]
                         })}
                         key={element.label}
                       />
@@ -1414,13 +1510,15 @@ export const GroupFilters = ({
             }
             componentData.push(
               <table className="table" key={'group_table'}>
+                <caption></caption>
                 <thead className="Border-b WFull" key={'group_thead'}>
                   <tr>
-                    <th></th>
+                    <th scope='col'></th>
                     {thead}
                   </tr>
                 </thead>
                 <tbody key={'group_tbody'}>{tr}</tbody>
+                <tfoot></tfoot>
               </table>
             );
           }
@@ -1529,7 +1627,7 @@ export const GroupFilters = ({
               <div key={index} className="Border MarginTop4 P1">
                 <div
                   key={e}
-                  className="Block  TextBlue700 TextLG  FontBold MB2 TextLeft"
+                  className="Block TextBlue700 TextLG FontBold MB2 TextLeft"
                   htmlFor="yes"
                 >
                   {e}
@@ -1546,11 +1644,12 @@ export const GroupFilters = ({
         return (
           <div key={`${compCase}-${groupNumber}${Math.random()}`} className="MarginBottom4">
             <div>
-              <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
+              <div className="Block TextBase FontBold MB2 TextLeft" htmlFor="username_1">
                 {`Group ${groupNumber}`}
               </div>
               <div className='Flex'>
-                <input
+                <label htmlFor={`${groupNumber}_from`}></label>
+                <input id={`${groupNumber}_from`}
                   onChange={onChangeFilterInput}
                   className="NumberInputCss"
                   name={`${groupNumber}_from`}
@@ -1560,7 +1659,8 @@ export const GroupFilters = ({
                   max={max}
                   defaultValue={userGivenInputValues && userGivenInputValues[`${groupNumber}_from`] || ''}
                 ></input>
-                <input
+                <label htmlFor={`${groupNumber}_to`}></label>
+                <input id={`${groupNumber}_to`}
                   onChange={onChangeFilterInput}
                   className="NumberInputCss"
                   name={`${groupNumber}_to`}
@@ -1580,35 +1680,35 @@ export const GroupFilters = ({
             <div key={`${compCase}--${Math.random()}`}>
               <div key={`${compCase}-1-${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
+                  <div className="Block TextBase FontBold MB2 TextLeft" htmlFor="username_2">
                     Group 1
                   </div>
-                  <div>
-                    <input
+                  <label htmlFor='grp1'></label>
+                    <input id='grp1'
                       onChange={onChangeFilterInput}
                       className="CheckBoxCss"
                       name="1"
                       type="text"
                       placeholder="Enter Text"
                     ></input>
-                  </div>
+
                 </div>
               </div>
 
               <div key={`${compCase}-2-${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
+                  <div className="Block TextBase FontBold MB2 TextLeft" htmlFor="username_3">
                     Group 2
                   </div>
-                  <div>
+                  <label htmlFor='grp2'></label>
                     <input
+                      id='grp2'
                       onChange={onChangeFilterInput}
                       className="CheckBoxCss"
                       name="2"
                       type="text"
                       placeholder="Enter Text"
                     ></input>
-                  </div>
                 </div>
               </div>
             </div>
@@ -1617,11 +1717,12 @@ export const GroupFilters = ({
           return (
             <div key={`${compCase}-${groupsCounter}-${Math.random()}`} className="MarginBottom4">
               <div>
-                <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
+                <div className="Block TextBase FontBold MB2 TextLeft" htmlFor="username_4">
                   {`Group ${groupsCounter}`}
                 </div>
                 <div>
-                  <input
+                <label htmlFor={`${groupsCounter}`}></label>
+                  <input id={`${groupsCounter}`}
                     onChange={onChangeFilterInput}
                     className="CheckBoxCss"
                     name={`${groupsCounter}`}
@@ -1858,9 +1959,9 @@ export const GroupFilters = ({
   return (
     <div className="m-1 PY3 PX2  BGGray100">
       <div className="P1 PY3 PX2 ColSpan2">
-        <div className="Block  TextBlue700 TextLG  FontBold MB2 TextLeft">
+        <label htmlFor="ClinicalAttributeSelect" className="Block TextBlue700 TextLG FontBold MB2 TextLeft">
           <FormattedMessage id="Clinical Filters" defaultMessage="Clinical Attribute" />
-        </div>
+        </label>
         <select
           value={selectDefaultValue}
           onChange={updateSelectedFilter}
@@ -2074,6 +2175,7 @@ export const UserDefinedGroupFilters = ({
           setShowAddGroupButton(false);
           let options = ['Yes', 'No'];
           if (filterType === 'static') {
+            // if
             options = [selectedFilterDetails.options[0], selectedFilterDetails.options[1]];
             setUserGivenInputValues({
               group_a: 'M',
@@ -2139,7 +2241,8 @@ export const UserDefinedGroupFilters = ({
                     <tr key={colName + index} className="Border-b">
                       <td className=" PX6Y4 CheckBoxRow">{element.label}</td>
                       <td className="PX6Y4">
-                        <input
+                        <label htmlFor={colName+'_1'}></label>
+                        <input id={colName+'_1'}
                           type="checkbox"
                           defaultChecked={group_a}
                           onChange={dropDownChange}
@@ -2151,7 +2254,8 @@ export const UserDefinedGroupFilters = ({
                         />
                       </td>
                       <td className="PX6Y4">
-                        <input
+                        <label htmlFor={colName+'_2'}></label>
+                        <input id={colName+'_2'}
                           type="checkbox"
                           defaultChecked={group_b}
                           onChange={dropDownChange}
@@ -2172,7 +2276,9 @@ export const UserDefinedGroupFilters = ({
                   <tr key={colName + index} className="Border-b">
                     <td className=" PX6Y4 CheckBoxRow">{element.label}</td>
                     <td className="PX6Y4">
+                      <label htmlFor={colName+'_3'}></label>
                       <input
+                        id={colName+'_3'}
                         type="checkbox"
                         onChange={dropDownChange}
                         value={JSON.stringify({
@@ -2183,7 +2289,8 @@ export const UserDefinedGroupFilters = ({
                       />
                     </td>
                     <td className="PX6Y4">
-                      <input
+                      <label htmlFor={colName+'_4'}></label>
+                      <input id={colName+'_4'}
                         type="checkbox"
                         onChange={dropDownChange}
                         value={JSON.stringify({
@@ -2199,14 +2306,16 @@ export const UserDefinedGroupFilters = ({
             }
             componentData.push(
               <table className="table" key={'group_table'}>
+                <caption></caption>
                 <thead className="Border-b WFull" key={'group_thead'}>
                   <tr>
-                    <th></th>
-                    <th className="GroupNamesFilter PX6Y4">Group A</th>
-                    <th className="GroupNamesFilter PX6Y4">Group B</th>
+                    <th scope='col'></th>
+                    <th scope='col' className="GroupNamesFilter PX6Y4">Group A</th>
+                    <th scope='col' className="GroupNamesFilter PX6Y4">Group B</th>
                   </tr>
                 </thead>
                 <tbody key={'group_tbody'}>{tr}</tbody>
+                <tfoot></tfoot>
               </table>
             );
           }
@@ -2220,8 +2329,8 @@ export const UserDefinedGroupFilters = ({
               }
               const element = d[sv];
               thead.push(
-                <th key={sv} className="GroupNamesFilter PX6Y4 ">
-                  Group {abc[sv]}:
+                <th key={sv} className="GroupNamesFilter PX6Y4" scope='col'>
+                  Group {groupNames[sv]}:
                 </th>
               );
               let checkbox = [];
@@ -2231,18 +2340,18 @@ export const UserDefinedGroupFilters = ({
                 if (index >= 5) {
                   break;
                 }
-                let name = 'group_' + abc[index] + '_' + element.value;
+                let name = 'group_' + groupNames[index] + '_' + element.value;
                 if (Object.keys(userGivenInputValues)?.length > 0) {
                   let group_check = false;
                   if (
-                    'group_' + abc[index] in userGivenInputValues &&
-                    userGivenInputValues['group_' + abc[index]]?.length > 0
+                    'group_' + groupNames[index] in userGivenInputValues &&
+                    userGivenInputValues['group_' + groupNames[index]]?.length > 0
                   ) {
-                    if (userGivenInputValues['group_' + abc[index]].indexOf(element.value) > -1) {
-                      let gi_val = userGivenInputValues['group_' + abc[index]];
+                    if (userGivenInputValues['group_' + groupNames[index]].indexOf(element.value) > -1) {
+                      let gi_val = userGivenInputValues['group_' + groupNames[index]];
                       for (let gi = 0; gi < gi_val?.length; gi++) {
                         let n = gi_val[gi];
-                        if ('group_' + abc[index] + '_' + n === name) {
+                        if ('group_' + groupNames[index] + '_' + n === name) {
                           group_check = true;
                           break;
                         }
@@ -2250,17 +2359,18 @@ export const UserDefinedGroupFilters = ({
                     }
                   }
                   checkbox.push(
-                    <td className="PX6Y4" key={index + '_' + sv + abc[sv] + '_' + element.label}>
-                      <input
+                    <td className="PX6Y4" key={index + '_' + sv + groupNames[sv] + '_' + element.label}>
+                      <label htmlFor={colName+'_5'}></label>
+                      <input id={colName+'_5'}
                         data-type={element.label}
-                        data-name={abc[index]}
+                        data-name={groupNames[index]}
                         type="checkbox"
                         defaultChecked={group_check}
                         onChange={dropDownChange}
                         value={JSON.stringify({
                           index: sv,
                           colName: colName,
-                          group: 'group_' + abc[index]
+                          group: 'group_' + groupNames[index]
                         })}
                         key={element.label}
                       />
@@ -2269,14 +2379,15 @@ export const UserDefinedGroupFilters = ({
                   group_i = group_i + 1;
                 } else {
                   checkbox.push(
-                    <td className="PX6Y4" key={index + '_' + sv + abc[sv] + '_' + element.label}>
-                      <input
+                    <td className="PX6Y4" key={index + '_' + sv + groupNames[sv] + '_' + element.label}>
+                      <label htmlFor={colName+'_6'}></label>
+                      <input id={colName+'_6'}
                         type="checkbox"
                         onChange={dropDownChange}
                         value={JSON.stringify({
                           index: sv,
                           colName: colName,
-                          group: 'group_' + abc[index]
+                          group: 'group_' + groupNames[index]
                         })}
                         key={element.label}
                       />
@@ -2293,13 +2404,15 @@ export const UserDefinedGroupFilters = ({
             }
             componentData.push(
               <table className="table" key={'group_table'}>
+                <caption></caption>
                 <thead className="Border-b WFull" key={'group_thead'}>
                   <tr>
-                    <th></th>
+                    <th scope='col'></th>
                     {thead}
                   </tr>
                 </thead>
                 <tbody key={'group_tbody'}>{tr}</tbody>
+                <tfoot></tfoot>
               </table>
             );
           }
@@ -2312,8 +2425,8 @@ export const UserDefinedGroupFilters = ({
               }
               const element = d[sv];
               thead.push(
-                <th key={sv} className="GroupNamesFilter PX6Y4 ">
-                  Group {abc[sv]}:
+                <th key={sv} className="GroupNamesFilter PX6Y4" scope='col'>
+                  Group {groupNames[sv]}:
                 </th>
               );
               let checkbox = [];
@@ -2323,18 +2436,18 @@ export const UserDefinedGroupFilters = ({
                 if (index >= 3) {
                   break;
                 }
-                let name = 'group_' + abc[index] + '_' + element.value;
+                let name = 'group_' + groupNames[index] + '_' + element.value;
                 if (Object.keys(userGivenInputValues)?.length > 0 && Object.keys(userGivenInputValues).some(key => ['group_a', 'group_b', 'group_c'].includes(key))) {
                   let group_check = false;
                   if (
-                    'group_' + abc[index] in userGivenInputValues &&
-                    userGivenInputValues['group_' + abc[index]]?.length > 0
+                    'group_' + groupNames[index] in userGivenInputValues &&
+                    userGivenInputValues['group_' + groupNames[index]]?.length > 0
                   ) {
-                    if (userGivenInputValues['group_' + abc[index]].indexOf(element.value) > -1) {
-                      let gi_val = userGivenInputValues['group_' + abc[index]];
+                    if (userGivenInputValues['group_' + groupNames[index]].indexOf(element.value) > -1) {
+                      let gi_val = userGivenInputValues['group_' + groupNames[index]];
                       for (let gi = 0; gi < gi_val?.length; gi++) {
                         let n = gi_val[gi];
-                        if ('group_' + abc[index] + '_' + n === name) {
+                        if ('group_' + groupNames[index] + '_' + n === name) {
                           group_check = true;
                           // break;
                         }
@@ -2342,17 +2455,18 @@ export const UserDefinedGroupFilters = ({
                     }
                   }
                   checkbox.push(
-                    <td className="PX6Y4" key={index + '_' + sv + abc[sv] + '_' + element.label}>
-                      <input
+                    <td className="PX6Y4" key={index + '_' + sv + groupNames[sv] + '_' + element.label}>
+                      <label htmlFor={colName+'_7'}></label>
+                      <input id={colName+'_7'}
                         data-type={element.label}
-                        data-name={abc[index]}
+                        data-name={groupNames[index]}
                         type="checkbox"
                         defaultChecked={group_check}
                         onChange={dropDownChange}
                         value={JSON.stringify({
                           index: sv,
                           colName: colName,
-                          group: 'group_' + abc[index]
+                          group: 'group_' + groupNames[index]
                         })}
                         key={element.label}
                       />
@@ -2361,14 +2475,15 @@ export const UserDefinedGroupFilters = ({
                   group_i = group_i + 1;
                 } else {
                   checkbox.push(
-                    <td className="PX6Y4" key={index + '_' + sv + abc[sv] + '_' + element.label}>
-                      <input
+                    <td className="PX6Y4" key={index + '_' + sv + groupNames[sv] + '_' + element.label}>
+                      <label htmlFor={colName+'_8'}></label>
+                      <input id={colName+'_8'}
                         type="checkbox"
                         onChange={dropDownChange}
                         value={JSON.stringify({
                           index: sv,
                           colName: colName,
-                          group: 'group_' + abc[index]
+                          group: 'group_' + groupNames[index]
                         })}
                         key={element.label}
                       />
@@ -2385,13 +2500,15 @@ export const UserDefinedGroupFilters = ({
             }
             componentData.push(
               <table className="table" key={'group_table'}>
+                <caption></caption>
                 <thead className="Border-b WFull" key={'group_thead'}>
                   <tr>
-                    <th></th>
+                    <th scope='col'></th>
                     {thead}
                   </tr>
                 </thead>
                 <tbody key={'group_tbody'}>{tr}</tbody>
+                <tfoot></tfoot>
               </table>
             );
           }
@@ -2501,7 +2618,7 @@ export const UserDefinedGroupFilters = ({
               <div key={index} className="Border MarginTop4 P1">
                 <div
                   key={e}
-                  className="Block  TextBlue700 TextLG  FontBold MB2 TextLeft"
+                  className="Block TextBlue700 TextLG FontBold MB2 TextLeft"
                   htmlFor="yes"
                 >
                   {e}
@@ -2517,11 +2634,13 @@ export const UserDefinedGroupFilters = ({
         return (
           <div key={`${compCase}-${groupNumber}${Math.random()}`} className="MarginBottom4">
             <div>
-              <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
+              <div className="Block TextBase FontBold MB2 TextLeft" htmlFor="username_5">
                 {`Group ${groupNumber}`}
               </div>
               <div className='Flex'>
+                <label htmlFor={`${groupNumber}_from`}></label>
                 <input
+                  id={`${groupNumber}_from`}
                   onChange={onChangeFilterInput}
                   className="NumberInputCss"
                   name={`${groupNumber}_from`}
@@ -2532,7 +2651,9 @@ export const UserDefinedGroupFilters = ({
                   defaultValue={userGivenInputValues && userGivenInputValues[`${groupNumber}_from`] || ''}
                   onKeyDown={(e) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault()}
                 ></input>
+                <label htmlFor={`${groupNumber}_to`}></label>
                 <input
+                  id={`${groupNumber}_to`}
                   onChange={onChangeFilterInput}
                   className="NumberInputCss"
                   name={`${groupNumber}_to`}
@@ -2553,35 +2674,32 @@ export const UserDefinedGroupFilters = ({
             <div key={`${compCase}--${Math.random()}`}>
               <div key={`${compCase}-1-${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
+                  <label className="Block TextBase FontBold MB2 TextLeft" htmlFor="username_6">
                     Group 1
-                  </div>
-                  <div>
-                    <input
+                  </label>
+
+                    <input id='username_6'
                       onChange={onChangeFilterInput}
                       className="CheckBoxCss"
                       name="1"
                       type="text"
                       placeholder="Enter Text"
                     ></input>
-                  </div>
                 </div>
               </div>
 
               <div key={`${compCase}-2-${Math.random()}`} className="MarginBottom4">
                 <div>
-                  <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
+                  <label className="Block TextBase FontBold MB2 TextLeft" htmlFor="username_7">
                     Group 2
-                  </div>
-                  <div>
-                    <input
+                  </label>
+                    <input id='username_7'
                       onChange={onChangeFilterInput}
                       className="CheckBoxCss"
                       name="2"
                       type="text"
                       placeholder="Enter Text"
                     ></input>
-                  </div>
                 </div>
               </div>
             </div>
@@ -2590,18 +2708,16 @@ export const UserDefinedGroupFilters = ({
           return (
             <div key={`${compCase}-${groupsCounter}-${Math.random()}`} className="MarginBottom4">
               <div>
-                <div className="Block  TextBase  FontBold MB2 TextLeft" htmlFor="username">
+                <label className="Block TextBase FontBold MB2 TextLeft" htmlFor="username_8">
                   {`Group ${groupsCounter}`}
-                </div>
-                <div>
-                  <input
+                </label>
+                  <input id='username_8'
                     onChange={onChangeFilterInput}
                     className="CheckBoxCss"
                     name={`${groupsCounter}`}
                     type="text"
                     placeholder="Enter Text"
                   ></input>
-                </div>
               </div>
             </div>
           );
@@ -2828,9 +2944,9 @@ export const UserDefinedGroupFilters = ({
   return (
     <div className="m-1 PY3 PX2 BGGray100">
       <div className="P1 PY3 PX2 ColSpan2">
-        <div className="Block  TextBlue700 TextLG  FontBold MB2 TextLeft">
+        <label htmlFor="ClinicalAttributeSelect" className="Block TextBlue700 TextLG FontBold MB2 TextLeft">
           <FormattedMessage id="Clinical Filters" defaultMessage="Clinical Attribute" />
-        </div>
+        </label>
         <select
           value={selectDefaultValue}
           onChange={updateSelectedFilter}

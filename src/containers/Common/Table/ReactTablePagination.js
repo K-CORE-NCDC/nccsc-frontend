@@ -19,10 +19,9 @@ function PaginateTable({
     width,
     TotalCount,
     paramObj,
-    setParamObj
-    // columnFil,
-    // tooltips = false,
-
+    setParamObj,
+    tableSummary,
+    footerGroups,
 }) {
     // Use the state and functions returned from useTable to build your UI
     const {
@@ -92,7 +91,15 @@ function PaginateTable({
             <div style={{ width: '100%', overflowX: 'auto' }}>
                 <span style={{ display: 'flex', fontSize: '18px' }}><b>Total:</b> <div style={{ color: "#003177", paddingLeft: '10px', fontSize: "18px" }}>{TotalCount}</div></span>
 
-                <table className={" boardList"} {...getTableProps()} style={{ width: '1075px' }}>
+                <table
+                    className="boardList"
+                    {...getTableProps()}
+                    style={{ width: '1075px' }}
+                    summary={tableSummary}
+                >
+                    <caption className="sr-only">
+                        {tableSummary}
+                    </caption>
                     <thead className="boardHeader">
                         {headerGroups.map((headerGroup) => (
                             <tr
@@ -100,16 +107,20 @@ function PaginateTable({
                                 {...headerGroup.getHeaderGroupProps()}
                             >
                                 {headerGroup.headers.map((column) => (
-
-                                    <th className={`${(column?.fixed && column?.fixed === 'left') ? 'fixed' : ''} boardCell IconSpan`} {...column.getHeaderProps(column.getSortByToggleProps())}
-                                        style={column?.width && column?.width !== '' ? { width: column?.width + 'px', textAlign: 'center', padding: '16px 24px', wordBreak: column?.wordBreak } : { textAlign: 'center', padding: '16px 24px' }} >
+                                    <th
+                                        className={`${(column?.fixed && column?.fixed === 'left') ? 'fixed' : ''} boardCell IconSpan`}
+                                        {...column.getHeaderProps(column.getSortByToggleProps())}
+                                        style={column?.width && column?.width !== '' ?
+                                            { width: column?.width + 'px', textAlign: 'center', padding: '16px 24px', wordBreak: column?.wordBreak } :
+                                            { textAlign: 'center', padding: '16px 24px' }
+                                        }
+                                        scope="col"
+                                    >
                                         {column.render('Header')}
-
                                         <span className={`${column.isSorted ? 'Opacity1' : 'Opacity0'}`}>
                                             {column.isSorted
                                                 ? column.isSortedDesc
                                                     ? <ChevronDownIcon className="IconClass Color8F" />
-
                                                     : <ChevronUpIcon className="IconClass Color8F" />
                                                 : <ChevronUpIcon className="IconClass Color8F" />}
                                         </span>
@@ -124,13 +135,15 @@ function PaginateTable({
                             return (
                                 <tr
                                     className="boardTr"
-                                    {...row.getRowProps(getRowProps(row))} key={i}
+                                    {...row.getRowProps(getRowProps(row))}
+                                    key={i}
                                 >
                                     {row.cells.map((cell) => {
                                         return (
                                             <td
                                                 className={`${(cell?.column?.fixed && cell?.column?.fixed === 'left') ? 'fixed' : ''} boardCell`}
-                                                {...cell.getCellProps()} style={{ textAlign: 'center', fontWeight: '400', padding: "16px 24px" }}
+                                                {...cell.getCellProps()}
+                                                style={{ textAlign: 'center', fontWeight: '400', padding: "16px 24px" }}
                                             >
                                                 {cell.render("Cell")}
                                             </td>
@@ -140,6 +153,23 @@ function PaginateTable({
                             );
                         })}
                     </tbody>
+                    {footerGroups && (
+                        <tfoot>
+                            {footerGroups.map((footerGroup, idx) => (
+                                <tr key={idx}>
+                                    {footerGroup.cells.map((cell, cellIdx) => (
+                                        <td
+                                            key={cellIdx}
+                                            colSpan={columns.length}
+                                            style={{ textAlign: 'center', padding: '16px 24px' }}
+                                        >
+                                            {cell.content}
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))}
+                        </tfoot>
+                    )}
                 </table>
             </div>
             <div>

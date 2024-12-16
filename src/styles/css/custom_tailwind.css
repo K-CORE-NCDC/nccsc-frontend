@@ -137,6 +137,7 @@
   padding: 4px 8px;
   border-radius: 0.25rem;
   width: 100px;
+  margin-left:auto;
 }
 
 .MultiUploadTDHeader {
@@ -146,7 +147,7 @@
 
 .MultiUploadTD {
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   align-items: center;
 }
 

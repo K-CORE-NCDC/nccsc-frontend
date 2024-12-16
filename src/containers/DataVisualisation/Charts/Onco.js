@@ -310,13 +310,14 @@ export default function DataOnco({
           <div className="gene_selctionBox">
             {!noGeneData && (
               <>
-                <label>
+                <label htmlFor='clinical_filters_input'>
                   <FormattedMessage
                     id="Clinical_Filters_heatmap"
                     defaultMessage="Clinical Attribute annotation"
                   />
                 </label>
                 <Multiselect
+                  id='clinical_filters'
                   options={optionChoices} // Options to display in the dropdown
                   selectedValues={option} // Preselected value to persist in dropdown
                   onSelect={onSelect} // Function will trigger on select event
@@ -333,88 +334,100 @@ export default function DataOnco({
           {showOnco && chartData['types'].includes('rna') && <div className="relative flex  oncoBorder">
             <span
               className="border oncoWidth TextAlignCenter oncoBoxesLabel"
-              >mRNA &gt;= (z-score)</span>
-
-                <input
-                  type="number"
-                  aria-label="From"
-                  placeholder='From'
-                  value={Filter['z_score_up_rna']}
-                  onChange={handleFilter}
-                  name='z_score_up_rna'
-                  className="oncoBorderLeft oncoBoxes oncoWidth" />
-                  <span
+            >mRNA &gt;= (z-score)</span>
+            <label htmlFor='mrna_up_zscore'></label>
+            <input
+              id='mrna_up_zscore'
+              type="number"
+              aria-label="From"
+              placeholder='From'
+              value={Filter['z_score_up_rna']}
+              onChange={handleFilter}
+              name='z_score_up_rna'
+              className="oncoBorderLeft oncoBoxes oncoWidth" />
+            <span
               className="border oncoWidth TextAlignCenter oncoBoxesLabel"
-              >mRNA &lt;= (z-score)</span>
-                <input
-                  type="number"
-                  aria-label="To"
-                  placeholder='To'
-                  value={Filter['z_score_down_rna']}
-                  onChange={handleFilter}
-                  name='z_score_down_rna'
-                  className="oncoBorderLeft oncoBoxes oncoWidth" />
+            >mRNA &lt;= (z-score)</span>
+            <label htmlFor='mrna_down_zscore'></label>
+            <input
+            id='mrna_down_zscore'
+            type="number"
+            aria-label="To"
+            placeholder='To'
+            value={Filter['z_score_down_rna']}
+            onChange={handleFilter}
+            name='z_score_down_rna'
+            className="oncoBorderLeft oncoBoxes oncoWidth" />
 
           </div>}
           {showOnco && chartData['types'].includes('cnv') && <div className="relative flex  oncoBorder">
-            <span
-              className="border oncoWidth TextAlignCenter oncoBoxesLabel"
-              >CNV &gt;= </span>
-            <input
-              type="number"
-              aria-label="From"
-              placeholder='From'
-              value={Filter['cn_up_value']}
-              name='cn_up_value'
-              onChange={handleFilter}
-              className="oncoBorderLeft oncoBoxes oncoWidth" />
-              <span
-              className="border oncoWidth TextAlignCenter oncoBoxesLabel"
-              >CNV  = </span>
-            <input
-              type="number"
-              aria-label="equal"
-              placeholder='equal'
-              value={Filter['cn_equal_value']}
-              name='cn_equal_value'
-              onChange={handleFilter}
-              className="oncoBorderLeft oncoBoxes oncoWidth" />
-              <span
-              className="border oncoWidth TextAlignCenter oncoBoxesLabel"
-              >CNV &lt;= </span>
-            <input
-              type="number"
-              aria-label="To"
-              placeholder='To'
-              value={Filter['cn_down_value']}
-              name='cn_down_value'
-              onChange={handleFilter}
-              className="oncoBorderLeft oncoBoxes oncoWidth" />
+          <span
+            className="border oncoWidth TextAlignCenter oncoBoxesLabel"
+          >CNV &gt;= </span>
+          <label htmlFor='cnv_up_value'></label>
+          <input
+            id='cnv_up_value'
+            type="number"
+            aria-label="From"
+            placeholder='From'
+            value={Filter['cn_up_value']}
+            name='cn_up_value'
+            onChange={handleFilter}
+            className="oncoBorderLeft oncoBoxes oncoWidth" />
+          <span
+          className="border oncoWidth TextAlignCenter oncoBoxesLabel"
+          >CNV  = </span>
+          <label htmlFor='cnv_equal_value'></label>
+          <input
+            id='cnv_equal_value'
+            type="number"
+            aria-label="equal"
+            placeholder='equal'
+            value={Filter['cn_equal_value']}
+            name='cn_equal_value'
+            onChange={handleFilter}
+            className="oncoBorderLeft oncoBoxes oncoWidth" />
+          <span
+          className="border oncoWidth TextAlignCenter oncoBoxesLabel"
+          >CNV &lt;= </span>
+          <label htmlFor='cnv_down_value'></label>
+          <input
+            id='cnv_down_value'
+            type="number"
+            aria-label="To"
+            placeholder='To'
+            value={Filter['cn_down_value']}
+            name='cn_down_value'
+            onChange={handleFilter}
+            className="oncoBorderLeft oncoBoxes oncoWidth" />
           </div> }
           {showOnco && chartData['types'].includes('proteome') && <div className="relative flex  oncoBorder">
-            <span
-              className="border oncoWidth TextAlignCenter oncoBoxesLabel"
-              >PROTEOME &gt;= (z-score)</span>
-
-            <input
-              type="number"
-              aria-label="From"
-              placeholder='From'
-              value={Filter['z_score_up_prot']}
-              onChange={handleFilter}
-              name='z_score_up_prot'
-              className="oncoBorderLeft oncoBoxes oncoWidth" />
-              <span
-              className="border oncoWidth TextAlignCenter oncoBoxesLabel"
-              >PROTEOME &lt;= (z-score)</span>
-            <input
-              type="number"
-              aria-label="To"
-              placeholder='To'
-              value={Filter['z_score_down_prot']}
-              onChange={handleFilter}
-              name='z_score_down_prot'
-              className="oncoBorderLeft oncoBoxes oncoWidth" />
+          <span
+            className="border oncoWidth TextAlignCenter oncoBoxesLabel"
+            >PROTEOME &gt;= (z-score)</span>
+          <label htmlFor='proteome_up_zscore'></label>
+          <input
+            id='proteome_up_zscore'
+            type="number"
+            aria-label="From"
+            placeholder='From'
+            value={Filter['z_score_up_prot']}
+            onChange={handleFilter}
+            name='z_score_up_prot'
+            className="oncoBorderLeft oncoBoxes oncoWidth" />
+          <span
+          className="border oncoWidth TextAlignCenter oncoBoxesLabel"
+          >PROTEOME &lt;= (z-score)</span>
+          <label htmlFor='proteome_down_zscore'></label>
+          <input
+            id='proteome_down_zscore'
+            type="number"
+            aria-label="To"
+            placeholder='To'
+            value={Filter['z_score_down_prot']}
+            onChange={handleFilter}
+            name='z_score_down_prot'
+            className="oncoBorderLeft oncoBoxes oncoWidth" />
           </div>}
           <button onClick={ChangeFilter} className='btn btnPrimary MarginTop2 FusionNameRE'>Submit</button>
 

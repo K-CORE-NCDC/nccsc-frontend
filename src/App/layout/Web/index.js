@@ -158,29 +158,36 @@ export default function Web() {
   };
 
   useEffect(() => {
-    let userid = '';
+    let username = '';
+
     let category = 'Others';
-    if (window.location.href.substring(window.location.href.lastIndexOf('/') + 1)) {
-      category = 'Visualize My Data';
-    } else if (
-      [
-        'circos',
-        'OncoPrint',
-        'lollipop',
-        'volcano',
-        'heatmap',
-        'survival',
-        'correlation',
-        'CNV',
-        'box',
-        'fusion'
-      ].some((r) => window.location.href.split('/').indexOf(r) >= 0)
-    ) {
+
+    // Example Data Visualization paths
+    if ([
+      'visualizesingle-exampledata',
+      'visualizeMyExampleData',
+      'visualizemulti-exampledata'
+    ].some(r => window.location.href.includes(r))) {
       category = 'Example Data Visualization';
+    }
+    // User Data Visualization paths
+    else if ([
+      'visualise-multidata',
+      'singledata-upload',
+      'newmultidataproject',
+      'multidataprojectview',
+      'multidatavisualization',
+      'visualizeMyData',
+      'visualise-singledata'
+    ].some(r => window.location.href.includes(r))) {
+      category = 'User Data Visualization';
+    }
+    else{
+      category = 'Others';
     }
 
     if (getCookie('is_login') && getCookie('is_login') !== null) {
-      userid = getCookie('username');
+      username = getCookie('username');
     } else {
       if (getCookie('sessionId') === undefined) {
         localStorage.removeItem('ncc_access_token');
@@ -208,7 +215,7 @@ export default function Web() {
         url: 'http://localhost:9192/home',
         startTime: loginTime,
         endTime: '',
-        userid: userid,
+        username: username,
         category: category
       };
       arrayOfLog[0] = object;
@@ -252,33 +259,56 @@ export default function Web() {
       // updateLocation();
     }
     let sessionAuth = '';
-    let userid = '';
+    let username= '';
     let category = 'Others';
-
-    if (window.location.href.substring(window.location.href.lastIndexOf('/') + 1)) {
-      category = 'Visualize My Data';
-    } else if (
-      [
-        'circos',
-        'OncoPrint',
-        'lollipop',
-        'volcano',
-        'heatmap',
-        'survival',
-        'correlation',
-        'CNV',
-        'box',
-        'fusion'
-      ].some((r) => window.location.href.split('/').indexOf(r) >= 0)
-    ) {
+    // Example Data Visualization paths
+    if ([
+      'visualizesingle-exampledata',
+      'visualizeMyExampleData',
+      'visualizemulti-exampledata'
+    ].some(r => window.location.href.includes(r))) {
       category = 'Example Data Visualization';
     }
+    // User Data Visualization paths
+    else if ([
+      'visualise-multidata',
+      'singledata-upload',
+      'newmultidataproject',
+      'multidataprojectview',
+      'multidatavisualization',
+      'visualizeMyData',
+      'visualise-singledata'
+    ].some(r => window.location.href.includes(r))) {
+      category = 'User Data Visualization';
+    }
+    else{
+      category = 'Others';
+    }
+    // if (window.location.href.substring(window.location.href.lastIndexOf('/') + 1)) {
+    //   category = 'Visualize My Data';
+    // } else if (
+    //   [
+    //     'circos',
+    //     'OncoPrint',
+    //     'lollipop',
+    //     'volcano',
+    //     'heatmap',
+    //     'survival',
+    //     'correlation',
+    //     'CNV',
+    //     'box',
+    //     'fusion'
+    //   ].some((r) => window.location.href.split('/').indexOf(r) >= 0)
+    // ) {
+    //   category = 'Example Data Visualization';
+    // }
 
     if (getCookie('sessionId')) {
       sessionAuth = getCookie('sessionId');
       if (sessionAuth) {
         if (getCookie('username')) {
-          userid = getCookie('username');
+          username = getCookie('username');
+          // userid = getCookie('username');
         }
       }
     }
@@ -303,7 +333,7 @@ export default function Web() {
       if (idNumber in logDataIs) logDataIs[idNumber]['endTime'] = currentTime;
       idNumber++;
     }
-    
+
 
     let object = {
       id: idNumber,
@@ -314,7 +344,7 @@ export default function Web() {
       latitude: latitude,
       longitude: longitude,
       visitedDate: formattedToday,
-      userid: userid,
+      username: username,
       category: category
     };
     sessionStorage.setItem('IdNumber', idNumber);
@@ -337,7 +367,7 @@ export default function Web() {
         latitude: latitude,
         longitude: longitude,
         visitedDate: formattedToday,
-        username: 'sameer',
+        username: username,
         category: category
       };
       logDataIs[idNumber] = object;
