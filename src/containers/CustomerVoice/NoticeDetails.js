@@ -7,7 +7,7 @@ import config from '../../config';
 
 function NoticeDetails() {
     let { slug } = useParams();
-    const title = { id: 'Notice', defaultMessage: 'Notice' };
+    const title = { id: 'K-core : Notice', defaultMessage: 'Notice' };
     const [DetailData, setDetailData] = useState({})
     const breadCrumbs = {
         '/Notice/': [

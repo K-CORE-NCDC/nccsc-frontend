@@ -7,7 +7,7 @@ import config from '../../config';
 
 function QADetails() {
     let { slug } = useParams();
-    const title = { id: 'QA', defaultMessage: 'QA' };
+    const title = { id: 'K-Core: Archive', defaultMessage: 'QA' };
     const [DetailData, setDetailData] = useState({})
     const breadCrumbs = {
         '/QA/': [

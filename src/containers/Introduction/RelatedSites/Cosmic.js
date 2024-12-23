@@ -10,7 +10,7 @@ export const Cosmic = () => {
         <div className="introduceWrap" style={{ paddingTop: '0px', height: '100%' }}>
           <div className="introduceBox01">
             <div className="logoBox">
-              <img src={cosmic_img} alt="img" />
+              <img src={cosmic_img} alt="cosmic_logo" />
             </div>
             <div className="txtBox">
               <p>
@@ -26,7 +26,7 @@ export const Cosmic = () => {
               <img
                 className="w100"
                 src={introduce_VisualContents}
-                alt="img"
+                alt="cosmic_img"
                 style={{ height: '300px' }}
               />
             </div>

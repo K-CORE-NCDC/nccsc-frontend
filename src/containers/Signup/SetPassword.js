@@ -155,7 +155,7 @@ function SetPassword() {
             <div className="auto">
               <h1 className="logo MarginBottom5">
                 <a>
-                  <img src={KcoreFinalLogo} alt="logo" className="logo Block MAuto W10" />
+                  <img src={KcoreFinalLogo} alt="kcore_logo" className="logo Block MAuto W10" />
                 </a>
               </h1>
               <div className="MultiUploadTextCenter">

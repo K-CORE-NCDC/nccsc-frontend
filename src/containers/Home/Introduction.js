@@ -79,7 +79,7 @@ const Introduction = ({ setActiveClassIndex, lan }) => {
                       style={{ cursor: 'pointer' }}
                     >
                       <FormattedMessage
-                        id="MyDataVisualization"
+                        id="MultiDataVisualization"
                         defaultMessage=" Visualize My Data"
                       />
                     </dt>
@@ -89,8 +89,8 @@ const Introduction = ({ setActiveClassIndex, lan }) => {
             </div>
           </div>
           <div style={img_div} className='img_div'>
-            <img src={logo1} alt="fc1" className="logo01" style={big_img1} />
-            <img src={logo2} alt="fc1" className="logo01" style={big_img2} />
+            <img src={logo1} alt="ncdc_logo_white" className="logo01" style={big_img1} />
+            <img src={logo2} alt="ncc_logo_white" className="logo01" style={big_img2} />
           </div>
         </div>
       </div>

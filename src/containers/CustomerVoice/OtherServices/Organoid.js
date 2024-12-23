@@ -1,16 +1,13 @@
 import React from 'react';
 import organoid01 from '../../../assets/images/organoid_flow_chart_final_01.png';
 import organoid03 from '../../../assets/images/organoid_flow_chart_2.png';
-import organoid04 from '../../../assets/images/cbottle.png';
-import organoid05 from '../../../assets/images/petridish.png';
-import organoid06 from '../../../assets/images/flowchart_02.png';
 import organoid07 from '../../../assets/images/organoid_flow_chart_new.png';
 import Attachments from '../../../assets/files/Organoid_v.4.docx';
 import HeaderComponent from '../../Common/HeaderComponent/HeaderComponent';
 import { style } from 'd3';
 
 function Organoid() {
-  const title = { id: 'Organoid', defaultMessage: 'Oragnoid' };
+  const title = { id: 'K-Core: Organoid', defaultMessage: 'Oragnoid' };
   const breadCrumbs = {
     '/Home/': [{ id: 'Home', defaultMessage: 'Home', to: '/' },
     { id: `CustomerService`, defaultMessage: `Customer Service`, to: `` },
@@ -80,7 +77,7 @@ function Organoid() {
                         <li>
                           <img
                             src={organoid01}
-                            alt="organoid"
+                            alt="organoid_img"
                             width="97%"
                             style={{ margin: 'auto' }}
                           ></img>
@@ -125,53 +122,6 @@ function Organoid() {
                       <div className="flex items-center justify-center h-full">
                         <img src={organoid07} alt="organoid" className="max-w-full h-auto" style={flowchartStyles.img} />
                       </div>
-
-                      {/* <div
-                        className="flex my-20 Border BorderstyleViz MarginBottom5"
-                        style={{ marginTop: '0%' }}
-                      >
-                        <div className="w-64 TextAlignCenter" style={{ width: '25%' }}>
-                          <img src={organoid04} alt="organoid" width="150"></img>
-                        </div>
-
-                        <div style={{ marginLeft: '10%', lineHeight: '30px', fontSize: '16px' }}>
-                          <ul className="mt-8 ml-8 ">
-                            <li className="mb-4">1) 동결바이얼</li>
-                            <li className="ml-12 mb-4">
-                              - 드라이아이스 상태의 1 바이얼 (106 cells/vial)
-                            </li>
-                            <li className="ml-12 mb-4">- 매주 화요일 오전, 택배 혹은 직접분양</li>
-                          </ul>
-                        </div>
-                      </div>
-
-                      <div
-                        className="flex Border BorderstyleViz MarginBottom5"
-                        style={{ marginTop: '0%' }}
-                      >
-                        <div className="w-64 TextAlignCenter" style={{ width: '25%' }}>
-                          <img
-                            className="mt-5 ml-5"
-                            src={organoid05}
-                            width="150"
-                            alt="organoid"
-                          ></img>
-                        </div>
-
-                        <div
-                          className=""
-                          style={{ marginLeft: '10%', lineHeight: '30px', fontSize: '16px' }}
-                        >
-                          <ul className="mt-8 ml-8">
-                            <li className="mb-4">2) 배양바이얼</li>
-                            <li className="ml-12 mb-4">
-                              - matrigel 배양상태의 오가노이드 1 바이얼 (상온)
-                            </li>
-                            <li className="ml-12 mb-4">- 매주 화요일 오후 3시, 직접분양만 가능</li>
-                          </ul>
-                        </div>
-                      </div> */}
-
                     </div>
                   </li>
 

@@ -15,7 +15,7 @@ export default function Index() {
     '/singledata-upload/': [
       { id: 'Home', defaultMessage: 'Home', to: '/' },
       {
-        id: 'MyDataVisualization',
+        id: 'MultiDataVisualization',
         defaultMessage: 'Visualise My Data',
         to: '/home/visualizeMyData/'
       },

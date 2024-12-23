@@ -9,7 +9,7 @@ const ServiceIntroPage = () => {
       <div className=" introduceWrap">
         <div className="introduceBox01">
           <div className="logoBox">
-            <img src={mainLogo} alt="img" />
+            <img src={mainLogo} alt="kcore_logo" />
           </div>
           <div className="txtBox">
             <p>
@@ -22,7 +22,7 @@ const ServiceIntroPage = () => {
         </div>
         <div className="introduceBox02">
           <div className="imgBox">
-            <img className="w100" src={introduce_VisualContents} alt="img" />
+            <img className="w100" src={introduce_VisualContents} alt="kcore_bg_img" />
           </div>
         </div>
         <div className="introduceBox03">

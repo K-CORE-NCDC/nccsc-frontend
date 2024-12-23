@@ -51,8 +51,8 @@ const FooterComponent = () => {
             <p>Copyright ⓒ 2021 by NCC. All rights reserved.</p>
           </div>
           <div style={img_div} className='footer_img_div'>
-            <img src={logo1} alt="fc1" className="logo01 mobile_logo" style={big_img1} />
-            <img src={logo2} alt="fc1" className="logo01 mobile_logo" style={big_img2} />
+            <img src={logo1} alt="ncdc_logo_white" className="logo01 mobile_logo" style={big_img1} />
+            <img src={logo2} alt="ncc_logo_white" className="logo01 mobile_logo" style={big_img2} />
           </div>
         </div>
       </footer>

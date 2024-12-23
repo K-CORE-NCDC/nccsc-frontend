@@ -18,7 +18,7 @@ import DataframeAttachment from '../../assets/files/ToolsAttachments/OtherTools_
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 const HomeComponent = () => {
   const intl = useIntl();
-  const title = { id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' };
+  const title = { id: 'Other Tools', defaultMessage: 'Tools' };
   const route = useLocation();
   function downloadFile(url, fileName) {
     const link = document.createElement('a');
@@ -32,7 +32,7 @@ const HomeComponent = () => {
   const breadCrumbs = {
     '/tools/': [
       { id: 'Home', defaultMessage: 'Home', to: '/' },
-      { id: 'MyDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
+      { id: 'MultiDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
       { id: 'Tools', defaultMessage: 'Other Tools', to: '/tools/' }
     ]
   };
@@ -79,7 +79,7 @@ const HomeComponent = () => {
                   <li className='listitems' >
                     <Link to={route?.pathname}>
                       <div className="thumb" style={{ background: '#f0efef' }}>
-                        <img src={icon1} alt="img" />
+                        <img src={icon1} alt="blast_img" />
                         <div className="hvBox">
                           <div className="hvBox_links">
                             <div className="textdiv" >
@@ -121,7 +121,7 @@ const HomeComponent = () => {
                   <li className='listitems'>
                     <Link to={route?.pathname}>
                       <div className="thumb">
-                        <img src={icon2} alt="img" />
+                        <img src={icon2} alt="vcf2maf_pic" />
                         <div className="hvBox">
                           <div className="hvBox_links">
                             <div className="textdiv" >
@@ -162,7 +162,7 @@ const HomeComponent = () => {
                   <li className='listitems'>
                     <Link to={route?.pathname}>
                       <div className="thumb">
-                        <img src={icon3} alt="img" />
+                        <img src={icon3} alt="interpro_pic" />
                         <div className="hvBox">
                           <div className="hvBox_links">
                             <div className="textdiv" >
@@ -204,7 +204,7 @@ const HomeComponent = () => {
                   <li className='listitems'>
                     <Link to={route?.pathname}>
                       <div className="thumb">
-                        <img src={icon4} alt="img" />
+                        <img src={icon4} alt="mafmerger_pic" />
                         <div className="hvBox">
                           <div className="hvBox_links">
                             <div className="textdiv" >
@@ -251,7 +251,7 @@ const HomeComponent = () => {
                   <li className='listitems'>
                     <Link to={route?.pathname}>
                       <div className="thumb">
-                        <img src={icon5} alt="img" />
+                        <img src={icon5} alt="refverconverter_pic" />
                         <div className="hvBox">
                           <div className="hvBox_links">
                             <div className="textdiv" >
@@ -298,7 +298,7 @@ const HomeComponent = () => {
                   <li className='listitems'>
                     <Link to={route?.pathname}>
                       <div className="thumb">
-                        <img src={icon5} alt="img" />
+                        <img src={icon5} alt="refverconverter_pic" />
                         <div className="hvBox">
                           <div className="hvBox_links">
                             <div className="textdiv" >

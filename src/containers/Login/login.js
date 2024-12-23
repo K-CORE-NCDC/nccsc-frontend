@@ -17,7 +17,7 @@ const LoginComponent = () => {
   let history = useHistory();
   const [errorMessage, setErrorMessage] = useState([]);
   const [isError, setIsError] = useState(false);
-  const title = { id: 'Login', defaultMessage: 'Login' };
+  const title = { id: 'Login: K-Core', defaultMessage: 'Login' };
   const intl = useIntl();
   const context = useContext(Context);
 
@@ -159,7 +159,7 @@ const LoginComponent = () => {
             <div className="auto">
               <h1 className="logo MarginBottom5">
                 <a>
-                  <img src={KcoreFinalLogo} alt="logo" className="logo Block MAuto W10" />
+                  <img src={KcoreFinalLogo} alt="kcore_logo" className="logo Block MAuto W10" />
                 </a>
               </h1>
               <div className="MultiUploadTextCenter">
@@ -207,13 +207,13 @@ const LoginComponent = () => {
                   {/* Input Username */}
                   <dl>
                     <dt style={{ width: "250px", display: "flex" }}>
-                      <img src={loginIcon1} alt="loginIcon1" />
+                      <img src={loginIcon1} alt="id_icon" />
                       <FormattedMessage id="RegistrationNumber" defaultMessage="Registration Number" />
                     </dt>
                     <dd>
                       <div className="inputText">
                         {/* Option 1: Using sr-only class (Bootstrap's approach) */}
-                        <label htmlFor="password" className="sr-only" style={{ position: 'absolute', width: '1px', height: '1px', padding: '0', margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: '0' }}>
+                        <label htmlFor="userId" className="sr-only" style={{ position: 'absolute', width: '1px', height: '1px', padding: '0', margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: '0' }}>
                           <FormattedMessage id="RegistrationNumber" defaultMessage="Registration Number" />
                         </label>
 
@@ -228,6 +228,11 @@ const LoginComponent = () => {
                               name="userId"
                               placeholder={placeholder}
                               autoComplete="off"
+                              style={{
+                                '::placeholder': {
+                                  color: '#616161',
+                                },
+                              }}
                             />
                           )}
                         </FormattedMessage>
@@ -238,12 +243,12 @@ const LoginComponent = () => {
                   {/* Input Password */}
                   <dl>
                     <dt style={{ width: "250px", display: "flex" }}>
-                      <img src={loginIcon2} alt="loginIcon2" />
+                      <img src={loginIcon2} alt="pw_icon" />
                       <FormattedMessage id="Password" defaultMessage="Password" />
                     </dt>
                     <dd>
                       <div className="inputText">
-                      <label htmlFor="userId" className="sr-only" style={{ position: 'absolute', width: '1px', height: '1px', padding: '0', margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: '0' }}>
+                      <label htmlFor="password" className="sr-only" style={{ position: 'absolute', width: '1px', height: '1px', padding: '0', margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: '0' }}>
                           <FormattedMessage id="Password" defaultMessage="Password" />
                         </label>
                         <FormattedMessage
@@ -273,7 +278,7 @@ const LoginComponent = () => {
                       {/* Find ID Button */}
                       <div className="flex Gap5 idPwSearch">
                         <Link to="/findregistrationnumber/" id="FindRegistrationNumberLink">
-                          <img src={loginIcon1} alt="loginIcon1" />
+                          <img src={loginIcon1} alt="id_icon" />
                           <font style={{ verticalAlign: 'inherit' }}>
                             <font style={{ verticalAlign: 'inherit' }}>
                               <FormattedMessage id="FindRegistrationNumber" defaultMessage="Find Registration Number" />
@@ -283,7 +288,7 @@ const LoginComponent = () => {
 
                         {/* Find Password Button */}
                         <Link to="/findpassword/" id="FindPasswordLink">
-                          <img src={loginIcon2} alt="loginIcon2" />
+                          <img src={loginIcon2} alt="pw_icon" />
                           <font style={{ verticalAlign: 'inherit' }}>
                             <font style={{ verticalAlign: 'inherit' }}>
                               <FormattedMessage id="FindPassword" defaultMessage="Find Password" />

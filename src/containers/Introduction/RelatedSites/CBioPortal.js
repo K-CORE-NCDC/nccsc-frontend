@@ -86,7 +86,7 @@ export const CBioPortal = () => {
               <div className=" introduceWrap" style={{ paddingTop: '0px', height: '100%' }}>
                 <div className="introduceBox01">
                   <div className="logoBox">
-                    <img src={cBioPortal} alt="img" />
+                    <img src={cBioPortal} alt="cbio_logo" />
                   </div>
                   <div className="txtBox">
                     <p>
@@ -99,7 +99,7 @@ export const CBioPortal = () => {
                 </div>
                 <div className="introduceBox02">
                   <div className="imgBox">
-                    <img className="w100" src={introduce_VisualContents} alt="img" />
+                    <img className="w100" src={introduce_VisualContents} alt="cbio_img" />
                   </div>
                   <div>
                     <div className="relatedurls" style={{ paddingTop: '5%' }}>

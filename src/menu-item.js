@@ -92,7 +92,7 @@ const childMenu = {
 
       {
         id: 'Visualize MyData',
-        title: <FormattedMessage id="MyDataVisualization" defaultMessage="Visualize My Data" />,
+        title: <FormattedMessage id="MultiDataVisualization" defaultMessage="Visualize My Data" />,
         type: 'group',
         icon: 'fa fa-dashboard',
         url: '/visualizeMyData/',

@@ -5,11 +5,12 @@ import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min
 import homeIcon from '../../../styles/images/icon-home.svg';
 import background from '../../../styles/images/subVisual-img06.jpg';
 import { getCookie } from '../../getCookie';
-
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
   const { project_id } = useParams();
   const history = useHistory();
+  const route = useLocation();
   const viz_tabs = ['visualise-multidata', 'visualise-singledata'];
   const upload_tabs = [
     'singledata-upload',
@@ -22,6 +23,10 @@ function HeaderComponent({ title, breadCrumbs, type, listItems, routeName }) {
     'mafmerger',
     'refverconverter'
   ];
+
+  useEffect(() => {
+    document.title = title.id;
+  }, [title]);
 
   useEffect(() => {
     viz_tabs?.forEach((item) => {

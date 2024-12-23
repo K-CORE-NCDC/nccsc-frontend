@@ -256,7 +256,7 @@ const countFiles = () => {
     setFileName(file);
   };
 
-  const title = { id: 'MultiDataVisualization', defaultMessage: 'Multi Data Visualization' };
+  const title = { id: 'Multi: Create Project', defaultMessage: 'Create New Project' };
 
   const breadCrumbs = {
     '/newmultidataproject/': [
@@ -315,14 +315,14 @@ const countFiles = () => {
             <div className="mainPopup W100" data-aos="zoom-in" data-aos-once="true">
               <div className="popupHeader">
                 <h3 className="TextLeft">Note</h3>
-                <span
+                <button
                   className="material-icons mainPopupClose"
                   id="mainPopupClose"
                   onClick={closeModal}
                   onTouchStart={closeModal}
                 >
                   close
-                </span>
+                </button>
               </div>
               <div
                 className="popupBody  introduceWrap"

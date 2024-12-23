@@ -10,7 +10,7 @@ export const TCGA = () => {
         <div className="introduceWrap" style={{ paddingTop: '0px', height: '100%' }}>
           <div className="introduceBox01">
             <div className="logoBox">
-              <img src={introduce_img} alt="img" />
+              <img src={introduce_img} alt="tcga_logo" />
             </div>
             <div className="txtBox">
               <p>
@@ -23,7 +23,7 @@ export const TCGA = () => {
           </div>
           <div className="introduceBox02">
             <div className="imgBox">
-              <img className="w100" src={introduce_VisualContents} alt="img" />
+              <img className="w100" src={introduce_VisualContents} alt="tcga_img" />
             </div>
             <div className="relatedurls" style={{ paddingTop: '5%' }}>
               <span className="material-icons" style={{ color: 'rosybrown' }}>

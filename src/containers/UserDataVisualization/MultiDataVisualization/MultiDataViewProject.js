@@ -10,6 +10,7 @@ import '../../../interceptor/interceptor';
 import HeaderComponent from '../../Common/HeaderComponent/HeaderComponent';
 import Table from '../../Common/Table/ReactTable';
 import PaginateTable from '../../Common/Table/ReactTablePagination';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 function ProjectsList() {
   let history = useHistory();
@@ -24,7 +25,6 @@ function ProjectsList() {
   const intl = useIntl();
   const selectInput = 'title'
   const searchInput = ''
-
 
 
   const fetchUsers = async (page, method) => {
@@ -543,6 +543,8 @@ function DeletedProjectsList() {
 export default function MultiDataViewProject() {
   const [isOpen, setIsOpen] = useState(true);
   const [activeTab, setActiveTab] = useState('1');
+  const route = useLocation();
+
   const breadCrumbs = {
     '/multidatavisualization/': [
       { id: 'Home', defaultMessage: 'Home', to: '/' },
@@ -559,6 +561,36 @@ export default function MultiDataViewProject() {
       }
     ]
   };
+  const [title, setTitle] = useState({ id: '', defaultMessage: '' });
+
+  useEffect(() => {
+    let newTitle = '';
+    let newMsg = '';
+    if (route.pathname.includes('/home/visualizemydata/')) {
+      newTitle += 'visualizemydata';
+      newMsg += 'Visualize My Data';
+    } else if (route.pathname.includes('/multidatavisualization/')) {
+      newTitle = 'MultiDataVisualization';
+      newMsg = 'Multi Data Visualization';
+    }else if (route.pathname.includes('/multidataprojectview/')) {
+      newTitle = 'Multi: View Projects';
+      newMsg = 'View Projects';
+    }
+
+    if (title.id !== newTitle) {
+      setTitle({ id: newTitle, defaultMessage: newMsg });
+    }
+
+  }, [route.pathname, breadCrumbs, title.id]);
+
+
+  useEffect(() => {
+    document.title = title.id;
+  }, [title]);
+
+
+
+
   useEffect(() => {
     AOS.init({
       duration: 2000
@@ -593,14 +625,14 @@ export default function MultiDataViewProject() {
             <div className="mainPopup W100" data-aos="zoom-in" data-aos-once="true">
               <div className="popupHeader">
                 <h3 className="TextLeft">Note</h3>
-                <span
+                <button
                   className="material-icons mainPopupClose"
                   id="mainPopupClose"
                   onClick={closeModal}
                   onTouchStart={closeModal}
                 >
                   close
-                </span>
+                </button>
               </div>
               <div
                 className="popupBody  introduceWrap"
@@ -633,7 +665,7 @@ export default function MultiDataViewProject() {
       )}
 
       <HeaderComponent
-        title={'sd'}
+        title={title}
         routeName="/multidatavisualization/"
         breadCrumbs={breadCrumbs['/multidatavisualization/']}
         type="single"

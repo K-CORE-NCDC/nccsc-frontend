@@ -1,8 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// import './styles/tailwind.css';
-// import './styles/index.css';
-
 import './styles/css/fonts.css';
 import './styles/css/material-icons.css';
 import './styles/css/layout.css';

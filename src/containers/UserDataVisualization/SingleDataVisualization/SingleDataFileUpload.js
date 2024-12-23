@@ -10,10 +10,10 @@ import {
 import { Context } from '../../../wrapper';
 import { DataOfFiles } from '../MultiDataVisualization/MultiFileUpload';
 
+
 function Modal({ showModal, toggleModal, fileName }) {
   let fileNameImage = require(`../../../assets/images/FileScreenshots/${fileName}.png`).default;
   let fileNameFile = require(`../../../assets/files/20_samples/${fileName}.tsv`).default;
-
   return (
     <>
       {showModal ? (
@@ -166,6 +166,11 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
   const [koreanlanguage, setKoreanlanguage] = useState(false);
   const [Englishlanguage, setEnglishlanguage] = useState(true);
   const context = useContext(Context);
+
+  useEffect(() => {
+    document.title = 'SingleDataUpload';
+  }, []);
+
 
   let toggleModal = (status, file) => {
     setShowModal(status);
@@ -345,7 +350,9 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
               <FormattedMessage id="selectType" defaultMessage="Select Type" />
             </dt>
             <dd className="selectBox select Flex">
-              <label htmlFor={`selectType-${key}`}></label>
+              <label id= {'label_'+key} htmlFor={`selectType-${key}`}style={{ display: 'none' }}>
+                <FormattedMessage id="Select Upload Type" defaultMessage="Select Upload Type" />
+              </label>
               <select
                 id={`selectType-${key}`}
                 onChange={updateFileTypeOnChange}
@@ -353,6 +360,7 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
                 defaultChecked={selectedFileSampleType[key]}
                 value={selectedFileSampleType[key]}
                 className="select-color w-full p-4 border focus:outline-none border-b-color focus:ring focus:border-b-color active:border-b-color mt-3"
+                aria-labelledby={'label_'+key}
               >
                 {Object.keys(dropdownOptionsSelected[key]).map((type) => (
                   <option className="text-gray-900" key={type} value={type}>
@@ -465,6 +473,7 @@ const SingleDataFileUpload = ({ updateComponentNumber }) => {
 
   return (
     <>
+
       {!showFileDataTable && (
         <div className="auto ">
           <div>

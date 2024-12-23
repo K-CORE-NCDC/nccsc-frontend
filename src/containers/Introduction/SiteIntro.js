@@ -20,6 +20,7 @@ export const SiteIntro = ({ lan }) => {
               <li className={activeTab === '1' ? 'on' : ''}>
                 <button
                   type="button"
+                  title="Site Intro"
                   onClick={() => {
                     setActiveTab('1');
                   }}
@@ -30,6 +31,7 @@ export const SiteIntro = ({ lan }) => {
               <li className={activeTab === '2' ? 'on' : ''}>
                 <button
                   type="button"
+                  title="Service Intro"
                   onClick={() => {
                     setActiveTab('2');
                   }}
@@ -40,6 +42,7 @@ export const SiteIntro = ({ lan }) => {
               <li className={activeTab === '3' ? 'on' : ''}>
                 <button
                   type="button"
+                  title="Organization"
                   onClick={() => {
                     setActiveTab('3');
                   }}
@@ -50,6 +53,7 @@ export const SiteIntro = ({ lan }) => {
               <li className={activeTab === '4' ? 'on' : ''}>
                 <button
                   type="button"
+                  title="Related Sites"
                   onClick={() => {
                     setActiveTab('4');
                   }}

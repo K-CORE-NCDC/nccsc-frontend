@@ -68,7 +68,7 @@ function Vcfmaf() {
   const [isError, setIsError] = useState(false);
   const dispatch = useDispatch();
   const vcf2mafResponse = useSelector((data) => data.homeReducer.vcfmaf);
-  const title = { id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' };
+  const title = { id: 'Other Tools: VCF To MAF', defaultMessage: 'VCF To MAF' };
   const history = useHistory();
 
   const setShowModalFunction = (stateData) => {
@@ -252,7 +252,7 @@ let uploadFile = () => {
   const breadCrumbs = {
     '/vcfmaf/': [
       { id: 'Home', defaultMessage: 'Home', to: '/' },
-      { id: 'MyDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
+      { id: 'MultiDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
       { id: 'Tools', defaultMessage: 'Other Tools', to: '/tools/' },
       { id: 'VCFMAF', defaultMessage: 'VCF To MAF', to: '/vcfmaf/' }
     ]

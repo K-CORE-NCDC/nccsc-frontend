@@ -12,7 +12,7 @@ import {
 
 import Draggable from 'react-draggable';
 const HomeComponent = () => {
-  const title = { id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' };
+  const title = { id: 'MultiDataVisualization', defaultMessage: 'Multi Data Visualization' };
   const location = useLocation();
   const history = useHistory();
   const [isOpen, setIsOpen] = useState(true);
@@ -81,14 +81,14 @@ const HomeComponent = () => {
             <div className="mainPopup W100" data-aos="zoom-in" data-aos-once="true">
               <div className="popupHeader">
                 <h3 className="TextLeft">Note</h3>
-                <span
+                <button
                   className="material-icons mainPopupClose"
                   id="mainPopupClose"
                   onClick={closeModal}
                   onTouchStart={closeModal}
                 >
                   close
-                </span>
+                </button>
               </div>
               <div
                 className="popupBody  introduceWrap"

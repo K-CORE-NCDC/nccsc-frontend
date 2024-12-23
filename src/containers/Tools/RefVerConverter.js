@@ -80,7 +80,7 @@ function RefVerConverter() {
     const [isError, setIsError] = useState(false);
     const dispatch = useDispatch();
     const refVerConverterResponse = useSelector((data) => data.homeReducer.refverconverter);
-    const title = { id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' };
+    const title = { id: 'Other Tools: RefVer Converter', defaultMessage: 'RefVer Converter' };
     const history = useHistory();
 
     const [hg19, sethg19] = useState(true);
@@ -286,7 +286,7 @@ function RefVerConverter() {
     const breadCrumbs = {
         '/refverconverter/': [
             { id: 'Home', defaultMessage: 'Home', to: '/' },
-            { id: 'MyDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
+            { id: 'MultiDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
             { id: 'Tools', defaultMessage: 'Other Tools', to: '/tools/' },
             { id: 'REFVERCONVERTER', defaultMessage: 'RefVer Converter (Liftover)', to: '/refverconverter/' }
         ]

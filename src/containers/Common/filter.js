@@ -165,7 +165,10 @@ export default function Filter({ parentCallback, filterState, project_id }) {
                   style={{ paddingRight: '0.5rem' }}
                   onClick={(e) => checkBoxFn(e, 'md_' + id + '_' + c)}
                 >
-                  <label htmlFor={'md_' + id + '_' + c}></label>
+                  {/* <label htmlFor={'md_' + id + '_' + c}></label> */}
+                  <label htmlFor={'md_' + id + '_' + c}id={'labelmd_' + id + '_' + c}style={{ display: 'none' }}>
+                    <FormattedMessage id="Select Filter" defaultMessage="Select Filter" />
+                  </label>
                   <input
                     type="checkbox"
                     id={'md_' + id + '_' + c}

@@ -181,7 +181,7 @@ const MultiDataVisualization = () => {
                   history.push('/visualizemulti-exampledata/home');
                 }}
               >
-                <img src={!viewMoreData ? plusicon : minusicon} alt="plusicon" />
+                <img src={!viewMoreData ? plusicon : minusicon} alt={!viewMoreData ? "see more" : "see less"} />
               </button>
             </ul>
           </div>

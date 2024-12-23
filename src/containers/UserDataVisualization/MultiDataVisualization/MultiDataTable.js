@@ -202,6 +202,7 @@ function MultiDataTable({ updateComponentNumber }) {
   const [showModal, setShowModal] = useState(true)
   const [loading, setLoading] = useState(true)
   const [FalseData, setFalseData] = useState(false)
+  const route = useLocation();
 
   let toggleModal = (status) => {
     setShowModal(status)
@@ -347,7 +348,6 @@ function MultiDataTable({ updateComponentNumber }) {
     };
   }, []);
 
-  const title = { id: 'MultiDataVisualization', defaultMessage: 'Multi Data Visualization' };
 
   const breadCrumbs = {
     '/newmultidataproject/': [
@@ -361,6 +361,24 @@ function MultiDataTable({ updateComponentNumber }) {
       { id: 'MultiDataUpload', defaultMessage: 'Multi Data Upload', to: '/home/visualizeMyData/' }
     ]
   };
+
+  const title= { id: '', defaultMessage: '' };
+
+  let newTitle = '';
+  let newMsg = '';
+    if (route.pathname.includes('/multidatavisualization/')) {
+      newTitle = 'MultiDataVisualization';
+      newMsg = 'Multi Data Visualization';
+    }else if (route.pathname.includes('/MultiDataProjectView/')) {
+      newTitle = 'Multi: View Projects';
+      newMsg = 'View Projects';
+    }
+
+    if (title.id !== newTitle) {
+      setTitle({ id: newTitle, defaultMessage: newMsg });
+    }
+
+
 
   const InforIcon = () => {
     return (

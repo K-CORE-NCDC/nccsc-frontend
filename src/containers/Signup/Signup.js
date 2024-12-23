@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -7,13 +7,14 @@ import nameIcon from '../../styles/images/icon-text.svg';
 import HeaderComponent from '../Common/HeaderComponent/HeaderComponent';
 import KcoreFinalLogo from '../../assets/images/K-coreFinalLogo.png';
 const SignupComponent = () => {
+
   const [userFormData, setUserFormData] = useState({
     emailId: ''
   });
   let history = useHistory();
   const intl = useIntl();
   const [errorMessage, setErrorMessage] = useState([]);
-  const title = { id: 'Signup', defaultMessage: 'Sign Up' };
+  const title = { id: 'Sign Up: K-core', defaultMessage: 'Sign Up' };
 
   const breadCrumbs = {
     '/signup/': [{ id: 'Signup', defaultMessage: 'Sign Up', to: '/signup/' }]
@@ -118,7 +119,7 @@ const SignupComponent = () => {
           <div className="MarginBottom5">
             <h1 className="logo">
               <a>
-                <img src={KcoreFinalLogo} alt="logo" className="logo Block MAuto W10" />
+                <img src={KcoreFinalLogo} alt="kcore_logo" className="logo Block MAuto W10" />
               </a>
             </h1>
           </div>

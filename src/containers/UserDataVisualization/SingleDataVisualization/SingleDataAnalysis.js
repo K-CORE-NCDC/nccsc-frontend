@@ -281,17 +281,6 @@ export default function DataVisualization() {
 
 
   useEffect(() => {
-    if (route.pathname.includes('/visualizesingle-exampledata/')) {
-      setExampleData(true);
-      setTitle({ id: 'VisualizeExampleData', defaultMessage: 'Visualize Example Data' });
-    } else if (route.pathname.includes('/visualise-singledata/')) {
-      setExampleData(false);
-      setTitle({ id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' });
-    }
-  }, [route.pathname]);
-
-
-  useEffect(() => {
     let chartx = LoadChart(width, tabName);
     setCharts((prevState) => ({
       ...prevState,
@@ -329,6 +318,31 @@ export default function DataVisualization() {
         }
     ]
   };
+
+  useEffect(() => {
+    let newTitle = '';
+    let newMsg = '';
+    if (route.pathname.includes('/visualizesingle-exampledata/')) {
+      newTitle += 'Example Single';
+      newMsg+='Visualize Single Example Data'
+    } else if (route.pathname.includes('/visualise-singledata/')) {
+      newTitle = 'Single';
+      newMsg+='Visualize Single Data'
+    }
+    const breadcrumbItems = breadCrumbs['/visualise-singledata/'];
+    const currentBreadcrumb = breadcrumbItems.find(item => route.pathname.includes(item.to));
+
+    if (currentBreadcrumb) {
+      newTitle += `: ${tab === "home" ? "Home" : tab === "variant-summary" ? "Variant Summary" : tab === "pca" ? "PCA": tab[0]?.toUpperCase() + tab?.slice(1)}`;
+      newMsg += `: ${tab === "home" ? "Home" : tab === "variant-summary" ? "Variant Summary" : tab === "pca" ? "PCA": tab[0]?.toUpperCase() + tab?.slice(1)}`;
+    }
+
+    if (title.id !== newTitle) {
+      setTitle({ id: newTitle, defaultMessage: newMsg });
+    }
+
+    setExampleData(route.pathname.includes('/visualizesingle-exampledata/'));
+  }, [route.pathname, breadCrumbs, title.id]);
 
   const [isGeneSetPopoverOpen, setIsGeneSetPopoverOpen] = useState(false);
 
@@ -377,7 +391,7 @@ export default function DataVisualization() {
                             <Link to={route.pathname}>
 
                               <div className="thumb">
-                                <img src={item.image} alt="img" />
+                                <img src={item.image} alt={item.image} />
                                 <div className="hvBox">
                                   <div className="hvBox_links">
 
@@ -475,7 +489,7 @@ export default function DataVisualization() {
                                     </div>
                                     <div className="w-20" style={{ backgroundColor: 'white' }}>
                                       <span className="filter-icon">
-                                        <img src={sample_img} alt="img" />
+                                        <img src={sample_img} alt="sample_img" />
                                       </span>
                                     </div>
                                   </div>

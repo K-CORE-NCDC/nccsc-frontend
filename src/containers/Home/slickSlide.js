@@ -38,28 +38,28 @@ export default function SlickSlider() {
     <div className="P5 Border BorderTop1 BorderGray200" style={{ borderStyle: 'solid' }}>
       <Slider {...settings}>
         <div>
-          <img src={f_ci1} alt="fc1" style={img} />
+          <img src={f_ci1} alt="mohw_logo" style={img} />
         </div>
         <div>
-          <img src={f_ci2} alt="fc2" style={img} />
+          <img src={f_ci2} alt="msit_logo" style={img} />
         </div>
         <div>
-          <img src={f_ci3} alt="fc3" style={img} />
+          <img src={f_ci3} alt="motie_logo" style={img} />
         </div>
         <div>
-          <img src={f_ci4} alt="fc4" style={img} />
+          <img src={f_ci4} alt="khis_logo" style={img} />
         </div>
         <div>
-          <img src={f_ci5} alt="fc5" style={img} />
+          <img src={f_ci5} alt="khidi_logo" style={img} />
         </div>
         <div>
-          <img src={f_ci6} alt="fc6" style={img} />
+          <img src={f_ci6} alt="ncc_logo" style={img} />
         </div>
         <div>
-          <img src={f_ci7} alt="fc7" style={big_img1} />
+          <img src={f_ci7} alt="cbpc_logo" style={big_img1} />
         </div>
         <div>
-          <img src={f_ci8} alt="fc8" style={big_img2} />
+          <img src={f_ci8} alt="ncdc_logo" style={big_img2} />
         </div>
       </Slider>
     </div>

@@ -353,11 +353,6 @@ export default function DataVisualization() {
         description: desc || ''
       };
       gridData.push(gridobj);
-      if (project_id) {
-        setTitle({ id: 'MultiDataVisualization', defaultMessage: 'Multi Data Visualization' });
-      } else {
-        setTitle({ id: 'VisualizeExampleData', defaultMessage: 'Visualize Example Data' });
-      }
     });
     setGridData(gridData);
   }, [availableTabsForProject, chartName]);
@@ -396,7 +391,7 @@ export default function DataVisualization() {
       { id: 'Home', defaultMessage: 'Home', to: '/' },
       project_id
         ? {
-          id: 'MyDataVisualization',
+          id: 'MultiDataVisualization',
           defaultMessage: 'Visualise My Data',
           to: '/home/visualizeMyData/'
         }
@@ -424,7 +419,6 @@ export default function DataVisualization() {
           0,
           userProjectDetails?.name.lastIndexOf('_')
         ),
-        // defaultMessage: userProjectDetails?.name,
         to: project_id ? `/visualise-multidata/home/${project_id}` : `/visualizemulti-exampledata/home/`
       },
       {
@@ -436,6 +430,30 @@ export default function DataVisualization() {
       }
     ]
   };
+
+  useEffect(() => {
+    let newTitle = '';
+    let newMsg = '';
+    if (route.pathname.includes('/visualizemulti-exampledata/')) {
+      newTitle += 'Example Multi';
+      newMsg+='Visualize Multi Example Data'
+    } else if (route.pathname.includes('/visualise-multidata/')) {
+      newTitle = 'Multi';
+      newMsg+='Visualize Multi Data'
+    }
+    const breadcrumbItems = breadCrumbs['/visualise-multidata/'];
+    const currentBreadcrumb = breadcrumbItems.find(item => route.pathname.includes(item.to));
+
+    if (currentBreadcrumb) {
+      newTitle += `: ${tab === "home" ? "Home" : tab[0]?.toUpperCase() + tab?.slice(1)}`;
+      newMsg += `: ${tab === "home" ? "Home" : tab[0]?.toUpperCase() + tab?.slice(1)}`;
+    }
+
+    if (title.id !== newTitle) {
+      setTitle({ id: newTitle, defaultMessage: newMsg });
+    }
+
+  }, [route.pathname, breadCrumbs, title.id]);
 
 
   return (
@@ -560,7 +578,7 @@ export default function DataVisualization() {
                               </div>
                               <div className="w-20" style={{ backgroundColor: 'white' }}>
                                 <span className="filter-icon">
-                                  <img src={sample_img} alt="img" />
+                                  <img src={sample_img} alt="sample_img" />
                                 </span>
                               </div>
                             </div>
@@ -750,7 +768,7 @@ export default function DataVisualization() {
                           <Link to={route?.pathname}>
 
                             <div className="thumb">
-                              <img src={item.image} alt="img" />
+                              <img src={item.image} alt={item.image} />
                               <div className="hvBox">
                                 <div className="hvBox_links">
                                   {project_id ? (

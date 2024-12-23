@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import { NoticeDetail } from '../../actions/api_actions';
 import config from '../../config';
 import Draggable from 'react-draggable';
@@ -11,8 +11,10 @@ function Popup({ toggleModal }) {
   const [isOpen, setIsOpen] = useState(false);
 
   /* getting the notice detail as response */
+  const divRef=useRef(null)
 
   useEffect(() => {
+
     let currentUrl = window.location;
     if (
       currentUrl['pathname'] === '/k-core/' ||
@@ -23,8 +25,12 @@ function Popup({ toggleModal }) {
       let data = NoticeDetail('GET');
       data.then((result) => {
         if (result.status === 200) {
+          // if (divRef.current) {
+          //   divRef.current.focus(); // Set focus on the div
+          // }
           setNoticeDetails(result.data);
           setNoticeStatus(200);
+
         } else {
           setNoticeDetails({});
           setNoticeStatus(204);
@@ -90,8 +96,9 @@ function Popup({ toggleModal }) {
         noticedetails?.data &&
         Object.keys(noticedetails['data']).length > 0
         &&
-        <Draggable disabled={!isOpen} onDrag={handleDrag}>
-          <div
+        <Draggable disabled={!isOpen} onDrag={handleDrag} ref={divRef}>
+
+          <div tabIndex={0} autoFocus={true}
             style={{
               width: '600px',
               height: '400px',
@@ -99,7 +106,7 @@ function Popup({ toggleModal }) {
               top: isOpen ? '50px' : '-1000px',
               left: isOpen ? '50px' : '-1000px',
               transition: 'top 0.3s ease-in-out, left 0.3s ease-in-out',
-              zIndex: '15'
+              zIndex: '100'
             }}
           >
             <div className="mainPopup">
@@ -107,14 +114,14 @@ function Popup({ toggleModal }) {
                 <h3 className="TextAlignCenter">
                   <FormattedMessage id="NoticePopup" defaultMessage="Notice Popup" />
                 </h3>
-                <span
+                <button
                   className="material-icons mainPopupClose"
                   id="mainPopupClose"
                   onClick={closeModal}
                   onTouchStart={closeModal}
                 >
                   close
-                </span>
+                </button>
               </div>
 
               {noticeStatus === 200 &&

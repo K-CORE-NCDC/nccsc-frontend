@@ -81,7 +81,7 @@ export default function Web() {
   }, []);
 
   const checkPopup = (event) => {
-    if (event.target.id === 'langBox') {
+    if (event.target.id === 'language_Box') {
       setShowLangMenu(true);
     } else {
       if (showLangMenu) {
@@ -438,9 +438,8 @@ export default function Web() {
           <div className="auto fullsize">
             <h1 className="logo">
               <a href="/k-core/">
-                {/* <img src={logoNew} alt="logo" className="logo01" /> */}
-                <img src={mainLogowhite} alt="logo" className="logo01" style={{ width: "108px" }} />
-                <img src={mainLogo} alt="logo" className="logo02" style={{ width: "108px" }} />
+                <img src={mainLogowhite} alt="kcore_logo_white" className="logo01" style={{ width: "108px" }} />
+                <img src={mainLogo} alt="kcore_logo" className="logo02" style={{ width: "108px" }} />
               </a>
             </h1>
             <div className="headerUtils">
@@ -472,8 +471,8 @@ export default function Web() {
                 </>
               )}
               <div className="language">
-                <a
-                  id="langBox"
+                <a href="#"
+                  id="language_Box"
                   className="on"
                   onClick={() => {
                     setShowLangMenu(!showLangMenu);
@@ -483,7 +482,7 @@ export default function Web() {
                 </a>
                 <ul style={showLangMenu ? { display: 'block' } : { display: 'none' }}>
                   <li className={context.locale === 'kr-KO' ? ' on ' : ''}>
-                    <a
+                    <a href="#"
                       onClick={() => {
                         changeLang('kr-KO');
                       }}
@@ -492,7 +491,7 @@ export default function Web() {
                     </a>
                   </li>
                   <li className={context.locale === 'en-US' ? ' on ' : ''}>
-                    <a
+                    <a href="#"
                       onClick={() => {
                         changeLang('en-US');
                       }}
@@ -504,7 +503,7 @@ export default function Web() {
               </div>
             </div>
           </div>
-          <a
+          <a href="#"
             onClick={() => {
               setMenuTabOpen(true);
             }}
@@ -536,7 +535,7 @@ export default function Web() {
                       setMouseEnterFlag(false);
                     }}
                   >
-                    <a
+                    <a href="#"
                       className={`${(mainPageInSmallScreen !== 0 && activeClassIndex === item?.index) ||
                         activeClassIndex === item?.index
                         ? 'active_menu'
@@ -689,7 +688,7 @@ export default function Web() {
               )}
 
               <div className="language">
-                <a
+                <a href="#"
                   className="on"
                   onClick={() => {
                     setShowLangMenu(!showLangMenu);
@@ -699,7 +698,7 @@ export default function Web() {
                 </a>
                 <ul style={showLangMenu ? { display: 'block' } : { display: 'none' }}>
                   <li className={context.locale === 'kr-KO' ? ' on ' : ''}>
-                    <a
+                    <a href="#"
                       onClick={() => {
                         changeLang('kr-KO');
                       }}
@@ -708,7 +707,7 @@ export default function Web() {
                     </a>
                   </li>
                   <li className={context.locale === 'en-US' ? ' on ' : ''}>
-                    <a
+                    <a href="#"
                       onClick={() => {
                         changeLang('en-US');
                       }}
@@ -734,6 +733,7 @@ export default function Web() {
               {childMenu?.mainmenu?.items?.map((item, i) => (
                 <li
                   ref={buttonRef}
+                  tabIndex={i}
                   onClick={() => {
                     setActiveclassPath(item?.id);
                     setActiveClassIndex(item?.index);
@@ -749,7 +749,7 @@ export default function Web() {
                   }}
                   key={'allMenu_li_' + i}
                 >
-                  <a className={`${activeClassIndex === item?.index ? 'active_menu' : ''} menu_li`}>
+                  <a href="#" className={`${activeClassIndex === item?.index ? 'active_menu' : ''} menu_li`}>
                     {item?.title}
                   </a>
                 </li>
@@ -761,6 +761,7 @@ export default function Web() {
             onClick={() => {
               setMenuTabOpen(false);
             }}
+            aria-label="Close"
           >
             <span></span>
             <span></span>

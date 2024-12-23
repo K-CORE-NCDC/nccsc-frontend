@@ -7,7 +7,7 @@ import config from '../../config';
 
 function FaqDetails() {
     let { slug } = useParams();
-    const title = { id: 'FAQ', defaultMessage: 'FAQ' };
+    const title = { id: 'K-Core : FAQ', defaultMessage: 'FAQ' };
     const [DetailData, setDetailData] = useState({})
     const breadCrumbs = {
         '/FAQ/': [

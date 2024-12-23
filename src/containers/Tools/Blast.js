@@ -66,7 +66,7 @@ function Blast() {
   let backend_url = config['auth'];
 
   const [selectedOption, setSelectedOption] = useState('textarea'); // Default selected option
-  const title = { id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' };
+  const title = { id: 'Other Tools: Blast', defaultMessage: 'Blast' };
 
   const setShowModalFunction = (stateData) => {
     setShowModal(stateData);
@@ -180,7 +180,7 @@ function Blast() {
   const breadCrumbs = {
     '/blast/': [
       { id: 'Home', defaultMessage: 'Home', to: '/' },
-      { id: 'MyDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
+      { id: 'MultiDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
       { id: 'Tools', defaultMessage: 'Other Tools', to: '/tools/' },
       { id: 'Blast', defaultMessage: 'Blast', to: '/blast/' }
     ]

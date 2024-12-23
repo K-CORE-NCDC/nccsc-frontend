@@ -33,7 +33,7 @@ function ServerError() {
                         <div className="auto">
                             {routeLocation.pathname !== '/' ? (
                                 <div className="serverError">
-                                    <img src={serverErrorIMage} alt="fc1" className="logo01" style={big_img1} />
+                                    <img src={serverErrorIMage} alt="server_error" className="logo01" style={big_img1} />
                                     <div className="bottomBtns MarginTop4">
                                         <div className="flex">
 

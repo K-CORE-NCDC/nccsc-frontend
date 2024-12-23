@@ -23,9 +23,9 @@ function FindIndex() {
   useEffect(() => {
     setRouteName(route.pathname);
     if (route.pathname === '/findregistrationnumber/') {
-      setTitle({ id: 'FindRegistrationNumber', defaultMessage: 'Find Registration Number' });
+      setTitle({ id: 'Find ID: K-Core', defaultMessage: 'Find Registration Number' });
     } else if (route.pathname === '/findpassword/') {
-      setTitle({ id: 'FindPassword', defaultMessage: 'Find Password' });
+      setTitle({ id: 'Find PW: K-Core', defaultMessage: 'Find Password' });
     }
   }, [route.pathname]);
 

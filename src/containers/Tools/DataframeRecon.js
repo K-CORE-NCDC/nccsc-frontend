@@ -62,7 +62,8 @@ function DataframeRecon() {
   const [isError, setIsError] = useState(false);
   const dispatch = useDispatch();
   const matrixResponse = useSelector((data) => data.homeReducer.dataframe_recon);
-  const title = { id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' };
+  // const title = { id: 'MultiDataVisualization', defaultMessage: 'Visualize My Data' };
+  const title = { id: 'Other Tools: Dataframe Converter', defaultMessage: 'Dataframe Converter' };
   const history = useHistory();
 
   const setShowModalFunction = (stateData) => {
@@ -170,7 +171,7 @@ function DataframeRecon() {
   const breadCrumbs = {
     '/dataframeconverter/': [
       { id: 'Home', defaultMessage: 'Home', to: '/' },
-      { id: 'MyDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
+      { id: 'MultiDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
       { id: 'Tools', defaultMessage: 'Other Tools', to: '/tools/' },
       { id: 'DataframeRecon', defaultMessage: 'Dataframe Converter', to: '/dataframeconverter/' }
     ]

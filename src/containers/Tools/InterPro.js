@@ -65,7 +65,7 @@ function InterPro() {
   let backend_url = config['auth'];
 
   const [selectedOption, setSelectedOption] = useState('textarea'); // Default selected option
-  const title = { id: 'MyDataVisualization', defaultMessage: 'Visualize My Data' };
+  const title = { id: 'Other Tools: Interpro', defaultMessage: 'Interpro' };
 
   const setShowModalFunction = (stateData) => {
     setShowModal(stateData);
@@ -183,7 +183,7 @@ function InterPro() {
   const breadCrumbs = {
     '/interpro/': [
       { id: 'Home', defaultMessage: 'Home', to: '/' },
-      { id: 'MyDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
+      { id: 'MultiDataVisualization', defaultMessage: 'Visualise My Data', to: '/home/visualizeMyData/' },
       { id: 'Tools', defaultMessage: 'Other Tools', to: '/tools/' },
       { id: 'Interpro', defaultMessage: 'Interpro', to: '/interpro/' }
     ]

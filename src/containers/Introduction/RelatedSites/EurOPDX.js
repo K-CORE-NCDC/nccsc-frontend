@@ -10,7 +10,7 @@ export const EurOPDX = () => {
         <div className="introduceWrap" style={{ paddingTop: '0px', height: '100%' }}>
           <div className="introduceBox01">
             <div className="logoBox">
-              <img src={src_img} alt="img" />
+              <img src={src_img} alt="euro_logo" />
             </div>
             <div className="txtBox">
               <p>
@@ -23,7 +23,7 @@ export const EurOPDX = () => {
           </div>
           <div className="introduceBox02">
             <div className="imgBox">
-              <img className="w100" src={introduce_VisualContents} alt="img" />
+              <img className="w100" src={introduce_VisualContents} alt="euro_img" />
             </div>
             <div className="relatedurls" style={{ paddingTop: '5%' }}>
               <span className="material-icons" style={{ color: 'rosybrown' }}>
