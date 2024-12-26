@@ -763,6 +763,7 @@ export default function DataLolipop({
                         <Table
                           columns={tableColumnsDatas}
                           data={tableData}
+                          summary={'lollipop_table'}
                         />
                       </div>
                     )}

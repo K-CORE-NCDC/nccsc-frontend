@@ -253,6 +253,7 @@ function FileProjectDataTable({ updateComponentNumber }) {
       <div className="App">
         {verificationResponse && (
           <Table
+          summary={'project_upload_table'}
             title=""
             columns={colData}
             data={rowData}

@@ -212,7 +212,6 @@ const LoginComponent = () => {
                     </dt>
                     <dd>
                       <div className="inputText">
-                        {/* Option 1: Using sr-only class (Bootstrap's approach) */}
                         <label htmlFor="userId" className="sr-only" style={{ position: 'absolute', width: '1px', height: '1px', padding: '0', margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: '0' }}>
                           <FormattedMessage id="RegistrationNumber" defaultMessage="Registration Number" />
                         </label>
@@ -220,7 +219,8 @@ const LoginComponent = () => {
                         <FormattedMessage id="PleaseEnterYourRegistrationNumber" defaultMessage="Please enter your Registration number.">
                           {(placeholder) => (
                             <input
-                              className={isError === true ? 'ErrorInput' : ''}
+                              // className={isError === true ? 'ErrorInput' : ''}
+                              className={`inputText${isError === true ? 'ErrorInput' : ''}`}
                               type="text"
                               value={userFormData.userId}
                               onChange={updateUserNamePassword}

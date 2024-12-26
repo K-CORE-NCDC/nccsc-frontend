@@ -211,7 +211,7 @@
 }
 
 .mainDataStatusWrap .mainDataStatus dl dd ul li span .count {
-  color: #009fe2;
+  color: #008be2;
 }
 
 .mainDataStatusWrap .mainDataStatus dl dd ul li span a {
@@ -223,11 +223,11 @@
 }
 
 .mainDataStatusWrap .mainDataStatus.service dl dt {
-  background-color: #009fe2;
+  background-color: #008be2;
 }
 
 .mainDataStatusWrap .mainDataStatus.service dl dd li:hover {
-  color: #009fe2;
+  color: #008be2;
   text-decoration: underline;
 }
 
@@ -1268,7 +1268,7 @@
 }
 
 .dataSearchWrap .popularBox ul li span.rank.rank01 {
-  background-color: #009fe2;
+  background-color: #008be2;
 }
 
 .dataSearchWrap .popularBox ul li span.rank.rank02 {
@@ -1298,7 +1298,7 @@
 }
 
 .dataSearchWrap .popularBox ul li a:hover {
-  color: #009fe2;
+  color: #008be2;
   text-decoration: underline;
 }
 
@@ -1406,13 +1406,13 @@
   bottom: 0;
   z-index: -1;
   width: 0;
-  background-color: #009fe2;
+  background-color: #008be2;
 }
 
 .dataSearchWrap .dataRecommend .recommend a:hover {
   opacity: 1;
   color: rgb(255, 255, 255);
-  border-color: #009fe2;
+  border-color: #008be2;
 }
 
 .dataSearchWrap .dataRecommend .recommend a:hover::before {
@@ -1562,5 +1562,5 @@
 }
 .oncoBorderLeft{
   border:0;
-  
+
 }

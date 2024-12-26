@@ -24,7 +24,7 @@ function Modal({ showModal, toggleModal, fileName }) {
               <div className="Toolmodal-dialog">
                 <div className="Toolmodal-header">
                   <h3 className="Toolmodal-title">Sample File Download</h3>
-                  <button className="Toolmodal-close-btn" onClick={() => toggleModal(false, '')}>
+                  <button className="MultiCloseButton" onClick={() => toggleModal(false, '')}>
                     ×
                   </button>
                 </div>
@@ -51,7 +51,7 @@ function Modal({ showModal, toggleModal, fileName }) {
                   </div>
                 </div>
                 <div className="Toolmodal-footer">
-                  <button className="Toolmodal-close-btn" onClick={() => toggleModal(false, '')}>
+                  <button className="MultiUploadBgGrayButton" onClick={() => toggleModal(false, '')}>
                     Close
                   </button>
                 </div>

@@ -107,6 +107,7 @@ const VolcanoCmp = React.forwardRef(
               <Table
                 columns={table_cols}
                 data={negative_data}
+                summary={'negative_volcano_table'}
               />
               <div className="VolcanoContainer">
                 <h2 className="VolcanoText">
@@ -132,6 +133,7 @@ const VolcanoCmp = React.forwardRef(
             <Table
               columns={table_cols}
               data={positive_data}
+              summary={'positive_volcano_table'}
             />
             <div className="VolcanoContainer">
               <h2 className="VolcanoText">

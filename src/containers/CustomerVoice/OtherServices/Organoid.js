@@ -146,7 +146,7 @@ function Organoid() {
                         <div className="flex ml-8">
                           <div className="w-86per">
                             <table className="min-w-full " style={style.tableBorder} border="1">
-                              <caption></caption>
+                            <caption style={{ display: 'none' }}>오가노이드 연계 데</caption>
                               <thead className="border border-black">
                                 <tr
                                   className="h-20 MultiUploadTextCenter TextWhite"
@@ -174,7 +174,7 @@ function Organoid() {
                                   <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50">
                                     나이
                                   </td>
-                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50 MultiUploadTextCenter">
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50 MultiUploadTextCenter" title="checkpoint">
                                     0
                                   </td>
                                   <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
@@ -183,7 +183,7 @@ function Organoid() {
                                   <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50">
                                     성별
                                   </td>
-                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50 MultiUploadTextCenter">
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50 MultiUploadTextCenter" title="checkpoint">
                                     0
                                   </td>
                                   <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
@@ -192,7 +192,7 @@ function Organoid() {
                                   <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50">
                                     원발암
                                   </td>
-                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50 MultiUploadTextCenter">
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50 MultiUploadTextCenter"title="checkpoint">
                                     0
                                   </td>
                                   <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
@@ -201,7 +201,7 @@ function Organoid() {
                                   <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50 ">
                                     검체정보
                                   </td>
-                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50 MultiUploadTextCenter">
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-slate-50 MultiUploadTextCenter"title="checkpoint">
                                     0
                                   </td>
                                   <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
@@ -211,7 +211,7 @@ function Organoid() {
                                     병리검사결과
                                   </td>
                                   <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
-                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 MultiUploadTextCenter">
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 MultiUploadTextCenter"title="checkpoint">
                                     0
                                   </td>
                                 </tr>
@@ -220,7 +220,7 @@ function Organoid() {
                                     수술정보 및 수술병리조직결과
                                   </td>
                                   <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
-                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 MultiUploadTextCenter">
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 MultiUploadTextCenter"title="checkpoint">
                                     0
                                   </td>
                                 </tr>
@@ -229,7 +229,7 @@ function Organoid() {
                                     항암제 치료 정보 및 반응성
                                   </td>
                                   <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
-                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 MultiUploadTextCenter">
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 MultiUploadTextCenter"title="checkpoint">
                                     0
                                   </td>
                                 </tr>
@@ -238,7 +238,7 @@ function Organoid() {
                                     방사선 치료 유무 및 반응성
                                   </td>
                                   <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
-                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 MultiUploadTextCenter">
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 MultiUploadTextCenter"title="checkpoint">
                                     0
                                   </td>
                                 </tr>
@@ -247,7 +247,7 @@ function Organoid() {
                                     추적관찰
                                   </td>
                                   <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-white"></td>
-                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 MultiUploadTextCenter MultiUploadTextCenter">
+                                  <td className="text165rem lineHeightInitial text-balck font-light PX6Y4 whitespace-nowrap border border-black bg-blue-100 MultiUploadTextCenter MultiUploadTextCenter"title="checkpoint">
                                     0
                                   </td>
                                 </tr>
@@ -358,7 +358,7 @@ function Organoid() {
                   className="table-auto border border-black mx-auto ml-16 w-86per"
                   style={{ borderTop: 'none', border: '1px solid #ddd' }}
                 >
-                  <caption></caption>
+                  <caption style={{display: 'none'}}>오가노이드 연계 데이터</caption>
                   <thead>
                     <tr>
                       <th scope="col" style={{ width: '20%' }}></th>

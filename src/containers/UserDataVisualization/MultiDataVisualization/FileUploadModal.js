@@ -145,7 +145,7 @@ return (
                   defaultMessage="Select A File"
                 />
               </h5>
-              <button className="Toolmodal-close-btn" onClick={() => setIsModal(false)}>
+              <button className="MultiCloseButton" onClick={() => setIsModal(false)}>
                 ×
               </button>
             </div>
@@ -237,7 +237,7 @@ return (
             </div>
             <div className="Toolmodal-footer">
               <button
-                className="Toolmodal-close-btn"
+                className="MultiUploadBgGrayButton"
                 style={{ fontSize: '20px' }}
                 onClick={() => setIsModal(false)}
               >

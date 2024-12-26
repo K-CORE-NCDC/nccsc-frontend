@@ -97,7 +97,7 @@ function PaginateTable({
                     style={{ width: '1075px' }}
                     summary={tableSummary}
                 >
-                    <caption className="sr-only">
+                    <caption className="sr-only" style={{display: 'none'}}>
                         {tableSummary}
                     </caption>
                     <thead className="boardHeader">
@@ -172,6 +172,10 @@ function PaginateTable({
                     )}
                 </table>
             </div>
+            {/* << : 맨 처음으로
+< : 이전
+> : 다음
+>> : 맨 마지막 */}
             <div>
                 <div className="paging" id="paging">
                     <button
@@ -187,6 +191,7 @@ function PaginateTable({
                                 gotoPage(newPageNumber - 1);
                             }
                         }}
+                        title="맨 처음으로"
                     >
                         {'<<'}
                     </button>
@@ -206,6 +211,7 @@ function PaginateTable({
                                 gotoPage(pageNumber - 2)
                             }
                         }}
+                        title="이전"
                     >
                         {"<"}
                     </button>
@@ -234,6 +240,7 @@ function PaginateTable({
                             ))}
                     </ul>
                     <button
+                    title="다음"
                         className={` ${pageNumber >=
                             Math.ceil(
                                 parseInt(totalCount) / parseInt(PageSize)
@@ -260,6 +267,7 @@ function PaginateTable({
                         {">"}
                     </button>
                     <button
+                    title="맨 마지막"
                         className={`${pageNumber < totalPages ? "on" : ""}`}
                         onClick={() => {
                             if (pageNumber < totalPages) {

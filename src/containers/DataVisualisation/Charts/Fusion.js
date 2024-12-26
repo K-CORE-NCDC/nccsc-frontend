@@ -391,7 +391,7 @@ export default function FusionPlot({
                         {groupName}
                       </div>
                       {VennData && !noData && (
-                        <Table pagination columns={tableColumnsData} data={tableData} width="2650" />
+                        <Table pagination columns={tableColumnsData} data={tableData} width="2650" summary={'fusion_table'} />
                       )}
                     </div>
                   )}

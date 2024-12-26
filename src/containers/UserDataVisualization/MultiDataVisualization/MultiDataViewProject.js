@@ -326,6 +326,7 @@ function ProjectsList() {
       <div className="">
         {tableData && (
           <Table
+          summary={'multi_data_view_table'}
             columns={columns}
             data={tableData?.data}
             width={"2300"}

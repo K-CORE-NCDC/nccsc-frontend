@@ -59,11 +59,14 @@ export const SingleDataVisualization = () => {
                       >
                         <FormattedMessage id="ExamplePage" defaultMessage="Example Page" />
                       </button>
-                      <button className="btn" id="DownloadManual">
+                      {/* <button className="btn" id="DownloadManual">
                         <a href={SingleDataManual} download>
                           <FormattedMessage id="DownloadManual" defaultMessage="Download Manual" />
                         </a>
-                      </button>
+                      </button> */}
+                      <a href={SingleDataManual} download className="btn" id="DownloadManual">
+                        <FormattedMessage id="DownloadManual" defaultMessage="Download Manual" />
+                      </a>
                     </div>
                     <div className="tit contentBtns_smallScreen">
                       <button
@@ -92,7 +95,8 @@ export const SingleDataVisualization = () => {
 
                   <div className="contentBox">
                     <ul className="contentBox_left">
-                      <li className="" tabIndex="0">
+                      {/* <li className="" tabIndex="0"> */}
+                      <li className="">
                         <p>
                           {' '}
                           <b>Variant Summary : </b> &nbsp;
@@ -102,7 +106,8 @@ export const SingleDataVisualization = () => {
                           />
                         </p>
                       </li>
-                      <li className="" tabIndex="-1" style={{}}>
+                      {/* <li className="" tabIndex="-1" style={{}}> */}
+                      <li className="">
                         <p>
                           {' '}
                           <b>Circos:</b> &nbsp;
@@ -112,7 +117,8 @@ export const SingleDataVisualization = () => {
                           />
                         </p>
                       </li>
-                      <li tabIndex="-1">
+                      {/* <li tabIndex="-1"> */}
+                      <li>
                         <p>
                           {' '}
                           <b>Lollipop:</b> &nbsp;
@@ -122,7 +128,8 @@ export const SingleDataVisualization = () => {
                           />
                         </p>
                       </li>
-                      <li className="" tabIndex="-1">
+                      {/* <li className="" tabIndex="-1"> */}
+                      <li>
                         <p>
                           <b>CNV:</b> &nbsp;
                           <FormattedMessage
@@ -133,7 +140,8 @@ export const SingleDataVisualization = () => {
                       </li>
                     </ul>
                     <ul className="contentBox_right">
-                      <li className="" tabIndex="-1">
+                      {/* <li className="" tabIndex="-1"> */}
+                      <li>
                         <p>
                           {' '}
                           <b>Heatmap:</b> &nbsp;
@@ -143,7 +151,8 @@ export const SingleDataVisualization = () => {
                           />
                         </p>
                       </li>
-                      <li className="" tabIndex="-1" style={{}}>
+                      {/* <li className="" tabIndex="-1" style={{}}> */}
+                      <li>
                         <p>
                           <b>Box (Tumor vs Normal):</b> &nbsp;
                           <FormattedMessage
@@ -153,7 +162,8 @@ export const SingleDataVisualization = () => {
                         </p>
                       </li>
 
-                      <li className="" tabIndex="-1" style={{}}>
+                      {/* <li className="" tabIndex="-1" style={{}}> */}
+                      <li>
                         <p>
                           {' '}
                           <b>Survival:</b> &nbsp;
@@ -163,7 +173,8 @@ export const SingleDataVisualization = () => {
                           />
                         </p>
                       </li>
-                      <li className="" tabIndex="-1" style={{}}>
+                      {/* <li className="" tabIndex="-1" style={{}}> */}
+                      <li>
                         <p>
                           {' '}
                           <b>PCA:</b> &nbsp;
@@ -178,7 +189,7 @@ export const SingleDataVisualization = () => {
                 </div>
               </div>
               <table className="contentsTable" style={{ marginTop: '15px' }}summary='shows file types which are required for the vizualization'>
-              <caption>Single Data Visualization Columns</caption>
+              <caption style={{ display: 'none' }}>Single Data Visualization Columns</caption>
                 <thead>
                   <tr>
                     <th scope="col">Data Type</th>
@@ -210,7 +221,7 @@ export const SingleDataVisualization = () => {
                   <tr>
                     <td>DNA Mutation</td>
                     <td>
-                      <span className="material-icons"alt="checkpoint">radio_button_check</span>
+                      <span className="material-icons"alt="checkpoint">radio_button_unchecked</span>
                     </td>
                     <td>
                       <span className="material-icons" alt="checkpoint">radio_button_unchecked</span>

@@ -528,7 +528,7 @@ export default function Filter({ parentCallback, filterState, project_id }) {
           &nbsp;&nbsp;&nbsp;&nbsp;
           <button
             className="FilterLabelText FilterButton"
-            style={{ backgroundColor: '#009fe2', border: '1px solid white' }}
+            style={{ backgroundColor: '#008be2', border: '1px solid white' }}
             onClick={sendFilter}
           >
             <FormattedMessage id="Search" defaultMessage={' Search '} />

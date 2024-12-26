@@ -106,19 +106,20 @@ function NoticeList() {
                                 PageSize={paramObj?.perPage}
                                 paramObj={paramObj}
                                 setParamObj={(data) => setParamObj(data)}
+                                tableSummary={"Notice"}
                                 // tableSummary={intl.formatMessage({
                                 //     id: "NoticeTableSummary",
                                 //     defaultMessage: 'Notice board entries with pagination'
                                 // })}
-                                footerGroups={[
-                                    {
-                                        cells: [
-                                            {
-                                                content: `Total Entries: ${tableData?.total || 0}`
-                                            }
-                                        ]
-                                    }
-                                ]}
+                                // footerGroups={[
+                                //     {
+                                //         cells: [
+                                //             {
+                                //                 content: `Total Entries: ${tableData?.total || 0}`
+                                //             }
+                                //         ]
+                                //     }
+                                // ]}
                             />
                         </>
                     )}

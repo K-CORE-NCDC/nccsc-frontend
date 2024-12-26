@@ -29,7 +29,7 @@ export const VisualizeMyData = () => {
                       />
                     </dt>
                   </dl>
-                  <Link className="btn btnDetail" to="/visualise-singledata/home/">
+                  <Link className="btn btnDetail" to="/visualise-singledata/home/" tabIndex="0" role="button">
                     <FormattedMessage id="Analyze" defaultMessage="Analyze" />
                     <img src={arrow_icon} alt="arrow-icon" />
                   </Link>
@@ -47,9 +47,8 @@ export const VisualizeMyData = () => {
                       />
                     </dt>
                   </dl>
-                  <Link className="btn btnDetail" to="/multidatavisualization/">
+                  <Link className="btn btnDetail" to="/multidatavisualization/" tabIndex="0" role="button">
                     <FormattedMessage id="Analyze" defaultMessage="Analyze" />
-
                     <img src={arrow_icon} alt="arrow-icon" />
                   </Link>
                 </div>
@@ -63,7 +62,7 @@ export const VisualizeMyData = () => {
                       <FormattedMessage id="visualize_otherTools" defaultMessage="Other Tools" />
                     </dt>
                   </dl>
-                  <Link className="btn btnDetail" to="/tools/">
+                  <Link className="btn btnDetail" to="/tools/" tabIndex="0" role="button">
                     <FormattedMessage id="Analyze" defaultMessage="Analyze" />
                     <img src={arrow_icon} alt="arrow-icon" />
                   </Link>

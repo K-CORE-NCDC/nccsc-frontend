@@ -555,12 +555,14 @@ function SankeyPlot({ inputData, screenCapture, setToFalseAfterScreenCapture }) 
                       columns={ColumnNames}
                       data={basicHtml}
                       width={"1075"}
+                      summary={'sankey_table'}
                     />
                     ) : (
                       <Table
                       columns={ColumnNames}
                       data={[{ clinicalAttribute: <FormattedMessage id="No Clinical Data" defaultMessage="No Clinical Data" />, Value: <FormattedMessage id="No Clinical Data" defaultMessage="No Clinical Data" /> }]}
                       width={"1075"}
+                      summary={'sankey_table'}
                     />
                       )}
                   </div>
@@ -582,6 +584,7 @@ function SankeyPlot({ inputData, screenCapture, setToFalseAfterScreenCapture }) 
                           columns={tableColumnsData}
                           data={tableData}
                           width={'1600'}
+                          summary={'sankey_table'}
                         />
                       </div>
                     </div>

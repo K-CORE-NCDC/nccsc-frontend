@@ -20,7 +20,9 @@ function Modal({ showModal, setShowModal }) {
                 {/*header*/}
                 <div className="Toolmodal-header">
                   <h3 className="Toolmodal-title">Blast Sample File</h3>
-                  <button className="Toolmodal-close-btn" onClick={() => setShowModal(false)}>
+                  <button
+                  className="MultiCloseButton"
+                  onClick={() => setShowModal(false)}>
                     ×
                   </button>
                 </div>
@@ -36,7 +38,7 @@ function Modal({ showModal, setShowModal }) {
                 </div>
                 {/*footer*/}
                 <div className="Toolmodal-footer">
-                  <button className="Toolmodal-close-btn" onClick={() => setShowModal(false)}>
+                  <button className="MultiUploadBgGrayButton" onClick={() => setShowModal(false)}>
                     Close
                   </button>
                 </div>
@@ -271,7 +273,7 @@ function Blast() {
                           <div>
                             <dl>
                               <dt>
-                                <FormattedMessage id="UploadFile" defaultMessage="Upload File" />
+                                <FormattedMessage id="ChooseFile" defaultMessage="Upload File" />
                               </dt>
                               <dd>
                                 <div className="inputText">

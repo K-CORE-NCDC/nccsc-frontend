@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import {
-  clearMultiFIleUploadState
-} from "../../../actions/api_actions";
+import { useHistory,useLocation } from "react-router-dom";
+import {clearMultiFIleUploadState} from "../../../actions/api_actions";
 import HeaderComponent from "../../Common/HeaderComponent/HeaderComponent";
 import LoaderCmp from "../../Common/Loader";
 import Table from '../../Common/Table/ReactTable';
@@ -27,7 +25,7 @@ function Modal({ showModal, toggleModal }) {
                   <div className="Toolmodal-header">
                     <h3 className="Toolmodal-title"><FormattedMessage id="Errors" defaultMessage="Errors" /></h3>
                     <button
-                      className="Toolmodal-close-btn"
+                      className="MultiCloseButton"
                       onClick={() => toggleModal(false, '')}
                     >
                       ×
@@ -175,7 +173,7 @@ function Modal({ showModal, toggleModal }) {
                   {/*footer*/}
                   <div className="Toolmodal-footer">
                     <button
-                      className="Toolmodal-close-btn"
+                      className="MultiUploadBgGrayButton"
                       onClick={() => toggleModal(false, '')}
                     >
                       <FormattedMessage id="Close" defaultMessage="Close" />
@@ -478,7 +476,7 @@ function MultiDataTable({ updateComponentNumber }) {
                       });
                     }}
                     className="btn"
-                    style={{ backgroundColor: "#009fe2" }}
+                    style={{ backgroundColor: "#008be2" }}
                   >
                     <FormattedMessage id="Visualize" defaultMessage="Visualize" />
                   </button>
@@ -505,6 +503,7 @@ function MultiDataTable({ updateComponentNumber }) {
                 {!FalseData &&
                   <div style={{ marginTop: '3%' }}>
                     <Table
+                      summary={'projects_table'}
                       title=""
                       columns={colData}
                       data={rowData}

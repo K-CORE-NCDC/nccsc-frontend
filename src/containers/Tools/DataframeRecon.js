@@ -19,7 +19,9 @@ function Modal({ showModal, setShowModal }) {
               <div className="Toolmodal-dialog">
                 <div className="Toolmodal-header">
                   <h3 className="Toolmodal-title">Matrix to Melted Sample File</h3>
-                  <button className="Toolmodal-close-btn" onClick={() => setShowModal(false)}>
+                  <button
+                      className="MultiCloseButton"
+                  onClick={() => setShowModal(false)}>
                     ×
                   </button>
                 </div>
@@ -39,7 +41,10 @@ function Modal({ showModal, setShowModal }) {
                   </div>
                 </div>
                 <div className="Toolmodal-footer">
-                  <button className="Toolmodal-close-btn" onClick={() => setShowModal(false)}>
+                  <button
+                  // className="Toolmodal-close-btn"
+                  className="MultiUploadBgGrayButton"
+                  onClick={() => setShowModal(false)}>
                     Close
                   </button>
                 </div>
@@ -62,7 +67,6 @@ function DataframeRecon() {
   const [isError, setIsError] = useState(false);
   const dispatch = useDispatch();
   const matrixResponse = useSelector((data) => data.homeReducer.dataframe_recon);
-  // const title = { id: 'MultiDataVisualization', defaultMessage: 'Visualize My Data' };
   const title = { id: 'Other Tools: Dataframe Converter', defaultMessage: 'Dataframe Converter' };
   const history = useHistory();
 
@@ -213,7 +217,7 @@ function DataframeRecon() {
                               <dl>
                                 <br></br>
                                 <dt>
-                                  <FormattedMessage id="UploadFile" defaultMessage="Upload File" />
+                                  <FormattedMessage id="ChooseFile" defaultMessage="Upload File" />
                                 </dt>
                                 <dd>
                                 <label htmlFor='MatrixFile'></label>

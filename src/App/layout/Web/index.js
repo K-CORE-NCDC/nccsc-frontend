@@ -284,24 +284,6 @@ export default function Web() {
     else{
       category = 'Others';
     }
-    // if (window.location.href.substring(window.location.href.lastIndexOf('/') + 1)) {
-    //   category = 'Visualize My Data';
-    // } else if (
-    //   [
-    //     'circos',
-    //     'OncoPrint',
-    //     'lollipop',
-    //     'volcano',
-    //     'heatmap',
-    //     'survival',
-    //     'correlation',
-    //     'CNV',
-    //     'box',
-    //     'fusion'
-    //   ].some((r) => window.location.href.split('/').indexOf(r) >= 0)
-    // ) {
-    //   category = 'Example Data Visualization';
-    // }
 
     if (getCookie('sessionId')) {
       sessionAuth = getCookie('sessionId');
@@ -544,7 +526,7 @@ export default function Web() {
                       style={
                         (mainPageInSmallScreen !== 0 && activeClassIndex === item?.index) ||
                           activeClassIndex === item?.index
-                          ? { color: '#009fe2' }
+                          ? { color: '#008be2' }
                           : { color: '' }
                       }
                     >

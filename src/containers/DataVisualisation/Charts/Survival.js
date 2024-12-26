@@ -267,6 +267,8 @@ export default function DataSurvival({
                 columns={getColumns(columns)}
                 data={trow}
                 width={"1650"}
+                summary={'survival_table'}
+
               />}
 
 

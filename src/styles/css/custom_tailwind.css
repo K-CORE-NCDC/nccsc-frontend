@@ -111,6 +111,29 @@
   margin-left:auto;
 }
 
+/* .MultiUploadBgGrayButton {
+  background-color: #edf2f7;
+  padding: 4px 8px;
+  border-radius: 0.25rem;
+  width: 100px;
+  margin-left:auto;
+} */
+.MultiCloseButton {
+  background-color: #edf2f7;
+  padding: 4px;
+  border-radius: 0.25rem;
+  width: 32px; /* Adjust the width and height to make it square */
+  height: 32px; /* Ensures the button is square */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+}
+
+.inputText input::placeholder {
+  color: #616161;
+}
+
 .MultiUploadTDHeader {
   border: 1px solid #d1d5db;
   padding: 0.5rem 1rem;

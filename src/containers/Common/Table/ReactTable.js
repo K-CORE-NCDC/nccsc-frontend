@@ -35,6 +35,7 @@ function Table({
         gotoPage,
         // setPageSize,
         state: { pageSize },
+        // summary
     } = useTable(
         {
             columns,
@@ -92,7 +93,7 @@ function Table({
             <div style={{ width: '100%', overflowX: 'auto' }}>
                 <span style={{ display: 'flex', fontSize: '18px' }}><b>Total:</b> <div style={{ color: "#003177", paddingLeft: '10px', fontSize: "18px" }}>{data?.length}</div></span>
                 <table className={" boardList"} {...getTableProps()} style={{ width:'1075px' }}>
-                    <caption></caption>
+                    <caption style={{display: 'none'}}>{summary}</caption>
                     <thead className="boardHeader">
                         {headerGroups.map((headerGroup) => (
                             <tr

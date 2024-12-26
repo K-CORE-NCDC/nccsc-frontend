@@ -1325,7 +1325,7 @@ export const GroupFilters = ({
             }
             componentData.push(
               <table className="table" key={'group_table'}>
-                <caption></caption>
+                <caption style={{ display: 'none' }}>group table</caption>
                 <thead className="Border-b WFull" key={'group_thead'}>
                   <tr>
                     <th scope='col'></th>
@@ -1419,7 +1419,7 @@ export const GroupFilters = ({
             }
             componentData.push(
               <table className="table" key={'group_table'}>
-                <caption></caption>
+                <caption style={{ display: 'none' }}>group table</caption>
                 <thead className="Border-b WFull" key={'group_thead'}>
                   <tr>
                     <th scope='col'></th>
@@ -1510,7 +1510,7 @@ export const GroupFilters = ({
             }
             componentData.push(
               <table className="table" key={'group_table'}>
-                <caption></caption>
+                <caption style={{ display: 'none' }}>group_table</caption>
                 <thead className="Border-b WFull" key={'group_thead'}>
                   <tr>
                     <th scope='col'></th>
@@ -2306,7 +2306,7 @@ export const UserDefinedGroupFilters = ({
             }
             componentData.push(
               <table className="table" key={'group_table'}>
-                <caption></caption>
+                <caption style={{ display: 'none' }}>group_table</caption>
                 <thead className="Border-b WFull" key={'group_thead'}>
                   <tr>
                     <th scope='col'></th>
@@ -2404,7 +2404,7 @@ export const UserDefinedGroupFilters = ({
             }
             componentData.push(
               <table className="table" key={'group_table'}>
-                <caption></caption>
+                <caption style={{ display: 'none' }}>group_table</caption>
                 <thead className="Border-b WFull" key={'group_thead'}>
                   <tr>
                     <th scope='col'></th>
@@ -2500,7 +2500,7 @@ export const UserDefinedGroupFilters = ({
             }
             componentData.push(
               <table className="table" key={'group_table'}>
-                <caption></caption>
+                <caption style={{ display: 'none' }}>group_table</caption>
                 <thead className="Border-b WFull" key={'group_thead'}>
                   <tr>
                     <th scope='col'></th>

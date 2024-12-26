@@ -263,6 +263,7 @@ function SankeyIndex({ selectedGene, variants, screenCapture, setToFalseAfterScr
                           columns={generateTableColumnsData(detailGeneData)}
                           data={detailGeneData}
                           width="1100"
+                          summary={'sankey_data'}
                         />
                       </div>
                     </div>

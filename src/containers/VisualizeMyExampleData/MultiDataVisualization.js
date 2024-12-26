@@ -188,7 +188,7 @@ const MultiDataVisualization = () => {
         </div>
       </div>
       <table className="contentsTable" style={{ marginTop: '15px' }}summary='shows file types which are required for the vizualization'>
-        <caption></caption>
+      <caption style={{display: 'none'}}>Multi Data Visualization Table</caption>
         <thead>
           <tr>
             <th scope="col" style={{ width: '160px' }}>Data Type</th>
@@ -209,70 +209,70 @@ const MultiDataVisualization = () => {
           <tr>
             <td>Clinical Information</td>
             <td>
-              <span className="material-icons">*</span>
+              <span className="material-icons" alt="필수 입력">*</span>
             </td>
             <td>
-              <span className="material-icons">*</span>
+              <span className="material-icons" alt="필수 입력">*</span>
             </td>
             <td>
-              <span className="material-icons">*</span>
+              <span className="material-icons" alt="필수 입력">*</span>
             </td>
             <td>
-              <span className="material-icons">*</span>
+              <span className="material-icons" alt="필수 입력">*</span>
             </td>
             <td>
-              <span className="material-icons">*</span>
+              <span className="material-icons" alt="필수 입력">*</span>
             </td>
             <td>
-              <span className="material-icons">*</span>
+              <span className="material-icons" alt="필수 입력">*</span>
             </td>
             <td>
-              <span className="material-icons">*</span>
+              <span className="material-icons" alt="필수 입력">*</span>
             </td>
             <td>
-              <span className="material-icons">*</span>{' '}
+              <span className="material-icons" alt="필수 입력">*</span>{' '}
             </td>
             <td>
-              <span className="material-icons">*</span>{' '}
+              <span className="material-icons" alt="필수 입력">*</span>{' '}
             </td>
             <td>
-              <span className="material-icons">*</span>{' '}
+              <span className="material-icons" alt="필수 입력">*</span>{' '}
             </td>
             <td>
-              <span className="material-icons">*</span>{' '}
+              <span className="material-icons" alt="필수 입력">*</span>{' '}
             </td>
           </tr>
           <tr>
             <td>DNA Mutation</td>
             <td>
-              <span className="material-icons">V</span>
+              <span className="material-icons"alt="선택 입력">V</span>
             </td>
             <td>
-              <span className="material-icons">*</span>
+              <span className="material-icons" alt="필수 입력">*</span>
             </td>
             <td>
-              <span className="material-icons">V</span>
-            </td>
-            <td></td>
-            <td></td>
-            <td>
-              <span className="material-icons">O</span>
+              <span className="material-icons"alt="선택 입력">V</span>
             </td>
             <td></td>
             <td></td>
+            <td>
+              <span className="material-icons" alt="checkpoint">O</span>
+            </td>
+            <td></td>
+            <td></td>
             <td></td>
             <td></td>
             <td>
-              <span className="material-icons">V</span>
+              <span className="material-icons"alt="선택 입력">V</span>
             </td>
           </tr>
           <tr>
             <td>CNV</td>
             <td>
-              <span className="material-icons">V</span>
+              <span className="material-icons"alt="선택 입력">V</span>
             </td>
             <td>
-              <span className="material-icons">*</span>
+              <span className="material-icons" alt="필수 입력">*</span>
             </td>
             <td></td>
             <td></td>
@@ -280,7 +280,7 @@ const MultiDataVisualization = () => {
             <td></td>
             <td></td>
             <td>
-              <span className="material-icons">*</span>
+              <span className="material-icons" alt="필수 입력">*</span>
             </td>
             <td></td>
             <td></td>
@@ -289,13 +289,13 @@ const MultiDataVisualization = () => {
           <tr>
             <td>Methylation</td>
             <td>
-              <span className="material-icons">V</span>
+              <span className="material-icons"alt="선택 입력">V</span>
             </td>
             <td></td>
             <td></td>
             <td></td>
             <td>
-              <span className="material-icons">V</span>
+              <span className="material-icons"alt="선택 입력">V</span>
             </td>
             <td></td>
             <td></td>
@@ -303,31 +303,31 @@ const MultiDataVisualization = () => {
             <td></td>
             <td></td>
             <td>
-              <span className="material-icons">V</span>
+              <span className="material-icons"alt="선택 입력">V</span>
             </td>
           </tr>
           <tr>
             <td>RNA</td>
             <td>
-              <span className="material-icons">V</span>
+              <span className="material-icons"alt="선택 입력">V</span>
             </td>
-            <td><span className="material-icons">*</span></td>
+            <td><span className="material-icons" alt="필수 입력">*</span></td>
             <td></td>
             <td>
-              <span className="material-icons">V</span>
+              <span className="material-icons"alt="선택 입력">V</span>
             </td>
             <td>
-              <span className="material-icons">V</span>
+              <span className="material-icons"alt="선택 입력">V</span>
             </td>
             <td>
-              <span className="material-icons">O</span>
+              <span className="material-icons" alt="checkpoint">O</span>
             </td>
             <td>
-              <span className="material-icons">*</span>
+              <span className="material-icons" alt="필수 입력">*</span>
             </td>
             <td></td>
             <td>
-              <span className="material-icons">V</span>
+              <span className="material-icons"alt="선택 입력">V</span>
             </td>
             <td></td>
             <td></td>
@@ -335,7 +335,7 @@ const MultiDataVisualization = () => {
           <tr>
             <td>Fusion</td>
             <td>
-              <span className="material-icons">V</span>
+              <span className="material-icons"alt="선택 입력">V</span>
             </td>
             <td></td>
             <td></td>
@@ -346,46 +346,46 @@ const MultiDataVisualization = () => {
             <td></td>
             <td></td>
             <td>
-              <span className="material-icons">*</span>
+              <span className="material-icons" alt="필수 입력">*</span>
             </td>
             <td></td>
           </tr>
           <tr>
             <td>Proteome</td>
             <td>
-              <span className="material-icons">V</span>
+              <span className="material-icons"alt="선택 입력">V</span>
             </td>
-            <td><span className="material-icons">*</span></td>
+            <td><span className="material-icons" alt="필수 입력">*</span></td>
             <td></td>
             <td>
-              <span className="material-icons">V</span>
+              <span className="material-icons"alt="선택 입력">V</span>
             </td>
             <td>
-              <span className="material-icons">V</span>
+              <span className="material-icons"alt="선택 입력">V</span>
             </td>
             <td>
-              <span className="material-icons">O</span>
+              <span className="material-icons" alt="checkpoint">O</span>
             </td>
             <td>
-              <span className="material-icons">*</span>
+              <span className="material-icons" alt="필수 입력">*</span>
             </td>
             <td></td>
             <td>
-              <span className="material-icons">V</span>
+              <span className="material-icons"alt="선택 입력">V</span>
             </td>
             <td></td>
-            <td><span className="material-icons">V</span></td>
+            <td><span className="material-icons"alt="선택 입력">V</span></td>
           </tr>
           <tr>
             <td>Phosphorylation</td>
             <td></td>
             <td></td>
             <td>
-              <span className="material-icons">V</span>
+              <span className="material-icons"alt="선택 입력">V</span>
             </td>
             <td></td>
             <td>
-              <span className="material-icons">V</span>
+              <span className="material-icons"alt="선택 입력">V</span>
             </td>
             <td></td>
             <td></td>

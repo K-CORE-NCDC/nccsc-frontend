@@ -367,7 +367,7 @@ br.m {
 }
 
 .colorSecondary {
-  color: #009fe2 !important;
+  color: #008be2 !important;
 }
 
 .colorSecondary200 {
@@ -560,8 +560,8 @@ input::placeholder {
 }
 
 .checkbox input[type='checkbox']:checked+label:before {
-  border-color: #009fe2;
-  background-color: #009fe2;
+  border-color: #008be2;
+  background-color: #008be2;
   background-image: url('../images/icon-check.svg');
   background-position: 50% 50%;
   background-repeat: no-repeat;
@@ -605,7 +605,7 @@ input::placeholder {
 }
 
 .radioBox>input[type='radio']:checked+label::before {
-  border: 6px solid #009fe2;
+  border: 6px solid #008be2;
 }
 
 .radioBox>input[type='radio']:disabled+label {
@@ -656,7 +656,7 @@ input::placeholder {
 }
 
 .switcher input[type='checkbox']:checked+label {
-  background-color: #009fe2;
+  background-color: #008be2;
 }
 
 .switcher input[type='checkbox']:checked+label span:after {
@@ -771,7 +771,7 @@ select {
 }
 
 .selectBox ul li a:hover {
-  background-color: #009fe2;
+  background-color: #008be2;
   color: rgb(255, 255, 255);
 }
 
@@ -857,7 +857,7 @@ textarea {
 
 #ui-datepicker-div td a.ui-state-highlight {
   color: rgb(255, 255, 255);
-  background-color: #009fe2;
+  background-color: #008be2;
 }
 
 #ui-datepicker-div .ui-datepicker-header {
@@ -934,12 +934,12 @@ textarea {
 }
 
 .btn.btnSecondary {
-  border-color: #009fe2;
-  background-color: #009fe2;
+  border-color: #008be2;
+  background-color: #008be2;
 }
 
 .btn.btnSecondary.bdBtn {
-  color: #009fe2;
+  color: #008be2;
   background-color: rgb(255, 255, 255);
 }
 
@@ -1239,7 +1239,7 @@ table tbody tr {
 }
 
 .boardList .announce {
-  background-color: #009fe2;
+  background-color: #008be2;
   font-size: 12px;
   color: rgb(255, 255, 255);
   padding: 6px;
@@ -1259,7 +1259,7 @@ table tbody tr {
 }
 
 .boardList .status.statusEnd {
-  background-color: #009fe2;
+  background-color: #008be2;
   color: rgb(255, 255, 255);
 }
 
@@ -1518,7 +1518,7 @@ table tbody tr {
 }
 
 .boardTopUtil .boardTotal span {
-  /* color: #009fe2; */
+  /* color: #008be2; */
   font-weight: 500;
   margin-left: 4px;
   font-size: 18px;
@@ -1632,7 +1632,7 @@ table tbody tr {
 }
 
 .boardView .boardViewHeader .boardViewTitle p .status.statusReply {
-  background-color: #009fe2;
+  background-color: #008be2;
 }
 
 @media all and (max-width: 767px) {
@@ -1702,7 +1702,7 @@ table tbody tr {
 
 .boardView .boardViewBody .fileDownload ul li {
   font-size: 16px;
-  color: #009fe2;
+  color: #008be2;
   text-decoration: underline;
   display: flex;
   align-items: flex-start;
@@ -1989,7 +1989,7 @@ table tbody tr {
 }
 
 .header .headerTop .headerUtils .headerSearchBox.on {
-  border-color: #009fe2;
+  border-color: #008be2;
 }
 
 .header .headerTop .headerUtils .headerSearchBox input {
@@ -2076,11 +2076,11 @@ table tbody tr {
 .header .headerTop .headerUtils .headerSearchBox .searchKeyword .keywordList ol li:nth-child(1) .num,
 .header .headerTop .headerUtils .headerSearchBox .searchKeyword .keywordList ol li:nth-child(2) .num,
 .header .headerTop .headerUtils .headerSearchBox .searchKeyword .keywordList ol li:nth-child(3) .num {
-  color: #009fe2;
+  color: #008be2;
 }
 
 .header .headerTop .headerUtils .headerSearchBox .searchKeyword .keywordList ol li .keyword:hover {
-  color: #009fe2;
+  color: #008be2;
   text-decoration: underline;
 }
 
@@ -2162,7 +2162,7 @@ table tbody tr {
 }
 
 .header .headerTop .headerUtils .language ul li.on a {
-  color: #009fe2;
+  color: #008be2;
 }
 
 .header .headerBottom {
@@ -2294,7 +2294,7 @@ table tbody tr {
   left: 0;
   right: 0;
   height: 4px;
-  background-color: #009fe2;
+  background-color: #008be2;
   transform: scaleX(0);
   transition: 0.3s;
 }
@@ -2304,7 +2304,7 @@ table tbody tr {
 }
 
 .gnb>ul>li:hover>a {
-  color: #009fe2 !important;
+  color: #008be2 !important;
 }
 
 .gnb>ul>li:hover>a:after {
@@ -2312,7 +2312,7 @@ table tbody tr {
 }
 
 .gnb>ul>li.on>a {
-  color: #009fe2 !important;
+  color: #008be2 !important;
 }
 
 .gnb>ul>li.on>a:after {
@@ -2320,7 +2320,7 @@ table tbody tr {
 }
 
 .gnb>ul>li.on .sub>li.on>a {
-  color: #009fe2;
+  color: #008be2;
 }
 
 .gnb .sub {
@@ -2343,7 +2343,7 @@ table tbody tr {
 }
 
 .gnb .sub li:hover {
-  color: #009fe2;
+  color: #008be2;
 }
 
 .gnb .sub li>a {
@@ -2498,7 +2498,7 @@ table tbody tr {
 }
 
 .allMenuWrap .imgBox .utils .language ul li.on a {
-  color: #009fe2;
+  color: #008be2;
 }
 
 .allMenuWrap .imgBox .btns {
@@ -2549,7 +2549,7 @@ table tbody tr {
 }
 
 .allMenuWrap .allMenu>ul>li:hover>a {
-  color: #009fe2;
+  color: #008be2;
 }
 
 .allMenuWrap .allMenu .sub {
@@ -2582,7 +2582,7 @@ table tbody tr {
 }
 
 .allMenuWrap .allMenu .sub li a:hover {
-  color: #009fe2;
+  color: #008be2;
 }
 
 .allMenuWrap .allMenu .depth03 li {
@@ -2660,7 +2660,7 @@ table tbody tr {
 .header.on .headerTop .gnb>ul>li:hover>a,
 .header.rev .headerTop .gnb>ul>li.on>a,
 .header.rev .headerTop .gnb>ul>li:hover>a {
-  color: #009fe2;
+  color: #008be2;
 }
 
 .header.on .headerTop .headerUtils .headerSearchBox,
@@ -2803,7 +2803,7 @@ table tbody tr {
 }
 
 .footer .footerBottom .footerMenu a:nth-child(2) {
-  color: #009fe2;
+  color: #008be2;
 }
 
 .footer .flex {
@@ -3076,7 +3076,7 @@ table tbody tr {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background-color: #009fe2;
+  background-color: #008be2;
 }
 
 .calendar .calendarBody .on {
@@ -3667,7 +3667,7 @@ body {
 }
 
 .star {
-  color: #009fe2;
+  color: #008be2;
 }
 
 .writeForm .inputText,
@@ -3700,7 +3700,7 @@ body {
   font-size: 16px;
   font-weight: 500;
   line-height: 150%;
-  color: #009fe2;
+  color: #008be2;
 }
 
 @media all and (max-width: 767px) {
@@ -4013,7 +4013,7 @@ body {
 
 .faqList dl dd .marker {
   top: 32px;
-  color: #009fe2;
+  color: #008be2;
 }
 
 big {

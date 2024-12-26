@@ -26,7 +26,7 @@ function Modal({ showModal, toggleModal }) {
                   <div className="Toolmodal-header">
                     <h3 className="Toolmodal-title"><FormattedMessage id="Errors" defaultMessage="Errors" /></h3>
                     <button
-                      className="Toolmodal-close-btn"
+                      className="MultiCloseButton"
                       onClick={() => toggleModal(false, '')}
                     >
                       ×
@@ -163,7 +163,7 @@ function Modal({ showModal, toggleModal }) {
                   {/*footer*/}
                   <div className="Toolmodal-footer">
                     <button
-                      className="Toolmodal-close-btn"
+                      className="MultiUploadBgGrayButton"
                       onClick={() => toggleModal(false, '')}
                     >
                       <FormattedMessage id="Close" defaultMessage="Close" />
@@ -396,7 +396,7 @@ function SingleDataTable({ updateComponentNumber }) {
                   history.push(`/visualise-singledata/${tab}/${projectId}`);
                 }}
                 className="btn"
-                style={{ backgroundColor: "#009fe2" }}
+                style={{ backgroundColor: "#008be2" }}
               >
                 <FormattedMessage id="Visualize" defaultMessage="Visualize" />
               </button>
@@ -423,6 +423,7 @@ function SingleDataTable({ updateComponentNumber }) {
             {!FalseData &&
               <div style={{ marginTop: '3%' }}>
                 <Table
+                  summary={'single_data_table'}
                   title=""
                   columns={colData}
                   data={rowData}

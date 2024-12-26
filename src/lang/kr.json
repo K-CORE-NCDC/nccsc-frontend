@@ -18,7 +18,7 @@
   "ExampleVisualization": "단일 데이터 예제 시각화",
   "VisualizeExample": "시각화예제",
   "Data": "데이터",
-  "VisualizeMyData": "사용자 데이터 분석",
+  "VisualizeMyData": "사용자 데이터 시각화",
   "VisualizeExampleData": "데이터 분석 예시",
   "DataApplication": "데이터 신청",
   "BlastDesc": "생물학적 서열 데이터를 입력하여 database 에서 유사 서열 검색 ",
@@ -643,5 +643,6 @@
   "DfDesc2":" ",
   "dataframeconverter":"데이터프레임 변환기",
   "DataError": "데이터가 충분하지 않습니다. 다른 유전자(유전자 2개 이상)를 선택해 주세요.",
-  "UploadTwo":"최소 두 개 이상의 오믹스 데이터를 업로드 해야합니다."
+  "UploadTwo":"최소 두 개 이상의 오믹스 데이터를 업로드 해야합니다.",
+  "ChooseFile":"파일 선택"
 }

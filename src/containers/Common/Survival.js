@@ -81,6 +81,7 @@ const SurvivalCmp = React.forwardRef(({ data, watermarkCss, pValue, survialType 
               <Table
                 data={filteredValue}
                 columns={columns}
+                summary={'survival_table'}
               />
             </div>
           );

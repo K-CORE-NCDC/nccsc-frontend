@@ -77,7 +77,7 @@ function FaqList() {
       accessor: (row) => row.writer,
     },
     {
-      Header: intl.formatMessage({ id: "DateOfIssue", defaultMessage: 'Date Of Issue' }),
+      Header: intl.formatMessage({ id: "DateOfIssue", defaultMessage: 'Date' }),
       accessor: (row) => row.created_on.slice(0, 19).replace("T", " "),
     }
   ];
@@ -97,6 +97,7 @@ function FaqList() {
               PageSize={paramObj?.perPage}
               paramObj={paramObj}
               setParamObj={(data) => setParamObj(data)}
+              tableSummary={"FAQ"}
             />
           )}
           {tableData && tableData.length === 0 && <h1 className="MultiUploadTextCenter">{intl.formatMessage({ id: "NoRecords", defaultMessage: 'No Records Found' })}</h1>}
@@ -126,7 +127,8 @@ function FaqDetail({ slug_id }) {
           </div>
           <div className="shadow-sm">
             <table className="border-slate-300 table-auto">
-              <caption></caption>
+            {/* <caption style={{display: 'none'}}>FAQ</caption> */}
+            <caption style={{visibility: 'hidden'}}>FAQ</caption>
 
               <tbody>
                 <tr className="h-8">

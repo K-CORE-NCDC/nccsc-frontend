@@ -207,7 +207,7 @@ img.m {
 }
 
 .lnb ul li.on a {
-  background-color: #009fe2;
+  background-color: #008be2;
 }
 
 .subContents {
@@ -237,7 +237,7 @@ img.m {
   transform: translateX(-50%);
   width: 48px;
   height: 4px;
-  background: linear-gradient(to right, #003177 66%, #009fe2 33%);
+  background: linear-gradient(to right, #003177 66%, #008be2 33%);
 }
 
 .contentsTitle h3 {
@@ -331,7 +331,7 @@ img.m {
   left: 0;
   right: 0;
   height: 3px;
-  background-color: #009fe2;
+  background-color: #008be2;
 }
 
 .loginWrap {
@@ -463,7 +463,7 @@ img.m {
   font-weight: 700;
   letter-spacing: -0.04rem;
   line-height: 130%;
-  color: #009fe2;
+  color: #008be2;
 }
 
 @media all and (max-width: 767px) {
@@ -692,11 +692,11 @@ img.m {
 }
 
 .joinProcess ul li.on .icon {
-  background-color: #009fe2;
+  background-color: #008be2;
 }
 
 .joinProcess ul li.on .step {
-  color: #009fe2;
+  color: #008be2;
 }
 
 .joinProcess ul li.on .tit {
@@ -740,7 +740,7 @@ img.m {
   font-size: 16px;
   font-weight: 500;
   line-height: 150%;
-  color: #009fe2;
+  color: #008be2;
 }
 
 @media all and (max-width: 767px) {
@@ -897,7 +897,7 @@ img.m {
   font-size: 16px;
   font-weight: 500;
   line-height: 150%;
-  color: #009fe2;
+  color: #008be2;
   text-decoration: underline;
 }
 
@@ -967,7 +967,7 @@ img.m {
   font-size: 14px;
   font-weight: 500;
   line-height: 140%;
-  color: #009fe2;
+  color: #008be2;
 }
 
 .joinSuccess {
@@ -1117,7 +1117,7 @@ h4.conTitle::before {
   left: 0;
   width: 36px;
   height: 4px;
-  background: linear-gradient(to right, #009fe2 12px, #003177 0);
+  background: linear-gradient(to right, #008be2 12px, #003177 0);
 }
 
 h4.conTitle img {
@@ -1176,7 +1176,7 @@ h5 {
   font-weight: 700;
   letter-spacing: -0.04rem;
   line-height: 130%;
-  color: #009fe2;
+  color: #008be2;
 }
 
 @media all and (max-width: 767px) {
@@ -1363,7 +1363,7 @@ h5 {
 }
 
 .publicDataInfo ul li:nth-child(3) dt {
-  color: #009fe2;
+  color: #008be2;
 }
 
 .centerImg {
@@ -1456,7 +1456,7 @@ h5 {
 }
 
 .organization .conBox03 .cellBox {
-  border-color: #009fe2;
+  border-color: #008be2;
 }
 
 .organization .conBox03 .division {
@@ -1620,7 +1620,7 @@ h5 {
 }
 
 .organization .conBox04 ul li:nth-child(4) dt {
-  background-color: #009fe2;
+  background-color: #008be2;
 }
 
 .historyWrap {
@@ -1826,19 +1826,19 @@ h5 {
 }
 
 .historyList>ul>li:nth-child(odd) .year {
-  color: #009fe2;
+  color: #008be2;
 }
 
 .historyList>ul>li:nth-child(odd) .year::after {
-  background-color: #009fe2;
+  background-color: #008be2;
 }
 
 .historyList>ul>li:nth-child(odd) .list::before {
-  border: 1px solid #009fe2;
+  border: 1px solid #008be2;
 }
 
 .historyList>ul>li:nth-child(odd) .list::after {
-  background-color: #009fe2;
+  background-color: #008be2;
 }
 
 .historyList>ul>li:nth-child(even) .year {
@@ -2037,7 +2037,7 @@ h5 {
 }
 
 .linkList>ul>li a {
-  color: #009fe2;
+  color: #008be2;
   text-decoration: underline;
 }
 
@@ -2046,7 +2046,7 @@ h5 {
 }
 
 .linkList>ul>li a p::before {
-  background-color: #009fe2;
+  background-color: #008be2;
 }
 
 .thesisList ul {
@@ -2147,7 +2147,7 @@ h5 {
   font-size: 16px;
   font-weight: 500;
   line-height: 150%;
-  color: #009fe2;
+  color: #008be2;
 }
 
 @media all and (max-width: 767px) {
@@ -2162,7 +2162,7 @@ h5 {
 }
 
 .thesisList ul .itemBox02 dd:hover {
-  color: #009fe2;
+  color: #008be2;
 }
 
 .thesisList.type02 ul li {
@@ -2283,7 +2283,7 @@ h5 {
 }
 
 .myInfo .infoListContent li a {
-  color: #009fe2;
+  color: #008be2;
   text-decoration: underline;
 }
 
@@ -2443,11 +2443,11 @@ h5 {
 }
 
 .myInfoInquiry ul li:nth-child(3) dt {
-  color: #009fe2;
+  color: #008be2;
 }
 
 .myInfoInquiry ul li:nth-child(3) dd span {
-  background-color: #009fe2;
+  background-color: #008be2;
 }
 
 .dataSubContents01 {
@@ -2605,8 +2605,8 @@ h5 {
 }
 
 .searchFilter dl dd button.on {
-  background-color: #009fe2;
-  border-color: #009fe2;
+  background-color: #008be2;
+  border-color: #008be2;
   color: rgb(255, 255, 255);
 }
 
@@ -2698,8 +2698,8 @@ h5 {
 }
 
 .dataListArray .btns button.on {
-  border-color: #009fe2;
-  color: #009fe2;
+  border-color: #008be2;
+  color: #008be2;
 }
 
 .dataListArray .array {
@@ -2786,7 +2786,7 @@ h5 {
 }
 
 .labels02 span.label03 {
-  background-color: #009fe2;
+  background-color: #008be2;
 }
 
 .tooltip {
@@ -2868,8 +2868,8 @@ h5 {
 }
 
 .hashtag a:hover {
-  color: #009fe2;
-  border-color: #009fe2;
+  color: #008be2;
+  border-color: #008be2;
 }
 
 .dataList ul {
@@ -2981,7 +2981,7 @@ h5 {
 }
 
 .dataList ul li:hover {
-  border-color: #009fe2;
+  border-color: #008be2;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
 }
 
@@ -3082,9 +3082,9 @@ h5 {
 }
 
 .dataSubContents01.simplify .searchFilter dl dd button.on {
-  background-color: #009fe2;
+  background-color: #008be2;
   color: rgb(255, 255, 255);
-  border: 1px solid #009fe2;
+  border: 1px solid #008be2;
 }
 
 .dataSubContents01.simplify .contentsTab .tabUtil button img {
@@ -3286,7 +3286,7 @@ h5 {
   font-weight: 700;
   letter-spacing: -0.04rem;
   line-height: 130%;
-  color: #009fe2;
+  color: #008be2;
   position: relative;
   display: flex;
   align-items: center;
@@ -3315,7 +3315,7 @@ h5 {
 
 .inquiryBefore dl dd {
   width: calc(100% - 244px);
-  color: #009fe2;
+  color: #008be2;
 }
 
 .inlineLabels.respons .radioBox {
@@ -3513,7 +3513,7 @@ h5 {
   -moz-border-radius: 30px;
   -ms-border-radius: 30px;
   border-radius: 30px;
-  background-color: #009fe2;
+  background-color: #008be2;
   font-size: 14px;
   font-weight: 500;
   line-height: 140%;
@@ -3602,7 +3602,7 @@ h5 {
   -moz-border-radius: 30px;
   -ms-border-radius: 30px;
   border-radius: 30px;
-  background-color: #009fe2;
+  background-color: #008be2;
   margin-top: 12px;
 }
 
@@ -3640,7 +3640,7 @@ h5 {
 }
 
 .needDoc ul li:hover {
-  border-color: #009fe2;
+  border-color: #008be2;
 }
 
 .needDoc .num {
@@ -3651,7 +3651,7 @@ h5 {
   font-weight: 700;
   letter-spacing: -0.02rem;
   line-height: 120%;
-  color: #009fe2;
+  color: #008be2;
 }
 
 @media all and (max-width: 767px) {
@@ -3703,7 +3703,7 @@ h5 {
 }
 
 .txtListBox:hover {
-  border-color: #009fe2;
+  border-color: #008be2;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
 }
 
@@ -3768,6 +3768,7 @@ h5 {
 }
 
 .committeeBox .titleBox dt .colorSecondary {
+  /* color: #82d6f7 !important; */
   color: #82d6f7 !important;
 }
 
@@ -3810,7 +3811,7 @@ h5 {
 }
 
 .committeeBox ul li:hover {
-  border-color: #009fe2;
+  border-color: #008be2;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
 }
 
@@ -3946,7 +3947,7 @@ h5 {
 }
 
 .analyticGuideBox01 .slideBox .slick-dots li.slick-active {
-  background-color: #009fe2;
+  background-color: #008be2;
 }
 
 .analyticGuideBox01 .slideBox .arrow {
@@ -4160,7 +4161,7 @@ h5 {
 }
 
 .researchStatus01 .subTxt span {
-  color: #009fe2;
+  color: #008be2;
 }
 
 .researchStatus01 .status {
@@ -4206,7 +4207,7 @@ h5 {
 }
 
 .researchStatus01 .status dl dd {
-  color: #009fe2;
+  color: #008be2;
 }
 
 .researchStatus01 li:nth-child(4) .txtBox {
@@ -4218,11 +4219,11 @@ h5 {
 }
 
 .researchStatus01 li:nth-child(5) .txtBox {
-  color: #009fe2;
+  color: #008be2;
 }
 
 .researchStatus01 li:nth-child(5) .txtBox .amount span {
-  background-color: #009fe2;
+  background-color: #008be2;
 }
 
 .researchStatus01+.comment {
@@ -4271,7 +4272,7 @@ h5 {
 }
 
 .researchStatus02 ul li a:hover {
-  border-color: #009fe2;
+  border-color: #008be2;
 }
 
 .researchStatus02 .icon {
@@ -4332,11 +4333,11 @@ h5 {
 }
 
 .researchStatus02 li:hover .txtBox {
-  color: #009fe2;
+  color: #008be2;
 }
 
 .researchStatus02 li:hover .amount span {
-  background-color: #009fe2;
+  background-color: #008be2;
 }
 
 .researchStatus02 li:nth-child(1):hover .icon {
@@ -4537,7 +4538,7 @@ h5 {
 }
 
 .contentsTable.research .type.type02 {
-  background-color: #009fe2;
+  background-color: #008be2;
 }
 
 .contentsTable.research .status01 {
@@ -4692,7 +4693,7 @@ h5 {
 }
 
 .linkTxt {
-  color: #009fe2;
+  color: #008be2;
   text-decoration: underline;
 }
 
@@ -4784,7 +4785,7 @@ h5 {
   font-weight: 700;
   letter-spacing: -0.04rem;
   line-height: 130%;
-  color: #009fe2;
+  color: #008be2;
 }
 
 @media all and (max-width: 767px) {
@@ -4911,7 +4912,7 @@ h5 {
 }
 
 .serviceType.type02 {
-  background-color: #009fe2;
+  background-color: #008be2;
 }
 
 .serviceType.type03 {
@@ -5117,7 +5118,7 @@ h5 {
 }
 
 .fileUpload .flex .btn.btnSecondary {
-  border-color: #009fe2;
+  border-color: #008be2;
 }
 
 .fileUpload .flex .btn.btnGray {
@@ -5460,7 +5461,7 @@ h5 {
 }
 
 .statusInfo dl dd p strong.colorSecondary::before {
-  background-color: #009fe2;
+  background-color: #008be2;
 }
 
 .withdrawal {
@@ -5564,7 +5565,7 @@ h5 {
 }
 
 .dataProcess .titleBox.titleBox01 .colorSecondary span {
-  background-color: #009fe2;
+  background-color: #008be2;
 }
 
 .dataProcess .titleBox.titleBox01 .colorPrimary span {
@@ -5647,7 +5648,7 @@ h5 {
 }
 
 .btnDownload:not(.disabled):hover {
-  background-color: #009fe2 !important;
+  background-color: #008be2 !important;
   color: rgb(255, 255, 255) !important;
 }
 
@@ -5663,7 +5664,7 @@ h5 {
 }
 
 .btnInquiry:not(.disabled):hover {
-  background-color: #009fe2 !important;
+  background-color: #008be2 !important;
   color: rgb(255, 255, 255) !important;
 }
 
@@ -6044,7 +6045,7 @@ h5 {
 }
 
 .dataSeleTable02 .btnPeriodSelect .popCalendar .calendarWrap .calendarBox .monthTable td.on {
-  background-color: #009fe2;
+  background-color: #008be2;
   color: rgb(255, 255, 255);
 }
 
@@ -6389,7 +6390,7 @@ h5 {
 
 .paymentSort .comment {
   font-size: 16px;
-  color: #009fe2;
+  color: #008be2;
   margin-top: 24px;
   text-align: center;
 }
@@ -6725,7 +6726,7 @@ h5 {
 }
 
 .serviceComment span {
-  color: #009fe2;
+  color: #008be2;
 }
 
 .introduceWrap {
@@ -6766,7 +6767,7 @@ h5 {
 }
 
 .introduceWrap .introduceBox01 .txtBox p span {
-  color: #009fe2;
+  color: #008be2;
 }
 
 .introduceWrap .introduceBox02 {
@@ -6840,7 +6841,7 @@ h5 {
 }
 
 .introduceWrap .introduceBox03 ul li p span {
-  color: #009fe2;
+  color: #008be2;
 }
 
 /*# sourceMappingURL=contents.css.map */

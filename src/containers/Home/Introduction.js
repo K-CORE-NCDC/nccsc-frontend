@@ -65,22 +65,34 @@ const Introduction = ({ setActiveClassIndex, lan }) => {
                       </a>
                     </dt>
                     <dt
+                      tabIndex={0}
                       onClick={() => {
                         setActiveClassIndex(2);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          setActiveClassIndex(2);
+                        }
                       }}
                       style={{ cursor: 'pointer' }}
                     >
                       <FormattedMessage id="Visualization" defaultMessage="Visualize Example Data" />
                     </dt>
                     <dt
+                      tabIndex={0}
                       onClick={() => {
                         setActiveClassIndex(3);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          setActiveClassIndex(3);
+                        }
                       }}
                       style={{ cursor: 'pointer' }}
                     >
                       <FormattedMessage
-                        id="MultiDataVisualization"
-                        defaultMessage=" Visualize My Data"
+                        id="VisualizeMyData"
+                        defaultMessage="Visualize My Data"
                       />
                     </dt>
                   </dl>

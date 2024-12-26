@@ -50,7 +50,7 @@ function QAList() {
   // }, []);
 
   useEffect(() => {
-    fetchUsers(1, 'GET'); 
+    fetchUsers(1, 'GET');
     setParamObj(paramObj)
   }, [paramObj]);
 
@@ -82,7 +82,7 @@ function QAList() {
       accessor: (row) => row.writer,
     },
     {
-      Header: intl.formatMessage({ id: "DateOfIssue", defaultMessage: 'Date Of Issue' }),
+      Header: intl.formatMessage({ id: "DateOfIssue", defaultMessage: 'Date' }),
       accessor: (row) => row.created_on.slice(0, 19).replace("T", " "),
     }
   ];
@@ -104,7 +104,8 @@ function QAList() {
               PageSize={paramObj?.perPage}
               paramObj={paramObj}
               setParamObj={(data) => setParamObj(data)}
-          
+              tableSummary={"Archive"}
+
             />
           )}
           {(tableData === null) && <h1 className="MultiUploadTextCenter">{intl.formatMessage({ id: "NoRecords", defaultMessage: 'No Records Found' })}</h1>}
