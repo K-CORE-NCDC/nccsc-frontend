@@ -10,7 +10,7 @@ export const ICGC = () => {
         <div className="introduceWrap" style={{ paddingTop: '0px', height: '100%' }}>
           <div className="introduceBox01">
             <div className="logoBox">
-              <img src={introduce_img} alt="icgc_logo" />
+              <img src={introduce_img} alt="icgc_img" />
             </div>
             <div className="txtBox">
               <p>
