@@ -146,7 +146,7 @@ function Organoid() {
                         <div className="flex ml-8">
                           <div className="w-86per">
                             <table className="min-w-full " style={style.tableBorder} border="1">
-                            <caption style={{ display: 'none' }}>오가노이드 연계 데</caption>
+                            <caption style={{ display: 'none' }}>오가노이드 연계 데이터 테이블</caption>
                               <thead className="border border-black">
                                 <tr
                                   className="h-20 MultiUploadTextCenter TextWhite"
