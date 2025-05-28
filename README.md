@@ -1,2 +1,2 @@
-﻿# nccsc-frontend
+﻿# ncc-frontend
 The K-CORE portal provides a comprehensive range of visualization tools to support diverse clinico-omics studies. With a focus on the integrated analysis of omics and clinical data, K-CORE suggests various statistical functions essential for precision medicine. The implemented tools are user friendly, versatile, and widely applicable, ensuring accessibility and adaptability to a broad spectrum of precision oncology research requirements. All genomic analyses were based on the hg38 reference genome, ensuring consistency and accuracy of variant interpretation.
